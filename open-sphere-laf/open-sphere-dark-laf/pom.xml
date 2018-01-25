@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>io.open-sphere</groupId>
+		<artifactId>open-sphere-laf</artifactId>
+		<version>5.2.3-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>open-sphere-dark-laf</artifactId>
+	<name>${application.display.name} Dark Look And Feel</name>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>io.opensphere.laf.default_laf.OSDarkLAFMain</mainClass>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+						<manifestEntries>
+							<Application-Name>OpenSphere Desktop</Application-Name>
+							<Permissions>all-permissions</Permissions>
+						</manifestEntries>
+						<addMavenDescriptor>false</addMavenDescriptor>
+						<index>false</index>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+

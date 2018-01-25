@@ -1,0 +1,17 @@
+io.opensphere.core.pipeline.renderer.special.RenderToTextureGeometryRenderer$Factory
+io.opensphere.core.pipeline.renderer.special.GeometryGroupRenderer$Factory
+io.opensphere.core.pipeline.renderer.buffered.TileRendererBuffered$Factory
+io.opensphere.core.pipeline.renderer.buffered.PointRendererBuffered$Factory
+io.opensphere.core.pipeline.renderer.buffered.PointSetRendererBuffered$Factory
+io.opensphere.core.pipeline.renderer.buffered.PointSpriteRendererBuffered$Factory
+io.opensphere.core.pipeline.renderer.buffered.MultiDrawPolygonRendererBuffered$Factory
+io.opensphere.core.pipeline.renderer.buffered.PolygonRendererBuffered$Factory
+io.opensphere.core.pipeline.renderer.buffered.PolylineRendererBuffered$Factory
+io.opensphere.core.pipeline.renderer.buffered.PolygonMeshRendererBuffered$Factory
+io.opensphere.core.pipeline.renderer.immediate.TileRendererImmediate$Factory
+io.opensphere.core.pipeline.renderer.immediate.PolygonMeshRendererImmediate$Factory
+io.opensphere.core.pipeline.renderer.immediate.PointRendererImmediate$Factory
+io.opensphere.core.pipeline.renderer.immediate.PointSpriteRendererImmediate$Factory
+io.opensphere.core.pipeline.renderer.immediate.PolygonRendererImmediate$Factory
+io.opensphere.core.pipeline.renderer.immediate.PolylineRendererImmediate$Factory
+io.opensphere.core.pipeline.renderer.immediate.LabelRendererImmediate$Factory

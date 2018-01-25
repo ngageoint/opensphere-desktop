@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pluginLoaderCollection>
+    <pluginLoaderData>
+        <id>MantlePlugin</id>
+        <class>io.opensphere.mantle.plugin.MantlePlugin</class>
+        <appVersion>1.0</appVersion>
+        <requiredPluginDependency>OverlayPlugin</requiredPluginDependency>
+        <pluginProperty>
+            <key>elementCacheType</key>
+            <value>REGISTRY</value> <!-- DISK, REGISTRY, or MEMORY -->
+        </pluginProperty>
+        <pluginProperty>
+            <key>elementDiskCacheLocation</key>
+            <value>${opensphere.path.runtime}/elementCache</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>elementDiskCacheUseEncryption</key>
+            <value>false</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>elementCacheInMemoryPoolSize</key>
+            <value>DYNAMIC</value> <!-- DYNAMIC, UNLIMITED or a number of elements -->
+        </pluginProperty>
+        <pluginProperty>
+            <key>useDynamicClassStorageInCache</key>
+            <value>true</value> <!-- true or false -->
+        </pluginProperty>
+        <pluginProperty>
+            <key>enableColumnDataAnalysis</key>
+            <value>true</value> <!-- true or false -->
+        </pluginProperty>
+        <pluginProperty>
+            <key>iconCacheLocation</key>
+            <value>${opensphere.path.runtime}/iconCache</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>mapAnnotationRegistryPersistenceHelperClass</key>
+            <value>io.opensphere.mantle.mp.impl.persist.v1.MapAnnotationRegistryPersistenceHelperV1</value>
+        </pluginProperty>
+    </pluginLoaderData>
+</pluginLoaderCollection>

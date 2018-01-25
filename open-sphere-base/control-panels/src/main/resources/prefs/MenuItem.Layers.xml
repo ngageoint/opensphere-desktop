@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences topic="MenuItem.Layers">
+   <preference key="visible" class="java.lang.Boolean">
+      <value>true</value>
+   </preference>
+</preferences>

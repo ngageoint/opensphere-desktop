@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suppressions PUBLIC
+    "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+    "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+    <!--  Code generator could be broken down into more functions but it would make it more difficult to understand. -->
+    <suppress files="DynamicMetaDataListCodeGenerator.java" checks="JavaNCSSCheck|NPathComplexity" />
+   
+    <!--  Ignore abstract coupling in DataElementCacheImpl -->
+    <suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]mantle[\\/]data[\\/]cache[\\/]impl[\\/]DataElementCacheImpl.java" checks="ClassDataAbstractionCoupling" />
+    
+    <!--  Need one extra parameter in constructor -->
+    <suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]mantle[\\/]data[\\/]geom[\\/]style[\\/]impl[\\/]ui[\\/].*EditorPanel.java" checks="ParameterNumber" />
+    
+    <!--  Need one extra parameter in utility method -->
+    <suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]mantle[\\/]data[\\/]geom[\\/]style[\\/]impl[\\/]AbstractLocationFeatureVisualizationStyle.java" checks="ParameterNumber" />
+    
+</suppressions>
+

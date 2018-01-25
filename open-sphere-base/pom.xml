@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>io.open-sphere</groupId>
+		<artifactId>open-sphere</artifactId>
+		<version>5.2.3-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>open-sphere-base</artifactId>
+	<packaging>pom</packaging>
+
+	<name>${application.display.name} Application Base</name>
+
+	<properties>
+		<output.directory>../../target/child_modules</output.directory>
+	</properties>
+
+	<modules>
+		<module>analysis</module>
+		<module>auxiliary</module>
+		<module>control-panels</module>
+		<module>core</module>
+		<module>mantle</module>
+		<module>overlay</module>
+		<module>test-support</module>
+		<module>xyz-tile</module>
+        <module>column-mappings</module>
+  </modules>
+</project>

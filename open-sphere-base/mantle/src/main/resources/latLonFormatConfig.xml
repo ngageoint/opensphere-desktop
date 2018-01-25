@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<LatLonFormatsConfig>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}DDD:MM'SS&quot;H dd:mm'ss&quot;h</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>DDDMMSSH ddmmssh</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>DDMMSS.SSH ddmmss.ssh</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>DDMMSS.SSSH ddmmss.sssh</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}dd:mm'ss&quot;h DDD:MM'SS&quot;H</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>ddmmssh DDDMMSSH</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>ddmmss.ssh DDMMSS.SSH</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>ddmmss.sssh DDMMSS.SSSH</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}DDD.D dd.d</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}DDD.DD dd.dd</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}DDD.DDD dd.ddd</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}DDD.DDDD dd.dddd</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}DDD.DDDDD dd.ddddd</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}DDD.DDDDDD dd.dddddd</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}DDD.DDDDDDD dd.ddddddd</format>
+    </LatLonFormats>    
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}ddd.d DD.D</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}ddd.dd DD.DD</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}ddd.ddd DD.DDD</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}ddd.dddd DD.DDDD</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}ddd.ddddd DD.DDDDD</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}ddd.dddddd DD.DDDDDD</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}ddd.ddddddd DD.DDDDDDD</format>
+    </LatLonFormats>    
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}DDD.DH dd.dh</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}DDD.DDH dd.ddh</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}DDD.DDDH dd.dddh</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}DDD.DDDDH dd.ddddh</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}DDD.DDDDDH dd.dddddh</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}DDD.DDDDDDH dd.ddddddh</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}DDD.DDDDDDDH dd.dddddddh</format>
+    </LatLonFormats>    
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}ddd.dh DD.DH</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}ddd.ddh DD.DDH</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}ddd.dddh DD.DDDH</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}ddd.ddddh DD.DDDDH</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}ddd.dddddh DD.DDDDDH</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}ddd.ddddddh DD.DDDDDDH</format>
+    </LatLonFormats>
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}ddd.dddddddh DD.DDDDDDDH</format>
+    </LatLonFormats>    
+    <LatLonFormats type="BOTH">
+        <format>{d1}{D2}dd:mm'ss.ss&quot;h DDD:MM'SS&quot;H</format>
+    </LatLonFormats>      
+    <LatLonFormats type="LON">
+        <format>{D2}DDD:MM'SS&quot;H</format>
+    </LatLonFormats>
+    <LatLonFormats type="LON">
+        <format>DDDMMSSH</format>
+    </LatLonFormats>
+    <LatLonFormats type="LON">
+        <format>DDD:MM'SS.SS&quot;H</format>
+    </LatLonFormats>
+    <LatLonFormats type="LON">
+        <format>DDMMSS.SSH</format>
+    </LatLonFormats>
+    <LatLonFormats type="LON">
+        <format>DDDMMSS.SSH</format>
+    </LatLonFormats>
+    <LatLonFormats type="LON">
+        <format>{D2}DDD.D</format>
+    </LatLonFormats>
+    <LatLonFormats type="LON">
+        <format>{D2}DDD.DD</format>
+    </LatLonFormats>
+    <LatLonFormats type="LON">
+        <format>{D2}DDD.DDD</format>
+    </LatLonFormats>
+    <LatLonFormats type="LON">
+        <format>{D2}DDD.DDDD</format>
+    </LatLonFormats>
+    <LatLonFormats type="LON">
+        <format>{D2}DDD.DDDDD</format>
+    </LatLonFormats>
+    <LatLonFormats type="LON">
+        <format>{D2}DDD.DDDDDD</format>
+    </LatLonFormats>
+    <LatLonFormats type="LON">
+        <format>{D2}DDD.DDDDDDD</format>
+    </LatLonFormats>
+    <LatLonFormats type="LON">
+        <format>{D2}DDD.DH</format>
+    </LatLonFormats>
+    <LatLonFormats type="LON">
+        <format>{D2}DDD.DDH</format>
+    </LatLonFormats>
+    <LatLonFormats type="LON">
+        <format>{D2}DDD.DDDH</format>
+    </LatLonFormats>
+    <LatLonFormats type="LON">
+        <format>{D2}DDD.DDDDH</format>
+    </LatLonFormats>
+     <LatLonFormats type="LON">
+        <format>{D2}DDD.DDDDDH</format>
+    </LatLonFormats>
+     <LatLonFormats type="LON">
+        <format>{D2}DDD.DDDDDDH</format>
+    </LatLonFormats>
+     <LatLonFormats type="LON">
+        <format>{D2}DDD.DDDDDDDH</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>{d1}dd:mm'ss&quot;h</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>ddmmssh</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>dd:mm'ss.ss&quot;h</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>ddmmss.ssh</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>{d1}dd.d</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>{d1}dd.dd</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>{d1}dd.ddd</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>{d1}dd.dddd</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>{d1}dd.ddddd</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>{d1}dd.dddddd</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>{d1}dd.dh</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>{d1}dd.ddh</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>{d1}dd.dddh</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>{d1}dd.ddddh</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>{d1}dd.dddddh</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>{d1}dd.ddddddh</format>
+    </LatLonFormats>
+    <LatLonFormats type="LAT">
+        <format>{d1}dd.dddddddh</format>
+    </LatLonFormats>
+</LatLonFormatsConfig>

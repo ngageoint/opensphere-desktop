@@ -1,0 +1,2 @@
+REWRITE_SYSTEM "http://www.opengis.net/kml/2.2" "maven:net.opengis.kml:kml_v2_2_0!/"
+ 

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DateFormatsConfig>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyyMMddHHmmss</sdf>
+        <regex>\d{14}</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyyMMddHHmmss'Z'</sdf>
+        <regex>\d{14}Z</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy-MM-dd'T'HH:mm:ss</sdf>
+        <regex>\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}</regex>
+    </DateFormat>    
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy-M-d'T'HH:mm:ss</sdf>
+        <regex>\d{4}\-\d{1,2}\-\d{1,2}T\d{2}\:\d{2}\:\d{2}</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy-MM-dd'T'HH:mm:ss'Z'</sdf>
+        <regex>\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}Z</regex>
+    </DateFormat>    
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy-M-d'T'HH:mm:ss'Z'</sdf>
+        <regex>\d{4}\-\d{1,2}\-\d{1,2}T\d{2}\:\d{2}\:\d{2}Z</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy-MM-dd'T'HH:mm:ss.SSS</sdf>
+        <regex>\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d+</regex>
+    </DateFormat>    
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy-M-d'T'HH:mm:ss.SSS</sdf>
+        <regex>\d{4}\-\d{1,2}\-\d{1,2}T\d{2}\:\d{2}\:\d{2}\.\d+</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy-MM-dd'T'HH:mm:ss.SSS'Z'</sdf>
+        <regex>\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d+Z</regex>
+    </DateFormat>    
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy-M-d'T'HH:mm:ss.SSS'Z'</sdf>
+        <regex>\d{4}\-\d{1,2}\-\d{1,2}T\d{2}\:\d{2}\:\d{2}\.\d+Z</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy-MM-dd HH:mm:ss</sdf>
+        <regex>\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}\:\d{2}</regex>
+    </DateFormat>    
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy-M-d HH:mm:ss</sdf>
+        <regex>\d{4}\-\d{1,2}\-\d{1,2}\s\d{2}\:\d{2}\:\d{2}</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy-MM-dd HH:mm:ss'Z'</sdf>
+        <regex>\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}\:\d{2}Z</regex>
+    </DateFormat>    
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy-M-d HH:mm:ss'Z'</sdf>
+        <regex>\d{4}\-\d{1,2}\-\d{1,2}\s\d{2}\:\d{2}\:\d{2}Z</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy-MM-dd HH:mm:ss.SSS</sdf>
+        <regex>\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}\:\d{2}\.\d+</regex>
+    </DateFormat>    
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy-M-dd HH:mm:ss.SSS</sdf>
+        <regex>\d{4}\-\d{1,2}\-\d{2}\s\d{2}\:\d{2}\:\d{2}\.\d+</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy-MM-dd HH:mm:ss.SSS'Z'</sdf>
+        <regex>\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}\:\d{2}\.\d+Z</regex>
+    </DateFormat>    
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy-M-dd HH:mm:ss.SSS'Z'</sdf>
+        <regex>\d{4}\-\d{1,2}\-\d{2}\s\d{2}\:\d{2}\:\d{2}\.\d+Z</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy/MM/dd'T'HH:mm:ss</sdf>
+        <regex>\d{4}\/\d{2}\/\d{2}T\d{2}\:\d{2}\:\d{2}</regex>
+    </DateFormat>    
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy/M/dd'T'HH:mm:ss</sdf>
+        <regex>\d{4}\/\d{1,2}\/\d{2}T\d{2}\:\d{2}\:\d{2}</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy/MM/dd'T'HH:mm:ss'Z'</sdf>
+        <regex>\d{4}\/\d{2}\/\d{2}T\d{2}\:\d{2}\:\d{2}Z</regex>
+    </DateFormat>    
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy/M/d'T'HH:mm:ss'Z'</sdf>
+        <regex>\d{4}\/\d{1,2}\/\d{1,2}T\d{2}\:\d{2}\:\d{2}Z</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy/M/d'T'HH:mm:ss.SSS</sdf>
+        <regex>\d{4}\/\d{1,2}\/\d{1,2}T\d{2}\:\d{2}\:\d{2}\.\d+</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy/MM/dd'T'HH:mm:ss.SSS'Z'</sdf>
+        <regex>\d{4}\/\d{2}\/\d{2}T\d{2}\:\d{2}\:\d{2}\.\d+Z</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy/M/d HH:mm:ss</sdf>
+        <regex>\d{4}\/\d{1,2}\/\d{1,2}\s\d{2}\:\d{2}\:\d{2}</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy/MM/dd/HHmmss'Z'</sdf>
+        <regex>\d{4}\/\d{1,2}\/\d{1,2}\/\d{6}\.\d+Z</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy/MM/dd HH:mm:ss'Z'</sdf>
+        <regex>\d{4}\/\d{2}\/\d{2}\s\d{2}\:\d{2}\:\d{2}Z</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy/MM/dd HH:mm:ss.SSS</sdf>
+        <regex>\d{4}\/\d{2}\/\d{2}\s\d{2}\:\d{2}\:\d{2}\.\d+</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>yyyy/MM/dd HH:mm:ss.SSS'Z'</sdf>
+        <regex>\d{4}\/\d{2}\/\d{2}\s\d{2}\:\d{2}\:\d{2}\.\d+Z</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>'td'MM/dd/yyyy HH:mm:ss</sdf>
+        <regex>td\d{2}\/\d{2}\/\d{4}\s\d{2}\:\d{2}\:\d{2}</regex>
+    </DateFormat>    
+    <DateFormat type="TIMESTAMP">
+        <sdf>'td'M/d/yyyy HH:mm:ss</sdf>
+        <regex>td\d{1,2}\/\d{1,2}\/\d{4}\s\d{2}\:\d{2}\:\d{2}</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>'td'MM/dd/yyyy HH:mm:ss.SSS</sdf>
+        <regex>td\d{2}\/\d{2}\/\d{4}\s\d{2}\:\d{2}\:\d{2}\.\d+</regex>
+    </DateFormat>    
+    <DateFormat type="TIMESTAMP">
+        <sdf>'td'M/dd/yyyy HH:mm:ss.SSS</sdf>
+        <regex>td\d{1,2}\/\d{2}\/\d{4}\s\d{2}\:\d{2}\:\d{2}\.\d+</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>MM/dd,HHmm'z'</sdf>
+        <regex>\d{2}\/\d{2}\,\d{4}z</regex>
+    </DateFormat>    
+    <DateFormat type="TIMESTAMP">
+        <sdf>M/d,HHmm'z'</sdf>
+        <regex>\d{1,2}\/\d{1,2}\,\d{4}z</regex>
+    </DateFormat>
+    <DateFormat type="TIMESTAMP">
+        <sdf>MMM dd,yyyy HH:mm:ss</sdf>
+        <regex>\w{3}\s\d{1,2}\,\s\d{4}\s\d{1,2}\:\d{1,2}\:\d{1,2}</regex>
+    </DateFormat>
+    <DateFormat type="DATE">
+        <sdf>yyyy-MM-dd</sdf>
+        <regex>\d{4}\-\d{2}\-\d{2}</regex>
+    </DateFormat>    
+    <DateFormat type="DATE">
+        <sdf>yyyy-M-d</sdf>
+        <regex>\d{4}\-\d{1,2}\-\d{1,2}</regex>
+    </DateFormat>
+    <DateFormat type="DATE">
+        <sdf>yyyy/MM/dd</sdf>
+        <regex>\d{4}\/\d{2}\/\d{2}</regex>
+    </DateFormat>
+    <DateFormat type="DATE">
+        <sdf>yyyy/M/d</sdf>
+        <regex>\d{4}\/\d{1,2}\/\d{1,2}</regex>
+    </DateFormat>
+    <DateFormat type="DATE">
+        <sdf>MM-dd-yyyy</sdf>
+        <regex>\d{2}\-\d{2}\-\d{4}</regex>
+    </DateFormat>
+    <DateFormat type="DATE">
+        <sdf>M-d-yyyy</sdf>
+        <regex>\d{1,2}\-\d{1,2}\-\d{4}</regex>
+    </DateFormat>
+    <DateFormat type="DATE">
+        <sdf>MM/dd/yyyy</sdf>
+        <regex>\d{2}\/\d{2}\/\d{4}</regex>
+    </DateFormat>
+    <DateFormat type="DATE">
+        <sdf>M/d/yyyy</sdf>
+        <regex>\d{1,2}\/\d{1,2}\/\d{4}</regex>
+    </DateFormat>
+    <DateFormat type="DATE">
+        <sdf>dd-MM-yyyy</sdf>
+        <regex>\d{2}\-\d{2}\-\d{4}</regex>
+    </DateFormat>
+    <DateFormat type="DATE">
+        <sdf>d-M-yyyy</sdf>
+        <regex>\d{1,2}\-\d{1,2}\-\d{4}</regex>
+    </DateFormat>
+    <DateFormat type="DATE">
+        <sdf>dd/MM/yyyy</sdf>
+        <regex>\d{2}\/\d{2}\/\d{4}</regex>
+    </DateFormat>
+    <DateFormat type="DATE">
+        <sdf>d/M/yyyy</sdf>
+        <regex>\d{1,2}\/\d{1,2}\/\d{4}</regex>
+    </DateFormat>
+    <DateFormat type="TIME">
+        <sdf>HH:mm:ss</sdf>
+        <regex>\d{2}\:\d{2}\:\d{2}</regex>
+    </DateFormat>
+    <DateFormat type="TIME">
+        <sdf>HH:mm:ss.SSS</sdf>
+        <regex>\d{2}\:\d{2}\:\d{2}\.\d+</regex>
+    </DateFormat>
+    <DateFormat type="TIME">
+        <sdf>HH:mm:ss'Z'</sdf>
+        <regex>\d{2}\:\d{2}\:\d{2}Z</regex>
+    </DateFormat>
+    <DateFormat type="TIME">
+        <sdf>HH:mm:ss.SSS'Z'</sdf>
+        <regex>\d{2}\:\d{2}\:\d{2}\.\d+Z</regex>
+    </DateFormat>
+</DateFormatsConfig>

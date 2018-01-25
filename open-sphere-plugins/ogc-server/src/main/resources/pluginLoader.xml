@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pluginLoaderCollection>
+    <pluginLoaderData>
+        <id>OGCServers</id>
+        <class>io.opensphere.server.OGCServerPlugin</class>
+        <appVersion>1.0</appVersion>
+        <requiredPluginDependency>MantlePlugin</requiredPluginDependency>
+        <pluginProperty>
+            <key>parentMenuName</key>
+            <value>Main Menu Bar/File</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>menuButtonLabel</key>
+            <value>Servers</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>menuPosition</key>
+            <value>1</value>
+        </pluginProperty>
+    </pluginLoaderData>
+</pluginLoaderCollection>

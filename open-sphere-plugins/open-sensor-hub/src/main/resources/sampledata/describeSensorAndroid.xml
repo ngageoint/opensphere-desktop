@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<swe:DescribeSensorResponse xmlns:swe="http://www.opengis.net/swes/2.0">
+  <swe:procedureDescriptionFormat>http://www.opengis.net/sensorml/2.0</swe:procedureDescriptionFormat>
+  <swe:description>
+    <swe:SensorDescription>
+      <swe:data>
+        <sml:PhysicalSystem xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sml="http://www.opengis.net/sensorml/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" gml:id="ANDROID_SENSORS">
+          <gml:identifier codeSpace="uid">urn:android:device:060693280a28e015</gml:identifier>
+          <sml:validTime>
+            <gml:TimePeriod gml:id="T1">
+              <gml:beginPosition>2015-02-16T07:57:48.111Z</gml:beginPosition>
+              <gml:endPosition indeterminatePosition="now"/>
+            </gml:TimePeriod>
+          </sml:validTime>
+          <sml:outputs>
+            <sml:OutputList>
+              <sml:output name="Rotation_Vector_data">
+                <swe:DataRecord>
+                  <swe:field name="time">
+                    <swe:Time definition="http://www.opengis.net/def/property/OGC/0/SamplingTime">
+                      <swe:uom xlink:href="http://www.opengis.net/def/uom/ISO-8601/0/Gregorian"/>
+                    </swe:Time>
+                  </swe:field>
+                  <swe:field name="orient">
+                    <swe:Vector definition="http://sensorml.com/ont/swe/property/OrientationQuaternion" referenceFrame="http://www.opengis.net/def/crs/OGC/0/ENU" localFrame="#LOCAL_FRAME">
+                      <swe:coordinate name="qx">
+                        <swe:Quantity definition="http://sensorml.com/ont/swe/property/QuaternionComponent">
+                          <swe:uom code="1"/>
+                        </swe:Quantity>
+                      </swe:coordinate>
+                      <swe:coordinate name="qy">
+                        <swe:Quantity definition="http://sensorml.com/ont/swe/property/QuaternionComponent">
+                          <swe:uom code="1"/>
+                        </swe:Quantity>
+                      </swe:coordinate>
+                      <swe:coordinate name="qz">
+                        <swe:Quantity definition="http://sensorml.com/ont/swe/property/QuaternionComponent">
+                          <swe:uom code="1"/>
+                        </swe:Quantity>
+                      </swe:coordinate>
+                      <swe:coordinate name="q0">
+                        <swe:Quantity definition="http://sensorml.com/ont/swe/property/QuaternionComponent">
+                          <swe:uom code="1"/>
+                        </swe:Quantity>
+                      </swe:coordinate>
+                    </swe:Vector>
+                  </swe:field>
+                </swe:DataRecord>
+              </sml:output>
+              <sml:output name="gps_data">
+                <swe:DataRecord>
+                  <swe:field name="time">
+                    <swe:Time definition="http://www.opengis.net/def/property/OGC/0/SamplingTime">
+                      <swe:uom xlink:href="http://www.opengis.net/def/uom/ISO-8601/0/Gregorian"/>
+                    </swe:Time>
+                  </swe:field>
+                  <swe:field name="location">
+                    <swe:Vector definition="http://sensorml.com/ont/swe/property/Location" referenceFrame="http://www.opengis.net/def/crs/EPSG/0/4979" localFrame="#LOCAL_FRAME">
+                      <swe:coordinate name="lat">
+                        <swe:Quantity definition="http://sensorml.com/ont/swe/property/Latitude">
+                          <swe:uom code="deg"/>
+                        </swe:Quantity>
+                      </swe:coordinate>
+                      <swe:coordinate name="lon">
+                        <swe:Quantity definition="http://sensorml.com/ont/swe/property/Longitude">
+                          <swe:uom code="deg"/>
+                        </swe:Quantity>
+                      </swe:coordinate>
+                      <swe:coordinate name="alt">
+                        <swe:Quantity definition="http://sensorml.com/ont/swe/property/Altitude">
+                          <swe:uom code="m"/>
+                        </swe:Quantity>
+                      </swe:coordinate>
+                    </swe:Vector>
+                  </swe:field>
+                </swe:DataRecord>
+              </sml:output>
+              <sml:output name="camera0_data">
+                <swe:DataRecord>
+                  <swe:field name="time">
+                    <swe:Time definition="http://www.opengis.net/def/property/OGC/0/SamplingTime">
+                      <swe:uom xlink:href="http://www.opengis.net/def/uom/ISO-8601/0/Gregorian"/>
+                    </swe:Time>
+                  </swe:field>
+                  <swe:field name="videoFrame">
+                    <swe:DataArray definition="http://sensorml.com/ont/swe/property/VideoFrame">
+                      <swe:elementCount>
+                        <swe:Count>
+                          <swe:value>600</swe:value>
+                        </swe:Count>
+                      </swe:elementCount>
+                      <swe:elementType name="row">
+                        <swe:DataArray>
+                          <swe:elementCount>
+                            <swe:Count>
+                              <swe:value>800</swe:value>
+                            </swe:Count>
+                          </swe:elementCount>
+                          <swe:elementType name="pixel">
+                            <swe:DataRecord>
+                              <swe:field name="red">
+                                <swe:Count/>
+                              </swe:field>
+                              <swe:field name="green">
+                                <swe:Count/>
+                              </swe:field>
+                              <swe:field name="blue">
+                                <swe:Count/>
+                              </swe:field>
+                            </swe:DataRecord>
+                          </swe:elementType>
+                        </swe:DataArray>
+                      </swe:elementType>
+                    </swe:DataArray>
+                  </swe:field>
+                </swe:DataRecord>
+              </sml:output>
+            </sml:OutputList>
+          </sml:outputs>
+          <sml:localReferenceFrame>
+            <sml:SpatialFrame id="LOCAL_FRAME">
+              <sml:origin>Center of the device screen</sml:origin>
+              <sml:axis name="x">The X axis is in the plane of the screen and points to the right</sml:axis>
+              <sml:axis name="y">The Y axis is in the plane of the screen and points up</sml:axis>
+              <sml:axis name="z">The Z axis points towards the outside of the front face of the screen</sml:axis>
+            </sml:SpatialFrame>
+          </sml:localReferenceFrame>
+          <sml:components>
+            <sml:ComponentList>
+              <sml:component name="sensor0">
+                <sml:PhysicalComponent gml:id="SENSOR_ROTATION_VECTOR">
+                  <gml:name>Rotation Vector</gml:name>
+                </sml:PhysicalComponent>
+              </sml:component>
+              <sml:component name="sensor1">
+                <sml:PhysicalComponent gml:id="LOC_GPS">
+                  <gml:name>gps</gml:name>
+                </sml:PhysicalComponent>
+              </sml:component>
+              <sml:component name="sensor2">
+                <sml:PhysicalComponent gml:id="CAM_0">
+                  <gml:name>Android Camera #0</gml:name>
+                </sml:PhysicalComponent>
+              </sml:component>
+            </sml:ComponentList>
+          </sml:components>
+          <sml:connections>
+            <sml:ConnectionList/>
+          </sml:connections>
+        </sml:PhysicalSystem>
+      </swe:data>
+    </swe:SensorDescription>
+  </swe:description>
+</swe:DescribeSensorResponse>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences topic="io.opensphere.core.net.NetworkConfigurationManagerImpl">
+   <preference key="SystemProxiesEnabled" class="java.lang.Boolean">
+      <value>true</value>
+   </preference>
+</preferences>

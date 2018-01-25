@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pluginLoaderCollection>
+    <pluginLoaderData>
+        <id>LayerManagementPlugin</id>
+        <class>io.opensphere.controlpanels.layers.LayerManagementPlugin</class>
+        <appVersion>1.0</appVersion>
+        <requiredPluginDependency>MantlePlugin</requiredPluginDependency>
+        <requiredPluginDependency>FilterBuilderPlugin</requiredPluginDependency>
+        <pluginProperty>
+            <key>parentMenuName</key>
+            <value>Main Menu Bar/View</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>menuButtonLabel</key>
+            <value>Layers</value>
+        </pluginProperty>
+    </pluginLoaderData>
+    <pluginLoaderData>
+        <id>OptionsPlugin</id>
+        <class>io.opensphere.controlpanels.options.OptionsPlugin</class>
+        <appVersion>1.0</appVersion>
+        <pluginProperty>
+            <key>parentMenuName</key>
+            <value>Main Menu Bar/Edit</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>menuButtonLabel</key>
+            <value>Settings</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>menuAccelerator</key>
+            <value>VK_F8</value>
+        </pluginProperty>
+    </pluginLoaderData>
+    <pluginLoaderData>
+        <id>QuerySupportPlugin</id>
+        <class>io.opensphere.controlpanels.query.QuerySupportPlugin</class>
+        <appVersion>1.0</appVersion>
+        <requiredPluginDependency>MantlePlugin</requiredPluginDependency>
+    </pluginLoaderData>
+    <pluginLoaderData>
+        <id>TimebrowserPlugin</id>
+        <class>io.opensphere.controlpanels.animation.TimelinePlugin</class>
+        <appVersion>1.0</appVersion>
+        <requiredPluginDependency>MantlePlugin</requiredPluginDependency>
+        <requiredPluginDependency>LayerManagementPlugin</requiredPluginDependency>
+        <pluginProperty>
+            <key>parentMenuName</key>
+            <value>Main Menu Bar/View</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>menuButtonLabel</key>
+            <value>Date Picker</value>
+        </pluginProperty>
+    </pluginLoaderData> 
+    <pluginLoaderData>
+        <id>ViewBookmarkPlugin</id>
+        <class>io.opensphere.controlpanels.viewbookmark.ViewBookmarkPlugin</class>
+        <appVersion>1.0</appVersion>
+        <requiredPluginDependency>IconLegendPlugin</requiredPluginDependency>
+        <pluginProperty>
+            <key>menuButtonLabel</key>
+            <value>Manage</value>
+        </pluginProperty>
+    </pluginLoaderData>
+    <pluginLoaderData>
+        <id>AboutPlugin</id>
+        <class>io.opensphere.controlpanels.about.AboutPlugin</class>
+        <appVersion>1.0</appVersion>
+        <pluginProperty>
+            <key>parentMenuName</key>
+            <value>Main Menu Bar/Help</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>menuButtonLabel</key>
+            <value>About</value>
+        </pluginProperty>
+    </pluginLoaderData>
+    <pluginLoaderData>
+        <id>VideoRecorderPlugin</id>
+        <class>io.opensphere.controlpanels.recording.VideoRecorderPlugin</class>
+        <appVersion>1.0</appVersion>
+        <pluginProperty>
+            <key>parentMenuName</key>
+            <value>Main Menu Bar/Tools</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>menuButtonLabel</key>
+            <value>Video Recording</value>
+        </pluginProperty>
+    </pluginLoaderData>
+    <pluginLoaderData>
+        <id>State</id>
+        <class>io.opensphere.controlpanels.state.StatePlugin</class>
+        <appVersion>1.0</appVersion>
+    </pluginLoaderData>
+</pluginLoaderCollection>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  targetNamespace="http://www.opengis.net/ogc">
+
+  <xs:import namespace="http://www.opengis.net/gml" schemaLocation="../../gml/2.1.2/geometry.xsd"/>
+
+  <!-- extending ogc filter with a few custom attributes, and in one case
+       relaxing a rule to allow better preservation of the the visual state 
+       of a filter. -->
+   <xs:redefine schemaLocation="../../filter/1.0.0/filter.xsd">
+   	
+    <xs:complexType name="FilterType">
+      <xs:complexContent>
+
+        <xs:extension base="ogc:FilterType">
+
+          <xs:attribute name="active" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                Filter active state.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        
+           <xs:attribute name="title" type="xs:token">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                Filter title
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+
+          <xs:attribute name="description" type="xs:token">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                Filter description
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+
+          <xs:attribute name="id" type="xs:token">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                Filter id
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <!--  This value might be better represented by an enum, but was not
+                100% sure of all the possible values, single, and spaital I 
+                think, but suspect there are others. -->
+          <xs:attribute name="filterType" type="xs:token">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                Filter type
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+		  <!--  This value might be better represented by an enum, but was not
+                100% sure of all the possible values: AND,OR ? -->
+          <xs:attribute name="match" type="xs:token">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                Filter match group type
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+
+          <xs:attribute name="type" type="xs:token">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                Filter type - looks like a layer name?
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+
+        </xs:extension>
+
+      </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="BinaryLogicOpType">
+      <xs:complexContent>
+
+         <xs:extension base="ogc:BinaryLogicOpType">
+         	<!-- The valdation of this redefine was odd, as setting
+         	minOccurs for this element to 1 actually resolved our use case
+         	when modifying the source ogc filter xsd, but doing that in
+         	this redefine did not work, setting it to 0, did. Also,
+         	this part does not seem to be picked up in the js
+         	version of xmllint -->
+<!-- 			<xs:choice minOccurs="0" maxOccurs="unbounded"> -->
+<!-- 				<xs:element ref="ogc:comparisonOps"/> -->
+<!-- 				<xs:element ref="ogc:spatialOps"/> -->
+<!-- 				<xs:element ref="ogc:logicOps"/> -->
+<!-- 			</xs:choice> -->
+
+          <xs:attribute name="description" type="xs:token">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                Filter description
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          
+          <xs:attribute name="namehint" type="xs:token">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                Parent filter group name hint.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          
+          <xs:attribute name="hint" type="xs:token">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                Filter type hint.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+
+        </xs:extension>
+
+	  </xs:complexContent>
+	</xs:complexType>
+
+  </xs:redefine>
+
+</xs:schema>

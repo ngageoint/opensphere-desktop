@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences topic="io.opensphere.controlpanels.layers.activedata.controller.AvailableDataDataLayerController">
+   <preference key="AddDataViewByType" class="java.lang.String">
+      <value>SOURCE</value>
+   </preference>
+</preferences>

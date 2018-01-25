@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences topic="io.opensphere.arcgis2.ArcGIS2Plugin">
+   <preference key="serverConfig" class="io.opensphere.mantle.datasources.impl.UrlSourceConfig">
+      <config>
+         <source>
+            <name>ArcGIS</name>
+            <active>true</active>
+            <baseUrl>http://services.arcgisonline.com/ArcGIS/rest/services</baseUrl>
+         </source>
+      </config>
+   </preference>
+</preferences>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pluginLoaderCollection>
+    <pluginLoaderData>
+        <id>OSMPlugin</id>
+        <class>io.opensphere.osm.OSMPlugin</class>
+        <appVersion>1.0</appVersion>
+        <requiredPluginDependency>OGCServers</requiredPluginDependency>
+    </pluginLoaderData>
+</pluginLoaderCollection>

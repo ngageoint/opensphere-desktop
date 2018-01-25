@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="OpenSphere Desktop">
+	<bannerLeft>
+		<name>OpenSphere Desktop</name>
+		<title>OpenSphere Desktop</title>
+		<src>images/OpenSphere-name.png</src>
+		<href></href>
+	</bannerLeft>
+
+	<skin>
+		<groupId>org.apache.maven.skins</groupId>
+		<artifactId>maven-fluido-skin</artifactId>
+		<version>1.6</version>
+	</skin>
+
+	<publishDate position="right" />
+	<version position="right" />
+	<poweredBy>
+		<logo name="OpenSphere" img="OpenSphere-logo.png" />
+	</poweredBy>
+
+	<body>
+		<menu name="Overview">
+			<item name="Introduction" href="index.html" />
+			<item name="Architecture" href="architecture.html" />
+			<item name="Development Guide">
+				<item name="Getting Started" href="developers_guide_intro.html" />
+				<item name="Development Environment and Coding Standards" href="standards.html" />
+				<item name="Data Registry" href="registry.html" />
+				<item name="Working With Mantle" href="mantle.html" />
+				<item name="Events" href="events.html" />
+				<item name="Menus" href="menus.html" />
+				<item name="Envoys" href="envoys.html" />
+				<item name="Timeline" href="timeline.html" />
+				<item name="Toolboxes" href="toolboxes.html" />
+				<item name="Utilities" href="utilities.html" />
+				<item name="Working with Remote Data Sources" href="remote_datasources.html" />
+				<item name="Configuring Data Sources" href="source_configuration.html" />
+				<item name="User Preferences" href="preferences.html" />
+				<item name="Displaying Data on the Map" href="map_display.html" />
+				<item name="Developing Your First Plugin" href="first_plugin.html" />
+			</item>
+		</menu>
+		<menu ref="parent" />
+		<menu ref="reports" />
+		<menu ref="modules" />
+	</body>
+</project>

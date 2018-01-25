@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.open-sphere</groupId>
+        <artifactId>open-sphere</artifactId>
+        <version>5.2.3-SNAPSHOT</version>
+    </parent>
+
+    <groupId>io.open-sphere.plugins</groupId>
+    <artifactId>open-sphere-plugins</artifactId>
+    <packaging>pom</packaging>
+    
+    <name>${application.display.name} Application Plugins</name>
+    
+    <properties>
+        <output.directory>../../target/child_modules</output.directory>
+    </properties>
+    
+    <modules>
+        <module>arcgis</module>
+        <module>city</module>
+        <module>csv-common</module>
+        <module>csv</module>
+        <module>feedback</module>
+        <module>filter-builder</module>
+        <module>geopackage</module>
+        <module>feature-actions</module>
+        <module>google-places</module>
+        <module>hud</module>
+        <module>imagery</module>
+        <module>import</module>
+        <module>kml</module>
+        <module>mapbox</module>
+        <module>mapzen</module>
+        <module>merge</module>
+        <module>my-places</module>
+        <module>ogc-server</module>
+        <module>open-sensor-hub</module>
+        <module>open-street-map</module>
+        <module>search</module>
+        <module>shapefile</module>
+        <module>stk-terrain</module>
+        <module>subterrain</module>
+        <module>terrain-profile</module>
+        <module>wfs</module>
+        <module>wms</module>
+        <module>wps</module>
+  </modules>
+</project>

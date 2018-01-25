@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suppressions PUBLIC
+    "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+    "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+    <!-- Allow more parameters for the matrix classes. -->
+    <suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]core[\\/]math[\\/]Matrix.d\.java" checks="ParameterNumberCheck" />
+    
+    <!-- Allow one additional parameter in the listener interface. -->
+    <suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]core[\\/]data[\\/]DataRegistryListenerManager\.java" checks="ParameterNumberCheck" />
+
+    <!-- Ignore duplicate code in the double precision matrix classes because it is necessary due to the way
+         they store their values. -->
+    <suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]core[\\/]math[\\/]((Matrix|Vector)[234]d|Quaternion)\.java" checks="StrictDuplicateCode" />
+
+    <!--  Ignore duplicate code in Preferences because it is necessary due to of all the different return types. -->
+    <suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]core[\\/]preferences[\\/]Preference\.java" checks="StrictDuplicateCode" />
+
+    <!--  Ignore duplicate code in the petrifyable collections because it is necessary due to of all the different collection types. -->
+    <suppress files="src[\\/](main|test)[\\/]java[\\/]io[\\/]opensphere[\\/]core[\\/]util[\\/]collections[\\/]petrifyable[\\/]Petrifyable.*\.java" checks="StrictDuplicateCode" />
+
+    <!-- The nested switches in Matrix4d trigger NCSS, but it's really not that complicated. -->
+    <suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]core[\\/]math[\\/]Matrix4d\.java" checks="JavaNCSS" />
+    
+    <!--  Allow SuppressWarnings in the Utilities class. -->
+    <suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]core[\\/]util[\\/]Utilities\.java" checks="SuppressWarnings" />
+
+    <!--  Allow SuppressWarnings in the Launcher class. -->
+    <suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]core[\\/]launch[\\/]Launch\.java" checks="SuppressWarnings" />
+
+    <!--  Allow SuppressWarnings in TransparentEquals.+Reference class since it cannot use Utilities. -->
+    <suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]core[\\/]util[\\/]ref[\\/]TransparentEquals.+Reference\.java" checks="SuppressWarnings" />
+    
+    <!-- TimeSpan is a long file because of all the nested implementations, but it's better to keep them encapsulated than break them out into separate files. -->
+    <suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]core[\\/]model[\\/]TimeSpan\.java" checks="FileLengthCheck" />
+
+    <!-- New is a long file because of all the different collection types. -->
+    <suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]core[\\/]util[\\/]collections[\\/]New\.java" checks="FileLengthCheck" />
+
+    <!-- JavaHelp throws Exception in its API. -->
+    <suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]core[\\/]help[\\/]HelpManagerImpl\.java" checks="IllegalCatch" />
+    
+    <!-- Autocloseable throws Exception. -->
+    <suppress files="src[\\/](main|test)[\\/]java[\\/]io[\\/]opensphere[\\/]core[\\/]util[\\/]Utilities(Test)?\.java" checks="IllegalCatch" />
+    
+    <!-- Ignore class fan out warning for XMLUtilities because of all the different parsing classes used. -->
+    <suppress files=".*opensphere[\\/]core[\\/]util[\\/]XMLUtilities.*\.java" checks="ClassFanOutComplexity" />
+
+    <!--  Ignore duplicate code in Icon*Button because they provide similar functionality with different base classes. -->
+    <suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]core[\\/]util[\\/]swing[\\/]Icon.*Button\.java" checks="StrictDuplicateCode" />
+    
+    <!--  Ignore unused javadoc in annotations because it's not actually unused, checkstyle just thinks it is. -->
+    <suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]core[\\/]util[\\/]ThreadConfined\.java" checks="JavadocMethod" />
+    
+    <!-- Ignore java.lang.ref warning for opensphere.core.util.ref. -->
+    <suppress files=".*opensphere[\\/]core[\\/]util[\\/]ref[\\/].*\.java" id="java.lang.ref" />
+    
+    <!-- Allow catching exception in classes that have calls to Callable. -->
+    <suppress files=".*opensphere[\\/]core[\\/]util[\\/](swing[\\/]EventQueueUtilities|lang[\\/]CancellableThreePhaseProperty|lang[\\/]TaskCanceller)\.java" checks="IllegalCatch" />
+    
+</suppressions>
+

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ViewerConfigurations>
+	<ViewerConfiguration classname="io.opensphere.core.viewer.impl.Viewer3D">
+		<ProjectionConfiguration classname="io.opensphere.core.projection.impl.MutableGlobeProjection" />
+		<ViewControlTranslatorConfiguration classname="io.opensphere.core.viewer.control.Viewer3DControlTranslator" />
+	</ViewerConfiguration>
+	<ViewerConfiguration classname="io.opensphere.core.viewer.impl.Viewer2D">
+		<ProjectionConfiguration classname="io.opensphere.core.projection.impl.EquirectangularProjection" />
+		<!-- 
+		<ProjectionConfiguration classname="io.opensphere.core.projection.impl.MillerProjection" />
+		<ProjectionConfiguration classname="io.opensphere.core.projection.impl.MercatorProjection" />
+		<ProjectionConfiguration classname="io.opensphere.core.projection.impl.HammerProjection" />
+		 -->
+		<ViewControlTranslatorConfiguration classname="io.opensphere.core.viewer.control.Viewer2DControlTranslator" />
+	</ViewerConfiguration>
+</ViewerConfigurations>

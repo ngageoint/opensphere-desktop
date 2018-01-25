@@ -1,0 +1,69 @@
+The software in this directory is distributed using the following licenses:
+
+==== Simplified BSD License (two clause license) (See LICENSE_JOGL.txt and LICENSE_GLUEGEN.txt) ====
+gluegen-rt-2.1.5.jar
+gluegen-rt-2.1.5-natives-linux-amd64.jar
+gluegen-rt-2.1.5-natives-windows-amd64.jar
+gluegen-rt-2.1.5-natives-windows-i586.jar
+jogl-all-2.1.5.jar
+jogl-java-src-2.1.5.zip
+jogl-all-2.1.5-natives-linux-amd64.jar
+jogl-all-2.1.5-natives-windows-amd64.jar
+jogl-all-2.1.5-natives-windows-i586.jar
+
+==== BSD License (three clause license) (See LICENSE_Poly2Tri.txt) ====
+poly2tri.jar
+poly2tri-src.zip
+
+==== Apache Software License 2.0 ====
+log4j-1.2.17.jar
+
+==== CERN License (See LICENSE_CERN.txt) ====
+trove-3.0.2.jar (HashFunctions and PrimeFinder classes)
+
+==== GNU lesser General Public License (See LICENSE_LGPLv2.1.txt) ====
+jts-1.12.jar (source available in jts-src-1.12.zip)
+trove-3.0.2.jar (source available in trove-src-2.0.4.jar)
+
+==== Sun Microsystems Binary Code License Agreement ====
+jhall-2.0_03.jar
+
+==== MIT License (See LICENSE_slf4j.txt) ====
+slf4j-api-1.6.1.jar
+slf4j-log4j12-1.6.1.jar
+
+==== MIT License (See LICENCE_proj.txt) ====
+win32/x86/proj.dll
+
+==== MIT/X License (See LICENCE_GDAL.txt) ====
+gdal-1.9.2.jar
+linux/x86_64/libgdal.so
+linux/x86_64/libgdalconstjni.so
+linux/x86_64/libgdaljni.so
+linux/x86_64/libogrjni.so
+linux/x86_64/libosrjni.so
+linux/x86_64/libproj.so
+win32/x86/gdal19.dll
+win32/x86/gdalconstjni.dll
+win32/x86/gdaljni.dll
+win32/x86/ogrjni.dll
+win32/x86/osrjni.dll
+win32/x86_64/gdal19.dll
+win32/x86_64/gdalconstjni.dll
+win32/x86_64/gdaljni.dll
+win32/x86_64/ogrjni.dll
+win32/x86_64/osrjni.dll
+win32/x86_64/proj.dll
+
+==== Not for distribution ====
+findbugs-2.0.0-annotations.jar
+jdepend-2.9.jar
+junit-4.5.jar
+cobertura-2.0.3.jar
+asm-4.1.jar
+asm-analysis-4.1.jar
+asm-commons-4.1.jar
+asm-tree-4.1.jar
+asm-util-4.1.jar
+log4j-1.2.17.jar
+oro-2.0.8.jar

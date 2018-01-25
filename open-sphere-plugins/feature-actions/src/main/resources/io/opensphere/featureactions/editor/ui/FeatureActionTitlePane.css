@@ -1,0 +1,8 @@
+.titled-pane > .title{
+   -fx-padding: 0 0 0 -6;
+}
+
+.copyable-label, .copyable-label:focused {
+    -fx-background-color: transparent ;
+    -fx-background-insets: 0px ;
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pluginLoaderCollection>
+    <pluginLoaderData>
+        <id>H2Plugin</id>
+        <class>io.opensphere.auxiliary.cache.H2Plugin</class>
+        <appVersion>1.0</appVersion>
+    </pluginLoaderData>
+</pluginLoaderCollection>

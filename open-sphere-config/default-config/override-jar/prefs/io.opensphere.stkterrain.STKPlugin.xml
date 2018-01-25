@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences topic="io.opensphere.stkterrain.STKPlugin">
+   <preference key="serverConfig" class="io.opensphere.mantle.datasources.impl.UrlSourceConfig">
+      <config>
+         <source>
+            <name>STK Terrain</name>
+            <active>true</active>
+            <baseUrl>http://assets.agi.com/stk-terrain</baseUrl>
+         </source>
+      </config>
+   </preference>
+</preferences>

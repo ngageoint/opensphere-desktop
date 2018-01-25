@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:state="http://www.bit-sys.com/state/v2" targetNamespace="http://www.bit-sys.com/state/v2">
+
+	<element name="columnMappings">
+		<complexType>
+			<sequence>
+				<element name="columnMapping" type="state:columnMappingType" minOccurs="0" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<complexType name="columnMappingType">
+		<sequence>
+			<element name="column" type="state:columnType" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+		<attribute name="name" type="string" use="required" />
+		<attribute name="type" type="string" />
+		<attribute name="description" type="string" />
+	</complexType>
+
+	<complexType name="columnType">
+		<simpleContent>
+			<extension base="string">
+				<attribute name="layer" type="string" />
+			</extension>
+		</simpleContent>
+	</complexType>
+
+</schema>
