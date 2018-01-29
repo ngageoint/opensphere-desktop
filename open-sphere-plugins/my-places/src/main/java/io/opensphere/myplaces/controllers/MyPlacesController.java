@@ -46,6 +46,9 @@ public class MyPlacesController implements Observer, Runnable, PointGoer, Servic
      */
     private static final int WAIT_TIME = 1000;
 
+    /**
+     * The context menu provider for ROI.
+     */
     private final RoiContextMenuProvider myRoiMenuProvider;
     /**
      * The context menu provider for categories.
@@ -137,8 +140,6 @@ public class MyPlacesController implements Observer, Runnable, PointGoer, Servic
                 DataGroupInfo.DataGroupContextKey.class, mySingleGroupMenuProvider);
         contextActionManager.deregisterContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT, CategoryContextKey.class,
                 myCategoryMenuProvider);
-        contextActionManager.deregisterContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT, CategoryContextKey.class,
-                myCategoryMenuProvider);
     }
 
     /**
@@ -208,10 +209,8 @@ public class MyPlacesController implements Observer, Runnable, PointGoer, Servic
         contextActionManager.registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT, CategoryContextKey.class,
                 myCategoryMenuProvider);
         // REGISTER A NEW CONTEXT PROVIDER HERE
-        //contextActionManager.registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT,
-          //      DataGroupInfo.DataGroupContextKey.class, myRoiMenuProvider);
-        //contextActionManager.registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT,
-          //      DataGroupInfo.DataGroupContextKey.class, provider);
+        contextActionManager.registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT,
+               DataGroupInfo.DataGroupContextKey.class, myRoiMenuProvider);
     }
 
     @Override
