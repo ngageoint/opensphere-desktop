@@ -23,6 +23,7 @@ import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MapVisualizationInfo;
 import io.opensphere.mantle.data.MapVisualizationType;
 import io.opensphere.mantle.data.util.impl.DataTypeActionUtils;
+import io.opensphere.mantle.plugin.selection.SelectionHandler;
 import io.opensphere.myplaces.constants.Constants;
 import io.opensphere.myplaces.dataaccess.MyPlacesDataAccessor;
 import io.opensphere.myplaces.importer.MyPlacesMasterImporter;
@@ -45,6 +46,7 @@ public class MyPlacesController implements Observer, Runnable, PointGoer, Servic
      */
     private static final int WAIT_TIME = 1000;
 
+    private final RoiContextMenuProvider myRoiMenuProvider;
     /**
      * The context menu provider for categories.
      */
@@ -110,6 +112,7 @@ public class MyPlacesController implements Observer, Runnable, PointGoer, Servic
         myDataGroupController = new MyPlacesDataGroupController(myToolbox, myModel);
         mySingleGroupMenuProvider = new SingleGroupContextMenuProvider(myToolbox, myModel, this);
         myCategoryMenuProvider = new CategoryContextMenuProvider(myToolbox, myModel);
+        myRoiMenuProvider = new RoiContextMenuProvider(myToolbox,myModel);
         myToolbox.getImporterRegistry().addImporter(new MyPlacesMasterImporter(myToolbox, myModel));
     }
 
@@ -132,6 +135,8 @@ public class MyPlacesController implements Observer, Runnable, PointGoer, Servic
         ContextActionManager contextActionManager = myToolbox.getUIRegistry().getContextActionManager();
         contextActionManager.deregisterContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT,
                 DataGroupInfo.DataGroupContextKey.class, mySingleGroupMenuProvider);
+        contextActionManager.deregisterContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT, CategoryContextKey.class,
+                myCategoryMenuProvider);
         contextActionManager.deregisterContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT, CategoryContextKey.class,
                 myCategoryMenuProvider);
     }
@@ -202,6 +207,11 @@ public class MyPlacesController implements Observer, Runnable, PointGoer, Servic
                 DataGroupInfo.DataGroupContextKey.class, mySingleGroupMenuProvider);
         contextActionManager.registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT, CategoryContextKey.class,
                 myCategoryMenuProvider);
+        // REGISTER A NEW CONTEXT PROVIDER HERE
+        //contextActionManager.registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT,
+          //      DataGroupInfo.DataGroupContextKey.class, myRoiMenuProvider);
+        //contextActionManager.registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT,
+          //      DataGroupInfo.DataGroupContextKey.class, provider);
     }
 
     @Override
