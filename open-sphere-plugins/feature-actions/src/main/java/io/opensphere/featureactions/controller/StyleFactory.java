@@ -22,6 +22,7 @@ import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.geom.MapLocationGeometrySupport;
 import io.opensphere.mantle.data.geom.style.FeatureVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.VisualizationStyle;
+import io.opensphere.mantle.data.geom.style.VisualizationStyleParameter;
 import io.opensphere.mantle.data.geom.style.impl.AbstractFeatureVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.AbstractPathVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.DynamicEllipseFeatureVisualization;
@@ -185,7 +186,7 @@ public class StyleFactory
                         style = newPointStyle(dataType, styleOptions);
                         break;
                     case ICON:
-                        style = newIconStyle(dataType, styleOptions);
+                        style = newIconStyle(dataType, styleOptions, defaultStyle);
                         break;
                     case ELLIPSE:
                         style = newEllipseStyle(dataType, styleOptions, false);
@@ -276,22 +277,39 @@ public class StyleFactory
      *
      * @param dataType the data type
      * @param styleOptions style options
+     * @param defaultStyle the default style
      * @return the style
      */
-    private IconFeatureVisualizationStyle newIconStyle(DataTypeInfo dataType, StyleOptions styleOptions)
+    private IconFeatureVisualizationStyle newIconStyle(DataTypeInfo dataType, StyleOptions styleOptions,
+            FeatureVisualizationStyle defaultStyle)
     {
-        IconFeatureVisualizationStyle style = new IconStyle(myToolbox, dataType.getTypeKey(), styleOptions.getIconId());
+        IconStyle style = new IconStyle(myToolbox, dataType.getTypeKey(), styleOptions.getIconId());
         style.initialize();
         style.initializeFromDataType();
+        if (defaultStyle instanceof IconFeatureVisualizationStyle)
+        {
+            style.initialize(defaultStyle);
+        }
+
+        float size;
         if (styleOptions.hasSizeBeenSet())
         {
-            style.setIconSize(styleOptions.getSize(), this);
+            size = styleOptions.getSize();
         }
         else
         {
-            PointFeatureVisualizationStyle original = getStyleFromConfig(PointFeatureVisualizationStyle.class, dataType);
-            style.setIconSize(original.getPointSize(), this);
+            if (defaultStyle instanceof IconFeatureVisualizationStyle)
+            {
+                size = ((IconFeatureVisualizationStyle)defaultStyle).getIconSize();
+            }
+            else
+            {
+                PointFeatureVisualizationStyle original = getStyleFromConfig(PointFeatureVisualizationStyle.class, dataType);
+                size = original.getPointSize();
+            }
         }
+        style.setIconSize(size, this);
+
         return style;
     }
 
@@ -402,6 +420,19 @@ public class StyleFactory
         {
             super(toolbox, typeKey);
             myIconId = iconId;
+        }
+
+        /**
+         * Initializes this icon style from the argument icon style.
+         *
+         * @param iconStyle the icon style from which to initialize
+         */
+        public void initialize(VisualizationStyle iconStyle)
+        {
+            for (VisualizationStyleParameter param : iconStyle.getStyleParameterSet())
+            {
+                setParameter(param);
+            }
         }
 
         @Override
