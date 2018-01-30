@@ -14,6 +14,7 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.kml.gx.Track;
 import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.plugin.selection.SelectionCommand;
 import io.opensphere.myplaces.constants.Constants;
 import io.opensphere.myplaces.models.DataTypeInfoMyPlaceChangedEvent;
 
@@ -39,6 +40,7 @@ public abstract class MyPointsMenuItemProvider implements ActionListener
                 item.addActionListener(e -> actionPerformed(e));
                 menuItems.put(type, item);
             }
+
         });
     }
 
@@ -109,8 +111,8 @@ public abstract class MyPointsMenuItemProvider implements ActionListener
             return;
         }
         // find the "Data" called dataParam and set its boolean value
-        mark.getExtendedData().getData().stream().filter(d -> d.getName().equals(dataParam))
-                .findFirst().ifPresent(d -> d.setValue(String.valueOf(value)));
+        mark.getExtendedData().getData().stream().filter(d -> d.getName().equals(dataParam)).findFirst()
+                .ifPresent(d -> d.setValue(String.valueOf(value)));
         dataType.fireChangeEvent(new DataTypeInfoMyPlaceChangedEvent(dataType, this));
     }
 
