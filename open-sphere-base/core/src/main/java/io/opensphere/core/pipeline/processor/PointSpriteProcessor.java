@@ -47,6 +47,7 @@ import io.opensphere.core.util.collections.StreamUtilities;
 import io.opensphere.core.util.concurrent.CommonTimer;
 import io.opensphere.core.util.concurrent.ThreadedStateMachine.StateController;
 import io.opensphere.core.viewer.ViewChangeSupport;
+import io.opensphere.core.viewer.ViewChangeSupport.ViewChangeType;
 import io.opensphere.core.viewer.Viewer;
 import io.opensphere.core.viewer.impl.DynamicViewer;
 
@@ -315,8 +316,17 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
             resetState(scalableGeoms, State.UNPROCESSED);
         }
 
+        System.out.println(type);
+
         // Reset projection-sensitive geometries so they get re-processed
-        myViewChangeExecutor.execute(() -> resetProjectionSensitiveGeometries(view));
+        if (type == ViewChangeSupport.ViewChangeType.NEW_VIEWER)
+        {
+            resetProjectionSensitiveGeometries(view, type);
+        }
+        else
+        {
+            myViewChangeExecutor.execute(() -> resetProjectionSensitiveGeometries(view, type));
+        }
 
         super.handleViewChanged(view, type);
     }
@@ -325,14 +335,16 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
      * Resets projection-sensitive geometries so they get re-processed.
      *
      * @param view the viewer
+     * @param type the change type
      */
-    private void resetProjectionSensitiveGeometries(Viewer view)
+    private void resetProjectionSensitiveGeometries(Viewer view, ViewChangeSupport.ViewChangeType type)
     {
         if (view instanceof DynamicViewer)
         {
             double heading = ((DynamicViewer)view).getHeading();
             double delta = Math.abs(heading - myLastHandledHeading);
-            if (delta >= HEADING_SENSITIVITY || myLastHandledHeading == Double.MAX_VALUE)
+            if (delta >= HEADING_SENSITIVITY || myLastHandledHeading == Double.MAX_VALUE
+                    || type == ViewChangeSupport.ViewChangeType.NEW_VIEWER)
             {
                 myLastHandledHeading = heading;
 
