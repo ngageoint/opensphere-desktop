@@ -316,8 +316,6 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
             resetState(scalableGeoms, State.UNPROCESSED);
         }
 
-        System.out.println(type);
-
         // Reset projection-sensitive geometries so they get re-processed
         if (type == ViewChangeSupport.ViewChangeType.NEW_VIEWER)
         {
