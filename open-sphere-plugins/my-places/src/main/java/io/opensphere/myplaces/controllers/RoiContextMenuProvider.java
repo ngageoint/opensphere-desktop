@@ -1,14 +1,23 @@
 package io.opensphere.myplaces.controllers;
 
-import java.awt.Component;
-import java.util.Collection;
 import java.util.List;
 
+import javax.swing.JMenuItem;
+
+import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextMenuProvider;
+import io.opensphere.core.geometry.Geometry;
+import io.opensphere.core.geometry.PolygonGeometry;
+import io.opensphere.core.util.collections.New;
+import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
+import io.opensphere.mantle.util.MantleToolboxUtils;
+import io.opensphere.myplaces.models.MyPlacesDataGroupInfo;
+import io.opensphere.myplaces.models.MyPlacesDataTypeInfo;
 import io.opensphere.myplaces.models.MyPlacesModel;
+import io.opensphere.myplaces.specific.regions.utils.RegionUtils;
 
 public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupInfo.DataGroupContextKey>
 {
@@ -27,6 +36,15 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupInfo
      */
     private final MyPlacesModel myModel;
 
+    /** The Current placemark. */
+    private Placemark myPlacemark;
+
+    /** The Group. */
+    private MyPlacesDataGroupInfo myGroup;
+
+    /** The Type. */
+    private MyPlacesDataTypeInfo myType;
+
     /**
      * Constructs a new points context menu provider.
      *
@@ -37,14 +55,27 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupInfo
     {
         myToolbox = toolbox;
         myModel = model;
+
     }
 
     @Override
-    public Collection<? extends Component> getMenuItems(String contextId, DataGroupContextKey key)
+    public List<JMenuItem> getMenuItems(String contextId, DataGroupContextKey key)
     {
-        List<Component> menuItems;
 
-        return menuItems;
+        myGroup = (MyPlacesDataGroupInfo)key.getDataGroup();
+        myType = (MyPlacesDataTypeInfo)key.getDataType();
+
+        System.out.println("My GROUP : " + myGroup.toString());
+        System.out.println("My Type : " + myType.toString());
+
+        if (myType != null)
+        {
+            myPlacemark = myType.getKmlPlacemark();
+        }
+        PolygonGeometry geom = RegionUtils.createGeometry(myPlacemark);
+        List<JMenuItem> menuItems = null;
+
+        return MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().blah(menuItems, geom);
     }
 
     @Override
