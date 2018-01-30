@@ -128,31 +128,7 @@ public class SelectionHandler
             if (contextId.equals(ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT))
             {
                 Geometry geom = key.getGeometry();
-                if (myQueryRegionManager.getQueryRegion(geom) != null)
-                {
-                    myLastGeometry = geom;
-                    menuItems = SelectionCommand.getQueryRegionMenuItems(myMenuActionListener, hasLoadFilters());
-                }
-                else if (geom instanceof PolygonGeometry)
-                {
-                    myLastGeometry = geom;
-                    menuItems = SelectionCommand.getPolygonMenuItems(myMenuActionListener, hasLoadFilters(), false);
-                }
-                else if (geom instanceof PolylineGeometry)
-                {
-                    myLastGeometry = geom;
-                    menuItems = SelectionCommand.getPolylineMenuItems(myMenuActionListener, hasLoadFilters());
-                }
-                else if (geom instanceof PointGeometry)
-                {
-                    myLastGeometry = geom;
-                    menuItems = SelectionCommand.getPointMenuItems(myMenuActionListener, hasLoadFilters());
-                }
-                else
-                {
-                    LOGGER.warn(
-                            "Unrecognized geometry type: '" + geom.getClass().getName() + "' cannot be used to create a buffer.");
-                }
+                menuItems = getRegionMenuItems(menuItems, geom);
             }
             else if (contextId.equals(ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT)
                     && key.getGeometry() instanceof PolygonGeometry)
@@ -289,6 +265,11 @@ public class SelectionHandler
                 myGeometryContextMenuProvider);
         actionManager.registerContextMenuItemProvider(ContextIdentifiers.ROI_CONTEXT, MultiGeometryContextKey.class,
                 myMultiGeometryContextMenuProvider);
+        /* actionManager.registerContextMenuItemProvider(DataGroupInfo.
+         * ACTIVE_DATA_CONTEXT, DataGroupInfo.DataGroupContextKey.class,
+         * myGeometryContextMenuProvider);
+         * MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().
+         * myGeometryContextMenuProvider; */
     }
 
     /**
@@ -868,6 +849,42 @@ public class SelectionHandler
             return "Distance may be positive or negative, but not zero";
         }
         return "Distance must be greater than zero";
+    }
+
+    /**
+     * Gets menu items for geometry.
+     * @param menuItems the menu items
+     * @param geom the geometry.
+     * @return menu items
+     */
+    public List<JMenuItem> getRegionMenuItems(List<JMenuItem> menuItems, Geometry geom)
+    {
+
+        if (myQueryRegionManager.getQueryRegion(geom) != null)
+        {
+            myLastGeometry = geom;
+            menuItems = SelectionCommand.getQueryRegionMenuItems(myMenuActionListener, hasLoadFilters());
+        }
+        else if (geom instanceof PolygonGeometry)
+        {
+            myLastGeometry = geom;
+            menuItems = SelectionCommand.getPolygonMenuItems(myMenuActionListener, hasLoadFilters(), false);
+        }
+        else if (geom instanceof PolylineGeometry)
+        {
+            myLastGeometry = geom;
+            menuItems = SelectionCommand.getPolylineMenuItems(myMenuActionListener, hasLoadFilters());
+        }
+        else if (geom instanceof PointGeometry)
+        {
+            myLastGeometry = geom;
+            menuItems = SelectionCommand.getPointMenuItems(myMenuActionListener, hasLoadFilters());
+        }
+        else
+        {
+            LOGGER.warn("Unrecognized geometry type: '" + geom.getClass().getName() + "' cannot be used to create a buffer.");
+        }
+        return menuItems;
     }
 
     /**
