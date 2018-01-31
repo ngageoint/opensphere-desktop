@@ -71,6 +71,10 @@ public class MapboxServerSourceController extends UrlServerSourceController
         {
             success = true;
         }
+        else if (tracker.getQueryStatus() == QueryTracker.QueryStatus.CANCELLED)
+        {
+            LOGGER.info("The query for " + source.getName() + " was canceled");
+        }
         else
         {
             Throwable e = tracker.getException();
