@@ -265,11 +265,6 @@ public class SelectionHandler
                 myGeometryContextMenuProvider);
         actionManager.registerContextMenuItemProvider(ContextIdentifiers.ROI_CONTEXT, MultiGeometryContextKey.class,
                 myMultiGeometryContextMenuProvider);
-        /* actionManager.registerContextMenuItemProvider(DataGroupInfo.
-         * ACTIVE_DATA_CONTEXT, DataGroupInfo.DataGroupContextKey.class,
-         * myGeometryContextMenuProvider);
-         * MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().
-         * myGeometryContextMenuProvider; */
     }
 
     /**
