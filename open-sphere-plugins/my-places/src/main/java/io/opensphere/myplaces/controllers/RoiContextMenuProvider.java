@@ -11,29 +11,20 @@ import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
 import io.opensphere.mantle.util.MantleToolboxUtils;
-import io.opensphere.myplaces.models.MyPlacesDataGroupInfo;
 import io.opensphere.myplaces.models.MyPlacesDataTypeInfo;
-import io.opensphere.myplaces.models.MyPlacesModel;
 import io.opensphere.myplaces.specific.regions.utils.RegionUtils;
 
+/**
+ * Provides the context menu for ROI selections.
+ */
 public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupInfo.DataGroupContextKey>
 {
-
-    /**
-     * The toolbox.
-     */
+    
+    /** The toolbox. */
     private final Toolbox myToolbox;
-
-    /**
-     * The places model.
-     */
-    private final MyPlacesModel myModel;
 
     /** The Current placemark. */
     private Placemark myPlacemark;
-
-    /** The Group. */
-    private MyPlacesDataGroupInfo myGroup;
 
     /** The Type. */
     private MyPlacesDataTypeInfo myType;
@@ -44,31 +35,24 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupInfo
      * @param toolbox The toolbox.
      * @param model The my places model.
      */
-    public RoiContextMenuProvider(Toolbox toolbox, MyPlacesModel model)
+    public RoiContextMenuProvider(Toolbox toolbox)
     {
         myToolbox = toolbox;
-        myModel = model;
-
     }
 
-    /**
-     * The menu provider for events related to single ROI geometry selection.
-     * 
-     */
     @Override
     public List<JMenuItem> getMenuItems(String contextId, DataGroupContextKey key)
     {
-
-        myGroup = (MyPlacesDataGroupInfo)key.getDataGroup();
+        List<JMenuItem> menuItems = null;
         myType = (MyPlacesDataTypeInfo)key.getDataType();
-
+         
         if (myType != null)
         {
             myPlacemark = myType.getKmlPlacemark();
+            
         }
         PolygonGeometry geom = RegionUtils.createGeometry(myPlacemark);
-        List<JMenuItem> menuItems = null;
-
+        
         return MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().getGeomtryMenuItems(menuItems, geom);
     }
 
