@@ -8,7 +8,6 @@ import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.geometry.PolygonGeometry;
-import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.myplaces.models.MyPlacesDataTypeInfo;
@@ -17,7 +16,7 @@ import io.opensphere.myplaces.specific.regions.utils.RegionUtils;
 /**
  * Provides the context menu for ROI selections.
  */
-public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupInfo.DataGroupContextKey>
+public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupContextKey>
 {
 
     /** The toolbox. */
@@ -61,4 +60,5 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupInfo
     {
         return 6;
     }
+
 }
