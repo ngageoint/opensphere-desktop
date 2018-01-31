@@ -19,7 +19,7 @@ import io.opensphere.myplaces.specific.regions.utils.RegionUtils;
  */
 public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupInfo.DataGroupContextKey>
 {
-    
+
     /** The toolbox. */
     private final Toolbox myToolbox;
 
@@ -44,15 +44,15 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupInfo
     public List<JMenuItem> getMenuItems(String contextId, DataGroupContextKey key)
     {
         List<JMenuItem> menuItems = null;
+        PolygonGeometry geom = null;
         myType = (MyPlacesDataTypeInfo)key.getDataType();
-         
+
         if (myType != null)
         {
             myPlacemark = myType.getKmlPlacemark();
-            
+            geom = RegionUtils.createGeometry(myPlacemark);
         }
-        PolygonGeometry geom = RegionUtils.createGeometry(myPlacemark);
-        
+
         return MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().getGeomtryMenuItems(menuItems, geom);
     }
 
