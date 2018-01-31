@@ -14,7 +14,6 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.kml.gx.Track;
 import io.opensphere.mantle.data.DataTypeInfo;
-import io.opensphere.mantle.plugin.selection.SelectionCommand;
 import io.opensphere.myplaces.constants.Constants;
 import io.opensphere.myplaces.models.DataTypeInfoMyPlaceChangedEvent;
 
