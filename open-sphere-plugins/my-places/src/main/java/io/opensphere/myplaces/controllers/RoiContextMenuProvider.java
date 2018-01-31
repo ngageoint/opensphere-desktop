@@ -22,12 +22,6 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupCont
     /** The toolbox. */
     private final Toolbox myToolbox;
 
-    /** The Current placemark. */
-    private Placemark myPlacemark;
-
-    /** The Type. */
-    private MyPlacesDataTypeInfo myType;
-
     /**
      * Constructs region of interest context menu provider.
      *
@@ -42,17 +36,16 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupCont
     @Override
     public List<JMenuItem> getMenuItems(String contextId, DataGroupContextKey key)
     {
-        List<JMenuItem> menuItems = null;
         PolygonGeometry geom = null;
-        myType = (MyPlacesDataTypeInfo)key.getDataType();
+        MyPlacesDataTypeInfo type = (MyPlacesDataTypeInfo)key.getDataType();
 
-        if (myType != null)
+        if (type != null)
         {
-            myPlacemark = myType.getKmlPlacemark();
-            geom = RegionUtils.createGeometry(myPlacemark);
+            Placemark placemark = type.getKmlPlacemark();
+            geom = RegionUtils.createGeometry(placemark);
         }
 
-        return MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().getGeomtryMenuItems(menuItems, geom);
+        return MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().getGeometryMenuItems(geom);
     }
 
     @Override
