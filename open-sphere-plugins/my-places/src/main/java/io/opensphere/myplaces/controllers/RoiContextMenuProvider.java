@@ -1,11 +1,10 @@
 package io.opensphere.myplaces.controllers;
 
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JMenuItem;
 
-import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.geometry.PolygonGeometry;
@@ -35,24 +34,16 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupCont
         myToolbox = toolbox;
     }
 
-    @Override
     public List<JMenuItem> getMenuItems(String contextId, DataGroupContextKey key)
     {
-        if (!(key.getDataGroup() instanceof MyPlacesDataGroupInfo))
+        List<JMenuItem> menuItems = Collections.emptyList();
+        if (key.getDataGroup() instanceof MyPlacesDataGroupInfo)
         {
-            return new LinkedList<>();
+            MyPlacesDataTypeInfo type = (MyPlacesDataTypeInfo)key.getDataType();
+            PolygonGeometry geom = RegionUtils.createGeometry(type.getKmlPlacemark());
+            menuItems = MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().getGeometryMenuItems(geom);
         }
-
-        PolygonGeometry geom = null;
-        MyPlacesDataTypeInfo type = (MyPlacesDataTypeInfo)key.getDataType();
-
-        if (type != null)
-        {
-            Placemark placemark = type.getKmlPlacemark();
-            geom = RegionUtils.createGeometry(placemark);
-        }
-
-        return MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().getGeometryMenuItems(geom);
+        return menuItems;
     }
 
     @Override
