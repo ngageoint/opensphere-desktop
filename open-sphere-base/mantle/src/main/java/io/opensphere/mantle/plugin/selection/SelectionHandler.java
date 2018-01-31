@@ -128,7 +128,7 @@ public class SelectionHandler
             if (contextId.equals(ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT))
             {
                 Geometry geom = key.getGeometry();
-                menuItems = getGeomtryMenuItems(menuItems, geom);
+                menuItems = getGeometryMenuItems(geom);
             }
             else if (contextId.equals(ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT)
                     && key.getGeometry() instanceof PolygonGeometry)
@@ -849,13 +849,12 @@ public class SelectionHandler
     /**
      * Gets menu items for geometry.
      * 
-     * @param menuItems the menu items
      * @param geom the geometry
      * @return menu items
      */
-    public List<JMenuItem> getGeomtryMenuItems(List<JMenuItem> menuItems, Geometry geom)
+    public List<JMenuItem> getGeometryMenuItems(Geometry geom)
     {
-
+        List<JMenuItem> menuItems = null;
         if (myQueryRegionManager.getQueryRegion(geom) != null)
         {
             myLastGeometry = geom;
