@@ -23,7 +23,6 @@ import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MapVisualizationInfo;
 import io.opensphere.mantle.data.MapVisualizationType;
 import io.opensphere.mantle.data.util.impl.DataTypeActionUtils;
-import io.opensphere.mantle.plugin.selection.SelectionHandler;
 import io.opensphere.myplaces.constants.Constants;
 import io.opensphere.myplaces.dataaccess.MyPlacesDataAccessor;
 import io.opensphere.myplaces.importer.MyPlacesMasterImporter;
