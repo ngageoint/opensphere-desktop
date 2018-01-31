@@ -47,7 +47,9 @@ import io.opensphere.core.util.collections.StreamUtilities;
 import io.opensphere.core.util.concurrent.CommonTimer;
 import io.opensphere.core.util.concurrent.ThreadedStateMachine.StateController;
 import io.opensphere.core.viewer.ViewChangeSupport;
+import io.opensphere.core.viewer.ViewChangeSupport.ViewChangeType;
 import io.opensphere.core.viewer.Viewer;
+import io.opensphere.core.viewer.impl.DynamicViewer;
 
 /**
  * Processor for {@link PointSpriteGeometry}s. This class determines the model
@@ -56,6 +58,9 @@ import io.opensphere.core.viewer.Viewer;
  */
 public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
 {
+    /** Sensitivity of heading rotation for triggering point sprite rotation. */
+    private static final double HEADING_SENSITIVITY = Math.toRadians(1);
+
     /** Comparator that determines geometry processing priority. */
     private final Comparator<? super PointSpriteGeometry> myPriorityComparator;
 
@@ -64,6 +69,9 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
 
     /** An executor that procrastinates before running tasks. */
     private final Executor myViewChangeExecutor = CommonTimer.createProcrastinatingExecutor(100);
+
+    /** The last heading value for which rotation was handled. */
+    private double myLastHandledHeading = Double.MAX_VALUE;
 
     /**
      * Construct a point processor.
@@ -309,25 +317,46 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
         }
 
         // Reset projection-sensitive geometries so they get re-processed
-        myViewChangeExecutor.execute(this::resetProjectionSensitiveGeometries);
+        if (type == ViewChangeSupport.ViewChangeType.NEW_VIEWER)
+        {
+            resetProjectionSensitiveGeometries(view, type);
+        }
+        else
+        {
+            myViewChangeExecutor.execute(() -> resetProjectionSensitiveGeometries(view, type));
+        }
 
         super.handleViewChanged(view, type);
     }
 
     /**
      * Resets projection-sensitive geometries so they get re-processed.
+     *
+     * @param view the viewer
+     * @param type the change type
      */
-    private void resetProjectionSensitiveGeometries()
+    private void resetProjectionSensitiveGeometries(Viewer view, ViewChangeSupport.ViewChangeType type)
     {
-        List<PointSpriteGeometry> projectionSensitiveGeoms = getGeometries().stream().filter(g -> g.isProjectionSensitive())
-                .collect(Collectors.toList());
-        if (CollectionUtilities.hasContent(projectionSensitiveGeoms))
+        if (view instanceof DynamicViewer)
         {
-            for (PointSpriteGeometry geom : projectionSensitiveGeoms)
+            double heading = ((DynamicViewer)view).getHeading();
+            double delta = Math.abs(heading - myLastHandledHeading);
+            if (delta >= HEADING_SENSITIVITY || myLastHandledHeading == Double.MAX_VALUE
+                    || type == ViewChangeSupport.ViewChangeType.NEW_VIEWER)
             {
-                getImageManagersToGeoms().remove(geom.getImageManager());
+                myLastHandledHeading = heading;
+
+                List<PointSpriteGeometry> projectionSensitiveGeoms = getGeometries().stream()
+                        .filter(g -> g.isProjectionSensitive()).collect(Collectors.toList());
+                if (CollectionUtilities.hasContent(projectionSensitiveGeoms))
+                {
+                    for (PointSpriteGeometry geom : projectionSensitiveGeoms)
+                    {
+                        getImageManagersToGeoms().remove(geom.getImageManager());
+                    }
+                    resetDueToImageUpdate(New.linkedList(projectionSensitiveGeoms), State.UNPROCESSED);
+                }
             }
-            resetDueToImageUpdate(New.linkedList(projectionSensitiveGeoms), State.UNPROCESSED);
         }
     }
 
