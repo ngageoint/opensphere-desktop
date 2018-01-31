@@ -850,7 +850,7 @@ public class SelectionHandler
      * Gets menu items for geometry.
      * 
      * @param menuItems the menu items
-     * @param geom the geometry.
+     * @param geom the geometry
      * @return menu items
      */
     public List<JMenuItem> getGeomtryMenuItems(List<JMenuItem> menuItems, Geometry geom)
