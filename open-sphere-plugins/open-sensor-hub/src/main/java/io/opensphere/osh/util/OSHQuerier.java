@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import io.opensphere.core.cache.CacheDeposit;
 import io.opensphere.core.cache.DefaultCacheDeposit;
 import io.opensphere.core.cache.accessor.PropertyAccessor;
@@ -27,6 +29,9 @@ import io.opensphere.osh.model.Output;
 /** OpenSensorHub querier. */
 public class OSHQuerier implements OSHImageQuerier
 {
+    /** Logger reference. */
+    private static final Logger LOGGER = Logger.getLogger(OSHQuerier.class);
+
     /** The data registry. */
     private final DataRegistry myDataRegistry;
 
@@ -43,11 +48,12 @@ public class OSHQuerier implements OSHImageQuerier
     /**
      * Queries the capabilities.
      *
+     * @param serverName the server name
      * @param baseUrl the base URL
      * @return the offerings
      * @throws QueryException if a problem occurred querying the data registry
      */
-    public List<Offering> getCapabilities(String baseUrl) throws QueryException
+    public List<Offering> getCapabilities(String serverName, String baseUrl) throws QueryException
     {
         List<Offering> offerings;
 
@@ -57,6 +63,11 @@ public class OSHQuerier implements OSHImageQuerier
         if (tracker.getQueryStatus() == QueryStatus.SUCCESS)
         {
             offerings = query.getResults();
+        }
+        else if (tracker.getQueryStatus() == QueryStatus.CANCELLED)
+        {
+            offerings = Collections.emptyList();
+            LOGGER.info("The query for " + serverName + " was canceled");
         }
         else
         {
