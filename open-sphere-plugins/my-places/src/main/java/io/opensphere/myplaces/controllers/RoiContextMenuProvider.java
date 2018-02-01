@@ -10,7 +10,6 @@ import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
 import io.opensphere.mantle.util.MantleToolboxUtils;
-import io.opensphere.myplaces.models.MyPlacesDataGroupInfo;
 import io.opensphere.myplaces.models.MyPlacesDataTypeInfo;
 import io.opensphere.myplaces.specific.regions.utils.RegionUtils;
 
