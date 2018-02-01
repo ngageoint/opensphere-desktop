@@ -46,6 +46,11 @@ public class MyPlacesController implements Observer, Runnable, PointGoer, Servic
     private static final int WAIT_TIME = 1000;
 
     /**
+     * The context menu provider for ROI.
+     */
+    private final RoiContextMenuProvider myRoiMenuProvider;
+
+    /**
      * The context menu provider for categories.
      */
     private final CategoryContextMenuProvider myCategoryMenuProvider;
@@ -110,7 +115,9 @@ public class MyPlacesController implements Observer, Runnable, PointGoer, Servic
         myDataGroupController = new MyPlacesDataGroupController(myToolbox, myModel);
         mySingleGroupMenuProvider = new SingleGroupContextMenuProvider(myToolbox, myModel, this);
         myCategoryMenuProvider = new CategoryContextMenuProvider(myToolbox, myModel);
+        myRoiMenuProvider = new RoiContextMenuProvider(myToolbox);
         myToolbox.getImporterRegistry().addImporter(new MyPlacesMasterImporter(myToolbox, myModel));
+
     }
 
     /**
@@ -134,6 +141,8 @@ public class MyPlacesController implements Observer, Runnable, PointGoer, Servic
                 DataGroupInfo.DataGroupContextKey.class, mySingleGroupMenuProvider);
         contextActionManager.deregisterContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT, CategoryContextKey.class,
                 myCategoryMenuProvider);
+        contextActionManager.deregisterContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT,
+                DataGroupInfo.DataGroupContextKey.class, myRoiMenuProvider);
     }
 
     /**
@@ -202,6 +211,8 @@ public class MyPlacesController implements Observer, Runnable, PointGoer, Servic
                 DataGroupInfo.DataGroupContextKey.class, mySingleGroupMenuProvider);
         contextActionManager.registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT, CategoryContextKey.class,
                 myCategoryMenuProvider);
+        contextActionManager.registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT,
+                DataGroupInfo.DataGroupContextKey.class, myRoiMenuProvider);
     }
 
     @Override
