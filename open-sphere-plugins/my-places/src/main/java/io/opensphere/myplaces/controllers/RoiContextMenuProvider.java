@@ -36,7 +36,7 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupCont
     public List<JMenuItem> getMenuItems(String contextId, DataGroupContextKey key)
     {
         List<JMenuItem> menuItems = Collections.emptyList();
-        if (key.getDataGroup() instanceof MyPlacesDataTypeInfo)
+        if (key.getDataType() instanceof MyPlacesDataTypeInfo)
         {
             MyPlacesDataTypeInfo type = (MyPlacesDataTypeInfo)key.getDataType();
             PolygonGeometry geom = RegionUtils.createGeometry(type.getKmlPlacemark());
