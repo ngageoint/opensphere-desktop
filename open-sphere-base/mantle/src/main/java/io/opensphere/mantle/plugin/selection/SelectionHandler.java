@@ -52,7 +52,9 @@ import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.ref.WeakReference;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.controller.DataTypeController;
+import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.data.DataGroupInfo.MultiDataGroupContextKey;
 import io.opensphere.mantle.data.cache.DataElementCache;
 import io.opensphere.mantle.data.util.DataElementUpdateUtils;
 import io.opensphere.mantle.data.util.purge.PurgeConfirmHelper;
@@ -160,8 +162,7 @@ public class SelectionHandler
         @Override
         public List<JMenuItem> getMenuItems(String contextId, MultiGeometryContextKey key)
         {
-            List<JMenuItem> menuItems = SelectionCommand.getRoiMenuItems(new PolygonCommandActionListener(key.getGeometries()),
-                    hasLoadFilters());
+            List<JMenuItem> menuItems = getMultiGeometryMenu(key.getGeometries());
             if (key.getGeometries().isEmpty())
             {
                 for (JMenuItem item : menuItems)
@@ -265,6 +266,7 @@ public class SelectionHandler
                 myGeometryContextMenuProvider);
         actionManager.registerContextMenuItemProvider(ContextIdentifiers.ROI_CONTEXT, MultiGeometryContextKey.class,
                 myMultiGeometryContextMenuProvider);
+
     }
 
     /**
@@ -879,6 +881,13 @@ public class SelectionHandler
         {
             LOGGER.warn("Unrecognized geometry type: '" + geom.getClass().getName() + "' cannot be used to create a buffer.");
         }
+        return menuItems;
+    }
+
+    public List<JMenuItem> getMultiGeometryMenu(Collection<? extends Geometry> geom)
+    {
+        List<JMenuItem> menuItems = SelectionCommand.getRoiMenuItems(new PolygonCommandActionListener(geom),
+                hasLoadFilters());
         return menuItems;
     }
 

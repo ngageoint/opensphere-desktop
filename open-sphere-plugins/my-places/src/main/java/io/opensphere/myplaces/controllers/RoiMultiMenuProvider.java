@@ -11,11 +11,10 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.PolygonGeometry;
+import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.DataGroupInfo.MultiDataGroupContextKey;
-import io.opensphere.mantle.plugin.selection.SelectionCommand;
-import io.opensphere.mantle.plugin.selection.SelectionHandler.PolygonCommandActionListener;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.myplaces.models.MyPlacesDataTypeInfo;
 import io.opensphere.myplaces.specific.regions.utils.RegionUtils;
@@ -43,7 +42,7 @@ public class RoiMultiMenuProvider implements ContextMenuProvider<MultiDataGroupC
     public Collection<? extends Component> getMenuItems(String contextId, MultiDataGroupContextKey key)
     {
         List<JMenuItem> menuItems = Collections.emptyList();
-        List<Geometry> geom = Collections.emptyList();
+        Collection<Geometry> geom = New.list();
         Collection<DataTypeInfo> dataTypes = getDataTypes(key);
 
         if (!dataTypes.isEmpty())
@@ -53,7 +52,9 @@ public class RoiMultiMenuProvider implements ContextMenuProvider<MultiDataGroupC
                 if (dti instanceof MyPlacesDataTypeInfo)
                 {
                     MyPlacesDataTypeInfo type = (MyPlacesDataTypeInfo)dti;
-                    geom.add(RegionUtils.createGeometry(type.getKmlPlacemark()));
+                    PolygonGeometry theGeom = RegionUtils.createGeometry(type.getKmlPlacemark());
+
+                    geom.add(theGeom);
                 }
             }
             menuItems = MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().getMultiGeometryMenu(geom);
