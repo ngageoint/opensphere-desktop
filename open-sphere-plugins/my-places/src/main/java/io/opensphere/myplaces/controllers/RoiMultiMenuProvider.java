@@ -42,7 +42,7 @@ public class RoiMultiMenuProvider implements ContextMenuProvider<MultiDataGroupC
     public Collection<? extends Component> getMenuItems(String contextId, MultiDataGroupContextKey key)
     {
         List<JMenuItem> menuItems = Collections.emptyList();
-        Collection<Geometry> geom = New.list();
+        Collection<Geometry> geometries = New.list();
         Collection<DataTypeInfo> dataTypes = getDataTypes(key);
 
         if (!dataTypes.isEmpty())
@@ -54,10 +54,10 @@ public class RoiMultiMenuProvider implements ContextMenuProvider<MultiDataGroupC
                     MyPlacesDataTypeInfo type = (MyPlacesDataTypeInfo)dti;
                     PolygonGeometry theGeom = RegionUtils.createGeometry(type.getKmlPlacemark());
 
-                    geom.add(theGeom);
+                    geometries.add(theGeom);
                 }
             }
-            menuItems = MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().getMultiGeometryMenu(geom);
+            menuItems = MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().getMultiGeometryMenu(geometries);
         }
 
         return menuItems;
