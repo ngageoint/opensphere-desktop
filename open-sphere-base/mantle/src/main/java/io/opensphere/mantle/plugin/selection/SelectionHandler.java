@@ -884,12 +884,12 @@ public class SelectionHandler
     
     /**
      * Gets menu when you have multiple geometries.
-     * @param geom the geometries
+     * @param geometries the geometries
      * @return menuItems the menu 
      */
-    public List<JMenuItem> getMultiGeometryMenu(Collection<? extends Geometry> geom)
+    public List<JMenuItem> getMultiGeometryMenu(Collection<? extends Geometry> geometries)
     {
-        List<JMenuItem> menuItems = SelectionCommand.getRoiMenuItems(new PolygonCommandActionListener(geom),
+        List<JMenuItem> menuItems = SelectionCommand.getRoiMenuItems(new PolygonCommandActionListener(geometries),
                 hasLoadFilters());
         return menuItems;
     }
