@@ -1,5 +1,7 @@
 package io.opensphere.server.control;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +53,9 @@ public class OGCServerHandler
     /** The Core Event Manager. */
     private final Toolbox myToolbox;
 
+    /** The map of sources to activation threads. */
+    private final Map<IDataSource, Thread> myActivationThreads = Collections.synchronizedMap(new HashMap<IDataSource, Thread>());
+
     /**
      * Instantiates a new <code>OGCServerSource</code> handler.
      *
@@ -85,6 +90,7 @@ public class OGCServerHandler
             @Override
             public void run()
             {
+                myActivationThreads.put(src, Thread.currentThread());
                 if (LOGGER.isTraceEnabled())
                 {
                     LOGGER.trace("OGCServerHandler::addDataSource::run: START : " + src.getName());
@@ -161,6 +167,16 @@ public class OGCServerHandler
     {
         final OGCServerSource src = (OGCServerSource)source;
         src.setBusy(true, this);
+
+        synchronized (myActivationThreads)
+        {
+            if (myActivationThreads.containsKey(src))
+            {
+                myActivationThreads.get(src).interrupt();
+                myActivationThreads.remove(src);
+            }
+        }
+
         Runnable r = new Runnable()
         {
             @Override
@@ -269,14 +285,14 @@ public class OGCServerHandler
             myListManager.addServer(payload, groupInfo);
         }
         myActivationTaskActivity.removeServer(source);
+        myActivationThreads.remove(source);
         source.setBusy(false, this);
         notifyLoadEnded(source, success, errorMessage);
     }
 
     /**
-     * Execute a runnable. If this class has an executor set, use it, else just
-     * run it on the current thread. This is basically equivalent to a null
-     * check on this class's executor.
+     * Execute a runnable. If this class has an executor set, use it, else just run it on the current thread. This is basically
+     * equivalent to a null check on this class's executor.
      *
      * @param task the task to run
      */
@@ -293,8 +309,7 @@ public class OGCServerHandler
     }
 
     /**
-     * Listener interface for clients that need to know when sources have
-     * started and finished their load sequences.
+     * Listener interface for clients that need to know when sources have started and finished their load sequences.
      */
     public interface ServerHandlerLoadListener
     {
@@ -316,8 +331,7 @@ public class OGCServerHandler
     }
 
     /**
-     * {@link TaskActivity} class that updates the spinner indicating servers
-     * are activating.
+     * {@link TaskActivity} class that updates the spinner indicating servers are activating.
      */
     private static class ActivationTaskActivity extends TaskActivity
     {
