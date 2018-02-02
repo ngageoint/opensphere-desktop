@@ -45,18 +45,18 @@ public class RoiMultiMenuProvider implements ContextMenuProvider<MultiDataGroupC
         Collection<Geometry> geometries = New.list();
         Collection<DataTypeInfo> dataTypes = getDataTypes(key);
 
-        if (!dataTypes.isEmpty())
+        for (DataTypeInfo dti : dataTypes)
         {
-            for (DataTypeInfo dti : dataTypes)
+            if (dti instanceof MyPlacesDataTypeInfo)
             {
-                if (dti instanceof MyPlacesDataTypeInfo)
-                {
-                    MyPlacesDataTypeInfo type = (MyPlacesDataTypeInfo)dti;
-                    PolygonGeometry theGeom = RegionUtils.createGeometry(type.getKmlPlacemark());
+                MyPlacesDataTypeInfo type = (MyPlacesDataTypeInfo)dti;
+                PolygonGeometry theGeom = RegionUtils.createGeometry(type.getKmlPlacemark());
 
-                    geometries.add(theGeom);
-                }
+                geometries.add(theGeom);
             }
+        }
+        if (!geometries.isEmpty())
+        {
             menuItems = MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().getMultiGeometryMenu(geometries);
         }
 
