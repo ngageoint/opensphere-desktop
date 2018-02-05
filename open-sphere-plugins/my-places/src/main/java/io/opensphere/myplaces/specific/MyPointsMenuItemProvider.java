@@ -39,6 +39,7 @@ public abstract class MyPointsMenuItemProvider implements ActionListener
                 item.addActionListener(e -> actionPerformed(e));
                 menuItems.put(type, item);
             }
+
         });
     }
 
@@ -109,8 +110,8 @@ public abstract class MyPointsMenuItemProvider implements ActionListener
             return;
         }
         // find the "Data" called dataParam and set its boolean value
-        mark.getExtendedData().getData().stream().filter(d -> d.getName().equals(dataParam))
-                .findFirst().ifPresent(d -> d.setValue(String.valueOf(value)));
+        mark.getExtendedData().getData().stream().filter(d -> d.getName().equals(dataParam)).findFirst()
+                .ifPresent(d -> d.setValue(String.valueOf(value)));
         dataType.fireChangeEvent(new DataTypeInfoMyPlaceChangedEvent(dataType, this));
     }
 
