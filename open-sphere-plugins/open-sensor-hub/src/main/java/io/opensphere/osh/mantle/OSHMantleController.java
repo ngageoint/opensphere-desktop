@@ -130,7 +130,7 @@ public class OSHMantleController extends DynamicService<String, Service>
         }
         catch (QueryException e)
         {
-            LOGGER.error(e.getCause().getMessage());
+            LOGGER.error(e, e);
             Notify.error("Failed to query OpenSensorHub server: " + e.getCause().getMessage());
         }
         return success;
