@@ -50,6 +50,7 @@ import io.opensphere.mantle.data.geom.style.impl.StyleUtils;
 import io.opensphere.mantle.data.geom.style.labelcontroller.LabelHoverController;
 import io.opensphere.mantle.data.geom.style.tilecontroller.TileStyleTransformController;
 import io.opensphere.mantle.data.impl.specialkey.HeadingKey;
+import io.opensphere.mantle.data.impl.specialkey.SpeedKey;
 import io.opensphere.mantle.data.tile.TileVisualizationSupport;
 import io.opensphere.mantle.toolbox.MantleToolboxImpl;
 import io.opensphere.mantle.util.MantleToolboxUtils;
@@ -130,9 +131,11 @@ public class MantlePlugin extends PluginAdapter
         }
 
         Properties pluginProperties = PluginPropertyUtils.convertToProperties(plugindata.getPluginProperty());
-        myToolbox.getPluginToolboxRegistry().registerPluginToolbox(new MantleToolboxImpl(myToolbox, pluginProperties));
+        MantleToolboxImpl mantleToolbox = new MantleToolboxImpl(myToolbox, pluginProperties);
+        myToolbox.getPluginToolboxRegistry().registerPluginToolbox(mantleToolbox);
 
-        MantleToolboxUtils.getMantleToolbox(toolbox).getColumnTypeDetector().addSpecialColumnDetector(HeadingKey::detectHeading);
+        mantleToolbox.getColumnTypeDetector().addSpecialColumnDetector(HeadingKey::detectHeading);
+        mantleToolbox.getColumnTypeDetector().addSpecialColumnDetector(SpeedKey::detectSpeed);
 
         createAndInstallEventCoalescers();
 

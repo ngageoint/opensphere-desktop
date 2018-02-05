@@ -38,14 +38,10 @@ public class HeadingKey extends AbstractSpecialKey
         super(NAME, unit);
     }
 
-    /**
-     * Gets the {@link HeadingUnit}.
-     *
-     * @return the unit
-     */
-    public HeadingUnit getHeadingUnit()
+    @Override
+    public HeadingUnit getKeyUnit()
     {
-        return (HeadingUnit)getKeyUnit();
+        return (HeadingUnit)super.getKeyUnit();
     }
 
     /** An enumeration of heading units. */
