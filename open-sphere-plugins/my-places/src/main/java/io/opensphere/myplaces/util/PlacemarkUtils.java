@@ -85,7 +85,6 @@ public final class PlacemarkUtils
         }
 
         DefaultMapFeatureVisualizationInfo visualInfo = new DefaultMapFeatureVisualizationInfo(visType, theStyle);
-
         dataType.setMapVisualizationInfo(visualInfo);
 
         Color color = PlacemarkUtils.getPlacemarkColor(placemark);
