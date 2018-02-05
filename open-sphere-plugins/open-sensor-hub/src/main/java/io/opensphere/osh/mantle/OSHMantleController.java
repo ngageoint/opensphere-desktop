@@ -121,13 +121,16 @@ public class OSHMantleController extends DynamicService<String, Service>
         boolean success = false;
         try
         {
-            List<Offering> offerings = myQuerier.getCapabilities(baseUrl);
-            addDynamicService(serverName, createServerGroupService(serverName, baseUrl, offerings));
-            success = true;
+            List<Offering> offerings = myQuerier.getCapabilities(serverName, baseUrl);
+            if (!offerings.isEmpty())
+            {
+                addDynamicService(serverName, createServerGroupService(serverName, baseUrl, offerings));
+                success = true;
+            }
         }
         catch (QueryException e)
         {
-            LOGGER.error(e);
+            LOGGER.error(e, e);
             Notify.error("Failed to query OpenSensorHub server: " + e.getCause().getMessage());
         }
         return success;
@@ -235,8 +238,7 @@ public class OSHMantleController extends DynamicService<String, Service>
     }
 
     /**
-     * Creates a service that manages the server data group and all its
-     * children.
+     * Creates a service that manages the server data group and all its children.
      *
      * @param serverName the server name
      * @param url the server URL
