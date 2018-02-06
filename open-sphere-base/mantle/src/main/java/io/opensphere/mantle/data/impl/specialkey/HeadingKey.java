@@ -64,13 +64,23 @@ public class HeadingKey extends AbstractSpecialKey
     public static boolean detectHeading(MetaDataInfo metaData, String columnName)
     {
         boolean wasDetected = false;
-        if (!metaData.hasTypeForSpecialKey(HeadingKey.DEFAULT)
-                && (StringUtils.containsIgnoreCase(columnName, "course") || StringUtils.containsIgnoreCase(columnName, "heading")
-                        || StringUtils.containsIgnoreCase(columnName, "bearing")))
+        if (!metaData.hasTypeForSpecialKey(HeadingKey.DEFAULT) && isHeading(columnName))
         {
             metaData.setSpecialKey(columnName, HeadingKey.DEFAULT, metaData);
             wasDetected = true;
         }
         return wasDetected;
+    }
+
+    /**
+     * Inspects the supplied column name, to determine if it represents a heading.
+     *
+     * @param columnName the name of the column to inspect
+     * @return whether the column is determined to be a heading column
+     */
+    public static boolean isHeading(String columnName)
+    {
+        return StringUtils.containsIgnoreCase(columnName, "course") || StringUtils.containsIgnoreCase(columnName, "heading")
+                || StringUtils.containsIgnoreCase(columnName, "bearing");
     }
 }

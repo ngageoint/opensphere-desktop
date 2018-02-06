@@ -54,7 +54,7 @@ public class SpeedKey extends AbstractSpecialKey
     public static boolean detectSpeed(MetaDataInfo metaData, String columnName)
     {
         boolean wasDetected = false;
-        if (!metaData.hasTypeForSpecialKey(SpeedKey.DEFAULT) && StringUtils.containsIgnoreCase(columnName, "speed"))
+        if (!metaData.hasTypeForSpecialKey(SpeedKey.DEFAULT) && isSpeed(columnName))
         {
             SpeedUnit unit = SpeedUnit.detectUnit(columnName);
             SpeedKey speedKey = unit != null ? new SpeedKey(unit) : SpeedKey.DEFAULT;
@@ -62,5 +62,16 @@ public class SpeedKey extends AbstractSpecialKey
             wasDetected = true;
         }
         return wasDetected;
+    }
+
+    /**
+     * Inspects the supplied column name, to determine if it represents a heading.
+     *
+     * @param columnName the name of the column to inspect
+     * @return whether the column is determined to be a heading column
+     */
+    public static boolean isSpeed(String columnName)
+    {
+        return StringUtils.containsIgnoreCase(columnName, "speed");
     }
 }
