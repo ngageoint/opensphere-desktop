@@ -68,7 +68,7 @@ public final class PlacemarkUtils
             MyPlacesEditListener controller)
     {
         MapVisualizationType visType = ExtendedDataUtils.getVisualizationType(placemark.getExtendedData());
-        boolean theStyle = false;
+        boolean usesStyle = false;
 
         if (placemark.getId() == null)
         {
@@ -81,10 +81,9 @@ public final class PlacemarkUtils
         if (visType == MapVisualizationType.USER_TRACK_ELEMENTS)
         {
             loadsTo = LoadsTo.TIMELINE;
-            theStyle = true;
+            usesStyle = true;
         }
-
-        DefaultMapFeatureVisualizationInfo visualInfo = new DefaultMapFeatureVisualizationInfo(visType, theStyle);
+        DefaultMapFeatureVisualizationInfo visualInfo = new DefaultMapFeatureVisualizationInfo(visType, usesStyle);
         dataType.setMapVisualizationInfo(visualInfo);
 
         Color color = PlacemarkUtils.getPlacemarkColor(placemark);
