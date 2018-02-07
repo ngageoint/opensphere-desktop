@@ -5,11 +5,13 @@ import java.util.regex.Pattern;
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.units.length.NauticalMiles;
 import io.opensphere.mantle.data.MetaDataInfo;
+import io.opensphere.mantle.data.SpecialColumnDetector;
+import io.opensphere.mantle.data.SpecialKey;
 
 /**
  * The Class EllipseSemiMinorAxisKey.
  */
-public class EllipseSemiMinorAxisKey extends AbstractSpecialKey
+public class EllipseSemiMinorAxisKey extends AbstractSpecialKey implements SpecialColumnDetector
 {
     /** The Default EllipseSemiMinorAxisKey. */
     public static final EllipseSemiMinorAxisKey DEFAULT = new EllipseSemiMinorAxisKey();
@@ -38,6 +40,34 @@ public class EllipseSemiMinorAxisKey extends AbstractSpecialKey
         super("EllipseSemiMinorAxis", semiMinorUnit);
     }
 
+    @Override
+    public boolean markSpecialColumn(MetaDataInfo metaData, String columnName)
+    {
+        boolean wasDetected = false;
+        if (!metaData.hasTypeForSpecialKey(EllipseSemiMinorAxisKey.DEFAULT))
+        {
+            SpecialKey specialKey = detectColumn(columnName);
+            if (specialKey != null)
+            {
+                metaData.setSpecialKey(columnName, specialKey, metaData);
+                wasDetected = true;
+            }
+        }
+        return wasDetected;
+    }
+
+    @Override
+    public SpecialKey detectColumn(String columnName)
+    {
+        SpecialKey specialKey = null;
+        if (isSemiMinor(columnName))
+        {
+            Class<? extends Length> unit = detectUnit(columnName);
+            specialKey = unit != null ? new EllipseSemiMinorAxisKey(unit) : EllipseSemiMinorAxisKey.DEFAULT;
+        }
+        return specialKey;
+    }
+
     /**
      * Gets the length units.
      *
@@ -47,28 +77,6 @@ public class EllipseSemiMinorAxisKey extends AbstractSpecialKey
     public Class<? extends Length> getAltitudeUnit()
     {
         return (Class<? extends Length>)getKeyUnit();
-    }
-
-    /**
-     * Inspects the supplied column name, to determine if it represents a semi-minor axis. If the column name represents a
-     * semi-minor axis, the metadata is updated to reflect this.
-     *
-     * @param metaData the meta data to update if the supplied column represents a semi-minor axis.
-     * @param columnName the name of the column to inspect
-     * @return whether the column was detected
-     */
-    public static boolean detectSemiMinor(MetaDataInfo metaData, String columnName)
-    {
-        boolean wasDetected = false;
-        if (!metaData.hasTypeForSpecialKey(EllipseSemiMinorAxisKey.DEFAULT) && isSemiMinor(columnName))
-        {
-            Class<? extends Length> unit = detectUnit(columnName);
-            EllipseSemiMinorAxisKey ellipseKey = unit != null ? new EllipseSemiMinorAxisKey(unit)
-                    : EllipseSemiMinorAxisKey.DEFAULT;
-            metaData.setSpecialKey(columnName, ellipseKey, metaData);
-            wasDetected = true;
-        }
-        return wasDetected;
     }
 
     /**

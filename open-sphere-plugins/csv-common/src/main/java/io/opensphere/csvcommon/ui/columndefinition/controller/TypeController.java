@@ -109,6 +109,7 @@ public class TypeController implements Observer
         allDataTypes.add(ColumnType.RADIUS);
         allDataTypes.add(ColumnType.LOB);
         allDataTypes.add(ColumnType.ASSOCIATION_ID);
+        allDataTypes.add(ColumnType.SPEED);
 
         return allDataTypes;
     }

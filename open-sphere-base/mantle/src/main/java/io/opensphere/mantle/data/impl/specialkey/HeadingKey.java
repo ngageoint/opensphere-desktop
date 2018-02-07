@@ -3,12 +3,13 @@ package io.opensphere.mantle.data.impl.specialkey;
 import org.apache.commons.lang3.StringUtils;
 
 import io.opensphere.mantle.data.MetaDataInfo;
+import io.opensphere.mantle.data.SpecialColumnDetector;
 import io.opensphere.mantle.data.SpecialKey;
 
 /**
  * A {@link SpecialKey} for heading / bearing / course.
  */
-public class HeadingKey extends AbstractSpecialKey
+public class HeadingKey extends AbstractSpecialKey implements SpecialColumnDetector
 {
     /** The default HeadingKey. */
     public static final HeadingKey DEFAULT = new HeadingKey();
@@ -44,32 +45,26 @@ public class HeadingKey extends AbstractSpecialKey
         return (HeadingUnit)super.getKeyUnit();
     }
 
-    /** An enumeration of heading units. */
-    public enum HeadingUnit
-    {
-        /** DEGREES_CLOCKWISE_FROM_NORTH. */
-        DEGREES_CLOCKWISE_FROM_NORTH
-    }
-
-    /**
-     * Inspects the supplied column name, to determine if it represents a
-     * heading. If the column name represents a heading, the metadata is updated
-     * to reflect this.
-     *
-     * @param metaData the meta data to update if the supplied column represents
-     *            a heading.
-     * @param columnName the name of the column to inspect
-     * @return whether the column was detected
-     */
-    public static boolean detectHeading(MetaDataInfo metaData, String columnName)
+    @Override
+    public boolean markSpecialColumn(MetaDataInfo metaData, String columnName)
     {
         boolean wasDetected = false;
-        if (!metaData.hasTypeForSpecialKey(HeadingKey.DEFAULT) && isHeading(columnName))
+        if (!metaData.hasTypeForSpecialKey(HeadingKey.DEFAULT))
         {
-            metaData.setSpecialKey(columnName, HeadingKey.DEFAULT, metaData);
-            wasDetected = true;
+            SpecialKey specialKey = detectColumn(columnName);
+            if (specialKey != null)
+            {
+                metaData.setSpecialKey(columnName, specialKey, metaData);
+                wasDetected = true;
+            }
         }
         return wasDetected;
+    }
+
+    @Override
+    public SpecialKey detectColumn(String columnName)
+    {
+        return isHeading(columnName) ? HeadingKey.DEFAULT : null;
     }
 
     /**
@@ -82,5 +77,12 @@ public class HeadingKey extends AbstractSpecialKey
     {
         return StringUtils.containsIgnoreCase(columnName, "course") || StringUtils.containsIgnoreCase(columnName, "heading")
                 || StringUtils.containsIgnoreCase(columnName, "bearing");
+    }
+
+    /** An enumeration of heading units. */
+    public enum HeadingUnit
+    {
+        /** DEGREES_CLOCKWISE_FROM_NORTH. */
+        DEGREES_CLOCKWISE_FROM_NORTH
     }
 }

@@ -138,10 +138,10 @@ public class MantlePlugin extends PluginAdapter
         myToolbox.getPluginToolboxRegistry().registerPluginToolbox(mantleToolbox);
 
         ColumnTypeDetector columnTypeDetector = mantleToolbox.getColumnTypeDetector();
-        columnTypeDetector.addSpecialColumnDetector(EllipseSemiMajorAxisKey::detectSemiMajor);
-        columnTypeDetector.addSpecialColumnDetector(EllipseSemiMinorAxisKey::detectSemiMinor);
-        columnTypeDetector.addSpecialColumnDetector(HeadingKey::detectHeading);
-        columnTypeDetector.addSpecialColumnDetector(SpeedKey::detectSpeed);
+        columnTypeDetector.addSpecialColumnDetector(EllipseSemiMajorAxisKey.DEFAULT);
+        columnTypeDetector.addSpecialColumnDetector(EllipseSemiMinorAxisKey.DEFAULT);
+        columnTypeDetector.addSpecialColumnDetector(HeadingKey.DEFAULT);
+        columnTypeDetector.addSpecialColumnDetector(SpeedKey.DEFAULT);
 
         createAndInstallEventCoalescers();
 

@@ -2,11 +2,15 @@ package io.opensphere.csvcommon.detect.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.model.IntegerRange;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.util.collections.CollectionUtilities;
+import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.StringTokenizer;
 import io.opensphere.csvcommon.common.CellSampler;
 import io.opensphere.csvcommon.common.LineSampler;
@@ -24,10 +28,6 @@ import io.opensphere.csvcommon.detect.columnformat.ColumnFormatFactoryImpl;
 import io.opensphere.csvcommon.detect.columnformat.ColumnFormatParameters;
 import io.opensphere.csvcommon.detect.columnformat.DelimitedColumnFormatParameters;
 import io.opensphere.csvcommon.detect.columnformat.FixedWidthColumnFormatParameters;
-import io.opensphere.csvcommon.detect.controller.CellSamplerImpl;
-import io.opensphere.csvcommon.detect.controller.DetectedParameters;
-import io.opensphere.csvcommon.detect.controller.LineSamplerFactory;
-import io.opensphere.csvcommon.detect.controller.TokenizerFactoryImpl;
 import io.opensphere.csvcommon.detect.datetime.DateTimeDetector;
 import io.opensphere.csvcommon.detect.lob.LineOfBearingDetector;
 import io.opensphere.csvcommon.detect.lob.model.LobColumnResults;
@@ -35,7 +35,10 @@ import io.opensphere.csvcommon.detect.location.AltitudeDetector;
 import io.opensphere.csvcommon.detect.location.LocationDetector;
 import io.opensphere.csvcommon.detect.location.LocationMatchMakerDetector;
 import io.opensphere.csvcommon.detect.location.model.LocationResults;
+import io.opensphere.importer.config.ColumnType;
 import io.opensphere.importer.config.SpecialColumn;
+import io.opensphere.mantle.data.ColumnTypeDetector;
+import io.opensphere.mantle.data.SpecialKey;
 
 /** Controller for CSV format detectors. */
 public class DetectionControllerImpl
@@ -46,14 +49,19 @@ public class DetectionControllerImpl
     /** The system preferences registry. */
     protected final PreferencesRegistry myPrefsRegistry;
 
+    /** The mantle column type detector. */
+    private final ColumnTypeDetector myColumnTypeDetector;
+
     /**
      * Constructor.
      *
      * @param prefsRegistry The system preferences registry.
+     * @param columnTypeDetector The mantle column type detector.
      */
-    public DetectionControllerImpl(PreferencesRegistry prefsRegistry)
+    public DetectionControllerImpl(PreferencesRegistry prefsRegistry, ColumnTypeDetector columnTypeDetector)
     {
         myPrefsRegistry = prefsRegistry;
+        myColumnTypeDetector = columnTypeDetector;
     }
 
     /**
@@ -97,6 +105,16 @@ public class DetectionControllerImpl
         detectWithTextDelimiter(samplerFactory, quote, truthParameters, result, tokenizer, changed);
 
         return result;
+    }
+
+    /**
+     * Gets the column type detector.
+     *
+     * @return the column type detector
+     */
+    protected ColumnTypeDetector getColumnTypeDetector()
+    {
+        return myColumnTypeDetector;
     }
 
     /**
@@ -268,6 +286,40 @@ public class DetectionControllerImpl
         LineOfBearingDetector lobDetector = new LineOfBearingDetector(myPrefsRegistry);
         ValuesWithConfidence<LobColumnResults> lobResult = lobDetector.detect(cellSampler);
         result.setLOBParameter(lobResult);
+
+        // Auto-detect other columns using Mantle's ColumnTypeDetector
+        autoDetect(result, cellSampler);
+    }
+
+    /**
+     * Auto-detect other columns using Mantle's ColumnTypeDetector.
+     *
+     * @param result the result
+     * @param cellSampler the cell sampler
+     */
+    private void autoDetect(DetectedParameters result, CellSampler cellSampler)
+    {
+        List<? extends String> headerCells = cellSampler.getHeaderCells();
+        if (CollectionUtilities.hasContent(headerCells))
+        {
+            Set<ColumnType> usedColumnTypes = New.set();
+            for (int headerIndex = 0; headerIndex < headerCells.size(); headerIndex++)
+            {
+                String column = headerCells.get(headerIndex);
+                SpecialKey specialKey = getColumnTypeDetector().detectColumn(column);
+                if (specialKey != null)
+                {
+                    ColumnType columnType = ColumnType.fromSpecialKey(specialKey);
+                    if (columnType != null && !usedColumnTypes.contains(columnType))
+                    {
+                        SpecialColumn specialColumn = new SpecialColumn(headerIndex, columnType, null);
+                        specialColumn.setSpecialKey(specialKey);
+                        result.getOtherColumns().add(specialColumn);
+                        usedColumnTypes.add(columnType);
+                    }
+                }
+            }
+        }
     }
 
     /**

@@ -9,14 +9,14 @@ import io.opensphere.mantle.data.impl.DefaultMetaDataInfo;
 /** Tests for {@link SpeedKey}. */
 public class SpeedKeyTest
 {
-    /** Test for {@link SpeedKey#detectSpeed(MetaDataInfo, String)}. */
+    /** Test for {@link SpeedKey#markSpecialColumn(MetaDataInfo, String)}. */
     @Test
-    public void testDetectSpeed()
+    public void testMarkSpecialColumn()
     {
         DefaultMetaDataInfo metaData = new DefaultMetaDataInfo();
         String column = "Speed (m/s)";
         metaData.addKey(column, Double.class, this);
-        SpeedKey.detectSpeed(metaData, column);
+        SpeedKey.DEFAULT.markSpecialColumn(metaData, column);
         SpeedKey actual = (SpeedKey)metaData.getSpecialTypeForKey(column);
         SpeedKey expected = new SpeedKey(SpeedUnit.METERS_PER_SECOND);
         Assert.assertEquals(expected, actual);
@@ -25,7 +25,7 @@ public class SpeedKeyTest
         metaData = new DefaultMetaDataInfo();
         column = "Speed (km/hr)";
         metaData.addKey(column, Double.class, this);
-        SpeedKey.detectSpeed(metaData, column);
+        SpeedKey.DEFAULT.markSpecialColumn(metaData, column);
         actual = (SpeedKey)metaData.getSpecialTypeForKey(column);
         expected = new SpeedKey(SpeedUnit.KILOMETERS_PER_HOUR);
         Assert.assertEquals(expected, actual);

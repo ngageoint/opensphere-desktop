@@ -10,14 +10,14 @@ import io.opensphere.mantle.data.impl.DefaultMetaDataInfo;
 /** Tests for {@link EllipseSemiMinorAxisKey}. */
 public class EllipseSemiMinorAxisKeyTest
 {
-    /** Test for {@link EllipseSemiMinorAxisKey#detectSemiMinor(MetaDataInfo, String)}. */
+    /** Test for {@link EllipseSemiMinorAxisKey#markSpecialColumn(MetaDataInfo, String)}. */
     @Test
-    public void testDetectSemiMinor()
+    public void testMarkSpecialColumn()
     {
         DefaultMetaDataInfo metaData = new DefaultMetaDataInfo();
         String column = "Semi-Minor 95 (km)";
         metaData.addKey(column, Double.class, this);
-        EllipseSemiMinorAxisKey.detectSemiMinor(metaData, column);
+        EllipseSemiMinorAxisKey.DEFAULT.markSpecialColumn(metaData, column);
         EllipseSemiMinorAxisKey actual = (EllipseSemiMinorAxisKey)metaData.getSpecialTypeForKey(column);
         EllipseSemiMinorAxisKey expected = new EllipseSemiMinorAxisKey(Kilometers.class);
         Assert.assertEquals(expected, actual);

@@ -3,12 +3,13 @@ package io.opensphere.mantle.data.impl.specialkey;
 import org.apache.commons.lang3.StringUtils;
 
 import io.opensphere.mantle.data.MetaDataInfo;
+import io.opensphere.mantle.data.SpecialColumnDetector;
 import io.opensphere.mantle.data.SpecialKey;
 
 /**
  * A {@link SpecialKey} for speed.
  */
-public class SpeedKey extends AbstractSpecialKey
+public class SpeedKey extends AbstractSpecialKey implements SpecialColumnDetector
 {
     /** The default SpeedKey. */
     public static final SpeedKey DEFAULT = new SpeedKey();
@@ -43,25 +44,32 @@ public class SpeedKey extends AbstractSpecialKey
         return (SpeedUnit)super.getKeyUnit();
     }
 
-    /**
-     * Inspects the supplied column name, to determine if it represents a speed. If the column name represents a speed, the
-     * metadata is updated to reflect this.
-     *
-     * @param metaData the meta data to update if the supplied column represents a speed.
-     * @param columnName the name of the column to inspect
-     * @return whether the column was detected
-     */
-    public static boolean detectSpeed(MetaDataInfo metaData, String columnName)
+    @Override
+    public boolean markSpecialColumn(MetaDataInfo metaData, String columnName)
     {
         boolean wasDetected = false;
-        if (!metaData.hasTypeForSpecialKey(SpeedKey.DEFAULT) && isSpeed(columnName))
+        if (!metaData.hasTypeForSpecialKey(SpeedKey.DEFAULT))
         {
-            SpeedUnit unit = SpeedUnit.detectUnit(columnName);
-            SpeedKey speedKey = unit != null ? new SpeedKey(unit) : SpeedKey.DEFAULT;
-            metaData.setSpecialKey(columnName, speedKey, metaData);
-            wasDetected = true;
+            SpecialKey specialKey = detectColumn(columnName);
+            if (specialKey != null)
+            {
+                metaData.setSpecialKey(columnName, specialKey, metaData);
+                wasDetected = true;
+            }
         }
         return wasDetected;
+    }
+
+    @Override
+    public SpecialKey detectColumn(String columnName)
+    {
+        SpecialKey specialKey = null;
+        if (isSpeed(columnName))
+        {
+            SpeedUnit unit = SpeedUnit.detectUnit(columnName);
+            specialKey = unit != null ? new SpeedKey(unit) : SpeedKey.DEFAULT;
+        }
+        return specialKey;
     }
 
     /**

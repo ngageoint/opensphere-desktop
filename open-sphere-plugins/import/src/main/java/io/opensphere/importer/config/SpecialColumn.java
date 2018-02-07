@@ -6,9 +6,11 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import io.opensphere.core.util.lang.ExpectedCloneableException;
 import io.opensphere.core.util.lang.HashCodeHelper;
+import io.opensphere.mantle.data.SpecialKey;
 
 /**
  * Base class for classes that identify columns with special handling.
@@ -34,6 +36,10 @@ public class SpecialColumn implements Cloneable
      */
     @XmlAttribute(name = "format")
     private String myFormat;
+
+    /** The optional special key. */
+    @XmlTransient
+    private SpecialKey mySpecialKey;
 
     /**
      * JAXB Constructor.
@@ -117,6 +123,26 @@ public class SpecialColumn implements Cloneable
         myFormat = format;
     }
 
+    /**
+     * Gets the special key.
+     *
+     * @return The special key.
+     */
+    public SpecialKey getSpecialKey()
+    {
+        return mySpecialKey;
+    }
+
+    /**
+     * Sets the special key.
+     *
+     * @param specialKey The special key.
+     */
+    public void setSpecialKey(SpecialKey specialKey)
+    {
+        mySpecialKey = specialKey;
+    }
+
     @Override
     public int hashCode()
     {
@@ -125,6 +151,7 @@ public class SpecialColumn implements Cloneable
         result = prime * result + HashCodeHelper.getHashCode(myColumnIndex);
         result = prime * result + HashCodeHelper.getHashCode(myColumnType);
         result = prime * result + HashCodeHelper.getHashCode(myFormat);
+        result = prime * result + HashCodeHelper.getHashCode(mySpecialKey);
         return result;
     }
 
@@ -143,7 +170,8 @@ public class SpecialColumn implements Cloneable
         //@formatter:off
         return myColumnIndex == other.myColumnIndex
                 && Objects.equals(myColumnType, other.myColumnType)
-                && Objects.equals(myFormat, other.myFormat);
+                && Objects.equals(myFormat, other.myFormat)
+                && Objects.equals(mySpecialKey, other.mySpecialKey);
         //@formatter:on
     }
 

@@ -10,11 +10,13 @@ import io.opensphere.core.units.length.Meters;
 import io.opensphere.core.units.length.NauticalMiles;
 import io.opensphere.core.units.length.StatuteMiles;
 import io.opensphere.mantle.data.MetaDataInfo;
+import io.opensphere.mantle.data.SpecialColumnDetector;
+import io.opensphere.mantle.data.SpecialKey;
 
 /**
  * The Class EllipseSemiMajorAxisKey.
  */
-public class EllipseSemiMajorAxisKey extends AbstractSpecialKey
+public class EllipseSemiMajorAxisKey extends AbstractSpecialKey implements SpecialColumnDetector
 {
     /** The Default EllipseSemiMajorAxis. */
     public static final EllipseSemiMajorAxisKey DEFAULT = new EllipseSemiMajorAxisKey();
@@ -43,6 +45,34 @@ public class EllipseSemiMajorAxisKey extends AbstractSpecialKey
         super("EllipseSemiMajorAxis", semiMajorUnit);
     }
 
+    @Override
+    public boolean markSpecialColumn(MetaDataInfo metaData, String columnName)
+    {
+        boolean wasDetected = false;
+        if (!metaData.hasTypeForSpecialKey(EllipseSemiMajorAxisKey.DEFAULT))
+        {
+            SpecialKey specialKey = detectColumn(columnName);
+            if (specialKey != null)
+            {
+                metaData.setSpecialKey(columnName, specialKey, metaData);
+                wasDetected = true;
+            }
+        }
+        return wasDetected;
+    }
+
+    @Override
+    public SpecialKey detectColumn(String columnName)
+    {
+        SpecialKey specialKey = null;
+        if (isSemiMajor(columnName))
+        {
+            Class<? extends Length> unit = detectUnit(columnName);
+            specialKey = unit != null ? new EllipseSemiMajorAxisKey(unit) : EllipseSemiMajorAxisKey.DEFAULT;
+        }
+        return specialKey;
+    }
+
     /**
      * Gets the length units.
      *
@@ -52,28 +82,6 @@ public class EllipseSemiMajorAxisKey extends AbstractSpecialKey
     public Class<? extends Length> getSemiMajorUnit()
     {
         return (Class<? extends Length>)getKeyUnit();
-    }
-
-    /**
-     * Inspects the supplied column name, to determine if it represents a semi-major axis. If the column name represents a
-     * semi-major axis, the metadata is updated to reflect this.
-     *
-     * @param metaData the meta data to update if the supplied column represents a semi-major axis.
-     * @param columnName the name of the column to inspect
-     * @return whether the column was detected
-     */
-    public static boolean detectSemiMajor(MetaDataInfo metaData, String columnName)
-    {
-        boolean wasDetected = false;
-        if (!metaData.hasTypeForSpecialKey(EllipseSemiMajorAxisKey.DEFAULT) && isSemiMajor(columnName))
-        {
-            Class<? extends Length> unit = detectUnit(columnName);
-            EllipseSemiMajorAxisKey ellipseKey = unit != null ? new EllipseSemiMajorAxisKey(unit)
-                    : EllipseSemiMajorAxisKey.DEFAULT;
-            metaData.setSpecialKey(columnName, ellipseKey, metaData);
-            wasDetected = true;
-        }
-        return wasDetected;
     }
 
     /**

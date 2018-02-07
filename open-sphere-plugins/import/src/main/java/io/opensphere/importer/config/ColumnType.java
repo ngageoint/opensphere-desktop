@@ -1,7 +1,11 @@
 package io.opensphere.importer.config;
 
+import java.util.Arrays;
+
 import io.opensphere.core.common.configuration.date.DateFormat;
 import io.opensphere.core.util.lang.enums.EnumUtilities;
+import io.opensphere.mantle.data.SpecialKey;
+import io.opensphere.mantle.data.impl.specialkey.SpeedKey;
 
 /**
  * The Enum ColumnType.
@@ -63,7 +67,10 @@ public enum ColumnType
     WKT_GEOMETRY("WKT", Category.SPATIAL),
 
     /** Association ID. */
-    ASSOCIATION_ID("Association ID")
+    ASSOCIATION_ID("Association ID"),
+
+    /** Speed. */
+    SPEED("Speed", SpeedKey.DEFAULT)
 
     ;
 
@@ -73,6 +80,9 @@ public enum ColumnType
     /** The category. */
     private final Category myCategory;
 
+    /** The optional special key. */
+    private final SpecialKey mySpecialKey;
+
     /**
      * Constructor.
      *
@@ -80,7 +90,7 @@ public enum ColumnType
      */
     ColumnType(String displayText)
     {
-        this(displayText, null);
+        this(displayText, (Category)null);
     }
 
     /**
@@ -93,6 +103,20 @@ public enum ColumnType
     {
         myDisplayText = displayText;
         myCategory = category;
+        mySpecialKey = null;
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param displayText The display text
+     * @param specialKey Optional special key
+     */
+    ColumnType(String displayText, SpecialKey specialKey)
+    {
+        myDisplayText = displayText;
+        myCategory = null;
+        mySpecialKey = specialKey;
     }
 
     /**
@@ -103,6 +127,16 @@ public enum ColumnType
     public Category getCategory()
     {
         return myCategory;
+    }
+
+    /**
+     * Gets the specialKey.
+     *
+     * @return the specialKey
+     */
+    public SpecialKey getSpecialKey()
+    {
+        return mySpecialKey;
     }
 
     @Override
@@ -151,6 +185,17 @@ public enum ColumnType
                 break;
         }
         return columnType;
+    }
+
+    /**
+     * Returns the ColumnType for the SpecialKey if it exists.
+     *
+     * @param specialKey the special key
+     * @return the matching ColumnType, or null
+     */
+    public static ColumnType fromSpecialKey(SpecialKey specialKey)
+    {
+        return Arrays.stream(ColumnType.values()).filter(ct -> specialKey.equals(ct.mySpecialKey)).findAny().orElse(null);
     }
 
     /**

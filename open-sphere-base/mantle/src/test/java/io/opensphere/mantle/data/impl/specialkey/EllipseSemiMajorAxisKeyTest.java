@@ -28,14 +28,14 @@ public class EllipseSemiMajorAxisKeyTest
         Assert.assertEquals(NauticalMiles.class, EllipseSemiMajorAxisKey.detectUnit("blah (nautical miles)"));
     }
 
-    /** Test for {@link EllipseSemiMajorAxisKey#detectSemiMajor(MetaDataInfo, String)}. */
+    /** Test for {@link EllipseSemiMajorAxisKey#markSpecialColumn(MetaDataInfo, String)}. */
     @Test
-    public void testDetectSemiMajor()
+    public void testMarkSpecialColumn()
     {
         DefaultMetaDataInfo metaData = new DefaultMetaDataInfo();
         String column = "Semi-Major 95 (km)";
         metaData.addKey(column, Double.class, this);
-        EllipseSemiMajorAxisKey.detectSemiMajor(metaData, column);
+        EllipseSemiMajorAxisKey.DEFAULT.markSpecialColumn(metaData, column);
         EllipseSemiMajorAxisKey actual = (EllipseSemiMajorAxisKey)metaData.getSpecialTypeForKey(column);
         EllipseSemiMajorAxisKey expected = new EllipseSemiMajorAxisKey(Kilometers.class);
         Assert.assertEquals(expected, actual);

@@ -8,8 +8,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import io.opensphere.core.common.configuration.date.DateFormat;
-import io.opensphere.core.common.configuration.date.DateFormatsConfig;
 import io.opensphere.core.common.configuration.date.DateFormat.Type;
+import io.opensphere.core.common.configuration.date.DateFormatsConfig;
 import io.opensphere.core.model.IntegerRange;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
@@ -18,8 +18,6 @@ import io.opensphere.csvcommon.common.datetime.DateColumnResults;
 import io.opensphere.csvcommon.config.v2.CSVParseParameters;
 import io.opensphere.csvcommon.detect.ListLineSampler;
 import io.opensphere.csvcommon.detect.columnformat.DelimitedColumnFormatParameters;
-import io.opensphere.csvcommon.detect.controller.DetectedParameters;
-import io.opensphere.csvcommon.detect.controller.LineSamplerFactory;
 import io.opensphere.csvcommon.detect.util.CSVColumnPrefsUtil;
 import io.opensphere.csvcommon.util.CsvTestUtils;
 import io.opensphere.csvcommon.util.LocationTestUtils;
@@ -73,7 +71,7 @@ public class DetectionControllerImplTest extends EasyMockSupport
 
         replayAll();
 
-        DetectionControllerImpl controller = new DetectionControllerImpl(prefsRegistry);
+        DetectionControllerImpl controller = new DetectionControllerImpl(prefsRegistry, null);
 
         DetectedParameters result = controller.detectParameters(new CSVParseParameters(), listLineSampler, factory, null);
 
