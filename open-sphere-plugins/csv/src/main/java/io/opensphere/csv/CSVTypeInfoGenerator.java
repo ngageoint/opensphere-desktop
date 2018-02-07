@@ -7,6 +7,7 @@ import java.util.Set;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.csv.config.v2.CSVDataSource;
 import io.opensphere.csvcommon.ColumnInfo;
@@ -242,12 +243,22 @@ public final class CSVTypeInfoGenerator
                         columnInfo.setSpecialType(AltitudeKey.DEFAULT);
                         break;
                     case SEMIMAJOR:
+                    {
                         columnInfo.setColumnClass(Double.class);
-                        columnInfo.setSpecialType(EllipseSemiMajorAxisKey.DEFAULT);
+                        Class<? extends Length> unit = EllipseSemiMajorAxisKey.detectUnit(columnName);
+                        EllipseSemiMajorAxisKey specialType = unit != null ? new EllipseSemiMajorAxisKey(unit)
+                                : EllipseSemiMajorAxisKey.DEFAULT;
+                        columnInfo.setSpecialType(specialType);
+                    }
                         break;
                     case SEMIMINOR:
+                    {
                         columnInfo.setColumnClass(Double.class);
-                        columnInfo.setSpecialType(EllipseSemiMinorAxisKey.DEFAULT);
+                        Class<? extends Length> unit = EllipseSemiMinorAxisKey.detectUnit(columnName);
+                        EllipseSemiMinorAxisKey specialType = unit != null ? new EllipseSemiMinorAxisKey(unit)
+                                : EllipseSemiMinorAxisKey.DEFAULT;
+                        columnInfo.setSpecialType(specialType);
+                    }
                         break;
                     case ORIENTATION:
                         columnInfo.setColumnClass(Double.class);

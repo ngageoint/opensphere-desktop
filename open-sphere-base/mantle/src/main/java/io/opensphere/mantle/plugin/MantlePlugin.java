@@ -10,6 +10,7 @@ import io.opensphere.core.api.adapter.PluginAdapter;
 import io.opensphere.core.util.event.EventCoalescer;
 import io.opensphere.core.util.property.PluginPropertyUtils;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import io.opensphere.mantle.data.ColumnTypeDetector;
 import io.opensphere.mantle.data.element.event.DataElementAltitudeChangeEvent;
 import io.opensphere.mantle.data.element.event.DataElementColorChangeEvent;
 import io.opensphere.mantle.data.element.event.DataElementHighlightChangeEvent;
@@ -49,6 +50,8 @@ import io.opensphere.mantle.data.geom.style.impl.SobelEdgeDetectionTileVisualiza
 import io.opensphere.mantle.data.geom.style.impl.StyleUtils;
 import io.opensphere.mantle.data.geom.style.labelcontroller.LabelHoverController;
 import io.opensphere.mantle.data.geom.style.tilecontroller.TileStyleTransformController;
+import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMajorAxisKey;
+import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMinorAxisKey;
 import io.opensphere.mantle.data.impl.specialkey.HeadingKey;
 import io.opensphere.mantle.data.impl.specialkey.SpeedKey;
 import io.opensphere.mantle.data.tile.TileVisualizationSupport;
@@ -134,8 +137,11 @@ public class MantlePlugin extends PluginAdapter
         MantleToolboxImpl mantleToolbox = new MantleToolboxImpl(myToolbox, pluginProperties);
         myToolbox.getPluginToolboxRegistry().registerPluginToolbox(mantleToolbox);
 
-        mantleToolbox.getColumnTypeDetector().addSpecialColumnDetector(HeadingKey::detectHeading);
-        mantleToolbox.getColumnTypeDetector().addSpecialColumnDetector(SpeedKey::detectSpeed);
+        ColumnTypeDetector columnTypeDetector = mantleToolbox.getColumnTypeDetector();
+        columnTypeDetector.addSpecialColumnDetector(HeadingKey::detectHeading);
+        columnTypeDetector.addSpecialColumnDetector(SpeedKey::detectSpeed);
+        columnTypeDetector.addSpecialColumnDetector(EllipseSemiMajorAxisKey::detectSemiMajor);
+        columnTypeDetector.addSpecialColumnDetector(EllipseSemiMinorAxisKey::detectSemiMinor);
 
         createAndInstallEventCoalescers();
 
