@@ -1,5 +1,7 @@
 package io.opensphere.mantle.data.impl.specialkey;
 
+import java.util.regex.Pattern;
+
 import org.apache.commons.lang3.StringUtils;
 
 import io.opensphere.core.units.length.Kilometers;
@@ -17,17 +19,14 @@ public class EllipseSemiMajorAxisKey extends AbstractSpecialKey
     /** The Default EllipseSemiMajorAxis. */
     public static final EllipseSemiMajorAxisKey DEFAULT = new EllipseSemiMajorAxisKey();
 
-    /** The Constant ELLIPS_SEMI_MAJOR_AXIS_KEY_NAME. */
-    public static final String ELLIPS_SEMI_MAJOR_AXIS_KEY_NAME = "EllipseSemiMajorAxis";
+    /** The pattern. */
+    private static final Pattern COLUMN_PATTERN = Pattern.compile(".*(semi.?major|smj_nm|smaj?).*", Pattern.CASE_INSENSITIVE);
 
-    /**
-     * serialVersionUID.
-     */
+    /** serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiates a new EllipseSemiMajorAxisKey, defaulted to nautical miles
-     * unit.
+     * Instantiates a new EllipseSemiMajorAxisKey, defaulted to nautical miles unit.
      */
     public EllipseSemiMajorAxisKey()
     {
@@ -41,7 +40,7 @@ public class EllipseSemiMajorAxisKey extends AbstractSpecialKey
      */
     public EllipseSemiMajorAxisKey(Class<? extends Length> semiMajorUnit)
     {
-        super(ELLIPS_SEMI_MAJOR_AXIS_KEY_NAME, semiMajorUnit);
+        super("EllipseSemiMajorAxis", semiMajorUnit);
     }
 
     /**
@@ -66,7 +65,7 @@ public class EllipseSemiMajorAxisKey extends AbstractSpecialKey
     public static boolean detectSemiMajor(MetaDataInfo metaData, String columnName)
     {
         boolean wasDetected = false;
-        if (!metaData.hasTypeForSpecialKey(EllipseSemiMajorAxisKey.DEFAULT)) // TODO
+        if (!metaData.hasTypeForSpecialKey(EllipseSemiMajorAxisKey.DEFAULT) && isSemiMajor(columnName))
         {
             Class<? extends Length> unit = detectUnit(columnName);
             EllipseSemiMajorAxisKey ellipseKey = unit != null ? new EllipseSemiMajorAxisKey(unit)
@@ -104,5 +103,16 @@ public class EllipseSemiMajorAxisKey extends AbstractSpecialKey
             lengthClass = Meters.class;
         }
         return lengthClass;
+    }
+
+    /**
+     * Inspects the supplied column name, to determine if it represents a semi-major axis.
+     *
+     * @param columnName the name of the column to inspect
+     * @return whether the column is determined to be a semi-major axis column
+     */
+    static boolean isSemiMajor(String columnName)
+    {
+        return COLUMN_PATTERN.matcher(columnName).matches();
     }
 }

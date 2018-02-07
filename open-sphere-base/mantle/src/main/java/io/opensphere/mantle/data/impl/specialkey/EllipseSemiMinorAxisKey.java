@@ -1,5 +1,7 @@
 package io.opensphere.mantle.data.impl.specialkey;
 
+import java.util.regex.Pattern;
+
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.units.length.NauticalMiles;
 import io.opensphere.mantle.data.MetaDataInfo;
@@ -12,17 +14,14 @@ public class EllipseSemiMinorAxisKey extends AbstractSpecialKey
     /** The Default EllipseSemiMinorAxisKey. */
     public static final EllipseSemiMinorAxisKey DEFAULT = new EllipseSemiMinorAxisKey();
 
-    /** The Constant ELLIPS_SEMI_MINOR_AXIS_KEY_NAME. */
-    public static final String ELLIPS_SEMI_MINOR_AXIS_KEY_NAME = "EllipseSemiMinorAxis";
+    /** The pattern. */
+    private static final Pattern COLUMN_PATTERN = Pattern.compile(".*(semi.?minor|smi_nm|smin?).*", Pattern.CASE_INSENSITIVE);
 
-    /**
-     * serialVersionUID.
-     */
+    /** serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiates a new EllipseSemiMinorAxisKey key. Defaulted to nautical
-     * miles unit.
+     * Instantiates a new EllipseSemiMinorAxisKey key. Defaulted to nautical miles unit.
      */
     public EllipseSemiMinorAxisKey()
     {
@@ -36,7 +35,7 @@ public class EllipseSemiMinorAxisKey extends AbstractSpecialKey
      */
     public EllipseSemiMinorAxisKey(Class<? extends Length> semiMinorUnit)
     {
-        super(ELLIPS_SEMI_MINOR_AXIS_KEY_NAME, semiMinorUnit);
+        super("EllipseSemiMinorAxis", semiMinorUnit);
     }
 
     /**
@@ -61,7 +60,7 @@ public class EllipseSemiMinorAxisKey extends AbstractSpecialKey
     public static boolean detectSemiMinor(MetaDataInfo metaData, String columnName)
     {
         boolean wasDetected = false;
-        if (!metaData.hasTypeForSpecialKey(EllipseSemiMinorAxisKey.DEFAULT)) // TODO
+        if (!metaData.hasTypeForSpecialKey(EllipseSemiMinorAxisKey.DEFAULT) && isSemiMinor(columnName))
         {
             Class<? extends Length> unit = detectUnit(columnName);
             EllipseSemiMinorAxisKey ellipseKey = unit != null ? new EllipseSemiMinorAxisKey(unit)
@@ -81,5 +80,16 @@ public class EllipseSemiMinorAxisKey extends AbstractSpecialKey
     public static Class<? extends Length> detectUnit(String columnName)
     {
         return EllipseSemiMajorAxisKey.detectUnit(columnName);
+    }
+
+    /**
+     * Inspects the supplied column name, to determine if it represents a semi-minor axis.
+     *
+     * @param columnName the name of the column to inspect
+     * @return whether the column is determined to be a semi-minor axis column
+     */
+    static boolean isSemiMinor(String columnName)
+    {
+        return COLUMN_PATTERN.matcher(columnName).matches();
     }
 }
