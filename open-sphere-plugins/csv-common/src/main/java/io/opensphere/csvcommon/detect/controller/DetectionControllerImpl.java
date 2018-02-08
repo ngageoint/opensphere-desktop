@@ -108,16 +108,6 @@ public class DetectionControllerImpl
     }
 
     /**
-     * Gets the column type detector.
-     *
-     * @return the column type detector
-     */
-    protected ColumnTypeDetector getColumnTypeDetector()
-    {
-        return myColumnTypeDetector;
-    }
-
-    /**
      * Runs the detectors that require the text delimiter to already be
      * identified.
      *
@@ -300,13 +290,13 @@ public class DetectionControllerImpl
     private void autoDetect(DetectedParameters result, CellSampler cellSampler)
     {
         List<? extends String> headerCells = cellSampler.getHeaderCells();
-        if (CollectionUtilities.hasContent(headerCells))
+        if (CollectionUtilities.hasContent(headerCells) && myColumnTypeDetector != null)
         {
             Set<ColumnType> usedColumnTypes = New.set();
             for (int headerIndex = 0; headerIndex < headerCells.size(); headerIndex++)
             {
                 String column = headerCells.get(headerIndex);
-                SpecialKey specialKey = getColumnTypeDetector().detectColumn(column);
+                SpecialKey specialKey = myColumnTypeDetector.detectColumn(column);
                 if (specialKey != null)
                 {
                     ColumnType columnType = ColumnType.fromSpecialKey(specialKey);

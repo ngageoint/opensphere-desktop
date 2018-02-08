@@ -5,6 +5,10 @@ import java.util.Arrays;
 import io.opensphere.core.common.configuration.date.DateFormat;
 import io.opensphere.core.util.lang.enums.EnumUtilities;
 import io.opensphere.mantle.data.SpecialKey;
+import io.opensphere.mantle.data.impl.specialkey.EllipseOrientationKey;
+import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMajorAxisKey;
+import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMinorAxisKey;
+import io.opensphere.mantle.data.impl.specialkey.HeadingKey;
 import io.opensphere.mantle.data.impl.specialkey.SpeedKey;
 
 /**
@@ -46,7 +50,7 @@ public enum ColumnType
     MGRS("MGRS", Category.SPATIAL),
 
     /** The ORIENTATION. */
-    ORIENTATION("Orientation"),
+    ORIENTATION("Orientation", EllipseOrientationKey.DEFAULT),
 
     /** The OTHER. */
     OTHER("Other"),
@@ -58,16 +62,19 @@ public enum ColumnType
     RADIUS("Radius (CEP)"),
 
     /** The SEMIMAJOR. */
-    SEMIMAJOR("Semi-major"),
+    SEMIMAJOR("Semi-major", EllipseSemiMajorAxisKey.DEFAULT),
 
     /** The SEMIMINOR. */
-    SEMIMINOR("Semi-minor"),
+    SEMIMINOR("Semi-minor", EllipseSemiMinorAxisKey.DEFAULT),
 
     /** WKT GEOMETRY. */
     WKT_GEOMETRY("WKT", Category.SPATIAL),
 
     /** Association ID. */
     ASSOCIATION_ID("Association ID"),
+
+    /** Heading. */
+    HEADING("Heading", HeadingKey.DEFAULT),
 
     /** Speed. */
     SPEED("Speed", SpeedKey.DEFAULT)

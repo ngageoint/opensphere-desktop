@@ -151,7 +151,6 @@ public class SpecialColumn implements Cloneable
         result = prime * result + HashCodeHelper.getHashCode(myColumnIndex);
         result = prime * result + HashCodeHelper.getHashCode(myColumnType);
         result = prime * result + HashCodeHelper.getHashCode(myFormat);
-        result = prime * result + HashCodeHelper.getHashCode(mySpecialKey);
         return result;
     }
 
@@ -170,8 +169,7 @@ public class SpecialColumn implements Cloneable
         //@formatter:off
         return myColumnIndex == other.myColumnIndex
                 && Objects.equals(myColumnType, other.myColumnType)
-                && Objects.equals(myFormat, other.myFormat)
-                && Objects.equals(mySpecialKey, other.mySpecialKey);
+                && Objects.equals(myFormat, other.myFormat);
         //@formatter:on
     }
 

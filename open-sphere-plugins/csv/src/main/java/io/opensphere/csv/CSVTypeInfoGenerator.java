@@ -26,10 +26,12 @@ import io.opensphere.mantle.data.impl.specialkey.AltitudeKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseOrientationKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMajorAxisKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMinorAxisKey;
+import io.opensphere.mantle.data.impl.specialkey.HeadingKey;
 import io.opensphere.mantle.data.impl.specialkey.LatitudeKey;
 import io.opensphere.mantle.data.impl.specialkey.LineOfBearingKey;
 import io.opensphere.mantle.data.impl.specialkey.LongitudeKey;
 import io.opensphere.mantle.data.impl.specialkey.RadiusKey;
+import io.opensphere.mantle.data.impl.specialkey.SpeedKey;
 import io.opensphere.mantle.data.impl.specialkey.TimeKey;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.mantle.util.dynenum.DynamicEnumerationKey;
@@ -271,6 +273,16 @@ public final class CSVTypeInfoGenerator
                     case LOB:
                         columnInfo.setColumnClass(Double.class);
                         columnInfo.setSpecialType(LineOfBearingKey.DEFAULT);
+                        break;
+                    case HEADING:
+                        columnInfo.setColumnClass(Double.class);
+                        columnInfo.setSpecialType(
+                                io.opensphere.core.util.Utilities.getValue(specialColumn.getSpecialKey(), HeadingKey.DEFAULT));
+                        break;
+                    case SPEED:
+                        columnInfo.setColumnClass(Double.class);
+                        columnInfo.setSpecialType(
+                                io.opensphere.core.util.Utilities.getValue(specialColumn.getSpecialKey(), SpeedKey.DEFAULT));
                         break;
                     default:
                         break;
