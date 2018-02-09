@@ -26,12 +26,15 @@ import io.opensphere.mantle.data.impl.specialkey.AltitudeKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseOrientationKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMajorAxisKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMinorAxisKey;
+import io.opensphere.mantle.data.impl.specialkey.HeadingErrorKey;
 import io.opensphere.mantle.data.impl.specialkey.HeadingKey;
 import io.opensphere.mantle.data.impl.specialkey.LatitudeKey;
 import io.opensphere.mantle.data.impl.specialkey.LineOfBearingKey;
 import io.opensphere.mantle.data.impl.specialkey.LongitudeKey;
 import io.opensphere.mantle.data.impl.specialkey.RadiusKey;
+import io.opensphere.mantle.data.impl.specialkey.SpeedErrorKey;
 import io.opensphere.mantle.data.impl.specialkey.SpeedKey;
+import io.opensphere.mantle.data.impl.specialkey.SpeedUnit;
 import io.opensphere.mantle.data.impl.specialkey.TimeKey;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.mantle.util.dynenum.DynamicEnumerationKey;
@@ -276,13 +279,27 @@ public final class CSVTypeInfoGenerator
                         break;
                     case HEADING:
                         columnInfo.setColumnClass(Double.class);
-                        columnInfo.setSpecialType(
-                                io.opensphere.core.util.Utilities.getValue(specialColumn.getSpecialKey(), HeadingKey.DEFAULT));
+                        columnInfo.setSpecialType(HeadingKey.DEFAULT);
                         break;
                     case SPEED:
+                    {
                         columnInfo.setColumnClass(Double.class);
-                        columnInfo.setSpecialType(
-                                io.opensphere.core.util.Utilities.getValue(specialColumn.getSpecialKey(), SpeedKey.DEFAULT));
+                        SpeedUnit unit = SpeedUnit.detectUnit(columnName);
+                        SpeedKey specialType = unit != null ? new SpeedKey(unit) : SpeedKey.DEFAULT;
+                        columnInfo.setSpecialType(specialType);
+                    }
+                        break;
+                    case HEADING_ERROR:
+                        columnInfo.setColumnClass(Double.class);
+                        columnInfo.setSpecialType(HeadingErrorKey.DEFAULT);
+                        break;
+                    case SPEED_ERROR:
+                    {
+                        columnInfo.setColumnClass(Double.class);
+                        SpeedUnit unit = SpeedUnit.detectUnit(columnName);
+                        SpeedErrorKey specialType = unit != null ? new SpeedErrorKey(unit) : SpeedErrorKey.DEFAULT;
+                        columnInfo.setSpecialType(specialType);
+                    }
                         break;
                     default:
                         break;

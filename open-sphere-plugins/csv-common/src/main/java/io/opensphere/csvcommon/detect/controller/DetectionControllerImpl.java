@@ -303,7 +303,6 @@ public class DetectionControllerImpl
                     if (columnType != null && !usedColumnTypes.contains(columnType))
                     {
                         SpecialColumn specialColumn = new SpecialColumn(headerIndex, columnType, null);
-                        specialColumn.setSpecialKey(specialKey);
                         result.getOtherColumns().add(specialColumn);
                         usedColumnTypes.add(columnType);
                     }

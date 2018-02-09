@@ -7,33 +7,33 @@ import io.opensphere.mantle.data.SpecialColumnDetector;
 import io.opensphere.mantle.data.SpecialKey;
 
 /**
- * A {@link SpecialKey} for speed.
+ * A {@link SpecialKey} for speed error.
  */
-public class SpeedKey extends AbstractSpecialKey implements SpecialColumnDetector
+public class SpeedErrorKey extends AbstractSpecialKey implements SpecialColumnDetector
 {
-    /** The default SpeedKey. */
-    public static final SpeedKey DEFAULT = new SpeedKey();
+    /** The default SpeedErrorKey. */
+    public static final SpeedErrorKey DEFAULT = new SpeedErrorKey();
 
     /** The name of this key. */
-    private static final String NAME = "Speed";
+    private static final String NAME = "Speed Error";
 
     /** The serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiates a new speed key with the METERS_PER_SECOND unit.
+     * Instantiates a new speed error key with the METERS_PER_SECOND unit.
      */
-    public SpeedKey()
+    public SpeedErrorKey()
     {
         super(NAME, SpeedUnit.METERS_PER_SECOND);
     }
 
     /**
-     * Instantiates a new speed key.
+     * Instantiates a new speed error key.
      *
      * @param unit the orientation unit
      */
-    public SpeedKey(SpeedUnit unit)
+    public SpeedErrorKey(SpeedUnit unit)
     {
         super(NAME, unit);
     }
@@ -48,7 +48,7 @@ public class SpeedKey extends AbstractSpecialKey implements SpecialColumnDetecto
     public boolean markSpecialColumn(MetaDataInfo metaData, String columnName)
     {
         boolean wasDetected = false;
-        if (!metaData.hasTypeForSpecialKey(SpeedKey.DEFAULT))
+        if (!metaData.hasTypeForSpecialKey(SpeedErrorKey.DEFAULT))
         {
             SpecialKey specialKey = detectColumn(columnName);
             if (specialKey != null)
@@ -64,22 +64,11 @@ public class SpeedKey extends AbstractSpecialKey implements SpecialColumnDetecto
     public SpecialKey detectColumn(String columnName)
     {
         SpecialKey specialKey = null;
-        if (isSpeed(columnName) && !StringUtils.containsIgnoreCase(columnName, "error"))
+        if (SpeedKey.isSpeed(columnName) && StringUtils.containsIgnoreCase(columnName, "error"))
         {
             SpeedUnit unit = SpeedUnit.detectUnit(columnName);
-            specialKey = unit != null ? new SpeedKey(unit) : SpeedKey.DEFAULT;
+            specialKey = unit != null ? new SpeedErrorKey(unit) : SpeedErrorKey.DEFAULT;
         }
         return specialKey;
-    }
-
-    /**
-     * Inspects the supplied column name, to determine if it represents a heading.
-     *
-     * @param columnName the name of the column to inspect
-     * @return whether the column is determined to be a heading column
-     */
-    public static boolean isSpeed(String columnName)
-    {
-        return StringUtils.containsIgnoreCase(columnName, "speed");
     }
 }

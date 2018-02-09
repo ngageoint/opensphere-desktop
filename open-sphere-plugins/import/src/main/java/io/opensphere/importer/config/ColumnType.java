@@ -8,7 +8,9 @@ import io.opensphere.mantle.data.SpecialKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseOrientationKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMajorAxisKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMinorAxisKey;
+import io.opensphere.mantle.data.impl.specialkey.HeadingErrorKey;
 import io.opensphere.mantle.data.impl.specialkey.HeadingKey;
+import io.opensphere.mantle.data.impl.specialkey.SpeedErrorKey;
 import io.opensphere.mantle.data.impl.specialkey.SpeedKey;
 
 /**
@@ -76,8 +78,14 @@ public enum ColumnType
     /** Heading. */
     HEADING("Heading", HeadingKey.DEFAULT),
 
+    /** Heading error. */
+    HEADING_ERROR("Heading Error", HeadingErrorKey.DEFAULT),
+
     /** Speed. */
-    SPEED("Speed", SpeedKey.DEFAULT)
+    SPEED("Speed", SpeedKey.DEFAULT),
+
+    /** Speed error. */
+    SPEED_ERROR("Speed Error", SpeedErrorKey.DEFAULT)
 
     ;
 

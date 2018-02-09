@@ -64,7 +64,7 @@ public class HeadingKey extends AbstractSpecialKey implements SpecialColumnDetec
     @Override
     public SpecialKey detectColumn(String columnName)
     {
-        return isHeading(columnName) ? HeadingKey.DEFAULT : null;
+        return isHeading(columnName) && !StringUtils.containsIgnoreCase(columnName, "error") ? HeadingKey.DEFAULT : null;
     }
 
     /**

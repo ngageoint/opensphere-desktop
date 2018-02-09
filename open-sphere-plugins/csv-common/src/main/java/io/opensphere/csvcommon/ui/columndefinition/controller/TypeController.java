@@ -111,6 +111,8 @@ public class TypeController implements Observer
         allDataTypes.add(ColumnType.ASSOCIATION_ID);
         allDataTypes.add(ColumnType.HEADING);
         allDataTypes.add(ColumnType.SPEED);
+        allDataTypes.add(ColumnType.HEADING_ERROR);
+        allDataTypes.add(ColumnType.SPEED_ERROR);
 
         return allDataTypes;
     }
