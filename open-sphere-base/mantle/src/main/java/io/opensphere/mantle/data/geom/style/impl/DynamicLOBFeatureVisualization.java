@@ -23,6 +23,7 @@ import io.opensphere.mantle.data.geom.style.impl.ui.GroupedMiniStyleEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.GroupedStyleParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.PanelBuilder;
 import io.opensphere.mantle.data.geom.style.impl.ui.StyleParameterEditorGroupPanel;
+import io.opensphere.mantle.data.impl.specialkey.HeadingKey;
 import io.opensphere.mantle.data.impl.specialkey.LineOfBearingKey;
 
 /**
@@ -200,6 +201,14 @@ public class DynamicLOBFeatureVisualization extends AbstractLOBFeatureVisualizat
                 if (lobOrientKey != null)
                 {
                     setParameter(ourLOBOrientationColumnKey, lobOrientKey, NO_EVENT_SOURCE);
+                }
+                else
+                {
+                    String headingKey = dti.getMetaDataInfo().getKeyForSpecialType(HeadingKey.DEFAULT);
+                    if (headingKey != null)
+                    {
+                        setParameter(ourLOBOrientationColumnKey, headingKey, NO_EVENT_SOURCE);
+                    }
                 }
             }
         }
