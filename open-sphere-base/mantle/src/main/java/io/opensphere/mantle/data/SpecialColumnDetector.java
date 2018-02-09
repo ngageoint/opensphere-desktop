@@ -1,7 +1,6 @@
 package io.opensphere.mantle.data;
 
 /** A functional interface used to detect and mark special columns. */
-@FunctionalInterface
 public interface SpecialColumnDetector
 {
     /**
@@ -16,4 +15,13 @@ public interface SpecialColumnDetector
      *         false otherwise.
      */
     boolean markSpecialColumn(MetaDataInfo layerInfo, String columnName);
+
+    /**
+     * Tests to determine if the supplied column is a some kind of special
+     * column, and if so returns the special key type.
+     *
+     * @param columnName the <code>column</code> to test and possibly mark.
+     * @return the special key or null if it wasn't detected
+     */
+    SpecialKey detectColumn(String columnName);
 }

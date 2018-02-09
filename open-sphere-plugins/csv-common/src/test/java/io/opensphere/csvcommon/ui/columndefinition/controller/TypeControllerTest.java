@@ -61,7 +61,7 @@ public class TypeControllerTest
         myUnselectedColumn.setDataType("");
         myModel.setSelectedDefinition(mySelectedColumn);
 
-        assertEquals(16, myModel.getAvailableDataTypes().size());
+        assertEquals(18, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_TIMESTAMP.toString()));
@@ -80,7 +80,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.TIMESTAMP.toString()));
-        assertEquals(16, myModel.getAvailableDataTypes().size());
+        assertEquals(18, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DATE.toString()));
@@ -98,7 +98,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DATE.toString()));
-        assertEquals(17, myModel.getAvailableDataTypes().size());
+        assertEquals(19, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.TIMESTAMP.toString()));
@@ -115,7 +115,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.TIME.toString()));
-        assertEquals(17, myModel.getAvailableDataTypes().size());
+        assertEquals(19, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.TIMESTAMP.toString()));
@@ -132,7 +132,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_TIMESTAMP.toString()));
-        assertEquals(16, myModel.getAvailableDataTypes().size());
+        assertEquals(18, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_DATE.toString()));
@@ -150,7 +150,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_DATE.toString()));
-        assertEquals(16, myModel.getAvailableDataTypes().size());
+        assertEquals(18, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_TIMESTAMP.toString()));
@@ -168,7 +168,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_TIME.toString()));
-        assertEquals(16, myModel.getAvailableDataTypes().size());
+        assertEquals(18, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_TIMESTAMP.toString()));
@@ -186,7 +186,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.LAT.toString()));
-        assertEquals(15, myModel.getAvailableDataTypes().size());
+        assertEquals(17, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_TIMESTAMP.toString()));
@@ -205,7 +205,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.LON.toString()));
-        assertEquals(15, myModel.getAvailableDataTypes().size());
+        assertEquals(17, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_TIMESTAMP.toString()));
@@ -224,7 +224,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.MGRS.toString()));
-        assertEquals(15, myModel.getAvailableDataTypes().size());
+        assertEquals(17, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_TIMESTAMP.toString()));
@@ -243,7 +243,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.POSITION.toString()));
-        assertEquals(15, myModel.getAvailableDataTypes().size());
+        assertEquals(17, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_TIMESTAMP.toString()));
@@ -262,7 +262,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.WKT_GEOMETRY.toString()));
-        assertEquals(15, myModel.getAvailableDataTypes().size());
+        assertEquals(17, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_TIMESTAMP.toString()));
@@ -281,7 +281,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.SEMIMAJOR.toString()));
-        assertEquals(15, myModel.getAvailableDataTypes().size());
+        assertEquals(17, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_TIMESTAMP.toString()));
@@ -300,7 +300,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.SEMIMINOR.toString()));
-        assertEquals(15, myModel.getAvailableDataTypes().size());
+        assertEquals(17, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_TIMESTAMP.toString()));
@@ -319,7 +319,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.ORIENTATION.toString()));
-        assertEquals(15, myModel.getAvailableDataTypes().size());
+        assertEquals(17, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_TIMESTAMP.toString()));
@@ -338,7 +338,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.RADIUS.toString()));
-        assertEquals(15, myModel.getAvailableDataTypes().size());
+        assertEquals(17, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_TIMESTAMP.toString()));
@@ -357,7 +357,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.LOB.toString()));
-        assertEquals(15, myModel.getAvailableDataTypes().size());
+        assertEquals(17, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_TIMESTAMP.toString()));
@@ -376,7 +376,7 @@ public class TypeControllerTest
         myModel.setSelectedDefinition(mySelectedColumn);
 
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.ALT.toString()));
-        assertEquals(15, myModel.getAvailableDataTypes().size());
+        assertEquals(17, myModel.getAvailableDataTypes().size());
 
         // ensure that the myModel does not contain unexpected columns:
         assertFalse(myModel.getAvailableDataTypes().contains(ColumnType.DOWN_TIMESTAMP.toString()));
