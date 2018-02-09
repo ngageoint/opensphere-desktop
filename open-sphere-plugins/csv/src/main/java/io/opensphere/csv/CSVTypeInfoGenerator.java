@@ -7,6 +7,7 @@ import java.util.Set;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.csv.config.v2.CSVDataSource;
 import io.opensphere.csvcommon.ColumnInfo;
@@ -25,10 +26,15 @@ import io.opensphere.mantle.data.impl.specialkey.AltitudeKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseOrientationKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMajorAxisKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMinorAxisKey;
+import io.opensphere.mantle.data.impl.specialkey.HeadingErrorKey;
+import io.opensphere.mantle.data.impl.specialkey.HeadingKey;
 import io.opensphere.mantle.data.impl.specialkey.LatitudeKey;
 import io.opensphere.mantle.data.impl.specialkey.LineOfBearingKey;
 import io.opensphere.mantle.data.impl.specialkey.LongitudeKey;
 import io.opensphere.mantle.data.impl.specialkey.RadiusKey;
+import io.opensphere.mantle.data.impl.specialkey.SpeedErrorKey;
+import io.opensphere.mantle.data.impl.specialkey.SpeedKey;
+import io.opensphere.mantle.data.impl.specialkey.SpeedUnit;
 import io.opensphere.mantle.data.impl.specialkey.TimeKey;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.mantle.util.dynenum.DynamicEnumerationKey;
@@ -242,12 +248,22 @@ public final class CSVTypeInfoGenerator
                         columnInfo.setSpecialType(AltitudeKey.DEFAULT);
                         break;
                     case SEMIMAJOR:
+                    {
                         columnInfo.setColumnClass(Double.class);
-                        columnInfo.setSpecialType(EllipseSemiMajorAxisKey.DEFAULT);
+                        Class<? extends Length> unit = EllipseSemiMajorAxisKey.detectUnit(columnName);
+                        EllipseSemiMajorAxisKey specialType = unit != null ? new EllipseSemiMajorAxisKey(unit)
+                                : EllipseSemiMajorAxisKey.DEFAULT;
+                        columnInfo.setSpecialType(specialType);
+                    }
                         break;
                     case SEMIMINOR:
+                    {
                         columnInfo.setColumnClass(Double.class);
-                        columnInfo.setSpecialType(EllipseSemiMinorAxisKey.DEFAULT);
+                        Class<? extends Length> unit = EllipseSemiMinorAxisKey.detectUnit(columnName);
+                        EllipseSemiMinorAxisKey specialType = unit != null ? new EllipseSemiMinorAxisKey(unit)
+                                : EllipseSemiMinorAxisKey.DEFAULT;
+                        columnInfo.setSpecialType(specialType);
+                    }
                         break;
                     case ORIENTATION:
                         columnInfo.setColumnClass(Double.class);
@@ -260,6 +276,30 @@ public final class CSVTypeInfoGenerator
                     case LOB:
                         columnInfo.setColumnClass(Double.class);
                         columnInfo.setSpecialType(LineOfBearingKey.DEFAULT);
+                        break;
+                    case HEADING:
+                        columnInfo.setColumnClass(Double.class);
+                        columnInfo.setSpecialType(HeadingKey.DEFAULT);
+                        break;
+                    case SPEED:
+                    {
+                        columnInfo.setColumnClass(Double.class);
+                        SpeedUnit unit = SpeedUnit.detectUnit(columnName);
+                        SpeedKey specialType = unit != null ? new SpeedKey(unit) : SpeedKey.DEFAULT;
+                        columnInfo.setSpecialType(specialType);
+                    }
+                        break;
+                    case HEADING_ERROR:
+                        columnInfo.setColumnClass(Double.class);
+                        columnInfo.setSpecialType(HeadingErrorKey.DEFAULT);
+                        break;
+                    case SPEED_ERROR:
+                    {
+                        columnInfo.setColumnClass(Double.class);
+                        SpeedUnit unit = SpeedUnit.detectUnit(columnName);
+                        SpeedErrorKey specialType = unit != null ? new SpeedErrorKey(unit) : SpeedErrorKey.DEFAULT;
+                        columnInfo.setSpecialType(specialType);
+                    }
                         break;
                     default:
                         break;

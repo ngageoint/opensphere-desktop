@@ -28,4 +28,13 @@ public interface ColumnTypeDetector
      * @return true if the column is a special key, false otherwise.
      */
     boolean examineColumn(MetaDataInfo metaData, String columnName);
+
+    /**
+     * Tests to determine if the supplied column is a some kind of special
+     * column, and if so returns the special key type.
+     *
+     * @param columnName the <code>column</code> to test and possibly mark.
+     * @return the special key or null if it wasn't detected
+     */
+    SpecialKey detectColumn(String columnName);
 }

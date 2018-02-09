@@ -7,49 +7,48 @@ import io.opensphere.mantle.data.SpecialColumnDetector;
 import io.opensphere.mantle.data.SpecialKey;
 
 /**
- * A {@link SpecialKey} for heading / bearing / course.
+ * A {@link SpecialKey} for speed.
  */
-public class HeadingKey extends AbstractSpecialKey implements SpecialColumnDetector
+public class SpeedKey extends AbstractSpecialKey implements SpecialColumnDetector
 {
-    /** The default HeadingKey. */
-    public static final HeadingKey DEFAULT = new HeadingKey();
+    /** The default SpeedKey. */
+    public static final SpeedKey DEFAULT = new SpeedKey();
 
     /** The name of this key. */
-    private static final String NAME = "Heading";
+    private static final String NAME = "Speed";
 
     /** The serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiates a new heading key with the DEGREES_CLOCKWISE_FROM_NORTH
-     * unit.
+     * Instantiates a new speed key with the METERS_PER_SECOND unit.
      */
-    public HeadingKey()
+    public SpeedKey()
     {
-        super(NAME, HeadingUnit.DEGREES_CLOCKWISE_FROM_NORTH);
+        super(NAME, SpeedUnit.METERS_PER_SECOND);
     }
 
     /**
-     * Instantiates a new heading key.
+     * Instantiates a new speed key.
      *
      * @param unit the orientation unit
      */
-    public HeadingKey(HeadingUnit unit)
+    public SpeedKey(SpeedUnit unit)
     {
         super(NAME, unit);
     }
 
     @Override
-    public HeadingUnit getKeyUnit()
+    public SpeedUnit getKeyUnit()
     {
-        return (HeadingUnit)super.getKeyUnit();
+        return (SpeedUnit)super.getKeyUnit();
     }
 
     @Override
     public boolean markSpecialColumn(MetaDataInfo metaData, String columnName)
     {
         boolean wasDetected = false;
-        if (!metaData.hasTypeForSpecialKey(HeadingKey.DEFAULT))
+        if (!metaData.hasTypeForSpecialKey(SpeedKey.DEFAULT))
         {
             SpecialKey specialKey = detectColumn(columnName);
             if (specialKey != null)
@@ -64,7 +63,13 @@ public class HeadingKey extends AbstractSpecialKey implements SpecialColumnDetec
     @Override
     public SpecialKey detectColumn(String columnName)
     {
-        return isHeading(columnName) && !StringUtils.containsIgnoreCase(columnName, "error") ? HeadingKey.DEFAULT : null;
+        SpecialKey specialKey = null;
+        if (isSpeed(columnName) && !StringUtils.containsIgnoreCase(columnName, "error"))
+        {
+            SpeedUnit unit = SpeedUnit.detectUnit(columnName);
+            specialKey = unit != null ? new SpeedKey(unit) : SpeedKey.DEFAULT;
+        }
+        return specialKey;
     }
 
     /**
@@ -73,16 +78,8 @@ public class HeadingKey extends AbstractSpecialKey implements SpecialColumnDetec
      * @param columnName the name of the column to inspect
      * @return whether the column is determined to be a heading column
      */
-    public static boolean isHeading(String columnName)
+    public static boolean isSpeed(String columnName)
     {
-        return StringUtils.containsIgnoreCase(columnName, "course") || StringUtils.containsIgnoreCase(columnName, "heading")
-                || StringUtils.containsIgnoreCase(columnName, "bearing");
-    }
-
-    /** An enumeration of heading units. */
-    public enum HeadingUnit
-    {
-        /** DEGREES_CLOCKWISE_FROM_NORTH. */
-        DEGREES_CLOCKWISE_FROM_NORTH
+        return StringUtils.containsIgnoreCase(columnName, "speed");
     }
 }
