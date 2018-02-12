@@ -160,8 +160,7 @@ public class SelectionHandler
         @Override
         public List<JMenuItem> getMenuItems(String contextId, MultiGeometryContextKey key)
         {
-            List<JMenuItem> menuItems = SelectionCommand.getRoiMenuItems(new PolygonCommandActionListener(key.getGeometries()),
-                    hasLoadFilters());
+            List<JMenuItem> menuItems = getMultiGeometryMenu(key.getGeometries());
             if (key.getGeometries().isEmpty())
             {
                 for (JMenuItem item : menuItems)
@@ -265,6 +264,7 @@ public class SelectionHandler
                 myGeometryContextMenuProvider);
         actionManager.registerContextMenuItemProvider(ContextIdentifiers.ROI_CONTEXT, MultiGeometryContextKey.class,
                 myMultiGeometryContextMenuProvider);
+
     }
 
     /**
@@ -879,6 +879,18 @@ public class SelectionHandler
         {
             LOGGER.warn("Unrecognized geometry type: '" + geom.getClass().getName() + "' cannot be used to create a buffer.");
         }
+        return menuItems;
+    }
+    
+    /**
+     * Gets menu when you have multiple geometries.
+     * @param geometries the geometries
+     * @return menuItems the menu 
+     */
+    public List<JMenuItem> getMultiGeometryMenu(Collection<? extends Geometry> geometries)
+    {
+        List<JMenuItem> menuItems = SelectionCommand.getRoiMenuItems(new PolygonCommandActionListener(geometries),
+                hasLoadFilters());
         return menuItems;
     }
 

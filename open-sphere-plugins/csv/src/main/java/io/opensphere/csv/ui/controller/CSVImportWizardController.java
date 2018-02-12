@@ -62,7 +62,9 @@ import io.opensphere.csvcommon.ui.controller.ImportableColumnController;
 import io.opensphere.importer.config.ColumnType;
 import io.opensphere.importer.config.LayerSettings;
 import io.opensphere.importer.config.SpecialColumn;
+import io.opensphere.mantle.data.ColumnTypeDetector;
 import io.opensphere.mantle.data.LoadsTo;
+import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.mantle.util.ProgressDialog;
 
 /** Controller for the CSV import wizard. */
@@ -125,7 +127,8 @@ public class CSVImportWizardController implements Observer
         assert EventQueue.isDispatchThread();
 
         myDataSource = dataSource;
-        myDetectionController = new DetectionControllerImpl(myToolbox.getPreferencesRegistry());
+        ColumnTypeDetector columnTypeDetector = MantleToolboxUtils.getMantleToolbox(myToolbox).getColumnTypeDetector();
+        myDetectionController = new DetectionControllerImpl(myToolbox.getPreferencesRegistry(), columnTypeDetector);
         final File file = new File(dataSource.getSourceUri());
 
         final ProgressDialog progressDialog = new ProgressDialog(parent, "Import CSV File", false, true, false, null, 0);
@@ -649,6 +652,7 @@ public class CSVImportWizardController implements Observer
         copyDetectedAltitudeParametersToParseParameters(detected, parse, ourConfidenceThreshold);
         copyDetectedLOBParametersToParseParameters(detected, parse, ourConfidenceThreshold);
         copyDetectedColumnFormat(detected, parse, ourConfidenceThreshold);
+        parse.getSpecialColumns().addAll(detected.getOtherColumns());
     }
 
     /**

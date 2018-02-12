@@ -1,6 +1,9 @@
 package io.opensphere.csvcommon.detect.controller;
 
+import java.util.List;
+
 import io.opensphere.core.model.IntegerRange;
+import io.opensphere.core.util.collections.New;
 import io.opensphere.csvcommon.common.datetime.DateColumnResults;
 import io.opensphere.csvcommon.detect.ValuesWithConfidence;
 import io.opensphere.csvcommon.detect.columnformat.ColumnFormatParameters;
@@ -36,6 +39,9 @@ public class DetectedParameters
 
     /** The LOB parameter. */
     private ValuesWithConfidence<LobColumnResults> myLOBParameter;
+
+    /** Other detected columns. */
+    private final List<SpecialColumn> myOtherColumns = New.list();
 
     /**
      * Gets the altitudeParameter.
@@ -195,5 +201,15 @@ public class DetectedParameters
     public void setHeaderLineParameter(ValuesWithConfidence<Integer> headerLineParameter)
     {
         myHeaderLineParameter = headerLineParameter;
+    }
+
+    /**
+     * Gets the other detected columns.
+     *
+     * @return the other detected columns
+     */
+    public List<SpecialColumn> getOtherColumns()
+    {
+        return myOtherColumns;
     }
 }

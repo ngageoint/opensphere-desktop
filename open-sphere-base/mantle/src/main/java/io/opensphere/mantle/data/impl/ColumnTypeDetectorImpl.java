@@ -6,6 +6,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import io.opensphere.mantle.data.ColumnTypeDetector;
 import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.SpecialColumnDetector;
+import io.opensphere.mantle.data.SpecialKey;
 
 /**
  * Detects column types known to mantle. These detections should be fairly
@@ -69,5 +70,21 @@ public class ColumnTypeDetectorImpl implements ColumnTypeDetector
             wasDetected |= detector.markSpecialColumn(metaData, columnName);
         }
         return wasDetected;
+    }
+
+    @Override
+    public SpecialKey detectColumn(String columnName)
+    {
+        SpecialKey specialKey = null;
+        for (SpecialColumnDetector detector : myDetectors)
+        {
+            SpecialKey key = detector.detectColumn(columnName);
+            if (key != null)
+            {
+                specialKey = key;
+                break;
+            }
+        }
+        return specialKey;
     }
 }
