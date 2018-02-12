@@ -5,6 +5,7 @@ import java.util.Map;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.cache.util.PropertyArrayDescriptor;
+import javafx.beans.property.StringProperty;
 
 /**
  * An interface for describing the metadata for a data type.
@@ -321,4 +322,16 @@ public interface MetaDataInfo
      *         or if the process was performed inline.
      */
     boolean isSpecialKeyExaminationRequired();
+
+    /**
+     * Gets the property in which the unique identifier key property is
+     * maintained. The key in this property corresponds to the same key
+     * associated with the association ID special key type. The property from
+     * this method must never be null, but the value accessed within the
+     * returned property may be null.
+     *
+     * @return the property in which the unique identifier key property is
+     *         maintained.
+     */
+    StringProperty uniqueIdentifierKeyProperty();
 }
