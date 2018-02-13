@@ -44,7 +44,7 @@ public class CompoundEventAdapter extends BoundEventAdapter implements CompoundE
      * @param title The title for the adapter.
      * @param description The description of the adapter.
      */
-    protected CompoundEventAdapter(String category, String title, String description)
+    public CompoundEventAdapter(String category, String title, String description)
     {
         super(category, title, description);
     }
