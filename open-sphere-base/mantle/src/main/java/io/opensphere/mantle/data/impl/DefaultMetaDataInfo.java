@@ -16,6 +16,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.cache.util.PropertyArrayDescriptor;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.javafx.ConcurrentStringProperty;
 import io.opensphere.core.util.lang.ToStringHelper;
 import io.opensphere.mantle.data.ColumnTypeDetector;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -35,6 +36,7 @@ import io.opensphere.mantle.data.util.DataElementLookupException;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.mantle.util.NumericDataDeterminationUtil;
 import io.opensphere.mantle.util.NumericDataDeterminationUtil.NumericDetermination;
+import javafx.beans.property.StringProperty;
 
 /**
  * An class for describing the metadata for a data type.
@@ -101,6 +103,11 @@ public class DefaultMetaDataInfo implements MetaDataInfo
      * for special keys. Defaults to true.
      */
     private boolean mySpecialKeyExaminationRequired = true;
+
+    /**
+     * The property in which the unique identifier key is maintained.
+     */
+    private final StringProperty myUniqueIdentifierKeyProperty = new ConcurrentStringProperty();
 
     /**
      * Clear preferences registry entry for numeric cache.
@@ -227,10 +234,11 @@ public class DefaultMetaDataInfo implements MetaDataInfo
     }
 
     /**
-     * Sets the value of the specialKeyExaminationRequired ({@link #mySpecialKeyExaminationRequired}) field.
+     * Sets the value of the specialKeyExaminationRequired
+     * ({@link #mySpecialKeyExaminationRequired}) field.
      *
-     * @param specialKeyExaminationRequired
-     *            the value to store in the {@link #mySpecialKeyExaminationRequired} field.
+     * @param specialKeyExaminationRequired the value to store in the
+     *            {@link #mySpecialKeyExaminationRequired} field.
      */
     @Override
     public void setSpecialKeyExaminationRequired(boolean specialKeyExaminationRequired)
@@ -899,5 +907,16 @@ public class DefaultMetaDataInfo implements MetaDataInfo
         }
         mySpecialKeyToTypeMap.clear();
         mySpecialTypeToKeyMap.clear();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.MetaDataInfo#uniqueIdentifierKeyProperty()
+     */
+    @Override
+    public StringProperty uniqueIdentifierKeyProperty()
+    {
+        return myUniqueIdentifierKeyProperty;
     }
 }
