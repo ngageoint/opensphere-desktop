@@ -16,6 +16,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.cache.util.PropertyArrayDescriptor;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.javafx.ConcurrentStringProperty;
 import io.opensphere.core.util.lang.ToStringHelper;
 import io.opensphere.mantle.data.ColumnTypeDetector;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -35,7 +36,6 @@ import io.opensphere.mantle.data.util.DataElementLookupException;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.mantle.util.NumericDataDeterminationUtil;
 import io.opensphere.mantle.util.NumericDataDeterminationUtil.NumericDetermination;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
@@ -107,7 +107,7 @@ public class DefaultMetaDataInfo implements MetaDataInfo
     /**
      * The property in which the unique identifier key is maintained.
      */
-    private final StringProperty myUniqueIdentifierKeyProperty = new SimpleStringProperty();
+    private final StringProperty myUniqueIdentifierKeyProperty = new ConcurrentStringProperty();
 
     /**
      * Clear preferences registry entry for numeric cache.
