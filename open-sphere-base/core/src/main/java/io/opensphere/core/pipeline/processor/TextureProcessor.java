@@ -29,6 +29,7 @@ import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.ImageGroup;
 import io.opensphere.core.geometry.ImageManager;
 import io.opensphere.core.geometry.ImageProvidingGeometry;
+import io.opensphere.core.geometry.PointSpriteGeometry;
 import io.opensphere.core.geometry.RenderableGeometry;
 import io.opensphere.core.geometry.renderproperties.BaseRenderProperties;
 import io.opensphere.core.image.Image;
@@ -917,10 +918,13 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
         Collection<E> textureDataLoaded = New.collection(objects.size());
         Collection<E> textureLoaded = New.collection(0);
         Collection<E> reload = null;
+        Collection<E> retFailed = null;
+
         for (E geom : objects)
         {
             handleBlankImage(geom);
             ImageGroup imageData = geom.getImageManager().pollCachedImageData();
+
             if (imageData == null)
             {
                 reload = handleMissingImageData(geom, textureLoaded, reload);
@@ -928,8 +932,19 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
             else
             {
                 // Ignore failed here because there may be another thread trying
-                // to process the image.
-                handleImageLoaded(textureDataLoaded, textureLoaded, (Collection<E>)null, geom, imageData);
+                // to process the image. If failed is instance of PointSpriteGeometry, reprocess.
+
+                retFailed = handleImageLoaded(textureDataLoaded, textureLoaded, (Collection<E>)null, geom, imageData);
+                if (retFailed != null)
+                {
+                    retFailed.forEach(geometry ->
+                    {
+                        if (geometry instanceof PointSpriteGeometry)
+                        {
+                            handleImageLoaded(textureDataLoaded, textureLoaded, (Collection<E>)null, geometry, imageData);
+                        }
+                    });
+                }
             }
         }
 
@@ -1529,7 +1544,8 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
             {
                 if (!myImageManagersToGeoms.containsKey(geom.getImageManager()))
                 {
-                    List<E> geoms = imageManagersToGeoms.computeIfAbsent(geom.getImageManager(), k -> Collections.synchronizedList(New.list()));
+                    List<E> geoms = imageManagersToGeoms.computeIfAbsent(geom.getImageManager(),
+                            k -> Collections.synchronizedList(New.list()));
                     geoms.add(geom);
                 }
                 else
