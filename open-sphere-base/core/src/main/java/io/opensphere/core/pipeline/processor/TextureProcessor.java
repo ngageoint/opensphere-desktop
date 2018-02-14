@@ -932,7 +932,8 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
             else
             {
                 // Ignore failed here because there may be another thread trying
-                // to process the image. If failed is instance of PointSpriteGeometry, reprocess.
+                // to process the image. If failed is instance of
+                // PointSpriteGeometry, reprocess.
 
                 retFailed = handleImageLoaded(textureDataLoaded, textureLoaded, (Collection<E>)null, geom, imageData);
                 if (retFailed != null)
