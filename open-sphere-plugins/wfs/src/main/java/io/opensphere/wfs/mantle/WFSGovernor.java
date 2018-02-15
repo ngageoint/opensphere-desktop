@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import com.vividsolutions.jts.geom.Polygon;
 
+import io.opensphere.core.Notify;
 import io.opensphere.core.animationhelper.TimeSpanGovernor;
 import io.opensphere.core.cache.accessor.GeometryAccessor;
 import io.opensphere.core.cache.accessor.TimeSpanAccessor;
@@ -127,6 +128,10 @@ public class WFSGovernor extends TimeSpanGovernor implements QueryTrackerListene
     public void statusChanged(QueryTracker tracker, QueryStatus status)
     {
         tracker.logException();
+        if (status == QueryStatus.FAILED)
+        {
+            Notify.error(tracker.getException().getMessage());
+        }
     }
 
     @Override

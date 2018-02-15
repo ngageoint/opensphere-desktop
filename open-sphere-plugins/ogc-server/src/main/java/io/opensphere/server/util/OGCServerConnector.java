@@ -7,6 +7,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -26,6 +28,8 @@ import io.opensphere.core.server.ServerProvider;
 import io.opensphere.core.server.ServerProviderRegistry;
 import io.opensphere.core.util.XMLUtilities;
 import io.opensphere.core.util.io.CancellableInputStream;
+import io.opensphere.core.util.io.StreamReader;
+import io.opensphere.core.util.lang.StringUtilities;
 
 /**
  * This handles establishing a connection with the OGC server.
@@ -140,6 +144,7 @@ public class OGCServerConnector
      * @return DataFileStream
      * @throws IOException if the InputStream breaks
      */
+    @SuppressWarnings("PMD.PreserveStackTrace")
     public static DataFileStream<GenericRecord> avroDataStream(InputStream in) throws IOException
     {
         if (in == null)
@@ -148,7 +153,27 @@ public class OGCServerConnector
         }
         GenericDatumReader<GenericRecord> gdr = new GenericDatumReader<>();
         gdr.getData().addLogicalTypeConversion(new TimeConversions.TimestampConversion());
-        return new DataFileStream<>(in, gdr);
+        try
+        {
+            return new DataFileStream<>(in, gdr);
+        }
+        catch (IOException e)
+        {
+            /* Attempt to parse the ExceptionReport from the server. Using a regular expression here because the Avro
+             * DataFileStream eats the beginning of the stream, making it no longer valid XML. */
+            String response = new StreamReader(in).readStreamIntoString(StringUtilities.DEFAULT_CHARSET);
+            Pattern pattern = Pattern.compile("<[\\w:]*?ExceptionText>(.+?)</[\\w:]*?ExceptionText>");
+            Matcher matcher = pattern.matcher(response);
+            if (matcher.find())
+            {
+                String exceptionText = matcher.group(1);
+                throw new IOException(exceptionText);
+            }
+            else
+            {
+                throw e;
+            }
+        }
     }
 
     /**
