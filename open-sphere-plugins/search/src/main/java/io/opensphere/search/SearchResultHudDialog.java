@@ -70,7 +70,8 @@ public class SearchResultHudDialog extends AbstractInternalFrame
             @Override
             public void internalFrameActivated(InternalFrameEvent e)
             {
-                myResultPanel.setDialogVisible(true);
+                // VORTEX-5538 Temporarily disable search notification dialog until recommended layers is added back
+//                myResultPanel.setDialogVisible(true);
             }
 
             @Override
