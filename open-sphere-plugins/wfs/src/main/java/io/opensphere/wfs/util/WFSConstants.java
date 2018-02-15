@@ -21,7 +21,7 @@ public final class WFSConstants
     public static final int DEFAULT_MAX_FEATURES = 100_000;
 
     /** The maximum number of maximum features. */
-    public static final int MAX_MAX_FEATURES = 500_000;
+    public static final int MAX_MAX_FEATURES = 2_000_000;
 
     /** Forbid instantiation of utility class. */
     private WFSConstants()
