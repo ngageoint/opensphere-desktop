@@ -36,7 +36,9 @@ public final class GeographicUtilities
         LatLonAlt startPoint = null;
         List<LatLonAlt> curPoly = New.list();
         Collection<List<LatLonAlt>> holes = null;
-        for (LatLonAlt lla : rings)
+        // Some shapefiles have duplicate successive points, so we remove them for the following logic work
+        List<LatLonAlt> deduped = removeDuplicates(rings);
+        for (LatLonAlt lla : deduped)
         {
             curPoly.add(lla);
 
@@ -50,10 +52,10 @@ public final class GeographicUtilities
             {
                 if (curPoly.size() > 2)
                 {
-                    // Exterior rings are defined in clockwise order and
-                    // inner rings are defined in counter-clockwise order.
+                    /* Exterior rings are defined in clockwise order and inner rings are defined in counter-clockwise order. Make
+                     * an exception to allow a counter-clockwise polygon if it's the only one in the list. */
                     PolygonWinding winding = getNaturalWinding(curPoly);
-                    if (winding == PolygonWinding.CLOCKWISE)
+                    if (winding == PolygonWinding.CLOCKWISE || deduped.size() == curPoly.size())
                     {
                         holes = New.collection();
                         polygons.put(curPoly, holes);
@@ -136,6 +138,27 @@ public final class GeographicUtilities
         }
 
         return screenPositions;
+    }
+
+    /**
+     * Creates a new list with successive duplicate points removed.
+     *
+     * @param points the points
+     * @return the de-duplicated list
+     */
+    static List<LatLonAlt> removeDuplicates(List<? extends LatLonAlt> points)
+    {
+        List<LatLonAlt> list = New.list(points.size());
+        LatLonAlt lastPoint = null;
+        for (LatLonAlt point : points)
+        {
+            if (!point.equals(lastPoint))
+            {
+                list.add(point);
+                lastPoint = point;
+            }
+        }
+        return list;
     }
 
     /** Disallow instantiation. */
