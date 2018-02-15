@@ -373,7 +373,7 @@ public abstract class AbstractWFSEnvoy extends AbstractEnvoy implements DataRegi
                             }
                             else
                             {
-                                throw new QueryException("Failed to get features from server: " + e, e);
+                                throw new QueryException("Failed to get features from server: " + e.getMessage(), e);
                             }
                         }
                         catch (OutOfMemoryError e)
