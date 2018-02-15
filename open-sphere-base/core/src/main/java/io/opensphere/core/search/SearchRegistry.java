@@ -31,9 +31,8 @@ public interface SearchRegistry
      * search for each of the current search providers until results are found.
      *
      * @param searchTerm What to search for.
-     * @param useBbox use a bounding box or not for the search
      */
-    void initiateSearch(String searchTerm, boolean useBbox);
+    void initiateSearch(String searchTerm);
 
     /**
      * Remove the search provider.
@@ -48,20 +47,6 @@ public interface SearchRegistry
      * @return searchProviders.
      */
     Map<String, Map<String, SearchProvider>> getProviders();
-
-    /**
-     * Sets whether the user wants to search in view. Search providers may choose to ignore this setting.
-     *
-     * @param inView whether the user wants to search in view
-     */
-    void setSearchInView(boolean inView);
-
-    /**
-     * Gets whether the user wants to search in view. Search providers may choose to ignore this setting.
-     *
-     * @return whether the user wants to search in view
-     */
-    boolean isSearchInView();
 
     /**
      * Gets the search providers for the given search types.

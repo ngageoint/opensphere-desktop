@@ -608,7 +608,7 @@ public class WFSEnvoy extends AbstractWFSEnvoy
             {
                 throw new OGCServerException("Cancelled streaming " + type.getDisplayName(), eek);
             }
-            throw new OGCServerException("Failed streaming " + type.getDisplayName(), eek);
+            throw new OGCServerException("Failed streaming " + type.getDisplayName() + " - " + eek.getMessage(), eek);
         }
         catch (RuntimeException eek)
         {

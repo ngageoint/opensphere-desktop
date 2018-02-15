@@ -2,10 +2,6 @@ package io.opensphere.search;
 
 import java.awt.BorderLayout;
 
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
@@ -15,6 +11,8 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.swing.AbstractHUDPanel;
 import io.opensphere.search.model.SearchModel;
 import io.opensphere.search.view.SearchDialogPanel;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
 
 /** A HUD-dialog in which search results are rendered. */
 public class SearchResultHudDialog extends AbstractInternalFrame
@@ -57,7 +55,7 @@ public class SearchResultHudDialog extends AbstractInternalFrame
 
         myResultPanel = new SearchDialogPanel(toolbox, searchModel);
         myResultPanelContainer = new JFXPanel();
-        Scene scene = new Scene(myResultPanel, 500, 800, Color.TRANSPARENT);
+        Scene scene = new Scene(myResultPanel, 500, 800);
         myResultPanelContainer.setScene(FXUtilities.addDesktopStyle(scene));
         setDefaultCloseOperation(HIDE_ON_CLOSE);
 
@@ -72,7 +70,8 @@ public class SearchResultHudDialog extends AbstractInternalFrame
             @Override
             public void internalFrameActivated(InternalFrameEvent e)
             {
-                myResultPanel.setDialogVisible(true);
+                // VORTEX-5538 Temporarily disable search notification dialog until recommended layers is added back
+//                myResultPanel.setDialogVisible(true);
             }
 
             @Override

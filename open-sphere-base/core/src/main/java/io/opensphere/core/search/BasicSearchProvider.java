@@ -17,9 +17,7 @@ public interface BasicSearchProvider extends SearchProvider
      * Perform the actual search and display any results on the map.
      *
      * @param searchString The string to search for.
-     * @param useBbox use a bounding box or not for the search
      * @return True if successful, false otherwise.
      */
-
-    boolean performSearch(String searchString, boolean useBbox);
+    boolean performSearch(String searchString);
 }
