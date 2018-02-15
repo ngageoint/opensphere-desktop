@@ -104,20 +104,10 @@ public class KeywordController
         // TODO Do we need to URL encode the search string?
         if (!StringUtils.isBlank(searchStr))
         {
-            mySearchRegistry.initiateSearch(searchStr, mySearchRegistry.isSearchInView());
+            mySearchRegistry.initiateSearch(searchStr);
         }
         FXUtilities.runOnFXThread(() -> myModel.getKeyword().set(searchStr));
         myPosition = null;
-    }
-
-    /**
-     * Tells the registry to search within a bounding box.
-     *
-     * @param selected the new search in view
-     */
-    public void setSearchInView(boolean selected)
-    {
-        mySearchRegistry.setSearchInView(selected);
     }
 
     /**

@@ -30,9 +30,6 @@ public class SearchRegistryImpl implements SearchRegistry
     @GuardedBy("myProviders")
     private final Map<String, Map<String, SearchProvider>> myProviders = new HashMap<>();
 
-    /** Whether the user wants to search in view. Search providers may choose to ignore this setting. */
-    private volatile boolean mySearchInView;
-
     @Override
     public void addSearchProvider(SearchProvider provider)
     {
@@ -59,7 +56,7 @@ public class SearchRegistryImpl implements SearchRegistry
     }
 
     @Override
-    public void initiateSearch(String searchTerm, boolean useBbox)
+    public void initiateSearch(String searchTerm)
     {
         // The order we want are
         // 1. Place Names
@@ -68,8 +65,7 @@ public class SearchRegistryImpl implements SearchRegistry
         // 4. ParsleyGeoNamesSearch
         for (SearchProvider searchProv : getProviders(SEARCH_TYPES))
         {
-            if (searchProv instanceof BasicSearchProvider
-                    && ((BasicSearchProvider)searchProv).performSearch(searchTerm, useBbox))
+            if (searchProv instanceof BasicSearchProvider && ((BasicSearchProvider)searchProv).performSearch(searchTerm))
             {
                 if (LOGGER.isDebugEnabled())
                 {
@@ -105,17 +101,5 @@ public class SearchRegistryImpl implements SearchRegistry
         {
             return New.map(myProviders);
         }
-    }
-
-    @Override
-    public void setSearchInView(boolean inView)
-    {
-        mySearchInView = inView;
-    }
-
-    @Override
-    public boolean isSearchInView()
-    {
-        return mySearchInView;
     }
 }
