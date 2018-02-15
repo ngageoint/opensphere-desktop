@@ -24,9 +24,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import javafx.application.Platform;
-import javafx.collections.ListChangeListener;
-
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -68,6 +65,8 @@ import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.search.model.SearchModel;
+import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 
 /**
  * Panel which contains the "Goto" functionality.
@@ -89,9 +88,6 @@ public final class SearchPanel extends JPanel implements ActionListener
 
     /** "Search help" text. */
     private static final String SEARCH_HELP = "Search Help";
-
-    /** "Search in view" text. */
-    private static final String SEARCH_IN_VIEW = "Search in View";
 
     /** "Search Options View" text. */
     private static final String SEARCH_OPTIONS_PANEL = "Search Options";
@@ -211,12 +207,7 @@ public final class SearchPanel extends JPanel implements ActionListener
         if (evt.getSource() instanceof JCheckBoxMenuItem)
         {
             JCheckBoxMenuItem anItem = (JCheckBoxMenuItem)evt.getSource();
-            if (anItem.getText().equals(SEARCH_IN_VIEW))
-            {
-                myPrefs.putBoolean(SEARCH_IN_VIEW, anItem.isSelected(), this);
-                mySearchGotoController.setSearchInView(anItem.isSelected());
-            }
-            else if (anItem.getText().equals(FORCE_TEXT_SEARCH))
+            if (anItem.getText().equals(FORCE_TEXT_SEARCH))
             {
                 myPrefs.putBoolean(FORCE_TEXT_SEARCH, anItem.isSelected(), this);
                 myForceTextSearch = anItem.isSelected();
@@ -525,13 +516,6 @@ public final class SearchPanel extends JPanel implements ActionListener
         {
             mySearchOptionsMenu = new OptionsMenu((Icon)null, 0);
             mySearchOptionsMenu.setIcon(IconUtil.getColorizedIcon(IconType.MENU, IconStyle.FLAT, Color.WHITE, 13));
-
-            JCheckBoxMenuItem searchViewItem = new JCheckBoxMenuItem(SEARCH_IN_VIEW);
-            boolean searchInView = myPrefs.getBoolean(SEARCH_IN_VIEW, false);
-            searchViewItem.setSelected(searchInView);
-            mySearchGotoController.setSearchInView(searchInView);
-            searchViewItem.addActionListener(this);
-            mySearchOptionsMenu.addItem(searchViewItem);
 
             JCheckBoxMenuItem forceText = new JCheckBoxMenuItem(FORCE_TEXT_SEARCH);
             myForceTextSearch = myPrefs.getBoolean(FORCE_TEXT_SEARCH, false);
