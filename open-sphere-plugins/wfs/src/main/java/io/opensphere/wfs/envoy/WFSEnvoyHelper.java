@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
@@ -399,6 +400,11 @@ public class WFSEnvoyHelper
                 type.setDescription(description);
             }
 
+            List<String> tagsToRemove = type.getTags().stream().filter(t -> t.indexOf(':') != -1).collect(Collectors.toList());
+            for (String tag : tagsToRemove)
+            {
+                type.removeTag(tag, this);
+            }
             for (KeywordsType keywords : featureType.getKeywords())
             {
                 for (String key : keywords.getKeyword())
