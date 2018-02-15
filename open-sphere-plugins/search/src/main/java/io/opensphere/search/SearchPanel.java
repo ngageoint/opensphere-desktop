@@ -59,7 +59,6 @@ import io.opensphere.core.util.image.IconUtil.IconType;
 import io.opensphere.core.util.javafx.WebDialog;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.swing.GhostTextField;
-import io.opensphere.core.util.swing.IconButton;
 import io.opensphere.core.util.swing.OptionsMenu;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.DataGroupController;
@@ -451,17 +450,20 @@ public final class SearchPanel extends JPanel implements ActionListener
             setLayout(new GridBagLayout());
             setName("searchPanel");
 
-            myWhatsHereButton = new IconButton(
-                    IconUtil.getColorizedIcon("/images/whatshere.png", IconStyle.NORMAL, IconUtil.DEFAULT_ICON_FOREGROUND));
-            myWhatsHereButton.setToolTipText("Discover what data is available in the current view and time.");
-            myWhatsHereButton.addActionListener(e ->
-            {
-                myHudFrameSupplier.get().setVisible(true);
-                myResultsDialog.resizeAndPositionToDefault(true);
-            });
-            myContainerPanel.add(myWhatsHereButton, gbc);
-
-            gbc.gridx++;
+            // removed to disable layer recommendation. Do not delete this code,
+            // it will go back in when layer recommendation is re-enabled for
+            // deployment:
+//            myWhatsHereButton = new IconButton(
+//                    IconUtil.getColorizedIcon("/images/whatshere.png", IconStyle.NORMAL, IconUtil.DEFAULT_ICON_FOREGROUND));
+//            myWhatsHereButton.setToolTipText("Discover what data is available in the current view and time.");
+//            myWhatsHereButton.addActionListener(e ->
+//            {
+//                myHudFrameSupplier.get().setVisible(true);
+//                myResultsDialog.resizeAndPositionToDefault(true);
+//            });
+//            myContainerPanel.add(myWhatsHereButton, gbc);
+//
+//            gbc.gridx++;
 
             myContainerPanel.add(getSearchMenu(), gbc);
 
