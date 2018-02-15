@@ -1,14 +1,13 @@
 package io.opensphere.search.view;
 
+import io.opensphere.core.Toolbox;
+import io.opensphere.search.controller.SearchController;
+import io.opensphere.search.model.SearchModel;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-
-import io.opensphere.core.Toolbox;
-import io.opensphere.search.controller.SearchController;
-import io.opensphere.search.model.SearchModel;
 
 /**
  * A panel in which results are rendered.
@@ -51,7 +50,6 @@ public class SearchDialogPanel extends BorderPane
 
         myModel = searchModel;
         myController = new SearchController(toolbox, myModel);
-        setStyle("-fx-background-color:transparent;");
 
         myConfigurationPane = new ConfigurationPane(myModel);
         myConfigurationPane.setMinSize(DEFAULT_MINIMUM_SIZE, HEADER_MAXIMUM_HEIGHT);
