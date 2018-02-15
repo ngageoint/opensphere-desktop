@@ -111,6 +111,21 @@ public class GeographicUtilitiesTest
     }
 
     /**
+     * Tests {@link GeographicUtilities#removeDuplicates(List)}.
+     */
+    @Test
+    public void testRemoveDuplicates()
+    {
+        // 1,1,2,1,1,1,2,1 -> 1,2,1,2,1
+        List<LatLonAlt> expected = New.list(LatLonAlt.createFromDegrees(1, 1), LatLonAlt.createFromDegrees(2, 2),
+                LatLonAlt.createFromDegrees(1, 1), LatLonAlt.createFromDegrees(2, 2), LatLonAlt.createFromDegrees(1, 1));
+        List<LatLonAlt> input = New.list(LatLonAlt.createFromDegrees(1, 1), LatLonAlt.createFromDegrees(1, 1),
+                LatLonAlt.createFromDegrees(2, 2), LatLonAlt.createFromDegrees(1, 1), LatLonAlt.createFromDegrees(1, 1),
+                LatLonAlt.createFromDegrees(1, 1), LatLonAlt.createFromDegrees(2, 2), LatLonAlt.createFromDegrees(1, 1));
+        Assert.assertEquals(expected, GeographicUtilities.removeDuplicates(input));
+    }
+
+    /**
      * Utility method for creating the list of LatLonAlt to make the code easier
      * to read.
      *
