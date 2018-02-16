@@ -23,6 +23,8 @@ import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.units.length.Kilometers;
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.units.length.Meters;
+import io.opensphere.core.units.length.NauticalMiles;
+import io.opensphere.core.units.length.StatuteMiles;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.BasicVisualizationInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -40,6 +42,7 @@ import io.opensphere.mantle.data.geom.style.StyleAltitudeReference;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleParameter;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleParameterFlags;
 import io.opensphere.mantle.data.geom.style.impl.ui.AbstractStyleParameterEditorPanel;
+import io.opensphere.mantle.data.geom.style.impl.ui.AdvancedLengthParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.CheckBoxStyleParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.EditorPanelVisibilityDependency;
 import io.opensphere.mantle.data.geom.style.impl.ui.FloatSliderStyleParameterEditorPanel;
@@ -62,7 +65,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     public static final String ourPropertyKeyPrefix = "AbstractLOBFeatureVisualizationStyle";
 
     /** The Constant ourLOBLengthPropertyKey. */
-    public static final String ourLOBLengthPropertyKey = ourPropertyKeyPrefix + ".LOBLength";
+    public static final String ourLOBLengthPropertyKey = ourPropertyKeyPrefix + ".LOBLengthNew";
 
     /** The Constant ourArrowLengthPropertyKey. */
     public static final String ourArrowLengthPropertyKey = ourPropertyKeyPrefix + ".ArrowLength";
@@ -86,8 +89,8 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     /** The Constant ourDefaultNodeSizeParameter. */
     public static final VisualizationStyleParameter ourDefaultLOBLengthParameter = new VisualizationStyleParameter(
-            ourLOBLengthPropertyKey, "Lob Length", 100f, Float.class, new VisualizationStyleParameterFlags(false, false),
-            ParameterHint.hint(false, false));
+            ourLOBLengthPropertyKey, "Lob Length", new Kilometers(100), Length.class,
+            new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
 
     /** The Constant ourDefaultNodeSizeParameter. */
     public static final VisualizationStyleParameter ourDefaultArrowLengthParameter = new VisualizationStyleParameter(
@@ -269,8 +272,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
      */
     public Length getLobLength()
     {
-        Float val = (Float)getStyleParameterValue(ourLOBLengthPropertyKey);
-        return val == null ? Meters.ZERO : new Kilometers(val.floatValue());
+        return (Length)getStyleParameterValue(ourLOBLengthPropertyKey);
     }
 
     /**
@@ -308,9 +310,12 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                 ourLengthModePropertyKey, New.list("Manual", "Column")));
 
         myLengthUnits = getToolbox().getUnitsRegistry().getPreferredFixedScaleUnits(Length.class, MAX_LOB_LENGTH);
+
         vsp = style.getStyleParameter(ourLOBLengthPropertyKey);
-        paramList.add(new LengthSliderStyleParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(vsp.getName()), style,
-                ourLOBLengthPropertyKey, false, true, MIN_LOB_LENGTH, MAX_LOB_LENGTH, myLengthUnits, Kilometers.class));
+        List<Class<? extends Length>> unitOptions = New.list(Kilometers.class, Meters.class, StatuteMiles.class,
+                NauticalMiles.class);
+        paramList.add(new AdvancedLengthParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(null), style,
+                ourLOBLengthPropertyKey, unitOptions));
 
         vsp = style.getStyleParameter(ourShowArrowPropertyKey);
         paramList.add(new CheckBoxStyleParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(vsp.getName()), style,
@@ -353,9 +358,12 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                 new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(0, null)));
 
         myLengthUnits = getToolbox().getUnitsRegistry().getPreferredFixedScaleUnits(Length.class, MAX_LOB_LENGTH);
+
         param = style.getStyleParameter(ourLOBLengthPropertyKey);
-        paramList.add(new LengthSliderStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style, ourLOBLengthPropertyKey,
-                false, true, MIN_LOB_LENGTH, MAX_LOB_LENGTH, myLengthUnits, Kilometers.class));
+        List<Class<? extends Length>> unitOptions = New.list(Kilometers.class, Meters.class, StatuteMiles.class,
+                NauticalMiles.class);
+        paramList.add(new AdvancedLengthParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(null), style,
+                ourLOBLengthPropertyKey, unitOptions));
 
         param = style.getStyleParameter(ourShowArrowPropertyKey);
         paramList.add(

@@ -1,6 +1,9 @@
 package io.opensphere.mantle.data.geom.style.impl.ui;
 
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,7 +17,7 @@ import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
 /**
  * A radio button AbstractStyleParameterEditorPanel.
  */
-public class RadioButtonParameterEditorPanel extends AbstractStyleParameterEditorPanel
+public class RadioButtonParameterEditorPanel extends AbstractStyleParameterEditorPanel implements ActionListener
 {
     /** The serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -40,6 +43,7 @@ public class RadioButtonParameterEditorPanel extends AbstractStyleParameterEdito
         for (String option : options)
         {
             JRadioButton button = new JRadioButton(option);
+            button.addActionListener(this);
             myRadioButtons.add(button);
             buttonGroup.add(button);
             panel.add(button);
@@ -55,11 +59,25 @@ public class RadioButtonParameterEditorPanel extends AbstractStyleParameterEdito
     @Override
     public final void update()
     {
+        assert EventQueue.isDispatchThread();
+
         Object value = getParamValue();
         if (value != null)
         {
             String stringValue = value.toString();
             myRadioButtons.stream().filter(b -> b.getText().equals(stringValue)).forEach(b -> b.setSelected(true));
         }
+    }
+
+    /**
+     * Called when one of the radio buttons is selected.
+     *
+     * @param e the event
+     */
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        String text = ((JRadioButton)e.getSource()).getText();
+        setParamValue(text);
     }
 }
