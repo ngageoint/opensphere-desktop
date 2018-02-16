@@ -1,6 +1,7 @@
 package io.opensphere.core.units.length;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Collection;
 
 import io.opensphere.core.units.InvalidUnitsException;
@@ -85,6 +86,28 @@ public abstract class Length implements Cloneable, Serializable, Comparable<Leng
         else
         {
             return UnitsUtilities.create(type, Length.class, from);
+        }
+    }
+
+    /**
+     * Creates a Length from the persistence string.
+     *
+     * @param className the class name
+     * @param magnitude the magnitude
+     * @return the Length
+     * @throws InvalidUnitsException If the type is invalid.
+     * @throws ParseException If the string is invalid.
+     */
+    @SuppressWarnings("unchecked")
+    public static Length parse(String className, String magnitude) throws InvalidUnitsException, ParseException
+    {
+        try
+        {
+            return create((Class<? extends Length>)Class.forName(className), Double.parseDouble(magnitude));
+        }
+        catch (NumberFormatException | ClassNotFoundException e)
+        {
+            throw new ParseException(className + " " + magnitude, 0);
         }
     }
 
