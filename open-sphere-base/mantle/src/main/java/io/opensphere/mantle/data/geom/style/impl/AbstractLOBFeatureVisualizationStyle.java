@@ -44,6 +44,7 @@ import io.opensphere.mantle.data.geom.style.VisualizationStyleParameterFlags;
 import io.opensphere.mantle.data.geom.style.impl.ui.AbstractStyleParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.AdvancedLengthParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.CheckBoxStyleParameterEditorPanel;
+import io.opensphere.mantle.data.geom.style.impl.ui.ColumnLengthParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.EditorPanelVisibilityDependency;
 import io.opensphere.mantle.data.geom.style.impl.ui.FloatSliderStyleParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.GroupedMiniStyleEditorPanel;
@@ -82,6 +83,9 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     /** The length mode property key. */
     public static final String ourLengthModePropertyKey = ourPropertyKeyPrefix + ".LengthMode";
 
+    /** The length column property key. */
+    public static final String ourLengthColumnPropertyKey = ourPropertyKeyPrefix + ".LengthColumn";
+
     /** The Constant ourDefaultEllipseLineWidthParameter. */
     public static final VisualizationStyleParameter ourDefaultLOBLineWidthParameter = new VisualizationStyleParameter(
             ourLOBLineWidthPropertyKey, "LOB Line Width", Float.valueOf(1.0f), Float.class,
@@ -111,6 +115,11 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     public static final VisualizationStyleParameter ourDefaultLengthModeParameter = new VisualizationStyleParameter(
             ourLengthModePropertyKey, "Length", "Manual", String.class, new VisualizationStyleParameterFlags(false, false),
             ParameterHint.hint(false, false));
+
+    /** The length column style parameter. */
+    public static final VisualizationStyleParameter ourDefaultLengthColumnParameter = new VisualizationStyleParameter(
+            ourLengthColumnPropertyKey, "Length Column", null, String.class, new VisualizationStyleParameterFlags(true, true),
+            ParameterHint.hint(false, true));
 
     /** The Constant MAX_LOB_LENGTH_METERS. */
     private static final Length MAX_LOB_LENGTH = new Kilometers(8000.0f);
@@ -310,12 +319,14 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                 ourLengthModePropertyKey, New.list("Manual", "Column")));
 
         myLengthUnits = getToolbox().getUnitsRegistry().getPreferredFixedScaleUnits(Length.class, MAX_LOB_LENGTH);
-
-        vsp = style.getStyleParameter(ourLOBLengthPropertyKey);
         List<Class<? extends Length>> unitOptions = New.list(Kilometers.class, Meters.class, StatuteMiles.class,
                 NauticalMiles.class);
-        paramList.add(new AdvancedLengthParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(null), style,
+
+        paramList.add(new AdvancedLengthParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(null), style,
                 ourLOBLengthPropertyKey, unitOptions));
+
+        paramList.add(new ColumnLengthParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(null), style,
+                ourLengthColumnPropertyKey, unitOptions));
 
         vsp = style.getStyleParameter(ourShowArrowPropertyKey);
         paramList.add(new CheckBoxStyleParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(vsp.getName()), style,
@@ -358,11 +369,10 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                 new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(0, null)));
 
         myLengthUnits = getToolbox().getUnitsRegistry().getPreferredFixedScaleUnits(Length.class, MAX_LOB_LENGTH);
-
-        param = style.getStyleParameter(ourLOBLengthPropertyKey);
         List<Class<? extends Length>> unitOptions = New.list(Kilometers.class, Meters.class, StatuteMiles.class,
                 NauticalMiles.class);
-        paramList.add(new AdvancedLengthParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(null), style,
+
+        paramList.add(new AdvancedLengthParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(null), style,
                 ourLOBLengthPropertyKey, unitOptions));
 
         param = style.getStyleParameter(ourShowArrowPropertyKey);
@@ -396,6 +406,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         setParameter(ourDefaultLOBOriginPointSizeParameter);
         setParameter(ourDefaultShowArrowParameter);
         setParameter(ourDefaultLengthModeParameter);
+        setParameter(ourDefaultLengthColumnParameter);
     }
 
     @Override
