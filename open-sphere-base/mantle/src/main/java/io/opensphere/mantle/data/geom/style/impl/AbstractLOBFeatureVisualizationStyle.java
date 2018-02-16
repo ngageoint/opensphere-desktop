@@ -48,6 +48,7 @@ import io.opensphere.mantle.data.geom.style.impl.ui.GroupedStyleParameterEditorP
 import io.opensphere.mantle.data.geom.style.impl.ui.LengthSliderStyleParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.PanelBuilder;
 import io.opensphere.mantle.data.geom.style.impl.ui.ParameterVisibilityConstraint;
+import io.opensphere.mantle.data.geom.style.impl.ui.RadioButtonParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.StyleParameterEditorGroupPanel;
 import io.opensphere.mantle.util.MantleConstants;
 
@@ -75,6 +76,9 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     /** The Constant ourOriginPointSizePropertyKey. */
     public static final String ourShowArrowPropertyKey = ourPropertyKeyPrefix + ".ShowArrow";
 
+    /** The length mode property key. */
+    public static final String ourLengthModePropertyKey = ourPropertyKeyPrefix + ".LengthMode";
+
     /** The Constant ourDefaultEllipseLineWidthParameter. */
     public static final VisualizationStyleParameter ourDefaultLOBLineWidthParameter = new VisualizationStyleParameter(
             ourLOBLineWidthPropertyKey, "LOB Line Width", Float.valueOf(1.0f), Float.class,
@@ -99,6 +103,11 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     public static final VisualizationStyleParameter ourDefaultShowArrowParameter = new VisualizationStyleParameter(
             ourShowArrowPropertyKey, "Show Arrow", Boolean.FALSE, Boolean.class,
             new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
+
+    /** The length mode style parameter. */
+    public static final VisualizationStyleParameter ourDefaultLengthModeParameter = new VisualizationStyleParameter(
+            ourLengthModePropertyKey, "Length", "Manual", String.class, new VisualizationStyleParameterFlags(false, false),
+            ParameterHint.hint(false, false));
 
     /** The Constant MAX_LOB_LENGTH_METERS. */
     private static final Length MAX_LOB_LENGTH = new Kilometers(8000.0f);
@@ -294,6 +303,10 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                 ourLOBOriginPointSizePropertyKey, true, false, 0.0f, MAX_POINT_SIZE,
                 new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(0, null)));
 
+        vsp = style.getStyleParameter(ourLengthModePropertyKey);
+        paramList.add(new RadioButtonParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(vsp.getName()), style,
+                ourLengthModePropertyKey, New.list("Manual", "Column")));
+
         myLengthUnits = getToolbox().getUnitsRegistry().getPreferredFixedScaleUnits(Length.class, MAX_LOB_LENGTH);
         vsp = style.getStyleParameter(ourLOBLengthPropertyKey);
         paramList.add(new LengthSliderStyleParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(vsp.getName()), style,
@@ -374,6 +387,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         setParameter(ourDefaultLOBLineWidthParameter);
         setParameter(ourDefaultLOBOriginPointSizeParameter);
         setParameter(ourDefaultShowArrowParameter);
+        setParameter(ourDefaultLengthModeParameter);
     }
 
     @Override
