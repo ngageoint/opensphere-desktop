@@ -27,6 +27,8 @@ import javax.swing.SwingConstants;
 
 import org.apache.commons.lang3.StringUtils;
 
+import io.opensphere.core.preferences.PreferenceChangeEvent;
+import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.collections.New;
@@ -63,9 +65,7 @@ public class ToolbarManager
                 JCheckBoxMenuItem mi = new JCheckBoxMenuItem("Show text", myShowIconButtonText);
                 mi.addActionListener(ev ->
                 {
-                    myShowIconButtonText ^= true;
-                    myPreferences.putBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, myShowIconButtonText, this);
-                    myIconButtons.forEach(b -> b.setTextPainted(myShowIconButtonText));
+                    myPreferences.putBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, !myShowIconButtonText, this);
                 });
                 popup.add(mi);
 
@@ -122,7 +122,9 @@ public class ToolbarManager
     public ToolbarManager(PreferencesRegistry preferencesRegistry)
     {
         myPreferences = preferencesRegistry.getPreferences(ToolbarManager.class);
-        myShowIconButtonText = myPreferences.getBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, false);
+        myShowIconButtonText = myPreferences.getBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, true);
+        
+        myPreferences.addPreferenceChangeListener(SHOW_ICON_BUTTON_TEXT_PREF_KEY, myTextListener);
     }
 
     /**
@@ -595,4 +597,17 @@ public class ToolbarManager
         /** South. */
         SOUTH;
     }
+    
+    /**
+     * Listener for showIconButtonText preference updates.
+     */
+    private final PreferenceChangeListener myTextListener = new PreferenceChangeListener() {
+
+		@Override
+		public void preferenceChange(PreferenceChangeEvent evt) {
+            myShowIconButtonText = evt.getValueAsBoolean(!myShowIconButtonText);
+            myIconButtons.forEach(b -> b.setTextPainted(myShowIconButtonText));
+		}
+    	
+    };
 }
