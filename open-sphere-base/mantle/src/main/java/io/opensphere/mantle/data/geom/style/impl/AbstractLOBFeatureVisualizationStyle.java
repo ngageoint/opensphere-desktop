@@ -1,8 +1,10 @@
 package io.opensphere.mantle.data.geom.style.impl;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 
@@ -40,6 +42,8 @@ import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.ParameterHint;
 import io.opensphere.mantle.data.geom.style.StyleAltitudeReference;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleParameter;
+import io.opensphere.mantle.data.geom.style.VisualizationStyleParameterChangeEvent;
+import io.opensphere.mantle.data.geom.style.VisualizationStyleParameterChangeListener;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleParameterFlags;
 import io.opensphere.mantle.data.geom.style.impl.ui.AbstractStyleParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.AdvancedLengthParameterEditorPanel;
@@ -108,8 +112,8 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     /** The Constant ourDefaultNodeSizeParameter. */
     public static final VisualizationStyleParameter ourDefaultArrowLengthParameter = new VisualizationStyleParameter(
-            ourArrowLengthPropertyKey, "Arrow Length", 10f, Float.class, new VisualizationStyleParameterFlags(false, false),
-            ParameterHint.hint(false, false));
+            ourArrowLengthPropertyKey, "Arrow Length", Float.valueOf(10f), Float.class,
+            new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
 
     /** The Constant ourDefaultOriginPointSizeParameter. */
     public static final VisualizationStyleParameter ourDefaultLOBOriginPointSizeParameter = new VisualizationStyleParameter(
@@ -150,6 +154,12 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     /** The length units. */
     private Class<? extends Length> myLengthUnits;
+
+    /** The map of length mode to the panel for that mode. */
+    private final Map<String, AbstractStyleParameterEditorPanel> myModeToPanelMap = New.map();
+
+    /** The listener for length mode. */
+    private final VisualizationStyleParameterChangeListener myModeListener = this::handleModeChange;
 
     /**
      * Instantiates a new abstract lob feature visualization style.
@@ -353,32 +363,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                 ourLOBOriginPointSizePropertyKey, true, false, 0.0f, MAX_POINT_SIZE,
                 new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(0, null)));
 
-        vsp = style.getStyleParameter(ourLengthModePropertyKey);
-        paramList.add(new RadioButtonParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(vsp.getName()), style,
-                ourLengthModePropertyKey, New.list(MANUAL_MODE, COLUMN_MODE)));
-
-        myLengthUnits = getToolbox().getUnitsRegistry().getPreferredFixedScaleUnits(Length.class, MAX_LOB_LENGTH);
-        List<Class<? extends Length>> unitOptions = New.list(Kilometers.class, Meters.class, StatuteMiles.class,
-                NauticalMiles.class);
-
-        paramList.add(new AdvancedLengthParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(null), style,
-                ourLOBLengthPropertyKey, unitOptions));
-
-        DataTypeInfo dti = StyleUtils.getDataTypeInfoFromKey(getToolbox(), getDTIKey());
-        if (dti != null && dti.getMetaDataInfo() != null)
-        {
-            if (style.getStyleParameterValue(ourLengthColumnPropertyKey) == null)
-            {
-                String lengthColumnKey = dti.getMetaDataInfo().getKeyForSpecialType(SpeedKey.DEFAULT);
-                if (lengthColumnKey != null)
-                {
-                    style.setParameter(ourLengthColumnPropertyKey, lengthColumnKey, NO_EVENT_SOURCE);
-                }
-            }
-            paramList.add(new ColumnLengthParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(null), style,
-                    ourLengthColumnPropertyKey, ourLengthMultiplierPropertyKey, dti.getMetaDataInfo().getKeyNames(),
-                    unitOptions));
-        }
+        addLengthPanels(paramList, style, StyleUtils::createBasicMiniPanelBuilder);
 
         vsp = style.getStyleParameter(ourShowArrowPropertyKey);
         paramList.add(new CheckBoxStyleParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(vsp.getName()), style,
@@ -420,12 +405,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                 ourLOBOriginPointSizePropertyKey, true, false, 0.0f, MAX_POINT_SIZE,
                 new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(0, null)));
 
-        myLengthUnits = getToolbox().getUnitsRegistry().getPreferredFixedScaleUnits(Length.class, MAX_LOB_LENGTH);
-        List<Class<? extends Length>> unitOptions = New.list(Kilometers.class, Meters.class, StatuteMiles.class,
-                NauticalMiles.class);
-
-        paramList.add(new AdvancedLengthParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(null), style,
-                ourLOBLengthPropertyKey, unitOptions));
+        addLengthPanels(paramList, style, PanelBuilder::get);
 
         param = style.getStyleParameter(ourShowArrowPropertyKey);
         paramList.add(
@@ -446,6 +426,54 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         panel.addGroup(paramGrp);
 
         return panel;
+    }
+
+    /**
+     * Creates and adds the length-related panels to the list.
+     *
+     * @param paramList the panel list
+     * @param style the style
+     * @param builderBuilder the panel builder creator
+     */
+    private void addLengthPanels(Collection<? super AbstractStyleParameterEditorPanel> paramList, MutableVisualizationStyle style,
+            Function<String, PanelBuilder> builderBuilder)
+    {
+        VisualizationStyleParameter vsp;
+        vsp = style.getStyleParameter(ourLengthModePropertyKey);
+        paramList.add(new RadioButtonParameterEditorPanel(builderBuilder.apply(vsp.getName()), style, ourLengthModePropertyKey,
+                New.list(MANUAL_MODE, COLUMN_MODE)));
+        String mode = (String)vsp.getValue();
+
+        myLengthUnits = getToolbox().getUnitsRegistry().getPreferredFixedScaleUnits(Length.class, MAX_LOB_LENGTH);
+        List<Class<? extends Length>> unitOptions = New.list(Kilometers.class, Meters.class, StatuteMiles.class,
+                NauticalMiles.class);
+
+        AdvancedLengthParameterEditorPanel manualLengthPanel = new AdvancedLengthParameterEditorPanel(builderBuilder.apply(null),
+                style, ourLOBLengthPropertyKey, unitOptions);
+        paramList.add(manualLengthPanel);
+        myModeToPanelMap.put(MANUAL_MODE, manualLengthPanel);
+
+        DataTypeInfo dti = StyleUtils.getDataTypeInfoFromKey(getToolbox(), getDTIKey());
+        if (dti != null && dti.getMetaDataInfo() != null)
+        {
+            if (style.getStyleParameterValue(ourLengthColumnPropertyKey) == null)
+            {
+                String lengthColumnKey = dti.getMetaDataInfo().getKeyForSpecialType(SpeedKey.DEFAULT);
+                if (lengthColumnKey != null)
+                {
+                    style.setParameter(ourLengthColumnPropertyKey, lengthColumnKey, NO_EVENT_SOURCE);
+                }
+            }
+            ColumnLengthParameterEditorPanel columnLengthPanel = new ColumnLengthParameterEditorPanel(builderBuilder.apply(null),
+                    style, ourLengthColumnPropertyKey, ourLengthMultiplierPropertyKey, dti.getMetaDataInfo().getKeyNames(),
+                    unitOptions);
+            paramList.add(columnLengthPanel);
+            myModeToPanelMap.put(COLUMN_MODE, columnLengthPanel);
+        }
+
+        // Do mode stuff
+        changeMode(mode);
+        style.addStyleParameterChangeListener(myModeListener);
     }
 
     @Override
@@ -592,5 +620,31 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         props.setDirectionalArrowLength(arrowLength);
         props = renderPropertyPool.getPoolInstance(props);
         return props;
+    }
+
+    /**
+     * Handles a change in the length UI mode.
+     *
+     * @param event the event
+     */
+    private void handleModeChange(VisualizationStyleParameterChangeEvent event)
+    {
+        String mode = (String)event.getChangedParameterSet().iterator().next().getValue();
+        changeMode(mode);
+    }
+
+    /**
+     * Changes the mode.
+     *
+     * @param mode the mode
+     */
+    private void changeMode(String mode)
+    {
+        AbstractStyleParameterEditorPanel panel = myModeToPanelMap.get(mode);
+        if (panel != null)
+        {
+            panel.setVisible(true);
+        }
+        myModeToPanelMap.entrySet().stream().filter(e -> !e.getKey().equals(mode)).forEach(e -> e.getValue().setVisible(false));
     }
 }
