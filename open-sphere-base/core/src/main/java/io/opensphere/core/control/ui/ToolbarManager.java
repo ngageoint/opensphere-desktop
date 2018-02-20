@@ -409,8 +409,6 @@ public class ToolbarManager
 
             if (tbc.getName().equals("TimeBrowser"))
             {
-                // getNorthBottomToolbar().fillHorizontalSpace();
-                // getNorthBottomToolbar().incrementGridx();
                 addComponent(getNorthBottomToolbar(), tbc);
                 getNorthBottomToolbar().incrementGridx();
                 getNorthBottomToolbar().fillHorizontalSpace();

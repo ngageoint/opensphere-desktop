@@ -34,7 +34,7 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
     /** The Reset all style data button. */
     private JButton myResetAllStyleDataButton;
 
-    /** The `Show Toolbar Labels` checkbox */
+    /** The `Show Toolbar Labels` checkbox. */
     private JCheckBox myShowToolbarLabelsCheckBox;
 
     /** The Style controller. */
