@@ -27,6 +27,8 @@ import javax.swing.SwingConstants;
 
 import org.apache.commons.lang3.StringUtils;
 
+import io.opensphere.core.preferences.PreferenceChangeEvent;
+import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.collections.New;
@@ -63,9 +65,7 @@ public class ToolbarManager
                 JCheckBoxMenuItem mi = new JCheckBoxMenuItem("Show text", myShowIconButtonText);
                 mi.addActionListener(ev ->
                 {
-                    myShowIconButtonText ^= true;
-                    myPreferences.putBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, myShowIconButtonText, this);
-                    myIconButtons.forEach(b -> b.setTextPainted(myShowIconButtonText));
+                    myPreferences.putBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, !myShowIconButtonText, this);
                 });
                 popup.add(mi);
 
@@ -84,6 +84,19 @@ public class ToolbarManager
                 popup.show((Component)e.getSource(), e.getX(), e.getY());
                 e.consume();
             }
+        }
+    };
+
+    /**
+     * Listener for showIconButtonText preference updates.
+     */
+    private final PreferenceChangeListener myTextListener = new PreferenceChangeListener()
+    {
+        @Override
+        public void preferenceChange(PreferenceChangeEvent evt)
+        {
+            myShowIconButtonText = evt.getValueAsBoolean(!myShowIconButtonText);
+            myIconButtons.forEach(b -> b.setTextPainted(myShowIconButtonText));
         }
     };
 
@@ -122,7 +135,9 @@ public class ToolbarManager
     public ToolbarManager(PreferencesRegistry preferencesRegistry)
     {
         myPreferences = preferencesRegistry.getPreferences(ToolbarManager.class);
-        myShowIconButtonText = myPreferences.getBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, false);
+        myShowIconButtonText = myPreferences.getBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, true);
+
+        myPreferences.addPreferenceChangeListener(SHOW_ICON_BUTTON_TEXT_PREF_KEY, myTextListener);
     }
 
     /**
@@ -394,7 +409,7 @@ public class ToolbarManager
             SeparatorLocation separatorLocation, Insets insets)
     {
         myNorthBottomToolbarComponents
-                .add(new ToolbarComponent(getNorthBottomToolbar(), componentName, comp, relativeLoc, separatorLocation, insets));
+            .add(new ToolbarComponent(getNorthBottomToolbar(), componentName, comp, relativeLoc, separatorLocation, insets));
         registerIconButtons(comp);
         Collections.sort(myNorthBottomToolbarComponents);
 
@@ -407,8 +422,6 @@ public class ToolbarManager
 
             if (tbc.getName().equals("TimeBrowser"))
             {
-//                getNorthBottomToolbar().fillHorizontalSpace();
-//                getNorthBottomToolbar().incrementGridx();
                 addComponent(getNorthBottomToolbar(), tbc);
                 getNorthBottomToolbar().incrementGridx();
                 getNorthBottomToolbar().fillHorizontalSpace();
@@ -437,7 +450,7 @@ public class ToolbarManager
             Insets insets)
     {
         myNorthToolbarComponents
-                .add(new ToolbarComponent(getNorthToolbar(), componentName, comp, order, separatorLocation, insets));
+            .add(new ToolbarComponent(getNorthToolbar(), componentName, comp, order, separatorLocation, insets));
         registerIconButtons(comp);
         Collections.sort(myNorthToolbarComponents);
         getNorthToolbar().removeAll();
@@ -476,7 +489,7 @@ public class ToolbarManager
             final SeparatorLocation separatorLocation, Insets insets)
     {
         mySouthToolbarComponents
-                .add(new ToolbarComponent(getSouthToolbar(), componentName, comp, relativeLoc, separatorLocation, insets));
+            .add(new ToolbarComponent(getSouthToolbar(), componentName, comp, relativeLoc, separatorLocation, insets));
         registerIconButtons(comp);
         Collections.sort(mySouthToolbarComponents);
 
