@@ -94,16 +94,16 @@ public final class HeatmapGeometryUtilities
         else if (style instanceof AbstractLOBFeatureVisualizationStyle)
         {
             AbstractLOBFeatureVisualizationStyle lobStyle = (AbstractLOBFeatureVisualizationStyle)style;
+            MetaDataProvider provider = new MDILinkedMetaDataProvider(dataType.getMetaDataInfo(), geomInfo.getMetaData());
             if (geom instanceof MapLineOfBearingGeometrySupport)
             {
                 float orientation = ((MapLineOfBearingGeometrySupport)geom).getOrientation();
-                convertedGeom = buildLine(geom, lobStyle, orientation);
+                convertedGeom = buildLine(geom, lobStyle, orientation, provider);
             }
             else if (style instanceof DynamicLOBFeatureVisualization)
             {
-                MetaDataProvider provider = new MDILinkedMetaDataProvider(dataType.getMetaDataInfo(), geomInfo.getMetaData());
                 float orientation = NumberUtilities.toFloat(lobStyle.getLobOrientation(0, geom, provider), 0f);
-                convertedGeom = buildLine(geom, lobStyle, orientation);
+                convertedGeom = buildLine(geom, lobStyle, orientation, provider);
             }
         }
         return convertedGeom;
@@ -144,17 +144,18 @@ public final class HeatmapGeometryUtilities
      * @param geom the mantle geometry
      * @param style the style
      * @param orientation the orientation
+     * @param provider the meta data provider
      * @return the polyline geometry
      */
     private static MapPolylineGeometrySupport buildLine(MapLocationGeometrySupport geom,
-            AbstractLOBFeatureVisualizationStyle style, float orientation)
+            AbstractLOBFeatureVisualizationStyle style, float orientation, MetaDataProvider provider)
     {
         LineOfBearingGeometry.Builder builder = new LineOfBearingGeometry.Builder();
         builder.setPosition(new GeographicPosition(geom.getLocation()));
         builder.setLineOrientation(orientation);
 
         DefaultLOBRenderProperties props = new DefaultLOBRenderProperties(0, true, false);
-        props.setLineLength((float)style.getLobLength().inMeters());
+        props.setLineLength((float)style.getLobLength(provider).inMeters());
         LineOfBearingGeometry coreLOB = new LineOfBearingGeometry(builder, props, null);
         List<LatLonAlt> locations = coreLOB.getVertices().stream().map(v -> ((GeographicPosition)v).getLatLonAlt())
                 .collect(Collectors.toList());
