@@ -168,6 +168,11 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
         return myResetAllStyleDataButton;
     }
     
+    /**
+     * Gets the `show toolbar labels` checkbox.
+     *
+     * @return the `show toolbar labels` checkbox
+     */
     private JCheckBox getShowToolbarLabelsCheckBox()
     {
     	if (myShowToolbarLabelsCheckBox == null)
