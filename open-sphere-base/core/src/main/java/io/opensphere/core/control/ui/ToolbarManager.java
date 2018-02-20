@@ -604,7 +604,8 @@ public class ToolbarManager
     private final PreferenceChangeListener myTextListener = new PreferenceChangeListener()
     {
         @Override
-        public void preferenceChange(PreferenceChangeEvent evt) {
+        public void preferenceChange(PreferenceChangeEvent evt)
+        {
             myShowIconButtonText = evt.getValueAsBoolean(!myShowIconButtonText);
             myIconButtons.forEach(b -> b.setTextPainted(myShowIconButtonText));
         }

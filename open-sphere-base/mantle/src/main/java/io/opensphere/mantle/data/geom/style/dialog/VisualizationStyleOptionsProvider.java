@@ -192,7 +192,8 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
     private final PreferenceChangeListener myTextListener = new PreferenceChangeListener()
     {
         @Override
-        public void preferenceChange(PreferenceChangeEvent evt) {
+        public void preferenceChange(PreferenceChangeEvent evt)
+        {
             myShowToolbarLabels = evt.getValueAsBoolean(!myShowToolbarLabels);
             if (myShowToolbarLabelsCheckBox != null)
             {
