@@ -601,13 +601,12 @@ public class ToolbarManager
     /**
      * Listener for showIconButtonText preference updates.
      */
-    private final PreferenceChangeListener myTextListener = new PreferenceChangeListener() {
-
+    private final PreferenceChangeListener myTextListener = new PreferenceChangeListener()
+    {
 		@Override
 		public void preferenceChange(PreferenceChangeEvent evt) {
             myShowIconButtonText = evt.getValueAsBoolean(!myShowIconButtonText);
             myIconButtons.forEach(b -> b.setTextPainted(myShowIconButtonText));
 		}
-    	
     };
 }
