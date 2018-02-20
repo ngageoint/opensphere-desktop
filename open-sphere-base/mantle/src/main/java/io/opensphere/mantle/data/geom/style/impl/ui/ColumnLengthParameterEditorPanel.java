@@ -1,17 +1,22 @@
 package io.opensphere.mantle.data.geom.style.impl.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.EventQueue;
 import java.util.Collection;
 
 import javax.swing.JComboBox;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+
+import org.apache.log4j.Logger;
 
 import io.opensphere.core.units.length.Length;
+import io.opensphere.core.util.collections.CollectionUtilities;
+import io.opensphere.core.util.swing.DocumentListenerAdapter;
 import io.opensphere.core.util.swing.GridBagPanel;
+import io.opensphere.core.util.swing.ListComboBoxModel;
+import io.opensphere.core.util.swing.SwingUtilities;
 import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
 
 /**
@@ -22,47 +27,69 @@ public class ColumnLengthParameterEditorPanel extends AbstractStyleParameterEdit
     /** The serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** Logger reference. */
+    private static final Logger LOGGER = Logger.getLogger(ColumnLengthParameterEditorPanel.class);
+
+    /** The multiplier parameter key. */
+    private final String myMultiplierKey;
+
+    /** The columns combo box. */
+    private final JComboBox<String> myColumnsCombo;
+
     /** The units combo box. */
-    private JComboBox<Class<? extends Length>> myUnitsCombo;
+    private final LengthUnitsComboBox myUnitsCombo;
+
+    /** The multiplier text field. */
+    private final JTextField myMultiplierField;
 
     /**
      * Constructor.
      *
      * @param label the {@link PanelBuilder}
      * @param style the style
-     * @param paramKey the param key
+     * @param columnKey the column key
+     * @param multiplierKey the multiplier key
+     * @param columns the columns
      * @param unitOptions the unit options
      */
-    public ColumnLengthParameterEditorPanel(PanelBuilder label, MutableVisualizationStyle style, String paramKey,
-            Collection<Class<? extends Length>> unitOptions)
+    public ColumnLengthParameterEditorPanel(PanelBuilder label, MutableVisualizationStyle style, String columnKey,
+            String multiplierKey, Collection<? extends String> columns, Collection<Class<? extends Length>> unitOptions)
     {
-        super(label, style, paramKey);
+        super(label, style, columnKey);
+        myMultiplierKey = multiplierKey;
 
-        myUnitsCombo = new JComboBox<>();
-        for (Class<? extends Length> unit : unitOptions)
-        {
-            myUnitsCombo.addItem(unit);
-        }
-        BasicComboBoxRenderer renderer = new BasicComboBoxRenderer();
-        myUnitsCombo.setRenderer(new ListCellRenderer<Class<? extends Length>>()
-        {
-            @Override
-            public Component getListCellRendererComponent(JList<? extends Class<? extends Length>> list,
-                    Class<? extends Length> value, int index, boolean isSelected, boolean cellHasFocus)
-            {
-                String displayValue = Length.create(value, 0.).getShortLabel(false);
-                return renderer.getListCellRendererComponent(list, displayValue, index, isSelected, cellHasFocus);
-            }
-        });
-//        myUnitsCombo.addActionListener(e -> handleValueChange());
+        myColumnsCombo = new JComboBox<>(new ListComboBoxModel<>(CollectionUtilities.sort(columns)));
+        myColumnsCombo.setToolTipText("The column value to use for length.");
+
+        myUnitsCombo = new LengthUnitsComboBox(unitOptions);
+
+        myMultiplierField = new JTextField();
+        myMultiplierField.setColumns(4);
+        myMultiplierField.setToolTipText("The amount by which to multiple the column value.");
 
         GridBagPanel panel = new GridBagPanel();
-        panel.setInsets(0, 4, 0, 0).fillNone().add(myUnitsCombo);
+        panel.setInsets(0, 0, 0, 4);
+        panel.add(myColumnsCombo);
+        panel.add(myUnitsCombo);
+        panel.add(new JLabel("x"));
+        panel.add(myMultiplierField);
+        panel.fillHorizontalSpace();
 
         myControlPanel.setLayout(new BorderLayout());
         myControlPanel.add(panel, BorderLayout.CENTER);
 
         update();
+
+        myColumnsCombo.addActionListener(e -> handleColumnChange());
+        myMultiplierField.getDocument().addDocumentListener(new DocumentListenerAdapter()
+        {
+            @Override
+            public void updateAction(DocumentEvent e)
+            {
+                handleLengthChange();
+            }
+        });
+        myUnitsCombo.addActionListener(e -> handleLengthChange());
     }
 
     @Override
@@ -70,10 +97,49 @@ public class ColumnLengthParameterEditorPanel extends AbstractStyleParameterEdit
     {
         assert EventQueue.isDispatchThread();
 
-        Object value = getParamValue();
-        if (value instanceof Length)
+        SwingUtilities.setComboBoxValue(myColumnsCombo, (String)getParamValue());
+
+        Length multiplierParamValue = (Length)myStyle.getStyleParameter(myMultiplierKey).getValue();
+        SwingUtilities.setComboBoxValue(myUnitsCombo, multiplierParamValue.getClass());
+        SwingUtilities.setTextFieldValue(myMultiplierField, String.valueOf((int)multiplierParamValue.getMagnitude()));
+    }
+
+    /**
+     * Handles a change in the column.
+     */
+    private void handleColumnChange()
+    {
+        String column = (String)myColumnsCombo.getSelectedItem();
+        setParamValue(column);
+    }
+
+    /**
+     * Handles a change in one of the length values.
+     */
+    private void handleLengthChange()
+    {
+        try
         {
-            myUnitsCombo.setSelectedItem(value.getClass());
+            Length value = getLength();
+            setParamValue(myMultiplierKey, value);
         }
+        catch (NumberFormatException e)
+        {
+            LOGGER.debug(e);
+        }
+    }
+
+    /**
+     * Gets the current length value from the UI.
+     *
+     * @return the length value
+     */
+    private Length getLength()
+    {
+        int magnitude = Integer.parseInt(myMultiplierField.getText());
+        @SuppressWarnings("unchecked")
+        Class<? extends Length> unit = (Class<? extends Length>)myUnitsCombo.getSelectedItem();
+        Length value = Length.create(unit, magnitude);
+        return value;
     }
 }

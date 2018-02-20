@@ -23,7 +23,7 @@ public class RadioButtonParameterEditorPanel extends AbstractStyleParameterEdito
     private static final long serialVersionUID = 1L;
 
     /** The radio buttons. */
-    private List<JRadioButton> myRadioButtons = New.list();
+    private final List<JRadioButton> myRadioButtons = New.list();
 
     /**
      * Constructor.
@@ -43,7 +43,6 @@ public class RadioButtonParameterEditorPanel extends AbstractStyleParameterEdito
         for (String option : options)
         {
             JRadioButton button = new JRadioButton(option);
-            button.addActionListener(this);
             myRadioButtons.add(button);
             buttonGroup.add(button);
             panel.add(button);
@@ -54,6 +53,11 @@ public class RadioButtonParameterEditorPanel extends AbstractStyleParameterEdito
         myControlPanel.add(panel, BorderLayout.CENTER);
 
         update();
+
+        for (JRadioButton button : myRadioButtons)
+        {
+            button.addActionListener(this);
+        }
     }
 
     @Override

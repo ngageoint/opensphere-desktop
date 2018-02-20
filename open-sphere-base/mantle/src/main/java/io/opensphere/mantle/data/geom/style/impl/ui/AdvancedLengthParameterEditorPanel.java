@@ -1,23 +1,19 @@
 package io.opensphere.mantle.data.geom.style.impl.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.EventQueue;
 import java.util.Collection;
 
-import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
-import javax.swing.ListCellRenderer;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.text.DefaultFormatter;
 
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.swing.GridBagPanel;
+import io.opensphere.core.util.swing.SwingUtilities;
 import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
 
 /**
@@ -29,16 +25,16 @@ public class AdvancedLengthParameterEditorPanel extends AbstractStyleParameterEd
     private static final long serialVersionUID = 1L;
 
     /** The maximum value spinner. */
-    private JSpinner myMaxValueSpinner;
+    private final JSpinner myMaxValueSpinner;
 
     /** The length slider. */
     private final JSlider myLengthSlider;
 
     /** The value label. */
-    private JLabel myValueLabel;
+    private final JLabel myValueLabel;
 
     /** The units combo box. */
-    private JComboBox<Class<? extends Length>> myUnitsCombo;
+    private final LengthUnitsComboBox myUnitsCombo;
 
     /**
      * Constructor.
@@ -66,25 +62,11 @@ public class AdvancedLengthParameterEditorPanel extends AbstractStyleParameterEd
         myMaxValueSpinner.addChangeListener(e -> updateSliderMax());
 
         myLengthSlider = new JSlider(0, maxValue, maxValue);
-        myValueLabel = new JLabel();
+        myLengthSlider.setToolTipText("The length value");
         myLengthSlider.addChangeListener(e -> handleValueChange());
+        myValueLabel = new JLabel();
 
-        myUnitsCombo = new JComboBox<>();
-        for (Class<? extends Length> unit : unitOptions)
-        {
-            myUnitsCombo.addItem(unit);
-        }
-        BasicComboBoxRenderer renderer = new BasicComboBoxRenderer();
-        myUnitsCombo.setRenderer(new ListCellRenderer<Class<? extends Length>>()
-        {
-            @Override
-            public Component getListCellRendererComponent(JList<? extends Class<? extends Length>> list,
-                    Class<? extends Length> value, int index, boolean isSelected, boolean cellHasFocus)
-            {
-                String displayValue = Length.create(value, 0.).getShortLabel(false);
-                return renderer.getListCellRendererComponent(list, displayValue, index, isSelected, cellHasFocus);
-            }
-        });
+        myUnitsCombo = new LengthUnitsComboBox(unitOptions);
         myUnitsCombo.addActionListener(e -> handleValueChange());
 
         GridBagPanel panel = new GridBagPanel();
@@ -111,10 +93,10 @@ public class AdvancedLengthParameterEditorPanel extends AbstractStyleParameterEd
             int magnitude = (int)length.getMagnitude();
             if (magnitude > getMaxValue())
             {
-                myMaxValueSpinner.setValue(magnitude);
+                SwingUtilities.setSpinnerValue(myMaxValueSpinner, Integer.valueOf(magnitude));
             }
-            myUnitsCombo.setSelectedItem(value.getClass());
-            myLengthSlider.setValue(magnitude);
+            SwingUtilities.setComboBoxValue(myUnitsCombo, value.getClass());
+            SwingUtilities.setSliderValue(myLengthSlider, magnitude);
         }
     }
 

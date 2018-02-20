@@ -54,6 +54,7 @@ import io.opensphere.mantle.data.geom.style.impl.ui.PanelBuilder;
 import io.opensphere.mantle.data.geom.style.impl.ui.ParameterVisibilityConstraint;
 import io.opensphere.mantle.data.geom.style.impl.ui.RadioButtonParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.StyleParameterEditorGroupPanel;
+import io.opensphere.mantle.data.impl.specialkey.SpeedKey;
 import io.opensphere.mantle.util.MantleConstants;
 
 /**
@@ -62,6 +63,12 @@ import io.opensphere.mantle.util.MantleConstants;
 @SuppressWarnings("PMD.GodClass")
 public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocationFeatureVisualizationStyle
 {
+    /** Manual length mode. */
+    private static final String MANUAL_MODE = "Manual";
+
+    /** Column length mode. */
+    private static final String COLUMN_MODE = "Column";
+
     /** The Constant ourPropertyKeyPrefix. */
     public static final String ourPropertyKeyPrefix = "AbstractLOBFeatureVisualizationStyle";
 
@@ -85,6 +92,9 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     /** The length column property key. */
     public static final String ourLengthColumnPropertyKey = ourPropertyKeyPrefix + ".LengthColumn";
+
+    /** The length multiplier property key. */
+    public static final String ourLengthMultiplierPropertyKey = ourPropertyKeyPrefix + ".LengthMultiplier";
 
     /** The Constant ourDefaultEllipseLineWidthParameter. */
     public static final VisualizationStyleParameter ourDefaultLOBLineWidthParameter = new VisualizationStyleParameter(
@@ -113,13 +123,18 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     /** The length mode style parameter. */
     public static final VisualizationStyleParameter ourDefaultLengthModeParameter = new VisualizationStyleParameter(
-            ourLengthModePropertyKey, "Length", "Manual", String.class, new VisualizationStyleParameterFlags(false, false),
+            ourLengthModePropertyKey, "Length", MANUAL_MODE, String.class, new VisualizationStyleParameterFlags(false, false),
             ParameterHint.hint(false, false));
 
     /** The length column style parameter. */
     public static final VisualizationStyleParameter ourDefaultLengthColumnParameter = new VisualizationStyleParameter(
             ourLengthColumnPropertyKey, "Length Column", null, String.class, new VisualizationStyleParameterFlags(true, true),
             ParameterHint.hint(false, true));
+
+    /** The length multiplier style parameter. */
+    public static final VisualizationStyleParameter ourDefaultLengthMultiplierParameter = new VisualizationStyleParameter(
+            ourLengthMultiplierPropertyKey, "Length Multiplier", new Meters(1000), Length.class,
+            new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
 
     /** The Constant MAX_LOB_LENGTH_METERS. */
     private static final Length MAX_LOB_LENGTH = new Kilometers(8000.0f);
@@ -165,14 +180,16 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     @Override
     public void createCombinedGeometry(Set<Geometry> setToAddTo, FeatureCombinedGeometryBuilderData builderData,
-            RenderPropertyPool renderPropertyPool) throws IllegalArgumentException
+            RenderPropertyPool renderPropertyPool)
+        throws IllegalArgumentException
     {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public void createIndividualGeometry(Set<Geometry> setToAddTo, FeatureIndividualGeometryBuilderData bd,
-            RenderPropertyPool renderPropertyPool) throws IllegalArgumentException
+            RenderPropertyPool renderPropertyPool)
+        throws IllegalArgumentException
     {
         AbstractRenderableGeometry geom = null;
         if (bd.getMGS() instanceof MapLocationGeometrySupport)
@@ -200,7 +217,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                         : bd.getDataType().getBasicVisualizationInfo();
 
                 LineOfBearingGeometry.Builder lobBuilder = createLobBuilder(bd, orientation, gp, mapVisInfo, basicVisInfo);
-                LOBRenderProperties props = determineRenderProperties(mapVisInfo, basicVisInfo, bd.getVS(), renderPropertyPool);
+                LOBRenderProperties props = determineRenderProperties(mapVisInfo, basicVisInfo, bd, renderPropertyPool);
 
                 // Add a time constraint if in time line mode.
                 Constraints constraints = StyleUtils.createTimeConstraintsIfApplicable(basicVisInfo, mapVisInfo, bd.getMGS(),
@@ -277,11 +294,33 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     /**
      * Gets the lob length.
      *
+     * @param metaDataProvider the meta data provider
      * @return the lob length
      */
-    public Length getLobLength()
+    public Length getLobLength(MetaDataProvider metaDataProvider)
     {
-        return (Length)getStyleParameterValue(ourLOBLengthPropertyKey);
+        Length length;
+        String mode = (String)getStyleParameterValue(ourLengthModePropertyKey);
+        if (COLUMN_MODE.equals(mode))
+        {
+            String column = (String)getStyleParameterValue(ourLengthColumnPropertyKey);
+            Object value = metaDataProvider.getValue(column);
+            try
+            {
+                double doubleValue = StyleUtils.convertValueToDouble(value);
+                Length multiplier = (Length)getStyleParameterValue(ourLengthMultiplierPropertyKey);
+                length = multiplier.multiplyBy(doubleValue);
+            }
+            catch (NumberFormatException e)
+            {
+                length = Meters.ZERO;
+            }
+        }
+        else
+        {
+            length = (Length)getStyleParameterValue(ourLOBLengthPropertyKey);
+        }
+        return length;
     }
 
     /**
@@ -316,7 +355,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
         vsp = style.getStyleParameter(ourLengthModePropertyKey);
         paramList.add(new RadioButtonParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(vsp.getName()), style,
-                ourLengthModePropertyKey, New.list("Manual", "Column")));
+                ourLengthModePropertyKey, New.list(MANUAL_MODE, COLUMN_MODE)));
 
         myLengthUnits = getToolbox().getUnitsRegistry().getPreferredFixedScaleUnits(Length.class, MAX_LOB_LENGTH);
         List<Class<? extends Length>> unitOptions = New.list(Kilometers.class, Meters.class, StatuteMiles.class,
@@ -325,8 +364,21 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         paramList.add(new AdvancedLengthParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(null), style,
                 ourLOBLengthPropertyKey, unitOptions));
 
-        paramList.add(new ColumnLengthParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(null), style,
-                ourLengthColumnPropertyKey, unitOptions));
+        DataTypeInfo dti = StyleUtils.getDataTypeInfoFromKey(getToolbox(), getDTIKey());
+        if (dti != null && dti.getMetaDataInfo() != null)
+        {
+            if (style.getStyleParameterValue(ourLengthColumnPropertyKey) == null)
+            {
+                String lengthColumnKey = dti.getMetaDataInfo().getKeyForSpecialType(SpeedKey.DEFAULT);
+                if (lengthColumnKey != null)
+                {
+                    style.setParameter(ourLengthColumnPropertyKey, lengthColumnKey, NO_EVENT_SOURCE);
+                }
+            }
+            paramList.add(new ColumnLengthParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(null), style,
+                    ourLengthColumnPropertyKey, ourLengthMultiplierPropertyKey, dti.getMetaDataInfo().getKeyNames(),
+                    unitOptions));
+        }
 
         vsp = style.getStyleParameter(ourShowArrowPropertyKey);
         paramList.add(new CheckBoxStyleParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(vsp.getName()), style,
@@ -407,6 +459,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         setParameter(ourDefaultShowArrowParameter);
         setParameter(ourDefaultLengthModeParameter);
         setParameter(ourDefaultLengthColumnParameter);
+        setParameter(ourDefaultLengthMultiplierParameter);
     }
 
     @Override
@@ -517,20 +570,21 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
      *
      * @param mapVisInfo Data type level info relevant for rendering.
      * @param basicVisInfo Basic information for the data type.
-     * @param visState the vis state
+     * @param bd the builder data
      * @param renderPropertyPool the render property pool
      * @return the point render properties
      */
     private LOBRenderProperties determineRenderProperties(MapVisualizationInfo mapVisInfo, BasicVisualizationInfo basicVisInfo,
-            VisualizationState visState, RenderPropertyPool renderPropertyPool)
+            FeatureIndividualGeometryBuilderData bd, RenderPropertyPool renderPropertyPool)
     {
         boolean pickable = basicVisInfo != null && basicVisInfo.getLoadsTo().isPickable();
         int zOrder = mapVisInfo == null ? 1000 : mapVisInfo.getZOrder();
         LOBRenderProperties props = new DefaultLOBRenderProperties(zOrder, true, pickable);
+        VisualizationState visState = bd.getVS();
         props.setColor(visState.isSelected() ? MantleConstants.SELECT_COLOR
                 : visState.isDefaultColor() ? getColor() : visState.getColor());
         props.setWidth(visState.isSelected() ? getLOBLineWidth() + MantleConstants.SELECT_WIDTH_ADDITION : getLOBLineWidth());
-        float lobLength = visState.isLobVisible() ? (float)getLobLength().inMeters() : 0.0f;
+        float lobLength = visState.isLobVisible() ? (float)getLobLength(bd.getMDP()).inMeters() : 0.0f;
         float arrowLength = (float)getArrowLength().inMeters();
         arrowLength = arrowLength > lobLength ? lobLength : arrowLength;
         props.setBaseAltitude((float)getLift());
