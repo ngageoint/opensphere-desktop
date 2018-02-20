@@ -87,6 +87,19 @@ public class ToolbarManager
         }
     };
 
+    /**
+     * Listener for showIconButtonText preference updates.
+     */
+    private final PreferenceChangeListener myTextListener = new PreferenceChangeListener()
+    {
+        @Override
+        public void preferenceChange(PreferenceChangeEvent evt)
+        {
+            myShowIconButtonText = evt.getValueAsBoolean(!myShowIconButtonText);
+            myIconButtons.forEach(b -> b.setTextPainted(myShowIconButtonText));
+        }
+    };
+
     /** Icon buttons that have been added to the toolbar and can have text. */
     private final Collection<IconButton> myIconButtons = New.collection();
 
@@ -595,17 +608,4 @@ public class ToolbarManager
         /** South. */
         SOUTH;
     }
-
-    /**
-     * Listener for showIconButtonText preference updates.
-     */
-    private final PreferenceChangeListener myTextListener = new PreferenceChangeListener()
-    {
-        @Override
-        public void preferenceChange(PreferenceChangeEvent evt)
-        {
-            myShowIconButtonText = evt.getValueAsBoolean(!myShowIconButtonText);
-            myIconButtons.forEach(b -> b.setTextPainted(myShowIconButtonText));
-        }
-    };
 }

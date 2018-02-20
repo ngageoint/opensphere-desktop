@@ -28,6 +28,9 @@ import io.opensphere.mantle.data.geom.style.VisualizationStyleController;
  */
 public class VisualizationStyleOptionsProvider extends AbstractPreferencesOptionsProvider
 {
+    /** Preference key for the user preference to show the icon button text. */
+    private static final String SHOW_ICON_BUTTON_TEXT_PREF_KEY = "showIconButtonText";
+
     /** The Panel. */
     private JPanel myPanel;
 
@@ -40,14 +43,27 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
     /** The Style controller. */
     private final VisualizationStyleController myStyleController;
 
-    /** Preference key for the user preference to show the icon button text. */
-    private static final String SHOW_ICON_BUTTON_TEXT_PREF_KEY = "showIconButtonText";
-
     /** Preferences for the toolbar. */
     private final Preferences toolbarPreferences;
 
     /** Flag indicating if the text should be shown on the toolbar buttons. */
     private boolean myShowToolbarLabels;
+
+    /**
+     * Listener for showIconButtonText preference updates.
+     */
+    private final PreferenceChangeListener myTextListener = new PreferenceChangeListener()
+    {
+        @Override
+        public void preferenceChange(PreferenceChangeEvent evt)
+        {
+            myShowToolbarLabels = evt.getValueAsBoolean(!myShowToolbarLabels);
+            if (myShowToolbarLabelsCheckBox != null)
+            {
+                myShowToolbarLabelsCheckBox.setSelected(myShowToolbarLabels);
+            }
+        }
+    };
 
     /**
      * Instantiates a new visualization style options provider.
@@ -63,6 +79,57 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
         toolbarPreferences = prefsRegistry.getPreferences(ToolbarManager.class);
         myShowToolbarLabels = toolbarPreferences.getBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, true);
         toolbarPreferences.addPreferenceChangeListener(SHOW_ICON_BUTTON_TEXT_PREF_KEY, myTextListener);
+
+        initializePanel();
+    }
+
+    private void initializePanel()
+    {
+        myPanel = new JPanel();
+        myPanel.setBackground(DEFAULT_BACKGROUND_COLOR);
+        myPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
+        myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+
+        myShowToolbarLabelsCheckBox = createShowToolbarLabelsCheckBox();
+        Box selectionPanel = Box.createHorizontalBox();
+        selectionPanel.setMaximumSize(new Dimension(3000, 30));
+        selectionPanel.setPreferredSize(new Dimension(300, 30));
+        selectionPanel.add(myShowToolbarLabelsCheckBox);
+        selectionPanel.add(Box.createHorizontalGlue());
+        selectionPanel.setBackground(TRANSPARENT_COLOR);
+        myPanel.add(selectionPanel);
+
+        myPanel.add(Box.createVerticalStrut(30));
+
+        JTextArea ta = new JTextArea();
+        ta.setBackground(TRANSPARENT_COLOR);
+        ta.setBorder(BorderFactory.createEmptyBorder());
+        ta.setFont(ta.getFont().deriveFont(Font.PLAIN, ta.getFont().getSize() + 1));
+        ta.setEditable(false);
+        ta.setMaximumSize(new Dimension(3000, 200));
+        ta.setFocusable(true);
+        ta.setWrapStyleWord(true);
+        ta.setLineWrap(true);
+        ta.setText("Use the button below to reset all style settings and restore all types to use the default styles.");
+        myPanel.add(ta);
+
+        myPanel.add(Box.createVerticalStrut(10));
+
+        myResetAllStyleDataButton = createResetAllStyleButton();
+        Box subPanel = Box.createHorizontalBox();
+        subPanel.setMaximumSize(new Dimension(3000, 30));
+        subPanel.setPreferredSize(new Dimension(300, 30));
+        subPanel.add(Box.createHorizontalGlue());
+        subPanel.add(myResetAllStyleDataButton);
+        subPanel.add(Box.createHorizontalGlue());
+        subPanel.setBackground(TRANSPARENT_COLOR);
+        myPanel.add(subPanel);
+
+        JPanel emptyPanel = new JPanel();
+        emptyPanel.setBackground(TRANSPARENT_COLOR);
+        myPanel.add(emptyPanel);
+
+        myPanel.add(Box.createVerticalGlue());
     }
 
     @Override
@@ -73,52 +140,6 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
     @Override
     public JPanel getOptionsPanel()
     {
-        if (myPanel == null)
-        {
-            myPanel = new JPanel();
-            myPanel.setBackground(DEFAULT_BACKGROUND_COLOR);
-            myPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
-            myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
-
-            Box selectionPanel = Box.createHorizontalBox();
-            selectionPanel.setMaximumSize(new Dimension(3000, 30));
-            selectionPanel.setPreferredSize(new Dimension(300, 30));
-            selectionPanel.add(getShowToolbarLabelsCheckBox());
-            selectionPanel.add(Box.createHorizontalGlue());
-            selectionPanel.setBackground(TRANSPARENT_COLOR);
-            myPanel.add(selectionPanel);
-
-            myPanel.add(Box.createVerticalStrut(30));
-
-            JTextArea ta = new JTextArea();
-            ta.setBackground(TRANSPARENT_COLOR);
-            ta.setBorder(BorderFactory.createEmptyBorder());
-            ta.setFont(ta.getFont().deriveFont(Font.PLAIN, ta.getFont().getSize() + 1));
-            ta.setEditable(false);
-            ta.setMaximumSize(new Dimension(3000, 200));
-            ta.setFocusable(true);
-            ta.setWrapStyleWord(true);
-            ta.setLineWrap(true);
-            ta.setText("Use the button below to reset all style settings and restore all types to use the default styles.");
-            myPanel.add(ta);
-
-            myPanel.add(Box.createVerticalStrut(10));
-
-            Box subPanel = Box.createHorizontalBox();
-            subPanel.setMaximumSize(new Dimension(3000, 30));
-            subPanel.setPreferredSize(new Dimension(300, 30));
-            subPanel.add(Box.createHorizontalGlue());
-            subPanel.add(getResetAllStyleButton());
-            subPanel.add(Box.createHorizontalGlue());
-            subPanel.setBackground(TRANSPARENT_COLOR);
-            myPanel.add(subPanel);
-
-            JPanel emptyPanel = new JPanel();
-            emptyPanel.setBackground(TRANSPARENT_COLOR);
-            myPanel.add(emptyPanel);
-
-            myPanel.add(Box.createVerticalGlue());
-        }
         return myPanel;
     }
 
@@ -140,65 +161,45 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
     }
 
     /**
-     * Gets the analyzer enabled check box.
+     * Creates a `Reset All Styles` button.
      *
-     * @return the analyzer enabled check box
+     * @return the button
      */
-    private JButton getResetAllStyleButton()
+    private JButton createResetAllStyleButton()
     {
-        if (myResetAllStyleDataButton == null)
+        JButton button = new JButton("Reset All Styles");
+        button.setFocusable(false);
+        button.addActionListener(new ActionListener()
         {
-            myResetAllStyleDataButton = new JButton("Reset All Styles");
-            myResetAllStyleDataButton.setFocusable(false);
-            myResetAllStyleDataButton.addActionListener(new ActionListener()
+            @Override
+            public void actionPerformed(ActionEvent e)
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
+                int option = JOptionPane.showConfirmDialog(SwingUtilities.getWindowAncestor(myResetAllStyleDataButton),
+                        "Are you sure you want to reset all styles to default and clear all style data?",
+                        "Reset All Style Confirmation", JOptionPane.OK_CANCEL_OPTION);
+                if (option == JOptionPane.OK_OPTION)
                 {
-                    int option = JOptionPane.showConfirmDialog(SwingUtilities.getWindowAncestor(myResetAllStyleDataButton),
-                            "Are you sure you want to reset all styles to default and clear all style data?",
-                            "Reset All Style Confirmation", JOptionPane.OK_CANCEL_OPTION);
-                    if (option == JOptionPane.OK_OPTION)
-                    {
-                        myStyleController.resetAllStyleSettings(this);
-                    }
+                    myStyleController.resetAllStyleSettings(this);
                 }
-            });
-        }
-        return myResetAllStyleDataButton;
-    }
-
-    /**
-     * Gets the `show toolbar labels` checkbox.
-     *
-     * @return the `show toolbar labels` checkbox
-     */
-    private JCheckBox getShowToolbarLabelsCheckBox()
-    {
-        if (myShowToolbarLabelsCheckBox == null)
-        {
-            myShowToolbarLabelsCheckBox = new JCheckBox("Show Icon Labels on Toolbar", myShowToolbarLabels);
-            myShowToolbarLabelsCheckBox.addActionListener(ev ->
-            {
-                toolbarPreferences.putBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, !myShowToolbarLabels, this);
-            });
-        }
-        return myShowToolbarLabelsCheckBox;
-    }
-
-    /**
-     * Listener for showIconButtonText preference updates.
-     */
-    private final PreferenceChangeListener myTextListener = new PreferenceChangeListener()
-    {
-        @Override
-        public void preferenceChange(PreferenceChangeEvent evt)
-        {
-            myShowToolbarLabels = evt.getValueAsBoolean(!myShowToolbarLabels);
-            if (myShowToolbarLabelsCheckBox != null)
-            {
-                myShowToolbarLabelsCheckBox.setSelected(myShowToolbarLabels);
             }
-        }
-    };
+        });
+
+        return button;
+    }
+
+    /**
+     * Creates a `Show Toolbar Labels` checkbox.
+     *
+     * @return the checkbox
+     */
+    private JCheckBox createShowToolbarLabelsCheckBox()
+    {
+        JCheckBox checkbox = new JCheckBox("Show Icon Labels on Toolbar", myShowToolbarLabels);
+        checkbox.addActionListener(ev ->
+        {
+            toolbarPreferences.putBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, !myShowToolbarLabels, this);
+        });
+
+        return checkbox;
+    }
 }
