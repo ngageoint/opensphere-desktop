@@ -162,26 +162,26 @@ public class ToolbarManager
     {
         switch (loc)
         {
-        case NORTH:
-            addNorthToolbarComponent(componentName, comp, order, separatorLocation, insets);
-            getNorthToolbar().revalidate();
-            getNorthToolbar().repaint();
-            break;
+            case NORTH:
+                addNorthToolbarComponent(componentName, comp, order, separatorLocation, insets);
+                getNorthToolbar().revalidate();
+                getNorthToolbar().repaint();
+                break;
 
-        case NORTH_BOTTOM:
-            addNorthBottomToolbarComponent(componentName, comp, order, separatorLocation, insets);
-            getNorthBottomToolbar().revalidate();
-            getNorthBottomToolbar().repaint();
-            break;
+            case NORTH_BOTTOM:
+                addNorthBottomToolbarComponent(componentName, comp, order, separatorLocation, insets);
+                getNorthBottomToolbar().revalidate();
+                getNorthBottomToolbar().repaint();
+                break;
 
-        case SOUTH:
-            addSouthToolbarComponent(componentName, comp, order, separatorLocation, insets);
-            getSouthToolbar().revalidate();
-            getSouthToolbar().repaint();
-            break;
+            case SOUTH:
+                addSouthToolbarComponent(componentName, comp, order, separatorLocation, insets);
+                getSouthToolbar().revalidate();
+                getSouthToolbar().repaint();
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
     }
 
@@ -244,53 +244,53 @@ public class ToolbarManager
         ToolbarComponent comp = null;
         switch (loc)
         {
-        case NORTH:
-            for (int i = myNorthToolbarComponents.size() - 1; i >= 0; i--)
-            {
-                comp = myNorthToolbarComponents.get(i);
-                if (comp.getName().equals(componentName))
+            case NORTH:
+                for (int i = myNorthToolbarComponents.size() - 1; i >= 0; i--)
                 {
-                    myNorthToolbarComponents.remove(comp);
-                    getNorthToolbar().remove(comp.getComponent());
-                    getNorthToolbar().repaint();
-                    deregisterIconButtons(comp.getComponent());
-                    break;
+                    comp = myNorthToolbarComponents.get(i);
+                    if (comp.getName().equals(componentName))
+                    {
+                        myNorthToolbarComponents.remove(comp);
+                        getNorthToolbar().remove(comp.getComponent());
+                        getNorthToolbar().repaint();
+                        deregisterIconButtons(comp.getComponent());
+                        break;
+                    }
                 }
-            }
-            break;
+                break;
 
-        case NORTH_BOTTOM:
-            for (int i = myNorthBottomToolbarComponents.size() - 1; i >= 0; i--)
-            {
-                comp = myNorthBottomToolbarComponents.get(i);
-                if (comp.getName().equals(componentName))
+            case NORTH_BOTTOM:
+                for (int i = myNorthBottomToolbarComponents.size() - 1; i >= 0; i--)
                 {
-                    myNorthBottomToolbarComponents.remove(comp);
-                    getNorthBottomToolbar().remove(comp.getComponent());
-                    getNorthBottomToolbar().repaint();
-                    deregisterIconButtons(comp.getComponent());
-                    break;
+                    comp = myNorthBottomToolbarComponents.get(i);
+                    if (comp.getName().equals(componentName))
+                    {
+                        myNorthBottomToolbarComponents.remove(comp);
+                        getNorthBottomToolbar().remove(comp.getComponent());
+                        getNorthBottomToolbar().repaint();
+                        deregisterIconButtons(comp.getComponent());
+                        break;
+                    }
                 }
-            }
-            break;
+                break;
 
-        case SOUTH:
-            for (int i = mySouthToolbarComponents.size() - 1; i >= 0; i--)
-            {
-                comp = mySouthToolbarComponents.get(i);
-                if (comp.getName().equals(componentName))
+            case SOUTH:
+                for (int i = mySouthToolbarComponents.size() - 1; i >= 0; i--)
                 {
-                    mySouthToolbarComponents.remove(comp);
-                    getSouthToolbar().remove(comp.getComponent());
-                    getSouthToolbar().repaint();
-                    deregisterIconButtons(comp.getComponent());
-                    break;
+                    comp = mySouthToolbarComponents.get(i);
+                    if (comp.getName().equals(componentName))
+                    {
+                        mySouthToolbarComponents.remove(comp);
+                        getSouthToolbar().remove(comp.getComponent());
+                        getSouthToolbar().repaint();
+                        deregisterIconButtons(comp.getComponent());
+                        break;
+                    }
                 }
-            }
-            break;
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
     }
 
@@ -316,34 +316,34 @@ public class ToolbarManager
 
         switch (tbc.getSeparatorLocation())
         {
-        case LEFT:
-            toolbar.style(SEPARATOR_STYLE).add(getSeparator());
-            toolbar.incrementGridx();
-            toolbar.style(BASIC_STYLE).add(tbc.getComponent());
-            break;
+            case LEFT:
+                toolbar.style(SEPARATOR_STYLE).add(getSeparator());
+                toolbar.incrementGridx();
+                toolbar.style(BASIC_STYLE).add(tbc.getComponent());
+                break;
 
-        case RIGHT:
-            toolbar.add(tbc.getComponent());
-            toolbar.incrementGridx();
-            toolbar.style(SEPARATOR_STYLE).add(getSeparator());
-            toolbar.style(BASIC_STYLE);
-            break;
+            case RIGHT:
+                toolbar.add(tbc.getComponent());
+                toolbar.incrementGridx();
+                toolbar.style(SEPARATOR_STYLE).add(getSeparator());
+                toolbar.style(BASIC_STYLE);
+                break;
 
-        case BOTH:
-            toolbar.style(SEPARATOR_STYLE).add(getSeparator());
-            toolbar.incrementGridx();
-            toolbar.add(tbc.getComponent());
-            toolbar.incrementGridx();
-            toolbar.style(SEPARATOR_STYLE).add(getSeparator());
-            toolbar.style(BASIC_STYLE);
-            break;
+            case BOTH:
+                toolbar.style(SEPARATOR_STYLE).add(getSeparator());
+                toolbar.incrementGridx();
+                toolbar.add(tbc.getComponent());
+                toolbar.incrementGridx();
+                toolbar.style(SEPARATOR_STYLE).add(getSeparator());
+                toolbar.style(BASIC_STYLE);
+                break;
 
-        case NONE:
-            toolbar.add(tbc.getComponent());
-            break;
+            case NONE:
+                toolbar.add(tbc.getComponent());
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
     }
 
@@ -357,28 +357,28 @@ public class ToolbarManager
     {
         switch (tbc.getSeparatorLocation())
         {
-        case LEFT:
-            toolbar.add(getSeparator());
-            toolbar.add(tbc.getComponent());
-            break;
+            case LEFT:
+                toolbar.add(getSeparator());
+                toolbar.add(tbc.getComponent());
+                break;
 
-        case RIGHT:
-            toolbar.add(tbc.getComponent());
-            toolbar.add(getSeparator());
-            break;
+            case RIGHT:
+                toolbar.add(tbc.getComponent());
+                toolbar.add(getSeparator());
+                break;
 
-        case BOTH:
-            toolbar.add(getSeparator());
-            toolbar.add(tbc.getComponent());
-            toolbar.add(getSeparator());
-            break;
+            case BOTH:
+                toolbar.add(getSeparator());
+                toolbar.add(tbc.getComponent());
+                toolbar.add(getSeparator());
+                break;
 
-        case NONE:
-            toolbar.add(tbc.getComponent());
-            break;
+            case NONE:
+                toolbar.add(tbc.getComponent());
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
     }
 
