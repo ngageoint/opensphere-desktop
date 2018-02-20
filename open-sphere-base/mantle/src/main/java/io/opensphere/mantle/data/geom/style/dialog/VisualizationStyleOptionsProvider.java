@@ -33,19 +33,19 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
 
     /** The Reset all style data button. */
     private JButton myResetAllStyleDataButton;
-    
+
     /** The `Show Toolbar Labels` checkbox */
     private JCheckBox myShowToolbarLabelsCheckBox;
 
     /** The Style controller. */
     private final VisualizationStyleController myStyleController;
-    
+
     /** Preference key for the user preference to show the icon button text. */
     private static final String SHOW_ICON_BUTTON_TEXT_PREF_KEY = "showIconButtonText";
-    
+
     /** Preferences for the toolbar. */
     private final Preferences toolbarPreferences;
-    
+
     /** Flag indicating if the text should be shown on the toolbar buttons. */
     private boolean myShowToolbarLabels;
 
@@ -79,7 +79,7 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
             myPanel.setBackground(DEFAULT_BACKGROUND_COLOR);
             myPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
             myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
-            
+
             Box selectionPanel = Box.createHorizontalBox();
             selectionPanel.setMaximumSize(new Dimension(3000, 30));
             selectionPanel.setPreferredSize(new Dimension(300, 30));
@@ -87,7 +87,7 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
             selectionPanel.add(Box.createHorizontalGlue());
             selectionPanel.setBackground(TRANSPARENT_COLOR);
             myPanel.add(selectionPanel);
-            
+
             myPanel.add(Box.createVerticalStrut(30));
 
             JTextArea ta = new JTextArea();
@@ -167,7 +167,7 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
         }
         return myResetAllStyleDataButton;
     }
-    
+
     /**
      * Gets the `show toolbar labels` checkbox.
      *
@@ -175,29 +175,29 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
      */
     private JCheckBox getShowToolbarLabelsCheckBox()
     {
-    	if (myShowToolbarLabelsCheckBox == null)
-    	{
-    		myShowToolbarLabelsCheckBox = new JCheckBox("Show Icon Labels on Toolbar", myShowToolbarLabels);
-    		myShowToolbarLabelsCheckBox.addActionListener(ev ->
+        if (myShowToolbarLabelsCheckBox == null)
+        {
+            myShowToolbarLabelsCheckBox = new JCheckBox("Show Icon Labels on Toolbar", myShowToolbarLabels);
+            myShowToolbarLabelsCheckBox.addActionListener(ev ->
             {
                 toolbarPreferences.putBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, !myShowToolbarLabels, this);
             });
-    	}
-    	return myShowToolbarLabelsCheckBox;
+        }
+        return myShowToolbarLabelsCheckBox;
     }
-    
+
     /**
      * Listener for showIconButtonText preference updates.
      */
     private final PreferenceChangeListener myTextListener = new PreferenceChangeListener()
     {
-		@Override
-		public void preferenceChange(PreferenceChangeEvent evt) {
-			myShowToolbarLabels = evt.getValueAsBoolean(!myShowToolbarLabels);
-			if (myShowToolbarLabelsCheckBox != null)
-			{
-				myShowToolbarLabelsCheckBox.setSelected(myShowToolbarLabels);
-			}
-		}
+        @Override
+        public void preferenceChange(PreferenceChangeEvent evt) {
+            myShowToolbarLabels = evt.getValueAsBoolean(!myShowToolbarLabels);
+            if (myShowToolbarLabelsCheckBox != null)
+            {
+                myShowToolbarLabelsCheckBox.setSelected(myShowToolbarLabels);
+            }
+        }
     };
 }
