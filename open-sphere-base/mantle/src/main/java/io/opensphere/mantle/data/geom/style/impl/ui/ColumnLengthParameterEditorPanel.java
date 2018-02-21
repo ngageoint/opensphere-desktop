@@ -70,6 +70,11 @@ public class ColumnLengthParameterEditorPanel extends AbstractStyleParameterEdit
         GridBagPanel panel = new GridBagPanel();
         panel.setInsets(0, 0, 0, 4);
         panel.add(myColumnsCombo);
+        String unitPreLabel = (String)myPanelBuilder.getOtherParameter("unitPreLabel");
+        if (unitPreLabel != null)
+        {
+            panel.add(new JLabel(unitPreLabel));
+        }
         panel.add(myUnitsCombo);
         panel.add(new JLabel("x"));
         panel.add(myMultiplierField);
