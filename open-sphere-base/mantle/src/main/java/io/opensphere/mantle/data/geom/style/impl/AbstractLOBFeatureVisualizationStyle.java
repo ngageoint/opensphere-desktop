@@ -51,6 +51,7 @@ import io.opensphere.mantle.data.geom.style.impl.ui.AbstractStyleParameterEditor
 import io.opensphere.mantle.data.geom.style.impl.ui.AbstractVisualizationControlPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.AdvancedLengthParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.CheckBoxStyleParameterEditorPanel;
+import io.opensphere.mantle.data.geom.style.impl.ui.ColumnAngleParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.ColumnLengthParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.EditorPanelVisibilityDependency;
 import io.opensphere.mantle.data.geom.style.impl.ui.FloatSliderStyleParameterEditorPanel;
@@ -62,6 +63,7 @@ import io.opensphere.mantle.data.geom.style.impl.ui.PanelBuilder;
 import io.opensphere.mantle.data.geom.style.impl.ui.ParameterVisibilityConstraint;
 import io.opensphere.mantle.data.geom.style.impl.ui.RadioButtonParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.StyleParameterEditorGroupPanel;
+import io.opensphere.mantle.data.impl.specialkey.HeadingErrorKey;
 import io.opensphere.mantle.data.impl.specialkey.SpeedErrorKey;
 import io.opensphere.mantle.data.impl.specialkey.SpeedKey;
 import io.opensphere.mantle.util.MantleConstants;
@@ -110,6 +112,12 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     /** The show ellipse property key. */
     public static final String ourShowEllipsePropertyKey = ourPropertyKeyPrefix + ".ShowEllipse";
+
+    /** The bearing error column property key. */
+    public static final String ourBearingErrorColumnPropertyKey = ourPropertyKeyPrefix + ".BearingErrorColumn";
+
+    /** The bearing error multiplier property key. */
+    public static final String ourBearingErrorMultiplierPropertyKey = ourPropertyKeyPrefix + ".BearingErrorMultiplier";
 
     /** The length error column property key. */
     public static final String ourLengthErrorColumnPropertyKey = ourPropertyKeyPrefix + ".LengthErrorColumn";
@@ -167,9 +175,19 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
             ourShowEllipsePropertyKey, "Show Ellipse", Boolean.FALSE, Boolean.class,
             new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
 
+    /** The bearing error column style parameter. */
+    public static final VisualizationStyleParameter ourDefaultBearingErrorColumnParameter = new VisualizationStyleParameter(
+            ourBearingErrorColumnPropertyKey, "Bearing Err", null, String.class,
+            new VisualizationStyleParameterFlags(true, true), ParameterHint.hint(false, true));
+
+    /** The bearing error multiplier style parameter. */
+    public static final VisualizationStyleParameter ourDefaultBearingErrorMultiplierParameter = new VisualizationStyleParameter(
+            ourBearingErrorMultiplierPropertyKey, "Bearing Error Multiplier", Integer.valueOf(1), Integer.class,
+            new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
+
     /** The length error column style parameter. */
     public static final VisualizationStyleParameter ourDefaultLengthErrorColumnParameter = new VisualizationStyleParameter(
-            ourLengthErrorColumnPropertyKey, "Length Err", null, String.class,
+            ourLengthErrorColumnPropertyKey, "Length Err ", null, String.class,
             new VisualizationStyleParameterFlags(true, true), ParameterHint.hint(false, true));
 
     /** The length error multiplier style parameter. */
@@ -413,6 +431,34 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         return length;
     }
 
+    /**
+     * Gets the bearing error.
+     *
+     * @param metaDataProvider the meta data provider
+     * @return the bearing error
+     */
+    public double getBearingError(MetaDataProvider metaDataProvider)
+    {
+        double error = 0;
+        Boolean show = (Boolean)getStyleParameterValue(ourShowErrorPropertyKey);
+        if (show.booleanValue())
+        {
+            String column = (String)getStyleParameterValue(ourBearingErrorColumnPropertyKey);
+            Object value = metaDataProvider.getValue(column);
+            try
+            {
+                double doubleValue = StyleUtils.convertValueToDouble(value);
+                Integer multiplier = (Integer)getStyleParameterValue(ourBearingErrorMultiplierPropertyKey);
+                error = multiplier.doubleValue() * doubleValue;
+            }
+            catch (NumberFormatException e)
+            {
+                error = 0;
+            }
+        }
+        return error;
+    }
+
     @Override
     @Nonnull
     public GroupedMiniStyleEditorPanel getMiniUIPanel()
@@ -559,15 +605,27 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         DataTypeInfo dti = StyleUtils.getDataTypeInfoFromKey(getToolbox(), getDTIKey());
         if (dti != null && dti.getMetaDataInfo() != null)
         {
+            setDefaultValue(style, dti, ourBearingErrorColumnPropertyKey, HeadingErrorKey.DEFAULT);
+            PanelBuilder builder = builderBuilder.apply(style.getStyleParameter(ourBearingErrorColumnPropertyKey).getName());
+            builder.setOtherParameter("unitPreLabel", "+/-");
+            AbstractStyleParameterEditorPanel bearingErrorPanel = new ColumnAngleParameterEditorPanel(builder, style,
+                    ourBearingErrorColumnPropertyKey, ourBearingErrorMultiplierPropertyKey, dti.getMetaDataInfo().getKeyNames());
+            paramList.add(bearingErrorPanel);
+
+            EditorPanelVisibilityDependency visDepend = new EditorPanelVisibilityDependency(panel, bearingErrorPanel);
+            visDepend.addConstraint(new ParameterVisibilityConstraint(ourShowErrorPropertyKey, true, Boolean.TRUE));
+            visDepend.evaluateStyle();
+            panel.addVisibilityDependency(visDepend);
+
             setDefaultValue(style, dti, ourLengthErrorColumnPropertyKey, SpeedErrorKey.DEFAULT);
-            PanelBuilder builder = builderBuilder.apply(style.getStyleParameter(ourLengthErrorColumnPropertyKey).getName());
+            builder = builderBuilder.apply(style.getStyleParameter(ourLengthErrorColumnPropertyKey).getName());
             builder.setOtherParameter("unitPreLabel", "+/-");
             AbstractStyleParameterEditorPanel lengthErrorPanel = new ColumnLengthParameterEditorPanel(builder, style,
                     ourLengthErrorColumnPropertyKey, ourLengthErrorMultiplierPropertyKey, dti.getMetaDataInfo().getKeyNames(),
                     LENGTH_UNITS);
             paramList.add(lengthErrorPanel);
 
-            EditorPanelVisibilityDependency visDepend = new EditorPanelVisibilityDependency(panel, lengthErrorPanel);
+            visDepend = new EditorPanelVisibilityDependency(panel, lengthErrorPanel);
             visDepend.addConstraint(new ParameterVisibilityConstraint(ourShowErrorPropertyKey, true, Boolean.TRUE));
             visDepend.evaluateStyle();
             panel.addVisibilityDependency(visDepend);
@@ -588,6 +646,8 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         setParameter(ourDefaultLengthMultiplierParameter);
         setParameter(ourDefaultShowErrorParameter);
         setParameter(ourDefaultShowEllipseParameter);
+        setParameter(ourDefaultBearingErrorColumnParameter);
+        setParameter(ourDefaultBearingErrorMultiplierParameter);
         setParameter(ourDefaultLengthErrorColumnParameter);
         setParameter(ourDefaultLengthErrorMultiplierParameter);
     }

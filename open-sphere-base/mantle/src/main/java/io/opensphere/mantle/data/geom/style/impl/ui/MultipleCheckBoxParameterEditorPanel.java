@@ -17,7 +17,7 @@ import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleParameter;
 
 /**
- * A radio button AbstractStyleParameterEditorPanel.
+ * A multiple check box AbstractStyleParameterEditorPanel.
  */
 public class MultipleCheckBoxParameterEditorPanel extends AbstractStyleParameterEditorPanel implements ActionListener
 {
