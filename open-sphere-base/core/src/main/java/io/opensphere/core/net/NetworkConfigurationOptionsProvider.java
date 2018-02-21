@@ -146,6 +146,8 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
             myNetworkConfigurationManager.setProxy("", -1);
             myNetworkConfigurationManager.setProxyExclusions("");
         }
+        
+        notifyChanged();
     }
 
     @Override
@@ -395,5 +397,10 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
     private Preferences getPreferences()
     {
         return getPreferencesRegistry().getPreferences(NetworkConfigurationOptionsProvider.class);
+    }
+
+    private void notifyChanged()
+    {
+        myNetworkConfigurationManager.notifyProxySettingsChanged();
     }
 }

@@ -20,6 +20,7 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.taskactivity.TaskActivity;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.datasources.IDataSource;
+import io.opensphere.server.control.AbstractServerSourceController.ReloadListener;
 import io.opensphere.server.services.ServerConnectionParams;
 import io.opensphere.server.source.OGCServerSource;
 import io.opensphere.server.toolbox.ServerListManager;
@@ -49,6 +50,8 @@ public class OGCServerHandler
 
     /** The load listeners. */
     private final WeakChangeSupport<ServerHandlerLoadListener> myLoadListeners = new WeakChangeSupport<>();
+
+    private Map<IDataSource, ReloadListener> myReloadListenerMap = new HashMap<IDataSource, ReloadListener>();
 
     /** The Core Event Manager. */
     private final Toolbox myToolbox;
@@ -202,6 +205,10 @@ public class OGCServerHandler
                 src.setBusy(false, this);
                 src.setActive(false);
                 notifyLoadEnded(src, true, null);
+                if (myReloadListenerMap.containsKey(source))
+                {
+                    myReloadListenerMap.get(source).finishReload(source);
+                }
             }
         };
         executeRunnable(r);
@@ -288,6 +295,20 @@ public class OGCServerHandler
         myActivationThreads.remove(source);
         source.setBusy(false, this);
         notifyLoadEnded(source, success, errorMessage);
+    }
+
+    protected void reloadSource(IDataSource source)
+    {
+        myReloadListenerMap.put(source, new ReloadListener()
+        {
+            @Override
+            public void finishReload(IDataSource source)
+            {
+                activateSource(source);
+                myReloadListenerMap.remove(source);
+            }
+        });
+        deactivateSource(source);
     }
 
     /**

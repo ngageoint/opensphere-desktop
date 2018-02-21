@@ -1,6 +1,7 @@
 package io.opensphere.server.control;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -33,6 +34,8 @@ public abstract class UrlServerSourceController extends AbstractServerSourceCont
     /** The set of sources whose activations were canceled by the user, not because of an error. */
     private final Set<IDataSource> myUserCancellations = Collections.synchronizedSet(new HashSet<IDataSource>());
 
+    private Map<IDataSource, ReloadListener> myReloadListenerMap = new HashMap<IDataSource, ReloadListener>();
+
     @Override
     public void open(Toolbox toolbox, Class<?> prefsTopic)
     {
@@ -45,6 +48,7 @@ public abstract class UrlServerSourceController extends AbstractServerSourceCont
         // Load the config and activate sources
         Preferences preferences = toolbox.getPreferencesRegistry().getPreferences(prefsTopic);
         setConfig(readConfig(preferences));
+
         initialize();
     }
 
@@ -79,6 +83,8 @@ public abstract class UrlServerSourceController extends AbstractServerSourceCont
                 myActivationThreads.remove(source);
                 myUserCancellations.remove(source);
             }
+
+            System.out.println("Activated " + source.getName() + " at " + new Date());
         });
     }
 
@@ -110,6 +116,11 @@ public abstract class UrlServerSourceController extends AbstractServerSourceCont
 
                 // Persist the configuration
                 updateSource(source);
+                System.out.println("Deactivated " + source.getName() + " at " + new Date());
+                if (myReloadListenerMap.containsKey(source))
+                {
+                    myReloadListenerMap.get(source).finishReload(source);
+                }
             }
         });
     }
@@ -138,6 +149,25 @@ public abstract class UrlServerSourceController extends AbstractServerSourceCont
     public int getOrdinal()
     {
         return -1;
+    }
+
+    @Override
+    protected void reloadActiveSources()
+    {
+        getSourceList().stream().filter(source -> source.isActive()).forEach(source ->
+        {
+            System.out.println("Reloading: " + source.getName() + " at " + new Date());
+            myReloadListenerMap.put(source, new ReloadListener()
+            {
+                @Override
+                public void finishReload(IDataSource source)
+                {
+                    activateSource(source);
+                    myReloadListenerMap.remove(source);
+                }
+            });
+            deactivateSource(source);
+        });
     }
 
     /**

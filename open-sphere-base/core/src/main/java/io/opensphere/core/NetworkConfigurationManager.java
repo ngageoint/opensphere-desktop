@@ -1,5 +1,7 @@
 package io.opensphere.core;
 
+import io.opensphere.core.util.ChangeSupport;
+
 /** Facility that manages the network configuration. */
 public interface NetworkConfigurationManager
 {
@@ -16,6 +18,8 @@ public interface NetworkConfigurationManager
      * @param listener The listener.
      */
     void addChangeListener(NetworkConfigurationChangeListener listener);
+
+    void addChangeListener(ProxySettingsChangeListener listener);
 
     /**
      * Get the system proxy config URL if one has been set.
@@ -44,7 +48,7 @@ public interface NetworkConfigurationManager
      * @return The port or -1.
      */
     int getProxyPort();
-
+    
     /**
      * Determine if a host should be excluded from the proxy configuration.
      *
@@ -59,7 +63,7 @@ public interface NetworkConfigurationManager
      * @return {@code true} if system proxies should be used.
      */
     boolean isUseSystemProxies();
-
+    
     /**
      * Set if system proxies should be used.
      *
@@ -73,6 +77,8 @@ public interface NetworkConfigurationManager
      * @param listener The listener.
      */
     void removeChangeListener(NetworkConfigurationChangeListener listener);
+
+    void removeChangeListener(ProxySettingsChangeListener listener);
 
     /** Restore the default settings. */
     void restoreDefaults();
@@ -98,6 +104,8 @@ public interface NetworkConfigurationManager
      * @param hostPatterns A string comprising the host patterns.
      */
     void setProxyExclusions(String hostPatterns);
+    
+    void notifyProxySettingsChanged();
 
     /** Listener for changes to the network configuration. */
     @FunctionalInterface
@@ -105,5 +113,11 @@ public interface NetworkConfigurationManager
     {
         /** Method called when the network configuration changes. */
         void networkConfigurationChanged();
+    }
+
+    @FunctionalInterface
+    interface ProxySettingsChangeListener
+    {
+        void proxySettingsChanged();
     }
 }
