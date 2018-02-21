@@ -33,9 +33,10 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     /** The key for the preference for system proxies. */
     private static final String SYSTEM_PROXIES_ENABLED_KEY = "SystemProxiesEnabled";
 
-    /** Change support. */
+    /** Change support for network configuration changes. */
     private final ChangeSupport<NetworkConfigurationChangeListener> myNetworkConfigChangeSupport = new WeakChangeSupport<NetworkConfigurationChangeListener>();
 
+    /** Change support for proxy settings changes. */
     private final ChangeSupport<ProxySettingsChangeListener> myProxySettingsChangeSupport = new WeakChangeSupport<ProxySettingsChangeListener>();
 
     /** The preferences. */
@@ -177,11 +178,11 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
         myPrefs.putBoolean(SYSTEM_PROXIES_ENABLED_KEY, use, this);
         notifyNetworkConfigChanged();
     }
-    
+
     @Override
     public void notifyProxySettingsChanged()
     {
-        myProxySettingsChangeSupport.notifyListeners(listener -> listener.proxySettingsChanged());;
+        myProxySettingsChangeSupport.notifyListeners(listener -> listener.proxySettingsChanged());
     }
 
     /**
