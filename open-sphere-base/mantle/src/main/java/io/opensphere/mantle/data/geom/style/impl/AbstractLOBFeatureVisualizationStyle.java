@@ -629,8 +629,13 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
      */
     private void handleModeChange(VisualizationStyleParameterChangeEvent event)
     {
-        String mode = (String)event.getChangedParameterSet().iterator().next().getValue();
-        changeMode(mode);
+        VisualizationStyleParameter modeParam = event.getChangedParameterSet().stream()
+                .filter(p -> ourLengthModePropertyKey.equals(p.getKey())).findAny().orElse(null);
+        if (modeParam != null)
+        {
+            String mode = (String)modeParam.getValue();
+            changeMode(mode);
+        }
     }
 
     /**
