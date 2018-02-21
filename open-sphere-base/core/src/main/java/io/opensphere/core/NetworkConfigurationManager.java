@@ -1,24 +1,25 @@
 package io.opensphere.core;
 
-import io.opensphere.core.util.ChangeSupport;
-
 /** Facility that manages the network configuration. */
 public interface NetworkConfigurationManager
 {
     /**
-     * The "purpose" that should be used when creating a username/password
-     * provider for the network proxy.
+     * The "purpose" that should be used when creating a username/password provider for the network proxy.
      */
     String PROXY_PURPOSE = "proxy";
 
     /**
-     * Add a listener for changes to the network configuration. Only a weak
-     * reference is held.
+     * Add a listener for changes to the network configuration. Only a weak reference is held.
      *
      * @param listener The listener.
      */
     void addChangeListener(NetworkConfigurationChangeListener listener);
 
+    /**
+     * Add a listener for changes to the proxy settings. Only a weak reference is held.
+     *
+     * @param listener the listener
+     */
     void addChangeListener(ProxySettingsChangeListener listener);
 
     /**
@@ -48,7 +49,7 @@ public interface NetworkConfigurationManager
      * @return The port or -1.
      */
     int getProxyPort();
-    
+
     /**
      * Determine if a host should be excluded from the proxy configuration.
      *
@@ -63,7 +64,7 @@ public interface NetworkConfigurationManager
      * @return {@code true} if system proxies should be used.
      */
     boolean isUseSystemProxies();
-    
+
     /**
      * Set if system proxies should be used.
      *
@@ -78,6 +79,11 @@ public interface NetworkConfigurationManager
      */
     void removeChangeListener(NetworkConfigurationChangeListener listener);
 
+    /**
+     * Remove a listener for changes to the proxy settings.
+     *
+     * @param listener the listener
+     */
     void removeChangeListener(ProxySettingsChangeListener listener);
 
     /** Restore the default settings. */
@@ -104,7 +110,8 @@ public interface NetworkConfigurationManager
      * @param hostPatterns A string comprising the host patterns.
      */
     void setProxyExclusions(String hostPatterns);
-    
+
+    /** Notify that proxy settings have been changed. */
     void notifyProxySettingsChanged();
 
     /** Listener for changes to the network configuration. */
@@ -115,9 +122,11 @@ public interface NetworkConfigurationManager
         void networkConfigurationChanged();
     }
 
+    /** Listener for changes to the proxy settings. */
     @FunctionalInterface
     interface ProxySettingsChangeListener
     {
+        /** Method called when the proxy settings change. */
         void proxySettingsChanged();
     }
 }

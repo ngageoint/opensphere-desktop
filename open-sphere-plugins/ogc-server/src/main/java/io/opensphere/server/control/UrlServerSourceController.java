@@ -1,7 +1,6 @@
 package io.opensphere.server.control;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -34,7 +33,8 @@ public abstract class UrlServerSourceController extends AbstractServerSourceCont
     /** The set of sources whose activations were canceled by the user, not because of an error. */
     private final Set<IDataSource> myUserCancellations = Collections.synchronizedSet(new HashSet<IDataSource>());
 
-    private Map<IDataSource, ReloadListener> myReloadListenerMap = new HashMap<IDataSource, ReloadListener>();
+    /** The map of sources to reload listeners. */
+    private Map<IDataSource, SourceReloadListener> myReloadListenerMap = new HashMap<IDataSource, SourceReloadListener>();
 
     @Override
     public void open(Toolbox toolbox, Class<?> prefsTopic)
@@ -83,8 +83,6 @@ public abstract class UrlServerSourceController extends AbstractServerSourceCont
                 myActivationThreads.remove(source);
                 myUserCancellations.remove(source);
             }
-
-            System.out.println("Activated " + source.getName() + " at " + new Date());
         });
     }
 
@@ -116,7 +114,7 @@ public abstract class UrlServerSourceController extends AbstractServerSourceCont
 
                 // Persist the configuration
                 updateSource(source);
-                System.out.println("Deactivated " + source.getName() + " at " + new Date());
+
                 if (myReloadListenerMap.containsKey(source))
                 {
                     myReloadListenerMap.get(source).finishReload(source);
@@ -156,8 +154,7 @@ public abstract class UrlServerSourceController extends AbstractServerSourceCont
     {
         getSourceList().stream().filter(source -> source.isActive()).forEach(source ->
         {
-            System.out.println("Reloading: " + source.getName() + " at " + new Date());
-            myReloadListenerMap.put(source, new ReloadListener()
+            myReloadListenerMap.put(source, new SourceReloadListener()
             {
                 @Override
                 public void finishReload(IDataSource source)

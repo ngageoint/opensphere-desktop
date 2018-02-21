@@ -35,6 +35,7 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
     /** The Change support. */
     private final WeakChangeSupport<ConfigChangeListener> myChangeSupport;
 
+    /** Listener for changes to the proxy settings. */
     private NetworkConfigurationManager.ProxySettingsChangeListener myProxySettingsChangeListener = this::reloadActiveSources;
 
     /** Object that holds and manages the Server source configs. */
@@ -367,11 +368,17 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
         protected abstract V callOnce();
     }
 
+    /** Listener for deactivation half of a reload (deactivation + activation) to be finished. */
     @FunctionalInterface
-    public interface ReloadListener
+    public interface SourceReloadListener
     {
+        /** Method to do activation half of a reload.
+         *
+         * @param source the source to finish reloading
+         */
         void finishReload(IDataSource source);
     }
 
+    /** Reload active sources. */
     protected abstract void reloadActiveSources();
 }
