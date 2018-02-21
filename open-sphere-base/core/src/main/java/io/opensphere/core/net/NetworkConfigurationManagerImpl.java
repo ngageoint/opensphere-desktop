@@ -34,7 +34,9 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     private static final String SYSTEM_PROXIES_ENABLED_KEY = "SystemProxiesEnabled";
 
     /** Change support. */
-    private final ChangeSupport<NetworkConfigurationChangeListener> myChangeSupport = new WeakChangeSupport<NetworkConfigurationChangeListener>();
+    private final ChangeSupport<NetworkConfigurationChangeListener> myNetworkConfigChangeSupport = new WeakChangeSupport<NetworkConfigurationChangeListener>();
+
+    private final ChangeSupport<ProxySettingsChangeListener> myProxySettingsChangeSupport = new WeakChangeSupport<ProxySettingsChangeListener>();
 
     /** The preferences. */
     private final Preferences myPrefs;
@@ -57,7 +59,13 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     @Override
     public void addChangeListener(NetworkConfigurationChangeListener listener)
     {
-        myChangeSupport.addListener(listener);
+        myNetworkConfigChangeSupport.addListener(listener);
+    }
+
+    @Override
+    public void addChangeListener(ProxySettingsChangeListener listener)
+    {
+        myProxySettingsChangeSupport.addListener(listener);
     }
 
     @Override
@@ -119,7 +127,13 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     @Override
     public void removeChangeListener(NetworkConfigurationChangeListener listener)
     {
-        myChangeSupport.removeListener(listener);
+        myNetworkConfigChangeSupport.removeListener(listener);
+    }
+
+    @Override
+    public void removeChangeListener(ProxySettingsChangeListener listener)
+    {
+        myProxySettingsChangeSupport.removeListener(listener);
     }
 
     @Override
@@ -140,35 +154,41 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
             myPrefs.putInt(PROXY_PORT_PREF_KEY, port, this);
         }
         myPrefs.putString(PROXY_HOST_PREF_KEY, url, this);
-        notifyChanged();
+        notifyNetworkConfigChanged();
     }
 
     @Override
     public void setProxyConfigUrl(String url)
     {
         myPrefs.putString(PROXY_CONFIG_URL_PREF_KEY, url, this);
-        notifyChanged();
+        notifyNetworkConfigChanged();
     }
 
     @Override
     public void setProxyExclusions(String hostPatterns)
     {
         myPrefs.putString(PROXY_EXCLUSION_PATTERNS_PREF_KEY, hostPatterns, this);
-        notifyChanged();
+        notifyNetworkConfigChanged();
     }
 
     @Override
     public void setUseSystemProxies(boolean use)
     {
         myPrefs.putBoolean(SYSTEM_PROXIES_ENABLED_KEY, use, this);
-        notifyChanged();
+        notifyNetworkConfigChanged();
+    }
+    
+    @Override
+    public void notifyProxySettingsChanged()
+    {
+        myProxySettingsChangeSupport.notifyListeners(listener -> listener.proxySettingsChanged());;
     }
 
     /**
      * Notify when the configuration has changed.
      */
-    private void notifyChanged()
+    private void notifyNetworkConfigChanged()
     {
-        myChangeSupport.notifyListeners(listener -> listener.networkConfigurationChanged());
+        myNetworkConfigChangeSupport.notifyListeners(listener -> listener.networkConfigurationChanged());
     }
 }

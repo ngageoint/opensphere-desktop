@@ -10,6 +10,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import io.opensphere.core.NetworkConfigurationManager;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.WeakChangeSupport;
@@ -33,6 +34,8 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
 
     /** The Change support. */
     private final WeakChangeSupport<ConfigChangeListener> myChangeSupport;
+
+    private NetworkConfigurationManager.ProxySettingsChangeListener myProxySettingsChangeListener = this::reloadActiveSources;
 
     /** Object that holds and manages the Server source configs. */
     private IDataSourceConfig myConfig;
@@ -180,6 +183,8 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
     {
         myToolbox = toolbox;
         myPrefsTopic = prefsTopic;
+
+        myToolbox.getSystemToolbox().getNetworkConfigurationManager().addChangeListener(myProxySettingsChangeListener);
     }
 
     @Override
@@ -361,4 +366,12 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
          */
         protected abstract V callOnce();
     }
+
+    @FunctionalInterface
+    public interface ReloadListener
+    {
+        void finishReload(IDataSource source);
+    }
+
+    protected abstract void reloadActiveSources();
 }
