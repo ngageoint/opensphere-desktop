@@ -167,7 +167,7 @@ public final class TrackRegistry
             else
             {
                 node = new DefaultTrackNode(position.getFirstObject().getLatLonAlt(),
-                        position.getSecondObject().getConstraints().getTimeConstraint().getTimeSpan());
+                        position.getSecondObject().getConstraints().getTimeConstraint().getTimeSpan(),null);
             }
             nodes.add(node);
         }
