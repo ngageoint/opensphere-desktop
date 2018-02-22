@@ -1,6 +1,7 @@
 package io.opensphere.mantle.data.geom.style.config.v1;
 
 import java.awt.Color;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -12,6 +13,8 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import io.opensphere.core.units.InvalidUnitsException;
+import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleParameter;
@@ -104,6 +107,17 @@ public class StyleParameterConfig
             {
                 return listSupp.parseList(value);
             }
+            else if (Length.class.isAssignableFrom(aClass))
+            {
+                try
+                {
+                    return Length.parse(type, value);
+                }
+                catch (InvalidUnitsException | ParseException e)
+                {
+                    LOGGER.error("Failed to convert " + aClass + " Value \"" + value + "\" - " + e.getMessage());
+                }
+            }
             else
             {
                 throw new UnsupportedClassConversionError("Could not convert value " + value + " to class " + type);
@@ -146,6 +160,10 @@ public class StyleParameterConfig
         else if (value instanceof List)
         {
             return listSupp.writeList((List<String>)value);
+        }
+        else if (value instanceof Length)
+        {
+            return ((Length)value).getMagnitudeString();
         }
         else
         {
