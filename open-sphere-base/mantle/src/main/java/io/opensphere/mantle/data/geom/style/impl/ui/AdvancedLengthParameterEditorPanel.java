@@ -12,6 +12,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.text.DefaultFormatter;
 
 import io.opensphere.core.units.length.Length;
+import io.opensphere.core.util.swing.ComponentUtilities;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.core.util.swing.SwingUtilities;
 import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
@@ -68,6 +69,7 @@ public class AdvancedLengthParameterEditorPanel extends AbstractStyleParameterEd
 
         myUnitsCombo = new LengthUnitsComboBox(unitOptions);
         myUnitsCombo.addActionListener(e -> handleValueChange());
+        ComponentUtilities.setPreferredHeight(myUnitsCombo, 24);
 
         GridBagPanel panel = new GridBagPanel();
         panel.fillNone().add(myMaxValueSpinner);

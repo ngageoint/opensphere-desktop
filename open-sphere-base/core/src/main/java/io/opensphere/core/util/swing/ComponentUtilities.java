@@ -168,6 +168,30 @@ public final class ComponentUtilities
     }
 
     /**
+     * Sets the preferred height of the component, leaving the preferred width
+     * the same.
+     *
+     * @param comp the component
+     * @param height the preferred height
+     */
+    public static void setPreferredHeight(Component comp, int height)
+    {
+        comp.setPreferredSize(new Dimension(comp.getPreferredSize().width, height));
+    }
+
+    /**
+     * Sets the minimum width of the component, leaving the minimum height
+     * the same.
+     *
+     * @param comp the component
+     * @param width the minimum width
+     */
+    public static void setMinimumWidth(Component comp, int width)
+    {
+        comp.setMinimumSize(new Dimension(width, comp.getMinimumSize().height));
+    }
+
+    /**
      * Sets the preferred width of the narrower component to that of the wider
      * component.
      *
