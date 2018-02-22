@@ -68,6 +68,7 @@ public class JAXBTrackNode implements TrackNode
         TimeSpan ts = node.getTime();
         myTimeStart = TimeSpanUtility.getWorkaroundStart(ts);
         myTimeEnd = TimeSpanUtility.getWorkaroundEnd(ts);
+
     }
 
     @Override
@@ -142,5 +143,11 @@ public class JAXBTrackNode implements TrackNode
         TimeSpan ts = node.getTime();
         myTimeStart = TimeSpanUtility.getWorkaroundStart(ts);
         myTimeEnd = TimeSpanUtility.getWorkaroundEnd(ts);
+    }
+
+    @Override
+    public Long getCacheID()
+    {
+        return null;
     }
 }

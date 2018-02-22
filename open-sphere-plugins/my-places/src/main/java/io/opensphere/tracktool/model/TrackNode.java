@@ -29,4 +29,11 @@ public interface TrackNode
      * @return the time
      */
     TimeSpan getTime();
+
+    /**
+     * Get the CacheId of the tracknode.
+     * 
+     * @return the cache id
+     */
+    Long getCacheID();
 }
