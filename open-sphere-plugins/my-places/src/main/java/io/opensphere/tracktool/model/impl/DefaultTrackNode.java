@@ -18,6 +18,9 @@ public class DefaultTrackNode implements TrackNode
 
     /** The Time. */
     private final TimeSpan myTime;
+    
+    /** The track node cacheID. */
+    private final Long myCacheID;
 
     /**
      * The callout offset.
@@ -31,19 +34,21 @@ public class DefaultTrackNode implements TrackNode
      */
     public DefaultTrackNode(LatLonAlt position)
     {
-        this(position, TimeSpan.TIMELESS);
+        this(position, TimeSpan.TIMELESS, null);
     }
 
     /**
      * Instantiates a new default track node.
      *
-     * @param position the position
-     * @param span the span
+     * @param position the position.
+     * @param span the span.
+     * @param id the cacheID.
      */
-    public DefaultTrackNode(LatLonAlt position, TimeSpan span)
+    public DefaultTrackNode(LatLonAlt position, TimeSpan span, Long id)
     {
         myPosition = position;
         myTime = span;
+        myCacheID = id;
     }
 
     /**
@@ -55,6 +60,7 @@ public class DefaultTrackNode implements TrackNode
     {
         myPosition = other.getLocation();
         myTime = other.getTime();
+        myCacheID = other.getCacheID();
     }
 
     @Override
@@ -107,5 +113,11 @@ public class DefaultTrackNode implements TrackNode
         }
         DefaultTrackNode other = (DefaultTrackNode)obj;
         return Objects.equals(myPosition, other.myPosition);
+    }
+
+    @Override
+    public Long getCacheID()
+    {
+      return myCacheID;
     }
 }
