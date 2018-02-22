@@ -194,7 +194,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
             new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
 
     /** The Constant MAX_LOB_LENGTH_METERS. */
-    private static final Length MAX_LOB_LENGTH = new Kilometers(8000.0f);
+    private static final Length MAX_LOB_LENGTH = new Kilometers(20000.0f);
 
     /** The minimum LOB length. */
     private static final Length MIN_LOB_LENGTH = Kilometers.ONE;
@@ -380,6 +380,10 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         else
         {
             length = (Length)getStyleParameterValue(ourLOBLengthPropertyKey);
+        }
+        if (length.compareTo(MAX_LOB_LENGTH) > 0)
+        {
+            length = MAX_LOB_LENGTH;
         }
         return length;
     }
@@ -595,8 +599,10 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
             MutableVisualizationStyle style, Function<String, PanelBuilder> builderBuilder,
             AbstractVisualizationControlPanel panel, boolean isMini)
     {
-        AbstractStyleParameterEditorPanel errorAndEllipsePanel = new MultipleCheckBoxParameterEditorPanel(
-                PanelBuilder.get(null, isMini ? 20 : 5, 0, 0, 0), style, ourShowErrorPropertyKey, ourShowEllipsePropertyKey);
+        PanelBuilder panelBuilder = PanelBuilder.get(null, isMini ? 20 : 5, 0, 0, 0);
+        panelBuilder.setOtherParameter("firstIndent", "9");
+        AbstractStyleParameterEditorPanel errorAndEllipsePanel = new MultipleCheckBoxParameterEditorPanel(panelBuilder, style,
+                ourShowErrorPropertyKey, ourShowEllipsePropertyKey);
         paramList.add(errorAndEllipsePanel);
 
         DataTypeInfo dti = StyleUtils.getDataTypeInfoFromKey(getToolbox(), getDTIKey());

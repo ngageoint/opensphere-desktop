@@ -28,14 +28,17 @@ public final class NumberUtilities
      */
     public static double parseDouble(String string, double defaultValue)
     {
-        double value;
-        try
+        double value = defaultValue;
+        if (string != null && !string.isEmpty())
         {
-            value = Double.parseDouble(string);
-        }
-        catch (NumberFormatException e)
-        {
-            value = defaultValue;
+            try
+            {
+                value = Double.parseDouble(string);
+            }
+            catch (NumberFormatException e)
+            {
+                value = defaultValue;
+            }
         }
         return value;
     }
@@ -50,14 +53,17 @@ public final class NumberUtilities
      */
     public static int parseInt(String string, int defaultValue)
     {
-        int value;
-        try
+        int value = defaultValue;
+        if (string != null && !string.isEmpty())
         {
-            value = Integer.parseInt(string);
-        }
-        catch (NumberFormatException e)
-        {
-            value = defaultValue;
+            try
+            {
+                value = Integer.parseInt(string);
+            }
+            catch (NumberFormatException e)
+            {
+                value = defaultValue;
+            }
         }
         return value;
     }

@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Nulls;
+import io.opensphere.core.util.lang.NumberUtilities;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleParameter;
@@ -39,12 +40,14 @@ public class MultipleCheckBoxParameterEditorPanel extends AbstractStyleParameter
         super(label, style, null);
 
         GridBagPanel panel = new GridBagPanel();
+        int firstIndent = NumberUtilities.parseInt((String)label.getOtherParameter("firstIndent"), 4);
         for (String paramKey : paramKeys)
         {
             VisualizationStyleParameter styleParameter = myStyle.getStyleParameter(paramKey);
             Boolean value = (Boolean)styleParameter.getValue();
             JCheckBox checkBox = new JCheckBox(Nulls.STRING, value.booleanValue());
-            panel.setInsets(0, 0, 0, 4).add(new JLabel(styleParameter.getName()));
+            int indent = myCheckBoxMap.isEmpty() ? firstIndent : 4;
+            panel.setInsets(0, 0, 0, indent).add(new JLabel(styleParameter.getName()));
             panel.setInsets(0, 0, 0, 9).add(checkBox);
 
             myCheckBoxMap.put(checkBox, paramKey);
