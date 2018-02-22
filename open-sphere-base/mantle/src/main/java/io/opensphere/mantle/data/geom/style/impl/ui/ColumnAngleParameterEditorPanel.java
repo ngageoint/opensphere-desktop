@@ -12,6 +12,7 @@ import javax.swing.event.DocumentEvent;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.util.collections.CollectionUtilities;
+import io.opensphere.core.util.swing.ComponentUtilities;
 import io.opensphere.core.util.swing.DocumentListenerAdapter;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.core.util.swing.ListComboBoxModel;
@@ -55,9 +56,11 @@ public class ColumnAngleParameterEditorPanel extends AbstractStyleParameterEdito
 
         myColumnsCombo = new JComboBox<>(new ListComboBoxModel<>(CollectionUtilities.sort(columns)));
         myColumnsCombo.setToolTipText("The column value to use for angle.");
+        ComponentUtilities.setPreferredHeight(myColumnsCombo, 24);
 
         myMultiplierField = new JTextField();
-        myMultiplierField.setColumns(4);
+        ComponentUtilities.setMinimumWidth(myMultiplierField, 50);
+        ComponentUtilities.setPreferredWidth(myMultiplierField, 50);
         myMultiplierField.setToolTipText("The amount by which to multiple the column value.");
 
         GridBagPanel panel = new GridBagPanel();

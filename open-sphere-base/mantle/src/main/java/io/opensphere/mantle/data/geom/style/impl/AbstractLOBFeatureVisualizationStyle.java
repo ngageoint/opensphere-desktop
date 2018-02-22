@@ -44,8 +44,6 @@ import io.opensphere.mantle.data.geom.style.ParameterHint;
 import io.opensphere.mantle.data.geom.style.StyleAltitudeReference;
 import io.opensphere.mantle.data.geom.style.VisualizationStyle;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleParameter;
-import io.opensphere.mantle.data.geom.style.VisualizationStyleParameterChangeEvent;
-import io.opensphere.mantle.data.geom.style.VisualizationStyleParameterChangeListener;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleParameterFlags;
 import io.opensphere.mantle.data.geom.style.impl.ui.AbstractStyleParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.AbstractVisualizationControlPanel;
@@ -213,12 +211,6 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     /** The length units. */
     private Class<? extends Length> myLengthUnits;
-
-    /** The map of length mode to the panel for that mode. */
-    private final Map<String, AbstractStyleParameterEditorPanel> myModeToPanelMap = New.map();
-
-    /** The listener for length mode. */
-    private final VisualizationStyleParameterChangeListener myModeListener = this::handleModeChange;
 
     /**
      * Instantiates a new abstract lob feature visualization style.
@@ -478,13 +470,13 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                 ourLOBOriginPointSizePropertyKey, true, false, 0.0f, MAX_POINT_SIZE,
                 new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(0, null)));
 
-        addLengthPanels(paramList, style, StyleUtils::createBasicMiniPanelBuilder);
+        addLengthPanels(paramList, style, StyleUtils::createBasicMiniPanelBuilder, panel);
 
         vsp = style.getStyleParameter(ourShowArrowPropertyKey);
         paramList.add(new CheckBoxStyleParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(vsp.getName()), style,
                 ourShowArrowPropertyKey, true));
 
-        addErrorAndEllipsePanels(paramList, style, StyleUtils::createBasicMiniPanelBuilder, panel);
+        addErrorAndEllipsePanels(paramList, style, StyleUtils::createBasicMiniPanelBuilder, panel, true);
 
         StyleParameterEditorGroupPanel paramGrp = new StyleParameterEditorGroupPanel(null, paramList, false, 1);
         panel.addGroupAtTop(paramGrp);
@@ -522,7 +514,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                 ourLOBOriginPointSizePropertyKey, true, false, 0.0f, MAX_POINT_SIZE,
                 new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(0, null)));
 
-        addLengthPanels(paramList, style, PanelBuilder::get);
+        addLengthPanels(paramList, style, PanelBuilder::get, panel);
 
         param = style.getStyleParameter(ourShowArrowPropertyKey);
         paramList.add(
@@ -539,7 +531,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         visDepend.evaluateStyle();
         panel.addVisibilityDependency(visDepend);
 
-        addErrorAndEllipsePanels(paramList, style, PanelBuilder::get, panel);
+        addErrorAndEllipsePanels(paramList, style, PanelBuilder::get, panel, false);
 
         StyleParameterEditorGroupPanel paramGrp = new StyleParameterEditorGroupPanel("Basic LOB Style", paramList);
         panel.addGroup(paramGrp);
@@ -553,22 +545,26 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
      * @param paramList the panel list
      * @param style the style
      * @param builderBuilder the panel builder creator
+     * @param panel the panel that everything is being added to
      */
     private void addLengthPanels(Collection<? super AbstractStyleParameterEditorPanel> paramList, MutableVisualizationStyle style,
-            Function<String, PanelBuilder> builderBuilder)
+            Function<String, PanelBuilder> builderBuilder, AbstractVisualizationControlPanel panel)
     {
         VisualizationStyleParameter vsp;
         vsp = style.getStyleParameter(ourLengthModePropertyKey);
         paramList.add(new RadioButtonParameterEditorPanel(builderBuilder.apply(vsp.getName()), style, ourLengthModePropertyKey,
                 New.list(MANUAL_MODE, COLUMN_MODE)));
-        String mode = (String)vsp.getValue();
 
         myLengthUnits = getToolbox().getUnitsRegistry().getPreferredFixedScaleUnits(Length.class, MAX_LOB_LENGTH);
 
         AdvancedLengthParameterEditorPanel manualLengthPanel = new AdvancedLengthParameterEditorPanel(builderBuilder.apply(null),
                 style, ourLOBLengthPropertyKey, LENGTH_UNITS);
         paramList.add(manualLengthPanel);
-        myModeToPanelMap.put(MANUAL_MODE, manualLengthPanel);
+
+        EditorPanelVisibilityDependency visDepend = new EditorPanelVisibilityDependency(panel, manualLengthPanel);
+        visDepend.addConstraint(new ParameterVisibilityConstraint(ourLengthModePropertyKey, true, MANUAL_MODE));
+        visDepend.evaluateStyle();
+        panel.addVisibilityDependency(visDepend);
 
         DataTypeInfo dti = StyleUtils.getDataTypeInfoFromKey(getToolbox(), getDTIKey());
         if (dti != null && dti.getMetaDataInfo() != null)
@@ -578,12 +574,12 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                     style, ourLengthColumnPropertyKey, ourLengthMultiplierPropertyKey, dti.getMetaDataInfo().getKeyNames(),
                     LENGTH_UNITS);
             paramList.add(columnLengthPanel);
-            myModeToPanelMap.put(COLUMN_MODE, columnLengthPanel);
-        }
 
-        // Do mode stuff
-        changeMode(mode);
-        style.addStyleParameterChangeListener(myModeListener);
+            visDepend = new EditorPanelVisibilityDependency(panel, columnLengthPanel);
+            visDepend.addConstraint(new ParameterVisibilityConstraint(ourLengthModePropertyKey, true, COLUMN_MODE));
+            visDepend.evaluateStyle();
+            panel.addVisibilityDependency(visDepend);
+        }
     }
 
     /**
@@ -593,13 +589,14 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
      * @param style the style
      * @param builderBuilder the panel builder creator
      * @param panel the panel that everything is being added to
+     * @param isMini whether this is for the mini panel
      */
     private void addErrorAndEllipsePanels(Collection<? super AbstractStyleParameterEditorPanel> paramList,
             MutableVisualizationStyle style, Function<String, PanelBuilder> builderBuilder,
-            AbstractVisualizationControlPanel panel)
+            AbstractVisualizationControlPanel panel, boolean isMini)
     {
         AbstractStyleParameterEditorPanel errorAndEllipsePanel = new MultipleCheckBoxParameterEditorPanel(
-                PanelBuilder.get(null, 20, 0, 0, 0), style, ourShowErrorPropertyKey, ourShowEllipsePropertyKey);
+                PanelBuilder.get(null, isMini ? 20 : 5, 0, 0, 0), style, ourShowErrorPropertyKey, ourShowEllipsePropertyKey);
         paramList.add(errorAndEllipsePanel);
 
         DataTypeInfo dti = StyleUtils.getDataTypeInfoFromKey(getToolbox(), getDTIKey());
@@ -802,36 +799,5 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         props.setDirectionalArrowLength(arrowLength);
         props = renderPropertyPool.getPoolInstance(props);
         return props;
-    }
-
-    /**
-     * Handles a change in the length UI mode.
-     *
-     * @param event the event
-     */
-    private void handleModeChange(VisualizationStyleParameterChangeEvent event)
-    {
-        VisualizationStyleParameter modeParam = event.getChangedParameterSet().stream()
-                .filter(p -> ourLengthModePropertyKey.equals(p.getKey())).findAny().orElse(null);
-        if (modeParam != null)
-        {
-            String mode = (String)modeParam.getValue();
-            changeMode(mode);
-        }
-    }
-
-    /**
-     * Changes the mode.
-     *
-     * @param mode the mode
-     */
-    private void changeMode(String mode)
-    {
-        AbstractStyleParameterEditorPanel panel = myModeToPanelMap.get(mode);
-        if (panel != null)
-        {
-            panel.setVisible(true);
-        }
-        myModeToPanelMap.entrySet().stream().filter(e -> !e.getKey().equals(mode)).forEach(e -> e.getValue().setVisible(false));
     }
 }
