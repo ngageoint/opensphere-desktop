@@ -19,6 +19,7 @@ public class DefaultTrackNode implements TrackNode
     /** The Time. */
     private final TimeSpan myTime;
     
+    /** The track node cacheID. */
     private final Long myCacheID;
 
     /**
@@ -33,7 +34,7 @@ public class DefaultTrackNode implements TrackNode
      */
     public DefaultTrackNode(LatLonAlt position)
     {
-        this(position, TimeSpan.TIMELESS, Long.MIN_VALUE);
+        this(position, TimeSpan.TIMELESS, null);
     }
 
     /**
