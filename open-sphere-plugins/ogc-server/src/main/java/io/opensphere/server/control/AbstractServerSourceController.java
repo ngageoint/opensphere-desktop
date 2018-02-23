@@ -36,7 +36,7 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
     private final WeakChangeSupport<ConfigChangeListener> myChangeSupport;
 
     /** Listener for changes to the proxy settings. */
-    private NetworkConfigurationManager.ProxySettingsChangeListener myProxySettingsChangeListener = this::reloadActiveSources;
+    private final NetworkConfigurationManager.NetworkConfigurationChangeListener myNetworkConfigChangeListener = this::reloadActiveSources;
 
     /** Object that holds and manages the Server source configs. */
     private IDataSourceConfig myConfig;
@@ -185,7 +185,7 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
         myToolbox = toolbox;
         myPrefsTopic = prefsTopic;
 
-        myToolbox.getSystemToolbox().getNetworkConfigurationManager().addChangeListener(myProxySettingsChangeListener);
+        myToolbox.getSystemToolbox().getNetworkConfigurationManager().addChangeListener(myNetworkConfigChangeListener);
     }
 
     @Override

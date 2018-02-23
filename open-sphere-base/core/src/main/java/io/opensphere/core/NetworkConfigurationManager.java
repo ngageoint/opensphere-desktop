@@ -16,13 +16,6 @@ public interface NetworkConfigurationManager
     void addChangeListener(NetworkConfigurationChangeListener listener);
 
     /**
-     * Add a listener for changes to the proxy settings. Only a weak reference is held.
-     *
-     * @param listener the listener
-     */
-    void addChangeListener(ProxySettingsChangeListener listener);
-
-    /**
      * Get the system proxy config URL if one has been set.
      *
      * @return The URL or {@code null}.
@@ -79,13 +72,6 @@ public interface NetworkConfigurationManager
      */
     void removeChangeListener(NetworkConfigurationChangeListener listener);
 
-    /**
-     * Remove a listener for changes to the proxy settings.
-     *
-     * @param listener the listener
-     */
-    void removeChangeListener(ProxySettingsChangeListener listener);
-
     /** Restore the default settings. */
     void restoreDefaults();
 
@@ -111,22 +97,11 @@ public interface NetworkConfigurationManager
      */
     void setProxyExclusions(String hostPatterns);
 
-    /** Notify that proxy settings have been changed. */
-    void notifyProxySettingsChanged();
-
     /** Listener for changes to the network configuration. */
     @FunctionalInterface
     interface NetworkConfigurationChangeListener
     {
         /** Method called when the network configuration changes. */
         void networkConfigurationChanged();
-    }
-
-    /** Listener for changes to the proxy settings. */
-    @FunctionalInterface
-    interface ProxySettingsChangeListener
-    {
-        /** Method called when the proxy settings change. */
-        void proxySettingsChanged();
     }
 }
