@@ -1,5 +1,8 @@
 package io.opensphere.core.geometry;
 
+import java.util.List;
+
+import io.opensphere.core.geometry.EllipseGeometry.ProjectedBuilder;
 import io.opensphere.core.math.DefaultEllipsoid;
 import io.opensphere.core.math.Ellipsoid;
 import io.opensphere.core.math.Vector3d;
@@ -9,10 +12,68 @@ import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.projection.Projection;
 import io.opensphere.core.util.MathUtil;
+import io.opensphere.core.util.collections.New;
 
 /** Utilities for building ellipses. */
 public final class EllipseGeometryUtilities
 {
+    /**
+     * Create the vertices in the projection. For ellipses whose centers have a
+     * non-zero altitude, the ellipse will enlarge as the altitude increases.
+     *
+     * @param builder The geometry builder.
+     * @return The projected vertices.
+     */
+    public static List<? extends GeographicPosition> createProjectedVertices(ProjectedBuilder builder)
+    {
+        return createProjectedVertices(builder, 180);
+    }
+
+    /**
+     * Create the vertices in the projection. For ellipses whose centers have a
+     * non-zero altitude, the ellipse will enlarge as the altitude increases.
+     *
+     * @param builder The geometry builder.
+     * @param arcAmountDeg The amount of the arc to draw on either side from the angle (in degrees).
+     * @return The projected vertices.
+     */
+    public static List<? extends GeographicPosition> createProjectedVertices(ProjectedBuilder builder, double arcAmountDeg)
+    {
+        GeographicPosition center = builder.getCenter();
+        double angle = builder.getAngle() * MathUtil.DEG_TO_RAD;
+        int vertexCount = builder.getVertexCount();
+        double semiMajorAxis = builder.getSemiMajorAxis();
+        double semiMinorAxis = builder.getSemiMinorAxis();
+        Projection projection = builder.getProjection();
+
+        // Create an ellipsoid to use for projecting the points into model
+        // coordinates.
+        Ellipsoid ellipsoid = createEllipsoid(projection, center, angle, semiMajorAxis, semiMinorAxis);
+
+        double angleStep = MathUtil.TWO_PI / vertexCount;
+
+        List<GeographicPosition> vertices = New.list();
+        final double halfPi = Math.PI / 2;
+        double arcAmount = Math.toRadians(arcAmountDeg);
+        double endTheta = halfPi + arcAmount;
+        for (double theta = halfPi - arcAmount; theta <= endTheta; theta += angleStep)
+        {
+            double x = Math.cos(theta);
+            double y = Math.sin(theta);
+            Vector3d modelPt = ellipsoid.localToModel(new Vector3d(x, y, 0.));
+            GeographicPosition geoWithAlt = projection.convertToPosition(modelPt, ReferenceLevel.TERRAIN);
+            // Remove the altitude from the position so that the ellipsoid
+            // renders flat on the model. This contracts the radius slightly. If
+            // we want to project it flat, the model position should be moved in
+            // the opposite direction of the ellipsoid's z-axis.
+            LatLonAlt location = LatLonAlt.createFromDegreesMeters(geoWithAlt.getLatLonAlt().getLatD(),
+                    geoWithAlt.getLatLonAlt().getLonD(), center.getAlt().getMeters(), center.getAlt().getReferenceLevel());
+            GeographicPosition geo = new GeographicPosition(location);
+            vertices.add(geo);
+        }
+        return vertices;
+    }
+
     /**
      * Create an ellipsoid whose z-axis is perpendicular to the surface of the
      * model and whose y-axis is rotated clockwise from north by the given

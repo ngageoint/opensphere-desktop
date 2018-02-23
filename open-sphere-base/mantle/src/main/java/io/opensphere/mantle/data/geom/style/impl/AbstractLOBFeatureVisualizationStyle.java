@@ -10,14 +10,19 @@ import javax.annotation.Nonnull;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.AbstractRenderableGeometry;
+import io.opensphere.core.geometry.EllipseGeometry;
+import io.opensphere.core.geometry.EllipseGeometryUtilities;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.LineOfBearingGeometry;
+import io.opensphere.core.geometry.PointGeometry;
+import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.geometry.constraint.Constraints;
 import io.opensphere.core.geometry.renderproperties.BaseRenderProperties;
 import io.opensphere.core.geometry.renderproperties.DefaultLOBRenderProperties;
 import io.opensphere.core.geometry.renderproperties.LOBRenderProperties;
 import io.opensphere.core.geometry.renderproperties.PointRenderProperties;
 import io.opensphere.core.geometry.renderproperties.PointSizeRenderProperty;
+import io.opensphere.core.geometry.renderproperties.PolylineRenderProperties;
 import io.opensphere.core.geometry.renderproperties.ScalableRenderProperties;
 import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.GeographicPosition;
@@ -252,7 +257,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
             RenderPropertyPool renderPropertyPool)
         throws IllegalArgumentException
     {
-        AbstractRenderableGeometry geom = null;
+        LineOfBearingGeometry geom = null;
         if (bd.getMGS() instanceof MapLocationGeometrySupport)
         {
             Float orientation = getLobOrientation(bd.getElementId(), bd.getMGS(), bd.getMDP());
@@ -269,7 +274,6 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
             {
                 ptGeom = createPointGeometry(bd, renderPropertyPool, getOriginPointSize() == 0f ? 1.0f : getOriginPointSize(),
                         null, setToAddTo);
-                setToAddTo.add(ptGeom);
             }
             if (buildLobLine)
             {
@@ -291,12 +295,39 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                 createLabelGeometry(setToAddTo, bd, gp, ptGeom == null ? geom.getConstraints() : ptGeom.getConstraints(),
                         renderPropertyPool);
             }
+            if (ptGeom instanceof PointGeometry && geom != null)
+            {
+                setToAddTo.add(createErrorArc(bd, (PointGeometry)ptGeom, geom));
+            }
         }
         else
         {
             throw new IllegalArgumentException(
                     "Cannot create geometries from type " + (bd.getMGS() == null ? "NULL" : bd.getMGS().getClass().getName()));
         }
+    }
+
+    private PolylineGeometry createErrorArc(FeatureIndividualGeometryBuilderData bd, PointGeometry pointGeom,
+            LineOfBearingGeometry lobGeom)
+    {
+        EllipseGeometry.ProjectedBuilder arcBuilder = new EllipseGeometry.ProjectedBuilder();
+        arcBuilder.setCenter((GeographicPosition)pointGeom.getPosition());
+        arcBuilder.setAngle(lobGeom.getLineOrientation());
+        arcBuilder.setSemiMajorAxis(lobGeom.getRenderProperties().getLineLength());
+        arcBuilder.setSemiMinorAxis(lobGeom.getRenderProperties().getLineLength());
+//        arcBuilder.setProjection();
+//        arcBuilder.setVertexCount(); // optional
+
+        PolylineGeometry.Builder<GeographicPosition> lineBuilder = new PolylineGeometry.Builder<>();
+        lineBuilder.setDataModelId(bd.getGeomId());
+        lineBuilder.setVertices(EllipseGeometryUtilities.createProjectedVertices(arcBuilder, 45));
+
+        PolylineRenderProperties renderProperties = null;
+
+        Constraints constraints = null;
+
+        PolylineGeometry geometry = new PolylineGeometry(lineBuilder, renderProperties, constraints);
+        return geometry;
     }
 
     @Override
