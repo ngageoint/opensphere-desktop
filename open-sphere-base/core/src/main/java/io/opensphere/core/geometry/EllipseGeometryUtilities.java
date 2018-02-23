@@ -50,7 +50,7 @@ public final class EllipseGeometryUtilities
         // coordinates.
         Ellipsoid ellipsoid = createEllipsoid(projection, center, angle, semiMajorAxis, semiMinorAxis);
 
-        double angleStep = MathUtil.TWO_PI / vertexCount;
+        double angleStep = Math.toRadians(arcAmountDeg * 2) / vertexCount;
 
         List<GeographicPosition> vertices = New.list();
         final double halfPi = Math.PI / 2;

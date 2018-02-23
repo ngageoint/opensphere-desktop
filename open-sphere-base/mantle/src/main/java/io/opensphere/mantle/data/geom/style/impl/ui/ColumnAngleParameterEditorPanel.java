@@ -2,6 +2,7 @@ package io.opensphere.mantle.data.geom.style.impl.ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.text.DecimalFormat;
 import java.util.Collection;
 
 import javax.swing.JComboBox;
@@ -99,8 +100,9 @@ public class ColumnAngleParameterEditorPanel extends AbstractStyleParameterEdito
 
         SwingUtilities.setComboBoxValue(myColumnsCombo, (String)getParamValue());
 
-        Integer multiplierParamValue = (Integer)myStyle.getStyleParameter(myMultiplierKey).getValue();
-        SwingUtilities.setTextFieldValue(myMultiplierField, multiplierParamValue.toString());
+        Float multiplierParamValue = (Float)myStyle.getStyleParameter(myMultiplierKey).getValue();
+        String multiplierText = DecimalFormat.getNumberInstance().format(multiplierParamValue.floatValue());
+        SwingUtilities.setTextFieldValue(myMultiplierField, multiplierText);
     }
 
     /**
@@ -119,8 +121,8 @@ public class ColumnAngleParameterEditorPanel extends AbstractStyleParameterEdito
     {
         try
         {
-            int magnitude = Integer.parseInt(myMultiplierField.getText());
-            setParamValue(myMultiplierKey, Integer.valueOf(magnitude));
+            float magnitude = Float.parseFloat(myMultiplierField.getText());
+            setParamValue(myMultiplierKey, Float.valueOf(magnitude));
         }
         catch (NumberFormatException e)
         {

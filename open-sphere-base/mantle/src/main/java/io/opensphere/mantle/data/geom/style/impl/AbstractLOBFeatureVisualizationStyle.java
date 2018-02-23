@@ -14,11 +14,11 @@ import io.opensphere.core.geometry.EllipseGeometry;
 import io.opensphere.core.geometry.EllipseGeometryUtilities;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.LineOfBearingGeometry;
-import io.opensphere.core.geometry.PointGeometry;
 import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.geometry.constraint.Constraints;
 import io.opensphere.core.geometry.renderproperties.BaseRenderProperties;
 import io.opensphere.core.geometry.renderproperties.DefaultLOBRenderProperties;
+import io.opensphere.core.geometry.renderproperties.DefaultPolylineRenderProperties;
 import io.opensphere.core.geometry.renderproperties.LOBRenderProperties;
 import io.opensphere.core.geometry.renderproperties.PointRenderProperties;
 import io.opensphere.core.geometry.renderproperties.PointSizeRenderProperty;
@@ -27,12 +27,14 @@ import io.opensphere.core.geometry.renderproperties.ScalableRenderProperties;
 import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
+import io.opensphere.core.model.LineType;
 import io.opensphere.core.units.length.Kilometers;
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.units.length.Meters;
 import io.opensphere.core.units.length.NauticalMiles;
 import io.opensphere.core.units.length.StatuteMiles;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.viewer.impl.Viewer3D;
 import io.opensphere.mantle.data.BasicVisualizationInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MapVisualizationInfo;
@@ -185,7 +187,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     /** The bearing error multiplier style parameter. */
     public static final VisualizationStyleParameter ourDefaultBearingErrorMultiplierParameter = new VisualizationStyleParameter(
-            ourBearingErrorMultiplierPropertyKey, "Bearing Error Multiplier", Integer.valueOf(1), Integer.class,
+            ourBearingErrorMultiplierPropertyKey, "Bearing Error Multiplier", Float.valueOf(1), Float.class,
             new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
 
     /** The length error column style parameter. */
@@ -257,7 +259,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
             RenderPropertyPool renderPropertyPool)
         throws IllegalArgumentException
     {
-        LineOfBearingGeometry geom = null;
+        LineOfBearingGeometry lobGeom = null;
         if (bd.getMGS() instanceof MapLocationGeometrySupport)
         {
             Float orientation = getLobOrientation(bd.getElementId(), bd.getMGS(), bd.getMDP());
@@ -287,47 +289,21 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                 // Add a time constraint if in time line mode.
                 Constraints constraints = StyleUtils.createTimeConstraintsIfApplicable(basicVisInfo, mapVisInfo, bd.getMGS(),
                         StyleUtils.getDataGroupInfoFromDti(getToolbox(), bd.getDataType()));
-                geom = new LineOfBearingGeometry(lobBuilder, props, constraints);
-                setToAddTo.add(geom);
+                lobGeom = new LineOfBearingGeometry(lobBuilder, props, constraints);
+                setToAddTo.add(lobGeom);
             }
-            if (ptGeom != null || geom != null)
+            if (ptGeom != null || lobGeom != null)
             {
-                createLabelGeometry(setToAddTo, bd, gp, ptGeom == null ? geom.getConstraints() : ptGeom.getConstraints(),
+                createLabelGeometry(setToAddTo, bd, gp, ptGeom == null ? lobGeom.getConstraints() : ptGeom.getConstraints(),
                         renderPropertyPool);
             }
-            if (ptGeom instanceof PointGeometry && geom != null)
-            {
-                setToAddTo.add(createErrorArc(bd, (PointGeometry)ptGeom, geom));
-            }
+            addErrorArcs(setToAddTo, bd, renderPropertyPool, lobGeom, gp);
         }
         else
         {
             throw new IllegalArgumentException(
                     "Cannot create geometries from type " + (bd.getMGS() == null ? "NULL" : bd.getMGS().getClass().getName()));
         }
-    }
-
-    private PolylineGeometry createErrorArc(FeatureIndividualGeometryBuilderData bd, PointGeometry pointGeom,
-            LineOfBearingGeometry lobGeom)
-    {
-        EllipseGeometry.ProjectedBuilder arcBuilder = new EllipseGeometry.ProjectedBuilder();
-        arcBuilder.setCenter((GeographicPosition)pointGeom.getPosition());
-        arcBuilder.setAngle(lobGeom.getLineOrientation());
-        arcBuilder.setSemiMajorAxis(lobGeom.getRenderProperties().getLineLength());
-        arcBuilder.setSemiMinorAxis(lobGeom.getRenderProperties().getLineLength());
-//        arcBuilder.setProjection();
-//        arcBuilder.setVertexCount(); // optional
-
-        PolylineGeometry.Builder<GeographicPosition> lineBuilder = new PolylineGeometry.Builder<>();
-        lineBuilder.setDataModelId(bd.getGeomId());
-        lineBuilder.setVertices(EllipseGeometryUtilities.createProjectedVertices(arcBuilder, 45));
-
-        PolylineRenderProperties renderProperties = null;
-
-        Constraints constraints = null;
-
-        PolylineGeometry geometry = new PolylineGeometry(lineBuilder, renderProperties, constraints);
-        return geometry;
     }
 
     @Override
@@ -462,7 +438,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
      * Gets the bearing error.
      *
      * @param metaDataProvider the meta data provider
-     * @return the bearing error
+     * @return the bearing error (in degrees)
      */
     public double getBearingError(MetaDataProvider metaDataProvider)
     {
@@ -475,7 +451,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
             try
             {
                 double doubleValue = StyleUtils.convertValueToDouble(value);
-                Integer multiplier = (Integer)getStyleParameterValue(ourBearingErrorMultiplierPropertyKey);
+                Float multiplier = (Float)getStyleParameterValue(ourBearingErrorMultiplierPropertyKey);
                 error = multiplier.doubleValue() * doubleValue;
             }
             catch (NumberFormatException e)
@@ -483,6 +459,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                 error = 0;
             }
         }
+        error = Math.min(error, 180);
         return error;
     }
 
@@ -806,6 +783,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         lobBuilder.setLineOrientation(orientation.floatValue());
         lobBuilder.setDataModelId(bd.getGeomId());
         lobBuilder.setDisplayArrow(isShowArrow());
+        lobBuilder.setLineType(LineType.GREAT_CIRCLE);
         return lobBuilder;
     }
 
@@ -836,5 +814,73 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         props.setDirectionalArrowLength(arrowLength);
         props = renderPropertyPool.getPoolInstance(props);
         return props;
+    }
+
+    /**
+     * Adds error arcs to the set, if necessary.
+     *
+     * @param setToAddTo the set to which to add the geometries
+     * @param bd the builder data
+     * @param renderPropertyPool the render property pool
+     * @param lobGeom the LOB geometry
+     * @param centerLocation the center (point) location
+     */
+    private void addErrorArcs(Set<? super Geometry> setToAddTo, FeatureIndividualGeometryBuilderData bd,
+            RenderPropertyPool renderPropertyPool, LineOfBearingGeometry lobGeom, GeographicPosition centerLocation)
+    {
+        double bearingError = getBearingError(bd.getMDP());
+        if (bearingError > 0 && lobGeom != null)
+        {
+            Length lengthError = getLobLengthError(bd.getMDP());
+            setToAddTo.add(createErrorArc(bd, renderPropertyPool, lobGeom, centerLocation, bearingError, lengthError));
+            if (lengthError.getMagnitude() > 0)
+            {
+                setToAddTo
+                        .add(createErrorArc(bd, renderPropertyPool, lobGeom, centerLocation, bearingError, lengthError.negate()));
+            }
+        }
+    }
+
+    /**
+     * Creates an error arc line geometry.
+     *
+     * @param bd the builder data
+     * @param renderPropertyPool the render property pool
+     * @param lobGeom the LOB geometry
+     * @param centerLocation the center (point) location
+     * @param bearingErrorDeg the bearing error in degrees
+     * @param legthError the length error
+     * @return the geometry
+     */
+    private PolylineGeometry createErrorArc(FeatureIndividualGeometryBuilderData bd, RenderPropertyPool renderPropertyPool,
+            LineOfBearingGeometry lobGeom, GeographicPosition centerLocation, double bearingErrorDeg, Length legthError)
+    {
+        // Create the ellipse arc builder
+        EllipseGeometry.ProjectedBuilder arcBuilder = new EllipseGeometry.ProjectedBuilder();
+        arcBuilder.setCenter(centerLocation);
+        arcBuilder.setAngle(lobGeom.getLineOrientation());
+        double lineLengthM = lobGeom.getRenderProperties().getLineLength() + legthError.inMeters();
+        arcBuilder.setSemiMajorAxis(lineLengthM);
+        arcBuilder.setSemiMinorAxis(lineLengthM);
+        arcBuilder.setProjection(getToolbox().getMapManager().getProjection(Viewer3D.class).getSnapshot());
+        int vertexCount = (int)Math.ceil(bearingErrorDeg * 35 / 180 + 2);
+        arcBuilder.setVertexCount(vertexCount);
+
+        // Create the line builder
+        PolylineGeometry.Builder<GeographicPosition> lineBuilder = new PolylineGeometry.Builder<>();
+        lineBuilder.setDataModelId(bd.getGeomId());
+        lineBuilder.setVertices(EllipseGeometryUtilities.createProjectedVertices(arcBuilder, bearingErrorDeg));
+
+        // Create the line render properties
+        PolylineRenderProperties renderProperties = new DefaultPolylineRenderProperties(lobGeom.getRenderProperties().getZOrder(),
+                true, lobGeom.getRenderProperties().isPickable());
+        renderProperties.setColor(lobGeom.getRenderProperties().getColor());
+        renderProperties.setWidth(lobGeom.getRenderProperties().getWidth());
+        renderProperties = renderPropertyPool.getPoolInstance(renderProperties);
+
+        // Create the constraints
+        Constraints constraints = lobGeom.getConstraints();
+
+        return new PolylineGeometry(lineBuilder, renderProperties, constraints);
     }
 }
