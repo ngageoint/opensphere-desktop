@@ -20,7 +20,6 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.taskactivity.TaskActivity;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.datasources.IDataSource;
-import io.opensphere.server.control.AbstractServerSourceController.SourceReloadListener;
 import io.opensphere.server.services.ServerConnectionParams;
 import io.opensphere.server.source.OGCServerSource;
 import io.opensphere.server.toolbox.ServerListManager;
@@ -50,9 +49,6 @@ public class OGCServerHandler
 
     /** The load listeners. */
     private final WeakChangeSupport<ServerHandlerLoadListener> myLoadListeners = new WeakChangeSupport<>();
-
-    /** The map of sources to reload listeners. */
-    private Map<IDataSource, SourceReloadListener> myReloadListenerMap = new HashMap<IDataSource, SourceReloadListener>();
 
     /** The Core Event Manager. */
     private final Toolbox myToolbox;
@@ -206,10 +202,6 @@ public class OGCServerHandler
                 src.setBusy(false, this);
                 src.setActive(false);
                 notifyLoadEnded(src, true, null);
-                if (myReloadListenerMap.containsKey(source))
-                {
-                    myReloadListenerMap.get(source).finishReload(source);
-                }
             }
         };
         executeRunnable(r);
@@ -305,21 +297,17 @@ public class OGCServerHandler
      */
     protected void reloadSource(IDataSource source)
     {
-        myReloadListenerMap.put(source, new SourceReloadListener()
+        executeRunnable(() ->
         {
-            @Override
-            public void finishReload(IDataSource source)
-            {
-                activateSource(source);
-                myReloadListenerMap.remove(source);
-            }
+            deactivateSource(source);
+            activateSource(source);
         });
-        deactivateSource(source);
     }
 
     /**
-     * Execute a runnable. If this class has an executor set, use it, else just run it on the current thread. This is basically
-     * equivalent to a null check on this class's executor.
+     * Execute a runnable. If this class has an executor set, use it, else just
+     * run it on the current thread. This is basically equivalent to a null
+     * check on this class's executor.
      *
      * @param task the task to run
      */
@@ -336,7 +324,8 @@ public class OGCServerHandler
     }
 
     /**
-     * Listener interface for clients that need to know when sources have started and finished their load sequences.
+     * Listener interface for clients that need to know when sources have
+     * started and finished their load sequences.
      */
     public interface ServerHandlerLoadListener
     {
@@ -358,7 +347,8 @@ public class OGCServerHandler
     }
 
     /**
-     * {@link TaskActivity} class that updates the spinner indicating servers are activating.
+     * {@link TaskActivity} class that updates the spinner indicating servers
+     * are activating.
      */
     private static class ActivationTaskActivity extends TaskActivity
     {
