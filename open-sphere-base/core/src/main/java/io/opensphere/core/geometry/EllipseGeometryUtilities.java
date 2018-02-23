@@ -55,7 +55,7 @@ public final class EllipseGeometryUtilities
         List<GeographicPosition> vertices = New.list();
         final double halfPi = Math.PI / 2;
         double arcAmount = Math.toRadians(arcAmountDeg);
-        double endTheta = halfPi + arcAmount;
+        double endTheta = halfPi + arcAmount + 0.000001;
         for (double theta = halfPi - arcAmount; theta <= endTheta; theta += angleStep)
         {
             double x = Math.cos(theta);

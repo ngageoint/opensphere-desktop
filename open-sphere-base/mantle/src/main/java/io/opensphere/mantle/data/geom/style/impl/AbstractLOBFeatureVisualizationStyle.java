@@ -18,10 +18,12 @@ import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.geometry.constraint.Constraints;
 import io.opensphere.core.geometry.renderproperties.BaseRenderProperties;
 import io.opensphere.core.geometry.renderproperties.DefaultLOBRenderProperties;
+import io.opensphere.core.geometry.renderproperties.DefaultPolygonRenderProperties;
 import io.opensphere.core.geometry.renderproperties.DefaultPolylineRenderProperties;
 import io.opensphere.core.geometry.renderproperties.LOBRenderProperties;
 import io.opensphere.core.geometry.renderproperties.PointRenderProperties;
 import io.opensphere.core.geometry.renderproperties.PointSizeRenderProperty;
+import io.opensphere.core.geometry.renderproperties.PolygonRenderProperties;
 import io.opensphere.core.geometry.renderproperties.PolylineRenderProperties;
 import io.opensphere.core.geometry.renderproperties.ScalableRenderProperties;
 import io.opensphere.core.model.Altitude;
@@ -882,5 +884,29 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         Constraints constraints = lobGeom.getConstraints();
 
         return new PolylineGeometry(lineBuilder, renderProperties, constraints);
+    }
+
+    private EllipseGeometry createEllipse(FeatureIndividualGeometryBuilderData bd, RenderPropertyPool renderPropertyPool,
+            GeographicPosition centerLocation)
+    {
+        // Create the builder
+        EllipseGeometry.ProjectedBuilder builder = new EllipseGeometry.ProjectedBuilder();
+        builder.setCenter(centerLocation);
+        // TODO orientation, smaj, smin from meta data using special keys
+//        builder.setAngle(orientation);
+//        builder.setSemiMajorAxis(StyleUtils.getValueInMeters(semiMajor, style.getAxisUnit()));
+//        builder.setSemiMinorAxis(StyleUtils.getValueInMeters(semiMinor, style.getAxisUnit()));
+        builder.setProjection(getToolbox().getMapManager().getProjection(Viewer3D.class).getSnapshot());
+
+        // Create the render properties
+        // TODO zorder, pickable
+        PolygonRenderProperties renderProperties = new DefaultPolygonRenderProperties(0, true, false);
+        renderProperties = renderPropertyPool.getPoolInstance(renderProperties);
+
+        // Create the constraints
+        // TODO
+        Constraints constraints = null;
+
+        return new EllipseGeometry(builder, renderProperties, constraints);
     }
 }
