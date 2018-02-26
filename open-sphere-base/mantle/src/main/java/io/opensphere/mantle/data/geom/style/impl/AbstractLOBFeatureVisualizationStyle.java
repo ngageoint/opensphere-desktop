@@ -40,6 +40,7 @@ import io.opensphere.core.viewer.impl.Viewer3D;
 import io.opensphere.mantle.data.BasicVisualizationInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MapVisualizationInfo;
+import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.SpecialKey;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 import io.opensphere.mantle.data.element.VisualizationState;
@@ -70,6 +71,9 @@ import io.opensphere.mantle.data.geom.style.impl.ui.PanelBuilder;
 import io.opensphere.mantle.data.geom.style.impl.ui.ParameterVisibilityConstraint;
 import io.opensphere.mantle.data.geom.style.impl.ui.RadioButtonParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.StyleParameterEditorGroupPanel;
+import io.opensphere.mantle.data.impl.specialkey.EllipseOrientationKey;
+import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMajorAxisKey;
+import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMinorAxisKey;
 import io.opensphere.mantle.data.impl.specialkey.HeadingErrorKey;
 import io.opensphere.mantle.data.impl.specialkey.SpeedErrorKey;
 import io.opensphere.mantle.data.impl.specialkey.SpeedKey;
@@ -300,6 +304,13 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                         renderPropertyPool);
             }
             addErrorArcs(setToAddTo, bd, renderPropertyPool, lobGeom, gp);
+
+            Boolean showEllipse = (Boolean)getStyleParameterValue(ourShowEllipsePropertyKey);
+            if (showEllipse.booleanValue() && lobGeom != null)
+            {
+                EllipseGeometry ellipse = createEllipse(bd, renderPropertyPool, lobGeom, gp);
+                setToAddTo.add(ellipse);
+            }
         }
         else
         {
@@ -886,26 +897,51 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         return new PolylineGeometry(lineBuilder, renderProperties, constraints);
     }
 
+    /**
+     * Creates an ellipse geometry.
+     *
+     * @param bd the builder data
+     * @param renderPropertyPool the render property pool
+     * @param lobGeom the LOB geometry
+     * @param centerLocation the center (point) location
+     * @return the geometry
+     */
+    @SuppressWarnings("unchecked")
     private EllipseGeometry createEllipse(FeatureIndividualGeometryBuilderData bd, RenderPropertyPool renderPropertyPool,
-            GeographicPosition centerLocation)
+            LineOfBearingGeometry lobGeom, GeographicPosition centerLocation)
     {
         // Create the builder
         EllipseGeometry.ProjectedBuilder builder = new EllipseGeometry.ProjectedBuilder();
+        builder.setDataModelId(bd.getGeomId());
         builder.setCenter(centerLocation);
-        // TODO orientation, smaj, smin from meta data using special keys
-//        builder.setAngle(orientation);
-//        builder.setSemiMajorAxis(StyleUtils.getValueInMeters(semiMajor, style.getAxisUnit()));
-//        builder.setSemiMinorAxis(StyleUtils.getValueInMeters(semiMinor, style.getAxisUnit()));
+        MetaDataInfo metaData = bd.getDataType().getMetaDataInfo();
+        String smajKey = metaData.getKeyForSpecialType(EllipseSemiMajorAxisKey.DEFAULT);
+        String sminKey = metaData.getKeyForSpecialType(EllipseSemiMinorAxisKey.DEFAULT);
+        String orientKey = metaData.getKeyForSpecialType(EllipseOrientationKey.DEFAULT);
+        if (smajKey != null && sminKey != null && orientKey != null)
+        {
+            double smajValue = StyleUtils.convertValueToDouble(bd.getMDP().getValue(smajKey));
+            Class<? extends Length> smajUnit = (Class<? extends Length>)metaData.getSpecialTypeForKey(smajKey).getKeyUnit();
+            builder.setSemiMajorAxis(StyleUtils.getValueInMeters(smajValue, smajUnit));
+
+            double sminValue = StyleUtils.convertValueToDouble(bd.getMDP().getValue(sminKey));
+            Class<? extends Length> sminUnit = (Class<? extends Length>)metaData.getSpecialTypeForKey(sminKey).getKeyUnit();
+            builder.setSemiMinorAxis(StyleUtils.getValueInMeters(sminValue, sminUnit));
+
+            double orientValue = StyleUtils.convertValueToDouble(bd.getMDP().getValue(orientKey));
+            builder.setAngle(orientValue);
+        }
         builder.setProjection(getToolbox().getMapManager().getProjection(Viewer3D.class).getSnapshot());
 
         // Create the render properties
-        // TODO zorder, pickable
-        PolygonRenderProperties renderProperties = new DefaultPolygonRenderProperties(0, true, false);
+        PolygonRenderProperties renderProperties = new DefaultPolygonRenderProperties(lobGeom.getRenderProperties().getZOrder(),
+                true, lobGeom.getRenderProperties().isPickable());
+        renderProperties.setColor(lobGeom.getRenderProperties().getColor());
+        renderProperties.setWidth(lobGeom.getRenderProperties().getWidth());
         renderProperties = renderPropertyPool.getPoolInstance(renderProperties);
 
         // Create the constraints
-        // TODO
-        Constraints constraints = null;
+        Constraints constraints = lobGeom.getConstraints();
 
         return new EllipseGeometry(builder, renderProperties, constraints);
     }
