@@ -94,10 +94,11 @@ public class AboutUtil
      * Creates ZIP archive with given filename.
      *
      * @param saveFile the file to save
+     * @param includeDb whether or not to include the db files
      * @param toNotify the event listener to notify when complete
      * @see io.opensphere.core.util.zip.Zip
      */
-    void performZipAction(File saveFile, ActionListener toNotify)
+    void performZipAction(File saveFile, boolean includeDb, ActionListener toNotify)
     {
         ThreadUtilities.runBackground(new Runnable()
         {
@@ -105,9 +106,12 @@ public class AboutUtil
             @Override
             public void run()
             {
-                List<ZipInputAdapter> inputAdapters = Zip.createAdaptersForDirectory("", new File(myDbPath), null);
-                Zip.createAdaptersForDirectory("", new File(myLogPath), inputAdapters);
+                List<ZipInputAdapter> inputAdapters = Zip.createAdaptersForDirectory("", new File(myLogPath), null);
                 Zip.createAdaptersForDirectory("", Paths.get(myRunPath, "prefs").toFile(), inputAdapters);
+                if (includeDb)
+                {
+                    Zip.createAdaptersForDirectory("", new File(myDbPath), inputAdapters);
+                }
 
                 Optional<Integer> filesize = inputAdapters.parallelStream().map(f -> (int)f.getSize()).reduce((a, b) -> a + b);
 
