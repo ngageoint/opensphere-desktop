@@ -14,12 +14,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -31,7 +33,8 @@ import org.apache.log4j.Logger;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.opensphere.core.Toolbox;
-import io.opensphere.core.control.ui.MenuBarRegistry;
+import io.opensphere.core.control.ui.UIRegistry;
+import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.filesystem.MnemonicFileChooser;
@@ -54,17 +57,20 @@ public class AboutPanel extends AbstractHUDPanel
     /** Serial. */
     private static final long serialVersionUID = 1L;
 
+    /** The Toolbox. */
+    private final transient Toolbox myToolbox;
+    
+    /** The UI Registry. */
+    private final transient UIRegistry myUiRegistry;
+    
+    /** The Preferences Registry. */
+    private final transient PreferencesRegistry myPreferencesRegistry;
+
     /** The About frame. */
     private final About myAboutFrame;
 
     /** The System properties map. */
     private final Map<String, String> mySystemPropertiesMap;
-    
-    /** The Toolbox. */
-    private final transient Toolbox myToolbox;
-    
-    /** The Menu Bar Registry. */
-    private MenuBarRegistry menuBarReg;
 
     /** The Close button. */
     private JButton myCloseButton;
@@ -76,10 +82,10 @@ public class AboutPanel extends AbstractHUDPanel
     private JButton myMoreButton;
     
     /** The file browser command. */
-    private String command;
+    private String myCommand;
     
     /** The OS working directory. */
-    private String workingDirectory;
+    private String myWorkingDirectory;
 
 
     /**
@@ -91,16 +97,19 @@ public class AboutPanel extends AbstractHUDPanel
     public AboutPanel(Toolbox toolbox, About frame)
     {
         super(toolbox.getPreferencesRegistry());
+
         myToolbox = toolbox;
-        menuBarReg = myToolbox.getUIRegistry().getMenuBarRegistry();
+        myPreferencesRegistry = toolbox.getPreferencesRegistry();
+        myUiRegistry = toolbox.getUIRegistry();
+
         myAboutFrame = frame;
-        this.setSize(getTopLevelPanelDim());
+        mySystemPropertiesMap = New.map();
+
+        setSize(getTopLevelPanelDim());
         setMinimumSize(getSize());
         setPreferredSize(getSize());
         setLayout(new BorderLayout());
         setBackground(getBackgroundColor());
-        mySystemPropertiesMap = New.map();
-        // add(getTabbedPane(), BorderLayout.CENTER);
 
         buildPropertyMap();
         initializeFileBrowser();
@@ -142,23 +151,23 @@ public class AboutPanel extends AbstractHUDPanel
     {
         if (System.getProperty("os.name").contains("Windows"))
         {
-            workingDirectory = null;
-            command = "explorer";
+            myWorkingDirectory = null;
+            myCommand = "explorer";
         }
         else if (new File("/usr/bin/xdg-open").canExecute())
         {
-            workingDirectory = "/";
-            command = "/usr/bin/xdg-open";
+            myWorkingDirectory = "/";
+            myCommand = "/usr/bin/xdg-open";
         }
         else if (new File("/usr/bin/gnome-open").canExecute())
         {
-            workingDirectory = "/";
-            command = "/usr/bin/gnome-open";
+            myWorkingDirectory = "/";
+            myCommand = "/usr/bin/gnome-open";
         }
         else
         {
-            workingDirectory = null;
-            command = null;
+            myWorkingDirectory = null;
+            myCommand = null;
         }
     }
 
@@ -207,7 +216,7 @@ public class AboutPanel extends AbstractHUDPanel
         p.add(lbPnl, BorderLayout.WEST);
         p.add(valPnl, BorderLayout.CENTER);
 
-        if (command != null)
+        if (myCommand != null)
         {
             final File file = new File(value);
             if (file.isDirectory())
@@ -238,10 +247,10 @@ public class AboutPanel extends AbstractHUDPanel
     {
         try
         {
-            ProcessBuilder pb = new ProcessBuilder(command, file.getCanonicalPath());
-            if (workingDirectory != null)
+            ProcessBuilder pb = new ProcessBuilder(myCommand, file.getCanonicalPath());
+            if (myWorkingDirectory != null)
             {
-                pb.directory(new File(workingDirectory));
+                pb.directory(new File(myWorkingDirectory));
             }
             pb.start();
         }
@@ -324,7 +333,7 @@ public class AboutPanel extends AbstractHUDPanel
     private File initSaveAs()
     {
         File saveFile = null;
-        MnemonicFileChooser fileChooser = new MnemonicFileChooser(myToolbox.getPreferencesRegistry(), null);
+        MnemonicFileChooser fileChooser = new MnemonicFileChooser(myPreferencesRegistry, null);
         
         int result = fileChooser.showSaveDialog(myAboutFrame, Collections.singleton(".zip"));
         if (result == JFileChooser.APPROVE_OPTION)
@@ -346,6 +355,8 @@ public class AboutPanel extends AbstractHUDPanel
      */
     private JButton createExportButton()
     {
+        AboutPanel self = this;
+
         myExportButton = new JButton("Export Logs");
         myExportButton.setMargin(ButtonPanel.INSETS_MEDIUM);
         myExportButton.addActionListener(new ActionListener()
@@ -377,12 +388,12 @@ public class AboutPanel extends AbstractHUDPanel
                     public void run()
                     {
                         TaskActivity ta = new TaskActivity();
-                        ProgressMonitor progressMon = new ProgressMonitor(myAboutFrame,
+                        ProgressMonitor progressMon = new ProgressMonitor(self,
                                 "Writing Debug Export File: " + saveFile.getName(), "Writing", 0, filesize.orElse(0));
 
                         ta.setLabelValue("Exporting log files...");
                         ta.setActive(true);
-                        menuBarReg.addTaskActivity(ta);
+                        myUiRegistry.getMenuBarRegistry().addTaskActivity(ta);
                         progressMon.setMillisToPopup(0);
                         
                         try
@@ -395,7 +406,7 @@ public class AboutPanel extends AbstractHUDPanel
                             {
                                 LOGGER.trace("Failed to delete file: " + saveFile.getAbsolutePath(), e);
                             }
-                            JOptionPane.showMessageDialog(myAboutFrame,
+                            JOptionPane.showMessageDialog(self,
                                     "Error encountered while saving export file", "File Save Error",
                                     JOptionPane.ERROR_MESSAGE);
                         }
@@ -574,9 +585,11 @@ public class AboutPanel extends AbstractHUDPanel
             }
         }
 
-        final TextViewDialog dvd = new TextViewDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
-                title + " System Properties", sb.toString(), false, myToolbox.getPreferencesRegistry());
-        dvd.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
+        Supplier<? extends JFrame> mainFrameProvider = myUiRegistry.getMainFrameProvider();
+        
+        final TextViewDialog dvd = new TextViewDialog(mainFrameProvider.get(),
+                title + " System Properties", sb.toString(), false, myPreferencesRegistry);
+        dvd.setLocationRelativeTo(mainFrameProvider.get());
         dvd.setVisible(true);
     }
 }
