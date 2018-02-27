@@ -508,10 +508,17 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         builder.setOtherParameter(FloatSliderStyleParameterEditorPanel.SHOW_SLIDER_LABELS, Boolean.FALSE);
         AbstractStyleParameterEditorPanel arrowLenPanel = new LengthSliderStyleParameterEditorPanel(builder, style,
                 ourArrowLengthPropertyKey, false, true, MIN_ARROW_LENGTH, MAX_ARROW_LENGTH, myLengthUnits, Kilometers.class);
+        AbstractStyleParameterEditorPanel filler = new BlankPanel();
         showArrowPanel.getSiblingComponents().add(arrowLenPanel);
+        showArrowPanel.getSiblingComponents().add(filler);
 
         EditorPanelVisibilityDependency visDepend = new EditorPanelVisibilityDependency(panel, arrowLenPanel);
         visDepend.addConstraint(new ParameterVisibilityConstraint(ourShowArrowPropertyKey, true, Boolean.TRUE));
+        visDepend.evaluateStyle();
+        panel.addVisibilityDependency(visDepend);
+
+        visDepend = new EditorPanelVisibilityDependency(panel, filler);
+        visDepend.addConstraint(new ParameterVisibilityConstraint(ourShowArrowPropertyKey, true, Boolean.FALSE));
         visDepend.evaluateStyle();
         panel.addVisibilityDependency(visDepend);
 
@@ -564,10 +571,17 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         AbstractStyleParameterEditorPanel arrowLenPanel = new LengthSliderStyleParameterEditorPanel(
                 PanelBuilder.get(param.getName()), style, ourArrowLengthPropertyKey, false, true, MIN_ARROW_LENGTH,
                 MAX_ARROW_LENGTH, myLengthUnits, Kilometers.class);
+        AbstractStyleParameterEditorPanel filler = new BlankPanel();
         showArrowPanel.getSiblingComponents().add(arrowLenPanel);
+        showArrowPanel.getSiblingComponents().add(filler);
 
         EditorPanelVisibilityDependency visDepend = new EditorPanelVisibilityDependency(panel, arrowLenPanel);
         visDepend.addConstraint(new ParameterVisibilityConstraint(ourShowArrowPropertyKey, true, Boolean.TRUE));
+        visDepend.evaluateStyle();
+        panel.addVisibilityDependency(visDepend);
+
+        visDepend = new EditorPanelVisibilityDependency(panel, filler);
+        visDepend.addConstraint(new ParameterVisibilityConstraint(ourShowArrowPropertyKey, true, Boolean.FALSE));
         visDepend.evaluateStyle();
         panel.addVisibilityDependency(visDepend);
 
@@ -960,4 +974,16 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
         return new EllipseGeometry(builder, renderProperties, constraints);
     }
+
+    /** A blank AbstractStyleParameterEditorPanel. */
+    private static class BlankPanel extends AbstractStyleParameterEditorPanel
+    {
+        /** The serialVersionUID. */
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        protected void update()
+        {
+        }
+    };
 }
