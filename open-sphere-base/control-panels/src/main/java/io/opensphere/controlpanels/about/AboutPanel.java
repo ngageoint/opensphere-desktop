@@ -50,16 +50,16 @@ public class AboutPanel extends AbstractHUDPanel
 
     /** The Toolbox. */
     private final transient Toolbox myToolbox;
-    
+
     /** The UI Registry. */
     private final transient UIRegistry myUiRegistry;
-    
+
     /** The Preferences Registry. */
     private final transient PreferencesRegistry myPreferencesRegistry;
 
     /** The About frame. */
     private final About myAboutFrame;
-    
+
     /** The About utility functions. */
     private final AboutUtil myUtil;
 
@@ -68,19 +68,18 @@ public class AboutPanel extends AbstractHUDPanel
 
     /** The Close button. */
     private JButton myCloseButton;
-    
+
     /** The Export Logs button. */
     private JButton myExportButton;
 
     /** The More button. */
     private JButton myMoreButton;
-    
+
     /** The file browser command. */
     private String myCommand;
-    
+
     /** The OS working directory. */
     private String myWorkingDirectory;
-
 
     /**
      * Instantiates a new layer manager panel.
@@ -106,9 +105,9 @@ public class AboutPanel extends AbstractHUDPanel
         setBackground(getBackgroundColor());
 
         buildPropertyMap();
-        
+
         myUtil = new AboutUtil(myToolbox, frame, mySystemPropertiesMap);
-        
+
         initializeFileBrowser();
         initialize();
     }
@@ -139,10 +138,10 @@ public class AboutPanel extends AbstractHUDPanel
             }
         }
     }
-    
+
     /**
-     * Initializes the file browser application and working directory
-     * based on the user's operating system.
+     * Initializes the file browser application and working directory based on
+     * the user's operating system.
      */
     private void initializeFileBrowser()
     {
@@ -167,7 +166,7 @@ public class AboutPanel extends AbstractHUDPanel
             myCommand = null;
         }
     }
-    
+
     /**
      * Opens a given directory.
      *
@@ -325,12 +324,12 @@ public class AboutPanel extends AbstractHUDPanel
         }
         return myCloseButton;
     }
-    
+
     /**
      * Creates the export button. Exports all logs, preferences and db files.
      * <p>
-     * After being clicked the button will initiate a Save-As dialog, then
-     * save the resulting file as a ZIP archive.
+     * After being clicked the button will initiate a Save-As dialog, then save
+     * the resulting file as a ZIP archive.
      *
      * @return the export button
      */
@@ -359,7 +358,7 @@ public class AboutPanel extends AbstractHUDPanel
                 });
             }
         });
-        
+
         return myExportButton;
     }
 
@@ -462,7 +461,6 @@ public class AboutPanel extends AbstractHUDPanel
 
         toPanel.add(Box.createVerticalStrut(10));
 
-
         final JPanel rtPanel = new JPanel();
         rtPanel.setBackground(Colors.TRANSPARENT_BLACK);
         rtPanel.setLayout(new BoxLayout(rtPanel, BoxLayout.X_AXIS));
@@ -526,9 +524,9 @@ public class AboutPanel extends AbstractHUDPanel
         }
 
         Supplier<? extends JFrame> mainFrameProvider = myUiRegistry.getMainFrameProvider();
-        
-        final TextViewDialog dvd = new TextViewDialog(mainFrameProvider.get(),
-                title + " System Properties", sb.toString(), false, myPreferencesRegistry);
+
+        final TextViewDialog dvd = new TextViewDialog(mainFrameProvider.get(), title + " System Properties", sb.toString(), false,
+                myPreferencesRegistry);
         dvd.setLocationRelativeTo(mainFrameProvider.get());
         dvd.setVisible(true);
     }

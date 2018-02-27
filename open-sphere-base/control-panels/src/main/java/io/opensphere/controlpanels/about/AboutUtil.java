@@ -27,31 +27,39 @@ import io.opensphere.core.util.zip.ZipInputAdapter;
 /**
  * Utility class for the About panel. Contains extracted filesystem methods.
  */
-public class AboutUtil {
+public class AboutUtil
+{
     /** The `Success` state message. */
     static final String SUCCESS = "SUCCESS";
 
     /** The `Failure` state message. */
     static final String FAILURE = "FAILURE";
-    
+
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(AboutUtil.class);
-    
+
     /** The application Toolbox. */
     private final transient Toolbox myToolbox;
-    
+
     /** The parent frame. */
     private final Component myParent;
-    
+
     /** The path to find DB files. */
     private final String myDbPath;
-    
+
     /** The path to find log files. */
     private final String myLogPath;
-    
+
     /** The application runtime path. */
     private final String myRunPath;
-    
+
+    /**
+     * Instantiates a new AboutUtil
+     *
+     * @param toolbox
+     * @param parent
+     * @param systemPropertiesMap
+     */
     AboutUtil(Toolbox toolbox, Component parent, Map<String, String> systemPropertiesMap)
     {
         myToolbox = toolbox;
@@ -61,7 +69,7 @@ public class AboutUtil {
         myLogPath = systemPropertiesMap.get("log.path");
         myRunPath = systemPropertiesMap.get("opensphere.path.runtime");
     }
-    
+
     /**
      * Initiates the `Save As` dialog and returns the chosen file.
      *
@@ -72,16 +80,16 @@ public class AboutUtil {
     {
         File saveFile = null;
         MnemonicFileChooser fileChooser = new MnemonicFileChooser(myToolbox.getPreferencesRegistry(), null);
-        
+
         int result = fileChooser.showSaveDialog(myParent, Collections.singleton(".zip"));
         if (result == JFileChooser.APPROVE_OPTION)
         {
             saveFile = fileChooser.getSelectedFile();
         }
-        
+
         return saveFile;
     }
-    
+
     /**
      * Creates ZIP archive with given filename.
      *
@@ -93,6 +101,7 @@ public class AboutUtil {
     {
         ThreadUtilities.runBackground(new Runnable()
         {
+            @SuppressWarnings("boxing")
             @Override
             public void run()
             {
@@ -100,14 +109,13 @@ public class AboutUtil {
                 Zip.createAdaptersForDirectory("", new File(myLogPath), inputAdapters);
                 Zip.createAdaptersForDirectory("", Paths.get(myRunPath, "prefs").toFile(), inputAdapters);
 
-                Optional<Integer> filesize =
-                        inputAdapters.parallelStream().map(f -> (int)f.getSize()).reduce((a, b) -> a+b);
+                Optional<Integer> filesize = inputAdapters.parallelStream().map(f -> (int)f.getSize()).reduce((a, b) -> a + b);
 
-                ProgressMonitor progressMon = new ProgressMonitor(myParent,
-                        "Writing Debug Export File: " + saveFile.getName(), "Writing", 0, filesize.orElse(0));
+                ProgressMonitor progressMon = new ProgressMonitor(myParent, "Writing Debug Export File: " + saveFile.getName(),
+                        "Writing", 0, filesize.orElse(0));
                 progressMon.setMillisToPopup(0);
 
-                try(TaskActivity ta = new TaskActivity())
+                try (TaskActivity ta = new TaskActivity())
                 {
                     ta.setLabelValue("Exporting log files...");
                     ta.setActive(true);
@@ -123,10 +131,9 @@ public class AboutUtil {
                     {
                         LOGGER.trace("Failed to delete file: " + saveFile.getAbsolutePath(), e);
                     }
-                    JOptionPane.showMessageDialog(myParent,
-                            "Error encountered while saving export file", "File Save Error",
+                    JOptionPane.showMessageDialog(myParent, "Error encountered while saving export file", "File Save Error",
                             JOptionPane.ERROR_MESSAGE);
-                    
+
                     toNotify.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, FAILURE));
                 }
 
@@ -134,5 +141,4 @@ public class AboutUtil {
             }
         });
     }
-    
 }
