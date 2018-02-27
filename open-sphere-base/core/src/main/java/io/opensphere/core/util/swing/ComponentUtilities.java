@@ -192,6 +192,18 @@ public final class ComponentUtilities
     }
 
     /**
+     * Sets the minimum height of the component, leaving the minimum width
+     * the same.
+     *
+     * @param comp the component
+     * @param height the minimum height
+     */
+    public static void setMinimumHeight(Component comp, int height)
+    {
+        comp.setMinimumSize(new Dimension(comp.getMinimumSize().width, height));
+    }
+
+    /**
      * Sets the preferred width of the narrower component to that of the wider
      * component.
      *

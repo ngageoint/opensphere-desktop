@@ -6,6 +6,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -21,6 +22,7 @@ import javax.swing.JPanel;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.swing.ComponentUtilities;
 import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleParameter;
 
@@ -75,6 +77,9 @@ public abstract class AbstractStyleParameterEditorPanel extends JPanel
 
     /** If true, the name label is placed above the editor components. */
     private boolean nameAbove;
+
+    /** Optional sibling components to be layed out after this one. */
+    private final List<AbstractStyleParameterEditorPanel> mySiblingComponents = New.list();
 
     static
     {
@@ -181,7 +186,7 @@ public abstract class AbstractStyleParameterEditorPanel extends JPanel
 
         int panelHeight = getPanelHeightFromBuilder();
         myControlPanel = new JPanel();
-        myControlPanel.setMinimumSize(new Dimension(getMinimumControlPanelWidth(), panelHeight));
+        ComponentUtilities.setMinimumHeight(myControlPanel, panelHeight);
 
         if (nameAbove)
         {
@@ -193,6 +198,16 @@ public abstract class AbstractStyleParameterEditorPanel extends JPanel
         }
         add(myControlPanel, BorderLayout.CENTER);
         setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
+    }
+
+    /**
+     * Gets the modifiable list of sibling components.
+     *
+     * @return the list of sibling components
+     */
+    public List<AbstractStyleParameterEditorPanel> getSiblingComponents()
+    {
+        return mySiblingComponents;
     }
 
     /**
@@ -285,7 +300,19 @@ public abstract class AbstractStyleParameterEditorPanel extends JPanel
     }
 
     /**
+     * Update the panel and all siblings.
+     */
+    public void updateAll()
+    {
+        update();
+        for (AbstractStyleParameterEditorPanel sibling : mySiblingComponents)
+        {
+            sibling.update();
+        }
+    }
+
+    /**
      * Update.
      */
-    public abstract void update();
+    protected abstract void update();
 }

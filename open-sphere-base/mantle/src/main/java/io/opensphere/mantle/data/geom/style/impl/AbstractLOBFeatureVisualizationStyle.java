@@ -498,8 +498,22 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         addLengthPanels(paramList, style, StyleUtils::createBasicMiniPanelBuilder, panel);
 
         vsp = style.getStyleParameter(ourShowArrowPropertyKey);
-        paramList.add(new CheckBoxStyleParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(vsp.getName()), style,
-                ourShowArrowPropertyKey, true));
+        CheckBoxStyleParameterEditorPanel showArrowPanel = new CheckBoxStyleParameterEditorPanel(
+                StyleUtils.createBasicMiniPanelBuilder(vsp.getName()), style, ourShowArrowPropertyKey, true);
+        paramList.add(showArrowPanel);
+
+        vsp = style.getStyleParameter(ourArrowLengthPropertyKey);
+        PanelBuilder builder = PanelBuilder.get(vsp.getName(), 5, 0, 0, 5);
+        builder.setOtherParameter(AbstractStyleParameterEditorPanel.PANEL_HEIGHT, Integer.valueOf(24));
+        builder.setOtherParameter(FloatSliderStyleParameterEditorPanel.SHOW_SLIDER_LABELS, Boolean.FALSE);
+        AbstractStyleParameterEditorPanel arrowLenPanel = new LengthSliderStyleParameterEditorPanel(builder, style,
+                ourArrowLengthPropertyKey, false, true, MIN_ARROW_LENGTH, MAX_ARROW_LENGTH, myLengthUnits, Kilometers.class);
+        showArrowPanel.getSiblingComponents().add(arrowLenPanel);
+
+        EditorPanelVisibilityDependency visDepend = new EditorPanelVisibilityDependency(panel, arrowLenPanel);
+        visDepend.addConstraint(new ParameterVisibilityConstraint(ourShowArrowPropertyKey, true, Boolean.TRUE));
+        visDepend.evaluateStyle();
+        panel.addVisibilityDependency(visDepend);
 
         addErrorAndEllipsePanels(paramList, style, StyleUtils::createBasicMiniPanelBuilder, panel, true);
 
@@ -542,14 +556,15 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         addLengthPanels(paramList, style, PanelBuilder::get, panel);
 
         param = style.getStyleParameter(ourShowArrowPropertyKey);
-        paramList.add(
-                new CheckBoxStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style, ourShowArrowPropertyKey, true));
+        CheckBoxStyleParameterEditorPanel showArrowPanel = new CheckBoxStyleParameterEditorPanel(
+                PanelBuilder.get(param.getName()), style, ourShowArrowPropertyKey, true);
+        paramList.add(showArrowPanel);
 
         param = style.getStyleParameter(ourArrowLengthPropertyKey);
         AbstractStyleParameterEditorPanel arrowLenPanel = new LengthSliderStyleParameterEditorPanel(
                 PanelBuilder.get(param.getName()), style, ourArrowLengthPropertyKey, false, true, MIN_ARROW_LENGTH,
                 MAX_ARROW_LENGTH, myLengthUnits, Kilometers.class);
-        paramList.add(arrowLenPanel);
+        showArrowPanel.getSiblingComponents().add(arrowLenPanel);
 
         EditorPanelVisibilityDependency visDepend = new EditorPanelVisibilityDependency(panel, arrowLenPanel);
         visDepend.addConstraint(new ParameterVisibilityConstraint(ourShowArrowPropertyKey, true, Boolean.TRUE));
