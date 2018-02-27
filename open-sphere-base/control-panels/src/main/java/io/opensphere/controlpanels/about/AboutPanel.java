@@ -348,7 +348,7 @@ public class AboutPanel extends AbstractHUDPanel
                     return;
                 }
 
-                myUtil.performZipAction(saveFile, evt ->
+                myUtil.performZipAction(saveFile, false, evt ->
                 {
                     if (evt.getActionCommand() == AboutUtil.SUCCESS)
                     {
