@@ -8,6 +8,7 @@ import javax.swing.JMenuItem;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.geometry.PolygonGeometry;
+import io.opensphere.kml.gx.Track;
 import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.myplaces.models.MyPlacesDataTypeInfo;
@@ -38,7 +39,13 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupCont
         List<JMenuItem> menuItems = Collections.emptyList();
         if (key.getDataType() instanceof MyPlacesDataTypeInfo)
         {
+
             MyPlacesDataTypeInfo type = (MyPlacesDataTypeInfo)key.getDataType();
+
+            if (type.getKmlPlacemark().getGeometry() instanceof Track)
+            {
+                return menuItems;
+            }
             PolygonGeometry geom = RegionUtils.createGeometry(type.getKmlPlacemark());
             menuItems = MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().getGeometryMenuItems(geom);
         }
