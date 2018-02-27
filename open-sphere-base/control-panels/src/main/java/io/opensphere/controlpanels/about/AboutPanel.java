@@ -7,12 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Supplier;
 
@@ -20,13 +18,10 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.ProgressMonitor;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -37,13 +32,9 @@ import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.filesystem.MnemonicFileChooser;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.swing.AbstractHUDPanel;
 import io.opensphere.core.util.swing.ButtonPanel;
-import io.opensphere.core.util.taskactivity.TaskActivity;
-import io.opensphere.core.util.zip.Zip;
-import io.opensphere.core.util.zip.ZipInputAdapter;
 import io.opensphere.mantle.util.TextViewDialog;
 
 /**
@@ -68,6 +59,9 @@ public class AboutPanel extends AbstractHUDPanel
 
     /** The About frame. */
     private final About myAboutFrame;
+    
+    /** The About utility functions. */
+    private final AboutUtil myUtil;
 
     /** The System properties map. */
     private final Map<String, String> mySystemPropertiesMap;
@@ -112,6 +106,9 @@ public class AboutPanel extends AbstractHUDPanel
         setBackground(getBackgroundColor());
 
         buildPropertyMap();
+        
+        myUtil = new AboutUtil(myToolbox, frame, mySystemPropertiesMap);
+        
         initializeFileBrowser();
         initialize();
     }
@@ -168,6 +165,33 @@ public class AboutPanel extends AbstractHUDPanel
         {
             myWorkingDirectory = null;
             myCommand = null;
+        }
+    }
+    
+    /**
+     * Opens a given directory.
+     *
+     * @param file the directory
+     */
+    private void openFolder(File file)
+    {
+        if (myCommand == null)
+        {
+            return;
+        }
+
+        try
+        {
+            ProcessBuilder pb = new ProcessBuilder(myCommand, file.getCanonicalPath());
+            if (myWorkingDirectory != null)
+            {
+                pb.directory(new File(myWorkingDirectory));
+            }
+            pb.start();
+        }
+        catch (final IOException e1)
+        {
+            LOGGER.error("Failed to open folder: " + e1, e1);
         }
     }
 
@@ -237,28 +261,6 @@ public class AboutPanel extends AbstractHUDPanel
 
         return p;
     }
-    
-    /**
-     * Opens a given directory.
-     *
-     * @param file the directory
-     */
-    private void openFolder(File file)
-    {
-        try
-        {
-            ProcessBuilder pb = new ProcessBuilder(myCommand, file.getCanonicalPath());
-            if (myWorkingDirectory != null)
-            {
-                pb.directory(new File(myWorkingDirectory));
-            }
-            pb.start();
-        }
-        catch (final IOException e1)
-        {
-            LOGGER.error("Failed to open folder: " + e1, e1);
-        }
-    }
 
     /**
      * Gets the about panel.
@@ -325,98 +327,36 @@ public class AboutPanel extends AbstractHUDPanel
     }
     
     /**
-     * Initiates the `Save As` dialog and returns the chosen file.
-     *
-     * @see io.opensphere.core.util.filesystem.MnemonicFileChooser
-     * @return the file to save
-     */
-    private File initSaveAs()
-    {
-        File saveFile = null;
-        MnemonicFileChooser fileChooser = new MnemonicFileChooser(myPreferencesRegistry, null);
-        
-        int result = fileChooser.showSaveDialog(myAboutFrame, Collections.singleton(".zip"));
-        if (result == JFileChooser.APPROVE_OPTION)
-        {
-            saveFile = fileChooser.getSelectedFile();
-        }
-        
-        return saveFile;
-    }
-    
-    /**
      * Creates the export button. Exports all logs, preferences and db files.
+     * <p>
+     * After being clicked the button will initiate a Save-As dialog, then
+     * save the resulting file as a ZIP archive.
      *
-     * <p>After being clicked the button will initiate a Save-As dialog, then
-     * save the resulting file as a ZIP archive.</p>
-     *
-     * @see io.opensphere.core.util.zip.Zip
      * @return the export button
      */
     private JButton createExportButton()
     {
-        AboutPanel self = this;
-
         myExportButton = new JButton("Export Logs");
         myExportButton.setMargin(ButtonPanel.INSETS_MEDIUM);
         myExportButton.addActionListener(new ActionListener()
         {
-            final String dbPath = mySystemPropertiesMap.get("opensphere.db.path");
-            final String logPath = mySystemPropertiesMap.get("log.path");
-            final String runPath = mySystemPropertiesMap.get("opensphere.path.runtime");
-            
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                File saveFile = initSaveAs();
+                File saveFile = myUtil.initSaveAs();
                 if (saveFile == null)
                 {
                     return;
                 }
 
-                File saveDir = saveFile.getParentFile();
-                List<ZipInputAdapter> inputAdapters = Zip.createAdaptersForDirectory("", new File(dbPath), null);
-                Zip.createAdaptersForDirectory("", new File(logPath), inputAdapters);
-                Zip.createAdaptersForDirectory("", Paths.get(runPath, "prefs").toFile(), inputAdapters);
-                
-                Optional<Integer> filesize =
-                        inputAdapters.parallelStream().map(f -> (int)f.getSize()).reduce((a, b) -> a+b);
-                
-                Thread t = new Thread(new Runnable()
+                myUtil.performZipAction(saveFile, evt ->
                 {
-                    @Override
-                    public void run()
+                    if (evt.getActionCommand() == AboutUtil.SUCCESS)
                     {
-                        TaskActivity ta = new TaskActivity();
-                        ProgressMonitor progressMon = new ProgressMonitor(self,
-                                "Writing Debug Export File: " + saveFile.getName(), "Writing", 0, filesize.orElse(0));
-
-                        ta.setLabelValue("Exporting log files...");
-                        ta.setActive(true);
-                        myUiRegistry.getMenuBarRegistry().addTaskActivity(ta);
-                        progressMon.setMillisToPopup(0);
-                        
-                        try
-                        {                        
-                            Zip.zipfiles(saveFile, inputAdapters, progressMon, true);
-                        }
-                        catch (IOException e)
-                        {
-                            if (!saveFile.delete() && LOGGER.isTraceEnabled())
-                            {
-                                LOGGER.trace("Failed to delete file: " + saveFile.getAbsolutePath(), e);
-                            }
-                            JOptionPane.showMessageDialog(self,
-                                    "Error encountered while saving export file", "File Save Error",
-                                    JOptionPane.ERROR_MESSAGE);
-                        }
-                        
-                        ta.setActive(false);
-                        progressMon.close();
+                        File saveDir = saveFile.getParentFile();
                         openFolder(saveDir);
                     }
                 });
-                t.start();
             }
         });
         
