@@ -309,7 +309,10 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
             if (showEllipse.booleanValue() && lobGeom != null)
             {
                 EllipseGeometry ellipse = createEllipse(bd, renderPropertyPool, lobGeom, gp);
-                setToAddTo.add(ellipse);
+                if (ellipse != null)
+                {
+                    setToAddTo.add(ellipse);
+                }
             }
         }
         else
@@ -933,7 +936,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
      * @param renderPropertyPool the render property pool
      * @param lobGeom the LOB geometry
      * @param centerLocation the center (point) location
-     * @return the geometry
+     * @return the geometry, or null if it couldn't be created
      */
     @SuppressWarnings("unchecked")
     private EllipseGeometry createEllipse(FeatureIndividualGeometryBuilderData bd, RenderPropertyPool renderPropertyPool,
@@ -941,8 +944,6 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     {
         // Create the builder
         EllipseGeometry.ProjectedBuilder builder = new EllipseGeometry.ProjectedBuilder();
-        builder.setDataModelId(bd.getGeomId());
-        builder.setCenter(centerLocation);
         MetaDataInfo metaData = bd.getDataType().getMetaDataInfo();
         String smajKey = metaData.getKeyForSpecialType(EllipseSemiMajorAxisKey.DEFAULT);
         String sminKey = metaData.getKeyForSpecialType(EllipseSemiMinorAxisKey.DEFAULT);
@@ -960,6 +961,12 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
             double orientValue = StyleUtils.convertValueToDouble(bd.getMDP().getValue(orientKey));
             builder.setAngle(orientValue);
         }
+        else
+        {
+            return null;
+        }
+        builder.setDataModelId(bd.getGeomId());
+        builder.setCenter(centerLocation);
         builder.setProjection(getToolbox().getMapManager().getProjection(Viewer3D.class).getSnapshot());
 
         // Create the render properties
