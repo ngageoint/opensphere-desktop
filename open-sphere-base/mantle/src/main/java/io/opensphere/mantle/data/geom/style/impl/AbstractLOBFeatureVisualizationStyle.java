@@ -26,10 +26,12 @@ import io.opensphere.core.geometry.renderproperties.PointSizeRenderProperty;
 import io.opensphere.core.geometry.renderproperties.PolygonRenderProperties;
 import io.opensphere.core.geometry.renderproperties.PolylineRenderProperties;
 import io.opensphere.core.geometry.renderproperties.ScalableRenderProperties;
+import io.opensphere.core.math.WGS84EarthConstants;
 import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.LineType;
+import io.opensphere.core.projection.GeographicBody3D;
 import io.opensphere.core.units.length.Kilometers;
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.units.length.Meters;
@@ -173,7 +175,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     /** The length multiplier style parameter. */
     public static final VisualizationStyleParameter ourDefaultLengthMultiplierParameter = new VisualizationStyleParameter(
-            ourLengthMultiplierPropertyKey, "Length Multiplier", new Meters(1000), Length.class,
+            ourLengthMultiplierPropertyKey, "Length Multiplier", new Meters(100), Length.class,
             new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
 
     /** The show error style parameter. */
@@ -203,7 +205,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     /** The length error multiplier style parameter. */
     public static final VisualizationStyleParameter ourDefaultLengthErrorMultiplierParameter = new VisualizationStyleParameter(
-            ourLengthErrorMultiplierPropertyKey, "Length Error Multiplier", new Meters(1000), Length.class,
+            ourLengthErrorMultiplierPropertyKey, "Length Error Multiplier", new Meters(100), Length.class,
             new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
 
     /** The Constant MAX_LOB_LENGTH_METERS. */
@@ -290,7 +292,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                         : bd.getDataType().getBasicVisualizationInfo();
 
                 LineOfBearingGeometry.Builder lobBuilder = createLobBuilder(bd, orientation, gp, mapVisInfo, basicVisInfo);
-                LOBRenderProperties props = determineRenderProperties(mapVisInfo, basicVisInfo, bd, renderPropertyPool);
+                LOBRenderProperties props = determineRenderProperties(mapVisInfo, basicVisInfo, bd, renderPropertyPool, gp);
 
                 // Add a time constraint if in time line mode.
                 Constraints constraints = StyleUtils.createTimeConstraintsIfApplicable(basicVisInfo, mapVisInfo, bd.getMGS(),
@@ -446,6 +448,10 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
             {
                 length = Meters.ZERO;
             }
+            if (length.getMagnitude() < 0)
+            {
+                length = length.negate();
+            }
         }
         return length;
     }
@@ -475,7 +481,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                 error = 0;
             }
         }
-        error = Math.min(error, 180);
+        error = Math.min(Math.abs(error), 180);
         return error;
     }
 
@@ -842,7 +848,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
      * @return the point render properties
      */
     private LOBRenderProperties determineRenderProperties(MapVisualizationInfo mapVisInfo, BasicVisualizationInfo basicVisInfo,
-            FeatureIndividualGeometryBuilderData bd, RenderPropertyPool renderPropertyPool)
+            FeatureIndividualGeometryBuilderData bd, RenderPropertyPool renderPropertyPool, GeographicPosition centerLocation)
     {
         boolean pickable = basicVisInfo != null && basicVisInfo.getLoadsTo().isPickable();
         int zOrder = mapVisInfo == null ? 1000 : mapVisInfo.getZOrder();
@@ -854,7 +860,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         float lobLength = visState.isLobVisible() ? (float)getLobLength(bd.getMDP()).inMeters() : 0.0f;
         float arrowLength = (float)getArrowLength().inMeters();
         arrowLength = arrowLength > lobLength ? lobLength : arrowLength;
-        props.setBaseAltitude((float)getLift());
+        props.setBaseAltitude((float)centerLocation.getAlt().getMeters());
         props.setLineLength(lobLength);
         props.setDirectionalArrowLength(arrowLength);
         props = renderPropertyPool.getPoolInstance(props);
@@ -873,11 +879,14 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     private void addErrorArcs(Set<? super Geometry> setToAddTo, FeatureIndividualGeometryBuilderData bd,
             RenderPropertyPool renderPropertyPool, LineOfBearingGeometry lobGeom, GeographicPosition centerLocation)
     {
-        double bearingError = getBearingError(bd.getMDP());
-        if (bearingError > 0 && lobGeom != null)
+        if (lobGeom != null)
         {
+            double bearingError = getBearingError(bd.getMDP());
             Length lengthError = getLobLengthError(bd.getMDP());
-            setToAddTo.add(createErrorArc(bd, renderPropertyPool, lobGeom, centerLocation, bearingError, lengthError));
+            if (bearingError > 0 || lengthError.getMagnitude() > 0)
+            {
+                setToAddTo.add(createErrorArc(bd, renderPropertyPool, lobGeom, centerLocation, bearingError, lengthError));
+            }
             if (lengthError.getMagnitude() > 0)
             {
                 setToAddTo
@@ -900,21 +909,37 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     private PolylineGeometry createErrorArc(FeatureIndividualGeometryBuilderData bd, RenderPropertyPool renderPropertyPool,
             LineOfBearingGeometry lobGeom, GeographicPosition centerLocation, double bearingErrorDeg, Length legthError)
     {
-        // Create the ellipse arc builder
-        EllipseGeometry.ProjectedBuilder arcBuilder = new EllipseGeometry.ProjectedBuilder();
-        arcBuilder.setCenter(centerLocation);
-        arcBuilder.setAngle(lobGeom.getLineOrientation());
-        double lineLengthM = lobGeom.getRenderProperties().getLineLength() + legthError.inMeters();
-        arcBuilder.setSemiMajorAxis(lineLengthM);
-        arcBuilder.setSemiMinorAxis(lineLengthM);
-        arcBuilder.setProjection(getToolbox().getMapManager().getProjection(Viewer3D.class).getSnapshot());
-        int vertexCount = (int)Math.ceil(bearingErrorDeg * 35 / 180 + 2);
-        arcBuilder.setVertexCount(vertexCount);
-
         // Create the line builder
         PolylineGeometry.Builder<GeographicPosition> lineBuilder = new PolylineGeometry.Builder<>();
         lineBuilder.setDataModelId(bd.getGeomId());
-        lineBuilder.setVertices(EllipseGeometryUtilities.createProjectedVertices(arcBuilder, bearingErrorDeg));
+        double lineLengthM = lobGeom.getRenderProperties().getLineLength() + legthError.inMeters();
+        if (bearingErrorDeg > 0)
+        {
+            // Create the ellipse arc builder
+            EllipseGeometry.ProjectedBuilder arcBuilder = new EllipseGeometry.ProjectedBuilder();
+            arcBuilder.setCenter(centerLocation);
+            arcBuilder.setAngle(lobGeom.getLineOrientation());
+            arcBuilder.setSemiMajorAxis(lineLengthM);
+            arcBuilder.setSemiMinorAxis(lineLengthM);
+            arcBuilder.setProjection(getToolbox().getMapManager().getProjection(Viewer3D.class).getSnapshot());
+            int vertexCount = (int)Math.ceil(bearingErrorDeg * 35 / 180 + 2);
+            arcBuilder.setVertexCount(vertexCount);
+
+            lineBuilder.setVertices(EllipseGeometryUtilities.createProjectedVertices(arcBuilder, bearingErrorDeg));
+        }
+        else
+        {
+            // Draw lines when no bearing error
+            LatLonAlt center = GeographicBody3D.greatCircleEndPosition(centerLocation.getLatLonAlt(),
+                    Math.toRadians(lobGeom.getLineOrientation()), WGS84EarthConstants.RADIUS_MEAN_M, lineLengthM);
+            LatLonAlt point1 = GeographicBody3D.greatCircleEndPosition(center, Math.toRadians(lobGeom.getLineOrientation() - 90),
+                    WGS84EarthConstants.RADIUS_MEAN_M, lobGeom.getRenderProperties().getDirectionalArrowLength());
+            point1 = point1.withAltitude(centerLocation.getAlt());
+            LatLonAlt point2 = GeographicBody3D.greatCircleEndPosition(center, Math.toRadians(lobGeom.getLineOrientation() + 90),
+                    WGS84EarthConstants.RADIUS_MEAN_M, lobGeom.getRenderProperties().getDirectionalArrowLength());
+            point2 = point2.withAltitude(centerLocation.getAlt());
+            lineBuilder.setVertices(New.list(new GeographicPosition(point1), new GeographicPosition(point2)));
+        }
 
         // Create the line render properties
         PolylineRenderProperties renderProperties = new DefaultPolylineRenderProperties(lobGeom.getRenderProperties().getZOrder(),
