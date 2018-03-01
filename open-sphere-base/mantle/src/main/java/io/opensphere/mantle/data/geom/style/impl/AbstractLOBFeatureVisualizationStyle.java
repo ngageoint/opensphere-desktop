@@ -923,7 +923,9 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
             arcBuilder.setSemiMajorAxis(lineLengthM);
             arcBuilder.setSemiMinorAxis(lineLengthM);
             arcBuilder.setProjection(getToolbox().getMapManager().getProjection(Viewer3D.class).getSnapshot());
-            int vertexCount = (int)Math.ceil(bearingErrorDeg * 35 / 180 + 2);
+            /* 37 is the default ellipse vertex count. Since bearing error can be in the range of 0 to 180, this calculation
+             * results in the appropriate number of vertices (2 - 37) depending on how long the arc is. */
+            int vertexCount = (int)Math.ceil(bearingErrorDeg / 180 * 35 + 2);
             arcBuilder.setVertexCount(vertexCount);
 
             lineBuilder.setVertices(EllipseGeometryUtilities.createProjectedVertices(arcBuilder, bearingErrorDeg));
