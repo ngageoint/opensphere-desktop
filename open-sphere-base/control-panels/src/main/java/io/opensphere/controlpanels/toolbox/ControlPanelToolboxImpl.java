@@ -3,9 +3,8 @@ package io.opensphere.controlpanels.toolbox;
 import java.util.Properties;
 
 import io.opensphere.controlpanels.ControlPanelToolbox;
-import io.opensphere.controlpanels.DetailPanelProvider;
-import io.opensphere.controlpanels.DetailPanelProviderRegistry;
 import io.opensphere.controlpanels.GenericThing;
+import io.opensphere.controlpanels.GenericThingProvider;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.ObservableValue;
@@ -24,7 +23,7 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
      * The default panel provider to use when none of the entries in the
      * registry can handle the target data.
      */
-    private final DetailPanelProvider myDefaultDetailPanelProvider;
+    private final GenericThingProvider myDefaultDetailPanelProvider;
 
     /**
      * The parent toolbox.
@@ -34,7 +33,7 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
     /**
      * The time span of the visible portion of the timeline
      */
-    private ObservableValue<TimeSpan> myUISpan;
+    private ObservableValue<io.opensphere.core.model.time.TimeSpan> myUISpan;
 
     /**
      * Creates a new control panel toolbox.
@@ -48,7 +47,7 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
     {
         myParentToolbox = toolbox;
         myDetailPanelProviderRegistry = createDetailPanelProviderRegistry(myParentToolbox, pluginProperties);
-        myDefaultDetailPanelProvider = new DefaultDetailPanelProvider(myParentToolbox);
+        myDefaultDetailPanelProvider = new DefaultDetailPanelProvider<Object>(myParentToolbox);
     }
 
     /**
@@ -78,31 +77,32 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
         return "A toolbox extension for control panels";
         
     }
-    @Override
-    public void setUISpan(ObservableValue<de.micromata.opengis.kml.v_2_2_0.TimeSpan> uiSpan)
-    {
-        // TODO Auto-generated method stub
-        
-    }
 
     @Override
     public GenericThing<?> getDetailPanelProviderRegistry()
     {
         // TODO Auto-generated method stub
-        return null;
+        return myDetailPanelProviderRegistry;
     }
 
     @Override
-    public GenericThing<?> getDefaultDetailPanelProvider()
+    public GenericThingProvider getDefaultDetailPanelProvider()
     {
         // TODO Auto-generated method stub
-        return null;
+        return myDefaultDetailPanelProvider;
     }
 
     @Override
-    public ObservableValue<de.micromata.opengis.kml.v_2_2_0.TimeSpan> getUISpan()
+    public ObservableValue<TimeSpan> getUISpan()
     {
         // TODO Auto-generated method stub
-        return null;
+        return myUISpan;
+    }
+
+    @Override
+    public void setUISpan(ObservableValue<TimeSpan> uiSpan)
+    {
+        this.myUISpan = uiSpan;
+        
     }
 }

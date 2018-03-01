@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import io.opensphere.controlpanels.DetailPane;
-import io.opensphere.controlpanels.DetailPanelProvider;
+import io.opensphere.controlpanels.GenericThingProvider;
 import io.opensphere.controlpanels.layers.availabledata.detail.ImagePreviewPane;
 import io.opensphere.controlpanels.layers.availabledata.detail.TextDetailPane;
 import io.opensphere.core.Toolbox;
@@ -16,8 +16,9 @@ import io.opensphere.mantle.data.MapVisualizationType;
 /**
  * The default detail panel provider, used to provide detail panels for all data
  * types.
+ * @param <T>
  */
-public class DefaultDetailPanelProvider implements DetailPanelProvider
+public class DefaultDetailPanelProvider<T> implements GenericThingProvider
 {
     /**
      * The set of instantiated instances.

@@ -3,7 +3,6 @@ package io.opensphere.controlpanels.toolbox;
 import java.util.Collection;
 import java.util.Properties;
 
-import io.opensphere.controlpanels.DetailPanelProviderRegistry;
 import io.opensphere.controlpanels.GenericThing;
 import io.opensphere.controlpanels.GenericThingProvider;
 import io.opensphere.core.Toolbox;

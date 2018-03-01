@@ -34,12 +34,12 @@ public interface ControlPanelToolbox extends PluginToolbox
      *
      * @return the timespan of the visible portion of the timeline.
      */
-    ObservableValue<TimeSpan> getUISpan();
+    ObservableValue<io.opensphere.core.model.time.TimeSpan> getUISpan();
 
     /**
      * Sets the observable {@link TimeSpan} representing the visible portion of the timeline.
      *
-     * @param uiSpan the timespan of the visible portion of the timeline.
+     * @param observableValue the timespan of the visible portion of the timeline.
      */
-    void setUISpan(ObservableValue<TimeSpan> uiSpan);
+    void setUISpan(ObservableValue<io.opensphere.core.model.time.TimeSpan> observableValue);
 }

@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import io.opensphere.controlpanels.ControlPanelToolbox;
 import io.opensphere.controlpanels.DetailPane;
-import io.opensphere.controlpanels.DetailPanelProvider;
 import io.opensphere.controlpanels.GenericThing;
 import io.opensphere.controlpanels.GenericThingProvider;
 import io.opensphere.core.Toolbox;
