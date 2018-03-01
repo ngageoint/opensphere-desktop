@@ -5,7 +5,7 @@ import javax.swing.JTable;
 /**
  * Spreadsheet-related utilities for table models.
  */
-public class SpreadsheetUtil
+public class SpreadsheetUtilities
 {
     /**
      * Sums the values of the selected table cells.
@@ -13,7 +13,7 @@ public class SpreadsheetUtil
      * @param table the table
      * @return summation
      */
-    public static double getSum(JTable table)
+    public static double getSelectedSum(JTable table)
     {
         double sum = 0.0;
 
