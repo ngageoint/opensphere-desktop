@@ -13,6 +13,9 @@ import io.opensphere.mantle.data.DataGroupInfo;
  */
 public interface ControlPanelToolbox extends PluginToolbox
 {
+
+    SimpleRegistry<Function<DataGroupInfo, Component>> getLayerControlProviderRegistry();
+
     /**
      * Gets the registry for {@link DetailPanelProvider} implementations. This
      * allows for plugins to register additional providers without injecting
@@ -22,11 +25,8 @@ public interface ControlPanelToolbox extends PluginToolbox
      *
      * @return the registry in which detail panel providers are registered.
      */
-    SimpleRegistry<Function<DataGroupInfo,Component>> getLayerControlProviderRegistry();
-
-    
-    
     SimpleRegistry<DetailPanelProvider> getDetailPanelProviderRegistry();
+
     /**
      * Gets the default {@link DetailPanelProvider} implementation.
      * 
@@ -35,7 +35,7 @@ public interface ControlPanelToolbox extends PluginToolbox
      * @return the provider to use when the none of the entries in the registry
      *         can handle the target data.
      */
-    DetailPanelProvider getDefaultProvider();
+    DetailPanelProvider getDefaultDetailPanelProvider();
 
     /**
      * Gets the observable {@link TimeSpan} representing the visible portion of

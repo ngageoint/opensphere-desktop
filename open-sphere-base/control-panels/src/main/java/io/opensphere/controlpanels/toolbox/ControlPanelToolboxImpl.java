@@ -7,7 +7,6 @@ import java.util.function.Function;
 import io.opensphere.controlpanels.ControlPanelToolbox;
 import io.opensphere.controlpanels.DetailPanelProvider;
 import io.opensphere.controlpanels.SimpleRegistry;
-import io.opensphere.controlpanels.GenericThingProvider;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.ObservableValue;
@@ -29,7 +28,7 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
      * The default panel provider to use when none of the entries in the
      * registry can handle the target data.
      */
-    // private final GenericThingProvider myDefaultProvider;
+    private final DetailPanelProvider myDefaultDetailPanelProvider;
 
     /**
      * The parent toolbox.
@@ -57,8 +56,8 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
 
         myLayerControlRegistry = new SimpleRegistryImpl<>();
         myLayerControlRegistry.initialize(toolbox, pluginProperties);
-        // myDefaultProvider = new
-        // DefaultDetailPanelProvider<Object>(myParentToolbox);
+
+        myDefaultDetailPanelProvider = new DefaultDetailPanelProvider(myParentToolbox);
     }
 
     /**
@@ -74,10 +73,10 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
     }
 
     @Override
-    public DetailPanelProvider getDefaultProvider()
+    public DetailPanelProvider getDefaultDetailPanelProvider()
     {
         // TODO Auto-generated method stub
-        return null;
+        return myDefaultDetailPanelProvider;
     }
 
     @Override

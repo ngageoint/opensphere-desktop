@@ -5,7 +5,6 @@ import java.util.Collection;
 import io.opensphere.controlpanels.ControlPanelToolbox;
 import io.opensphere.controlpanels.DetailPane;
 import io.opensphere.controlpanels.DetailPanelProvider;
-import io.opensphere.controlpanels.GenericThingProvider;
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.data.DataGroupInfo;
 
@@ -64,7 +63,7 @@ public class DetailPanelManager
 
             // if execution makes it here, then none of the providers can handle
             // the supplied data group, so use the default:
-            DetailPanelProvider defaultProvider = controlPanelToolbox.getDefaultProvider();
+            DetailPanelProvider defaultProvider = controlPanelToolbox.getDefaultDetailPanelProvider();
             return defaultProvider.getDetailPanel(dataGroupInfo);
         }
 

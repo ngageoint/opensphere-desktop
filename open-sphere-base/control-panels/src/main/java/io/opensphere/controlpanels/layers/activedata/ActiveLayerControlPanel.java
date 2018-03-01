@@ -20,6 +20,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
+import io.opensphere.controlpanels.ControlPanelToolbox;
 import io.opensphere.controlpanels.event.AnimationChangeExtentRequestEvent;
 import io.opensphere.controlpanels.layers.layerdetail.LayerDetailsCoordinator;
 import io.opensphere.controlpanels.layers.util.LoadsToUtilities;
@@ -108,6 +109,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
     /** The loads to subscriber. */
     private final transient EventListener<DataTypeInfoLoadsToChangeEvent> myLoadsToSubscriber = this::handleLoadsToChange;
 
+    private final Toolbox myToolbox;
     /**
      * Gets the MapVisualizationType for the given LayerSelectedEvent.
      *
@@ -157,6 +159,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
     {
         super(tb);
         myLayerDetailsCoordinator = ldc;
+        myToolbox = tb;
         setBorder(null);
         setLayout(new BorderLayout());
         setMinimumSize(null);
@@ -197,6 +200,11 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
             DataTypeInfo selectedType = getSelectedDataType();
             DataGroupInfo selectedGroup = getSelectedDataGroup();
 
+            
+            //for providers registered , load them..
+            ControlPanelToolbox cpToolbox = myToolbox.getPluginToolboxRegistry().getPluginToolbox(ControlPanelToolbox.class);
+            
+            
             getOpacityPanel().setVisible(showOpacity(getMapVisualizationType(selectEvent)));
             determineStyleShortCutButtonVisibility();
             determineEditButtonVisibility();
