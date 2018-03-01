@@ -923,6 +923,17 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
     }
 
     /**
+     * Returns a copy of this location with the specified altitude.
+     *
+     * @param altitude the altitude
+     * @return the new location
+     */
+    public LatLonAlt withAltitude(Altitude altitude)
+    {
+        return createFromDegreesMeters(myLatitudeDegrees, myLongitudeDegrees, altitude);
+    }
+
+    /**
      * Checks if this {@link LatLonAlt} is within a tolerance (inclusive) of
      * another LatLonAlt in terms of pure numeric offset between lat and lon
      * independently.
