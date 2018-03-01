@@ -413,6 +413,16 @@ public abstract class Length implements Cloneable, Serializable, Comparable<Leng
     }
 
     /**
+     * Returns a negated copy of this length.
+     *
+     * @return the negated length
+     */
+    public Length negate()
+    {
+        return create(getClass(), -getMagnitude());
+    }
+
+    /**
      * Return a string representation of this length using its long label.
      *
      * @return The string.
