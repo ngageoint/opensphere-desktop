@@ -3,6 +3,7 @@ package io.opensphere.mantle.data.geom.style.impl.ui;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Collection;
 
 import javax.swing.JComboBox;
@@ -101,7 +102,9 @@ public class ColumnAngleParameterEditorPanel extends AbstractStyleParameterEdito
         SwingUtilities.setComboBoxValue(myColumnsCombo, (String)getParamValue());
 
         Float multiplierParamValue = (Float)myStyle.getStyleParameter(myMultiplierKey).getValue();
-        String multiplierText = DecimalFormat.getNumberInstance().format(multiplierParamValue.floatValue());
+        NumberFormat format = DecimalFormat.getNumberInstance();
+        format.setGroupingUsed(false);
+        String multiplierText = format.format(multiplierParamValue.floatValue());
         SwingUtilities.setTextFieldValue(myMultiplierField, multiplierText);
     }
 

@@ -2,6 +2,7 @@ package io.opensphere.mantle.data.geom.style.impl.ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.text.NumberFormat;
 import java.util.Collection;
 
 import javax.swing.JComboBox;
@@ -110,7 +111,10 @@ public class ColumnLengthParameterEditorPanel extends AbstractStyleParameterEdit
 
         Length multiplierParamValue = (Length)myStyle.getStyleParameter(myMultiplierKey).getValue();
         SwingUtilities.setComboBoxValue(myUnitsCombo, multiplierParamValue.getClass());
-        SwingUtilities.setTextFieldValue(myMultiplierField, String.valueOf((int)multiplierParamValue.getMagnitude()));
+        NumberFormat format = NumberFormat.getNumberInstance();
+        format.setGroupingUsed(false);
+        String multiplierText = format.format((int)multiplierParamValue.getMagnitude());
+        SwingUtilities.setTextFieldValue(myMultiplierField, multiplierText);
     }
 
     /**

@@ -211,9 +211,6 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     /** The Constant MAX_LOB_LENGTH_METERS. */
     private static final Length MAX_LOB_LENGTH = new Kilometers(20000.0f);
 
-    /** The minimum LOB length. */
-    private static final Length MIN_LOB_LENGTH = Kilometers.ONE;
-
     /** The Constant MAX_ARROW_LENGTH_KILOMETERS. */
     private static final Length MAX_ARROW_LENGTH = new Kilometers(500.0f);
 
@@ -298,7 +295,10 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                 Constraints constraints = StyleUtils.createTimeConstraintsIfApplicable(basicVisInfo, mapVisInfo, bd.getMGS(),
                         StyleUtils.getDataGroupInfoFromDti(getToolbox(), bd.getDataType()));
                 lobGeom = new LineOfBearingGeometry(lobBuilder, props, constraints);
-                setToAddTo.add(lobGeom);
+                if (props.getLineLength() > 0)
+                {
+                    setToAddTo.add(lobGeom);
+                }
             }
             if (ptGeom != null || lobGeom != null)
             {
@@ -845,6 +845,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
      * @param basicVisInfo Basic information for the data type.
      * @param bd the builder data
      * @param renderPropertyPool the render property pool
+     * @param centerLocation the center (point) location
      * @return the point render properties
      */
     private LOBRenderProperties determineRenderProperties(MapVisualizationInfo mapVisInfo, BasicVisualizationInfo basicVisInfo,
@@ -859,7 +860,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         props.setWidth(visState.isSelected() ? getLOBLineWidth() + MantleConstants.SELECT_WIDTH_ADDITION : getLOBLineWidth());
         float lobLength = visState.isLobVisible() ? (float)getLobLength(bd.getMDP()).inMeters() : 0.0f;
         float arrowLength = (float)getArrowLength().inMeters();
-        arrowLength = arrowLength > lobLength ? lobLength : arrowLength;
+        arrowLength = Math.min(arrowLength, lobLength / 2);
         props.setBaseAltitude((float)centerLocation.getAlt().getMeters());
         props.setLineLength(lobLength);
         props.setDirectionalArrowLength(arrowLength);
@@ -879,7 +880,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     private void addErrorArcs(Set<? super Geometry> setToAddTo, FeatureIndividualGeometryBuilderData bd,
             RenderPropertyPool renderPropertyPool, LineOfBearingGeometry lobGeom, GeographicPosition centerLocation)
     {
-        if (lobGeom != null)
+        if (lobGeom != null && lobGeom.getRenderProperties().getLineLength() > 0)
         {
             double bearingError = getBearingError(bd.getMDP());
             Length lengthError = getLobLengthError(bd.getMDP());
@@ -1008,7 +1009,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     }
 
     /** A blank AbstractStyleParameterEditorPanel. */
-    private static class BlankPanel extends AbstractStyleParameterEditorPanel
+    static class BlankPanel extends AbstractStyleParameterEditorPanel
     {
         /** The serialVersionUID. */
         private static final long serialVersionUID = 1L;

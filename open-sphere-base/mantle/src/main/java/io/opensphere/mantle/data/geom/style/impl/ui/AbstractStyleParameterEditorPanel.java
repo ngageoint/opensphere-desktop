@@ -133,7 +133,7 @@ public abstract class AbstractStyleParameterEditorPanel extends JPanel
      * @param style a glorified map of String to Object, with event support
      * @param paramKey the name of the parameter edited by this ASPEP
      */
-    public void setStuff(PanelBuilder builder,
+    public final void setStuff(PanelBuilder builder,
             MutableVisualizationStyle style, String paramKey)
     {
         myPanelBuilder = builder;
@@ -145,7 +145,7 @@ public abstract class AbstractStyleParameterEditorPanel extends JPanel
      * Initialize the GUI for this class.  This method should be called before
      * subclasses attempt to add their own GUI components.
      */
-    public void setupAspep()
+    public final void setupAspep()
     {
         setLayout(new BorderLayout());
 
@@ -226,7 +226,7 @@ public abstract class AbstractStyleParameterEditorPanel extends JPanel
      *
      * @return the panel height from builder
      */
-    protected int getPanelHeightFromBuilder()
+    protected final int getPanelHeightFromBuilder()
     {
         Object value = myPanelBuilder.getOtherParameter(PANEL_HEIGHT);
         return value instanceof Number ? ((Number)value).intValue() : 40;
