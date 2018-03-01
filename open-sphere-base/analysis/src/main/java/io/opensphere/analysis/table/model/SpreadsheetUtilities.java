@@ -5,8 +5,15 @@ import javax.swing.JTable;
 /**
  * Spreadsheet-related utilities for table models.
  */
-public class SpreadsheetUtilities
+public final class SpreadsheetUtilities
 {
+    /**
+     * Constructor.
+     */
+    private SpreadsheetUtilities()
+    {
+    }
+
     /**
      * Sums the values of the selected table cells.
      *
