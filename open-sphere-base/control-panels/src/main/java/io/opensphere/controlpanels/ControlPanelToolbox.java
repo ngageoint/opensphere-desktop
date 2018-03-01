@@ -1,7 +1,7 @@
 package io.opensphere.controlpanels;
 
+import de.micromata.opengis.kml.v_2_2_0.TimeSpan;
 import io.opensphere.core.PluginToolbox;
-import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.ObservableValue;
 
 /**
@@ -13,18 +13,21 @@ public interface ControlPanelToolbox extends PluginToolbox
      * Gets the registry for {@link DetailPanelProvider} implementations. This
      * allows for plugins to register additional providers without injecting
      * dependencies into the core project.
+     * @param <T>
      *
      * @return the registry in which detail panel providers are registered.
      */
-    DetailPanelProviderRegistry getDetailPanelProviderRegistry();
+     GenericThing getDetailPanelProviderRegistry();
 
     /**
      * Gets the default {@link DetailPanelProvider} implementation.
+     * @param <T>
      *
      * @return the provider to use when the none of the entries in the registry
      *         can handle the target data.
      */
-    DetailPanelProvider getDefaultDetailPanelProvider();
+     GenericThing getDefaultDetailPanelProvider();
+        
 
     /**
      * Gets the observable {@link TimeSpan} representing the visible portion of the timeline.
