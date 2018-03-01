@@ -10,7 +10,7 @@ import io.opensphere.core.Toolbox;
  * the registry to add additional behavior.
  * @param <T>
  */
-public interface GenericThing<T>
+public interface SimpleRegistry<T>
 {
     /**
      * Registers the supplied provider with the registry.
@@ -18,7 +18,7 @@ public interface GenericThing<T>
      *
      * @param pProvider the provider to add to the registry.
      */
-    void registerProvider(GenericThingProvider provider);
+    void registerProvider(T provider);
 
     /**
      * Gets the {@link Collection} of registered {@link DetailPanelProvider}
@@ -27,7 +27,7 @@ public interface GenericThing<T>
      *
      * @return the {@link Collection} of available providers.
      */
-    Collection<GenericThingProvider> getProviders();
+    Collection<T> getProviders();
 
     /**
      * Initializes the registry with properties from configuration.

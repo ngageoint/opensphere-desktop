@@ -1,13 +1,17 @@
 package io.opensphere.controlpanels.toolbox;
 
+import java.awt.Component;
 import java.util.Properties;
+import java.util.function.Function;
 
 import io.opensphere.controlpanels.ControlPanelToolbox;
-import io.opensphere.controlpanels.GenericThing;
+import io.opensphere.controlpanels.DetailPanelProvider;
+import io.opensphere.controlpanels.SimpleRegistry;
 import io.opensphere.controlpanels.GenericThingProvider;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.ObservableValue;
+import io.opensphere.mantle.data.DataGroupInfo;
 
 /**
  * The default implementation of the control panel toolbox.
@@ -17,13 +21,15 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
     /**
      * The detail panel provider registry in which providers are registered.
      */
-    private final GenericThing<Object> myDetailPanelProviderRegistry;
+    private final SimpleRegistry<DetailPanelProvider> myDetailPanelRegistry;
+
+    private final SimpleRegistry<Function<DataGroupInfo, Component>> myLayerControlRegistry;
 
     /**
      * The default panel provider to use when none of the entries in the
      * registry can handle the target data.
      */
-    private final GenericThingProvider myDefaultDetailPanelProvider;
+    // private final GenericThingProvider myDefaultProvider;
 
     /**
      * The parent toolbox.
@@ -46,24 +52,13 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
     public ControlPanelToolboxImpl(Toolbox toolbox, Properties pluginProperties)
     {
         myParentToolbox = toolbox;
-        myDetailPanelProviderRegistry = createDetailPanelProviderRegistry(myParentToolbox, pluginProperties);
-        myDefaultDetailPanelProvider = new DefaultDetailPanelProvider<Object>(myParentToolbox);
-    }
+        myDetailPanelRegistry = new SimpleRegistryImpl<>();
+        myDetailPanelRegistry.initialize(toolbox, pluginProperties);
 
-    /**
-     * Creates a new provider registry.
-     *
-     * @param pToolbox the toolbox through which system interactions occur.
-     * @param pluginProperties the properties with which to configure the
-     *            registry.
-     * @return the instantiated and initialized registry.
-     */
-    protected GenericThing<Object> createDetailPanelProviderRegistry(Toolbox pToolbox, Properties pluginProperties)
-    {
-        GenericThing<Object> returnValue = new GenericThingImpl<Object>();
-        returnValue.initialize(pToolbox, pluginProperties);
-
-        return returnValue;
+        myLayerControlRegistry = new SimpleRegistryImpl<>();
+        myLayerControlRegistry.initialize(toolbox, pluginProperties);
+        // myDefaultProvider = new
+        // DefaultDetailPanelProvider<Object>(myParentToolbox);
     }
 
     /**
@@ -75,21 +70,14 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
     public String getDescription()
     {
         return "A toolbox extension for control panels";
-        
+
     }
 
     @Override
-    public GenericThing<?> getDetailPanelProviderRegistry()
+    public DetailPanelProvider getDefaultProvider()
     {
         // TODO Auto-generated method stub
-        return myDetailPanelProviderRegistry;
-    }
-
-    @Override
-    public GenericThingProvider getDefaultDetailPanelProvider()
-    {
-        // TODO Auto-generated method stub
-        return myDefaultDetailPanelProvider;
+        return null;
     }
 
     @Override
@@ -103,6 +91,20 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
     public void setUISpan(ObservableValue<TimeSpan> uiSpan)
     {
         this.myUISpan = uiSpan;
-        
+
+    }
+
+    @Override
+    public SimpleRegistry<Function<DataGroupInfo, Component>> getLayerControlProviderRegistry()
+    {
+        // TODO Auto-generated method stub
+        return myLayerControlRegistry;
+    }
+
+    @Override
+    public SimpleRegistry<DetailPanelProvider> getDetailPanelProviderRegistry()
+    {
+        // TODO Auto-generated method stub
+        return myDetailPanelRegistry;
     }
 }

@@ -1,5 +1,6 @@
 package io.opensphere.controlpanels;
 
+import io.opensphere.core.hud.framework.Component;
 import io.opensphere.mantle.data.DataGroupInfo;
 
 /**
@@ -33,4 +34,7 @@ public interface GenericThingProvider
      * @return a detail panel implementation for the supplied data group.
      */
     DetailPane getDetailPanel(DataGroupInfo dataGroupInfo);
+    
+    
+   
 }
