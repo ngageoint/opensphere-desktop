@@ -26,7 +26,7 @@ public interface ControlPanelToolbox extends PluginToolbox
      * @return the provider to use when the none of the entries in the registry
      *         can handle the target data.
      */
-     GenericThing getDefaultDetailPanelProvider();
+     GenericThingProvider getDefaultDetailPanelProvider();
         
 
     /**
