@@ -58,7 +58,7 @@ public final class DiskCacheDecodeHelper
         EncodeType et = EncodeType.decode(oos);
         if (!et.isNullType())
         {
-            result.setOriginId(Long.valueOf(oos.readLong()));
+            result.setOriginId(oos.readLong());
         }
 
         et = EncodeType.decode(oos);

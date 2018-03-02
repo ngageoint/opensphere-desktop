@@ -16,6 +16,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.LongFunction;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -277,7 +278,7 @@ public class DiskCacheAssistant implements CacheAssistant
      *      io.opensphere.mantle.data.dynmeta.impl.DynamicMetadataManagerImpl)
      */
     @Override
-    public DirectAccessRetriever getDirectAccessRetriever(DataTypeInfo dti, Map<Long, CacheEntry> cacheRefMap,
+    public DirectAccessRetriever getDirectAccessRetriever(DataTypeInfo dti, LongFunction<CacheEntry> cacheRefMap,
             DynamicMetadataManagerImpl dcm)
     {
         DiskCacheDirectAccessRetriever retriever = new DiskCacheDirectAccessRetriever(this, dti, cacheRefMap, dcm);
