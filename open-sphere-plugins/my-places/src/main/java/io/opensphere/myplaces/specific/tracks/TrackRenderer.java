@@ -179,7 +179,7 @@ public class TrackRenderer implements Renderer, Transformer
 
                 LatLonAlt position = LatLonAlt.createFromDegreesMeters(coord.getLatitude(), coord.getLongitude(),
                         coord.getAltitude(), Altitude.ReferenceLevel.TERRAIN);
-                DefaultTrackNode node = new DefaultTrackNode(position, time);
+                DefaultTrackNode node = new DefaultTrackNode(position, time, null);
 
                 int xOffset = ExtendedDataUtils.getInt(placemark.getExtendedData(), Constants.X_OFFSET_ID + "_" + index, 10);
                 int yOffset = ExtendedDataUtils.getInt(placemark.getExtendedData(), Constants.Y_OFFSET_ID + "_" + index, 10);

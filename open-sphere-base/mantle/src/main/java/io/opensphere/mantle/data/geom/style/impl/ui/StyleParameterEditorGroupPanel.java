@@ -5,17 +5,17 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 import javax.swing.border.EtchedBorder;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import io.opensphere.core.util.swing.GridBagPanel;
 
 /**
  * The Class StyleParameterEditorGroupPanel.
  */
-public class StyleParameterEditorGroupPanel extends JPanel
+public class StyleParameterEditorGroupPanel extends GridBagPanel
 {
     /**
      * serialVersionUID.
@@ -84,7 +84,8 @@ public class StyleParameterEditorGroupPanel extends JPanel
             int panelSpacing)
     {
         super();
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        anchorWest();
+        fillHorizontal();
         myEditorPanels = New.list();
         if (borderTitle != null && !borderTitle.isEmpty())
         {
@@ -115,16 +116,30 @@ public class StyleParameterEditorGroupPanel extends JPanel
         removeAll();
         for (AbstractStyleParameterEditorPanel pnl : myEditorPanels)
         {
+            JComponent panel = pnl;
+            if (!pnl.getSiblingComponents().isEmpty())
+            {
+                GridBagPanel multiPanel = new GridBagPanel();
+                multiPanel.anchorWest();
+                multiPanel.add(pnl);
+                multiPanel.fillHorizontal();
+                for (AbstractStyleParameterEditorPanel sibling : pnl.getSiblingComponents())
+                {
+                    multiPanel.add(sibling);
+                }
+                panel = multiPanel;
+            }
+
             if (myShowBorder)
             {
-                pnl.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20), BorderFactory
+                panel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20), BorderFactory
                         .createCompoundBorder(BorderFactory.createEtchedBorder(), BorderFactory.createEmptyBorder(2, 0, 2, 2))));
             }
-            add(pnl);
+            addRow(panel);
 
             if (mySpacing > 0)
             {
-                add(Box.createVerticalStrut(mySpacing));
+                addRow(Box.createVerticalStrut(mySpacing));
             }
         }
         revalidate();
@@ -137,7 +152,7 @@ public class StyleParameterEditorGroupPanel extends JPanel
     {
         for (AbstractStyleParameterEditorPanel pnl : myEditorPanels)
         {
-            pnl.update();
+            pnl.updateAll();
         }
     }
 
