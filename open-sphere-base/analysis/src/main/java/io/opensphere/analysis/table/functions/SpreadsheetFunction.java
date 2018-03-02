@@ -10,6 +10,7 @@ import javax.swing.JTable;
  * Function class that defines string representations, value formatting, and how
  * to execute.
  */
+@SuppressWarnings("boxing")
 public abstract class SpreadsheetFunction
 {
     /** The format string. */
@@ -19,7 +20,7 @@ public abstract class SpreadsheetFunction
     protected final String myLabel;
 
     /**
-     * Initializes enumerable.
+     * Constructs a Spreadsheet Function.
      *
      * @param formatString the function result format string
      * @param label the function name
@@ -125,11 +126,14 @@ public abstract class SpreadsheetFunction
                 }
             }
 
-            return Double.valueOf(sum);
+            return sum;
         }
     }
 
-    /** Representation of Table Selection Minimum. */
+    /**
+     * Representation of Table Selection Minimum. Does not include non-numeric
+     * cells.
+     */
     public static class Min extends SpreadsheetFunction
     {
         /** Constructs a Min function. */
@@ -139,10 +143,11 @@ public abstract class SpreadsheetFunction
         }
 
         /**
-         * Determines the minimum value of the selected cells in a given table,
-         * or 0 if nothing is selected.
+         * Determines the minimum value of the selected cells in a given table.
+         *
+         * @override
+         * @return the minimum value, or 0.0 if nothing is selected
          */
-        @SuppressWarnings("boxing")
         @Override
         public Number execute(JTable table)
         {
@@ -159,51 +164,135 @@ public abstract class SpreadsheetFunction
             }
 
             Optional<Double> result = selectedValues.stream().filter(this::isNumber).map(this::convertValue)
-                    .reduce((a, b) -> Math.min(a, b));
+                    .reduce((a, b) -> Double.min(a, b));
 
-            return result.orElse(Double.valueOf(0.0));
+            return result.orElse(0.0);
         }
     }
 
+    /** Representation of Table Selection Maximum. */
     public static class Max extends SpreadsheetFunction
     {
+        /** Constructs a Max function. */
         public Max()
         {
             super("%-10.3f", "Maximum Value");
         }
 
+        /**
+         * Determines the maximum value of the selected cells in a given table.
+         *
+         * @override
+         * @return the maximum value, of 0.0 if nothing is selected
+         */
         @Override
         public Number execute(JTable table)
         {
-            return 0;
+            double max = 0.0;
+
+            int[] rows = table.getSelectedRows();
+            int[] cols = table.getSelectedColumns();
+            for (int r : rows)
+            {
+                for (int c : cols)
+                {
+                    max = Math.max(max, convertValue(table.getValueAt(r, c)));
+                }
+            }
+
+            return max;
         }
     }
 
+    /**
+     * Representation of Table Selection Median. Does not include non-numeric
+     * cells.
+     */
     public static class Median extends SpreadsheetFunction
     {
+        /** Constructs a Median function. */
         public Median()
         {
             super("%-10.3f", "Median Value");
         }
 
+        /**
+         * Determines the median value of the selected cells in a given table.
+         *
+         * @override
+         * @return the median value, or NaN if nothing is selected
+         */
         @Override
         public Number execute(JTable table)
         {
-            return 0;
+            int[] rows = table.getSelectedRows();
+            int[] cols = table.getSelectedColumns();
+
+            List<Object> selectedValues = new ArrayList<>();
+            for (int r : rows)
+            {
+                for (int c : cols)
+                {
+                    selectedValues.add(table.getValueAt(r, c));
+                }
+            }
+
+            Double[] result = selectedValues.stream().filter(this::isNumber).map(this::convertValue).sorted()
+                    .toArray(Double[]::new);
+
+            int len = result.length;
+            if (len == 0)
+            {
+                return Double.NaN;
+            }
+            else if (len % 2 == 0)
+            {
+                return (result[len / 2] + result[len / 2 - 1]) / 2;
+            }
+            else
+            {
+                return result[len / 2];
+            }
         }
     }
 
+    /**
+     * Representation of Table Selection Mean. Does not include non-numeric
+     * cells.
+     */
     public static class Mean extends SpreadsheetFunction
     {
+        /** Constructs a Mean function. */
         public Mean()
         {
             super("%-10.3f", "Mean Value");
         }
 
+        /**
+         * Determines the mean value of the selected cells in a given table.
+         *
+         * @override
+         * @return the mean value, or NaN if nothing is selected
+         */
         @Override
         public Number execute(JTable table)
         {
-            return 0;
+            int[] rows = table.getSelectedRows();
+            int[] cols = table.getSelectedColumns();
+
+            List<Object> selectedValues = new ArrayList<>();
+            for (int r : rows)
+            {
+                for (int c : cols)
+                {
+                    selectedValues.add(table.getValueAt(r, c));
+                }
+            }
+
+            Optional<Double> result = selectedValues.stream().filter(this::isNumber).map(this::convertValue)
+                    .reduce((a, b) -> Double.sum(a, b));
+
+            return result.map((d) -> d / selectedValues.size()).orElse(Double.NaN);
         }
     }
 }

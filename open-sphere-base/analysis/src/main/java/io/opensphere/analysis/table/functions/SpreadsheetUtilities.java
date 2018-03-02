@@ -7,7 +7,8 @@ public final class SpreadsheetUtilities
 {
     /** Function values. */
     private static final SpreadsheetFunction[] FUNCTION_VALUES = new SpreadsheetFunction[] { new SpreadsheetFunction.Sum(),
-        new SpreadsheetFunction.Min() };
+        new SpreadsheetFunction.Min(), new SpreadsheetFunction.Max(), new SpreadsheetFunction.Median(),
+        new SpreadsheetFunction.Mean() };
 
     /**
      * Constructor.
