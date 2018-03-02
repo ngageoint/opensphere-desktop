@@ -33,7 +33,9 @@ public class PointGeometry extends AbstractColorGeometry implements PointRenderP
     public PointGeometry(PointGeometry.Builder<?> builder, PointRenderProperties renderProperties, Constraints constraints)
     {
         super(builder, renderProperties, constraints);
-        myPosition = builder.getPosition().add(new Vector3d(0, 0, getRenderProperties().getBaseAltitude()));
+        // Attempt to reuse the Position to save memory
+        float baseAltitude = getRenderProperties().getBaseAltitude();
+        myPosition = baseAltitude == 0 ? builder.getPosition() : builder.getPosition().add(new Vector3d(0, 0, baseAltitude));
     }
 
     @Override
