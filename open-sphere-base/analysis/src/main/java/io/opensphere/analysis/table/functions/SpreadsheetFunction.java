@@ -28,13 +28,23 @@ public abstract class SpreadsheetFunction
     }
 
     /**
-     * Format String Getter.
+     * Format String getter.
      *
-     * @return the format string
+     * @return myFormatString
      */
     public String getFormatString()
     {
-        return myLabel + ": " + myFormatString;
+        return myFormatString;
+    }
+
+    /**
+     * Label getter.
+     *
+     * @return myLabel
+     */
+    public String getLabel()
+    {
+        return myLabel;
     }
 
     /**
