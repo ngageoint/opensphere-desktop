@@ -40,7 +40,7 @@ public class RemoveDataElementsWorker extends AbstractDataElementTransformerWork
         aLock.lock();
         try
         {
-            List<Long> idsToRemove = CollectionUtilities.intersectionAsList(getProvider().getIdSet(), myCandidateIdsToRemove);
+            List<Long> idsToRemove = CollectionUtilities.intersectionAsList(getProvider().getIdsAsSet(), myCandidateIdsToRemove);
             if (idsToRemove == null || idsToRemove.isEmpty())
             {
                 return;

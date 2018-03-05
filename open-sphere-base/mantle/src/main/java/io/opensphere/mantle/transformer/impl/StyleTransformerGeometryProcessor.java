@@ -71,7 +71,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
     private final Set<Geometry> myHiddenGeometrySet;
 
     /** The id set. */
-    private final Set<Long> myIdSet;
+    private final TLongSet myIdSet;
 
     /** The Last color change update number. */
     private long myLastColorChangeUpdateNumber;
@@ -99,7 +99,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
         myMasterTransformer = master;
         myToolbox = tb;
         myDataTypeInfo = dti;
-        myIdSet = New.set();
+        myIdSet = new TLongHashSet();
         myGeometrySetLock = new ReentrantLock();
         myGeometrySet = New.set();
         myHiddenGeometrySet = New.set();
@@ -203,7 +203,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
     }
 
     @Override
-    public Set<Long> getIdSet()
+    public TLongSet getIdSet()
     {
         return myIdSet;
     }
@@ -330,7 +330,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
      */
     public void rebuildGeometriesFromStyleChange()
     {
-        StyleBasedUpdateGeometriesWorker worker = new StyleBasedUpdateGeometriesWorker(this, New.list(getIdSet()));
+        StyleBasedUpdateGeometriesWorker worker = new StyleBasedUpdateGeometriesWorker(this, getIdsAsList());
         executeIfNotShutdown(worker);
     }
 
@@ -465,7 +465,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
                 boolean hasMultiElementStyleType = myStyleManager.anyStyleAppliesToAllElements();
                 boolean anyStyleAlwaysRequiresGeometryRebuild = myStyleManager.anyStyleAlwaysRequiresFullGeometryRebuild();
 
-                List<Long> idsOfInterest = CollectionUtilities.intersectionAsList(getIdSet(), myEvt.getRegistryIds());
+                List<Long> idsOfInterest = CollectionUtilities.intersectionAsList(getIdsAsSet(), myEvt.getRegistryIds());
                 if (!idsOfInterest.isEmpty() && !hasMultiElementStyleType && !anyStyleAlwaysRequiresGeometryRebuild)
                 {
                     if (myEvt instanceof ConsolidatedDataElementVisibilityChangeEvent)
@@ -515,7 +515,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
                 {
                     StyleBasedUpdateGeometriesWorker worker = new StyleBasedUpdateGeometriesWorker(
                             StyleTransformerGeometryProcessor.this,
-                            anyStyleAlwaysRequiresGeometryRebuild ? idsOfInterest : New.list(getIdSet()));
+                            anyStyleAlwaysRequiresGeometryRebuild ? idsOfInterest : getIdsAsList());
                     executeIfNotShutdown(worker);
                 }
             }
@@ -646,11 +646,12 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
                     if (colorEvent.getUpdateNumber() > myLastColorChangeUpdateNumber)
                     {
                         myLastColorChangeUpdateNumber = colorEvent.getUpdateNumber();
+                        List<Long> ids = getIdsAsList();
                         if (hasMultiElementStyleType || anyStyleAlwaysRequiresGeometryRebuild)
                         {
                             rebuildAll = true;
                             MantleToolboxUtils.getDataElementUpdateUtils(getToolbox()).setDataElementsColor(colorEvent.getColor(),
-                                    New.list(getIdSet()), getDataType().getTypeKey(), myMasterTransformer);
+                                    ids, getDataType().getTypeKey(), myMasterTransformer);
                         }
                         else
                         {
@@ -665,7 +666,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
 
                                 executeIfNotShutdown(updator);
                                 MantleToolboxUtils.getDataElementUpdateUtils(getToolbox()).setDataElementsOpacity(
-                                        colorEvent.getColor().getAlpha(), New.list(getIdSet()), getDataType().getTypeKey(),
+                                        colorEvent.getColor().getAlpha(), ids, getDataType().getTypeKey(),
                                         myMasterTransformer);
                             }
                             else
@@ -673,11 +674,11 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
                                 // Update all render properties colors to match
                                 // the new color.
                                 StyleBasedDeriveColorUpdateGeometriesWorker aWorker = new StyleBasedDeriveColorUpdateGeometriesWorker(
-                                        StyleTransformerGeometryProcessor.this, New.list(getIdSet()), colorEvent.getColor(),
+                                        StyleTransformerGeometryProcessor.this, ids, colorEvent.getColor(),
                                         false);
                                 executeIfNotShutdown(aWorker);
                                 MantleToolboxUtils.getDataElementUpdateUtils(getToolbox()).setDataElementsColor(
-                                        colorEvent.getColor(), New.list(getIdSet()), getDataType().getTypeKey(),
+                                        colorEvent.getColor(), ids, getDataType().getTypeKey(),
                                         myMasterTransformer);
                             }
                         }
@@ -692,7 +693,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
             if (rebuildAll)
             {
                 StyleBasedUpdateGeometriesWorker worker = new StyleBasedUpdateGeometriesWorker(
-                        StyleTransformerGeometryProcessor.this, New.list(getIdSet()));
+                        StyleTransformerGeometryProcessor.this, getIdsAsList());
                 executeIfNotShutdown(worker);
             }
         }

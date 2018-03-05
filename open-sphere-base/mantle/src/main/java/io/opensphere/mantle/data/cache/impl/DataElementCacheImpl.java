@@ -9,11 +9,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.LongFunction;
+
+import javax.annotation.concurrent.GuardedBy;
 
 import org.apache.log4j.Logger;
 
 import gnu.trove.list.TLongList;
 import gnu.trove.list.array.TLongArrayList;
+import gnu.trove.map.TLongObjectMap;
 import gnu.trove.map.hash.TLongObjectHashMap;
 import io.opensphere.core.MemoryManager.MemoryListener;
 import io.opensphere.core.MemoryManager.Status;
@@ -79,7 +83,8 @@ public class DataElementCacheImpl implements DataElementCache
     private final CacheLoadFilterManager myCacheLoadFilterManager;
 
     /** The my cache ref map. */
-    private final Map<Long, CacheEntry> myCacheRefMap;
+    @GuardedBy("myCacheRefMap")
+    private final TLongObjectMap<CacheEntry> myCacheRefMap;
 
     /** The data type to id map. */
     private final DataTypeToIdMap myDataTypeToIdMap;
@@ -127,7 +132,7 @@ public class DataElementCacheImpl implements DataElementCache
         myDynamicMetadataManager = dcm;
         myDynamicEnumerationRegistry = deReg;
         myDataTypeToIdMap = new DataTypeToIdMap();
-        myCacheRefMap = New.concurrentMap();
+        myCacheRefMap = new TLongObjectHashMap<>();
         myAllIdSet = RangedLongSetFactory.newSet();
         myCacheConfiguration = cacheConfiguration;
         myUseDynamicClasses = myCacheConfiguration.isUseDynamicClassStorageForDataElements();
@@ -178,7 +183,7 @@ public class DataElementCacheImpl implements DataElementCache
         Utilities.checkNull(dti, "dti");
         myDataTypeToIdMap.addDataType(dti);
         myDynamicMetadataManager.addDataType(dti);
-        myTypeCountMetricsProvider.setValue(myDataTypeToIdMap.typeCount());
+        myTypeCountMetricsProvider.setValue(Integer.valueOf(myDataTypeToIdMap.typeCount()));
         if (DynamicMetaDataClassRegistry.getInstance().canCompile())
         {
             DynamicMetaDataClassRegistry.getInstance().addOrAdjustDataType(dti);
@@ -193,7 +198,10 @@ public class DataElementCacheImpl implements DataElementCache
     @Override
     public long[] getAllElementIdsAsArray()
     {
-        return CollectionUtilities.toLongArray(myCacheRefMap.keySet());
+        synchronized (myCacheRefMap)
+        {
+            return myCacheRefMap.keys();
+        }
     }
 
     /**
@@ -227,7 +235,7 @@ public class DataElementCacheImpl implements DataElementCache
     public String getDataTypeInfoKey(long id)
     {
         String ts = null;
-        CacheEntry ece = myCacheRefMap.get(id);
+        CacheEntry ece = getCacheEntry(id);
         if (ece != null)
         {
             ts = ece.getDataTypeKey();
@@ -253,7 +261,7 @@ public class DataElementCacheImpl implements DataElementCache
         CacheEntry ece = null;
         for (Long id : ids)
         {
-            ece = myCacheRefMap.get(id);
+            ece = getCacheEntry(id);
             if (ece != null)
             {
                 tsList.add(ece.getDataTypeKey());
@@ -295,7 +303,7 @@ public class DataElementCacheImpl implements DataElementCache
         CacheEntry ece = null;
         for (Long id : ids)
         {
-            ece = myCacheRefMap.get(id);
+            ece = getCacheEntry(id);
             if (ece != null)
             {
                 dtiKeySet.add(ece.getDataTypeKey());
@@ -313,11 +321,12 @@ public class DataElementCacheImpl implements DataElementCache
     public DirectAccessRetriever getDirectAccessRetriever(DataTypeInfo type)
     {
         Utilities.checkNull(type, "type");
+        LongFunction<CacheEntry> cacheLookupFunction = this::getCacheEntry;
         if (myCacheAssistant != null)
         {
-            return myCacheAssistant.getDirectAccessRetriever(type, myCacheRefMap, myDynamicMetadataManager);
+            return myCacheAssistant.getDirectAccessRetriever(type, cacheLookupFunction, myDynamicMetadataManager);
         }
-        return new DefaultDirectAccessRetriever(type, myCacheRefMap, myDynamicMetadataManager);
+        return new DefaultDirectAccessRetriever(type, cacheLookupFunction, myDynamicMetadataManager);
     }
 
     /**
@@ -412,7 +421,7 @@ public class DataElementCacheImpl implements DataElementCache
     public TimeSpan getTimeSpan(long id)
     {
         TimeSpan ts = null;
-        CacheEntry ece = myCacheRefMap.get(id);
+        CacheEntry ece = getCacheEntry(id);
         if (ece != null)
         {
             ts = ece.getTime();
@@ -438,7 +447,7 @@ public class DataElementCacheImpl implements DataElementCache
         CacheEntry ece = null;
         for (Long id : ids)
         {
-            ece = myCacheRefMap.get(id);
+            ece = getCacheEntry(id);
             if (ece != null)
             {
                 tsList.add(ece.getTime());
@@ -482,7 +491,7 @@ public class DataElementCacheImpl implements DataElementCache
     public VisualizationState getVisualizationState(long id)
     {
         VisualizationState ts = null;
-        CacheEntry ece = myCacheRefMap.get(id);
+        CacheEntry ece = getCacheEntry(id);
         if (ece != null)
         {
             ts = ece.getVisState();
@@ -508,7 +517,7 @@ public class DataElementCacheImpl implements DataElementCache
         CacheEntry ece = null;
         for (Long id : ids)
         {
-            ece = myCacheRefMap.get(id);
+            ece = getCacheEntry(id);
             if (ece != null)
             {
                 tsList.add(ece.getVisState());
@@ -666,7 +675,7 @@ public class DataElementCacheImpl implements DataElementCache
         {
             synchronized (myCacheRefMap)
             {
-                ref = myCacheRefMap.remove(id);
+                ref = id != null ? myCacheRefMap.remove(id.longValue()) : null;
             }
             if (ref != null)
             {
@@ -678,7 +687,7 @@ public class DataElementCacheImpl implements DataElementCache
                 }
             }
         }
-        myFeatureCountMetricsProvider.setValue(myCacheRefMap.size());
+        myFeatureCountMetricsProvider.setValue(Integer.valueOf(getCacheSize()));
         if (myCacheConfiguration.isRemoveFromStoreOnRemove() && myCacheAssistant != null)
         {
             myCacheAssistant.removeElements(idsToRemoveFromStore, refsToRemoveFromStore);
@@ -716,7 +725,7 @@ public class DataElementCacheImpl implements DataElementCache
             remove(myDataTypeToIdMap.getIdsForTypeAsRangedLongSet(dti));
             myDataTypeToIdMap.removeDataType(dti);
             myDynamicMetadataManager.removeDataType(dti);
-            myTypeCountMetricsProvider.setValue(myDataTypeToIdMap.typeCount());
+            myTypeCountMetricsProvider.setValue(Integer.valueOf(myDataTypeToIdMap.typeCount()));
             if (myCacheAssistant != null)
             {
                 myCacheAssistant.dataTypeRemoved(dti);
@@ -755,7 +764,7 @@ public class DataElementCacheImpl implements DataElementCache
         Utilities.checkNull(removedCacheIds, "removedCacheIds");
         for (Long id : removedCacheIds)
         {
-            CacheEntry ref = myCacheRefMap.get(id);
+            CacheEntry ref = getCacheEntry(id);
             if (ref != null)
             {
                 ref.setCacheReference(null);
@@ -794,7 +803,7 @@ public class DataElementCacheImpl implements DataElementCache
      */
     protected boolean updateCacheReference(long key, CacheReference value)
     {
-        CacheEntry ref = myCacheRefMap.get(key);
+        CacheEntry ref = getCacheEntry(key);
         if (ref != null)
         {
             ref.setCacheReference(value);
@@ -812,9 +821,9 @@ public class DataElementCacheImpl implements DataElementCache
     {
         if (LOGGER.isTraceEnabled())
         {
-            LOGGER.trace("Starting Cache Cleaner: Total Entries: " + myCacheRefMap.size() + " Max Pool: " + maxPool);
+            LOGGER.trace("Starting Cache Cleaner: Total Entries: " + getCacheSize() + " Max Pool: " + maxPool);
         }
-        int maxToClean = myCacheRefMap.size() + reserveCount - maxPool;
+        int maxToClean = getCacheSize() + reserveCount - maxPool;
         int cleanedCount = 0;
         long start = System.nanoTime();
 
@@ -824,7 +833,11 @@ public class DataElementCacheImpl implements DataElementCache
         int notCached = 0;
 
         CleanScanProcedure procedure = new CleanScanProcedure(removeCandidates);
-        List<CacheEntry> entryList = New.list(myCacheRefMap.values());
+        List<CacheEntry> entryList;
+        synchronized (myCacheRefMap)
+        {
+            entryList = New.list(myCacheRefMap.valueCollection());
+        }
         for (CacheEntry entry : entryList)
         {
             if (entry != null && !procedure.execute(entry))
@@ -871,7 +884,7 @@ public class DataElementCacheImpl implements DataElementCache
             LOGGER.trace(StringUtilities
                     .formatTimingMessage("Clean complete.\nCleaned " + cleanedCount + " in ", end - start)
                     + " Total Count: "
-                    + myCacheRefMap.size()
+                    + getCacheSize()
                     + " Max Pool: "
                     + maxPool
                     + " NumInMem: "
@@ -916,7 +929,8 @@ public class DataElementCacheImpl implements DataElementCache
 
         int maxPool = getMaxPool(myToolbox.getSystemToolbox().getMemoryManager().getMemoryStatus());
 
-        if (myCacheRefMap.size() + reserveCount > maxPool)
+        int cacheSize = getCacheSize();
+        if (cacheSize + reserveCount > maxPool)
         {
             doCleanCache(reserveCount, maxPool);
         }
@@ -924,7 +938,7 @@ public class DataElementCacheImpl implements DataElementCache
         {
             if (LOGGER.isTraceEnabled())
             {
-                LOGGER.trace("No Clean Required only " + myCacheRefMap.size() + " entries in memory.  Preferred is : " + maxPool);
+                LOGGER.trace("No Clean Required only " + cacheSize + " entries in memory.  Preferred is : " + maxPool);
             }
         }
     }
@@ -994,7 +1008,7 @@ public class DataElementCacheImpl implements DataElementCache
         Utilities.checkNull(elements, "elements");
         if (!elements.isEmpty())
         {
-            int size = myCacheRefMap.size();
+            int size = getCacheSize();
             if (!myCacheConfiguration.isUnlimited() && size + elements.size() >= myCacheConfiguration.getMaxInMemory())
             {
                 throw new CacheException("Insert will exceed max capacity; could not insert elements.");
@@ -1044,7 +1058,7 @@ public class DataElementCacheImpl implements DataElementCache
             }
             myAllIdSet.addAll(resultIds);
             myAllIdSet.remove(DataElement.FILTERED);
-            myFeatureCountMetricsProvider.setValue(myCacheRefMap.size());
+            myFeatureCountMetricsProvider.setValue(Integer.valueOf(getCacheSize()));
 
             for (Map.Entry<String, TLongList> entry : typeToIdList.entrySet())
             {
@@ -1076,7 +1090,7 @@ public class DataElementCacheImpl implements DataElementCache
         CacheEntry ref;
         for (Long id : ids)
         {
-            ref = myCacheRefMap.get(id);
+            ref = getCacheEntry(id);
             if (ref != null)
             {
                 DataTypeInfo dti = getDTIFromKey(ref.getDataTypeKey());
@@ -1128,14 +1142,14 @@ public class DataElementCacheImpl implements DataElementCache
         while (idItr.hasNext() && !query.isComplete())
         {
             currentId = idItr.next();
-            rec = myCacheRefMap.get(currentId);
+            rec = getCacheEntry(currentId);
             if (rec == null)
             {
                 query.notFound(currentId);
             }
             else
             {
-                cevProxy.setParts(currentId, rec, rec.getLoadedElementData());
+                cevProxy.setParts(currentId.longValue(), rec, rec.getLoadedElementData());
                 if (query.intersectsTimesOfInterest(cevProxy))
                 {
                     if (query.needsRetrieve(cevProxy))
@@ -1215,6 +1229,44 @@ public class DataElementCacheImpl implements DataElementCache
             {
                 EVENT_EXECUTOR.execute(() -> cleanCache(0));
             }
+        }
+    }
+
+    /**
+     * Gets the cache entry for the ID.
+     *
+     * @param id the ID
+     * @return the cache entry, or null
+     */
+    private CacheEntry getCacheEntry(Long id)
+    {
+        return id != null ? getCacheEntry(id.longValue()) : null;
+    }
+
+    /**
+     * Gets the cache entry for the ID.
+     *
+     * @param id the ID
+     * @return the cache entry, or null
+     */
+    private CacheEntry getCacheEntry(long id)
+    {
+        synchronized (myCacheRefMap)
+        {
+            return myCacheRefMap.get(id);
+        }
+    }
+
+    /**
+     * Gets number of entries in the cache.
+     *
+     * @return the cache size
+     */
+    private int getCacheSize()
+    {
+        synchronized (myCacheRefMap)
+        {
+            return myCacheRefMap.size();
         }
     }
 }
