@@ -1,4 +1,4 @@
-package io.opensphere.analysis.heatmap;
+package io.opensphere.heatmap;
 
 import java.util.List;
 import java.util.stream.Collectors;

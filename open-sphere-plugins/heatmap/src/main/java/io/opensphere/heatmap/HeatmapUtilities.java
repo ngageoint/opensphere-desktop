@@ -1,4 +1,4 @@
-package io.opensphere.analysis.heatmap;
+package io.opensphere.heatmap;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.MantleToolbox;

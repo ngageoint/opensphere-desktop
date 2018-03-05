@@ -1,9 +1,8 @@
-package io.opensphere.analysis.heatmap;
+package io.opensphere.heatmap;
 
 import java.util.Collection;
 import java.util.Collections;
 
-import io.opensphere.analysis.heatmap.DataRegistryHelper.HeatmapImageInfo;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.api.DefaultTransformer;
 import io.opensphere.core.data.DataRegistryListener;
@@ -23,6 +22,7 @@ import io.opensphere.core.image.ImageProvider;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.order.OrderParticipantKey;
 import io.opensphere.core.util.collections.CollectionUtilities;
+import io.opensphere.heatmap.DataRegistryHelper.HeatmapImageInfo;
 import io.opensphere.mantle.crust.MiniMantle;
 
 /** Heat map transformer. */

@@ -1,4 +1,4 @@
-package io.opensphere.analysis.heatmap;
+package io.opensphere.heatmap;
 
 import static org.junit.Assert.assertNull;
 
@@ -6,7 +6,12 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
-import io.opensphere.analysis.heatmap.DataRegistryHelper.HeatmapImageInfo;
+import io.opensphere.heatmap.DataRegistryHelper;
+import io.opensphere.heatmap.HeatmapController;
+import io.opensphere.heatmap.HeatmapDefaultStyleHandler;
+import io.opensphere.heatmap.HeatmapRecreator;
+import io.opensphere.heatmap.HeatmapVisualizationStyle;
+import io.opensphere.heatmap.DataRegistryHelper.HeatmapImageInfo;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.geom.style.VisualizationStyle;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleDatatypeChangeEvent;

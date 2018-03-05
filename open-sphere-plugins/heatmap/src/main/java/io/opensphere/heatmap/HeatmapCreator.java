@@ -1,4 +1,4 @@
-package io.opensphere.analysis.heatmap;
+package io.opensphere.heatmap;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

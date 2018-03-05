@@ -1,4 +1,4 @@
-package io.opensphere.analysis.heatmap;
+package io.opensphere.heatmap;
 
 import java.awt.EventQueue;
 import java.awt.image.BufferedImage;
@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import io.opensphere.analysis.heatmap.DataRegistryHelper.HeatmapImageInfo;
 import io.opensphere.core.Notify;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.export.ExportUtilities;
@@ -20,6 +19,7 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.PhasedTaskCanceller;
 import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.core.util.taskactivity.TaskActivity;
+import io.opensphere.heatmap.DataRegistryHelper.HeatmapImageInfo;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.DataTypeController;
 import io.opensphere.mantle.data.AbstractActivationListener;
