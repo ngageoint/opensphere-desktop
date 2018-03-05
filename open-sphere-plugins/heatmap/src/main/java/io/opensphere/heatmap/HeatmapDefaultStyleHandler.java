@@ -1,6 +1,6 @@
-package io.opensphere.analysis.heatmap;
+package io.opensphere.heatmap;
 
-import io.opensphere.analysis.heatmap.DataRegistryHelper.HeatmapImageInfo;
+import io.opensphere.heatmap.DataRegistryHelper.HeatmapImageInfo;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.VisualizationSupport;
 import io.opensphere.mantle.data.geom.style.VisualizationStyle;

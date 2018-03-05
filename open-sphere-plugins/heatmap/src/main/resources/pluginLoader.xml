@@ -2,7 +2,7 @@
 <pluginLoaderCollection>
     <pluginLoaderData>
         <id>HeatmapPlugin</id>
-        <class>io.opensphere.analysis.heatmap.HeatmapPlugin</class>
+        <class>io.opensphere.heatmap.HeatmapPlugin</class>
         <appVersion>1.0</appVersion>
         <pluginVersion>1.0</pluginVersion>
         <author>BIT Systems</author>

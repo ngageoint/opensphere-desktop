@@ -1,14 +1,14 @@
-package io.opensphere.analysis.heatmap;
+package io.opensphere.heatmap;
 
 import java.io.File;
 
-import io.opensphere.analysis.heatmap.DataRegistryHelper.HeatmapImageInfo;
 import io.opensphere.core.export.AbstractExporter;
 import io.opensphere.core.export.ExportException;
 import io.opensphere.core.util.MimeType;
 import io.opensphere.core.util.filesystem.FileUtilities;
 import io.opensphere.core.util.gdal.GdalIOUtilities;
 import io.opensphere.core.util.taskactivity.TaskActivity;
+import io.opensphere.heatmap.DataRegistryHelper.HeatmapImageInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
 
 /** An exporter that exports heat map layers. */

@@ -1,4 +1,4 @@
-package io.opensphere.analysis.heatmap;
+package io.opensphere.heatmap;
 
 import java.awt.Composite;
 import java.awt.CompositeContext;

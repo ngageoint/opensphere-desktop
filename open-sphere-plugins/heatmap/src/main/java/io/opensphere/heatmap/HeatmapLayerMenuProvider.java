@@ -1,4 +1,4 @@
-package io.opensphere.analysis.heatmap;
+package io.opensphere.heatmap;
 
 import java.awt.Component;
 import java.util.Collection;
@@ -10,15 +10,15 @@ import javax.swing.JMenuItem;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextActionManager;
 import io.opensphere.core.control.action.ContextMenuProvider;
-import io.opensphere.core.control.action.context.ContextIdentifiers;
-import io.opensphere.core.control.action.context.GeometryContextKey;
-import io.opensphere.core.geometry.Geometry;
-import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.util.Service;
 import io.opensphere.core.util.swing.SwingUtilities;
+import io.opensphere.mantle.data.DataGroupInfo;
+import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
+import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.util.MantleToolboxUtils;
 
-/** Heat map menu provider for query geometries. */
-public class HeatmapGeometryMenuProvider implements ContextMenuProvider<GeometryContextKey>
+/** Heat map menu provider for layers. */
+public class HeatmapLayerMenuProvider implements ContextMenuProvider<DataGroupContextKey>
 {
     /**
      * Creates a service that manages the layer context menu.
@@ -31,7 +31,7 @@ public class HeatmapGeometryMenuProvider implements ContextMenuProvider<Geometry
     {
         return new Service()
         {
-            private ContextMenuProvider<GeometryContextKey> myContextMenuProvider;
+            private ContextMenuProvider<DataGroupContextKey> myContextMenuProvider;
 
             @Override
             public void open()
@@ -39,11 +39,9 @@ public class HeatmapGeometryMenuProvider implements ContextMenuProvider<Geometry
                 ContextActionManager manager = toolbox.getUIRegistry().getContextActionManager();
                 if (manager != null)
                 {
-                    myContextMenuProvider = new HeatmapGeometryMenuProvider(toolbox, heatmapController);
-                    manager.registerContextMenuItemProvider(ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT,
-                            GeometryContextKey.class, myContextMenuProvider);
-                    manager.registerContextMenuItemProvider(ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT,
-                            GeometryContextKey.class, myContextMenuProvider);
+                    myContextMenuProvider = new HeatmapLayerMenuProvider(toolbox, heatmapController);
+                    manager.registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT, DataGroupContextKey.class,
+                            myContextMenuProvider);
                 }
             }
 
@@ -53,10 +51,8 @@ public class HeatmapGeometryMenuProvider implements ContextMenuProvider<Geometry
                 ContextActionManager manager = toolbox.getUIRegistry().getContextActionManager();
                 if (manager != null && myContextMenuProvider != null)
                 {
-                    manager.deregisterContextMenuItemProvider(ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT,
-                            GeometryContextKey.class, myContextMenuProvider);
-                    manager.deregisterContextMenuItemProvider(ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT,
-                            GeometryContextKey.class, myContextMenuProvider);
+                    manager.deregisterContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT, DataGroupContextKey.class,
+                            myContextMenuProvider);
                 }
             }
         };
@@ -65,36 +61,51 @@ public class HeatmapGeometryMenuProvider implements ContextMenuProvider<Geometry
     /** The heat map controller. */
     private final HeatmapController myHeatmapController;
 
+    /** The toolbox through which application state is accessed. */
+    private final Toolbox myToolbox;
+
     /**
      * Constructor.
      *
      * @param toolbox The toolbox
      * @param heatmapController the heat map controller
      */
-    public HeatmapGeometryMenuProvider(Toolbox toolbox, HeatmapController heatmapController)
+    public HeatmapLayerMenuProvider(Toolbox toolbox, HeatmapController heatmapController)
     {
+        myToolbox = toolbox;
         myHeatmapController = heatmapController;
     }
 
     @Override
-    public Collection<? extends Component> getMenuItems(String contextId, GeometryContextKey key)
+    public Collection<? extends Component> getMenuItems(String contextId, DataGroupContextKey key)
     {
         List<JMenuItem> menuItems = Collections.emptyList();
-
-        Geometry geometry = key.getGeometry();
-        if (geometry instanceof PolygonGeometry)
+        if (HeatmapUtilities.isFeatureLayer(key.getDataType()))
         {
             JMenuItem menuItem = SwingUtilities.newMenuItem(HeatmapController.MENU_TEXT,
-                e -> myHeatmapController.create(geometry));
+                    e -> myHeatmapController.create(key.getDataType()));
+            menuItem.setEnabled(hasFeatures(key.getDataType()));
+
             menuItems = Collections.singletonList(menuItem);
         }
-
         return menuItems;
+    }
+
+    /**
+     * Tests to determine if the data type has any data loaded.
+     *
+     * @param dataType that data type for which the test is performed.
+     * @return true if data is present for the supplied data type, false
+     *         otherwise.
+     */
+    private boolean hasFeatures(DataTypeInfo dataType)
+    {
+        return MantleToolboxUtils.getMantleToolbox(myToolbox).getDataElementCache().getElementCountForType(dataType) > 0;
     }
 
     @Override
     public int getPriority()
     {
-        return 11510;
+        return 30;
     }
 }

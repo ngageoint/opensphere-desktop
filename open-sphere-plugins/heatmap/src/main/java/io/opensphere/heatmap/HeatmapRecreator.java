@@ -1,6 +1,6 @@
-package io.opensphere.analysis.heatmap;
+package io.opensphere.heatmap;
 
-import io.opensphere.analysis.heatmap.DataRegistryHelper.HeatmapImageInfo;
+import io.opensphere.heatmap.DataRegistryHelper.HeatmapImageInfo;
 
 /**
  * Interface to an object that knows how to recreate heatmap images but with a

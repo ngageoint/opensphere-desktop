@@ -1,4 +1,4 @@
-package io.opensphere.analysis.heatmap;
+package io.opensphere.heatmap;
 
 /** Definitions of heat map gradients. Taken from server-common. */
 public enum HeatmapGradients
