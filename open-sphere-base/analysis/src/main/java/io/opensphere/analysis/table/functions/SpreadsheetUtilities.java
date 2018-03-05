@@ -6,7 +6,8 @@ package io.opensphere.analysis.table.functions;
 public final class SpreadsheetUtilities
 {
     /** Function values. */
-    private static final SpreadsheetFunction[] FUNCTION_VALUES = new SpreadsheetFunction[] { new SpreadsheetFunction.Sum() };
+    private static final SpreadsheetFunction[] FUNCTION_VALUES = new SpreadsheetFunction[] { new Sum(), new Min(), new Max(),
+        new Median(), new Mean() };
 
     /**
      * Constructor.

@@ -8,7 +8,6 @@ import javax.swing.JTable;
  */
 public abstract class SpreadsheetFunction
 {
-
     /** The format string. */
     protected final String myFormatString;
 
@@ -16,7 +15,7 @@ public abstract class SpreadsheetFunction
     protected final String myLabel;
 
     /**
-     * Initializes enumerable.
+     * Constructs a Spreadsheet Function.
      *
      * @param formatString the function result format string
      * @param label the function name
@@ -54,47 +53,4 @@ public abstract class SpreadsheetFunction
      * @return the resulting numeric function execution
      */
     public abstract Number execute(JTable table);
-
-    /** Representation of Table Cell Summation. */
-    public static class Sum extends SpreadsheetFunction
-    {
-        /** Constructs a Sum function. */
-        public Sum()
-        {
-            super("%-10.3f", "Sum");
-        }
-
-        /**
-         * Sums the selected cells in the given table.
-         *
-         * @override
-         */
-        @Override
-        public Number execute(JTable table)
-        {
-            double sum = 0.0;
-
-            int[] rows = table.getSelectedRows();
-            int[] cols = table.getSelectedColumns();
-            for (int r : rows)
-            {
-                for (int c : cols)
-                {
-                    Object value = table.getValueAt(r, c);
-
-                    try
-                    {
-                        sum += Double.valueOf(value.toString()).doubleValue();
-                    }
-                    catch (NumberFormatException | NullPointerException e)
-                    {
-                        // Ignore non-numeric values.
-                        continue;
-                    }
-                }
-            }
-
-            return Double.valueOf(sum);
-        }
-    }
 }
