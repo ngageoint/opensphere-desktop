@@ -1,6 +1,7 @@
 package io.opensphere.server.control;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -32,9 +33,6 @@ public abstract class UrlServerSourceController extends AbstractServerSourceCont
 
     /** The set of sources whose activations were canceled by the user, not because of an error. */
     private final Set<IDataSource> myUserCancellations = Collections.synchronizedSet(new HashSet<IDataSource>());
-
-    /** The map of sources to reload listeners. */
-    private Map<IDataSource, SourceReloadListener> myReloadListenerMap = new HashMap<IDataSource, SourceReloadListener>();
 
     @Override
     public void open(Toolbox toolbox, Class<?> prefsTopic)
@@ -114,11 +112,6 @@ public abstract class UrlServerSourceController extends AbstractServerSourceCont
 
                 // Persist the configuration
                 updateSource(source);
-
-                if (myReloadListenerMap.containsKey(source))
-                {
-                    myReloadListenerMap.get(source).finishReload(source);
-                }
             }
         });
     }
@@ -147,24 +140,6 @@ public abstract class UrlServerSourceController extends AbstractServerSourceCont
     public int getOrdinal()
     {
         return -1;
-    }
-
-    @Override
-    protected void reloadActiveSources()
-    {
-        getSourceList().stream().filter(source -> source.isActive()).forEach(source ->
-        {
-            myReloadListenerMap.put(source, new SourceReloadListener()
-            {
-                @Override
-                public void finishReload(IDataSource source)
-                {
-                    activateSource(source);
-                    myReloadListenerMap.remove(source);
-                }
-            });
-            deactivateSource(source);
-        });
     }
 
     /**

@@ -153,16 +153,11 @@ public class OGCServerSourceController extends AbstractServerSourceController
         }
     }
 
-    @Override
-    protected void reloadActiveSources()
-    {
-        getSourceList().stream().filter(source -> source.isActive()).forEach(source -> myServerHandler.reloadSource(source));
-    }
-
     /**
      * Configures the set of supported server types.
      *
-     * @param toolbox the toolbox with which the service validator is initialized.
+     * @param toolbox the toolbox with which the service validator is
+     *            initialized.
      */
     protected void configureServerTypes(final Toolbox toolbox)
     {

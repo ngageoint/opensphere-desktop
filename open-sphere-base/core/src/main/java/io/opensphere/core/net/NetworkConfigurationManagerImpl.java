@@ -33,8 +33,8 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     /** The key for the preference for system proxies. */
     private static final String SYSTEM_PROXIES_ENABLED_KEY = "SystemProxiesEnabled";
 
-    /** Change support for network configuration changes. */
-    private final ChangeSupport<NetworkConfigurationChangeListener> myNetworkConfigChangeSupport = new WeakChangeSupport<NetworkConfigurationChangeListener>();
+    /** Change support. */
+    private final ChangeSupport<NetworkConfigurationChangeListener> myChangeSupport = new WeakChangeSupport<NetworkConfigurationChangeListener>();
 
     /** The preferences. */
     private final Preferences myPrefs;
@@ -57,7 +57,7 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     @Override
     public void addChangeListener(NetworkConfigurationChangeListener listener)
     {
-        myNetworkConfigChangeSupport.addListener(listener);
+        myChangeSupport.addListener(listener);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     @Override
     public void removeChangeListener(NetworkConfigurationChangeListener listener)
     {
-        myNetworkConfigChangeSupport.removeListener(listener);
+        myChangeSupport.removeListener(listener);
     }
 
     @Override
@@ -163,8 +163,8 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     /**
      * Notify when the configuration has changed.
      */
-    protected void notifyNetworkConfigChanged()
+    protected void notifyChanged()
     {
-        myNetworkConfigChangeSupport.notifyListeners(listener -> listener.networkConfigurationChanged());
+        myChangeSupport.notifyListeners(listener -> listener.networkConfigurationChanged());
     }
 }

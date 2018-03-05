@@ -291,23 +291,8 @@ public class OGCServerHandler
     }
 
     /**
-     * Reload a source.
-     *
-     * @param source the source
-     */
-    protected void reloadSource(IDataSource source)
-    {
-        executeRunnable(() ->
-        {
-            deactivateSource(source);
-            activateSource(source);
-        });
-    }
-
-    /**
-     * Execute a runnable. If this class has an executor set, use it, else just
-     * run it on the current thread. This is basically equivalent to a null
-     * check on this class's executor.
+     * Execute a runnable. If this class has an executor set, use it, else just run it on the current thread. This is basically
+     * equivalent to a null check on this class's executor.
      *
      * @param task the task to run
      */
@@ -324,8 +309,7 @@ public class OGCServerHandler
     }
 
     /**
-     * Listener interface for clients that need to know when sources have
-     * started and finished their load sequences.
+     * Listener interface for clients that need to know when sources have started and finished their load sequences.
      */
     public interface ServerHandlerLoadListener
     {
@@ -347,8 +331,7 @@ public class OGCServerHandler
     }
 
     /**
-     * {@link TaskActivity} class that updates the spinner indicating servers
-     * are activating.
+     * {@link TaskActivity} class that updates the spinner indicating servers are activating.
      */
     private static class ActivationTaskActivity extends TaskActivity
     {
