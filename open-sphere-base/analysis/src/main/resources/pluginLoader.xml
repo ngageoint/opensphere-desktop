@@ -10,12 +10,4 @@
         <!-- Wait for KML so it can register first for double click events. -->
         <requiredPluginDependency>KMLPlugin</requiredPluginDependency>
     </pluginLoaderData>
-    <pluginLoaderData>
-        <id>HeatmapPlugin</id>
-        <class>io.opensphere.analysis.heatmap.HeatmapPlugin</class>
-        <appVersion>1.0</appVersion>
-        <pluginVersion>1.0</pluginVersion>
-        <author>BIT Systems</author>
-        <requiredPluginDependency>MantlePlugin</requiredPluginDependency>
-    </pluginLoaderData>
 </pluginLoaderCollection>

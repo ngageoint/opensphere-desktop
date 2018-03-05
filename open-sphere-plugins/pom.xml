@@ -47,5 +47,6 @@
         <module>wfs</module>
         <module>wms</module>
         <module>wps</module>
-  </modules>
+        <module>heatmap</module>
+    </modules>
 </project>
