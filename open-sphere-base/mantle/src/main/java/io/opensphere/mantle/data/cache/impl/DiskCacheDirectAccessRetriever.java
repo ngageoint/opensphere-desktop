@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.LongFunction;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -71,7 +72,7 @@ public class DiskCacheDirectAccessRetriever extends DefaultDirectAccessRetriever
      */
     @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
     public DiskCacheDirectAccessRetriever(DiskCacheAssistant diskCacheAssistant, DataTypeInfo dti,
-            Map<Long, CacheEntry> cacheRefMap, DynamicMetadataManagerImpl dcm)
+            LongFunction<CacheEntry> cacheRefMap, DynamicMetadataManagerImpl dcm)
     {
         super(dti, cacheRefMap, dcm);
         myDiskCacheAssistant = diskCacheAssistant;

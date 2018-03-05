@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.log4j.Logger;
 
+import io.opensphere.core.util.lang.HashCodeHelper;
 import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.cache.LoadedElementDataView;
 import io.opensphere.mantle.data.element.DataElement;
@@ -24,6 +25,9 @@ import io.opensphere.mantle.util.dynenum.DynamicEnumerationRegistry;
 @SuppressWarnings("PMD.GodClass")
 public class LoadedElementData implements LoadedElementDataView, Serializable
 {
+    /** The value representing a null origin ID. */
+    private static final int NULL_ID = -1;
+
     /** The Constant LOGGER. */
     private static final Logger LOGGER = Logger.getLogger(LoadedElementData.class);
 
@@ -42,7 +46,7 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
     private List<Object> myMetaData;
 
     /** The origin id. */
-    private Long myOriginId;
+    private long myOriginId = NULL_ID;
 
     /**
      * Convert value to boolean if possible.
@@ -286,7 +290,7 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
                     : new ArrayList<Object>(convertValuesIfNecessary(deReg, el, el.getMetaData().getValues()));
         }
 
-        myOriginId = Long.valueOf(el.getId());
+        myOriginId = el.getId();
         if (el instanceof MapDataElement)
         {
             myMapGeometrySupport = ((MapDataElement)el).getMapGeometrySupport();
@@ -308,7 +312,7 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
         LoadedElementData other = (LoadedElementData)obj;
 
         return Objects.equals(myMapGeometrySupport, other.myMapGeometrySupport) && Objects.equals(myMetaData, other.myMetaData)
-                && Objects.equals(myOriginId, other.myOriginId);
+                && myOriginId == other.myOriginId;
     }
 
     @Override
@@ -326,7 +330,7 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
     @Override
     public Long getOriginId()
     {
-        return myOriginId;
+        return myOriginId != NULL_ID ? Long.valueOf(myOriginId) : null;
     }
 
     @Override
@@ -336,7 +340,7 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
         int result = 1;
         result = prime * result + (myMapGeometrySupport == null ? 0 : myMapGeometrySupport.hashCode());
         result = prime * result + (myMetaData == null ? 0 : myMetaData.hashCode());
-        result = prime * result + (myOriginId == null ? 0 : myOriginId.hashCode());
+        result = prime * result + HashCodeHelper.getHashCode(myOriginId);
         return result;
     }
 
@@ -381,7 +385,7 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
      */
     public void setOriginId(long id)
     {
-        myOriginId = Long.valueOf(id);
+        myOriginId = id;
     }
 
     /**
@@ -391,7 +395,7 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
      */
     public void setOriginId(Long id)
     {
-        myOriginId = id;
+        myOriginId = id != null ? id.longValue() : NULL_ID;
     }
 
     /**

@@ -32,6 +32,7 @@ import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.order.impl.DefaultOrderCategory;
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.units.length.Meters;
+import io.opensphere.core.util.MathUtil;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
@@ -923,8 +924,13 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
         Altitude.ReferenceLevel refLevel = altRef.isAutomatic()
                 ? mlgs.followTerrain() ? Altitude.ReferenceLevel.TERRAIN : mlgs.getLocation().getAltitudeReference()
                 : altRef.getReference();
-        return new GeographicPosition(LatLonAlt.createFromDegreesMeters(mlgs.getLocation().getLatD(),
-                mlgs.getLocation().getLonD(), determineAltitude(visState, mlgs, mdp), refLevel));
+        double altM = determineAltitude(visState, mlgs, mdp);
+        boolean altEquals = mlgs.getLocation().getAltitudeReference() == refLevel
+                && MathUtil.isZero(mlgs.getLocation().getAltM() - altM);
+        // Attempt to reuse the LatLonAlt to save memory
+        LatLonAlt location = altEquals ? mlgs.getLocation()
+                : LatLonAlt.createFromDegreesMeters(mlgs.getLocation().getLatD(), mlgs.getLocation().getLonD(), altM, refLevel);
+        return new GeographicPosition(location);
     }
 
     /**

@@ -328,7 +328,7 @@ public class CSVFileImporter implements FileOrURLImporter
                 {
                     myController.removeSource(source, true, mainFrame());
                 }
-                myController.addSource(source);
+                ThreadUtilities.runBackground(() -> myController.addSource(source));
                 if (callback != null)
                 {
                     callback.run();

@@ -1,6 +1,5 @@
 package io.opensphere.mantle.transformer.impl;
 
-import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.AbstractDataTypeInfoChangeEvent;
 import io.opensphere.mantle.data.event.DataTypeInfoColorChangeEvent;
 import io.opensphere.mantle.data.event.DataTypeVisibilityChangeEvent;
@@ -53,7 +52,7 @@ class DataTypeInfoChangeWorker implements Runnable
             {
                 // Rebuild all geometries.
                 DefaultUpdateGeometriesWorker worker = new DefaultUpdateGeometriesWorker(myDefaultMapDataElementTransformer,
-                        myFactory, New.list(myDefaultMapDataElementTransformer.getIdSet()));
+                        myFactory, myDefaultMapDataElementTransformer.getIdsAsList());
                 myDefaultMapDataElementTransformer.executeIfNotShutdown(worker);
             }
                 break;
@@ -72,7 +71,7 @@ class DataTypeInfoChangeWorker implements Runnable
                 // to alter our MapGeometrySupport and then rebuild.
                 // all geometries.
                 DefaultUpdateGeometriesWorker worker = new DefaultUpdateGeometriesWorker(myDefaultMapDataElementTransformer,
-                        myFactory, New.list(myDefaultMapDataElementTransformer.getIdSet()));
+                        myFactory, myDefaultMapDataElementTransformer.getIdsAsList());
                 myDefaultMapDataElementTransformer.executeIfNotShutdown(worker);
                 break;
             case TYPE_COLOR_CHANGED:
@@ -89,7 +88,7 @@ class DataTypeInfoChangeWorker implements Runnable
                     {
                         MantleToolboxUtils.getDataElementUpdateUtils(myDefaultMapDataElementTransformer.getToolbox())
                                 .setDataElementsOpacity(colorEvent.getColor().getAlpha(),
-                                        New.list(myDefaultMapDataElementTransformer.getIdSet()),
+                                        myDefaultMapDataElementTransformer.getIdsAsList(),
                                         myDefaultMapDataElementTransformer.getDataType().getTypeKey(),
                                         myDefaultMapDataElementTransformer);
                     }
@@ -97,7 +96,7 @@ class DataTypeInfoChangeWorker implements Runnable
                     {
                         MantleToolboxUtils.getDataElementUpdateUtils(myDefaultMapDataElementTransformer.getToolbox())
                                 .setDataElementsColor(colorEvent.getColor(),
-                                        New.list(myDefaultMapDataElementTransformer.getIdSet()),
+                                        myDefaultMapDataElementTransformer.getIdsAsList(),
                                         myDefaultMapDataElementTransformer.getDataType().getTypeKey(),
                                         myDefaultMapDataElementTransformer);
                     }
@@ -105,7 +104,7 @@ class DataTypeInfoChangeWorker implements Runnable
                 break;
             case REBUILD_GEOMETRY_REQUEST:
                 DefaultUpdateGeometriesWorker aWorker = new DefaultUpdateGeometriesWorker(myDefaultMapDataElementTransformer,
-                        myFactory, New.list(myDefaultMapDataElementTransformer.getIdSet()));
+                        myFactory, myDefaultMapDataElementTransformer.getIdsAsList());
                 myDefaultMapDataElementTransformer.executeIfNotShutdown(aWorker);
                 break;
             default:

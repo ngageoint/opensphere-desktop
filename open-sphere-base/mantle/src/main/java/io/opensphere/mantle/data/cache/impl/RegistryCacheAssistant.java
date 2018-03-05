@@ -15,6 +15,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.function.LongFunction;
 
 import org.apache.log4j.Logger;
 
@@ -188,7 +189,7 @@ public class RegistryCacheAssistant implements CacheAssistant
     }
 
     @Override
-    public DirectAccessRetriever getDirectAccessRetriever(DataTypeInfo dti, Map<Long, CacheEntry> cacheRefMap,
+    public DirectAccessRetriever getDirectAccessRetriever(DataTypeInfo dti, LongFunction<CacheEntry> cacheRefMap,
             DynamicMetadataManagerImpl dcm)
     {
         return new RegistryDirectAccessRetriever(dti, cacheRefMap, dcm);
@@ -443,7 +444,7 @@ public class RegistryCacheAssistant implements CacheAssistant
          * @param cacheRefMap the cache ref map
          * @param dcm the dcm
          */
-        public RegistryDirectAccessRetriever(DataTypeInfo dti, Map<Long, CacheEntry> cacheRefMap, DynamicMetadataManagerImpl dcm)
+        public RegistryDirectAccessRetriever(DataTypeInfo dti, LongFunction<CacheEntry> cacheRefMap, DynamicMetadataManagerImpl dcm)
         {
             super(dti, cacheRefMap, dcm);
         }
