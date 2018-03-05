@@ -3,10 +3,10 @@ package io.opensphere.mantle.transformer.impl;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import gnu.trove.set.TLongSet;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ControlRegistry;
 import io.opensphere.core.control.DefaultMouseBinding;
@@ -158,7 +158,7 @@ public abstract class AbstractMapDataElementTransformer implements MapDataElemen
      *
      * @return the id set
      */
-    public abstract Set<Long> getIdSet();
+    public abstract TLongSet getIdSet();
 
     /**
      * Gets the toolbox.

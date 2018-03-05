@@ -2,7 +2,7 @@ package io.opensphere.mantle.data.cache.impl;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.function.LongFunction;
 
 import gnu.trove.list.TLongList;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -53,7 +53,7 @@ public interface CacheAssistant
      * @param dcm the dcm
      * @return the direct access retriever
      */
-    DirectAccessRetriever getDirectAccessRetriever(DataTypeInfo dti, Map<Long, CacheEntry> cacheRefMap,
+    DirectAccessRetriever getDirectAccessRetriever(DataTypeInfo dti, LongFunction<CacheEntry> cacheRefMap,
             DynamicMetadataManagerImpl dcm);
 
     /**

@@ -63,7 +63,7 @@ class ConsolidatedDataElementEventHandler implements Runnable
             }
             else
             {
-                idsOfInterest = CollectionUtilities.intersectionAsList(myDefaultMapDataElementTransformer.getIdSet(),
+                idsOfInterest = CollectionUtilities.intersectionAsList(myDefaultMapDataElementTransformer.getIdsAsSet(),
                         myEvent.getRegistryIds());
             }
 
