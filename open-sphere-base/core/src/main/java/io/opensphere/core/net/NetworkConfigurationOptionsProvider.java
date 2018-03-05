@@ -147,7 +147,7 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
             myNetworkConfigurationManager.setProxyExclusions("");
         }
 
-        ((NetworkConfigurationManagerImpl)myNetworkConfigurationManager).notifyNetworkConfigChanged();
+        ((NetworkConfigurationManagerImpl)myNetworkConfigurationManager).notifyChanged();
     }
 
     @Override

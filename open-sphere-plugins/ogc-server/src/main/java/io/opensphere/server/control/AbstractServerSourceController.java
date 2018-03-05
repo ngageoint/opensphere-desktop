@@ -2,6 +2,7 @@ package io.opensphere.server.control;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -12,6 +13,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import io.opensphere.core.NetworkConfigurationManager;
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.event.AbstractSingleStateEvent;
+import io.opensphere.core.event.EventListener;
 import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
@@ -37,6 +40,9 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
 
     /** Listener for changes to the proxy settings. */
     private final NetworkConfigurationManager.NetworkConfigurationChangeListener myNetworkConfigChangeListener = this::reloadActiveSources;
+
+    /** The Map of sources to reload listeners. */
+    private Map<IDataSource, EventListener<AbstractSingleStateEvent>> myReloadListenerMap = new HashMap<IDataSource, EventListener<AbstractSingleStateEvent>>();
 
     /** Object that holds and manages the Server source configs. */
     private IDataSourceConfig myConfig;
@@ -337,7 +343,37 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
         finally
         {
             myConfigLock.writeLock().unlock();
+            if (myReloadListenerMap.containsKey(source))
+            {
+                EventListener<AbstractSingleStateEvent> listener = myReloadListenerMap.get(source);
+                myReloadListenerMap.remove(source);
+                listener.notify(new AbstractSingleStateEvent()
+                {
+                    @Override
+                    public String getDescription()
+                    {
+                        return "Deactivation of " + source.getName() + " is done, finishing reload.";
+                    }
+                });
+            }
         }
+    }
+
+    /** Reload active sources. */
+    protected void reloadActiveSources()
+    {
+        getSourceList().stream().filter(source -> source.isActive()).forEach(source ->
+        {
+            myReloadListenerMap.put(source, new EventListener<AbstractSingleStateEvent>()
+            {
+                @Override
+                public void notify(AbstractSingleStateEvent event)
+                {
+                    activateSource(source);
+                }
+            });
+            deactivateSource(source);
+        });
     }
 
     /**
@@ -367,18 +403,4 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
          */
         protected abstract V callOnce();
     }
-
-    /** Listener for deactivation half of a reload (deactivation + activation) to be finished. */
-    @FunctionalInterface
-    public interface SourceReloadListener
-    {
-        /** Method to do activation half of a reload.
-         *
-         * @param source the source to finish reloading
-         */
-        void finishReload(IDataSource source);
-    }
-
-    /** Reload active sources. */
-    protected abstract void reloadActiveSources();
 }
