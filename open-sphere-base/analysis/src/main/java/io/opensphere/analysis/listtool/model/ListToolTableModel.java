@@ -21,6 +21,7 @@ import io.opensphere.core.util.swing.table.AbstractColumnTableModel;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.SpecialKey;
+import io.opensphere.mantle.data.dynmeta.DynamicMetadataDataTypeController;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.impl.specialkey.TimeKey;
 
@@ -41,6 +42,9 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
 
     /** The row data provider. */
     private transient DataElementProvider myRowDataProvider;
+
+    /** The data type controller. */
+    private transient DynamicMetadataDataTypeController myDataTypeController = null;
 
     /** The time column index. */
     private int myTimeColumnIndex = -1;
@@ -268,6 +272,34 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
     }
 
     /**
+     * If a column is user-created all cells inside are editable.
+     *
+     * @return true if we can retrieve a dynamic column from the index of the
+     *         given cell
+     * @override
+     */
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex)
+    {
+        String colName = getColumnName(columnIndex);
+        return myDataTypeController == null ? false
+                : myDataTypeController.getDynamicColumnNamesOfType(String.class, false).contains(colName);
+    }
+
+    /**
+     * Sets a cell value within a user-created column.
+     *
+     * @override
+     */
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex)
+    {
+        String colName = getColumnName(columnIndex);
+        long dataElementId = getDataElementId(rowIndex).longValue();
+        myDataTypeController.setValue(dataElementId, colName, aValue, this);
+    }
+
+    /**
      * Sets the highlighted id.
      *
      * @param id the highlighted id
@@ -299,6 +331,16 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
                 fireTableChanged(e);
             }
         });
+    }
+
+    /**
+     * Sets myDataTypeController. Used to determine if a column is user-created.
+     *
+     * @param controller the dynamic meta-data controller
+     */
+    public void setDynamicColumnProvider(DynamicMetadataDataTypeController controller)
+    {
+        myDataTypeController = controller;
     }
 
     /**

@@ -127,6 +127,19 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
     }
 
     @Override
+    public boolean removeDynamicColumn(String columnName, Class<?> columnClass, Object source)
+    {
+        if (myDTI.getMetaDataInfo().hasKey(columnName))
+        {
+            int columnIndex = myDTI.getMetaDataInfo().getKeyNames().indexOf(columnName);
+            DynamicMetadataController<?> controller = myDynColumnNameToValueMap.remove(columnIndex);
+
+            return myDTI.getMetaDataInfo().removeKey(columnName, columnClass, source);
+        }
+        return false;
+    }
+
+    @Override
     public void appendValue(List<Long> cacheIds, int columnIndex, Object value, Object source)
     {
         Utilities.checkNull(cacheIds, "cacheIds");

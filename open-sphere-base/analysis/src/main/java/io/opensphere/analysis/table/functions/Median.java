@@ -40,8 +40,8 @@ public class Median extends SpreadsheetFunction
             }
         }
 
-        Double[] result = selectedValues.stream().filter(NumberUtilities::isNumber).map((d) -> ((Number)d).doubleValue()).sorted()
-                .toArray(Double[]::new);
+        Double[] result = selectedValues.stream().filter(NumberUtilities::isNumber)
+                .map((d) -> NumberUtilities.parseDouble(d, Double.NaN)).sorted().toArray(Double[]::new);
 
         int len = result.length;
         if (len == 0)

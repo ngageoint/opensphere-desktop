@@ -59,6 +59,22 @@ public final class Zip
     public static List<ZipInputAdapter> createAdaptersForDirectory(String location, File directory,
             List<ZipInputAdapter> pAppendList)
     {
+        return createAdaptersForDirectory(location, directory, pAppendList, ZipEntry.DEFLATED);
+    }
+
+    /**
+     * Creates a recursive listing of adapters from a directory.
+     *
+     * @param location the location
+     * @param directory the directory
+     * @param pAppendList the append list
+     * @param compression the compression type, either ZipEntry.DEFLATED or
+     *            ZipEntry.STORED
+     * @return the list
+     */
+    public static List<ZipInputAdapter> createAdaptersForDirectory(String location, File directory,
+            List<ZipInputAdapter> pAppendList, int compression)
+    {
         List<ZipInputAdapter> appendList = pAppendList;
         if (appendList == null)
         {
@@ -79,7 +95,7 @@ public final class Zip
                     }
                     else
                     {
-                        appendList.add(new ZipFileInputAdapter(newLocation, child, ZipEntry.DEFLATED));
+                        appendList.add(new ZipFileInputAdapter(newLocation, child, compression));
                     }
                 }
             }
@@ -389,7 +405,8 @@ public final class Zip
      */
     @SuppressWarnings("PMD.CollapsibleIfStatements")
     public static void zipfiles(File zipFile, List<ZipInputAdapter> zipInputs, final ProgressMonitor pm,
-            final boolean progressByFiles) throws IOException
+            final boolean progressByFiles)
+        throws IOException
     {
         ZipOutputStream zipOS = new ZipOutputStream(new FileOutputStream(zipFile));
         zipOS.setLevel(9);
