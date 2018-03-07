@@ -6,9 +6,7 @@ import java.util.function.Function;
 import de.micromata.opengis.kml.v_2_2_0.TimeSpan;
 import io.opensphere.core.PluginToolbox;
 import io.opensphere.core.util.ObservableValue;
-import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
-import javafx.scene.layout.HBox;
 
 /**
  * Defines a toolbox for use with control panels.
@@ -16,6 +14,14 @@ import javafx.scene.layout.HBox;
 public interface ControlPanelToolbox extends PluginToolbox
 {
 
+    /**
+     * Gets the registry for {@link LayerControlProvider} implementations. This
+     * allows for plugins to register additional providers without injecting
+     * dependencies into the core project.
+     * 
+     *
+     * @return the registry in which detail panel providers are registered.
+     */
     SimpleRegistry<Function<DataTypeInfo, Component>> getLayerControlProviderRegistry();
 
     /**
@@ -23,7 +29,6 @@ public interface ControlPanelToolbox extends PluginToolbox
      * allows for plugins to register additional providers without injecting
      * dependencies into the core project.
      * 
-     * @param <T>
      *
      * @return the registry in which detail panel providers are registered.
      */
@@ -32,7 +37,6 @@ public interface ControlPanelToolbox extends PluginToolbox
     /**
      * Gets the default {@link DetailPanelProvider} implementation.
      * 
-     * @param <T>
      *
      * @return the provider to use when the none of the entries in the registry
      *         can handle the target data.
