@@ -86,7 +86,12 @@ public final class Zip
             File[] children = directory.listFiles();
             if (children != null && children.length > 0)
             {
-                String newLocation = location + File.separator + directory.getName();
+                String newLocation = directory.getName();
+                if (location != null)
+                {
+                    newLocation = location + File.separator + newLocation;
+                }
+
                 for (File child : children)
                 {
                     if (child.isDirectory())

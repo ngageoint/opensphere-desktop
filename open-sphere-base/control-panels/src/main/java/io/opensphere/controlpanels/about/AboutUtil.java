@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.zip.ZipEntry;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -107,11 +106,11 @@ public class AboutUtil
             @Override
             public void run()
             {
-                List<ZipInputAdapter> inputAdapters = Zip.createAdaptersForDirectory("", new File(myLogPath), null);
-                Zip.createAdaptersForDirectory("", Paths.get(myRunPath, "prefs").toFile(), inputAdapters, ZipEntry.STORED);
+                List<ZipInputAdapter> inputAdapters = Zip.createAdaptersForDirectory(null, new File(myLogPath), null);
+                Zip.createAdaptersForDirectory(null, Paths.get(myRunPath, "prefs").toFile(), inputAdapters);
                 if (includeDb)
                 {
-                    Zip.createAdaptersForDirectory("", new File(myDbPath), inputAdapters, ZipEntry.STORED);
+                    Zip.createAdaptersForDirectory(null, new File(myDbPath), inputAdapters);
                 }
 
                 Optional<Integer> filesize = inputAdapters.parallelStream().map(f -> (int)f.getSize()).reduce((a, b) -> a + b);
