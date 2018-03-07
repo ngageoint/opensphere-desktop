@@ -15,6 +15,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import io.opensphere.core.NetworkConfigurationManager;
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.common.util.UrlUtil;
 import io.opensphere.core.event.AbstractSingleStateEvent;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.util.ChangeSupport.Callback;
@@ -399,11 +400,14 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
         DataGroupController dgc = MantleToolboxUtils.getMantleToolbox(myToolbox).getDataGroupController();
         dgc.getActiveMembers(false).stream().forEach(dti ->
         {
-            if (dti.getUrl() != null)
+            if (UrlUtil.isValidAbsoluteUrl(dti.getUrl()))
             {
                 activeURLs.add(dti.getUrl());
             }
-            activeURLs.add(dti.getSourcePrefix());
+            else if (UrlUtil.isValidAbsoluteUrl(dti.getSourcePrefix()))
+            {
+                activeURLs.add(dti.getSourcePrefix());
+            }
         });
         return activeURLs;
     }
