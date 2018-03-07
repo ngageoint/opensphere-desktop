@@ -84,9 +84,9 @@ public abstract class AbstractDynamicMetadataController<T> implements DynamicMet
         Set<Long> idsRemoved = new HashSet<>(elementIds);
         for (Long id : elementIds)
         {
-            if (myIdToValueMap.contains(id))
+            if (myIdToValueMap.contains(id.longValue()))
             {
-                myIdToValueMap.remove(id);
+                myIdToValueMap.remove(id.longValue());
                 idsRemoved.add(id);
             }
         }
@@ -175,7 +175,7 @@ public abstract class AbstractDynamicMetadataController<T> implements DynamicMet
             {
                 for (Long id : cacheIds)
                 {
-                    myIdToValueMap.put(id, tempVal);
+                    myIdToValueMap.put(id.longValue(), tempVal);
                 }
                 fireChangeEvent(cacheIds, source);
             }

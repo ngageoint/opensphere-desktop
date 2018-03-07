@@ -80,6 +80,8 @@ public interface DynamicMetadataController<T>
 
     /**
      * Sets the column index.
+     *
+     * @param index the column index
      */
     void setColumnIndex(int index);
 
