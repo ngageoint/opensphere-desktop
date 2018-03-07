@@ -11,6 +11,8 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.ObservableValue;
 import io.opensphere.mantle.data.DataGroupInfo;
+import io.opensphere.mantle.data.DataTypeInfo;
+import javafx.scene.layout.HBox;
 
 /**
  * The default implementation of the control panel toolbox.
@@ -22,7 +24,7 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
      */
     private final SimpleRegistry<DetailPanelProvider> myDetailPanelRegistry;
 
-    private final SimpleRegistry<Function<DataGroupInfo, Component>> myLayerControlRegistry;
+    private final SimpleRegistry<Function<DataTypeInfo, Component>> myLayerControlRegistry;
 
     /**
      * The default panel provider to use when none of the entries in the
@@ -94,7 +96,7 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
     }
 
     @Override
-    public SimpleRegistry<Function<DataGroupInfo, Component>> getLayerControlProviderRegistry()
+    public SimpleRegistry<Function<DataTypeInfo, Component>> getLayerControlProviderRegistry()
     {
         // TODO Auto-generated method stub
         return myLayerControlRegistry;

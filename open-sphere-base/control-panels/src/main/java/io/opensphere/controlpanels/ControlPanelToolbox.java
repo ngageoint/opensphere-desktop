@@ -7,6 +7,8 @@ import de.micromata.opengis.kml.v_2_2_0.TimeSpan;
 import io.opensphere.core.PluginToolbox;
 import io.opensphere.core.util.ObservableValue;
 import io.opensphere.mantle.data.DataGroupInfo;
+import io.opensphere.mantle.data.DataTypeInfo;
+import javafx.scene.layout.HBox;
 
 /**
  * Defines a toolbox for use with control panels.
@@ -14,7 +16,7 @@ import io.opensphere.mantle.data.DataGroupInfo;
 public interface ControlPanelToolbox extends PluginToolbox
 {
 
-    SimpleRegistry<Function<DataGroupInfo, Component>> getLayerControlProviderRegistry();
+    SimpleRegistry<Function<DataTypeInfo, Component>> getLayerControlProviderRegistry();
 
     /**
      * Gets the registry for {@link DetailPanelProvider} implementations. This

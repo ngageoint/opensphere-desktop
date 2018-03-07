@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import io.opensphere.controlpanels.SimpleRegistry;
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.util.collections.New;
 
 /**
  * A default implementation of the {@link DetailPanelProviderRegistry}, in which
@@ -36,7 +37,7 @@ public class SimpleRegistryImpl<T> implements SimpleRegistry<T>
     @Override
     public void initialize(Toolbox pToolbox, Properties pProperties)
     {
-        // TODO Auto-generated method stub
+       myProviders = New.collection();
         
     }
 

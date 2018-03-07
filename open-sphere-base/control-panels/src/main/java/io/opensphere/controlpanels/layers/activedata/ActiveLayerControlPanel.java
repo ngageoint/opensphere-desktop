@@ -11,14 +11,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JTextField;
 
 import io.opensphere.controlpanels.ControlPanelToolbox;
 import io.opensphere.controlpanels.event.AnimationChangeExtentRequestEvent;
@@ -39,6 +42,7 @@ import io.opensphere.core.util.swing.IconButton;
 import io.opensphere.core.util.swing.IconToggleButton;
 import io.opensphere.core.util.swing.SplitButton;
 import io.opensphere.core.util.swing.VerticalList;
+import io.opensphere.core.util.swing.LinkedSliderTextField.PanelSizeParameters;
 import io.opensphere.mantle.controller.util.DataGroupInfoUtilities;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -49,6 +53,7 @@ import io.opensphere.mantle.data.geom.style.dialog.MiniStylePanel;
 import io.opensphere.mantle.data.geom.style.dialog.ShowTypeVisualizationStyleEvent;
 import io.opensphere.mantle.data.geom.style.dialog.VisualizationStyleControlDialog;
 import io.opensphere.mantle.layers.event.LayerSelectedEvent;
+import javafx.scene.layout.HBox;
 
 /**
  * The lower panel of the Active Layers panel.
@@ -110,6 +115,9 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
     private final transient EventListener<DataTypeInfoLoadsToChangeEvent> myLoadsToSubscriber = this::handleLoadsToChange;
 
     private final Toolbox myToolbox;
+
+    private GridBagPanel myProviderPanel;
+
     /**
      * Gets the MapVisualizationType for the given LayerSelectedEvent.
      *
@@ -200,11 +208,18 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
             DataTypeInfo selectedType = getSelectedDataType();
             DataGroupInfo selectedGroup = getSelectedDataGroup();
 
-            
-            //for providers registered , load them..
             ControlPanelToolbox cpToolbox = myToolbox.getPluginToolboxRegistry().getPluginToolbox(ControlPanelToolbox.class);
-            
-            
+
+            System.out.println("registered PRovdiers = " + cpToolbox.getLayerControlProviderRegistry().getProviders().size());
+
+            for (Function<DataTypeInfo, Component> provider : cpToolbox.getLayerControlProviderRegistry().getProviders())
+            {
+                // GridBagPanel mainPanel = buildMainPanel();
+                // myUniqueProviderColumns = provider.apply(selectedType);
+                rebuildProviderPanel(provider.apply(selectedType));
+
+            }
+
             getOpacityPanel().setVisible(showOpacity(getMapVisualizationType(selectEvent)));
             determineStyleShortCutButtonVisibility();
             determineEditButtonVisibility();
@@ -286,11 +301,6 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         }
     }
 
-    /**
-     * Builds the color/opacity panel.
-     *
-     * @return the color/opacity panel
-     */
     private GridBagPanel buildColorOpacityPanel()
     {
         GridBagPanel colorOpacityPanel = new GridBagPanel();
@@ -314,6 +324,8 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         mainPanel.fillHorizontal();
         mainPanel.setInsets(SPACE, SPACE, 0, SPACE);
         mainPanel.addRow(getUpperButtonPanel());
+        myProviderPanel = new GridBagPanel();
+        mainPanel.addRow(myProviderPanel);
         mainPanel.addRow(buildColorOpacityPanel());
         mainPanel.addRow(getTileLevelControlPanel());
         myCustomControlsPanel = Box.createHorizontalBox();
@@ -647,6 +659,15 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         return myMiniStyleBox;
     }
 
+    private JComponent getProviderPanel()
+    {
+        if (myProviderPanel == null)
+        {
+            myProviderPanel = new GridBagPanel();
+        }
+        return myProviderPanel;
+    }
+
     /**
      * Gets the vis style button.
      *
@@ -828,6 +849,22 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         }
         getMiniStyleBox().revalidate();
         getMiniStyleBox().repaint();
+    }
+
+    private void rebuildProviderPanel(Component uniqueProvider)
+    {
+        getProviderPanel().removeAll();
+        GridBagPanel providerPanel = new GridBagPanel();
+        providerPanel.setInsets(0, 0, 0, 0);
+        JLabel textField = new JLabel("Unique ID Column: ");
+        uniqueProvider.setSize(35, 24);
+        providerPanel.add(textField);
+        providerPanel.add(uniqueProvider);
+        providerPanel.setVisible(true);
+
+        getProviderPanel().add(providerPanel);
+        getProviderPanel().revalidate();
+        getProviderPanel().repaint();
     }
 
     /**
