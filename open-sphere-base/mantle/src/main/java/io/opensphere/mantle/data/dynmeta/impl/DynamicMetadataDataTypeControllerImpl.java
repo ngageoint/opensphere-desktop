@@ -87,6 +87,29 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
     }
 
     /**
+     * Reindexes the dynamic columns supported by this class. Used when removing
+     * columns.
+     *
+     * @param columnIndex
+     */
+    private void reindex(int columnIndex)
+    {
+        TIntObjectHashMap<DynamicMetadataController<?>> tempStore = new TIntObjectHashMap<>();
+        for (int key : myDynColumnNameToValueMap.keys())
+        {
+            if (key > columnIndex)
+            {
+                tempStore.put(key - 1, myDynColumnNameToValueMap.remove(key));
+            }
+        }
+
+        for (int key : tempStore.keys())
+        {
+            myDynColumnNameToValueMap.put(key, tempStore.remove(key));
+        }
+    }
+
+    /**
      * Checks if is same class.
      *
      * @param c1 the c1
@@ -132,9 +155,15 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
         if (myDTI.getMetaDataInfo().hasKey(columnName))
         {
             int columnIndex = myDTI.getMetaDataInfo().getKeyNames().indexOf(columnName);
-            DynamicMetadataController<?> controller = myDynColumnNameToValueMap.remove(columnIndex);
+            boolean removed = myDTI.getMetaDataInfo().removeKey(columnName, columnClass, source);
 
-            return myDTI.getMetaDataInfo().removeKey(columnName, columnClass, source);
+            DynamicMetadataController<?> controller = myDynColumnNameToValueMap.remove(columnIndex);
+            controller.clear(source);
+            controller.setColumnIndex(-1);
+
+            reindex(columnIndex);
+
+            return removed;
         }
         return false;
     }

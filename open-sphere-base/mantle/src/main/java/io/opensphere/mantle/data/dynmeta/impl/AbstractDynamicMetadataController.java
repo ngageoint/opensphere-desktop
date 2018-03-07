@@ -22,7 +22,7 @@ import io.opensphere.mantle.data.element.event.consolidated.ConsolidatedDataElem
 public abstract class AbstractDynamicMetadataController<T> implements DynamicMetadataController<T>
 {
     /** The Column index. */
-    private final int myColumnIndex;
+    private int myColumnIndex;
 
     /** The Column name. */
     private final String myColumnName;
@@ -106,6 +106,12 @@ public abstract class AbstractDynamicMetadataController<T> implements DynamicMet
     public int getColumnIndex()
     {
         return myColumnIndex;
+    }
+
+    @Override
+    public void setColumnIndex(int index)
+    {
+        myColumnIndex = index;
     }
 
     @Override

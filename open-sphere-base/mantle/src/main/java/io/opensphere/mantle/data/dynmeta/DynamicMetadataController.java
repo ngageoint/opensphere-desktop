@@ -79,6 +79,11 @@ public interface DynamicMetadataController<T>
     int getColumnIndex();
 
     /**
+     * Sets the column index.
+     */
+    void setColumnIndex(int index);
+
+    /**
      * Gets the column name.
      *
      * @return the column name
