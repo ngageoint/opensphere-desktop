@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pluginLoaderCollection>
+    <pluginLoaderData>
+        <id>HeatmapPlugin</id>
+        <class>io.opensphere.heatmap.HeatmapPlugin</class>
+        <appVersion>1.0</appVersion>
+        <pluginVersion>1.0</pluginVersion>
+        <author>BIT Systems</author>
+        <requiredPluginDependency>MantlePlugin</requiredPluginDependency>
+        <requiredPluginDependency>AnalysisPlugin</requiredPluginDependency>
+    </pluginLoaderData>
+</pluginLoaderCollection>
