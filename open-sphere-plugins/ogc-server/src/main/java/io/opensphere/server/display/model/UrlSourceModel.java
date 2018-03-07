@@ -91,6 +91,6 @@ public class UrlSourceModel extends WrappedModel<UrlDataSource>
     protected void updateViewModel(UrlDataSource domainModel)
     {
         getServerName().set(domainModel.getName());
-        getURL().set(domainModel.getBaseUrl());
+        getURL().set(domainModel.getURLString());
     }
 }

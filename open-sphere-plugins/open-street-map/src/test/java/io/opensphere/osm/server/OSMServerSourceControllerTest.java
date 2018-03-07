@@ -46,7 +46,7 @@ public class OSMServerSourceControllerTest
         UrlDataSource source = (UrlDataSource)controller.createNewSource("New Server");
 
         assertEquals("Open Street Map", source.getName());
-        assertEquals(ourServer, source.getBaseUrl());
+        assertEquals(ourServer, source.getURLString());
     }
 
     /**

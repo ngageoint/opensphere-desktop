@@ -124,7 +124,7 @@ public abstract class UrlServerSourceController extends AbstractServerSourceCont
         if (source instanceof UrlDataSource)
         {
             UrlDataSource serverSource = (UrlDataSource)source;
-            description.append("<br>&nbsp URL: ").append(serverSource.getBaseUrl());
+            description.append("<br>&nbsp URL: ").append(serverSource.getURLString());
         }
         description.append("</html>");
         return description.toString();

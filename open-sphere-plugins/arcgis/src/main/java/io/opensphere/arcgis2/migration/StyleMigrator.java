@@ -46,8 +46,8 @@ public class StyleMigrator implements MicroMigrator
             {
                 if (key.startsWith(entry.getKey().getURL(null)))
                 {
-                    String newKey = key.replace(entry.getKey().getURL(null), entry.getValue().getBaseUrl());
-                    StringBuffer buffer = new StringBuffer(entry.getValue().getBaseUrl());
+                    String newKey = key.replace(entry.getKey().getURL(null), entry.getValue().getURLString());
+                    StringBuffer buffer = new StringBuffer(entry.getValue().getURLString());
                     buffer.append(newKey);
                     newKey = buffer.toString();
 

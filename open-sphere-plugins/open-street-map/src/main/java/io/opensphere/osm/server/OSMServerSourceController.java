@@ -47,8 +47,8 @@ public class OSMServerSourceController extends UrlServerSourceController
     @Override
     protected boolean handleActivateSource(IDataSource source)
     {
-        DataModelCategory category = XYZTileUtils.newLayersCategory(((UrlDataSource)source).getBaseUrl(), OSMUtil.PROVIDER);
-        XYZServerInfo serverInfo = new XYZServerInfo(source.getName(), ((UrlDataSource)source).getBaseUrl());
+        DataModelCategory category = XYZTileUtils.newLayersCategory(((UrlDataSource)source).getURLString(), OSMUtil.PROVIDER);
+        XYZServerInfo serverInfo = new XYZServerInfo(source.getName(), ((UrlDataSource)source).getURLString());
         XYZTileLayerInfo layerInfo = null;
         if (serverInfo.getServerUrl().contains("osm_tiles_pc"))
         {
@@ -67,7 +67,7 @@ public class OSMServerSourceController extends UrlServerSourceController
     @Override
     protected void handleDeactivateSource(IDataSource source)
     {
-        DataModelCategory category = XYZTileUtils.newLayersCategory(((UrlDataSource)source).getBaseUrl(), OSMUtil.PROVIDER);
+        DataModelCategory category = XYZTileUtils.newLayersCategory(((UrlDataSource)source).getURLString(), OSMUtil.PROVIDER);
         getToolbox().getDataRegistry().removeModels(category, false);
     }
 }
