@@ -24,7 +24,7 @@ public class SimpleRegistryImpl<T> implements SimpleRegistry<T>
     public void registerProvider(T provider)
     {
         myProviders.add(provider);
-        
+
     }
 
     @Override
@@ -37,10 +37,8 @@ public class SimpleRegistryImpl<T> implements SimpleRegistry<T>
     @Override
     public void initialize(Toolbox pToolbox, Properties pProperties)
     {
-       myProviders = New.collection();
-        
+        myProviders = New.collection();
+
     }
-
-
 
 }
