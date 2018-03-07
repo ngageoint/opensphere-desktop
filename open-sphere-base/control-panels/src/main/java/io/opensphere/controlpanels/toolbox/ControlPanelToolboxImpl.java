@@ -10,9 +10,7 @@ import io.opensphere.controlpanels.SimpleRegistry;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.ObservableValue;
-import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
-import javafx.scene.layout.HBox;
 
 /**
  * The default implementation of the control panel toolbox.
@@ -24,6 +22,9 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
      */
     private final SimpleRegistry<DetailPanelProvider> myDetailPanelRegistry;
 
+    /**
+     * The layer control provider registry in which providers are registered.
+     */
     private final SimpleRegistry<Function<DataTypeInfo, Component>> myLayerControlRegistry;
 
     /**
@@ -40,7 +41,7 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
     /**
      * The time span of the visible portion of the timeline
      */
-    private ObservableValue<io.opensphere.core.model.time.TimeSpan> myUISpan;
+    private ObservableValue<TimeSpan> myUISpan;
 
     /**
      * Creates a new control panel toolbox.
@@ -77,14 +78,12 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
     @Override
     public DetailPanelProvider getDefaultDetailPanelProvider()
     {
-        // TODO Auto-generated method stub
         return myDefaultDetailPanelProvider;
     }
 
     @Override
     public ObservableValue<TimeSpan> getUISpan()
     {
-        // TODO Auto-generated method stub
         return myUISpan;
     }
 
@@ -98,14 +97,12 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
     @Override
     public SimpleRegistry<Function<DataTypeInfo, Component>> getLayerControlProviderRegistry()
     {
-        // TODO Auto-generated method stub
         return myLayerControlRegistry;
     }
 
     @Override
     public SimpleRegistry<DetailPanelProvider> getDetailPanelProviderRegistry()
     {
-        // TODO Auto-generated method stub
         return myDetailPanelRegistry;
     }
 }
