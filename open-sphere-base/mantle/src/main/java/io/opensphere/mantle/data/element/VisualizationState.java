@@ -2,6 +2,7 @@ package io.opensphere.mantle.data.element;
 
 import java.awt.Color;
 import java.io.Serializable;
+import java.util.Objects;
 
 import io.opensphere.core.cache.util.PropertyDescriptor;
 import io.opensphere.core.util.lang.BitArrays;
@@ -45,11 +46,8 @@ public class VisualizationState implements Serializable
     /** The altitude adjust in meters. */
     private float myAltitudeAdjust;
 
-    /**
-     * Current color of the data element. Stored as int behind the scenes to
-     * save memory as Color is larger.
-     */
-    private int myColor = DEFAULT_COLOR.getRGB();
+    /** Current color of the data element. */
+    private Color myColor = DEFAULT_COLOR;
 
     /** Bit Field for flag storage. 8 bits max. */
     private volatile byte myFlagsBitField;
@@ -122,7 +120,7 @@ public class VisualizationState implements Serializable
      */
     public final Color getColor()
     {
-        return new Color(myColor, true);
+        return myColor;
     }
 
     /**
@@ -142,7 +140,7 @@ public class VisualizationState implements Serializable
      */
     public boolean isDefaultColor()
     {
-        return DEFAULT_COLOR.getRGB() == myColor;
+        return DEFAULT_COLOR.equals(myColor);
     }
 
     /**
@@ -211,8 +209,8 @@ public class VisualizationState implements Serializable
             throw new IllegalArgumentException("Color cannot be null");
         }
 
-        boolean changed = myColor != c.getRGB();
-        myColor = c.getRGB();
+        boolean changed = !myColor.equals(c);
+        myColor = c;
         return changed;
     }
 
@@ -314,7 +312,7 @@ public class VisualizationState implements Serializable
         }
         VisualizationState other = (VisualizationState)obj;
         return Float.floatToIntBits(myAltitudeAdjust) == Float.floatToIntBits(other.myAltitudeAdjust)
-                && myFlagsBitField == other.myFlagsBitField && myColor == other.myColor;
+                && myFlagsBitField == other.myFlagsBitField && Objects.equals(myColor, other.myColor);
     }
 
     @Override
@@ -324,7 +322,7 @@ public class VisualizationState implements Serializable
         int result = 1;
         result = prime * result + Float.floatToIntBits(myAltitudeAdjust);
         result = prime * result + myFlagsBitField;
-        result = prime * result + myColor;
+        result = prime * result + Objects.hashCode(myColor);
         return result;
     }
 
