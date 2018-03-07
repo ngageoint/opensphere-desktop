@@ -27,6 +27,6 @@ public class OSMServerSourceValidator extends UrlServerSourceValidator
     @Override
     protected URL getUrl(UrlDataSource source) throws MalformedURLException
     {
-        return new URL(OSMUtil.getInstance().buildImageUrlString(source.getBaseUrl(), new ZYXImageKey(0, 0, 0, null)));
+        return new URL(OSMUtil.getInstance().buildImageUrlString(source.getURLString(), new ZYXImageKey(0, 0, 0, null)));
     }
 }

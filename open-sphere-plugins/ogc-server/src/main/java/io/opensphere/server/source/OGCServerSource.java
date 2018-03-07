@@ -279,6 +279,12 @@ public class OGCServerSource extends AbstractDataSource implements ServerSource
         return url;
     }
 
+    @Override
+    public String getURLString()
+    {
+        return myWFSServerURL == null ? (myWMSServerURL == null ? myWPSServerURL : myWMSServerURL) : myWFSServerURL;
+    }
+
     /**
      * Get the WFS URL.
      *
@@ -290,8 +296,7 @@ public class OGCServerSource extends AbstractDataSource implements ServerSource
     }
 
     /**
-     * Gets the URL to use for WMS GetMap requests if the user has overridden
-     * the URL from the WMS GetCapabilities document.
+     * Gets the URL to use for WMS GetMap requests if the user has overridden the URL from the WMS GetCapabilities document.
      *
      * @return the WMS GetMap URL Override
      */
@@ -328,17 +333,15 @@ public class OGCServerSource extends AbstractDataSource implements ServerSource
     }
 
     /**
-     * Check essential elements of this source for anything critical that has
-     * been left blank. This will check if all of the Server URLs are empty or
-     * if the server name is either null, empty, or defaulted.
+     * Check essential elements of this source for anything critical that has been left blank. This will check if all of the
+     * Server URLs are empty or if the server name is either null, empty, or defaulted.
      *
      * @return true, if source has valid content for all essential fields
      */
     public boolean hasValidContent()
     {
-        return !StringUtils.isBlank(myName) && !DEFAULT_SERVER_NAME.equals(myName)
-                && !(StringUtils.isBlank(myWMSServerURL) && StringUtils.isBlank(myWFSServerURL)
-                        && StringUtils.isBlank(myWPSServerURL));
+        return !StringUtils.isBlank(myName) && !DEFAULT_SERVER_NAME.equals(myName) && !(StringUtils.isBlank(myWMSServerURL)
+                && StringUtils.isBlank(myWFSServerURL) && StringUtils.isBlank(myWPSServerURL));
     }
 
     /**

@@ -52,7 +52,7 @@ public class ServerMigrator
             for (IDataSource source : newConfig.getSourceList())
             {
                 UrlDataSource urlSource = (UrlDataSource)source;
-                existingNewUrls.put(urlSource.getBaseUrl(), urlSource);
+                existingNewUrls.put(urlSource.getURLString(), urlSource);
             }
 
             boolean hasChanged = false;
@@ -63,7 +63,7 @@ public class ServerMigrator
                     UrlDataSource newSource = new UrlDataSource(participant.getName(), participant.getURL("wfs"));
                     newConfig.addSource(newSource);
                     hasChanged = true;
-                    existingNewUrls.put(newSource.getBaseUrl(), newSource);
+                    existingNewUrls.put(newSource.getURLString(), newSource);
                 }
 
                 oldToNew.put(participant, existingNewUrls.get(participant.getURL("wfs")));

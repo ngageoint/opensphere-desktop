@@ -72,8 +72,8 @@ public class OrderManagerMigrator implements MicroMigrator
             {
                 ArcGISServerSource oldServer = migrate.getSecondObject();
                 UrlDataSource newServer = oldServerToNewServer.get(oldServer);
-                String newId = migrate.getFirstObject().getId().replace(oldServer.getURL(null), newServer.getBaseUrl());
-                StringBuffer buffer = new StringBuffer(newServer.getBaseUrl());
+                String newId = migrate.getFirstObject().getId().replace(oldServer.getURL(null), newServer.getURLString());
+                StringBuffer buffer = new StringBuffer(newServer.getURLString());
                 buffer.append(newId);
                 newId = buffer.toString();
                 if (!existingIds.contains(newId))

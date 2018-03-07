@@ -25,6 +25,6 @@ public class OSHServerSourceValidator extends UrlServerSourceValidator
     @Override
     protected URL getUrl(UrlDataSource source) throws MalformedURLException
     {
-        return new URL(source.getBaseUrl() + "?service=SOS&version=2.0&request=GetCapabilities");
+        return new URL(source.getURLString() + "?service=SOS&version=2.0&request=GetCapabilities");
     }
 }

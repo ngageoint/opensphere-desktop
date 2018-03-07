@@ -25,6 +25,6 @@ public class ArcGISServerSourceValidator extends UrlServerSourceValidator
     @Override
     protected URL getUrl(UrlDataSource source) throws MalformedURLException
     {
-        return new URL(source.getBaseUrl() + "?f=json");
+        return new URL(source.getURLString() + "?f=json");
     }
 }
