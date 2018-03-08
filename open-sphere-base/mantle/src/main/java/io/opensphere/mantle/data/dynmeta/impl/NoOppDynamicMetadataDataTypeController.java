@@ -190,4 +190,10 @@ public class NoOppDynamicMetadataDataTypeController implements DynamicMetadataDa
     {
         return false;
     }
+
+    @Override
+    public boolean removeDynamicColumn(String columnName, Class<?> columnClass, Object source)
+    {
+        return false;
+    }
 }
