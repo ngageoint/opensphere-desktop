@@ -90,7 +90,7 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
      * Reindexes the dynamic columns supported by this class. Used when removing
      * columns.
      *
-     * @param columnIndex
+     * @param columnIndex the column index
      */
     private void reindex(int columnIndex)
     {

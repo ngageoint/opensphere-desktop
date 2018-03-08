@@ -44,7 +44,7 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
     private transient DataElementProvider myRowDataProvider;
 
     /** The data type controller. */
-    private transient DynamicMetadataDataTypeController myDataTypeController = null;
+    private transient DynamicMetadataDataTypeController myDataTypeController;
 
     /** The time column index. */
     private int myTimeColumnIndex = -1;
