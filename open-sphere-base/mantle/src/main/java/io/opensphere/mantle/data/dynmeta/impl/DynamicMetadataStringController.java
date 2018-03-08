@@ -33,14 +33,14 @@ public class DynamicMetadataStringController extends AbstractDynamicMetadataCont
         {
             for (Long id : cacheIds)
             {
-                String oldStringValue = getIdToValueMap().get(id);
+                String oldStringValue = getIdToValueMap().get(id.longValue());
                 if (oldStringValue == null)
                 {
-                    getIdToValueMap().put(id, stringValueToAppend);
+                    getIdToValueMap().put(id.longValue(), stringValueToAppend);
                 }
                 else
                 {
-                    getIdToValueMap().put(id, oldStringValue + stringValueToAppend);
+                    getIdToValueMap().put(id.longValue(), oldStringValue + stringValueToAppend);
                 }
             }
             fireChangeEvent(cacheIds, source);

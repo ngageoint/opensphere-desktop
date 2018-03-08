@@ -106,11 +106,11 @@ public class AboutUtil
             @Override
             public void run()
             {
-                List<ZipInputAdapter> inputAdapters = Zip.createAdaptersForDirectory("", new File(myLogPath), null);
-                Zip.createAdaptersForDirectory("", Paths.get(myRunPath, "prefs").toFile(), inputAdapters);
+                List<ZipInputAdapter> inputAdapters = Zip.createAdaptersForDirectory(null, new File(myLogPath), null);
+                Zip.createAdaptersForDirectory(null, Paths.get(myRunPath, "prefs").toFile(), inputAdapters);
                 if (includeDb)
                 {
-                    Zip.createAdaptersForDirectory("", new File(myDbPath), inputAdapters);
+                    Zip.createAdaptersForDirectory(null, new File(myDbPath), inputAdapters);
                 }
 
                 Optional<Integer> filesize = inputAdapters.parallelStream().map(f -> (int)f.getSize()).reduce((a, b) -> a + b);
