@@ -282,8 +282,7 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
     public boolean isCellEditable(int rowIndex, int columnIndex)
     {
         String colName = getColumnName(columnIndex);
-        return myDataTypeController == null ? false
-                : myDataTypeController.getDynamicColumnNamesOfType(String.class, false).contains(colName);
+        return myDataTypeController == null ? false : myDataTypeController.getDynamicColumnNames().contains(colName);
     }
 
     /**
