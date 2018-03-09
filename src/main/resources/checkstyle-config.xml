@@ -122,8 +122,6 @@
 
 		<module name="Indentation" />
 
-		<!-- used by the "SuppressionCommentFilter" -->
-		<module name="FileContentsHolder" />
 		<!-- Annotation Checks -->
 		<!-- See http://checkstyle.sf.net/config_annotation.html -->
 		<module name="MissingOverride" />

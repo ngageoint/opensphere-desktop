@@ -9,24 +9,6 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -49,6 +31,23 @@ import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.image.IconUtil.IconStyle;
 import io.opensphere.core.util.image.IconUtil.IconType;
 import io.opensphere.core.util.swing.SwingUtilities;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 
 /** Histogram Swing panel. */
 public class HistogramPanel extends JFXPanel implements Closeable
@@ -83,7 +82,6 @@ public class HistogramPanel extends JFXPanel implements Closeable
         AnalysisToolbox analysisToolbox = toolbox.getPluginToolboxRegistry().getPluginToolbox(AnalysisToolbox.class);
         myController = new HistogramController(toolbox, analysisToolbox.getSettingsModel());
         myModel = myController.getModel();
-        myController.open();
         addMouseListener(new MouseAdapter()
         {
             @Override
@@ -100,6 +98,20 @@ public class HistogramPanel extends JFXPanel implements Closeable
     {
         myController.close();
         mySettingsPane.closeDialog();
+    }
+
+    @Override
+    public void addNotify()
+    {
+        super.addNotify();
+        myController.open();
+    }
+
+    @Override
+    public void removeNotify()
+    {
+        super.removeNotify();
+        myController.close();
     }
 
     /**
