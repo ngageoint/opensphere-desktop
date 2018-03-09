@@ -4,9 +4,9 @@ package io.opensphere.mantle.datasources;
 public interface UrlSource extends IDataSource
 {
     /**
-     * Get the URL string.
+     * Get the URL.
      *
-     * @return the URL string
+     * @return the URL
      */
     String getURL();
 }

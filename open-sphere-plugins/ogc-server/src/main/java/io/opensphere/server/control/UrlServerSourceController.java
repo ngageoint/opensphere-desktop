@@ -1,7 +1,6 @@
 package io.opensphere.server.control;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
