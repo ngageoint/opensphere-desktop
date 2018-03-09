@@ -10,6 +10,8 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
+import io.opensphere.core.NetworkConfigurationManager;
+import io.opensphere.core.SystemToolbox;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.cache.SimpleSessionOnlyCacheDeposit;
 import io.opensphere.core.data.DataRegistry;
@@ -206,8 +208,16 @@ public class OSMServerSourceControllerTest
         EasyMock.expect(prefsRegistry.getPreferences(EasyMock.eq(OSMPlugin.class))).andReturn(prefs);
 
         Toolbox toolbox = support.createMock(Toolbox.class);
+
+        NetworkConfigurationManager networkConfigManager = support.createMock(NetworkConfigurationManager.class);
+        networkConfigManager
+                .addChangeListener(EasyMock.isA(NetworkConfigurationManager.NetworkConfigurationChangeListener.class));
+        SystemToolbox systemToolbox = support.createMock(SystemToolbox.class);
+        EasyMock.expect(toolbox.getSystemToolbox()).andReturn(systemToolbox);
+        EasyMock.expect(systemToolbox.getNetworkConfigurationManager()).andReturn(networkConfigManager);
         EasyMock.expect(toolbox.getDataRegistry()).andReturn(registry);
         EasyMock.expect(toolbox.getPreferencesRegistry()).andReturn(prefsRegistry);
+
         return toolbox;
     }
 }
