@@ -33,6 +33,12 @@ public class GeometryRegistryImpl extends DefaultGenericPublisher<Geometry> impl
      */
     private final TLongObjectHashMap<Object> myDataModelMap = new TLongObjectHashMap<>();
 
+    /**
+     * Whether to add geometries to the data model map. Nothing currently uses the data model map functionality so it's set to
+     * false to save memory.
+     */
+    private final boolean myAddToDataModelMap;
+
     /** Data retriever executor. */
     private final ExecutorService myDataRetrieverExecutor;
 
@@ -51,6 +57,7 @@ public class GeometryRegistryImpl extends DefaultGenericPublisher<Geometry> impl
     public GeometryRegistryImpl(ExecutorService dataRetrieverExecutor)
     {
         myDataRetrieverExecutor = dataRetrieverExecutor;
+        myAddToDataModelMap = false;
     }
 
     @Override
@@ -321,7 +328,7 @@ public class GeometryRegistryImpl extends DefaultGenericPublisher<Geometry> impl
      */
     private void addToDataModelMap(Geometry geom)
     {
-        if (geom.getDataModelId() != -1)
+        if (geom.getDataModelId() != -1 && myAddToDataModelMap)
         {
             synchronized (myDataModelMap)
             {
