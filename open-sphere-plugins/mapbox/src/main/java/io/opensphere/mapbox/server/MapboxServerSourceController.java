@@ -64,7 +64,7 @@ public class MapboxServerSourceController extends UrlServerSourceController
     {
         boolean success = false;
 
-        DataModelCategory category = XYZTileUtils.newLayersCategory(((UrlDataSource)source).getURLString(), MapboxUtil.PROVIDER);
+        DataModelCategory category = XYZTileUtils.newLayersCategory(((UrlDataSource)source).getURL(), MapboxUtil.PROVIDER);
         SimpleQuery<XYZTileLayerInfo> query = new SimpleQuery<>(category, XYZTileUtils.LAYERS_DESCRIPTOR);
         QueryTracker tracker = getToolbox().getDataRegistry().performQuery(query);
         if (tracker.getQueryStatus() == QueryTracker.QueryStatus.SUCCESS)
@@ -88,7 +88,7 @@ public class MapboxServerSourceController extends UrlServerSourceController
     @Override
     protected void handleDeactivateSource(IDataSource source)
     {
-        DataModelCategory category = XYZTileUtils.newLayersCategory(((UrlDataSource)source).getURLString(), MapboxUtil.PROVIDER);
+        DataModelCategory category = XYZTileUtils.newLayersCategory(((UrlDataSource)source).getURL(), MapboxUtil.PROVIDER);
         getToolbox().getDataRegistry().removeModels(category, false);
     }
 }

@@ -60,13 +60,13 @@ public class ArcGISServerSourceController extends UrlServerSourceController
         try (TaskActivity activity = TaskActivity.createActive(source.getName() + " is loading.."))
         {
             myToolbox.getUIRegistry().getMenuBarRegistry().addTaskActivity(activity);
-            return myMantleController.addServer(source.getName(), ((UrlDataSource)source).getURLString());
+            return myMantleController.addServer(source.getName(), ((UrlDataSource)source).getURL());
         }
     }
 
     @Override
     protected void handleDeactivateSource(IDataSource source)
     {
-        myMantleController.removeServer(source.getName(), ((UrlDataSource)source).getURLString());
+        myMantleController.removeServer(source.getName(), ((UrlDataSource)source).getURL());
     }
 }

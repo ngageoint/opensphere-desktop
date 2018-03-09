@@ -107,7 +107,7 @@ public final class UrlSourceEditor extends AbstractServerSourceEditor<UrlDataSou
         {
             if (otherSource instanceof UrlDataSource)
             {
-                otherUrls.add(((UrlDataSource)otherSource).getURLString());
+                otherUrls.add(((UrlDataSource)otherSource).getURL());
             }
         }
         return otherUrls;
@@ -131,7 +131,7 @@ public final class UrlSourceEditor extends AbstractServerSourceEditor<UrlDataSou
 
                 getServiceValidator().setParent(UrlSourceEditor.this);
                 getServiceValidator().setSource(editingSource);
-                String url = editingSource.getURLString();
+                String url = editingSource.getURL();
                 if (StringUtils.isNotEmpty(url))
                 {
                     isValid = getServiceValidator().getValidationStatus() == ValidationStatus.VALID;

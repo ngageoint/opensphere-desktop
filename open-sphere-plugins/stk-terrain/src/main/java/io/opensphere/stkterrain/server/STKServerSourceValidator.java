@@ -26,6 +26,6 @@ public class STKServerSourceValidator extends UrlServerSourceValidator
     @Override
     protected URL getUrl(UrlDataSource source) throws MalformedURLException
     {
-        return new URL(source.getURLString() + Constants.TILE_SETS_URL);
+        return new URL(source.getURL() + Constants.TILE_SETS_URL);
     }
 }

@@ -16,8 +16,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import io.opensphere.core.NetworkConfigurationManager;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.common.util.UrlUtil;
-import io.opensphere.core.event.AbstractSingleStateEvent;
-import io.opensphere.core.event.EventListener;
 import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
@@ -25,7 +23,7 @@ import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.datasources.IDataSource;
 import io.opensphere.mantle.datasources.IDataSourceConfig;
-import io.opensphere.mantle.datasources.URLSource;
+import io.opensphere.mantle.datasources.UrlSource;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.server.customization.ServerCustomization;
 import io.opensphere.server.display.ServerSourceEditor;
@@ -48,8 +46,8 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
             this::reloadBadSources;
 
     /** The Map of sources to reload listeners. */
-    private final Map<IDataSource, EventListener<AbstractSingleStateEvent>> myReloadListenerMap =
-            new HashMap<IDataSource, EventListener<AbstractSingleStateEvent>>();
+    private final Map<IDataSource, Runnable> myFinishReloadMap =
+            Collections.synchronizedMap(new HashMap<IDataSource, Runnable>());
 
     /** Object that holds and manages the Server source configs. */
     private IDataSourceConfig myConfig;
@@ -349,18 +347,14 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
         finally
         {
             myConfigLock.writeLock().unlock();
-            if (myReloadListenerMap.containsKey(source))
+            synchronized (myFinishReloadMap)
             {
-                EventListener<AbstractSingleStateEvent> listener = myReloadListenerMap.get(source);
-                myReloadListenerMap.remove(source);
-                listener.notify(new AbstractSingleStateEvent()
+                Runnable finishReload;
+                if ((finishReload = myFinishReloadMap.get(source)) != null)
                 {
-                    @Override
-                    public String getDescription()
-                    {
-                        return "Deactivation of " + source.getName() + " is done, finishing reload.";
-                    }
-                });
+                    myFinishReloadMap.remove(source);
+                    finishReload.run();
+                }
             }
         }
     }
@@ -371,14 +365,14 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
         Set<String> activeSourceURLs = getActiveSourceURLs();
         getSourceList().stream().forEach(source ->
         {
-            if (source instanceof URLSource)
+            if (source instanceof UrlSource)
             {
-                if (source.isActive() && !activeSourceURLs.contains(((URLSource)source).getURLString()))
+                if (source.isActive() && !activeSourceURLs.contains(((UrlSource)source).getURL()))
                 {
-                    myReloadListenerMap.put(source, new EventListener<AbstractSingleStateEvent>()
+                    myFinishReloadMap.put(source, new Runnable()
                     {
                         @Override
-                        public void notify(AbstractSingleStateEvent event)
+                        public void run()
                         {
                             activateSource(source);
                         }
@@ -403,10 +397,6 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
             if (UrlUtil.isValidAbsoluteUrl(dti.getUrl()))
             {
                 activeURLs.add(dti.getUrl());
-            }
-            else if (UrlUtil.isValidAbsoluteUrl(dti.getSourcePrefix()))
-            {
-                activeURLs.add(dti.getSourcePrefix());
             }
         });
         return activeURLs;

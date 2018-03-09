@@ -6,14 +6,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import io.opensphere.mantle.datasources.URLSource;
+import io.opensphere.mantle.datasources.UrlSource;
 
 /**
  * Stores the configuration for a single URL data source.
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement()
-public class UrlDataSource extends AbstractDataSource implements URLSource
+public class UrlDataSource extends AbstractDataSource implements UrlSource
 {
     /** The layer name. */
     @XmlElement(name = "name", required = true)
@@ -89,7 +89,7 @@ public class UrlDataSource extends AbstractDataSource implements URLSource
     }
 
     @Override
-    public String getURLString()
+    public String getURL()
     {
         return myBaseUrl;
     }
