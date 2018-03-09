@@ -52,7 +52,7 @@ public class OSHServerSourceController extends UrlServerSourceController
     @Override
     protected boolean handleActivateSource(IDataSource source)
     {
-        return myMantleController.addServer(source.getName(), ((UrlDataSource)source).getURLString());
+        return myMantleController.addServer(source.getName(), ((UrlDataSource)source).getURL());
     }
 
     @Override

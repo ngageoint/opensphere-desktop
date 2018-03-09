@@ -280,7 +280,7 @@ public class OGCServerSource extends AbstractDataSource implements ServerSource
     }
 
     @Override
-    public String getURLString()
+    public String getURL()
     {
         return myWFSServerURL == null ? (myWMSServerURL == null ? myWPSServerURL : myWMSServerURL) : myWFSServerURL;
     }

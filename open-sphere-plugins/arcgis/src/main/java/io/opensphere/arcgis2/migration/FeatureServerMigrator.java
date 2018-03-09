@@ -51,7 +51,7 @@ public class FeatureServerMigrator implements MicroMigrator
             for (IDataSource source : newConfig.getSourceList())
             {
                 UrlDataSource urlSource = (UrlDataSource)source;
-                ThreeTuple<String, String, Integer> host = UrlUtilities.getProtocolHostPort(urlSource.getURLString(), 80);
+                ThreeTuple<String, String, Integer> host = UrlUtilities.getProtocolHostPort(urlSource.getURL(), 80);
                 existingNewUrls.put(host.getSecondObject(), urlSource);
             }
 

@@ -97,6 +97,9 @@ public interface NetworkConfigurationManager
      */
     void setProxyExclusions(String hostPatterns);
 
+    /** Notify when the network configuration has changed. */
+    void notifyChanged();
+
     /** Listener for changes to the network configuration. */
     @FunctionalInterface
     interface NetworkConfigurationChangeListener

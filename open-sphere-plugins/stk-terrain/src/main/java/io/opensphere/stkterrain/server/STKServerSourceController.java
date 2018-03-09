@@ -76,7 +76,7 @@ public class STKServerSourceController extends UrlServerSourceController impleme
         }
         else
         {
-            String serverUrl = urlSource.getURLString();
+            String serverUrl = urlSource.getURL();
             STKDataGroupController groupController = new STKDataGroupController(getToolbox(), urlSource.getName(), serverUrl);
             myGroupControllers.put(serverUrl, groupController);
             List<Envoy> envoys = New.list(new TileSetEnvoy(getToolbox(), new STKValidatorSupport(urlSource, this), serverUrl),
@@ -92,7 +92,7 @@ public class STKServerSourceController extends UrlServerSourceController impleme
     {
         UrlDataSource urlSource = (UrlDataSource)source;
 
-        String serverUrl = urlSource.getURLString();
+        String serverUrl = urlSource.getURL();
         STKDataGroupController groupController = myGroupControllers.remove(serverUrl);
         if (groupController != null)
         {

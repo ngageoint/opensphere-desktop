@@ -63,13 +63,14 @@ public class STKDataGroupBuilder
     public DataGroupInfo createGroupAndType(TileSet tileSet, String serverUrl)
     {
         String id = serverUrl + tileSet.getName();
-        DefaultDataGroupInfo dataGroup = new DefaultDataGroupInfo(false, myToolbox, Constants.PROVIDER_TYPE, serverUrl + tileSet.getName(),
-                tileSet.getName());
+        DefaultDataGroupInfo dataGroup = new DefaultDataGroupInfo(false, myToolbox, Constants.PROVIDER_TYPE,
+                serverUrl + tileSet.getName(), tileSet.getName());
         dataGroup.activationProperty().addListener(myActivationListener);
         dataGroup.setGroupDescription(buildDescription(tileSet));
 
-        DefaultDataTypeInfo dataType = new DefaultDataTypeInfo(myToolbox, serverUrl, id, tileSet.getName(), tileSet.getName(),
-                false);
+        DefaultDataTypeInfo dataType =
+                new DefaultDataTypeInfo(myToolbox, serverUrl, id, tileSet.getName(), tileSet.getName(), false);
+        dataType.setUrl(serverUrl);
         OrderParticipantKey orderKey = new DefaultOrderParticipantKey(DefaultOrderCategory.DEFAULT_ELEVATION_FAMILY,
                 DefaultOrderCategory.EARTH_ELEVATION_CATEGORY, id);
         dataType.setOrderKey(orderKey);
