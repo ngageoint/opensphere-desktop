@@ -93,27 +93,6 @@ public class FeatureActionsController extends EventListenerService
     }
 
     /**
-     * Applies the actions to the data elements.
-     *
-     * @param actions the actions
-     * @param elements the data elements
-     * @param dataType the data type
-     */
-    private void applyActions(Collection<? extends Action> actions, List<? extends MapDataElement> elements,
-            DataTypeInfo dataType)
-    {
-        if (LOGGER.isDebugEnabled())
-        {
-            LOGGER.debug("Applying actions " + actions + " to " + elements.size());
-        }
-
-        for (ActionApplier applier : myActionAppliers)
-        {
-            applier.applyActions(actions, elements, dataType);
-        }
-    }
-
-    /**
      * Un-applies any actions to the data elements of the data type.
      *
      * @param ids the data element IDs
@@ -148,8 +127,7 @@ public class FeatureActionsController extends EventListenerService
     }
 
     /**
-     * Does everything. Figures out what actions need to be applied if any, and
-     * applies them to the features.
+     * Does everything. Figures out what actions need to be applied if any, and applies them to the features.
      *
      * @param ids the data element IDs
      * @param dataType the data type
@@ -166,16 +144,7 @@ public class FeatureActionsController extends EventListenerService
                     .getDataTypeStyleByTypeKey(dataType.getTypeKey());
             myTypeKeysAndStyles.put(dataType.getTypeKey(), XMLUtilities.jaxbClone(style, DataTypeStyleConfig.class));
 
-            Map<Collection<Action>, List<MapDataElement>> actionToElementsMap = mapActionToElements(ids, dataType,
-                    featureActions);
-
-            for (Map.Entry<Collection<Action>, List<MapDataElement>> entry : actionToElementsMap.entrySet())
-            {
-                Collection<Action> actions = entry.getKey();
-                List<MapDataElement> elements = entry.getValue();
-
-                applyActions(actions, elements, dataType);
-            }
+            applyActions(featureActions, ids, dataType);
 
             if (LOGGER.isDebugEnabled())
             {
@@ -186,11 +155,57 @@ public class FeatureActionsController extends EventListenerService
     }
 
     /**
+     * Applies the feature actions to the IDs.
+     *
+     * @param featureActions the feature actions
+     * @param ids the IDs
+     * @param dataType the data type
+     */
+    private void applyActions(Collection<? extends FeatureAction> featureActions, Collection<Long> ids, DataTypeInfo dataType)
+    {
+        StopWatch sw = new StopWatch();
+
+        Map<Collection<Action>, List<MapDataElement>> actionToElementsMap = mapActionToElements(ids, dataType, featureActions);
+
+        sw.print("mapActionToElements");
+
+        for (Map.Entry<Collection<Action>, List<MapDataElement>> entry : actionToElementsMap.entrySet())
+        {
+            Collection<Action> actions = entry.getKey();
+            List<MapDataElement> elements = entry.getValue();
+
+            applyActions(actions, elements, dataType);
+        }
+
+        sw.print("applyActions");
+    }
+
+    /**
+     * Applies the actions to the data elements.
+     *
+     * @param actions the actions
+     * @param elements the data elements
+     * @param dataType the data type
+     */
+    private void applyActions(Collection<? extends Action> actions, List<? extends MapDataElement> elements,
+            DataTypeInfo dataType)
+    {
+        if (LOGGER.isDebugEnabled())
+        {
+            LOGGER.debug("Applying actions " + actions + " to " + elements.size());
+        }
+
+        for (ActionApplier applier : myActionAppliers)
+        {
+            applier.applyActions(actions, elements, dataType);
+        }
+    }
+
+    /**
      * Gets the actions that need to be applied to the data element.
      *
      * @param element the data element
-     * @param actionsAndEvaluators collection of all possible actions and their
-     *            filter evaluators
+     * @param actionsAndEvaluators collection of all possible actions and their filter evaluators
      * @return the passing actions
      */
     private Collection<FeatureAction> getPassingActions(DataElement element,
@@ -230,16 +245,14 @@ public class FeatureActionsController extends EventListenerService
     }
 
     /**
-     * Checks if there were any feature action groups that the data element
-     * didn't satisfy, and creates a feature action that satisfies the data
-     * element for any such groups.
+     * Checks if there were any feature action groups that the data element didn't satisfy, and creates a feature action that
+     * satisfies the data element for any such groups.
      *
      * @param element the data element
      * @param passingFeatureActions the passing feature actions
      * @param groupsToSatisfy the groups that need to be satisfied
      * @param dataType the data type
-     * @param actionsAndEvaluators collection of all possible actions and their
-     *            filter evaluators
+     * @param actionsAndEvaluators collection of all possible actions and their filter evaluators
      */
     private void handleGroupUnsatisfaction(MapDataElement element, Collection<FeatureAction> passingFeatureActions,
             Set<String> groupsToSatisfy, DataTypeInfo dataType,
@@ -347,7 +360,7 @@ public class FeatureActionsController extends EventListenerService
      * @return the map
      */
     private Map<Collection<Action>, List<MapDataElement>> mapActionToElements(Collection<Long> ids, DataTypeInfo dataType,
-            Collection<FeatureAction> featureActions)
+            Collection<? extends FeatureAction> featureActions)
     {
         Map<Collection<Action>, List<MapDataElement>> actionToElementsMap = New.map();
 
@@ -362,7 +375,9 @@ public class FeatureActionsController extends EventListenerService
 
         List<Pair<FeatureAction, DataFilterEvaluator>> actionsAndEvaluators = StreamUtilities.map(featureActions,
                 this::createEvaluator);
+        StopWatch sw = new StopWatch();
         Collection<MapDataElement> elements = FeatureActionUtilities.getDataElements(myMantleToolbox, ids, dataType);
+        sw.print(" getDataElements");
         for (MapDataElement element : elements)
         {
             Collection<FeatureAction> passingFeatureActions = getPassingActions(element, actionsAndEvaluators);
@@ -380,6 +395,7 @@ public class FeatureActionsController extends EventListenerService
                 actionToElementsMap.computeIfAbsent(passingActions, k -> New.list()).add(element);
             }
         }
+        sw.print(" build actions map");
         return actionToElementsMap;
     }
 
