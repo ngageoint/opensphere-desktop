@@ -2,16 +2,16 @@ package io.opensphere.analysis.table.functions;
 
 import java.util.function.BiFunction;
 
-import io.opensphere.core.util.lang.NumberUtilities;
-
-/** Representation of a multi-column function. */
+/**
+ * Representation of a multi-column function.
+ */
 public class ColumnFunction
 {
-    /** Array of column names. */
-    private final String[] myColumns = new String[2];
-
     /** Array of column values. */
-    private final double[] myValues = new double[2];
+    private final Object[] myValues = new Object[2];
+
+    /** The function name. */
+    private final String myName;
 
     /** The function to apply. */
     private final BiFunction<Object, Object, Object> myFunction;
@@ -19,57 +19,58 @@ public class ColumnFunction
     /**
      * Constructs a ColumnFunction.
      *
-     * @param columnA the initial column
-     * @param columnB the applied column
-     * @param valueA the initial value
-     * @param valueB the applied value
+     * @param name the name of the function
      * @param function the function to apply each value to
      */
-    public ColumnFunction(String columnA, String columnB, Object valueA, Object valueB,
-            BiFunction<Object, Object, Object> function)
+    public ColumnFunction(String name, BiFunction<Object, Object, Object> function)
     {
-        myColumns[0] = columnA;
-        myColumns[1] = columnB;
-
-        myValues[0] = NumberUtilities.parseDouble(valueA, 0.0);
-        myValues[1] = NumberUtilities.parseDouble(valueB, 0.0);
-
+        myName = name;
         myFunction = function;
     }
 
     /**
-     * Constructs a ColumnFunction using a default function (addition).
+     * Sets the values that the function will utilize.
      *
-     * @param columnA the initial column
-     * @param columnB the applied column
-     * @param valueA the initial value
-     * @param valueB the applied value
+     * @param value the value to set
+     * @param index the index to set
      */
-    public ColumnFunction(String columnA, String columnB, Object valueA, Object valueB)
+    public void setValue(Object value, int index)
     {
-        this(columnA, columnB, valueA, valueB, (left, right) ->
+        if (index >= 0 && index < myValues.length)
         {
-            double dLeft = NumberUtilities.parseDouble(left, 0.0);
-            double dRight = NumberUtilities.parseDouble(right, 0.0);
-
-            return Double.valueOf(dLeft + dRight);
-        });
+            myValues[index] = value;
+        }
     }
 
     /**
-     * Retrieves myColumns.
+     * Returns the result of the function.
      *
-     * @return mycolumns
+     * @return the function result after applying to each value
      */
-    public String[] getColumns()
+    public Object getValue()
     {
-        return myColumns;
+        return myFunction.apply(myValues[0], myValues[1]);
     }
 
-    @SuppressWarnings("boxing")
     @Override
     public String toString()
     {
-        return myFunction.apply(myValues[0], myValues[1]).toString();
+        return myName;
     };
+
+    /**
+     * Builds and applies the function with whatever values it requires.
+     *
+     * @param value1
+     * @param value2
+     * @return a readable ColumnFunction
+     */
+    public ColumnFunction build(Object value1, Object value2)
+    {
+        ColumnFunction result = new ColumnFunction(myName, myFunction);
+        result.setValue(value1, 0);
+        result.setValue(value2, 1);
+
+        return result;
+    }
 }
