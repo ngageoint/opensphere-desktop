@@ -11,6 +11,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+import io.opensphere.analysis.table.functions.ColumnFunction;
 import io.opensphere.analysis.table.model.MGRSMetaColumn;
 import io.opensphere.analysis.table.model.MetaColumn;
 import io.opensphere.analysis.table.model.MetaColumnsTableModel;
@@ -282,7 +283,9 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
     public boolean isCellEditable(int rowIndex, int columnIndex)
     {
         String colName = getColumnName(columnIndex);
-        return myDataTypeController == null ? false : myDataTypeController.getDynamicColumnNames().contains(colName);
+        // We don't want to manually edit ColumnFunction cells
+        return myDataTypeController == null ? false : myDataTypeController.isDynamicColumn(colName)
+                && !myDataTypeController.getDynamicColumnNamesOfType(ColumnFunction.class, false).contains(colName);
     }
 
     /**
