@@ -61,15 +61,15 @@ public class ColumnFunction
     /**
      * Builds and applies the function with whatever values it requires.
      *
-     * @param value1
-     * @param value2
+     * @param left the left (initial) value
+     * @param right the right (applied) value
      * @return a readable ColumnFunction
      */
-    public ColumnFunction build(Object value1, Object value2)
+    public ColumnFunction build(Object left, Object right)
     {
         ColumnFunction result = new ColumnFunction(myName, myFunction);
-        result.setValue(value1, 0);
-        result.setValue(value2, 1);
+        result.setValue(left, 0);
+        result.setValue(right, 1);
 
         return result;
     }
