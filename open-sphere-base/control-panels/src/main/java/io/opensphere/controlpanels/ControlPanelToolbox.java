@@ -13,7 +13,6 @@ import io.opensphere.mantle.data.DataTypeInfo;
  */
 public interface ControlPanelToolbox extends PluginToolbox
 {
-
     /**
      * Gets the registry for {@link LayerControlProvider} implementations. This
      * allows for plugins to register additional providers without injecting
