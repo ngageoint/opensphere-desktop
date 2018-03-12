@@ -845,7 +845,6 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
     {
         getProviderPanel().removeAll();
         GridBagPanel providerPanel = new GridBagPanel();
-        providerPanel.setInsets(0, 0, 0, 0);
         JLabel textField = new JLabel("Unique ID Column: ");
         uniqueProvider.setSize(35, 24);
         providerPanel.add(textField);
