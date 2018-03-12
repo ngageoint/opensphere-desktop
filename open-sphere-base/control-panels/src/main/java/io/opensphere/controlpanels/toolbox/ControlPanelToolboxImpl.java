@@ -56,10 +56,8 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
         myParentToolbox = toolbox;
         myDetailPanelRegistry = new SimpleRegistryImpl<>();
         myDetailPanelRegistry.initialize(toolbox, pluginProperties);
-
         myLayerControlRegistry = new SimpleRegistryImpl<>();
         myLayerControlRegistry.initialize(toolbox, pluginProperties);
-
         myDefaultDetailPanelProvider = new DefaultDetailPanelProvider(myParentToolbox);
     }
 
@@ -72,7 +70,6 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
     public String getDescription()
     {
         return "A toolbox extension for control panels";
-
     }
 
     @Override
@@ -91,7 +88,6 @@ public class ControlPanelToolboxImpl implements ControlPanelToolbox
     public void setUISpan(ObservableValue<TimeSpan> uiSpan)
     {
         this.myUISpan = uiSpan;
-
     }
 
     @Override
