@@ -141,6 +141,33 @@ public class HttpServerImpl implements HttpServer
         return myRequestorProvider.getRequestor().sendGet(url, response);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.server.HttpServer#sendHead(java.net.URL, java.util.Map, io.opensphere.core.server.ResponseValues)
+     */
+    @Override
+    public void sendHead(URL url, Map<String, String> extraHeaderValues, ResponseValues response)
+        throws IOException, URISyntaxException
+    {
+        assert !EventQueue.isDispatchThread();
+
+        myRequestorProvider.getHeadRequestor().sendHead(url, extraHeaderValues, response);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.server.HttpServer#sendHead(java.net.URL, io.opensphere.core.server.ResponseValues)
+     */
+    @Override
+    public void sendHead(URL url, ResponseValues response) throws IOException, URISyntaxException
+    {
+        assert !EventQueue.isDispatchThread();
+
+        myRequestorProvider.getHeadRequestor().sendHead(url, response);
+    }
+
     @Override
     public CancellableInputStream sendPost(URL url, InputStream postData, Map<String, String> extraHeaderValues,
             ResponseValues response, ContentType contentType)
