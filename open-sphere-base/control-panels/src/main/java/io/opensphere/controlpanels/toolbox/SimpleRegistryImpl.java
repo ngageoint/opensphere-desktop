@@ -11,7 +11,7 @@ import io.opensphere.core.util.collections.New;
  * A default implementation of the {@link DetailPanelProviderRegistry}, in which
  * providers are cached.
  * 
- * @param <T>
+ * @param <T> the type of the provider.
  */
 public class SimpleRegistryImpl<T> implements SimpleRegistry<T>
 {
@@ -24,7 +24,6 @@ public class SimpleRegistryImpl<T> implements SimpleRegistry<T>
     public void registerProvider(T provider)
     {
         myProviders.add(provider);
-
     }
 
     @Override
@@ -38,7 +37,5 @@ public class SimpleRegistryImpl<T> implements SimpleRegistry<T>
     public void initialize(Toolbox pToolbox, Properties pProperties)
     {
         myProviders = New.collection();
-
     }
-
 }
