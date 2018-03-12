@@ -9,24 +9,20 @@ import io.opensphere.core.Toolbox;
  * A registry of detail panel providers. Plugins may register a provider with
  * the registry to add additional behavior.
  * 
- * @param <T>
+ * @param <T> the type of the provider.
  */
 public interface SimpleRegistry<T>
 {
     /**
      * Registers the supplied provider with the registry.
-     * 
-     * @param <T>
      *
      * @param pProvider the provider to add to the registry.
      */
     void registerProvider(T provider);
 
     /**
-     * Gets the {@link Collection} of registered {@link DetailPanelProvider}
-     * implementations from the registry.
-     * 
-     * @param <T>
+     * Gets the {@link Collection} of registered provider implementations from
+     * the registry.
      *
      * @return the {@link Collection} of available providers.
      */
@@ -39,5 +35,4 @@ public interface SimpleRegistry<T>
      * @param pProperties the properties with which to initialize the registry.
      */
     void initialize(Toolbox pToolbox, Properties pProperties);
-
 }
