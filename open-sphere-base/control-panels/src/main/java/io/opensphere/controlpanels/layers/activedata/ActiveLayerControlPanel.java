@@ -283,6 +283,11 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         }
     }
 
+    /**
+     * Builds the color/opacity panel.
+     *
+     * @return the color/opacity panel
+     */
     private GridBagPanel buildColorOpacityPanel()
     {
         GridBagPanel colorOpacityPanel = new GridBagPanel();
