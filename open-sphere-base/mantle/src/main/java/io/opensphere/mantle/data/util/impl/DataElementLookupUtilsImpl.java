@@ -203,10 +203,10 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
     public DataElement getDataElement(long dataElementId, DataTypeInfo dtiHint, String dataTypeInfoKeyHint)
     {
         DataElement result = null;
-        List<DataElement> resultList = new ArrayList<>(1);
         try
         {
-            retrieveDataElements(resultList, Collections.singletonList(dataElementId), dtiHint, dataTypeInfoKeyHint, false);
+            List<DataElement> resultList = retrieveDataElements(Collections.singletonList(dataElementId), dtiHint,
+                    dataTypeInfoKeyHint, false);
             result = resultList.get(0);
         }
         catch (DataElementLookupException e)
@@ -283,11 +283,11 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
         Utilities.checkNull(dataElementIds, DATA_ELEMENT_IDS);
         if (dataElementIds.isEmpty())
         {
-            return Collections.<DataElement>emptyList();
+            return Collections.emptyList();
         }
 
-        List<DataElement> resultList = new ArrayList<>(dataElementIds.size());
-        retrieveDataElements(resultList, dataElementIds, dtiHint, dataTypeInfoKeyHint, ignoreMapGeometrySupport);
+        List<DataElement> resultList = retrieveDataElements(dataElementIds, dtiHint, dataTypeInfoKeyHint,
+                ignoreMapGeometrySupport);
         return resultList;
     }
 
@@ -637,41 +637,29 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
     }
 
     /**
-     * Retrieves the DataElements by id and adds them to the provided list. The
-     * dtiHint and dataTypeInfoKeyHint can help prevent multiple queries from
-     * running against the data model. They are used in the dtiHint first, then
-     * the dataTypeInfoKeyHint second. If neither hint is provided then they
-     * will be queried first so that the remainder of the element can be
-     * retrieved and reformed.
+     * Retrieves the DataElements by id. The dtiHint and dataTypeInfoKeyHint can help prevent multiple queries from running
+     * against the data model. They are used in the dtiHint first, then the dataTypeInfoKeyHint second. If neither hint is
+     * provided then they will be queried first so that the remainder of the element can be retrieved and reformed.
      *
-     * All of the id's requested must be of the same data type or an exception
-     * will be generated.
+     * All of the id's requested must be of the same data type or an exception will be generated.
      *
-     * @param deList the list of DataElement to append the results of the
-     *            search.
      * @param dataElementIds the data element ids to lookup
-     * @param dtiHint the {@link DataTypeInfo} for the point if known ( null if
-     *            not known is okay )
-     * @param dataTypeInfoKeyHint the key for the DataTypeInfo if known ( null
-     *            if not known is okay )
-     * @param ignoreMapGeometrySupport the ignore map data elements map geometry
-     *            support ( don't get the extra MGS parts )
-     * @return the number of elements added to the list.
-     * @throws DataElementLookupException if the dtiHint or dataTypeInfoKeyHint
-     *             are the wrong type for any of the ids provided, or if the
-     *             types retrieved are of different data types, or if the data
-     *             type cannot be determined, or if all the ids cannot be
-     *             retrieved.
+     * @param dtiHint the {@link DataTypeInfo} for the point if known ( null if not known is okay )
+     * @param dataTypeInfoKeyHint the key for the DataTypeInfo if known ( null if not known is okay )
+     * @param ignoreMapGeometrySupport the ignore map data elements map geometry support ( don't get the extra MGS parts )
+     * @return the resulting data elements
+     * @throws DataElementLookupException if the dtiHint or dataTypeInfoKeyHint are the wrong type for any of the ids provided, or
+     *             if the types retrieved are of different data types, or if the data type cannot be determined, or if all the ids
+     *             cannot be retrieved.
      */
-    private int retrieveDataElements(List<DataElement> deList, List<Long> dataElementIds, DataTypeInfo dtiHint,
-            String dataTypeInfoKeyHint, boolean ignoreMapGeometrySupport)
+    private List<DataElement> retrieveDataElements(List<Long> dataElementIds, DataTypeInfo dtiHint, String dataTypeInfoKeyHint,
+            boolean ignoreMapGeometrySupport)
         throws DataElementLookupException
     {
-        Utilities.checkNull(deList, "deList");
         Utilities.checkNull(dataElementIds, DATA_ELEMENT_IDS);
         if (dataElementIds.isEmpty())
         {
-            return 0;
+            return Collections.emptyList();
         }
 
         final DataTypeInfo dti = dtiHint == null ? getDataTypeInfo(dataElementIds.get(0), dataTypeInfoKeyHint) : dtiHint;
@@ -736,10 +724,8 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
         {
             throw new DataElementLookupException(e.getMessage(), e);
         }
-        List<DataElement> resultList = query.getResults();
-        deList.addAll(resultList);
 
-        return resultList.size();
+        return query.getResults();
     }
 
     /**

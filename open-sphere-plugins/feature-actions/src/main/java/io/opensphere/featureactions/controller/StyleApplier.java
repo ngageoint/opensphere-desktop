@@ -145,10 +145,13 @@ public class StyleApplier implements ActionApplier
         List<Long> ids = elementIds.stream().filter(overriddenIds::contains).collect(Collectors.toList());
         Color color = dataType.getBasicVisualizationInfo().getTypeColor();
 
-        Collection<MapDataElement> elements = FeatureActionUtilities.getDataElements(myMantleToolbox, ids, dataType);
+        Collection<DataElement> elements = FeatureActionUtilities.getDataElements(myMantleToolbox, ids, dataType);
         for (DataElement element : elements)
         {
-            element.getVisualizationState().setColor(color);
+            if (element instanceof MapDataElement)
+            {
+                element.getVisualizationState().setColor(color);
+            }
         }
 
         provider.removeOverrideStyle(ids);
