@@ -126,6 +126,33 @@ public interface HttpServer
     CancellableInputStream sendGet(URL url, ResponseValues response) throws IOException, URISyntaxException;
 
     /**
+     * Sends a HEAD request to the server.
+     *
+     * @param url The url to the server which should include any parameters.
+     * @param extraHeaderValues Header values to add to the request header.
+     * @param response The response code and message returned from the get
+     *            request.
+     * @throws IOException Thrown if an error happens when communicating with
+     *             the server.
+     * @throws URISyntaxException Thrown if an error occurs converting the URL
+     *             to a URI.
+     */
+    void sendHead(URL url, Map<String, String> extraHeaderValues, ResponseValues response) throws IOException, URISyntaxException;
+
+    /**
+     * Sends a HEAD request to the server.
+     *
+     * @param url The url to the server which should include any parameters.
+     * @param response The response code and message returned from the get
+     *            request.
+     * @throws IOException Thrown if an error happens when communicating with
+     *             the server.
+     * @throws URISyntaxException Thrown if an error occurs converting the URL
+     *             to a URI.
+     */
+    void sendHead(URL url, ResponseValues response) throws IOException, URISyntaxException;
+
+    /**
      * Sends a post request to the server.
      *
      * @param url The url to send the post request to.

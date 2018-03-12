@@ -8,7 +8,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
 /**
@@ -18,7 +17,7 @@ public abstract class AbstractJFXOptionsProvider extends AbstractOptionsProvider
 {
     /**
      * Creates a new options provider, using the supplied topic name.
-     * 
+     *
      * @param topic the topic to apply to the provider.
      */
     public AbstractJFXOptionsProvider(String topic)
