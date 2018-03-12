@@ -98,34 +98,24 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
         Map<String, String> proxyOptionPreference = new HashMap<String, String>();
         if (myUseSystemProxiesButton.isSelected())
         {
-            myNetworkConfigurationManager.setUseSystemProxies(true);
-            myNetworkConfigurationManager.setProxyConfigUrl("");
-            myNetworkConfigurationManager.setProxy("", -1);
-            myNetworkConfigurationManager.setProxyExclusions(mySystemProxyExclusionsField.getText());
-
+            myNetworkConfigurationManager.setProxyConfiguration("", -1, true, "", mySystemProxyExclusionsField.getText());
             proxyOptionPreference.put(mySystemProxyExclusionsLabel.getText(), mySystemProxyExclusionsField.getText());
             setProxyPreferenceValue(myUseSystemProxiesButton.getText(), proxyOptionPreference, this);
         }
         else if (myUseAutoProxyButton.isSelected())
         {
-            myNetworkConfigurationManager.setUseSystemProxies(false);
-            myNetworkConfigurationManager.setProxyConfigUrl(myAutoConfigProxyUrlField.getText());
-            myNetworkConfigurationManager.setProxy("", -1);
-            myNetworkConfigurationManager.setProxyExclusions("");
-
+            myNetworkConfigurationManager.setProxyConfiguration("", -1, false, myAutoConfigProxyUrlField.getText(), "");
             proxyOptionPreference.put(myAutoConfigProxyLabel.getText(), myAutoConfigProxyUrlField.getText());
             setProxyPreferenceValue(myUseAutoProxyButton.getText(), proxyOptionPreference, this);
         }
         else if (myUseManualProxyButton.isSelected())
         {
-            myNetworkConfigurationManager.setUseSystemProxies(false);
-            myNetworkConfigurationManager.setProxyConfigUrl("");
-            String portText = myManualProxyPortField.getText();
-            int port;
             try
             {
-                port = Integer.parseInt(portText);
-                myNetworkConfigurationManager.setProxy(myManualProxyHostField.getText(), port);
+                String portText = myManualProxyPortField.getText();
+                int port = Integer.parseInt(portText);
+                myNetworkConfigurationManager.setProxyConfiguration(myManualProxyHostField.getText(), port, false, "",
+                        myManualProxyExclusionsField.getText());
                 proxyOptionPreference.put(myManualProxyPortLabel.getText(), portText);
                 proxyOptionPreference.put(myManualProxyHostLabel.getText(), myManualProxyHostField.getText());
             }
@@ -133,20 +123,15 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
             {
                 JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(myManualProxyHostField),
                         "Could not parse port number.");
+                myNetworkConfigurationManager.setProxyConfiguration("", -1, false, "", myManualProxyExclusionsField.getText());
             }
-
-            myNetworkConfigurationManager.setProxyExclusions(myManualProxyExclusionsField.getText());
             proxyOptionPreference.put(myManualProxyExclusionsLabel.getText(), myManualProxyExclusionsField.getText());
             setProxyPreferenceValue(myUseManualProxyButton.getText(), proxyOptionPreference, this);
         }
         else
         {
-            myNetworkConfigurationManager.setUseSystemProxies(false);
-            myNetworkConfigurationManager.setProxyConfigUrl("");
-            myNetworkConfigurationManager.setProxy("", -1);
-            myNetworkConfigurationManager.setProxyExclusions("");
+            myNetworkConfigurationManager.setProxyConfiguration("", -1, false, "", "");
         }
-        myNetworkConfigurationManager.notifyChanged();
     }
 
     @Override
