@@ -29,7 +29,6 @@ public class SimpleRegistryImpl<T> implements SimpleRegistry<T>
     @Override
     public Collection<T> getProviders()
     {
-        // TODO Auto-generated method stub
         return myProviders;
     }
 
