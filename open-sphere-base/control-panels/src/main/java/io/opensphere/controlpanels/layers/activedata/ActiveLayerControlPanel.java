@@ -116,7 +116,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
     private final ControlPanelToolbox myCpToolbox;
 
     /** The provider panel. **/
-    private GridBagPanel myProviderPanel;
+    private final GridBagPanel myProviderPanel;
 
     /**
      * Gets the MapVisualizationType for the given LayerSelectedEvent.
@@ -127,7 +127,6 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
     private static MapVisualizationType getMapVisualizationType(LayerSelectedEvent selectEvent)
     {
         MapVisualizationType mvt = null;
-
         DataTypeInfo dti = selectEvent.getDataTypeInfo();
         if (dti == null)
         {
@@ -141,7 +140,6 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         {
             mvt = dti.getMapVisualizationInfo().getVisualizationType();
         }
-
         return mvt;
     }
 
@@ -169,18 +167,15 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         myLayerDetailsCoordinator = ldc;
         myToolbox = tb;
         myCpToolbox = tb.getPluginToolboxRegistry().getPluginToolbox(ControlPanelToolbox.class);
-
+        myProviderPanel = new GridBagPanel();
         setBorder(null);
         setLayout(new BorderLayout());
         setMinimumSize(null);
         setPreferredSize(null);
-
         add(buildMainPanel(), BorderLayout.CENTER);
-
         getFeatureColorPanel().setVisible(false);
         getOpacityPanel().setVisible(false);
         getMiniStyleBox().setVisible(false);
-
         tb.getEventManager().subscribe(DataTypeInfoLoadsToChangeEvent.class, myLoadsToSubscriber);
     }
 
@@ -202,14 +197,12 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
     public void setSelected(LayerSelectedEvent selectEvent)
     {
         assert EventQueue.isDispatchThread();
-
         if (CollectionUtilities.hasContent(selectEvent.getDataGroupInfos())
                 || CollectionUtilities.hasContent(selectEvent.getDataTypeInfos()))
         {
             setSelectedItems(selectEvent.getDataGroupInfos(), selectEvent.getDataTypeInfos());
             DataTypeInfo selectedType = getSelectedDataType();
             DataGroupInfo selectedGroup = getSelectedDataGroup();
-
             myProviderPanel.setVisible(false);
             getOpacityPanel().setVisible(showOpacity(getMapVisualizationType(selectEvent)));
             determineStyleShortCutButtonVisibility();
@@ -221,7 +214,6 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
             myAnalyzeButton.setSelected(LoadsToUtilities.isAnalyzeEnabled(selectedLayer));
             myTimelineButton.setVisible(LoadsToUtilities.allowTimelineSelection(selectedLayer));
             myTimelineButton.setSelected(LoadsToUtilities.isTimelineEnabled(selectedLayer));
-
             Collection<Object> objects = CollectionUtilities.concat(selectEvent.getDataGroupInfos(),
                     selectEvent.getDataTypeInfos());
             List<Exporter> exporters = Exporters.getExporters(objects, getToolbox(), java.io.File.class);
@@ -232,34 +224,27 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
             else
             {
                 getExportButton().removeAll();
-
                 ExportMenuProvider menuProvider = new ExportMenuProvider();
                 for (JMenuItem menuItem : menuProvider.getMenuItems(getToolbox(), "Export to ", exporters))
                 {
                     myExportButton.add(menuItem);
                 }
-
                 getExportButton().setVisible(true);
             }
-
             if (selectedType.getMetaDataInfo() != null && selectedType.getMapVisualizationInfo() != null
                     && selectedType.getMapVisualizationInfo().usesMapDataElements())
             {
                 myCpToolbox.getLayerControlProviderRegistry().getProviders()
                         .forEach(provider -> rebuildProviderLayerControl(provider.apply(selectedType)));
             }
-
             if (Arrays.stream(getUpperButtonPanel().getComponents()).anyMatch(c -> c instanceof AbstractButton && c.isVisible()))
             {
                 getUpperButtonPanel().setVisible(true);
             }
-
             rebuildMiniStyleBox(selectedGroup, selectedType);
             getMiniStyleBox().setVisible(true);
-
             Component layerControlComponent = selectedGroup.getAssistant().getLayerControlUIComponent(null, selectedGroup,
                     selectedType);
-
             if (layerControlComponent != null)
             {
                 myCustomControlsPanel.removeAll();
@@ -271,7 +256,6 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
             {
                 myCustomControlsPanel.setVisible(false);
             }
-
             setVisible(true);
         }
         else
@@ -322,7 +306,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         mainPanel.fillHorizontal();
         mainPanel.setInsets(SPACE, SPACE, 0, SPACE);
         mainPanel.addRow(getUpperButtonPanel());
-        myProviderPanel = new GridBagPanel();
+        mainPanel.add(myProviderPanel);
         mainPanel.addRow(myProviderPanel);
         mainPanel.addRow(buildColorOpacityPanel());
         mainPanel.addRow(getTileLevelControlPanel());
@@ -432,7 +416,6 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         {
             isVisible = false;
         }
-
         getFeatureEditButton().setVisible(isVisible);
     }
 
@@ -454,7 +437,6 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
                 }
             }
         }
-
         Collection<DataTypeInfo> selectedTypes = getSelectedDataTypes();
         if (!visible && selectedTypes != null && !selectedTypes.isEmpty())
         {
@@ -467,7 +449,6 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
                 }
             }
         }
-
         getLayerDetailsButton().setVisible(visible);
     }
 
@@ -664,10 +645,6 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
      */
     private JComponent getProviderPanel()
     {
-        if (myProviderPanel == null)
-        {
-            myProviderPanel = new GridBagPanel();
-        }
         return myProviderPanel;
     }
 
@@ -869,7 +846,6 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         providerPanel.add(textField);
         providerPanel.fillHorizontal();
         providerPanel.add(uniqueProvider);
-
         getProviderPanel().setVisible(true);
         getProviderPanel().add(providerPanel);
         getProviderPanel().revalidate();
