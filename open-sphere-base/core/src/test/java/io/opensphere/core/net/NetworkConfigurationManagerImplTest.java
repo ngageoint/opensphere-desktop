@@ -59,7 +59,7 @@ public class NetworkConfigurationManagerImplTest
         support.replayAll();
 
         NetworkConfigurationManager networkConfigurationManager = new NetworkConfigurationManagerImpl(prefsRegistry);
-        networkConfigurationManager.setProxyExclusions(exclusions);
+        networkConfigurationManager.setProxyConfiguration("", -1, false, "", exclusions);
         boolean excluded = networkConfigurationManager.isExcludedFromProxy(host);
 
         support.verifyAll();
