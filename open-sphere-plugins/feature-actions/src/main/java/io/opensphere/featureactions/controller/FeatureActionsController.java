@@ -20,6 +20,7 @@ import io.opensphere.core.event.EventListenerService;
 import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.util.Aggregator;
 import io.opensphere.core.util.ThreadConfined;
 import io.opensphere.core.util.XMLUtilities;
 import io.opensphere.core.util.collections.CollectionUtilities;
@@ -140,7 +141,9 @@ public class FeatureActionsController extends EventListenerService
                     .getDataTypeStyleByTypeKey(dataType.getTypeKey());
             myTypeKeysAndStyles.put(dataType.getTypeKey(), XMLUtilities.jaxbClone(style, DataTypeStyleConfig.class));
 
-            applyActions(featureActions, ids, dataType);
+            Aggregator<Long> aggregator = new Aggregator<>(100_000, idSubset -> applyActions(featureActions, idSubset, dataType));
+            aggregator.addItems(ids);
+            aggregator.processAll();
 
             if (LOGGER.isDebugEnabled())
             {
@@ -160,6 +163,7 @@ public class FeatureActionsController extends EventListenerService
     private void applyActions(Collection<? extends FeatureAction> featureActions, Collection<Long> ids, DataTypeInfo dataType)
     {
         StopWatch sw = new StopWatch();
+        System.out.println("===== new batch");
 
         Map<Collection<Action>, List<MapDataElement>> actionToElementsMap = mapActionToElements(ids, dataType, featureActions);
 
