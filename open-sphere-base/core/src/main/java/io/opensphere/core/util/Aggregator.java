@@ -28,6 +28,21 @@ public class Aggregator<T>
     private final Consumer<List<T>> myProcessor;
 
     /**
+     * Helper method to process some data in batches.
+     *
+     * @param items the items to process
+     * @param batchSize the batch size
+     * @param processor the processor
+     * @param <T> the items type
+     */
+    public static <T> void process(Collection<? extends T> items, int batchSize, Consumer<List<T>> processor)
+    {
+        Aggregator<T> aggregator = new Aggregator<>(batchSize, processor);
+        aggregator.addItems(items);
+        aggregator.processAll();
+    }
+
+    /**
      * Constructor.
      *
      * @param batchSize the size at which to process the items

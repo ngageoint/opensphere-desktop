@@ -141,9 +141,7 @@ public class FeatureActionsController extends EventListenerService
                     .getDataTypeStyleByTypeKey(dataType.getTypeKey());
             myTypeKeysAndStyles.put(dataType.getTypeKey(), XMLUtilities.jaxbClone(style, DataTypeStyleConfig.class));
 
-            Aggregator<Long> aggregator = new Aggregator<>(100_000, idSubset -> applyActions(featureActions, idSubset, dataType));
-            aggregator.addItems(ids);
-            aggregator.processAll();
+            Aggregator.process(ids, 100_000, idSubset -> applyActions(featureActions, idSubset, dataType));
 
             if (LOGGER.isDebugEnabled())
             {
@@ -162,12 +160,7 @@ public class FeatureActionsController extends EventListenerService
      */
     private void applyActions(Collection<? extends FeatureAction> featureActions, Collection<Long> ids, DataTypeInfo dataType)
     {
-        StopWatch sw = new StopWatch();
-        System.out.println("===== new batch");
-
         Map<Collection<Action>, List<MapDataElement>> actionToElementsMap = mapActionToElements(ids, dataType, featureActions);
-
-        sw.print("mapActionToElements");
 
         for (Map.Entry<Collection<Action>, List<MapDataElement>> entry : actionToElementsMap.entrySet())
         {
@@ -176,8 +169,6 @@ public class FeatureActionsController extends EventListenerService
 
             applyActions(actions, elements, dataType);
         }
-
-        sw.print("applyActions");
     }
 
     /**
@@ -309,7 +300,7 @@ public class FeatureActionsController extends EventListenerService
             List<Long> ids = myMantleToolbox.getDataElementLookupUtils().getDataElementCacheIds(dataType);
             if (!ids.isEmpty())
             {
-                clearActions(ids, dataType);
+                Aggregator.process(ids, 100_000, idSubset -> clearActions(idSubset, dataType));
                 myTypeKeysAndStyles.remove(dataType.getTypeKey());
                 doActions(ids, dataType);
             }
@@ -369,9 +360,7 @@ public class FeatureActionsController extends EventListenerService
         Set<String> groupsToSatisfy = featureActions.stream().map(a -> a.getGroupName()).distinct()
                 .filter(g -> myRegistry.getActionCreator(g) != null).collect(Collectors.toSet());
 
-        StopWatch sw = new StopWatch();
         Collection<DataElement> elements = FeatureActionUtilities.getDataElements(myMantleToolbox, ids, dataType);
-        sw.print(" getDataElements");
         for (DataElement element : elements)
         {
             if (element instanceof MapDataElement)
@@ -379,27 +368,21 @@ public class FeatureActionsController extends EventListenerService
                 MapDataElement mapElement = (MapDataElement)element;
 
                 Collection<FeatureAction> passingFeatureActions = getPassingActions(mapElement, featureActions);
-                sw.addCategoryTime(" getPassingActions");
 
                 handleGroupUnsatisfaction(mapElement, passingFeatureActions, groupsToSatisfy, dataType);
-                sw.addCategoryTime(" handleGroupUnsatisfaction");
 
                 Set<Action> passingActions = new LinkedHashSet<>();
                 for (FeatureAction featureAction : passingFeatureActions)
                 {
                     passingActions.addAll(featureAction.getActions());
                 }
-                sw.addCategoryTime(" add to passingActions");
 
                 if (!passingActions.isEmpty())
                 {
                     actionToElementsMap.computeIfAbsent(passingActions, k -> New.list()).add(mapElement);
                 }
-                sw.addCategoryTime(" add to actionToElementsMap");
             }
         }
-        sw.printCategories();
-//        sw.print(" build actions map");
         return actionToElementsMap;
     }
 
