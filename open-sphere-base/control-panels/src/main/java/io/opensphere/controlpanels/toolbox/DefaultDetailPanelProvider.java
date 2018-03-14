@@ -16,6 +16,7 @@ import io.opensphere.mantle.data.MapVisualizationType;
 /**
  * The default detail panel provider, used to provide detail panels for all data
  * types.
+ * 
  */
 public class DefaultDetailPanelProvider implements DetailPanelProvider
 {
@@ -75,7 +76,6 @@ public class DefaultDetailPanelProvider implements DetailPanelProvider
             {
                 initialize(MapVisualizationType.MOTION_IMAGERY);
             }
-
             returnValue = myDetailPanelInstances.get(MapVisualizationType.MOTION_IMAGERY);
             returnValue.populate(pDataGroup);
         }
@@ -85,12 +85,10 @@ public class DefaultDetailPanelProvider implements DetailPanelProvider
             if (!visualizationTypes.isEmpty())
             {
                 visualizationType = visualizationTypes.iterator().next();
-
                 if (!myDetailPanelInstances.containsKey(visualizationType))
                 {
                     initialize(visualizationType);
                 }
-
                 returnValue = myDetailPanelInstances.get(visualizationType);
                 returnValue.populate(pDataGroup);
             }
@@ -115,7 +113,6 @@ public class DefaultDetailPanelProvider implements DetailPanelProvider
         synchronized (myDetailPanelInstances)
         {
             Set<MapVisualizationType> keys = New.set(MapVisualizationType.values());
-
             DetailPane detailPane;
             switch (pType)
             {
@@ -129,7 +126,6 @@ public class DefaultDetailPanelProvider implements DetailPanelProvider
                     keys.removeAll(New.set(MapVisualizationType.MOTION_IMAGERY, MapVisualizationType.MOTION_IMAGERY_DATA));
                     break;
             }
-
             // register the new instance for all valid key types:
             keys.forEach(t -> myDetailPanelInstances.put(t, detailPane));
         }

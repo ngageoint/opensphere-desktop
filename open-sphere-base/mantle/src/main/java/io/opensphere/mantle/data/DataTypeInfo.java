@@ -65,6 +65,17 @@ public interface DataTypeInfo extends Model, Comparable<DataTypeInfo>
             DataTypeInfo.class);
 
     /**
+     * Converts the data type to a display string, or null.
+     *
+     * @param dataType the data type
+     * @return the display string, or null
+     */
+    static String toDisplayString(DataTypeInfo dataType)
+    {
+        return dataType != null ? dataType.getDisplayName() : null;
+    }
+
+    /**
      * Adds a tag to this data type.
      *
      * @param tag the tag to add ( null not allowed ).

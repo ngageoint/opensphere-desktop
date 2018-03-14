@@ -23,6 +23,7 @@ import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.SpecialKey;
 import io.opensphere.mantle.data.event.DataTypeInfoMetaDataKeyAddedChangeEvent;
+import io.opensphere.mantle.data.event.DataTypeInfoMetaDataKeyRemovedChangeEvent;
 import io.opensphere.mantle.data.event.DataTypeInfoMetaDataSpecialKeyChangeEvent;
 import io.opensphere.mantle.data.impl.specialkey.AltitudeKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseOrientationKey;
@@ -300,6 +301,57 @@ public class DefaultMetaDataInfo implements MetaDataInfo
         {
             myDataTypeInfo.fireChangeEvent(new DataTypeInfoMetaDataKeyAddedChangeEvent(myDataTypeInfo, key, source));
         }
+        return true;
+    }
+
+    /**
+     * Removes a key from the key names.
+     *
+     * @param key - the key to add
+     * @param keyClass - the class for the key
+     * @param source - the calling object
+     * @return true if removed, false if not in set.
+     */
+    @Override
+    public boolean removeKey(String key, Class<?> keyClass, Object source)
+    {
+        int index = myKeyNames.indexOf(key);
+        if (index < 0)
+        {
+            return false;
+        }
+
+        myKeyNames.remove(key);
+        myKeyClassTypeMap.remove(key);
+        myPropertyArrayDescriptor = generatePropertyArrayDescriptor(myKeyNames, myKeyClassTypeMap);
+
+        SpecialKey sk = getSpecialTypeForKey(key);
+        if (sk != null)
+        {
+            removeSpecialKey(sk, source);
+        }
+
+        // If the class of the key being added is a Number then we will
+        // automatically set it to numeric. If it is not a number, then we will
+        // have to do on the fly determination.
+        if (Number.class.isAssignableFrom(keyClass))
+        {
+            myNumericKeyMapLock.writeLock().lock();
+            try
+            {
+                myNumericKeyMap.remove(key);
+            }
+            finally
+            {
+                myNumericKeyMapLock.writeLock().unlock();
+            }
+        }
+
+        if (myDataTypeInfo != null)
+        {
+            myDataTypeInfo.fireChangeEvent(new DataTypeInfoMetaDataKeyRemovedChangeEvent(myDataTypeInfo, key, source));
+        }
+
         return true;
     }
 
