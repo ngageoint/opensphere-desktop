@@ -10,8 +10,10 @@ import org.apache.log4j.Logger;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.StringUtilities;
+import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
 import io.opensphere.mantle.data.geom.factory.RenderPropertyPool;
+import io.opensphere.mantle.data.geom.factory.impl.DefaultRenderPropertyPool;
 import io.opensphere.mantle.data.geom.style.FeatureVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.DefaultFeatureIndividualGeometryBuilderData;
 import io.opensphere.mantle.transformer.util.GeometrySetUtil;
@@ -64,14 +66,12 @@ public class StyleBasedUpdateGeometriesWorker extends AbstractDataElementTransfo
 
                 dataRetriever.retrieveData();
 
-                Set<Long> oldVisIds = New.set(myIdsOfInterest.size());
                 Set<Geometry> oldVisibleGeomSet = GeometrySetUtil.findGeometrySetWithIds(getProvider().getGeometrySet(),
-                        getProvider().getGeometrySetLock(), myIdsOfInterest, oldVisIds,
+                        getProvider().getGeometrySetLock(), myIdsOfInterest, null,
                         getProvider().getDataModelIdFromGeometryIdBitMask());
 
-                Set<Long> oldHiddenIds = New.set(myIdsOfInterest.size());
                 Set<Geometry> oldHiddenGeomSet = GeometrySetUtil.findGeometrySetWithIds(getProvider().getHiddenGeometrySet(),
-                        getProvider().getGeometrySetLock(), myIdsOfInterest, oldHiddenIds,
+                        getProvider().getGeometrySetLock(), myIdsOfInterest, null,
                         getProvider().getDataModelIdFromGeometryIdBitMask());
 
                 Set<Geometry> newVisibleGeomSet = New.set(oldVisibleGeomSet.size());
@@ -79,7 +79,8 @@ public class StyleBasedUpdateGeometriesWorker extends AbstractDataElementTransfo
 
                 Iterator<ElementData> edItr = dataRetriever.iterator();
 
-                RenderPropertyPool rpp = createPool();
+                RenderPropertyPool rpp = DefaultRenderPropertyPool.createPool(getProvider().getDataType(), oldVisibleGeomSet,
+                        oldHiddenGeomSet);
                 ElementData ed = null;
                 FeatureVisualizationStyle style = null;
                 DefaultFeatureIndividualGeometryBuilderData builderData = new DefaultFeatureIndividualGeometryBuilderData();
@@ -122,6 +123,7 @@ public class StyleBasedUpdateGeometriesWorker extends AbstractDataElementTransfo
                         }
                     }
                 }
+
                 myMultiFeatureGeometryBuildHelper.createMultiFeatureGeometries(newVisibleGeomSet, rpp);
                 myMultiFeatureGeometryBuildHelper.clear();
 
@@ -135,7 +137,7 @@ public class StyleBasedUpdateGeometriesWorker extends AbstractDataElementTransfo
 
                 if (getProvider().isPublishUpdatesToGeometryRegistry())
                 {
-                    publishToProvider(oldVisibleGeomSet, newVisibleGeomSet);
+                    ThreadUtilities.runCpu(() -> publishToProvider(oldVisibleGeomSet, newVisibleGeomSet));
                 }
             }
             finally
