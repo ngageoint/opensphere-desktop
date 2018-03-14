@@ -29,7 +29,6 @@ import io.opensphere.mantle.data.geom.style.VisualizationStyleController;
 import io.opensphere.mantle.data.geom.style.dialog.StyleManagerUtils;
 import io.opensphere.mantle.data.geom.style.impl.AbstractFeatureVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.AbstractLocationFeatureVisualizationStyle;
-import io.opensphere.mantle.data.geom.style.impl.PointFeatureVisualizationStyle;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /**
@@ -133,7 +132,8 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
 
             if (ClassUtils.isAssignable(selectedStyleClass, AbstractLocationFeatureVisualizationStyle.class))
             {
-                drawLabel(pEvent, element, vsc, featureClass);
+                drawLabel(pEvent, element, vsc, featureClass,
+                        selectedStyleClass.asSubclass(AbstractLocationFeatureVisualizationStyle.class));
             }
         }
     }
@@ -147,9 +147,11 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
      *            of the label is loaded.
      * @param pFeatureClass the feature class associated with the supplied
      *            element.
+     * @param pStyleClass the style class associated with the supplied element.
      */
     protected void drawLabel(DataElementHighlightChangeEvent pEvent, DataElement pElement,
-            VisualizationStyleController pStyleController, Class<? extends VisualizationSupport> pFeatureClass)
+            VisualizationStyleController pStyleController, Class<? extends VisualizationSupport> pFeatureClass,
+            Class<? extends AbstractLocationFeatureVisualizationStyle> pStyleClass)
     {
         MapGeometrySupport geom = pElement instanceof MapDataElement ? ((MapDataElement)pElement).getMapGeometrySupport() : null;
         if (geom != null)
@@ -161,9 +163,9 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
             {
                 eraseLabel();
             }
-            PointFeatureVisualizationStyle style = (PointFeatureVisualizationStyle)pStyleController
-                    .getStyleForEditorWithConfigValues(PointFeatureVisualizationStyle.class, pFeatureClass,
-                            pElement.getDataTypeInfo().getParent(), pElement.getDataTypeInfo());
+
+            AbstractFeatureVisualizationStyle style = pStyleClass.cast(pStyleController.getStyleForEditorWithConfigValues(
+                    pStyleClass, pFeatureClass, pElement.getDataTypeInfo().getParent(), pElement.getDataTypeInfo()));
 
             LabelGeometry lastLabelGeometry = buildLabelGeometry(pEvent.getRegistryId(), style, pElement, geom);
             getToolbox().getGeometryRegistry().addGeometriesForSource(this, Collections.singleton(lastLabelGeometry));
