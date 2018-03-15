@@ -122,18 +122,21 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
         DataElement element = MantleToolboxUtils.getDataElementLookupUtils(getToolbox()).getDataElement(pEvent.getRegistryId(),
                 null, null);
 
-        List<Class<? extends VisualizationSupport>> featureClasses = StyleManagerUtils
-                .getDefaultFeatureClassesForType(element.getDataTypeInfo());
-        VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox).getVisualizationStyleController();
-        for (Class<? extends VisualizationSupport> featureClass : featureClasses)
+        if (element != null)
         {
-            Class<? extends VisualizationStyle> selectedStyleClass = vsc.getSelectedVisualizationStyleClass(featureClass,
-                    element.getDataTypeInfo().getParent(), element.getDataTypeInfo());
-
-            if (selectedStyleClass != null && ClassUtils.isAssignable(selectedStyleClass, AbstractLocationFeatureVisualizationStyle.class))
+            List<Class<? extends VisualizationSupport>> featureClasses = StyleManagerUtils
+                    .getDefaultFeatureClassesForType(element.getDataTypeInfo());
+            VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox).getVisualizationStyleController();
+            for (Class<? extends VisualizationSupport> featureClass : featureClasses)
             {
-                drawLabel(pEvent, element, vsc, featureClass,
-                        selectedStyleClass.asSubclass(AbstractLocationFeatureVisualizationStyle.class));
+                Class<? extends VisualizationStyle> selectedStyleClass = vsc.getSelectedVisualizationStyleClass(featureClass,
+                        element.getDataTypeInfo().getParent(), element.getDataTypeInfo());
+
+                if (selectedStyleClass != null && ClassUtils.isAssignable(selectedStyleClass, AbstractLocationFeatureVisualizationStyle.class))
+                {
+                    drawLabel(pEvent, element, vsc, featureClass,
+                            selectedStyleClass.asSubclass(AbstractLocationFeatureVisualizationStyle.class));
+                }
             }
         }
     }
