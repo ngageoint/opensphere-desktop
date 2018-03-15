@@ -18,6 +18,7 @@ import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
+import io.opensphere.mantle.data.element.VisualizationState;
 import io.opensphere.mantle.data.element.event.consolidated.ConsolidatedDataElementColorChangeEvent;
 import io.opensphere.mantle.data.geom.style.FeatureVisualizationStyle;
 import io.opensphere.mantle.transformer.MapDataElementTransformer;
@@ -145,10 +146,10 @@ public class StyleApplier implements ActionApplier
         List<Long> ids = elementIds.stream().filter(overriddenIds::contains).collect(Collectors.toList());
         Color color = dataType.getBasicVisualizationInfo().getTypeColor();
 
-        Collection<MapDataElement> elements = FeatureActionUtilities.getDataElements(myMantleToolbox, ids, dataType);
-        for (DataElement element : elements)
+        List<VisualizationState> visualizationStates = myMantleToolbox.getDataElementLookupUtils().getVisualizationStates(ids);
+        for (VisualizationState visualizationState : visualizationStates)
         {
-            element.getVisualizationState().setColor(color);
+            visualizationState.setColor(color);
         }
 
         provider.removeOverrideStyle(ids);

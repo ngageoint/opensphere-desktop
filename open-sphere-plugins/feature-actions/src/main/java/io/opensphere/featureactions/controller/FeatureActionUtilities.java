@@ -13,6 +13,7 @@ import io.opensphere.featureactions.model.Action;
 import io.opensphere.featureactions.model.StyleAction;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.util.DataElementLookupException;
 
@@ -30,14 +31,14 @@ public final class FeatureActionUtilities
      * @param dataType the data type
      * @return the data elements
      */
-    public static Collection<MapDataElement> getDataElements(MantleToolbox mantleToolbox, Collection<Long> ids,
+    public static Collection<DataElement> getDataElements(MantleToolbox mantleToolbox, Collection<Long> ids,
             DataTypeInfo dataType)
     {
-        Collection<MapDataElement> elements;
+        Collection<DataElement> elements;
         try
         {
-            elements = CollectionUtilities.filterDowncast(mantleToolbox.getDataElementLookupUtils()
-                    .getDataElements(CollectionUtilities.getList(ids), dataType, null, true), MapDataElement.class);
+            elements = mantleToolbox.getDataElementLookupUtils().getDataElements(CollectionUtilities.getList(ids), dataType, null,
+                    true);
         }
         catch (DataElementLookupException e)
         {
