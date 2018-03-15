@@ -130,7 +130,7 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
             Class<? extends VisualizationStyle> selectedStyleClass = vsc.getSelectedVisualizationStyleClass(featureClass,
                     element.getDataTypeInfo().getParent(), element.getDataTypeInfo());
 
-            if (ClassUtils.isAssignable(selectedStyleClass, AbstractLocationFeatureVisualizationStyle.class))
+            if (selectedStyleClass != null && ClassUtils.isAssignable(selectedStyleClass, AbstractLocationFeatureVisualizationStyle.class))
             {
                 drawLabel(pEvent, element, vsc, featureClass,
                         selectedStyleClass.asSubclass(AbstractLocationFeatureVisualizationStyle.class));
