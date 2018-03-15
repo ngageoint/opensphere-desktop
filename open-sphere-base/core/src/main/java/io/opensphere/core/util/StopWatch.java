@@ -1,9 +1,12 @@
 package io.opensphere.core.util;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
 
+import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
 
 /** A stop watch that works the way I want it to. */
@@ -73,7 +76,9 @@ public class StopWatch
      */
     public void printCategories()
     {
-        for (Map.Entry<String, Long> entry : myCategoryTimes.entrySet())
+        List<Entry<String, Long>> entrySet = CollectionUtilities.sort(myCategoryTimes.entrySet(),
+            (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+        for (Map.Entry<String, Long> entry : entrySet)
         {
             System.out.println(StringUtils.leftPad(entry.getValue().toString(), 7) + " " + entry.getKey());
         }

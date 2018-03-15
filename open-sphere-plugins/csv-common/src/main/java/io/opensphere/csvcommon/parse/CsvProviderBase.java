@@ -30,8 +30,8 @@ import io.opensphere.csvcommon.config.v2.CSVDelimitedColumnFormat;
 import io.opensphere.csvcommon.config.v2.CSVFixedWidthColumnFormat;
 import io.opensphere.csvcommon.config.v2.CSVParseParameters;
 import io.opensphere.importer.config.ColumnType;
-import io.opensphere.importer.config.SpecialColumn;
 import io.opensphere.importer.config.ColumnType.Category;
+import io.opensphere.importer.config.SpecialColumn;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.DataElementProvider;
@@ -55,25 +55,13 @@ public abstract class CsvProviderBase implements DataElementProvider
     private static final Logger LOGGER = Logger.getLogger(CsvProviderBase.class);
 
     /** The Constant OUR_DISCARDED_DATAELEMENT. */
-    protected static DataElement OUR_DISCARDED_DATAELEMENT = new DefaultDataElement(0);
+    private static DataElement OUR_DISCARDED_DATAELEMENT = new DefaultDataElement(0);
 
     /** A Counter that helps generate ID's for the geometries. */
-    protected static AtomicLong ourIDCounter = new AtomicLong(1000000);
+    private static AtomicLong ourIDCounter = new AtomicLong(1000000);
 
     /** The Constant TO_PERCENT. */
-    protected static final double TO_PERCENT = 100.0;
-
-    /** The Column analyzer. */
-    protected ColumnClassAnalyzer myColumnAnalyzer;
-
-    /** The the location of the column breaks if not delimited. */
-    protected int[] myColumnBreaks;
-
-    /** The column names. */
-    protected List<? extends String> myColumnNames;
-
-    /** The Column name to class map. */
-    protected Map<String, Class<?>> myColumnNameToClassMap;
+    private static final double TO_PERCENT = 100.0;
 
     /** Saves the config. */
     protected Runnable myConfigSaver;
@@ -81,50 +69,20 @@ public abstract class CsvProviderBase implements DataElementProvider
     /** The current line. */
     protected String myCurrLine;
 
-    /** The discarded line count. */
-    protected int myDiscardedLineCount;
-
-    /** The Dynamic enum columns. */
-    protected Map<String, Class<?>> myDynamicEnumColumnsToOrigClassMap;
-
     /** The Dynamic enumeration registry. */
     protected DynamicEnumerationRegistry myDynamicEnumerationRegistry;
 
     /** The Error messages. */
     protected List<String> myErrorMessages;
 
-    /** The filtered set of column names. */
-    protected Set<String> myFilteredColumns;
-
     /** The index of the first row with data in the file. */
     protected int myFirstDataRowNum;
-
-    /** The my had error. */
-    protected boolean myHadError;
-
-    /** The Had warning. */
-    protected boolean myHadWarning;
-
-    /** Indicates if the warn message has already been shown. */
-    protected boolean myHasBeenWarned;
-
-    /** The delimited flag, if false means fixed width columns. */
-    protected boolean myIsDelimited;
-
-    /** The Is quoted. */
-    protected boolean myIsQuoted;
 
     /** The line index. */
     protected int myLineIndex;
 
     /** The next element to return. */
     protected DataElement myNextElementToReturn;
-
-    /** The number of columns. */
-    protected int myNumColumns;
-
-    /** The my overall time extent. */
-    protected TimeSpan myOverallTimeExtent = TimeSpan.TIMELESS;
 
     /** The parts. */
     protected String[] myParts;
@@ -138,14 +96,8 @@ public abstract class CsvProviderBase implements DataElementProvider
     /** The Task activity. */
     protected InputStreamMonitorTaskActivity myTaskActivity;
 
-    /** The delimited text tokenizer. */
-    protected TextDelimitedStringTokenizer myTokenizer;
-
     /** The toolbox. */
     protected Toolbox myToolbox;
-
-    /** The Total line count. */
-    protected int myTotalLineCount;
 
     /** The type info. */
     protected DefaultDataTypeInfo myTypeInfo;
@@ -156,14 +108,62 @@ public abstract class CsvProviderBase implements DataElementProvider
     /** The Use dynamic enumerations. */
     protected boolean myUseDynamicEnumerations;
 
-    /** The Uses fixed width columns. */
-    protected boolean myUsesFixedWidthColumns;
-
     /** The Warning messages. */
     protected List<String> myWarningMessages;
 
     /** Support for generating geometries. */
     protected GeomSupportFactory geomFact;
+
+    /** The Column analyzer. */
+    private ColumnClassAnalyzer myColumnAnalyzer;
+
+    /** The the location of the column breaks if not delimited. */
+    private int[] myColumnBreaks;
+
+    /** The column names. */
+    private List<? extends String> myColumnNames;
+
+    /** The Column name to class map. */
+    private Map<String, Class<?>> myColumnNameToClassMap;
+
+    /** The discarded line count. */
+    private int myDiscardedLineCount;
+
+    /** The Dynamic enum columns. */
+    private Map<String, Class<?>> myDynamicEnumColumnsToOrigClassMap;
+
+    /** The filtered set of column names. */
+    private Set<String> myFilteredColumns;
+
+    /** The my had error. */
+    private boolean myHadError;
+
+    /** The Had warning. */
+    private boolean myHadWarning;
+
+    /** Indicates if the warn message has already been shown. */
+    private boolean myHasBeenWarned;
+
+    /** The delimited flag, if false means fixed width columns. */
+    private boolean myIsDelimited;
+
+    /** The Is quoted. */
+    private boolean myIsQuoted;
+
+    /** The number of columns. */
+    private int myNumColumns;
+
+    /** The my overall time extent. */
+    private TimeSpan myOverallTimeExtent = TimeSpan.TIMELESS;
+
+    /** The delimited text tokenizer. */
+    private TextDelimitedStringTokenizer myTokenizer;
+
+    /** The Total line count. */
+    private int myTotalLineCount;
+
+    /** The Uses fixed width columns. */
+    private boolean myUsesFixedWidthColumns;
 
     /**
      * Gets the URI of the data, depending on the specific source.
