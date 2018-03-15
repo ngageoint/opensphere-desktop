@@ -193,16 +193,22 @@ public class LatLonAltParser
     public static Pair<CoordFormat, CoordFormat> getLatLonFormat(String input)
     {
         if (input == null)
+        {
             return null;
+        }
         String str = input.trim().toUpperCase();
         if (LOGGER.isDebugEnabled())
+        {
             LOGGER.debug("Lat/Lon string to parse = " + input);
+        }
 
         for (Coords c : latLonOptions)
         {
             Matcher matcher = c.getPattern().matcher(str);
             if (matcher.matches())
+            {
                 return Pair.create(c.getLat().getCoordFormat(), c.getLon().getCoordFormat());
+            }
         }
         return null;
     }
@@ -253,7 +259,17 @@ public class LatLonAltParser
      */
     public static double parseLat(String latString, CoordFormat format)
     {
-        return parseAngle(latString, latByFormat.get(format));
+        double lat = Double.NaN;
+        // Try more efficient parsing for decimal values
+        if (format == CoordFormat.DECIMAL)
+        {
+            lat = parseDecimalAngle(latString, CoordType.LAT);
+        }
+        if (Double.isNaN(lat))
+        {
+            lat = parseAngle(latString, latByFormat.get(format));
+        }
+        return lat;
     }
 
     /**
@@ -278,7 +294,17 @@ public class LatLonAltParser
      */
     public static double parseLon(String lonString, CoordFormat format)
     {
-        return parseAngle(lonString, lonByFormat.get(format));
+        double lon = Double.NaN;
+        // Try more efficient parsing for decimal values
+        if (format == CoordFormat.DECIMAL)
+        {
+            lon = parseDecimalAngle(lonString, CoordType.LON);
+        }
+        if (Double.isNaN(lon))
+        {
+            lon = parseAngle(lonString, lonByFormat.get(format));
+        }
+        return lon;
     }
 
     /**
@@ -302,10 +328,14 @@ public class LatLonAltParser
     public static LatLonAlt parseLatLon(String input)
     {
         if (input == null)
+        {
             return null;
+        }
         String str = input.trim().toUpperCase();
         if (LOGGER.isDebugEnabled())
+        {
             LOGGER.debug("Lat/Lon string to parse = " + input);
+        }
 
         for (Coords c : latLonOptions)
         {
@@ -316,12 +346,16 @@ public class LatLonAltParser
                 double lat = parse(c.getLat(), matcher);
                 double lon = parse(c.getLon(), matcher);
                 if (Double.isNaN(lat) || Double.isNaN(lon))
+                {
                     return null;
+                }
 
                 // If our latitude is greater than 90, we know
                 // that the latitude and longitude need to be switched
                 if (Math.abs(lat) > 90)
+                {
                     return LatLonAlt.createFromDegrees(lon, lat);
+                }
                 return LatLonAlt.createFromDegrees(lat, lon);
             }
         }
@@ -351,8 +385,10 @@ public class LatLonAltParser
         catch (NumberFormatException nfe)
         {
             if (LOGGER.isDebugEnabled())
+            {
                 LOGGER.debug("Number format exception trying to parse deg = " + coord.getDeg(matcher) + " min = "
                         + coord.getMin(matcher) + " sec = " + coord.getSec(matcher) + " fracSec = " + coord.getFracSec(matcher));
+            }
             return Double.NaN;
         }
     }
@@ -375,18 +411,28 @@ public class LatLonAltParser
         double val = Math.abs(d);
 
         if (min != null)
+        {
             val += parseMinutes(min) / Constants.MINUTES_PER_DEGREE;
+        }
         if (sec != null)
+        {
             val += Double.parseDouble(sec) / Constants.SECONDS_PER_DEGREE;
+        }
         if (fracSec != null)
+        {
             val += Double.parseDouble("." + fracSec) / Constants.SECONDS_PER_DEGREE;
+        }
 
         if (Double.compare(d, 0.) < 0)
+        {
             val = -val;
+        }
 
         // possibly, this is the second time inverting the value
         if ("S".equals(dir) || "W".equals(dir))
+        {
             val = -val;
+        }
         return val;
     }
 
@@ -399,7 +445,9 @@ public class LatLonAltParser
     private static double parseMinutes(String min)
     {
         if (min.length() <= 2 || min.indexOf(".") != -1)
+        {
             return Double.parseDouble(min);
+        }
         return Double.parseDouble(min.substring(0, 2) + "." + min.substring(2));
     }
 
@@ -414,7 +462,9 @@ public class LatLonAltParser
     private static double parseAngle(String input, Coord[] coords)
     {
         if (input == null || coords == null)
+        {
             return Double.NaN;
+        }
 
         String str = input.trim().toUpperCase();
         for (Coord c : coords)
@@ -424,11 +474,42 @@ public class LatLonAltParser
             {
                 double result = parse(c, matcher);
                 if (c.getCoordType() == CoordType.LAT && Math.abs(result) > 90.)
+                {
                     result = Double.NaN;
+                }
                 return result;
             }
         }
         return Double.NaN;
+    }
+
+    /**
+     * Parse a latitude or a longitude from a given string, expecting that the string is a decimal number.
+     *
+     * @param input The string to parse.
+     * @param coordType The coordinate type.
+     * @return The latitude parsed from the string, or {@link Double#NaN} if it could not be parsed.
+     */
+    private static double parseDecimalAngle(String input, CoordType coordType)
+    {
+        double result = Double.NaN;
+        if (input != null)
+        {
+            try
+            {
+                result = Double.parseDouble(input.trim());
+                if (coordType == CoordType.LAT && Math.abs(result) > 90.)
+                {
+                    result = Double.NaN;
+                }
+            }
+            catch (NumberFormatException e)
+            {
+                // TODO change to debug
+                LOGGER.warn(e);
+            }
+        }
+        return result;
     }
 
     /**
@@ -566,7 +647,9 @@ public class LatLonAltParser
         {
             String dir = getGroup(matcher, myDirectionIndex1);
             if (dir != null && !dir.isEmpty())
+            {
                 return dir;
+            }
             return getGroup(matcher, myDirectionIndex2);
         }
 
