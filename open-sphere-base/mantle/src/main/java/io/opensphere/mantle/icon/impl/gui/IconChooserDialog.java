@@ -42,6 +42,9 @@ public class IconChooserDialog extends JDialog
     public static final String DEFAULT_MESSAGE = "Use the tree on the left to select the icon set"
             + ", then select an icon from the grid.";
 
+    /** The Constant HELP_MESSAGE. */
+    public static final String HELP_MESSAGE = "Icons have a right-click context menu that allows for alternative actions.";
+
     /** The Constant ICON_SELECTED. */
     public static final String ICON_SELECTED = "ICON_SELECTED";
 
@@ -94,20 +97,6 @@ public class IconChooserDialog extends JDialog
 
         myChooserPanel = new IconChooserPanel(tb, false, true, puMenu, null);
 
-        JPanel msgPanel = new JPanel(new BorderLayout());
-        msgPanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 10));
-
-        JTextArea jta = new JTextArea();
-        jta.setLineWrap(true);
-        jta.setWrapStyleWord(true);
-        jta.setFont(jta.getFont().deriveFont(Font.BOLD, jta.getFont().getSize() + 5));
-        jta.setText(message);
-        jta.setEditable(false);
-        jta.setBackground(msgPanel.getBackground());
-        jta.setBorder(BorderFactory.createEmptyBorder());
-
-        msgPanel.add(jta, BorderLayout.CENTER);
-
         JPanel mainPanel = new JPanel(new BorderLayout());
 
         JPanel closePanel = new JPanel();
@@ -123,11 +112,47 @@ public class IconChooserDialog extends JDialog
         mySelectionListener = e -> close(ICON_SELECTED);
         myChooserPanel.addActionListener(mySelectionListener);
 
-        mainPanel.add(msgPanel, BorderLayout.NORTH);
+        mainPanel.add(createMessagePanel(message, HELP_MESSAGE), BorderLayout.NORTH);
         mainPanel.add(myChooserPanel, BorderLayout.CENTER);
         mainPanel.add(closePanel, BorderLayout.SOUTH);
         setContentPane(mainPanel);
         setLocationRelativeTo(SwingUtilities.getWindowAncestor(owner));
+    }
+
+    /**
+     * Creates the Title message panel.
+     *
+     * @param title the title/message
+     * @param subtitle the subtitle/sub-message
+     * @return the created panel
+     */
+    private JPanel createMessagePanel(String title, String subtitle)
+    {
+        JPanel msgPanel = new JPanel(new BorderLayout());
+        msgPanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 10));
+
+        JTextArea titleText = new JTextArea();
+        titleText.setLineWrap(true);
+        titleText.setWrapStyleWord(true);
+        titleText.setFont(titleText.getFont().deriveFont(Font.BOLD, titleText.getFont().getSize() + 5));
+        titleText.setText(title);
+        titleText.setEditable(false);
+        titleText.setBackground(msgPanel.getBackground());
+        titleText.setBorder(BorderFactory.createEmptyBorder());
+
+        JTextArea subtitleText = new JTextArea();
+        subtitleText.setLineWrap(true);
+        subtitleText.setWrapStyleWord(true);
+        subtitleText.setFont(subtitleText.getFont().deriveFont(Font.ITALIC, subtitleText.getFont().getSize()));
+        subtitleText.setText(subtitle);
+        subtitleText.setEditable(false);
+        subtitleText.setBackground(msgPanel.getBackground());
+        subtitleText.setBorder(BorderFactory.createEmptyBorder());
+
+        msgPanel.add(titleText, BorderLayout.CENTER);
+        msgPanel.add(subtitleText, BorderLayout.SOUTH);
+
+        return msgPanel;
     }
 
     /**
