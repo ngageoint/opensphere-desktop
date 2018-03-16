@@ -118,10 +118,10 @@ public abstract class CsvProviderBase implements DataElementProvider
     private ColumnClassAnalyzer myColumnAnalyzer;
 
     /** The the location of the column breaks if not delimited. */
-    private int[] myColumnBreaks;
+    private final int[] myColumnBreaks;
 
     /** The column names. */
-    private List<? extends String> myColumnNames;
+    private final List<? extends String> myColumnNames;
 
     /** The Column name to class map. */
     private Map<String, Class<?>> myColumnNameToClassMap;
@@ -133,7 +133,7 @@ public abstract class CsvProviderBase implements DataElementProvider
     private Map<String, Class<?>> myDynamicEnumColumnsToOrigClassMap;
 
     /** The filtered set of column names. */
-    private Set<String> myFilteredColumns;
+    private final Set<String> myFilteredColumns;
 
     /** The my had error. */
     private boolean myHadError;
@@ -151,7 +151,7 @@ public abstract class CsvProviderBase implements DataElementProvider
     private boolean myIsQuoted;
 
     /** The number of columns. */
-    private int myNumColumns;
+    private final int myNumColumns;
 
     /** The my overall time extent. */
     private TimeSpan myOverallTimeExtent = TimeSpan.TIMELESS;
@@ -163,7 +163,35 @@ public abstract class CsvProviderBase implements DataElementProvider
     private int myTotalLineCount;
 
     /** The Uses fixed width columns. */
-    private boolean myUsesFixedWidthColumns;
+    private final boolean myUsesFixedWidthColumns;
+
+    /**
+     * Constructor, setting all necessary information to perform the extraction from the CSV file.
+     *
+     * @param dtiKey the data type key
+     */
+    public CsvProviderBase(String dtiKey)
+    {
+        myHasBeenWarned = false;
+        CSVParseParameters parseParameters = getParseParams();
+        myFirstDataRowNum = parseParameters.getDataStartLine().intValue();
+        if (parseParameters.getColumnFormat() instanceof CSVDelimitedColumnFormat)
+        {
+            CSVDelimitedColumnFormat columnFormat = (CSVDelimitedColumnFormat)parseParameters.getColumnFormat();
+            myIsDelimited = true;
+            myIsQuoted = StringUtils.isNotEmpty(columnFormat.getTextDelimiter());
+            myTokenizer = new TextDelimitedStringTokenizer(columnFormat.getTokenDelimiter(), columnFormat.getTextDelimiter());
+        }
+        myUsesFixedWidthColumns = parseParameters.getColumnFormat() instanceof CSVFixedWidthColumnFormat;
+        myColumnBreaks = myUsesFixedWidthColumns
+                ? ((CSVFixedWidthColumnFormat)parseParameters.getColumnFormat()).getColumnDivisions() : null;
+        myNumColumns = parseParameters.getColumnNames().size();
+
+        myColumnNames = parseParameters.getColumnNames();
+        determineColumnClasses(dtiKey);
+
+        myFilteredColumns = getColumnFilter();
+    }
 
     /**
      * Gets the URI of the data, depending on the specific source.
@@ -587,35 +615,6 @@ public abstract class CsvProviderBase implements DataElementProvider
             ptData = null;
         }
         return ptData;
-    }
-
-    /**
-     * Finds all necessary information to perform the extraction from the CSV
-     * file.
-     *
-     * @param dtiKey the new up extraction
-     */
-    protected void setupExtraction(String dtiKey)
-    {
-        myHasBeenWarned = false;
-        CSVParseParameters parseParameters = getParseParams();
-        myFirstDataRowNum = parseParameters.getDataStartLine().intValue();
-        if (parseParameters.getColumnFormat() instanceof CSVDelimitedColumnFormat)
-        {
-            CSVDelimitedColumnFormat columnFormat = (CSVDelimitedColumnFormat)parseParameters.getColumnFormat();
-            myIsDelimited = true;
-            myIsQuoted = StringUtils.isNotEmpty(columnFormat.getTextDelimiter());
-            myTokenizer = new TextDelimitedStringTokenizer(columnFormat.getTokenDelimiter(), columnFormat.getTextDelimiter());
-        }
-        myUsesFixedWidthColumns = parseParameters.getColumnFormat() instanceof CSVFixedWidthColumnFormat;
-        myColumnBreaks = myUsesFixedWidthColumns
-                ? ((CSVFixedWidthColumnFormat)parseParameters.getColumnFormat()).getColumnDivisions() : null;
-        myNumColumns = parseParameters.getColumnNames().size();
-
-        myColumnNames = parseParameters.getColumnNames();
-        determineColumnClasses(dtiKey);
-
-        myFilteredColumns = getColumnFilter();
     }
 
     /**
