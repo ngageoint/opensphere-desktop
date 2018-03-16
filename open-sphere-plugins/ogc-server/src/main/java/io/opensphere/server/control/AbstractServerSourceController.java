@@ -350,9 +350,8 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
             synchronized (myFinishReloadMap)
             {
                 Runnable finishReload;
-                if ((finishReload = myFinishReloadMap.get(source)) != null)
+                if ((finishReload = myFinishReloadMap.remove(source)) != null)
                 {
-                    myFinishReloadMap.remove(source);
                     finishReload.run();
                 }
             }
@@ -391,12 +390,12 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
     private Set<String> getActiveSourceURLs()
     {
         Set<String> activeURLs = new HashSet<String>();
-        DataGroupController dgc = MantleToolboxUtils.getMantleToolbox(myToolbox).getDataGroupController();
-        dgc.getActiveMembers(false).stream().forEach(dti ->
+        DataGroupController dataGroupController = MantleToolboxUtils.getMantleToolbox(myToolbox).getDataGroupController();
+        dataGroupController.getActiveMembers(false).stream().forEach(dataTypeInfo ->
         {
-            if (UrlUtil.isValidAbsoluteUrl(dti.getUrl()))
+            if (UrlUtil.isValidAbsoluteUrl(dataTypeInfo.getUrl()))
             {
-                activeURLs.add(dti.getUrl());
+                activeURLs.add(dataTypeInfo.getUrl());
             }
         });
         return activeURLs;
