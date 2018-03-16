@@ -15,6 +15,7 @@ import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.element.VisualizationState;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
 import io.opensphere.mantle.data.geom.factory.RenderPropertyPool;
+import io.opensphere.mantle.data.geom.factory.impl.DefaultRenderPropertyPool;
 import io.opensphere.mantle.data.geom.style.FeatureVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.DefaultFeatureIndividualGeometryBuilderData;
 
@@ -74,7 +75,7 @@ public class StyleBasedBuildAndPublishGeometriesWorker extends AbstractDataEleme
             int index = 0;
             MapGeometrySupport mgs = null;
             VisualizationState vs = null;
-            RenderPropertyPool rpPool = createPool();
+            RenderPropertyPool rpPool = new DefaultRenderPropertyPool(getProvider().getDataType());
 
             DefaultFeatureIndividualGeometryBuilderData builderData = new DefaultFeatureIndividualGeometryBuilderData();
             for (MapDataElement mde : myMapDataElements)

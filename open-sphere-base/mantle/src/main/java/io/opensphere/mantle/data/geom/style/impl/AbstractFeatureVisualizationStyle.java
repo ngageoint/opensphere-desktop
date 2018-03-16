@@ -336,7 +336,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
                 builderData.getMDP(), builderData.getVS());
 
         PointGeometryFactory factory = new PointGeometryFactory(renderPropertyPool);
-        if (position.getAlt().getMeters() < 0)
+        if (position.getLatLonAlt().getAltM() < 0)
         {
             setToAddTo.addAll(mySubsurfaceGeometryCreator.createSubsurfaceGeometry(builderData, renderPropertyPool,
                     stylePointSize, factory, constraints, getColor(), position));
