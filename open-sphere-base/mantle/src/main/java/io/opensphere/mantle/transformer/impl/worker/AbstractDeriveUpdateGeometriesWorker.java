@@ -116,18 +116,16 @@ public abstract class AbstractDeriveUpdateGeometriesWorker extends AbstractDataE
             try
             {
                 start = System.nanoTime();
-                Set<Long> oldVisIds = New.set(myIdsOfInterest.size());
                 Set<Geometry> oldVisibleGeomSet = GeometrySetUtil.findGeometrySetWithIds(getProvider().getGeometrySet(),
-                        getProvider().getGeometrySetLock(), myIdsOfInterest, oldVisIds,
+                        getProvider().getGeometrySetLock(), myIdsOfInterest, null,
                         getProvider().getDataModelIdFromGeometryIdBitMask());
 
-                Set<Long> oldHiddenIds = New.set(myIdsOfInterest.size());
                 Set<Geometry> oldHiddenGeomSet = GeometrySetUtil.findGeometrySetWithIds(getProvider().getHiddenGeometrySet(),
-                        getProvider().getGeometrySetLock(), myIdsOfInterest, oldHiddenIds,
+                        getProvider().getGeometrySetLock(), myIdsOfInterest, null,
                         getProvider().getDataModelIdFromGeometryIdBitMask());
 
-                RenderPropertyPool rpp = DefaultRenderPropertyPool.createPool(getProvider().getDataType(),
-                        getProvider().getGeometrySet(), getProvider().getHiddenGeometrySet());
+                RenderPropertyPool rpp = DefaultRenderPropertyPool.createPool(getProvider().getDataType(), oldVisibleGeomSet,
+                        oldHiddenGeomSet);
 
                 if (LOGGER.isTraceEnabled())
                 {
