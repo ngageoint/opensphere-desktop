@@ -41,8 +41,8 @@ public class Mean extends SpreadsheetFunction
             }
         }
 
-        Optional<Double> result = selectedValues.stream().filter(NumberUtilities::isNumber).map((d) -> ((Number)d).doubleValue())
-                .reduce((a, b) -> Double.sum(a, b));
+        Optional<Double> result = selectedValues.stream().filter(NumberUtilities::isNumber)
+                .map((d) -> NumberUtilities.parseDouble(d, Double.NaN)).reduce((a, b) -> Double.sum(a, b));
 
         return result.map((d) -> d / selectedValues.size()).orElse(Double.NaN);
     }

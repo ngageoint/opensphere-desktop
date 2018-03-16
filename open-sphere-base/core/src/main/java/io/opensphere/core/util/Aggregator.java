@@ -2,6 +2,7 @@ package io.opensphere.core.util;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -25,6 +26,21 @@ public class Aggregator<T>
 
     /** The processor. */
     private final Consumer<List<T>> myProcessor;
+
+    /**
+     * Helper method to process some data in batches.
+     *
+     * @param items the items to process
+     * @param batchSize the batch size
+     * @param processor the processor
+     * @param <T> the items type
+     */
+    public static <T> void process(Collection<? extends T> items, int batchSize, Consumer<List<T>> processor)
+    {
+        Aggregator<T> aggregator = new Aggregator<>(batchSize, processor);
+        aggregator.addItems(items);
+        aggregator.processAll();
+    }
 
     /**
      * Constructor.
@@ -67,17 +83,37 @@ public class Aggregator<T>
      */
     public void addItems(Collection<? extends T> items)
     {
-        if (myBatchSize > 1)
+        int totalSize = myItems.size() + items.size();
+        if (totalSize < myBatchSize)
         {
             myItems.addAll(items);
-            if (myItems.size() >= myBatchSize)
-            {
-                processAll();
-            }
+        }
+        else if (totalSize == myBatchSize)
+        {
+            myItems.addAll(items);
+            processAll();
         }
         else
         {
-            myProcessor.accept(New.list(items));
+            Iterator<? extends T> iter = items.iterator();
+            while (iter.hasNext())
+            {
+                int countToAdd = myBatchSize - myItems.size();
+                int i = 0;
+                while (iter.hasNext())
+                {
+                    if (i++ >= countToAdd)
+                    {
+                        break;
+                    }
+                    T item = iter.next();
+                    myItems.add(item);
+                }
+                if (myItems.size() >= myBatchSize)
+                {
+                    processAll();
+                }
+            }
         }
     }
 

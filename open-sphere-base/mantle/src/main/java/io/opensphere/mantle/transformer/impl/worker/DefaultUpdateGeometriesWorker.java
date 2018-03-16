@@ -193,14 +193,12 @@ public class DefaultUpdateGeometriesWorker extends AbstractDataElementTransforme
         VisualizationState defaultVSState = new VisualizationState(true);
 
         long start = System.nanoTime();
-        Set<Long> oldVisIds = New.set(myIdsOfInterest.size());
         Set<Geometry> oldVisibleGeomSet = GeometrySetUtil.findGeometrySetWithIds(getProvider().getGeometrySet(),
-                getProvider().getGeometrySetLock(), myIdsOfInterest, oldVisIds,
+                getProvider().getGeometrySetLock(), myIdsOfInterest, null,
                 getProvider().getDataModelIdFromGeometryIdBitMask());
 
-        Set<Long> oldHiddenIds = New.set(myIdsOfInterest.size());
         Set<Geometry> oldHiddenGeomSet = GeometrySetUtil.findGeometrySetWithIds(getProvider().getHiddenGeometrySet(),
-                getProvider().getGeometrySetLock(), myIdsOfInterest, oldHiddenIds,
+                getProvider().getGeometrySetLock(), myIdsOfInterest, null,
                 getProvider().getDataModelIdFromGeometryIdBitMask());
 
         Set<Geometry> newVisibleGeomSet = New.set(oldVisibleGeomSet.size());
