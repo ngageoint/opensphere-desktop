@@ -48,6 +48,15 @@ public class NetworkConfigurationManagerImplTest
 
         Preferences prefs = support.createMock(Preferences.class);
         Capture<String> prefKey = EasyMock.newCapture();
+        EasyMock.expect(prefs.removeInt(EasyMock.eq("ProxyPort"), EasyMock.isA(NetworkConfigurationManager.class))).andReturn(80);
+        EasyMock.expect(
+                prefs.putString(EasyMock.eq("ProxyHost"), EasyMock.eq(""), EasyMock.isA(NetworkConfigurationManager.class)))
+                .andReturn(null);
+        EasyMock.expect(prefs.putBoolean(EasyMock.eq("SystemProxiesEnabled"), EasyMock.eq(false),
+                EasyMock.isA(NetworkConfigurationManager.class))).andReturn(null);
+        EasyMock.expect(
+                prefs.putString(EasyMock.eq("ProxyConfigUrl"), EasyMock.eq(""), EasyMock.isA(NetworkConfigurationManager.class)))
+                .andReturn(null);
         EasyMock.expect(prefs.putString(EasyMock.eq("ProxyExclusionPatterns"), EasyMock.capture(prefKey), EasyMock.anyObject()))
                 .andReturn(null);
         EasyMock.expect(prefs.getString("ProxyExclusionPatterns", "")).andAnswer(() -> prefKey.getValue());
@@ -60,6 +69,7 @@ public class NetworkConfigurationManagerImplTest
 
         NetworkConfigurationManager networkConfigurationManager = new NetworkConfigurationManagerImpl(prefsRegistry);
         networkConfigurationManager.setProxyConfiguration("", -1, false, "", exclusions);
+
         boolean excluded = networkConfigurationManager.isExcludedFromProxy(host);
 
         support.verifyAll();

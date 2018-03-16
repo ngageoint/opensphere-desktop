@@ -146,7 +146,7 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
      * @param host the host, or {@code ""} to disable the proxy
      * @param port the port number
      */
-    public void setProxyHost(String host, int port)
+    private void setProxyHost(String host, int port)
     {
         if (StringUtils.isEmpty(host))
         {

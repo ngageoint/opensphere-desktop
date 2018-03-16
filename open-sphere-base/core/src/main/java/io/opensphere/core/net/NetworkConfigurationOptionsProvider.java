@@ -123,7 +123,6 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
             {
                 JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(myManualProxyHostField),
                         "Could not parse port number.");
-                myNetworkConfigurationManager.setProxyConfiguration("", -1, false, "", myManualProxyExclusionsField.getText());
             }
             proxyOptionPreference.put(myManualProxyExclusionsLabel.getText(), myManualProxyExclusionsField.getText());
             setProxyPreferenceValue(myUseManualProxyButton.getText(), proxyOptionPreference, this);
