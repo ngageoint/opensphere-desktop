@@ -1,6 +1,5 @@
 package io.opensphere.csv;
 
-import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.locks.ReentrantLock;
@@ -11,10 +10,10 @@ import io.opensphere.core.dialog.alertviewer.event.Type;
 import io.opensphere.core.order.impl.DefaultOrderCategory;
 import io.opensphere.csv.config.v2.CSVDataSource;
 import io.opensphere.csv.parse.CSVDataElementProvider;
+import io.opensphere.mantle.controller.DataTypeController;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.DataTypeInfoOrderManager;
 import io.opensphere.mantle.data.DefaultDataTypeInfoOrderManager;
-import io.opensphere.mantle.data.event.DataTypeInfoColorChangeEvent;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
 import io.opensphere.mantle.datasources.IDataSource;
 import io.opensphere.mantle.datasources.LoadEndDispositionEvent;
@@ -222,20 +221,13 @@ public class CSVFileHandler extends AbstractDataSourceHandler
             String source = CSVEnvoy.class.getSimpleName() + ':' + csvFileSource.getSourceUri();
             String category = "CSV/" + csvFileSource.getName();
 
+            DataTypeController dataTypeController = MantleToolboxUtils.getMantleToolbox(getController().getToolbox())
+                    .getDataTypeController();
             myLoadUnloadLock.lock();
             try
             {
-                MantleToolboxUtils.getMantleToolbox(getController().getToolbox()).getDataTypeController().addDataType(source,
-                        category, loadResult, this);
-                MantleToolboxUtils.getMantleToolbox(getController().getToolbox()).getDataTypeController().addDataElements(dep,
-                        null, null, this);
-                // Ensure that the data elements get the type color
-                Color typeColor = loadResult.getBasicVisualizationInfo().getTypeColor();
-                if (typeColor != null && typeColor != loadResult.getBasicVisualizationInfo().getDefaultTypeColor())
-                {
-                    loadResult.fireChangeEvent(new DataTypeInfoColorChangeEvent(loadResult,
-                            loadResult.getBasicVisualizationInfo().getTypeColor(), false, source));
-                }
+                dataTypeController.addDataType(source, category, loadResult, this);
+                dataTypeController.addDataElements(dep, null, null, this);
             }
             finally
             {
