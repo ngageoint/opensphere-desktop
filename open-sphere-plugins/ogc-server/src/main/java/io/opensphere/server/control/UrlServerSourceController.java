@@ -45,6 +45,7 @@ public abstract class UrlServerSourceController extends AbstractServerSourceCont
         // Load the config and activate sources
         Preferences preferences = toolbox.getPreferencesRegistry().getPreferences(prefsTopic);
         setConfig(readConfig(preferences));
+
         initialize();
     }
 
@@ -122,7 +123,7 @@ public abstract class UrlServerSourceController extends AbstractServerSourceCont
         if (source instanceof UrlDataSource)
         {
             UrlDataSource serverSource = (UrlDataSource)source;
-            description.append("<br>&nbsp URL: ").append(serverSource.getBaseUrl());
+            description.append("<br>&nbsp URL: ").append(serverSource.getURL());
         }
         description.append("</html>");
         return description.toString();

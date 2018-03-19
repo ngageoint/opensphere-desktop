@@ -2,28 +2,35 @@ package io.opensphere.server.control;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import io.opensphere.core.NetworkConfigurationManager;
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.common.util.UrlUtil;
 import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.NamedThreadFactory;
+import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.datasources.IDataSource;
 import io.opensphere.mantle.datasources.IDataSourceConfig;
+import io.opensphere.mantle.datasources.UrlSource;
+import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.server.customization.ServerCustomization;
 import io.opensphere.server.display.ServerSourceEditor;
 import io.opensphere.server.toolbox.ServerSourceController;
 
 /**
- * Abstract implementation of {@link ServerSourceController} that provides an
- * implementation of the change support.
+ * Abstract implementation of {@link ServerSourceController} that provides an implementation of the change support.
  */
 public abstract class AbstractServerSourceController implements ServerSourceController
 {
@@ -33,6 +40,14 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
 
     /** The Change support. */
     private final WeakChangeSupport<ConfigChangeListener> myChangeSupport;
+
+    /** Listener for changes to the proxy settings. */
+    private final NetworkConfigurationManager.NetworkConfigurationChangeListener myNetworkConfigChangeListener =
+            this::reloadBadSources;
+
+    /** The Map of sources to reload listeners. */
+    private final Map<IDataSource, Runnable> myFinishReloadMap =
+            Collections.synchronizedMap(new HashMap<IDataSource, Runnable>());
 
     /** Object that holds and manages the Server source configs. */
     private IDataSourceConfig myConfig;
@@ -180,6 +195,8 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
     {
         myToolbox = toolbox;
         myPrefsTopic = prefsTopic;
+
+        myToolbox.getSystemToolbox().getNetworkConfigurationManager().addChangeListener(myNetworkConfigChangeListener);
     }
 
     @Override
@@ -315,8 +332,7 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
     }
 
     /**
-     * Notifies the config that a source has been updated and needs to be
-     * saved/persisted.
+     * Notifies the config that a source has been updated and needs to be saved/persisted.
      *
      * @param source the source
      */
@@ -331,7 +347,58 @@ public abstract class AbstractServerSourceController implements ServerSourceCont
         finally
         {
             myConfigLock.writeLock().unlock();
+            synchronized (myFinishReloadMap)
+            {
+                Runnable finishReload;
+                if ((finishReload = myFinishReloadMap.remove(source)) != null)
+                {
+                    finishReload.run();
+                }
+            }
         }
+    }
+
+    /** Reload sources which are marked as active, but are not actually activated. */
+    protected void reloadBadSources()
+    {
+        Set<String> activeSourceURLs = getActiveSourceURLs();
+        getSourceList().stream().forEach(source ->
+        {
+            if (source instanceof UrlSource)
+            {
+                if (source.isActive() && !activeSourceURLs.contains(((UrlSource)source).getURL()))
+                {
+                    myFinishReloadMap.put(source, new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            activateSource(source);
+                        }
+                    });
+                    deactivateSource(source);
+                }
+            }
+        });
+    }
+
+    /**
+     * Gets the set of active sources.
+     *
+     * @return the set of active sources
+     */
+    private Set<String> getActiveSourceURLs()
+    {
+        Set<String> activeURLs = new HashSet<String>();
+        DataGroupController dataGroupController = MantleToolboxUtils.getMantleToolbox(myToolbox).getDataGroupController();
+        dataGroupController.getActiveMembers(false).stream().forEach(dataTypeInfo ->
+        {
+            if (UrlUtil.isValidAbsoluteUrl(dataTypeInfo.getUrl()))
+            {
+                activeURLs.add(dataTypeInfo.getUrl());
+            }
+        });
+        return activeURLs;
     }
 
     /**

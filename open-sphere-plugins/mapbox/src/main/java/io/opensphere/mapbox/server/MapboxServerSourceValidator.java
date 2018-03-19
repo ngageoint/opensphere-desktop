@@ -25,6 +25,6 @@ public class MapboxServerSourceValidator extends UrlServerSourceValidator
     @Override
     protected URL getUrl(UrlDataSource source) throws MalformedURLException
     {
-        return new URL(source.getBaseUrl());
+        return new URL(source.getURL());
     }
 }

@@ -61,13 +61,6 @@ public interface NetworkConfigurationManager
     boolean isUseSystemProxies();
 
     /**
-     * Set if system proxies should be used.
-     *
-     * @param use {@code true} if system proxies should be used.
-     */
-    void setUseSystemProxies(boolean use);
-
-    /**
      * Remove a listener for changes to the network configuration.
      *
      * @param listener The listener.
@@ -78,26 +71,15 @@ public interface NetworkConfigurationManager
     void restoreDefaults();
 
     /**
-     * Set the system proxy host.
+     * Set the proxy configuration.
      *
-     * @param host The host, or {@code ""} to disable the proxy.
-     * @param port The port number.
+     * @param host the host, or {@code ""} to disable the proxy
+     * @param port the port number
+     * @param useSystemProxies {@code true} if system proxies should be used
+     * @param configUrl the config URL
+     * @param hostPatterns the string comprising the host patterns
      */
-    void setProxy(String host, int port);
-
-    /**
-     * Set the system proxy config URL.
-     *
-     * @param url The URL.
-     */
-    void setProxyConfigUrl(String url);
-
-    /**
-     * Set the hosts to be excluded from proxy usage.
-     *
-     * @param hostPatterns A string comprising the host patterns.
-     */
-    void setProxyExclusions(String hostPatterns);
+    void setProxyConfiguration(String host, int port, boolean useSystemProxies, String configUrl, String hostPatterns);
 
     /** Listener for changes to the network configuration. */
     @FunctionalInterface

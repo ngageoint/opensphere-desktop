@@ -34,7 +34,8 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     private static final String SYSTEM_PROXIES_ENABLED_KEY = "SystemProxiesEnabled";
 
     /** Change support. */
-    private final ChangeSupport<NetworkConfigurationChangeListener> myChangeSupport = new WeakChangeSupport<NetworkConfigurationChangeListener>();
+    private final ChangeSupport<NetworkConfigurationChangeListener> myChangeSupport =
+            new WeakChangeSupport<NetworkConfigurationChangeListener>();
 
     /** The preferences. */
     private final Preferences myPrefs;
@@ -129,9 +130,25 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     }
 
     @Override
-    public void setProxy(String url, int port)
+    public void setProxyConfiguration(String host, int port, boolean useSystemProxies, String configUrl, String hostPatterns)
     {
-        if (StringUtils.isEmpty(url))
+        setProxyHost(host, port);
+        myPrefs.putBoolean(SYSTEM_PROXIES_ENABLED_KEY, useSystemProxies, this);
+        myPrefs.putString(PROXY_CONFIG_URL_PREF_KEY, configUrl, this);
+        myPrefs.putString(PROXY_EXCLUSION_PATTERNS_PREF_KEY, hostPatterns, this);
+
+        notifyChanged();
+    }
+
+    /**
+     * Set the system proxy host.
+     *
+     * @param host the host, or {@code ""} to disable the proxy
+     * @param port the port number
+     */
+    private void setProxyHost(String host, int port)
+    {
+        if (StringUtils.isEmpty(host))
         {
             myPrefs.removeInt(PROXY_PORT_PREF_KEY, this);
         }
@@ -139,29 +156,7 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
         {
             myPrefs.putInt(PROXY_PORT_PREF_KEY, port, this);
         }
-        myPrefs.putString(PROXY_HOST_PREF_KEY, url, this);
-        notifyChanged();
-    }
-
-    @Override
-    public void setProxyConfigUrl(String url)
-    {
-        myPrefs.putString(PROXY_CONFIG_URL_PREF_KEY, url, this);
-        notifyChanged();
-    }
-
-    @Override
-    public void setProxyExclusions(String hostPatterns)
-    {
-        myPrefs.putString(PROXY_EXCLUSION_PATTERNS_PREF_KEY, hostPatterns, this);
-        notifyChanged();
-    }
-
-    @Override
-    public void setUseSystemProxies(boolean use)
-    {
-        myPrefs.putBoolean(SYSTEM_PROXIES_ENABLED_KEY, use, this);
-        notifyChanged();
+        myPrefs.putString(PROXY_HOST_PREF_KEY, host, this);
     }
 
     /**

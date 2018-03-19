@@ -1,9 +1,10 @@
 package io.opensphere.server.source;
 
 import io.opensphere.mantle.datasources.IDataSource;
+import io.opensphere.mantle.datasources.UrlSource;
 
 /** Interface for data sources that connect to external servers. */
-public interface ServerSource extends IDataSource
+public interface ServerSource extends IDataSource, UrlSource
 {
     /**
      * Creates a near copy of this data source suitable for export.
