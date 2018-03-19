@@ -23,6 +23,9 @@ public class DataElementsRemovedEvent extends AbstractDataTypeControllerEvent
     /** The data type info. */
     private final DataTypeInfo myType;
 
+    /** Whether this event is for a full clear of the layer. */
+    private boolean myFullClear;
+
     /**
      * Instantiates a new DataElementsRemovedEvent.
      *
@@ -33,12 +36,7 @@ public class DataElementsRemovedEvent extends AbstractDataTypeControllerEvent
      */
     public DataElementsRemovedEvent(DataTypeInfo dti, List<Long> removedIds, boolean areMappable, Object source)
     {
-        super(source);
-        Utilities.checkNull(dti, "dti");
-        Utilities.checkNull(removedIds, "ids");
-        myType = dti;
-        myRemovedDataElementIdSet = new ImmutableRangedLongSet(new DefaultRangedLongSet(removedIds));
-        myAreMappable = areMappable;
+        this(dti, new ImmutableRangedLongSet(new DefaultRangedLongSet(removedIds)), areMappable, source);
     }
 
     /**
@@ -51,12 +49,7 @@ public class DataElementsRemovedEvent extends AbstractDataTypeControllerEvent
      */
     public DataElementsRemovedEvent(DataTypeInfo dti, long[] removedIds, boolean areMappable, Object source)
     {
-        super(source);
-        Utilities.checkNull(dti, "dti");
-        Utilities.checkNull(removedIds, "ids");
-        myType = dti;
-        myRemovedDataElementIdSet = new ImmutableRangedLongSet(new DefaultRangedLongSet(removedIds));
-        myAreMappable = areMappable;
+        this(dti, new ImmutableRangedLongSet(new DefaultRangedLongSet(removedIds)), areMappable, source);
     }
 
     /**
@@ -69,11 +62,24 @@ public class DataElementsRemovedEvent extends AbstractDataTypeControllerEvent
      */
     public DataElementsRemovedEvent(DataTypeInfo dti, RangedLongSet removedIds, boolean areMappable, Object source)
     {
+        this(dti, new ImmutableRangedLongSet(new DefaultRangedLongSet(removedIds)), areMappable, source);
+    }
+
+    /**
+     * Instantiates a new DataElementsRemovedEvent.
+     *
+     * @param dti the new current {@link DataTypeInfo}.
+     * @param removedIds the ids that are removed
+     * @param areMappable the are mappable
+     * @param source the source of the change.
+     */
+    private DataElementsRemovedEvent(DataTypeInfo dti, ImmutableRangedLongSet removedIds, boolean areMappable, Object source)
+    {
         super(source);
         Utilities.checkNull(dti, "dti");
         Utilities.checkNull(removedIds, "ids");
         myType = dti;
-        myRemovedDataElementIdSet = new ImmutableRangedLongSet(new DefaultRangedLongSet(removedIds));
+        myRemovedDataElementIdSet = removedIds;
         myAreMappable = areMappable;
     }
 
@@ -114,5 +120,25 @@ public class DataElementsRemovedEvent extends AbstractDataTypeControllerEvent
     public DataTypeInfo getType()
     {
         return myType;
+    }
+
+    /**
+     * Gets whether this event is for a full clear of the layer.
+     *
+     * @return whether it's a full clear
+     */
+    public boolean isFullClear()
+    {
+        return myFullClear;
+    }
+
+    /**
+     * Sets whether this event is for a full clear of the layer.
+     *
+     * @param fullClear whether it's a full clear
+     */
+    public void setFullClear(boolean fullClear)
+    {
+        myFullClear = fullClear;
     }
 }

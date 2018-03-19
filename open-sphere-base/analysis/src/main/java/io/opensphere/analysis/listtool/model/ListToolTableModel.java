@@ -150,6 +150,14 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
     }
 
     /**
+     * Removes all IDs/records.
+     */
+    public void removeAll()
+    {
+        myRowDataProvider.removeAll();
+    }
+
+    /**
      * Clears the cache.
      */
     public void clearCache()
