@@ -17,7 +17,6 @@ import io.opensphere.core.geometry.renderproperties.LabelRenderProperties;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.mantle.MantleToolbox;
-import io.opensphere.mantle.data.ActivationState;
 import io.opensphere.mantle.data.DataGroupActivationProperty;
 import io.opensphere.mantle.data.VisualizationSupport;
 import io.opensphere.mantle.data.element.DataElement;
@@ -121,7 +120,7 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
 
         DataGroupActivationProperty activation = toolbox.getDataGroupController().getDataGroupInfo(dtiKey).activationProperty();
 
-        return activation.getValue() == ActivationState.ACTIVE;
+        return activation.isActiveOrActivating();
     }
 
     /**
