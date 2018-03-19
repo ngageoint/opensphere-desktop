@@ -1167,11 +1167,6 @@
             </dependency>
             <dependency>
                 <groupId>io.open-sphere.plugins</groupId>
-                <artifactId>mapzen</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.open-sphere.plugins</groupId>
                 <artifactId>merge</artifactId>
                 <version>${project.version}</version>
             </dependency>
