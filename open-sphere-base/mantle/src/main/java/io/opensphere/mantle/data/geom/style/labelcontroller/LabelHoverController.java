@@ -112,7 +112,13 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
     private boolean isEventElementActive(DataElementHighlightChangeEvent event)
     {
         MantleToolbox toolbox = MantleToolboxUtils.getMantleToolbox(getToolbox());
+
         String dtiKey = event.getDataTypeKey();
+        if (dtiKey == null)
+        {
+            return false;
+        }
+
         DataGroupActivationProperty activation = toolbox.getDataGroupController().getDataGroupInfo(dtiKey).activationProperty();
 
         return activation.getValue() == ActivationState.ACTIVE;
