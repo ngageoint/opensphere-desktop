@@ -13,6 +13,7 @@ import io.opensphere.core.util.Constants;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
+import io.opensphere.core.util.lang.StringUtilities;
 
 /**
  * Class to hold utilities for parsing various forms of latitude and longitude.
@@ -493,7 +494,7 @@ public class LatLonAltParser
     private static double parseDecimalAngle(String input, CoordType coordType)
     {
         double result = Double.NaN;
-        if (input != null)
+        if (input != null && !StringUtilities.startsWith(input, '0'))
         {
             try
             {
