@@ -506,8 +506,7 @@ public class LatLonAltParser
             }
             catch (NumberFormatException e)
             {
-                // TODO change to debug
-                LOGGER.warn(e);
+                LOGGER.debug(e);
             }
         }
         return result;
