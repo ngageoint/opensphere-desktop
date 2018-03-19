@@ -16,6 +16,8 @@ import io.opensphere.core.geometry.renderproperties.DefaultLabelRenderProperties
 import io.opensphere.core.geometry.renderproperties.LabelRenderProperties;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.time.TimeSpan;
+import io.opensphere.mantle.MantleToolbox;
+import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.VisualizationSupport;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
@@ -89,7 +91,7 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
     @Override
     public void notify(DataElementHighlightChangeEvent event)
     {
-        if (event.isHighlighted())
+        if (isEventElementActive(event) && event.isHighlighted())
         {
             drawLabel(event);
         }
@@ -97,6 +99,23 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
         {
             eraseLabel();
         }
+    }
+
+    /**
+     * Determines whether or not the geometry we're trying to highlight is in an
+     * activated state.
+     *
+     * @param event the highlight event
+     * @return whether the data group containing the event element is active
+     */
+    private boolean isEventElementActive(DataElementHighlightChangeEvent event)
+    {
+        MantleToolbox toolbox = MantleToolboxUtils.getMantleToolbox(getToolbox());
+
+        String dtiKey = event.getDataTypeKey();
+        DataGroupInfo dataGroup = toolbox.getDataGroupController().getDataGroupInfo(dtiKey);
+
+        return dataGroup != null && dataGroup.activationProperty().isActive();
     }
 
     /**
@@ -132,7 +151,8 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
                 Class<? extends VisualizationStyle> selectedStyleClass = vsc.getSelectedVisualizationStyleClass(featureClass,
                         element.getDataTypeInfo().getParent(), element.getDataTypeInfo());
 
-                if (selectedStyleClass != null && ClassUtils.isAssignable(selectedStyleClass, AbstractLocationFeatureVisualizationStyle.class))
+                if (selectedStyleClass != null
+                        && ClassUtils.isAssignable(selectedStyleClass, AbstractLocationFeatureVisualizationStyle.class))
                 {
                     drawLabel(pEvent, element, vsc, featureClass,
                             selectedStyleClass.asSubclass(AbstractLocationFeatureVisualizationStyle.class));
