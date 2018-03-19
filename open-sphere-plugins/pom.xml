@@ -33,7 +33,7 @@
         <module>import</module>
         <module>kml</module>
         <module>mapbox</module>
-        <module>mapzen</module>
+        
         <module>merge</module>
         <module>my-places</module>
         <module>ogc-server</module>
