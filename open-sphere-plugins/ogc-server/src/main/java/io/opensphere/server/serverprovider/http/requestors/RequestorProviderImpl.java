@@ -46,6 +46,9 @@ public class RequestorProviderImpl implements RequestorProvider
      */
     private GetRequestorImpl myGetter;
 
+    /** The requestor that makes HEAD requests to the server. */
+    private HeadRequestorImpl myHeadRequestor;
+
     /**
      * Contains the header values.
      */
@@ -69,6 +72,7 @@ public class RequestorProviderImpl implements RequestorProvider
         myFilePoster = new FilePostRequestorImpl(client, headerValues);
         myPoster = new PostRequestorImpl(client, headerValues);
         myGetter = new GetRequestorImpl(client, headerValues);
+        myHeadRequestor = new HeadRequestorImpl(client, headerValues);
         myDeleter = new DeleteRequestorImpl(client, headerValues);
     }
 
@@ -94,6 +98,17 @@ public class RequestorProviderImpl implements RequestorProvider
     public GetRequestor getRequestor()
     {
         return myGetter;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.server.serverprovider.http.requestors.RequestorProvider#getHeadRequestor()
+     */
+    @Override
+    public HeadRequestor getHeadRequestor()
+    {
+        return myHeadRequestor;
     }
 
     @Override

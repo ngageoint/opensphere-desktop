@@ -49,6 +49,13 @@ public interface RequestorProvider
     GetRequestor getRequestor();
 
     /**
+     * Gets the HEAD requestor.
+     *
+     * @return the HEAD requestor.
+     */
+    HeadRequestor getHeadRequestor();
+
+    /**
      * Gets a host and port to connect to based on the configured proxy settings
      * for this server.
      *
