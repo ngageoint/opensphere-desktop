@@ -9,12 +9,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -60,6 +54,11 @@ import io.opensphere.mantle.data.event.ServerManagerDialogChangeEvent.EventType;
 import io.opensphere.mantle.data.impl.DefaultGroupInfoTreeNodeData;
 import io.opensphere.mantle.data.impl.GroupByNodeUserObject;
 import io.opensphere.mantle.util.MantleToolboxUtils;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 
 /** The AddDataPanel. */
 @SuppressWarnings("PMD.GodClass")
@@ -139,9 +138,17 @@ public final class AvailableDataPanel extends AbstractDiscoveryDataPanel impleme
     private final transient DiscoveryTreeExpansionHelper myExpansionHelper;
 
     /** The group focus request listener. */
-    private final transient EventListener<AvailableGroupSelectionEvent> myFocusListener = event -> focusOnNode(value -> value.getDataGroupInfo() != null
-                    && value.getDataGroupInfo().getId().equals(event.getDataGroupInfo().getId()),
-            null);
+    private final transient EventListener<AvailableGroupSelectionEvent> myFocusListener = event ->
+    {
+        DataGroupInfo eventDataGroup = event.getDataGroupInfo();
+        if (eventDataGroup == null)
+        {
+            return;
+        }
+
+        focusOnNode(value -> value.getDataGroupInfo() != null
+                && value.getDataGroupInfo().getId().equals(eventDataGroup.getId()), null);
+    };
 
     /** The my layer details coordinator. */
     private final transient LayerDetailsCoordinator myLayerDetailsCoordinator;
