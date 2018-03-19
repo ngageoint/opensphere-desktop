@@ -49,7 +49,6 @@ public class CSVDataElementProvider extends CsvProviderBase
             boolean useDeterminedDataTypes, boolean useDynamicEnumerations)
         throws FileNotFoundException, IOException
     {
-        super(dti.getTypeKey());
         geomFact = new CSVMapLocationGeoemtrySupportFactory();
         myToolbox = tb;
         myFileSource = source;
@@ -63,6 +62,7 @@ public class CSVDataElementProvider extends CsvProviderBase
         myTypeInfo = dti;
         mySpecialColumnMap = io.opensphere.csvcommon.common.Utilities
                 .createSpecialColumnMap(getParseParams().getSpecialColumns());
+        setupExtraction(myTypeInfo.getTypeKey());
 
         myTaskActivity = new InputStreamMonitorTaskActivity("Loading CSV File", "Loading CSV File");
         LOGGER.info("Reading CSV file: " + aFile);

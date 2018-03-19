@@ -118,10 +118,10 @@ public abstract class CsvProviderBase implements DataElementProvider
     private ColumnClassAnalyzer myColumnAnalyzer;
 
     /** The the location of the column breaks if not delimited. */
-    private final int[] myColumnBreaks;
+    private int[] myColumnBreaks;
 
     /** The column names. */
-    private final List<? extends String> myColumnNames;
+    private List<? extends String> myColumnNames;
 
     /** The Column name to class map. */
     private Map<String, Class<?>> myColumnNameToClassMap;
@@ -133,7 +133,7 @@ public abstract class CsvProviderBase implements DataElementProvider
     private Map<String, Class<?>> myDynamicEnumColumnsToOrigClassMap;
 
     /** The filtered set of column names. */
-    private final Set<String> myFilteredColumns;
+    private Set<String> myFilteredColumns;
 
     /** The my had error. */
     private boolean myHadError;
@@ -151,7 +151,7 @@ public abstract class CsvProviderBase implements DataElementProvider
     private boolean myIsQuoted;
 
     /** The number of columns. */
-    private final int myNumColumns;
+    private int myNumColumns;
 
     /** The my overall time extent. */
     private TimeSpan myOverallTimeExtent = TimeSpan.TIMELESS;
@@ -163,14 +163,15 @@ public abstract class CsvProviderBase implements DataElementProvider
     private int myTotalLineCount;
 
     /** The Uses fixed width columns. */
-    private final boolean myUsesFixedWidthColumns;
+    private boolean myUsesFixedWidthColumns;
 
     /**
-     * Constructor, setting all necessary information to perform the extraction from the CSV file.
+     * Finds all necessary information to perform the extraction from the CSV
+     * file.
      *
-     * @param dtiKey the data type key
+     * @param dtiKey the new up extraction
      */
-    public CsvProviderBase(String dtiKey)
+    protected void setupExtraction(String dtiKey)
     {
         myHasBeenWarned = false;
         CSVParseParameters parseParameters = getParseParams();
