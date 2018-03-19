@@ -9,7 +9,10 @@ import io.opensphere.search.SearchOptionsProvider;
 import io.opensphere.search.mapzen.model.MapZenSettingsModel;
 import io.opensphere.search.mapzen.view.MapZenOptionsProvider;
 
-/** The plugin that provides a MapZen GeoCode search. */
+/**
+ * The plugin that provides a MapZen GeoCode search. Mapzen has shutdown as of
+ * February 1, 2018. This plugin does not get initialized by the launch files.
+ */
 public class MapZenPlugin extends PluginAdapter
 {
     /** The class the does the actual searching. */
@@ -38,7 +41,6 @@ public class MapZenPlugin extends PluginAdapter
             {
                 myToolbox.getSearchRegistry().removeSearchProvider(myGeoQuerySearcher);
             }
-
             OptionsProvider searchProvider = myToolbox.getUIRegistry().getOptionsRegistry()
                     .getRootProviderByTopic(SearchOptionsProvider.PROVIDER_NAME);
             if (searchProvider != null)
@@ -50,7 +52,7 @@ public class MapZenPlugin extends PluginAdapter
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see io.opensphere.core.api.adapter.PluginAdapter#initialize(io.opensphere.core.PluginLoaderData,
      *      io.opensphere.core.Toolbox)
      */
@@ -58,10 +60,8 @@ public class MapZenPlugin extends PluginAdapter
     public void initialize(PluginLoaderData plugindata, Toolbox toolbox)
     {
         myToolbox = toolbox;
-
         Preferences preferences = toolbox.getPreferencesRegistry().getPreferences(MapZenPlugin.class);
         myModel = new MapZenSettingsModel(preferences);
-
         myOptionsProvider = new MapZenOptionsProvider(myToolbox, myModel);
         OptionsProvider parentSearchProvider = myToolbox.getUIRegistry().getOptionsRegistry()
                 .getRootProviderByTopic(SearchOptionsProvider.PROVIDER_NAME);
@@ -69,7 +69,6 @@ public class MapZenPlugin extends PluginAdapter
         {
             parentSearchProvider.addSubTopic(myOptionsProvider);
         }
-
         myGeoQuerySearcher = new MapZenSearchProvider(myToolbox, myModel);
         myToolbox.getSearchRegistry().addSearchProvider(myGeoQuerySearcher);
     }
