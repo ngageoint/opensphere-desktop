@@ -47,7 +47,6 @@ import io.opensphere.core.util.collections.StreamUtilities;
 import io.opensphere.core.util.concurrent.CommonTimer;
 import io.opensphere.core.util.concurrent.ThreadedStateMachine.StateController;
 import io.opensphere.core.viewer.ViewChangeSupport;
-import io.opensphere.core.viewer.ViewChangeSupport.ViewChangeType;
 import io.opensphere.core.viewer.Viewer;
 import io.opensphere.core.viewer.impl.DynamicViewer;
 
@@ -289,7 +288,8 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
     @Override
     protected void resetStateDueToProjectionChange()
     {
-        // Preserve super class behavior for projection-insensitive geometries. Projection-sensitive geometries are reset in
+        // Preserve super class behavior for projection-insensitive geometries.
+        // Projection-sensitive geometries are reset in
         // handleViewChanged instead of here for performance.
         List<PointSpriteGeometry> regularGeoms = getReadyGeometries().stream().filter(g -> !g.isProjectionSensitive())
                 .collect(Collectors.toList());

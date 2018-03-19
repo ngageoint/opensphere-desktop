@@ -102,7 +102,7 @@ public class IconChooserStyleParameterEditorPanel extends AbstractStyleParameter
     {
         if (e.getSource() == myButton)
         {
-            final IconChooserDialog icd = new IconChooserDialog(this, true, null, myStyle.getToolbox());
+            final IconChooserDialog icd = new IconChooserDialog(this, true, IconChooserDialog.DEFAULT_MESSAGE, myStyle.getToolbox());
             icd.setSelectedUrl(getParameterValue());
             icd.addActionListener(new ActionListener()
             {
