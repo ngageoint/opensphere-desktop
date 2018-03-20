@@ -644,9 +644,10 @@ public class DataElementCacheImpl implements DataElementCache
      * Removes the Identified IDs from the cache.
      *
      * @param ids the IDs to remove from the cache.
+     * @param fullClear whether it's a full clear for the layer.
      * @return the number removed
      */
-    public int remove(Collection<Long> ids)
+    public int remove(Collection<Long> ids, boolean fullClear)
     {
         long start = System.nanoTime();
         Utilities.checkNull(ids, IDS_STRING);
@@ -697,8 +698,9 @@ public class DataElementCacheImpl implements DataElementCache
         for (Map.Entry<String, List<Long>> entry : typeToIdList.entrySet())
         {
             DataTypeInfo dti = typeKeyToTypeMap.get(entry.getKey());
-            myToolbox.getEventManager()
-                    .publishEvent(new DataElementsRemovedEvent(dti, entry.getValue(), isMapDataElmentType(dti), this));
+            DataElementsRemovedEvent event = new DataElementsRemovedEvent(dti, entry.getValue(), isMapDataElmentType(dti), this);
+            event.setFullClear(fullClear);
+            myToolbox.getEventManager().publishEvent(event);
         }
 
         if (LOGGER.isTraceEnabled())
@@ -722,7 +724,7 @@ public class DataElementCacheImpl implements DataElementCache
             {
                 LOGGER.trace("Remove Data Type Started At: " + System.currentTimeMillis());
             }
-            remove(myDataTypeToIdMap.getIdsForTypeAsRangedLongSet(dti));
+            remove(myDataTypeToIdMap.getIdsForTypeAsRangedLongSet(dti), true);
             myDataTypeToIdMap.removeDataType(dti);
             myDynamicMetadataManager.removeDataType(dti);
             myTypeCountMetricsProvider.setValue(Integer.valueOf(myDataTypeToIdMap.typeCount()));

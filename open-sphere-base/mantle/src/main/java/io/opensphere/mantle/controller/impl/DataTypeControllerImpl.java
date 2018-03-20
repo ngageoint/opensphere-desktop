@@ -446,7 +446,7 @@ public class DataTypeControllerImpl implements DataTypeController
             }
         }
 
-        myDECache.remove(CollectionUtilities.listView(ids));
+        myDECache.remove(CollectionUtilities.listView(ids), false);
     }
 
     @Override
