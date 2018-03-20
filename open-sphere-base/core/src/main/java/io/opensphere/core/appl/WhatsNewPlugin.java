@@ -168,10 +168,6 @@ public class WhatsNewPlugin extends PluginAdapter
         }
         myDialog.setVisible(true);
     }
-    
-    protected void showAutoProxy() {
-        myToolbox.getUIRegistry().getOptionsRegistry().requestShowTopic("Automatic Proxy");
-    }
 
     /**
      * Update the dialog with the version and message for a certain index.
