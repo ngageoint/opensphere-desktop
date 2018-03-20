@@ -30,8 +30,8 @@ public class DataElementsRemovedEvent extends AbstractDataTypeControllerEvent
      * Instantiates a new DataElementsRemovedEvent.
      *
      * @param dti the new current {@link DataTypeInfo}.
-     * @param removedIds the ids that are removed
-     * @param areMappable the are mappable
+     * @param removedIds the ids that are removed.
+     * @param areMappable the are mappable.
      * @param source the source of the change.
      */
     public DataElementsRemovedEvent(DataTypeInfo dti, List<Long> removedIds, boolean areMappable, Object source)
@@ -43,8 +43,8 @@ public class DataElementsRemovedEvent extends AbstractDataTypeControllerEvent
      * Instantiates a new DataElementsRemovedEvent.
      *
      * @param dti the new current {@link DataTypeInfo}.
-     * @param removedIds the ids that are removed
-     * @param areMappable the are mappable
+     * @param removedIds the ids that are removed.
+     * @param areMappable the are mappable.
      * @param source the source of the change.
      */
     public DataElementsRemovedEvent(DataTypeInfo dti, long[] removedIds, boolean areMappable, Object source)
@@ -56,8 +56,8 @@ public class DataElementsRemovedEvent extends AbstractDataTypeControllerEvent
      * Instantiates a new DataElementsRemovedEvent.
      *
      * @param dti the new current {@link DataTypeInfo}.
-     * @param removedIds the ids that are removed
-     * @param areMappable the are mappable
+     * @param removedIds the ids that are removed.
+     * @param areMappable the are mappable.
      * @param source the source of the change.
      */
     public DataElementsRemovedEvent(DataTypeInfo dti, RangedLongSet removedIds, boolean areMappable, Object source)
@@ -69,8 +69,8 @@ public class DataElementsRemovedEvent extends AbstractDataTypeControllerEvent
      * Instantiates a new DataElementsRemovedEvent.
      *
      * @param dti the new current {@link DataTypeInfo}.
-     * @param removedIds the ids that are removed
-     * @param areMappable the are mappable
+     * @param removedIds the ids that are removed.
+     * @param areMappable the are mappable.
      * @param source the source of the change.
      */
     private DataElementsRemovedEvent(DataTypeInfo dti, ImmutableRangedLongSet removedIds, boolean areMappable, Object source)

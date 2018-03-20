@@ -644,7 +644,7 @@ public class DataElementCacheImpl implements DataElementCache
      * Removes the Identified IDs from the cache.
      *
      * @param ids the IDs to remove from the cache.
-     * @param fullClear whether it's a full clear for the layer
+     * @param fullClear whether it's a full clear for the layer.
      * @return the number removed
      */
     public int remove(Collection<Long> ids, boolean fullClear)
