@@ -1,7 +1,6 @@
 package io.opensphere.mantle.data.geom.style.impl.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
+import io.opensphere.core.util.swing.ComponentUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
 
@@ -49,9 +49,7 @@ public class CheckBoxStyleParameterEditorPanel extends AbstractStyleParameterEdi
         myCheckBox.addActionListener(this);
 
         int panelHeight = getPanelHeightFromBuilder();
-        myControlPanel.setMinimumSize(new Dimension(80, panelHeight));
-        myControlPanel.setPreferredSize(new Dimension(80, panelHeight));
-        myControlPanel.setMaximumSize(new Dimension(1200, panelHeight));
+        ComponentUtilities.setPreferredHeight(myControlPanel, panelHeight);
         showMessage(Boolean.valueOf(isParameterValue()));
     }
 

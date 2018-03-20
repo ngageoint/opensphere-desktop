@@ -1,7 +1,7 @@
 package io.opensphere.mantle.data.cache.impl;
 
 import java.util.List;
-import java.util.Map;
+import java.util.function.LongFunction;
 
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.Utilities;
@@ -22,7 +22,7 @@ import io.opensphere.mantle.data.geom.MapGeometrySupport;
 public class DefaultDirectAccessRetriever implements DirectAccessRetriever
 {
     /** The my cache ref map. */
-    private final Map<Long, CacheEntry> myCacheRefMap;
+    private final LongFunction<CacheEntry> myCacheRefMap;
 
     /** The my data type. */
     private final DataTypeInfo myDataType;
@@ -37,7 +37,7 @@ public class DefaultDirectAccessRetriever implements DirectAccessRetriever
      * @param cacheRefMap the cache ref map
      * @param dcm the dcm
      */
-    public DefaultDirectAccessRetriever(DataTypeInfo dti, Map<Long, CacheEntry> cacheRefMap, DynamicMetadataManagerImpl dcm)
+    public DefaultDirectAccessRetriever(DataTypeInfo dti, LongFunction<CacheEntry> cacheRefMap, DynamicMetadataManagerImpl dcm)
     {
         myDataType = dti;
         myCacheRefMap = cacheRefMap;
@@ -197,6 +197,6 @@ public class DefaultDirectAccessRetriever implements DirectAccessRetriever
      */
     private CacheEntry getCacheEntryForCacheId(long cacheId)
     {
-        return myCacheRefMap.get(cacheId);
+        return myCacheRefMap.apply(cacheId);
     }
 }

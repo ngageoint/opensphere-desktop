@@ -16,6 +16,8 @@ import io.opensphere.core.geometry.renderproperties.DefaultLabelRenderProperties
 import io.opensphere.core.geometry.renderproperties.LabelRenderProperties;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.time.TimeSpan;
+import io.opensphere.mantle.MantleToolbox;
+import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.VisualizationSupport;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
@@ -29,7 +31,6 @@ import io.opensphere.mantle.data.geom.style.VisualizationStyleController;
 import io.opensphere.mantle.data.geom.style.dialog.StyleManagerUtils;
 import io.opensphere.mantle.data.geom.style.impl.AbstractFeatureVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.AbstractLocationFeatureVisualizationStyle;
-import io.opensphere.mantle.data.geom.style.impl.PointFeatureVisualizationStyle;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /**
@@ -90,7 +91,7 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
     @Override
     public void notify(DataElementHighlightChangeEvent event)
     {
-        if (event.isHighlighted())
+        if (isEventElementActive(event) && event.isHighlighted())
         {
             drawLabel(event);
         }
@@ -98,6 +99,23 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
         {
             eraseLabel();
         }
+    }
+
+    /**
+     * Determines whether or not the geometry we're trying to highlight is in an
+     * activated state.
+     *
+     * @param event the highlight event
+     * @return whether the data group containing the event element is active
+     */
+    private boolean isEventElementActive(DataElementHighlightChangeEvent event)
+    {
+        MantleToolbox toolbox = MantleToolboxUtils.getMantleToolbox(getToolbox());
+
+        String dtiKey = event.getDataTypeKey();
+        DataGroupInfo dataGroup = toolbox.getDataGroupController().getDataGroupInfo(dtiKey);
+
+        return dataGroup != null && dataGroup.activationProperty().isActive();
     }
 
     /**
@@ -123,17 +141,22 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
         DataElement element = MantleToolboxUtils.getDataElementLookupUtils(getToolbox()).getDataElement(pEvent.getRegistryId(),
                 null, null);
 
-        List<Class<? extends VisualizationSupport>> featureClasses = StyleManagerUtils
-                .getDefaultFeatureClassesForType(element.getDataTypeInfo());
-        VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox).getVisualizationStyleController();
-        for (Class<? extends VisualizationSupport> featureClass : featureClasses)
+        if (element != null)
         {
-            Class<? extends VisualizationStyle> selectedStyleClass = vsc.getSelectedVisualizationStyleClass(featureClass,
-                    element.getDataTypeInfo().getParent(), element.getDataTypeInfo());
-
-            if (ClassUtils.isAssignable(selectedStyleClass, AbstractLocationFeatureVisualizationStyle.class))
+            List<Class<? extends VisualizationSupport>> featureClasses = StyleManagerUtils
+                    .getDefaultFeatureClassesForType(element.getDataTypeInfo());
+            VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox).getVisualizationStyleController();
+            for (Class<? extends VisualizationSupport> featureClass : featureClasses)
             {
-                drawLabel(pEvent, element, vsc, featureClass);
+                Class<? extends VisualizationStyle> selectedStyleClass = vsc.getSelectedVisualizationStyleClass(featureClass,
+                        element.getDataTypeInfo().getParent(), element.getDataTypeInfo());
+
+                if (selectedStyleClass != null
+                        && ClassUtils.isAssignable(selectedStyleClass, AbstractLocationFeatureVisualizationStyle.class))
+                {
+                    drawLabel(pEvent, element, vsc, featureClass,
+                            selectedStyleClass.asSubclass(AbstractLocationFeatureVisualizationStyle.class));
+                }
             }
         }
     }
@@ -147,9 +170,11 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
      *            of the label is loaded.
      * @param pFeatureClass the feature class associated with the supplied
      *            element.
+     * @param pStyleClass the style class associated with the supplied element.
      */
     protected void drawLabel(DataElementHighlightChangeEvent pEvent, DataElement pElement,
-            VisualizationStyleController pStyleController, Class<? extends VisualizationSupport> pFeatureClass)
+            VisualizationStyleController pStyleController, Class<? extends VisualizationSupport> pFeatureClass,
+            Class<? extends AbstractLocationFeatureVisualizationStyle> pStyleClass)
     {
         MapGeometrySupport geom = pElement instanceof MapDataElement ? ((MapDataElement)pElement).getMapGeometrySupport() : null;
         if (geom != null)
@@ -161,9 +186,9 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
             {
                 eraseLabel();
             }
-            PointFeatureVisualizationStyle style = (PointFeatureVisualizationStyle)pStyleController
-                    .getStyleForEditorWithConfigValues(PointFeatureVisualizationStyle.class, pFeatureClass,
-                            pElement.getDataTypeInfo().getParent(), pElement.getDataTypeInfo());
+
+            AbstractFeatureVisualizationStyle style = pStyleClass.cast(pStyleController.getStyleForEditorWithConfigValues(
+                    pStyleClass, pFeatureClass, pElement.getDataTypeInfo().getParent(), pElement.getDataTypeInfo()));
 
             LabelGeometry lastLabelGeometry = buildLabelGeometry(pEvent.getRegistryId(), style, pElement, geom);
             getToolbox().getGeometryRegistry().addGeometriesForSource(this, Collections.singleton(lastLabelGeometry));

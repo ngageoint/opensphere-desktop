@@ -18,6 +18,7 @@ import io.opensphere.core.util.io.CancellableInputStream;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.server.serverprovider.ProxySelectorImpl;
 import io.opensphere.server.serverprovider.http.requestors.RequestorProvider;
+import javafx.application.Platform;
 
 /**
  * Sends http requests to a specified server.
@@ -85,6 +86,7 @@ public class HttpServerImpl implements HttpServer
         throws IOException, URISyntaxException
     {
         assert !EventQueue.isDispatchThread();
+        assert !Platform.isFxApplicationThread();
 
         return myRequestorProvider.getFilePoster().postFileToServer(postToURL, metaDataParts, fileToPost, response);
     }
@@ -94,6 +96,7 @@ public class HttpServerImpl implements HttpServer
         throws IOException, URISyntaxException
     {
         assert !EventQueue.isDispatchThread();
+        assert !Platform.isFxApplicationThread();
 
         return myRequestorProvider.getFilePoster().postFileToServer(postToURL, fileToPost, response);
     }
@@ -120,6 +123,7 @@ public class HttpServerImpl implements HttpServer
     public CancellableInputStream sendDelete(URL url, ResponseValues response) throws IOException, URISyntaxException
     {
         assert !EventQueue.isDispatchThread();
+        assert !Platform.isFxApplicationThread();
 
         return myRequestorProvider.getDeleteRequestor().sendDelete(url, response);
     }
@@ -129,6 +133,7 @@ public class HttpServerImpl implements HttpServer
         throws IOException, URISyntaxException
     {
         assert !EventQueue.isDispatchThread();
+        assert !Platform.isFxApplicationThread();
 
         return myRequestorProvider.getRequestor().sendGet(url, extraHeaderValues, response);
     }
@@ -137,8 +142,38 @@ public class HttpServerImpl implements HttpServer
     public CancellableInputStream sendGet(URL url, ResponseValues response) throws IOException, URISyntaxException
     {
         assert !EventQueue.isDispatchThread();
+        assert !Platform.isFxApplicationThread();
 
         return myRequestorProvider.getRequestor().sendGet(url, response);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.server.HttpServer#sendHead(java.net.URL, java.util.Map, io.opensphere.core.server.ResponseValues)
+     */
+    @Override
+    public void sendHead(URL url, Map<String, String> extraHeaderValues, ResponseValues response)
+        throws IOException, URISyntaxException
+    {
+        assert !EventQueue.isDispatchThread();
+        assert !Platform.isFxApplicationThread();
+
+        myRequestorProvider.getHeadRequestor().sendHead(url, extraHeaderValues, response);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.server.HttpServer#sendHead(java.net.URL, io.opensphere.core.server.ResponseValues)
+     */
+    @Override
+    public void sendHead(URL url, ResponseValues response) throws IOException, URISyntaxException
+    {
+        assert !EventQueue.isDispatchThread();
+        assert !Platform.isFxApplicationThread();
+
+        myRequestorProvider.getHeadRequestor().sendHead(url, response);
     }
 
     @Override
@@ -147,6 +182,7 @@ public class HttpServerImpl implements HttpServer
         throws IOException, URISyntaxException
     {
         assert !EventQueue.isDispatchThread();
+        assert !Platform.isFxApplicationThread();
 
         com.bitsys.common.http.header.ContentType commonContentType = com.bitsys.common.http.header.ContentType.APPLICATION_XML;
 
@@ -163,6 +199,7 @@ public class HttpServerImpl implements HttpServer
         throws IOException, URISyntaxException
     {
         assert !EventQueue.isDispatchThread();
+        assert !Platform.isFxApplicationThread();
 
         return myRequestorProvider.getPostRequestor().sendPost(url, postData, response);
     }
@@ -172,6 +209,7 @@ public class HttpServerImpl implements HttpServer
         throws IOException, URISyntaxException
     {
         assert !EventQueue.isDispatchThread();
+        assert !Platform.isFxApplicationThread();
 
         com.bitsys.common.http.header.ContentType commonContentType = com.bitsys.common.http.header.ContentType.APPLICATION_XML;
 
@@ -188,6 +226,9 @@ public class HttpServerImpl implements HttpServer
             ResponseValues response)
         throws IOException, URISyntaxException
     {
+        assert !EventQueue.isDispatchThread();
+        assert !Platform.isFxApplicationThread();
+
         return myRequestorProvider.getPostRequestor().sendPost(url, extraHeaderValues, postData, response);
     }
 
@@ -196,6 +237,7 @@ public class HttpServerImpl implements HttpServer
         throws IOException, URISyntaxException
     {
         assert !EventQueue.isDispatchThread();
+        assert !Platform.isFxApplicationThread();
 
         return myRequestorProvider.getPostRequestor().sendPost(url, postData, response);
     }

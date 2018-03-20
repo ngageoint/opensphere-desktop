@@ -122,10 +122,6 @@
 			<artifactId>mapbox</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.open-sphere.plugins</groupId>
-			<artifactId>mapzen</artifactId>
-		</dependency>
-		<dependency>
 				<groupId>io.open-sphere.plugins</groupId>
 				<artifactId>merge</artifactId>
 		</dependency>

@@ -5,9 +5,14 @@ import java.awt.FontFormatException;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 import javax.swing.Icon;
+import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
+import javax.swing.JSlider;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 import org.apache.log4j.Logger;
@@ -114,6 +119,63 @@ public final class SwingUtilities
             LOG.error("Unable to load font-awesome package.", e);
         }
         return null;
+    }
+
+    /**
+     * Sets a combo box value only if the value is not null and is different from the current value.
+     *
+     * @param <T> the type of the items
+     * @param combo the combo box
+     * @param value the value
+     */
+    public static <T> void setComboBoxValue(JComboBox<T> combo, Object value)
+    {
+        if (value != null && !value.equals(combo.getSelectedItem()))
+        {
+            combo.setSelectedItem(value);
+        }
+    }
+
+    /**
+     * Sets a text field value only if the value is different from the current value.
+     *
+     * @param textField the text field
+     * @param value the value
+     */
+    public static void setTextFieldValue(JTextField textField, String value)
+    {
+        if (!Objects.equals(textField.getText(), value))
+        {
+            textField.setText(value);
+        }
+    }
+
+    /**
+     * Sets a spinner value only if the value is not null and is different from the current value.
+     *
+     * @param spinner the spinner
+     * @param value the value
+     */
+    public static void setSpinnerValue(JSpinner spinner, Object value)
+    {
+        if (value != null && !value.equals(spinner.getValue()))
+        {
+            spinner.setValue(value);
+        }
+    }
+
+    /**
+     * Sets a slider value only if the value is different from the current value.
+     *
+     * @param slider the slider
+     * @param value the value
+     */
+    public static void setSliderValue(JSlider slider, int value)
+    {
+        if (slider.getValue() != value)
+        {
+            slider.setValue(value);
+        }
     }
 
     /** Private constructor. */

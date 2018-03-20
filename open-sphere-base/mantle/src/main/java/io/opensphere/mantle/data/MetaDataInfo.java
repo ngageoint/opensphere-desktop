@@ -26,6 +26,16 @@ public interface MetaDataInfo
     boolean addKey(String key, Class<?> keyClass, Object source);
 
     /**
+     * Removes a key from the key names.
+     *
+     * @param key - the key to add
+     * @param keyClass - the class for the key
+     * @param source - the calling object
+     * @return true if removed, false if not in set.
+     */
+    boolean removeKey(String key, Class<?> keyClass, Object source);
+
+    /**
      * Quick access to key for {@link SpecialKey}.Altitude.
      *
      * @return the key or null if none designated for this type.

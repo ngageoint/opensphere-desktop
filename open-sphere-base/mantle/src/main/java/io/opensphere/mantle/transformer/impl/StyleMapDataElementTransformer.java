@@ -1,17 +1,17 @@
 package io.opensphere.mantle.transformer.impl;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import gnu.trove.map.hash.TLongLongHashMap;
+import gnu.trove.set.TLongSet;
+import gnu.trove.set.hash.TLongHashSet;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.util.Utilities;
-import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.collections.TroveUtilities;
 import io.opensphere.mantle.controller.event.impl.ActiveDataGroupsChangedEvent;
 import io.opensphere.mantle.data.AbstractDataTypeInfoChangeEvent;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -157,9 +157,9 @@ public class StyleMapDataElementTransformer extends AbstractMapDataElementTransf
     }
 
     @Override
-    public Set<Long> getIdSet()
+    public TLongSet getIdSet()
     {
-        return Collections.unmodifiableSet(New.set(myGeometryProcessor.getIdSet()));
+        return TroveUtilities.unmodifiableSet(new TLongHashSet(myGeometryProcessor.getIdSet()));
     }
 
     /**

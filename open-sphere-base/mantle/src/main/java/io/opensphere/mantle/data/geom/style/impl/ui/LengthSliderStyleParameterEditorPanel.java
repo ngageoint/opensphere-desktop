@@ -3,7 +3,6 @@ package io.opensphere.mantle.data.geom.style.impl.ui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Dictionary;
@@ -21,7 +20,9 @@ import javax.swing.event.ChangeListener;
 
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.MathUtil;
+import io.opensphere.core.util.swing.ComponentUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
 
 /**
@@ -93,11 +94,12 @@ public class LengthSliderStyleParameterEditorPanel extends AbstractStyleParamete
         myLengthSlider.setLabelTable(ht);
         myLengthSlider.setPaintLabels((Boolean)myPanelBuilder.getOtherParameter(SHOW_SLIDER_LABELS, Boolean.TRUE));
 
-        myLengthValueLabel = new JLabel(myTextEntry ? Length.getLongLabel(displayUnits, true)
-                : Length.create(displayUnits, initialVal).toLongLabelString());
+        myLengthValueLabel = new JLabel(myTextEntry ? Length.getShortLabel(displayUnits, true)
+                : Length.create(displayUnits, initialVal).toShortLabelString());
         myLengthTextField = new JTextField(Integer.toString(myLengthSlider.getValue()));
         myLengthTextField.addActionListener(this);
-        myLengthTextField.setMinimumSize(new Dimension(80, 20));
+        ComponentUtilities.setMinimumWidth(myLengthTextField, 50);
+        ComponentUtilities.setPreferredWidth(myLengthTextField, 50);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -105,9 +107,9 @@ public class LengthSliderStyleParameterEditorPanel extends AbstractStyleParamete
 
         if (myTextEntry)
         {
-            JPanel subPanel = new JPanel(new GridLayout(1, 2, 5, 0));
-            subPanel.add(myLengthSlider);
-            subPanel.add(myLengthTextField);
+            GridBagPanel subPanel = new GridBagPanel();
+            subPanel.fillHorizontal().add(myLengthSlider);
+            subPanel.fillNone().setInsets(0, 5, 0, 0).add(myLengthTextField);
             panel.add(subPanel);
             panel.add(Box.createHorizontalStrut(5));
             panel.add(myLengthValueLabel);
@@ -245,8 +247,8 @@ public class LengthSliderStyleParameterEditorPanel extends AbstractStyleParamete
             public void run()
             {
                 myLengthTextField.setText(Integer.toString(value));
-                myLengthValueLabel.setText(myTextEntry ? Length.getLongLabel(myDisplayUnits, true)
-                        : Length.create(myDisplayUnits, value).toLongLabelString());
+                myLengthValueLabel.setText(myTextEntry ? Length.getShortLabel(myDisplayUnits, true)
+                        : Length.create(myDisplayUnits, value).toShortLabelString());
             }
         });
     }

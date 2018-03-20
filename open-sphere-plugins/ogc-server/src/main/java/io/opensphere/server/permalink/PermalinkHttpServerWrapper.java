@@ -157,4 +157,28 @@ public class PermalinkHttpServerWrapper implements PermalinkHttpServer
     {
         return myPermalinker.uploadFile(payload, this);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.server.HttpServer#sendHead(java.net.URL, java.util.Map, io.opensphere.core.server.ResponseValues)
+     */
+    @Override
+    public void sendHead(URL url, Map<String, String> extraHeaderValues, ResponseValues response)
+        throws IOException, URISyntaxException
+    {
+        myServer.sendHead(url, extraHeaderValues, response);
+
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.server.HttpServer#sendHead(java.net.URL, io.opensphere.core.server.ResponseValues)
+     */
+    @Override
+    public void sendHead(URL url, ResponseValues response) throws IOException, URISyntaxException
+    {
+        myServer.sendHead(url, response);
+    }
 }

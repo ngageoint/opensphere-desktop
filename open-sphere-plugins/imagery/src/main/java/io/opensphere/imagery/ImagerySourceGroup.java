@@ -36,6 +36,7 @@ import io.opensphere.core.util.XMLUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.HashCodeHelper;
+import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.core.util.ref.WeakReference;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.zip.Zip;
@@ -661,7 +662,7 @@ public class ImagerySourceGroup extends AbstractDataSource
                 "Writing Image Source Export File: " + selectedFile.getName(), "Writing", 0, (int)totalBytes);
         progressMon.setMillisToPopup(0);
 
-        final Thread t = new Thread(new Runnable()
+        ThreadUtilities.runBackground(new Runnable()
         {
             @Override
             public void run()
@@ -682,6 +683,5 @@ public class ImagerySourceGroup extends AbstractDataSource
                 progressMon.close();
             }
         });
-        t.start();
     }
 }

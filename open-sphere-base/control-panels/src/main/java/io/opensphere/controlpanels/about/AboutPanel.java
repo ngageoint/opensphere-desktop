@@ -12,11 +12,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -26,6 +28,8 @@ import org.apache.log4j.Logger;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.control.ui.UIRegistry;
+import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.StringUtilities;
@@ -44,20 +48,38 @@ public class AboutPanel extends AbstractHUDPanel
     /** Serial. */
     private static final long serialVersionUID = 1L;
 
+    /** The Toolbox. */
+    private final transient Toolbox myToolbox;
+
+    /** The UI Registry. */
+    private final transient UIRegistry myUiRegistry;
+
+    /** The Preferences Registry. */
+    private final transient PreferencesRegistry myPreferencesRegistry;
+
     /** The About frame. */
     private final About myAboutFrame;
 
-    /** The Close button. */
-    private JButton myCloseButton;
-
-    /** The More button. */
-    private JButton myMoreButton;
+    /** The About utility functions. */
+    private final AboutUtil myUtil;
 
     /** The System properties map. */
     private final Map<String, String> mySystemPropertiesMap;
 
-    /** The Toolbox. */
-    private final transient Toolbox myToolbox;
+    /** The Close button. */
+    private JButton myCloseButton;
+
+    /** The Export Logs button. */
+    private JButton myExportButton;
+
+    /** The More button. */
+    private JButton myMoreButton;
+
+    /** The file browser command. */
+    private String myCommand;
+
+    /** The OS working directory. */
+    private String myWorkingDirectory;
 
     /**
      * Instantiates a new layer manager panel.
@@ -68,16 +90,25 @@ public class AboutPanel extends AbstractHUDPanel
     public AboutPanel(Toolbox toolbox, About frame)
     {
         super(toolbox.getPreferencesRegistry());
+
         myToolbox = toolbox;
+        myPreferencesRegistry = toolbox.getPreferencesRegistry();
+        myUiRegistry = toolbox.getUIRegistry();
+
         myAboutFrame = frame;
-        this.setSize(getTopLevelPanelDim());
+        mySystemPropertiesMap = New.map();
+
+        setSize(getTopLevelPanelDim());
         setMinimumSize(getSize());
         setPreferredSize(getSize());
         setLayout(new BorderLayout());
         setBackground(getBackgroundColor());
-        mySystemPropertiesMap = New.map();
-        // add(getTabbedPane(), BorderLayout.CENTER);
+
         buildPropertyMap();
+
+        myUtil = new AboutUtil(myToolbox, frame, mySystemPropertiesMap);
+
+        initializeFileBrowser();
         initialize();
     }
 
@@ -105,6 +136,61 @@ public class AboutPanel extends AbstractHUDPanel
                 final String value = StringUtilities.expandProperties(p.getProperty(key.toString()), p);
                 mySystemPropertiesMap.put(key.toString(), value);
             }
+        }
+    }
+
+    /**
+     * Initializes the file browser application and working directory based on
+     * the user's operating system.
+     */
+    private void initializeFileBrowser()
+    {
+        if (System.getProperty("os.name").contains("Windows"))
+        {
+            myWorkingDirectory = null;
+            myCommand = "explorer";
+        }
+        else if (new File("/usr/bin/xdg-open").canExecute())
+        {
+            myWorkingDirectory = "/";
+            myCommand = "/usr/bin/xdg-open";
+        }
+        else if (new File("/usr/bin/gnome-open").canExecute())
+        {
+            myWorkingDirectory = "/";
+            myCommand = "/usr/bin/gnome-open";
+        }
+        else
+        {
+            myWorkingDirectory = null;
+            myCommand = null;
+        }
+    }
+
+    /**
+     * Opens a given directory.
+     *
+     * @param file the directory
+     */
+    private void openFolder(File file)
+    {
+        if (myCommand == null)
+        {
+            return;
+        }
+
+        try
+        {
+            ProcessBuilder pb = new ProcessBuilder(myCommand, file.getCanonicalPath());
+            if (myWorkingDirectory != null)
+            {
+                pb.directory(new File(myWorkingDirectory));
+            }
+            pb.start();
+        }
+        catch (final IOException e1)
+        {
+            LOGGER.error("Failed to open folder: " + e1, e1);
         }
     }
 
@@ -153,30 +239,7 @@ public class AboutPanel extends AbstractHUDPanel
         p.add(lbPnl, BorderLayout.WEST);
         p.add(valPnl, BorderLayout.CENTER);
 
-        final String workingDirectory;
-        final String command;
-        if (System.getProperty("os.name").contains("Windows"))
-        {
-            workingDirectory = null;
-            command = "explorer";
-        }
-        else if (new File("/usr/bin/xdg-open").canExecute())
-        {
-            workingDirectory = "/";
-            command = "/usr/bin/xdg-open";
-        }
-        else if (new File("/usr/bin/gnome-open").canExecute())
-        {
-            workingDirectory = "/";
-            command = "/usr/bin/gnome-open";
-        }
-        else
-        {
-            workingDirectory = null;
-            command = null;
-        }
-
-        if (command != null)
+        if (myCommand != null)
         {
             final File file = new File(value);
             if (file.isDirectory())
@@ -188,19 +251,7 @@ public class AboutPanel extends AbstractHUDPanel
                     @Override
                     public void actionPerformed(ActionEvent e)
                     {
-                        try
-                        {
-                            ProcessBuilder pb = new ProcessBuilder(command, "\"" + file.getCanonicalPath() + "\"");
-                            if (workingDirectory != null)
-                            {
-                                pb.directory(new File(workingDirectory));
-                            }
-                            pb.start();
-                        }
-                        catch (final IOException e1)
-                        {
-                            LOGGER.error("Failed to open folder: " + e1, e1);
-                        }
+                        openFolder(file);
                     }
                 });
                 p.add(openBtn, BorderLayout.EAST);
@@ -272,6 +323,43 @@ public class AboutPanel extends AbstractHUDPanel
             });
         }
         return myCloseButton;
+    }
+
+    /**
+     * Creates the export button. Exports all logs, preferences and db files.
+     * <p>
+     * After being clicked the button will initiate a Save-As dialog, then save
+     * the resulting file as a ZIP archive.
+     *
+     * @return the export button
+     */
+    private JButton createExportButton()
+    {
+        myExportButton = new JButton("Export Logs");
+        myExportButton.setMargin(ButtonPanel.INSETS_MEDIUM);
+        myExportButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                File saveFile = myUtil.initSaveAs();
+                if (saveFile == null)
+                {
+                    return;
+                }
+
+                myUtil.performZipAction(saveFile, false, evt ->
+                {
+                    if (evt.getActionCommand() == AboutUtil.SUCCESS)
+                    {
+                        File saveDir = saveFile.getParentFile();
+                        openFolder(saveDir);
+                    }
+                });
+            }
+        });
+
+        return myExportButton;
     }
 
     /**
@@ -373,18 +461,18 @@ public class AboutPanel extends AbstractHUDPanel
 
         toPanel.add(Box.createVerticalStrut(10));
 
-        final JPanel morePanel = new JPanel(new BorderLayout());
-        toPanel.add(getMoreButton());
-
         final JPanel rtPanel = new JPanel();
         rtPanel.setBackground(Colors.TRANSPARENT_BLACK);
         rtPanel.setLayout(new BoxLayout(rtPanel, BoxLayout.X_AXIS));
         rtPanel.add(Box.createHorizontalGlue());
         rtPanel.add(getMoreButton());
         rtPanel.add(Box.createHorizontalStrut(5));
+        rtPanel.add(createExportButton());
+        rtPanel.add(Box.createHorizontalStrut(5));
         rtPanel.add(getCloseButton());
         rtPanel.add(Box.createHorizontalGlue());
 
+        final JPanel morePanel = new JPanel(new BorderLayout());
         morePanel.add(rtPanel, BorderLayout.CENTER);
         morePanel.setBackground(Colors.TRANSPARENT_BLACK);
 
@@ -435,9 +523,11 @@ public class AboutPanel extends AbstractHUDPanel
             }
         }
 
-        final TextViewDialog dvd = new TextViewDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
-                title + " System Properties", sb.toString(), false, myToolbox.getPreferencesRegistry());
-        dvd.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
+        Supplier<? extends JFrame> mainFrameProvider = myUiRegistry.getMainFrameProvider();
+
+        final TextViewDialog dvd = new TextViewDialog(mainFrameProvider.get(), title + " System Properties", sb.toString(), false,
+                myPreferencesRegistry);
+        dvd.setLocationRelativeTo(mainFrameProvider.get());
         dvd.setVisible(true);
     }
 }

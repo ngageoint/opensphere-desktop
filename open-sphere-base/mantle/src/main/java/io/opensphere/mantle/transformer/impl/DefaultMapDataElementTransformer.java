@@ -59,7 +59,7 @@ public class DefaultMapDataElementTransformer extends AbstractMapDataElementTran
     private final Set<Geometry> myHiddenGeometrySet;
 
     /** The id set. */
-    private final Set<Long> myIdSet;
+    private final TLongSet myIdSet;
 
     /** The Last color change update number. */
     private long myLastColorChangeUpdateNumber;
@@ -80,7 +80,7 @@ public class DefaultMapDataElementTransformer extends AbstractMapDataElementTran
             TransformerGeomRegistryUpdateTaskActivity activity)
     {
         super(aToolbox, dti, source, category);
-        myIdSet = New.set();
+        myIdSet = new TLongHashSet();
         myGeomRegUpdateActivity = activity;
         myGeometrySetLock = new ReentrantLock();
         myGeometrySet = New.set();
@@ -316,7 +316,7 @@ public class DefaultMapDataElementTransformer extends AbstractMapDataElementTran
      * @see io.opensphere.mantle.transformer.impl.AbstractMapDataElementTransformer#getIdSet()
      */
     @Override
-    public Set<Long> getIdSet()
+    public TLongSet getIdSet()
     {
         return myIdSet;
     }

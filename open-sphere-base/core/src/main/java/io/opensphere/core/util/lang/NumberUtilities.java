@@ -6,6 +6,35 @@ package io.opensphere.core.util.lang;
 public final class NumberUtilities
 {
     /**
+     * Attempts conversion of an object to a Double in order to determine
+     * whether or not it is a Number.
+     *
+     * @param value the object to convert
+     * @return whether the conversion was successful
+     */
+    public static boolean isNumber(Object value)
+    {
+        if (value == null)
+        {
+            return false;
+        }
+        else if (value instanceof Number)
+        {
+            return true;
+        }
+
+        try
+        {
+            Double.valueOf(value.toString());
+            return true;
+        }
+        catch (NumberFormatException e)
+        {
+            return false;
+        }
+    }
+
+    /**
      * Returns the primitive value of the given Integer, or the default value if
      * it's null.
      *
@@ -28,16 +57,41 @@ public final class NumberUtilities
      */
     public static double parseDouble(String string, double defaultValue)
     {
-        double value;
-        try
+        double value = defaultValue;
+        if (string != null && !string.isEmpty())
         {
-            value = Double.parseDouble(string);
-        }
-        catch (NumberFormatException e)
-        {
-            value = defaultValue;
+            try
+            {
+                value = Double.parseDouble(string);
+            }
+            catch (NumberFormatException e)
+            {
+                value = defaultValue;
+            }
         }
         return value;
+    }
+
+    /**
+     * Returns the double value of the given object, or the default value if
+     * it's not parseable.
+     *
+     * @param object the object
+     * @param defaultValue the default value
+     * @return the double value, or default value if the value is not parseable
+     */
+    public static double parseDouble(Object object, double defaultValue)
+    {
+        if (object == null)
+        {
+            return defaultValue;
+        }
+        else if (object instanceof Number)
+        {
+            return ((Number)object).doubleValue();
+        }
+
+        return parseDouble(object.toString(), defaultValue);
     }
 
     /**
@@ -50,14 +104,17 @@ public final class NumberUtilities
      */
     public static int parseInt(String string, int defaultValue)
     {
-        int value;
-        try
+        int value = defaultValue;
+        if (string != null && !string.isEmpty())
         {
-            value = Integer.parseInt(string);
-        }
-        catch (NumberFormatException e)
-        {
-            value = defaultValue;
+            try
+            {
+                value = Integer.parseInt(string);
+            }
+            catch (NumberFormatException e)
+            {
+                value = defaultValue;
+            }
         }
         return value;
     }

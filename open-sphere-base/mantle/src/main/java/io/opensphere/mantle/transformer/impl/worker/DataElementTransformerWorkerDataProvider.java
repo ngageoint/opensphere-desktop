@@ -1,10 +1,13 @@
 package io.opensphere.mantle.transformer.impl.worker;
 
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 
+import gnu.trove.set.TLongSet;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.Geometry;
+import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.transformer.TransformerGeomRegistryUpdateTaskActivity;
 
@@ -53,7 +56,7 @@ public interface DataElementTransformerWorkerDataProvider
      *
      * @return the id set
      */
-    Set<Long> getIdSet();
+    TLongSet getIdSet();
 
     /**
      * Gets the toolbox.
@@ -82,4 +85,28 @@ public interface DataElementTransformerWorkerDataProvider
      * @return the publish updates to geometry registry
      */
     boolean isPublishUpdatesToGeometryRegistry();
+
+    /**
+     * Gets the IDs as a new List.
+     *
+     * @return the IDs as a new List
+     */
+    default List<Long> getIdsAsList()
+    {
+        List<Long> ids = New.list(getIdSet().size());
+        getIdSet().forEach(ids::add);
+        return ids;
+    }
+
+    /**
+     * Gets the IDs as a new Set.
+     *
+     * @return the IDs as a new Set
+     */
+    default Set<Long> getIdsAsSet()
+    {
+        Set<Long> ids = New.set(getIdSet().size());
+        getIdSet().forEach(ids::add);
+        return ids;
+    }
 }

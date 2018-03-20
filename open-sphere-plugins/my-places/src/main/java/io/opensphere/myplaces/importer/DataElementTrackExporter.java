@@ -95,7 +95,7 @@ public class DataElementTrackExporter extends AbstractDataElementExporter
             loc = LatLonAlt.createFromDegreesMeters(loc.getLatD(), loc.getLonD(), alt, loc.getAltitudeReference());
         }
 
-        return new DefaultTrackNode(loc, dataElement.getTimeSpan());
+        return new DefaultTrackNode(loc, dataElement.getTimeSpan(),dataElement.getIdInCache());
     }
 
     /** A comparator for sorting data elements by time. */

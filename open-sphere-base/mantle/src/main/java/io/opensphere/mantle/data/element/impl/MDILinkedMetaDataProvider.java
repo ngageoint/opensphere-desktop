@@ -85,7 +85,7 @@ public class MDILinkedMetaDataProvider extends AbstractMDILinkedMetaDataProvider
     {
         int index = getMetaDataInfo().getKeyIndex(key);
         Object result = null;
-        if (index >= 0 && index < myValues.size())
+        if (myValues != null && index >= 0 && index < myValues.size())
         {
             result = myValues.get(index);
         }

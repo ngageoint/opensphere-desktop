@@ -21,6 +21,16 @@ public interface DynamicMetadataDataTypeController
     boolean addDynamicColumn(String columnName, Class<?> columnClass, Object source);
 
     /**
+     * Removes the dynamic column.
+     *
+     * @param columnName the column name for the dynamic column
+     * @param columnClass the column class
+     * @param source the source of the add request
+     * @return true, if successful, false if column already exists
+     */
+    boolean removeDynamicColumn(String columnName, Class<?> columnClass, Object source);
+
+    /**
      * Append values.
      *
      * @param cacheIds the cache ids

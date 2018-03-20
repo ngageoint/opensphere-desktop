@@ -6,16 +6,12 @@ import java.util.List;
 import io.opensphere.core.geometry.constraint.Constraints;
 import io.opensphere.core.geometry.renderproperties.BaseRenderProperties;
 import io.opensphere.core.geometry.renderproperties.PolygonRenderProperties;
-import io.opensphere.core.math.Ellipsoid;
 import io.opensphere.core.math.Vector3d;
-import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.model.GeographicPosition;
-import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.Position;
 import io.opensphere.core.projection.Projection;
 import io.opensphere.core.util.MathUtil;
 import io.opensphere.core.util.Utilities;
-import io.opensphere.core.util.collections.New;
 
 /**
  * A {@link Geometry} that models a series of connected line segments that
@@ -127,7 +123,7 @@ public class EllipseGeometry extends PolygonGeometry
         myCenter = builder.getCenter();
         Utilities.checkNull(builder.getProjection(), "builder.getProjection()");
         Utilities.checkNull(builder.getCenter(), "builder.getCenter()");
-        setVertices(createProjectedVertices(builder));
+        setVertices(EllipseGeometryUtilities.createProjectedVertices(builder));
     }
 
     /**
@@ -205,48 +201,6 @@ public class EllipseGeometry extends PolygonGeometry
             double y = cos * semiMajorAxis * axis.getY() + sin * semiMinorAxis * axis.getX();
             Position pt = center.add(new Vector3d(x, y, 0.));
             vertices.add(pt);
-        }
-        return vertices;
-    }
-
-    /**
-     * Create the vertices in the projection. For ellipses whose centers have a
-     * non-zero altitude, the ellipse will enlarge as the altitude increases.
-     *
-     * @param builder The geometry builder.
-     * @return The projected vertices.
-     */
-    private List<? extends GeographicPosition> createProjectedVertices(ProjectedBuilder builder)
-    {
-        GeographicPosition center = builder.getCenter();
-        double angle = builder.getAngle() * MathUtil.DEG_TO_RAD;
-        int vertexCount = builder.getVertexCount();
-        double semiMajorAxis = builder.getSemiMajorAxis();
-        double semiMinorAxis = builder.getSemiMinorAxis();
-        Projection projection = builder.getProjection();
-
-        // Create an ellipsoid to use for projecting the points into model
-        // coordinates.
-        Ellipsoid ellipsoid = EllipseGeometryUtilities.createEllipsoid(projection, center, angle, semiMajorAxis, semiMinorAxis);
-
-        double angleStep = MathUtil.TWO_PI / vertexCount;
-
-        List<GeographicPosition> vertices = New.list();
-        for (int i = 0; i < vertexCount; i++)
-        {
-            double theta = i * angleStep;
-            double x = Math.cos(theta);
-            double y = Math.sin(theta);
-            Vector3d modelPt = ellipsoid.localToModel(new Vector3d(x, y, 0.));
-            GeographicPosition geoWithAlt = projection.convertToPosition(modelPt, ReferenceLevel.TERRAIN);
-            // Remove the altitude from the position so that the ellipsoid
-            // renders flat on the model. This contracts the radius slightly. If
-            // we want to project it flat, the model position should be moved in
-            // the opposite direction of the ellipsoid's z-axis.
-            LatLonAlt location = LatLonAlt.createFromDegreesMeters(geoWithAlt.getLatLonAlt().getLatD(),
-                    geoWithAlt.getLatLonAlt().getLonD(), center.getAlt().getMeters(), center.getAlt().getReferenceLevel());
-            GeographicPosition geo = new GeographicPosition(location);
-            vertices.add(geo);
         }
         return vertices;
     }

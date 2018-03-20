@@ -138,6 +138,12 @@ public class ArcGISServerSource extends AbstractDataSource implements ServerSour
         return myBaseServerURL;
     }
 
+    @Override
+    public String getURL()
+    {
+        return myBaseServerURL;
+    }
+
     /**
      * Checks if is active.
      *

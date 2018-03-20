@@ -20,13 +20,12 @@ import io.opensphere.core.event.EventListenerService;
 import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.util.Aggregator;
 import io.opensphere.core.util.ThreadConfined;
 import io.opensphere.core.util.XMLUtilities;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.collections.StreamUtilities;
 import io.opensphere.core.util.lang.EqualsHelper;
-import io.opensphere.core.util.lang.Pair;
 import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.featureactions.model.Action;
 import io.opensphere.featureactions.model.FeatureAction;
@@ -93,6 +92,86 @@ public class FeatureActionsController extends EventListenerService
     }
 
     /**
+     * Un-applies any actions to the data elements of the data type.
+     *
+     * @param ids the data element IDs
+     * @param dataType the data type of the elements
+     */
+    private void clearActions(Collection<Long> ids, DataTypeInfo dataType)
+    {
+        if (myTypeKeysAndStyles.containsKey(dataType.getTypeKey()))
+        {
+            for (ActionApplier applier : myActionAppliers)
+            {
+                applier.clearActions(ids, dataType);
+            }
+        }
+    }
+
+    /**
+     * Ensures that a filter evaluator exists or is created for the feature action.
+     *
+     * @param featureAction the feature action
+     */
+    private void populateEvaluator(FeatureAction featureAction)
+    {
+        DataFilterEvaluator evaluator = featureAction.getEvaluator();
+        if (evaluator == null)
+        {
+            evaluator = new DataFilterEvaluator(featureAction.getFilter(), myMantleToolbox.getDynamicEnumerationRegistry());
+            featureAction.setEvaluator(evaluator);
+        }
+    }
+
+    /**
+     * Does everything. Figures out what actions need to be applied if any, and applies them to the features.
+     *
+     * @param ids the data element IDs
+     * @param dataType the data type
+     */
+    private void doActions(Collection<Long> ids, DataTypeInfo dataType)
+    {
+        long start = System.nanoTime();
+
+        List<FeatureAction> featureActions = myRegistry.getEnabled(dataType.getTypeKey());
+        if (!featureActions.isEmpty())
+        {
+            DataTypeStyleConfig style = myPrefs.getPreferences(StyleManagerController.class)
+                    .getJAXBObject(StyleManagerConfig.class, "styleManagerConfig", new StyleManagerConfig())
+                    .getDataTypeStyleByTypeKey(dataType.getTypeKey());
+            myTypeKeysAndStyles.put(dataType.getTypeKey(), XMLUtilities.jaxbClone(style, DataTypeStyleConfig.class));
+
+            Aggregator.process(ids, 100_000, idSubset -> applyActions(featureActions, idSubset, dataType));
+
+            if (LOGGER.isDebugEnabled())
+            {
+                long delta = TimeUnit.NANOSECONDS.toMicros(System.nanoTime() - start);
+                LOGGER.debug("Applied feature actions to " + ids.size() + " elements in " + delta + " μs");
+            }
+        }
+    }
+
+    /**
+     * Applies the feature actions to the IDs.
+     *
+     * @param featureActions the feature actions
+     * @param ids the IDs
+     * @param dataType the data type
+     */
+    private void applyActions(Collection<? extends FeatureAction> featureActions, Collection<Long> ids, DataTypeInfo dataType)
+    {
+        Map<Collection<Action>, List<MapDataElement>> actionToElementsMap = mapActionToElements(ids, dataType, featureActions);
+
+        for (Map.Entry<Collection<Action>, List<MapDataElement>> entry : actionToElementsMap.entrySet())
+        {
+            Collection<Action> actions = entry.getKey();
+            List<MapDataElement> elements = entry.getValue();
+
+            applyActions(actions, elements, dataType);
+        }
+    }
+
+    /**
      * Applies the actions to the data elements.
      *
      * @param actions the actions
@@ -114,99 +193,23 @@ public class FeatureActionsController extends EventListenerService
     }
 
     /**
-     * Un-applies any actions to the data elements of the data type.
-     *
-     * @param ids the data element IDs
-     * @param dataType the data type of the elements
-     */
-    private void clearActions(Collection<Long> ids, DataTypeInfo dataType)
-    {
-        if (myTypeKeysAndStyles.containsKey(dataType.getTypeKey()))
-        {
-            for (ActionApplier applier : myActionAppliers)
-            {
-                applier.clearActions(ids, dataType);
-            }
-        }
-    }
-
-    /**
-     * Creates a filter evaluator for the feature action.
-     *
-     * @param featureAction the feature action
-     * @return the pair of the action and evaluator
-     */
-    private Pair<FeatureAction, DataFilterEvaluator> createEvaluator(FeatureAction featureAction)
-    {
-        DataFilterEvaluator evaluator = featureAction.getEvaluator();
-        if (evaluator == null)
-        {
-            evaluator = new DataFilterEvaluator(featureAction.getFilter(), myMantleToolbox.getDynamicEnumerationRegistry());
-            featureAction.setEvaluator(evaluator);
-        }
-        return new Pair<>(featureAction, evaluator);
-    }
-
-    /**
-     * Does everything. Figures out what actions need to be applied if any, and
-     * applies them to the features.
-     *
-     * @param ids the data element IDs
-     * @param dataType the data type
-     */
-    private void doActions(Collection<Long> ids, DataTypeInfo dataType)
-    {
-        long start = System.nanoTime();
-
-        List<FeatureAction> featureActions = myRegistry.getEnabled(dataType.getTypeKey());
-        if (!featureActions.isEmpty())
-        {
-            DataTypeStyleConfig style = myPrefs.getPreferences(StyleManagerController.class)
-                    .getJAXBObject(StyleManagerConfig.class, "styleManagerConfig", new StyleManagerConfig())
-                    .getDataTypeStyleByTypeKey(dataType.getTypeKey());
-            myTypeKeysAndStyles.put(dataType.getTypeKey(), XMLUtilities.jaxbClone(style, DataTypeStyleConfig.class));
-
-            Map<Collection<Action>, List<MapDataElement>> actionToElementsMap = mapActionToElements(ids, dataType,
-                    featureActions);
-
-            for (Map.Entry<Collection<Action>, List<MapDataElement>> entry : actionToElementsMap.entrySet())
-            {
-                Collection<Action> actions = entry.getKey();
-                List<MapDataElement> elements = entry.getValue();
-
-                applyActions(actions, elements, dataType);
-            }
-
-            if (LOGGER.isDebugEnabled())
-            {
-                long delta = TimeUnit.NANOSECONDS.toMicros(System.nanoTime() - start);
-                LOGGER.debug("Applied feature actions to " + ids.size() + " elements in " + delta + " μs");
-            }
-        }
-    }
-
-    /**
      * Gets the actions that need to be applied to the data element.
      *
      * @param element the data element
-     * @param actionsAndEvaluators collection of all possible actions and their
-     *            filter evaluators
+     * @param featureActions collection of all possible actions
      * @return the passing actions
      */
-    private Collection<FeatureAction> getPassingActions(DataElement element,
-            Collection<? extends Pair<FeatureAction, DataFilterEvaluator>> actionsAndEvaluators)
+    private Collection<FeatureAction> getPassingActions(DataElement element, Collection<? extends FeatureAction> featureActions)
     {
-        Collection<FeatureAction> featureActions = New.list();
-        for (Pair<FeatureAction, DataFilterEvaluator> pair : actionsAndEvaluators)
+        Collection<FeatureAction> passingActions = New.list();
+        for (FeatureAction featureAction : featureActions)
         {
-            FeatureAction featureAction = pair.getFirstObject();
-            DataFilterEvaluator evaluator = pair.getSecondObject();
-            if (evaluator.accepts(element))
+            if (featureAction.getEvaluator().accepts(element))
             {
-                featureActions.add(featureAction);
+                passingActions.add(featureAction);
             }
         }
-        return featureActions;
+        return passingActions;
     }
 
     /**
@@ -230,20 +233,16 @@ public class FeatureActionsController extends EventListenerService
     }
 
     /**
-     * Checks if there were any feature action groups that the data element
-     * didn't satisfy, and creates a feature action that satisfies the data
-     * element for any such groups.
+     * Checks if there were any feature action groups that the data element didn't satisfy, and creates a feature action that
+     * satisfies the data element for any such groups.
      *
      * @param element the data element
      * @param passingFeatureActions the passing feature actions
      * @param groupsToSatisfy the groups that need to be satisfied
      * @param dataType the data type
-     * @param actionsAndEvaluators collection of all possible actions and their
-     *            filter evaluators
      */
     private void handleGroupUnsatisfaction(MapDataElement element, Collection<FeatureAction> passingFeatureActions,
-            Set<String> groupsToSatisfy, DataTypeInfo dataType,
-            Collection<? super Pair<FeatureAction, DataFilterEvaluator>> actionsAndEvaluators)
+            Set<String> groupsToSatisfy, DataTypeInfo dataType)
     {
         if (!groupsToSatisfy.isEmpty())
         {
@@ -257,14 +256,13 @@ public class FeatureActionsController extends EventListenerService
                     FeatureActionCreator actionCreator = myRegistry.getActionCreator(group);
                     FeatureAction featureAction = actionCreator.create(element);
 
-                    Pair<FeatureAction, DataFilterEvaluator> evaluator = createEvaluator(featureAction);
+                    populateEvaluator(featureAction);
                     // Sanity check to avoid creating new actions that won't be
                     // accepted, which can actually happen.
-                    if (evaluator.getSecondObject().accepts(element))
+                    if (featureAction.getEvaluator().accepts(element))
                     {
                         myRegistry.add(dataType.getTypeKey(), Collections.singleton(featureAction), this);
                         passingFeatureActions.add(featureAction);
-                        actionsAndEvaluators.add(evaluator);
 
                         if (LOGGER.isDebugEnabled())
                         {
@@ -302,7 +300,7 @@ public class FeatureActionsController extends EventListenerService
             List<Long> ids = myMantleToolbox.getDataElementLookupUtils().getDataElementCacheIds(dataType);
             if (!ids.isEmpty())
             {
-                clearActions(ids, dataType);
+                Aggregator.process(ids, 100_000, idSubset -> clearActions(idSubset, dataType));
                 myTypeKeysAndStyles.remove(dataType.getTypeKey());
                 doActions(ids, dataType);
             }
@@ -347,37 +345,42 @@ public class FeatureActionsController extends EventListenerService
      * @return the map
      */
     private Map<Collection<Action>, List<MapDataElement>> mapActionToElements(Collection<Long> ids, DataTypeInfo dataType,
-            Collection<FeatureAction> featureActions)
+            Collection<? extends FeatureAction> featureActions)
     {
         Map<Collection<Action>, List<MapDataElement>> actionToElementsMap = New.map();
 
-        // Set the type key so that the evaluator will accept it
         for (FeatureAction action : featureActions)
         {
+            // Set the type key so that the evaluator will accept it
             action.getFilter().getSource().setTypeKey(dataType.getTypeKey());
+
+            populateEvaluator(action);
         }
 
         Set<String> groupsToSatisfy = featureActions.stream().map(a -> a.getGroupName()).distinct()
                 .filter(g -> myRegistry.getActionCreator(g) != null).collect(Collectors.toSet());
 
-        List<Pair<FeatureAction, DataFilterEvaluator>> actionsAndEvaluators = StreamUtilities.map(featureActions,
-                this::createEvaluator);
-        Collection<MapDataElement> elements = FeatureActionUtilities.getDataElements(myMantleToolbox, ids, dataType);
-        for (MapDataElement element : elements)
+        Collection<DataElement> elements = FeatureActionUtilities.getDataElements(myMantleToolbox, ids, dataType);
+        for (DataElement element : elements)
         {
-            Collection<FeatureAction> passingFeatureActions = getPassingActions(element, actionsAndEvaluators);
-
-            handleGroupUnsatisfaction(element, passingFeatureActions, groupsToSatisfy, dataType, actionsAndEvaluators);
-
-            Set<Action> passingActions = new LinkedHashSet<>();
-            for (FeatureAction featureAction : passingFeatureActions)
+            if (element instanceof MapDataElement)
             {
-                passingActions.addAll(featureAction.getActions());
-            }
+                MapDataElement mapElement = (MapDataElement)element;
 
-            if (!passingActions.isEmpty())
-            {
-                actionToElementsMap.computeIfAbsent(passingActions, k -> New.list()).add(element);
+                Collection<FeatureAction> passingFeatureActions = getPassingActions(mapElement, featureActions);
+
+                handleGroupUnsatisfaction(mapElement, passingFeatureActions, groupsToSatisfy, dataType);
+
+                Set<Action> passingActions = new LinkedHashSet<>();
+                for (FeatureAction featureAction : passingFeatureActions)
+                {
+                    passingActions.addAll(featureAction.getActions());
+                }
+
+                if (!passingActions.isEmpty())
+                {
+                    actionToElementsMap.computeIfAbsent(passingActions, k -> New.list()).add(mapElement);
+                }
             }
         }
         return actionToElementsMap;

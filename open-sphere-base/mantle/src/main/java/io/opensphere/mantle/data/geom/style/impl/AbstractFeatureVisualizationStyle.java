@@ -32,6 +32,7 @@ import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.order.impl.DefaultOrderCategory;
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.units.length.Meters;
+import io.opensphere.core.util.MathUtil;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
@@ -62,6 +63,7 @@ import io.opensphere.mantle.data.geom.style.impl.ui.GroupedStyleParameterEditorP
 import io.opensphere.mantle.data.geom.style.impl.ui.LabelComboEditor;
 import io.opensphere.mantle.data.geom.style.impl.ui.LengthSliderStyleParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.MultiComboBoxStyleTwoParameterEditorPanel;
+import io.opensphere.mantle.data.geom.style.impl.ui.MultipleCheckBoxParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.PanelBuilder;
 import io.opensphere.mantle.data.geom.style.impl.ui.ParameterVisibilityConstraint;
 import io.opensphere.mantle.data.geom.style.impl.ui.StyleParameterEditorGroupPanel;
@@ -334,7 +336,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
                 builderData.getMDP(), builderData.getVS());
 
         PointGeometryFactory factory = new PointGeometryFactory(renderPropertyPool);
-        if (position.getAlt().getMeters() < 0)
+        if (position.getLatLonAlt().getAltM() < 0)
         {
             setToAddTo.addAll(mySubsurfaceGeometryCreator.createSubsurfaceGeometry(builderData, renderPropertyPool,
                     stylePointSize, factory, constraints, getColor(), position));
@@ -586,15 +588,9 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
             DataTypeInfo dti = StyleUtils.getDataTypeInfoFromKey(getToolbox(), getDTIKey());
             if (dti != null && dti.getMetaDataInfo() != null && dti.getMetaDataInfo().getKeyCount() > 0)
             {
-                PanelBuilder lb = StyleUtils.createSliderMiniPanelBuilder("Use Altitude");
-                AbstractStyleParameterEditorPanel useAltitudePanel = new CheckBoxStyleParameterEditorPanel(lb, style,
-                        USE_ALTITUDE_PROPERTY_KEY, false);
-                paramList.add(useAltitudePanel);
-
-                lb = StyleUtils.createSliderMiniPanelBuilder("Is Depth");
-                AbstractStyleParameterEditorPanel isDepthPanel = new CheckBoxStyleParameterEditorPanel(lb, style,
-                        IS_DEPTH_PROPERTY_KEY, false);
-                paramList.add(isDepthPanel);
+                AbstractStyleParameterEditorPanel altitudeAndDepthPanel = new MultipleCheckBoxParameterEditorPanel(
+                        PanelBuilder.get(null, 20, 0, 0, 0), style, USE_ALTITUDE_PROPERTY_KEY, IS_DEPTH_PROPERTY_KEY);
+                paramList.add(altitudeAndDepthPanel);
 
                 if (supportsLabels())
                 {
@@ -668,14 +664,9 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
                         "Warning: Some values may be drawn under terrain");
                 paramList.add(altRefPanel);
 
-                lb = PanelBuilder.get("Use Altitude");
-                AbstractStyleParameterEditorPanel useAltitudePanel = new CheckBoxStyleParameterEditorPanel(lb, style,
-                        USE_ALTITUDE_PROPERTY_KEY, false);
-                paramList.add(useAltitudePanel);
-
-                lb = PanelBuilder.get("Is Depth");
-                AbstractStyleParameterEditorPanel isDepthPanel = new CheckBoxStyleParameterEditorPanel(lb, style,
-                        IS_DEPTH_PROPERTY_KEY, false);
+                lb = PanelBuilder.get(null, 5, 0, 0, 0);
+                AbstractStyleParameterEditorPanel isDepthPanel = new MultipleCheckBoxParameterEditorPanel(lb, style,
+                        USE_ALTITUDE_PROPERTY_KEY, IS_DEPTH_PROPERTY_KEY);
                 paramList.add(isDepthPanel);
 
                 Collection<String> labels = Arrays
@@ -933,8 +924,13 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
         Altitude.ReferenceLevel refLevel = altRef.isAutomatic()
                 ? mlgs.followTerrain() ? Altitude.ReferenceLevel.TERRAIN : mlgs.getLocation().getAltitudeReference()
                 : altRef.getReference();
-        return new GeographicPosition(LatLonAlt.createFromDegreesMeters(mlgs.getLocation().getLatD(),
-                mlgs.getLocation().getLonD(), determineAltitude(visState, mlgs, mdp), refLevel));
+        double altM = determineAltitude(visState, mlgs, mdp);
+        boolean altEquals = mlgs.getLocation().getAltitudeReference() == refLevel
+                && MathUtil.isZero(mlgs.getLocation().getAltM() - altM);
+        // Attempt to reuse the LatLonAlt to save memory
+        LatLonAlt location = altEquals ? mlgs.getLocation()
+                : LatLonAlt.createFromDegreesMeters(mlgs.getLocation().getLatD(), mlgs.getLocation().getLonD(), altM, refLevel);
+        return new GeographicPosition(location);
     }
 
     /**
