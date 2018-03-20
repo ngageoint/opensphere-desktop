@@ -28,6 +28,7 @@ import io.opensphere.mantle.data.geom.MapLocationGeometrySupport;
 import io.opensphere.mantle.data.geom.MapPathGeometrySupport;
 import io.opensphere.mantle.data.geom.style.VisualizationStyle;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleController;
+import io.opensphere.mantle.data.geom.style.VisualizationStyleParameter;
 import io.opensphere.mantle.data.geom.style.dialog.StyleManagerUtils;
 import io.opensphere.mantle.data.geom.style.impl.AbstractFeatureVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.AbstractLocationFeatureVisualizationStyle;
@@ -91,7 +92,7 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
     @Override
     public void notify(DataElementHighlightChangeEvent event)
     {
-        if (isEventElementActive(event) && event.isHighlighted())
+        if (isEventElementActive(event.getDataTypeKey()) && event.isHighlighted())
         {
             drawLabel(event);
         }
@@ -105,14 +106,12 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
      * Determines whether or not the geometry we're trying to highlight is in an
      * activated state.
      *
-     * @param event the highlight event
+     * @param dtiKey the element's data type key
      * @return whether the data group containing the event element is active
      */
-    private boolean isEventElementActive(DataElementHighlightChangeEvent event)
+    private boolean isEventElementActive(String dtiKey)
     {
         MantleToolbox toolbox = MantleToolboxUtils.getMantleToolbox(getToolbox());
-
-        String dtiKey = event.getDataTypeKey();
         DataGroupInfo dataGroup = toolbox.getDataGroupController().getDataGroupInfo(dtiKey);
 
         return dataGroup != null && dataGroup.activationProperty().isActive();
@@ -189,6 +188,15 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
 
             AbstractFeatureVisualizationStyle style = pStyleClass.cast(pStyleController.getStyleForEditorWithConfigValues(
                     pStyleClass, pFeatureClass, pElement.getDataTypeInfo().getParent(), pElement.getDataTypeInfo()));
+
+            VisualizationStyleParameter enabledParam = style
+                    .getStyleParameter(AbstractFeatureVisualizationStyle.LABEL_ENABLED_PROPERTY_KEY);
+            boolean isEnabled = enabledParam != null && ((Boolean)enabledParam.getValue()).booleanValue();
+            if (isEnabled)
+            {
+                // Don't draw the label if it's enabled by settings.
+                return;
+            }
 
             LabelGeometry lastLabelGeometry = buildLabelGeometry(pEvent.getRegistryId(), style, pElement, geom);
             getToolbox().getGeometryRegistry().addGeometriesForSource(this, Collections.singleton(lastLabelGeometry));
