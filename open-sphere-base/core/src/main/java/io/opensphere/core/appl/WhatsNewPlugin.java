@@ -33,7 +33,6 @@ import io.opensphere.core.api.adapter.PluginAdapter;
 import io.opensphere.core.control.ui.MenuBarRegistry;
 import io.opensphere.core.event.ApplicationLifecycleEvent;
 import io.opensphere.core.event.EventListener;
-import io.opensphere.core.options.OptionsProvider;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.javafx.WebPanel;
@@ -72,7 +71,7 @@ public class WhatsNewPlugin extends PluginAdapter
         {
             if (event.getStage() == ApplicationLifecycleEvent.Stage.MAIN_FRAME_VISIBLE)
             {
-                EventQueueUtilities.runOnEDT(() -> showWhatsNew(true));
+                EventQueueUtilities.runOnEDT(() -> showWhatsNew(false));
             }
         }
     };
