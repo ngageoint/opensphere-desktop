@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -12,7 +13,6 @@ import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 import javax.media.opengl.GL;
@@ -1287,10 +1287,19 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
         Collection<E> processorGeometries = getGeometrySet();
         synchronized (processorGeometries)
         {
-            resets = resets.stream().filter(geom -> hasGeometry(geom)).collect(Collectors.toCollection(New::list));
-            Collection<ImageManager> imageManagers = resets.parallelStream().map(geom -> geom.getImageManager())
-                    .collect(Collectors.toCollection(New::collection));
-
+            Collection<ImageManager> imageManagers = New.collection(resets.size());
+            for (Iterator<? extends E> iter = resets.iterator(); iter.hasNext();)
+            {
+                E geom = iter.next();
+                if (!hasGeometry(geom))
+                {
+                    iter.remove();
+                }
+                else
+                {
+                    imageManagers.add(geom.getImageManager());
+                }
+            }
             if (!resets.isEmpty())
             {
                 // Clear the cache to force a reload.
