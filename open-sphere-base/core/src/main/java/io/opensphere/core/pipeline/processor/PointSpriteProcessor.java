@@ -353,7 +353,10 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
                     List<PointSpriteGeometry> projectionSensitiveGeoms = getGeometries().parallelStream()
                             .filter(g -> g.isProjectionSensitive()).collect(Collectors.toCollection(New::list));
 
-                    projectionSensitiveGeoms.forEach(geom -> getImageManagersToGeoms().remove(geom.getImageManager()));
+                    projectionSensitiveGeoms.parallelStream().map(geom -> geom.getImageManager())
+                            .collect(Collectors.toCollection(New::set))
+                            .forEach(manager -> getImageManagersToGeoms().remove(manager));
+
                     resetDueToImageUpdate(projectionSensitiveGeoms, State.UNPROCESSED);
                 }
             }
