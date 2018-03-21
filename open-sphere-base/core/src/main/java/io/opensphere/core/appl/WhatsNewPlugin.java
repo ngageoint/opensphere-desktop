@@ -59,6 +59,9 @@ public class WhatsNewPlugin extends PluginAdapter
 
     /** The web panel. */
     private WebPanel myWebPanel;
+    
+    /** The toolbox. */
+    private Toolbox myToolbox;
 
     /** Listener for lifecycle events. */
     private final EventListener<ApplicationLifecycleEvent> myLifeCycleEventListener = new EventListener<ApplicationLifecycleEvent>()
@@ -91,6 +94,7 @@ public class WhatsNewPlugin extends PluginAdapter
     @Override
     public void initialize(PluginLoaderData plugindata, final Toolbox toolbox)
     {
+        myToolbox = toolbox;
         myParentComponentProvider = toolbox.getUIRegistry().getMainFrameProvider();
         myPrefs = toolbox.getPreferencesRegistry().getPreferences(WhatsNewPlugin.class);
 
@@ -205,6 +209,13 @@ public class WhatsNewPlugin extends PluginAdapter
 
         myPrevButton = new JButton("Previous");
         myPrevButton.addActionListener(e -> updateDialog(--myCurrentIndex));
+        
+        final JButton autoProxyWizardButton = new JButton("Run Auto-Proxy Wizard");
+        autoProxyWizardButton.addActionListener(e ->
+        {
+            myToolbox.getUIRegistry().getOptionsRegistry().requestShowTopic("Automatic Proxy");
+            myDialog.setVisible(false);
+        });
 
         final JButton closeButton = new JButton("Close");
         closeButton.addActionListener(e -> myDialog.setVisible(false));
@@ -227,6 +238,7 @@ public class WhatsNewPlugin extends PluginAdapter
         gbc.weightx = 1.;
         gbc.anchor = GridBagConstraints.WEST;
         buttonPanel.add(myPrevButton, gbc);
+        buttonPanel.add(autoProxyWizardButton,gbc);
         gbc.anchor = GridBagConstraints.CENTER;
         buttonPanel.add(closeButton, gbc);
         gbc.anchor = GridBagConstraints.EAST;

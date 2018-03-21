@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.IntFunction;
 
-import javafx.beans.value.ChangeListener;
-
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.SwingUtilities;
@@ -32,6 +30,7 @@ import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.util.DataElementLookupException;
 import io.opensphere.mantle.data.util.DataElementLookupUtils;
+import javafx.beans.value.ChangeListener;
 
 /**
  * Data element provider for the list tool table model.
@@ -283,6 +282,22 @@ class DataElementProvider extends AbstractRowDataProvider<List<?>>
                 fireTableRowsDeleted(min, max);
             }
         }
+    }
+
+    /**
+     * Removes all IDs/records.
+     */
+    public void removeAll()
+    {
+        int max;
+        synchronized (this)
+        {
+            max = myIds.size() - 1;
+            myIds.clear();
+            myMaxId = 0;
+            myCache.clear();
+        }
+        fireTableRowsDeleted(0, max);
     }
 
     /**
