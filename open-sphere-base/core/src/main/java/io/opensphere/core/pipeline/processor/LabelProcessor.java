@@ -319,8 +319,7 @@ public class LabelProcessor extends AbstractProcessor<LabelGeometry>
         if (pos instanceof ScreenPosition)
         {
             ScreenPosition sPos = (ScreenPosition)pos;
-            ScreenPosition adjPos = new ScreenPosition(
-                    Math.round(sPos.getX() - hAlign * lay.rect.getWidth()),
+            ScreenPosition adjPos = new ScreenPosition(Math.round(sPos.getX() - hAlign * lay.rect.getWidth()),
                     Math.round(sPos.getY() + vAlign * lay.rect.getHeight()));
 
             window = getPositionConverter().convertPositionToModel(adjPos, modelCenter);
@@ -335,15 +334,13 @@ public class LabelProcessor extends AbstractProcessor<LabelGeometry>
             }
 
             window = getPositionConverter().convertModelToWindow(model, Vector3d.ORIGIN);
-            window = new Vector3d(window.getX() - hAlign * lay.rect.getWidth(),
-                    window.getY() - vAlign * lay.rect.getHeight(), 0.0);
+            window = new Vector3d(window.getX() - hAlign * lay.rect.getWidth(), window.getY() - vAlign * lay.rect.getHeight(),
+                    0.0);
 
             // Cache the bounding box of the label for occlusion testing.
             ScreenPosition ul = new ScreenPosition(window.getX(), window.getY());
-            ScreenPosition lr = new ScreenPosition(window.getX() + lay.rect.getWidth(),
-                    window.getY() + lay.rect.getHeight());
-            getCache().putCacheAssociation(label, new ScreenBoundingBox(ul, lr),
-                    ScreenBoundingBox.class, 0, 0);
+            ScreenPosition lr = new ScreenPosition(window.getX() + lay.rect.getWidth(), window.getY() + lay.rect.getHeight());
+            getCache().putCacheAssociation(label, new ScreenBoundingBox(ul, lr), ScreenBoundingBox.class, 0, 0);
         }
 
         ModelCoordinates result = new ModelCoordinates(window);
@@ -359,6 +356,7 @@ public class LabelProcessor extends AbstractProcessor<LabelGeometry>
     {
         /** line height. */
         private double lineH;
+
         /** bounding Rectangle. */
         private Rectangle2D rect;
     }
@@ -368,7 +366,7 @@ public class LabelProcessor extends AbstractProcessor<LabelGeometry>
         String[] lines = txt.split("\\n");
         double maxW = 0.0;
         double maxH = 0.0;
-        for (String ln :  lines)
+        for (String ln : lines)
         {
             Rectangle2D r = drawFont.createGlyphVector(frc, ln).getLogicalBounds();
             maxW = Math.max(maxW, r.getWidth());
@@ -467,8 +465,9 @@ public class LabelProcessor extends AbstractProcessor<LabelGeometry>
         }
 
         /**
-         * Get the distance between baselines of consecutive lines.  It is used
+         * Get the distance between baselines of consecutive lines. It is used
          * to lay out multi-line labels.
+         * 
          * @return the baseline delta
          */
         public double getBaselineDelta()
@@ -478,6 +477,7 @@ public class LabelProcessor extends AbstractProcessor<LabelGeometry>
 
         /**
          * Set the baseline delta (cf. getBaselineDelta).
+         * 
          * @param d the baseline delta
          */
         public void setBaselineDelta(double d)
