@@ -262,7 +262,7 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
         readLock.lock();
         try
         {
-            for (PointSpriteGeometry geom : textureLoaded)
+            textureLoaded.parallelStream().forEach(geom ->
             {
                 SpriteModelCoordinates modelData = getCache().getCacheAssociation(geom, SpriteModelCoordinates.class);
                 if (modelData == null)
@@ -273,9 +273,10 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
                     TextureGroup cachedTextureGroup = getCache().getCacheAssociation(geom.getImageManager(), TextureGroup.class);
                     setModelSizes(geom, cachedTextureGroup, modelData);
                     cacheData(geom, new TextureModelData(modelData, null));
+
                     setOnscreenDirty();
                 }
-            }
+            });
         }
         finally
         {
@@ -288,11 +289,10 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
     @Override
     protected void resetStateDueToProjectionChange()
     {
-        // Preserve super class behavior for projection-insensitive geometries.
-        // Projection-sensitive geometries are reset in
-        // handleViewChanged instead of here for performance.
-        List<PointSpriteGeometry> regularGeoms = getReadyGeometries().stream().filter(g -> !g.isProjectionSensitive())
-                .collect(Collectors.toList());
+        // Reset state for all ready geometries in order to preserve interaction
+        // between user operations & other geometry state.
+        // Concessions in performance have to be made for correctness.
+        Collection<PointSpriteGeometry> regularGeoms = getReadyGeometries();
         if (CollectionUtilities.hasContent(regularGeoms))
         {
             resetState(regularGeoms, TextureState.TEXTURE_LOADED);
@@ -346,15 +346,14 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
             {
                 myLastHandledHeading = heading;
 
-                List<PointSpriteGeometry> projectionSensitiveGeoms = getGeometries().stream()
-                        .filter(g -> g.isProjectionSensitive()).collect(Collectors.toList());
-                if (CollectionUtilities.hasContent(projectionSensitiveGeoms))
+                Collection<PointSpriteGeometry> processorGeometries = getGeometrySet();
+                synchronized (processorGeometries)
                 {
-                    for (PointSpriteGeometry geom : projectionSensitiveGeoms)
-                    {
-                        getImageManagersToGeoms().remove(geom.getImageManager());
-                    }
-                    resetDueToImageUpdate(New.linkedList(projectionSensitiveGeoms), State.UNPROCESSED);
+                    List<PointSpriteGeometry> projectionSensitiveGeoms = getGeometries().parallelStream()
+                            .filter(g -> g.isProjectionSensitive()).collect(Collectors.toCollection(New::list));
+
+                    projectionSensitiveGeoms.forEach(geom -> getImageManagersToGeoms().remove(geom.getImageManager()));
+                    resetDueToImageUpdate(projectionSensitiveGeoms, State.UNPROCESSED);
                 }
             }
         }
