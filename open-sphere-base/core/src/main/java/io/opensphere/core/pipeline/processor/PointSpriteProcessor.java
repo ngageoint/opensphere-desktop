@@ -346,8 +346,9 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
             {
                 myLastHandledHeading = heading;
 
-                Collection<PointSpriteGeometry> processorGeometries = getGeometrySet();
-                synchronized (processorGeometries)
+                // When re-processing rotated images, we want to ensure they
+                // aren't otherwise modified.
+                synchronized (getGeometrySet())
                 {
                     List<PointSpriteGeometry> projectionSensitiveGeoms = getGeometries().parallelStream()
                             .filter(g -> g.isProjectionSensitive()).collect(Collectors.toCollection(New::list));
