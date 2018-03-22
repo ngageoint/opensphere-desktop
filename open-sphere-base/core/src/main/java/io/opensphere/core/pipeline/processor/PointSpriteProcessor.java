@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.locks.Lock;
 import java.util.function.Function;
@@ -262,7 +263,7 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
         readLock.lock();
         try
         {
-            textureLoaded.parallelStream().forEach(geom ->
+            textureLoaded.stream().forEach(geom ->
             {
                 SpriteModelCoordinates modelData = getCache().getCacheAssociation(geom, SpriteModelCoordinates.class);
                 if (modelData == null)
@@ -350,11 +351,12 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
                 // aren't otherwise modified.
                 synchronized (getGeometrySet())
                 {
-                    List<PointSpriteGeometry> projectionSensitiveGeoms = getGeometries().parallelStream()
+                    Map<ImageManager, List<PointSpriteGeometry>> managersToGeoms = getImageManagersToGeoms();
+
+                    List<PointSpriteGeometry> projectionSensitiveGeoms = getGeometries().stream()
                             .filter(g -> g.isProjectionSensitive()).collect(Collectors.toCollection(New::list));
 
-                    projectionSensitiveGeoms.parallelStream()
-                            .forEach(geom -> getImageManagersToGeoms().remove(geom.getImageManager()));
+                    projectionSensitiveGeoms.stream().forEach(geom -> managersToGeoms.remove(geom.getImageManager()));
 
                     resetDueToImageUpdate(projectionSensitiveGeoms, State.UNPROCESSED);
                 }
