@@ -5,8 +5,9 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+import org.apache.log4j.Logger;
+
 import io.opensphere.core.util.AbstractChangeSupport;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.StrongChangeSupport;
 
 /**
@@ -16,6 +17,9 @@ import io.opensphere.core.util.StrongChangeSupport;
  */
 public abstract class AbstractRowDataProvider<T> implements RowDataProvider<T>
 {
+    /** Logger reference. */
+    private static final Logger LOGGER = Logger.getLogger(AbstractRowDataProvider.class);
+
     /** The change support. */
     private final transient AbstractChangeSupport<TableModelListener> myChangeSupport = new StrongChangeSupport<>();
 
@@ -153,20 +157,23 @@ public abstract class AbstractRowDataProvider<T> implements RowDataProvider<T>
      * <code>TableModelListeners</code> that registered themselves as listeners
      * for this table model.
      *
-     * @param e the event to be forwarded
+     * @param event the event to be forwarded
      *
      * @see #addTableModelListener
      * @see TableModelEvent
      * @see EventListenerList
      */
-    public void fireTableChanged(final TableModelEvent e)
+    public void fireTableChanged(final TableModelEvent event)
     {
-        myChangeSupport.notifyListeners(new Callback<TableModelListener>()
+        myChangeSupport.notifyListeners(listener ->
         {
-            @Override
-            public void notify(TableModelListener listener)
+            try
             {
-                listener.tableChanged(e);
+                listener.tableChanged(event);
+            }
+            catch (RuntimeException e)
+            {
+                LOGGER.warn(e);
             }
         });
     }
