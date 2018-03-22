@@ -35,7 +35,7 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
 
     /** Change support. */
     private final ChangeSupport<NetworkConfigurationChangeListener> myChangeSupport =
-            new WeakChangeSupport<NetworkConfigurationChangeListener>();
+            new WeakChangeSupport<>();
 
     /** The preferences. */
     private final Preferences myPrefs;
