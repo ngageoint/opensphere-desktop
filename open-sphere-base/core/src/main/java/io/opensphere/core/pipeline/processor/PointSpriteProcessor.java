@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -263,7 +262,7 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
         readLock.lock();
         try
         {
-            textureLoaded.stream().forEach(geom ->
+            for (PointSpriteGeometry geom : textureLoaded)
             {
                 SpriteModelCoordinates modelData = getCache().getCacheAssociation(geom, SpriteModelCoordinates.class);
                 if (modelData == null)
@@ -277,7 +276,7 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
 
                     setOnscreenDirty();
                 }
-            });
+            }
         }
         finally
         {
@@ -355,10 +354,9 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
                     Map<ImageManager, List<PointSpriteGeometry>> managersToGeoms = getImageManagersToGeoms();
                     List<PointSpriteGeometry> projectionSensitiveGeoms = New.list(geoms.size());
 
-                    PointSpriteGeometry geom;
-                    for (Iterator<PointSpriteGeometry> geomIterator = geoms.iterator(); geomIterator.hasNext();)
+                    for (PointSpriteGeometry geom : geoms)
                     {
-                        if ((geom = geomIterator.next()).isProjectionSensitive())
+                        if (geom.isProjectionSensitive())
                         {
                             projectionSensitiveGeoms.add(geom);
                             managersToGeoms.remove(geom.getImageManager());
