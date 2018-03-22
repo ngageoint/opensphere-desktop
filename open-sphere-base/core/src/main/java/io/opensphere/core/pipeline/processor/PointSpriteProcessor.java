@@ -6,13 +6,13 @@ import java.awt.image.BufferedImage;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.locks.Lock;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import com.jogamp.opengl.util.texture.TextureCoords;
 
@@ -349,14 +349,21 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
 
                 // When re-processing rotated images, we want to ensure they
                 // aren't otherwise modified.
-                synchronized (getGeometrySet())
+                Collection<PointSpriteGeometry> geoms = getGeometrySet();
+                synchronized (geoms)
                 {
                     Map<ImageManager, List<PointSpriteGeometry>> managersToGeoms = getImageManagersToGeoms();
+                    List<PointSpriteGeometry> projectionSensitiveGeoms = New.list(geoms.size());
 
-                    List<PointSpriteGeometry> projectionSensitiveGeoms = getGeometries().stream()
-                            .filter(g -> g.isProjectionSensitive()).collect(Collectors.toCollection(New::list));
-
-                    projectionSensitiveGeoms.stream().forEach(geom -> managersToGeoms.remove(geom.getImageManager()));
+                    PointSpriteGeometry geom;
+                    for (Iterator<PointSpriteGeometry> geomIterator = geoms.iterator(); geomIterator.hasNext();)
+                    {
+                        if ((geom = geomIterator.next()).isProjectionSensitive())
+                        {
+                            projectionSensitiveGeoms.add(geom);
+                            managersToGeoms.remove(geom.getImageManager());
+                        }
+                    }
 
                     resetDueToImageUpdate(projectionSensitiveGeoms, State.UNPROCESSED);
                 }
