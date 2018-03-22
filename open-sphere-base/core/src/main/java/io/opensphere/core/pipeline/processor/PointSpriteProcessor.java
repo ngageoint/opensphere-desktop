@@ -7,11 +7,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.locks.Lock;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import com.jogamp.opengl.util.texture.TextureCoords;
 
@@ -273,6 +273,7 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
                     TextureGroup cachedTextureGroup = getCache().getCacheAssociation(geom.getImageManager(), TextureGroup.class);
                     setModelSizes(geom, cachedTextureGroup, modelData);
                     cacheData(geom, new TextureModelData(modelData, null));
+
                     setOnscreenDirty();
                 }
             }
@@ -288,11 +289,10 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
     @Override
     protected void resetStateDueToProjectionChange()
     {
-        // Preserve super class behavior for projection-insensitive geometries.
-        // Projection-sensitive geometries are reset in
-        // handleViewChanged instead of here for performance.
-        List<PointSpriteGeometry> regularGeoms = getReadyGeometries().stream().filter(g -> !g.isProjectionSensitive())
-                .collect(Collectors.toList());
+        // Reset state for all ready geometries in order to preserve interaction
+        // between user operations & other geometry state.
+        // Concessions in performance have to be made for correctness.
+        Collection<PointSpriteGeometry> regularGeoms = getReadyGeometries();
         if (CollectionUtilities.hasContent(regularGeoms))
         {
             resetState(regularGeoms, TextureState.TEXTURE_LOADED);
@@ -346,15 +346,24 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
             {
                 myLastHandledHeading = heading;
 
-                List<PointSpriteGeometry> projectionSensitiveGeoms = getGeometries().stream()
-                        .filter(g -> g.isProjectionSensitive()).collect(Collectors.toList());
-                if (CollectionUtilities.hasContent(projectionSensitiveGeoms))
+                // When re-processing rotated images, we want to ensure they
+                // aren't otherwise modified.
+                Collection<PointSpriteGeometry> geoms = getGeometrySet();
+                synchronized (geoms)
                 {
-                    for (PointSpriteGeometry geom : projectionSensitiveGeoms)
+                    Map<ImageManager, List<PointSpriteGeometry>> managersToGeoms = getImageManagersToGeoms();
+                    List<PointSpriteGeometry> projectionSensitiveGeoms = New.list(geoms.size());
+
+                    for (PointSpriteGeometry geom : geoms)
                     {
-                        getImageManagersToGeoms().remove(geom.getImageManager());
+                        if (geom.isProjectionSensitive())
+                        {
+                            projectionSensitiveGeoms.add(geom);
+                            managersToGeoms.remove(geom.getImageManager());
+                        }
                     }
-                    resetDueToImageUpdate(New.linkedList(projectionSensitiveGeoms), State.UNPROCESSED);
+
+                    resetDueToImageUpdate(projectionSensitiveGeoms, State.UNPROCESSED);
                 }
             }
         }

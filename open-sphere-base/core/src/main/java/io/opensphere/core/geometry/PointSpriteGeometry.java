@@ -185,7 +185,8 @@ public class PointSpriteGeometry extends PointGeometry implements ImageProviding
         /**
          * Sets whether the geometry is sensitive to projection changes.
          *
-         * @param isProjectionSensitive whether the geometry is sensitive to projection changes
+         * @param isProjectionSensitive whether the geometry is sensitive to
+         *            projection changes
          */
         public void setProjectionSensitive(boolean isProjectionSensitive)
         {

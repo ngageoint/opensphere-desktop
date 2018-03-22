@@ -939,8 +939,8 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
                 if (retFailed != null)
                 {
                     retFailed.stream().filter(geometry -> geometry instanceof PointSpriteGeometry)
-                            .forEach(geometry -> handleImageLoaded(textureDataLoaded, textureLoaded, (Collection<E>)null, geometry,
-                                    imageData));
+                            .forEach(geometry -> handleImageLoaded(textureDataLoaded, textureLoaded, (Collection<E>)null,
+                                    geometry, imageData));
                 }
             }
         }
