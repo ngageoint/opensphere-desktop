@@ -62,10 +62,16 @@ public class DefaultTrack implements Track
      */
     private boolean myIsShowHeading;
 
-    /** When true, indicates if the bubbles should show the velocity field's value. */
+    /**
+     * When true, indicates if the bubbles should show the velocity field's
+     * value.
+     */
     private boolean myShowVelocity;
 
-    /** When true, indicates if the bubbles should show the duration field's value. */
+    /**
+     * When true, indicates if the bubbles should show the duration field's
+     * value.
+     */
     private boolean myShowDuration;
 
     /** The name which uniquely identifies the track. */
@@ -85,7 +91,10 @@ public class DefaultTrack implements Track
     /** When true, show the name in the annotation bubble. */
     private boolean myShowName = true;
 
-    /** When true, show the name of each field in the annotation bubble next to the value. */
+    /**
+     * When true, show the name of each field in the annotation bubble next to
+     * the value.
+     */
     private boolean myShowFieldTitles = true;
 
     /**
@@ -154,7 +163,7 @@ public class DefaultTrack implements Track
         myIsShowHeading = copy.isShowHeading();
         myShowVelocity = copy.isShowVelocity();
         myShowDuration = copy.isShowDuration();
-        myTimeSpan = copy.getTimeSpan();
+        myTimeSpan = copy.getTimeSpan() == null ? figureOutSpan(myNodes) : copy.getTimeSpan();
         myAnimate = copy.isAnimate();
     }
 
@@ -384,8 +393,8 @@ public class DefaultTrack implements Track
     /**
      * Sets the value of the {@link #myShowVelocity} field.
      *
-     * @param showVelocity
-     *            the value to store in the {@link #myShowVelocity} field.
+     * @param showVelocity the value to store in the {@link #myShowVelocity}
+     *            field.
      */
     public void setShowVelocity(boolean showVelocity)
     {
@@ -395,8 +404,8 @@ public class DefaultTrack implements Track
     /**
      * Sets the value of the {@link #myShowDuration} field.
      *
-     * @param showDuration
-     *            the value to store in the {@link #myShowDuration} field.
+     * @param showDuration the value to store in the {@link #myShowDuration}
+     *            field.
      */
     public void setShowDuration(boolean showDuration)
     {
@@ -436,8 +445,8 @@ public class DefaultTrack implements Track
     /**
      * Sets the value of the {@link #myShowFieldTitles} field.
      *
-     * @param showFieldTitles
-     *            the value to store in the {@link #myShowFieldTitles} field.
+     * @param showFieldTitles the value to store in the
+     *            {@link #myShowFieldTitles} field.
      */
     public void setShowFieldTitles(boolean showFieldTitles)
     {
@@ -455,10 +464,11 @@ public class DefaultTrack implements Track
     }
 
     /**
-     * Sets the units used to express distance for length display in the track bubble.
+     * Sets the units used to express distance for length display in the track
+     * bubble.
      *
-     * @param distanceUnit The units used to display the track length in the track
-     *            bubble.
+     * @param distanceUnit The units used to display the track length in the
+     *            track bubble.
      */
     public void setDistanceUnit(Class<? extends Length> distanceUnit)
     {
