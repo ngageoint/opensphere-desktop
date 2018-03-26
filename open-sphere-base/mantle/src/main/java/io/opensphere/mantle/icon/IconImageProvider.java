@@ -54,8 +54,8 @@ public class IconImageProvider implements ImmediateImageProvider<Void>
     private volatile Image myContent;
 
     /**
-     * The unprocessed image if there is an image processor. This is to avoid having to reload the image when we just want to
-     * re-process it.
+     * The unprocessed image if there is an image processor. This is to avoid
+     * having to reload the image when we just want to re-process it.
      */
     private Image myUnprocessedContent;
 
@@ -280,7 +280,6 @@ public class IconImageProvider implements ImmediateImageProvider<Void>
                 }
 
                 bufferedImage = myImageProcessor.process(bufferedImage);
-
                 content = new ImageIOImage(bufferedImage);
             }
             else

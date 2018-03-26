@@ -156,8 +156,8 @@ public class IconFeatureVisualizationStyle extends AbstractLocationFeatureVisual
 
     /** The default heading column parameter. */
     public static final VisualizationStyleParameter ourDefaultHeadingColumnParameter = new VisualizationStyleParameter(
-            ourHeadingColumnPropertyKey, "Heading Column", null, String.class,
-            new VisualizationStyleParameterFlags(true, true), ParameterHint.hint(false, true));
+            ourHeadingColumnPropertyKey, "Heading Column", null, String.class, new VisualizationStyleParameterFlags(true, true),
+            ParameterHint.hint(false, true));
 
     /** The Temp icon record. */
     private transient IconRecord myTempIconRecord;
@@ -194,14 +194,16 @@ public class IconFeatureVisualizationStyle extends AbstractLocationFeatureVisual
 
     @Override
     public void createCombinedGeometry(Set<Geometry> setToAddTo, FeatureCombinedGeometryBuilderData builderData,
-            RenderPropertyPool renderPropertyPool) throws IllegalArgumentException
+            RenderPropertyPool renderPropertyPool)
+        throws IllegalArgumentException
     {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public void createIndividualGeometry(Set<Geometry> setToAddTo, FeatureIndividualGeometryBuilderData bd,
-            RenderPropertyPool renderPropertyPool) throws IllegalArgumentException
+            RenderPropertyPool renderPropertyPool)
+        throws IllegalArgumentException
     {
         if (bd.getMGS() instanceof MapLocationGeometrySupport)
         {
@@ -425,8 +427,8 @@ public class IconFeatureVisualizationStyle extends AbstractLocationFeatureVisual
 
         param = style.getStyleParameter(ourDefaultPointSizePropertyKey);
         FloatSliderStyleParameterEditorPanel pointSizePanel = new FloatSliderStyleParameterEditorPanel(
-                StyleUtils.createSliderMiniPanelBuilder(param.getName()), style, ourDefaultPointSizePropertyKey, true, false, 1.0f,
-                MAX_POINT_SIZE, new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(0, null));
+                StyleUtils.createSliderMiniPanelBuilder(param.getName()), style, ourDefaultPointSizePropertyKey, true, false,
+                1.0f, MAX_POINT_SIZE, new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(0, null));
         paramList.add(pointSizePanel);
 
         EditorPanelVisibilityDependency vd = new EditorPanelVisibilityDependency(panel, pointSizePanel);

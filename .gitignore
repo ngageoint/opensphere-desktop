@@ -1,3 +1,8 @@
+# Eclipse
+.settings/
+.classpath
+.project
+
+# Maven / Other
 /target
-/.settings/
 /.pmd
