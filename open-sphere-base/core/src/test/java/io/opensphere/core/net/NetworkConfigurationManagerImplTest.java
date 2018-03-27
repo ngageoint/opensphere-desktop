@@ -1,12 +1,15 @@
 package io.opensphere.core.net;
 
-import org.easymock.Capture;
+import java.util.Arrays;
+
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Assert;
 import org.junit.Test;
 
 import io.opensphere.core.NetworkConfigurationManager;
+import io.opensphere.core.net.config.ConfigurationType;
+import io.opensphere.core.net.config.ProxyConfigurations;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
 
@@ -47,19 +50,10 @@ public class NetworkConfigurationManagerImplTest
         EasyMockSupport support = new EasyMockSupport();
 
         Preferences prefs = support.createMock(Preferences.class);
-        Capture<String> prefKey = EasyMock.newCapture();
-        EasyMock.expect(prefs.removeInt(EasyMock.eq("ProxyPort"), EasyMock.isA(NetworkConfigurationManager.class))).andReturn(80);
-        EasyMock.expect(
-                prefs.putString(EasyMock.eq("ProxyHost"), EasyMock.eq(""), EasyMock.isA(NetworkConfigurationManager.class)))
-                .andReturn(null);
-        EasyMock.expect(prefs.putBoolean(EasyMock.eq("SystemProxiesEnabled"), EasyMock.eq(false),
-                EasyMock.isA(NetworkConfigurationManager.class))).andReturn(null);
-        EasyMock.expect(
-                prefs.putString(EasyMock.eq("ProxyConfigUrl"), EasyMock.eq(""), EasyMock.isA(NetworkConfigurationManager.class)))
-                .andReturn(null);
-        EasyMock.expect(prefs.putString(EasyMock.eq("ProxyExclusionPatterns"), EasyMock.capture(prefKey), EasyMock.anyObject()))
-                .andReturn(null);
-        EasyMock.expect(prefs.getString("ProxyExclusionPatterns", "")).andAnswer(() -> prefKey.getValue());
+        ProxyConfigurations configurations = new ProxyConfigurations();
+
+        EasyMock.expect(prefs.getJAXBObject(ProxyConfigurations.class, "configurations", null)).andReturn(configurations);
+
         PreferencesRegistry prefsRegistry = support.createMock(PreferencesRegistry.class);
         EasyMock.expect(prefsRegistry.getPreferences(NetworkConfigurationManagerImpl.class)).andReturn(prefs);
         prefs.printPrefs();
@@ -68,7 +62,9 @@ public class NetworkConfigurationManagerImplTest
         support.replayAll();
 
         NetworkConfigurationManager networkConfigurationManager = new NetworkConfigurationManagerImpl(prefsRegistry);
-        networkConfigurationManager.setProxyConfiguration("", -1, false, "", exclusions);
+        networkConfigurationManager.setSelectedProxyType(ConfigurationType.SYSTEM);
+        networkConfigurationManager.getSystemConfiguration().getExclusionPatterns()
+                .addAll(Arrays.asList(exclusions.split(",\\s*|\\s+")));
 
         boolean excluded = networkConfigurationManager.isExcludedFromProxy(host);
 
