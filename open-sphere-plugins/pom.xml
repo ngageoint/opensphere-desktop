@@ -33,7 +33,6 @@
         <module>import</module>
         <module>kml</module>
         <module>mapbox</module>
-        
         <module>merge</module>
         <module>my-places</module>
         <module>ogc-server</module>
@@ -48,5 +47,6 @@
         <module>wms</module>
         <module>wps</module>
         <module>heatmap</module>
+        <module>ww-icons</module>
     </modules>
 </project>

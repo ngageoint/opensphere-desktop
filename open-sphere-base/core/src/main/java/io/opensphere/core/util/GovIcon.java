@@ -3,9 +3,9 @@ package io.opensphere.core.util;
 /** An enumeration over the set of available govicons.io icons. */
 public enum GovIcon implements FontIconEnum
 {
-    /** A */
+    /** */
     LOGO_540("\ue900"),
-    /** A */
+    /** */
     FEDAPI_540("\ue933"),
     /**  */
     LOGO_18F("\ue971"),

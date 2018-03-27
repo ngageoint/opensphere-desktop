@@ -133,11 +133,8 @@ public final class FontIcons
             {
                 IconRecord record = iter.next();
 
-                if (record.getCollectionName().equals("Font Icons"))
-                {
-                    iter.remove();
-                    removedIds.add(record.getId());
-                }
+                iter.remove();
+                removedIds.add(record.getId());
             }
 
             if (!removedIds.isEmpty())
