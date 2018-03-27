@@ -1,5 +1,11 @@
 package io.opensphere.core;
 
+import io.opensphere.core.net.config.ConfigurationType;
+import io.opensphere.core.net.config.ManualProxyConfiguration;
+import io.opensphere.core.net.config.NoProxyConfiguration;
+import io.opensphere.core.net.config.SystemProxyConfiguration;
+import io.opensphere.core.net.config.UrlProxyConfiguration;
+
 /** Facility that manages the network configuration. */
 public interface NetworkConfigurationManager
 {
@@ -18,32 +24,45 @@ public interface NetworkConfigurationManager
     void addChangeListener(NetworkConfigurationChangeListener listener);
 
     /**
-     * Get the system proxy config URL if one has been set.
+     * Gets the type of proxy currently in use for network operations.
      *
-     * @return The URL or {@code null}.
+     * @return the type of proxy currently in use for network operations.
      */
-    String getProxyConfigUrl();
+    ConfigurationType getSelectedProxyType();
 
     /**
-     * Get the hosts to be excluded from proxy usage.
+     * Gets the configuration object used when no proxy is selected.
      *
-     * @return The string comprising the host patterns.
+     * @return the configuration object used when no proxy is selected.
      */
-    String getProxyExclusions();
+    NoProxyConfiguration getNoProxyConfiguration();
 
     /**
-     * Get the system proxy host if one has been set.
+     * Gets the configuration object used when a system-specified proxy is
+     * selected.
      *
-     * @return The host or {@code ""}.
+     * @return the configuration object used when a system-specified proxy is
+     *         selected.
      */
-    String getProxyHost();
+    SystemProxyConfiguration getSystemConfiguration();
 
     /**
-     * Get the system proxy port if one has been set.
+     * Gets the configuration object used when an automatic proxy URL is
+     * selected.
      *
-     * @return The port or -1.
+     * @return the configuration object used when an automatic proxy URL is
+     *         selected.
      */
-    int getProxyPort();
+    UrlProxyConfiguration getUrlConfiguration();
+
+    /**
+     * Gets the configuration object used when a manual proxy host, port and
+     * exclusion list are selected.
+     *
+     * @return the configuration object used when a manual proxy host, port and
+     *         exclusion list are selected.
+     */
+    ManualProxyConfiguration getManualConfiguration();
 
     /**
      * Determine if a host should be excluded from the proxy configuration.
@@ -52,13 +71,6 @@ public interface NetworkConfigurationManager
      * @return {@code true} if the host should be excluded.
      */
     boolean isExcludedFromProxy(String host);
-
-    /**
-     * Get if system proxies should be used.
-     *
-     * @return {@code true} if system proxies should be used.
-     */
-    boolean isUseSystemProxies();
 
     /**
      * Remove a listener for changes to the network configuration.
@@ -71,15 +83,16 @@ public interface NetworkConfigurationManager
     void restoreDefaults();
 
     /**
-     * Set the proxy configuration.
+     * Sets the proxy type to use for network operations.
      *
-     * @param host the host, or {@code ""} to disable the proxy
-     * @param port the port number
-     * @param useSystemProxies {@code true} if system proxies should be used
-     * @param configUrl the config URL
-     * @param hostPatterns the string comprising the host patterns
+     * @param configurationType the proxy type to use for network operations.
      */
-    void setProxyConfiguration(String host, int port, boolean useSystemProxies, String configUrl, String hostPatterns);
+    void setSelectedProxyType(ConfigurationType configurationType);
+
+    /**
+     * Persists all proxy configuration information to preferences.
+     */
+    void persistConfiguration();
 
     /** Listener for changes to the network configuration. */
     @FunctionalInterface

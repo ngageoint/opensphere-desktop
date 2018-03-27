@@ -17,6 +17,8 @@ import com.bitsys.common.http.proxy.AutomaticProxyResolver;
 import com.bitsys.common.http.proxy.ProxyHostConfig;
 
 import io.opensphere.core.NetworkConfigurationManager;
+import io.opensphere.core.net.config.ConfigurationType;
+import io.opensphere.core.net.config.ManualProxyConfiguration;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.UnexpectedEnumException;
 
@@ -86,7 +88,7 @@ public final class ProxySelectorImpl extends ProxySelector
         {
             results.add(Proxy.NO_PROXY);
         }
-        else if (myNetworkConfigurationManager.isUseSystemProxies())
+        else if (myNetworkConfigurationManager.getSelectedProxyType() == ConfigurationType.SYSTEM)
         {
             if (myNetworkConfigurationManager.isExcludedFromProxy(uri.getHost()))
             {
@@ -97,21 +99,25 @@ public final class ProxySelectorImpl extends ProxySelector
                 results.addAll(SYSTEM_DEFAULT_PROXY_SELECTOR.select(uri));
             }
         }
-        else
+        else if (myNetworkConfigurationManager.getSelectedProxyType() == ConfigurationType.MANUAL)
         {
-            String proxyConfigUrl = myNetworkConfigurationManager.getProxyConfigUrl();
+            results.add(selectWithProxyHostPort(uri));
+        }
+        else if (myNetworkConfigurationManager.getSelectedProxyType() == ConfigurationType.URL)
+        {
+            String proxyConfigUrl = myNetworkConfigurationManager.getUrlConfiguration().getProxyUrl();
             if (!StringUtils.isBlank(proxyConfigUrl))
             {
                 selectWithConfigUrl(uri, proxyConfigUrl, results);
-            }
-            else if (!StringUtils.isBlank(myNetworkConfigurationManager.getProxyHost()))
-            {
-                results.add(selectWithProxyHostPort(uri));
             }
             else
             {
                 results.add(Proxy.NO_PROXY);
             }
+        }
+        else
+        {
+            results.add(Proxy.NO_PROXY);
         }
         if (LOGGER.isDebugEnabled())
         {
@@ -164,14 +170,12 @@ public final class ProxySelectorImpl extends ProxySelector
      */
     private Proxy selectWithProxyHostPort(URI uri)
     {
-        String proxyHost = myNetworkConfigurationManager.getProxyHost();
+        ManualProxyConfiguration manualConfiguration = myNetworkConfigurationManager.getManualConfiguration();
+        String proxyHost = manualConfiguration.getHost();
         if (myNetworkConfigurationManager.isExcludedFromProxy(uri.getHost()) || proxyHost.equals(uri.getHost()))
         {
             return Proxy.NO_PROXY;
         }
-        else
-        {
-            return new Proxy(Type.HTTP, new InetSocketAddress(proxyHost, myNetworkConfigurationManager.getProxyPort()));
-        }
+        return new Proxy(Type.HTTP, new InetSocketAddress(proxyHost, manualConfiguration.getPort()));
     }
 }
