@@ -1,10 +1,13 @@
 package io.opensphere.core.util.swing;
 
+import java.awt.Component;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.temporal.ChronoUnit;
 
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 
@@ -38,6 +41,38 @@ public class DurationPicker extends JPanel
 
     /** The duration units provider. */
     private final transient DurationUnitsProvider myDurationUnitsProvider = new DurationUnitsProvider();
+
+    /**
+     * Shows a duration picker dialog.
+     *
+     * @param parent the parent component
+     * @param title the dialog title
+     * @param message a message to display
+     * @param duration the initial duration
+     * @param unitOptions the unit options
+     * @return the picked duration, or null
+     */
+    public static Duration show(Component parent, String title, String message, Duration duration, ChronoUnit... unitOptions)
+    {
+        Duration pickedDuration = null;
+
+        DurationPicker picker = new DurationPicker(unitOptions);
+        picker.getDuration().set(duration);
+
+        GridBagPanel panel = new GridBagPanel();
+        panel.anchorWest();
+        panel.addRow(new JLabel(message));
+        panel.addRow(picker);
+
+        OptionDialog dialog = new OptionDialog(parent, panel, title);
+        dialog.buildAndShow();
+        if (dialog.getSelection() == JOptionPane.OK_OPTION)
+        {
+            pickedDuration = picker.getDuration().get();
+        }
+
+        return pickedDuration;
+    }
 
     /**
      * Constructor.
