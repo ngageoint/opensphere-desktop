@@ -23,14 +23,45 @@ public interface NetworkConfigurationManager
      */
     void addChangeListener(NetworkConfigurationChangeListener listener);
 
+    /**
+     * Gets the type of proxy currently in use for network operations.
+     *
+     * @return the type of proxy currently in use for network operations.
+     */
     ConfigurationType getSelectedProxyType();
 
+    /**
+     * Gets the configuration object used when no proxy is selected.
+     *
+     * @return the configuration object used when no proxy is selected.
+     */
     NoProxyConfiguration getNoProxyConfiguration();
 
+    /**
+     * Gets the configuration object used when a system-specified proxy is
+     * selected.
+     *
+     * @return the configuration object used when a system-specified proxy is
+     *         selected.
+     */
     SystemProxyConfiguration getSystemConfiguration();
 
+    /**
+     * Gets the configuration object used when an automatic proxy URL is
+     * selected.
+     *
+     * @return the configuration object used when an automatic proxy URL is
+     *         selected.
+     */
     UrlProxyConfiguration getUrlConfiguration();
 
+    /**
+     * Gets the configuration object used when a manual proxy host, port and
+     * exclusion list are selected.
+     *
+     * @return the configuration object used when a manual proxy host, port and
+     *         exclusion list are selected.
+     */
     ManualProxyConfiguration getManualConfiguration();
 
     /**
@@ -52,10 +83,15 @@ public interface NetworkConfigurationManager
     void restoreDefaults();
 
     /**
-     * @param configurationType
+     * Sets the proxy type to use for network operations.
+     *
+     * @param configurationType the proxy type to use for network operations.
      */
     void setSelectedProxyType(ConfigurationType configurationType);
 
+    /**
+     * Persists all proxy configuration information to preferences.
+     */
     void persistConfiguration();
 
     /** Listener for changes to the network configuration. */
