@@ -3,9 +3,8 @@ package io.opensphere.core.util;
 /**
  * An enumeration over the set of available FontAwesome icons.
  */
-public enum AwesomeIcon
+public enum AwesomeIcon implements FontIconEnum
 {
-
     /** A constant used to reference the '500px' icon. */
     ICON_500PX("\uf26e"),
 
@@ -2386,7 +2385,9 @@ public enum AwesomeIcon
      * Gets the value of the {@link #myFontCode} field.
      *
      * @return the value stored in the {@link #myFontCode} field.
+     * @override
      */
+    @Override
     public String getFontCode()
     {
         return myFontCode;

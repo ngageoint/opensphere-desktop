@@ -31,6 +31,17 @@ public final class SwingUtilities
     public static final Font FONT_AWESOME_FONT = getFontAwesomeFont();
 
     /**
+     * The {@link Font} object in which the govicons package is contained.
+     */
+    public static final Font GOVICONS_FONT = getGovIconFont();
+
+    /**
+     * The {@link Font} object in which the military-rank-icons package is
+     * contained.
+     */
+    public static final Font MILITARY_RANK_FONT = getMilitaryRankFont();
+
+    /**
      * Creates a new menu item.
      *
      * @param text the text
@@ -108,7 +119,41 @@ public final class SwingUtilities
      */
     public static Font getFontAwesomeFont()
     {
-        try (InputStream in = SwingUtilities.class.getResourceAsStream("/fonts/fontawesome-webfont.ttf"))
+        return getFont("/fonts/fontawesome-webfont.ttf");
+    }
+
+    /**
+     * Creates the govicons {@link Font} object, loading all icons contained
+     * within the package.
+     *
+     * @return the {@link Font} object containing the font-awesome icons.
+     */
+    public static Font getGovIconFont()
+    {
+        return getFont("/fonts/govicons-webfont.ttf");
+    }
+
+    /**
+     * Creates the military-rank-icons {@link Font} object, loading all icons
+     * contained within the package.
+     *
+     * @return the {@link Font} object containing the font-awesome icons.
+     */
+    public static Font getMilitaryRankFont()
+    {
+        return getFont("/fonts/military-rank-icons.ttf");
+    }
+
+    /**
+     * Creates the {@link Font} object for the given font path, loading all
+     * icons contained within the package.
+     *
+     * @param fontPath the path to the {@link Font} in resources.
+     * @return the {@link Font} object containing the font-awesome icons.
+     */
+    private static Font getFont(String fontPath)
+    {
+        try (InputStream in = SwingUtilities.class.getResourceAsStream(fontPath))
         {
             Font baseFont = Font.createFont(Font.TRUETYPE_FONT, in);
             Font awesomeFont = baseFont.deriveFont(Font.BOLD, 24);
@@ -122,7 +167,8 @@ public final class SwingUtilities
     }
 
     /**
-     * Sets a combo box value only if the value is not null and is different from the current value.
+     * Sets a combo box value only if the value is not null and is different
+     * from the current value.
      *
      * @param <T> the type of the items
      * @param combo the combo box
@@ -137,7 +183,8 @@ public final class SwingUtilities
     }
 
     /**
-     * Sets a text field value only if the value is different from the current value.
+     * Sets a text field value only if the value is different from the current
+     * value.
      *
      * @param textField the text field
      * @param value the value
@@ -151,7 +198,8 @@ public final class SwingUtilities
     }
 
     /**
-     * Sets a spinner value only if the value is not null and is different from the current value.
+     * Sets a spinner value only if the value is not null and is different from
+     * the current value.
      *
      * @param spinner the spinner
      * @param value the value
@@ -165,7 +213,8 @@ public final class SwingUtilities
     }
 
     /**
-     * Sets a slider value only if the value is different from the current value.
+     * Sets a slider value only if the value is different from the current
+     * value.
      *
      * @param slider the slider
      * @param value the value
