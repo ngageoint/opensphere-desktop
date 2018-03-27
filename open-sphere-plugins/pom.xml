@@ -47,6 +47,6 @@
         <module>wms</module>
         <module>wps</module>
         <module>heatmap</module>
-        <module>ww-icons</module>
+        <module>extra-icons</module>
     </modules>
 </project>
