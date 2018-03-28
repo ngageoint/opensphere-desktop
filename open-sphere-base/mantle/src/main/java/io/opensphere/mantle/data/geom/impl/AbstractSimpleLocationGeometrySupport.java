@@ -103,4 +103,10 @@ public abstract class AbstractSimpleLocationGeometrySupport extends AbstractSimp
         }
         myLocation = loc;
     }
+
+    @Override
+    public String toString()
+    {
+        return getClass().getSimpleName() + "[" + myLocation.toSimpleString() + "]";
+    }
 }

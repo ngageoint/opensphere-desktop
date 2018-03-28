@@ -335,6 +335,33 @@ public final class ColorUtilities
     }
 
     /**
+     * Gets a brighter or darker version of the given color.
+     *
+     * @param color the normal color
+     * @param shift the amount to brighten by (0-255)
+     * @return the alternate color
+     */
+    public static Color getAlternateColor(Color color, int shift)
+    {
+        Color selectedColor = color;
+        if (color != null)
+        {
+            if (ColorUtilities.getBrightness(color) >= 130)
+            {
+                selectedColor = color.darker();
+            }
+            else
+            {
+                int red = Math.min(color.getRed() + shift, 255);
+                int green = Math.min(color.getGreen() + shift, 255);
+                int blue = Math.min(color.getBlue() + shift, 255);
+                selectedColor = new Color(red, green, blue);
+            }
+        }
+        return selectedColor;
+    }
+
+    /**
      * Checks if the two colors are equal including the alpha channel.
      *
      * @param c1 the first {@link Color}

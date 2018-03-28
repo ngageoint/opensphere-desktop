@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.junit.Test;
 
@@ -537,6 +538,7 @@ public class TimeSpanTest
     {
         TimeSpan actual = TimeSpan.fromISO8601String("2010-03-13T12:35:17Z/2010-03-15T03:59:21Z");
         SimpleDateFormat fmt = new SimpleDateFormat(DateTimeFormats.DATE_TIME_FORMAT);
+        fmt.setTimeZone(TimeZone.getTimeZone("GMT"));
         TimeSpan expected = TimeSpan.get(fmt.parse("2010-03-13 12:35:17"), fmt.parse("2010-03-15 03:59:21"));
         assertEquals(expected, actual);
     }
@@ -1058,6 +1060,8 @@ public class TimeSpanTest
         assertEquals(TimeSpan.get(100L, 200L), TimeSpan.get(200L, 300L).interpolate(TimeSpan.get(100L, 200L), 1.));
         assertEquals(TimeSpan.get(175L, 275L), TimeSpan.get(200L, 300L).interpolate(TimeSpan.get(100L, 200L), .25));
         assertEquals(TimeSpan.get(125L, 225L), TimeSpan.get(200L, 300L).interpolate(TimeSpan.get(100L, 200L), .75));
+
+        assertEquals(TimeSpan.get(150L), TimeSpan.get(100L).interpolate(TimeSpan.get(200L), 0.5));
 
         assertEquals(TimeSpan.TIMELESS, TimeSpan.TIMELESS.interpolate(TimeSpan.TIMELESS, 0.));
     }
