@@ -1,10 +1,8 @@
 package io.opensphere.core.net;
 
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -20,8 +18,11 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 import io.opensphere.core.NetworkConfigurationManager;
+import io.opensphere.core.net.config.ConfigurationType;
+import io.opensphere.core.net.config.ManualProxyConfiguration;
+import io.opensphere.core.net.config.SystemProxyConfiguration;
+import io.opensphere.core.net.config.UrlProxyConfiguration;
 import io.opensphere.core.options.impl.AbstractPreferencesOptionsProvider;
-import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.swing.GhostTextField;
 import io.opensphere.core.util.swing.GridBagPanel;
@@ -31,9 +32,6 @@ import io.opensphere.core.util.swing.GridBagPanel;
  */
 public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOptionsProvider
 {
-    /** The label for the auto-config URL box. */
-    private JLabel myAutoConfigProxyLabel;
-
     /** The text entry field for the auto config URL. */
     private JTextField myAutoConfigProxyUrlField;
 
@@ -43,23 +41,11 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
     /** The text entry field for the manual proxy host. */
     private JTextField myManualProxyHostField;
 
-    /** The label for the manual proxy host box. */
-    private JLabel myManualProxyHostLabel;
-
     /** The text entry field for the manual proxy port. */
     private JTextField myManualProxyPortField;
 
-    /** The label for the manual proxy port box. */
-    private JLabel myManualProxyPortLabel;
-
     /** The network configuration manager. */
     private final NetworkConfigurationManager myNetworkConfigurationManager;
-
-    /** The label for the proxy exclusions box. */
-    private JLabel myManualProxyExclusionsLabel;
-
-    /** The label for the proxy exclusions box. */
-    private JLabel mySystemProxyExclusionsLabel;
 
     /** The text entry field for the proxy exclusions. */
     private JTextField mySystemProxyExclusionsField;
@@ -75,9 +61,6 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
 
     /** Button indicating if system proxies should be used. */
     private JRadioButton myUseSystemProxiesButton;
-
-    /** Default Map if a key is not in the preference list. */
-    private final HashMap<String, String> myDefaultMap = new HashMap<String, String>();
 
     /**
      * Constructor.
@@ -95,42 +78,47 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
     @Override
     public void applyChanges()
     {
-        Map<String, String> proxyOptionPreference = new HashMap<String, String>();
         if (myUseSystemProxiesButton.isSelected())
         {
-            myNetworkConfigurationManager.setProxyConfiguration("", -1, true, "", mySystemProxyExclusionsField.getText());
-            proxyOptionPreference.put(mySystemProxyExclusionsLabel.getText(), mySystemProxyExclusionsField.getText());
-            setProxyPreferenceValue(myUseSystemProxiesButton.getText(), proxyOptionPreference, this);
+            myNetworkConfigurationManager.setSelectedProxyType(ConfigurationType.SYSTEM);
         }
         else if (myUseAutoProxyButton.isSelected())
         {
-            myNetworkConfigurationManager.setProxyConfiguration("", -1, false, myAutoConfigProxyUrlField.getText(), "");
-            proxyOptionPreference.put(myAutoConfigProxyLabel.getText(), myAutoConfigProxyUrlField.getText());
-            setProxyPreferenceValue(myUseAutoProxyButton.getText(), proxyOptionPreference, this);
+            myNetworkConfigurationManager.setSelectedProxyType(ConfigurationType.URL);
         }
         else if (myUseManualProxyButton.isSelected())
         {
-            try
-            {
-                String portText = myManualProxyPortField.getText();
-                int port = Integer.parseInt(portText);
-                myNetworkConfigurationManager.setProxyConfiguration(myManualProxyHostField.getText(), port, false, "",
-                        myManualProxyExclusionsField.getText());
-                proxyOptionPreference.put(myManualProxyPortLabel.getText(), portText);
-                proxyOptionPreference.put(myManualProxyHostLabel.getText(), myManualProxyHostField.getText());
-            }
-            catch (NumberFormatException e)
-            {
-                JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(myManualProxyHostField),
-                        "Could not parse port number.");
-            }
-            proxyOptionPreference.put(myManualProxyExclusionsLabel.getText(), myManualProxyExclusionsField.getText());
-            setProxyPreferenceValue(myUseManualProxyButton.getText(), proxyOptionPreference, this);
+            myNetworkConfigurationManager.setSelectedProxyType(ConfigurationType.MANUAL);
         }
         else
         {
-            myNetworkConfigurationManager.setProxyConfiguration("", -1, false, "", "");
+            myNetworkConfigurationManager.setSelectedProxyType(ConfigurationType.NONE);
         }
+
+        SystemProxyConfiguration systemConfiguration = myNetworkConfigurationManager.getSystemConfiguration();
+        systemConfiguration.getExclusionPatterns().addAll(Arrays.asList(mySystemProxyExclusionsField.getText().split(",\\s*|\\s+")));
+
+        UrlProxyConfiguration urlConfiguration = myNetworkConfigurationManager.getUrlConfiguration();
+        urlConfiguration.setProxyUrl(myAutoConfigProxyUrlField.getText());
+
+        try
+        {
+            // parse the number BEFORE MAKING ANY CHANGES:
+            int port = Integer.parseInt(myManualProxyPortField.getText());
+
+            ManualProxyConfiguration configuration = myNetworkConfigurationManager.getManualConfiguration();
+            configuration.setHost(myManualProxyHostField.getText());
+            configuration.setPort(port);
+
+            configuration.getExclusionPatterns().addAll(Arrays.asList(myManualProxyExclusionsField.getText().split(",\\s*|\\s+")));
+        }
+        catch (@SuppressWarnings("unused") NumberFormatException e)
+        {
+            JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(myManualProxyHostField),
+                    "Could not parse port number.");
+        }
+
+        myNetworkConfigurationManager.persistConfiguration();
     }
 
     @Override
@@ -158,17 +146,15 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
         panel.style(controlStyle).anchorWest().setFill(GridBagConstraints.HORIZONTAL).setWeightx(1);
         panel.style(buttonStyle).addRow(myUseNoProxyButton);
         panel.style(buttonStyle).addRow(myUseSystemProxiesButton);
-        panel.style(null, labelStyle, controlStyle).addRow(null, mySystemProxyExclusionsLabel, mySystemProxyExclusionsField);
+        panel.style(null, labelStyle, controlStyle).addRow(null, new JLabel("Proxy Exclusions:"), mySystemProxyExclusionsField);
         panel.style(buttonStyle).addRow(myUseAutoProxyButton);
-        panel.style(null, labelStyle, controlStyle).addRow(null, myAutoConfigProxyLabel, myAutoConfigProxyUrlField);
+        panel.style(null, labelStyle, controlStyle).addRow(null, new JLabel("Configuration URL:"), myAutoConfigProxyUrlField);
         panel.style(buttonStyle).addRow(myUseManualProxyButton);
-        panel.style(null, labelStyle, controlStyle).addRow(null, myManualProxyHostLabel, myManualProxyHostField);
-        panel.style(null, labelStyle, controlStyle).addRow(null, myManualProxyPortLabel, myManualProxyPortField);
-        panel.style(null, labelStyle, controlStyle).addRow(null, myManualProxyExclusionsLabel, myManualProxyExclusionsField);
+        panel.style(null, labelStyle, controlStyle).addRow(null, new JLabel("Proxy Host:"), myManualProxyHostField);
+        panel.style(null, labelStyle, controlStyle).addRow(null, new JLabel("Proxy Port:"), myManualProxyPortField);
+        panel.style(null, labelStyle, controlStyle).addRow(null, new JLabel("Proxy Exclusions:"), myManualProxyExclusionsField);
 
-        setProxyEnabled(myNetworkConfigurationManager.isUseSystemProxies(),
-                !myNetworkConfigurationManager.getProxyConfigUrl().isEmpty(),
-                !myNetworkConfigurationManager.getProxyHost().isEmpty());
+        revertToSavedConfiguration();
 
         return panel;
     }
@@ -177,53 +163,23 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
     public void restoreDefaults()
     {
         myNetworkConfigurationManager.restoreDefaults();
-        setProxyEnabled(myNetworkConfigurationManager.isUseSystemProxies(),
-                !myNetworkConfigurationManager.getProxyConfigUrl().isEmpty(),
-                !myNetworkConfigurationManager.getProxyHost().isEmpty());
-        restoreDefaultPreferences(myUseSystemProxiesButton.getText(), myUseAutoProxyButton.getText(),
-                myUseManualProxyButton.getText());
-    }
-
-    /**
-     * Restores default preferences for network proxy settings.
-     *
-     * @param myUseSystemProxiesKey textfield label
-     * @param myUseAutoProxyKey textfield label
-     * @param myUseManualProxyKey textfield label
-     */
-    private void restoreDefaultPreferences(String myUseSystemProxiesKey, String myUseAutoProxyKey, String myUseManualProxyKey)
-    {
-        mySystemProxyExclusionsField.setText("");
-        myAutoConfigProxyUrlField.setText("");
-        myManualProxyHostField.setText("");
-        myManualProxyPortField.setText("80");
-        myManualProxyExclusionsField.setText("");
-
-        getPreferences().removeMap(myUseSystemProxiesKey, this);
-        getPreferences().removeMap(myUseAutoProxyKey, this);
-        getPreferences().removeMap(myUseManualProxyKey, this);
+        revertToSavedConfiguration();
     }
 
     /** Initializes components. */
     private void initializeComponents()
     {
-        ActionListener actionListener = new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                setProxyEnabled(myUseSystemProxiesButton.isSelected(), myUseAutoProxyButton.isSelected(),
-                        myUseManualProxyButton.isSelected());
-            }
-        };
         myUseNoProxyButton = new JRadioButton("No proxy");
-        myUseNoProxyButton.addActionListener(actionListener);
         myUseSystemProxiesButton = new JRadioButton("Use system proxy settings");
-        myUseSystemProxiesButton.addActionListener(actionListener);
         myUseManualProxyButton = new JRadioButton("Manual proxy configuration");
-        myUseManualProxyButton.addActionListener(actionListener);
         myUseAutoProxyButton = new JRadioButton("Automatic proxy configuration");
-        myUseAutoProxyButton.addActionListener(actionListener);
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(myUseNoProxyButton);
+        group.add(myUseSystemProxiesButton);
+        group.add(myUseAutoProxyButton);
+        group.add(myUseAutoProxyButton);
+
         myManualProxyHostField = new JTextField(20);
         myManualProxyPortField = new JTextField(5);
         DocumentFilter filter = new DocumentFilter()
@@ -257,128 +213,44 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
         mySystemProxyExclusionsField = new GhostTextField(exTxt);
         mySystemProxyExclusionsField.setColumns(20);
         mySystemProxyExclusionsField.setToolTipText(helpTxt);
-        myAutoConfigProxyLabel = new JLabel("Configuration URL:");
-        myManualProxyHostLabel = new JLabel("Proxy Host:");
-        myManualProxyPortLabel = new JLabel("Proxy Port:");
-        myManualProxyExclusionsLabel = new JLabel("Proxy Exclusions:");
-        mySystemProxyExclusionsLabel = new JLabel("Proxy Exclusions:");
-
-        myDefaultMap.put(mySystemProxyExclusionsLabel.getText(), " ");
-        myDefaultMap.put(myAutoConfigProxyLabel.getText(), " ");
-        myDefaultMap.put(myManualProxyPortLabel.getText(), "80");
-        myDefaultMap.put(myManualProxyHostLabel.getText(), " ");
     }
 
     /**
      * Set the proxy enabled.
-     *
-     * @param systemProxiesEnabled If system proxies are enabled.
-     * @param autoProxyEnabled If the auto proxy is enabled.
-     * @param manualProxyEnabled If the manual proxy is enabled.
      */
-    private void setProxyEnabled(boolean systemProxiesEnabled, boolean autoProxyEnabled, boolean manualProxyEnabled)
+    private void revertToSavedConfiguration()
     {
-        if (autoProxyEnabled)
+        // populate all proxy fields from configuration:
+        SystemProxyConfiguration systemConfiguration = myNetworkConfigurationManager.getSystemConfiguration();
+        mySystemProxyExclusionsField
+                .setText(systemConfiguration.getExclusionPatterns().stream().collect(Collectors.joining(" ")));
+
+        UrlProxyConfiguration urlConfiguration = myNetworkConfigurationManager.getUrlConfiguration();
+        myAutoConfigProxyUrlField.setText(urlConfiguration.getProxyUrl());
+
+        ManualProxyConfiguration manualConfiguration = myNetworkConfigurationManager.getManualConfiguration();
+        myManualProxyHostField.setText(manualConfiguration.getHost());
+        myManualProxyPortField.setText(Integer.toString(manualConfiguration.getPort()));
+        myManualProxyExclusionsField
+                .setText(manualConfiguration.getExclusionPatterns().stream().collect(Collectors.joining(" ")));
+
+        ConfigurationType selectedProxyType = myNetworkConfigurationManager.getSelectedProxyType();
+        switch (selectedProxyType)
         {
-            myUseAutoProxyButton.setSelected(true);
-            myAutoConfigProxyLabel.setEnabled(true);
-            myAutoConfigProxyUrlField.setEnabled(true);
-            myAutoConfigProxyUrlField.setText(getPreferences().getStringMap(myUseAutoProxyButton.getText(), myDefaultMap)
-                    .get(myAutoConfigProxyLabel.getText()));
-            myManualProxyHostLabel.setEnabled(false);
-            myManualProxyHostField.setEnabled(false);
-            myManualProxyPortLabel.setEnabled(false);
-            myManualProxyPortField.setEnabled(false);
-            myManualProxyExclusionsField.setEnabled(false);
-            myManualProxyExclusionsLabel.setEnabled(false);
-            mySystemProxyExclusionsField.setEnabled(false);
-            mySystemProxyExclusionsLabel.setEnabled(false);
-        }
-        else if (manualProxyEnabled)
-        {
-            myUseManualProxyButton.setSelected(true);
-            myAutoConfigProxyLabel.setEnabled(false);
-            myAutoConfigProxyUrlField.setEnabled(false);
-            myManualProxyHostLabel.setEnabled(true);
-            myManualProxyHostField.setEnabled(true);
-            myManualProxyPortLabel.setEnabled(true);
-            myManualProxyPortField.setEnabled(true);
-            myManualProxyExclusionsField.setEnabled(true);
-            myManualProxyExclusionsLabel.setEnabled(true);
-            mySystemProxyExclusionsField.setEnabled(false);
-            mySystemProxyExclusionsLabel.setEnabled(false);
-            myManualProxyHostField.setText(getPreferences().getStringMap(myUseManualProxyButton.getText(), myDefaultMap)
-                    .get(myManualProxyHostLabel.getText()));
-            myManualProxyPortField.setText(getPreferences().getStringMap(myUseManualProxyButton.getText(), myDefaultMap)
-                    .get(myManualProxyPortLabel.getText()));
-
-            int proxyPort = myNetworkConfigurationManager.getProxyPort();
-            if (proxyPort == -1)
-            {
-                proxyPort = 80;
-            }
-
-            myManualProxyExclusionsField.setText(getPreferences().getStringMap(myUseManualProxyButton.getText(), myDefaultMap)
-                    .get(myManualProxyExclusionsLabel.getText()));
-        }
-        else
-        {
-            if (systemProxiesEnabled)
-            {
-                myUseSystemProxiesButton.setSelected(true);
-
-                mySystemProxyExclusionsField
-                        .setText(getPreferences().getStringMap(myUseSystemProxiesButton.getText(), myDefaultMap)
-                                .get(mySystemProxyExclusionsLabel.getText()));
-
-                mySystemProxyExclusionsField.setEnabled(true);
-                mySystemProxyExclusionsLabel.setEnabled(true);
-            }
-            else
-            {
+            case NONE:
                 myUseNoProxyButton.setSelected(true);
-                mySystemProxyExclusionsField.setEnabled(false);
-                mySystemProxyExclusionsLabel.setEnabled(false);
-            }
-            myAutoConfigProxyLabel.setEnabled(false);
-            myAutoConfigProxyUrlField.setEnabled(false);
-            myManualProxyHostLabel.setEnabled(false);
-            myManualProxyHostField.setEnabled(false);
-            myManualProxyPortLabel.setEnabled(false);
-            myManualProxyPortField.setEnabled(false);
-            myManualProxyExclusionsField.setEnabled(false);
-            myManualProxyExclusionsLabel.setEnabled(false);
+                break;
+            case SYSTEM:
+                myUseSystemProxiesButton.setSelected(true);
+                break;
+            case URL:
+                myUseAutoProxyButton.setSelected(true);
+                break;
+            case MANUAL:
+                myUseManualProxyButton.setSelected(true);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unrecognized proxy type: " + selectedProxyType.name());
         }
-    }
-
-    /**
-     * Save the fields as preferences in Proxy Settings.
-     *
-     * @param myKey Preference Key for saving
-     * @param myProxyOptionPreferences A map of preferences
-     * @param source - the source
-     *
-     */
-    private void setProxyPreferenceValue(String myKey, Map<String, String> myProxyOptionPreferences, Object source)
-    {
-        if (myProxyOptionPreferences.containsValue(null))
-        {
-            myProxyOptionPreferences.replace(myKey, null, " ");
-        }
-        if (getPreferences().getStringMap(myKey, myDefaultMap) != myDefaultMap)
-        {
-            getPreferences().removeMap(myKey, source);
-        }
-        getPreferences().putStringMap(myKey, myProxyOptionPreferences, source);
-    }
-
-    /**
-     * Return preferences registry.
-     *
-     * @return - preferences registry
-     */
-    private Preferences getPreferences()
-    {
-        return getPreferencesRegistry().getPreferences(NetworkConfigurationOptionsProvider.class);
     }
 }

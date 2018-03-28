@@ -32,6 +32,8 @@ import io.opensphere.core.common.connection.ServerConfiguration;
 import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.geometry.GeometryRegistry;
 import io.opensphere.core.geometry.RenderingCapabilities;
+import io.opensphere.core.net.config.ConfigurationType;
+import io.opensphere.core.net.config.ProxyConfigurations;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.server.serverprovider.ProxySelectorImpl;
@@ -369,18 +371,17 @@ public class HttpServerFactoryTest
     private NetworkConfigurationManager createNetworkConfigurationManager(EasyMockSupport support)
     {
         NetworkConfigurationManager manager = support.createMock(NetworkConfigurationManager.class);
-        manager.getProxyConfigUrl();
-        EasyMock.expectLastCall().andReturn(null);
+
+        ProxyConfigurations configurations = new ProxyConfigurations();
+        configurations.getManualProxyConfiguration().setHost(ourProxyHost);
+        configurations.getManualProxyConfiguration().setPort(ourProxyPort);
+
+        EasyMock.expect(manager.getSelectedProxyType()).andReturn(ConfigurationType.MANUAL).anyTimes();
+        EasyMock.expect(manager.getManualConfiguration()).andReturn(configurations.getManualProxyConfiguration());
 
         EasyMock.expect(Boolean.valueOf(manager.isExcludedFromProxy(ourHost))).andReturn(Boolean.FALSE);
+        configurations.setSelectedConfigurationType(ConfigurationType.MANUAL);
 
-        manager.getProxyHost();
-        EasyMock.expectLastCall().andReturn(ourProxyHost).anyTimes();
-
-        manager.getProxyPort();
-        EasyMock.expectLastCall().andReturn(Integer.valueOf(ourProxyPort));
-
-        EasyMock.expect(Boolean.valueOf(manager.isUseSystemProxies())).andReturn(Boolean.FALSE);
         ProxySelector.setDefault(new ProxySelectorImpl(manager));
 
         return manager;

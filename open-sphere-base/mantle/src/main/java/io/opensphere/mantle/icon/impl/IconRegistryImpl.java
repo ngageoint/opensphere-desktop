@@ -145,7 +145,7 @@ public class IconRegistryImpl implements IconRegistry
             myDataElementIdLock.unlock();
         }
         myChangeSupport.notifyListeners(
-            listener -> listener.iconsUnassigned(Collections.singletonList(Long.valueOf(deId)), source), EXECUTOR);
+                listener -> listener.iconsUnassigned(Collections.singletonList(Long.valueOf(deId)), source), EXECUTOR);
     }
 
     @Override
@@ -561,7 +561,7 @@ public class IconRegistryImpl implements IconRegistry
             myDataElementIdLock.unlock();
         }
         myChangeSupport.notifyListeners(
-            listener -> listener.iconAssigned(iconId, Collections.singletonList(Long.valueOf(deId)), source), EXECUTOR);
+                listener -> listener.iconAssigned(iconId, Collections.singletonList(Long.valueOf(deId)), source), EXECUTOR);
     }
 
     @Override
@@ -754,7 +754,7 @@ public class IconRegistryImpl implements IconRegistry
         {
             record = myIconIdToIconRecordMap.get(id);
         }
-        return new Pair<>(record, wasAdded);
+        return new Pair<>(record, Boolean.valueOf(wasAdded));
     }
 
     /**
@@ -771,9 +771,10 @@ public class IconRegistryImpl implements IconRegistry
             return overrideId.intValue();
         }
 
-        /* If the value came from the config, use it. If it's a legacy config the version won't be there so we need to use the
-         * counter to calculate the correct ID. If it's being added in code (not config) then just one-up from the highest
-         * value */
+        /* If the value came from the config, use it. If it's a legacy config
+         * the version won't be there so we need to use the counter to calculate
+         * the correct ID. If it's being added in code (not config) then just
+         * one-up from the highest value */
         int id;
         if (provider instanceof IconRecordConfig)
         {

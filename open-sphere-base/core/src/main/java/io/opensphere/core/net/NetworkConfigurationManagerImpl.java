@@ -1,11 +1,18 @@
 package io.opensphere.core.net;
 
+import java.util.Collections;
+import java.util.Set;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.NetworkConfigurationManager;
+import io.opensphere.core.net.config.ConfigurationType;
+import io.opensphere.core.net.config.ManualProxyConfiguration;
+import io.opensphere.core.net.config.NoProxyConfiguration;
+import io.opensphere.core.net.config.ProxyConfigurations;
+import io.opensphere.core.net.config.SystemProxyConfiguration;
+import io.opensphere.core.net.config.UrlProxyConfiguration;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.ChangeSupport;
@@ -18,27 +25,17 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(NetworkConfigurationManagerImpl.class);
 
-    /** The key for the proxy config url in the preferences. */
-    private static final String PROXY_CONFIG_URL_PREF_KEY = "ProxyConfigUrl";
+    /** The lock object used for synchronization. */
+    private static final Object PROXY_CONFIG_LOCK = new Object();
 
-    /** The key for the proxy config url in the preferences. */
-    private static final String PROXY_EXCLUSION_PATTERNS_PREF_KEY = "ProxyExclusionPatterns";
-
-    /** The key for the proxy host in the preferences. */
-    private static final String PROXY_HOST_PREF_KEY = "ProxyHost";
-
-    /** The key for the proxy port in the preferences. */
-    private static final String PROXY_PORT_PREF_KEY = "ProxyPort";
-
-    /** The key for the preference for system proxies. */
-    private static final String SYSTEM_PROXIES_ENABLED_KEY = "SystemProxiesEnabled";
+    /** The JAXB Configuration object stored to / read from preferences. */
+    private ProxyConfigurations myConfigurations;
 
     /** Change support. */
-    private final ChangeSupport<NetworkConfigurationChangeListener> myChangeSupport =
-            new WeakChangeSupport<>();
+    private final ChangeSupport<NetworkConfigurationChangeListener> myChangeSupport = new WeakChangeSupport<>();
 
     /** The preferences. */
-    private final Preferences myPrefs;
+    private final Preferences myPreferences;
 
     /** The system preferences registry. */
     private final PreferencesRegistry myPrefsRegistry;
@@ -51,8 +48,8 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     public NetworkConfigurationManagerImpl(PreferencesRegistry prefsRegistry)
     {
         myPrefsRegistry = prefsRegistry;
-        myPrefs = prefsRegistry.getPreferences(NetworkConfigurationManagerImpl.class);
-        myPrefs.printPrefs();
+        myPreferences = prefsRegistry.getPreferences(NetworkConfigurationManagerImpl.class);
+        myPreferences.printPrefs();
     }
 
     @Override
@@ -61,60 +58,118 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
         myChangeSupport.addListener(listener);
     }
 
-    @Override
-    public String getProxyConfigUrl()
+    /**
+     * Gets the configuration group object, loading it from preferences if
+     * necessary.
+     *
+     * @return the configuration group object, reflecting the persisted state of
+     *         the proxy.
+     */
+    private ProxyConfigurations getConfigurations()
     {
-        return myPrefs.getString(PROXY_CONFIG_URL_PREF_KEY, "");
+        synchronized (PROXY_CONFIG_LOCK)
+        {
+            if (myConfigurations == null)
+            {
+                myConfigurations = myPreferences.getJAXBObject(ProxyConfigurations.class, "configurations", null);
+                // if it's still null, create a new one:
+                if (myConfigurations == null)
+                {
+                    myConfigurations = new ProxyConfigurations();
+                    myConfigurations.setSelectedConfigurationType(ConfigurationType.SYSTEM);
+                    persistConfiguration();
+                }
+            }
+        }
+        return myConfigurations;
     }
 
     @Override
-    public String getProxyExclusions()
+    public void persistConfiguration()
     {
-        return myPrefs.getString(PROXY_EXCLUSION_PATTERNS_PREF_KEY, "");
+        synchronized (PROXY_CONFIG_LOCK)
+        {
+            myPreferences.putJAXBObject("configurations", myConfigurations, false, this);
+            notifyChanged();
+        }
     }
 
     @Override
-    public String getProxyHost()
+    public ConfigurationType getSelectedProxyType()
     {
-        return myPrefs.getString(PROXY_HOST_PREF_KEY, "");
+        ConfigurationType configurationType = getConfigurations().getSelectedConfigurationType();
+        if (configurationType == null)
+        {
+            configurationType = ConfigurationType.SYSTEM;
+            getConfigurations().setSelectedConfigurationType(configurationType);
+        }
+        return configurationType;
     }
 
     @Override
-    public int getProxyPort()
+    public void setSelectedProxyType(ConfigurationType configurationType)
     {
-        return myPrefs.getInt(PROXY_PORT_PREF_KEY, -1);
+        getConfigurations().setSelectedConfigurationType(configurationType);
+    }
+
+    @Override
+    public NoProxyConfiguration getNoProxyConfiguration()
+    {
+        return getConfigurations().getNoProxyConfiguration();
+    }
+
+    @Override
+    public SystemProxyConfiguration getSystemConfiguration()
+    {
+        return getConfigurations().getSystemProxyConfiguration();
+    }
+
+    @Override
+    public UrlProxyConfiguration getUrlConfiguration()
+    {
+        return getConfigurations().getUrlProxyConfiguration();
+    }
+
+    @Override
+    public ManualProxyConfiguration getManualConfiguration()
+    {
+        return getConfigurations().getManualProxyConfiguration();
     }
 
     @Override
     public boolean isExcludedFromProxy(String host)
     {
-        String proxyExclusions = getProxyExclusions();
-        if (StringUtils.isNotEmpty(proxyExclusions))
+        Set<String> exclusionPatterns;
+        if (getSelectedProxyType() == ConfigurationType.SYSTEM)
         {
-            for (String excl : proxyExclusions.split("[\\s;,]+"))
+            exclusionPatterns = getSystemConfiguration().getExclusionPatterns();
+        }
+        else if (getSelectedProxyType() == ConfigurationType.MANUAL)
+        {
+            exclusionPatterns = getManualConfiguration().getExclusionPatterns();
+        }
+        else
+        {
+            exclusionPatterns = Collections.emptySet();
+        }
+
+        for (String exclusion : exclusionPatterns)
+        {
+            // Generate a regular expression from the exclusion string.
+            // Treat everything except '*' literally.
+            String[] splitOnStar = exclusion.split("\\*", -1);
+            String pattern = "\\Q" + StringUtilities.join("\\E.*\\Q", splitOnStar) + "\\E";
+            if (Pattern.matches(pattern, host))
             {
-                // Generate a regular expression from the exclusion string.
-                // Treat everything except '*' literally.
-                String[] splitOnStar = excl.split("\\*", -1);
-                String pattern = "\\Q" + StringUtilities.join("\\E.*\\Q", splitOnStar) + "\\E";
-                if (Pattern.matches(pattern, host))
+                if (LOGGER.isDebugEnabled())
                 {
-                    if (LOGGER.isDebugEnabled())
-                    {
-                        LOGGER.debug(StringUtilities.concat("Host [", host, "] matches proxy exclusion pattern [", excl,
-                                "]; not using proxy."));
-                    }
-                    return true;
+                    LOGGER.debug(StringUtilities.concat("Host [", host, "] matches proxy exclusion pattern [", exclusion,
+                            "]; not using proxy."));
                 }
+                return true;
             }
         }
         return false;
-    }
-
-    @Override
-    public boolean isUseSystemProxies()
-    {
-        return myPrefs.getBoolean(SYSTEM_PROXIES_ENABLED_KEY, false);
     }
 
     @Override
@@ -127,36 +182,6 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     public void restoreDefaults()
     {
         myPrefsRegistry.resetPreferences(NetworkConfigurationManagerImpl.class, this);
-    }
-
-    @Override
-    public void setProxyConfiguration(String host, int port, boolean useSystemProxies, String configUrl, String hostPatterns)
-    {
-        setProxyHost(host, port);
-        myPrefs.putBoolean(SYSTEM_PROXIES_ENABLED_KEY, useSystemProxies, this);
-        myPrefs.putString(PROXY_CONFIG_URL_PREF_KEY, configUrl, this);
-        myPrefs.putString(PROXY_EXCLUSION_PATTERNS_PREF_KEY, hostPatterns, this);
-
-        notifyChanged();
-    }
-
-    /**
-     * Set the system proxy host.
-     *
-     * @param host the host, or {@code ""} to disable the proxy
-     * @param port the port number
-     */
-    private void setProxyHost(String host, int port)
-    {
-        if (StringUtils.isEmpty(host))
-        {
-            myPrefs.removeInt(PROXY_PORT_PREF_KEY, this);
-        }
-        else
-        {
-            myPrefs.putInt(PROXY_PORT_PREF_KEY, port, this);
-        }
-        myPrefs.putString(PROXY_HOST_PREF_KEY, host, this);
     }
 
     /**

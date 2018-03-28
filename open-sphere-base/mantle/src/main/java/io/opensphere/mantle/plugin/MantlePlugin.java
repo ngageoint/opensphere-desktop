@@ -10,6 +10,7 @@ import io.opensphere.core.api.adapter.PluginAdapter;
 import io.opensphere.core.util.event.EventCoalescer;
 import io.opensphere.core.util.property.PluginPropertyUtils;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.ColumnTypeDetector;
 import io.opensphere.mantle.data.element.event.DataElementAltitudeChangeEvent;
 import io.opensphere.mantle.data.element.event.DataElementColorChangeEvent;
@@ -55,6 +56,7 @@ import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMinorAxisKey;
 import io.opensphere.mantle.data.impl.specialkey.HeadingKey;
 import io.opensphere.mantle.data.impl.specialkey.SpeedKey;
 import io.opensphere.mantle.data.tile.TileVisualizationSupport;
+import io.opensphere.mantle.icon.FontIcons;
 import io.opensphere.mantle.toolbox.MantleToolboxImpl;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
@@ -152,6 +154,8 @@ public class MantlePlugin extends PluginAdapter
         myTileStyleTransformController = new TileStyleTransformController(toolbox);
         myLabelHoverController = new LabelHoverController(toolbox);
 
+        FontIcons.getIconMap(toolbox.getPluginToolboxRegistry().getPluginToolbox(MantleToolbox.class));
+
         EventQueueUtilities.runOnEDTAndWait(new Runnable()
         {
             @Override
@@ -215,7 +219,7 @@ public class MantlePlugin extends PluginAdapter
         VisualizationStyleRegistry vsr = MantleToolboxUtils.getMantleToolbox(myToolbox).getVisualizationStyleRegistry();
 
         // Feature styles
-        for (Class<? extends VisualizationStyle> c :  StyleUtils.FEATURE_STYLES)
+        for (Class<? extends VisualizationStyle> c : StyleUtils.FEATURE_STYLES)
         {
             vsr.installStyle(c, this);
         }

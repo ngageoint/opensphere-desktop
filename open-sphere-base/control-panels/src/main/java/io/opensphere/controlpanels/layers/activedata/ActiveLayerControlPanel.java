@@ -231,7 +231,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
                 }
                 getExportButton().setVisible(true);
             }
-            if (selectedType.getMetaDataInfo() != null && selectedType.getMapVisualizationInfo() != null
+            if (selectedType != null && selectedType.getMetaDataInfo() != null && selectedType.getMapVisualizationInfo() != null
                     && selectedType.getMapVisualizationInfo().usesMapDataElements())
             {
                 myCpToolbox.getLayerControlProviderRegistry().getProviders()
@@ -645,7 +645,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
 
     /**
      * Gets the provider grid panel.
-     * 
+     *
      * @return the provider grid panel.
      */
     private JComponent getProviderPanel()
@@ -838,7 +838,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
 
     /**
      * Rebuild the provider panel.
-     * 
+     *
      * @param uniqueProvider the provider component.
      */
     private void rebuildProviderLayerControl(Component uniqueProvider)
