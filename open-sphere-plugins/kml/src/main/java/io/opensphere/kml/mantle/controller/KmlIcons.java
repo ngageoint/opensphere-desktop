@@ -3,8 +3,8 @@ package io.opensphere.kml.mantle.controller;
 import java.net.URL;
 import java.util.Map;
 
-import io.opensphere.mantle.controller.AbstractIconLoader;
 import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.icon.impl.AbstractIconLoader;
 
 /** Way to access KML icons. */
 public final class KmlIcons extends AbstractIconLoader

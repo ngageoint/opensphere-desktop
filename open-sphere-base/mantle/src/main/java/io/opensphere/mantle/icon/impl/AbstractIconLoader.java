@@ -1,4 +1,4 @@
-package io.opensphere.mantle.controller;
+package io.opensphere.mantle.icon.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,7 +22,6 @@ import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
-import io.opensphere.mantle.icon.impl.IconProviderFactory;
 
 /** Way to access KML icons. */
 public abstract class AbstractIconLoader
