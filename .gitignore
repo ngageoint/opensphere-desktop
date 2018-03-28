@@ -3,6 +3,9 @@
 .classpath
 .project
 
+# Extra-icons
+open-sphere-plugins/extra-icons/src/main/resources/
+
 # Maven / Other
 /target
 /.pmd
