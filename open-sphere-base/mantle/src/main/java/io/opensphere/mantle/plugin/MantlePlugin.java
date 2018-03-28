@@ -56,7 +56,7 @@ import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMinorAxisKey;
 import io.opensphere.mantle.data.impl.specialkey.HeadingKey;
 import io.opensphere.mantle.data.impl.specialkey.SpeedKey;
 import io.opensphere.mantle.data.tile.TileVisualizationSupport;
-import io.opensphere.mantle.icon.FontIcons;
+import io.opensphere.mantle.icon.impl.FontIcons;
 import io.opensphere.mantle.toolbox.MantleToolboxImpl;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 

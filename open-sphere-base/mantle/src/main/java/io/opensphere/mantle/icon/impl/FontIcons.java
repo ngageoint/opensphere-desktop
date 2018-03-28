@@ -1,4 +1,4 @@
-package io.opensphere.mantle.icon;
+package io.opensphere.mantle.icon.impl;
 
 import java.awt.Color;
 import java.io.File;
@@ -38,7 +38,8 @@ import io.opensphere.core.util.swing.FontIcon;
 import io.opensphere.core.util.swing.GovIconFontIcon;
 import io.opensphere.core.util.swing.MilitaryRankFontIcon;
 import io.opensphere.mantle.MantleToolbox;
-import io.opensphere.mantle.icon.impl.IconProviderFactory;
+import io.opensphere.mantle.icon.IconProvider;
+import io.opensphere.mantle.icon.IconRecord;
 
 /** Way to access font icons. */
 public final class FontIcons
