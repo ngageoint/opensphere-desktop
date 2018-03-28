@@ -103,7 +103,7 @@ public class KMLGeometryBuilder
         myMantleToolbox = mantleToolbox;
         // myServerRegistry = serverRegistry;
         myDataSource = dataSource;
-        myIconHrefToURLMap = New.map(KmlIcons.getIconMap(mantleToolbox));
+        myIconHrefToURLMap = New.map(KmlIcons.getKmlIconMap(mantleToolbox));
     }
 
     /**
@@ -265,7 +265,8 @@ public class KMLGeometryBuilder
     }
 
     /**
-     * Converts a LatLonAlt to a LatLonAlt at the same location but on the ground.
+     * Converts a LatLonAlt to a LatLonAlt at the same location but on the
+     * ground.
      *
      * @param location The location
      * @return The ground location
@@ -378,7 +379,8 @@ public class KMLGeometryBuilder
     }
 
     /**
-     * Lower-level method to create a MapGeometrySupport from a list of LatLonAlts.
+     * Lower-level method to create a MapGeometrySupport from a list of
+     * LatLonAlts.
      *
      * @param locations The locations
      * @param holes The interior rings if this is a polygon
@@ -458,8 +460,9 @@ public class KMLGeometryBuilder
                         ((AbstractMapGeometrySupport)mapGeomSupport).addChild(mantleGeoms.get(i));
                     }
 
-                    /* HACK - Work around a limitation in Mantle where child colors are not used. If the parent has no color, use
-                     * the color of the first child with a color. */
+                    /* HACK - Work around a limitation in Mantle where child
+                     * colors are not used. If the parent has no color, use the
+                     * color of the first child with a color. */
                     Color mantleDefault = Color.WHITE;
                     if (mantleDefault.equals(mapGeomSupport.getColor()) && mapGeomSupport.getChildren() != null)
                     {
@@ -707,7 +710,8 @@ public class KMLGeometryBuilder
     }
 
     /**
-     * Converts the given altitude mode to the user's preferred altitude mode for this data source.
+     * Converts the given altitude mode to the user's preferred altitude mode
+     * for this data source.
      *
      * @param altitudeMode The altitude mode
      * @return The equivalent preferred altitude mode of the user

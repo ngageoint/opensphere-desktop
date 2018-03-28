@@ -5,17 +5,17 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.Icon;
 
-import io.opensphere.core.util.AwesomeIcon;
+import io.opensphere.core.util.GovIcon;
 
 /**
- * A rendered text icon in which the {@link AwesomeIcon} is drawn as a
+ * A rendered text icon in which the {@link GovIcon} is drawn as a
  * Swing-compatible {@link Icon} instance.
  */
-public class FontAwesomeIcon extends AbstractFontIcon
+public class GovIconFontIcon extends AbstractFontIcon
 {
     static
     {
-        GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(SwingUtilities.FONT_AWESOME_FONT);
+        GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(SwingUtilities.GOVICONS_FONT);
     }
 
     /**
@@ -23,9 +23,9 @@ public class FontAwesomeIcon extends AbstractFontIcon
      *
      * @param pIcon the icon to draw.
      */
-    public FontAwesomeIcon(AwesomeIcon pIcon)
+    public GovIconFontIcon(GovIcon pIcon)
     {
-        super(SwingUtilities.FONT_AWESOME_FONT, pIcon);
+        super(SwingUtilities.GOVICONS_FONT, pIcon);
     }
 
     /**
@@ -34,9 +34,9 @@ public class FontAwesomeIcon extends AbstractFontIcon
      * @param pIcon the icon to draw.
      * @param pColor the color to draw the icon.
      */
-    public FontAwesomeIcon(AwesomeIcon pIcon, Color pColor)
+    public GovIconFontIcon(GovIcon pIcon, Color pColor)
     {
-        super(SwingUtilities.FONT_AWESOME_FONT, pIcon, pColor);
+        super(SwingUtilities.GOVICONS_FONT, pIcon, pColor);
     }
 
     /**
@@ -47,8 +47,8 @@ public class FontAwesomeIcon extends AbstractFontIcon
      * @param pColor the color to draw the icon.
      * @param pSize the size of the icon.
      */
-    public FontAwesomeIcon(AwesomeIcon pIcon, Color pColor, int pSize)
+    public GovIconFontIcon(GovIcon pIcon, Color pColor, int pSize)
     {
-        super(SwingUtilities.FONT_AWESOME_FONT, pIcon, pColor, pSize);
+        super(SwingUtilities.GOVICONS_FONT, pIcon, pColor, pSize);
     }
 }
