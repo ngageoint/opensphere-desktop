@@ -4,10 +4,10 @@ import java.net.URL;
 import java.util.Map;
 
 import io.opensphere.mantle.MantleToolbox;
-import io.opensphere.mantle.controller.IconLoader;
+import io.opensphere.mantle.controller.AbstractIconLoader;
 
 /** Way to access KML icons. */
-public final class KmlIcons extends IconLoader
+public final class KmlIcons extends AbstractIconLoader
 {
     /** The static KmlIcons instance. */
     private static KmlIcons iconLoader;
