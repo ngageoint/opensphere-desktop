@@ -7,7 +7,7 @@ import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.IconLoader;
 
 /** Way to access KML icons. */
-public class KmlIcons extends IconLoader
+public final class KmlIcons extends IconLoader
 {
     /** The static KmlIcons instance. */
     private static KmlIcons iconLoader;
