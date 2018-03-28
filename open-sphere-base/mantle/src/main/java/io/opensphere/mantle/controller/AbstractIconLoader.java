@@ -25,10 +25,10 @@ import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.impl.IconProviderFactory;
 
 /** Way to access KML icons. */
-public abstract class IconLoader
+public abstract class AbstractIconLoader
 {
     /** Logger. */
-    private static final Logger LOGGER = Logger.getLogger(IconLoader.class);
+    private static final Logger LOGGER = Logger.getLogger(AbstractIconLoader.class);
 
     /** The images file path. */
     private final String myImageList;
@@ -53,7 +53,7 @@ public abstract class IconLoader
      * @param pSubCategoryName the name of the collection subcategory
      * @param pSourceKey the source key for records
      */
-    public IconLoader(String pImageList, String pCollectionName, String pSubCategoryName, String pSourceKey)
+    public AbstractIconLoader(String pImageList, String pCollectionName, String pSubCategoryName, String pSourceKey)
     {
         myImageList = pImageList;
         myCollectionName = pCollectionName;
