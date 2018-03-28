@@ -346,7 +346,7 @@ public final class ColorUtilities
         Color selectedColor = color;
         if (color != null)
         {
-            if (ColorUtilities.getBrightness(color) >= 125)
+            if (ColorUtilities.getBrightness(color) >= 130)
             {
                 selectedColor = color.darker();
             }
