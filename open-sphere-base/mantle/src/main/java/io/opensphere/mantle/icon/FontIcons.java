@@ -40,7 +40,7 @@ import io.opensphere.core.util.swing.MilitaryRankFontIcon;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.icon.impl.IconProviderFactory;
 
-/** Way to access KML icons. */
+/** Way to access font icons. */
 public final class FontIcons
 {
     /** Logger. */
@@ -108,7 +108,7 @@ public final class FontIcons
     }
 
     /**
-     * Gets the KML icon records from the icon registry.
+     * Gets the font icon records from the icon registry.
      *
      * @param mantleToolbox the mantle toolbox
      * @return the icon records
