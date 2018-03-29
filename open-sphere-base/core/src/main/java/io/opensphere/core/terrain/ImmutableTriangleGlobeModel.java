@@ -169,14 +169,15 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
 
         try
         {
-            SimpleTesseraBlockBuilder<GeographicTesseraVertex> triBuilder = new SimpleTesseraBlockBuilder<GeographicTesseraVertex>(
-                    3, modelCenter);
+            Geometry bufferedPolygon = polygon.buffer(0);
+
+            SimpleTesseraBlockBuilder<GeographicTesseraVertex> triBuilder = new SimpleTesseraBlockBuilder<>(3, modelCenter);
 
             Collection<TerrainTriangle> fullyContained = New.collection();
             Collection<TerrainTriangle> partiallyContained = New.collection();
 
-            getNorthBottom().getOverlappingTriangles(polygon, fullyContained, partiallyContained);
-            getSouthBottom().getOverlappingTriangles(polygon, fullyContained, partiallyContained);
+            getNorthBottom().getOverlappingTriangles(bufferedPolygon, fullyContained, partiallyContained);
+            getSouthBottom().getOverlappingTriangles(bufferedPolygon, fullyContained, partiallyContained);
 
             for (TerrainTriangle tri : fullyContained)
             {
@@ -194,7 +195,7 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
 
             for (TerrainTriangle partial : partiallyContained)
             {
-                Geometry geom = polygon.intersection(partial.getJTSPolygon());
+                Geometry geom = bufferedPolygon.intersection(partial.getJTSPolygon());
                 VertexGenerator<GeographicTesseraVertex> vertexGenerator = new SimpleVertexGenerator(terrainVertices, partial);
                 for (int i = 0; i < geom.getNumGeometries(); ++i)
                 {
