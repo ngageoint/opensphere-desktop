@@ -8,15 +8,15 @@
   <xs:import namespace="http://www.opengis.net/kml/2.2" schemaLocation="../../kml/2.2.0/ogckml22.xsd" />
   <!-- <xs:import namespace="http://www.opengis.net/ogc" schemaLocation="../../filter/1.0.0/filter.xsd" /> -->
   <xs:import namespace="http://www.opengis.net/ogc" schemaLocation="filter-extended.xsd" />
-  
+
 
    <xs:element name="state" type="fade:StateType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A saved state is used to preserve the state of a FADE tool, to allow 
-        others to see the same viewpoint and data sets, and to allow a user to 
-        resume working where they left off. The state includes camera look 
-        angles and locations, animation and temporal information, data layers 
+        A saved state is used to preserve the state of Open Sphere, to allow
+        others to see the same viewpoint and data sets, and to allow a user to
+        resume working where they left off. The state includes camera look
+        angles and locations, animation and temporal information, data layers
         and zoom levels, and many other items.
       </xs:documentation>
     </xs:annotation>
@@ -25,10 +25,10 @@
   <xs:complexType name="StateType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A saved state is used to preserve the state of a FADE tool, to allow 
-        others to see the same viewpoint and data sets, and to allow a user to 
-        resume working where they left off. The state includes camera look 
-        angles and locations, animation and temporal information, data layers 
+        A saved state is used to preserve the state of Open Sphere, to allow
+        others to see the same viewpoint and data sets, and to allow a user to
+        resume working where they left off. The state includes camera look
+        angles and locations, animation and temporal information, data layers
         and zoom levels, and many other items.
       </xs:documentation>
     </xs:annotation>
@@ -56,7 +56,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            A user-entered set of textual tags, used for categorizing saved 
+            A user-entered set of textual tags, used for categorizing saved
             states.
           </xs:documentation>
         </xs:annotation>
@@ -75,7 +75,7 @@
         minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Defines a collection of areas in which data is not loaded during 
+            Defines a collection of areas in which data is not loaded during
             query operations.
           </xs:documentation>
         </xs:annotation>
@@ -154,6 +154,15 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
+
+      <xs:element name="featureActions" type="fade:FeatureActionArrayType"
+          minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Feature actions to apply to layers in the saved state.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
     </xs:all>
 
     <xs:attribute name="source" type="xs:token" use="required">
@@ -177,7 +186,7 @@
   <xs:complexType name="UrlsType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A collection of one or more 'url' elements
+        A collection of one or more 'url' elements.
       </xs:documentation>
     </xs:annotation>
 
@@ -195,7 +204,7 @@
  <xs:complexType name="ProjectionsType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A collection of one or more 'projection' elements
+        A collection of one or more 'projection' elements.
       </xs:documentation>
     </xs:annotation>
 
@@ -203,7 +212,7 @@
       <xs:element name="projection" type="xs:token" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-           A projection reference, e.g. EPSG:4326 or CRS:84
+           A projection reference, e.g. EPSG:4326 or CRS:84.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -213,7 +222,7 @@
   <xs:complexType name="LocalDataType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-    
+
       </xs:documentation>
     </xs:annotation>
 
@@ -229,7 +238,7 @@
   <xs:complexType name="MapType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A complex type in which the details of the Map projection and camera 
+        A complex type in which the details of the Map projection and camera
         location are encapsulated.
       </xs:documentation>
     </xs:annotation>
@@ -238,7 +247,7 @@
       <xs:element ref="kml:Camera" minOccurs="1" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            The specifications of the camera location, expressed as a KML 
+            The specifications of the camera location, expressed as a KML
             CameraType element, including location, tilt, roll, and zoom.
           </xs:documentation>
         </xs:annotation>
@@ -259,8 +268,8 @@
   <xs:simpleType name="ProjectionType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        The projection type applied to the map display. Allowed values are 
-        'Perspective' (3D) or 'Equirectangular', 'Mercator', 'Miller' or 
+        The projection type applied to the map display. Allowed values are
+        'Perspective' (3D) or 'Equirectangular', 'Mercator', 'Miller' or
         'Hammer'.
       </xs:documentation>
     </xs:annotation>
@@ -287,7 +296,7 @@
         minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            A single exclusion area, expressing a region in which no data will 
+            A single exclusion area, expressing a region in which no data will
             be loaded.
           </xs:documentation>
         </xs:annotation>
@@ -299,7 +308,7 @@
   <xs:complexType name="ExclusionAreaType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        Defines a polygonal region from which data is excluded during query 
+        Defines a polygonal region from which data is excluded during query
         operations.
       </xs:documentation>
     </xs:annotation>
@@ -317,7 +326,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            An optional reference to a layer, allowing the exclusion area to 
+            An optional reference to a layer, allowing the exclusion area to
             apply to a single layer instead of all data.
           </xs:documentation>
         </xs:annotation>
@@ -327,7 +336,7 @@
     <xs:attribute name="id" type="xs:token" use="required">
       <xs:annotation>
         <xs:documentation xml:lang="en" xml:space="preserve">
-          A machine-generated textual identifier used to ensure the area 
+          A machine-generated textual identifier used to ensure the area
           definition is unique.
         </xs:documentation>
       </xs:annotation>
@@ -345,44 +354,44 @@
   <xs:complexType name="FiltersType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A collection of filters used to narrow the set of results from query 
+        A collection of filters used to narrow the set of results from query
         operations.
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-       <xs:element name="filter" type="ogc:FilterType" minOccurs="0" maxOccurs="unbounded"> 
-        <xs:annotation> 
-          <xs:documentation xml:lang="en" xml:space="preserve"> A single filter 
+       <xs:element name="filter" type="ogc:FilterType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve"> A single filter
             area, expressing a restriction on a query operation. </xs:documentation>
-          </xs:annotation> 
+          </xs:annotation>
        </xs:element>
     </xs:sequence>
   </xs:complexType>
 
 
 
-  <!-- <xs:complexType name="FilterType"> <xs:annotation> <xs:documentation xml:lang="en" 
-    xml:space="preserve"> A collection of filters used to narrow the set of results from 
-    query operations. </xs:documentation> </xs:annotation> <xs:choice> <xs:element ref="ogc:spatialOps" 
-    /> <xs:element ref="ogc:comparisonOps" /> <xs:element ref="ogc:logicOps" /> <xs:element 
-    ref="ogc:FeatureId" maxOccurs="unbounded" /> </xs:choice> <xs:attribute name="id" 
-    type="xs:token" use="required"> <xs:annotation> <xs:documentation xml:lang="en" xml:space="preserve"> 
-    A machine-generated textual identifier used to ensure the area definition is unique. 
-    </xs:documentation> </xs:annotation> </xs:attribute> <xs:attribute name="active" 
-    type="xs:boolean" use="required"> <xs:annotation> <xs:documentation xml:lang="en" 
-    xml:space="preserve"> Denotes whether this filter is currently active. </xs:documentation> 
-    </xs:annotation> </xs:attribute> <xs:attribute name="filterType" type="fade:FilterTypeType" 
-    use="required"> <xs:annotation> <xs:documentation xml:lang="en" xml:space="preserve"> 
-    The type applied to the filter. </xs:documentation> </xs:annotation> </xs:attribute> 
-    <xs:attribute name="title" type="xs:token" use="required"> <xs:annotation> <xs:documentation 
-    xml:lang="en" xml:space="preserve"> A human readable textual title. </xs:documentation> 
-    </xs:annotation> </xs:attribute> <xs:attribute name="description" use="optional"> 
-    <xs:annotation> <xs:documentation xml:lang="en" xml:space="preserve"> A human readable 
-    description of the filter. </xs:documentation> </xs:annotation> </xs:attribute> <xs:attribute 
-    name="type" use="optional"> <xs:annotation> <xs:documentation xml:lang="en" xml:space="preserve"> 
-    The layer / feature to which the filter applies. </xs:documentation> </xs:annotation> 
-    </xs:attribute> <xs:attribute name="match" use="optional"> <xs:annotation> <xs:documentation 
-    xml:lang="en" xml:space="preserve"> The type of matching applied when the filter 
+  <!-- <xs:complexType name="FilterType"> <xs:annotation> <xs:documentation xml:lang="en"
+    xml:space="preserve"> A collection of filters used to narrow the set of results from
+    query operations. </xs:documentation> </xs:annotation> <xs:choice> <xs:element ref="ogc:spatialOps"
+    /> <xs:element ref="ogc:comparisonOps" /> <xs:element ref="ogc:logicOps" /> <xs:element
+    ref="ogc:FeatureId" maxOccurs="unbounded" /> </xs:choice> <xs:attribute name="id"
+    type="xs:token" use="required"> <xs:annotation> <xs:documentation xml:lang="en" xml:space="preserve">
+    A machine-generated textual identifier used to ensure the area definition is unique.
+    </xs:documentation> </xs:annotation> </xs:attribute> <xs:attribute name="active"
+    type="xs:boolean" use="required"> <xs:annotation> <xs:documentation xml:lang="en"
+    xml:space="preserve"> Denotes whether this filter is currently active. </xs:documentation>
+    </xs:annotation> </xs:attribute> <xs:attribute name="filterType" type="fade:FilterTypeType"
+    use="required"> <xs:annotation> <xs:documentation xml:lang="en" xml:space="preserve">
+    The type applied to the filter. </xs:documentation> </xs:annotation> </xs:attribute>
+    <xs:attribute name="title" type="xs:token" use="required"> <xs:annotation> <xs:documentation
+    xml:lang="en" xml:space="preserve"> A human readable textual title. </xs:documentation>
+    </xs:annotation> </xs:attribute> <xs:attribute name="description" use="optional">
+    <xs:annotation> <xs:documentation xml:lang="en" xml:space="preserve"> A human readable
+    description of the filter. </xs:documentation> </xs:annotation> </xs:attribute> <xs:attribute
+    name="type" use="optional"> <xs:annotation> <xs:documentation xml:lang="en" xml:space="preserve">
+    The layer / feature to which the filter applies. </xs:documentation> </xs:annotation>
+    </xs:attribute> <xs:attribute name="match" use="optional"> <xs:annotation> <xs:documentation
+    xml:lang="en" xml:space="preserve"> The type of matching applied when the filter
     executes. </xs:documentation> </xs:annotation> </xs:attribute> </xs:complexType> -->
 
   <xs:simpleType name="FilterTypeType">
@@ -425,9 +434,9 @@
     <xs:attribute name="type" type="fade:LayersCollectionType" use="required">
       <xs:annotation>
         <xs:documentation xml:lang="en" xml:space="preserve">
-          The layer type of the collection. The value must be unique within 
-          the saved state (e.g.: only one 'layers' tag with a type attribute 
-          value of 'map' may be present, and only one 'layers' tag with a type 
+          The layer type of the collection. The value must be unique within
+          the saved state (e.g.: only one 'layers' tag with a type attribute
+          value of 'map' may be present, and only one 'layers' tag with a type
           attribute value of 'data'.
         </xs:documentation>
       </xs:annotation>
@@ -448,71 +457,13 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:complexType name="StreamOptionsType">
-    <xs:annotation>
-      <xs:documentation xml:lang="en" xml:space="preserve">
-       Layer option related to streaming layers.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:all>
-      <xs:element name="layer" type="xs:token" minOccurs="0"
-        maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation xml:lang="en" xml:space="preserve">
-            The streaming layer type?
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="threshold" type="xs:integer" minOccurs="0"
-        maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation xml:lang="en" xml:space="preserve">
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="ageOffActive" type="xs:boolean" minOccurs="0"
-        maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation xml:lang="en" xml:space="preserve">
-            If activated, features older than then ageOff time
-            should be removed from the dispay.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="ageOffTime" type="xs:integer" minOccurs="0"
-        maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation xml:lang="en" xml:space="preserve">
-            Time, in minutes, when features of a streaming layer
-            should be aged off the display, dependent on ageOffActive.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="play" type="xs:boolean" minOccurs="0"
-        maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation xml:lang="en" xml:space="preserve">
-            Flag for the stremaing state, e.g. is playing/ is streaming.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="binSettings" type="fade:BinSettingsType" minOccurs="0" maxOccurs="1">
-         <xs:annotation>
-          <xs:documentation xml:lang="en" xml:space="preserve">
-            Optional stream bin settings for the layer.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:all>
-  </xs:complexType>
-
   <xs:complexType name="LayerType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A layer is defined as a single source of data, either base maps, or 
-        features, or another data type. The layer type contains information 
-        needed to load a information into a FADE tool for the saved state, and 
-        may be referenced by its 'id' child tag. The value of the child 'id' 
+        A layer is defined as a single source of data, either base maps, or
+        features, or another data type. The layer type contains information
+        needed to load a information into Open Sphere for the saved state, and
+        may be referenced by its 'id' child tag. The value of the child 'id'
         tag must be unique within the saved state.
       </xs:documentation>
     </xs:annotation>
@@ -531,7 +482,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-
+            If altitude should be used.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -541,6 +492,187 @@
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
 
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="arrowSize" type="xs:integer" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            The size of each of the 2 lines in the arrowhead for the line of bearing.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="arrowUnits" type="xs:token" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Units of the arrowhead size.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="lobBearingColumn" type="xs:token" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Column used to define the bearing used in a line of bearing.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+
+      <xs:element name="lobBearingError" type="xs:integer" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Multiplier on the bearing error of a line of bearing.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="lobBearingErrorColumn" type="xs:token" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Column used to define the bearing error used in a line of bearing.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="lobLength" type="xs:integer" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Integer length of a line of bearing.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="lobColumnLength" type="xs:integer" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Multiplier on the length of a line of bearing.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="lobLengthError" type="xs:integer" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Multiplier on the length error of a line of bearing.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="lobLengthColumn" type="xs:token" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Column used to define the length of a line of bearing.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="lobLengthErrorColumn" type="xs:token" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Column used to define the length error of a line of bearing.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="lobLengthType" type="xs:token" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Type of length to use for line of bearing length. (manual or column)
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="lobLengthUnits" type="xs:token" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Units used on the length of a line of bearing.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="lobLengthErrorUnits" type="xs:token" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Units of the line of bearing length error.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="rotationColumn" type="xs:token" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Column to used to define how much an icon should be rotated.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="showArrow" type="xs:boolean" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            If an arrow should be drawn on a line of bearing.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="showEllipse" type="xs:boolean" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            If ellipses should be drawn in addition to a line of bearing.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="showError" type="xs:boolean" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            If error should be shown on a line of bearng.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="showEllipsoids" type="xs:boolean" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            If ellipses should be rendered as ellipsoids in 3D.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="showGroundRef" type="xs:boolean" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            If ellipses should get a line showing ground reference in 3D.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="showRotation" type="xs:boolean" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            If icons should be rotated.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -573,6 +705,15 @@
       </xs:element>
 
       <xs:element name="colorControl" type="xs:token" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="colorize" type="xs:token" minOccurs="0"
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
@@ -661,7 +802,7 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      
+
       <xs:element name="exportEnabled" type="xs:boolean" minOccurs="0"
         maxOccurs="1">
         <xs:annotation>
@@ -711,18 +852,9 @@
         minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            The icon style configuration defined for the layer. This is 
-            optional, and if no configuration is defined, a simple point style 
+            The icon style configuration defined for the layer. This is
+            optional, and if no configuration is defined, a simple point style
             will be used instead.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      
-      <xs:element name="stream" type="fade:StreamOptionsType"
-        minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation xml:lang="en" xml:space="preserve">
-            Streaming Layer Options
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -731,7 +863,7 @@
         minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Color model options
+            Color model options.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -739,7 +871,7 @@
       <xs:element name="id" type="xs:token" minOccurs="1" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            The unique identifier of the layer. Machine generated, and must be 
+            The unique identifier of the layer. Machine generated, and must be
             unique within the saved state.
           </xs:documentation>
         </xs:annotation>
@@ -749,7 +881,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            TODO: This may be the same as the 'type' tag supplied by the 
+            TODO: This may be the same as the 'type' tag supplied by the
             desktop application.
           </xs:documentation>
         </xs:annotation>
@@ -853,12 +985,12 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      
+
       <xs:element name="crossOrigin" type="xs:token" minOccurs="0"
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Cross origin setting
+            Cross origin setting.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -876,7 +1008,16 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
+            The feature shape name.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
 
+      <xs:element name="centerShapeName" type="xs:token" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            The feature center shape name.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -971,9 +1112,9 @@
         </xs:annotation>
       </xs:element>
 
-      <!-- <xs:element name="type" type="xs:token" minOccurs="0" maxOccurs="1"> <xs:annotation> 
-        <xs:documentation xml:lang="en" xml:space="preserve"> TODO: This may be the same 
-        as the 'layerType' tag supplied by the web application. </xs:documentation> </xs:annotation> 
+      <!-- <xs:element name="type" type="xs:token" minOccurs="0" maxOccurs="1"> <xs:annotation>
+        <xs:documentation xml:lang="en" xml:space="preserve"> TODO: This may be the same
+        as the 'layerType' tag supplied by the web application. </xs:documentation> </xs:annotation>
         </xs:element> -->
 
       <xs:element name="url" type="xs:token" minOccurs="1" maxOccurs="1">
@@ -982,42 +1123,29 @@
 
           </xs:documentation>
         </xs:annotation>
-      </xs:element> 
-       <!-- 
-        Not sure the refreshRate element should be here, 
+      </xs:element>
+       <!--
+        Not sure the refreshRate element should be here,
         maybe a simple name/value extension point?
       -->
       <xs:element name="refreshRate" type="xs:integer" minOccurs="0"
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Refersh rate for the layer
+            Refresh rate for the layer.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      <!-- 
-        Not sure the analyze element should be here, 
-        maybe a simple name/value extension point?
-      -->
-      <xs:element name="analyze" type="xs:boolean" minOccurs="0"
-        maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation xml:lang="en" xml:space="preserve">
-             Flag to indcate if this layer can be used
-              for data analytics.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      
+
       <xs:element name="imageUrl" type="xs:token" minOccurs="0"
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Alternate image url for a layer, added to support omar layers
+            Alternate image URL for a layer, added to support imagery layers.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      
+
       <xs:element name="imageParams" type="fade:LayerParamsType"
         minOccurs="0" maxOccurs="1">
         <xs:annotation>
@@ -1026,7 +1154,7 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      
+
       <xs:element name="proxy" type="xs:boolean" minOccurs="0"
         maxOccurs="1">
         <xs:annotation>
@@ -1035,11 +1163,11 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      
+
       <xs:element name="urls" type="fade:UrlsType" minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            List of alternate servers providing same service
+            List of alternate servers providing same service.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -1047,7 +1175,7 @@
       <xs:element name="projection" type="xs:token" minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            The layer projection. If not present assume EPSG:4326
+            The layer projection. If not present, assume EPSG:4326.
           </xs:documentation>
         </xs:annotation>
      </xs:element>
@@ -1064,7 +1192,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            A flag used to force the application to use HTTP POST requests 
+            A flag used to force the application to use HTTP POST requests
             instead of GET requests for data retrieval on this layer.
           </xs:documentation>
         </xs:annotation>
@@ -1092,7 +1220,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Optional orginal url reference
+            Optional original URL reference.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -1121,7 +1249,7 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      
+
       <xs:element name="showRoot" type="xs:boolean" minOccurs="0"
         maxOccurs="1">
         <xs:annotation>
@@ -1144,7 +1272,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Optional layer comment
+            Optional layer comment.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -1153,7 +1281,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Optional layer quote
+            Optional layer quote.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -1162,7 +1290,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Optional layer data delimiter
+            Optional layer data delimiter.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -1171,7 +1299,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Optional 1st data row line
+            Optional 1st data row line.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -1180,16 +1308,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Optional header row line
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-
-      <xs:element name="objectPreview" type="fade:ObjectPreviewType" minOccurs="0"
-        maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation xml:lang="en" xml:space="preserve">
-            Optional object information associated with the layer.
+            Optional header row line.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -1210,8 +1329,8 @@
   <xs:complexType name="IconStyleType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A definition of an style for displaying a feature using an icon. All 
-        features in the layer will use the same configuration, and icons will 
+        A definition of an style for displaying a feature using an icon. All
+        features in the layer will use the same configuration, and icons will
         be displayed for each feature in the layer, as configured in the style.
       </xs:documentation>
     </xs:annotation>
@@ -1257,8 +1376,8 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            The display offset to use when showing an icon for a given 
-            feature. This allows the icon to be shifted horizontally from the 
+            The display offset to use when showing an icon for a given
+            feature. This allows the icon to be shifted horizontally from the
             position of the feature by a number of pixels.
           </xs:documentation>
         </xs:annotation>
@@ -1268,8 +1387,8 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            The display offset to use when showing an icon for a given 
-            feature. This allows the icon to be shifted vertically from the 
+            The display offset to use when showing an icon for a given
+            feature. This allows the icon to be shifted vertically from the
             position of the feature by a number of pixels.
           </xs:documentation>
         </xs:annotation>
@@ -1279,7 +1398,7 @@
         minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            A flag used to force the tool to mix the configured color with the 
+            A flag used to force the tool to mix the configured color with the
             underlying image color.
           </xs:documentation>
         </xs:annotation>
@@ -1290,7 +1409,7 @@
   <xs:simpleType name="IconDefaultType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        An enumeration over the set of available display types for an icon 
+        An enumeration over the set of available display types for an icon
         style.
       </xs:documentation>
     </xs:annotation>
@@ -1329,8 +1448,8 @@
   <xs:complexType name="QueryAreaType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        Defines the structure of a spatial region that is submitted to a 
-        remote server as the boundary in which data is loaded for a given 
+        Defines the structure of a spatial region that is submitted to a
+        remote server as the boundary in which data is loaded for a given
         layer or layers.
       </xs:documentation>
     </xs:annotation>
@@ -1339,8 +1458,8 @@
       <xs:element ref="kml:Polygon" minOccurs="1" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            The defined region to be used for query operations on the remote 
-            server. Makes use of the KML polygon for query areas.           
+            The defined region to be used for query operations on the remote
+            server. Makes use of the KML polygon for query areas.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -1349,8 +1468,8 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            An optional field in which the layer to which the query area 
-            applies is specified. 
+            An optional field in which the layer to which the query area
+            applies is specified.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -1359,7 +1478,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            An optional description field for a query area 
+            An optional description field for a query area.
           </xs:documentation>
         </xs:annotation>
        </xs:element>
@@ -1368,7 +1487,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            An optional tags field for a query area 
+            An optional tags field for a query area.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -1377,7 +1496,7 @@
     <xs:attribute name="id" type="xs:token" use="required">
       <xs:annotation>
         <xs:documentation xml:lang="en" xml:space="preserve">
-          The unique identifier of a query area, machine generated to allow 
+          The unique identifier of a query area, machine generated to allow
           multiple regions to be defined in a single state file.
         </xs:documentation>
       </xs:annotation>
@@ -1396,7 +1515,7 @@
   <xs:complexType name="QueryEntriesType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A container type used to specify the set of queries to execute as part 
+        A container type used to specify the set of queries to execute as part
         of the state load operation.
       </xs:documentation>
     </xs:annotation>
@@ -1406,8 +1525,8 @@
         minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            A single query entry, referencing the layer from which data was 
-            loaded, and the area it was loaded in. Also references the filter 
+            A single query entry, referencing the layer from which data was
+            loaded, and the area it was loaded in. Also references the filter
             or filter group used to narrow data.
           </xs:documentation>
         </xs:annotation>
@@ -1419,7 +1538,7 @@
   <xs:complexType name="QueryEntryType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        Defines the structure specifying a query for a given layer, in a given 
+        Defines the structure specifying a query for a given layer, in a given
         region, using filters and areas.
       </xs:documentation>
     </xs:annotation>
@@ -1436,7 +1555,7 @@
     <xs:attribute name="areaId" type="xs:token" use="required">
       <xs:annotation>
         <xs:documentation xml:lang="en" xml:space="preserve">
-          The unique identifier of the area in which the query took place. 
+          The unique identifier of the area in which the query took place.
           This references the 'id' attribute within the 'queryArea' tag.
         </xs:documentation>
       </xs:annotation>
@@ -1446,7 +1565,7 @@
       <xs:annotation>
         <xs:documentation xml:lang="en" xml:space="preserve">
           The unique identifier of the filter applied during query operations. This
-          references the 'id' attribute of a 'filter' tag. 
+          references the 'id' attribute of a 'filter' tag.
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>
@@ -1454,7 +1573,7 @@
     <xs:attribute name="includeArea" type="xs:boolean" use="required">
       <xs:annotation>
         <xs:documentation xml:lang="en" xml:space="preserve">
-          A flag used to indicate that the specified area should be used for 
+          A flag used to indicate that the specified area should be used for
           results inclusion, or exclusion.
         </xs:documentation>
       </xs:annotation>
@@ -1467,7 +1586,7 @@
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    
+
      <xs:attribute name="temp" type="xs:boolean" use="optional">
       <xs:annotation>
         <xs:documentation xml:lang="en" xml:space="preserve">
@@ -1475,15 +1594,15 @@
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    
+
   </xs:complexType>
 
 
   <xs:complexType name="TimeType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A container in which the set of time-related configuration items are 
-        defined, including data load interval, data display intervals, 
+        A container in which the set of time-related configuration items are
+        defined, including data load interval, data display intervals,
         animation intervals, and other items.
       </xs:documentation>
     </xs:annotation>
@@ -1547,8 +1666,8 @@
         minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Defines an interval in which data is held and not animated (e.g.: 
-            the data that temporally falls in this interval will be displayed 
+            Defines an interval in which data is held and not animated (e.g.:
+            the data that temporally falls in this interval will be displayed
             for the entire animation instead of for its defined temporal span).
           </xs:documentation>
         </xs:annotation>
@@ -1578,9 +1697,9 @@
   <xs:complexType name="HeldIntervalsType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A set of data hold intervals, used in animations. A hold interval 
-        defines an interval in which data is held and not animated (e.g.: the 
-        data that temporally falls in this interval will be displayed for the 
+        A set of data hold intervals, used in animations. A hold interval
+        defines an interval in which data is held and not animated (e.g.: the
+        data that temporally falls in this interval will be displayed for the
         entire animation instead of for its defined temporal span).
       </xs:documentation>
     </xs:annotation>
@@ -1590,7 +1709,7 @@
         maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            A single held interval, either configured for a single layer or 
+            A single held interval, either configured for a single layer or
             all loaded layers.
           </xs:documentation>
         </xs:annotation>
@@ -1602,10 +1721,10 @@
   <xs:complexType name="HeldIntervalType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A definition of a single held interval for data animation. The data 
-        that temporally falls within the held interval will be displayed for 
-        the entire animation, allowing for change detection to occur. A held 
-        interval may be configured for a single layer, or all layers currently 
+        A definition of a single held interval for data animation. The data
+        that temporally falls within the held interval will be displayed for
+        the entire animation, allowing for change detection to occur. A held
+        interval may be configured for a single layer, or all layers currently
         loaded in the tool.
       </xs:documentation>
     </xs:annotation>
@@ -1614,9 +1733,9 @@
       <xs:element name="key" type="xs:token" minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            The layer key for which this held interval is configured. May not 
-            be blank, but may be omitted. If omitted, the held interval will 
-            be interpreted as a "hold" instruction for all layers currently 
+            The layer key for which this held interval is configured. May not
+            be blank, but may be omitted. If omitted, the held interval will
+            be interpreted as a "hold" instruction for all layers currently
             loaded in the tool.
           </xs:documentation>
         </xs:annotation>
@@ -1683,8 +1802,8 @@
   <xs:complexType name="StylesType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A collection of styles, in which each style is defined as a key / 
-        value pair. 
+        A collection of styles, in which each style is defined as a key /
+        value pair.
       </xs:documentation>
     </xs:annotation>
 
@@ -1704,8 +1823,8 @@
   <xs:complexType name="StyleType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        Defines a single style for a given layer. A style is defined as a key / 
-        value pair. 
+        Defines a single style for a given layer. A style is defined as a key /
+        value pair.
       </xs:documentation>
     </xs:annotation>
 
@@ -1727,7 +1846,7 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      
+
     </xs:sequence>
   </xs:complexType>
 
@@ -1844,15 +1963,6 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-
-      <xs:element name="useAltitude" type="xs:boolean" minOccurs="0"
-        maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation xml:lang="en" xml:space="preserve">
-
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
     </xs:all>
   </xs:complexType>
 
@@ -1860,8 +1970,8 @@
   <xs:complexType name="FormatsType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A container in which multiple formats may be defined. The formats type 
-        allows the state to define multiple MIME types for a given entity. 
+        A container in which multiple formats may be defined. The formats type
+        allows the state to define multiple MIME types for a given entity.
       </xs:documentation>
     </xs:annotation>
 
@@ -1898,7 +2008,7 @@
   <xs:simpleType name="MappingTypes">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-       Allowable mapping type
+       Allowable mapping type.
       </xs:documentation>
     </xs:annotation>
 
@@ -1919,11 +2029,11 @@
       <xs:enumeration value="Time" />
     </xs:restriction>
   </xs:simpleType>
-  
+
   <xs:simpleType name="MappingUnits">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-       Allowable mapping units
+       Allowable mapping units.
       </xs:documentation>
     </xs:annotation>
 
@@ -1934,6 +2044,7 @@
       <xs:enumeration value="nmi" />
       <xs:enumeration value="mi" />
       <xs:enumeration value="ft" />
+      <xs:enumeration value="degree" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -1960,7 +2071,7 @@
   <xs:complexType name="MappingType">
      <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        Defines fixed mapping types
+        Defines fixed mapping types.
       </xs:documentation>
     </xs:annotation>
 
@@ -1987,7 +2098,16 @@
         minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-           Optional data format
+           Optional data format.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="customFormat" type="xs:token"
+        minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+           Optional custom format in addition to the base data format.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -1996,16 +2116,16 @@
         minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-           ?
+           Whether to set the record time.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      
+
       <xs:element name="removeField" type="xs:boolean"
         minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-           ?
+           Whether to remove the original field.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -2014,7 +2134,7 @@
         minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-           Flag that the orginal (un-coverted) value is stored.
+           Flag that the original (unconverted) value is stored.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -2023,7 +2143,7 @@
         minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-           Defines field units
+           Defines field units.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -2032,7 +2152,7 @@
         minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-           Type modifier, e.g. start date/ End date.
+           Type modifier, e.g. start date/ end date.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -2050,8 +2170,8 @@
   <xs:complexType name="MappingsType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A container in which multiple formats may be defined. The formats type 
-        allows the state to define multiple MIME types for a given entity. 
+        A container in which multiple formats may be defined. The formats type
+        allows the state to define multiple MIME types for a given entity.
       </xs:documentation>
     </xs:annotation>
 
@@ -2072,7 +2192,7 @@
   <xs:complexType name="LabelColumnsType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-
+        A container in which multiple labels may be defined.
       </xs:documentation>
     </xs:annotation>
 
@@ -2081,7 +2201,7 @@
         maxOccurs="5">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-
+            The labels.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -2092,14 +2212,14 @@
   <xs:complexType name="LabelColumnType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-
+        Describes a label that should be displayed with a vector.
       </xs:documentation>
     </xs:annotation>
 
     <xs:attribute name="column" type="xs:token" use="required">
       <xs:annotation>
         <xs:documentation xml:lang="en" xml:space="preserve">
-
+          The column name.
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>
@@ -2107,7 +2227,7 @@
     <xs:attribute name="showColumn" type="xs:boolean" use="required">
       <xs:annotation>
         <xs:documentation xml:lang="en" xml:space="preserve">
-
+          If the column name should be displayed in the label.
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>
@@ -2137,7 +2257,7 @@
   <xs:complexType name="TimeAnimationType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A declaration of an animation sequence, including the loop behavior, 
+        A declaration of an animation sequence, including the loop behavior,
         loop interval, time per frame, and state of play.
       </xs:documentation>
     </xs:annotation>
@@ -2147,7 +2267,7 @@
         minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Defines the behavior of the application during the beginning and 
+            Defines the behavior of the application during the beginning and
             end of the animation loop.
           </xs:documentation>
         </xs:annotation>
@@ -2186,7 +2306,7 @@
   <xs:complexType name="TimeFadeType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        Defines the fade in / fade out behavior of features displayed during 
+        Defines the fade in / fade out behavior of features displayed during
         animation windows.
       </xs:documentation>
     </xs:annotation>
@@ -2196,7 +2316,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            The time used by the state over which a feature should "fade" into 
+            The time used by the state over which a feature should "fade" into
             full opacity.
           </xs:documentation>
         </xs:annotation>
@@ -2206,7 +2326,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            The time used by the state over which a feature should "fade" out 
+            The time used by the state over which a feature should "fade" out
             of full opacity.
           </xs:documentation>
         </xs:annotation>
@@ -2217,7 +2337,7 @@
  <xs:complexType name="TagsType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        A collection of one or more 'tag' elements, used to categorize the 
+        A collection of one or more 'tag' elements, used to categorize the
         saved state.
       </xs:documentation>
     </xs:annotation>
@@ -2226,7 +2346,7 @@
       <xs:element name="tag" type="xs:token" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            A human readable "tag" used for categorization. This is a free 
+            A human readable "tag" used for categorization. This is a free
             text field, but should not contain any commas.
           </xs:documentation>
         </xs:annotation>
@@ -2237,7 +2357,7 @@
   <xs:simpleType name="LoopBehaviorType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        An enumeration over the set of available behavior types for the 
+        An enumeration over the set of available behavior types for the
         beginning and end of animation periods.
       </xs:documentation>
     </xs:annotation>
@@ -2263,62 +2383,62 @@
       <xs:enumeration value="Stop" />
     </xs:restriction>
   </xs:simpleType>
-  
+
   <xs:simpleType name="FloatType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        Specalized float data type that also allows "Infinity"
+        Specialized float data type that also allows "Infinity".
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:token">
-        <!-- 
-            The xsd pattern match syntax seems to have some limits .
+        <!--
+            The xsd pattern match syntax seems to have some limits.
             It does not have the special starts with/ ends with
-            qualifires, so this will match things like
+            qualifiers, so this will match things like
             "1347dd". For this use case, this is probably ok.
         -->
         <xs:pattern value="((-)?(Infinity))|((-)?(\d)+(\.)?(\d)+)" />
     </xs:restriction>
   </xs:simpleType>
-  
+
   <xs:simpleType name="IntegerType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        Specalized integer data type that also allows "Infinity"
+        Specialized integer data type that also allows "Infinity".
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:token">
-         <!-- 
+         <!--
             The xsd pattern match syntax seems to have some limits .
             It does not have the special starts with/ ends with
-            qualifires, so this will match things like
+            qualifiers, so this will match things like
             "1347dd". For this use case, this is probably ok.
         -->
         <xs:pattern value="((-)?(Infinity))|((-)?(\d)+)" />
     </xs:restriction>
   </xs:simpleType>
-  
+
    <xs:simpleType name="PositiveIntegerType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        Specalized positive integer data type that also allows "Infinity"
+        Specialized positive integer data type that also allows "Infinity".
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:token">
-         <!-- 
+         <!--
             The xsd pattern match syntax seems to have some limits .
             It does not have the special starts with/ ends with
-            qualifires, so this will match things like
+            qualifiers, so this will match things like
             "1347dd". For this use case, this is probably ok.
         -->
         <xs:pattern value="((-)?(Infinity))|((\d)+)" />
     </xs:restriction>
   </xs:simpleType>
-    
+
   <xs:complexType name="ColorModelType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        Defines a color model
+        Defines a color model.
       </xs:documentation>
     </xs:annotation>
 
@@ -2327,7 +2447,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-           //TODO:This should be an enum
+           //TODO:This should be an enum.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -2340,7 +2460,7 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      
+
        <xs:element name="binMethod" type="fade:BinMethodType" minOccurs="0"
         maxOccurs="1">
         <xs:annotation>
@@ -2349,10 +2469,10 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      
+
     </xs:all>
   </xs:complexType>
-  
+
   <xs:complexType name="BinMethodType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
@@ -2364,7 +2484,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Bin Method
+            Bin Method.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -2372,7 +2492,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            The field used for the bin method
+            The field used for the bin method.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -2381,7 +2501,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Numeric offset
+            Numeric offset.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -2390,7 +2510,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Numeric width
+            Numeric width.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -2401,7 +2521,7 @@
   <xs:complexType name="NameValueType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        Defines a color model
+        Defines a color model.
       </xs:documentation>
     </xs:annotation>
     <xs:all>
@@ -2409,7 +2529,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Name part of a name value pair
+            Name part of a name value pair.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -2417,13 +2537,13 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Vaue part of a name value pair.
+            Value part of a name value pair.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
     </xs:all>
   </xs:complexType>
-  
+
   <xs:complexType name="NameValueSequenceType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
@@ -2442,11 +2562,11 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  
+
   <xs:simpleType name="BinMethodsEnumType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-       Bin methods 
+       Bin methods.
       </xs:documentation>
     </xs:annotation>
 
@@ -2460,7 +2580,7 @@
  <xs:complexType name="BinMethodSequenceType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-       Collection of bin methods
+       Collection of bin methods.
       </xs:documentation>
     </xs:annotation>
 
@@ -2469,7 +2589,7 @@
         minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-           Bin method item
+           Bin method item.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -2488,7 +2608,7 @@
         maxOccurs="1">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            State of the bin
+            State of the bin.
           </xs:documentation>
         </xs:annotation>
 
@@ -2498,7 +2618,7 @@
         maxOccurs="1">
          <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Maximum bin size
+            Maximum bin size.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -2507,7 +2627,7 @@
         maxOccurs="1">
          <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-           Bin methods
+           Bin methods.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -2518,71 +2638,289 @@
 
   </xs:complexType>
 
-  <xs:complexType name="ObjectPreviewType">
+  <xs:complexType name="AbstractActionType" abstract="true">
+    <xs:annotation>
+      <xs:documentation>
+        All action elements are derived from this abstract supertype.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:complexType>
+
+  <xs:element name="_Action" type="fade:AbstractActionType" abstract="true"/>
+
+  <xs:complexType name="ActionArrayType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
-        Defines object properties for object layers.
+        A container in which multiple actions may be defined.
       </xs:documentation>
     </xs:annotation>
 
-    <xs:all>
-      <xs:element name="id" type="xs:token" minOccurs="1"
-        maxOccurs="1">
+    <xs:sequence>
+      <xs:element ref="fade:_Action" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation xml:lang="en" xml:space="preserve">
-            Required ID of object
+            An action entry.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-
-      <xs:element name="coi" type="xs:token" minOccurs="0"
-        maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation xml:lang="en" xml:space="preserve">
-            Optional COI of object
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-
-      <xs:element name="enabled" type="xs:token" minOccurs="0"
-        maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation xml:lang="en" xml:space="preserve">
-            Optional enabled flag of object
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-
-      <xs:element name="name" type="xs:token" minOccurs="0"
-        maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation xml:lang="en" xml:space="preserve">
-            Optional name of object
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-
-      <xs:element name="type" type="xs:token" minOccurs="0"
-        maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation xml:lang="en" xml:space="preserve">
-            Optional type of object
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-
-      <xs:element name="temporal" type="xs:boolean" minOccurs="0"
-        maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation xml:lang="en" xml:space="preserve">
-            Optional temporal flag of object
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-
-    </xs:all>
-
+    </xs:sequence>
   </xs:complexType>
 
-  
+  <xs:element name="featureStyleAction" type="fade:FeatureStyleActionType"
+      substitutionGroup="fade:_Action"/>
+
+  <xs:complexType name="FeatureStyleActionType">
+    <xs:annotation>
+      <xs:documentation>
+        An action that styles features.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="fade:AbstractActionType">
+        <xs:all>
+          <xs:element name="color" type="xs:token"
+              minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                The feature color.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+
+          <xs:element name="opacity" type="fade:DecimalPercentageType"
+              minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                The feature opacity, in the range [0, 1].
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+
+          <xs:element name="size" type="xs:decimal"
+              minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                The feature size.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+
+          <xs:element name="showRotation" type="xs:boolean" minOccurs="0"
+            maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                If icons should be rotated.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+
+          <xs:element name="rotationColumn" type="xs:token" minOccurs="0"
+            maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                Column to used to define how much an icon should be rotated.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+
+          <xs:element name="shape" type="fade:ShapeType"
+              minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                The feature shape.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+
+          <xs:element name="centerShape" type="fade:ShapeType"
+              minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                The feature center shape.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+
+          <xs:element name="iconSrc" type="xs:token"
+              minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                The icon src, when using the Icon shape.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:all>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="featureLabelAction" type="fade:FeatureLabelActionType"
+      substitutionGroup="fade:_Action"/>
+
+  <xs:complexType name="FeatureLabelActionType">
+    <xs:annotation>
+      <xs:documentation>
+        An action that adds labels to features.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="fade:AbstractActionType">
+        <xs:all>
+          <xs:element name="color" type="xs:token"
+              minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                The label color.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+
+          <xs:element name="size" type="xs:decimal"
+              minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                The label font size.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+
+          <xs:element name="customName" type="xs:token"
+              minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                A custom column name to apply to features.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+
+          <xs:element name="customValue" type="xs:token"
+              minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                A custom column value to apply to features, using the customName
+                field.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+
+          <xs:element name="labels" type="fade:LabelColumnsType"
+              minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en" xml:space="preserve">
+                The labels to display.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:all>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="FeatureActionTypeHint">
+    <xs:annotation>
+      <xs:documentation xml:lang="en" xml:space="preserve">
+       Allowable type hints for feature actions.
+      </xs:documentation>
+    </xs:annotation>
+
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="exact">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+           The type should be used as a literal layer id.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="filterable">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+           The type should be parsed to resolve filterable layers.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="FeatureActionType">
+    <xs:sequence>
+      <xs:element name="filter" type="ogc:FilterType"
+          minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            An OGC filter to match features.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="actions" type="fade:ActionArrayType"
+          minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Actions to execute against matched features.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+
+    <xs:attribute name="active" type="xs:boolean">
+      <xs:annotation>
+        <xs:documentation xml:lang="en" xml:space="preserve">
+          Feature action active state.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+
+    <xs:attribute name="title" type="xs:token">
+      <xs:annotation>
+        <xs:documentation xml:lang="en" xml:space="preserve">
+          Feature action title.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+
+    <xs:attribute name="description" type="xs:token">
+      <xs:annotation>
+        <xs:documentation xml:lang="en" xml:space="preserve">
+          Feature action description.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+
+    <xs:attribute name="type" type="xs:token">
+      <xs:annotation>
+        <xs:documentation xml:lang="en" xml:space="preserve">
+          Type that can be resolved to one or more layers.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+
+    <xs:attribute name="typeHint" type="fade:FeatureActionTypeHint">
+      <xs:annotation>
+        <xs:documentation xml:lang="en" xml:space="preserve">
+          Describes how the type should be interpreted.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:element name="featureAction" type="fade:FeatureActionType"/>
+
+  <xs:complexType name="FeatureActionArrayType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en" xml:space="preserve">
+        A container in which multiple feature actions may be defined.
+      </xs:documentation>
+    </xs:annotation>
+
+    <xs:sequence>
+      <xs:element ref="fade:featureAction"
+          minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            A feature action entry.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
 </xs:schema>
