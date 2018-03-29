@@ -18,7 +18,7 @@ import io.opensphere.controlpanels.layers.util.ClockAndOrColorLabel;
 import io.opensphere.controlpanels.layers.util.FeatureTypeLabel;
 import io.opensphere.core.util.AwesomeIcon;
 import io.opensphere.core.util.image.IconUtil;
-import io.opensphere.core.util.swing.FontAwesomeIcon;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.util.swing.tree.ButtonModelPayload;
 import io.opensphere.core.util.swing.tree.CustomTreeTableModelButtonBuilder;
 import io.opensphere.core.util.swing.tree.DragNDropTreeCellRenderer;
@@ -238,7 +238,8 @@ public class ActiveDataTreeTableTreeCellRenderer extends TreeTableTreeCellRender
      * Adds a new icon representing a process.
      *
      * @param pTree the tree in which the cell is rendered.
-     * @param pPanel the panel in which the cell is rendered (specifically, where the icon will be displayed).
+     * @param pPanel the panel in which the cell is rendered (specifically,
+     *            where the icon will be displayed).
      * @param pNode The tree node to modify.
      * @param pDataTypeInfo the data type for which to add the icon.
      */
@@ -247,7 +248,7 @@ public class ActiveDataTreeTableTreeCellRenderer extends TreeTableTreeCellRender
         if (pDataTypeInfo.getMapVisualizationInfo() != null
                 && pDataTypeInfo.getMapVisualizationInfo().getVisualizationType() == MapVisualizationType.PROCESS_RESULT_ELEMENTS)
         {
-            Icon icon = new FontAwesomeIcon(AwesomeIcon.ICON_FLASK, Color.WHITE, 14);
+            Icon icon = new GenericFontIcon(AwesomeIcon.ICON_FLASK, Color.WHITE, 14);
             myProcessLabel.setIcon(icon);
             pPanel.add(myProcessLabel);
             addComponentWidth(myProcessLabel);

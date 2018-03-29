@@ -18,7 +18,7 @@ import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.AwesomeIcon;
 import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.swing.FontAwesomeIcon;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.util.swing.SwingUtilities;
 
 /**
@@ -45,7 +45,7 @@ class HeldIntervalsLayer extends IntervalsLayer
     public HeldIntervalsLayer(Toolbox toolbox, AnimationModel animationModel, Component parent)
     {
         super(animationModel, animationModel.getHeldIntervals(), "hold", "held",
-                new FontAwesomeIcon(AwesomeIcon.ICON_HAND_GRAB_O, Color.WHITE), new Color(0, 175, 255),
+                new GenericFontIcon(AwesomeIcon.ICON_HAND_GRAB_O, Color.WHITE), new Color(0, 175, 255),
                 ColorUtilities.opacitizeColor(AnimationConstants.ACTIVE_HANDLE_COLOR, 64));
         myToolbox = toolbox;
         myAnimationModel = animationModel;
@@ -82,7 +82,7 @@ class HeldIntervalsLayer extends IntervalsLayer
             menuItems = New.list(2);
             menuItems.addAll(superMenuItems);
             menuItems.add(SwingUtilities.newMenuItem("Hold span for layers...",
-                    new FontAwesomeIcon(AwesomeIcon.ICON_HAND_GRAB_O, Color.WHITE),
+                    new GenericFontIcon(AwesomeIcon.ICON_HAND_GRAB_O, Color.WHITE),
                     e -> handleHoldLayers(snapSpan(key.getTimeSpan()))));
         }
         return menuItems;

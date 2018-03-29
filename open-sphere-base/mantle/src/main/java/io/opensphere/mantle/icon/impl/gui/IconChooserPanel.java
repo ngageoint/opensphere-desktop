@@ -143,6 +143,8 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     /** The Popup menu. */
     private final JPopupMenu myTreePopupMenu;
 
+    private final JButton myIconBuilderButton;
+
     /** The optional selected icon URL. */
     private String mySelectedUrl;
 
@@ -154,15 +156,17 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
      * @param showAddIconButton the show add icon button
      * @param iconPopupMenu the icon popup menu
      * @param treePopupMenu the tree popup menu ( optional, null means none)
+     * @param iconBuilderButton button
      */
     public IconChooserPanel(Toolbox tb, boolean isMultiSelect, boolean showAddIconButton, JPopupMenu iconPopupMenu,
-            JPopupMenu treePopupMenu)
+            JPopupMenu treePopupMenu, JButton iconBuilderButton)
     {
         myToolbox = tb;
         myIconRegistry = MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry();
         myMultiSelect = isMultiSelect;
         myIconPopupMenu = iconPopupMenu;
         myTreePopupMenu = treePopupMenu;
+        myIconBuilderButton = iconBuilderButton;
         myShowAddIconButton = showAddIconButton;
         myChangeSupport = new WeakChangeSupport<>();
         mySelectedRecords = New.set();
@@ -234,8 +238,15 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         if (myShowAddIconButton)
         {
             JButton addFromFile = new JButton("Add Icon From File...");
-            myTreePanel.add(addFromFile, BorderLayout.SOUTH);
             addFromFile.addActionListener(e -> loadFromFile(IconRecord.USER_ADDED_COLLECTION, null));
+
+            JPanel buttonPanel = new JPanel(new BorderLayout());
+            if (myIconBuilderButton != null)
+            {
+                buttonPanel.add(myIconBuilderButton, BorderLayout.NORTH);
+            }
+            buttonPanel.add(addFromFile, BorderLayout.SOUTH);
+            myTreePanel.add(buttonPanel, BorderLayout.SOUTH);
         }
 
         refreshFromRegistry(null);

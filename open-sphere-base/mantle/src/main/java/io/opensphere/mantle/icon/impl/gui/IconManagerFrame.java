@@ -88,7 +88,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
 
         JPopupMenu iconPopupMenu = new JPopupMenu();
         JPopupMenu treePopupMenu = new JPopupMenu();
-        myChooserPanel = new IconChooserPanel(tb, true, false, iconPopupMenu, treePopupMenu);
+        myChooserPanel = new IconChooserPanel(tb, true, false, iconPopupMenu, treePopupMenu, null);
 
         myMenuBar = new JMenuBar();
         myFileMenu = new JMenu("File");
@@ -123,7 +123,8 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.icon.IconRegistryListener#iconAssigned(long, java.util.List, java.lang.Object)
+     * @see io.opensphere.mantle.icon.IconRegistryListener#iconAssigned(long,
+     *      java.util.List, java.lang.Object)
      */
     @Override
     public void iconAssigned(long iconId, List<Long> deIds, Object source)
@@ -134,7 +135,8 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.icon.IconRegistryListener#iconsAdded(java.util.List, java.lang.Object)
+     * @see io.opensphere.mantle.icon.IconRegistryListener#iconsAdded(java.util.List,
+     *      java.lang.Object)
      */
     @Override
     public void iconsAdded(List<IconRecord> added, Object source)
@@ -146,7 +148,8 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.icon.IconRegistryListener#iconsRemoved(java.util.List, java.lang.Object)
+     * @see io.opensphere.mantle.icon.IconRegistryListener#iconsRemoved(java.util.List,
+     *      java.lang.Object)
      */
     @Override
     public void iconsRemoved(List<IconRecord> removed, Object source)
@@ -158,7 +161,8 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.icon.IconRegistryListener#iconsUnassigned(java.util.List, java.lang.Object)
+     * @see io.opensphere.mantle.icon.IconRegistryListener#iconsUnassigned(java.util.List,
+     *      java.lang.Object)
      */
     @Override
     public void iconsUnassigned(List<Long> deIds, Object source)
@@ -245,7 +249,8 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     }
 
     /**
-     * Creates the icon popup menu items, and adds the new items to the supplied menu.
+     * Creates the icon popup menu items, and adds the new items to the supplied
+     * menu.
      *
      * @param puMenu the popup menu in which the items will be added.
      */
@@ -269,7 +274,8 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     }
 
     /**
-     * Creates the menu bar menu items, adding the newly created items to the {@link #myEditMenu}.
+     * Creates the menu bar menu items, adding the newly created items to the
+     * {@link #myEditMenu}.
      */
     private void createMenuBarEditMenuItems()
     {
@@ -295,7 +301,8 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     }
 
     /**
-     * Creates the menu bar file menu items, adding the newly created items to the {@link #myFileMenu}.
+     * Creates the menu bar file menu items, adding the newly created items to
+     * the {@link #myFileMenu}.
      */
     private void createMenuBarFileMenuItems()
     {

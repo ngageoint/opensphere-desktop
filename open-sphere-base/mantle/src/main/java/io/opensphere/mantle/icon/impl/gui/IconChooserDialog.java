@@ -95,7 +95,10 @@ public class IconChooserDialog extends JDialog
         puMenu.add(newMenuItem("Rotate Icon...", e -> showRotateDialog()));
         puMenu.add(newMenuItem("Delete Icon...", e -> deleteSelected()));
 
-        myChooserPanel = new IconChooserPanel(tb, false, true, puMenu, null);
+        JButton buildIcon = new JButton("Build New Icon...");
+        buildIcon.addActionListener(e -> showBuilderDialog());
+
+        myChooserPanel = new IconChooserPanel(tb, false, true, puMenu, null, buildIcon);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
 
@@ -193,6 +196,17 @@ public class IconChooserDialog extends JDialog
             IconRotationDialog dialog = new IconRotationDialog(this, record, iconRegistry, myChooserPanel);
             dialog.setVisible(true);
         }
+    }
+
+    /**
+     * Shows the icon builder dialog.
+     */
+    private void showBuilderDialog()
+    {
+
+        IconRegistry iconRegistry = MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry();
+        IconBuilderDialog dialog = new IconBuilderDialog(this, iconRegistry, myChooserPanel);
+        dialog.setVisible(true);
     }
 
     /**

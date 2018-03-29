@@ -25,7 +25,7 @@ import io.opensphere.controlpanels.layers.util.FeatureTypeLabel;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.AwesomeIcon;
 import io.opensphere.core.util.image.IconUtil;
-import io.opensphere.core.util.swing.FontAwesomeIcon;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.util.swing.tree.ButtonModelPayload;
 import io.opensphere.core.util.swing.tree.CustomTreeTableModelButtonBuilder;
 import io.opensphere.core.util.swing.tree.HoverButtonTreeCellRenderer;
@@ -121,8 +121,8 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
                     ImageIO.read(AvailableDataTreeTableTreeCellRenderer.class.getResource("/images/streaming.png")));
             ourAlertIcon = new ImageIcon(
                     ImageIO.read(AvailableDataTreeTableTreeCellRenderer.class.getResource("/images/bang_12x12.png")));
-            ourProcessIcon = new FontAwesomeIcon(AwesomeIcon.ICON_FLASK, Color.WHITE, 14);
-            ourCreateInstanceIcon = new FontAwesomeIcon(AwesomeIcon.ICON_PLUS_SQUARE, Color.GREEN, 14);
+            ourProcessIcon = new GenericFontIcon(AwesomeIcon.ICON_FLASK, Color.WHITE, 14);
+            ourCreateInstanceIcon = new GenericFontIcon(AwesomeIcon.ICON_PLUS_SQUARE, Color.GREEN, 14);
         }
         catch (IOException e)
         {
@@ -189,9 +189,9 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
                 addLabel(panel, myStreamingLabel);
             }
             if (dgi.hasMember(
-                t -> t.getMapVisualizationInfo() != null
-                        && t.getMapVisualizationInfo().getVisualizationType() == MapVisualizationType.PROCESS_RESULT_ELEMENTS,
-                false))
+                    t -> t.getMapVisualizationInfo() != null
+                            && t.getMapVisualizationInfo().getVisualizationType() == MapVisualizationType.PROCESS_RESULT_ELEMENTS,
+                    false))
             {
                 addLabel(panel, myProcessLabel);
             }

@@ -30,7 +30,7 @@ import io.opensphere.core.util.ChangeListener;
 import io.opensphere.core.util.NoEffectPredicate;
 import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.lang.StringUtilities;
-import io.opensphere.core.util.swing.FontAwesomeIcon;
+import io.opensphere.core.util.swing.GenericFontIcon;
 
 /**
  * Animation version of DragHandlesLayer.
@@ -120,7 +120,7 @@ class AnimationDragHandlesLayer extends DragHandlesLayer
                 }
             });
             JMenu zoomMenu = new JMenu("Zoom to");
-            zoomMenu.setIcon(new FontAwesomeIcon(AwesomeIcon.ICON_CROP, Color.WHITE));
+            zoomMenu.setIcon(new GenericFontIcon(AwesomeIcon.ICON_CROP, Color.WHITE));
             zoomMenu.add(zoomItem);
             deconflictMenus(menuItems, zoomMenu);
         }
@@ -182,7 +182,7 @@ class AnimationDragHandlesLayer extends DragHandlesLayer
                     if (!getObservableTimeSpan().getStart().get().equals(time))
                     {
                         getObservableTimeSpan().getSpan()
-                        .set(TimeSpan.get(time, getObservableTimeSpan().getSpan().get().getDuration()));
+                                .set(TimeSpan.get(time, getObservableTimeSpan().getSpan().get().getDuration()));
                     }
                 }
             }
@@ -203,7 +203,7 @@ class AnimationDragHandlesLayer extends DragHandlesLayer
                     if (!getObservableTimeSpan().getEnd().get().equals(time))
                     {
                         getObservableTimeSpan().getSpan()
-                        .set(TimeSpan.get(getObservableTimeSpan().getSpan().get().getDuration(), time));
+                                .set(TimeSpan.get(getObservableTimeSpan().getSpan().get().getDuration(), time));
                     }
                 }
             }

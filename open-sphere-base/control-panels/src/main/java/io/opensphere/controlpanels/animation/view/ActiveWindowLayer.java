@@ -46,7 +46,7 @@ import io.opensphere.core.util.CalendarUtilities;
 import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.awt.AWTUtilities;
-import io.opensphere.core.util.swing.FontAwesomeIcon;
+import io.opensphere.core.util.swing.GenericFontIcon;
 
 /**
  * Active time window layer.
@@ -195,18 +195,18 @@ class ActiveWindowLayer extends CompositeLayer
             {
                 JMenuItem skipMenuItem = new JMenuItem(
                         new IntervalAction("Skip active span", myAnimationModel.getSkippedIntervals(), myTimeModel));
-                skipMenuItem.setIcon(new FontAwesomeIcon(AwesomeIcon.ICON_BAN, Color.RED));
+                skipMenuItem.setIcon(new GenericFontIcon(AwesomeIcon.ICON_BAN, Color.RED));
                 menuItems.add(skipMenuItem);
 
                 JMenuItem holdMenuItem = new JMenuItem(
                         new IntervalAction("Hold active span", myAnimationModel.getHeldIntervals(), myTimeModel));
-                holdMenuItem.setIcon(new FontAwesomeIcon(AwesomeIcon.ICON_HAND_GRAB_O, Color.WHITE));
+                holdMenuItem.setIcon(new GenericFontIcon(AwesomeIcon.ICON_HAND_GRAB_O, Color.WHITE));
                 menuItems.add(holdMenuItem);
             }
         }
 
         JMenu zoomMenu = new JMenu("Zoom to");
-        zoomMenu.setIcon(new FontAwesomeIcon(AwesomeIcon.ICON_CROP, Color.WHITE));
+        zoomMenu.setIcon(new GenericFontIcon(AwesomeIcon.ICON_CROP, Color.WHITE));
         zoomMenu.add(new JSeparator());
 
         Calendar cal = Calendar.getInstance();
@@ -372,7 +372,7 @@ class ActiveWindowLayer extends CompositeLayer
                 int labelPosition = mySide == SwingConstants.RIGHT ? SwingUtilities.LEFT : SwingConstants.RIGHT;
                 int labelX = AWTUtilities.getTextXLocation(label,
                         labelPosition == SwingConstants.RIGHT ? bounds.x : AWTUtilities.getMaxX(bounds),
-                                DragHandle.TRIANGLE_SIZE + 4, labelPosition, g2d);
+                        DragHandle.TRIANGLE_SIZE + 4, labelPosition, g2d);
                 int labelY = bounds.y + (bounds.height >> 1) + 5;
                 getTemporaryLayers().add(new ContextLabel(label, labelX, labelY));
             }

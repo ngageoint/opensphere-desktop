@@ -1,5 +1,6 @@
 package io.opensphere.mantle.icon.impl.gui;
 
+import io.opensphere.mantle.icon.IconRecord;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Pos;
@@ -11,9 +12,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
-import io.opensphere.mantle.icon.IconRecord;
-
 /** Icon rotation pane. */
+@SuppressWarnings("restriction")
 public class IconRotationPane extends BorderPane
 {
     /** The rotation value model. */

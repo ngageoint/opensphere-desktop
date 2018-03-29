@@ -1,5 +1,10 @@
 package io.opensphere.core.util;
 
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+
+import io.opensphere.core.util.swing.SwingUtilities;
+
 /**
  * An enumeration over the set of available FontAwesome icons.
  */
@@ -2366,6 +2371,11 @@ public enum AwesomeIcon implements FontIconEnum
     /** A constant used to reference the 'youtube_square' icon. */
     ICON_YOUTUBE_SQUARE("\uf166");
 
+    static
+    {
+        GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(SwingUtilities.FONT_AWESOME_FONT);
+    }
+
     /**
      * The font code defining the icon.
      */
@@ -2391,5 +2401,11 @@ public enum AwesomeIcon implements FontIconEnum
     public String getFontCode()
     {
         return myFontCode;
+    }
+
+    @Override
+    public Font getFont()
+    {
+        return SwingUtilities.FONT_AWESOME_FONT;
     }
 }

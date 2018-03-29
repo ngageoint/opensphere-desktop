@@ -36,7 +36,7 @@ import io.opensphere.core.util.StrongObservableValue;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.collections.StreamUtilities;
-import io.opensphere.core.util.swing.FontAwesomeIcon;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.util.swing.SwingUtilities;
 
 /** Load span(s) layer in the timeline. */
@@ -105,9 +105,9 @@ public class LoadIntervalsLayer extends CompositeLayer
     public List<? extends Component> getMenuItems(String contextId, TimespanContextKey key)
     {
         List<JMenuItem> menuItems = New.list(2);
-        menuItems.add(SwingUtilities.newMenuItem("Load", new FontAwesomeIcon(AwesomeIcon.ICON_CLOUD_DOWNLOAD, Color.YELLOW),
+        menuItems.add(SwingUtilities.newMenuItem("Load", new GenericFontIcon(AwesomeIcon.ICON_CLOUD_DOWNLOAD, Color.YELLOW),
                 e -> loadIntervalExternal(key.getTimeSpan())));
-        menuItems.add(SwingUtilities.newMenuItem("Add", new FontAwesomeIcon(AwesomeIcon.ICON_PLUS, Color.YELLOW),
+        menuItems.add(SwingUtilities.newMenuItem("Add", new GenericFontIcon(AwesomeIcon.ICON_PLUS, Color.YELLOW),
                 e -> addIntervalExternal(key.getTimeSpan())));
         return menuItems;
     }
@@ -231,7 +231,7 @@ public class LoadIntervalsLayer extends CompositeLayer
         SnapFunction snap = new ResolutionBasedSnapFunction(myMillisPerPixel);
 
         addLayer(new DraggableTimeWindowLayer(observableSpan, myColorOutline, null, Function.identity(),
-            () -> observableSpan.get().getDuration(), snap, this::handleRemoveAction)
+                () -> observableSpan.get().getDuration(), snap, this::handleRemoveAction)
         {
             @Override
             public boolean canDrag(Point p)
@@ -270,7 +270,7 @@ public class LoadIntervalsLayer extends CompositeLayer
         List<TimelineLayer> layers = getLayers().stream()
                 .filter(l -> l instanceof TimeWindowLayer && ((TimeWindowLayer)l).getTimeSpan().get().equals(span)
                         || l instanceof DragHandlesLayer
-                        && ((DragHandlesLayer)l).getObservableTimeSpan().getSpan().get().equals(span))
+                                && ((DragHandlesLayer)l).getObservableTimeSpan().getSpan().get().equals(span))
                 .collect(Collectors.toList());
         for (TimelineLayer layer : layers)
         {
