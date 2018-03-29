@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.vividsolutions.jts.geom.Polygon;
+import com.vividsolutions.jts.geom.Geometry;
 
 import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.GeographicConvexPolygon;
@@ -72,7 +72,7 @@ public class NorthTerrainTriangle extends TerrainTriangle
     }
 
     @Override
-    public void getOverlappingTriangles(Polygon polygon, Collection<TerrainTriangle> fullyContained,
+    public void getOverlappingTriangles(Geometry polygon, Collection<TerrainTriangle> fullyContained,
             Collection<TerrainTriangle> partiallyContained)
     {
         getLeftChild().getOverlappingTriangles(polygon, fullyContained, partiallyContained);

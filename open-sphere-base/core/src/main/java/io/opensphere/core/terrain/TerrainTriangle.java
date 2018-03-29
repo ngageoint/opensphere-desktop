@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Polygon;
 
 import io.opensphere.core.math.DefaultSphere;
@@ -839,7 +840,7 @@ public class TerrainTriangle implements Cloneable, Tessera<GeographicPosition>
      * @param partiallyContained Triangles which overlap but are not fully
      *            contained within the polygon.
      */
-    public void getOverlappingTriangles(Polygon polygon, Collection<TerrainTriangle> fullyContained,
+    public void getOverlappingTriangles(Geometry polygon, Collection<TerrainTriangle> fullyContained,
             Collection<TerrainTriangle> partiallyContained)
     {
         if (getJTSPolygon().intersects(polygon))

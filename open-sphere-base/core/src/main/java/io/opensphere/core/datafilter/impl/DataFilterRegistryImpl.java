@@ -107,8 +107,10 @@ public class DataFilterRegistryImpl implements DataFilterRegistry
     @Override
     public long addSpatialLoadFilter(final String typeKey, final Geometry filter)
     {
-        myTypeKeyToSpatialFilterMap.put(typeKey, filter);
-        notifyListeners(l -> l.spatialFilterAdded(typeKey, filter));
+        Geometry bufferedFilter = filter.buffer(0);
+
+        myTypeKeyToSpatialFilterMap.put(typeKey, bufferedFilter);
+        notifyListeners(l -> l.spatialFilterAdded(typeKey, bufferedFilter));
         return 0;
     }
 
