@@ -1,4 +1,4 @@
-package io.opensphere.mantle.controller;
+package io.opensphere.mantle.icon.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,10 +19,9 @@ import gnu.trove.list.TIntList;
 import gnu.trove.list.array.TIntArrayList;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.StringUtilities;
-import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.impl.IconProviderFactory;
+import io.opensphere.mantle.icon.IconRegistry;
 
 /** Way to access KML icons. */
 public abstract class AbstractIconLoader
@@ -64,14 +63,14 @@ public abstract class AbstractIconLoader
     /**
      * Gets the icon map.
      *
-     * @param mantleToolbox Reference to the MantleToolbox
+     * @param iconRegistry the icon registry
      * @return the icon map
      */
-    public Map<String, URL> getIconMap(MantleToolbox mantleToolbox)
+    public Map<String, URL> getIconMap(IconRegistry iconRegistry)
     {
         if (myIconIdentifierToUrlMap == null)
         {
-            myIconIdentifierToUrlMap = Collections.unmodifiableMap(loadIconBuilder(mantleToolbox));
+            myIconIdentifierToUrlMap = Collections.unmodifiableMap(loadIconBuilder(iconRegistry));
         }
         return myIconIdentifierToUrlMap;
     }
@@ -79,21 +78,21 @@ public abstract class AbstractIconLoader
     /**
      * Initialize the default icons.
      *
-     * @param mantleToolbox Reference to the MantleToolbox
+     * @param iconRegistry the icon registry
      * @return the map
      */
-    protected Map<String, URL> loadIconBuilder(MantleToolbox mantleToolbox)
+    protected Map<String, URL> loadIconBuilder(IconRegistry iconRegistry)
     {
-        List<IconRecord> records = new LinkedList<>(getIconsFromRegistry(mantleToolbox));
+        List<IconRecord> records = new LinkedList<>(getIconsFromRegistry(iconRegistry));
 
         Map<String, Integer> publicUrlToIdMap = records.stream()
                 .collect(Collectors.toMap(r -> getPublicUrl(r.getImageURL()), r -> Integer.valueOf(r.getId()), (v1, v2) -> v2));
 
-        removeOldRecords(mantleToolbox, records);
+        removeOldRecords(iconRegistry, records);
 
         if (records.isEmpty())
         {
-            records = readIconsFromFile(mantleToolbox, publicUrlToIdMap);
+            records = readIconsFromFile(iconRegistry, publicUrlToIdMap);
         }
 
         return createMap(records);
@@ -102,22 +101,22 @@ public abstract class AbstractIconLoader
     /**
      * Gets the KML icon records from the icon registry.
      *
-     * @param mantleToolbox the mantle toolbox
+     * @param iconRegistry the icon registry
      * @return the icon records
      */
-    protected List<IconRecord> getIconsFromRegistry(MantleToolbox mantleToolbox)
+    protected List<IconRecord> getIconsFromRegistry(IconRegistry iconRegistry)
     {
-        return mantleToolbox.getIconRegistry().getIconRecords(
+        return iconRegistry.getIconRecords(
                 r -> myCollectionName.equals(r.getCollectionName()) && mySubCategoryName.equals(r.getSubCategory()));
     }
 
     /**
      * Removes old records from the list and the icon registry.
      *
-     * @param mantleToolbox the mantle toolbox
+     * @param iconRegistry the icon registry
      * @param records the icon records
      */
-    protected void removeOldRecords(MantleToolbox mantleToolbox, Collection<IconRecord> records)
+    protected void removeOldRecords(IconRegistry iconRegistry, Collection<IconRecord> records)
     {
         if (!records.isEmpty())
         {
@@ -142,7 +141,7 @@ public abstract class AbstractIconLoader
 
                 if (!removedIds.isEmpty())
                 {
-                    mantleToolbox.getIconRegistry().removeIcons(removedIds, getClass());
+                    iconRegistry.removeIcons(removedIds, getClass());
                 }
             }
         }
@@ -151,12 +150,12 @@ public abstract class AbstractIconLoader
     /**
      * Reads icons from the file, into the icon registry.
      *
-     * @param mantleToolbox the mantle toolbox
+     * @param iconRegistry the icon registry
      * @param publicUrlToIdMap map of public URL to icon ID (to keep IDs
      *            consistent)
      * @return the icon records
      */
-    protected List<IconRecord> readIconsFromFile(MantleToolbox mantleToolbox, Map<String, Integer> publicUrlToIdMap)
+    protected List<IconRecord> readIconsFromFile(IconRegistry iconRegistry, Map<String, Integer> publicUrlToIdMap)
     {
         List<IconProvider> iconProviders = readFile().stream().map(this::getResource).filter(Objects::nonNull)
                 .map(url -> IconProviderFactory.create(url, myCollectionName, mySubCategoryName, mySourceKey))
@@ -165,7 +164,7 @@ public abstract class AbstractIconLoader
         List<Integer> ids = iconProviders.stream().map(p -> publicUrlToIdMap.get(getPublicUrl(p.getIconURL())))
                 .collect(Collectors.toList());
 
-        return mantleToolbox.getIconRegistry().addIcons(iconProviders, ids, getClass());
+        return iconRegistry.addIcons(iconProviders, ids, getClass());
     }
 
     /**

@@ -76,7 +76,7 @@ public class KMLPlugin extends AbstractPanelPlugin
 
         KMLDataRegistryHelper.addDataSourceChangeListener(toolbox.getDataRegistry(), myDataRegistryListener);
 
-        KmlIcons.getKmlIconMap(toolbox.getPluginToolboxRegistry().getPluginToolbox(MantleToolbox.class));
+        KmlIcons.getKmlIconMap(toolbox.getPluginToolboxRegistry().getPluginToolbox(MantleToolbox.class).getIconRegistry());
 
         super.initialize(plugindata, toolbox);
     }

@@ -103,7 +103,7 @@ public class KMLGeometryBuilder
         myMantleToolbox = mantleToolbox;
         // myServerRegistry = serverRegistry;
         myDataSource = dataSource;
-        myIconHrefToURLMap = New.map(KmlIcons.getKmlIconMap(mantleToolbox));
+        myIconHrefToURLMap = New.map(KmlIcons.getKmlIconMap(mantleToolbox.getIconRegistry()));
     }
 
     /**

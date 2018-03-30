@@ -3,8 +3,8 @@ package io.opensphere.kml.mantle.controller;
 import java.net.URL;
 import java.util.Map;
 
-import io.opensphere.mantle.MantleToolbox;
-import io.opensphere.mantle.controller.AbstractIconLoader;
+import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.icon.impl.AbstractIconLoader;
 
 /** Way to access KML icons. */
 public final class KmlIcons extends AbstractIconLoader
@@ -15,17 +15,17 @@ public final class KmlIcons extends AbstractIconLoader
     /**
      * Generates a static KmlIcons loader and returns its IconMap.
      *
-     * @param mantleToolbox the Mantle toolbox
+     * @param iconRegistry the icon registry
      * @return the icon map
      */
-    public static synchronized Map<String, URL> getKmlIconMap(MantleToolbox mantleToolbox)
+    public static synchronized Map<String, URL> getKmlIconMap(IconRegistry iconRegistry)
     {
         if (iconLoader == null)
         {
             iconLoader = new KmlIcons("/images/maps.google.com/imageList.txt", "GoogleEarth", "KML Plugin", "maps.google.com");
         }
 
-        return iconLoader.getIconMap(mantleToolbox);
+        return iconLoader.getIconMap(iconRegistry);
     }
 
     /**

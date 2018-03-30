@@ -66,33 +66,6 @@ public class ChartLayerModel
     private final MemoizingSupplier<TimeSpan> myExtentsSupplier;
 
     /**
-     * Gets the selected color for the given color.
-     *
-     * @param color the normal color
-     * @return the selected color
-     */
-    private static Color getSelectedColor(Color color)
-    {
-        Color selectedColor = color;
-        if (color != null)
-        {
-            if (ColorUtilities.getBrightness(color) >= 125)
-            {
-                selectedColor = color.darker();
-            }
-            else
-            {
-                int shift = 64;
-                int red = Math.min(color.getRed() + shift, 255);
-                int green = Math.min(color.getGreen() + shift, 255);
-                int blue = Math.min(color.getBlue() + shift, 255);
-                selectedColor = new Color(red, green, blue);
-            }
-        }
-        return selectedColor;
-    }
-
-    /**
      * Constructor.
      *
      * @param name The name of the layer
@@ -237,7 +210,7 @@ public class ChartLayerModel
     public final void setColor(Color color)
     {
         myColor = color;
-        mySelectedColor = getSelectedColor(color);
+        mySelectedColor = ColorUtilities.getAlternateColor(color, 64);
     }
 
     /**
