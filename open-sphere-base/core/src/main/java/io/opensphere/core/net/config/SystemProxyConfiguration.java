@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import io.opensphere.core.util.lang.ToStringHelper;
+
 /**
  * Configuration class for system proxy configurations, with exclusion patterns.
  */
@@ -32,5 +34,16 @@ public class SystemProxyConfiguration extends ProxyConfiguration
             myExclusionPatterns = new HashSet<>();
         }
         return myExclusionPatterns;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return new ToStringHelper(this).addIfNotNull("Exclusions", myExclusionPatterns).toString();
     }
 }

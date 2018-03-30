@@ -6,6 +6,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import io.opensphere.core.util.lang.ToStringHelper;
+
 /** A collection of the set of possible proxy configurations. */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -141,5 +143,18 @@ public class ProxyConfigurations
             myManualProxyConfiguration = new ManualProxyConfiguration();
         }
         return myManualProxyConfiguration;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return new ToStringHelper(this).add("SelectedProxy", mySelectedConfigurationType)
+                .add(mySystemProxyConfiguration.toString()).add(myUrlProxyConfiguration.toString())
+                .add(myManualProxyConfiguration.toString()).toStringPreferenceDump();
     }
 }
