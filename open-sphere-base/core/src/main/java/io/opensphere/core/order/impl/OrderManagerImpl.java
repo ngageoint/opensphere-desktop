@@ -14,7 +14,6 @@ import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import gnu.trove.procedure.TIntObjectProcedure;
-import gnu.trove.procedure.TObjectIntProcedure;
 import io.opensphere.core.order.OrderCategory;
 import io.opensphere.core.order.OrderChangeListener;
 import io.opensphere.core.order.OrderManager;
