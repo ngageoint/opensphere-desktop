@@ -3,7 +3,6 @@ package io.opensphere.core.net.config;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,6 +12,7 @@ import org.apache.log4j.Logger;
 import io.opensphere.core.appl.PreConfigurationUpdateModule;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.util.collections.New;
 
 /** Migrates the old proxy configs to the new format. */
 public class ProxyConfigurationMigrator implements PreConfigurationUpdateModule
@@ -24,23 +24,21 @@ public class ProxyConfigurationMigrator implements PreConfigurationUpdateModule
     public void updateConfigs(PreferencesRegistry prefsRegistry)
     {
         Preferences proxyPreferences = prefsRegistry.getPreferences("io.opensphere.core.net.NetworkConfigurationManagerImpl");
-        Set<String> preferenceKeys = new HashSet<String>(
-                Arrays.asList("ProxyConfigUrl", "ProxyExclusionPatterns", "ProxyHost", "ProxyPort", "SystemProxiesEnabled"));
+        Set<String> preferenceKeys = New.set("ProxyConfigUrl", "ProxyExclusionPatterns", "ProxyHost", "ProxyPort",
+                "SystemProxiesEnabled");
         Map<String, String> preferenceValues = new HashMap<String, String>();
-        boolean isChanged = false;
 
         for (String key : preferenceKeys)
         {
             String preferenceValue = proxyPreferences.getString(key, "");
             if (!preferenceValue.isEmpty())
             {
-                isChanged = true;
                 preferenceValues.put(key, preferenceValue);
             }
             proxyPreferences.remove(key, this);
         }
 
-        if (isChanged)
+        if (!preferenceValues.isEmpty())
         {
             LOGGER.info("Migrating old proxy configurations");
             ProxyConfigurations proxyConfigs = convertPreferences(preferenceValues);
