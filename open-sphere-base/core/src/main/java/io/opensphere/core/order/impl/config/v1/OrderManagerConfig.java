@@ -52,7 +52,6 @@ public class OrderManagerConfig
                 @Override
                 public boolean execute(OrderParticipantKey key, int order)
                 {
-                    //System.out.println("ORder : " + order + " " + "key " + key.getId());
                     myParticipants.add(new OrderManagerParticipant(key.getId(), order));
                     return true;
                 }
