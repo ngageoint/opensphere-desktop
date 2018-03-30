@@ -223,7 +223,7 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
         catch (TopologyException e)
         {
             // This is likely caused by the polygon overlapping itself.
-            LOGGER.error("JTS polygon intersection failed." + e);
+            LOGGER.error("JTS polygon intersection failed.", e);
             return null;
         }
     }
