@@ -412,8 +412,7 @@ public class OrderManagerImpl implements OrderManager
         }
 
         int assignedOrder;
-        TObjectIntMap<OrderParticipantKey> moved = new TObjectIntHashMap<>(
-                Math.abs(referenceOrder - currentOrder));
+        TObjectIntMap<OrderParticipantKey> moved = new TObjectIntHashMap<>(Math.abs(referenceOrder - currentOrder));
         if (currentOrder < referenceOrder)
         {
             // Move the ones from currentOrder + 1 to referenceOrder down one
@@ -446,7 +445,6 @@ public class OrderManagerImpl implements OrderManager
             }
             assignedOrder = referenceOrder + 1;
         }
-
         insertParticipant(participant, assignedOrder);
         moved.put(participant, assignedOrder);
         notifyParticipantChanged(moved, ParticipantChangeType.ORDER_CHANGED);
@@ -485,8 +483,7 @@ public class OrderManagerImpl implements OrderManager
         }
 
         int assignedOrder;
-        TObjectIntMap<OrderParticipantKey> moved = new TObjectIntHashMap<>(
-                Math.abs(referenceOrder - currentOrder));
+        TObjectIntMap<OrderParticipantKey> moved = new TObjectIntHashMap<>(Math.abs(referenceOrder - currentOrder));
         if (currentOrder < referenceOrder)
         {
             // Move the ones from currentOrder + 1 to referenceOrder - 1 down
@@ -494,11 +491,15 @@ public class OrderManagerImpl implements OrderManager
             // and insert at referenceOrder - 1.
             for (int i = currentOrder + 1; i < referenceOrder; ++i)
             {
-                OrderParticipantKey move = myOrderToParticipants.get(i);
-                removeParticipant(move);
-                insertParticipant(move, i - 1);
-                moved.put(move, i - 1);
+                if (myOrderToParticipants.containsKey(i))
+                {
+                    OrderParticipantKey move = myOrderToParticipants.get(i);
+                    removeParticipant(move);
+                    insertParticipant(move, i - 1);
+                    moved.put(move, i - 1);
+                }
             }
+
             assignedOrder = referenceOrder - 1;
         }
         else
@@ -507,14 +508,16 @@ public class OrderManagerImpl implements OrderManager
             // and insert at referenceOrder
             for (int i = currentOrder - 1; i >= referenceOrder; --i)
             {
-                OrderParticipantKey move = myOrderToParticipants.get(i);
-                removeParticipant(move);
-                insertParticipant(move, i + 1);
-                moved.put(move, i + 1);
+                if (myOrderToParticipants.containsKey(i))
+                {
+                    OrderParticipantKey move = myOrderToParticipants.get(i);
+                    removeParticipant(move);
+                    insertParticipant(move, i + 1);
+                    moved.put(move, i + 1);
+                }
             }
             assignedOrder = referenceOrder;
         }
-
         insertParticipant(participant, assignedOrder);
         moved.put(participant, assignedOrder);
         notifyParticipantChanged(moved, ParticipantChangeType.ORDER_CHANGED);
