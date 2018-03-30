@@ -458,8 +458,6 @@ public class OrderManagerImpl implements OrderManager
     @Override
     public synchronized int moveBelow(OrderParticipantKey participant, OrderParticipantKey reference)
     {
-        // participant is the one being moved and reference is the participant
-        // to be moved below.
         if (!isManaged(participant) || !isManaged(reference))
         {
             LOGGER.error("Attempting to reorder unmanaged participants.");
