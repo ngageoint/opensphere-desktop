@@ -104,14 +104,7 @@ public class ProxyConfigurationMigratorTest
      */
     private boolean systemProxiesMatch(SystemProxyConfiguration expected, SystemProxyConfiguration actual)
     {
-        if (null == expected.getExclusionPatterns())
-        {
-            return null == actual.getExclusionPatterns();
-        }
-        else
-        {
-            return expected.getExclusionPatterns().equals(actual.getExclusionPatterns());
-        }
+        return expected.getExclusionPatterns().equals(actual.getExclusionPatterns());
     }
 
     /**
@@ -144,26 +137,9 @@ public class ProxyConfigurationMigratorTest
     {
         if (null == expected.getHost())
         {
-            // null host and null exclusion patterns
-            if (null == expected.getExclusionPatterns())
-            {
-                return null == actual.getHost() && null == actual.getExclusionPatterns()
-                        && expected.getPort() == actual.getPort();
-            }
-            // null host only
-            else
-            {
-                return null == actual.getHost() && expected.getExclusionPatterns().equals(actual.getExclusionPatterns())
-                        && expected.getPort() == actual.getPort();
-            }
-        }
-        // null exclusion patterns only
-        else if (null == expected.getExclusionPatterns())
-        {
-            return null == actual.getExclusionPatterns() && expected.getHost().equals(actual.getHost())
+            return null == actual.getHost() && expected.getExclusionPatterns().equals(actual.getExclusionPatterns())
                     && expected.getPort() == actual.getPort();
         }
-        // no null values
         else
         {
             return expected.getHost().equals(actual.getHost()) && expected.getPort() == actual.getPort()
