@@ -457,6 +457,64 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:complexType name="StreamOptionsType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en" xml:space="preserve">
+       Layer option related to streaming layers.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="layer" type="xs:token" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            The streaming layer type?
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="threshold" type="xs:integer" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ageOffActive" type="xs:boolean" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            If activated, features older than then ageOff time
+            should be removed from the dispay.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ageOffTime" type="xs:integer" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Time, in minutes, when features of a streaming layer
+            should be aged off the display, dependent on ageOffActive.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="play" type="xs:boolean" minOccurs="0"
+        maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Flag for the stremaing state, e.g. is playing/ is streaming.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="binSettings" type="fade:BinSettingsType" minOccurs="0" maxOccurs="1">
+         <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Optional stream bin settings for the layer.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+
   <xs:complexType name="LayerType">
     <xs:annotation>
       <xs:documentation xml:lang="en" xml:space="preserve">
@@ -855,6 +913,15 @@
             The icon style configuration defined for the layer. This is
             optional, and if no configuration is defined, a simple point style
             will be used instead.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="stream" type="fade:StreamOptionsType"
+        minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Streaming Layer Options
           </xs:documentation>
         </xs:annotation>
       </xs:element>

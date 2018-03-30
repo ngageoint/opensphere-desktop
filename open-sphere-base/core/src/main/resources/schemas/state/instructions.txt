@@ -10,6 +10,7 @@ cp -r <git-root>/opensphere-state-schema/src/main/* <git-root>/opensphere-deskto
 I've had to make some edits to what is checked in to get XJC to work:
 Edit bindings.xjb and change "../xsd/filter/1.0.0/filter.xsd" to "../xsd/state/1.0.0/filter-extended.xsd", and change the package names to our convention, i.e. _220 not v_2_2_0.  Alternatively you may be able to revert the changes to bindings.xjb
 Edit filter-restriction.xsd and set minOccurs="2"
+Edit state.xsd and add the StreamOptionsType type, and stream element back in
 
 Run the following from <git-root>/opensphere-desktop/open-sphere-base/core/src/main/resources/schemas/state
 xjc -extension -d ../../../java xsd/state/1.0.0/state.xsd -b xjb/bindings.xjb

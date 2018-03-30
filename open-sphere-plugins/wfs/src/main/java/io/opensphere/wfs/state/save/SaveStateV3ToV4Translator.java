@@ -40,7 +40,6 @@ public final class SaveStateV3ToV4Translator
 //        layerV3.getEllipseStyle();
 //        layerV3.getLineOfBearingStyle();
         layer.setAltitudeEnabled(Boolean.valueOf(layerV3.getBasicFeatureStyle().isUseAltitude()));
-        layer.setAnalyze(Boolean.valueOf(layerV3.getLoadsTo() == null || layerV3.getLoadsTo().isAnalysisEnabled()));
         layer.setAnimate(Boolean.toString(layerV3.isAnimate()));
         layer.setBaseColor(toColorString(layerV3.getBasicFeatureStyle().getPointColor()));
         layer.setBasicFeatureStyle(toFeatureStyle(layerV3.getBasicFeatureStyle()));
@@ -119,7 +118,6 @@ public final class SaveStateV3ToV4Translator
         style.setPointColor(toColorString(styleV3.getPointColor()));
         style.setPointOpacity(Integer.valueOf(styleV3.getPointOpacity()));
         style.setPointSize(BigDecimal.valueOf(styleV3.getPointSize()));
-        style.setUseAltitude(Boolean.valueOf(styleV3.isUseAltitude()));
         return style;
     }
 
