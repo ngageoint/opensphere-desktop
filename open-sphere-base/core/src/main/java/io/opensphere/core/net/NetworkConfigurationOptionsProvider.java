@@ -96,6 +96,7 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
         }
 
         SystemProxyConfiguration systemConfiguration = myNetworkConfigurationManager.getSystemConfiguration();
+        systemConfiguration.getExclusionPatterns().clear();
         systemConfiguration.getExclusionPatterns().addAll(Arrays.asList(mySystemProxyExclusionsField.getText().split(",\\s*|\\s+")));
 
         UrlProxyConfiguration urlConfiguration = myNetworkConfigurationManager.getUrlConfiguration();
@@ -110,6 +111,7 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
             configuration.setHost(myManualProxyHostField.getText());
             configuration.setPort(port);
 
+            configuration.getExclusionPatterns().clear();
             configuration.getExclusionPatterns().addAll(Arrays.asList(myManualProxyExclusionsField.getText().split(",\\s*|\\s+")));
         }
         catch (@SuppressWarnings("unused") NumberFormatException e)
