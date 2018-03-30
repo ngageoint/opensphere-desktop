@@ -1,5 +1,6 @@
 package io.opensphere.mantle.icon.impl.gui;
 
+import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -17,12 +18,9 @@ import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 
-/**
- *
- */
+/** The component class for building icons. */
 public class IconBuilderDialog extends JFXDialog
 {
-
     /** serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -47,10 +45,11 @@ public class IconBuilderDialog extends JFXDialog
         super(owner, "Build an Icon");
         myIconRegistry = iconRegistry;
         myChooserPanel = chooserPanel;
+
         IconBuilderPane pane = new IconBuilderPane();
         setFxNode(pane);
 
-        setSize(400, 600);
+        setMinimumSize(new Dimension(400, 600));
 
         setLocationRelativeTo(owner);
         setAcceptEar(() -> saveImage(pane.getFinalImage(), pane.getImageName()));

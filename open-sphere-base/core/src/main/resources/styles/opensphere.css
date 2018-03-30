@@ -27,6 +27,18 @@
     -fx-text-fill: linear-gradient(to bottom, derive(-opensphere-dark, 20%) 10%, derive(-opensphere-dark, -40%) 80%);
 }
 
+.icons-FontAwesome {
+    -fx-font-family: FontAwesome !important;
+}
+
+.icons-Govicons {
+    -fx-font-family: Govicons !important;
+}
+
+.icons-military-rank-icons {
+    -fx-font-family: "military-rank-icons" !important;
+}
+
 .scroll-bar>.thumb {
     -fx-color: -opensphere-purple;
 }

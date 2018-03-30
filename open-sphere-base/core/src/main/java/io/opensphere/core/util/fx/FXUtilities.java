@@ -1,5 +1,7 @@
 package io.opensphere.core.util.fx;
 
+import static io.opensphere.core.util.lang.NumberUtilities.toFloat;
+
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -11,6 +13,18 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
+import javax.swing.ImageIcon;
+
+import org.apache.log4j.Logger;
+
+import com.sun.javafx.application.PlatformImpl;
+
+import io.opensphere.core.units.duration.Duration;
+import io.opensphere.core.units.duration.Nanoseconds;
+import io.opensphere.core.util.image.IconUtil;
+import io.opensphere.core.util.image.IconUtil.IconStyle;
+import io.opensphere.core.util.image.IconUtil.IconType;
+import io.opensphere.core.util.lang.Nulls;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
@@ -44,19 +58,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.web.WebEngine;
 import javafx.util.Callback;
-
-import javax.swing.ImageIcon;
-
-import org.apache.log4j.Logger;
-
-import com.sun.javafx.application.PlatformImpl;
-
-import io.opensphere.core.units.duration.Duration;
-import io.opensphere.core.units.duration.Nanoseconds;
-import io.opensphere.core.util.image.IconUtil;
-import io.opensphere.core.util.image.IconUtil.IconStyle;
-import io.opensphere.core.util.image.IconUtil.IconType;
-import io.opensphere.core.util.lang.Nulls;
 
 /** JavaFX utilities. */
 @SuppressWarnings("PMD.GodClass")
@@ -453,8 +454,15 @@ public final class FXUtilities
      */
     public static java.awt.Color toAwtColor(Color color)
     {
-        // TODO add opacity
-        return new java.awt.Color(color.hashCode() >> 8);
+        java.awt.Color awtColor = null;
+
+        if (color != null)
+        {
+            awtColor = new java.awt.Color(toFloat(color.getRed()), toFloat(color.getGreen()), toFloat(color.getBlue()),
+                    toFloat(color.getOpacity()));
+        }
+
+        return awtColor;
     }
 
     /**

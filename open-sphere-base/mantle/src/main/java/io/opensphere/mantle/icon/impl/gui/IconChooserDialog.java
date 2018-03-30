@@ -203,7 +203,6 @@ public class IconChooserDialog extends JDialog
      */
     private void showBuilderDialog()
     {
-
         IconRegistry iconRegistry = MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry();
         IconBuilderDialog dialog = new IconBuilderDialog(this, iconRegistry, myChooserPanel);
         dialog.setVisible(true);

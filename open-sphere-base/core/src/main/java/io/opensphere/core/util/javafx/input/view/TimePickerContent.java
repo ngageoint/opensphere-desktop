@@ -11,7 +11,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import io.opensphere.core.util.AwesomeIcon;
-import io.opensphere.core.util.fx.FxAwesomeIcons;
+import io.opensphere.core.util.fx.FxIcons;
 
 /**
  * The content section of the time picker, in which the controls are rendered.
@@ -78,13 +78,13 @@ public class TimePickerContent extends VBox
 
         HBox bar = new HBox();
         bar.setAlignment(Pos.CENTER);
-        myOkayButton = FxAwesomeIcons.createIconButton(AwesomeIcon.ICON_CHECK, "ok-button", "", 12);
+        myOkayButton = FxIcons.createIconButton(AwesomeIcon.ICON_CHECK, "ok-button", "", 12);
         myOkayButton.setTooltip(new Tooltip("Okay"));
 
-        myNowButton = FxAwesomeIcons.createIconButton(AwesomeIcon.ICON_FLASH, "now-button", "", 12);
+        myNowButton = FxIcons.createIconButton(AwesomeIcon.ICON_FLASH, "now-button", "", 12);
         myNowButton.setTooltip(new Tooltip("Set to current time"));
 
-        myCancelButton = FxAwesomeIcons.createIconButton(AwesomeIcon.ICON_TIMES, "cancel-button", "", 12);
+        myCancelButton = FxIcons.createIconButton(AwesomeIcon.ICON_TIMES, "cancel-button", "", 12);
         myCancelButton.setTooltip(new Tooltip("Cancel"));
 
         Label spacer1 = new Label();

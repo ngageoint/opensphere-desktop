@@ -297,7 +297,7 @@ public class GenericFontIcon implements Icon, FontIcon
      */
     public int getYPos()
     {
-        return myYPos == null ? getSize() - (getSize() / 4) + (getSize() / 16) : myYPos.intValue();
+        return myYPos == null ? mySize - (mySize / 4) + (mySize / 16) : myYPos.intValue();
     }
 
     /**
