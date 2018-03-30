@@ -1380,6 +1380,14 @@
         </xs:annotation>
       </xs:element>
 
+      <xs:element name="uniqueId" type="fade:UniqueIdType" minOccurs="0" maxOccurs="1">
+         <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            Optional unique identifier column.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
     </xs:all>
 
     <xs:attribute name="type" type="xs:token" use="required">
@@ -2988,6 +2996,37 @@
         </xs:annotation>
       </xs:element>
     </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UniqueIdType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en" xml:space="preserve">
+        Defines a unique identifier.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="id" type="xs:token" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            The ID.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="name" type="xs:token" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            The ID (again).
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="field" type="xs:token" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" xml:space="preserve">
+            The ID (again).
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:all>
   </xs:complexType>
 
 </xs:schema>

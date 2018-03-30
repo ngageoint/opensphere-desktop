@@ -10,7 +10,6 @@ package com.bitsys.fade.mist.state.v4;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -19,20 +18,21 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * 
- *         Defines a color model.
+ *         Defines a unique identifier.
  *       
  * 
- * <p>Java class for NameValueType complex type.
+ * <p>Java class for UniqueIdType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="NameValueType">
+ * &lt;complexType name="UniqueIdType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;all>
- *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}token"/>
- *         &lt;element name="value" type="{http://www.w3.org/2001/XMLSchema}token"/>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}token" minOccurs="0"/>
+ *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}token" minOccurs="0"/>
+ *         &lt;element name="field" type="{http://www.w3.org/2001/XMLSchema}token" minOccurs="0"/>
  *       &lt;/all>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -42,19 +42,48 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "NameValueType", propOrder = {
+@XmlType(name = "UniqueIdType", propOrder = {
 
 })
-public class NameValueType {
+public class UniqueIdType {
 
-    @XmlElement(required = true)
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "token")
+    protected String id;
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String name;
-    @XmlElement(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
-    protected String value;
+    protected String field;
+
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setId(String value) {
+        this.id = value;
+    }
+
+    public boolean isSetId() {
+        return (this.id!= null);
+    }
 
     /**
      * Gets the value of the name property.
@@ -85,31 +114,31 @@ public class NameValueType {
     }
 
     /**
-     * Gets the value of the value property.
+     * Gets the value of the field property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getValue() {
-        return value;
+    public String getField() {
+        return field;
     }
 
     /**
-     * Sets the value of the value property.
+     * Sets the value of the field property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setValue(String value) {
-        this.value = value;
+    public void setField(String value) {
+        this.field = value;
     }
 
-    public boolean isSetValue() {
-        return (this.value!= null);
+    public boolean isSetField() {
+        return (this.field!= null);
     }
 
 }
