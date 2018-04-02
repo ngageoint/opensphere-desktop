@@ -202,7 +202,7 @@ public class GenericFontIcon implements Icon, FontIcon
                 int height = mySize > myHeight ? mySize : myHeight;
                 myBuffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
-                Graphics2D graphics = (Graphics2D)myBuffer.getGraphics();
+                Graphics2D graphics = myBuffer.createGraphics();
                 graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
                 graphics.setFont(myFont.deriveFont(Font.PLAIN, getSize()));
@@ -234,7 +234,7 @@ public class GenericFontIcon implements Icon, FontIcon
                 Font font = myFont.deriveFont(Font.PLAIN, getSize());
 
                 BufferedImage temp = new BufferedImage(mySize, mySize, BufferedImage.TYPE_INT_ARGB);
-                Graphics2D graphics = (Graphics2D)temp.getGraphics();
+                Graphics2D graphics = temp.createGraphics();
                 graphics.setFont(font);
                 myWidth = graphics.getFontMetrics().charWidth(myIcon.getFontCode().charAt(0));
                 myHeight = graphics.getFontMetrics().charWidth(myIcon.getFontCode().charAt(0));

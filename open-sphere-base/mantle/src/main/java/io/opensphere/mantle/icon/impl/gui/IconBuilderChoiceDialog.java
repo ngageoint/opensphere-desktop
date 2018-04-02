@@ -28,11 +28,11 @@ public class IconBuilderChoiceDialog extends JPanel
     /** serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /** The selected icon value. */
-    private FontIconEnum myIconValue;
-
     /** The list model containing icons available for selection. */
     private final DefaultListModel<FontIconEnum> myListModel = new DefaultListModel<>();
+
+    /** The selected icon value. */
+    private FontIconEnum myIconValue;
 
     /** The icon list. */
     private JList<FontIconEnum> myList;
@@ -57,7 +57,7 @@ public class IconBuilderChoiceDialog extends JPanel
         Vector<String> treeValues = new Vector<>();
         // Temporarily hard-code icon values.
         treeValues.add("FontAwesome Icons");
-        treeValues.add("Govicon Icons");
+        treeValues.add("Government Icons");
         treeValues.add("Military Rank Icons");
 
         JTree tree = new JTree(treeValues);
@@ -70,7 +70,7 @@ public class IconBuilderChoiceDialog extends JPanel
                 case "FontAwesome Icons":
                     addElementsToList(8, AwesomeIcon.values());
                     break;
-                case "Govicon Icons":
+                case "Government Icons":
                     addElementsToList(8, GovIcon.values());
                     break;
                 case "Military Rank Icons":

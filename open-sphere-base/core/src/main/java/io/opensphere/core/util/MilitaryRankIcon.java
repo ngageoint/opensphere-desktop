@@ -248,7 +248,6 @@ public enum MilitaryRankIcon implements FontIconEnum
      * Gets the value of the {@link #myFontCode} field.
      *
      * @return the value stored in the {@link #myFontCode} field.
-     * @override
      */
     @Override
     public String getFontCode()

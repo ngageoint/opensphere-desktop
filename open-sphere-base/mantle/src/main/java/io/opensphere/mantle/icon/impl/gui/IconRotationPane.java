@@ -13,7 +13,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 /** Icon rotation pane. */
-@SuppressWarnings("restriction")
 public class IconRotationPane extends BorderPane
 {
     /** The rotation value model. */

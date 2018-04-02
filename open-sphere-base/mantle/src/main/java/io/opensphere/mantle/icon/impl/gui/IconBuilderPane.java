@@ -33,7 +33,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 
 /** Panel for building custom icons. */
-@SuppressWarnings("restriction")
 public class IconBuilderPane extends BorderPane
 {
     /** The rotation value model. */
