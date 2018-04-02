@@ -1,12 +1,12 @@
 package io.opensphere.search.view;
 
+import io.opensphere.search.model.SearchModel;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-
-import io.opensphere.search.model.SearchModel;
 
 /**
  * A pane in which the result count, search terms, and sort configuration are
@@ -19,6 +19,9 @@ public class MetadataPane extends AbstractSearchPane
 
     /** The combo-box in which the sort operation is configured. */
     private final ComboBox<String> mySortDropdown;
+
+    /** The button to clear search results without affecting the search box. */
+    private final Button myClearButton;
 
     /**
      * Creates a new metadata pane bound to the supplied model.
@@ -48,6 +51,9 @@ public class MetadataPane extends AbstractSearchPane
         mySortDropdown = new ComboBox<>(getModel().getSortTypes());
         mySortDropdown.valueProperty().bindBidirectional(getModel().getSortType());
 
+        myClearButton = new Button("Clear");
+        myClearButton.setOnAction((evt) -> getModel().getKeyword().setValue(null));
+
         Label resultsFor = new Label("Showing Results for : ");
         Label sortLabel = new Label("Sort By:");
         Region spacer = new Region();
@@ -57,5 +63,6 @@ public class MetadataPane extends AbstractSearchPane
         add(spacer, 2, 0);
         add(sortLabel, 3, 0);
         add(mySortDropdown, 4, 0);
+        add(myClearButton, 5, 0);
     }
 }
