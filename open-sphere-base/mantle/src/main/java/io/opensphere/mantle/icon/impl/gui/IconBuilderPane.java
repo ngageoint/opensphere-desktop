@@ -2,44 +2,35 @@ package io.opensphere.mantle.icon.impl.gui;
 
 import static io.opensphere.core.util.fx.FXUtilities.toAwtColor;
 
+import java.awt.Window;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 import io.opensphere.core.image.processor.RotateImageProcessor;
-import io.opensphere.core.util.AwesomeIcon;
 import io.opensphere.core.util.FontIconEnum;
-import io.opensphere.core.util.fx.FxIcons;
 import io.opensphere.core.util.swing.GenericFontIcon;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
-import javafx.stage.Popup;
 
 /** Panel for building custom icons. */
 @SuppressWarnings("restriction")
@@ -60,27 +51,24 @@ public class IconBuilderPane extends BorderPane
     /** The current icon. */
     private GenericFontIcon myCurrentIcon;
 
-    /** The ComboBox containing all icon choices. */
-    private ComboBox<FontIconEnum> myComboBox;
-
     /** The ColorPicker that determines the icon color. */
     private ColorPicker myColorPicker;
 
     /** The ImageView that renders the modified icon. */
     private ImageView myImageRenderView;
 
-    /** */
-    private BorderPane myChoicePane;
+    /** The AWT Window that owns this pane. */
+    private final Window myOwner;
 
-    /** */
-    private Popup myPopupWindow;
-
-    /** */
-    private ObservableList<Node> myIconContent;
-
-    /** Constructs a new IconBuilderPane. */
-    public IconBuilderPane()
+    /**
+     * Constructs a new IconBuilderPane.
+     *
+     * @param owner the AWT Window
+     */
+    public IconBuilderPane(Window owner)
     {
+        myOwner = owner;
+
         setTop(createTop());
 
         setCenter(createImageView());
@@ -99,8 +87,6 @@ public class IconBuilderPane extends BorderPane
         mySize.addListener((v, o, n) -> updateImageSize());
         myXPos.addListener((v, o, n) -> updateImagePosition());
         myYPos.addListener((v, o, n) -> updateImagePosition());
-
-        createPopup();
     }
 
     /**
@@ -112,161 +98,23 @@ public class IconBuilderPane extends BorderPane
     {
         HBox box = new HBox();
 
-//        myComboBox = new ComboBox<>();
-//        myComboBox.getItems().addAll(AwesomeIcon.values());
-//        myComboBox.getItems().addAll(GovIcon.values());
-//        myComboBox.getItems().addAll(MilitaryRankIcon.values());
-//
-//        myComboBox.setCellFactory(new Callback<ListView<FontIconEnum>, ListCell<FontIconEnum>>()
-//        {
-//            @Override
-//            public ListCell<FontIconEnum> call(ListView<FontIconEnum> param)
-//            {
-//                return new ListCell<FontIconEnum>()
-//                {
-//                    ImageView view;
-//                    {
-//                        setContentDisplay(ContentDisplay.LEFT);
-//                        view = new ImageView();
-//                    }
-//
-//                    @Override
-//                    protected void updateItem(FontIconEnum item, boolean empty)
-//                    {
-//                        super.updateItem(item, empty);
-//                        setGraphic(view);
-//
-//                        if (item != null && !empty)
-//                        {
-//                            GenericFontIcon icon = new GenericFontIcon(item);
-//
-//                            setText(item.toString());
-//                            view.setImage(SwingFXUtils.toFXImage(icon.getImage(), null));
-//                        }
-//                    }
-//                };
-//            }
-//
-//        });
-
-        Button button = new Button("...");
+        Button button = new Button("Select an Icon...");
         button.setOnAction((evt) ->
         {
             IconBuilderChoiceDialog iconChoice = new IconBuilderChoiceDialog();
-            JDialog dialog = iconChoice.createDialog("Select an Icon");
-            dialog.setVisible(true);
-
-            FontIconEnum icon = (FontIconEnum)iconChoice.getValue();
-            updateImageView(icon);
-//            myPopupWindow.show(this, getScene().getWidth() / 2, getScene().getHeight() / 2);
+            int result = JOptionPane.showConfirmDialog(myOwner, iconChoice, "Select an Icon", JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.PLAIN_MESSAGE);
+            if (result == JOptionPane.OK_OPTION)
+            {
+                updateImageView(iconChoice.getValue());
+            }
         });
 
         myColorPicker = new ColorPicker();
 
         box.getChildren().addAll(button, myColorPicker);
-//        box.getChildren().addAll(myComboBox, myColorPicker);
 
         return box;
-    }
-
-    /**
-     * Creates the icon selection popup window.
-     *
-     * @return the popup
-     */
-    private Popup createPopup()
-    {
-        myPopupWindow = new Popup();
-        myPopupWindow.setAutoHide(true);
-        myPopupWindow.setHideOnEscape(true);
-        myPopupWindow.setAutoFix(true);
-
-        myChoicePane = new BorderPane();
-        myChoicePane.setRight(createFontViewPane(100., 5));
-
-        TreeView<String> fontSelectionView = createFontSelectionView();
-        myChoicePane.setLeft(fontSelectionView);
-        myChoicePane.getStyleClass().add("root");
-
-        myPopupWindow.getContent().add(myChoicePane);
-
-        return myPopupWindow;
-    }
-
-    /**
-     * Creates the tree view for the icon selection popup.
-     *
-     * @return the tree view
-     */
-    private TreeView<String> createFontSelectionView()
-    {
-        TreeItem<String> root = new TreeItem<>("Font Icons");
-        root.getChildren().add(new TreeItem<String>("FontAwesome Icons"));
-
-        TreeView<String> treeView = new TreeView<>();
-        treeView.setRoot(root);
-        treeView.setShowRoot(false);
-
-        treeView.getSelectionModel().selectedItemProperty().addListener((v, o, newSelection) ->
-        {
-            switch (newSelection.getValue())
-            {
-                case "FontAwesome Icons":
-                    createButtonNodesForArray(AwesomeIcon.values());
-                    break;
-                default:
-                    break;
-            }
-        });
-
-        return treeView;
-    }
-
-    /**
-     * Creates button nodes for each font icon.
-     *
-     * @param values the values of a font icon enumerable
-     */
-    private void createButtonNodesForArray(FontIconEnum... values)
-    {
-        myIconContent.clear();
-
-        for (FontIconEnum icon : values)
-        {
-            Button buttonNode = FxIcons.createIconButton(icon, "", 50);
-            buttonNode.setOnAction((evt) ->
-            {
-                updateImageView(icon);
-                myPopupWindow.hide();
-            });
-
-            myIconContent.add(buttonNode);
-        }
-    }
-
-    /**
-     * Creates the scroll pane for the icon selection popup.
-     *
-     * @param tileSize the width & height of each square tile
-     * @param numCols the number of tiles per row
-     * @return the scroll pane
-     */
-    private ScrollPane createFontViewPane(double tileSize, int numCols)
-    {
-        ScrollPane scrollArea = new ScrollPane();
-
-        TilePane pane = new TilePane();
-        pane.setTileAlignment(Pos.CENTER);
-        pane.setPrefTileWidth(tileSize);
-        pane.setPrefTileHeight(tileSize);
-        pane.setPrefColumns(numCols);
-
-        myIconContent = pane.getChildren();
-
-        scrollArea.setContent(pane);
-        scrollArea.setPrefSize(pane.getPrefWidth(), 200.);
-
-        return scrollArea;
     }
 
     /**

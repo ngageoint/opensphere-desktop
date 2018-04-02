@@ -46,10 +46,10 @@ public class IconBuilderDialog extends JFXDialog
         myIconRegistry = iconRegistry;
         myChooserPanel = chooserPanel;
 
-        IconBuilderPane pane = new IconBuilderPane();
+        IconBuilderPane pane = new IconBuilderPane(owner);
         setFxNode(pane);
 
-        setMinimumSize(new Dimension(400, 600));
+        setMinimumSize(new Dimension(450, 600));
 
         setLocationRelativeTo(owner);
         setAcceptEar(() -> saveImage(pane.getFinalImage(), pane.getImageName()));
