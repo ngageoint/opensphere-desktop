@@ -57,28 +57,28 @@ public final class FxIcons
      */
     public static Button createIconButton(FontIconEnum pIcon, String pText, int pSize)
     {
-        return createIconButton(pIcon, "icons", pText, pSize);
+        return createIconButton(pIcon, pText, pSize, "icons", "icons-" + pIcon.getFont().getFontName());
     }
 
     /**
      * Creates a button using the named icon as its content.
      *
      * @param pIcon the name of the icon to use as the content of the button.
-     * @param pStyleName the name of the style to apply to the button.
      * @param pText the text to use in the button, will be displayed after the
      *            icon.
      * @param pSize the size of the icon in the button, expressed as a font
      *            size.
+     * @param pStyleNames the names of the styles to apply to the button.
      * @return a new button using the named icon.
      */
-    public static Button createIconButton(FontIconEnum pIcon, String pStyleName, String pText, int pSize)
+    public static Button createIconButton(FontIconEnum pIcon, String pText, int pSize, String... pStyleNames)
     {
         Label icon = createIconLabel(pIcon, 12);
         icon.setStyle("-fx-font-size: " + pSize + "px;");
 
         Button button = new Button(pText);
         button.setGraphic(icon);
-        button.getStyleClass().add(pStyleName);
+        button.getStyleClass().addAll(pStyleNames);
 
         return button;
     }

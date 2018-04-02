@@ -75,7 +75,6 @@ public class IconBuilderPane extends BorderPane
         BorderPane.setAlignment(myImageRenderView, Pos.CENTER);
         myImageRenderView.autosize();
 
-//        myComboBox.setOnAction((event) -> updateImageView());
         myColorPicker.setOnAction((event) -> updateImageColor());
 
         setRight(createRight());
