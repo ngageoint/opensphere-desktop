@@ -21,10 +21,21 @@
 }
 */
 .icons {
-    -fx-font-family: FontAwesome;
     -fx-font-size: 12px;
     -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
     -fx-text-fill: linear-gradient(to bottom, derive(-opensphere-dark, 20%) 10%, derive(-opensphere-dark, -40%) 80%);
+}
+
+.icons-FontAwesome {
+    -fx-font-family: FontAwesome;
+}
+
+.icons-Govicons {
+    -fx-font-family: Govicons;
+}
+
+.icons-military-rank-icons {
+    -fx-font-family: "military-rank-icons";
 }
 
 .scroll-bar>.thumb {

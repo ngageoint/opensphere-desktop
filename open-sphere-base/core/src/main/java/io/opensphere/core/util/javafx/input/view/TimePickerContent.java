@@ -2,6 +2,8 @@ package io.opensphere.core.util.javafx.input.view;
 
 import java.time.LocalTime;
 
+import io.opensphere.core.util.AwesomeIcon;
+import io.opensphere.core.util.fx.FxIcons;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,9 +11,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-
-import io.opensphere.core.util.AwesomeIcon;
-import io.opensphere.core.util.fx.FxAwesomeIcons;
 
 /**
  * The content section of the time picker, in which the controls are rendered.
@@ -34,7 +33,8 @@ public class TimePickerContent extends VBox
     private final BoundNumericSpinner mySecondSpinner;
 
     /**
-     * The button used to accept the time entered in the picker, also hides the popup.
+     * The button used to accept the time entered in the picker, also hides the
+     * popup.
      */
     private final Button myOkayButton;
 
@@ -44,7 +44,8 @@ public class TimePickerContent extends VBox
     private final Button myNowButton;
 
     /**
-     * The button used to reject the time entered in the picker, also hides the popup.
+     * The button used to reject the time entered in the picker, also hides the
+     * popup.
      */
     private final Button myCancelButton;
 
@@ -78,13 +79,13 @@ public class TimePickerContent extends VBox
 
         HBox bar = new HBox();
         bar.setAlignment(Pos.CENTER);
-        myOkayButton = FxAwesomeIcons.createIconButton(AwesomeIcon.ICON_CHECK, "ok-button", "", 12);
+        myOkayButton = FxIcons.createIconButton(AwesomeIcon.ICON_CHECK, "", 12, "ok-button");
         myOkayButton.setTooltip(new Tooltip("Okay"));
 
-        myNowButton = FxAwesomeIcons.createIconButton(AwesomeIcon.ICON_FLASH, "now-button", "", 12);
+        myNowButton = FxIcons.createIconButton(AwesomeIcon.ICON_FLASH, "", 12, "now-button");
         myNowButton.setTooltip(new Tooltip("Set to current time"));
 
-        myCancelButton = FxAwesomeIcons.createIconButton(AwesomeIcon.ICON_TIMES, "cancel-button", "", 12);
+        myCancelButton = FxIcons.createIconButton(AwesomeIcon.ICON_TIMES, "", 12, "cancel-button");
         myCancelButton.setTooltip(new Tooltip("Cancel"));
 
         Label spacer1 = new Label();
@@ -104,7 +105,8 @@ public class TimePickerContent extends VBox
     }
 
     /**
-     * Calculates a time and populates the picker with the values extracted from the components.
+     * Calculates a time and populates the picker with the values extracted from
+     * the components.
      */
     protected void calculateValue()
     {

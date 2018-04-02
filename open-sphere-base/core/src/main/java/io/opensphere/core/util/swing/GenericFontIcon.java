@@ -19,7 +19,7 @@ import io.opensphere.core.util.FontIconEnum;
  * This class is abstract and cannot be instantiated. Extensions need to
  * statically register their specific font with the GraphicsEnvironment.
  */
-public abstract class AbstractFontIcon implements Icon, FontIcon
+public class GenericFontIcon implements Icon, FontIcon
 {
     /** The default color of the icon. */
     private static final Color DEFAULT_COLOR = Color.BLACK;
@@ -28,7 +28,7 @@ public abstract class AbstractFontIcon implements Icon, FontIcon
     private static final int DEFAULT_SIZE = 16;
 
     /** A lock used to enforce synchronization. */
-    private static final Object PAINT_LOCK = new Object[0];
+    private final Object PAINT_LOCK = new Object[0];
 
     /**
      * The size of the icon, expressed as a font size. Defaults to
@@ -48,6 +48,12 @@ public abstract class AbstractFontIcon implements Icon, FontIcon
      */
     private int myHeight;
 
+    /** The Y position of the icon in the paint area. */
+    private Integer myYPos;
+
+    /** The X position of the icon in the paint area. */
+    private Integer myXPos;
+
     /** The buffer into which the icon is painted. */
     private BufferedImage myBuffer;
 
@@ -64,41 +70,38 @@ public abstract class AbstractFontIcon implements Icon, FontIcon
      * Creates a new icon, painted with the default color
      * ({@link #DEFAULT_COLOR}), at the default size ({@link #DEFAULT_SIZE}).
      *
-     * @param pFont the font to use.
      * @param pIcon the icon to draw.
      */
-    public AbstractFontIcon(Font pFont, FontIconEnum pIcon)
+    public GenericFontIcon(FontIconEnum pIcon)
     {
-        this(pFont, pIcon, DEFAULT_COLOR);
+        this(pIcon, DEFAULT_COLOR);
     }
 
     /**
      * Creates a new icon, painted with the supplied color, at the default size
      * ({@value #DEFAULT_SIZE}).
      *
-     * @param pFont the font to use.
      * @param pIcon the icon to draw.
      * @param pColor the color to draw the icon.
      */
-    public AbstractFontIcon(Font pFont, FontIconEnum pIcon, Color pColor)
+    public GenericFontIcon(FontIconEnum pIcon, Color pColor)
     {
-        this(pFont, pIcon, pColor, DEFAULT_SIZE);
+        this(pIcon, pColor, DEFAULT_SIZE);
     }
 
     /**
      * Creates a new icon, painted with the supplied color, at the supplied
      * size.
      *
-     * @param pFont the font to use.
      * @param pIcon the icon to draw.
      * @param pColor the color to draw the icon.
      * @param pSize the size of the icon.
      */
-    public AbstractFontIcon(Font pFont, FontIconEnum pIcon, Color pColor, int pSize)
+    public GenericFontIcon(FontIconEnum pIcon, Color pColor, int pSize)
     {
-        myFont = pFont;
         myIcon = pIcon;
         myColor = pColor;
+        myFont = pIcon.getFont();
         setSize(pSize);
     }
 
@@ -195,16 +198,17 @@ public abstract class AbstractFontIcon implements Icon, FontIcon
         {
             if (myBuffer == null)
             {
-                myBuffer = new BufferedImage(getIconWidth(), getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+                int width = mySize > myWidth ? mySize : myWidth;
+                int height = mySize > myHeight ? mySize : myHeight;
+                myBuffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
-                Graphics2D graphics = (Graphics2D)myBuffer.getGraphics();
+                Graphics2D graphics = myBuffer.createGraphics();
                 graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
                 graphics.setFont(myFont.deriveFont(Font.PLAIN, getSize()));
                 graphics.setColor(getColor());
 
-                int sy = getSize() - (getSize() / 4) + (getSize() / 16);
-                graphics.drawString(myIcon.getFontCode(), 0, sy);
+                graphics.drawString(myIcon.getFontCode(), getXPos(), getYPos());
                 graphics.dispose();
             }
         }
@@ -223,11 +227,14 @@ public abstract class AbstractFontIcon implements Icon, FontIcon
         {
             synchronized (PAINT_LOCK)
             {
+                myXPos = null;
+                myYPos = null;
+
                 mySize = pSize;
                 Font font = myFont.deriveFont(Font.PLAIN, getSize());
 
                 BufferedImage temp = new BufferedImage(mySize, mySize, BufferedImage.TYPE_INT_ARGB);
-                Graphics2D graphics = (Graphics2D)temp.getGraphics();
+                Graphics2D graphics = temp.createGraphics();
                 graphics.setFont(font);
                 myWidth = graphics.getFontMetrics().charWidth(myIcon.getFontCode().charAt(0));
                 myHeight = graphics.getFontMetrics().charWidth(myIcon.getFontCode().charAt(0));
@@ -258,5 +265,48 @@ public abstract class AbstractFontIcon implements Icon, FontIcon
     public int getIconHeight()
     {
         return myWidth;
+    }
+
+    /**
+     * Sets the value of the {@link #myYPos} field.
+     *
+     * @param yPos the value to store in the {@link #myYPos} field.
+     */
+    public void setYPos(int yPos)
+    {
+        myYPos = Integer.valueOf(yPos);
+        invalidate();
+    }
+
+    /**
+     * Sets the value of the {@link #myXPos} field.
+     *
+     * @param xPos the value to store in the {@link #myXPos} field.
+     */
+    public void setXPos(int xPos)
+    {
+        myXPos = Integer.valueOf(xPos);
+        invalidate();
+    }
+
+    /**
+     * Returns the value of the {@link #myYPos} field, or calculates a value
+     * based on {@link #mySize} if null.
+     *
+     * @return the Y position
+     */
+    public int getYPos()
+    {
+        return myYPos == null ? mySize - (mySize / 4) + (mySize / 16) : myYPos.intValue();
+    }
+
+    /**
+     * Returns the value of the {@link #myXPos} field, 0 if null.
+     *
+     * @return the X position
+     */
+    public int getXPos()
+    {
+        return myXPos == null ? 0 : myXPos.intValue();
     }
 }

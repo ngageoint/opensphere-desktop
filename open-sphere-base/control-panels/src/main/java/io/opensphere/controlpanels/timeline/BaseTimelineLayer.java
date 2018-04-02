@@ -27,7 +27,7 @@ import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakObservableValue;
 import io.opensphere.core.util.awt.AWTUtilities;
-import io.opensphere.core.util.swing.FontAwesomeIcon;
+import io.opensphere.core.util.swing.GenericFontIcon;
 
 /**
  * The base timeline layer.
@@ -124,7 +124,7 @@ class BaseTimelineLayer extends AbstractTimelineLayer
     @Override
     public List<? extends Component> getMenuItems(String contextId, TimespanContextKey key)
     {
-        JMenuItem item = new JMenuItem("Zoom", new FontAwesomeIcon(AwesomeIcon.ICON_CROP, Color.WHITE));
+        JMenuItem item = new JMenuItem("Zoom", new GenericFontIcon(AwesomeIcon.ICON_CROP, Color.WHITE));
         item.addActionListener(new ActionListener()
         {
             @Override

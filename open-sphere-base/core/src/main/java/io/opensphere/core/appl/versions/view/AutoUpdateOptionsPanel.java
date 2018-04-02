@@ -30,7 +30,7 @@ import io.opensphere.core.appl.versions.model.AutoUpdatePreferenceKeys;
 import io.opensphere.core.appl.versions.model.AutoUpdatePreferences;
 import io.opensphere.core.util.AwesomeIcon;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.swing.FontAwesomeIcon;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.core.util.swing.binding.CheckBox;
 import io.opensphere.core.util.swing.binding.TextField;
@@ -50,19 +50,19 @@ public class AutoUpdateOptionsPanel extends ViewPanel
     private final Map<String, ButtonModel> myPreferredVersionDictionary;
 
     /** The controller used for application state changes. */
-    private AutoUpdateController myController;
+    private final AutoUpdateController myController;
 
     /** The model in which values are contained. */
-    private AutoUpdatePreferences myPreferences;
+    private final AutoUpdatePreferences myPreferences;
 
     /** The button group used to enforce unique version selection. */
-    private ButtonGroup myPreferredVersionButtonGroup;
+    private final ButtonGroup myPreferredVersionButtonGroup;
 
     /** The container in which version rows are displayed. */
-    private GridBagPanel myVersionContainer;
+    private final GridBagPanel myVersionContainer;
 
     /** The toolbox through which application state is accessed. */
-    private Toolbox myToolbox;
+    private final Toolbox myToolbox;
 
     /**
      * Creates a new options panel for configuring auto update.
@@ -137,7 +137,7 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         if (!isPreferred)
         {
             box.add(Box.createHorizontalGlue());
-            JButton deleteButton = new JButton(new FontAwesomeIcon(AwesomeIcon.ICON_TRASH_O, Color.WHITE));
+            JButton deleteButton = new JButton(new GenericFontIcon(AwesomeIcon.ICON_TRASH_O, Color.WHITE));
             deleteButton.setBackground(Color.RED);
             box.add(deleteButton);
             deleteButton.addActionListener(e -> deleteVersion(version, box, deleteButton));
