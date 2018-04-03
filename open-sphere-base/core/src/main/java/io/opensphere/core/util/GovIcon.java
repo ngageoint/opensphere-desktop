@@ -1,5 +1,10 @@
 package io.opensphere.core.util;
 
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+
+import io.opensphere.core.util.swing.SwingUtilities;
+
 /** An enumeration over the set of available govicons.io icons. */
 public enum GovIcon implements FontIconEnum
 {
@@ -414,6 +419,11 @@ public enum GovIcon implements FontIconEnum
     /** Enumerable representation of a world icon. */
     WORLD("\ue947");
 
+    static
+    {
+        GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(SwingUtilities.GOVICONS_FONT);
+    }
+
     /**
      * The font code defining the icon.
      */
@@ -438,5 +448,11 @@ public enum GovIcon implements FontIconEnum
     public String getFontCode()
     {
         return myFontCode;
+    }
+
+    @Override
+    public Font getFont()
+    {
+        return SwingUtilities.GOVICONS_FONT;
     }
 }

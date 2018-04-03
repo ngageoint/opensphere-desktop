@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import io.opensphere.core.util.lang.ToStringHelper;
+
 /** Configuration class for Manual proxies with exclusion lists. */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -78,5 +80,17 @@ public class ManualProxyConfiguration extends ProxyConfiguration
     public void setPort(int port)
     {
         myPort = port;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return new ToStringHelper(this).add("Host", myHost).add("Port", myPort).addIfNotNull("Exclusions", myExclusionPatterns)
+                .toString();
     }
 }

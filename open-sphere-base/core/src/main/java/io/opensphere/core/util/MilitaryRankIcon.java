@@ -1,5 +1,10 @@
 package io.opensphere.core.util;
 
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+
+import io.opensphere.core.util.swing.SwingUtilities;
+
 /** Enumerable representation of Military Rank webfont. */
 public enum MilitaryRankIcon implements FontIconEnum
 {
@@ -219,6 +224,11 @@ public enum MilitaryRankIcon implements FontIconEnum
     /** Enumerable representation of SgtMajMarCor. */
     RANK_01_E9_3("*");
 
+    static
+    {
+        GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(SwingUtilities.MILITARY_RANK_FONT);
+    }
+
     /**
      * The font code defining the icon.
      */
@@ -239,8 +249,15 @@ public enum MilitaryRankIcon implements FontIconEnum
      *
      * @return the value stored in the {@link #myFontCode} field.
      */
+    @Override
     public String getFontCode()
     {
         return myFontCode;
+    }
+
+    @Override
+    public Font getFont()
+    {
+        return SwingUtilities.MILITARY_RANK_FONT;
     }
 }

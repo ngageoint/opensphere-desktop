@@ -8,17 +8,16 @@ import java.awt.event.WindowEvent;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.ButtonBar.ButtonData;
-
 import javax.swing.JDialog;
 
 import io.opensphere.core.util.ThreadConfined;
 import io.opensphere.core.util.ValidationStatus;
 import io.opensphere.core.util.ValidatorSupport;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.ButtonBar.ButtonData;
 
 /** Swing dialog that contains a JavaFX component. */
 public class JFXDialog extends JDialog

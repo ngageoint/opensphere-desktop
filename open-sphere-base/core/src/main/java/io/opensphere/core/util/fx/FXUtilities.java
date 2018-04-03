@@ -1,5 +1,7 @@
 package io.opensphere.core.util.fx;
 
+import static io.opensphere.core.util.lang.NumberUtilities.toFloat;
+
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -11,6 +13,18 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
+import javax.swing.ImageIcon;
+
+import org.apache.log4j.Logger;
+
+import com.sun.javafx.application.PlatformImpl;
+
+import io.opensphere.core.units.duration.Duration;
+import io.opensphere.core.units.duration.Nanoseconds;
+import io.opensphere.core.util.image.IconUtil;
+import io.opensphere.core.util.image.IconUtil.IconStyle;
+import io.opensphere.core.util.image.IconUtil.IconType;
+import io.opensphere.core.util.lang.Nulls;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
@@ -44,19 +58,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.web.WebEngine;
 import javafx.util.Callback;
-
-import javax.swing.ImageIcon;
-
-import org.apache.log4j.Logger;
-
-import com.sun.javafx.application.PlatformImpl;
-
-import io.opensphere.core.units.duration.Duration;
-import io.opensphere.core.units.duration.Nanoseconds;
-import io.opensphere.core.util.image.IconUtil;
-import io.opensphere.core.util.image.IconUtil.IconStyle;
-import io.opensphere.core.util.image.IconUtil.IconType;
-import io.opensphere.core.util.lang.Nulls;
 
 /** JavaFX utilities. */
 @SuppressWarnings("PMD.GodClass")
@@ -428,7 +429,8 @@ public final class FXUtilities
     }
 
     /**
-     * Converts an AWT color to a JavaFX color.
+     * Converts an AWT color to a JavaFX color. If no color is provided, default
+     * to White.
      *
      * @param awtColor the AWT color
      * @return the JavaFX color
@@ -436,25 +438,42 @@ public final class FXUtilities
     public static Color fromAwtColor(java.awt.Color awtColor)
     {
         final double maxOpacity = 255.;
-        Color color = null;
+        Color color;
+
         if (awtColor != null)
         {
             color = Color.rgb(awtColor.getRed(), awtColor.getGreen(), awtColor.getBlue(), awtColor.getAlpha() / maxOpacity);
+        }
+        else
+        {
+            color = Color.WHITE;
         }
 
         return color;
     }
 
     /**
-     * Converts a JavaFX color to an AWT color.
+     * Converts a JavaFX color to an AWT color. If no color is provided, default
+     * to White.
      *
      * @param color the JavaFX color
      * @return the AWT color
      */
     public static java.awt.Color toAwtColor(Color color)
     {
-        // TODO add opacity
-        return new java.awt.Color(color.hashCode() >> 8);
+        java.awt.Color awtColor;
+
+        if (color != null)
+        {
+            awtColor = new java.awt.Color(toFloat(color.getRed()), toFloat(color.getGreen()), toFloat(color.getBlue()),
+                    toFloat(color.getOpacity()));
+        }
+        else
+        {
+            awtColor = java.awt.Color.WHITE;
+        }
+
+        return awtColor;
     }
 
     /**
