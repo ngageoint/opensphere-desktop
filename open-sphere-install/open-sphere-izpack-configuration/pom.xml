@@ -4,7 +4,7 @@
     <parent>
         <groupId>io.open-sphere.install</groupId>
         <artifactId>open-sphere-install</artifactId>
-        <version>5.2.3</version>
+        <version>5.2.4-SNAPSHOT</version>
     </parent>
     <artifactId>open-sphere-izpack-configuration</artifactId>
     <name>${application.display.name} IZPack Installer Configuration</name>
