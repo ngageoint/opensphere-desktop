@@ -195,12 +195,10 @@ public class WFSDataTypeBuilder
         if (info instanceof WFSDataType && info.getMetaDataInfo() instanceof WFSMetaDataInfo)
         {
             WFSDataType wfsDTI = (WFSDataType)info;
-            WFSMetaDataInfo origMDI = (WFSMetaDataInfo)wfsDTI.getMetaDataInfo();
 
             // The metadata info for the new data type.
             WFSMetaDataInfo metaDataInfo = new WFSMetaDataInfo(myToolbox, columnManager);
-            metaDataInfo.setDynamicTime(origMDI.isDynamicTime());
-            metaDataInfo.setGeometryColumn(wfsDTI.getMetaDataInfo().getGeometryColumn());
+            populateMetaData(metaDataInfo, wfsDTI, state);
 
             String stateIdSuffix = " (" + stateId + ")";
             String typeName = state.getId();
@@ -227,26 +225,6 @@ public class WFSDataTypeBuilder
             {
                 newDti.addTag(tag, this);
             }
-            for (String col : state.getDisabledColumns())
-            {
-                metaDataInfo.addDeselectedColumn(col);
-            }
-
-            if (state.isDisableEmptyColumns())
-            {
-                metaDataInfo.setAutomaticallyDisableEmptyColumns(true);
-            }
-
-            // Copy the columns into the new data type.
-            for (String colName : wfsDTI.getMetaDataInfo().getKeyNames())
-            {
-                if (wfsDTI.getMetaDataInfo().getSpecialTypeForKey(colName) != null)
-                {
-                    metaDataInfo.setSpecialKey(colName, wfsDTI.getMetaDataInfo().getSpecialTypeForKey(colName), this);
-                }
-                metaDataInfo.addWFSKey(colName, wfsDTI.getMetaDataInfo().getKeyClassType(colName), this);
-            }
-            metaDataInfo.copyKeysToOriginalKeys();
             newDti.setQueryable(wfsDTI.isQueryable());
             newDti.setMetaDataInfo(metaDataInfo);
             newDti.setOrderKey(wfsDTI.getOrderKey());
@@ -261,6 +239,41 @@ public class WFSDataTypeBuilder
         }
 
         return newDti;
+    }
+
+    /**
+     * Populates the meta data.
+     *
+     * @param metaDataInfo the meta data
+     * @param wfsDTI the WFS data type
+     * @param state the WFS layer state
+     */
+    protected void populateMetaData(WFSMetaDataInfo metaDataInfo, WFSDataType wfsDTI, WFSLayerState state)
+    {
+        WFSMetaDataInfo origMDI = (WFSMetaDataInfo)wfsDTI.getMetaDataInfo();
+        metaDataInfo.setDynamicTime(origMDI.isDynamicTime());
+        metaDataInfo.setGeometryColumn(wfsDTI.getMetaDataInfo().getGeometryColumn());
+
+        for (String col : state.getDisabledColumns())
+        {
+            metaDataInfo.addDeselectedColumn(col);
+        }
+
+        if (state.isDisableEmptyColumns())
+        {
+            metaDataInfo.setAutomaticallyDisableEmptyColumns(true);
+        }
+
+        // Copy the columns into the new data type.
+        for (String colName : wfsDTI.getMetaDataInfo().getKeyNames())
+        {
+            if (wfsDTI.getMetaDataInfo().getSpecialTypeForKey(colName) != null)
+            {
+                metaDataInfo.setSpecialKey(colName, wfsDTI.getMetaDataInfo().getSpecialTypeForKey(colName), this);
+            }
+            metaDataInfo.addWFSKey(colName, wfsDTI.getMetaDataInfo().getKeyClassType(colName), this);
+        }
+        metaDataInfo.copyKeysToOriginalKeys();
     }
 
     /**
