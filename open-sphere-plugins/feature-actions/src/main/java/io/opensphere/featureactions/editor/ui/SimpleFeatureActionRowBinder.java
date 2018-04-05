@@ -1,11 +1,6 @@
 package io.opensphere.featureactions.editor.ui;
 
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.featureactions.editor.controller.FilterActionAdapter;
 import io.opensphere.featureactions.editor.controller.SimpleFeatureActionController;
 import io.opensphere.featureactions.editor.model.CriteriaOptions;
@@ -14,6 +9,10 @@ import io.opensphere.featureactions.editor.model.SimpleFeatureActionGroup;
 import io.opensphere.featureactions.editor.model.SimpleFeatureActions;
 import io.opensphere.featureactions.model.StyleAction;
 import io.opensphere.mantle.controller.DataTypeController;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 /**
  * Binds the {@link SimpleFeatureActionRowView} to the
@@ -55,7 +54,7 @@ public class SimpleFeatureActionRowBinder
         myModel = model;
         myController = new SimpleFeatureActionController(typeController, actions, group, myModel);
         bindUI();
-        Platform.runLater(() -> updateVisibleElements());
+        FXUtilities.runOnFXThreadAndWait(() -> updateVisibleElements());
     }
 
     /** Unbinds the ui from the model. */

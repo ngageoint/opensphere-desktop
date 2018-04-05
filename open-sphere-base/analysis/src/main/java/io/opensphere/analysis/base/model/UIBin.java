@@ -5,18 +5,17 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.paint.Color;
-
 import javax.annotation.concurrent.NotThreadSafe;
 
 import gnu.trove.list.TLongList;
 import gnu.trove.list.array.TLongArrayList;
 import io.opensphere.analysis.binning.bins.Bin;
 import io.opensphere.analysis.util.DataTypeUtilities;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.data.element.DataElement;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.paint.Color;
 
 /**
  * UI bin model that composes a regular bin.
@@ -63,7 +62,7 @@ public class UIBin implements Bin<DataElement>, Comparable<UIBin>
      */
     public void setCount(int count)
     {
-        Platform.runLater(() -> myCount.set(count));
+        FXUtilities.runOnFXThreadAndWait(() -> myCount.set(count));
     }
 
     /**

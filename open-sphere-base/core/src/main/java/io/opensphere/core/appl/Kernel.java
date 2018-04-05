@@ -31,8 +31,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXBusyLabel;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.opensphere.core.Notify;
 import io.opensphere.core.Plugin;
@@ -400,7 +398,7 @@ public class Kernel
     private void initJavaFx()
     {
         Platform.setImplicitExit(false);
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
     }

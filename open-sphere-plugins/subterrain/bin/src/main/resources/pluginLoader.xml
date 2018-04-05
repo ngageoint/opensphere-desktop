@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pluginLoaderCollection>
+    <pluginLoaderData>
+        <id>Subterrain</id>
+        <class>io.opensphere.subterrain.SubterrainPlugin</class>
+        <appVersion>1.0</appVersion>
+    </pluginLoaderData>
+</pluginLoaderCollection>

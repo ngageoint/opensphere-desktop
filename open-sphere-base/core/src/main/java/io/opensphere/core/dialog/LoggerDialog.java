@@ -43,6 +43,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 
+//import io.opensphere.core.common.lobintersect.Point;
 import io.opensphere.core.hud.awt.AbstractInternalFrame;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.Utilities;
@@ -191,16 +192,15 @@ public class LoggerDialog extends AbstractInternalFrame
      *
      * @param text The text to search for (case insensitive).
      */
-    @SuppressWarnings("unchecked")
     private void search(String text)
     {
         mySelectedNode = null;
         if (!text.isEmpty())
         {
             DefaultMutableTreeNode node = getRootNode();
-            for (Enumeration<DefaultMutableTreeNode> nodeEnum = node.preorderEnumeration(); nodeEnum.hasMoreElements();)
+            for (Enumeration<TreeNode> nodeEnum = node.preorderEnumeration(); nodeEnum.hasMoreElements();)
             {
-                node = nodeEnum.nextElement();
+                node = (DefaultMutableTreeNode)nodeEnum.nextElement();
                 if (node.toString().toLowerCase().contains(text.toLowerCase()))
                 {
                     mySelectedNode = node;

@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import io.opensphere.core.datafilter.columns.ColumnMapping;
+import io.opensphere.core.util.fx.AutoCompleteComboBoxListener;
+import io.opensphere.core.util.fx.FXUtilities;
+import io.opensphere.core.util.image.IconUtil.IconType;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -15,11 +19,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-
-import io.opensphere.core.datafilter.columns.ColumnMapping;
-import io.opensphere.core.util.fx.AutoCompleteComboBoxListener;
-import io.opensphere.core.util.fx.FXUtilities;
-import io.opensphere.core.util.image.IconUtil.IconType;
 
 /** A column mapping ListCell. */
 class ColumnMappingCell extends ListCell<ColumnMapping>
@@ -39,17 +38,17 @@ class ColumnMappingCell extends ListCell<ColumnMapping>
     /** Column selection widget. */
     private final ComboBox<String> columnSel = new ComboBox<>();
 
-    /** Set to true when events originating here come back.  Ignore them. */
+    /** Set to true when events originating here come back. Ignore them. */
     private boolean ignoreEdits;
 
     /** Index of types by display name. */
-    private Map<String, DataTypeRef> nameIndex = new TreeMap<>();
+    private final Map<String, DataTypeRef> nameIndex = new TreeMap<>();
 
     /** Index of types by type key. */
-    private Map<String, DataTypeRef> keyIndex = new TreeMap<>();
+    private final Map<String, DataTypeRef> keyIndex = new TreeMap<>();
 
     /** List of display names of active types. */
-    private List<String> activeList = new LinkedList<>();
+    private final List<String> activeList = new LinkedList<>();
 
     /**
      * Constructor.
@@ -62,7 +61,7 @@ class ColumnMappingCell extends ListCell<ColumnMapping>
     {
         rsc = cmr;
         model = m;
-        for (DataTypeRef r :  layers)
+        for (DataTypeRef r : layers)
         {
             nameIndex.put(r.getType().getDisplayName(), r);
             keyIndex.put(r.getType().getTypeKey(), r);
@@ -92,8 +91,8 @@ class ColumnMappingCell extends ListCell<ColumnMapping>
         Button delB = FXUtilities.newIconButton(IconType.CLOSE, Color.RED);
         delB.setTooltip(new Tooltip("Remove"));
         delB.setOnAction(e -> model.remove(getIndex()));
-        rootPane.getChildren().addAll(new Label("Layer:"), layerSel,
-                new Label(" Column:"), columnSel, FXUtilities.newHSpacer(0), delB);
+        rootPane.getChildren().addAll(new Label("Layer:"), layerSel, new Label(" Column:"), columnSel, FXUtilities.newHSpacer(0),
+                delB);
     }
 
     @Override
@@ -154,15 +153,16 @@ class ColumnMappingCell extends ListCell<ColumnMapping>
     /** Writes an updated ColumnMapping instance to the model (i.e., List). */
     private void updateModel()
     {
-        // Note:  do not write to the model synchronously lest the resulting
+        // Note: do not write to the model synchronously lest the resulting
         // events cause conflicts in access to the model.
         String lay = keyOf(layerSel.getValue());
         String col = columnSel.getValue();
-        Platform.runLater(() -> model.set(getIndex(), new ColumnMapping(null, lay, col)));
+        FXUtilities.runOnFXThreadAndWait(() -> model.set(getIndex(), new ColumnMapping(null, lay, col)));
     }
 
     /**
      * Lookup the display name for a given type key
+     * 
      * @param key key
      * @return name
      */
@@ -178,6 +178,7 @@ class ColumnMappingCell extends ListCell<ColumnMapping>
 
     /**
      * Lookup the type key for a given display name.
+     * 
      * @param name name
      * @return key
      */
@@ -193,6 +194,7 @@ class ColumnMappingCell extends ListCell<ColumnMapping>
 
     /**
      * Null-tolerant get method.
+     * 
      * @param m a Map
      * @param k a key
      * @return a value, or null

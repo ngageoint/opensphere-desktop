@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>io.open-sphere</groupId>
+		<artifactId>open-sphere-base</artifactId>
+		<version>5.2.4-SNAPSHOT</version>
+	</parent>
+	<artifactId>column-mappings</artifactId>
+	<packaging>jar</packaging>
+	<name>${application.display.name} Column Mappings Library</name>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/xsd</directory>
+			</resource>
+			<resource>
+				<directory>src/main/xjb</directory>
+			</resource>
+		</resources>
+
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<episode>false</episode>
+							<useDependenciesAsEpisodes>false</useDependenciesAsEpisodes>
+							<schemaDirectory>src/main/xsd</schemaDirectory>
+							<generatePackage>io.opensphere.state.v2</generatePackage>
+							<schemas>
+								<schema>
+									<fileset>
+										<includes>
+											<include>columnMappings.xsd</include>
+										</includes>
+									</fileset>
+								</schema>
+							</schemas>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<dependencies>
+		<dependency>
+		    <groupId>javax.xml.bind</groupId>
+		    <artifactId>jaxb-api</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>

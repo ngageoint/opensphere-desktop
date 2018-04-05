@@ -1,6 +1,6 @@
 package io.opensphere.core.util;
 
-import javafx.application.Platform;
+import io.opensphere.core.util.fx.FXUtilities;
 import javafx.collections.ListChangeListener;
 
 /**
@@ -87,13 +87,13 @@ public class ObservableValueService extends CompositeService
             @Override
             public void open()
             {
-                Platform.runLater(() -> observable.addListener(listener));
+                FXUtilities.runOnFXThreadAndWait(() -> observable.addListener(listener));
             }
 
             @Override
             public void close()
             {
-                Platform.runLater(() -> observable.removeListener(listener));
+                FXUtilities.runOnFXThreadAndWait(() -> observable.removeListener(listener));
             }
         });
     }

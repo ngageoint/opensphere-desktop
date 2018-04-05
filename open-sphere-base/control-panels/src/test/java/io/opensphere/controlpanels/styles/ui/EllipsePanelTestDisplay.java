@@ -9,7 +9,7 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.controlpanels.styles.model.EllipseModel;
 import io.opensphere.core.UnitsRegistry;
@@ -30,7 +30,7 @@ public class EllipsePanelTestDisplay
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

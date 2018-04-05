@@ -1,11 +1,10 @@
 package io.opensphere.analysis.base.controller;
 
-import javafx.application.Platform;
-
 import io.opensphere.analysis.base.model.CommonSettingsModel;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.event.EventListenerService;
 import io.opensphere.core.util.collections.CollectionUtilities;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.DataTypeController;
 import io.opensphere.mantle.controller.event.AbstractDataTypeControllerEvent;
@@ -68,7 +67,7 @@ public class SettingsModelController extends EventListenerService
      */
     private void handleActiveDataGroupsChangedEvent(ActiveDataGroupsChangedEvent event)
     {
-        Platform.runLater(() ->
+        FXUtilities.runOnFXThreadAndWait(() ->
         {
             for (DataGroupInfo group : event.getActivatedGroups())
             {
@@ -94,7 +93,7 @@ public class SettingsModelController extends EventListenerService
      */
     private void handleDataTypeControllerEvent(AbstractDataTypeControllerEvent event)
     {
-        Platform.runLater(() ->
+        FXUtilities.runOnFXThreadAndWait(() ->
         {
             if (event instanceof DataTypeAddedEvent)
             {
@@ -124,7 +123,7 @@ public class SettingsModelController extends EventListenerService
      */
     private void handleDataTypeInfoChangeEvent(AbstractDataTypeInfoChangeEvent event)
     {
-        Platform.runLater(() ->
+        FXUtilities.runOnFXThreadAndWait(() ->
         {
             if (event instanceof DataTypeVisibilityChangeEvent)
             {
@@ -167,7 +166,7 @@ public class SettingsModelController extends EventListenerService
         if (isToolQualifiedType(layer) && !myModel.availableLayersProperty().contains(layer))
         {
             int index = CollectionUtilities.indexOf(layer, myModel.availableLayersProperty(),
-                (o1, o2) -> o1.getSourcePrefixAndDisplayNameCombo().compareTo(o2.getSourcePrefixAndDisplayNameCombo()));
+                    (o1, o2) -> o1.getSourcePrefixAndDisplayNameCombo().compareTo(o2.getSourcePrefixAndDisplayNameCombo()));
             myModel.availableLayersProperty().add(index, layer);
         }
     }

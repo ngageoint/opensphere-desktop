@@ -8,6 +8,7 @@ import javax.swing.JMenuItem;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.MenuBarRegistry;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.fx.JFXDialog;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -241,7 +242,7 @@ public final class GuiUtil
         {
             synchronized (this)
             {
-                Platform.runLater(() -> runJfx());
+                FXUtilities.runOnFXThreadAndWait(() -> runJfx());
                 try
                 {
                     wait();

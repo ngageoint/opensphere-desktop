@@ -2,12 +2,12 @@ package io.opensphere.core.util.fx;
 
 import java.awt.Window;
 
+import javax.swing.JDialog;
+
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonBar.ButtonData;
-
-import javax.swing.JDialog;
 
 /** Swing dialog that contains a JavaFX ButtonPane. */
 public abstract class ButtonDialog extends JDialog
@@ -41,7 +41,7 @@ public abstract class ButtonDialog extends JDialog
      */
     public void initialize()
     {
-        Platform.runLater(() -> myFxPanel.setScene(createScene()));
+        FXUtilities.runOnFXThreadAndWait(() -> myFxPanel.setScene(createScene()));
     }
 
     /**

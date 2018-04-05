@@ -117,7 +117,7 @@ public class JFXDialog extends JDialog
         this(owner, title, showCancel);
         if (nodeSupp != null)
         {
-            Platform.runLater(() ->
+            FXUtilities.runOnFXThreadAndWait(() ->
             {
                 guiNode = nodeSupp.get();
                 if (guiNode != null)
@@ -213,7 +213,7 @@ public class JFXDialog extends JDialog
         {
             guiEditor = (Editor)guiNode;
         }
-        Platform.runLater(() -> mainPanel.setScene(createScene()));
+        FXUtilities.runOnFXThreadAndWait(() -> mainPanel.setScene(createScene()));
     }
 
     /**

@@ -4,23 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.collections.ListChangeListener;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Series;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.util.StringConverter;
-
 import io.opensphere.analysis.base.model.BinType;
 import io.opensphere.analysis.base.model.DataType;
 import io.opensphere.analysis.base.model.LabelModel;
@@ -36,6 +19,21 @@ import io.opensphere.core.units.duration.Days;
 import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.fx.FXUtilities;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.ListChangeListener;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.util.StringConverter;
 
 /**
  * BarChart that can have the orientation changed. Currently this is not
@@ -79,7 +77,7 @@ public class SwitchableBarChart extends BorderPane
     {
         super();
         myModel = model;
-        Platform.runLater(this::initFx);
+        FXUtilities.runOnFXThreadAndWait(this::initFx);
     }
 
     /** Initializes the JavaFX stuff. */
@@ -98,7 +96,7 @@ public class SwitchableBarChart extends BorderPane
         myModel.getSettingsModel().selectedColumnProperty().addListener((obs, old, newValue) -> getCharts().stream()
                 .forEach(chart -> updateCategoryLabel((CategoryAxis)chart.lookup("#category"))));
         myModel.getSettingsModel().categoryAxisTextProperty().addListener(
-            (obs, old, newValue) -> getCharts().stream().forEach(chart -> updateCategoryAxisText(chart, newValue)));
+                (obs, old, newValue) -> getCharts().stream().forEach(chart -> updateCategoryAxisText(chart, newValue)));
         myModel.getSettingsModel().countAxisTextProperty()
                 .addListener((obs, old, newValue) -> getCharts().stream().forEach(chart -> updateCountAxisText(chart, newValue)));
 

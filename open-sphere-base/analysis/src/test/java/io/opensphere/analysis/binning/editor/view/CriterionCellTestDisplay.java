@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.analysis.binning.criteria.BinCriteria;
 import io.opensphere.analysis.binning.criteria.BinCriteriaElement;
@@ -45,7 +45,7 @@ public class CriterionCellTestDisplay
     @Test
     public void testEdit()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -94,7 +94,7 @@ public class CriterionCellTestDisplay
     @Test
     public void testNew()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -128,7 +128,7 @@ public class CriterionCellTestDisplay
     @Test
     public void testRemove()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

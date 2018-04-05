@@ -19,7 +19,7 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.controlpanels.iconpicker.model.IconPickerModel;
 import io.opensphere.core.PluginToolboxRegistry;
@@ -60,7 +60,7 @@ public class IconPickerControllerTestDisplay
     @Test
     public void testShowPicker() throws MalformedURLException, InterruptedException
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
         EasyMockSupport support = new EasyMockSupport();
@@ -148,7 +148,7 @@ public class IconPickerControllerTestDisplay
     @Test
     public void testShowPickerNotDefault() throws MalformedURLException, InterruptedException
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
         EasyMockSupport support = new EasyMockSupport();

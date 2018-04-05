@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suppressions PUBLIC
+    "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+    "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+	<!-- Suppress duplicate code warning for ARC REST interface classes. -->
+	<suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]wfs[\\/]esri[\\/]Esri(SimpleRenderer|RendererInfo)\.java" checks="StrictDuplicateCode" />
+	
+	<!-- WFSEnvoy uses classes in common that throw Exception. -->
+	<suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]wfs[\\/]envoy[\\/]WFSEnvoy\.java" checks="IllegalCatchCheck" />
+	
+	<!-- Checkstyle is being weird about the JSON annotations. -->
+	<suppress files="src[\\/]main[\\/]java[\\/]io[\\/]opensphere[\\/]wfs[\\/]esri[\\/].*\.java" checks="IndentationCheck" />
+</suppressions>
+

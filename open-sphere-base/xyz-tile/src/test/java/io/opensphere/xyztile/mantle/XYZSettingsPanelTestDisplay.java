@@ -7,7 +7,7 @@ import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.xyztile.model.XYZSettings;
 
@@ -22,7 +22,7 @@ public class XYZSettingsPanelTestDisplay
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

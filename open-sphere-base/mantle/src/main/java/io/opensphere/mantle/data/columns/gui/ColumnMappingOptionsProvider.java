@@ -1,16 +1,13 @@
 package io.opensphere.mantle.data.columns.gui;
 
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-
 import javax.swing.JPanel;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.options.impl.OptionsPanel;
 import io.opensphere.core.util.fx.FXUtilities;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
 
 /** Column mapping OptionsProvider for global settings. */
 public class ColumnMappingOptionsProvider extends AbstractOptionsProvider
@@ -46,7 +43,7 @@ public class ColumnMappingOptionsProvider extends AbstractOptionsProvider
         if (myPanel == null)
         {
             final JFXPanel fxPanel = new JFXPanel();
-            PlatformImpl.runAndWait(() -> fxPanel.setScene(createScene()));
+            FXUtilities.runOnFXThreadAndWait(() -> fxPanel.setScene(createScene()));
             myPanel = new OptionsPanel(fxPanel, true);
         }
         return myPanel;

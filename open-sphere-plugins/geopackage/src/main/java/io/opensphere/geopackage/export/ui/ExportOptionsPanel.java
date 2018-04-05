@@ -17,7 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -65,7 +65,7 @@ public class ExportOptionsPanel extends JFXPanel
     public int getMaxZoomLevel()
     {
         final AtomicInteger level = new AtomicInteger();
-        PlatformImpl.runAndWait(() -> level.set(myMaxZoomCombo.getSelectionModel().getSelectedItem().intValue()));
+        Platform.runLater(() -> level.set(myMaxZoomCombo.getSelectionModel().getSelectedItem().intValue()));
         return level.get();
     }
 

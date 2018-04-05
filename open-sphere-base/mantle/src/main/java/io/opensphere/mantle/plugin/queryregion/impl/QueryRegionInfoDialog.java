@@ -3,16 +3,7 @@ package io.opensphere.mantle.plugin.queryregion.impl;
 import java.awt.Window;
 import java.util.function.Consumer;
 
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.input.MouseEvent;
-
 import javax.swing.JDialog;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.core.datafilter.DataFilterGroup;
 import io.opensphere.core.datafilter.DataFilterRegistry;
@@ -20,6 +11,13 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.plugin.queryregion.QueryRegion;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+import javafx.scene.input.MouseEvent;
 
 /** Dialog that shows information about a query region. */
 public class QueryRegionInfoDialog extends JDialog
@@ -64,7 +62,7 @@ public class QueryRegionInfoDialog extends JDialog
         JFXPanel panel = new JFXPanel();
         setContentPane(panel);
         setVisible(true);
-        PlatformImpl.startup(() ->
+        FXUtilities.runOnFXThreadAndWait(() ->
         {
             TreeItem<Object> root = new TreeItem<>("Layers for Query Region");
             root.setExpanded(true);

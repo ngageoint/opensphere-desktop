@@ -1,0 +1,298 @@
+
+Section 1.  Least-Squares Localization from Lines
+
+  The problem at hand is to estimate a location given several lines-of-bearing
+that supposedly pass through it.  Each such line defines a point and a
+direction from that point to the desired location.  Cognizant of the fact that
+the lines themselves are only approximately known, we want the best estimate of
+the location common to all of the lines.  The solution outlined below minimizes
+the sum of the squared distances of the estimate from the lines to produce what
+is deemed the best estimate of a common point, given the uncertainties.
+
+  Since real-world lines-of-bearing are usually given in geodetic coordinates
+on the curved surface of Earth, conversion to Euclidian coordinates must be
+preformed before solving the problem using linear algebra.  How to do so is
+described in Section 4.
+
+  The problem is given as a set of lines, L_1, L_2, ..., L_n, expressed in
+parametric form
+
+      p_k(t) = p0_k + u_k t,
+
+where t ranges over R, p0_k is one point on L_k, and u_k is a unit vector
+parallel to the line.  This form is obtained rather directly from the geodetic
+definition of the lines-of-bearing.  However, it is more convenient to work
+with lines defined in the plane as affine subspaces of codimension 1:
+
+      f_k(x) = <a_k, x> + b_k = 0,
+
+where <.,.> denotes the vector inner product, a_k is a unit vector orthogonal
+to u_k, and b_k = -<a_k, p0_k> is chosen so that f_k(p0_k) = 0.  The great
+advantage of this representation is that distance from the L_k to a point, x,
+in the plane is obtained by evaluating f, as
+
+      d(L_k, x) = |f_k(x)|,
+
+and therefore,
+
+      d(L_k, x)^2 = f_k(x)^2,
+
+where d denotes distance, and k ranges from 1 to n.  Now, as stated above, the
+desired location is to be found where the sum of these squared distances is
+minimized.  To find it, we can calculate the sum, which is a positive
+semi-definite, real-valued quadratic function defined on the plane.  Then we
+can differentiate and find the point where its partial derivatives are all
+zero; i.e., where the total derivative, or gradient, is the zero vector.  Note
+that at least one solution must exist, and it is unique unless all of the lines
+are parallel.
+
+  The sum of the squared distances can be reduced to a simple expression by
+some careful algebra.  Switching to matrix notation,
+
+      f_k(x) = a_k x + b_k,
+
+where a_k is a row vector, and x and b_k are column vectors.  Therefore,
+
+      f_k(x)^2 = (a_k x + b_k)^2
+
+and then differentiating with the chain rule gives
+
+      d/dx (f_k(x)^2) = 2 (a_k x + b_k) a_k.
+
+Now, we wanted the derivative of the sum, which is found as the sum of the
+derivatives:
+
+(1)   d/dx SUM f_k(x)^2 = 2 SUM (a_k x a_k + b_k a_k)
+                        = 2 (SUM a_k x a_k + SUM b_k a_k),
+
+which we could calculate directly by addition.  However, it is far more
+convenient to observe that if a is an nx2 matrix whose kth row is a_k and b is
+an nx1 column vector whose kth element is b_k, then
+
+(2)   SUM b_k a_k = b^* a,
+
+and
+
+(3)   SUM a_k x a_k = SUM x^* a_k^* a_k
+                    = x^* SUM a_k^* a_k
+                    = x^* a^* a.
+
+Here, the star denotes the transpose, so that a_k^* is a column vector, and the
+product a_k^* a_k is the tensor product of a_k with itself, which is a matrix,
+in this case 2x2.  Thus the sum of them, a^* a, is also a 2x2 matrix.  Also,
+the first step in (3), namely substituting x^* a_k^* a_k for a_k x a_k is not
+obvious.  It is correct, however, since a_k x is a real number, so it is its
+own transpose.  Therefore a_k x a_k = (a_k x)^* a_k = x^* a_k^* a_k.
+
+  Combining (1), (2), and (3) yields
+
+      d/dx SUM f_k(x)^2 = 2 (x^* a^* a + b^* a).
+
+Now, we set this equal to zero and solve:
+
+      x^* a^* a + b^* a = 0
+      a^* a x + a^* b = 0
+              a^* a x = -a^* b
+                    x = -(a^* a)^(-1) a^* b
+
+to find the desired value of x.  As mentioned previously, there is a unique
+solution whenever not all of the lines are parallel.  When the lines are
+parallel a^* a is not invertible, and consequently formula for x cannot be
+evaluated.  In practice, this should almost never happen.  However, when the
+lines are nearly parallel, the matrix inversion can still be unruly, and the
+resulting x not very well localized.  In the code, the eigenvalues are checked
+to see when the matrix is ill-conditioned, in which case an error is reported.
+
+  As an aside, the approach described above cannot be directly generalized to
+higher dimensions, since the lines do not have codimension 1 except in the
+plane.  However, the problem can still be solved (if necessary).  Starting
+again with the set of parametric lines, observe that the squared distance can
+be expressed as
+
+      d(L_k, x)^2 = |(I - P_k) (x - p0_k)|^2,
+
+where |.| denotes the vector norm and P_k = u_k u_k^* is the projection onto
+the subspace spanned by u_k.  Since u_k is a column vector, u_k u_k^* is the
+tensor product of u_k with itself, and hence is a matrix.  It is also of note
+that I - P_k is the projection onto the subspace orthogonal to u_k, which is
+why the norm of it is used to measure distances from the line.  Henceforth,
+let Q_k = I - P_k.  Now, differentiate with the chain rule and simplify:
+
+      d/dx |Q_k (x - p0_k)|^2 = 2 (Q_k (x - p0_k))^* Q_k
+                              = 2 (x - p0_k)^* Q_k^* Q_k
+                              = 2 (x - p0_k)^* Q_k^*.
+
+The last simplification is possible because projections are symmetric and
+idempotent.  Then, we set the sum equal to zero and solve:
+
+      SUM 2 (x - p0_k)^* Q_k^* = 0
+            SUM Q_k (x - p0_k) = 0
+                   (SUM Q_k) x = SUM Q_k p0_k
+                             x = (SUM Q_K)^(-1) (SUM Q_k p0_k).
+
+As in the two-dimensional case, the required matrix inversion will always be
+possible except when the lines are all parallel.  This solution is not as nice
+because the summation cannot be reduced to matrix multiplication.
+
+
+Section 2.  Error Estimation
+
+  Returning to the 2-D case, we'd like to measure the "uncertainty" of the
+localization.  The quotation marks are there because an estimate of uncertainty
+in the inputs is usually not provided.  Consequently, uncertainty in the output
+is difficult to measure.  However, we can calculate two things that can be used
+to understand the localization statistically.
+
+  The most desired information is the error ellipse (ellipsoid in higher
+dimensions).  This shape is a concise way of representing the relative accuracy
+of the localization in different directions, and it is related to the
+directions of the lines.  To find it, we use the matrix that was used above,
+
+      m = a^* a.
+
+By its construction, it is symmetric and positive semi-definite, and since the
+localization is not unique when m is singular, we may assume it is positive
+definite.  Therefore it is diagonalizable with orthogonal eigenvectors and two
+positive eigenvalues.  The shape and orientation of the error ellipse are
+obtainable directly from the eigenvalues and eigenvectors, with the semiminor
+and semimajor axes parallel to the eigenvectors and having lengths proportional
+to e_i^(-1/2), where e_i are the eigenvalues.  With a little trigonometry and
+judicious scaling, the ellipse can be exported for display.
+
+  The second calculation has to do with the error arising from the problem
+itself.  As previously mentioned, there is usually no estimate of error in the
+input lines, but even so, a collection of more than two lines are not likely to
+have a single intersection point.  Therefore, we can measure the extent to
+which the estimate has missed lying exactly on the lines-of-bearing.
+
+  The one-dimensional case is familiar and can be used as an analogy.  Here, we
+have a set of points on a line and seek the point that minimizes the squared
+distances from the input points.  In fact, the estimate in this case is the
+familiar mean, and the measure of how much it misses is called the standard
+deviation, which is the square root of the mean squared distances from the
+input points.  Applying this analogy to the 2-D case, we want our standard
+deviation to be the square root of the mean squared distance from the input
+lines.  Recalling the expression for the squared distances, we find a formula
+for the standard deviation,
+
+    s = ((SUM (a_k x + b_k)^2) / n)^(1/2),
+
+which could be used to set the scale the error ellipse.  This was not done in
+the code because those ellipses are often too small to be visible, and they
+would always degenerate to a point whenever the problem involves only two
+lines.  As it currently stands, the scales of the ellipses are somewhat
+arbitrary.
+
+
+Section 3.  Detection of Outliers
+
+  One question that naturally arises is how the algorithm behaves when the
+lines-of-bearing do not actually converge.  This kind of thing can happen if
+unrelated data are accidentally introduced or if the data themselves are
+somehow corrupted.  As mentioned above, the algorithm always gives a unique
+solution except when the lines are all parallel, and it is partly because the
+algorithm treats the inputs as lines that extend infinitely in both directions.
+To be precise, though, a line-of-bearing is a ray, and if the location found by
+the algorithm is "behind" the ray's one endpoint, then it is likely that the
+ray should not have been used.  In fact, if the majority of the rays nearly
+converge in a region that for some is off-angle by more than a certain amount,
+then the minority can be removed and the location recalculated without their
+erroneous influence.
+
+  This strategy is actually implemented in the code, though there are some
+oddball cases that can usually be corrected by hand.  For instance, one or more
+outliers, even if they are eliminated in the first round, can pull the solution
+outside the viewing cone of legitimate inputs, causing those to be eliminated
+as well.  It is also possible that, after eliminating the outliers, there are
+not enough lines-of-bearing remaining to do the calculation.  In the latter
+case, the algorithm is considered to have failed.
+
+
+Section 4.  Conversion to Linear Space
+
+  The solution outlined above depends heavily on the fact that all operations
+are performed within a linear framework.  Real-world problems, however, occur
+on the surface of Earth, which is not linear.  We must, therefore, perform a
+conversion from that surface to a plane before proceeding and then convert back
+once the solution is found.  We do this by constructing a plane tangent to the
+surface and projecting the lines onto it.  To make the problem tractable, some
+simplifying assumptions are used.
+
+  The first assumption is that the Earth is a sphere.  This assumption makes
+the mathematical interpretation of latitude and longitude values much easier to
+work with and introduces very little error in the calculation.  In fact, the
+second assumption will usually be the greater source of error.  Positions in
+geodetic coordinates are converted into cartesian coordinates in 3-D, and to
+further simplify, everything is scaled so that the Earth has unit radius.
+
+  The second assumption is that the sphere can be modeled accurately by a plane
+tangent to the surface.  The amount of error introduced by this assumption is
+dependent on the scale of the problem, but will generally be tolerable whenever
+it is confined to a region of less than 20 or 30 degrees of latitude and/or
+longitude.  It is also only fair to mention that the projection should not be
+expected to work at all if the problem cannot be confined to a hemisphere.  In
+cases where the scale is "too large" (by some measure), an error should be
+reported.
+
+  The projection that is currently implemented is an orthographic projection
+onto a plane tangent to the sphere at a point chosen to represent the "average"
+location of the origin points of the lines-of-bearing.  This representative
+is found by adding the points as vectors in R^3 and then normalizing the sum,
+which is a calculation that avoids singularities at the poles and any other
+unpleasantness that may occur in the vicinity of the longitude branch cut
+(usually at 180 degrees).
+
+  As an aside, an alternative projection, namely the gnomonic, may give better
+results at larger scales.  Without an abundance of testing, it is difficult to
+say whether it is worth the trouble to implement it.
+
+
+Section 5.  The Last Resort
+
+  If the 2-D algorithm proves to be insufficient because of its range versus
+accuracy tradeoff, there is an alternative that may prove satisfactory.  In
+effect, every line-of-bearing is part of a geodesic on the Earth, which
+(assuming again that Earth is spherical) is a great circle on the sphere.  The
+approach described below takes advantage of the fact that a great circle is
+the intersection of the sphere with a plane containing its center (i.e., the
+origin).
+
+  Therefore, we can convert each LOB into a plane in R^3 and then proceed with
+an analogous least-squares localization from the planes.  The math for this
+operation will be quite similar, with each a_k being a unit normal to the
+corresponding plane, and each b_k = 0 (because the planes all contain the
+origin).  The final formula for x is the same,
+
+      x = -(a^* a)^(-1) a^* b,
+
+except that a^* a is 3x3 and will only be invertible if there are at least
+three planes and they don't all intersect in a line.  We don't really care
+about the value of x in any case, because when the solution is unique, it will
+always be the origin.  What we actually need is the matrix m = a^* a, or to be
+precise, its eigenvalues and eigenvectors.
+
+  The eigenvector corresponding to the smallest eigenvalue of m points to the
+location on the sphere that best represents the convergence of the great
+circles containing the lines-of-bearing.  Note that the smallest eigenvalue may
+be zero, which is okay, but if the multiplicity is higher than one, then the
+planes are all parallel, and there are infinitely many solutions.  Also, if
+another eigenvalue is too close to zero, then the problem may be considered
+ill-conditioned (i.e., the planes are all nearly parallel).  Assuming the
+problem is well-conditioned, the other two eigenvalues and eigenvectors can be
+used to construct an error ellipse on the surface in a manner similar to the
+2-D case.
+
+  In the procedure outlined above, there is an inherent ambiguity in that the
+eigenvector for the smallest eigenvalue of m identifies two antipodal points,
+both of which are candidate solutions to the localization problem.  Since each
+line-of-bearing in its original form has a definite directional bias, it should
+prefer one of the two candidates.  However, there is no guarantee that they
+will all agree on which one.  In case of disagreement, some means of
+identifying and eliminating outliers would have to be used.
+
+  The advantage of this approach is that it has no range limitation, including
+that the problem need not even be confined to a hemispherical region of the
+globe and that accuracy is not affected by distance.  The disadvantages are
+that rejecting outliers is a bit more tricky and that it has not been
+implemented.
+

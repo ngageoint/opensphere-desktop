@@ -12,7 +12,7 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.controlpanels.styles.model.EllipseModel;
 import io.opensphere.core.util.collections.New;
@@ -28,7 +28,7 @@ public class EllipseBinderTestDisplay
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

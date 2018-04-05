@@ -12,7 +12,7 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.Toolbox;
@@ -92,7 +92,7 @@ public class MergeUITestDisplay
     @Test
     public void testAccept() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -139,7 +139,7 @@ public class MergeUITestDisplay
     @Test
     public void testMergeUI()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

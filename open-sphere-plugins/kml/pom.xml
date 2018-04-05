@@ -12,6 +12,24 @@
 	<packaging>jar</packaging>
 	<name>${application.display.name} KML Plugin</name>
 
+	<build>
+		<plugins>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>9</source>
+                    <target>9</target>
+                    <compilerArgs>
+                        <arg>--add-exports</arg>
+                        <arg>java.xml/com.sun.org.apache.xml.internal.utils=ALL-UNNAMED</arg>
+                    </compilerArgs>
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
+		</plugins>
+	</build>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>

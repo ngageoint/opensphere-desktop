@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences topic="io.opensphere.kml.BundlePrefs">
+   <preference key="zoomTo" class="java.lang.Boolean">
+      <value>false</value>
+   </preference>
+</preferences>

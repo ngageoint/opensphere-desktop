@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.controlpanels.columnlabels.model.ColumnLabels;
 import io.opensphere.core.util.collections.New;
@@ -23,7 +23,7 @@ public class ColumnLabelsEditorTestDisplay
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

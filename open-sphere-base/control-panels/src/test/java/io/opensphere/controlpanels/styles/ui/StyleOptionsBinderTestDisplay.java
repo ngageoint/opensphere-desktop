@@ -11,7 +11,7 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.controlpanels.styles.model.StyleOptions;
 import io.opensphere.controlpanels.styles.model.Styles;
@@ -28,7 +28,7 @@ public class StyleOptionsBinderTestDisplay
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

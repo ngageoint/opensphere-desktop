@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pluginLoaderCollection>
+    <pluginLoaderData>
+        <id>CSVPlugin</id>
+        <class>io.opensphere.csv.CSVPlugin</class>
+        <appVersion>1.0</appVersion>
+        <requiredPluginDependency>MantlePlugin</requiredPluginDependency>
+        <requiredPluginDependency>TimebrowserPlugin</requiredPluginDependency>
+        <pluginProperty>
+            <key>useDeterminedDataTypes</key>
+            <value>true</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>useDynamicEnumerations</key>
+            <value>true</value>
+        </pluginProperty>
+    </pluginLoaderData>
+</pluginLoaderCollection>

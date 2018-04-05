@@ -9,7 +9,7 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.xyztile.model.Projection;
@@ -33,7 +33,7 @@ public class XYZSettingsUITestDisplay
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

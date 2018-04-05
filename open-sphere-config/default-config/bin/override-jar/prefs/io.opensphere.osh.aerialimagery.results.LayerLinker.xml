@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences topic="io.opensphere.core.appl.ExecutorManager">
+	<preference key="linkedlayers"
+		class="io.opensphere.osh.aerialimagery.model.LinkedLayers">
+		<LinkedLayers>
+			<LinkedLayer>
+				<linkedLayersTypeKey>http://sensiasoft.net:8181/sensorhub/sos/urn:mysos:solo:nav2/platformLoc</linkedLayersTypeKey>
+				<otherLinkedLayersTypeKey>http://sensiasoft.net:8181/sensorhub/sos/urn:mysos:solo:video2/camOutput</otherLinkedLayersTypeKey>
+			</LinkedLayer>
+		</LinkedLayers>
+	</preference>
+</preferences>

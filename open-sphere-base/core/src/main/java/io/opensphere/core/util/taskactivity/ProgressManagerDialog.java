@@ -4,6 +4,13 @@ import java.awt.Window;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.annotation.concurrent.ThreadSafe;
+import javax.swing.JDialog;
+
+import io.opensphere.core.util.ThreadConfined;
+import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.fx.FXUtilities;
+import io.opensphere.core.util.image.IconUtil.IconType;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.value.ObservableValue;
@@ -22,16 +29,6 @@ import javafx.scene.control.cell.ProgressBarTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-
-import javax.annotation.concurrent.ThreadSafe;
-import javax.swing.JDialog;
-
-import com.sun.javafx.application.PlatformImpl;
-
-import io.opensphere.core.util.ThreadConfined;
-import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.fx.FXUtilities;
-import io.opensphere.core.util.image.IconUtil.IconType;
 
 /**
  * A dialog that can display the running tasks and allow the user to take action
@@ -73,7 +70,7 @@ public class ProgressManagerDialog extends JDialog
 
         JFXPanel panel = new JFXPanel();
         setContentPane(panel);
-        PlatformImpl.startup(() -> initPanel(panel));
+        FXUtilities.runOnFXThreadAndWait(() -> initPanel(panel));
     }
 
     /**
@@ -83,7 +80,7 @@ public class ProgressManagerDialog extends JDialog
      */
     public void addTask(TaskActivity ta)
     {
-        Platform.runLater(() -> myTasks.add(ta));
+        FXUtilities.runOnFXThreadAndWait(() -> myTasks.add(ta));
     }
 
     /**
@@ -95,7 +92,7 @@ public class ProgressManagerDialog extends JDialog
     {
         // Make a copy to send to the FX thread.
         Collection<? extends TaskActivity> copy = New.collection(taskActivities);
-        Platform.runLater(() -> myTasks.addAll(copy));
+        FXUtilities.runOnFXThreadAndWait(() -> myTasks.addAll(copy));
     }
 
     /**
@@ -104,7 +101,7 @@ public class ProgressManagerDialog extends JDialog
     public final void refresh()
     {
         myDirty.set(true);
-        Platform.runLater(this::refreshNow);
+        FXUtilities.runOnFXThreadAndWait(this::refreshNow);
     }
 
     /**
@@ -114,7 +111,7 @@ public class ProgressManagerDialog extends JDialog
      */
     public void removeTask(TaskActivity taskActivity)
     {
-        Platform.runLater(() -> myTasks.remove(taskActivity));
+        FXUtilities.runOnFXThreadAndWait(() -> myTasks.remove(taskActivity));
     }
 
     /**

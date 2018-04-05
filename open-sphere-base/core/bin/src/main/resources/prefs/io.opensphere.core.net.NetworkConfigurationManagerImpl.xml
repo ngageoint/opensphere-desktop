@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><preferences topic="io.opensphere.core.net.NetworkConfigurationManagerImpl">
+   <preference class="io.opensphere.core.net.config.ProxyConfigurations" key="configurations">
+      <proxyConfigurations>
+         <selected>system</selected>
+         <no-proxy/>
+         <system-proxy/>
+         <url-proxy/>
+         <manual-proxy>
+            <port>0</port>
+         </manual-proxy>
+      </proxyConfigurations>
+   </preference>
+</preferences>

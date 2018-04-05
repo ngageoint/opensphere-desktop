@@ -18,8 +18,8 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
+import javafx.application.Platform;
+import javafx.scene.control.skin.VirtualFlow;
 
 import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.Toolbox;
@@ -74,7 +74,7 @@ public class SimpleFeatureActonPaneTestDisplay
     @Test
     public void testCreate() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -145,7 +145,7 @@ public class SimpleFeatureActonPaneTestDisplay
     @Test
     public void testDelete() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -224,7 +224,7 @@ public class SimpleFeatureActonPaneTestDisplay
     @Test
     public void testRead() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -295,7 +295,7 @@ public class SimpleFeatureActonPaneTestDisplay
     @Test
     public void testUpdate() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

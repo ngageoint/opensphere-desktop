@@ -14,7 +14,7 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.Toolbox;
@@ -65,7 +65,7 @@ public class SimpleFeatureActionRowTestDisplay
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -127,7 +127,7 @@ public class SimpleFeatureActionRowTestDisplay
     @Test
     public void testNullUpdateItem()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -173,7 +173,7 @@ public class SimpleFeatureActionRowTestDisplay
     @Test
     public void testClose()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -244,7 +244,7 @@ public class SimpleFeatureActionRowTestDisplay
     @Test
     public void testCopy()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -294,7 +294,7 @@ public class SimpleFeatureActionRowTestDisplay
     @Test
     public void testEditNew()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -347,7 +347,7 @@ public class SimpleFeatureActionRowTestDisplay
     @Test
     public void testRange()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -407,7 +407,7 @@ public class SimpleFeatureActionRowTestDisplay
     @Test
     public void testRemove()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pluginLoaderCollection>
+    <pluginLoaderData>
+        <id>AlertViewerPlugin</id>
+        <class>io.opensphere.core.dialog.alertviewer.AlertViewerPlugin</class>
+    </pluginLoaderData>
+    <pluginLoaderData>
+        <id>KeyMapPlugin</id>
+        <class>io.opensphere.core.control.keybinding.KeyMapPlugin</class>
+        <appVersion>1.0</appVersion>
+        <pluginProperty>
+            <key>parentMenuName</key>
+            <value>Main Menu Bar/Help</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>menuButtonLabel</key>
+            <value>Key Map</value>
+        </pluginProperty>
+    </pluginLoaderData> 
+    <pluginLoaderData>
+        <id>IconLegendPlugin</id>
+        <class>io.opensphere.core.iconlegend.plugin.IconLegendPlugin</class>
+        <appVersion>1.0</appVersion>
+        <pluginProperty>
+            <key>parentMenuName</key>
+            <value>Main Menu Bar/Help</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>menuButtonLabel</key>
+            <value>Icon Legend</value>
+        </pluginProperty>
+    </pluginLoaderData>
+    <pluginLoaderData>
+        <id>DontShowDialogPlugin</id>
+        <class>io.opensphere.core.appl.DontShowDialogPlugin</class>
+        <appVersion>1.0</appVersion>
+    </pluginLoaderData>
+    <pluginLoaderData>
+        <id>WhatsNew</id>
+        <class>io.opensphere.core.appl.WhatsNewPlugin</class>
+        <appVersion>1.0</appVersion>
+    </pluginLoaderData>
+    <pluginLoaderData>
+        <id>NewVersion</id>
+        <class>io.opensphere.core.appl.versions.NewVersionPlugin</class>
+        <appVersion>1.0</appVersion>
+        <requiredPluginDependency>OGCServers</requiredPluginDependency>
+    </pluginLoaderData>
+</pluginLoaderCollection>

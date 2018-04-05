@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.controlpanels.columnlabels.model.ColumnLabel;
 import io.opensphere.controlpanels.styles.controller.LabelOptionsController;
@@ -36,7 +36,7 @@ public class LabelOptionsPanelTestDisplay
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

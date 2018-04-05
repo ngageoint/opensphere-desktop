@@ -7,7 +7,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import javafx.application.Platform;
+import io.opensphere.core.util.fx.FXUtilities;
+import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.data.gui.LayerListView;
 import javafx.collections.FXCollections;
 import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
@@ -16,12 +18,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
-
-import com.sun.javafx.application.PlatformImpl;
-
-import io.opensphere.core.util.fx.FXUtilities;
-import io.opensphere.mantle.data.DataTypeInfo;
-import io.opensphere.mantle.data.gui.LayerListView;
 
 /** The export options panel. */
 public class ExportOptionsPanel extends JFXPanel
@@ -44,7 +40,7 @@ public class ExportOptionsPanel extends JFXPanel
     {
         super();
         setPreferredSize(new Dimension(300, 300));
-        Platform.runLater(() -> setScene(createScene(dataTypes)));
+        FXUtilities.runOnFXThreadAndWait(() -> setScene(createScene(dataTypes)));
     }
 
     /**
@@ -65,7 +61,7 @@ public class ExportOptionsPanel extends JFXPanel
     public int getMaxZoomLevel()
     {
         final AtomicInteger level = new AtomicInteger();
-        PlatformImpl.runAndWait(() -> level.set(myMaxZoomCombo.getSelectionModel().getSelectedItem().intValue()));
+        FXUtilities.runOnFXThreadAndWait(() -> level.set(myMaxZoomCombo.getSelectionModel().getSelectedItem().intValue()));
         return level.get();
     }
 

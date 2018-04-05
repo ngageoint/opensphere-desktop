@@ -31,7 +31,6 @@ import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.image.IconUtil.IconStyle;
 import io.opensphere.core.util.image.IconUtil.IconType;
 import io.opensphere.core.util.swing.SwingUtilities;
-import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Insets;
@@ -90,7 +89,7 @@ public class HistogramPanel extends JFXPanel implements Closeable
                 handleMouseClick(e);
             }
         });
-        Platform.runLater(this::initFx);
+        FXUtilities.runOnFXThreadAndWait(this::initFx);
     }
 
     @Override

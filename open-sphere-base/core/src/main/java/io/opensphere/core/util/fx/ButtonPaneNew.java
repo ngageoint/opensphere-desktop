@@ -66,8 +66,8 @@ public class ButtonPaneNew extends BorderPane
     {
         myEditor = ed;
         if (myEditor != null)
-            Platform.runLater(() -> validate((o, s, m) -> setValidationStatus(s, m)));
-        // By using Platform.runLater, we delay attaching and invoking the
+            FXUtilities.runOnFXThreadAndWait(() -> validate((o, s, m) -> setValidationStatus(s, m)));
+        // By using runAndWait, we delay attaching and invoking the
         // validation listener until after everything is constructed.  If
         // we don't, then styling (during construction) can interfere with
         // reporting errors or warnings (from the validation support).

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences topic="io.opensphere.osm.OSMPlugin">
+   <preference key="serverConfig" class="io.opensphere.mantle.datasources.impl.UrlSourceConfig">
+      <config>
+         <source>
+            <name>Open Street Map</name>
+            <active>true</active>
+            <baseUrl>http://osm.geointservices.io/osm_tiles_pc/{z}/{x}/{y}.png</baseUrl>
+         </source>
+      </config>
+   </preference>
+</preferences>

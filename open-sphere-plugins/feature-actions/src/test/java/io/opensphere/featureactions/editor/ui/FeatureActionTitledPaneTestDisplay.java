@@ -8,7 +8,7 @@ import javafx.scene.control.Accordion;
 
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.featureactions.editor.model.SimpleFeatureAction;
@@ -35,7 +35,7 @@ public class FeatureActionTitledPaneTestDisplay
     @Test
     public void testAddAction()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -63,7 +63,7 @@ public class FeatureActionTitledPaneTestDisplay
     @Test
     public void testAllChecked()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -104,7 +104,7 @@ public class FeatureActionTitledPaneTestDisplay
     @Test
     public void testGroupRename()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -135,7 +135,7 @@ public class FeatureActionTitledPaneTestDisplay
     @Test
     public void testNoneChecked()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -176,7 +176,7 @@ public class FeatureActionTitledPaneTestDisplay
     @Test
     public void testSelectAll()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -232,7 +232,7 @@ public class FeatureActionTitledPaneTestDisplay
     @Test
     public void testSomeChecked()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

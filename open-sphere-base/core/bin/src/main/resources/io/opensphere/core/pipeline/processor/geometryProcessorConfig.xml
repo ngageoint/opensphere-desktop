@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GeometryProcessorConfigurations>
+	<GeometryProcessorConfiguration geometryClassname="io.opensphere.core.geometry.TileGeometry"			geometryProcessorClassname="io.opensphere.core.pipeline.processor.TileProcessor"			loadAhead="5" />
+	<GeometryProcessorConfiguration geometryClassname="io.opensphere.core.geometry.PointGeometry"			geometryProcessorClassname="io.opensphere.core.pipeline.processor.PointProcessor"			loadAhead="2147483647" />
+	<GeometryProcessorConfiguration geometryClassname="io.opensphere.core.geometry.PointSetGeometry"		geometryProcessorClassname="io.opensphere.core.pipeline.processor.PointSetProcessor"			loadAhead="2147483647" />
+	<GeometryProcessorConfiguration geometryClassname="io.opensphere.core.geometry.PointSpriteGeometry"		geometryProcessorClassname="io.opensphere.core.pipeline.processor.PointSpriteProcessor"		loadAhead="5" />
+    <GeometryProcessorConfiguration geometryClassname="io.opensphere.core.geometry.PolygonGeometry"      geometryProcessorClassname="io.opensphere.core.pipeline.processor.PolygonProcessor"          loadAhead="2147483647" />
+    <GeometryProcessorConfiguration geometryClassname="io.opensphere.core.geometry.GeoScreenPolygonGeometry" geometryProcessorClassname="io.opensphere.core.pipeline.processor.GeoScreenPolygonProcessor"     loadAhead="2147483647" />
+    <GeometryProcessorConfiguration geometryClassname="io.opensphere.core.geometry.PolylineGeometry"      geometryProcessorClassname="io.opensphere.core.pipeline.processor.PolylineProcessor"          loadAhead="2147483647" />
+	<GeometryProcessorConfiguration geometryClassname="io.opensphere.core.geometry.GeoScreenPolylineGeometry"	geometryProcessorClassname="io.opensphere.core.pipeline.processor.GeoScreenPolylineProcessor"		loadAhead="2147483647" />
+	<GeometryProcessorConfiguration geometryClassname="io.opensphere.core.geometry.PolygonMeshGeometry"		geometryProcessorClassname="io.opensphere.core.pipeline.processor.PolygonMeshProcessor"		loadAhead="2147483647" />
+	<GeometryProcessorConfiguration geometryClassname="io.opensphere.core.geometry.LabelGeometry"			geometryProcessorClassname="io.opensphere.core.pipeline.processor.LabelProcessor"			loadAhead="2147483647" />
+	<GeometryProcessorConfiguration geometryClassname="io.opensphere.core.geometry.RenderToTextureGeometry"	geometryProcessorClassname="io.opensphere.core.pipeline.processor.RenderToTextureProcessor"		loadAhead="2147483647" />
+	<GeometryProcessorConfiguration geometryClassname="io.opensphere.core.geometry.GeometryGroupGeometry"		geometryProcessorClassname="io.opensphere.core.pipeline.processor.GeometryGroupGeometryProcessor"	loadAhead="2147483647" />
+	<GeometryProcessorConfiguration geometryClassname="io.opensphere.core.geometry.TerrainTileGeometry"		geometryProcessorClassname="io.opensphere.core.pipeline.processor.TerrainTileProcessor"		loadAhead="5" />
+</GeometryProcessorConfigurations>

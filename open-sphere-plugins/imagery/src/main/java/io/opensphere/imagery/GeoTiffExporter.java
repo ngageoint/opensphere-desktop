@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import javafx.application.Platform;
-
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
@@ -31,6 +29,7 @@ import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.util.MimeType;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.gdal.GdalIOUtilities;
 import io.opensphere.core.util.javafx.WebPanel;
 import io.opensphere.core.util.swing.AutohideMessageDialog;
@@ -158,7 +157,7 @@ public class GeoTiffExporter extends AbstractExporter
         dialog.setVisible(true);
         dialog.setLocationRelativeTo(mainFrame);
 
-        Platform.runLater(() -> fxPanel.loadContent("<html><body bgcolor='#535366' style='color: white;'>"
+        FXUtilities.runOnFXThreadAndWait(() -> fxPanel.loadContent("<html><body bgcolor='#535366' style='color: white;'>"
                 + "GeoTIFF export is complete to <a style='color: white;' href='" + file.toURI() + "'>" + file
                 + "</a>.<p><a style='color: white;' href='" + file.getParentFile().toURI() + "'>Parent directory</a>"
                 + "<body></html>"));

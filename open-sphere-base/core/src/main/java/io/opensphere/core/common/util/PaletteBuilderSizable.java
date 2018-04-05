@@ -5,7 +5,7 @@ import java.awt.Transparency;
 import java.awt.image.IndexColorModel;
 import java.awt.image.RenderedImage;
 
-import com.sun.imageio.plugins.common.PaletteBuilder;
+import com.github.jaiimageio.impl.common.PaletteBuilder;
 
 /**
  * The PaletteBuilder this class extends implements the octree quantization

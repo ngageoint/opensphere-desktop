@@ -5,10 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.function.Supplier;
 import java.util.Set;
-
-import javafx.application.Platform;
+import java.util.function.Supplier;
 
 import javax.swing.SwingUtilities;
 
@@ -25,6 +23,8 @@ import io.opensphere.core.hud.awt.HUDJInternalFrame;
 import io.opensphere.core.search.ResultsSearchProvider;
 import io.opensphere.core.search.SearchProvider;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.fx.FXUtilities;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.search.model.SearchModel;
 
@@ -161,7 +161,7 @@ public class SearchPlugin extends AbstractHUDFrameMenuItemPlugin
         List<String> allSearchTypes = New.list(searchTypes);
         Collections.sort(allSearchTypes);
 
-        Platform.runLater(() ->
+        FXUtilities.runOnFXThreadAndWait(() ->
         {
             myModel.getSelectedSearchTypes().addAll(allSearchTypes);
             myModel.getSearchTypes().addAll(allSearchTypes);

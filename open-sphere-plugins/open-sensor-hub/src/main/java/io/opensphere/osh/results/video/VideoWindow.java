@@ -5,16 +5,15 @@ import java.awt.EventQueue;
 import java.awt.Window;
 import java.io.ByteArrayInputStream;
 
-import javafx.application.Platform;
+import javax.swing.JDialog;
+
+import io.opensphere.core.util.fx.FXUtilities;
+import io.opensphere.mantle.data.DataTypeInfo;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import javax.swing.JDialog;
-
-import io.opensphere.mantle.data.DataTypeInfo;
 
 /** A video window. */
 public class VideoWindow extends JDialog
@@ -43,7 +42,7 @@ public class VideoWindow extends JDialog
         setLocationRelativeTo(owner);
         JFXPanel fxPanel = new JFXPanel();
         add(fxPanel);
-        Platform.runLater(() -> initFx(fxPanel));
+        FXUtilities.runOnFXThreadAndWait(() -> initFx(fxPanel));
     }
 
     /**
@@ -53,7 +52,7 @@ public class VideoWindow extends JDialog
      */
     public void setImageBytes(byte[] bytes)
     {
-        Platform.runLater(() ->
+        FXUtilities.runOnFXThreadAndWait(() ->
         {
             Image image = new Image(new ByteArrayInputStream(bytes));
             myImageView.setImage(image);

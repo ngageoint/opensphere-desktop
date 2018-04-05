@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pluginLoaderCollection>
+    <pluginLoaderData>
+        <id>HUDPlugin</id>
+        <class>io.opensphere.hud.HUDPlugin</class>
+        <appVersion>1.0</appVersion>
+    </pluginLoaderData>
+    <pluginLoaderData>
+        <id>DashboardPlugin</id>
+        <class>io.opensphere.hud.dashboard.DashboardPlugin</class>
+        <appVersion>1.0</appVersion>
+        <requiredPluginDependency>HUDPlugin</requiredPluginDependency>
+        <pluginProperty>
+            <key>parentMenuName</key>
+            <value>Main Menu Bar/Debug</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>menuButtonLabel</key>
+            <value>Dashboard</value>
+        </pluginProperty>
+    </pluginLoaderData>
+</pluginLoaderCollection>

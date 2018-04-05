@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pluginLoaderCollection>
+    <pluginLoaderData>
+        <id>GooglePlacesPlugin</id>
+        <class>io.opensphere.search.googleplaces.GooglePlacesPlugin</class>
+        <appVersion>1.0</appVersion>
+        <requiredPluginDependency>MantlePlugin</requiredPluginDependency>
+        <requiredPluginDependency>GotoPlugin</requiredPluginDependency>
+    </pluginLoaderData>
+</pluginLoaderCollection>

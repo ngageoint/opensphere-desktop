@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.io.File;
 
-import javafx.application.Platform;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -24,6 +22,7 @@ import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.export.Exporter;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.javafx.WebPanel;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.swing.AutohideMessageDialog;
@@ -144,7 +143,7 @@ public class DataElementExporter implements ExportCompleteListener
         dialog.setVisible(true);
         dialog.setLocationRelativeTo(parent);
 
-        Platform.runLater(() ->
+        FXUtilities.runOnFXThreadAndWait(() ->
         {
             String content = StringUtilities.concat("<html><body bgcolor='#535366' style='color: white;'>", "Successfully saved ",
                     exportedCount, " rows to <a style='color: white;' href='", file.toURI(), "'>", file,

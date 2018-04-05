@@ -14,8 +14,8 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
+import javafx.application.Platform;
+import javafx.scene.control.skin.VirtualFlow;
 
 import io.opensphere.analysis.binning.criteria.BinCriteria;
 import io.opensphere.analysis.binning.criteria.BinCriteriaElement;
@@ -63,7 +63,7 @@ public class BinCriteriaEditorTestDisplay
     @Test
     public void testCreate()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -111,7 +111,7 @@ public class BinCriteriaEditorTestDisplay
     @Test
     public void testDelete()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -170,7 +170,7 @@ public class BinCriteriaEditorTestDisplay
     @Test
     public void testRead()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -218,7 +218,7 @@ public class BinCriteriaEditorTestDisplay
     @Test
     public void testUpdate()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

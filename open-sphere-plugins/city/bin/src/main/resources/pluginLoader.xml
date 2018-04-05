@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pluginLoaderCollection>
+    <pluginLoaderData>
+        <id>CityPlugin</id>
+        <class>io.opensphere.city.CityPlugin</class>
+        <appVersion>1.0</appVersion>
+        <requiredPluginDependency>OGCServers</requiredPluginDependency>
+        <requiredPluginDependency>XYZTilePlugin</requiredPluginDependency>
+    </pluginLoaderData>
+</pluginLoaderCollection>

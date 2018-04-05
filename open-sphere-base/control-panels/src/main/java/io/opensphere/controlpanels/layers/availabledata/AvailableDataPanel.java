@@ -54,7 +54,6 @@ import io.opensphere.mantle.data.event.ServerManagerDialogChangeEvent.EventType;
 import io.opensphere.mantle.data.impl.DefaultGroupInfoTreeNodeData;
 import io.opensphere.mantle.data.impl.GroupByNodeUserObject;
 import io.opensphere.mantle.util.MantleToolboxUtils;
-import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -146,8 +145,8 @@ public final class AvailableDataPanel extends AbstractDiscoveryDataPanel impleme
             return;
         }
 
-        focusOnNode(value -> value.getDataGroupInfo() != null
-                && value.getDataGroupInfo().getId().equals(eventDataGroup.getId()), null);
+        focusOnNode(value -> value.getDataGroupInfo() != null && value.getDataGroupInfo().getId().equals(eventDataGroup.getId()),
+                null);
     };
 
     /** The my layer details coordinator. */
@@ -395,7 +394,7 @@ public final class AvailableDataPanel extends AbstractDiscoveryDataPanel impleme
     {
         myDetailsPanel = new JFXPanel();
         myDetailsPanel.setPreferredSize(new Dimension(300, 600));
-        Platform.runLater(this::initFx);
+        FXUtilities.runOnFXThreadAndWait(this::initFx);
 
         createServerManagerButton();
 
@@ -431,11 +430,11 @@ public final class AvailableDataPanel extends AbstractDiscoveryDataPanel impleme
         {
             TreeTableTreeNode treeNode = (TreeTableTreeNode)treePath.getLastPathComponent();
             GroupByNodeUserObject groupByNode = (GroupByNodeUserObject)treeNode.getPayload().getPayloadData();
-            Platform.runLater(() -> replaceDetailPanel(groupByNode.getDataGroupInfo()));
+            FXUtilities.runOnFXThreadAndWait(() -> replaceDetailPanel(groupByNode.getDataGroupInfo()));
         }
         else
         {
-            Platform.runLater(() -> replaceDetailPanel(null));
+            FXUtilities.runOnFXThreadAndWait(() -> replaceDetailPanel(null));
         }
     }
 

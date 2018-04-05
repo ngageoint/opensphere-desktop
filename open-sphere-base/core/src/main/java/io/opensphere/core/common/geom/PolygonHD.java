@@ -5,10 +5,9 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.PathIterator;
+import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-
-import sun.awt.geom.Crossings;
 
 /**
  * The <code>PolygonHD</code> class encapsulates a description of a closed,
@@ -441,9 +440,10 @@ public class PolygonHD implements Shape, java.io.Serializable
         return (hits & 1) != 0;
     }
 
-    private Crossings getCrossings(double xlo, double ylo, double xhi, double yhi)
+    private Path2D.Double getCrossings(double xlo, double ylo, double xhi, double yhi)
     {
-        Crossings cross = new Crossings.EvenOdd(xlo, ylo, xhi, yhi);
+        Path2D.Double path = new Path2D.Double(Path2D.WIND_EVEN_ODD);
+//        Crossings cross = new Crossings.EvenOdd(xlo, ylo, xhi, yhi);
         double lastx = xpoints[npoints - 1];
         double lasty = ypoints[npoints - 1];
         double curx, cury;
@@ -453,15 +453,16 @@ public class PolygonHD implements Shape, java.io.Serializable
         {
             curx = xpoints[i];
             cury = ypoints[i];
-            if (cross.accumulateLine(lastx, lasty, curx, cury))
-            {
-                return null;
-            }
+            path.quadTo(lastx, lasty, curx, cury);
+//            if (cross.accumulateLine(lastx, lasty, curx, cury))
+//            {
+//                return null;
+//            }
             lastx = curx;
             lasty = cury;
         }
 
-        return cross;
+        return path;
     }
 
     /**
@@ -488,8 +489,8 @@ public class PolygonHD implements Shape, java.io.Serializable
             return false;
         }
 
-        Crossings cross = getCrossings(x, y, x + w, y + h);
-        return cross == null || !cross.isEmpty();
+        Path2D cross = getCrossings(x, y, x + w, y + h);
+        return cross.intersects(x, y, w, h);
     }
 
     /**
@@ -516,8 +517,8 @@ public class PolygonHD implements Shape, java.io.Serializable
             return false;
         }
 
-        Crossings cross = getCrossings(x, y, x + w, y + h);
-        return cross != null && cross.covers(y, y + h);
+        Path2D cross = getCrossings(x, y, x + w, y + h);
+        return cross.contains(x, y, w, h);
     }
 
     /**

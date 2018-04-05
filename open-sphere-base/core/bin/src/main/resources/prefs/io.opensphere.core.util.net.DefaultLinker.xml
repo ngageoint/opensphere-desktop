@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences topic="io.opensphere.core.util.net.DefaultLinker">
+   <preference key="linkProviders" class="io.opensphere.core.util.xml.StringMap">
+      <StringMap>
+         <JAXBEntry>
+            <key>Open URL</key>
+            <value>%s</value>
+         </JAXBEntry>
+      </StringMap>
+   </preference>
+   <preference key="columnNamesToLinkProviders" class="io.opensphere.core.util.xml.StringMap">
+      <StringMap>
+         <JAXBEntry>
+            <key>^.*$^.*$^(file|https?)://.*$</key>
+            <value>Open URL</value>
+         </JAXBEntry>
+      </StringMap>
+   </preference>
+</preferences>
