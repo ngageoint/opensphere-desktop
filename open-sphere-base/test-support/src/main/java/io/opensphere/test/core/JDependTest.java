@@ -1,4 +1,4 @@
-package io.opensphere.core;
+package io.opensphere.test.core;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -58,7 +58,7 @@ public class JDependTest
      * Runs jdeps for the current package.
      *
      * @return the output lines
-     * @throws IOException if a problem occurred running jdeps
+     * @throws IOException if a   problem occurred running jdeps
      */
     private List<String> runJdeps() throws IOException
     {

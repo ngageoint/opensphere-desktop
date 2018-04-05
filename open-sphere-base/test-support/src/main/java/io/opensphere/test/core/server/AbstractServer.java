@@ -1,4 +1,4 @@
-package io.opensphere.core.server;
+package io.opensphere.test.core.server;
 
 import java.io.IOException;
 import java.io.OutputStream;

@@ -1,4 +1,4 @@
-package io.opensphere.core.testutils;
+package io.opensphere.test.core.testutils;
 
 /** Utilities for unit and functional tests. */
 public final class TestUtils

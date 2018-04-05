@@ -1,4 +1,4 @@
-package io.opensphere.core.matchers;
+package io.opensphere.test.core.matchers;
 
 import java.lang.ref.SoftReference;
 import java.util.Arrays;

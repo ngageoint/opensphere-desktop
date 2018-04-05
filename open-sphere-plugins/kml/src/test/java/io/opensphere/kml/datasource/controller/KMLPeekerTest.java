@@ -17,13 +17,13 @@ import org.easymock.IAnswer;
 import org.junit.Test;
 
 import io.opensphere.core.Toolbox;
-import io.opensphere.core.matchers.EasyMockHelper;
 import io.opensphere.core.server.HttpServer;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.server.ServerProvider;
 import io.opensphere.core.server.ServerProviderRegistry;
 import io.opensphere.core.util.io.CancellableInputStream;
 import io.opensphere.core.util.lang.ByteString;
+import io.opensphere.test.core.matchers.EasyMockHelper;
 
 /**
  * Tests the kml peeker class.

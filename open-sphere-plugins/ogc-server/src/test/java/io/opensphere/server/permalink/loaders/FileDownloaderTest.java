@@ -20,12 +20,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-import io.opensphere.core.matchers.EasyMockHelper;
 import io.opensphere.core.server.HttpServer;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.util.XMLUtilities;
 import io.opensphere.core.util.io.CancellableInputStream;
 import io.opensphere.core.util.lang.StringUtilities;
+import io.opensphere.test.core.matchers.EasyMockHelper;
 
 /**
  * Tests the StateFileDownloader class.

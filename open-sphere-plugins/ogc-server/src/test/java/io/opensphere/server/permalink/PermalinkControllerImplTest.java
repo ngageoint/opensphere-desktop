@@ -19,7 +19,6 @@ import org.easymock.IAnswer;
 import org.junit.Test;
 
 import io.opensphere.core.common.connection.ServerConfiguration;
-import io.opensphere.core.matchers.EasyMockHelper;
 import io.opensphere.core.server.HttpServer;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.util.collections.New;
@@ -32,6 +31,7 @@ import io.opensphere.server.toolbox.ServerListManager;
 import io.opensphere.server.toolbox.ServerSourceController;
 import io.opensphere.server.toolbox.ServerSourceControllerManager;
 import io.opensphere.server.toolbox.SimpleFilePayload;
+import io.opensphere.test.core.matchers.EasyMockHelper;
 
 /**
  * Tests the permalink controller.

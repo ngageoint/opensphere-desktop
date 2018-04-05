@@ -34,7 +34,6 @@ import io.opensphere.core.data.CacheDepositReceiver;
 import io.opensphere.core.data.QueryException;
 import io.opensphere.core.data.util.DataModelCategory;
 import io.opensphere.core.image.Image;
-import io.opensphere.core.matchers.EasyMockHelper;
 import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.ZYXImageKey;
@@ -47,6 +46,7 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.image.ImageUtil;
 import io.opensphere.core.util.io.CancellableInputStream;
 import io.opensphere.core.util.lang.StringUtilities;
+import io.opensphere.test.core.matchers.EasyMockHelper;
 import io.opensphere.xyztile.util.XYZTileUtils;
 
 /**

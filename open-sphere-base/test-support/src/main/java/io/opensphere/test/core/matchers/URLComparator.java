@@ -1,4 +1,4 @@
-package io.opensphere.core.matchers;
+package io.opensphere.test.core.matchers;
 
 import java.net.URL;
 import java.util.Comparator;

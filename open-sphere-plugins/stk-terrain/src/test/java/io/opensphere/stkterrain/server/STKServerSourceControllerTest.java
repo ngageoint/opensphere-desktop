@@ -25,7 +25,6 @@ import io.opensphere.core.data.DataRegistry;
 import io.opensphere.core.data.util.DataModelCategory;
 import io.opensphere.core.dialog.alertviewer.event.UserMessageEvent;
 import io.opensphere.core.event.EventManager;
-import io.opensphere.core.matchers.EasyMockHelper;
 import io.opensphere.core.order.OrderManager;
 import io.opensphere.core.order.OrderManagerRegistry;
 import io.opensphere.core.order.impl.DefaultOrderCategory;
@@ -50,6 +49,7 @@ import io.opensphere.stkterrain.envoy.QuantizedMeshEnvoy;
 import io.opensphere.stkterrain.envoy.TileSetEnvoy;
 import io.opensphere.stkterrain.envoy.TileSetMetadataEnvoy;
 import io.opensphere.stkterrain.mantle.STKDataGroupController;
+import io.opensphere.test.core.matchers.EasyMockHelper;
 
 /**
  * Unit test for {@link STKServerSourceController}.

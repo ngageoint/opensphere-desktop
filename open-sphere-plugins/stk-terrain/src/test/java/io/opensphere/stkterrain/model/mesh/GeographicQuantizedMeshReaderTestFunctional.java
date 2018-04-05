@@ -12,7 +12,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
-import io.opensphere.core.testutils.TestUtils;
+import io.opensphere.test.core.testutils.TestUtils;
 
 /** Unit test for {@link GeographicQuantizedMeshReader}. */
 public class GeographicQuantizedMeshReaderTestFunctional

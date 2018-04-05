@@ -1,4 +1,4 @@
-package io.opensphere.core.matchers;
+package io.opensphere.test.core.matchers;
 
 import java.util.ArrayList;
 import java.util.Collection;

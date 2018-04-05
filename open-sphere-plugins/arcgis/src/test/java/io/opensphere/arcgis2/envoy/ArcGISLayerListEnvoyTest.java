@@ -20,13 +20,13 @@ import io.opensphere.core.cache.accessor.PropertyAccessor;
 import io.opensphere.core.data.CacheDepositReceiver;
 import io.opensphere.core.data.QueryException;
 import io.opensphere.core.data.util.DataModelCategory;
-import io.opensphere.core.matchers.EasyMockHelper;
 import io.opensphere.core.server.HttpServer;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.server.ServerProvider;
 import io.opensphere.core.server.ServerProviderRegistry;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.io.CancellableInputStream;
+import io.opensphere.test.core.matchers.EasyMockHelper;
 
 /**
  * Unit test for {@link ArcGISLayerListEnvoy}.

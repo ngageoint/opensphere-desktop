@@ -21,7 +21,6 @@ import io.opensphere.core.cache.accessor.SerializableAccessor;
 import io.opensphere.core.data.CacheDepositReceiver;
 import io.opensphere.core.data.QueryException;
 import io.opensphere.core.data.util.DataModelCategory;
-import io.opensphere.core.matchers.EasyMockHelper;
 import io.opensphere.core.server.HttpServer;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.server.ServerProvider;
@@ -31,6 +30,7 @@ import io.opensphere.core.util.io.CancellableInputStream;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.stkterrain.model.TileSetMetadata;
 import io.opensphere.stkterrain.util.Constants;
+import io.opensphere.test.core.matchers.EasyMockHelper;
 
 /**
  * Unit test for the {@link TileSetMetadataEnvoy}.
