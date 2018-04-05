@@ -6,15 +6,6 @@ import java.awt.Point;
 import java.awt.Window;
 import java.util.List;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener.Change;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-
 import javax.swing.JFrame;
 
 import io.opensphere.core.Toolbox;
@@ -25,6 +16,14 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.search.model.SearchModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener.Change;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 
 /**
  * The shows the search results in a list.
@@ -161,8 +160,8 @@ public class ResultPane extends BorderPane
         if (myPopupDialog == null || !myPopupDialog.isVisible())
         {
             JFrame parent = myToolbox.getUIRegistry().getMainFrameProvider().get();
-            JFXDialog dialog = new JFXDialog(parent, null);
-            dialog.setSize(new Dimension(360, 240));
+            JFXDialog dialog = new JFXDialog(parent, null, false);
+            dialog.setSize(new Dimension(400, 400));
             dialog.setResizable(true);
             setLocationRelativeTo(dialog, parent);
             dialog.setModal(false);
