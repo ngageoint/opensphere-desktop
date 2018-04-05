@@ -2,7 +2,6 @@ package io.opensphere.core.util.fx;
 
 import java.util.function.Consumer;
 
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBar;

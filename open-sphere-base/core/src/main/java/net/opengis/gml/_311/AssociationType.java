@@ -381,7 +381,7 @@ public class AssociationType {
      *     
      */
     public void setObject(JAXBElement<?> value) {
-        this.object = ((JAXBElement<?> ) value);
+        this.object = (value);
     }
 
     /**

@@ -125,7 +125,7 @@ public class TargetPropertyType {
      *     
      */
     public void setFeature(JAXBElement<? extends AbstractFeatureType> value) {
-        this.feature = ((JAXBElement<? extends AbstractFeatureType> ) value);
+        this.feature = (value);
     }
 
     /**
@@ -215,7 +215,7 @@ public class TargetPropertyType {
      *     
      */
     public void setGeometry(JAXBElement<? extends AbstractGeometryType> value) {
-        this.geometry = ((JAXBElement<? extends AbstractGeometryType> ) value);
+        this.geometry = (value);
     }
 
     /**

@@ -3321,7 +3321,7 @@ public class ObjectFactory {
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/gml", name = "doubleOrNullTupleList")
     public JAXBElement<List<String>> createDoubleOrNullTupleList(List<String> value) {
-        return new JAXBElement<List<String>>(_DoubleOrNullTupleList_QNAME, ((Class) List.class), null, ((List<String> ) value));
+        return new JAXBElement<List<String>>(_DoubleOrNullTupleList_QNAME, ((Class) List.class), null, (value));
     }
 
     /**
@@ -3789,7 +3789,7 @@ public class ObjectFactory {
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/gml", name = "Null")
     public JAXBElement<List<String>> createNull(List<String> value) {
-        return new JAXBElement<List<String>>(_Null_QNAME, ((Class) List.class), null, ((List<String> ) value));
+        return new JAXBElement<List<String>>(_Null_QNAME, ((Class) List.class), null, (value));
     }
 
     /**
@@ -5850,7 +5850,7 @@ public class ObjectFactory {
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/gml", name = "CountList")
     public JAXBElement<List<String>> createCountList(List<String> value) {
-        return new JAXBElement<List<String>>(_CountList_QNAME, ((Class) List.class), null, ((List<String> ) value));
+        return new JAXBElement<List<String>>(_CountList_QNAME, ((Class) List.class), null, (value));
     }
 
     /**
@@ -6264,7 +6264,7 @@ public class ObjectFactory {
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/gml", name = "BooleanList")
     public JAXBElement<List<String>> createBooleanList(List<String> value) {
-        return new JAXBElement<List<String>>(_BooleanList_QNAME, ((Class) List.class), null, ((List<String> ) value));
+        return new JAXBElement<List<String>>(_BooleanList_QNAME, ((Class) List.class), null, (value));
     }
 
     /**
@@ -6453,7 +6453,7 @@ public class ObjectFactory {
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/gml", name = "CountExtent")
     public JAXBElement<List<String>> createCountExtent(List<String> value) {
-        return new JAXBElement<List<String>>(_CountExtent_QNAME, ((Class) List.class), null, ((List<String> ) value));
+        return new JAXBElement<List<String>>(_CountExtent_QNAME, ((Class) List.class), null, (value));
     }
 
     /**
@@ -7389,7 +7389,7 @@ public class ObjectFactory {
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/gml", name = "integerValueList")
     public JAXBElement<List<BigInteger>> createIntegerValueList(List<BigInteger> value) {
-        return new JAXBElement<List<BigInteger>>(_IntegerValueList_QNAME, ((Class) List.class), null, ((List<BigInteger> ) value));
+        return new JAXBElement<List<BigInteger>>(_IntegerValueList_QNAME, ((Class) List.class), null, (value));
     }
 
     /**

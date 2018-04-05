@@ -11,6 +11,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jdesktop.swingx.JXBusyLabel;
@@ -181,8 +182,8 @@ public abstract class ObjectBusyPanel extends JXPanel
 
             myMessage = new JLabel("");
             myMessage.setForeground(Color.CYAN);
-            myMessage.setHorizontalTextPosition(JLabel.CENTER);
-            myMessage.setHorizontalAlignment(JLabel.CENTER);
+            myMessage.setHorizontalTextPosition(SwingConstants.CENTER);
+            myMessage.setHorizontalAlignment(SwingConstants.CENTER);
             myMessage.setFont(myMessage.getFont().deriveFont(Font.BOLD, myMessage.getFont().getSize() + 3));
 
             JPanel messagePanel = new JPanel(new BorderLayout());

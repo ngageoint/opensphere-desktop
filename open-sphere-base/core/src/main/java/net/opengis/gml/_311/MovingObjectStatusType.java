@@ -87,7 +87,7 @@ public class MovingObjectStatusType
      *     
      */
     public void setLocation(JAXBElement<? extends LocationPropertyType> value) {
-        this.location = ((JAXBElement<? extends LocationPropertyType> ) value);
+        this.location = (value);
     }
 
     /**

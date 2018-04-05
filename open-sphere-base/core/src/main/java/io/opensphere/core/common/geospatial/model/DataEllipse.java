@@ -68,6 +68,7 @@ public class DataEllipse extends DataPoint implements IDataEllipse
      *
      * @param val, nm
      */
+    @Override
     public void setSemiMajorAxis(double val)
     {
         this.major = val;
@@ -78,6 +79,7 @@ public class DataEllipse extends DataPoint implements IDataEllipse
      *
      * @return nm
      */
+    @Override
     public double getSemiMajorAxis()
     {
         return this.major;
@@ -88,6 +90,7 @@ public class DataEllipse extends DataPoint implements IDataEllipse
      *
      * @param val, nm
      */
+    @Override
     public void setSemiMinorAxis(double val)
     {
         this.minor = val;
@@ -98,6 +101,7 @@ public class DataEllipse extends DataPoint implements IDataEllipse
      *
      * @return nm
      */
+    @Override
     public double getSemiMinorAxis()
     {
         return this.minor;
@@ -108,6 +112,7 @@ public class DataEllipse extends DataPoint implements IDataEllipse
      *
      * @param val, degs
      */
+    @Override
     public void setOrientation(double val)
     {
         this.orient = val;
@@ -118,11 +123,13 @@ public class DataEllipse extends DataPoint implements IDataEllipse
      *
      * @return degs
      */
+    @Override
     public double getOrientation()
     {
         return this.orient;
     }
 
+    @Override
     public String toString()
     {
         StringBuffer buf = new StringBuffer();
@@ -142,6 +149,7 @@ public class DataEllipse extends DataPoint implements IDataEllipse
         return buf.toString();
     }
 
+    @Override
     public DataEllipse clone()
     {
         DataEllipse newPoint = new DataEllipse();

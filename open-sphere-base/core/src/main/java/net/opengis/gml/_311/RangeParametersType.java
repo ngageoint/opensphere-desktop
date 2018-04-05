@@ -414,7 +414,7 @@ public class RangeParametersType {
      *     
      */
     public void setCompositeValue(JAXBElement<? extends CompositeValueType> value) {
-        this.compositeValue = ((JAXBElement<? extends CompositeValueType> ) value);
+        this.compositeValue = (value);
     }
 
     /**

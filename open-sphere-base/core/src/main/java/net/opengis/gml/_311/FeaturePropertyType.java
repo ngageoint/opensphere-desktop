@@ -119,7 +119,7 @@ public class FeaturePropertyType {
      *     
      */
     public void setFeature(JAXBElement<? extends AbstractFeatureType> value) {
-        this.feature = ((JAXBElement<? extends AbstractFeatureType> ) value);
+        this.feature = (value);
     }
 
     /**

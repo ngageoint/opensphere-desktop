@@ -78,7 +78,7 @@ public class SurfaceType
      *     
      */
     public void setPatches(JAXBElement<? extends SurfacePatchArrayPropertyType> value) {
-        this.patches = ((JAXBElement<? extends SurfacePatchArrayPropertyType> ) value);
+        this.patches = (value);
     }
 
 }

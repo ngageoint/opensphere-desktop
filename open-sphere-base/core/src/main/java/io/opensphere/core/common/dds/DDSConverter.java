@@ -51,7 +51,7 @@ public class DDSConverter
 
         DataBufferByte buff = (DataBufferByte)bufferedSrcImage.getData().getDataBuffer();
         byte[] sourceArray = buff.getData();
-        final int destDataSize = (int)((bufferedSrcImage.getHeight() * bufferedSrcImage.getWidth()));
+        final int destDataSize = ((bufferedSrcImage.getHeight() * bufferedSrcImage.getWidth()));
         outputNotDirect = ByteBuffer.allocate(destDataSize + DDSEncoder.DDS_HEADER_SIZE);
         outputNotDirect.order(ByteOrder.LITTLE_ENDIAN);
 

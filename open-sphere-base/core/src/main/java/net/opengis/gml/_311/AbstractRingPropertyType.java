@@ -70,7 +70,7 @@ public class AbstractRingPropertyType {
      *     
      */
     public void setRing(JAXBElement<? extends AbstractRingType> value) {
-        this.ring = ((JAXBElement<? extends AbstractRingType> ) value);
+        this.ring = (value);
     }
 
 }

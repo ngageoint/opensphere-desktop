@@ -11,7 +11,6 @@ import io.opensphere.core.util.DateTimeFormats;
 import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.fx.TableViewAutosizer;
 import io.opensphere.core.util.image.IconUtil.IconType;
-import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;

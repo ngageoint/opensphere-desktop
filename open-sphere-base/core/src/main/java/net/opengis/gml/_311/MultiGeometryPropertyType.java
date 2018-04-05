@@ -103,7 +103,7 @@ public class MultiGeometryPropertyType {
      *     
      */
     public void setGeometricAggregate(JAXBElement<? extends AbstractGeometricAggregateType> value) {
-        this.geometricAggregate = ((JAXBElement<? extends AbstractGeometricAggregateType> ) value);
+        this.geometricAggregate = (value);
     }
 
     /**

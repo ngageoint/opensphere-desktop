@@ -77,7 +77,7 @@ public class PolygonType
      *     
      */
     public void setExterior(JAXBElement<AbstractRingPropertyType> value) {
-        this.exterior = ((JAXBElement<AbstractRingPropertyType> ) value);
+        this.exterior = (value);
     }
 
     /**

@@ -3,6 +3,7 @@ package io.opensphere.core.util.swing.tags;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -20,6 +21,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.MouseInputAdapter;
 
@@ -74,7 +76,7 @@ public class JTagField extends JPanel
      */
     public JTagField(List<String> choices, Color tagColor)
     {
-        super(new WrappedFlowLayout(WrappedFlowLayout.LEFT, 5, 1));
+        super(new WrappedFlowLayout(FlowLayout.LEFT, 5, 1));
         myChoices = choices;
         myTagColor = tagColor;
         setPreferredSize(new Dimension(500, 28));
@@ -287,7 +289,7 @@ public class JTagField extends JPanel
     public static void main(String[] args)
     {
         JFrame frame = new JFrame("demo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         JTagField tagField = new JTagField(Arrays.asList("One", "Two", "Item Three", "4"));
         tagField.setBackground(Color.BLUE);

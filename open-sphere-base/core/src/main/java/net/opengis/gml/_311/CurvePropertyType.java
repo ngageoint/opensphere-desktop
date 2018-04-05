@@ -99,7 +99,7 @@ public class CurvePropertyType {
      *     
      */
     public void setCurve(JAXBElement<? extends AbstractCurveType> value) {
-        this.curve = ((JAXBElement<? extends AbstractCurveType> ) value);
+        this.curve = (value);
     }
 
     /**

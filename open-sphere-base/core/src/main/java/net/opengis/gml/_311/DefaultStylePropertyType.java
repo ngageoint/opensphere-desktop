@@ -95,7 +95,7 @@ public class DefaultStylePropertyType {
      *     
      */
     public void setStyle(JAXBElement<? extends AbstractStyleType> value) {
-        this.style = ((JAXBElement<? extends AbstractStyleType> ) value);
+        this.style = (value);
     }
 
     /**

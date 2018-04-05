@@ -93,7 +93,7 @@ public class SolidPropertyType {
      *     
      */
     public void setSolid(JAXBElement<? extends AbstractSolidType> value) {
-        this.solid = ((JAXBElement<? extends AbstractSolidType> ) value);
+        this.solid = (value);
     }
 
     /**

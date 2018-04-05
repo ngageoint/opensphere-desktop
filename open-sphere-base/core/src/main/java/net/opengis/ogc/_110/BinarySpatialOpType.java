@@ -203,7 +203,7 @@ public class BinarySpatialOpType
      *     
      */
     public void setGeometry(JAXBElement<? extends AbstractGeometryType> value) {
-        this.geometry = ((JAXBElement<? extends AbstractGeometryType> ) value);
+        this.geometry = (value);
     }
 
     /**
@@ -229,7 +229,7 @@ public class BinarySpatialOpType
      *     
      */
     public void setEnvelope(JAXBElement<? extends EnvelopeType> value) {
-        this.envelope = ((JAXBElement<? extends EnvelopeType> ) value);
+        this.envelope = (value);
     }
 
 }

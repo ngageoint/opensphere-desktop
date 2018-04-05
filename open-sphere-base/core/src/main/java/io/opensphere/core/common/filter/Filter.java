@@ -153,7 +153,7 @@ public class Filter
         // Try and construct now
         try
         {
-            literalEx.setValue((Comparable<? extends Object>)constructor.newInstance(literalEx.getValue()));
+            literalEx.setValue(constructor.newInstance(literalEx.getValue()));
             return true;
         }
         catch (Exception e)

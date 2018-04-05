@@ -103,7 +103,7 @@ public class TimePrimitivePropertyType {
      *     
      */
     public void setTimePrimitive(JAXBElement<? extends AbstractTimePrimitiveType> value) {
-        this.timePrimitive = ((JAXBElement<? extends AbstractTimePrimitiveType> ) value);
+        this.timePrimitive = (value);
     }
 
     /**

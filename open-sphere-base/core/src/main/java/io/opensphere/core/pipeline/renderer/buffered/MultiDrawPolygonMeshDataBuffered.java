@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
+import javax.media.opengl.GL2GL3;
 
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
@@ -121,14 +122,14 @@ public class MultiDrawPolygonMeshDataBuffered extends BufferObjectList<BufferObj
             }
 
             ColorBufferUtilities.getColors(geom, geom.getRenderProperties().getFillColorRenderProperties(), highlight,
-                    (ByteBuffer)drawColor.rewind());
+                    drawColor.rewind());
 
             int geomVertexCount = datum.getVertexData().getModelCoords().size();
-            pickManager.getPickColor(geom, (ByteBuffer)pickColor.rewind());
+            pickManager.getPickColor(geom, pickColor.rewind());
             Utilities.times(geomVertexCount, () ->
             {
-                colors.put((ByteBuffer)drawColor.rewind());
-                pickColors.put((ByteBuffer)pickColor.rewind());
+                colors.put(drawColor.rewind());
+                pickColors.put(pickColor.rewind());
             });
 
             if (timeIntervals != null && groupTimeSpan != null)
@@ -186,7 +187,7 @@ public class MultiDrawPolygonMeshDataBuffered extends BufferObjectList<BufferObj
         {
             BufferUtilities.addSequenceToBuffer(offset, indexCount, indexBuffer);
         }
-        return (IntBuffer)indexBuffer.flip();
+        return indexBuffer.flip();
     }
 
     /**
@@ -233,7 +234,7 @@ public class MultiDrawPolygonMeshDataBuffered extends BufferObjectList<BufferObj
                 drawMode = GL.GL_TRIANGLES;
                 break;
             case QUAD_VERTEX_COUNT:
-                drawMode = GL2.GL_QUADS;
+                drawMode = GL2GL3.GL_QUADS;
                 break;
             default:
                 drawMode = GL2.GL_POLYGON;

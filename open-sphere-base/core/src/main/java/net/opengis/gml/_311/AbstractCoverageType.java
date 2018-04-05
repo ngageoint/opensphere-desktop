@@ -98,7 +98,7 @@ public abstract class AbstractCoverageType
      *     
      */
     public void setDomainSet(JAXBElement<? extends DomainSetType> value) {
-        this.domainSet = ((JAXBElement<? extends DomainSetType> ) value);
+        this.domainSet = (value);
     }
 
     /**

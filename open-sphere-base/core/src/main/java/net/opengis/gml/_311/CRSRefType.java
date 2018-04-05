@@ -111,7 +111,7 @@ public class CRSRefType {
      *     
      */
     public void setCRS(JAXBElement<? extends AbstractReferenceSystemType> value) {
-        this.crs = ((JAXBElement<? extends AbstractReferenceSystemType> ) value);
+        this.crs = (value);
     }
 
     /**

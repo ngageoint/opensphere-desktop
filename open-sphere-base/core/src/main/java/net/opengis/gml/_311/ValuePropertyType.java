@@ -427,7 +427,7 @@ public class ValuePropertyType {
      *     
      */
     public void setCompositeValue(JAXBElement<? extends CompositeValueType> value) {
-        this.compositeValue = ((JAXBElement<? extends CompositeValueType> ) value);
+        this.compositeValue = (value);
     }
 
     /**
@@ -733,7 +733,7 @@ public class ValuePropertyType {
      *     
      */
     public void setObject(JAXBElement<?> value) {
-        this.object = ((JAXBElement<?> ) value);
+        this.object = (value);
     }
 
     /**

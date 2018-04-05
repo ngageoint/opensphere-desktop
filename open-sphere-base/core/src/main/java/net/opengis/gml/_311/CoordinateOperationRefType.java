@@ -105,7 +105,7 @@ public class CoordinateOperationRefType {
      *     
      */
     public void setCoordinateOperation(JAXBElement<? extends AbstractCoordinateOperationType> value) {
-        this.coordinateOperation = ((JAXBElement<? extends AbstractCoordinateOperationType> ) value);
+        this.coordinateOperation = (value);
     }
 
     /**

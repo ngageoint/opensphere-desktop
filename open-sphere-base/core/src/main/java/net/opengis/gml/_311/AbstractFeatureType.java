@@ -105,7 +105,7 @@ public abstract class AbstractFeatureType
      *     
      */
     public void setLocation(JAXBElement<? extends LocationPropertyType> value) {
-        this.location = ((JAXBElement<? extends LocationPropertyType> ) value);
+        this.location = (value);
     }
 
 }

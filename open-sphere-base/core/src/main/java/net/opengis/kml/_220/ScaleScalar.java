@@ -18,11 +18,11 @@ public class ScaleScalar
     protected final static QName NAME = new QName("http://www.opengis.net/kml/2.2", "scale");
 
     public ScaleScalar(Double value) {
-        super(NAME, ((Class) Double.class), null, value);
+        super(NAME, (Double.class), null, value);
     }
 
     public ScaleScalar() {
-        super(NAME, ((Class) Double.class), null, null);
+        super(NAME, (Double.class), null, null);
     }
 
 }

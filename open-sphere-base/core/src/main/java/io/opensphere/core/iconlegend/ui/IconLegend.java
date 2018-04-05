@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -94,7 +95,7 @@ public final class IconLegend implements IconLegendListener
             myIconLegendFrame.setIconifiable(false);
             myIconLegendFrame.setClosable(true);
             myIconLegendFrame.setResizable(true);
-            myIconLegendFrame.setDefaultCloseOperation(AbstractInternalFrame.HIDE_ON_CLOSE);
+            myIconLegendFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
             myIconLegendFrame.setContentPane(getMainPanel());
             myIconLegendFrame.setLocation(200, 100);
         }

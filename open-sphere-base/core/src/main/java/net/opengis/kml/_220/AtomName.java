@@ -18,11 +18,11 @@ public class AtomName
     protected final static QName NAME = new QName("http://www.w3.org/2005/Atom", "name");
 
     public AtomName(String value) {
-        super(NAME, ((Class) String.class), null, value);
+        super(NAME, (String.class), null, value);
     }
 
     public AtomName() {
-        super(NAME, ((Class) String.class), null, null);
+        super(NAME, (String.class), null, null);
     }
 
 }

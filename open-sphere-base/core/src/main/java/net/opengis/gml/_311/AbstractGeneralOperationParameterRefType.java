@@ -93,7 +93,7 @@ public class AbstractGeneralOperationParameterRefType {
      *     
      */
     public void setGeneralOperationParameter(JAXBElement<? extends AbstractGeneralOperationParameterType> value) {
-        this.generalOperationParameter = ((JAXBElement<? extends AbstractGeneralOperationParameterType> ) value);
+        this.generalOperationParameter = (value);
     }
 
     /**

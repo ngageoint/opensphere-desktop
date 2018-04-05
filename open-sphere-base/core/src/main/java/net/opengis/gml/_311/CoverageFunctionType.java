@@ -98,7 +98,7 @@ public class CoverageFunctionType {
      *     
      */
     public void setGridFunction(JAXBElement<? extends GridFunctionType> value) {
-        this.gridFunction = ((JAXBElement<? extends GridFunctionType> ) value);
+        this.gridFunction = (value);
     }
 
 }

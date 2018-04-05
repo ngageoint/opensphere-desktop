@@ -1,5 +1,6 @@
 package io.opensphere.core.util.gdal;
 
+import java.awt.Transparency;
 import java.awt.color.ColorSpace;
 import java.awt.image.BandedSampleModel;
 import java.awt.image.BufferedImage;
@@ -310,7 +311,7 @@ public class GDALImageReader extends ImageReader
             {
                 boolean hasAlpha = rasterTypes.containsKey(RasterType.ALPHA);
                 colorModel = new ComponentColorModel(colorSpace, hasAlpha, false,
-                        hasAlpha ? ColorModel.TRANSLUCENT : ColorModel.OPAQUE, dataType);
+                        hasAlpha ? Transparency.TRANSLUCENT : Transparency.OPAQUE, dataType);
             }
         }
         return colorModel;
@@ -473,7 +474,7 @@ public class GDALImageReader extends ImageReader
                 fos.close();
             }
 
-            Dataset dataset = gdal.Open(myFile.getAbsolutePath(), gdalconst.GA_ReadOnly);
+            Dataset dataset = gdal.Open(myFile.getAbsolutePath(), gdalconstConstants.GA_ReadOnly);
             if (dataset == null)
             {
                 GDALGenericUtilities.logLastError(LOGGER, Level.ERROR);

@@ -94,7 +94,7 @@ public class UnaryLogicOpType
      *     
      */
     public void setComparisonOps(JAXBElement<? extends ComparisonOpsType> value) {
-        this.comparisonOps = ((JAXBElement<? extends ComparisonOpsType> ) value);
+        this.comparisonOps = (value);
     }
 
     /**
@@ -140,7 +140,7 @@ public class UnaryLogicOpType
      *     
      */
     public void setSpatialOps(JAXBElement<? extends SpatialOpsType> value) {
-        this.spatialOps = ((JAXBElement<? extends SpatialOpsType> ) value);
+        this.spatialOps = (value);
     }
 
     /**
@@ -170,7 +170,7 @@ public class UnaryLogicOpType
      *     
      */
     public void setLogicOps(JAXBElement<? extends LogicOpsType> value) {
-        this.logicOps = ((JAXBElement<? extends LogicOpsType> ) value);
+        this.logicOps = (value);
     }
 
 }

@@ -64,16 +64,19 @@ public class DataObject implements Serializable, io.opensphere.core.common.geosp
     }
 
     // Getters and setters
+    @Override
     public List<?> getProperties()
     {
         return values;
     }
 
+    @Override
     public List<String> getPropertyKeys()
     {
         return keys;
     }
 
+    @Override
     public boolean hasProperty(String key)
     {
         if (keys.contains(key))
@@ -83,6 +86,7 @@ public class DataObject implements Serializable, io.opensphere.core.common.geosp
         return false;
     }
 
+    @Override
     public Object getProperty(String key)
     {
         Object ret = null;
@@ -93,6 +97,7 @@ public class DataObject implements Serializable, io.opensphere.core.common.geosp
         return ret;
     }
 
+    @Override
     public void setProperty(String property, Object value)
     {
         int index = keys.indexOf(property);
@@ -107,6 +112,7 @@ public class DataObject implements Serializable, io.opensphere.core.common.geosp
         }
     }
 
+    @Override
     public void removeProperty(String property)
     {
         if (property != null && keys.contains(property))
@@ -116,31 +122,37 @@ public class DataObject implements Serializable, io.opensphere.core.common.geosp
         }
     }
 
+    @Override
     public long getId()
     {
         return id;
     }
 
+    @Override
     public void setId(long id)
     {
         this.id = id;
     }
 
+    @Override
     public Color getColor()
     {
         return color;
     }
 
+    @Override
     public void setColor(Color color)
     {
         this.color = color;
     }
 
+    @Override
     public Date getStartDate()
     {
         return startDate;
     }
 
+    @Override
     public void setStartDate(Date startDate)
     {
         this.startDate = startDate;
@@ -151,6 +163,7 @@ public class DataObject implements Serializable, io.opensphere.core.common.geosp
      *
      * @return startDate
      */
+    @Override
     public Date getDate()
     {
         return startDate;
@@ -161,16 +174,19 @@ public class DataObject implements Serializable, io.opensphere.core.common.geosp
      *
      * @param startDate
      */
+    @Override
     public void setDate(Date startDate)
     {
         this.startDate = startDate;
     }
 
+    @Override
     public Date getEndDate()
     {
         return endDate;
     }
 
+    @Override
     public void setEndDate(Date endDate)
     {
         this.endDate = endDate;
@@ -192,16 +208,19 @@ public class DataObject implements Serializable, io.opensphere.core.common.geosp
         return buf.toString();
     }
 
+    @Override
     public String getFeatureId()
     {
         return featureId;
     }
 
+    @Override
     public void setFeatureId(String featureId)
     {
         this.featureId = featureId;
     }
 
+    @Override
     public String getDataType()
     {
         String dataType = null;
@@ -223,6 +242,7 @@ public class DataObject implements Serializable, io.opensphere.core.common.geosp
         this.selected = selected;
     }
 
+    @Override
     public DataObject clone()
     {
         DataObject clone = new DataObject();

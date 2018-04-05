@@ -90,7 +90,7 @@ public class IdentifierType {
      *     
      */
     public void setName(JAXBElement<CodeType> value) {
-        this.name = ((JAXBElement<CodeType> ) value);
+        this.name = (value);
     }
 
     /**

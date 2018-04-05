@@ -113,7 +113,7 @@ public class ReferenceSystemRefType {
      *     
      */
     public void setReferenceSystem(JAXBElement<? extends AbstractReferenceSystemType> value) {
-        this.referenceSystem = ((JAXBElement<? extends AbstractReferenceSystemType> ) value);
+        this.referenceSystem = (value);
     }
 
     /**

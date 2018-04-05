@@ -103,7 +103,7 @@ public class SurfacePropertyType {
      *     
      */
     public void setSurface(JAXBElement<? extends AbstractSurfaceType> value) {
-        this.surface = ((JAXBElement<? extends AbstractSurfaceType> ) value);
+        this.surface = (value);
     }
 
     /**

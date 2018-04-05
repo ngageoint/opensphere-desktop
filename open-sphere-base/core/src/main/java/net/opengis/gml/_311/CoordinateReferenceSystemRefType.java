@@ -107,7 +107,7 @@ public class CoordinateReferenceSystemRefType {
      *     
      */
     public void setCoordinateReferenceSystem(JAXBElement<? extends AbstractReferenceSystemType> value) {
-        this.coordinateReferenceSystem = ((JAXBElement<? extends AbstractReferenceSystemType> ) value);
+        this.coordinateReferenceSystem = (value);
     }
 
     /**

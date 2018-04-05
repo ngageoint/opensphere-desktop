@@ -83,6 +83,7 @@ public class MainPortionIterator implements Iterator<ShapeRecord>
         return record.getRecord();
     }
 
+    @Override
     public void remove()
     {
         throw (new UnsupportedOperationException());

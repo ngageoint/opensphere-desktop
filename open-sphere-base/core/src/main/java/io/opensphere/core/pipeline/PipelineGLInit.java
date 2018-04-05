@@ -27,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -579,7 +580,7 @@ public class PipelineGLInit
             dialog.setTitle("Warning");
             dialog.initialize(createSummaryPanel(VIABILITY_WARNING), createDetailsPanel(sb.toString()), myPrefs,
                     "hideViabilityMessage");
-            dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             dialog.setLocationRelativeTo(myComponent);
             dialog.setVisible(true);
         });
@@ -601,7 +602,7 @@ public class PipelineGLInit
 
                 dialog.initialize(createSummaryPanel(DISPLAY_LIST_WARNING), (Component)null, myPrefs, "hideDisplayListMessage",
                         "OK", enableLabel);
-                dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                 dialog.setLocationRelativeTo(myComponent);
                 dialog.setVisible(true);
                 if (dialog.getSelection() == enableLabel)
@@ -626,7 +627,7 @@ public class PipelineGLInit
             final String disableLabel = "Disable Safe Mode";
             dialog.initialize(createSummaryPanel(SAFE_MODE_WARNING), (Component)null, myPrefs, "hideSafeModeMessage", "OK",
                     disableLabel);
-            dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             dialog.setLocationRelativeTo(myComponent);
             dialog.setVisible(true);
             if (dialog.getSelection() == disableLabel)

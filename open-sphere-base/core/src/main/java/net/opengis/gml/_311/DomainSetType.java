@@ -176,7 +176,7 @@ public class DomainSetType {
      *     
      */
     public void setGeometry(JAXBElement<? extends AbstractGeometryType> value) {
-        this.geometry = ((JAXBElement<? extends AbstractGeometryType> ) value);
+        this.geometry = (value);
     }
 
     /**
@@ -218,7 +218,7 @@ public class DomainSetType {
      *     
      */
     public void setTimeObject(JAXBElement<? extends AbstractTimeObjectType> value) {
-        this.timeObject = ((JAXBElement<? extends AbstractTimeObjectType> ) value);
+        this.timeObject = (value);
     }
 
     /**

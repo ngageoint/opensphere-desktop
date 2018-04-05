@@ -11,6 +11,7 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 /**
  * This class encapsulates a suite of test routines for LeastSqLineLocator and
@@ -441,7 +442,7 @@ public class LeastSqLineTestSuite
     private void show()
     {
         JFrame f = new JFrame("Stuff");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         f.getContentPane().setLayout(new BorderLayout());
         f.getContentPane().add(new Graph(), BorderLayout.CENTER);
         f.setSize(800, 800);

@@ -1018,7 +1018,7 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.opengis.net/kml/2.2", name = "color", defaultValue = "ffffffff")
     @XmlJavaTypeAdapter(HexBinaryAdapter.class)
     public JAXBElement<byte[]> createColor(byte[] value) {
-        return new JAXBElement<byte[]>(_Color_QNAME, byte[].class, null, ((byte[]) value));
+        return new JAXBElement<byte[]>(_Color_QNAME, byte[].class, null, (value));
     }
 
     /**
@@ -1226,7 +1226,7 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.opengis.net/kml/2.2", name = "textColor", defaultValue = "ff000000")
     @XmlJavaTypeAdapter(HexBinaryAdapter.class)
     public JAXBElement<byte[]> createTextColor(byte[] value) {
-        return new JAXBElement<byte[]>(_TextColor_QNAME, byte[].class, null, ((byte[]) value));
+        return new JAXBElement<byte[]>(_TextColor_QNAME, byte[].class, null, (value));
     }
 
     /**
@@ -1532,7 +1532,7 @@ public class ObjectFactory {
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/kml/2.2", name = "coordinates")
     public JAXBElement<List<String>> createCoordinates(List<String> value) {
-        return new JAXBElement<List<String>>(_Coordinates_QNAME, ((Class) List.class), null, ((List<String> ) value));
+        return new JAXBElement<List<String>>(_Coordinates_QNAME, ((Class) List.class), null, (value));
     }
 
     /**
@@ -1964,7 +1964,7 @@ public class ObjectFactory {
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/kml/2.2", name = "state")
     public JAXBElement<List<ItemIconStateEnumType>> createState(List<ItemIconStateEnumType> value) {
-        return new JAXBElement<List<ItemIconStateEnumType>>(_State_QNAME, ((Class) List.class), null, ((List<ItemIconStateEnumType> ) value));
+        return new JAXBElement<List<ItemIconStateEnumType>>(_State_QNAME, ((Class) List.class), null, (value));
     }
 
     /**
@@ -2226,7 +2226,7 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.opengis.net/kml/2.2", name = "bgColor", defaultValue = "ffffffff")
     @XmlJavaTypeAdapter(HexBinaryAdapter.class)
     public JAXBElement<byte[]> createBgColor(byte[] value) {
-        return new JAXBElement<byte[]>(_BgColor_QNAME, byte[].class, null, ((byte[]) value));
+        return new JAXBElement<byte[]>(_BgColor_QNAME, byte[].class, null, (value));
     }
 
     /**

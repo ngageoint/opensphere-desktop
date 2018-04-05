@@ -96,7 +96,7 @@ public class DynamicFeatureType
      *     
      */
     public void setHistory(JAXBElement<? extends HistoryPropertyType> value) {
-        this.history = ((JAXBElement<? extends HistoryPropertyType> ) value);
+        this.history = (value);
     }
 
     /**

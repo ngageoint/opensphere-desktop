@@ -179,20 +179,20 @@ public final class ShaderRendererUtilitiesGLSL extends AbstractShaderRendererUti
             GLUtilities.checkGLErrors(gl, LOGGER, "Link Program");
 
             IntBuffer intbuf = IntBuffer.allocate(16);
-            gl.getGL2().glGetProgramiv(intervalFilterProgram, GL2.GL_LINK_STATUS, intbuf);
+            gl.getGL2().glGetProgramiv(intervalFilterProgram, GL2ES2.GL_LINK_STATUS, intbuf);
             int linkStatus = intbuf.get();
-            if (LOGGER.isDebugEnabled() || linkStatus != GL2.GL_TRUE)
+            if (LOGGER.isDebugEnabled() || linkStatus != GL.GL_TRUE)
             {
                 // get log of link operation
                 intbuf.rewind();
-                gl.getGL2().glGetProgramiv(intervalFilterProgram, GL2.GL_INFO_LOG_LENGTH, intbuf);
+                gl.getGL2().glGetProgramiv(intervalFilterProgram, GL2ES2.GL_INFO_LOG_LENGTH, intbuf);
                 intbuf.rewind();
                 int logLength = intbuf.get();
                 ByteBuffer bytebuf = ByteBuffer.allocate(logLength + 1);
                 gl.getGL2().glGetProgramInfoLog(intervalFilterProgram, logLength, intbuf, bytebuf);
                 bytebuf.rewind();
                 String logText = new String(bytebuf.array(), StringUtilities.DEFAULT_CHARSET);
-                LOGGER.log(linkStatus == GL2.GL_TRUE ? Level.DEBUG : Level.ERROR, "Interval shader link log: " + logText);
+                LOGGER.log(linkStatus == GL.GL_TRUE ? Level.DEBUG : Level.ERROR, "Interval shader link log: " + logText);
             }
 
             int vertAttrIndex = gl.getGL2().glGetAttribLocation(intervalFilterProgram, "vertexInterval");
@@ -242,20 +242,20 @@ public final class ShaderRendererUtilitiesGLSL extends AbstractShaderRendererUti
         GLUtilities.checkGLErrors(gl, LOGGER, "Compile Shader");
 
         IntBuffer intbuf = IntBuffer.allocate(16);
-        gl.getGL2().glGetShaderiv(shaderId, GL2.GL_COMPILE_STATUS, intbuf);
+        gl.getGL2().glGetShaderiv(shaderId, GL2ES2.GL_COMPILE_STATUS, intbuf);
         int compileStatus = intbuf.get();
-        if (LOGGER.isDebugEnabled() || compileStatus != GL2.GL_TRUE)
+        if (LOGGER.isDebugEnabled() || compileStatus != GL.GL_TRUE)
         {
             // get log of compile operation
             intbuf.rewind();
-            gl.getGL2().glGetShaderiv(shaderId, GL2.GL_INFO_LOG_LENGTH, intbuf);
+            gl.getGL2().glGetShaderiv(shaderId, GL2ES2.GL_INFO_LOG_LENGTH, intbuf);
             intbuf.rewind();
             int logLength = intbuf.get();
             ByteBuffer bytebuf = ByteBuffer.allocate(logLength + 1);
             gl.getGL2().glGetShaderInfoLog(shaderId, logLength, intbuf, bytebuf);
             bytebuf.rewind();
             String logText = new String(bytebuf.array(), StringUtilities.DEFAULT_CHARSET);
-            LOGGER.log(compileStatus == GL2.GL_TRUE ? Level.DEBUG : Level.ERROR, "Shader compile log: " + logText);
+            LOGGER.log(compileStatus == GL.GL_TRUE ? Level.DEBUG : Level.ERROR, "Shader compile log: " + logText);
         }
 
         return shaderId;

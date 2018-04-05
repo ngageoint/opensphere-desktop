@@ -179,7 +179,7 @@ public class LocationPropertyType {
      *     
      */
     public void setGeometry(JAXBElement<? extends AbstractGeometryType> value) {
-        this.geometry = ((JAXBElement<? extends AbstractGeometryType> ) value);
+        this.geometry = (value);
     }
 
     /**

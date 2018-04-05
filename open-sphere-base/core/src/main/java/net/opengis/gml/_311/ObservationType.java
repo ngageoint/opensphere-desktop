@@ -132,7 +132,7 @@ public class ObservationType
      *     
      */
     public void setTarget(JAXBElement<TargetPropertyType> value) {
-        this.target = ((JAXBElement<TargetPropertyType> ) value);
+        this.target = (value);
     }
 
     /**

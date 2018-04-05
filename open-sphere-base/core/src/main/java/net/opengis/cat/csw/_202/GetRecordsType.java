@@ -171,7 +171,7 @@ public class GetRecordsType
      *     
      */
     public void setAbstractQuery(JAXBElement<? extends AbstractQueryType> value) {
-        this.abstractQuery = ((JAXBElement<? extends AbstractQueryType> ) value);
+        this.abstractQuery = (value);
     }
 
     /**

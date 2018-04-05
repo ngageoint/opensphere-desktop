@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
+import javax.media.opengl.GL2GL3;
 
 import com.jogamp.opengl.util.texture.TextureCoords;
 
@@ -302,7 +303,7 @@ public class TileDataBuffered extends BufferObjectList<BufferObject>
                     drawMode = GL.GL_TRIANGLES;
                     break;
                 case QUAD_VERTEX_COUNT:
-                    drawMode = GL2.GL_QUADS;
+                    drawMode = GL2GL3.GL_QUADS;
                     break;
                 default:
                     drawMode = GL2.GL_POLYGON;

@@ -209,7 +209,7 @@ public class DictionaryEntryType {
      *     
      */
     public void setDefinition(JAXBElement<? extends DefinitionType> value) {
-        this.definition = ((JAXBElement<? extends DefinitionType> ) value);
+        this.definition = (value);
     }
 
     /**

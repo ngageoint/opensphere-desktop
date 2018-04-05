@@ -23,16 +23,19 @@ public class ESRIShapefileIterator implements Iterator<ShapefileRecord>
         dbfItr = parent.getDbf().iterator();
     }
 
+    @Override
     public boolean hasNext()
     {
         return (shpItr.hasNext() && dbfItr.hasNext());
     }
 
+    @Override
     public ShapefileRecord next()
     {
         return new ShapefileRecord(shpItr.next(), dbfItr.next());
     }
 
+    @Override
     public void remove()
     {
         throw (new UnsupportedOperationException());

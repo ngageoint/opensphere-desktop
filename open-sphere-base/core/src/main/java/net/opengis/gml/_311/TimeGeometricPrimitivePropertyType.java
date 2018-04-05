@@ -91,7 +91,7 @@ public class TimeGeometricPrimitivePropertyType {
      *     
      */
     public void setTimeGeometricPrimitive(JAXBElement<? extends AbstractTimeGeometricPrimitiveType> value) {
-        this.timeGeometricPrimitive = ((JAXBElement<? extends AbstractTimeGeometricPrimitiveType> ) value);
+        this.timeGeometricPrimitive = (value);
     }
 
     /**

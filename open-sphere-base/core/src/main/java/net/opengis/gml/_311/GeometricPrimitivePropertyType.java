@@ -126,7 +126,7 @@ public class GeometricPrimitivePropertyType {
      *     
      */
     public void setGeometricPrimitive(JAXBElement<? extends AbstractGeometricPrimitiveType> value) {
-        this.geometricPrimitive = ((JAXBElement<? extends AbstractGeometricPrimitiveType> ) value);
+        this.geometricPrimitive = (value);
     }
 
     /**

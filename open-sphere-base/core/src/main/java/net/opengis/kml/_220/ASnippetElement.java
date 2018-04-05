@@ -18,11 +18,11 @@ public class ASnippetElement
     protected final static QName NAME = new QName("http://www.opengis.net/kml/2.2", "Snippet");
 
     public ASnippetElement(SnippetType value) {
-        super(NAME, ((Class) SnippetType.class), null, value);
+        super(NAME, (SnippetType.class), null, value);
     }
 
     public ASnippetElement() {
-        super(NAME, ((Class) SnippetType.class), null, null);
+        super(NAME, (SnippetType.class), null, null);
     }
 
 }

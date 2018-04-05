@@ -97,7 +97,7 @@ public class TopoPrimitiveMemberType {
      *     
      */
     public void setTopoPrimitive(JAXBElement<? extends AbstractTopoPrimitiveType> value) {
-        this.topoPrimitive = ((JAXBElement<? extends AbstractTopoPrimitiveType> ) value);
+        this.topoPrimitive = (value);
     }
 
     /**
