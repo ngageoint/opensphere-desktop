@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import io.opensphere.core.modulestate.TagList;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.LoadsTo;
+import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.server.state.StateConstants;
 import io.opensphere.wfs.util.WFSConstants;
 
@@ -86,6 +87,10 @@ public class WFSLayerState
     /** The loads to. */
     @XmlTransient
     private LoadsTo myLoadsTo;
+
+    /** The meta data info for the layer. */
+    @XmlTransient
+    private MetaDataInfo myMetaData;
 
     // TODO: Add spike style
 
@@ -445,5 +450,25 @@ public class WFSLayerState
     public void setLoadsTo(LoadsTo loadsTo)
     {
         myLoadsTo = loadsTo;
+    }
+
+    /**
+     * Gets the metaData.
+     *
+     * @return the metaData
+     */
+    public MetaDataInfo getMetaData()
+    {
+        return myMetaData;
+    }
+
+    /**
+     * Sets the metaData.
+     *
+     * @param metaData the metaData
+     */
+    public void setMetaData(MetaDataInfo metaData)
+    {
+        myMetaData = metaData;
     }
 }

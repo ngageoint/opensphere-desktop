@@ -225,7 +225,6 @@ public class CSVStateController extends AbstractLayerStateController<CSVDataSour
         layer.setVisible(dataSource.isVisible());
         layer.setBaseColor(StateUtilities.formatColor(dataSource.getLayerSettings().getColor()));
         layer.setTemporal(Boolean.valueOf(dataSource.getLayerSettings().isTimelineEnabled()));
-        layer.setAnalyze(Boolean.valueOf(dataSource.getLayerSettings().isMetadataEnabled()));
         layer.setAnimate(Boolean.TRUE.toString());
         layer.setLoad(Boolean.TRUE);
         layer.setSpatial(Boolean.TRUE);
@@ -261,7 +260,7 @@ public class CSVStateController extends AbstractLayerStateController<CSVDataSour
 //        dataSource.setSourceClassificationHeader(ch);
         dataSource.getLayerSettings().setColor(StateUtilities.parseColor(getColor(layer)));
         dataSource.getLayerSettings().setTimelineEnabled(BooleanUtilities.toBoolean(layer.isTemporal()));
-        dataSource.getLayerSettings().setMetadataEnabled(BooleanUtilities.toBoolean(layer.isAnalyze()));
+        dataSource.getLayerSettings().setMetadataEnabled(true);
         dataSource.setParseParameters(toParameters(layer));
         return dataSource;
     }
