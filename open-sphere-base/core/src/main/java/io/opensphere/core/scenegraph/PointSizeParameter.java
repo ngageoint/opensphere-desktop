@@ -1,6 +1,6 @@
 package io.opensphere.core.scenegraph;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 /**
  * This is a {@link SceneGraph} parameter that indicates a GL point size.

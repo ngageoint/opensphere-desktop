@@ -13,13 +13,8 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.media.nativewindow.AbstractGraphicsDevice;
-import javax.media.opengl.GL;
-import javax.media.opengl.GLContext;
-import javax.media.opengl.GLProfile;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -31,6 +26,11 @@ import javax.swing.WindowConstants;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+
+import com.jogamp.nativewindow.AbstractGraphicsDevice;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GLContext;
+import com.jogamp.opengl.GLProfile;
 
 import io.opensphere.core.geometry.AbstractGeometry.RenderMode;
 import io.opensphere.core.geometry.Geometry;
@@ -341,7 +341,8 @@ public class PipelineGLInit
         LOGGER.info("GPU memory is " + absoluteCacheSizeBytesGPU / (1 << 20) + " MiB (" + absoluteCacheSizeBytesGPU + " B)");
 
         final double defaultGPUSizeFraction = .95;
-        final double gpuSizeFraction = Utilities.parseSystemProperty("opensphere.geometryCache.gpuSizeFraction", defaultGPUSizeFraction);
+        final double gpuSizeFraction = Utilities.parseSystemProperty("opensphere.geometryCache.gpuSizeFraction",
+                defaultGPUSizeFraction);
 
         final double defaultLowWaterFraction = .7;
         final double lowWaterFraction = Utilities.parseSystemProperty("opensphere.geometryCache.gpuLowWaterFraction",
@@ -363,8 +364,8 @@ public class PipelineGLInit
      */
     private void logGLInfo(GL gl)
     {
-        final AbstractGraphicsDevice device = gl.getContext().getGLDrawable().getNativeSurface().getGraphicsConfiguration().getScreen()
-                .getDevice();
+        final AbstractGraphicsDevice device = gl.getContext().getGLDrawable().getNativeSurface().getGraphicsConfiguration()
+                .getScreen().getDevice();
         final GLContext ctx = gl.getContext();
 
         ToStringHelper helper = new ToStringHelper((Class<?>)null, 0);

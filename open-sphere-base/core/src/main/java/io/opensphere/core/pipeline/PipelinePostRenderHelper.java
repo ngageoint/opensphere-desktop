@@ -16,9 +16,9 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GLContext;
-import javax.media.opengl.GLDrawable;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GLContext;
+import com.jogamp.opengl.GLDrawable;
 
 import io.opensphere.core.FrameBufferCaptureManager.FrameBufferCaptureListener;
 import io.opensphere.core.FrameBufferCaptureManager.FrameBufferCaptureProvider;
@@ -178,8 +178,8 @@ public class PipelinePostRenderHelper
             try
             {
                 GLDrawable drawable = GLContext.getCurrent().getGLDrawable();
-                myCaptureWidth = drawable.getWidth();
-                myFrameBufferHeight = drawable.getHeight();
+                myCaptureWidth = drawable.getSurfaceWidth();
+                myFrameBufferHeight = drawable.getSurfaceHeight();
 
                 // We are getting the image as RGB, so 3 bytes per pixel.
                 int bytesPerPixel = 3;

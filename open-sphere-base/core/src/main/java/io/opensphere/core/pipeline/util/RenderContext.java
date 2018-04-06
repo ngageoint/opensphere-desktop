@@ -2,11 +2,11 @@ package io.opensphere.core.pipeline.util;
 
 import java.util.Collection;
 
-import javax.media.opengl.DebugGL2;
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.media.opengl.GL2ES1;
-import javax.media.opengl.fixedfunc.GLMatrixFunc;
+import com.jogamp.opengl.DebugGL2;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GL2ES1;
+import com.jogamp.opengl.fixedfunc.GLMatrixFunc;
 
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.geometry.AbstractGeometry.RenderMode;
@@ -515,7 +515,7 @@ public class RenderContext
     }
 
     /**
-     * Get if {@link javax.media.opengl.GL2GL3#GL_CLAMP_TO_BORDER} is supported.
+     * Get if {@link com.jogamp.opengl.GL2GL3#GL_CLAMP_TO_BORDER} is supported.
      *
      * @return {@code true} if the feature is supported.
      */
@@ -525,7 +525,7 @@ public class RenderContext
     }
 
     /**
-     * Get if {@link javax.media.opengl.GL2GL3#GL_CLAMP_TO_BORDER} is supported.
+     * Get if {@link com.jogamp.opengl.GL2GL3#GL_CLAMP_TO_BORDER} is supported.
      *
      * @param warningPrefix A prefix to be added to the warnings.
      * @param warnings If the feature is not available, a warning is added to

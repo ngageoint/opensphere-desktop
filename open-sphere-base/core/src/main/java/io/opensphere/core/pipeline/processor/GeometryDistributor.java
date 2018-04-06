@@ -15,7 +15,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.concurrent.GuardedBy;
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 import org.apache.log4j.Logger;
 

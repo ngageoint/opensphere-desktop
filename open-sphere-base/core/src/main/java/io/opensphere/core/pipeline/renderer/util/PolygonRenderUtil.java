@@ -3,9 +3,9 @@ package io.opensphere.core.pipeline.renderer.util;
 import java.awt.Color;
 import java.util.List;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.media.opengl.GL2GL3;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GL2GL3;
 
 import gnu.trove.list.TIntList;
 import io.opensphere.core.geometry.AbstractGeometry;

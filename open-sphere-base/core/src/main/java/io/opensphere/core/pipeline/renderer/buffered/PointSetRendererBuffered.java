@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 import org.apache.log4j.Logger;
 

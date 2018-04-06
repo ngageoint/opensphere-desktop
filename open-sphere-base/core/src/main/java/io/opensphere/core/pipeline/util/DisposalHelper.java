@@ -1,6 +1,6 @@
 package io.opensphere.core.pipeline.util;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 /**
  * Helper for on-card memory disposal handling.

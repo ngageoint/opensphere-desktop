@@ -2,8 +2,8 @@ package io.opensphere.core.pipeline.util;
 
 import java.awt.Color;
 
-import javax.media.opengl.GL2;
-import javax.media.opengl.fixedfunc.GLMatrixFunc;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.fixedfunc.GLMatrixFunc;
 
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.geometry.AbstractGeometry.RenderMode;

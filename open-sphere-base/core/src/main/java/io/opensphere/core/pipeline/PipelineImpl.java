@@ -10,12 +10,12 @@ import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLContext;
-import javax.media.opengl.GLEventListener;
-import javax.media.opengl.GLProfile;
-import javax.media.opengl.fixedfunc.GLMatrixFunc;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLContext;
+import com.jogamp.opengl.GLEventListener;
+import com.jogamp.opengl.GLProfile;
+import com.jogamp.opengl.fixedfunc.GLMatrixFunc;
 import javax.swing.Timer;
 
 import org.apache.log4j.Logger;
@@ -313,7 +313,7 @@ public class PipelineImpl implements GLEventListener, Pipeline, GenericSubscribe
     /**
      * {@inheritDoc}
      *
-     * @see javax.media.opengl.GLEventListener#display(javax.media.opengl.GLAutoDrawable)
+     * @see com.jogamp.opengl.GLEventListener#display(com.jogamp.opengl.GLAutoDrawable)
      */
     @Override
     @SuppressFBWarnings("IS2_INCONSISTENT_SYNC")
@@ -449,7 +449,7 @@ public class PipelineImpl implements GLEventListener, Pipeline, GenericSubscribe
     /**
      * {@inheritDoc}
      *
-     * @see javax.media.opengl.GLEventListener#dispose(javax.media.opengl.GLAutoDrawable)
+     * @see com.jogamp.opengl.GLEventListener#dispose(com.jogamp.opengl.GLAutoDrawable)
      */
     @Override
     public void dispose(GLAutoDrawable drawable)
@@ -522,7 +522,7 @@ public class PipelineImpl implements GLEventListener, Pipeline, GenericSubscribe
     /**
      * {@inheritDoc}
      *
-     * @see javax.media.opengl.GLEventListener#init(javax.media.opengl.GLAutoDrawable)
+     * @see com.jogamp.opengl.GLEventListener#init(com.jogamp.opengl.GLAutoDrawable)
      */
     @Override
     public void init(GLAutoDrawable drawable)

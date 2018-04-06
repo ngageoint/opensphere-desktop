@@ -3,8 +3,8 @@ package io.opensphere.core.pipeline.renderer.buffered;
 import java.nio.FloatBuffer;
 
 import javax.annotation.Nullable;
-import javax.media.opengl.GL;
-import javax.media.opengl.fixedfunc.GLPointerFunc;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.fixedfunc.GLPointerFunc;
 
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.pipeline.util.RenderContext;
