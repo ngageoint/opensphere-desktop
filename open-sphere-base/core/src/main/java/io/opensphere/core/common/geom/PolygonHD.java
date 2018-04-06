@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.PathIterator;
-import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
@@ -440,10 +439,9 @@ public class PolygonHD implements Shape, java.io.Serializable
         return (hits & 1) != 0;
     }
 
-    private Path2D.Double getCrossings(double xlo, double ylo, double xhi, double yhi)
+    private Crossings getCrossings(double xlo, double ylo, double xhi, double yhi)
     {
-        Path2D.Double path = new Path2D.Double(Path2D.WIND_EVEN_ODD);
-//        Crossings cross = new Crossings.EvenOdd(xlo, ylo, xhi, yhi);
+        Crossings cross = new Crossings.EvenOdd(xlo, ylo, xhi, yhi);
         double lastx = xpoints[npoints - 1];
         double lasty = ypoints[npoints - 1];
         double curx, cury;
@@ -453,16 +451,15 @@ public class PolygonHD implements Shape, java.io.Serializable
         {
             curx = xpoints[i];
             cury = ypoints[i];
-            path.quadTo(lastx, lasty, curx, cury);
-//            if (cross.accumulateLine(lastx, lasty, curx, cury))
-//            {
-//                return null;
-//            }
+            if (cross.accumulateLine(lastx, lasty, curx, cury))
+            {
+                return null;
+            }
             lastx = curx;
             lasty = cury;
         }
 
-        return path;
+        return cross;
     }
 
     /**
@@ -489,8 +486,8 @@ public class PolygonHD implements Shape, java.io.Serializable
             return false;
         }
 
-        Path2D cross = getCrossings(x, y, x + w, y + h);
-        return cross.intersects(x, y, w, h);
+        Crossings cross = getCrossings(x, y, x + w, y + h);
+        return cross == null || !cross.isEmpty();
     }
 
     /**
@@ -517,8 +514,8 @@ public class PolygonHD implements Shape, java.io.Serializable
             return false;
         }
 
-        Path2D cross = getCrossings(x, y, x + w, y + h);
-        return cross.contains(x, y, w, h);
+        Crossings cross = getCrossings(x, y, x + w, y + h);
+        return cross != null && cross.covers(y, y + h);
     }
 
     /**

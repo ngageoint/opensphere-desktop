@@ -5,8 +5,6 @@ import java.util.Map;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
-import javax.media.opengl.GL2ES2;
-import javax.media.opengl.GL2ES3;
 
 import io.opensphere.core.geometry.renderproperties.BlendingConfigGL;
 import io.opensphere.core.geometry.renderproperties.BlendingConfigGL.BlendFactor;
@@ -28,13 +26,13 @@ public final class GLBlendingHandler
 
     static
     {
-        ourBlendFactorTypeMap.put(BlendFactor.CONSTANT_ALPHA, Integer.valueOf(GL2ES2.GL_CONSTANT_ALPHA));
-        ourBlendFactorTypeMap.put(BlendFactor.CONSTANT_COLOR, Integer.valueOf(GL2ES2.GL_CONSTANT_COLOR));
+        ourBlendFactorTypeMap.put(BlendFactor.CONSTANT_ALPHA, Integer.valueOf(GL2.GL_CONSTANT_ALPHA));
+        ourBlendFactorTypeMap.put(BlendFactor.CONSTANT_COLOR, Integer.valueOf(GL2.GL_CONSTANT_COLOR));
         ourBlendFactorTypeMap.put(BlendFactor.DST_ALPHA, Integer.valueOf(GL.GL_DST_ALPHA));
         ourBlendFactorTypeMap.put(BlendFactor.DST_COLOR, Integer.valueOf(GL.GL_DST_COLOR));
         ourBlendFactorTypeMap.put(BlendFactor.ONE, Integer.valueOf(GL.GL_ONE));
-        ourBlendFactorTypeMap.put(BlendFactor.ONE_MINUS_CONSTANT_ALPHA, Integer.valueOf(GL2ES2.GL_ONE_MINUS_CONSTANT_ALPHA));
-        ourBlendFactorTypeMap.put(BlendFactor.ONE_MINUS_CONSTANT_COLOR, Integer.valueOf(GL2ES2.GL_ONE_MINUS_CONSTANT_COLOR));
+        ourBlendFactorTypeMap.put(BlendFactor.ONE_MINUS_CONSTANT_ALPHA, Integer.valueOf(GL2.GL_ONE_MINUS_CONSTANT_ALPHA));
+        ourBlendFactorTypeMap.put(BlendFactor.ONE_MINUS_CONSTANT_COLOR, Integer.valueOf(GL2.GL_ONE_MINUS_CONSTANT_COLOR));
         ourBlendFactorTypeMap.put(BlendFactor.ONE_MINUS_DST_ALPHA, Integer.valueOf(GL.GL_ONE_MINUS_DST_ALPHA));
         ourBlendFactorTypeMap.put(BlendFactor.ONE_MINUS_DST_COLOR, Integer.valueOf(GL.GL_ONE_MINUS_DST_COLOR));
         ourBlendFactorTypeMap.put(BlendFactor.ONE_MINUS_SRC_ALPHA, Integer.valueOf(GL.GL_ONE_MINUS_SRC_ALPHA));
@@ -47,8 +45,8 @@ public final class GLBlendingHandler
         ourBlendFunctionTypeMap.put(BlendFunction.FUNC_ADD, Integer.valueOf(GL.GL_FUNC_ADD));
         ourBlendFunctionTypeMap.put(BlendFunction.FUNC_REVERSE_SUBTRACT, Integer.valueOf(GL.GL_FUNC_REVERSE_SUBTRACT));
         ourBlendFunctionTypeMap.put(BlendFunction.FUNC_SUBTRACT, Integer.valueOf(GL.GL_FUNC_SUBTRACT));
-        ourBlendFunctionTypeMap.put(BlendFunction.MAX, Integer.valueOf(GL2ES3.GL_MAX));
-        ourBlendFunctionTypeMap.put(BlendFunction.MIN, Integer.valueOf(GL2ES3.GL_MIN));
+        ourBlendFunctionTypeMap.put(BlendFunction.MAX, Integer.valueOf(GL2.GL_MAX));
+        ourBlendFunctionTypeMap.put(BlendFunction.MIN, Integer.valueOf(GL2.GL_MIN));
     }
 
     /**

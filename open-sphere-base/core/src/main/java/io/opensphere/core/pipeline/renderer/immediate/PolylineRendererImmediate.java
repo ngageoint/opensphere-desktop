@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
-import javax.media.opengl.GL2GL3;
 
 import org.apache.log4j.Logger;
 
@@ -105,7 +104,7 @@ public class PolylineRendererImmediate extends AbstractRenderer<PolylineGeometry
 
                     PolylineModelData fPositions = positions;
                     GL2Utilities.renderWithTransform(rc, geo.getRenderProperties().getTransform(),
-                        () -> render(rc, geo, fPositions));
+                            () -> render(rc, geo, fPositions));
                 }
             }
         }
@@ -208,7 +207,7 @@ public class PolylineRendererImmediate extends AbstractRenderer<PolylineGeometry
                     drawMode = GL.GL_TRIANGLES;
                     break;
                 case QUAD_VERTEX_COUNT:
-                    drawMode = GL2GL3.GL_QUADS;
+                    drawMode = GL2.GL_QUADS;
                     break;
                 default:
                     drawMode = GL2.GL_POLYGON;

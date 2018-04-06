@@ -43,7 +43,7 @@ public final class PolygonRenderUtil
                 drawMode = GL.GL_TRIANGLES;
                 break;
             case AbstractRenderer.QUAD_VERTEX_COUNT:
-                drawMode = GL2GL3.GL_QUADS;
+                drawMode = GL2.GL_QUADS;
                 break;
             case AbstractRenderer.TRIANGLE_STRIP_VERTEX_COUNT:
                 drawMode = GL.GL_TRIANGLE_STRIP;

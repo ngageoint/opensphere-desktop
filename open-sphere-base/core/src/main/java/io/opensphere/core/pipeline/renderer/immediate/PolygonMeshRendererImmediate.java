@@ -90,8 +90,7 @@ public class PolygonMeshRendererImmediate extends AbstractRenderer<PolygonMeshGe
 
             rc.getGL().glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
 
-            PolygonRenderUtil.setupGL(rc.getGL(), rc.getRenderMode(),
-                    false, false);
+            PolygonRenderUtil.setupGL(rc.getGL(), rc.getRenderMode(), false, false);
             rc.getGL().glDisable(GL.GL_CULL_FACE);
 
             LightingModelConfigGL lastLight = null;
@@ -139,7 +138,7 @@ public class PolygonMeshRendererImmediate extends AbstractRenderer<PolygonMeshGe
                         }
 
                         GL2Utilities.renderWithTransform(rc, geom.getRenderProperties().getTransform(),
-                            () -> PolygonRenderUtil.drawPolygonMesh(rc.getGL(), modelData.getFirstObject()));
+                                () -> PolygonRenderUtil.drawPolygonMesh(rc.getGL(), modelData.getFirstObject()));
                     }
                 }
                 finally
@@ -192,7 +191,7 @@ public class PolygonMeshRendererImmediate extends AbstractRenderer<PolygonMeshGe
                     drawMode = GL.GL_TRIANGLES;
                     break;
                 case QUAD_VERTEX_COUNT:
-                    drawMode = GL2GL3.GL_QUADS;
+                    drawMode = GL2.GL_QUADS;
                     break;
                 default:
                     drawMode = GL2.GL_POLYGON;

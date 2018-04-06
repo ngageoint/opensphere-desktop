@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
-import javax.media.opengl.GL2GL3;
 
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.model.ColorArrayList;
@@ -54,7 +53,9 @@ public class PolygonMeshDataBuffered extends BufferObjectList<PolygonMeshBuffere
         /** How many vertices doth a triangle have. */
         private static final int TRIANGLE_VERTEX_COUNT = 3;
 
-        /** How many vertices does a single triangle have in a triangle strip. */
+        /**
+         * How many vertices does a single triangle have in a triangle strip.
+         */
         private static final int TRIANGLE_STRIP_VERTEX_COUNT = 2;
 
         /** The tile data. */
@@ -150,10 +151,10 @@ public class PolygonMeshDataBuffered extends BufferObjectList<PolygonMeshBuffere
                     drawMode = GL.GL_TRIANGLES;
                     break;
                 case QUAD_VERTEX_COUNT:
-                    drawMode = GL2GL3.GL_QUADS;
+                    drawMode = GL2.GL_QUADS;
                     break;
                 case TRIANGLE_STRIP_VERTEX_COUNT:
-                    drawMode = GL.GL_TRIANGLE_STRIP;
+                    drawMode = GL2.GL_TRIANGLE_STRIP;
                     break;
                 default:
                     drawMode = GL2.GL_POLYGON;
