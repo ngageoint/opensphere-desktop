@@ -161,7 +161,7 @@ public class ResultPane extends BorderPane
         {
             JFrame parent = myToolbox.getUIRegistry().getMainFrameProvider().get();
             JFXDialog dialog = new JFXDialog(parent, null, false);
-            dialog.setSize(new Dimension(400, 400));
+            dialog.setSize(new Dimension(420, 420));
             dialog.setResizable(true);
             setLocationRelativeTo(dialog, parent);
             dialog.setModal(false);

@@ -16,7 +16,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -142,7 +144,8 @@ public class SearchResultBasic extends GridPane implements Closeable
                 : myModel.getDescription();
         myDescription.textProperty().set(description);
         myDescription.setTextFill(DEFAULT_TEXT_COLOR);
-        add(myDescription, 0, row++, 2, 1);
+        Node descriptionNode = detailed ? new ScrollPane(myDescription) : myDescription;
+        add(descriptionNode, 0, row++, 2, 1);
 
         if (detailed)
         {
@@ -201,7 +204,7 @@ public class SearchResultBasic extends GridPane implements Closeable
         builder.append(lon.toShortLabelString(12, 6, 'E', 'W'));
         if (alt.getMagnitude() != 0)
         {
-            builder.append(' ').append(alt.toShortLabelString());
+            builder.append("  ").append(alt.toShortLabelString(1, 3));
         }
         return builder.toString();
     }
