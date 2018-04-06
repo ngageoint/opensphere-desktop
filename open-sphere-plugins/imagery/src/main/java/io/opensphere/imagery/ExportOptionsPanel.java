@@ -10,6 +10,7 @@ import java.util.stream.IntStream;
 import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.gui.LayerListView;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
@@ -40,7 +41,7 @@ public class ExportOptionsPanel extends JFXPanel
     {
         super();
         setPreferredSize(new Dimension(300, 300));
-        FXUtilities.runOnFXThreadAndWait(() -> setScene(createScene(dataTypes)));
+        Platform.runLater(() -> setScene(createScene(dataTypes)));
     }
 
     /**

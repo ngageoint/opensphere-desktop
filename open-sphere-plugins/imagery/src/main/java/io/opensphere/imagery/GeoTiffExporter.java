@@ -29,7 +29,6 @@ import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.util.MimeType;
-import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.gdal.GdalIOUtilities;
 import io.opensphere.core.util.javafx.WebPanel;
 import io.opensphere.core.util.swing.AutohideMessageDialog;
@@ -39,6 +38,7 @@ import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MapVisualizationInfo;
 import io.opensphere.mantle.data.MapVisualizationType;
+import javafx.application.Platform;
 
 /**
  * Implements the Exporter interface and is inadvisably installed into the
@@ -157,7 +157,7 @@ public class GeoTiffExporter extends AbstractExporter
         dialog.setVisible(true);
         dialog.setLocationRelativeTo(mainFrame);
 
-        FXUtilities.runOnFXThreadAndWait(() -> fxPanel.loadContent("<html><body bgcolor='#535366' style='color: white;'>"
+        Platform.runLater(() -> fxPanel.loadContent("<html><body bgcolor='#535366' style='color: white;'>"
                 + "GeoTIFF export is complete to <a style='color: white;' href='" + file.toURI() + "'>" + file
                 + "</a>.<p><a style='color: white;' href='" + file.getParentFile().toURI() + "'>Parent directory</a>"
                 + "<body></html>"));
