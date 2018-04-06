@@ -4,6 +4,6 @@
 .project
 
 # Maven / Other
-/target
-/.pmd
-/bin
+target/
+bin/
+.pmd
