@@ -21,12 +21,12 @@ import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.StrongObservableValue;
 import io.opensphere.core.util.collections.StreamUtilities;
-import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.image.ImageUtil;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.impl.GroupCategorizationUtilities;
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -174,7 +174,7 @@ public class ImagePreviewPane extends DetailPane
                     observableRegion.getErrorCause(), true);
         }
 
-        FXUtilities.runOnFXThreadAndWait(() -> myRenderer.loadingMapProperty().set(false));
+        Platform.runLater(() -> myRenderer.loadingMapProperty().set(false));
     }
 
     /**
@@ -236,6 +236,6 @@ public class ImagePreviewPane extends DetailPane
             myRenderer.imageProperty().set(BROKEN_IMAGE);
         }
 
-        FXUtilities.runOnFXThreadAndWait(() -> myRenderer.loadingImageProperty().set(false));
+        Platform.runLater(() -> myRenderer.loadingImageProperty().set(false));
     }
 }

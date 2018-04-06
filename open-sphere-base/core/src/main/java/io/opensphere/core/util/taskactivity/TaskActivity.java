@@ -4,7 +4,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.concurrent.ThreadSafe;
 
-import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
 import io.opensphere.core.util.javafx.ConcurrentStringProperty;
 import javafx.application.Platform;
@@ -72,7 +71,7 @@ public class TaskActivity implements AutoCloseable
         }
         else
         {
-            FXUtilities.runOnFXThreadAndWait(r);
+            Platform.runLater(r);
         }
     }
 

@@ -608,7 +608,10 @@ public final class FXUtilities
 
         final AtomicReference<Throwable> errorProp = new AtomicReference<>();
         final CountDownLatch latch = new CountDownLatch(1);
-        Platform.runLater(new Runnable()
+        // The JavaFX platform should only be started once. A number of actions
+        // start it automatically, such as creating a SwingJFXPane. This may
+        // throw and break the application.
+        Platform.startup(new Runnable()
         {
             @Override
             public void run()

@@ -62,7 +62,7 @@ public class QueryRegionInfoDialog extends JDialog
         JFXPanel panel = new JFXPanel();
         setContentPane(panel);
         setVisible(true);
-        FXUtilities.runOnFXThreadAndWait(() ->
+        Platform.startup(() ->
         {
             TreeItem<Object> root = new TreeItem<>("Layers for Query Region");
             root.setExpanded(true);

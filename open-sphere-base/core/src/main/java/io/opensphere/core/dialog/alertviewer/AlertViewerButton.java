@@ -5,11 +5,11 @@ import java.awt.Color;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.dialog.alertviewer.event.Type;
 import io.opensphere.core.util.ThreadConfined;
-import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.image.IconUtil.IconType;
 import io.opensphere.core.util.swing.AlertNotificationButton;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
@@ -49,7 +49,7 @@ class AlertViewerButton extends AlertNotificationButton
         myAlerts = alerts;
 
         addActionListener(e -> handleButtonClick());
-        FXUtilities.runOnFXThreadAndWait(() -> myAlerts.addListener(this::handleAlertsChange));
+        Platform.runLater(() -> myAlerts.addListener(this::handleAlertsChange));
     }
 
     @Override

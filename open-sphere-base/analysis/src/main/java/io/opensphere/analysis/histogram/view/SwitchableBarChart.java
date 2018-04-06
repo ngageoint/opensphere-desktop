@@ -19,6 +19,7 @@ import io.opensphere.core.units.duration.Days;
 import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.fx.FXUtilities;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;

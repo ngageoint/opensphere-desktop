@@ -70,7 +70,7 @@ public class ProgressManagerDialog extends JDialog
 
         JFXPanel panel = new JFXPanel();
         setContentPane(panel);
-        FXUtilities.runOnFXThreadAndWait(() -> initPanel(panel));
+        Platform.startup(() -> initPanel(panel));
     }
 
     /**
@@ -80,7 +80,7 @@ public class ProgressManagerDialog extends JDialog
      */
     public void addTask(TaskActivity ta)
     {
-        FXUtilities.runOnFXThreadAndWait(() -> myTasks.add(ta));
+        Platform.runLater(() -> myTasks.add(ta));
     }
 
     /**
@@ -92,7 +92,7 @@ public class ProgressManagerDialog extends JDialog
     {
         // Make a copy to send to the FX thread.
         Collection<? extends TaskActivity> copy = New.collection(taskActivities);
-        FXUtilities.runOnFXThreadAndWait(() -> myTasks.addAll(copy));
+        Platform.runLater(() -> myTasks.addAll(copy));
     }
 
     /**
@@ -101,7 +101,7 @@ public class ProgressManagerDialog extends JDialog
     public final void refresh()
     {
         myDirty.set(true);
-        FXUtilities.runOnFXThreadAndWait(this::refreshNow);
+        Platform.runLater(this::refreshNow);
     }
 
     /**
@@ -111,7 +111,7 @@ public class ProgressManagerDialog extends JDialog
      */
     public void removeTask(TaskActivity taskActivity)
     {
-        FXUtilities.runOnFXThreadAndWait(() -> myTasks.remove(taskActivity));
+        Platform.runLater(() -> myTasks.remove(taskActivity));
     }
 
     /**

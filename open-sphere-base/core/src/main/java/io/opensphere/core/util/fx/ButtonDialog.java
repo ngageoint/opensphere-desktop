@@ -41,7 +41,7 @@ public abstract class ButtonDialog extends JDialog
      */
     public void initialize()
     {
-        FXUtilities.runOnFXThreadAndWait(() -> myFxPanel.setScene(createScene()));
+        Platform.runLater(() -> myFxPanel.setScene(createScene()));
     }
 
     /**

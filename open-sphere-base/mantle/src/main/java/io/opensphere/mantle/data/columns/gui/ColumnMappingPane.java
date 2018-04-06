@@ -9,6 +9,7 @@ import io.opensphere.core.util.collections.StreamUtilities;
 import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.image.IconUtil.IconType;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -86,7 +87,7 @@ public class ColumnMappingPane extends BorderPane
                     "Confirm Delete", ButtonType.YES, ButtonType.NO);
             if (b == ButtonType.YES)
             {
-                FXUtilities.runOnFXThreadAndWait(() -> myResources.getController().remove(definedColumn));
+                Platform.runLater(() -> myResources.getController().remove(definedColumn));
             }
         });
     }

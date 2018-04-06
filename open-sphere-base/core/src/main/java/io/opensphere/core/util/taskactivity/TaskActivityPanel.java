@@ -22,10 +22,10 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import io.opensphere.core.util.concurrent.CatchingRunnable;
-import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 
@@ -132,7 +132,7 @@ public class TaskActivityPanel extends JPanel
         ta.completeProperty().addListener(myListener);
         ta.labelProperty().addListener(myListener);
 
-        FXUtilities.runOnFXThreadAndWait(() -> myListener.invalidated(null));
+        Platform.startup(() -> myListener.invalidated(null));
     }
 
     /**

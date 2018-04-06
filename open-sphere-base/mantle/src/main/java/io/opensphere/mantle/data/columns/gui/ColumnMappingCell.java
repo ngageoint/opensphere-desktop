@@ -157,12 +157,12 @@ class ColumnMappingCell extends ListCell<ColumnMapping>
         // events cause conflicts in access to the model.
         String lay = keyOf(layerSel.getValue());
         String col = columnSel.getValue();
-        FXUtilities.runOnFXThreadAndWait(() -> model.set(getIndex(), new ColumnMapping(null, lay, col)));
+        Platform.runLater(() -> model.set(getIndex(), new ColumnMapping(null, lay, col)));
     }
 
     /**
      * Lookup the display name for a given type key
-     * 
+     *
      * @param key key
      * @return name
      */
@@ -178,7 +178,7 @@ class ColumnMappingCell extends ListCell<ColumnMapping>
 
     /**
      * Lookup the type key for a given display name.
-     * 
+     *
      * @param name name
      * @return key
      */
@@ -194,7 +194,7 @@ class ColumnMappingCell extends ListCell<ColumnMapping>
 
     /**
      * Null-tolerant get method.
-     * 
+     *
      * @param m a Map
      * @param k a key
      * @return a value, or null

@@ -54,6 +54,7 @@ import io.opensphere.mantle.data.event.ServerManagerDialogChangeEvent.EventType;
 import io.opensphere.mantle.data.impl.DefaultGroupInfoTreeNodeData;
 import io.opensphere.mantle.data.impl.GroupByNodeUserObject;
 import io.opensphere.mantle.util.MantleToolboxUtils;
+import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -394,7 +395,7 @@ public final class AvailableDataPanel extends AbstractDiscoveryDataPanel impleme
     {
         myDetailsPanel = new JFXPanel();
         myDetailsPanel.setPreferredSize(new Dimension(300, 600));
-        FXUtilities.runOnFXThreadAndWait(this::initFx);
+        Platform.runLater(this::initFx);
 
         createServerManagerButton();
 
@@ -430,11 +431,11 @@ public final class AvailableDataPanel extends AbstractDiscoveryDataPanel impleme
         {
             TreeTableTreeNode treeNode = (TreeTableTreeNode)treePath.getLastPathComponent();
             GroupByNodeUserObject groupByNode = (GroupByNodeUserObject)treeNode.getPayload().getPayloadData();
-            FXUtilities.runOnFXThreadAndWait(() -> replaceDetailPanel(groupByNode.getDataGroupInfo()));
+            Platform.runLater(() -> replaceDetailPanel(groupByNode.getDataGroupInfo()));
         }
         else
         {
-            FXUtilities.runOnFXThreadAndWait(() -> replaceDetailPanel(null));
+            Platform.runLater(() -> replaceDetailPanel(null));
         }
     }
 

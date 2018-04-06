@@ -321,10 +321,9 @@ public class JFXAlert extends JDialog
      * <p>
      * This method must be called on the JavaFX Application thread.
      * Additionally, it must either be called from an input event handler or
-     * from the run method of a Runnable passed to
-     * {@link FXUtilities#runOnFXThreadAndWait
-     * FXUtilities.runOnFXThreadAndWait}. It must not be called during animation
-     * or layout processing.
+     * from the run method of a Runnable passed to {@link Platform#runLater
+     * Platform.runlater}. It must not be called during animation or layout
+     * processing.
      * </p>
      *
      * @return An {@link Optional} that contains the result. Refer to the
@@ -336,7 +335,7 @@ public class JFXAlert extends JDialog
      */
     public final Optional<ButtonType> showAndWait()
     {
-        FXUtilities.runOnFXThreadAndWait(() -> myMainPanel.setScene(createScene()));
+        Platform.runLater(() -> myMainPanel.setScene(createScene()));
 
         if (Platform.isNestedLoopRunning())
         {

@@ -22,7 +22,7 @@ import java.util.Locale;
 
 import org.apache.log4j.Logger;
 
-import io.opensphere.core.util.fx.FXUtilities;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -233,7 +233,7 @@ public class DatePickerContent extends VBox
             // Forwards traversal, pass focus to day cell.
             if (myLastFocusedDayCell != null)
             {
-                FXUtilities.runOnFXThreadAndWait(() -> myLastFocusedDayCell.requestFocus());
+                Platform.runLater(() -> myLastFocusedDayCell.requestFocus());
             }
             else
             {

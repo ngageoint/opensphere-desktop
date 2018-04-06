@@ -15,8 +15,8 @@ import io.opensphere.core.dialog.alertviewer.event.UserMessageEvent;
 import io.opensphere.core.dialog.alertviewer.toast.ToastController;
 import io.opensphere.core.event.EventListenerService;
 import io.opensphere.core.util.ThreadConfined;
-import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -44,7 +44,9 @@ class AlertViewerController extends EventListenerService
         super(toolbox.getEventManager(), 1);
         myToolbox = toolbox;
         myToaster = new ToastController(toolbox.getUIRegistry().getMainFrameProvider());
-        FXUtilities.runOnFXThreadAndWait(() ->
+        // Both PlatformImpl and this will throw if FX is already started; this
+        // really should not be called
+        Platform.startup(() ->
         {
         });
         bindEvent(UserMessageEvent.class, this::handleUserMessageEvent);
@@ -92,7 +94,7 @@ class AlertViewerController extends EventListenerService
         }
 
         final Alert alert = new Alert(event.getType(), event.getMessage(), event.isMakeVisible());
-        FXUtilities.runOnFXThreadAndWait(() -> addAlert(alert));
+        Platform.runLater(() -> addAlert(alert));
     }
 
     /**
