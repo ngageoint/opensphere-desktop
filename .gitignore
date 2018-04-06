@@ -6,4 +6,4 @@
 # Maven / Other
 /target
 /.pmd
-bin/
+/bin
