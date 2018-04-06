@@ -77,7 +77,7 @@ public class SwitchableBarChart extends BorderPane
     {
         super();
         myModel = model;
-        FXUtilities.runOnFXThreadAndWait(this::initFx);
+        Platform.runLater(this::initFx);
     }
 
     /** Initializes the JavaFX stuff. */

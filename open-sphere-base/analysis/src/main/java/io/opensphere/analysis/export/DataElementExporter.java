@@ -22,7 +22,6 @@ import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.export.Exporter;
 import io.opensphere.core.preferences.PreferencesRegistry;
-import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.javafx.WebPanel;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.swing.AutohideMessageDialog;
@@ -30,6 +29,7 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.taskactivity.TaskActivity;
 import io.opensphere.mantle.data.cache.DataElementCache;
 import io.opensphere.mantle.data.element.DataElement;
+import javafx.application.Platform;
 
 /**
  * Given an exporter and a {@link MetaColumnsTableModel}, this class will ask
@@ -143,7 +143,7 @@ public class DataElementExporter implements ExportCompleteListener
         dialog.setVisible(true);
         dialog.setLocationRelativeTo(parent);
 
-        FXUtilities.runOnFXThreadAndWait(() ->
+        Platform.runLater(() ->
         {
             String content = StringUtilities.concat("<html><body bgcolor='#535366' style='color: white;'>", "Successfully saved ",
                     exportedCount, " rows to <a style='color: white;' href='", file.toURI(), "'>", file,

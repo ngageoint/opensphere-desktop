@@ -49,6 +49,7 @@ import io.opensphere.mantle.data.event.DataTypeInfoColorChangeEvent;
 import io.opensphere.mantle.data.event.DataTypeInfoMetaDataKeyAddedChangeEvent;
 import io.opensphere.mantle.data.event.DataTypeInfoMetaDataKeyRemovedChangeEvent;
 import io.opensphere.mantle.data.util.DataElementLookupUtils;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.paint.Color;
@@ -83,8 +84,7 @@ public abstract class AbstractToolController extends EventListenerService
             List<UIBin> added = CollectionUtilities
                     .getList(CollectionUtilities.filterDowncast(e.getChangedElements(), UIBin.class));
             Collections.sort(added, comparator);
-            FXUtilities.runOnFXThreadAndWait(
-                    () -> CollectionUtilities.addSorted(getModel().getDataModel().getBins(), added, comparator));
+            Platform.runLater(() -> CollectionUtilities.addSorted(getModel().getDataModel().getBins(), added, comparator));
         }
 
         @Override
@@ -98,7 +98,7 @@ public abstract class AbstractToolController extends EventListenerService
         public void elementsRemoved(ListDataEvent<Bin<DataElement>> e)
         {
             Set<Bin<DataElement>> removed = New.set(e.getChangedElements());
-            FXUtilities.runOnFXThreadAndWait(() -> getModel().getDataModel().getBins().removeAll(removed));
+            Platform.runLater(() -> getModel().getDataModel().getBins().removeAll(removed));
         }
     };
 
@@ -147,7 +147,7 @@ public abstract class AbstractToolController extends EventListenerService
         super.open();
 
         // Set some initial state after listeners have been added
-        FXUtilities.runOnFXThreadAndWait(() ->
+        Platform.runLater(() ->
         {
             handleLockedChange(Boolean.valueOf(getSettingsModel().lockedProperty().get()));
             String selectedColumn = getInitialColumn();
@@ -349,7 +349,7 @@ public abstract class AbstractToolController extends EventListenerService
         ThreadUtilities.runBackground(() ->
         {
             ThreadUtilities.sleep(100);
-            FXUtilities.runOnFXThreadAndWait(() -> getModel().getDataModel().getBins().addAll(oldBins));
+            Platform.runLater(() -> getModel().getDataModel().getBins().addAll(oldBins));
         });
     }
 
@@ -366,7 +366,7 @@ public abstract class AbstractToolController extends EventListenerService
             {
                 DataTypeInfoColorChangeEvent colorEvent = (DataTypeInfoColorChangeEvent)event;
                 Color color = FXUtilities.fromAwtColor(colorEvent.getColor());
-                FXUtilities.runOnFXThreadAndWait(() -> myModel.getDataModel().layerColorProperty().set(color));
+                Platform.runLater(() -> myModel.getDataModel().layerColorProperty().set(color));
             }
         }
         else if (event instanceof DataTypeInfoMetaDataKeyAddedChangeEvent)
@@ -374,7 +374,7 @@ public abstract class AbstractToolController extends EventListenerService
             if (isCurrentLayer(event.getDataTypeInfo()))
             {
                 DataTypeInfoMetaDataKeyAddedChangeEvent keyEvent = (DataTypeInfoMetaDataKeyAddedChangeEvent)event;
-                FXUtilities.runOnFXThreadAndWait(() -> getSettingsModel().availableColumnsProperty().add(keyEvent.getKey()));
+                Platform.runLater(() -> getSettingsModel().availableColumnsProperty().add(keyEvent.getKey()));
             }
         }
         else if (event instanceof DataTypeInfoMetaDataKeyRemovedChangeEvent)
@@ -382,7 +382,7 @@ public abstract class AbstractToolController extends EventListenerService
             if (isCurrentLayer(event.getDataTypeInfo()))
             {
                 DataTypeInfoMetaDataKeyRemovedChangeEvent keyEvent = (DataTypeInfoMetaDataKeyRemovedChangeEvent)event;
-                FXUtilities.runOnFXThreadAndWait(() -> getSettingsModel().availableColumnsProperty().remove(keyEvent.getKey()));
+                Platform.runLater(() -> getSettingsModel().availableColumnsProperty().remove(keyEvent.getKey()));
             }
         }
     }
@@ -501,7 +501,7 @@ public abstract class AbstractToolController extends EventListenerService
             myBinner.setListener(myBinnerListener);
             List<UIBin> bins = CollectionUtilities.getList(CollectionUtilities.filterDowncast(myBinner.getBins(), UIBin.class));
             Collections.sort(bins, getSettingsModel().sortMethodProperty().get().getComparator());
-            FXUtilities.runOnFXThreadAndWait(() -> myModel.getDataModel().getBins().setAll(bins));
+            Platform.runLater(() -> myModel.getDataModel().getBins().setAll(bins));
         }
     }
 

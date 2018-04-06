@@ -4,7 +4,6 @@ import io.opensphere.analysis.base.model.CommonSettingsModel;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.event.EventListenerService;
 import io.opensphere.core.util.collections.CollectionUtilities;
-import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.DataTypeController;
 import io.opensphere.mantle.controller.event.AbstractDataTypeControllerEvent;
@@ -17,6 +16,7 @@ import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.event.DataTypeInfoLoadsToChangeEvent;
 import io.opensphere.mantle.data.event.DataTypeVisibilityChangeEvent;
+import javafx.application.Platform;
 
 /**
  * Controller for SettingsModel. Essentially adapts mantle data type state into
@@ -67,7 +67,7 @@ public class SettingsModelController extends EventListenerService
      */
     private void handleActiveDataGroupsChangedEvent(ActiveDataGroupsChangedEvent event)
     {
-        FXUtilities.runOnFXThreadAndWait(() ->
+        Platform.runLater(() ->
         {
             for (DataGroupInfo group : event.getActivatedGroups())
             {
@@ -93,7 +93,7 @@ public class SettingsModelController extends EventListenerService
      */
     private void handleDataTypeControllerEvent(AbstractDataTypeControllerEvent event)
     {
-        FXUtilities.runOnFXThreadAndWait(() ->
+        Platform.runLater(() ->
         {
             if (event instanceof DataTypeAddedEvent)
             {
@@ -123,7 +123,7 @@ public class SettingsModelController extends EventListenerService
      */
     private void handleDataTypeInfoChangeEvent(AbstractDataTypeInfoChangeEvent event)
     {
-        FXUtilities.runOnFXThreadAndWait(() ->
+        Platform.runLater(() ->
         {
             if (event instanceof DataTypeVisibilityChangeEvent)
             {
