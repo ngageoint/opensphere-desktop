@@ -1,5 +1,0 @@
-Run the following from OpenSphereDesktop/open-sphere-base/core/src/main/resources/schemas/state
-
-xjc -extension -d ../../../java xsd/state/1.0.0/state.xsd -b xjb/bindings.xjb
-
-Either revert PropertyNameType or edit it to match the previous version in the history.

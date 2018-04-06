@@ -1,8 +1,0 @@
-/* Hide the table header. */
-.column-header-background { visibility: hidden; -fx-padding: -2em; }
-
-/* Hide the cell borders. */
-.table-view { -fx-table-cell-border-color: transparent; }
-
-/** Don't draw the focus on the table. */
-.table-view:focused { -fx-background-color:  -fx-box-border, -fx-control-inner-background; }
