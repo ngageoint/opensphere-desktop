@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<pluginLoaderCollection>
-    <pluginLoaderData>
-        <id>OpenSensorHubPlugin</id>
-        <class>io.opensphere.osh.OSHPlugin</class>
-        <appVersion>1.0</appVersion>
-        <requiredPluginDependency>OGCServers</requiredPluginDependency>
-    </pluginLoaderData>
-</pluginLoaderCollection>

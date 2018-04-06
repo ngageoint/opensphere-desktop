@@ -17,6 +17,7 @@ import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.wps.config.v2.ProcessSetting;
 import io.opensphere.wps.ui.detail.provider.DecorationUtils;
 import io.opensphere.wps.util.WpsUtilities;
+import javafx.application.Platform;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import net.opengis.wps._100.InputDescriptionType;
@@ -86,7 +87,7 @@ public class LayerColumnLinker
         {
             List<String> columns = getColumns(layer, inputDescription);
 
-            FXUtilities.runOnFXThreadAndWait(() ->
+            Platform.runLater(() ->
             {
                 columnBox.getItems().setAll(columns);
                 String defaultValue = processSetting != null ? processSetting.getLastUsedColumns().get(layer) : null;

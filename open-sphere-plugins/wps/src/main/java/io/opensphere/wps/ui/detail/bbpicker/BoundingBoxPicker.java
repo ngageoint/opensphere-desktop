@@ -29,6 +29,7 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.overlay.OverlayToolboxUtils;
 import io.opensphere.overlay.SelectionModeController;
 import io.opensphere.wps.util.WpsUtilities;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
@@ -232,7 +233,7 @@ public class BoundingBoxPicker extends Control
             LOG.info("Region Selected: " + boundingBox);
             mySelectedBoundingBox = null;
 
-            FXUtilities.runOnFXThreadAndWait(() -> myListView.getItems().add(boundingBox));
+            Platform.runLater(() -> myListView.getItems().add(boundingBox));
 
             EventQueue.invokeLater(() ->
             {

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<pluginLoaderCollection>
-    <pluginLoaderData>
-        <id>ShapeFilePlugin</id>
-        <class>io.opensphere.shapefile.ShapeFilePlugin</class>
-        <appVersion>1.0</appVersion>
-        <requiredPluginDependency>MantlePlugin</requiredPluginDependency>
-    </pluginLoaderData>
-</pluginLoaderCollection>

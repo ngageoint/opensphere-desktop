@@ -53,7 +53,6 @@ import io.opensphere.core.hud.awt.HUDJInternalFrame;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.image.IconUtil.IconStyle;
 import io.opensphere.core.util.image.IconUtil.IconType;
@@ -685,7 +684,7 @@ public final class SearchPanel extends JPanel implements ActionListener
                     AbstractButton menuItem = (AbstractButton)e.getSource();
                     boolean selected = menuItem.isSelected();
                     String type = menuItem.getText();
-                    FXUtilities.runOnFXThreadAndWait(() ->
+                    Platform.runLater(() ->
                     {
                         if (selected)
                         {

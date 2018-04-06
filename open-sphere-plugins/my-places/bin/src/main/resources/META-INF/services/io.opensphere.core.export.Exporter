@@ -1,6 +1,0 @@
-io.opensphere.myplaces.export.MyPlacesKmlExporter
-io.opensphere.myplaces.export.MyPlacesCsvExporter
-io.opensphere.myplaces.export.MyPlacesShapeFileExporter
-io.opensphere.myplaces.importer.DataElementPointExporter
-io.opensphere.myplaces.importer.DataElementRegionExporter
-io.opensphere.myplaces.importer.DataElementTrackExporter

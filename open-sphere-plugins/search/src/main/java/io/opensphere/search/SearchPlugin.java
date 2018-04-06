@@ -23,10 +23,9 @@ import io.opensphere.core.hud.awt.HUDJInternalFrame;
 import io.opensphere.core.search.ResultsSearchProvider;
 import io.opensphere.core.search.SearchProvider;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.fx.FXUtilities;
-import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.search.model.SearchModel;
+import javafx.application.Platform;
 
 /** Class for the "Goto" hud frame. */
 public class SearchPlugin extends AbstractHUDFrameMenuItemPlugin
@@ -161,7 +160,7 @@ public class SearchPlugin extends AbstractHUDFrameMenuItemPlugin
         List<String> allSearchTypes = New.list(searchTypes);
         Collections.sort(allSearchTypes);
 
-        FXUtilities.runOnFXThreadAndWait(() ->
+        Platform.runLater(() ->
         {
             myModel.getSelectedSearchTypes().addAll(allSearchTypes);
             myModel.getSearchTypes().addAll(allSearchTypes);

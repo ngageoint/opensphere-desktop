@@ -7,8 +7,8 @@ import java.io.ByteArrayInputStream;
 
 import javax.swing.JDialog;
 
-import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.data.DataTypeInfo;
+import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -42,7 +42,7 @@ public class VideoWindow extends JDialog
         setLocationRelativeTo(owner);
         JFXPanel fxPanel = new JFXPanel();
         add(fxPanel);
-        FXUtilities.runOnFXThreadAndWait(() -> initFx(fxPanel));
+        Platform.runLater(() -> initFx(fxPanel));
     }
 
     /**
@@ -52,7 +52,7 @@ public class VideoWindow extends JDialog
      */
     public void setImageBytes(byte[] bytes)
     {
-        FXUtilities.runOnFXThreadAndWait(() ->
+        Platform.runLater(() ->
         {
             Image image = new Image(new ByteArrayInputStream(bytes));
             myImageView.setImage(image);
