@@ -113,8 +113,10 @@ public class MutableConstraints extends Constraints
     }
 
     /* (non-Javadoc)
-     * @see io.opensphere.core.geometry.constraint.Constraints#setLocationConstraint(io.opensphere.core.model.LatLonAlt)
-     */
+     * 
+     * @see
+     * io.opensphere.core.geometry.constraint.Constraints#setLocationConstraint(
+     * io.opensphere.core.model.LatLonAlt) */
     @Override
     public void setLocationConstraint(LatLonAlt locationConstraint)
     {

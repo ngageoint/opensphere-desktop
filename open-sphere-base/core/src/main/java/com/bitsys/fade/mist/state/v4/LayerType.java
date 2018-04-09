@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.math.BigDecimal;
@@ -22,19 +21,21 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import net.opengis.kml._220.LatLonBoxType;
 
-
 /**
  * 
- *         A layer is defined as a single source of data, either base maps, or 
- *         features, or another data type. The layer type contains information 
- *         needed to load a information into a FADE tool for the saved state, and 
- *         may be referenced by its 'id' child tag. The value of the child 'id' 
- *         tag must be unique within the saved state.
- *       
+ * A layer is defined as a single source of data, either base maps, or features,
+ * or another data type. The layer type contains information needed to load a
+ * information into a FADE tool for the saved state, and may be referenced by
+ * its 'id' child tag. The value of the child 'id' tag must be unique within the
+ * saved state.
  * 
- * <p>Java class for LayerType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for LayerType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LayerType">
@@ -128,152 +129,227 @@ import net.opengis.kml._220.LatLonBoxType;
 @XmlType(name = "LayerType", propOrder = {
 
 })
-public class LayerType {
+public class LayerType
+{
 
     protected BigDecimal alpha;
+
     protected Boolean altitudeEnabled;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String animate;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String baseColor;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String baseType;
+
     protected BasicFeatureStyleType basicFeatureStyle;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String colorControl;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String colorizeStyle;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String dataProvider;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String dateFormat;
+
     protected String description;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String disabledEmptyColumns;
+
     protected Boolean exclusions;
+
     protected LatLonBoxType extents;
+
     protected Boolean fixedHeight;
+
     protected Boolean filter;
+
     protected Boolean exportEnabled;
+
     protected Boolean fixedWidth;
+
     protected FormatsType formats;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String getMapUrl;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String providedBy;
+
     protected IconStyleType iconStyle;
+
     protected StreamOptionsType stream;
+
     protected ColorModelType colorModel;
+
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String id;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String layerType;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String legends;
+
     protected Boolean load;
+
     protected BigInteger maxDisplaySize;
+
     protected BigInteger minDisplaySize;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String maxResolution;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String minResolution;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String maxZoom;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String minZoom;
+
     protected Boolean noClear;
+
     protected LayerParamsType params;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String provider;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String crossOrigin;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String serverId;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String shapeName;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String showLabels;
+
     protected Boolean spatial;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String splitLevels;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String style;
+
     protected StylesType styles;
+
     protected TagsType tags;
+
     protected Boolean temporal;
+
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger tileSize;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String timeFormat;
+
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String title;
+
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String url;
+
     protected BigInteger refreshRate;
+
     protected Boolean analyze;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String imageUrl;
+
     protected LayerParamsType imageParams;
+
     protected Boolean proxy;
+
     protected UrlsType urls;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String projection;
+
     protected ProjectionsType projections;
+
     protected Boolean usePost;
+
     protected boolean visible;
+
     protected BigInteger zoomOffset;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String originalUrl;
+
     protected ColumnsType columns;
+
     protected MappingsType mappings;
+
     protected Boolean collapsed;
+
     protected Boolean showRoot;
+
     protected Boolean editable;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String comment;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String quote;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String delimiter;
+
     protected BigInteger dataRow;
+
     protected BigInteger headerRow;
+
     protected ObjectPreviewType objectPreview;
+
     @XmlAttribute(name = "type", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
@@ -282,1688 +358,1629 @@ public class LayerType {
     /**
      * Gets the value of the alpha property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     * @return possible object is {@link BigDecimal }
+     * 
      */
-    public BigDecimal getAlpha() {
+    public BigDecimal getAlpha()
+    {
         return alpha;
     }
 
     /**
      * Sets the value of the alpha property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     * @param value allowed object is {@link BigDecimal }
+     * 
      */
-    public void setAlpha(BigDecimal value) {
+    public void setAlpha(BigDecimal value)
+    {
         this.alpha = value;
     }
 
-    public boolean isSetAlpha() {
-        return (this.alpha!= null);
+    public boolean isSetAlpha()
+    {
+        return (this.alpha != null);
     }
 
     /**
      * Gets the value of the altitudeEnabled property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isAltitudeEnabled() {
+    public Boolean isAltitudeEnabled()
+    {
         return altitudeEnabled;
     }
 
     /**
      * Sets the value of the altitudeEnabled property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setAltitudeEnabled(Boolean value) {
+    public void setAltitudeEnabled(Boolean value)
+    {
         this.altitudeEnabled = value;
     }
 
-    public boolean isSetAltitudeEnabled() {
-        return (this.altitudeEnabled!= null);
+    public boolean isSetAltitudeEnabled()
+    {
+        return (this.altitudeEnabled != null);
     }
 
     /**
      * Gets the value of the animate property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getAnimate() {
+    public String getAnimate()
+    {
         return animate;
     }
 
     /**
      * Sets the value of the animate property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setAnimate(String value) {
+    public void setAnimate(String value)
+    {
         this.animate = value;
     }
 
-    public boolean isSetAnimate() {
-        return (this.animate!= null);
+    public boolean isSetAnimate()
+    {
+        return (this.animate != null);
     }
 
     /**
      * Gets the value of the baseColor property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getBaseColor() {
+    public String getBaseColor()
+    {
         return baseColor;
     }
 
     /**
      * Sets the value of the baseColor property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setBaseColor(String value) {
+    public void setBaseColor(String value)
+    {
         this.baseColor = value;
     }
 
-    public boolean isSetBaseColor() {
-        return (this.baseColor!= null);
+    public boolean isSetBaseColor()
+    {
+        return (this.baseColor != null);
     }
 
     /**
      * Gets the value of the baseType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getBaseType() {
+    public String getBaseType()
+    {
         return baseType;
     }
 
     /**
      * Sets the value of the baseType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setBaseType(String value) {
+    public void setBaseType(String value)
+    {
         this.baseType = value;
     }
 
-    public boolean isSetBaseType() {
-        return (this.baseType!= null);
+    public boolean isSetBaseType()
+    {
+        return (this.baseType != null);
     }
 
     /**
      * Gets the value of the basicFeatureStyle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BasicFeatureStyleType }
-     *     
+     * @return possible object is {@link BasicFeatureStyleType }
+     * 
      */
-    public BasicFeatureStyleType getBasicFeatureStyle() {
+    public BasicFeatureStyleType getBasicFeatureStyle()
+    {
         return basicFeatureStyle;
     }
 
     /**
      * Sets the value of the basicFeatureStyle property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BasicFeatureStyleType }
-     *     
+     * @param value allowed object is {@link BasicFeatureStyleType }
+     * 
      */
-    public void setBasicFeatureStyle(BasicFeatureStyleType value) {
+    public void setBasicFeatureStyle(BasicFeatureStyleType value)
+    {
         this.basicFeatureStyle = value;
     }
 
-    public boolean isSetBasicFeatureStyle() {
-        return (this.basicFeatureStyle!= null);
+    public boolean isSetBasicFeatureStyle()
+    {
+        return (this.basicFeatureStyle != null);
     }
 
     /**
      * Gets the value of the colorControl property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getColorControl() {
+    public String getColorControl()
+    {
         return colorControl;
     }
 
     /**
      * Sets the value of the colorControl property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setColorControl(String value) {
+    public void setColorControl(String value)
+    {
         this.colorControl = value;
     }
 
-    public boolean isSetColorControl() {
-        return (this.colorControl!= null);
+    public boolean isSetColorControl()
+    {
+        return (this.colorControl != null);
     }
 
     /**
      * Gets the value of the colorizeStyle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getColorizeStyle() {
+    public String getColorizeStyle()
+    {
         return colorizeStyle;
     }
 
     /**
      * Sets the value of the colorizeStyle property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setColorizeStyle(String value) {
+    public void setColorizeStyle(String value)
+    {
         this.colorizeStyle = value;
     }
 
-    public boolean isSetColorizeStyle() {
-        return (this.colorizeStyle!= null);
+    public boolean isSetColorizeStyle()
+    {
+        return (this.colorizeStyle != null);
     }
 
     /**
      * Gets the value of the dataProvider property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDataProvider() {
+    public String getDataProvider()
+    {
         return dataProvider;
     }
 
     /**
      * Sets the value of the dataProvider property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDataProvider(String value) {
+    public void setDataProvider(String value)
+    {
         this.dataProvider = value;
     }
 
-    public boolean isSetDataProvider() {
-        return (this.dataProvider!= null);
+    public boolean isSetDataProvider()
+    {
+        return (this.dataProvider != null);
     }
 
     /**
      * Gets the value of the dateFormat property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDateFormat() {
+    public String getDateFormat()
+    {
         return dateFormat;
     }
 
     /**
      * Sets the value of the dateFormat property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDateFormat(String value) {
+    public void setDateFormat(String value)
+    {
         this.dateFormat = value;
     }
 
-    public boolean isSetDateFormat() {
-        return (this.dateFormat!= null);
+    public boolean isSetDateFormat()
+    {
+        return (this.dateFormat != null);
     }
 
     /**
      * Gets the value of the description property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
     /**
      * Sets the value of the description property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDescription(String value) {
+    public void setDescription(String value)
+    {
         this.description = value;
     }
 
-    public boolean isSetDescription() {
-        return (this.description!= null);
+    public boolean isSetDescription()
+    {
+        return (this.description != null);
     }
 
     /**
      * Gets the value of the disabledEmptyColumns property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDisabledEmptyColumns() {
+    public String getDisabledEmptyColumns()
+    {
         return disabledEmptyColumns;
     }
 
     /**
      * Sets the value of the disabledEmptyColumns property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDisabledEmptyColumns(String value) {
+    public void setDisabledEmptyColumns(String value)
+    {
         this.disabledEmptyColumns = value;
     }
 
-    public boolean isSetDisabledEmptyColumns() {
-        return (this.disabledEmptyColumns!= null);
+    public boolean isSetDisabledEmptyColumns()
+    {
+        return (this.disabledEmptyColumns != null);
     }
 
     /**
      * Gets the value of the exclusions property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isExclusions() {
+    public Boolean isExclusions()
+    {
         return exclusions;
     }
 
     /**
      * Sets the value of the exclusions property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setExclusions(Boolean value) {
+    public void setExclusions(Boolean value)
+    {
         this.exclusions = value;
     }
 
-    public boolean isSetExclusions() {
-        return (this.exclusions!= null);
+    public boolean isSetExclusions()
+    {
+        return (this.exclusions != null);
     }
 
     /**
      * Gets the value of the extents property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LatLonBoxType }
-     *     
+     * @return possible object is {@link LatLonBoxType }
+     * 
      */
-    public LatLonBoxType getExtents() {
+    public LatLonBoxType getExtents()
+    {
         return extents;
     }
 
     /**
      * Sets the value of the extents property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LatLonBoxType }
-     *     
+     * @param value allowed object is {@link LatLonBoxType }
+     * 
      */
-    public void setExtents(LatLonBoxType value) {
+    public void setExtents(LatLonBoxType value)
+    {
         this.extents = value;
     }
 
-    public boolean isSetExtents() {
-        return (this.extents!= null);
+    public boolean isSetExtents()
+    {
+        return (this.extents != null);
     }
 
     /**
      * Gets the value of the fixedHeight property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isFixedHeight() {
+    public Boolean isFixedHeight()
+    {
         return fixedHeight;
     }
 
     /**
      * Sets the value of the fixedHeight property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setFixedHeight(Boolean value) {
+    public void setFixedHeight(Boolean value)
+    {
         this.fixedHeight = value;
     }
 
-    public boolean isSetFixedHeight() {
-        return (this.fixedHeight!= null);
+    public boolean isSetFixedHeight()
+    {
+        return (this.fixedHeight != null);
     }
 
     /**
      * Gets the value of the filter property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isFilter() {
+    public Boolean isFilter()
+    {
         return filter;
     }
 
     /**
      * Sets the value of the filter property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setFilter(Boolean value) {
+    public void setFilter(Boolean value)
+    {
         this.filter = value;
     }
 
-    public boolean isSetFilter() {
-        return (this.filter!= null);
+    public boolean isSetFilter()
+    {
+        return (this.filter != null);
     }
 
     /**
      * Gets the value of the exportEnabled property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isExportEnabled() {
+    public Boolean isExportEnabled()
+    {
         return exportEnabled;
     }
 
     /**
      * Sets the value of the exportEnabled property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setExportEnabled(Boolean value) {
+    public void setExportEnabled(Boolean value)
+    {
         this.exportEnabled = value;
     }
 
-    public boolean isSetExportEnabled() {
-        return (this.exportEnabled!= null);
+    public boolean isSetExportEnabled()
+    {
+        return (this.exportEnabled != null);
     }
 
     /**
      * Gets the value of the fixedWidth property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isFixedWidth() {
+    public Boolean isFixedWidth()
+    {
         return fixedWidth;
     }
 
     /**
      * Sets the value of the fixedWidth property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setFixedWidth(Boolean value) {
+    public void setFixedWidth(Boolean value)
+    {
         this.fixedWidth = value;
     }
 
-    public boolean isSetFixedWidth() {
-        return (this.fixedWidth!= null);
+    public boolean isSetFixedWidth()
+    {
+        return (this.fixedWidth != null);
     }
 
     /**
      * Gets the value of the formats property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FormatsType }
-     *     
+     * @return possible object is {@link FormatsType }
+     * 
      */
-    public FormatsType getFormats() {
+    public FormatsType getFormats()
+    {
         return formats;
     }
 
     /**
      * Sets the value of the formats property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FormatsType }
-     *     
+     * @param value allowed object is {@link FormatsType }
+     * 
      */
-    public void setFormats(FormatsType value) {
+    public void setFormats(FormatsType value)
+    {
         this.formats = value;
     }
 
-    public boolean isSetFormats() {
-        return (this.formats!= null);
+    public boolean isSetFormats()
+    {
+        return (this.formats != null);
     }
 
     /**
      * Gets the value of the getMapUrl property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getGetMapUrl() {
+    public String getGetMapUrl()
+    {
         return getMapUrl;
     }
 
     /**
      * Sets the value of the getMapUrl property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setGetMapUrl(String value) {
+    public void setGetMapUrl(String value)
+    {
         this.getMapUrl = value;
     }
 
-    public boolean isSetGetMapUrl() {
-        return (this.getMapUrl!= null);
+    public boolean isSetGetMapUrl()
+    {
+        return (this.getMapUrl != null);
     }
 
     /**
      * Gets the value of the providedBy property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getProvidedBy() {
+    public String getProvidedBy()
+    {
         return providedBy;
     }
 
     /**
      * Sets the value of the providedBy property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setProvidedBy(String value) {
+    public void setProvidedBy(String value)
+    {
         this.providedBy = value;
     }
 
-    public boolean isSetProvidedBy() {
-        return (this.providedBy!= null);
+    public boolean isSetProvidedBy()
+    {
+        return (this.providedBy != null);
     }
 
     /**
      * Gets the value of the iconStyle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link IconStyleType }
-     *     
+     * @return possible object is {@link IconStyleType }
+     * 
      */
-    public IconStyleType getIconStyle() {
+    public IconStyleType getIconStyle()
+    {
         return iconStyle;
     }
 
     /**
      * Sets the value of the iconStyle property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link IconStyleType }
-     *     
+     * @param value allowed object is {@link IconStyleType }
+     * 
      */
-    public void setIconStyle(IconStyleType value) {
+    public void setIconStyle(IconStyleType value)
+    {
         this.iconStyle = value;
     }
 
-    public boolean isSetIconStyle() {
-        return (this.iconStyle!= null);
+    public boolean isSetIconStyle()
+    {
+        return (this.iconStyle != null);
     }
 
     /**
      * Gets the value of the stream property.
      * 
-     * @return
-     *     possible object is
-     *     {@link StreamOptionsType }
-     *     
+     * @return possible object is {@link StreamOptionsType }
+     * 
      */
-    public StreamOptionsType getStream() {
+    public StreamOptionsType getStream()
+    {
         return stream;
     }
 
     /**
      * Sets the value of the stream property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link StreamOptionsType }
-     *     
+     * @param value allowed object is {@link StreamOptionsType }
+     * 
      */
-    public void setStream(StreamOptionsType value) {
+    public void setStream(StreamOptionsType value)
+    {
         this.stream = value;
     }
 
-    public boolean isSetStream() {
-        return (this.stream!= null);
+    public boolean isSetStream()
+    {
+        return (this.stream != null);
     }
 
     /**
      * Gets the value of the colorModel property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ColorModelType }
-     *     
+     * @return possible object is {@link ColorModelType }
+     * 
      */
-    public ColorModelType getColorModel() {
+    public ColorModelType getColorModel()
+    {
         return colorModel;
     }
 
     /**
      * Sets the value of the colorModel property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ColorModelType }
-     *     
+     * @param value allowed object is {@link ColorModelType }
+     * 
      */
-    public void setColorModel(ColorModelType value) {
+    public void setColorModel(ColorModelType value)
+    {
         this.colorModel = value;
     }
 
-    public boolean isSetColorModel() {
-        return (this.colorModel!= null);
+    public boolean isSetColorModel()
+    {
+        return (this.colorModel != null);
     }
 
     /**
      * Gets the value of the id property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
     /**
      * Sets the value of the id property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setId(String value) {
+    public void setId(String value)
+    {
         this.id = value;
     }
 
-    public boolean isSetId() {
-        return (this.id!= null);
+    public boolean isSetId()
+    {
+        return (this.id != null);
     }
 
     /**
      * Gets the value of the layerType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLayerType() {
+    public String getLayerType()
+    {
         return layerType;
     }
 
     /**
      * Sets the value of the layerType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLayerType(String value) {
+    public void setLayerType(String value)
+    {
         this.layerType = value;
     }
 
-    public boolean isSetLayerType() {
-        return (this.layerType!= null);
+    public boolean isSetLayerType()
+    {
+        return (this.layerType != null);
     }
 
     /**
      * Gets the value of the legends property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLegends() {
+    public String getLegends()
+    {
         return legends;
     }
 
     /**
      * Sets the value of the legends property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLegends(String value) {
+    public void setLegends(String value)
+    {
         this.legends = value;
     }
 
-    public boolean isSetLegends() {
-        return (this.legends!= null);
+    public boolean isSetLegends()
+    {
+        return (this.legends != null);
     }
 
     /**
      * Gets the value of the load property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isLoad() {
+    public Boolean isLoad()
+    {
         return load;
     }
 
     /**
      * Sets the value of the load property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setLoad(Boolean value) {
+    public void setLoad(Boolean value)
+    {
         this.load = value;
     }
 
-    public boolean isSetLoad() {
-        return (this.load!= null);
+    public boolean isSetLoad()
+    {
+        return (this.load != null);
     }
 
     /**
      * Gets the value of the maxDisplaySize property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getMaxDisplaySize() {
+    public BigInteger getMaxDisplaySize()
+    {
         return maxDisplaySize;
     }
 
     /**
      * Sets the value of the maxDisplaySize property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setMaxDisplaySize(BigInteger value) {
+    public void setMaxDisplaySize(BigInteger value)
+    {
         this.maxDisplaySize = value;
     }
 
-    public boolean isSetMaxDisplaySize() {
-        return (this.maxDisplaySize!= null);
+    public boolean isSetMaxDisplaySize()
+    {
+        return (this.maxDisplaySize != null);
     }
 
     /**
      * Gets the value of the minDisplaySize property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getMinDisplaySize() {
+    public BigInteger getMinDisplaySize()
+    {
         return minDisplaySize;
     }
 
     /**
      * Sets the value of the minDisplaySize property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setMinDisplaySize(BigInteger value) {
+    public void setMinDisplaySize(BigInteger value)
+    {
         this.minDisplaySize = value;
     }
 
-    public boolean isSetMinDisplaySize() {
-        return (this.minDisplaySize!= null);
+    public boolean isSetMinDisplaySize()
+    {
+        return (this.minDisplaySize != null);
     }
 
     /**
      * Gets the value of the maxResolution property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMaxResolution() {
+    public String getMaxResolution()
+    {
         return maxResolution;
     }
 
     /**
      * Sets the value of the maxResolution property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMaxResolution(String value) {
+    public void setMaxResolution(String value)
+    {
         this.maxResolution = value;
     }
 
-    public boolean isSetMaxResolution() {
-        return (this.maxResolution!= null);
+    public boolean isSetMaxResolution()
+    {
+        return (this.maxResolution != null);
     }
 
     /**
      * Gets the value of the minResolution property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMinResolution() {
+    public String getMinResolution()
+    {
         return minResolution;
     }
 
     /**
      * Sets the value of the minResolution property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMinResolution(String value) {
+    public void setMinResolution(String value)
+    {
         this.minResolution = value;
     }
 
-    public boolean isSetMinResolution() {
-        return (this.minResolution!= null);
+    public boolean isSetMinResolution()
+    {
+        return (this.minResolution != null);
     }
 
     /**
      * Gets the value of the maxZoom property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMaxZoom() {
+    public String getMaxZoom()
+    {
         return maxZoom;
     }
 
     /**
      * Sets the value of the maxZoom property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMaxZoom(String value) {
+    public void setMaxZoom(String value)
+    {
         this.maxZoom = value;
     }
 
-    public boolean isSetMaxZoom() {
-        return (this.maxZoom!= null);
+    public boolean isSetMaxZoom()
+    {
+        return (this.maxZoom != null);
     }
 
     /**
      * Gets the value of the minZoom property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMinZoom() {
+    public String getMinZoom()
+    {
         return minZoom;
     }
 
     /**
      * Sets the value of the minZoom property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMinZoom(String value) {
+    public void setMinZoom(String value)
+    {
         this.minZoom = value;
     }
 
-    public boolean isSetMinZoom() {
-        return (this.minZoom!= null);
+    public boolean isSetMinZoom()
+    {
+        return (this.minZoom != null);
     }
 
     /**
      * Gets the value of the noClear property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isNoClear() {
+    public Boolean isNoClear()
+    {
         return noClear;
     }
 
     /**
      * Sets the value of the noClear property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setNoClear(Boolean value) {
+    public void setNoClear(Boolean value)
+    {
         this.noClear = value;
     }
 
-    public boolean isSetNoClear() {
-        return (this.noClear!= null);
+    public boolean isSetNoClear()
+    {
+        return (this.noClear != null);
     }
 
     /**
      * Gets the value of the params property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LayerParamsType }
-     *     
+     * @return possible object is {@link LayerParamsType }
+     * 
      */
-    public LayerParamsType getParams() {
+    public LayerParamsType getParams()
+    {
         return params;
     }
 
     /**
      * Sets the value of the params property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LayerParamsType }
-     *     
+     * @param value allowed object is {@link LayerParamsType }
+     * 
      */
-    public void setParams(LayerParamsType value) {
+    public void setParams(LayerParamsType value)
+    {
         this.params = value;
     }
 
-    public boolean isSetParams() {
-        return (this.params!= null);
+    public boolean isSetParams()
+    {
+        return (this.params != null);
     }
 
     /**
      * Gets the value of the provider property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getProvider() {
+    public String getProvider()
+    {
         return provider;
     }
 
     /**
      * Sets the value of the provider property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setProvider(String value) {
+    public void setProvider(String value)
+    {
         this.provider = value;
     }
 
-    public boolean isSetProvider() {
-        return (this.provider!= null);
+    public boolean isSetProvider()
+    {
+        return (this.provider != null);
     }
 
     /**
      * Gets the value of the crossOrigin property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getCrossOrigin() {
+    public String getCrossOrigin()
+    {
         return crossOrigin;
     }
 
     /**
      * Sets the value of the crossOrigin property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setCrossOrigin(String value) {
+    public void setCrossOrigin(String value)
+    {
         this.crossOrigin = value;
     }
 
-    public boolean isSetCrossOrigin() {
-        return (this.crossOrigin!= null);
+    public boolean isSetCrossOrigin()
+    {
+        return (this.crossOrigin != null);
     }
 
     /**
      * Gets the value of the serverId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getServerId() {
+    public String getServerId()
+    {
         return serverId;
     }
 
     /**
      * Sets the value of the serverId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setServerId(String value) {
+    public void setServerId(String value)
+    {
         this.serverId = value;
     }
 
-    public boolean isSetServerId() {
-        return (this.serverId!= null);
+    public boolean isSetServerId()
+    {
+        return (this.serverId != null);
     }
 
     /**
      * Gets the value of the shapeName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getShapeName() {
+    public String getShapeName()
+    {
         return shapeName;
     }
 
     /**
      * Sets the value of the shapeName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setShapeName(String value) {
+    public void setShapeName(String value)
+    {
         this.shapeName = value;
     }
 
-    public boolean isSetShapeName() {
-        return (this.shapeName!= null);
+    public boolean isSetShapeName()
+    {
+        return (this.shapeName != null);
     }
 
     /**
      * Gets the value of the showLabels property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getShowLabels() {
+    public String getShowLabels()
+    {
         return showLabels;
     }
 
     /**
      * Sets the value of the showLabels property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setShowLabels(String value) {
+    public void setShowLabels(String value)
+    {
         this.showLabels = value;
     }
 
-    public boolean isSetShowLabels() {
-        return (this.showLabels!= null);
+    public boolean isSetShowLabels()
+    {
+        return (this.showLabels != null);
     }
 
     /**
      * Gets the value of the spatial property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isSpatial() {
+    public Boolean isSpatial()
+    {
         return spatial;
     }
 
     /**
      * Sets the value of the spatial property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setSpatial(Boolean value) {
+    public void setSpatial(Boolean value)
+    {
         this.spatial = value;
     }
 
-    public boolean isSetSpatial() {
-        return (this.spatial!= null);
+    public boolean isSetSpatial()
+    {
+        return (this.spatial != null);
     }
 
     /**
      * Gets the value of the splitLevels property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSplitLevels() {
+    public String getSplitLevels()
+    {
         return splitLevels;
     }
 
     /**
      * Sets the value of the splitLevels property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSplitLevels(String value) {
+    public void setSplitLevels(String value)
+    {
         this.splitLevels = value;
     }
 
-    public boolean isSetSplitLevels() {
-        return (this.splitLevels!= null);
+    public boolean isSetSplitLevels()
+    {
+        return (this.splitLevels != null);
     }
 
     /**
      * Gets the value of the style property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getStyle() {
+    public String getStyle()
+    {
         return style;
     }
 
     /**
      * Sets the value of the style property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setStyle(String value) {
+    public void setStyle(String value)
+    {
         this.style = value;
     }
 
-    public boolean isSetStyle() {
-        return (this.style!= null);
+    public boolean isSetStyle()
+    {
+        return (this.style != null);
     }
 
     /**
      * Gets the value of the styles property.
      * 
-     * @return
-     *     possible object is
-     *     {@link StylesType }
-     *     
+     * @return possible object is {@link StylesType }
+     * 
      */
-    public StylesType getStyles() {
+    public StylesType getStyles()
+    {
         return styles;
     }
 
     /**
      * Sets the value of the styles property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link StylesType }
-     *     
+     * @param value allowed object is {@link StylesType }
+     * 
      */
-    public void setStyles(StylesType value) {
+    public void setStyles(StylesType value)
+    {
         this.styles = value;
     }
 
-    public boolean isSetStyles() {
-        return (this.styles!= null);
+    public boolean isSetStyles()
+    {
+        return (this.styles != null);
     }
 
     /**
      * Gets the value of the tags property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TagsType }
-     *     
+     * @return possible object is {@link TagsType }
+     * 
      */
-    public TagsType getTags() {
+    public TagsType getTags()
+    {
         return tags;
     }
 
     /**
      * Sets the value of the tags property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TagsType }
-     *     
+     * @param value allowed object is {@link TagsType }
+     * 
      */
-    public void setTags(TagsType value) {
+    public void setTags(TagsType value)
+    {
         this.tags = value;
     }
 
-    public boolean isSetTags() {
-        return (this.tags!= null);
+    public boolean isSetTags()
+    {
+        return (this.tags != null);
     }
 
     /**
      * Gets the value of the temporal property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isTemporal() {
+    public Boolean isTemporal()
+    {
         return temporal;
     }
 
     /**
      * Sets the value of the temporal property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setTemporal(Boolean value) {
+    public void setTemporal(Boolean value)
+    {
         this.temporal = value;
     }
 
-    public boolean isSetTemporal() {
-        return (this.temporal!= null);
+    public boolean isSetTemporal()
+    {
+        return (this.temporal != null);
     }
 
     /**
      * Gets the value of the tileSize property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getTileSize() {
+    public BigInteger getTileSize()
+    {
         return tileSize;
     }
 
     /**
      * Sets the value of the tileSize property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setTileSize(BigInteger value) {
+    public void setTileSize(BigInteger value)
+    {
         this.tileSize = value;
     }
 
-    public boolean isSetTileSize() {
-        return (this.tileSize!= null);
+    public boolean isSetTileSize()
+    {
+        return (this.tileSize != null);
     }
 
     /**
      * Gets the value of the timeFormat property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTimeFormat() {
+    public String getTimeFormat()
+    {
         return timeFormat;
     }
 
     /**
      * Sets the value of the timeFormat property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTimeFormat(String value) {
+    public void setTimeFormat(String value)
+    {
         this.timeFormat = value;
     }
 
-    public boolean isSetTimeFormat() {
-        return (this.timeFormat!= null);
+    public boolean isSetTimeFormat()
+    {
+        return (this.timeFormat != null);
     }
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
-    public boolean isSetTitle() {
-        return (this.title!= null);
+    public boolean isSetTitle()
+    {
+        return (this.title != null);
     }
 
     /**
      * Gets the value of the url property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getUrl() {
+    public String getUrl()
+    {
         return url;
     }
 
     /**
      * Sets the value of the url property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setUrl(String value) {
+    public void setUrl(String value)
+    {
         this.url = value;
     }
 
-    public boolean isSetUrl() {
-        return (this.url!= null);
+    public boolean isSetUrl()
+    {
+        return (this.url != null);
     }
 
     /**
      * Gets the value of the refreshRate property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getRefreshRate() {
+    public BigInteger getRefreshRate()
+    {
         return refreshRate;
     }
 
     /**
      * Sets the value of the refreshRate property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setRefreshRate(BigInteger value) {
+    public void setRefreshRate(BigInteger value)
+    {
         this.refreshRate = value;
     }
 
-    public boolean isSetRefreshRate() {
-        return (this.refreshRate!= null);
+    public boolean isSetRefreshRate()
+    {
+        return (this.refreshRate != null);
     }
 
     /**
      * Gets the value of the analyze property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isAnalyze() {
+    public Boolean isAnalyze()
+    {
         return analyze;
     }
 
     /**
      * Sets the value of the analyze property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setAnalyze(Boolean value) {
+    public void setAnalyze(Boolean value)
+    {
         this.analyze = value;
     }
 
-    public boolean isSetAnalyze() {
-        return (this.analyze!= null);
+    public boolean isSetAnalyze()
+    {
+        return (this.analyze != null);
     }
 
     /**
      * Gets the value of the imageUrl property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getImageUrl() {
+    public String getImageUrl()
+    {
         return imageUrl;
     }
 
     /**
      * Sets the value of the imageUrl property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setImageUrl(String value) {
+    public void setImageUrl(String value)
+    {
         this.imageUrl = value;
     }
 
-    public boolean isSetImageUrl() {
-        return (this.imageUrl!= null);
+    public boolean isSetImageUrl()
+    {
+        return (this.imageUrl != null);
     }
 
     /**
      * Gets the value of the imageParams property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LayerParamsType }
-     *     
+     * @return possible object is {@link LayerParamsType }
+     * 
      */
-    public LayerParamsType getImageParams() {
+    public LayerParamsType getImageParams()
+    {
         return imageParams;
     }
 
     /**
      * Sets the value of the imageParams property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LayerParamsType }
-     *     
+     * @param value allowed object is {@link LayerParamsType }
+     * 
      */
-    public void setImageParams(LayerParamsType value) {
+    public void setImageParams(LayerParamsType value)
+    {
         this.imageParams = value;
     }
 
-    public boolean isSetImageParams() {
-        return (this.imageParams!= null);
+    public boolean isSetImageParams()
+    {
+        return (this.imageParams != null);
     }
 
     /**
      * Gets the value of the proxy property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isProxy() {
+    public Boolean isProxy()
+    {
         return proxy;
     }
 
     /**
      * Sets the value of the proxy property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setProxy(Boolean value) {
+    public void setProxy(Boolean value)
+    {
         this.proxy = value;
     }
 
-    public boolean isSetProxy() {
-        return (this.proxy!= null);
+    public boolean isSetProxy()
+    {
+        return (this.proxy != null);
     }
 
     /**
      * Gets the value of the urls property.
      * 
-     * @return
-     *     possible object is
-     *     {@link UrlsType }
-     *     
+     * @return possible object is {@link UrlsType }
+     * 
      */
-    public UrlsType getUrls() {
+    public UrlsType getUrls()
+    {
         return urls;
     }
 
     /**
      * Sets the value of the urls property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link UrlsType }
-     *     
+     * @param value allowed object is {@link UrlsType }
+     * 
      */
-    public void setUrls(UrlsType value) {
+    public void setUrls(UrlsType value)
+    {
         this.urls = value;
     }
 
-    public boolean isSetUrls() {
-        return (this.urls!= null);
+    public boolean isSetUrls()
+    {
+        return (this.urls != null);
     }
 
     /**
      * Gets the value of the projection property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getProjection() {
+    public String getProjection()
+    {
         return projection;
     }
 
     /**
      * Sets the value of the projection property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setProjection(String value) {
+    public void setProjection(String value)
+    {
         this.projection = value;
     }
 
-    public boolean isSetProjection() {
-        return (this.projection!= null);
+    public boolean isSetProjection()
+    {
+        return (this.projection != null);
     }
 
     /**
      * Gets the value of the projections property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ProjectionsType }
-     *     
+     * @return possible object is {@link ProjectionsType }
+     * 
      */
-    public ProjectionsType getProjections() {
+    public ProjectionsType getProjections()
+    {
         return projections;
     }
 
     /**
      * Sets the value of the projections property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ProjectionsType }
-     *     
+     * @param value allowed object is {@link ProjectionsType }
+     * 
      */
-    public void setProjections(ProjectionsType value) {
+    public void setProjections(ProjectionsType value)
+    {
         this.projections = value;
     }
 
-    public boolean isSetProjections() {
-        return (this.projections!= null);
+    public boolean isSetProjections()
+    {
+        return (this.projections != null);
     }
 
     /**
      * Gets the value of the usePost property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isUsePost() {
+    public Boolean isUsePost()
+    {
         return usePost;
     }
 
     /**
      * Sets the value of the usePost property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setUsePost(Boolean value) {
+    public void setUsePost(Boolean value)
+    {
         this.usePost = value;
     }
 
-    public boolean isSetUsePost() {
-        return (this.usePost!= null);
+    public boolean isSetUsePost()
+    {
+        return (this.usePost != null);
     }
 
     /**
      * Gets the value of the visible property.
      * 
      */
-    public boolean isVisible() {
+    public boolean isVisible()
+    {
         return visible;
     }
 
@@ -1971,404 +1988,392 @@ public class LayerType {
      * Sets the value of the visible property.
      * 
      */
-    public void setVisible(boolean value) {
+    public void setVisible(boolean value)
+    {
         this.visible = value;
     }
 
-    public boolean isSetVisible() {
+    public boolean isSetVisible()
+    {
         return true;
     }
 
     /**
      * Gets the value of the zoomOffset property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getZoomOffset() {
+    public BigInteger getZoomOffset()
+    {
         return zoomOffset;
     }
 
     /**
      * Sets the value of the zoomOffset property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setZoomOffset(BigInteger value) {
+    public void setZoomOffset(BigInteger value)
+    {
         this.zoomOffset = value;
     }
 
-    public boolean isSetZoomOffset() {
-        return (this.zoomOffset!= null);
+    public boolean isSetZoomOffset()
+    {
+        return (this.zoomOffset != null);
     }
 
     /**
      * Gets the value of the originalUrl property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getOriginalUrl() {
+    public String getOriginalUrl()
+    {
         return originalUrl;
     }
 
     /**
      * Sets the value of the originalUrl property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setOriginalUrl(String value) {
+    public void setOriginalUrl(String value)
+    {
         this.originalUrl = value;
     }
 
-    public boolean isSetOriginalUrl() {
-        return (this.originalUrl!= null);
+    public boolean isSetOriginalUrl()
+    {
+        return (this.originalUrl != null);
     }
 
     /**
      * Gets the value of the columns property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ColumnsType }
-     *     
+     * @return possible object is {@link ColumnsType }
+     * 
      */
-    public ColumnsType getColumns() {
+    public ColumnsType getColumns()
+    {
         return columns;
     }
 
     /**
      * Sets the value of the columns property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ColumnsType }
-     *     
+     * @param value allowed object is {@link ColumnsType }
+     * 
      */
-    public void setColumns(ColumnsType value) {
+    public void setColumns(ColumnsType value)
+    {
         this.columns = value;
     }
 
-    public boolean isSetColumns() {
-        return (this.columns!= null);
+    public boolean isSetColumns()
+    {
+        return (this.columns != null);
     }
 
     /**
      * Gets the value of the mappings property.
      * 
-     * @return
-     *     possible object is
-     *     {@link MappingsType }
-     *     
+     * @return possible object is {@link MappingsType }
+     * 
      */
-    public MappingsType getMappings() {
+    public MappingsType getMappings()
+    {
         return mappings;
     }
 
     /**
      * Sets the value of the mappings property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link MappingsType }
-     *     
+     * @param value allowed object is {@link MappingsType }
+     * 
      */
-    public void setMappings(MappingsType value) {
+    public void setMappings(MappingsType value)
+    {
         this.mappings = value;
     }
 
-    public boolean isSetMappings() {
-        return (this.mappings!= null);
+    public boolean isSetMappings()
+    {
+        return (this.mappings != null);
     }
 
     /**
      * Gets the value of the collapsed property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isCollapsed() {
+    public Boolean isCollapsed()
+    {
         return collapsed;
     }
 
     /**
      * Sets the value of the collapsed property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setCollapsed(Boolean value) {
+    public void setCollapsed(Boolean value)
+    {
         this.collapsed = value;
     }
 
-    public boolean isSetCollapsed() {
-        return (this.collapsed!= null);
+    public boolean isSetCollapsed()
+    {
+        return (this.collapsed != null);
     }
 
     /**
      * Gets the value of the showRoot property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isShowRoot() {
+    public Boolean isShowRoot()
+    {
         return showRoot;
     }
 
     /**
      * Sets the value of the showRoot property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setShowRoot(Boolean value) {
+    public void setShowRoot(Boolean value)
+    {
         this.showRoot = value;
     }
 
-    public boolean isSetShowRoot() {
-        return (this.showRoot!= null);
+    public boolean isSetShowRoot()
+    {
+        return (this.showRoot != null);
     }
 
     /**
      * Gets the value of the editable property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isEditable() {
+    public Boolean isEditable()
+    {
         return editable;
     }
 
     /**
      * Sets the value of the editable property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setEditable(Boolean value) {
+    public void setEditable(Boolean value)
+    {
         this.editable = value;
     }
 
-    public boolean isSetEditable() {
-        return (this.editable!= null);
+    public boolean isSetEditable()
+    {
+        return (this.editable != null);
     }
 
     /**
      * Gets the value of the comment property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getComment() {
+    public String getComment()
+    {
         return comment;
     }
 
     /**
      * Sets the value of the comment property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setComment(String value) {
+    public void setComment(String value)
+    {
         this.comment = value;
     }
 
-    public boolean isSetComment() {
-        return (this.comment!= null);
+    public boolean isSetComment()
+    {
+        return (this.comment != null);
     }
 
     /**
      * Gets the value of the quote property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getQuote() {
+    public String getQuote()
+    {
         return quote;
     }
 
     /**
      * Sets the value of the quote property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setQuote(String value) {
+    public void setQuote(String value)
+    {
         this.quote = value;
     }
 
-    public boolean isSetQuote() {
-        return (this.quote!= null);
+    public boolean isSetQuote()
+    {
+        return (this.quote != null);
     }
 
     /**
      * Gets the value of the delimiter property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDelimiter() {
+    public String getDelimiter()
+    {
         return delimiter;
     }
 
     /**
      * Sets the value of the delimiter property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDelimiter(String value) {
+    public void setDelimiter(String value)
+    {
         this.delimiter = value;
     }
 
-    public boolean isSetDelimiter() {
-        return (this.delimiter!= null);
+    public boolean isSetDelimiter()
+    {
+        return (this.delimiter != null);
     }
 
     /**
      * Gets the value of the dataRow property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getDataRow() {
+    public BigInteger getDataRow()
+    {
         return dataRow;
     }
 
     /**
      * Sets the value of the dataRow property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setDataRow(BigInteger value) {
+    public void setDataRow(BigInteger value)
+    {
         this.dataRow = value;
     }
 
-    public boolean isSetDataRow() {
-        return (this.dataRow!= null);
+    public boolean isSetDataRow()
+    {
+        return (this.dataRow != null);
     }
 
     /**
      * Gets the value of the headerRow property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getHeaderRow() {
+    public BigInteger getHeaderRow()
+    {
         return headerRow;
     }
 
     /**
      * Sets the value of the headerRow property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setHeaderRow(BigInteger value) {
+    public void setHeaderRow(BigInteger value)
+    {
         this.headerRow = value;
     }
 
-    public boolean isSetHeaderRow() {
-        return (this.headerRow!= null);
+    public boolean isSetHeaderRow()
+    {
+        return (this.headerRow != null);
     }
 
     /**
      * Gets the value of the objectPreview property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ObjectPreviewType }
-     *     
+     * @return possible object is {@link ObjectPreviewType }
+     * 
      */
-    public ObjectPreviewType getObjectPreview() {
+    public ObjectPreviewType getObjectPreview()
+    {
         return objectPreview;
     }
 
     /**
      * Sets the value of the objectPreview property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ObjectPreviewType }
-     *     
+     * @param value allowed object is {@link ObjectPreviewType }
+     * 
      */
-    public void setObjectPreview(ObjectPreviewType value) {
+    public void setObjectPreview(ObjectPreviewType value)
+    {
         this.objectPreview = value;
     }
 
-    public boolean isSetObjectPreview() {
-        return (this.objectPreview!= null);
+    public boolean isSetObjectPreview()
+    {
+        return (this.objectPreview != null);
     }
 
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getType() {
+    public String getType()
+    {
         return type;
     }
 
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setType(String value) {
+    public void setType(String value)
+    {
         this.type = value;
     }
 
-    public boolean isSetType() {
-        return (this.type!= null);
+    public boolean isSetType()
+    {
+        return (this.type != null);
     }
 
 }

@@ -165,7 +165,7 @@ public interface PrivateKeyProvider
      * Get if the certificate chain is current.
      *
      * @return {@code true} if the certificate chain is current.
-     * @throws PrivateKeyProviderException If a certificate cannot be retrieved.
+     * @throws PrivateKeyProviderException If a   certificate cannot be retrieved.
      */
     boolean isCurrent() throws PrivateKeyProviderException;
 }

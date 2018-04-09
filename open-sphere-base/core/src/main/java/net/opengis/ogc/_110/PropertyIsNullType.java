@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ogc._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for PropertyIsNullType complex type.
+ * <p>
+ * Java class for PropertyIsNullType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="PropertyIsNullType">
@@ -34,11 +35,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PropertyIsNullType", propOrder = {
-    "propertyName"
-})
-public class PropertyIsNullType
-    extends ComparisonOpsType
+@XmlType(name = "PropertyIsNullType", propOrder = { "propertyName" })
+public class PropertyIsNullType extends ComparisonOpsType
 {
 
     @XmlElement(name = "PropertyName", required = true)
@@ -47,24 +45,22 @@ public class PropertyIsNullType
     /**
      * Gets the value of the propertyName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PropertyNameType }
-     *     
+     * @return possible object is {@link PropertyNameType }
+     * 
      */
-    public PropertyNameType getPropertyName() {
+    public PropertyNameType getPropertyName()
+    {
         return propertyName;
     }
 
     /**
      * Sets the value of the propertyName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PropertyNameType }
-     *     
+     * @param value allowed object is {@link PropertyNameType }
+     * 
      */
-    public void setPropertyName(PropertyNameType value) {
+    public void setPropertyName(PropertyNameType value)
+    {
         this.propertyName = value;
     }
 

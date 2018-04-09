@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -35,11 +36,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "perpendicularOffset"
-})
+@XmlType(name = "", propOrder = { "perpendicularOffset" })
 @XmlRootElement(name = "LinePlacement")
-public class LinePlacement {
+public class LinePlacement
+{
 
     @XmlElement(name = "PerpendicularOffset")
     protected ParameterValueType perpendicularOffset;
@@ -47,24 +47,22 @@ public class LinePlacement {
     /**
      * Gets the value of the perpendicularOffset property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ParameterValueType }
-     *     
+     * @return possible object is {@link ParameterValueType }
+     * 
      */
-    public ParameterValueType getPerpendicularOffset() {
+    public ParameterValueType getPerpendicularOffset()
+    {
         return perpendicularOffset;
     }
 
     /**
      * Sets the value of the perpendicularOffset property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ParameterValueType }
-     *     
+     * @param value allowed object is {@link ParameterValueType }
+     * 
      */
-    public void setPerpendicularOffset(ParameterValueType value) {
+    public void setPerpendicularOffset(ParameterValueType value)
+    {
         this.perpendicularOffset = value;
     }
 

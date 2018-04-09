@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,22 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A discrete coverage consists of a domain set, range set and optionally a coverage function. The domain set consists of either geometry or temporal objects, finite in number. The range set is comprised of a finite number of attribute values each of which is associated to every direct position within any single spatiotemporal object in the domain. In other words, the range values are constant on each spatiotemporal object in the domain. This coverage function maps each element from the coverage domain to an element in its range. This definition conforms to ISO 19123.
+ * A discrete coverage consists of a domain set, range set and optionally a
+ * coverage function. The domain set consists of either geometry or temporal
+ * objects, finite in number. The range set is comprised of a finite number of
+ * attribute values each of which is associated to every direct position within
+ * any single spatiotemporal object in the domain. In other words, the range
+ * values are constant on each spatiotemporal object in the domain. This
+ * coverage function maps each element from the coverage domain to an element in
+ * its range. This definition conforms to ISO 19123.
  * 
- * <p>Java class for AbstractDiscreteCoverageType complex type.
+ * <p>
+ * Java class for AbstractDiscreteCoverageType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractDiscreteCoverageType">
@@ -36,19 +44,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractDiscreteCoverageType", propOrder = {
-    "coverageFunction"
-})
-@XmlSeeAlso({
-    MultiSolidCoverageType.class,
-    GridCoverageType.class,
-    RectifiedGridCoverageType.class,
-    MultiCurveCoverageType.class,
-    MultiPointCoverageType.class,
-    MultiSurfaceCoverageType.class
-})
-public abstract class AbstractDiscreteCoverageType
-    extends AbstractCoverageType
+@XmlType(name = "AbstractDiscreteCoverageType", propOrder = { "coverageFunction" })
+@XmlSeeAlso({ MultiSolidCoverageType.class, GridCoverageType.class, RectifiedGridCoverageType.class, MultiCurveCoverageType.class,
+    MultiPointCoverageType.class, MultiSurfaceCoverageType.class })
+public abstract class AbstractDiscreteCoverageType extends AbstractCoverageType
 {
 
     protected CoverageFunctionType coverageFunction;
@@ -56,24 +55,22 @@ public abstract class AbstractDiscreteCoverageType
     /**
      * Gets the value of the coverageFunction property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CoverageFunctionType }
-     *     
+     * @return possible object is {@link CoverageFunctionType }
+     * 
      */
-    public CoverageFunctionType getCoverageFunction() {
+    public CoverageFunctionType getCoverageFunction()
+    {
         return coverageFunction;
     }
 
     /**
      * Sets the value of the coverageFunction property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CoverageFunctionType }
-     *     
+     * @param value allowed object is {@link CoverageFunctionType }
+     * 
      */
-    public void setCoverageFunction(CoverageFunctionType value) {
+    public void setCoverageFunction(CoverageFunctionType value)
+    {
         this.coverageFunction = value;
     }
 

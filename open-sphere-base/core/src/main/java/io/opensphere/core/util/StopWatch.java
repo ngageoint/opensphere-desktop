@@ -40,7 +40,8 @@ public class StopWatch
     }
 
     /**
-     * Gets the elapsed number of microseconds since the last recorded time, padded for formatting.
+     * Gets the elapsed number of microseconds since the last recorded time,
+     * padded for formatting.
      *
      * @return the microseconds
      */
@@ -60,7 +61,8 @@ public class StopWatch
     }
 
     /**
-     * Adds the delta from the last recorded time to the category's cumulative time.
+     * Adds the delta from the last recorded time to the category's cumulative
+     * time.
      *
      * @param category the category
      */
@@ -77,7 +79,7 @@ public class StopWatch
     public void printCategories()
     {
         List<Entry<String, Long>> entrySet = CollectionUtilities.sort(myCategoryTimes.entrySet(),
-            (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+                (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
         for (Map.Entry<String, Long> entry : entrySet)
         {
             System.out.println(StringUtils.leftPad(entry.getValue().toString(), 7) + " " + entry.getKey());

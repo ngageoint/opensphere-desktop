@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.math.BigInteger;
@@ -18,13 +17,18 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Definition of an algorithm used to perform a coordinate operation. Most operation methods use a number of operation parameters, although some coordinate conversions use none. Each coordinate operation using the method assigns values to these parameters. 
+ * Definition of an algorithm used to perform a coordinate operation. Most
+ * operation methods use a number of operation parameters, although some
+ * coordinate conversions use none. Each coordinate operation using the method
+ * assigns values to these parameters.
  * 
- * <p>Java class for OperationMethodType complex type.
+ * <p>
+ * Java class for OperationMethodType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="OperationMethodType">
@@ -46,43 +50,44 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "OperationMethodType", propOrder = {
-    "methodID",
-    "remarks",
-    "methodFormula",
-    "sourceDimensions",
-    "targetDimensions",
-    "usesParameter"
-})
-public class OperationMethodType
-    extends OperationMethodBaseType
+@XmlType(name = "OperationMethodType", propOrder = { "methodID", "remarks", "methodFormula", "sourceDimensions",
+    "targetDimensions", "usesParameter" })
+public class OperationMethodType extends OperationMethodBaseType
 {
 
     protected List<IdentifierType> methodID;
+
     protected StringOrRefType remarks;
+
     @XmlElement(required = true)
     protected CodeType methodFormula;
+
     @XmlElement(required = true)
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger sourceDimensions;
+
     @XmlElement(required = true)
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger targetDimensions;
+
     protected List<AbstractGeneralOperationParameterRefType> usesParameter;
 
     /**
-     * Set of alternative identifications of this operation method. The first methodID, if any, is normally the primary identification code, and any others are aliases. Gets the value of the methodID property.
+     * Set of alternative identifications of this operation method. The first
+     * methodID, if any, is normally the primary identification code, and any
+     * others are aliases. Gets the value of the methodID property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the methodID property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the methodID property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getMethodID().add(newItem);
+     * getMethodID().add(newItem);
      * </pre>
      * 
      * 
@@ -92,122 +97,120 @@ public class OperationMethodType
      * 
      * 
      */
-    public List<IdentifierType> getMethodID() {
-        if (methodID == null) {
+    public List<IdentifierType> getMethodID()
+    {
+        if (methodID == null)
+        {
             methodID = new ArrayList<IdentifierType>();
         }
         return this.methodID;
     }
 
     /**
-     * Comments on or information about this operation method, including source information.
+     * Comments on or information about this operation method, including source
+     * information.
      * 
-     * @return
-     *     possible object is
-     *     {@link StringOrRefType }
-     *     
+     * @return possible object is {@link StringOrRefType }
+     * 
      */
-    public StringOrRefType getRemarks() {
+    public StringOrRefType getRemarks()
+    {
         return remarks;
     }
 
     /**
      * Sets the value of the remarks property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link StringOrRefType }
-     *     
+     * @param value allowed object is {@link StringOrRefType }
+     * 
      */
-    public void setRemarks(StringOrRefType value) {
+    public void setRemarks(StringOrRefType value)
+    {
         this.remarks = value;
     }
 
     /**
      * Gets the value of the methodFormula property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CodeType }
-     *     
+     * @return possible object is {@link CodeType }
+     * 
      */
-    public CodeType getMethodFormula() {
+    public CodeType getMethodFormula()
+    {
         return methodFormula;
     }
 
     /**
      * Sets the value of the methodFormula property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CodeType }
-     *     
+     * @param value allowed object is {@link CodeType }
+     * 
      */
-    public void setMethodFormula(CodeType value) {
+    public void setMethodFormula(CodeType value)
+    {
         this.methodFormula = value;
     }
 
     /**
      * Gets the value of the sourceDimensions property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getSourceDimensions() {
+    public BigInteger getSourceDimensions()
+    {
         return sourceDimensions;
     }
 
     /**
      * Sets the value of the sourceDimensions property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setSourceDimensions(BigInteger value) {
+    public void setSourceDimensions(BigInteger value)
+    {
         this.sourceDimensions = value;
     }
 
     /**
      * Gets the value of the targetDimensions property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getTargetDimensions() {
+    public BigInteger getTargetDimensions()
+    {
         return targetDimensions;
     }
 
     /**
      * Sets the value of the targetDimensions property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setTargetDimensions(BigInteger value) {
+    public void setTargetDimensions(BigInteger value)
+    {
         this.targetDimensions = value;
     }
 
     /**
-     * Unordered list of associations to the set of operation parameters and parameter groups used by this operation method. Gets the value of the usesParameter property.
+     * Unordered list of associations to the set of operation parameters and
+     * parameter groups used by this operation method. Gets the value of the
+     * usesParameter property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the usesParameter property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the usesParameter property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getUsesParameter().add(newItem);
+     * getUsesParameter().add(newItem);
      * </pre>
      * 
      * 
@@ -217,8 +220,10 @@ public class OperationMethodType
      * 
      * 
      */
-    public List<AbstractGeneralOperationParameterRefType> getUsesParameter() {
-        if (usesParameter == null) {
+    public List<AbstractGeneralOperationParameterRefType> getUsesParameter()
+    {
+        if (usesParameter == null)
+        {
             usesParameter = new ArrayList<AbstractGeneralOperationParameterRefType>();
         }
         return this.usesParameter;

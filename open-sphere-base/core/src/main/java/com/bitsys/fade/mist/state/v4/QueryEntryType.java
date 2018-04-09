@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,16 +15,18 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
- *         Defines the structure specifying a query for a given layer, in a given 
- *         region, using filters and areas.
- *       
+ * Defines the structure specifying a query for a given layer, in a given
+ * region, using filters and areas.
  * 
- * <p>Java class for QueryEntryType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for QueryEntryType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="QueryEntryType">
@@ -46,116 +47,120 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "QueryEntryType")
-public class QueryEntryType {
+public class QueryEntryType
+{
 
     @XmlAttribute(name = "layerId", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String layerId;
+
     @XmlAttribute(name = "areaId", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String areaId;
+
     @XmlAttribute(name = "filterId")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String filterId;
+
     @XmlAttribute(name = "includeArea", required = true)
     protected boolean includeArea;
+
     @XmlAttribute(name = "filterGroup", required = true)
     protected boolean filterGroup;
+
     @XmlAttribute(name = "temp")
     protected Boolean temp;
 
     /**
      * Gets the value of the layerId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLayerId() {
+    public String getLayerId()
+    {
         return layerId;
     }
 
     /**
      * Sets the value of the layerId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLayerId(String value) {
+    public void setLayerId(String value)
+    {
         this.layerId = value;
     }
 
-    public boolean isSetLayerId() {
-        return (this.layerId!= null);
+    public boolean isSetLayerId()
+    {
+        return (this.layerId != null);
     }
 
     /**
      * Gets the value of the areaId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getAreaId() {
+    public String getAreaId()
+    {
         return areaId;
     }
 
     /**
      * Sets the value of the areaId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setAreaId(String value) {
+    public void setAreaId(String value)
+    {
         this.areaId = value;
     }
 
-    public boolean isSetAreaId() {
-        return (this.areaId!= null);
+    public boolean isSetAreaId()
+    {
+        return (this.areaId != null);
     }
 
     /**
      * Gets the value of the filterId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getFilterId() {
+    public String getFilterId()
+    {
         return filterId;
     }
 
     /**
      * Sets the value of the filterId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setFilterId(String value) {
+    public void setFilterId(String value)
+    {
         this.filterId = value;
     }
 
-    public boolean isSetFilterId() {
-        return (this.filterId!= null);
+    public boolean isSetFilterId()
+    {
+        return (this.filterId != null);
     }
 
     /**
      * Gets the value of the includeArea property.
      * 
      */
-    public boolean isIncludeArea() {
+    public boolean isIncludeArea()
+    {
         return includeArea;
     }
 
@@ -163,11 +168,13 @@ public class QueryEntryType {
      * Sets the value of the includeArea property.
      * 
      */
-    public void setIncludeArea(boolean value) {
+    public void setIncludeArea(boolean value)
+    {
         this.includeArea = value;
     }
 
-    public boolean isSetIncludeArea() {
+    public boolean isSetIncludeArea()
+    {
         return true;
     }
 
@@ -175,7 +182,8 @@ public class QueryEntryType {
      * Gets the value of the filterGroup property.
      * 
      */
-    public boolean isFilterGroup() {
+    public boolean isFilterGroup()
+    {
         return filterGroup;
     }
 
@@ -183,43 +191,45 @@ public class QueryEntryType {
      * Sets the value of the filterGroup property.
      * 
      */
-    public void setFilterGroup(boolean value) {
+    public void setFilterGroup(boolean value)
+    {
         this.filterGroup = value;
     }
 
-    public boolean isSetFilterGroup() {
+    public boolean isSetFilterGroup()
+    {
         return true;
     }
 
     /**
      * Gets the value of the temp property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public boolean isTemp() {
+    public boolean isTemp()
+    {
         return temp;
     }
 
     /**
      * Sets the value of the temp property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setTemp(boolean value) {
+    public void setTemp(boolean value)
+    {
         this.temp = value;
     }
 
-    public boolean isSetTemp() {
-        return (this.temp!= null);
+    public boolean isSetTemp()
+    {
+        return (this.temp != null);
     }
 
-    public void unsetTemp() {
+    public void unsetTemp()
+    {
         this.temp = null;
     }
 

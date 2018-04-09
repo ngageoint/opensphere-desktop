@@ -174,6 +174,7 @@ public class CalloutImpl implements Callout
     {
         myCornerRadius = cornerRadius;
     }
+
     @Override
     public void setPickable(boolean pickable)
     {

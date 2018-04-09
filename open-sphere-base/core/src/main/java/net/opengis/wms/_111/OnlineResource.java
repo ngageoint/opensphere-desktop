@@ -5,7 +5,6 @@
 // Generated on: 2011.02.04 at 01:31:16 PM MST 
 //
 
-
 package net.opengis.wms._111;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,21 +15,23 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
 @XmlRootElement(name = "OnlineResource")
-public class OnlineResource {
+public class OnlineResource
+{
 
     @XmlAttribute(name = "xmlns:xlink")
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String xmlnsXlink = "http://www.w3.org/1999/xlink";
+
     @XmlAttribute(name = "type", namespace = "http://www.w3.org/1999/xlink")
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String xlinkType;
+
     @XmlAttribute(name = "href", required = true, namespace = "http://www.w3.org/1999/xlink")
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String xlinkHref;
@@ -38,15 +39,17 @@ public class OnlineResource {
     /**
      * Gets the value of the xmlnsXlink property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getXmlnsXlink() {
-        if (xmlnsXlink == null) {
+    public String getXmlnsXlink()
+    {
+        if (xmlnsXlink == null)
+        {
             return "http://www.w3.org/1999/xlink";
-        } else {
+        }
+        else
+        {
             return xmlnsXlink;
         }
     }
@@ -54,27 +57,28 @@ public class OnlineResource {
     /**
      * Sets the value of the xmlnsXlink property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setXmlnsXlink(String value) {
+    public void setXmlnsXlink(String value)
+    {
         this.xmlnsXlink = value;
     }
 
     /**
      * Gets the value of the xlinkType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getXlinkType() {
-        if (xlinkType == null) {
+    public String getXlinkType()
+    {
+        if (xlinkType == null)
+        {
             return "simple";
-        } else {
+        }
+        else
+        {
             return xlinkType;
         }
     }
@@ -82,36 +86,33 @@ public class OnlineResource {
     /**
      * Sets the value of the xlinkType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setXlinkType(String value) {
+    public void setXlinkType(String value)
+    {
         this.xlinkType = value;
     }
 
     /**
      * Gets the value of the xlinkHref property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getXlinkHref() {
+    public String getXlinkHref()
+    {
         return xlinkHref;
     }
 
     /**
      * Sets the value of the xlinkHref property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setXlinkHref(String value) {
+    public void setXlinkHref(String value)
+    {
         this.xlinkHref = value;
     }
 

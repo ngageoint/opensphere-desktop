@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ViewVolumeType complex type.
+ * <p>
+ * Java class for ViewVolumeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ViewVolumeType">
@@ -44,209 +45,206 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ViewVolumeType", propOrder = {
-    "leftFov",
-    "rightFov",
-    "bottomFov",
-    "topFov",
-    "near",
-    "viewVolumeSimpleExtensionGroup",
-    "viewVolumeObjectExtensionGroup"
-})
-public class ViewVolumeType
-    extends AbstractObjectType
+@XmlType(name = "ViewVolumeType", propOrder = { "leftFov", "rightFov", "bottomFov", "topFov", "near",
+    "viewVolumeSimpleExtensionGroup", "viewVolumeObjectExtensionGroup" })
+public class ViewVolumeType extends AbstractObjectType
 {
 
     @XmlElement(defaultValue = "0.0")
     protected Double leftFov;
+
     @XmlElement(defaultValue = "0.0")
     protected Double rightFov;
+
     @XmlElement(defaultValue = "0.0")
     protected Double bottomFov;
+
     @XmlElement(defaultValue = "0.0")
     protected Double topFov;
+
     @XmlElement(defaultValue = "0.0")
     protected Double near;
+
     @XmlElement(name = "ViewVolumeSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> viewVolumeSimpleExtensionGroup;
+
     @XmlElement(name = "ViewVolumeObjectExtensionGroup")
     protected List<AbstractObjectType> viewVolumeObjectExtensionGroup;
 
     /**
      * Gets the value of the leftFov property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getLeftFov() {
+    public Double getLeftFov()
+    {
         return leftFov;
     }
 
     /**
      * Sets the value of the leftFov property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setLeftFov(Double value) {
+    public void setLeftFov(Double value)
+    {
         this.leftFov = value;
     }
 
-    public boolean isSetLeftFov() {
-        return (this.leftFov!= null);
+    public boolean isSetLeftFov()
+    {
+        return (this.leftFov != null);
     }
 
     /**
      * Gets the value of the rightFov property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getRightFov() {
+    public Double getRightFov()
+    {
         return rightFov;
     }
 
     /**
      * Sets the value of the rightFov property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setRightFov(Double value) {
+    public void setRightFov(Double value)
+    {
         this.rightFov = value;
     }
 
-    public boolean isSetRightFov() {
-        return (this.rightFov!= null);
+    public boolean isSetRightFov()
+    {
+        return (this.rightFov != null);
     }
 
     /**
      * Gets the value of the bottomFov property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getBottomFov() {
+    public Double getBottomFov()
+    {
         return bottomFov;
     }
 
     /**
      * Sets the value of the bottomFov property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setBottomFov(Double value) {
+    public void setBottomFov(Double value)
+    {
         this.bottomFov = value;
     }
 
-    public boolean isSetBottomFov() {
-        return (this.bottomFov!= null);
+    public boolean isSetBottomFov()
+    {
+        return (this.bottomFov != null);
     }
 
     /**
      * Gets the value of the topFov property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getTopFov() {
+    public Double getTopFov()
+    {
         return topFov;
     }
 
     /**
      * Sets the value of the topFov property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setTopFov(Double value) {
+    public void setTopFov(Double value)
+    {
         this.topFov = value;
     }
 
-    public boolean isSetTopFov() {
-        return (this.topFov!= null);
+    public boolean isSetTopFov()
+    {
+        return (this.topFov != null);
     }
 
     /**
      * Gets the value of the near property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getNear() {
+    public Double getNear()
+    {
         return near;
     }
 
     /**
      * Sets the value of the near property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setNear(Double value) {
+    public void setNear(Double value)
+    {
         this.near = value;
     }
 
-    public boolean isSetNear() {
-        return (this.near!= null);
+    public boolean isSetNear()
+    {
+        return (this.near != null);
     }
 
     /**
      * Gets the value of the viewVolumeSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the viewVolumeSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the viewVolumeSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getViewVolumeSimpleExtensionGroup().add(newItem);
+     * getViewVolumeSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getViewVolumeSimpleExtensionGroup() {
-        if (viewVolumeSimpleExtensionGroup == null) {
+    public List<Object> getViewVolumeSimpleExtensionGroup()
+    {
+        if (viewVolumeSimpleExtensionGroup == null)
+        {
             viewVolumeSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.viewVolumeSimpleExtensionGroup;
     }
 
-    public boolean isSetViewVolumeSimpleExtensionGroup() {
-        return ((this.viewVolumeSimpleExtensionGroup!= null)&&(!this.viewVolumeSimpleExtensionGroup.isEmpty()));
+    public boolean isSetViewVolumeSimpleExtensionGroup()
+    {
+        return ((this.viewVolumeSimpleExtensionGroup != null) && (!this.viewVolumeSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetViewVolumeSimpleExtensionGroup() {
+    public void unsetViewVolumeSimpleExtensionGroup()
+    {
         this.viewVolumeSimpleExtensionGroup = null;
     }
 
@@ -254,15 +252,16 @@ public class ViewVolumeType
      * Gets the value of the viewVolumeObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the viewVolumeObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the viewVolumeObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getViewVolumeObjectExtensionGroup().add(newItem);
+     * getViewVolumeObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -272,18 +271,22 @@ public class ViewVolumeType
      * 
      * 
      */
-    public List<AbstractObjectType> getViewVolumeObjectExtensionGroup() {
-        if (viewVolumeObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getViewVolumeObjectExtensionGroup()
+    {
+        if (viewVolumeObjectExtensionGroup == null)
+        {
             viewVolumeObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.viewVolumeObjectExtensionGroup;
     }
 
-    public boolean isSetViewVolumeObjectExtensionGroup() {
-        return ((this.viewVolumeObjectExtensionGroup!= null)&&(!this.viewVolumeObjectExtensionGroup.isEmpty()));
+    public boolean isSetViewVolumeObjectExtensionGroup()
+    {
+        return ((this.viewVolumeObjectExtensionGroup != null) && (!this.viewVolumeObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetViewVolumeObjectExtensionGroup() {
+    public void unsetViewVolumeObjectExtensionGroup()
+    {
         this.viewVolumeObjectExtensionGroup = null;
     }
 

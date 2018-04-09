@@ -24,7 +24,8 @@ public final class PositioningUtil
     }
 
     /**
-     * Gets the intersection between the supplied vector and the supplied position.
+     * Gets the intersection between the supplied vector and the supplied
+     * position.
      *
      * @param v0 the zeroth position of the 'a' node to calculate.
      * @param v1 the zeroth position of the 'a' node to calculate.
@@ -80,8 +81,10 @@ public final class PositioningUtil
     }
 
     /**
-     * To facilitate multiple types of parent object, we unfortunately must allow for Objects to be passed in. This method handles
-     * determining the bounds of the given Object. If the Object type is not supported, a default Bounds will be returned.
+     * To facilitate multiple types of parent object, we unfortunately must
+     * allow for Objects to be passed in. This method handles determining the
+     * bounds of the given Object. If the Object type is not supported, a
+     * default Bounds will be returned.
      *
      * @param pObject the object for which to get the boundaries.
      * @return the boundaries of the supplied object.
@@ -106,9 +109,10 @@ public final class PositioningUtil
     }
 
     /**
-     * This function attempts to determine the best screen given the parent object from which we are wanting to position another
-     * item relative to. This is particularly important when we want to keep items from going off screen, and for handling
-     * multiple monitor support.
+     * This function attempts to determine the best screen given the parent
+     * object from which we are wanting to position another item relative to.
+     * This is particularly important when we want to keep items from going off
+     * screen, and for handling multiple monitor support.
      *
      * @param obj the object for which to get the screen.
      * @return the screen associated with the supplied object.
@@ -181,9 +185,10 @@ public final class PositioningUtil
     }
 
     /**
-     * Gets an adjusted position within the supplied min and max boundaries. The supplied location is compared with the
-     * dimensions, and moved as needed. This method is axis-agnostic, in that it works exactly the same with the X axis as it does
-     * with the Y axis.
+     * Gets an adjusted position within the supplied min and max boundaries. The
+     * supplied location is compared with the dimensions, and moved as needed.
+     * This method is axis-agnostic, in that it works exactly the same with the
+     * X axis as it does with the Y axis.
      *
      * @param pMinBounds the minimum value for the edge of the rendering area.
      * @param pMaxBounds the maximum value for the edge of the rendering area.
@@ -208,9 +213,10 @@ public final class PositioningUtil
     }
 
     /**
-     * Gets an position within the supplied min and max boundaries. The supplied location is compared with the dimensions, and
-     * moved as needed. This method is axis-agnostic, in that it works exactly the same with the X axis as it does with the Y
-     * axis.
+     * Gets an position within the supplied min and max boundaries. The supplied
+     * location is compared with the dimensions, and moved as needed. This
+     * method is axis-agnostic, in that it works exactly the same with the X
+     * axis as it does with the Y axis.
      *
      * @param pMinBounds the minimum value for the edge of the rendering area.
      * @param pMaxBounds the maximum value for the edge of the rendering area.
@@ -235,18 +241,24 @@ public final class PositioningUtil
     }
 
     /**
-     * Gets the target position at which the popup should be displayed. It takes care specifically of the repositioning of the
-     * item such that it remains onscreen as best it can, given it's unique qualities.
+     * Gets the target position at which the popup should be displayed. It takes
+     * care specifically of the repositioning of the item such that it remains
+     * onscreen as best it can, given it's unique qualities.
      *
-     * As will all other functions, this one returns a Point2D that represents an x,y location that should safely position the
-     * item onscreen as best as possible.
+     * As will all other functions, this one returns a Point2D that represents
+     * an x,y location that should safely position the item onscreen as best as
+     * possible.
      *
-     * Note that <code>width</code> and <code>height</code> refer to the width and height of the node/popup that is needing to be
-     * repositioned, not of the parent.
+     * Note that <code>width</code> and <code>height</code> refer to the width
+     * and height of the node/popup that is needing to be repositioned, not of
+     * the parent.
      *
-     * @param parent the node from which to calculate the offset (this is the node that the point is 'relative to').
-     * @param width the width of the node for which the calculation is being performed.
-     * @param height the height of the node for which the calculation is being performed.
+     * @param parent the node from which to calculate the offset (this is the
+     *            node that the point is 'relative to').
+     * @param width the width of the node for which the calculation is being
+     *            performed.
+     * @param height the height of the node for which the calculation is being
+     *            performed.
      * @return the point at which the component should be drawn.
      */
     public static Point2D pointRelativeTo(Node parent, double width, double height)
@@ -260,8 +272,10 @@ public final class PositioningUtil
         double finalScreenY = getPosition(screenBounds.getMinY(), screenBounds.getMaxY(), screenY, parentBounds.getMinY(),
                 height);
 
-        // --- after all the moving around, we do one last check / rearrange. Unlike the check above, this time we are just fully
-        // committed to keeping the item on screen at all costs, regardless of whether or not that results in overlapping the
+        // --- after all the moving around, we do one last check / rearrange.
+        // Unlike the check above, this time we are just fully
+        // committed to keeping the item on screen at all costs, regardless of
+        // whether or not that results in overlapping the
         // parent object.
         finalScreenX = getAdjustedPosition(screenBounds.getMinX(), screenBounds.getMaxX(), finalScreenX, screenBounds.getMaxX(),
                 width);

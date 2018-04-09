@@ -5,27 +5,26 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A Geodesic consists of two distinct
- *    positions joined by a geodesic curve. The control points of
- *    a Geodesic shall lie on the geodesic between its start
- *    point and end points. Between these two points, a geodesic
- *    curve defined from ellipsoid or geoid model used by the
- *    co-ordinate reference systems may be used to interpolate
- *    other positions. Any other point in the controlPoint array
- *    must fall on this geodesic.
+ * A Geodesic consists of two distinct positions joined by a geodesic curve. The
+ * control points of a Geodesic shall lie on the geodesic between its start
+ * point and end points. Between these two points, a geodesic curve defined from
+ * ellipsoid or geoid model used by the co-ordinate reference systems may be
+ * used to interpolate other positions. Any other point in the controlPoint
+ * array must fall on this geodesic.
  * 
- * <p>Java class for GeodesicType complex type.
+ * <p>
+ * Java class for GeodesicType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GeodesicType">
@@ -40,9 +39,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GeodesicType")
-public class GeodesicType
-    extends GeodesicStringType
+public class GeodesicType extends GeodesicStringType
 {
-
 
 }

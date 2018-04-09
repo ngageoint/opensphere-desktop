@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,17 +12,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *             The LockFeatureResponseType is used to define an
- *             element to contains the response to a LockFeature
- *             operation.
- *          
+ * The LockFeatureResponseType is used to define an element to contains the
+ * response to a LockFeature operation.
  * 
- * <p>Java class for LockFeatureResponseType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for LockFeatureResponseType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LockFeatureResponseType">
@@ -42,94 +42,86 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LockFeatureResponseType", propOrder = {
-    "lockId",
-    "featuresLocked",
-    "featuresNotLocked"
-})
-public class LockFeatureResponseType {
+@XmlType(name = "LockFeatureResponseType", propOrder = { "lockId", "featuresLocked", "featuresNotLocked" })
+public class LockFeatureResponseType
+{
 
     @XmlElement(name = "LockId", required = true)
     protected String lockId;
+
     @XmlElement(name = "FeaturesLocked")
     protected FeaturesLockedType featuresLocked;
+
     @XmlElement(name = "FeaturesNotLocked")
     protected FeaturesNotLockedType featuresNotLocked;
 
     /**
      * 
-     *                   The LockFeatureResponse includes a LockId element
-     *                   that contains a lock identifier.  The lock identifier
-     *                   can be used by a client, in subsequent operations, to
-     *                   operate upon the locked feature instances.
-     *                
+     * The LockFeatureResponse includes a LockId element that contains a lock
+     * identifier. The lock identifier can be used by a client, in subsequent
+     * operations, to operate upon the locked feature instances.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * 
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLockId() {
+    public String getLockId()
+    {
         return lockId;
     }
 
     /**
      * Sets the value of the lockId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLockId(String value) {
+    public void setLockId(String value)
+    {
         this.lockId = value;
     }
 
     /**
      * Gets the value of the featuresLocked property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FeaturesLockedType }
-     *     
+     * @return possible object is {@link FeaturesLockedType }
+     * 
      */
-    public FeaturesLockedType getFeaturesLocked() {
+    public FeaturesLockedType getFeaturesLocked()
+    {
         return featuresLocked;
     }
 
     /**
      * Sets the value of the featuresLocked property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FeaturesLockedType }
-     *     
+     * @param value allowed object is {@link FeaturesLockedType }
+     * 
      */
-    public void setFeaturesLocked(FeaturesLockedType value) {
+    public void setFeaturesLocked(FeaturesLockedType value)
+    {
         this.featuresLocked = value;
     }
 
     /**
      * Gets the value of the featuresNotLocked property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FeaturesNotLockedType }
-     *     
+     * @return possible object is {@link FeaturesNotLockedType }
+     * 
      */
-    public FeaturesNotLockedType getFeaturesNotLocked() {
+    public FeaturesNotLockedType getFeaturesNotLocked()
+    {
         return featuresNotLocked;
     }
 
     /**
      * Sets the value of the featuresNotLocked property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FeaturesNotLockedType }
-     *     
+     * @param value allowed object is {@link FeaturesNotLockedType }
+     * 
      */
-    public void setFeaturesNotLocked(FeaturesNotLockedType value) {
+    public void setFeaturesNotLocked(FeaturesNotLockedType value)
+    {
         this.featuresNotLocked = value;
     }
 

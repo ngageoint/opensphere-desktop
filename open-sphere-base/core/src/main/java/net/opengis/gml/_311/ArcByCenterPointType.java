@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.math.BigInteger;
@@ -17,13 +16,18 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * This variant of the arc requires that the points on the arc have to be computed instead of storing the coordinates directly. The control point is the center point of the arc plus the radius and the bearing at start and end. This represenation can be used only in 2D.
+ * This variant of the arc requires that the points on the arc have to be
+ * computed instead of storing the coordinates directly. The control point is
+ * the center point of the arc plus the radius and the bearing at start and end.
+ * This represenation can be used only in 2D.
  * 
- * <p>Java class for ArcByCenterPointType complex type.
+ * <p>
+ * Java class for ArcByCenterPointType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ArcByCenterPointType">
@@ -53,241 +57,226 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ArcByCenterPointType", propOrder = {
-    "pos",
-    "pointProperty",
-    "pointRep",
-    "posList",
-    "coordinates",
-    "radius",
-    "startAngle",
-    "endAngle"
-})
-@XmlSeeAlso({
-    CircleByCenterPointType.class
-})
-public class ArcByCenterPointType
-    extends AbstractCurveSegmentType
+@XmlType(name = "ArcByCenterPointType", propOrder = { "pos", "pointProperty", "pointRep", "posList", "coordinates", "radius",
+    "startAngle", "endAngle" })
+@XmlSeeAlso({ CircleByCenterPointType.class })
+public class ArcByCenterPointType extends AbstractCurveSegmentType
 {
 
     protected DirectPositionType pos;
+
     protected PointPropertyType pointProperty;
+
     protected PointPropertyType pointRep;
+
     protected DirectPositionListType posList;
+
     protected CoordinatesType coordinates;
+
     @XmlElement(required = true)
     protected LengthType radius;
+
     protected AngleType startAngle;
+
     protected AngleType endAngle;
+
     @XmlAttribute(name = "interpolation")
     protected CurveInterpolationType interpolation;
+
     @XmlAttribute(name = "numArc", required = true)
     protected BigInteger numArc;
 
     /**
      * Gets the value of the pos property.
      * 
-     * @return
-     *     possible object is
-     *     {@link DirectPositionType }
-     *     
+     * @return possible object is {@link DirectPositionType }
+     * 
      */
-    public DirectPositionType getPos() {
+    public DirectPositionType getPos()
+    {
         return pos;
     }
 
     /**
      * Sets the value of the pos property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DirectPositionType }
-     *     
+     * @param value allowed object is {@link DirectPositionType }
+     * 
      */
-    public void setPos(DirectPositionType value) {
+    public void setPos(DirectPositionType value)
+    {
         this.pos = value;
     }
 
     /**
      * Gets the value of the pointProperty property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PointPropertyType }
-     *     
+     * @return possible object is {@link PointPropertyType }
+     * 
      */
-    public PointPropertyType getPointProperty() {
+    public PointPropertyType getPointProperty()
+    {
         return pointProperty;
     }
 
     /**
      * Sets the value of the pointProperty property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PointPropertyType }
-     *     
+     * @param value allowed object is {@link PointPropertyType }
+     * 
      */
-    public void setPointProperty(PointPropertyType value) {
+    public void setPointProperty(PointPropertyType value)
+    {
         this.pointProperty = value;
     }
 
     /**
-     * Deprecated with GML version 3.1.0. Use "pointProperty" instead. Included for backwards compatibility with GML 3.0.0.
+     * Deprecated with GML version 3.1.0. Use "pointProperty" instead. Included
+     * for backwards compatibility with GML 3.0.0.
      * 
-     * @return
-     *     possible object is
-     *     {@link PointPropertyType }
-     *     
+     * @return possible object is {@link PointPropertyType }
+     * 
      */
-    public PointPropertyType getPointRep() {
+    public PointPropertyType getPointRep()
+    {
         return pointRep;
     }
 
     /**
      * Sets the value of the pointRep property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PointPropertyType }
-     *     
+     * @param value allowed object is {@link PointPropertyType }
+     * 
      */
-    public void setPointRep(PointPropertyType value) {
+    public void setPointRep(PointPropertyType value)
+    {
         this.pointRep = value;
     }
 
     /**
      * Gets the value of the posList property.
      * 
-     * @return
-     *     possible object is
-     *     {@link DirectPositionListType }
-     *     
+     * @return possible object is {@link DirectPositionListType }
+     * 
      */
-    public DirectPositionListType getPosList() {
+    public DirectPositionListType getPosList()
+    {
         return posList;
     }
 
     /**
      * Sets the value of the posList property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DirectPositionListType }
-     *     
+     * @param value allowed object is {@link DirectPositionListType }
+     * 
      */
-    public void setPosList(DirectPositionListType value) {
+    public void setPosList(DirectPositionListType value)
+    {
         this.posList = value;
     }
 
     /**
      * Deprecated with GML version 3.1.0. Use "posList" instead.
      * 
-     * @return
-     *     possible object is
-     *     {@link CoordinatesType }
-     *     
+     * @return possible object is {@link CoordinatesType }
+     * 
      */
-    public CoordinatesType getCoordinates() {
+    public CoordinatesType getCoordinates()
+    {
         return coordinates;
     }
 
     /**
      * Sets the value of the coordinates property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CoordinatesType }
-     *     
+     * @param value allowed object is {@link CoordinatesType }
+     * 
      */
-    public void setCoordinates(CoordinatesType value) {
+    public void setCoordinates(CoordinatesType value)
+    {
         this.coordinates = value;
     }
 
     /**
      * Gets the value of the radius property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LengthType }
-     *     
+     * @return possible object is {@link LengthType }
+     * 
      */
-    public LengthType getRadius() {
+    public LengthType getRadius()
+    {
         return radius;
     }
 
     /**
      * Sets the value of the radius property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LengthType }
-     *     
+     * @param value allowed object is {@link LengthType }
+     * 
      */
-    public void setRadius(LengthType value) {
+    public void setRadius(LengthType value)
+    {
         this.radius = value;
     }
 
     /**
      * Gets the value of the startAngle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link AngleType }
-     *     
+     * @return possible object is {@link AngleType }
+     * 
      */
-    public AngleType getStartAngle() {
+    public AngleType getStartAngle()
+    {
         return startAngle;
     }
 
     /**
      * Sets the value of the startAngle property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link AngleType }
-     *     
+     * @param value allowed object is {@link AngleType }
+     * 
      */
-    public void setStartAngle(AngleType value) {
+    public void setStartAngle(AngleType value)
+    {
         this.startAngle = value;
     }
 
     /**
      * Gets the value of the endAngle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link AngleType }
-     *     
+     * @return possible object is {@link AngleType }
+     * 
      */
-    public AngleType getEndAngle() {
+    public AngleType getEndAngle()
+    {
         return endAngle;
     }
 
     /**
      * Sets the value of the endAngle property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link AngleType }
-     *     
+     * @param value allowed object is {@link AngleType }
+     * 
      */
-    public void setEndAngle(AngleType value) {
+    public void setEndAngle(AngleType value)
+    {
         this.endAngle = value;
     }
 
     /**
      * Gets the value of the interpolation property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CurveInterpolationType }
-     *     
+     * @return possible object is {@link CurveInterpolationType }
+     * 
      */
-    public CurveInterpolationType getInterpolation() {
-        if (interpolation == null) {
+    public CurveInterpolationType getInterpolation()
+    {
+        if (interpolation == null)
+        {
             return CurveInterpolationType.CIRCULAR_ARC_CENTER_POINT_WITH_RADIUS;
-        } else {
+        }
+        else
+        {
             return interpolation;
         }
     }
@@ -295,27 +284,28 @@ public class ArcByCenterPointType
     /**
      * Sets the value of the interpolation property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CurveInterpolationType }
-     *     
+     * @param value allowed object is {@link CurveInterpolationType }
+     * 
      */
-    public void setInterpolation(CurveInterpolationType value) {
+    public void setInterpolation(CurveInterpolationType value)
+    {
         this.interpolation = value;
     }
 
     /**
      * Gets the value of the numArc property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getNumArc() {
-        if (numArc == null) {
+    public BigInteger getNumArc()
+    {
+        if (numArc == null)
+        {
             return new BigInteger("1");
-        } else {
+        }
+        else
+        {
             return numArc;
         }
     }
@@ -323,12 +313,11 @@ public class ArcByCenterPointType
     /**
      * Sets the value of the numArc property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setNumArc(BigInteger value) {
+    public void setNumArc(BigInteger value)
+    {
         this.numArc = value;
     }
 

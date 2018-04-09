@@ -176,8 +176,7 @@ public class Kernel
                         ApplicationLifecycleEvent.publishEvent(myToolbox.getEventManager(),
                                 ApplicationLifecycleEvent.Stage.MAIN_FRAME_VISIBLE);
 
-                        if ("x86".equals(System.getProperty("os.arch"))
-                                && StringUtils.isNotEmpty(System.getenv("ProgramW6432")))
+                        if ("x86".equals(System.getProperty("os.arch")) && StringUtils.isNotEmpty(System.getenv("ProgramW6432")))
                         {
                             JOptionPane.showMessageDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
                                     "<html>You are running with 32-bit Java on a 64-bit operating system. "

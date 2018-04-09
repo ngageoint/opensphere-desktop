@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -19,16 +18,17 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * List of numbers with a uniform scale.  
- *       A member of the list may be a typed null. 
- *       The value of uom (Units Of Measure) attribute is a reference to 
- *       a Reference System for the amount, either a ratio or position scale. 
+ * List of numbers with a uniform scale. A member of the list may be a typed
+ * null. The value of uom (Units Of Measure) attribute is a reference to a
+ * Reference System for the amount, either a ratio or position scale.
  * 
- * <p>Java class for MeasureOrNullListType complex type.
+ * <p>
+ * Java class for MeasureOrNullListType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="MeasureOrNullListType">
@@ -43,44 +43,46 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MeasureOrNullListType", propOrder = {
-    "value"
-})
-@XmlSeeAlso({
-    QuantityExtentType.class
-})
-public class MeasureOrNullListType {
+@XmlType(name = "MeasureOrNullListType", propOrder = { "value" })
+@XmlSeeAlso({ QuantityExtentType.class })
+public class MeasureOrNullListType
+{
 
     @XmlValue
     protected List<String> value;
+
     @XmlAttribute(name = "uom", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String uom;
 
     /**
-     * XML List based on the union type defined above.  An element declared with this type contains a space-separated list of double values with null values interspersed as needed Gets the value of the value property.
+     * XML List based on the union type defined above. An element declared with
+     * this type contains a space-separated list of double values with null
+     * values interspersed as needed Gets the value of the value property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the value property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the value property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getValue().add(newItem);
+     * getValue().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getValue() {
-        if (value == null) {
+    public List<String> getValue()
+    {
+        if (value == null)
+        {
             value = new ArrayList<String>();
         }
         return this.value;
@@ -89,24 +91,22 @@ public class MeasureOrNullListType {
     /**
      * Gets the value of the uom property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getUom() {
+    public String getUom()
+    {
         return uom;
     }
 
     /**
      * Sets the value of the uom property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setUom(String value) {
+    public void setUom(String value)
+    {
         this.uom = value;
     }
 

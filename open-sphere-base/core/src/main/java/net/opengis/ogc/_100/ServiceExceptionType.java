@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:24:08 PM MST 
 //
 
-
 package net.opengis.ogc._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,17 +13,19 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
  * 
- *             The ServiceExceptionType type defines the ServiceException
- *             element.  The content of the element is an exception message
- *             that the service wished to convey to the client application.
- *          
+ * The ServiceExceptionType type defines the ServiceException element. The
+ * content of the element is an exception message that the service wished to
+ * convey to the client application.
  * 
- * <p>Java class for ServiceExceptionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for ServiceExceptionType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ServiceExceptionType">
@@ -40,87 +41,82 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ServiceExceptionType", propOrder = {
-    "value"
-})
-public class ServiceExceptionType {
+@XmlType(name = "ServiceExceptionType", propOrder = { "value" })
+public class ServiceExceptionType
+{
 
     @XmlValue
     protected String value;
+
     @XmlAttribute
     protected String code;
+
     @XmlAttribute
     protected String locator;
 
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getValue() {
+    public String getValue()
+    {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setValue(String value) {
+    public void setValue(String value)
+    {
         this.value = value;
     }
 
     /**
      * Gets the value of the code property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getCode() {
+    public String getCode()
+    {
         return code;
     }
 
     /**
      * Sets the value of the code property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setCode(String value) {
+    public void setCode(String value)
+    {
         this.code = value;
     }
 
     /**
      * Gets the value of the locator property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLocator() {
+    public String getLocator()
+    {
         return locator;
     }
 
     /**
      * Sets the value of the locator property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLocator(String value) {
+    public void setLocator(String value)
+    {
         this.locator = value;
     }
 

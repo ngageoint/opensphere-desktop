@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -15,13 +14,21 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Information about the spatial, vertical, and/or temporal extent of a reference system object. Constraints: At least one of the elements "description", "boundingBox", "boundingPolygon", "verticalExtent", and temporalExtent" must be included, but more that one can be included when appropriate. Furthermore, more than one "boundingBox", "boundingPolygon", "verticalExtent", and/or temporalExtent" element can be included, with more than one meaning the union of the individual domains.
+ * Information about the spatial, vertical, and/or temporal extent of a
+ * reference system object. Constraints: At least one of the elements
+ * "description", "boundingBox", "boundingPolygon", "verticalExtent", and
+ * temporalExtent" must be included, but more that one can be included when
+ * appropriate. Furthermore, more than one "boundingBox", "boundingPolygon",
+ * "verticalExtent", and/or temporalExtent" element can be included, with more
+ * than one meaning the union of the individual domains.
  * 
- * <p>Java class for ExtentType complex type.
+ * <p>
+ * Java class for ExtentType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ExtentType">
@@ -44,58 +51,57 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ExtentType", propOrder = {
-    "description",
-    "boundingBox",
-    "boundingPolygon",
-    "verticalExtent",
-    "temporalExtent"
-})
-public class ExtentType {
+@XmlType(name = "ExtentType", propOrder = { "description", "boundingBox", "boundingPolygon", "verticalExtent", "temporalExtent" })
+public class ExtentType
+{
 
     protected StringOrRefType description;
+
     protected List<EnvelopeType> boundingBox;
+
     protected List<PolygonType> boundingPolygon;
+
     protected List<EnvelopeType> verticalExtent;
+
     protected List<TimePeriodType> temporalExtent;
 
     /**
      * Description of spatial and/or temporal extent of this object.
      * 
-     * @return
-     *     possible object is
-     *     {@link StringOrRefType }
-     *     
+     * @return possible object is {@link StringOrRefType }
+     * 
      */
-    public StringOrRefType getDescription() {
+    public StringOrRefType getDescription()
+    {
         return description;
     }
 
     /**
      * Sets the value of the description property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link StringOrRefType }
-     *     
+     * @param value allowed object is {@link StringOrRefType }
+     * 
      */
-    public void setDescription(StringOrRefType value) {
+    public void setDescription(StringOrRefType value)
+    {
         this.description = value;
     }
 
     /**
-     * Unordered list of bounding boxes (or envelopes) whose union describes the spatial domain of this object.Gets the value of the boundingBox property.
+     * Unordered list of bounding boxes (or envelopes) whose union describes the
+     * spatial domain of this object.Gets the value of the boundingBox property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the boundingBox property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the boundingBox property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getBoundingBox().add(newItem);
+     * getBoundingBox().add(newItem);
      * </pre>
      * 
      * 
@@ -105,26 +111,30 @@ public class ExtentType {
      * 
      * 
      */
-    public List<EnvelopeType> getBoundingBox() {
-        if (boundingBox == null) {
+    public List<EnvelopeType> getBoundingBox()
+    {
+        if (boundingBox == null)
+        {
             boundingBox = new ArrayList<EnvelopeType>();
         }
         return this.boundingBox;
     }
 
     /**
-     * Unordered list of bounding polygons whose union describes the spatial domain of this object.Gets the value of the boundingPolygon property.
+     * Unordered list of bounding polygons whose union describes the spatial
+     * domain of this object.Gets the value of the boundingPolygon property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the boundingPolygon property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the boundingPolygon property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getBoundingPolygon().add(newItem);
+     * getBoundingPolygon().add(newItem);
      * </pre>
      * 
      * 
@@ -134,26 +144,30 @@ public class ExtentType {
      * 
      * 
      */
-    public List<PolygonType> getBoundingPolygon() {
-        if (boundingPolygon == null) {
+    public List<PolygonType> getBoundingPolygon()
+    {
+        if (boundingPolygon == null)
+        {
             boundingPolygon = new ArrayList<PolygonType>();
         }
         return this.boundingPolygon;
     }
 
     /**
-     * Unordered list of vertical intervals whose union describes the spatial domain of this object.Gets the value of the verticalExtent property.
+     * Unordered list of vertical intervals whose union describes the spatial
+     * domain of this object.Gets the value of the verticalExtent property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the verticalExtent property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the verticalExtent property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getVerticalExtent().add(newItem);
+     * getVerticalExtent().add(newItem);
      * </pre>
      * 
      * 
@@ -163,26 +177,30 @@ public class ExtentType {
      * 
      * 
      */
-    public List<EnvelopeType> getVerticalExtent() {
-        if (verticalExtent == null) {
+    public List<EnvelopeType> getVerticalExtent()
+    {
+        if (verticalExtent == null)
+        {
             verticalExtent = new ArrayList<EnvelopeType>();
         }
         return this.verticalExtent;
     }
 
     /**
-     * Unordered list of time periods whose union describes the spatial domain of this object.Gets the value of the temporalExtent property.
+     * Unordered list of time periods whose union describes the spatial domain
+     * of this object.Gets the value of the temporalExtent property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the temporalExtent property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the temporalExtent property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getTemporalExtent().add(newItem);
+     * getTemporalExtent().add(newItem);
      * </pre>
      * 
      * 
@@ -192,8 +210,10 @@ public class ExtentType {
      * 
      * 
      */
-    public List<TimePeriodType> getTemporalExtent() {
-        if (temporalExtent == null) {
+    public List<TimePeriodType> getTemporalExtent()
+    {
+        if (temporalExtent == null)
+        {
             temporalExtent = new ArrayList<TimePeriodType>();
         }
         return this.temporalExtent;

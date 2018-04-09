@@ -5,19 +5,21 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for BinMethodsEnumType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for BinMethodsEnumType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="BinMethodsEnumType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token">
@@ -31,27 +33,31 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "BinMethodsEnumType")
 @XmlEnum
-public enum BinMethodsEnumType {
+public enum BinMethodsEnumType
+{
 
     @XmlEnumValue("Unique")
-    UNIQUE("Unique"),
-    @XmlEnumValue("Date")
-    DATE("Date"),
-    @XmlEnumValue("Numeric")
+    UNIQUE("Unique"), @XmlEnumValue("Date")
+    DATE("Date"), @XmlEnumValue("Numeric")
     NUMERIC("Numeric");
     private final String value;
 
-    BinMethodsEnumType(String v) {
+    BinMethodsEnumType(String v)
+    {
         value = v;
     }
 
-    public String value() {
+    public String value()
+    {
         return value;
     }
 
-    public static BinMethodsEnumType fromValue(String v) {
-        for (BinMethodsEnumType c: BinMethodsEnumType.values()) {
-            if (c.value.equals(v)) {
+    public static BinMethodsEnumType fromValue(String v)
+    {
+        for (BinMethodsEnumType c : BinMethodsEnumType.values())
+        {
+            if (c.value.equals(v))
+            {
                 return c;
             }
         }

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import java.util.ArrayList;
@@ -17,13 +16,16 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Identifies a Coordinate Reference System (CRS) supported for this input or output.
+ * Identifies a Coordinate Reference System (CRS) supported for this input or
+ * output.
  * 
- * <p>Java class for CRSsType complex type.
+ * <p>
+ * Java class for CRSsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CRSsType">
@@ -40,10 +42,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CRSsType", propOrder = {
-    "crs"
-})
-public class CRSsType {
+@XmlType(name = "CRSsType", propOrder = { "crs" })
+public class CRSsType
+{
 
     @XmlElement(name = "CRS", namespace = "", required = true)
     @XmlSchemaType(name = "anyURI")
@@ -53,26 +54,28 @@ public class CRSsType {
      * Gets the value of the crs property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the crs property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the crs property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getCRS().add(newItem);
+     * getCRS().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getCRS() {
-        if (crs == null) {
+    public List<String> getCRS()
+    {
+        if (crs == null)
+        {
             crs = new ArrayList<String>();
         }
         return this.crs;

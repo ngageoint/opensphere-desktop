@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,13 +15,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A MultiPoint is defined by one or more Points, referenced through pointMember elements.
+ * A MultiPoint is defined by one or more Points, referenced through pointMember
+ * elements.
  * 
- * <p>Java class for MultiPointType complex type.
+ * <p>
+ * Java class for MultiPointType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="MultiPointType">
@@ -40,15 +42,12 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MultiPointType", propOrder = {
-    "pointMember",
-    "pointMemberList"
-})
-public class MultiPointType
-    extends AbstractGeometricAggregateType
+@XmlType(name = "MultiPointType", propOrder = { "pointMember", "pointMemberList" })
+public class MultiPointType extends AbstractGeometricAggregateType
 {
 
     protected List<PointPropertyType> pointMember;
+
     @XmlElement(name = "pointMembers")
     protected PointArrayPropertyType pointMemberList;
 
@@ -56,15 +55,16 @@ public class MultiPointType
      * Gets the value of the pointMember property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the pointMember property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the pointMember property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPointMember().add(newItem);
+     * getPointMember().add(newItem);
      * </pre>
      * 
      * 
@@ -74,8 +74,10 @@ public class MultiPointType
      * 
      * 
      */
-    public List<PointPropertyType> getPointMember() {
-        if (pointMember == null) {
+    public List<PointPropertyType> getPointMember()
+    {
+        if (pointMember == null)
+        {
             pointMember = new ArrayList<PointPropertyType>();
         }
         return this.pointMember;
@@ -84,24 +86,22 @@ public class MultiPointType
     /**
      * Gets the value of the pointMemberList property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PointArrayPropertyType }
-     *     
+     * @return possible object is {@link PointArrayPropertyType }
+     * 
      */
-    public PointArrayPropertyType getPointMemberList() {
+    public PointArrayPropertyType getPointMemberList()
+    {
         return pointMemberList;
     }
 
     /**
      * Sets the value of the pointMemberList property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PointArrayPropertyType }
-     *     
+     * @param value allowed object is {@link PointArrayPropertyType }
+     * 
      */
-    public void setPointMemberList(PointArrayPropertyType value) {
+    public void setPointMemberList(PointArrayPropertyType value)
+    {
         this.pointMemberList = value;
     }
 

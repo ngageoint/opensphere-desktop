@@ -9,6 +9,7 @@ public class DegDecimalMin extends Angle
 
     /**
      * Construct with a specified value in degrees.
+     * 
      * @param magnitude degrees
      */
     public DegDecimalMin(double magnitude)
@@ -54,6 +55,7 @@ public class DegDecimalMin extends Angle
 
     /**
      * Format a value in degrees with specified precision and sign indicators.
+     * 
      * @param deg the value in degrees
      * @param precision the number of digits after the decimal (minutes)
      * @param pos positive indicator
@@ -70,6 +72,7 @@ public class DegDecimalMin extends Angle
 
     /**
      * Format a value in degrees with specified precision and no sign indicator.
+     * 
      * @param deg the value in degrees
      * @param precision the number of digits after the decimal (minutes)
      * @return the requested String

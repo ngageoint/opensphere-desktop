@@ -47,7 +47,8 @@ public final class BufferUtilities
      */
     public static ByteBuffer clone(ByteBuffer buf)
     {
-        final ByteBuffer result = buf.isDirect() ? ByteBuffer.allocateDirect(buf.capacity()) : ByteBuffer.allocate(buf.capacity());
+        final ByteBuffer result = buf.isDirect() ? ByteBuffer.allocateDirect(buf.capacity())
+                : ByteBuffer.allocate(buf.capacity());
         final ByteBuffer dup = buf.duplicate();
         dup.rewind().limit(dup.capacity());
         result.put(dup);

@@ -12,8 +12,8 @@ import io.opensphere.core.cache.matcher.PropertyMatcher;
 
 /**
  * An implementation of the
- * {@link io.opensphere.core.cache.jdbc.type.ValueTranslator} interface for
- * use in translating {@link InputStream}s.
+ * {@link io.opensphere.core.cache.jdbc.type.ValueTranslator} interface for use
+ * in translating {@link InputStream}s.
  */
 public class InputStreamTranslator extends AbstractValueTranslator<InputStream>
 {
@@ -38,7 +38,8 @@ public class InputStreamTranslator extends AbstractValueTranslator<InputStream>
      */
     @Override
     public int getValue(Class<? extends InputStream> type, long sizeBytes, int column, ResultSet rs,
-            PropertyMatcher<? extends InputStream> filter, Collection<? super InputStream> results) throws CacheException
+            PropertyMatcher<? extends InputStream> filter, Collection<? super InputStream> results)
+        throws CacheException
     {
         try (InputStream object = rs.getBinaryStream(column))
         {

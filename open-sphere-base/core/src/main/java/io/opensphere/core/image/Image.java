@@ -118,7 +118,8 @@ public abstract class Image implements Serializable, AutoCloseable
      *             recognized.
      */
     public static Image read(InputStream stream, int contentLengthBytes, String contentType, boolean ddsDesired,
-            boolean useBufferedImagePool, ImageMetrics metrics) throws ImageFormatUnknownException
+            boolean useBufferedImagePool, ImageMetrics metrics)
+        throws ImageFormatUnknownException
     {
         return IMAGE_FACTORY.createImage(stream, contentLengthBytes, contentType, ddsDesired, useBufferedImagePool, metrics);
     }
@@ -259,7 +260,7 @@ public abstract class Image implements Serializable, AutoCloseable
      *            {@code true}, {@link #dispose()} must be called when use of
      *            the pooled objects is complete.
      * @throws ImageFormatUnknownException If the data format is not recognized.
-     * @throws IOException If an image input stream cannot be created.
+     * @throws IOException If an  image input stream cannot be created.
      */
     protected abstract void setByteBuffer(ByteBuffer data, boolean usePool) throws ImageFormatUnknownException, IOException;
 
@@ -273,7 +274,7 @@ public abstract class Image implements Serializable, AutoCloseable
      *            {@code true}, {@link #dispose()} must be called when use of
      *            the pooled objects is complete.
      * @throws ImageFormatUnknownException If the data format is not recognized.
-     * @throws IOException If an image input stream cannot be created.
+     * @throws IOException If an  image input stream cannot be created.
      */
     protected void setInput(InputStream input, int estimatedStreamLengthBytes, boolean usePool)
         throws ImageFormatUnknownException, IOException

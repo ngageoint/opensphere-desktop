@@ -101,8 +101,8 @@ public class PointRendererBuffered<T extends PointGeometry> extends AbstractPoin
     }
 
     @Override
-    protected void doRenderPoints(RenderContext rc, Collection<? extends T> input, Collection<? super T> rejects, PickManager pickManager,
-            ModelDataRetriever<T> dataRetriever, TimeRenderData renderData)
+    protected void doRenderPoints(RenderContext rc, Collection<? extends T> input, Collection<? super T> rejects,
+            PickManager pickManager, ModelDataRetriever<T> dataRetriever, TimeRenderData renderData)
     {
         getFadedRenderingHelper().initIntervalFilter(rc, false, null);
 

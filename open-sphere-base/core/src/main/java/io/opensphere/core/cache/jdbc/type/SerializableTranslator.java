@@ -37,7 +37,8 @@ public class SerializableTranslator extends AbstractValueTranslator<Serializable
      */
     @Override
     public int getValue(Class<? extends Serializable> type, long sizeBytes, int column, ResultSet rs,
-            PropertyMatcher<? extends Serializable> filter, Collection<? super Serializable> results) throws CacheException
+            PropertyMatcher<? extends Serializable> filter, Collection<? super Serializable> results)
+        throws CacheException
     {
         try
         {

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:41 PM MST 
 //
 
-
 package net.opengis.wms_130;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -37,90 +38,83 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "title",
-    "onlineResource",
-    "logoURL"
-})
+@XmlType(name = "", propOrder = { "title", "onlineResource", "logoURL" })
 @XmlRootElement(name = "Attribution")
-public class Attribution {
+public class Attribution
+{
 
     @XmlElement(name = "Title")
     protected String title;
+
     @XmlElement(name = "OnlineResource")
     protected OnlineResource onlineResource;
+
     @XmlElement(name = "LogoURL")
     protected LogoURL logoURL;
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
     /**
      * Gets the value of the onlineResource property.
      * 
-     * @return
-     *     possible object is
-     *     {@link OnlineResource }
-     *     
+     * @return possible object is {@link OnlineResource }
+     * 
      */
-    public OnlineResource getOnlineResource() {
+    public OnlineResource getOnlineResource()
+    {
         return onlineResource;
     }
 
     /**
      * Sets the value of the onlineResource property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link OnlineResource }
-     *     
+     * @param value allowed object is {@link OnlineResource }
+     * 
      */
-    public void setOnlineResource(OnlineResource value) {
+    public void setOnlineResource(OnlineResource value)
+    {
         this.onlineResource = value;
     }
 
     /**
      * Gets the value of the logoURL property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LogoURL }
-     *     
+     * @return possible object is {@link LogoURL }
+     * 
      */
-    public LogoURL getLogoURL() {
+    public LogoURL getLogoURL()
+    {
         return logoURL;
     }
 
     /**
      * Sets the value of the logoURL property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LogoURL }
-     *     
+     * @param value allowed object is {@link LogoURL }
+     * 
      */
-    public void setLogoURL(LogoURL value) {
+    public void setLogoURL(LogoURL value)
+    {
         this.logoURL = value;
     }
 

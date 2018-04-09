@@ -73,5 +73,5 @@ public interface DataRegistryDataProvider
     void query(DataModelCategory category, Collection<? extends Satisfaction> satisfactions,
             List<? extends PropertyMatcher<?>> parameters, List<? extends OrderSpecifier> orderSpecifiers, int limit,
             Collection<? extends PropertyDescriptor<?>> propertyDescriptors, CacheDepositReceiver queryReceiver)
-                throws InterruptedException, QueryException;
+        throws InterruptedException, QueryException;
 }

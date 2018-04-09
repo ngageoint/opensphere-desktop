@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.ogc._100t;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,11 +15,13 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
- * <p>Java class for FilterType complex type.
+ * <p>
+ * Java class for FilterType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="FilterType">
@@ -56,32 +57,37 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FilterType")
-public class FilterType
-    extends OriginalFilterType
+public class FilterType extends OriginalFilterType
 {
 
     @XmlAttribute(name = "active")
     protected Boolean active;
+
     @XmlAttribute(name = "title")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String title;
+
     @XmlAttribute(name = "description")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String description;
+
     @XmlAttribute(name = "id")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String id;
+
     @XmlAttribute(name = "filterType")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String filterType;
+
     @XmlAttribute(name = "match")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String match;
+
     @XmlAttribute(name = "type")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
@@ -90,201 +96,195 @@ public class FilterType
     /**
      * Gets the value of the active property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public boolean isActive() {
+    public boolean isActive()
+    {
         return active;
     }
 
     /**
      * Sets the value of the active property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setActive(boolean value) {
+    public void setActive(boolean value)
+    {
         this.active = value;
     }
 
-    public boolean isSetActive() {
-        return (this.active!= null);
+    public boolean isSetActive()
+    {
+        return (this.active != null);
     }
 
-    public void unsetActive() {
+    public void unsetActive()
+    {
         this.active = null;
     }
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
-    public boolean isSetTitle() {
-        return (this.title!= null);
+    public boolean isSetTitle()
+    {
+        return (this.title != null);
     }
 
     /**
      * Gets the value of the description property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
     /**
      * Sets the value of the description property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDescription(String value) {
+    public void setDescription(String value)
+    {
         this.description = value;
     }
 
-    public boolean isSetDescription() {
-        return (this.description!= null);
+    public boolean isSetDescription()
+    {
+        return (this.description != null);
     }
 
     /**
      * Gets the value of the id property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
     /**
      * Sets the value of the id property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setId(String value) {
+    public void setId(String value)
+    {
         this.id = value;
     }
 
-    public boolean isSetId() {
-        return (this.id!= null);
+    public boolean isSetId()
+    {
+        return (this.id != null);
     }
 
     /**
      * Gets the value of the filterType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getFilterType() {
+    public String getFilterType()
+    {
         return filterType;
     }
 
     /**
      * Sets the value of the filterType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setFilterType(String value) {
+    public void setFilterType(String value)
+    {
         this.filterType = value;
     }
 
-    public boolean isSetFilterType() {
-        return (this.filterType!= null);
+    public boolean isSetFilterType()
+    {
+        return (this.filterType != null);
     }
 
     /**
      * Gets the value of the match property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMatch() {
+    public String getMatch()
+    {
         return match;
     }
 
     /**
      * Sets the value of the match property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMatch(String value) {
+    public void setMatch(String value)
+    {
         this.match = value;
     }
 
-    public boolean isSetMatch() {
-        return (this.match!= null);
+    public boolean isSetMatch()
+    {
+        return (this.match != null);
     }
 
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getType() {
+    public String getType()
+    {
         return type;
     }
 
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setType(String value) {
+    public void setType(String value)
+    {
         this.type = value;
     }
 
-    public boolean isSetType() {
-        return (this.type!= null);
+    public boolean isSetType()
+    {
+        return (this.type != null);
     }
 
 }

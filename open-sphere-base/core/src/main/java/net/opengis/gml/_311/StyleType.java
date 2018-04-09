@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,13 +15,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * [complexType of] Predefined concrete value of the top-level property. Encapsulates all other styling information.
+ * [complexType of] Predefined concrete value of the top-level property.
+ * Encapsulates all other styling information.
  * 
- * <p>Java class for StyleType complex type.
+ * <p>
+ * Java class for StyleType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="StyleType">
@@ -40,31 +42,29 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "StyleType", propOrder = {
-    "featureStyle",
-    "graphStyle"
-})
-public class StyleType
-    extends AbstractStyleType
+@XmlType(name = "StyleType", propOrder = { "featureStyle", "graphStyle" })
+public class StyleType extends AbstractStyleType
 {
 
     @XmlElement(required = true)
     protected List<FeatureStylePropertyType> featureStyle;
+
     protected GraphStylePropertyType graphStyle;
 
     /**
      * Gets the value of the featureStyle property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the featureStyle property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the featureStyle property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getFeatureStyle().add(newItem);
+     * getFeatureStyle().add(newItem);
      * </pre>
      * 
      * 
@@ -74,8 +74,10 @@ public class StyleType
      * 
      * 
      */
-    public List<FeatureStylePropertyType> getFeatureStyle() {
-        if (featureStyle == null) {
+    public List<FeatureStylePropertyType> getFeatureStyle()
+    {
+        if (featureStyle == null)
+        {
             featureStyle = new ArrayList<FeatureStylePropertyType>();
         }
         return this.featureStyle;
@@ -84,24 +86,22 @@ public class StyleType
     /**
      * Gets the value of the graphStyle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link GraphStylePropertyType }
-     *     
+     * @return possible object is {@link GraphStylePropertyType }
+     * 
      */
-    public GraphStylePropertyType getGraphStyle() {
+    public GraphStylePropertyType getGraphStyle()
+    {
         return graphStyle;
     }
 
     /**
      * Sets the value of the graphStyle property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link GraphStylePropertyType }
-     *     
+     * @param value allowed object is {@link GraphStylePropertyType }
+     * 
      */
-    public void setGraphStyle(GraphStylePropertyType value) {
+    public void setGraphStyle(GraphStylePropertyType value)
+    {
         this.graphStyle = value;
     }
 

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,11 +16,13 @@ import javax.xml.namespace.QName;
 
 import net.opengis.ogc._110.FilterType;
 
-
 /**
- * <p>Java class for DeleteElementType complex type.
+ * <p>
+ * Java class for DeleteElementType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DeleteElementType">
@@ -40,98 +41,91 @@ import net.opengis.ogc._110.FilterType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DeleteElementType", propOrder = {
-    "filter"
-})
-public class DeleteElementType {
+@XmlType(name = "DeleteElementType", propOrder = { "filter" })
+public class DeleteElementType
+{
 
     @XmlElement(name = "Filter", namespace = "http://www.opengis.net/ogc", required = true)
     protected FilterType filter;
+
     @XmlAttribute(name = "handle")
     protected String handle;
+
     @XmlAttribute(name = "typeName", required = true)
     protected QName typeName;
 
     /**
      * 
-     *                   The Filter element is used to constrain the scope
-     *                   of the delete operation to those features identified
-     *                   by the filter.  Feature instances can be specified
-     *                   explicitly and individually using the identifier of
-     *                   each feature instance OR a set of features to be
-     *                   operated on can be identified by specifying spatial
-     *                   and non-spatial constraints in the filter.
-     *                   If no filter is specified then an exception should
-     *                   be raised since it is unlikely that a client application
-     *                   intends to delete all feature instances.
-     *                
+     * The Filter element is used to constrain the scope of the delete operation
+     * to those features identified by the filter. Feature instances can be
+     * specified explicitly and individually using the identifier of each
+     * feature instance OR a set of features to be operated on can be identified
+     * by specifying spatial and non-spatial constraints in the filter. If no
+     * filter is specified then an exception should be raised since it is
+     * unlikely that a client application intends to delete all feature
+     * instances.
      * 
-     * @return
-     *     possible object is
-     *     {@link FilterType }
-     *     
+     * 
+     * @return possible object is {@link FilterType }
+     * 
      */
-    public FilterType getFilter() {
+    public FilterType getFilter()
+    {
         return filter;
     }
 
     /**
      * Sets the value of the filter property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FilterType }
-     *     
+     * @param value allowed object is {@link FilterType }
+     * 
      */
-    public void setFilter(FilterType value) {
+    public void setFilter(FilterType value)
+    {
         this.filter = value;
     }
 
     /**
      * Gets the value of the handle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHandle() {
+    public String getHandle()
+    {
         return handle;
     }
 
     /**
      * Sets the value of the handle property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHandle(String value) {
+    public void setHandle(String value)
+    {
         this.handle = value;
     }
 
     /**
      * Gets the value of the typeName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link QName }
-     *     
+     * @return possible object is {@link QName }
+     * 
      */
-    public QName getTypeName() {
+    public QName getTypeName()
+    {
         return typeName;
     }
 
     /**
      * Sets the value of the typeName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link QName }
-     *     
+     * @param value allowed object is {@link QName }
+     * 
      */
-    public void setTypeName(QName value) {
+    public void setTypeName(QName value)
+    {
         this.typeName = value;
     }
 

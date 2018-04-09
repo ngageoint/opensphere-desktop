@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package org.w3._2001.smil20._311.language;
 
 import java.math.BigDecimal;
@@ -37,11 +36,13 @@ import org.w3._2001.smil20._311.SyncBehaviorDefaultType;
 import org.w3._2001.smil20._311.SyncBehaviorType;
 import org.w3c.dom.Element;
 
-
 /**
- * <p>Java class for animateColorType complex type.
+ * <p>
+ * Java class for animateColorType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="animateColorType">
@@ -64,70 +65,92 @@ import org.w3c.dom.Element;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "animateColorType", propOrder = {
-    "any"
-})
-public class AnimateColorType
-    extends AnimateColorPrototype
+@XmlType(name = "animateColorType", propOrder = { "any" })
+public class AnimateColorType extends AnimateColorPrototype
 {
 
     @XmlAnyElement(lax = true)
     protected List<Object> any;
+
     @XmlAttribute(name = "dur")
     protected String dur;
+
     @XmlAttribute(name = "begin")
     protected String begin;
+
     @XmlAttribute(name = "end")
     protected String end;
+
     @XmlAttribute(name = "repeatDur")
     protected String repeatDur;
+
     @XmlAttribute(name = "repeatCount")
     protected BigDecimal repeatCount;
+
     @XmlAttribute(name = "min")
     protected String min;
+
     @XmlAttribute(name = "max")
     protected String max;
+
     @XmlAttribute(name = "repeat")
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger repeat;
+
     @XmlAttribute(name = "fillDefault")
     protected FillDefaultType fillDefault;
+
     @XmlAttribute(name = "syncBehaviorDefault")
     protected SyncBehaviorDefaultType syncBehaviorDefault;
+
     @XmlAttribute(name = "syncToleranceDefault")
     protected String syncToleranceDefault;
+
     @XmlAttribute(name = "fill")
     protected FillTimingAttrsType fill;
+
     @XmlAttribute(name = "restart")
     protected RestartTimingType restart;
+
     @XmlAttribute(name = "restartDefault")
     protected RestartDefaultType restartDefault;
+
     @XmlAttribute(name = "syncBehavior")
     protected SyncBehaviorType syncBehavior;
+
     @XmlAttribute(name = "syncTolerance")
     protected String syncTolerance;
+
     @XmlAttribute(name = "calcMode")
     protected String calcMode;
+
     @XmlAttribute(name = "alt")
     protected String alt;
+
     @XmlAttribute(name = "longdesc")
     @XmlSchemaType(name = "anyURI")
     protected String longdesc;
+
     @XmlAttribute(name = "id")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
     @XmlSchemaType(name = "ID")
     protected String id;
+
     @XmlAttribute(name = "class")
     protected String clazz;
+
     @XmlAttribute(name = "lang", namespace = "http://www.w3.org/XML/1998/namespace")
     protected String lang;
+
     @XmlAttribute(name = "targetElement")
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected Object targetElement;
+
     @XmlAttribute(name = "skip-content")
     protected Boolean skipContent;
+
     @XmlAnyAttribute
     private Map<QName, String> otherAttributes = new HashMap<QName, String>();
 
@@ -135,27 +158,29 @@ public class AnimateColorType
      * Gets the value of the any property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the any property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the any property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAny().add(newItem);
+     * getAny().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * {@link Element }
      * 
      * 
      */
-    public List<Object> getAny() {
-        if (any == null) {
+    public List<Object> getAny()
+    {
+        if (any == null)
+        {
             any = new ArrayList<Object>();
         }
         return this.any;
@@ -164,207 +189,193 @@ public class AnimateColorType
     /**
      * Gets the value of the dur property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDur() {
+    public String getDur()
+    {
         return dur;
     }
 
     /**
      * Sets the value of the dur property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDur(String value) {
+    public void setDur(String value)
+    {
         this.dur = value;
     }
 
     /**
      * Gets the value of the begin property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getBegin() {
+    public String getBegin()
+    {
         return begin;
     }
 
     /**
      * Sets the value of the begin property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setBegin(String value) {
+    public void setBegin(String value)
+    {
         this.begin = value;
     }
 
     /**
      * Gets the value of the end property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getEnd() {
+    public String getEnd()
+    {
         return end;
     }
 
     /**
      * Sets the value of the end property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setEnd(String value) {
+    public void setEnd(String value)
+    {
         this.end = value;
     }
 
     /**
      * Gets the value of the repeatDur property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getRepeatDur() {
+    public String getRepeatDur()
+    {
         return repeatDur;
     }
 
     /**
      * Sets the value of the repeatDur property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setRepeatDur(String value) {
+    public void setRepeatDur(String value)
+    {
         this.repeatDur = value;
     }
 
     /**
      * Gets the value of the repeatCount property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     * @return possible object is {@link BigDecimal }
+     * 
      */
-    public BigDecimal getRepeatCount() {
+    public BigDecimal getRepeatCount()
+    {
         return repeatCount;
     }
 
     /**
      * Sets the value of the repeatCount property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     * @param value allowed object is {@link BigDecimal }
+     * 
      */
-    public void setRepeatCount(BigDecimal value) {
+    public void setRepeatCount(BigDecimal value)
+    {
         this.repeatCount = value;
     }
 
     /**
      * Gets the value of the min property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMin() {
+    public String getMin()
+    {
         return min;
     }
 
     /**
      * Sets the value of the min property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMin(String value) {
+    public void setMin(String value)
+    {
         this.min = value;
     }
 
     /**
      * Gets the value of the max property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMax() {
+    public String getMax()
+    {
         return max;
     }
 
     /**
      * Sets the value of the max property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMax(String value) {
+    public void setMax(String value)
+    {
         this.max = value;
     }
 
     /**
      * Gets the value of the repeat property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getRepeat() {
+    public BigInteger getRepeat()
+    {
         return repeat;
     }
 
     /**
      * Sets the value of the repeat property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setRepeat(BigInteger value) {
+    public void setRepeat(BigInteger value)
+    {
         this.repeat = value;
     }
 
     /**
      * Gets the value of the fillDefault property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FillDefaultType }
-     *     
+     * @return possible object is {@link FillDefaultType }
+     * 
      */
-    public FillDefaultType getFillDefault() {
-        if (fillDefault == null) {
+    public FillDefaultType getFillDefault()
+    {
+        if (fillDefault == null)
+        {
             return FillDefaultType.INHERIT;
-        } else {
+        }
+        else
+        {
             return fillDefault;
         }
     }
@@ -372,27 +383,28 @@ public class AnimateColorType
     /**
      * Sets the value of the fillDefault property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FillDefaultType }
-     *     
+     * @param value allowed object is {@link FillDefaultType }
+     * 
      */
-    public void setFillDefault(FillDefaultType value) {
+    public void setFillDefault(FillDefaultType value)
+    {
         this.fillDefault = value;
     }
 
     /**
      * Gets the value of the syncBehaviorDefault property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SyncBehaviorDefaultType }
-     *     
+     * @return possible object is {@link SyncBehaviorDefaultType }
+     * 
      */
-    public SyncBehaviorDefaultType getSyncBehaviorDefault() {
-        if (syncBehaviorDefault == null) {
+    public SyncBehaviorDefaultType getSyncBehaviorDefault()
+    {
+        if (syncBehaviorDefault == null)
+        {
             return SyncBehaviorDefaultType.INHERIT;
-        } else {
+        }
+        else
+        {
             return syncBehaviorDefault;
         }
     }
@@ -400,27 +412,28 @@ public class AnimateColorType
     /**
      * Sets the value of the syncBehaviorDefault property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SyncBehaviorDefaultType }
-     *     
+     * @param value allowed object is {@link SyncBehaviorDefaultType }
+     * 
      */
-    public void setSyncBehaviorDefault(SyncBehaviorDefaultType value) {
+    public void setSyncBehaviorDefault(SyncBehaviorDefaultType value)
+    {
         this.syncBehaviorDefault = value;
     }
 
     /**
      * Gets the value of the syncToleranceDefault property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSyncToleranceDefault() {
-        if (syncToleranceDefault == null) {
+    public String getSyncToleranceDefault()
+    {
+        if (syncToleranceDefault == null)
+        {
             return "inherit";
-        } else {
+        }
+        else
+        {
             return syncToleranceDefault;
         }
     }
@@ -428,27 +441,28 @@ public class AnimateColorType
     /**
      * Sets the value of the syncToleranceDefault property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSyncToleranceDefault(String value) {
+    public void setSyncToleranceDefault(String value)
+    {
         this.syncToleranceDefault = value;
     }
 
     /**
      * Gets the value of the fill property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FillTimingAttrsType }
-     *     
+     * @return possible object is {@link FillTimingAttrsType }
+     * 
      */
-    public FillTimingAttrsType getFill() {
-        if (fill == null) {
+    public FillTimingAttrsType getFill()
+    {
+        if (fill == null)
+        {
             return FillTimingAttrsType.DEFAULT;
-        } else {
+        }
+        else
+        {
             return fill;
         }
     }
@@ -456,27 +470,28 @@ public class AnimateColorType
     /**
      * Sets the value of the fill property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FillTimingAttrsType }
-     *     
+     * @param value allowed object is {@link FillTimingAttrsType }
+     * 
      */
-    public void setFill(FillTimingAttrsType value) {
+    public void setFill(FillTimingAttrsType value)
+    {
         this.fill = value;
     }
 
     /**
      * Gets the value of the restart property.
      * 
-     * @return
-     *     possible object is
-     *     {@link RestartTimingType }
-     *     
+     * @return possible object is {@link RestartTimingType }
+     * 
      */
-    public RestartTimingType getRestart() {
-        if (restart == null) {
+    public RestartTimingType getRestart()
+    {
+        if (restart == null)
+        {
             return RestartTimingType.DEFAULT;
-        } else {
+        }
+        else
+        {
             return restart;
         }
     }
@@ -484,27 +499,28 @@ public class AnimateColorType
     /**
      * Sets the value of the restart property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link RestartTimingType }
-     *     
+     * @param value allowed object is {@link RestartTimingType }
+     * 
      */
-    public void setRestart(RestartTimingType value) {
+    public void setRestart(RestartTimingType value)
+    {
         this.restart = value;
     }
 
     /**
      * Gets the value of the restartDefault property.
      * 
-     * @return
-     *     possible object is
-     *     {@link RestartDefaultType }
-     *     
+     * @return possible object is {@link RestartDefaultType }
+     * 
      */
-    public RestartDefaultType getRestartDefault() {
-        if (restartDefault == null) {
+    public RestartDefaultType getRestartDefault()
+    {
+        if (restartDefault == null)
+        {
             return RestartDefaultType.INHERIT;
-        } else {
+        }
+        else
+        {
             return restartDefault;
         }
     }
@@ -512,27 +528,28 @@ public class AnimateColorType
     /**
      * Sets the value of the restartDefault property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link RestartDefaultType }
-     *     
+     * @param value allowed object is {@link RestartDefaultType }
+     * 
      */
-    public void setRestartDefault(RestartDefaultType value) {
+    public void setRestartDefault(RestartDefaultType value)
+    {
         this.restartDefault = value;
     }
 
     /**
      * Gets the value of the syncBehavior property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SyncBehaviorType }
-     *     
+     * @return possible object is {@link SyncBehaviorType }
+     * 
      */
-    public SyncBehaviorType getSyncBehavior() {
-        if (syncBehavior == null) {
+    public SyncBehaviorType getSyncBehavior()
+    {
+        if (syncBehavior == null)
+        {
             return SyncBehaviorType.DEFAULT;
-        } else {
+        }
+        else
+        {
             return syncBehavior;
         }
     }
@@ -540,51 +557,50 @@ public class AnimateColorType
     /**
      * Sets the value of the syncBehavior property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SyncBehaviorType }
-     *     
+     * @param value allowed object is {@link SyncBehaviorType }
+     * 
      */
-    public void setSyncBehavior(SyncBehaviorType value) {
+    public void setSyncBehavior(SyncBehaviorType value)
+    {
         this.syncBehavior = value;
     }
 
     /**
      * Gets the value of the syncTolerance property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSyncTolerance() {
+    public String getSyncTolerance()
+    {
         return syncTolerance;
     }
 
     /**
      * Sets the value of the syncTolerance property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSyncTolerance(String value) {
+    public void setSyncTolerance(String value)
+    {
         this.syncTolerance = value;
     }
 
     /**
      * Gets the value of the calcMode property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getCalcMode() {
-        if (calcMode == null) {
+    public String getCalcMode()
+    {
+        if (calcMode == null)
+        {
             return "linear";
-        } else {
+        }
+        else
+        {
             return calcMode;
         }
     }
@@ -592,171 +608,160 @@ public class AnimateColorType
     /**
      * Sets the value of the calcMode property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setCalcMode(String value) {
+    public void setCalcMode(String value)
+    {
         this.calcMode = value;
     }
 
     /**
      * Gets the value of the alt property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getAlt() {
+    public String getAlt()
+    {
         return alt;
     }
 
     /**
      * Sets the value of the alt property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setAlt(String value) {
+    public void setAlt(String value)
+    {
         this.alt = value;
     }
 
     /**
      * Gets the value of the longdesc property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLongdesc() {
+    public String getLongdesc()
+    {
         return longdesc;
     }
 
     /**
      * Sets the value of the longdesc property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLongdesc(String value) {
+    public void setLongdesc(String value)
+    {
         this.longdesc = value;
     }
 
     /**
      * Gets the value of the id property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
     /**
      * Sets the value of the id property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setId(String value) {
+    public void setId(String value)
+    {
         this.id = value;
     }
 
     /**
      * Gets the value of the clazz property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getClazz() {
+    public String getClazz()
+    {
         return clazz;
     }
 
     /**
      * Sets the value of the clazz property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setClazz(String value) {
+    public void setClazz(String value)
+    {
         this.clazz = value;
     }
 
     /**
      * Gets the value of the lang property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLang() {
+    public String getLang()
+    {
         return lang;
     }
 
     /**
      * Sets the value of the lang property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLang(String value) {
+    public void setLang(String value)
+    {
         this.lang = value;
     }
 
     /**
      * Gets the value of the targetElement property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
+     * @return possible object is {@link Object }
+     * 
      */
-    public Object getTargetElement() {
+    public Object getTargetElement()
+    {
         return targetElement;
     }
 
     /**
      * Sets the value of the targetElement property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
+     * @param value allowed object is {@link Object }
+     * 
      */
-    public void setTargetElement(Object value) {
+    public void setTargetElement(Object value)
+    {
         this.targetElement = value;
     }
 
     /**
      * Gets the value of the skipContent property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public boolean isSkipContent() {
-        if (skipContent == null) {
+    public boolean isSkipContent()
+    {
+        if (skipContent == null)
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return skipContent;
         }
     }
@@ -764,30 +769,30 @@ public class AnimateColorType
     /**
      * Sets the value of the skipContent property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setSkipContent(Boolean value) {
+    public void setSkipContent(Boolean value)
+    {
         this.skipContent = value;
     }
 
     /**
-     * Gets a map that contains attributes that aren't bound to any typed property on this class.
+     * Gets a map that contains attributes that aren't bound to any typed
+     * property on this class.
      * 
      * <p>
-     * the map is keyed by the name of the attribute and 
-     * the value is the string value of the attribute.
+     * the map is keyed by the name of the attribute and the value is the string
+     * value of the attribute.
      * 
-     * the map returned by this method is live, and you can add new attribute
-     * by updating the map directly. Because of this design, there's no setter.
+     * the map returned by this method is live, and you can add new attribute by
+     * updating the map directly. Because of this design, there's no setter.
      * 
      * 
-     * @return
-     *     always non-null
+     * @return always non-null
      */
-    public Map<QName, String> getOtherAttributes() {
+    public Map<QName, String> getOtherAttributes()
+    {
         return otherAttributes;
     }
 

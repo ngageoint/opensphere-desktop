@@ -5,19 +5,21 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for displayModeEnumType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for displayModeEnumType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="displayModeEnumType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -30,25 +32,30 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "displayModeEnumType")
 @XmlEnum
-public enum DisplayModeEnumType {
+public enum DisplayModeEnumType
+{
 
     @XmlEnumValue("default")
-    DEFAULT("default"),
-    @XmlEnumValue("hide")
+    DEFAULT("default"), @XmlEnumValue("hide")
     HIDE("hide");
     private final String value;
 
-    DisplayModeEnumType(String v) {
+    DisplayModeEnumType(String v)
+    {
         value = v;
     }
 
-    public String value() {
+    public String value()
+    {
         return value;
     }
 
-    public static DisplayModeEnumType fromValue(String v) {
-        for (DisplayModeEnumType c: DisplayModeEnumType.values()) {
-            if (c.value.equals(v)) {
+    public static DisplayModeEnumType fromValue(String v)
+    {
+        for (DisplayModeEnumType c : DisplayModeEnumType.values())
+        {
+            if (c.value.equals(v))
+            {
                 return c;
             }
         }

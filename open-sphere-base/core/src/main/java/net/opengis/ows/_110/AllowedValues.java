@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.ows._110;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -40,43 +41,41 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "valueOrRange"
-})
+@XmlType(name = "", propOrder = { "valueOrRange" })
 @XmlRootElement(name = "AllowedValues")
-public class AllowedValues {
+public class AllowedValues
+{
 
-    @XmlElements({
-        @XmlElement(name = "Range", type = RangeType.class),
-        @XmlElement(name = "Value", type = ValueType.class)
-    })
+    @XmlElements({ @XmlElement(name = "Range", type = RangeType.class), @XmlElement(name = "Value", type = ValueType.class) })
     protected List<Object> valueOrRange;
 
     /**
      * Gets the value of the valueOrRange property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the valueOrRange property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the valueOrRange property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getValueOrRange().add(newItem);
+     * getValueOrRange().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link RangeType }
-     * {@link ValueType }
+     * Objects of the following type(s) are allowed in the list {@link RangeType
+     * } {@link ValueType }
      * 
      * 
      */
-    public List<Object> getValueOrRange() {
-        if (valueOrRange == null) {
+    public List<Object> getValueOrRange()
+    {
+        if (valueOrRange == null)
+        {
             valueOrRange = new ArrayList<Object>();
         }
         return this.valueOrRange;

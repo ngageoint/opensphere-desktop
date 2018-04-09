@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.ows._110;
 
 import java.util.ArrayList;
@@ -17,13 +16,15 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Basic metadata identifying and describing a set of data. 
+ * Basic metadata identifying and describing a set of data.
  * 
- * <p>Java class for BasicIdentificationType complex type.
+ * <p>
+ * Java class for BasicIdentificationType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="BasicIdentificationType">
@@ -41,61 +42,56 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "BasicIdentificationType", propOrder = {
-    "identifier",
-    "metadata"
-})
-@XmlSeeAlso({
-    ManifestType.class,
-    ReferenceGroupType.class,
-    IdentificationType.class
-})
-public class BasicIdentificationType
-    extends DescriptionType
+@XmlType(name = "BasicIdentificationType", propOrder = { "identifier", "metadata" })
+@XmlSeeAlso({ ManifestType.class, ReferenceGroupType.class, IdentificationType.class })
+public class BasicIdentificationType extends DescriptionType
 {
 
     @XmlElement(name = "Identifier")
     protected CodeType identifier;
+
     @XmlElement(name = "Metadata")
     protected List<MetadataType> metadata;
 
     /**
-     * Optional unique identifier or name of this dataset. 
+     * Optional unique identifier or name of this dataset.
      * 
-     * @return
-     *     possible object is
-     *     {@link CodeType }
-     *     
+     * @return possible object is {@link CodeType }
+     * 
      */
-    public CodeType getIdentifier() {
+    public CodeType getIdentifier()
+    {
         return identifier;
     }
 
     /**
      * Sets the value of the identifier property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CodeType }
-     *     
+     * @param value allowed object is {@link CodeType }
+     * 
      */
-    public void setIdentifier(CodeType value) {
+    public void setIdentifier(CodeType value)
+    {
         this.identifier = value;
     }
 
     /**
-     * Optional unordered list of additional metadata about this data(set). A list of optional metadata elements for this data identification could be specified in the Implementation Specification for this service. Gets the value of the metadata property.
+     * Optional unordered list of additional metadata about this data(set). A
+     * list of optional metadata elements for this data identification could be
+     * specified in the Implementation Specification for this service. Gets the
+     * value of the metadata property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the metadata property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the metadata property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getMetadata().add(newItem);
+     * getMetadata().add(newItem);
      * </pre>
      * 
      * 
@@ -105,8 +101,10 @@ public class BasicIdentificationType
      * 
      * 
      */
-    public List<MetadataType> getMetadata() {
-        if (metadata == null) {
+    public List<MetadataType> getMetadata()
+    {
+        if (metadata == null)
+        {
             metadata = new ArrayList<MetadataType>();
         }
         return this.metadata;

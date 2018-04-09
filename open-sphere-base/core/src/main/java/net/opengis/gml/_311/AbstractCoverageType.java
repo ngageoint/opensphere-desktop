@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.math.BigInteger;
@@ -20,13 +19,16 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Abstract element which acts as the head of a substitution group for coverages. Note that a coverage is a GML feature.
+ * Abstract element which acts as the head of a substitution group for
+ * coverages. Note that a coverage is a GML feature.
  * 
- * <p>Java class for AbstractCoverageType complex type.
+ * <p>
+ * Java class for AbstractCoverageType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractCoverageType">
@@ -45,22 +47,17 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractCoverageType", propOrder = {
-    "domainSet",
-    "rangeSet"
-})
-@XmlSeeAlso({
-    AbstractContinuousCoverageType.class,
-    AbstractDiscreteCoverageType.class
-})
-public abstract class AbstractCoverageType
-    extends AbstractFeatureType
+@XmlType(name = "AbstractCoverageType", propOrder = { "domainSet", "rangeSet" })
+@XmlSeeAlso({ AbstractContinuousCoverageType.class, AbstractDiscreteCoverageType.class })
+public abstract class AbstractCoverageType extends AbstractFeatureType
 {
 
     @XmlElementRef(name = "domainSet", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
     protected JAXBElement<? extends DomainSetType> domainSet;
+
     @XmlElement(required = true)
     protected RangeSetType rangeSet;
+
     @XmlAttribute(name = "dimension")
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger dimension;
@@ -68,84 +65,84 @@ public abstract class AbstractCoverageType
     /**
      * Gets the value of the domainSet property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link DomainSetType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiSolidDomainType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link RectifiedGridDomainType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiCurveDomainType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiSurfaceDomainType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link GridDomainType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiPointDomainType }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement
+     *         }{@code <}{@link DomainSetType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link MultiSolidDomainType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link RectifiedGridDomainType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link MultiCurveDomainType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link MultiSurfaceDomainType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link GridDomainType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link MultiPointDomainType }{@code >}
+     * 
      */
-    public JAXBElement<? extends DomainSetType> getDomainSet() {
+    public JAXBElement<? extends DomainSetType> getDomainSet()
+    {
         return domainSet;
     }
 
     /**
      * Sets the value of the domainSet property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link DomainSetType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiSolidDomainType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link RectifiedGridDomainType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiCurveDomainType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiSurfaceDomainType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link GridDomainType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiPointDomainType }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link DomainSetType }{@code >} {@link JAXBElement
+     *            }{@code <}{@link MultiSolidDomainType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link RectifiedGridDomainType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link MultiCurveDomainType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link MultiSurfaceDomainType
+     *            }{@code >} {@link JAXBElement }{@code <}{@link GridDomainType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link MultiPointDomainType }{@code >}
+     * 
      */
-    public void setDomainSet(JAXBElement<? extends DomainSetType> value) {
+    public void setDomainSet(JAXBElement<? extends DomainSetType> value)
+    {
         this.domainSet = (value);
     }
 
     /**
      * Gets the value of the rangeSet property.
      * 
-     * @return
-     *     possible object is
-     *     {@link RangeSetType }
-     *     
+     * @return possible object is {@link RangeSetType }
+     * 
      */
-    public RangeSetType getRangeSet() {
+    public RangeSetType getRangeSet()
+    {
         return rangeSet;
     }
 
     /**
      * Sets the value of the rangeSet property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link RangeSetType }
-     *     
+     * @param value allowed object is {@link RangeSetType }
+     * 
      */
-    public void setRangeSet(RangeSetType value) {
+    public void setRangeSet(RangeSetType value)
+    {
         this.rangeSet = value;
     }
 
     /**
      * Gets the value of the dimension property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getDimension() {
+    public BigInteger getDimension()
+    {
         return dimension;
     }
 
     /**
      * Sets the value of the dimension property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setDimension(BigInteger value) {
+    public void setDimension(BigInteger value)
+    {
         this.dimension = value;
     }
 

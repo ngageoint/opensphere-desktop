@@ -180,8 +180,8 @@ public final class ComponentUtilities
     }
 
     /**
-     * Sets the minimum width of the component, leaving the minimum height
-     * the same.
+     * Sets the minimum width of the component, leaving the minimum height the
+     * same.
      *
      * @param comp the component
      * @param width the minimum width
@@ -192,8 +192,8 @@ public final class ComponentUtilities
     }
 
     /**
-     * Sets the minimum height of the component, leaving the minimum width
-     * the same.
+     * Sets the minimum height of the component, leaving the minimum width the
+     * same.
      *
      * @param comp the component
      * @param height the minimum height

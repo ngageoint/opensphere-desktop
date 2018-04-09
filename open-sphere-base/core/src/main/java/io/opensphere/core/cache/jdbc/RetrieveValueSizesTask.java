@@ -104,7 +104,8 @@ public class RetrieveValueSizesTask extends DatabaseTask implements StatementUse
      * @throws CacheException If there is a database error.
      */
     protected long[] doGetValueSizes(Connection conn, Statement stmt, int groupId, int[] dataIds,
-            final Collection<String> columnNames) throws CacheException
+            final Collection<String> columnNames)
+        throws CacheException
     {
         String tableName = TableNames.getDataTableName(groupId);
 

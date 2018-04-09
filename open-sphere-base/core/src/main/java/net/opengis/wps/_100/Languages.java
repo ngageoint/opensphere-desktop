@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -49,71 +50,68 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "_default",
-    "supported"
-})
+@XmlType(name = "", propOrder = { "_default", "supported" })
 @XmlRootElement(name = "Languages")
-public class Languages {
+public class Languages
+{
 
     @XmlElement(name = "Default", required = true)
     protected Languages.Default _default;
+
     @XmlElement(name = "Supported", required = true)
     protected LanguagesType supported;
 
     /**
      * Gets the value of the default property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Languages.Default }
-     *     
+     * @return possible object is {@link Languages.Default }
+     * 
      */
-    public Languages.Default getDefault() {
+    public Languages.Default getDefault()
+    {
         return _default;
     }
 
     /**
      * Sets the value of the default property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Languages.Default }
-     *     
+     * @param value allowed object is {@link Languages.Default }
+     * 
      */
-    public void setDefault(Languages.Default value) {
+    public void setDefault(Languages.Default value)
+    {
         this._default = value;
     }
 
     /**
      * Gets the value of the supported property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LanguagesType }
-     *     
+     * @return possible object is {@link LanguagesType }
+     * 
      */
-    public LanguagesType getSupported() {
+    public LanguagesType getSupported()
+    {
         return supported;
     }
 
     /**
      * Sets the value of the supported property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LanguagesType }
-     *     
+     * @param value allowed object is {@link LanguagesType }
+     * 
      */
-    public void setSupported(LanguagesType value) {
+    public void setSupported(LanguagesType value)
+    {
         this.supported = value;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -130,10 +128,9 @@ public class Languages {
      * 
      */
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "language"
-    })
-    public static class Default {
+    @XmlType(name = "", propOrder = { "language" })
+    public static class Default
+    {
 
         @XmlElement(name = "Language", namespace = "http://www.opengis.net/ows/1.1", required = true)
         @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
@@ -141,26 +138,25 @@ public class Languages {
         protected String language;
 
         /**
-         * Identifier of the default language supported by the service.  This language identifier shall be as specified in IETF RFC 4646.
+         * Identifier of the default language supported by the service. This
+         * language identifier shall be as specified in IETF RFC 4646.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getLanguage() {
+        public String getLanguage()
+        {
             return language;
         }
 
         /**
          * Sets the value of the language property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setLanguage(String value) {
+        public void setLanguage(String value)
+        {
             this.language = value;
         }
 

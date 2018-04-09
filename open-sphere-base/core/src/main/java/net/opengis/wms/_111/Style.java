@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:39 PM MST 
 //
 
-
 package net.opengis.wms._111;
 
 import java.util.ArrayList;
@@ -17,104 +16,96 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "name",
-    "title",
-    "_abstract",
-    "legendURL",
-    "styleSheetURL",
-    "styleURL"
-})
+@XmlType(name = "", propOrder = { "name", "title", "_abstract", "legendURL", "styleSheetURL", "styleURL" })
 @XmlRootElement(name = "Style")
-public class Style {
+public class Style
+{
 
     @XmlElement(name = "Name", required = true)
     protected String name;
+
     @XmlElement(name = "Title", required = true)
     protected String title;
+
     @XmlElement(name = "Abstract")
     protected String _abstract;
+
     @XmlElement(name = "LegendURL")
     protected List<LegendURL> legendURL;
+
     @XmlElement(name = "StyleSheetURL")
     protected StyleSheetURL styleSheetURL;
+
     @XmlElement(name = "StyleURL")
     protected StyleURL styleURL;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
     /**
      * Gets the value of the abstract property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getAbstract() {
+    public String getAbstract()
+    {
         return _abstract;
     }
 
     /**
      * Sets the value of the abstract property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setAbstract(String value) {
+    public void setAbstract(String value)
+    {
         this._abstract = value;
     }
 
@@ -122,26 +113,29 @@ public class Style {
      * Gets the value of the legendURL property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the legendURL property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the legendURL property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLegendURL().add(newItem);
+     * getLegendURL().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link LegendURL }
+     * Objects of the following type(s) are allowed in the list {@link LegendURL
+     * }
      * 
      * 
      */
-    public List<LegendURL> getLegendURL() {
-        if (legendURL == null) {
+    public List<LegendURL> getLegendURL()
+    {
+        if (legendURL == null)
+        {
             legendURL = new ArrayList<LegendURL>();
         }
         return this.legendURL;
@@ -150,48 +144,44 @@ public class Style {
     /**
      * Gets the value of the styleSheetURL property.
      * 
-     * @return
-     *     possible object is
-     *     {@link StyleSheetURL }
-     *     
+     * @return possible object is {@link StyleSheetURL }
+     * 
      */
-    public StyleSheetURL getStyleSheetURL() {
+    public StyleSheetURL getStyleSheetURL()
+    {
         return styleSheetURL;
     }
 
     /**
      * Sets the value of the styleSheetURL property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link StyleSheetURL }
-     *     
+     * @param value allowed object is {@link StyleSheetURL }
+     * 
      */
-    public void setStyleSheetURL(StyleSheetURL value) {
+    public void setStyleSheetURL(StyleSheetURL value)
+    {
         this.styleSheetURL = value;
     }
 
     /**
      * Gets the value of the styleURL property.
      * 
-     * @return
-     *     possible object is
-     *     {@link StyleURL }
-     *     
+     * @return possible object is {@link StyleURL }
+     * 
      */
-    public StyleURL getStyleURL() {
+    public StyleURL getStyleURL()
+    {
         return styleURL;
     }
 
     /**
      * Sets the value of the styleURL property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link StyleURL }
-     *     
+     * @param value allowed object is {@link StyleURL }
+     * 
      */
-    public void setStyleURL(StyleURL value) {
+    public void setStyleURL(StyleURL value)
+    {
         this.styleURL = value;
     }
 

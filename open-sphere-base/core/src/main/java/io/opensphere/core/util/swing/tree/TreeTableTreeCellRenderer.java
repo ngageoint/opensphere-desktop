@@ -88,7 +88,8 @@ public class TreeTableTreeCellRenderer extends GridBagPanel implements TreeCellR
      */
     public void addPrefixIcons(JTree tree, JPanel panel, TreeTableTreeNode node)
     {
-        /* intentionally blank, provided for subclass implementations to override */
+        /* intentionally blank, provided for subclass implementations to
+         * override */
     }
 
     /**
@@ -99,7 +100,8 @@ public class TreeTableTreeCellRenderer extends GridBagPanel implements TreeCellR
      */
     public void formatText(ButtonModelPayload payload, JLabel label)
     {
-        /* intentionally blank, provided for subclass implementations to override */
+        /* intentionally blank, provided for subclass implementations to
+         * override */
     }
 
     /**
@@ -111,7 +113,8 @@ public class TreeTableTreeCellRenderer extends GridBagPanel implements TreeCellR
      */
     public void setState(JTree tree, TreeTableTreeNode pNode, TristateCheckBox pTristateCheckBox)
     {
-        /* intentionally blank, provided for subclass implementations to override */
+        /* intentionally blank, provided for subclass implementations to
+         * override */
     }
 
     /**
@@ -226,7 +229,8 @@ public class TreeTableTreeCellRenderer extends GridBagPanel implements TreeCellR
     }
 
     /**
-     * Adds the busy label if necessary, and takes care of managing its painting.
+     * Adds the busy label if necessary, and takes care of managing its
+     * painting.
      *
      * @param tree the tree
      * @param node the node

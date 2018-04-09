@@ -10,6 +10,7 @@ import io.opensphere.core.TimeManager.ActiveTimeSpans;
 import io.opensphere.core.animation.AnimationState;
 import io.opensphere.core.util.lang.QuietCloseable;
 import io.opensphere.core.util.lang.ThreadUtilities;
+
 /**
  * Notifies a {@link RefreshListener} when the time has changed. Also prevents
  * the timeline from moving to the next step until the {@link RefreshListener}

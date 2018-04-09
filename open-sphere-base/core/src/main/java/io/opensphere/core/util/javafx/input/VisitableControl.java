@@ -5,7 +5,8 @@ import javafx.scene.control.Control;
 import io.opensphere.core.util.Visitable;
 
 /**
- * An extension of the {@link Control} that implements the {@link Visitable} interface.
+ * An extension of the {@link Control} that implements the {@link Visitable}
+ * interface.
  */
 public abstract class VisitableControl extends Control implements Visitable
 {

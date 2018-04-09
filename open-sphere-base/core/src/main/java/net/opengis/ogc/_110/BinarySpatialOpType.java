@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ogc._110;
 
 import javax.xml.bind.JAXBElement;
@@ -51,11 +50,13 @@ import net.opengis.gml._311.SurfaceType;
 import net.opengis.gml._311.TinType;
 import net.opengis.gml._311.TriangulatedSurfaceType;
 
-
 /**
- * <p>Java class for BinarySpatialOpType complex type.
+ * <p>
+ * Java class for BinarySpatialOpType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="BinarySpatialOpType">
@@ -76,159 +77,171 @@ import net.opengis.gml._311.TriangulatedSurfaceType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "BinarySpatialOpType", propOrder = {
-    "propertyName",
-    "geometry",
-    "envelope"
-})
-public class BinarySpatialOpType
-    extends SpatialOpsType
+@XmlType(name = "BinarySpatialOpType", propOrder = { "propertyName", "geometry", "envelope" })
+public class BinarySpatialOpType extends SpatialOpsType
 {
 
     @XmlElement(name = "PropertyName", required = true)
     protected PropertyNameType propertyName;
+
     @XmlElementRef(name = "_Geometry", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
     protected JAXBElement<? extends AbstractGeometryType> geometry;
+
     @XmlElementRef(name = "Envelope", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
     protected JAXBElement<? extends EnvelopeType> envelope;
 
     /**
      * Gets the value of the propertyName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PropertyNameType }
-     *     
+     * @return possible object is {@link PropertyNameType }
+     * 
      */
-    public PropertyNameType getPropertyName() {
+    public PropertyNameType getPropertyName()
+    {
         return propertyName;
     }
 
     /**
      * Sets the value of the propertyName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PropertyNameType }
-     *     
+     * @param value allowed object is {@link PropertyNameType }
+     * 
      */
-    public void setPropertyName(PropertyNameType value) {
+    public void setPropertyName(PropertyNameType value)
+    {
         this.propertyName = value;
     }
 
     /**
      * Gets the value of the geometry property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link MultiCurveType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link RingType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link TinType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractGeometricPrimitiveType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractSurfaceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link SurfaceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiGeometryType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiPointType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link LineStringType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link LinearRingType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractGeometryType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link CompositeCurveType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link OrientableCurveType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractGeometryType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractSolidType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractRingType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link SolidType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link TriangulatedSurfaceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiLineStringType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractGeometricAggregateType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link OrientableSurfaceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link GridType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiPolygonType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PolygonType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link CompositeSolidType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiSurfaceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link GeometricComplexType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link CurveType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractCurveType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link CompositeSurfaceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PolyhedralSurfaceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiSolidType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link RectifiedGridType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PointType }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement
+     *         }{@code <}{@link MultiCurveType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link RingType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link TinType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link AbstractGeometricPrimitiveType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link AbstractSurfaceType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link SurfaceType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link MultiGeometryType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link MultiPointType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link LineStringType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link LinearRingType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link AbstractGeometryType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link CompositeCurveType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link OrientableCurveType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link AbstractGeometryType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link AbstractSolidType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link AbstractRingType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link SolidType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link TriangulatedSurfaceType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link MultiLineStringType }{@code >}
+     *         {@link JAXBElement
+     *         }{@code <}{@link AbstractGeometricAggregateType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link OrientableSurfaceType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link GridType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link MultiPolygonType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link PolygonType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link CompositeSolidType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link MultiSurfaceType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link GeometricComplexType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link CurveType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link AbstractCurveType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link CompositeSurfaceType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link PolyhedralSurfaceType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link MultiSolidType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link RectifiedGridType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link PointType }{@code >}
+     * 
      */
-    public JAXBElement<? extends AbstractGeometryType> getGeometry() {
+    public JAXBElement<? extends AbstractGeometryType> getGeometry()
+    {
         return geometry;
     }
 
     /**
      * Sets the value of the geometry property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link MultiCurveType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link RingType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link TinType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractGeometricPrimitiveType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractSurfaceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link SurfaceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiGeometryType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiPointType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link LineStringType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link LinearRingType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractGeometryType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link CompositeCurveType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link OrientableCurveType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractGeometryType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractSolidType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractRingType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link SolidType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link TriangulatedSurfaceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiLineStringType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractGeometricAggregateType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link OrientableSurfaceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link GridType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiPolygonType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PolygonType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link CompositeSolidType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiSurfaceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link GeometricComplexType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link CurveType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractCurveType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link CompositeSurfaceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PolyhedralSurfaceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiSolidType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link RectifiedGridType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PointType }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link MultiCurveType }{@code >} {@link JAXBElement
+     *            }{@code <}{@link RingType }{@code >} {@link JAXBElement
+     *            }{@code <}{@link TinType }{@code >} {@link JAXBElement
+     *            }{@code <}{@link AbstractGeometricPrimitiveType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link AbstractSurfaceType
+     *            }{@code >} {@link JAXBElement }{@code <}{@link SurfaceType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link MultiGeometryType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link MultiPointType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link LineStringType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link LinearRingType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link AbstractGeometryType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link CompositeCurveType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link OrientableCurveType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link AbstractGeometryType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link AbstractSolidType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link AbstractRingType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link SolidType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link TriangulatedSurfaceType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link MultiLineStringType }{@code >}
+     *            {@link JAXBElement
+     *            }{@code <}{@link AbstractGeometricAggregateType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link OrientableSurfaceType
+     *            }{@code >} {@link JAXBElement }{@code <}{@link GridType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link MultiPolygonType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link PolygonType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link CompositeSolidType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link MultiSurfaceType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link GeometricComplexType
+     *            }{@code >} {@link JAXBElement }{@code <}{@link CurveType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link AbstractCurveType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link CompositeSurfaceType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link PolyhedralSurfaceType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link MultiSolidType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link RectifiedGridType
+     *            }{@code >} {@link JAXBElement }{@code <}{@link PointType
+     *            }{@code >}
+     * 
      */
-    public void setGeometry(JAXBElement<? extends AbstractGeometryType> value) {
+    public void setGeometry(JAXBElement<? extends AbstractGeometryType> value)
+    {
         this.geometry = (value);
     }
 
     /**
      * Gets the value of the envelope property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link EnvelopeType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link EnvelopeWithTimePeriodType }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement
+     *         }{@code <}{@link EnvelopeType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link EnvelopeWithTimePeriodType }{@code >}
+     * 
      */
-    public JAXBElement<? extends EnvelopeType> getEnvelope() {
+    public JAXBElement<? extends EnvelopeType> getEnvelope()
+    {
         return envelope;
     }
 
     /**
      * Sets the value of the envelope property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link EnvelopeType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link EnvelopeWithTimePeriodType }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link EnvelopeType }{@code >} {@link JAXBElement
+     *            }{@code <}{@link EnvelopeWithTimePeriodType }{@code >}
+     * 
      */
-    public void setEnvelope(JAXBElement<? extends EnvelopeType> value) {
+    public void setEnvelope(JAXBElement<? extends EnvelopeType> value)
+    {
         this.envelope = (value);
     }
 

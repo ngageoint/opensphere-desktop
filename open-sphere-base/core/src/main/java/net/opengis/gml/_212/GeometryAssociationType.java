@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.gml._212;
 
 import javax.xml.bind.JAXBElement;
@@ -17,19 +16,21 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *         An instance of this type (e.g. a geometryMember) can either 
- *         enclose or point to a primitive geometry element. When serving 
- *         as a simple link that references a remote geometry instance, 
- *         the value of the gml:remoteSchema attribute can be used to 
- *         locate a schema fragment that constrains the target instance.
- *       
+ * An instance of this type (e.g. a geometryMember) can either enclose or point
+ * to a primitive geometry element. When serving as a simple link that
+ * references a remote geometry instance, the value of the gml:remoteSchema
+ * attribute can be used to locate a schema fragment that constrains the target
+ * instance.
  * 
- * <p>Java class for GeometryAssociationType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for GeometryAssociationType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GeometryAssociationType">
@@ -48,284 +49,284 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GeometryAssociationType", propOrder = {
-    "geometry"
-})
-@XmlSeeAlso({
-    LinearRingMemberType.class,
-    LineStringMemberType.class,
-    PointMemberType.class,
-    PolygonMemberType.class
-})
-public class GeometryAssociationType {
+@XmlType(name = "GeometryAssociationType", propOrder = { "geometry" })
+@XmlSeeAlso({ LinearRingMemberType.class, LineStringMemberType.class, PointMemberType.class, PolygonMemberType.class })
+public class GeometryAssociationType
+{
 
     @XmlElementRef(name = "_Geometry", namespace = "http://www.opengis.net/gml", type = JAXBElement.class, required = false)
     protected JAXBElement<? extends AbstractGeometryType> geometry;
+
     @XmlAttribute(name = "remoteSchema", namespace = "http://www.opengis.net/gml")
     @XmlSchemaType(name = "anyURI")
     protected String remoteSchema;
+
     /**
      * 
      * 
      */
     @XmlAttribute(name = "type", namespace = "http://www.w3.org/1999/xlink")
     public final static String TYPE = "simple";
+
     @XmlAttribute(name = "href", namespace = "http://www.w3.org/1999/xlink")
     @XmlSchemaType(name = "anyURI")
     protected String href;
+
     @XmlAttribute(name = "role", namespace = "http://www.w3.org/1999/xlink")
     @XmlSchemaType(name = "anyURI")
     protected String role;
+
     @XmlAttribute(name = "arcrole", namespace = "http://www.w3.org/1999/xlink")
     @XmlSchemaType(name = "anyURI")
     protected String arcrole;
+
     @XmlAttribute(name = "title", namespace = "http://www.w3.org/1999/xlink")
     protected String title;
+
     @XmlAttribute(name = "show", namespace = "http://www.w3.org/1999/xlink")
     protected String show;
+
     @XmlAttribute(name = "actuate", namespace = "http://www.w3.org/1999/xlink")
     protected String actuate;
 
     /**
      * Gets the value of the geometry property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link MultiPointType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiPolygonType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link LineStringType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiLineStringType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link GeometryCollectionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PointType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link GeometryCollectionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractGeometryType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link LinearRingType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PolygonType }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement
+     *         }{@code <}{@link MultiPointType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link MultiPolygonType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link LineStringType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link MultiLineStringType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link GeometryCollectionType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link PointType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link GeometryCollectionType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link AbstractGeometryType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link LinearRingType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link PolygonType
+     *         }{@code >}
+     * 
      */
-    public JAXBElement<? extends AbstractGeometryType> getGeometry() {
+    public JAXBElement<? extends AbstractGeometryType> getGeometry()
+    {
         return geometry;
     }
 
     /**
      * Sets the value of the geometry property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link MultiPointType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiPolygonType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link LineStringType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiLineStringType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link GeometryCollectionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PointType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link GeometryCollectionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractGeometryType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link LinearRingType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PolygonType }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link MultiPointType }{@code >} {@link JAXBElement
+     *            }{@code <}{@link MultiPolygonType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link LineStringType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link MultiLineStringType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link GeometryCollectionType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link PointType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link GeometryCollectionType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link AbstractGeometryType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link LinearRingType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link PolygonType }{@code >}
+     * 
      */
-    public void setGeometry(JAXBElement<? extends AbstractGeometryType> value) {
+    public void setGeometry(JAXBElement<? extends AbstractGeometryType> value)
+    {
         this.geometry = value;
     }
 
-    public boolean isSetGeometry() {
-        return (this.geometry!= null);
+    public boolean isSetGeometry()
+    {
+        return (this.geometry != null);
     }
 
     /**
      * Gets the value of the remoteSchema property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getRemoteSchema() {
+    public String getRemoteSchema()
+    {
         return remoteSchema;
     }
 
     /**
      * Sets the value of the remoteSchema property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setRemoteSchema(String value) {
+    public void setRemoteSchema(String value)
+    {
         this.remoteSchema = value;
     }
 
-    public boolean isSetRemoteSchema() {
-        return (this.remoteSchema!= null);
+    public boolean isSetRemoteSchema()
+    {
+        return (this.remoteSchema != null);
     }
 
     /**
      * Gets the value of the href property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHref() {
+    public String getHref()
+    {
         return href;
     }
 
     /**
      * Sets the value of the href property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHref(String value) {
+    public void setHref(String value)
+    {
         this.href = value;
     }
 
-    public boolean isSetHref() {
-        return (this.href!= null);
+    public boolean isSetHref()
+    {
+        return (this.href != null);
     }
 
     /**
      * Gets the value of the role property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getRole() {
+    public String getRole()
+    {
         return role;
     }
 
     /**
      * Sets the value of the role property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setRole(String value) {
+    public void setRole(String value)
+    {
         this.role = value;
     }
 
-    public boolean isSetRole() {
-        return (this.role!= null);
+    public boolean isSetRole()
+    {
+        return (this.role != null);
     }
 
     /**
      * Gets the value of the arcrole property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getArcrole() {
+    public String getArcrole()
+    {
         return arcrole;
     }
 
     /**
      * Sets the value of the arcrole property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setArcrole(String value) {
+    public void setArcrole(String value)
+    {
         this.arcrole = value;
     }
 
-    public boolean isSetArcrole() {
-        return (this.arcrole!= null);
+    public boolean isSetArcrole()
+    {
+        return (this.arcrole != null);
     }
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
-    public boolean isSetTitle() {
-        return (this.title!= null);
+    public boolean isSetTitle()
+    {
+        return (this.title != null);
     }
 
     /**
      * Gets the value of the show property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getShow() {
+    public String getShow()
+    {
         return show;
     }
 
     /**
      * Sets the value of the show property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setShow(String value) {
+    public void setShow(String value)
+    {
         this.show = value;
     }
 
-    public boolean isSetShow() {
-        return (this.show!= null);
+    public boolean isSetShow()
+    {
+        return (this.show != null);
     }
 
     /**
      * Gets the value of the actuate property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getActuate() {
+    public String getActuate()
+    {
         return actuate;
     }
 
     /**
      * Sets the value of the actuate property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setActuate(String value) {
+    public void setActuate(String value)
+    {
         this.actuate = value;
     }
 
-    public boolean isSetActuate() {
-        return (this.actuate!= null);
+    public boolean isSetActuate()
+    {
+        return (this.actuate != null);
     }
 
 }

@@ -59,7 +59,8 @@ public class CipherEncryptedPrivateKeyProvider extends AbstractPrivateKeyProvide
      * @throws CipherException If the private key cannot be encrypted.
      */
     public CipherEncryptedPrivateKeyProvider(String alias, String source, PrivateKey key, List<? extends X509Certificate> chain,
-            CipherFactory cipherFactory, boolean persistable) throws CertificateEncodingException, CipherException
+            CipherFactory cipherFactory, boolean persistable)
+        throws CertificateEncodingException, CipherException
     {
         super(alias, source);
 

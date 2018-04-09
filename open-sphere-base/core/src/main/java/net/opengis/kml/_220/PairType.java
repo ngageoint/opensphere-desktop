@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for PairType complex type.
+ * <p>
+ * Java class for PairType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="PairType">
@@ -44,152 +45,153 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PairType", propOrder = {
-    "key",
-    "styleUrl",
-    "abstractStyleSelectorGroup",
-    "pairSimpleExtensionGroup",
-    "pairObjectExtensionGroup"
-})
-public class PairType
-    extends AbstractObjectType
+@XmlType(name = "PairType", propOrder = { "key", "styleUrl", "abstractStyleSelectorGroup", "pairSimpleExtensionGroup",
+    "pairObjectExtensionGroup" })
+public class PairType extends AbstractObjectType
 {
 
     @XmlElement(defaultValue = "normal")
     @XmlSchemaType(name = "string")
     protected StyleStateEnumType key;
+
     @XmlSchemaType(name = "anyURI")
     protected String styleUrl;
+
     @XmlElementRef(name = "AbstractStyleSelectorGroup", namespace = "http://www.opengis.net/kml/2.2", type = JAXBElement.class, required = false)
     protected JAXBElement<? extends AbstractStyleSelectorType> abstractStyleSelectorGroup;
+
     @XmlElement(name = "PairSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> pairSimpleExtensionGroup;
+
     @XmlElement(name = "PairObjectExtensionGroup")
     protected List<AbstractObjectType> pairObjectExtensionGroup;
 
     /**
      * Gets the value of the key property.
      * 
-     * @return
-     *     possible object is
-     *     {@link StyleStateEnumType }
-     *     
+     * @return possible object is {@link StyleStateEnumType }
+     * 
      */
-    public StyleStateEnumType getKey() {
+    public StyleStateEnumType getKey()
+    {
         return key;
     }
 
     /**
      * Sets the value of the key property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link StyleStateEnumType }
-     *     
+     * @param value allowed object is {@link StyleStateEnumType }
+     * 
      */
-    public void setKey(StyleStateEnumType value) {
+    public void setKey(StyleStateEnumType value)
+    {
         this.key = value;
     }
 
-    public boolean isSetKey() {
-        return (this.key!= null);
+    public boolean isSetKey()
+    {
+        return (this.key != null);
     }
 
     /**
      * Gets the value of the styleUrl property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getStyleUrl() {
+    public String getStyleUrl()
+    {
         return styleUrl;
     }
 
     /**
      * Sets the value of the styleUrl property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setStyleUrl(String value) {
+    public void setStyleUrl(String value)
+    {
         this.styleUrl = value;
     }
 
-    public boolean isSetStyleUrl() {
-        return (this.styleUrl!= null);
+    public boolean isSetStyleUrl()
+    {
+        return (this.styleUrl != null);
     }
 
     /**
      * Gets the value of the abstractStyleSelectorGroup property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link StyleType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractStyleSelectorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link StyleMapType }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement }{@code <}{@link StyleType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link AbstractStyleSelectorType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link StyleMapType }{@code >}
+     * 
      */
-    public JAXBElement<? extends AbstractStyleSelectorType> getAbstractStyleSelectorGroup() {
+    public JAXBElement<? extends AbstractStyleSelectorType> getAbstractStyleSelectorGroup()
+    {
         return abstractStyleSelectorGroup;
     }
 
     /**
      * Sets the value of the abstractStyleSelectorGroup property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link StyleType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractStyleSelectorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link StyleMapType }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link StyleType }{@code >} {@link JAXBElement
+     *            }{@code <}{@link AbstractStyleSelectorType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link StyleMapType }{@code >}
+     * 
      */
-    public void setAbstractStyleSelectorGroup(JAXBElement<? extends AbstractStyleSelectorType> value) {
+    public void setAbstractStyleSelectorGroup(JAXBElement<? extends AbstractStyleSelectorType> value)
+    {
         this.abstractStyleSelectorGroup = value;
     }
 
-    public boolean isSetAbstractStyleSelectorGroup() {
-        return (this.abstractStyleSelectorGroup!= null);
+    public boolean isSetAbstractStyleSelectorGroup()
+    {
+        return (this.abstractStyleSelectorGroup != null);
     }
 
     /**
      * Gets the value of the pairSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the pairSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the pairSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPairSimpleExtensionGroup().add(newItem);
+     * getPairSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getPairSimpleExtensionGroup() {
-        if (pairSimpleExtensionGroup == null) {
+    public List<Object> getPairSimpleExtensionGroup()
+    {
+        if (pairSimpleExtensionGroup == null)
+        {
             pairSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.pairSimpleExtensionGroup;
     }
 
-    public boolean isSetPairSimpleExtensionGroup() {
-        return ((this.pairSimpleExtensionGroup!= null)&&(!this.pairSimpleExtensionGroup.isEmpty()));
+    public boolean isSetPairSimpleExtensionGroup()
+    {
+        return ((this.pairSimpleExtensionGroup != null) && (!this.pairSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetPairSimpleExtensionGroup() {
+    public void unsetPairSimpleExtensionGroup()
+    {
         this.pairSimpleExtensionGroup = null;
     }
 
@@ -197,15 +199,16 @@ public class PairType
      * Gets the value of the pairObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the pairObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the pairObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPairObjectExtensionGroup().add(newItem);
+     * getPairObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -215,18 +218,22 @@ public class PairType
      * 
      * 
      */
-    public List<AbstractObjectType> getPairObjectExtensionGroup() {
-        if (pairObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getPairObjectExtensionGroup()
+    {
+        if (pairObjectExtensionGroup == null)
+        {
             pairObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.pairObjectExtensionGroup;
     }
 
-    public boolean isSetPairObjectExtensionGroup() {
-        return ((this.pairObjectExtensionGroup!= null)&&(!this.pairObjectExtensionGroup.isEmpty()));
+    public boolean isSetPairObjectExtensionGroup()
+    {
+        return ((this.pairObjectExtensionGroup != null) && (!this.pairObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetPairObjectExtensionGroup() {
+    public void unsetPairObjectExtensionGroup()
+    {
         this.pairObjectExtensionGroup = null;
     }
 

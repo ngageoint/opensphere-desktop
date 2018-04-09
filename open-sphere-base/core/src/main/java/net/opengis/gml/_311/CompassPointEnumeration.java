@@ -5,18 +5,20 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for CompassPointEnumeration.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for CompassPointEnumeration.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="CompassPointEnumeration">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -43,30 +45,18 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "CompassPointEnumeration")
 @XmlEnum
-public enum CompassPointEnumeration {
+public enum CompassPointEnumeration
+{
 
-    N,
-    NNE,
-    NE,
-    ENE,
-    E,
-    ESE,
-    SE,
-    SSE,
-    S,
-    SSW,
-    SW,
-    WSW,
-    W,
-    WNW,
-    NW,
-    NNW;
+    N, NNE, NE, ENE, E, ESE, SE, SSE, S, SSW, SW, WSW, W, WNW, NW, NNW;
 
-    public String value() {
+    public String value()
+    {
         return name();
     }
 
-    public static CompassPointEnumeration fromValue(String v) {
+    public static CompassPointEnumeration fromValue(String v)
+    {
         return valueOf(v);
     }
 

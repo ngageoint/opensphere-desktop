@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -15,13 +14,16 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * [complexType of] The style descriptor for a graph consisting of a number of features. Describes graph-specific style attributes.
+ * [complexType of] The style descriptor for a graph consisting of a number of
+ * features. Describes graph-specific style attributes.
  * 
- * <p>Java class for GraphStyleType complex type.
+ * <p>
+ * Java class for GraphStyleType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GraphStyleType">
@@ -46,220 +48,202 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GraphStyleType", propOrder = {
-    "planar",
-    "directed",
-    "grid",
-    "minDistance",
-    "minAngle",
-    "graphType",
-    "drawingType",
-    "lineType",
-    "aestheticCriteria"
-})
-public class GraphStyleType
-    extends BaseStyleDescriptorType
+@XmlType(name = "GraphStyleType", propOrder = { "planar", "directed", "grid", "minDistance", "minAngle", "graphType",
+    "drawingType", "lineType", "aestheticCriteria" })
+public class GraphStyleType extends BaseStyleDescriptorType
 {
 
     protected Boolean planar;
+
     protected Boolean directed;
+
     protected Boolean grid;
+
     protected Double minDistance;
+
     protected Double minAngle;
+
     protected GraphTypeType graphType;
+
     protected DrawingTypeType drawingType;
+
     protected LineTypeType lineType;
+
     protected List<AesheticCriteriaType> aestheticCriteria;
 
     /**
      * Gets the value of the planar property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isPlanar() {
+    public Boolean isPlanar()
+    {
         return planar;
     }
 
     /**
      * Sets the value of the planar property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setPlanar(Boolean value) {
+    public void setPlanar(Boolean value)
+    {
         this.planar = value;
     }
 
     /**
      * Gets the value of the directed property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isDirected() {
+    public Boolean isDirected()
+    {
         return directed;
     }
 
     /**
      * Sets the value of the directed property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setDirected(Boolean value) {
+    public void setDirected(Boolean value)
+    {
         this.directed = value;
     }
 
     /**
      * Gets the value of the grid property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isGrid() {
+    public Boolean isGrid()
+    {
         return grid;
     }
 
     /**
      * Sets the value of the grid property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setGrid(Boolean value) {
+    public void setGrid(Boolean value)
+    {
         this.grid = value;
     }
 
     /**
      * Gets the value of the minDistance property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getMinDistance() {
+    public Double getMinDistance()
+    {
         return minDistance;
     }
 
     /**
      * Sets the value of the minDistance property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setMinDistance(Double value) {
+    public void setMinDistance(Double value)
+    {
         this.minDistance = value;
     }
 
     /**
      * Gets the value of the minAngle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getMinAngle() {
+    public Double getMinAngle()
+    {
         return minAngle;
     }
 
     /**
      * Sets the value of the minAngle property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setMinAngle(Double value) {
+    public void setMinAngle(Double value)
+    {
         this.minAngle = value;
     }
 
     /**
      * Gets the value of the graphType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link GraphTypeType }
-     *     
+     * @return possible object is {@link GraphTypeType }
+     * 
      */
-    public GraphTypeType getGraphType() {
+    public GraphTypeType getGraphType()
+    {
         return graphType;
     }
 
     /**
      * Sets the value of the graphType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link GraphTypeType }
-     *     
+     * @param value allowed object is {@link GraphTypeType }
+     * 
      */
-    public void setGraphType(GraphTypeType value) {
+    public void setGraphType(GraphTypeType value)
+    {
         this.graphType = value;
     }
 
     /**
      * Gets the value of the drawingType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link DrawingTypeType }
-     *     
+     * @return possible object is {@link DrawingTypeType }
+     * 
      */
-    public DrawingTypeType getDrawingType() {
+    public DrawingTypeType getDrawingType()
+    {
         return drawingType;
     }
 
     /**
      * Sets the value of the drawingType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DrawingTypeType }
-     *     
+     * @param value allowed object is {@link DrawingTypeType }
+     * 
      */
-    public void setDrawingType(DrawingTypeType value) {
+    public void setDrawingType(DrawingTypeType value)
+    {
         this.drawingType = value;
     }
 
     /**
      * Gets the value of the lineType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LineTypeType }
-     *     
+     * @return possible object is {@link LineTypeType }
+     * 
      */
-    public LineTypeType getLineType() {
+    public LineTypeType getLineType()
+    {
         return lineType;
     }
 
     /**
      * Sets the value of the lineType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LineTypeType }
-     *     
+     * @param value allowed object is {@link LineTypeType }
+     * 
      */
-    public void setLineType(LineTypeType value) {
+    public void setLineType(LineTypeType value)
+    {
         this.lineType = value;
     }
 
@@ -267,15 +251,16 @@ public class GraphStyleType
      * Gets the value of the aestheticCriteria property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the aestheticCriteria property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the aestheticCriteria property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAestheticCriteria().add(newItem);
+     * getAestheticCriteria().add(newItem);
      * </pre>
      * 
      * 
@@ -285,8 +270,10 @@ public class GraphStyleType
      * 
      * 
      */
-    public List<AesheticCriteriaType> getAestheticCriteria() {
-        if (aestheticCriteria == null) {
+    public List<AesheticCriteriaType> getAestheticCriteria()
+    {
+        if (aestheticCriteria == null)
+        {
             aestheticCriteria = new ArrayList<AesheticCriteriaType>();
         }
         return this.aestheticCriteria;

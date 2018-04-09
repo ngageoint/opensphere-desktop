@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.gml._212;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,16 +12,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *         This abstract base type for geometry collections just makes the 
- *         srsName attribute mandatory.
- *       
+ * This abstract base type for geometry collections just makes the srsName
+ * attribute mandatory.
  * 
- * <p>Java class for AbstractGeometryCollectionBaseType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for AbstractGeometryCollectionBaseType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractGeometryCollectionBaseType">
@@ -39,12 +40,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AbstractGeometryCollectionBaseType")
-@XmlSeeAlso({
-    GeometryCollectionType.class
-})
-public abstract class AbstractGeometryCollectionBaseType
-    extends AbstractGeometryType
+@XmlSeeAlso({ GeometryCollectionType.class })
+public abstract class AbstractGeometryCollectionBaseType extends AbstractGeometryType
 {
-
 
 }

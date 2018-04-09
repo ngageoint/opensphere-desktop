@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -17,13 +16,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * This type supports embedding an array of topological primitives in a TopoComplex
+ * This type supports embedding an array of topological primitives in a
+ * TopoComplex
  * 
- * <p>Java class for TopoPrimitiveArrayAssociationType complex type.
+ * <p>
+ * Java class for TopoPrimitiveArrayAssociationType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TopoPrimitiveArrayAssociationType">
@@ -42,10 +44,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TopoPrimitiveArrayAssociationType", propOrder = {
-    "topoPrimitive"
-})
-public class TopoPrimitiveArrayAssociationType {
+@XmlType(name = "TopoPrimitiveArrayAssociationType", propOrder = { "topoPrimitive" })
+public class TopoPrimitiveArrayAssociationType
+{
 
     @XmlElementRef(name = "_TopoPrimitive", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
     protected List<JAXBElement<? extends AbstractTopoPrimitiveType>> topoPrimitive;
@@ -54,15 +55,16 @@ public class TopoPrimitiveArrayAssociationType {
      * Gets the value of the topoPrimitive property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the topoPrimitive property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the topoPrimitive property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getTopoPrimitive().add(newItem);
+     * getTopoPrimitive().add(newItem);
      * </pre>
      * 
      * 
@@ -76,8 +78,10 @@ public class TopoPrimitiveArrayAssociationType {
      * 
      * 
      */
-    public List<JAXBElement<? extends AbstractTopoPrimitiveType>> getTopoPrimitive() {
-        if (topoPrimitive == null) {
+    public List<JAXBElement<? extends AbstractTopoPrimitiveType>> getTopoPrimitive()
+    {
+        if (topoPrimitive == null)
+        {
             topoPrimitive = new ArrayList<JAXBElement<? extends AbstractTopoPrimitiveType>>();
         }
         return this.topoPrimitive;

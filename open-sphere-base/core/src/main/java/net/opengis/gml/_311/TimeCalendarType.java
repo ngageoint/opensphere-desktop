@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,15 +15,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A calendar is a discrete temporal reference system 
- *       that provides a basis for defining temporal position to a resolution of one day. 
- *       A single calendar may reference more than one calendar era.
+ * A calendar is a discrete temporal reference system that provides a basis for
+ * defining temporal position to a resolution of one day. A single calendar may
+ * reference more than one calendar era.
  * 
- * <p>Java class for TimeCalendarType complex type.
+ * <p>
+ * Java class for TimeCalendarType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TimeCalendarType">
@@ -41,11 +42,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TimeCalendarType", propOrder = {
-    "referenceFrame"
-})
-public class TimeCalendarType
-    extends AbstractTimeReferenceSystemType
+@XmlType(name = "TimeCalendarType", propOrder = { "referenceFrame" })
+public class TimeCalendarType extends AbstractTimeReferenceSystemType
 {
 
     @XmlElement(required = true)
@@ -55,15 +53,16 @@ public class TimeCalendarType
      * Gets the value of the referenceFrame property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the referenceFrame property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the referenceFrame property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getReferenceFrame().add(newItem);
+     * getReferenceFrame().add(newItem);
      * </pre>
      * 
      * 
@@ -73,8 +72,10 @@ public class TimeCalendarType
      * 
      * 
      */
-    public List<TimeCalendarEraPropertyType> getReferenceFrame() {
-        if (referenceFrame == null) {
+    public List<TimeCalendarEraPropertyType> getReferenceFrame()
+    {
+        if (referenceFrame == null)
+        {
             referenceFrame = new ArrayList<TimeCalendarEraPropertyType>();
         }
         return this.referenceFrame;

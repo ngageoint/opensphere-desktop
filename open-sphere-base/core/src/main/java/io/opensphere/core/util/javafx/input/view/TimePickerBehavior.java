@@ -5,7 +5,8 @@ import java.time.LocalTime;
 import javafx.scene.control.ComboBoxBase;
 
 /**
- * A behavior implementation bound to a combo box that supports selection of {@link LocalTime} values.
+ * A behavior implementation bound to a combo box that supports selection of
+ * {@link LocalTime} values.
  */
 public class TimePickerBehavior extends AbstractComboBoxBehavior<LocalTime>
 {
@@ -27,11 +28,13 @@ public class TimePickerBehavior extends AbstractComboBoxBehavior<LocalTime>
     @Override
     public void onAutoHide()
     {
-        // when we click on some non-interactive part of the calendar - we do not want to hide.
+        // when we click on some non-interactive part of the calendar - we do
+        // not want to hide.
         TimePicker picker = (TimePicker)getControl();
         TimePickerSkin cpSkin = (TimePickerSkin)picker.getSkin();
         cpSkin.syncWithAutoUpdate();
-        // if the TimePicker is no longer showing, then invoke the super method to keep its show/hide state in sync.
+        // if the TimePicker is no longer showing, then invoke the super method
+        // to keep its show/hide state in sync.
         if (!picker.isShowing())
         {
             super.onAutoHide();

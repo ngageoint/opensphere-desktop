@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,16 +12,19 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A contextually local coordinate reference system; which can be divided into two broad categories:
- * - earth-fixed systems applied to engineering activities on or near the surface of the earth;
- * - CRSs on moving platforms such as road vehicles, vessels, aircraft, or spacecraft.
- * For further information, see OGC Abstract Specification Topic 2. 
+ * A contextually local coordinate reference system; which can be divided into
+ * two broad categories: - earth-fixed systems applied to engineering activities
+ * on or near the surface of the earth; - CRSs on moving platforms such as road
+ * vehicles, vessels, aircraft, or spacecraft. For further information, see OGC
+ * Abstract Specification Topic 2.
  * 
- * <p>Java class for EngineeringCRSType complex type.
+ * <p>
+ * Java class for EngineeringCRSType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="EngineeringCRSType">
@@ -40,64 +42,57 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "EngineeringCRSType", propOrder = {
-    "usesCS",
-    "usesEngineeringDatum"
-})
-public class EngineeringCRSType
-    extends AbstractReferenceSystemType
+@XmlType(name = "EngineeringCRSType", propOrder = { "usesCS", "usesEngineeringDatum" })
+public class EngineeringCRSType extends AbstractReferenceSystemType
 {
 
     @XmlElement(required = true)
     protected CoordinateSystemRefType usesCS;
+
     @XmlElement(required = true)
     protected EngineeringDatumRefType usesEngineeringDatum;
 
     /**
      * Gets the value of the usesCS property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CoordinateSystemRefType }
-     *     
+     * @return possible object is {@link CoordinateSystemRefType }
+     * 
      */
-    public CoordinateSystemRefType getUsesCS() {
+    public CoordinateSystemRefType getUsesCS()
+    {
         return usesCS;
     }
 
     /**
      * Sets the value of the usesCS property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CoordinateSystemRefType }
-     *     
+     * @param value allowed object is {@link CoordinateSystemRefType }
+     * 
      */
-    public void setUsesCS(CoordinateSystemRefType value) {
+    public void setUsesCS(CoordinateSystemRefType value)
+    {
         this.usesCS = value;
     }
 
     /**
      * Gets the value of the usesEngineeringDatum property.
      * 
-     * @return
-     *     possible object is
-     *     {@link EngineeringDatumRefType }
-     *     
+     * @return possible object is {@link EngineeringDatumRefType }
+     * 
      */
-    public EngineeringDatumRefType getUsesEngineeringDatum() {
+    public EngineeringDatumRefType getUsesEngineeringDatum()
+    {
         return usesEngineeringDatum;
     }
 
     /**
      * Sets the value of the usesEngineeringDatum property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link EngineeringDatumRefType }
-     *     
+     * @param value allowed object is {@link EngineeringDatumRefType }
+     * 
      */
-    public void setUsesEngineeringDatum(EngineeringDatumRefType value) {
+    public void setUsesEngineeringDatum(EngineeringDatumRefType value)
+    {
         this.usesEngineeringDatum = value;
     }
 

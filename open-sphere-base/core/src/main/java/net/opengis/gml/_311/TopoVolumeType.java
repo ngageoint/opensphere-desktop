@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,13 +15,22 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * The TopoVolume type and element represent a homogeneous topological expression, a set of directed TopoSolids, which if realised are isomorphic to a geometric solid primitive. The intended use of TopoVolume is to appear within a 3D solid feature instance to express the structural and geometric relationships of this solid to other features via the shared TopoSolid definitions.  . Note the orientation assigned to the directedSolid has no meaning in three dimensions. It is preserved for symmetry with the preceding types and elements.
+ * The TopoVolume type and element represent a homogeneous topological
+ * expression, a set of directed TopoSolids, which if realised are isomorphic to
+ * a geometric solid primitive. The intended use of TopoVolume is to appear
+ * within a 3D solid feature instance to express the structural and geometric
+ * relationships of this solid to other features via the shared TopoSolid
+ * definitions. . Note the orientation assigned to the directedSolid has no
+ * meaning in three dimensions. It is preserved for symmetry with the preceding
+ * types and elements.
  * 
- * <p>Java class for TopoVolumeType complex type.
+ * <p>
+ * Java class for TopoVolumeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TopoVolumeType">
@@ -39,11 +47,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TopoVolumeType", propOrder = {
-    "directedTopoSolid"
-})
-public class TopoVolumeType
-    extends AbstractTopologyType
+@XmlType(name = "TopoVolumeType", propOrder = { "directedTopoSolid" })
+public class TopoVolumeType extends AbstractTopologyType
 {
 
     @XmlElement(required = true)
@@ -53,15 +58,16 @@ public class TopoVolumeType
      * Gets the value of the directedTopoSolid property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the directedTopoSolid property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the directedTopoSolid property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getDirectedTopoSolid().add(newItem);
+     * getDirectedTopoSolid().add(newItem);
      * </pre>
      * 
      * 
@@ -71,8 +77,10 @@ public class TopoVolumeType
      * 
      * 
      */
-    public List<DirectedTopoSolidPropertyType> getDirectedTopoSolid() {
-        if (directedTopoSolid == null) {
+    public List<DirectedTopoSolidPropertyType> getDirectedTopoSolid()
+    {
+        if (directedTopoSolid == null)
+        {
             directedTopoSolid = new ArrayList<DirectedTopoSolidPropertyType>();
         }
         return this.directedTopoSolid;

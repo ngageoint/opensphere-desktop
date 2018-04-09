@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for PolyStyleType complex type.
+ * <p>
+ * Java class for PolyStyleType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="PolyStyleType">
@@ -41,116 +42,116 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PolyStyleType", propOrder = {
-    "fill",
-    "outline",
-    "polyStyleSimpleExtensionGroup",
-    "polyStyleObjectExtensionGroup"
-})
-public class PolyStyleType
-    extends AbstractColorStyleType
+@XmlType(name = "PolyStyleType", propOrder = { "fill", "outline", "polyStyleSimpleExtensionGroup",
+    "polyStyleObjectExtensionGroup" })
+public class PolyStyleType extends AbstractColorStyleType
 {
 
     @XmlElement(defaultValue = "1")
     protected Boolean fill;
+
     @XmlElement(defaultValue = "1")
     protected Boolean outline;
+
     @XmlElement(name = "PolyStyleSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> polyStyleSimpleExtensionGroup;
+
     @XmlElement(name = "PolyStyleObjectExtensionGroup")
     protected List<AbstractObjectType> polyStyleObjectExtensionGroup;
 
     /**
      * Gets the value of the fill property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isFill() {
+    public Boolean isFill()
+    {
         return fill;
     }
 
     /**
      * Sets the value of the fill property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setFill(Boolean value) {
+    public void setFill(Boolean value)
+    {
         this.fill = value;
     }
 
-    public boolean isSetFill() {
-        return (this.fill!= null);
+    public boolean isSetFill()
+    {
+        return (this.fill != null);
     }
 
     /**
      * Gets the value of the outline property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isOutline() {
+    public Boolean isOutline()
+    {
         return outline;
     }
 
     /**
      * Sets the value of the outline property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setOutline(Boolean value) {
+    public void setOutline(Boolean value)
+    {
         this.outline = value;
     }
 
-    public boolean isSetOutline() {
-        return (this.outline!= null);
+    public boolean isSetOutline()
+    {
+        return (this.outline != null);
     }
 
     /**
      * Gets the value of the polyStyleSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the polyStyleSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the polyStyleSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPolyStyleSimpleExtensionGroup().add(newItem);
+     * getPolyStyleSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getPolyStyleSimpleExtensionGroup() {
-        if (polyStyleSimpleExtensionGroup == null) {
+    public List<Object> getPolyStyleSimpleExtensionGroup()
+    {
+        if (polyStyleSimpleExtensionGroup == null)
+        {
             polyStyleSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.polyStyleSimpleExtensionGroup;
     }
 
-    public boolean isSetPolyStyleSimpleExtensionGroup() {
-        return ((this.polyStyleSimpleExtensionGroup!= null)&&(!this.polyStyleSimpleExtensionGroup.isEmpty()));
+    public boolean isSetPolyStyleSimpleExtensionGroup()
+    {
+        return ((this.polyStyleSimpleExtensionGroup != null) && (!this.polyStyleSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetPolyStyleSimpleExtensionGroup() {
+    public void unsetPolyStyleSimpleExtensionGroup()
+    {
         this.polyStyleSimpleExtensionGroup = null;
     }
 
@@ -158,15 +159,16 @@ public class PolyStyleType
      * Gets the value of the polyStyleObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the polyStyleObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the polyStyleObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPolyStyleObjectExtensionGroup().add(newItem);
+     * getPolyStyleObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -176,18 +178,22 @@ public class PolyStyleType
      * 
      * 
      */
-    public List<AbstractObjectType> getPolyStyleObjectExtensionGroup() {
-        if (polyStyleObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getPolyStyleObjectExtensionGroup()
+    {
+        if (polyStyleObjectExtensionGroup == null)
+        {
             polyStyleObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.polyStyleObjectExtensionGroup;
     }
 
-    public boolean isSetPolyStyleObjectExtensionGroup() {
-        return ((this.polyStyleObjectExtensionGroup!= null)&&(!this.polyStyleObjectExtensionGroup.isEmpty()));
+    public boolean isSetPolyStyleObjectExtensionGroup()
+    {
+        return ((this.polyStyleObjectExtensionGroup != null) && (!this.polyStyleObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetPolyStyleObjectExtensionGroup() {
+    public void unsetPolyStyleObjectExtensionGroup()
+    {
         this.polyStyleObjectExtensionGroup = null;
     }
 

@@ -24,7 +24,8 @@ public class PopupSkin<T extends Skinnable> implements Skin<Skinnable>
     /**
      * Creates a new generic popup skin.
      *
-     * @param skinnable the {@link Skinnable} item from which the popup was created.
+     * @param skinnable the {@link Skinnable} item from which the popup was
+     *            created.
      * @param content the content to use as the node of the skin.
      */
     public PopupSkin(T skinnable, Node content)

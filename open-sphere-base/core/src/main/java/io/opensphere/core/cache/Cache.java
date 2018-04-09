@@ -112,7 +112,8 @@ public interface Cache
      * @throws CacheException If there's a problem accessing the cache.
      */
     List<DataModelCategory> getDataModelCategoriesByGroupId(int[] groupIds, boolean source, boolean family, boolean category,
-            boolean distinct) throws CacheException;
+            boolean distinct)
+        throws CacheException;
 
     /**
      * Get the distinct data model categories for some models.
@@ -181,7 +182,7 @@ public interface Cache
      */
     long[] getIds(Collection<? extends Satisfaction> satisfactions, Collection<? extends PropertyMatcher<?>> parameters,
             List<? extends OrderSpecifier> orderSpecifiers, int startIndex, int limit)
-                throws CacheException, NotSerializableException;
+        throws CacheException, NotSerializableException;
 
     /**
      * Get the primary keys that match the input parameters.
@@ -208,7 +209,7 @@ public interface Cache
      */
     long[] getIds(DataModelCategory category, Collection<? extends PropertyMatcher<?>> parameters,
             List<? extends OrderSpecifier> orderSpecifiers, int startIndex, int limit)
-                throws CacheException, NotSerializableException;
+        throws CacheException, NotSerializableException;
 
     /**
      * Get the primary keys that match the input parameters.
@@ -234,7 +235,7 @@ public interface Cache
      */
     long[] getIds(int[] groupIds, Collection<? extends PropertyMatcher<?>> parameters,
             List<? extends OrderSpecifier> orderSpecifiers, int startIndex, int limit)
-                throws NotSerializableException, CacheException;
+        throws NotSerializableException, CacheException;
 
     /**
      * Get the interval combinations that can be satisfied by this cache.
@@ -314,7 +315,7 @@ public interface Cache
      *         more than one input object, the ids will be in the same order as
      *         the input objects.
      * @throws CacheException If there's a problem accessing the cache.
-     * @throws NotSerializableException If a non-serializable property value is
+     * @throws NotSerializableException If a   non-serializable property value is
      *             encountered.
      */
     <T> long[] put(final CacheDeposit<T> insert, CacheModificationListener listener)
@@ -363,5 +364,5 @@ public interface Cache
      */
     <T> void updateValues(long[] ids, Collection<? extends T> input,
             Collection<? extends PropertyAccessor<? super T, ?>> accessors, Executor executor, CacheModificationListener listener)
-                throws CacheException, NotSerializableException;
+        throws CacheException, NotSerializableException;
 }

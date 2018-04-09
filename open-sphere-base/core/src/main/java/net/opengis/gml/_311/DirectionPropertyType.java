@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,11 +14,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for DirectionPropertyType complex type.
+ * <p>
+ * Java class for DirectionPropertyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DirectionPropertyType">
@@ -40,175 +41,174 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DirectionPropertyType", propOrder = {
-    "directionVector",
-    "compassPoint",
-    "directionKeyword",
-    "directionString"
-})
-public class DirectionPropertyType {
+@XmlType(name = "DirectionPropertyType", propOrder = { "directionVector", "compassPoint", "directionKeyword", "directionString" })
+public class DirectionPropertyType
+{
 
     @XmlElement(name = "DirectionVector")
     protected DirectionVectorType directionVector;
+
     @XmlElement(name = "CompassPoint")
     protected CompassPointEnumeration compassPoint;
+
     @XmlElement(name = "DirectionKeyword")
     protected CodeType directionKeyword;
+
     @XmlElement(name = "DirectionString")
     protected StringOrRefType directionString;
+
     @XmlAttribute(name = "remoteSchema", namespace = "http://www.opengis.net/gml")
     @XmlSchemaType(name = "anyURI")
     protected String remoteSchema;
+
     @XmlAttribute(name = "type", namespace = "http://www.w3.org/1999/xlink")
     protected String type;
+
     @XmlAttribute(name = "href", namespace = "http://www.w3.org/1999/xlink")
     @XmlSchemaType(name = "anyURI")
     protected String href;
+
     @XmlAttribute(name = "role", namespace = "http://www.w3.org/1999/xlink")
     @XmlSchemaType(name = "anyURI")
     protected String role;
+
     @XmlAttribute(name = "arcrole", namespace = "http://www.w3.org/1999/xlink")
     @XmlSchemaType(name = "anyURI")
     protected String arcrole;
+
     @XmlAttribute(name = "title", namespace = "http://www.w3.org/1999/xlink")
     protected String title;
+
     @XmlAttribute(name = "show", namespace = "http://www.w3.org/1999/xlink")
     protected String show;
+
     @XmlAttribute(name = "actuate", namespace = "http://www.w3.org/1999/xlink")
     protected String actuate;
 
     /**
      * Gets the value of the directionVector property.
      * 
-     * @return
-     *     possible object is
-     *     {@link DirectionVectorType }
-     *     
+     * @return possible object is {@link DirectionVectorType }
+     * 
      */
-    public DirectionVectorType getDirectionVector() {
+    public DirectionVectorType getDirectionVector()
+    {
         return directionVector;
     }
 
     /**
      * Sets the value of the directionVector property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DirectionVectorType }
-     *     
+     * @param value allowed object is {@link DirectionVectorType }
+     * 
      */
-    public void setDirectionVector(DirectionVectorType value) {
+    public void setDirectionVector(DirectionVectorType value)
+    {
         this.directionVector = value;
     }
 
     /**
      * Gets the value of the compassPoint property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CompassPointEnumeration }
-     *     
+     * @return possible object is {@link CompassPointEnumeration }
+     * 
      */
-    public CompassPointEnumeration getCompassPoint() {
+    public CompassPointEnumeration getCompassPoint()
+    {
         return compassPoint;
     }
 
     /**
      * Sets the value of the compassPoint property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CompassPointEnumeration }
-     *     
+     * @param value allowed object is {@link CompassPointEnumeration }
+     * 
      */
-    public void setCompassPoint(CompassPointEnumeration value) {
+    public void setCompassPoint(CompassPointEnumeration value)
+    {
         this.compassPoint = value;
     }
 
     /**
      * Gets the value of the directionKeyword property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CodeType }
-     *     
+     * @return possible object is {@link CodeType }
+     * 
      */
-    public CodeType getDirectionKeyword() {
+    public CodeType getDirectionKeyword()
+    {
         return directionKeyword;
     }
 
     /**
      * Sets the value of the directionKeyword property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CodeType }
-     *     
+     * @param value allowed object is {@link CodeType }
+     * 
      */
-    public void setDirectionKeyword(CodeType value) {
+    public void setDirectionKeyword(CodeType value)
+    {
         this.directionKeyword = value;
     }
 
     /**
      * Gets the value of the directionString property.
      * 
-     * @return
-     *     possible object is
-     *     {@link StringOrRefType }
-     *     
+     * @return possible object is {@link StringOrRefType }
+     * 
      */
-    public StringOrRefType getDirectionString() {
+    public StringOrRefType getDirectionString()
+    {
         return directionString;
     }
 
     /**
      * Sets the value of the directionString property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link StringOrRefType }
-     *     
+     * @param value allowed object is {@link StringOrRefType }
+     * 
      */
-    public void setDirectionString(StringOrRefType value) {
+    public void setDirectionString(StringOrRefType value)
+    {
         this.directionString = value;
     }
 
     /**
      * Gets the value of the remoteSchema property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getRemoteSchema() {
+    public String getRemoteSchema()
+    {
         return remoteSchema;
     }
 
     /**
      * Sets the value of the remoteSchema property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setRemoteSchema(String value) {
+    public void setRemoteSchema(String value)
+    {
         this.remoteSchema = value;
     }
 
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getType() {
-        if (type == null) {
+    public String getType()
+    {
+        if (type == null)
+        {
             return "simple";
-        } else {
+        }
+        else
+        {
             return type;
         }
     }
@@ -216,156 +216,143 @@ public class DirectionPropertyType {
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setType(String value) {
+    public void setType(String value)
+    {
         this.type = value;
     }
 
     /**
      * Gets the value of the href property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHref() {
+    public String getHref()
+    {
         return href;
     }
 
     /**
      * Sets the value of the href property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHref(String value) {
+    public void setHref(String value)
+    {
         this.href = value;
     }
 
     /**
      * Gets the value of the role property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getRole() {
+    public String getRole()
+    {
         return role;
     }
 
     /**
      * Sets the value of the role property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setRole(String value) {
+    public void setRole(String value)
+    {
         this.role = value;
     }
 
     /**
      * Gets the value of the arcrole property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getArcrole() {
+    public String getArcrole()
+    {
         return arcrole;
     }
 
     /**
      * Sets the value of the arcrole property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setArcrole(String value) {
+    public void setArcrole(String value)
+    {
         this.arcrole = value;
     }
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
     /**
      * Gets the value of the show property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getShow() {
+    public String getShow()
+    {
         return show;
     }
 
     /**
      * Sets the value of the show property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setShow(String value) {
+    public void setShow(String value)
+    {
         this.show = value;
     }
 
     /**
      * Gets the value of the actuate property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getActuate() {
+    public String getActuate()
+    {
         return actuate;
     }
 
     /**
      * Sets the value of the actuate property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setActuate(String value) {
+    public void setActuate(String value)
+    {
         this.actuate = value;
     }
 

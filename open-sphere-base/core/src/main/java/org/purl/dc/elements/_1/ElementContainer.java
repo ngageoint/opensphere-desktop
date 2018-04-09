@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 01:49:34 PM MST 
 //
 
-
 package org.purl.dc.elements._1;
 
 import java.util.ArrayList;
@@ -17,14 +16,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * This type definition is included as a convenience for schema authors 
- *       who need a container element for all of the DC elements.
+ * This type definition is included as a convenience for schema authors who need
+ * a container element for all of the DC elements.
  * 
- * <p>Java class for elementContainer complex type.
+ * <p>
+ * Java class for elementContainer complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="elementContainer">
@@ -41,10 +42,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "elementContainer", propOrder = {
-    "dcElement"
-})
-public class ElementContainer {
+@XmlType(name = "elementContainer", propOrder = { "dcElement" })
+public class ElementContainer
+{
 
     @XmlElementRef(name = "DC-element", namespace = "http://purl.org/dc/elements/1.1/", type = JAXBElement.class)
     protected List<JAXBElement<SimpleLiteral>> dcElement;
@@ -53,15 +53,16 @@ public class ElementContainer {
      * Gets the value of the dcElement property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the dcElement property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the dcElement property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getDCElement().add(newItem);
+     * getDCElement().add(newItem);
      * </pre>
      * 
      * 
@@ -122,8 +123,10 @@ public class ElementContainer {
      * 
      * 
      */
-    public List<JAXBElement<SimpleLiteral>> getDCElement() {
-        if (dcElement == null) {
+    public List<JAXBElement<SimpleLiteral>> getDCElement()
+    {
+        if (dcElement == null)
+        {
             dcElement = new ArrayList<JAXBElement<SimpleLiteral>>();
         }
         return this.dcElement;

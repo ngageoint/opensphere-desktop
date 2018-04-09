@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,17 +12,19 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *         A "SymbolizerType" is an abstract type for encoding the graphical
- *         properties used to portray geographic information.  Concrete symbol
- *         types are derived from this base type.
- *       
+ * A "SymbolizerType" is an abstract type for encoding the graphical properties
+ * used to portray geographic information. Concrete symbol types are derived
+ * from this base type.
  * 
- * <p>Java class for SymbolizerType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for SymbolizerType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SymbolizerType">
@@ -38,14 +39,9 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SymbolizerType")
-@XmlSeeAlso({
-    LineSymbolizer.class,
-    PointSymbolizer.class,
-    PolygonSymbolizer.class,
-    TextSymbolizer.class,
-    RasterSymbolizer.class
-})
-public abstract class SymbolizerType {
-
+@XmlSeeAlso({ LineSymbolizer.class, PointSymbolizer.class, PolygonSymbolizer.class, TextSymbolizer.class,
+    RasterSymbolizer.class })
+public abstract class SymbolizerType
+{
 
 }

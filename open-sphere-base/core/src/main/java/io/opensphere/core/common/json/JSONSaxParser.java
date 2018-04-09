@@ -83,9 +83,9 @@ public class JSONSaxParser
      * Parses a text file filled with JSON content.
      *
      * @param JSONFile - the file to open.
-     * @throws IOException - if an error is encountered opening or reading the
+     * @throws IOException - if  an error is encountered opening or reading the
      *             file
-     * @throws JSONSaxParseException - if a fatal exception is encountered
+     * @throws JSONSaxParseException - if  a fatal exception is encountered
      *             halting the parsing engine.
      */
     public void parse(File JSONFile) throws IOException, JSONSaxParseException
@@ -98,7 +98,7 @@ public class JSONSaxParser
      *
      * @param JSONtext the JSON format text to be parsed.
      * @return true if the string was parsed, false if there was an error
-     * @throws JSONSaxParseException - if a fatal exception is encountered
+     * @throws JSONSaxParseException - if  a fatal exception is encountered
      *             halting the parsing engine.
      */
     public boolean parse(String JSONtext) throws JSONSaxParseException
@@ -120,9 +120,9 @@ public class JSONSaxParser
      * stream will be parsed until it ends.
      *
      * @param jsonInputStream - the input stream to parse.
-     * @throws IOException - if an error is encountered processing the
+     * @throws IOException - if  an error is encountered processing the
      *             {@link InputStream}
-     * @throws JSONSaxParseException - if a fatal exception is encountered
+     * @throws JSONSaxParseException - if  a fatal exception is encountered
      *             halting the parsing engine.
      */
     public void parse(InputStream jsonInputStream) throws IOException, JSONSaxParseException
@@ -134,9 +134,9 @@ public class JSONSaxParser
      * Parses the content from a Reader of only JSON format content.
      *
      * @param jsonReader - the {@link Reader} from which to read the content.
-     * @throws IOException - if an error is encountered reading content from the
+     * @throws IOException - if  an error is encountered reading content from the
      *             Reader.
-     * @throws JSONSaxParseException - if a fatal exception is encountered
+     * @throws JSONSaxParseException - if  a fatal exception is encountered
      *             halting the parsing engine.
      */
     public void parse(Reader jsonReader) throws IOException, JSONSaxParseException
@@ -251,7 +251,7 @@ public class JSONSaxParser
          * @param numChars - the number of characters in the buffer to be
          *            processed
          * @param buff - the character buffer.
-         * @throws JSONSaxParseException if a fatal error is encountered
+         * @throws JSONSaxParseException if a   fatal error is encountered
          *             processing the document.
          */
         public void process(int numChars, char[] buff) throws JSONSaxParseException

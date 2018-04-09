@@ -252,7 +252,8 @@ public class ProcrastinatingExecutorTest
         if (StringUtils.isEmpty(System.getenv("SLOW_MACHINE")))
         {
             // Use the FixedThreadPoolExecutor for this test because the
-            // execution latency of ThreadPoolExecutor can get up to several milliseconds
+            // execution latency of ThreadPoolExecutor can get up to several
+            // milliseconds
             // when tasks are submitted to it rapidly.
             ExecutorService executor = new FixedThreadPoolExecutor(1);
             ProcrastinatingExecutor procrastinator = new ProcrastinatingExecutor(executor);
@@ -262,7 +263,8 @@ public class ProcrastinatingExecutorTest
             final AtomicLong lastSubmission = new AtomicLong();
 
             // Submit tasks in quick succession. Some of them will get cancelled
-            // if they overlap, but the interval between executions should remain small.
+            // if they overlap, but the interval between executions should
+            // remain small.
 
             int minDelayMilliseconds = 0;
             int maxDelayMilliseconds = 30;

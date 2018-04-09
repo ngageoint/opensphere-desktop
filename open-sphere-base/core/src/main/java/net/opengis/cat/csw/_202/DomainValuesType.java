@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,11 +15,13 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
 
-
 /**
- * <p>Java class for DomainValuesType complex type.
+ * <p>
+ * Java class for DomainValuesType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DomainValuesType">
@@ -47,29 +48,31 @@ import javax.xml.namespace.QName;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DomainValuesType", propOrder = {
-    "propertyName",
-    "parameterName",
-    "listOfValues",
-    "conceptualScheme",
-    "rangeOfValues"
-})
-public class DomainValuesType {
+@XmlType(name = "DomainValuesType", propOrder = { "propertyName", "parameterName", "listOfValues", "conceptualScheme",
+    "rangeOfValues" })
+public class DomainValuesType
+{
 
     @XmlElement(name = "PropertyName")
     @XmlSchemaType(name = "anyURI")
     protected String propertyName;
+
     @XmlElement(name = "ParameterName")
     @XmlSchemaType(name = "anyURI")
     protected String parameterName;
+
     @XmlElement(name = "ListOfValues")
     protected ListOfValuesType listOfValues;
+
     @XmlElement(name = "ConceptualScheme")
     protected ConceptualSchemeType conceptualScheme;
+
     @XmlElement(name = "RangeOfValues")
     protected RangeOfValuesType rangeOfValues;
+
     @XmlAttribute(required = true)
     protected QName type;
+
     @XmlAttribute
     @XmlSchemaType(name = "anyURI")
     protected String uom;
@@ -77,168 +80,154 @@ public class DomainValuesType {
     /**
      * Gets the value of the propertyName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getPropertyName() {
+    public String getPropertyName()
+    {
         return propertyName;
     }
 
     /**
      * Sets the value of the propertyName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setPropertyName(String value) {
+    public void setPropertyName(String value)
+    {
         this.propertyName = value;
     }
 
     /**
      * Gets the value of the parameterName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getParameterName() {
+    public String getParameterName()
+    {
         return parameterName;
     }
 
     /**
      * Sets the value of the parameterName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setParameterName(String value) {
+    public void setParameterName(String value)
+    {
         this.parameterName = value;
     }
 
     /**
      * Gets the value of the listOfValues property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ListOfValuesType }
-     *     
+     * @return possible object is {@link ListOfValuesType }
+     * 
      */
-    public ListOfValuesType getListOfValues() {
+    public ListOfValuesType getListOfValues()
+    {
         return listOfValues;
     }
 
     /**
      * Sets the value of the listOfValues property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ListOfValuesType }
-     *     
+     * @param value allowed object is {@link ListOfValuesType }
+     * 
      */
-    public void setListOfValues(ListOfValuesType value) {
+    public void setListOfValues(ListOfValuesType value)
+    {
         this.listOfValues = value;
     }
 
     /**
      * Gets the value of the conceptualScheme property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ConceptualSchemeType }
-     *     
+     * @return possible object is {@link ConceptualSchemeType }
+     * 
      */
-    public ConceptualSchemeType getConceptualScheme() {
+    public ConceptualSchemeType getConceptualScheme()
+    {
         return conceptualScheme;
     }
 
     /**
      * Sets the value of the conceptualScheme property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ConceptualSchemeType }
-     *     
+     * @param value allowed object is {@link ConceptualSchemeType }
+     * 
      */
-    public void setConceptualScheme(ConceptualSchemeType value) {
+    public void setConceptualScheme(ConceptualSchemeType value)
+    {
         this.conceptualScheme = value;
     }
 
     /**
      * Gets the value of the rangeOfValues property.
      * 
-     * @return
-     *     possible object is
-     *     {@link RangeOfValuesType }
-     *     
+     * @return possible object is {@link RangeOfValuesType }
+     * 
      */
-    public RangeOfValuesType getRangeOfValues() {
+    public RangeOfValuesType getRangeOfValues()
+    {
         return rangeOfValues;
     }
 
     /**
      * Sets the value of the rangeOfValues property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link RangeOfValuesType }
-     *     
+     * @param value allowed object is {@link RangeOfValuesType }
+     * 
      */
-    public void setRangeOfValues(RangeOfValuesType value) {
+    public void setRangeOfValues(RangeOfValuesType value)
+    {
         this.rangeOfValues = value;
     }
 
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link QName }
-     *     
+     * @return possible object is {@link QName }
+     * 
      */
-    public QName getType() {
+    public QName getType()
+    {
         return type;
     }
 
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link QName }
-     *     
+     * @param value allowed object is {@link QName }
+     * 
      */
-    public void setType(QName value) {
+    public void setType(QName value)
+    {
         this.type = value;
     }
 
     /**
      * Gets the value of the uom property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getUom() {
+    public String getUom()
+    {
         return uom;
     }
 
     /**
      * Sets the value of the uom property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setUom(String value) {
+    public void setUom(String value)
+    {
         this.uom = value;
     }
 

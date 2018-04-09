@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.ows._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,13 +13,21 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Complete reference to a remote resource that needs to be retrieved from an OWS using an XML-encoded operation request. This element shall be used, within an InputData or Manifest element that is used for input data, when that input data needs to be retrieved from another web service using a XML-encoded OWS operation request. This element shall not be used for local payload input data or for requesting the resource from a web server using HTTP Get. 
+ * Complete reference to a remote resource that needs to be retrieved from an
+ * OWS using an XML-encoded operation request. This element shall be used,
+ * within an InputData or Manifest element that is used for input data, when
+ * that input data needs to be retrieved from another web service using a
+ * XML-encoded OWS operation request. This element shall not be used for local
+ * payload input data or for requesting the resource from a web server using
+ * HTTP Get.
  * 
- * <p>Java class for ServiceReferenceType complex type.
+ * <p>
+ * Java class for ServiceReferenceType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ServiceReferenceType">
@@ -38,16 +45,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ServiceReferenceType", propOrder = {
-    "requestMessage",
-    "requestMessageReference"
-})
-public class ServiceReferenceType
-    extends ReferenceType
+@XmlType(name = "ServiceReferenceType", propOrder = { "requestMessage", "requestMessageReference" })
+public class ServiceReferenceType extends ReferenceType
 {
 
     @XmlElement(name = "RequestMessage")
     protected Object requestMessage;
+
     @XmlElement(name = "RequestMessageReference")
     @XmlSchemaType(name = "anyURI")
     protected String requestMessageReference;
@@ -55,48 +59,44 @@ public class ServiceReferenceType
     /**
      * Gets the value of the requestMessage property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
+     * @return possible object is {@link Object }
+     * 
      */
-    public Object getRequestMessage() {
+    public Object getRequestMessage()
+    {
         return requestMessage;
     }
 
     /**
      * Sets the value of the requestMessage property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
+     * @param value allowed object is {@link Object }
+     * 
      */
-    public void setRequestMessage(Object value) {
+    public void setRequestMessage(Object value)
+    {
         this.requestMessage = value;
     }
 
     /**
      * Gets the value of the requestMessageReference property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getRequestMessageReference() {
+    public String getRequestMessageReference()
+    {
         return requestMessageReference;
     }
 
     /**
      * Sets the value of the requestMessageReference property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setRequestMessageReference(String value) {
+    public void setRequestMessageReference(String value)
+    {
         this.requestMessageReference = value;
     }
 

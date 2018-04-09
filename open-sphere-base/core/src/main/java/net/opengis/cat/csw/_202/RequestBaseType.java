@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,16 +13,18 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *             Base type for all request messages except GetCapabilities. The 
- *             attributes identify the relevant service type and version.
- *          
+ * Base type for all request messages except GetCapabilities. The attributes
+ * identify the relevant service type and version.
  * 
- * <p>Java class for RequestBaseType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for RequestBaseType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="RequestBaseType">
@@ -40,31 +41,30 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RequestBaseType")
-@XmlSeeAlso({
-    GetDomainType.class,
-    DescribeRecordType.class,
-    GetRecordByIdType.class,
-    GetRecordsType.class
-})
-public abstract class RequestBaseType {
+@XmlSeeAlso({ GetDomainType.class, DescribeRecordType.class, GetRecordByIdType.class, GetRecordsType.class })
+public abstract class RequestBaseType
+{
 
     @XmlAttribute(required = true)
     protected String service;
+
     @XmlAttribute(required = true)
     protected String version;
 
     /**
      * Gets the value of the service property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getService() {
-        if (service == null) {
+    public String getService()
+    {
+        if (service == null)
+        {
             return "CSW";
-        } else {
+        }
+        else
+        {
             return service;
         }
     }
@@ -72,27 +72,28 @@ public abstract class RequestBaseType {
     /**
      * Sets the value of the service property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setService(String value) {
+    public void setService(String value)
+    {
         this.service = value;
     }
 
     /**
      * Gets the value of the version property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getVersion() {
-        if (version == null) {
+    public String getVersion()
+    {
+        if (version == null)
+        {
             return "2.0.2";
-        } else {
+        }
+        else
+        {
             return version;
         }
     }
@@ -100,12 +101,11 @@ public abstract class RequestBaseType {
     /**
      * Sets the value of the version property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setVersion(String value) {
+    public void setVersion(String value)
+    {
         this.version = value;
     }
 

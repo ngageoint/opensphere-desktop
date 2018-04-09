@@ -5,42 +5,40 @@
 // Generated on: 2010.01.26 at 12:24:08 PM MST 
 //
 
-
 package net.opengis.ogc._100;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
-
 /**
- * This object contains factory methods for each 
- * Java content interface and Java element interface 
- * generated in the net.opengis.ogc._100 package. 
- * <p>An ObjectFactory allows you to programatically 
- * construct new instances of the Java representation 
- * for XML content. The Java representation of XML 
- * content can consist of schema derived interfaces 
- * and classes representing the binding of schema 
- * type definitions, element declarations and model 
- * groups.  Factory methods for each of these are 
- * provided in this class.
+ * This object contains factory methods for each Java content interface and Java
+ * element interface generated in the net.opengis.ogc._100 package.
+ * <p>
+ * An ObjectFactory allows you to programatically construct new instances of the
+ * Java representation for XML content. The Java representation of XML content
+ * can consist of schema derived interfaces and classes representing the binding
+ * of schema type definitions, element declarations and model groups. Factory
+ * methods for each of these are provided in this class.
  * 
  */
 @XmlRegistry
-public class ObjectFactory {
-
+public class ObjectFactory
+{
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: net.opengis.ogc._100
+     * Create a new ObjectFactory that can be used to create new instances of
+     * schema derived classes for package: net.opengis.ogc._100
      * 
      */
-    public ObjectFactory() {
+    public ObjectFactory()
+    {
     }
 
     /**
      * Create an instance of {@link Equals }
      * 
      */
-    public Equals createEquals() {
+    public Equals createEquals()
+    {
         return new Equals();
     }
 
@@ -48,7 +46,8 @@ public class ObjectFactory {
      * Create an instance of {@link DWithin }
      * 
      */
-    public DWithin createDWithin() {
+    public DWithin createDWithin()
+    {
         return new DWithin();
     }
 
@@ -56,7 +55,8 @@ public class ObjectFactory {
      * Create an instance of {@link ArithmeticOperatorsType }
      * 
      */
-    public ArithmeticOperatorsType createArithmeticOperatorsType() {
+    public ArithmeticOperatorsType createArithmeticOperatorsType()
+    {
         return new ArithmeticOperatorsType();
     }
 
@@ -64,7 +64,8 @@ public class ObjectFactory {
      * Create an instance of {@link Touches }
      * 
      */
-    public Touches createTouches() {
+    public Touches createTouches()
+    {
         return new Touches();
     }
 
@@ -72,7 +73,8 @@ public class ObjectFactory {
      * Create an instance of {@link BBOX }
      * 
      */
-    public BBOX createBBOX() {
+    public BBOX createBBOX()
+    {
         return new BBOX();
     }
 
@@ -80,7 +82,8 @@ public class ObjectFactory {
      * Create an instance of {@link SpatialOperatorsType }
      * 
      */
-    public SpatialOperatorsType createSpatialOperatorsType() {
+    public SpatialOperatorsType createSpatialOperatorsType()
+    {
         return new SpatialOperatorsType();
     }
 
@@ -88,7 +91,8 @@ public class ObjectFactory {
      * Create an instance of {@link NullCheck }
      * 
      */
-    public NullCheck createNullCheck() {
+    public NullCheck createNullCheck()
+    {
         return new NullCheck();
     }
 
@@ -96,7 +100,8 @@ public class ObjectFactory {
      * Create an instance of {@link SimpleComparisons }
      * 
      */
-    public SimpleComparisons createSimpleComparisons() {
+    public SimpleComparisons createSimpleComparisons()
+    {
         return new SimpleComparisons();
     }
 
@@ -104,7 +109,8 @@ public class ObjectFactory {
      * Create an instance of {@link Overlaps }
      * 
      */
-    public Overlaps createOverlaps() {
+    public Overlaps createOverlaps()
+    {
         return new Overlaps();
     }
 
@@ -112,7 +118,8 @@ public class ObjectFactory {
      * Create an instance of {@link ServiceExceptionReport }
      * 
      */
-    public ServiceExceptionReport createServiceExceptionReport() {
+    public ServiceExceptionReport createServiceExceptionReport()
+    {
         return new ServiceExceptionReport();
     }
 
@@ -120,7 +127,8 @@ public class ObjectFactory {
      * Create an instance of {@link LogicalOperators }
      * 
      */
-    public LogicalOperators createLogicalOperators() {
+    public LogicalOperators createLogicalOperators()
+    {
         return new LogicalOperators();
     }
 
@@ -128,7 +136,8 @@ public class ObjectFactory {
      * Create an instance of {@link Crosses }
      * 
      */
-    public Crosses createCrosses() {
+    public Crosses createCrosses()
+    {
         return new Crosses();
     }
 
@@ -136,7 +145,8 @@ public class ObjectFactory {
      * Create an instance of {@link FilterCapabilities }
      * 
      */
-    public FilterCapabilities createFilterCapabilities() {
+    public FilterCapabilities createFilterCapabilities()
+    {
         return new FilterCapabilities();
     }
 
@@ -144,7 +154,8 @@ public class ObjectFactory {
      * Create an instance of {@link Like }
      * 
      */
-    public Like createLike() {
+    public Like createLike()
+    {
         return new Like();
     }
 
@@ -152,7 +163,8 @@ public class ObjectFactory {
      * Create an instance of {@link Within }
      * 
      */
-    public Within createWithin() {
+    public Within createWithin()
+    {
         return new Within();
     }
 
@@ -160,7 +172,8 @@ public class ObjectFactory {
      * Create an instance of {@link ScalarCapabilitiesType }
      * 
      */
-    public ScalarCapabilitiesType createScalarCapabilitiesType() {
+    public ScalarCapabilitiesType createScalarCapabilitiesType()
+    {
         return new ScalarCapabilitiesType();
     }
 
@@ -168,7 +181,8 @@ public class ObjectFactory {
      * Create an instance of {@link SpatialCapabilitiesType }
      * 
      */
-    public SpatialCapabilitiesType createSpatialCapabilitiesType() {
+    public SpatialCapabilitiesType createSpatialCapabilitiesType()
+    {
         return new SpatialCapabilitiesType();
     }
 
@@ -176,7 +190,8 @@ public class ObjectFactory {
      * Create an instance of {@link Contains }
      * 
      */
-    public Contains createContains() {
+    public Contains createContains()
+    {
         return new Contains();
     }
 
@@ -184,7 +199,8 @@ public class ObjectFactory {
      * Create an instance of {@link Beyond }
      * 
      */
-    public Beyond createBeyond() {
+    public Beyond createBeyond()
+    {
         return new Beyond();
     }
 
@@ -192,7 +208,8 @@ public class ObjectFactory {
      * Create an instance of {@link Intersect }
      * 
      */
-    public Intersect createIntersect() {
+    public Intersect createIntersect()
+    {
         return new Intersect();
     }
 
@@ -200,7 +217,8 @@ public class ObjectFactory {
      * Create an instance of {@link FunctionNamesType }
      * 
      */
-    public FunctionNamesType createFunctionNamesType() {
+    public FunctionNamesType createFunctionNamesType()
+    {
         return new FunctionNamesType();
     }
 
@@ -208,7 +226,8 @@ public class ObjectFactory {
      * Create an instance of {@link FunctionsType }
      * 
      */
-    public FunctionsType createFunctionsType() {
+    public FunctionsType createFunctionsType()
+    {
         return new FunctionsType();
     }
 
@@ -216,7 +235,8 @@ public class ObjectFactory {
      * Create an instance of {@link ComparisonOperatorsType }
      * 
      */
-    public ComparisonOperatorsType createComparisonOperatorsType() {
+    public ComparisonOperatorsType createComparisonOperatorsType()
+    {
         return new ComparisonOperatorsType();
     }
 
@@ -224,7 +244,8 @@ public class ObjectFactory {
      * Create an instance of {@link ServiceExceptionType }
      * 
      */
-    public ServiceExceptionType createServiceExceptionType() {
+    public ServiceExceptionType createServiceExceptionType()
+    {
         return new ServiceExceptionType();
     }
 
@@ -232,7 +253,8 @@ public class ObjectFactory {
      * Create an instance of {@link FunctionNameType }
      * 
      */
-    public FunctionNameType createFunctionNameType() {
+    public FunctionNameType createFunctionNameType()
+    {
         return new FunctionNameType();
     }
 
@@ -240,7 +262,8 @@ public class ObjectFactory {
      * Create an instance of {@link SimpleArithmetic }
      * 
      */
-    public SimpleArithmetic createSimpleArithmetic() {
+    public SimpleArithmetic createSimpleArithmetic()
+    {
         return new SimpleArithmetic();
     }
 
@@ -248,7 +271,8 @@ public class ObjectFactory {
      * Create an instance of {@link Disjoint }
      * 
      */
-    public Disjoint createDisjoint() {
+    public Disjoint createDisjoint()
+    {
         return new Disjoint();
     }
 
@@ -256,7 +280,8 @@ public class ObjectFactory {
      * Create an instance of {@link Between }
      * 
      */
-    public Between createBetween() {
+    public Between createBetween()
+    {
         return new Between();
     }
 

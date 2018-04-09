@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import java.math.BigInteger;
@@ -19,18 +18,19 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.ogc._110.GmlObjectIdType;
 
-
 /**
  * 
- *             A GetGmlObjectType element contains exactly one GmlObjectId.  
- *             The value of the gml:id attribute on that GmlObjectId is used 
- *             as a unique key to retrieve the complex element with a 
- *             gml:id attribute with the same value.  
- *          
+ * A GetGmlObjectType element contains exactly one GmlObjectId. The value of the
+ * gml:id attribute on that GmlObjectId is used as a unique key to retrieve the
+ * complex element with a gml:id attribute with the same value.
  * 
- * <p>Java class for GetGmlObjectType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for GetGmlObjectType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GetGmlObjectType">
@@ -50,19 +50,19 @@ import net.opengis.ogc._110.GmlObjectIdType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetGmlObjectType", propOrder = {
-    "gmlObjectId"
-})
-public class GetGmlObjectType
-    extends BaseRequestType
+@XmlType(name = "GetGmlObjectType", propOrder = { "gmlObjectId" })
+public class GetGmlObjectType extends BaseRequestType
 {
 
     @XmlElement(name = "GmlObjectId", namespace = "http://www.opengis.net/ogc", required = true)
     protected GmlObjectIdType gmlObjectId;
+
     @XmlAttribute(name = "outputFormat")
     protected String outputFormat;
+
     @XmlAttribute(name = "traverseXlinkDepth", required = true)
     protected String traverseXlinkDepth;
+
     @XmlAttribute(name = "traverseXlinkExpiry")
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger traverseXlinkExpiry;
@@ -70,39 +70,39 @@ public class GetGmlObjectType
     /**
      * Gets the value of the gmlObjectId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link GmlObjectIdType }
-     *     
+     * @return possible object is {@link GmlObjectIdType }
+     * 
      */
-    public GmlObjectIdType getGmlObjectId() {
+    public GmlObjectIdType getGmlObjectId()
+    {
         return gmlObjectId;
     }
 
     /**
      * Sets the value of the gmlObjectId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link GmlObjectIdType }
-     *     
+     * @param value allowed object is {@link GmlObjectIdType }
+     * 
      */
-    public void setGmlObjectId(GmlObjectIdType value) {
+    public void setGmlObjectId(GmlObjectIdType value)
+    {
         this.gmlObjectId = value;
     }
 
     /**
      * Gets the value of the outputFormat property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getOutputFormat() {
-        if (outputFormat == null) {
+    public String getOutputFormat()
+    {
+        if (outputFormat == null)
+        {
             return "GML3";
-        } else {
+        }
+        else
+        {
             return outputFormat;
         }
     }
@@ -110,60 +110,55 @@ public class GetGmlObjectType
     /**
      * Sets the value of the outputFormat property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setOutputFormat(String value) {
+    public void setOutputFormat(String value)
+    {
         this.outputFormat = value;
     }
 
     /**
      * Gets the value of the traverseXlinkDepth property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTraverseXlinkDepth() {
+    public String getTraverseXlinkDepth()
+    {
         return traverseXlinkDepth;
     }
 
     /**
      * Sets the value of the traverseXlinkDepth property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTraverseXlinkDepth(String value) {
+    public void setTraverseXlinkDepth(String value)
+    {
         this.traverseXlinkDepth = value;
     }
 
     /**
      * Gets the value of the traverseXlinkExpiry property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getTraverseXlinkExpiry() {
+    public BigInteger getTraverseXlinkExpiry()
+    {
         return traverseXlinkExpiry;
     }
 
     /**
      * Sets the value of the traverseXlinkExpiry property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setTraverseXlinkExpiry(BigInteger value) {
+    public void setTraverseXlinkExpiry(BigInteger value)
+    {
         this.traverseXlinkExpiry = value;
     }
 

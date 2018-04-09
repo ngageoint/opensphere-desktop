@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.ogc._100t;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for FilterType complex type.
+ * <p>
+ * Java class for FilterType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="FilterType">
@@ -43,169 +44,188 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "spatialOps",
-    "comparisonOps",
-    "logicOps",
-    "featureId"
-})
-@XmlSeeAlso({
-    FilterType.class
-})
-public class OriginalFilterType {
+@XmlType(name = "", propOrder = { "spatialOps", "comparisonOps", "logicOps", "featureId" })
+@XmlSeeAlso({ FilterType.class })
+public class OriginalFilterType
+{
 
     @XmlElementRef(name = "spatialOps", namespace = "http://www.opengis.net/ogc", type = JAXBElement.class, required = false)
     protected JAXBElement<? extends SpatialOpsType> spatialOps;
+
     @XmlElementRef(name = "comparisonOps", namespace = "http://www.opengis.net/ogc", type = JAXBElement.class, required = false)
     protected JAXBElement<? extends ComparisonOpsType> comparisonOps;
+
     @XmlElementRef(name = "logicOps", namespace = "http://www.opengis.net/ogc", type = JAXBElement.class, required = false)
     protected JAXBElement<? extends LogicOpsType> logicOps;
+
     @XmlElement(name = "FeatureId")
     protected List<FeatureIdType> featureId;
 
     /**
      * Gets the value of the spatialOps property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link DistanceBufferType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinarySpatialOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinarySpatialOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinarySpatialOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link SpatialOpsType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinarySpatialOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinarySpatialOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinarySpatialOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BBOXType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link DistanceBufferType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinarySpatialOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinarySpatialOpType }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement
+     *         }{@code <}{@link DistanceBufferType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link BinarySpatialOpType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link BinarySpatialOpType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link BinarySpatialOpType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link SpatialOpsType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link BinarySpatialOpType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link BinarySpatialOpType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link BinarySpatialOpType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link BBOXType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link DistanceBufferType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link BinarySpatialOpType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link BinarySpatialOpType
+     *         }{@code >}
+     * 
      */
-    public JAXBElement<? extends SpatialOpsType> getSpatialOps() {
+    public JAXBElement<? extends SpatialOpsType> getSpatialOps()
+    {
         return spatialOps;
     }
 
     /**
      * Sets the value of the spatialOps property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link DistanceBufferType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinarySpatialOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinarySpatialOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinarySpatialOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link SpatialOpsType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinarySpatialOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinarySpatialOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinarySpatialOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BBOXType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link DistanceBufferType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinarySpatialOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinarySpatialOpType }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link DistanceBufferType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link BinarySpatialOpType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link BinarySpatialOpType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link BinarySpatialOpType
+     *            }{@code >} {@link JAXBElement }{@code <}{@link SpatialOpsType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link BinarySpatialOpType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link BinarySpatialOpType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link BinarySpatialOpType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link BBOXType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link DistanceBufferType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link BinarySpatialOpType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link BinarySpatialOpType
+     *            }{@code >}
+     * 
      */
-    public void setSpatialOps(JAXBElement<? extends SpatialOpsType> value) {
+    public void setSpatialOps(JAXBElement<? extends SpatialOpsType> value)
+    {
         this.spatialOps = value;
     }
 
-    public boolean isSetSpatialOps() {
-        return (this.spatialOps!= null);
+    public boolean isSetSpatialOps()
+    {
+        return (this.spatialOps != null);
     }
 
     /**
      * Gets the value of the comparisonOps property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link BinaryComparisonOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryComparisonOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryComparisonOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ComparisonOpsType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryComparisonOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PropertyIsLikeType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryComparisonOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PropertyIsNullType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PropertyIsBetweenType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryComparisonOpType }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement
+     *         }{@code <}{@link BinaryComparisonOpType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link BinaryComparisonOpType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link BinaryComparisonOpType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link ComparisonOpsType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link BinaryComparisonOpType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link PropertyIsLikeType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link BinaryComparisonOpType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link PropertyIsNullType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link PropertyIsBetweenType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link BinaryComparisonOpType }{@code >}
+     * 
      */
-    public JAXBElement<? extends ComparisonOpsType> getComparisonOps() {
+    public JAXBElement<? extends ComparisonOpsType> getComparisonOps()
+    {
         return comparisonOps;
     }
 
     /**
      * Sets the value of the comparisonOps property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link BinaryComparisonOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryComparisonOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryComparisonOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ComparisonOpsType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryComparisonOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PropertyIsLikeType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryComparisonOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PropertyIsNullType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PropertyIsBetweenType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryComparisonOpType }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link BinaryComparisonOpType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link BinaryComparisonOpType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link BinaryComparisonOpType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link ComparisonOpsType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link BinaryComparisonOpType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link PropertyIsLikeType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link BinaryComparisonOpType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link PropertyIsNullType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link PropertyIsBetweenType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link BinaryComparisonOpType
+     *            }{@code >}
+     * 
      */
-    public void setComparisonOps(JAXBElement<? extends ComparisonOpsType> value) {
+    public void setComparisonOps(JAXBElement<? extends ComparisonOpsType> value)
+    {
         this.comparisonOps = value;
     }
 
-    public boolean isSetComparisonOps() {
-        return (this.comparisonOps!= null);
+    public boolean isSetComparisonOps()
+    {
+        return (this.comparisonOps != null);
     }
 
     /**
      * Gets the value of the logicOps property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link UnaryLogicOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryLogicOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryLogicOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link LogicOpsType }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement
+     *         }{@code <}{@link UnaryLogicOpType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link BinaryLogicOpType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link BinaryLogicOpType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link LogicOpsType }{@code >}
+     * 
      */
-    public JAXBElement<? extends LogicOpsType> getLogicOps() {
+    public JAXBElement<? extends LogicOpsType> getLogicOps()
+    {
         return logicOps;
     }
 
     /**
      * Sets the value of the logicOps property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link UnaryLogicOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryLogicOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryLogicOpType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link LogicOpsType }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link UnaryLogicOpType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link BinaryLogicOpType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link BinaryLogicOpType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link LogicOpsType }{@code >}
+     * 
      */
-    public void setLogicOps(JAXBElement<? extends LogicOpsType> value) {
+    public void setLogicOps(JAXBElement<? extends LogicOpsType> value)
+    {
         this.logicOps = value;
     }
 
-    public boolean isSetLogicOps() {
-        return (this.logicOps!= null);
+    public boolean isSetLogicOps()
+    {
+        return (this.logicOps != null);
     }
 
     /**
      * Gets the value of the featureId property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the featureId property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the featureId property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getFeatureId().add(newItem);
+     * getFeatureId().add(newItem);
      * </pre>
      * 
      * 
@@ -215,18 +235,22 @@ public class OriginalFilterType {
      * 
      * 
      */
-    public List<FeatureIdType> getFeatureId() {
-        if (featureId == null) {
+    public List<FeatureIdType> getFeatureId()
+    {
+        if (featureId == null)
+        {
             featureId = new ArrayList<FeatureIdType>();
         }
         return this.featureId;
     }
 
-    public boolean isSetFeatureId() {
-        return ((this.featureId!= null)&&(!this.featureId.isEmpty()));
+    public boolean isSetFeatureId()
+    {
+        return ((this.featureId != null) && (!this.featureId.isEmpty()));
     }
 
-    public void unsetFeatureId() {
+    public void unsetFeatureId()
+    {
         this.featureId = null;
     }
 

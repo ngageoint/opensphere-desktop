@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.gml._212;
 
 import java.math.BigDecimal;
@@ -15,15 +14,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *         Represents a coordinate tuple in one, two, or three dimensions.
- *       
+ * Represents a coordinate tuple in one, two, or three dimensions.
  * 
- * <p>Java class for CoordType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for CoordType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CoordType">
@@ -42,102 +43,98 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CoordType", propOrder = {
-    "x",
-    "y",
-    "z"
-})
-public class CoordType {
+@XmlType(name = "CoordType", propOrder = { "x", "y", "z" })
+public class CoordType
+{
 
     @XmlElement(name = "X", required = true)
     protected BigDecimal x;
+
     @XmlElement(name = "Y")
     protected BigDecimal y;
+
     @XmlElement(name = "Z")
     protected BigDecimal z;
 
     /**
      * Gets the value of the x property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     * @return possible object is {@link BigDecimal }
+     * 
      */
-    public BigDecimal getX() {
+    public BigDecimal getX()
+    {
         return x;
     }
 
     /**
      * Sets the value of the x property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     * @param value allowed object is {@link BigDecimal }
+     * 
      */
-    public void setX(BigDecimal value) {
+    public void setX(BigDecimal value)
+    {
         this.x = value;
     }
 
-    public boolean isSetX() {
-        return (this.x!= null);
+    public boolean isSetX()
+    {
+        return (this.x != null);
     }
 
     /**
      * Gets the value of the y property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     * @return possible object is {@link BigDecimal }
+     * 
      */
-    public BigDecimal getY() {
+    public BigDecimal getY()
+    {
         return y;
     }
 
     /**
      * Sets the value of the y property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     * @param value allowed object is {@link BigDecimal }
+     * 
      */
-    public void setY(BigDecimal value) {
+    public void setY(BigDecimal value)
+    {
         this.y = value;
     }
 
-    public boolean isSetY() {
-        return (this.y!= null);
+    public boolean isSetY()
+    {
+        return (this.y != null);
     }
 
     /**
      * Gets the value of the z property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     * @return possible object is {@link BigDecimal }
+     * 
      */
-    public BigDecimal getZ() {
+    public BigDecimal getZ()
+    {
         return z;
     }
 
     /**
      * Sets the value of the z property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     * @param value allowed object is {@link BigDecimal }
+     * 
      */
-    public void setZ(BigDecimal value) {
+    public void setZ(BigDecimal value)
+    {
         this.z = value;
     }
 
-    public boolean isSetZ() {
-        return (this.z!= null);
+    public boolean isSetZ()
+    {
+        return (this.z != null);
     }
 
 }

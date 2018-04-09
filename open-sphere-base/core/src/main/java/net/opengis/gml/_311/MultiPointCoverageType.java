@@ -5,20 +5,21 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * A discrete coverage type whose domain is defined by a collection of point
  * 
- * <p>Java class for MultiPointCoverageType complex type.
+ * <p>
+ * Java class for MultiPointCoverageType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="MultiPointCoverageType">
@@ -40,9 +41,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MultiPointCoverageType")
-public class MultiPointCoverageType
-    extends AbstractDiscreteCoverageType
+public class MultiPointCoverageType extends AbstractDiscreteCoverageType
 {
-
 
 }

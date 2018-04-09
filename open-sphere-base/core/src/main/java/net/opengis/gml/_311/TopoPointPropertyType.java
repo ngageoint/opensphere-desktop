@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for TopoPointPropertyType complex type.
+ * <p>
+ * Java class for TopoPointPropertyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TopoPointPropertyType">
@@ -34,10 +35,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TopoPointPropertyType", propOrder = {
-    "topoPoint"
-})
-public class TopoPointPropertyType {
+@XmlType(name = "TopoPointPropertyType", propOrder = { "topoPoint" })
+public class TopoPointPropertyType
+{
 
     @XmlElement(name = "TopoPoint", required = true)
     protected TopoPointType topoPoint;
@@ -45,24 +45,22 @@ public class TopoPointPropertyType {
     /**
      * Gets the value of the topoPoint property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TopoPointType }
-     *     
+     * @return possible object is {@link TopoPointType }
+     * 
      */
-    public TopoPointType getTopoPoint() {
+    public TopoPointType getTopoPoint()
+    {
         return topoPoint;
     }
 
     /**
      * Sets the value of the topoPoint property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TopoPointType }
-     *     
+     * @param value allowed object is {@link TopoPointType }
+     * 
      */
-    public void setTopoPoint(TopoPointType value) {
+    public void setTopoPoint(TopoPointType value)
+    {
         this.topoPoint = value;
     }
 

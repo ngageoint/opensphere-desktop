@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * <p>Java class for SimpleDataType complex type.
+ * <p>
+ * Java class for SimpleDataType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SimpleDataType">
@@ -33,70 +34,68 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SimpleDataType", propOrder = {
-    "value"
-})
-public class SimpleDataType {
+@XmlType(name = "SimpleDataType", propOrder = { "value" })
+public class SimpleDataType
+{
 
     @XmlValue
     protected String value;
+
     @XmlAttribute(name = "name", required = true)
     protected String name;
 
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getValue() {
+    public String getValue()
+    {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setValue(String value) {
+    public void setValue(String value)
+    {
         this.value = value;
     }
 
-    public boolean isSetValue() {
-        return (this.value!= null);
+    public boolean isSetValue()
+    {
+        return (this.value != null);
     }
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
-    public boolean isSetName() {
-        return (this.name!= null);
+    public boolean isSetName()
+    {
+        return (this.name != null);
     }
 
 }

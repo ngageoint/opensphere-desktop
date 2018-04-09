@@ -5,19 +5,21 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for OperationType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for OperationType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="OperationType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -34,33 +36,34 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "OperationType")
 @XmlEnum
-public enum OperationType {
+public enum OperationType
+{
 
     @XmlEnumValue("Insert")
-    INSERT("Insert"),
-    @XmlEnumValue("Update")
-    UPDATE("Update"),
-    @XmlEnumValue("Delete")
-    DELETE("Delete"),
-    @XmlEnumValue("Query")
-    QUERY("Query"),
-    @XmlEnumValue("Lock")
-    LOCK("Lock"),
-    @XmlEnumValue("GetGmlObject")
+    INSERT("Insert"), @XmlEnumValue("Update")
+    UPDATE("Update"), @XmlEnumValue("Delete")
+    DELETE("Delete"), @XmlEnumValue("Query")
+    QUERY("Query"), @XmlEnumValue("Lock")
+    LOCK("Lock"), @XmlEnumValue("GetGmlObject")
     GET_GML_OBJECT("GetGmlObject");
     private final String value;
 
-    OperationType(String v) {
+    OperationType(String v)
+    {
         value = v;
     }
 
-    public String value() {
+    public String value()
+    {
         return value;
     }
 
-    public static OperationType fromValue(String v) {
-        for (OperationType c: OperationType.values()) {
-            if (c.value.equals(v)) {
+    public static OperationType fromValue(String v)
+    {
+        for (OperationType c : OperationType.values())
+        {
+            if (c.value.equals(v))
+            {
                 return c;
             }
         }

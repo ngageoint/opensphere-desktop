@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.w3c.dom.Element;
 
-
 /**
- * <p>Java class for ExtendedDataType complex type.
+ * <p>
+ * Java class for ExtendedDataType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ExtendedDataType">
@@ -42,17 +43,16 @@ import org.w3c.dom.Element;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ExtendedDataType", propOrder = {
-    "data",
-    "schemaData",
-    "any"
-})
-public class ExtendedDataType {
+@XmlType(name = "ExtendedDataType", propOrder = { "data", "schemaData", "any" })
+public class ExtendedDataType
+{
 
     @XmlElement(name = "Data")
     protected List<DataType> data;
+
     @XmlElement(name = "SchemaData")
     protected List<SchemaDataType> schemaData;
+
     @XmlAnyElement(lax = true)
     protected List<Object> any;
 
@@ -60,36 +60,41 @@ public class ExtendedDataType {
      * Gets the value of the data property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the data property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the data property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getData().add(newItem);
+     * getData().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link DataType }
+     * Objects of the following type(s) are allowed in the list {@link DataType
+     * }
      * 
      * 
      */
-    public List<DataType> getData() {
-        if (data == null) {
+    public List<DataType> getData()
+    {
+        if (data == null)
+        {
             data = new ArrayList<DataType>();
         }
         return this.data;
     }
 
-    public boolean isSetData() {
-        return ((this.data!= null)&&(!this.data.isEmpty()));
+    public boolean isSetData()
+    {
+        return ((this.data != null) && (!this.data.isEmpty()));
     }
 
-    public void unsetData() {
+    public void unsetData()
+    {
         this.data = null;
     }
 
@@ -97,15 +102,16 @@ public class ExtendedDataType {
      * Gets the value of the schemaData property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the schemaData property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the schemaData property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSchemaData().add(newItem);
+     * getSchemaData().add(newItem);
      * </pre>
      * 
      * 
@@ -115,18 +121,22 @@ public class ExtendedDataType {
      * 
      * 
      */
-    public List<SchemaDataType> getSchemaData() {
-        if (schemaData == null) {
+    public List<SchemaDataType> getSchemaData()
+    {
+        if (schemaData == null)
+        {
             schemaData = new ArrayList<SchemaDataType>();
         }
         return this.schemaData;
     }
 
-    public boolean isSetSchemaData() {
-        return ((this.schemaData!= null)&&(!this.schemaData.isEmpty()));
+    public boolean isSetSchemaData()
+    {
+        return ((this.schemaData != null) && (!this.schemaData.isEmpty()));
     }
 
-    public void unsetSchemaData() {
+    public void unsetSchemaData()
+    {
         this.schemaData = null;
     }
 
@@ -134,37 +144,41 @@ public class ExtendedDataType {
      * Gets the value of the any property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the any property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the any property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAny().add(newItem);
+     * getAny().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Element }
+     * Objects of the following type(s) are allowed in the list {@link Element }
      * {@link Object }
      * 
      * 
      */
-    public List<Object> getAny() {
-        if (any == null) {
+    public List<Object> getAny()
+    {
+        if (any == null)
+        {
             any = new ArrayList<Object>();
         }
         return this.any;
     }
 
-    public boolean isSetAny() {
-        return ((this.any!= null)&&(!this.any.isEmpty()));
+    public boolean isSetAny()
+    {
+        return ((this.any != null) && (!this.any.isEmpty()));
     }
 
-    public void unsetAny() {
+    public void unsetAny()
+    {
         this.any = null;
     }
 

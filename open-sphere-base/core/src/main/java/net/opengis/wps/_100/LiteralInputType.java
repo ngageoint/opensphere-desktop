@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,13 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 import net.opengis.ows._110.AllowedValues;
 import net.opengis.ows._110.AnyValue;
 
-
 /**
- * Description of a process input that consists of a simple literal value (e.g., "2.1"). (Informative: This type is a subset of the ows:UnNamedDomainType defined in owsDomaintype.xsd.) 
+ * Description of a process input that consists of a simple literal value (e.g.,
+ * "2.1"). (Informative: This type is a subset of the ows:UnNamedDomainType
+ * defined in owsDomaintype.xsd.)
  * 
- * <p>Java class for LiteralInputType complex type.
+ * <p>
+ * Java class for LiteralInputType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LiteralInputType">
@@ -40,118 +43,112 @@ import net.opengis.ows._110.AnyValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LiteralInputType", propOrder = {
-    "allowedValues",
-    "anyValue",
-    "valuesReference",
-    "defaultValue"
-})
-public class LiteralInputType
-    extends LiteralOutputType
+@XmlType(name = "LiteralInputType", propOrder = { "allowedValues", "anyValue", "valuesReference", "defaultValue" })
+public class LiteralInputType extends LiteralOutputType
 {
 
     @XmlElement(name = "AllowedValues", namespace = "http://www.opengis.net/ows/1.1")
     protected AllowedValues allowedValues;
+
     @XmlElement(name = "AnyValue", namespace = "http://www.opengis.net/ows/1.1")
     protected AnyValue anyValue;
+
     @XmlElement(name = "ValuesReference", namespace = "")
     protected ValuesReferenceType valuesReference;
+
     @XmlElement(name = "DefaultValue", namespace = "")
     protected String defaultValue;
 
     /**
-     * Indicates that there are a finite set of values and ranges allowed for this input, and contains list of all the valid values and/or ranges of values. Notice that these values and ranges can be displayed to a human client. 
+     * Indicates that there are a finite set of values and ranges allowed for
+     * this input, and contains list of all the valid values and/or ranges of
+     * values. Notice that these values and ranges can be displayed to a human
+     * client.
      * 
-     * @return
-     *     possible object is
-     *     {@link AllowedValues }
-     *     
+     * @return possible object is {@link AllowedValues }
+     * 
      */
-    public AllowedValues getAllowedValues() {
+    public AllowedValues getAllowedValues()
+    {
         return allowedValues;
     }
 
     /**
      * Sets the value of the allowedValues property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link AllowedValues }
-     *     
+     * @param value allowed object is {@link AllowedValues }
+     * 
      */
-    public void setAllowedValues(AllowedValues value) {
+    public void setAllowedValues(AllowedValues value)
+    {
         this.allowedValues = value;
     }
 
     /**
-     * Indicates that any value is allowed for this input. This element shall be included when there are no restrictions, except for data type, on the allowable value of this input. 
+     * Indicates that any value is allowed for this input. This element shall be
+     * included when there are no restrictions, except for data type, on the
+     * allowable value of this input.
      * 
-     * @return
-     *     possible object is
-     *     {@link AnyValue }
-     *     
+     * @return possible object is {@link AnyValue }
+     * 
      */
-    public AnyValue getAnyValue() {
+    public AnyValue getAnyValue()
+    {
         return anyValue;
     }
 
     /**
      * Sets the value of the anyValue property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link AnyValue }
-     *     
+     * @param value allowed object is {@link AnyValue }
+     * 
      */
-    public void setAnyValue(AnyValue value) {
+    public void setAnyValue(AnyValue value)
+    {
         this.anyValue = value;
     }
 
     /**
      * Gets the value of the valuesReference property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ValuesReferenceType }
-     *     
+     * @return possible object is {@link ValuesReferenceType }
+     * 
      */
-    public ValuesReferenceType getValuesReference() {
+    public ValuesReferenceType getValuesReference()
+    {
         return valuesReference;
     }
 
     /**
      * Sets the value of the valuesReference property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ValuesReferenceType }
-     *     
+     * @param value allowed object is {@link ValuesReferenceType }
+     * 
      */
-    public void setValuesReference(ValuesReferenceType value) {
+    public void setValuesReference(ValuesReferenceType value)
+    {
         this.valuesReference = value;
     }
 
     /**
      * Gets the value of the defaultValue property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDefaultValue() {
+    public String getDefaultValue()
+    {
         return defaultValue;
     }
 
     /**
      * Sets the value of the defaultValue property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDefaultValue(String value) {
+    public void setDefaultValue(String value)
+    {
         this.defaultValue = value;
     }
 

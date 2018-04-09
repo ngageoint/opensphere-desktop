@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,13 +13,15 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Reference to an output value that is a web accessible resource. 
+ * Reference to an output value that is a web accessible resource.
  * 
- * <p>Java class for OutputReferenceType complex type.
+ * <p>
+ * Java class for OutputReferenceType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="OutputReferenceType">
@@ -37,16 +38,20 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "OutputReferenceType")
-public class OutputReferenceType {
+public class OutputReferenceType
+{
 
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "anyURI")
     protected String href;
+
     @XmlAttribute
     protected String mimeType;
+
     @XmlAttribute
     @XmlSchemaType(name = "anyURI")
     protected String encoding;
+
     @XmlAttribute
     @XmlSchemaType(name = "anyURI")
     protected String schema;
@@ -54,96 +59,88 @@ public class OutputReferenceType {
     /**
      * Gets the value of the href property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHref() {
+    public String getHref()
+    {
         return href;
     }
 
     /**
      * Sets the value of the href property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHref(String value) {
+    public void setHref(String value)
+    {
         this.href = value;
     }
 
     /**
      * Gets the value of the mimeType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMimeType() {
+    public String getMimeType()
+    {
         return mimeType;
     }
 
     /**
      * Sets the value of the mimeType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMimeType(String value) {
+    public void setMimeType(String value)
+    {
         this.mimeType = value;
     }
 
     /**
      * Gets the value of the encoding property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getEncoding() {
+    public String getEncoding()
+    {
         return encoding;
     }
 
     /**
      * Sets the value of the encoding property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setEncoding(String value) {
+    public void setEncoding(String value)
+    {
         this.encoding = value;
     }
 
     /**
      * Gets the value of the schema property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSchema() {
+    public String getSchema()
+    {
         return schema;
     }
 
     /**
      * Sets the value of the schema property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSchema(String value) {
+    public void setSchema(String value)
+    {
         this.schema = value;
     }
 

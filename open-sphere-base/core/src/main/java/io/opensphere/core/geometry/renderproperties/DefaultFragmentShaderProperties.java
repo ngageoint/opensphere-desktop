@@ -83,7 +83,7 @@ public class DefaultFragmentShaderProperties extends AbstractRenderProperties im
      *
      * @param s The stream.
      * @throws IOException If there is an error.
-     * @throws ClassNotFoundException If a class is not found.
+     * @throws ClassNotFoundException If a   class is not found.
      */
     private void readObject(java.io.ObjectInputStream s) throws IOException, ClassNotFoundException
     {

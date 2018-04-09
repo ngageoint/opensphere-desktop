@@ -85,7 +85,7 @@ public final class InstallDescriptorGenerator
     /**
      * Generates the install descriptor json file.
      *
-     * @throws IOException if an invalid file descriptor was created
+     * @throws IOException if an  invalid file descriptor was created
      */
     private static void generateInstallDescriptor() throws IOException
     {

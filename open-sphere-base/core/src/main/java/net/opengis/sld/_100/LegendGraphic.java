@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -35,11 +36,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "graphic"
-})
+@XmlType(name = "", propOrder = { "graphic" })
 @XmlRootElement(name = "LegendGraphic")
-public class LegendGraphic {
+public class LegendGraphic
+{
 
     @XmlElement(name = "Graphic", required = true)
     protected Graphic graphic;
@@ -47,24 +47,22 @@ public class LegendGraphic {
     /**
      * Gets the value of the graphic property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Graphic }
-     *     
+     * @return possible object is {@link Graphic }
+     * 
      */
-    public Graphic getGraphic() {
+    public Graphic getGraphic()
+    {
         return graphic;
     }
 
     /**
      * Sets the value of the graphic property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Graphic }
-     *     
+     * @param value allowed object is {@link Graphic }
+     * 
      */
-    public void setGraphic(Graphic value) {
+    public void setGraphic(Graphic value)
+    {
         this.graphic = value;
     }
 

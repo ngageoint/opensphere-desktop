@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for RegionType complex type.
+ * <p>
+ * Java class for RegionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="RegionType">
@@ -41,116 +42,115 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RegionType", propOrder = {
-    "latLonAltBox",
-    "lod",
-    "regionSimpleExtensionGroup",
-    "regionObjectExtensionGroup"
-})
-public class RegionType
-    extends AbstractObjectType
+@XmlType(name = "RegionType", propOrder = { "latLonAltBox", "lod", "regionSimpleExtensionGroup", "regionObjectExtensionGroup" })
+public class RegionType extends AbstractObjectType
 {
 
     @XmlElement(name = "LatLonAltBox")
     protected LatLonAltBoxType latLonAltBox;
+
     @XmlElement(name = "Lod")
     protected LodType lod;
+
     @XmlElement(name = "RegionSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> regionSimpleExtensionGroup;
+
     @XmlElement(name = "RegionObjectExtensionGroup")
     protected List<AbstractObjectType> regionObjectExtensionGroup;
 
     /**
      * Gets the value of the latLonAltBox property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LatLonAltBoxType }
-     *     
+     * @return possible object is {@link LatLonAltBoxType }
+     * 
      */
-    public LatLonAltBoxType getLatLonAltBox() {
+    public LatLonAltBoxType getLatLonAltBox()
+    {
         return latLonAltBox;
     }
 
     /**
      * Sets the value of the latLonAltBox property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LatLonAltBoxType }
-     *     
+     * @param value allowed object is {@link LatLonAltBoxType }
+     * 
      */
-    public void setLatLonAltBox(LatLonAltBoxType value) {
+    public void setLatLonAltBox(LatLonAltBoxType value)
+    {
         this.latLonAltBox = value;
     }
 
-    public boolean isSetLatLonAltBox() {
-        return (this.latLonAltBox!= null);
+    public boolean isSetLatLonAltBox()
+    {
+        return (this.latLonAltBox != null);
     }
 
     /**
      * Gets the value of the lod property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LodType }
-     *     
+     * @return possible object is {@link LodType }
+     * 
      */
-    public LodType getLod() {
+    public LodType getLod()
+    {
         return lod;
     }
 
     /**
      * Sets the value of the lod property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LodType }
-     *     
+     * @param value allowed object is {@link LodType }
+     * 
      */
-    public void setLod(LodType value) {
+    public void setLod(LodType value)
+    {
         this.lod = value;
     }
 
-    public boolean isSetLod() {
-        return (this.lod!= null);
+    public boolean isSetLod()
+    {
+        return (this.lod != null);
     }
 
     /**
      * Gets the value of the regionSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the regionSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the regionSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getRegionSimpleExtensionGroup().add(newItem);
+     * getRegionSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getRegionSimpleExtensionGroup() {
-        if (regionSimpleExtensionGroup == null) {
+    public List<Object> getRegionSimpleExtensionGroup()
+    {
+        if (regionSimpleExtensionGroup == null)
+        {
             regionSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.regionSimpleExtensionGroup;
     }
 
-    public boolean isSetRegionSimpleExtensionGroup() {
-        return ((this.regionSimpleExtensionGroup!= null)&&(!this.regionSimpleExtensionGroup.isEmpty()));
+    public boolean isSetRegionSimpleExtensionGroup()
+    {
+        return ((this.regionSimpleExtensionGroup != null) && (!this.regionSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetRegionSimpleExtensionGroup() {
+    public void unsetRegionSimpleExtensionGroup()
+    {
         this.regionSimpleExtensionGroup = null;
     }
 
@@ -158,15 +158,16 @@ public class RegionType
      * Gets the value of the regionObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the regionObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the regionObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getRegionObjectExtensionGroup().add(newItem);
+     * getRegionObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -176,18 +177,22 @@ public class RegionType
      * 
      * 
      */
-    public List<AbstractObjectType> getRegionObjectExtensionGroup() {
-        if (regionObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getRegionObjectExtensionGroup()
+    {
+        if (regionObjectExtensionGroup == null)
+        {
             regionObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.regionObjectExtensionGroup;
     }
 
-    public boolean isSetRegionObjectExtensionGroup() {
-        return ((this.regionObjectExtensionGroup!= null)&&(!this.regionObjectExtensionGroup.isEmpty()));
+    public boolean isSetRegionObjectExtensionGroup()
+    {
+        return ((this.regionObjectExtensionGroup != null) && (!this.regionObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetRegionObjectExtensionGroup() {
+    public void unsetRegionObjectExtensionGroup()
+    {
         this.regionObjectExtensionGroup = null;
     }
 

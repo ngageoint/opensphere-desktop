@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -36,63 +37,58 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "lineSymbolizer",
-    "polygonSymbolizer"
-})
+@XmlType(name = "", propOrder = { "lineSymbolizer", "polygonSymbolizer" })
 @XmlRootElement(name = "ImageOutline")
-public class ImageOutline {
+public class ImageOutline
+{
 
     @XmlElement(name = "LineSymbolizer")
     protected LineSymbolizer lineSymbolizer;
+
     @XmlElement(name = "PolygonSymbolizer")
     protected PolygonSymbolizer polygonSymbolizer;
 
     /**
      * Gets the value of the lineSymbolizer property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LineSymbolizer }
-     *     
+     * @return possible object is {@link LineSymbolizer }
+     * 
      */
-    public LineSymbolizer getLineSymbolizer() {
+    public LineSymbolizer getLineSymbolizer()
+    {
         return lineSymbolizer;
     }
 
     /**
      * Sets the value of the lineSymbolizer property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LineSymbolizer }
-     *     
+     * @param value allowed object is {@link LineSymbolizer }
+     * 
      */
-    public void setLineSymbolizer(LineSymbolizer value) {
+    public void setLineSymbolizer(LineSymbolizer value)
+    {
         this.lineSymbolizer = value;
     }
 
     /**
      * Gets the value of the polygonSymbolizer property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PolygonSymbolizer }
-     *     
+     * @return possible object is {@link PolygonSymbolizer }
+     * 
      */
-    public PolygonSymbolizer getPolygonSymbolizer() {
+    public PolygonSymbolizer getPolygonSymbolizer()
+    {
         return polygonSymbolizer;
     }
 
     /**
      * Sets the value of the polygonSymbolizer property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PolygonSymbolizer }
-     *     
+     * @param value allowed object is {@link PolygonSymbolizer }
+     * 
      */
-    public void setPolygonSymbolizer(PolygonSymbolizer value) {
+    public void setPolygonSymbolizer(PolygonSymbolizer value)
+    {
         this.polygonSymbolizer = value;
     }
 

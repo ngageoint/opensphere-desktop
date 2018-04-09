@@ -5,42 +5,40 @@
 // Generated on: 2010.01.26 at 12:20:40 PM MST 
 //
 
-
 package net.opengis.wms._111;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
-
 /**
- * This object contains factory methods for each 
- * Java content interface and Java element interface 
- * generated in the net.opengis.wms._111 package. 
- * <p>An ObjectFactory allows you to programatically 
- * construct new instances of the Java representation 
- * for XML content. The Java representation of XML 
- * content can consist of schema derived interfaces 
- * and classes representing the binding of schema 
- * type definitions, element declarations and model 
- * groups.  Factory methods for each of these are 
- * provided in this class.
+ * This object contains factory methods for each Java content interface and Java
+ * element interface generated in the net.opengis.wms._111 package.
+ * <p>
+ * An ObjectFactory allows you to programatically construct new instances of the
+ * Java representation for XML content. The Java representation of XML content
+ * can consist of schema derived interfaces and classes representing the binding
+ * of schema type definitions, element declarations and model groups. Factory
+ * methods for each of these are provided in this class.
  * 
  */
 @XmlRegistry
-public class ObjectFactory {
-
+public class ObjectFactory
+{
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: net.opengis.wms._111
+     * Create a new ObjectFactory that can be used to create new instances of
+     * schema derived classes for package: net.opengis.wms._111
      * 
      */
-    public ObjectFactory() {
+    public ObjectFactory()
+    {
     }
 
     /**
      * Create an instance of {@link ServiceExceptionReport }
      * 
      */
-    public ServiceExceptionReport createServiceExceptionReport() {
+    public ServiceExceptionReport createServiceExceptionReport()
+    {
         return new ServiceExceptionReport();
     }
 
@@ -48,7 +46,8 @@ public class ObjectFactory {
      * Create an instance of {@link ServiceException }
      * 
      */
-    public ServiceException createServiceException() {
+    public ServiceException createServiceException()
+    {
         return new ServiceException();
     }
 

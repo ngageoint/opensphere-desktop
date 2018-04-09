@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,13 +13,16 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A combination of format, encoding, and/or schema supported by a process input or output. 
+ * A combination of format, encoding, and/or schema supported by a process input
+ * or output.
  * 
- * <p>Java class for ComplexDataDescriptionType complex type.
+ * <p>
+ * Java class for ComplexDataDescriptionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ComplexDataDescriptionType">
@@ -39,18 +41,17 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ComplexDataDescriptionType", propOrder = {
-    "mimeType",
-    "encoding",
-    "schema"
-})
-public class ComplexDataDescriptionType {
+@XmlType(name = "ComplexDataDescriptionType", propOrder = { "mimeType", "encoding", "schema" })
+public class ComplexDataDescriptionType
+{
 
     @XmlElement(name = "MimeType", namespace = "", required = true)
     protected String mimeType;
+
     @XmlElement(name = "Encoding", namespace = "")
     @XmlSchemaType(name = "anyURI")
     protected String encoding;
+
     @XmlElement(name = "Schema", namespace = "")
     @XmlSchemaType(name = "anyURI")
     protected String schema;
@@ -58,72 +59,66 @@ public class ComplexDataDescriptionType {
     /**
      * Gets the value of the mimeType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMimeType() {
+    public String getMimeType()
+    {
         return mimeType;
     }
 
     /**
      * Sets the value of the mimeType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMimeType(String value) {
+    public void setMimeType(String value)
+    {
         this.mimeType = value;
     }
 
     /**
      * Gets the value of the encoding property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getEncoding() {
+    public String getEncoding()
+    {
         return encoding;
     }
 
     /**
      * Sets the value of the encoding property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setEncoding(String value) {
+    public void setEncoding(String value)
+    {
         this.encoding = value;
     }
 
     /**
      * Gets the value of the schema property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSchema() {
+    public String getSchema()
+    {
         return schema;
     }
 
     /**
      * Sets the value of the schema property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSchema(String value) {
+    public void setSchema(String value)
+    {
         this.schema = value;
     }
 

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for RangeSetType complex type.
+ * <p>
+ * Java class for RangeSetType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="RangeSetType">
@@ -43,41 +44,40 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RangeSetType", propOrder = {
-    "valueArray",
-    "scalarValueList",
-    "dataBlock",
-    "file"
-})
-public class RangeSetType {
+@XmlType(name = "RangeSetType", propOrder = { "valueArray", "scalarValueList", "dataBlock", "file" })
+public class RangeSetType
+{
 
     @XmlElement(name = "ValueArray")
     protected List<ValueArrayType> valueArray;
-    @XmlElementRefs({
-        @XmlElementRef(name = "BooleanList", namespace = "http://www.opengis.net/gml", type = JAXBElement.class),
+
+    @XmlElementRefs({ @XmlElementRef(name = "BooleanList", namespace = "http://www.opengis.net/gml", type = JAXBElement.class),
         @XmlElementRef(name = "CountList", namespace = "http://www.opengis.net/gml", type = JAXBElement.class),
         @XmlElementRef(name = "QuantityList", namespace = "http://www.opengis.net/gml", type = JAXBElement.class),
-        @XmlElementRef(name = "CategoryList", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
-    })
+        @XmlElementRef(name = "CategoryList", namespace = "http://www.opengis.net/gml", type = JAXBElement.class) })
     protected List<JAXBElement<?>> scalarValueList;
+
     @XmlElement(name = "DataBlock")
     protected DataBlockType dataBlock;
+
     @XmlElement(name = "File")
     protected FileType file;
 
     /**
-     * each member _Value holds a tuple or "row" from the equivalent table Gets the value of the valueArray property.
+     * each member _Value holds a tuple or "row" from the equivalent table Gets
+     * the value of the valueArray property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the valueArray property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the valueArray property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getValueArray().add(newItem);
+     * getValueArray().add(newItem);
      * </pre>
      * 
      * 
@@ -87,90 +87,97 @@ public class RangeSetType {
      * 
      * 
      */
-    public List<ValueArrayType> getValueArray() {
-        if (valueArray == null) {
+    public List<ValueArrayType> getValueArray()
+    {
+        if (valueArray == null)
+        {
             valueArray = new ArrayList<ValueArrayType>();
         }
         return this.valueArray;
     }
 
     /**
-     * each list holds the complete set of one scalar component from the values - i.e. a "column" from the equivalent table Gets the value of the scalarValueList property.
+     * each list holds the complete set of one scalar component from the values
+     * - i.e. a "column" from the equivalent table Gets the value of the
+     * scalarValueList property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the scalarValueList property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the scalarValueList property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getScalarValueList().add(newItem);
+     * getScalarValueList().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link List }{@code <}{@link String }{@code >}{@code >}
-     * {@link JAXBElement }{@code <}{@link List }{@code <}{@link String }{@code >}{@code >}
-     * {@link JAXBElement }{@code <}{@link MeasureOrNullListType }{@code >}
-     * {@link JAXBElement }{@code <}{@link CodeOrNullListType }{@code >}
+     * {@link JAXBElement }{@code <}{@link List }{@code <}{@link String
+     * }{@code >}{@code >} {@link JAXBElement }{@code <}{@link List
+     * }{@code <}{@link String }{@code >}{@code >} {@link JAXBElement
+     * }{@code <}{@link MeasureOrNullListType }{@code >} {@link JAXBElement
+     * }{@code <}{@link CodeOrNullListType }{@code >}
      * 
      * 
      */
-    public List<JAXBElement<?>> getScalarValueList() {
-        if (scalarValueList == null) {
+    public List<JAXBElement<?>> getScalarValueList()
+    {
+        if (scalarValueList == null)
+        {
             scalarValueList = new ArrayList<JAXBElement<?>>();
         }
         return this.scalarValueList;
     }
 
     /**
-     * Its tuple list holds the values as space-separated tuples each of which contains comma-separated components, and the tuple structure is specified using the rangeParameters property.
+     * Its tuple list holds the values as space-separated tuples each of which
+     * contains comma-separated components, and the tuple structure is specified
+     * using the rangeParameters property.
      * 
-     * @return
-     *     possible object is
-     *     {@link DataBlockType }
-     *     
+     * @return possible object is {@link DataBlockType }
+     * 
      */
-    public DataBlockType getDataBlock() {
+    public DataBlockType getDataBlock()
+    {
         return dataBlock;
     }
 
     /**
      * Sets the value of the dataBlock property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DataBlockType }
-     *     
+     * @param value allowed object is {@link DataBlockType }
+     * 
      */
-    public void setDataBlock(DataBlockType value) {
+    public void setDataBlock(DataBlockType value)
+    {
         this.dataBlock = value;
     }
 
     /**
-     * a reference to an external source for the data, together with a description of how that external source is structured
+     * a reference to an external source for the data, together with a
+     * description of how that external source is structured
      * 
-     * @return
-     *     possible object is
-     *     {@link FileType }
-     *     
+     * @return possible object is {@link FileType }
+     * 
      */
-    public FileType getFile() {
+    public FileType getFile()
+    {
         return file;
     }
 
     /**
      * Sets the value of the file property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FileType }
-     *     
+     * @param value allowed object is {@link FileType }
+     * 
      */
-    public void setFile(FileType value) {
+    public void setFile(FileType value)
+    {
         this.file = value;
     }
 

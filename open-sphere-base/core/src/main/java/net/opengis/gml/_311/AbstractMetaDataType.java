@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -19,13 +18,15 @@ import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * An abstract base type for complex metadata types.
  * 
- * <p>Java class for AbstractMetaDataType complex type.
+ * <p>
+ * Java class for AbstractMetaDataType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractMetaDataType">
@@ -40,16 +41,14 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractMetaDataType", propOrder = {
-    "content"
-})
-@XmlSeeAlso({
-    GenericMetaDataType.class
-})
-public abstract class AbstractMetaDataType {
+@XmlType(name = "AbstractMetaDataType", propOrder = { "content" })
+@XmlSeeAlso({ GenericMetaDataType.class })
+public abstract class AbstractMetaDataType
+{
 
     @XmlValue
     protected String content;
+
     @XmlAttribute(name = "id", namespace = "http://www.opengis.net/gml")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
@@ -59,48 +58,44 @@ public abstract class AbstractMetaDataType {
     /**
      * An abstract base type for complex metadata types.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getContent() {
+    public String getContent()
+    {
         return content;
     }
 
     /**
      * Sets the value of the content property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setContent(String value) {
+    public void setContent(String value)
+    {
         this.content = value;
     }
 
     /**
      * Gets the value of the id property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
     /**
      * Sets the value of the id property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setId(String value) {
+    public void setId(String value)
+    {
         this.id = value;
     }
 

@@ -15,25 +15,25 @@ public class HttpClientOptions
     @Beta
     public enum RedirectMode
     {
-        /**
-         * This strategy mode the restrictions on automatic redirection of
-         * entity enclosing methods such as <code>POST</code> and
-         * <code>PUT</code> imposed by the HTTP specification.
-         * <code>302 Moved Temporarily</code>, <code>301 Moved
-         * Permanently</code> and <code>307 Temporary Redirect</code> status
-         * codes will result in an automatic redirect of <code>HEAD</code> and
-         * <code>GET</code> methods only. <code>POST</code> and <code>PUT</code>
-         * methods will not be automatically redirected as requiring user
-         * confirmation.
-         */
-        DEFAULT,
+    /**
+     * This strategy mode the restrictions on automatic redirection of entity
+     * enclosing methods such as <code>POST</code> and <code>PUT</code> imposed
+     * by the HTTP specification. <code>302 Moved Temporarily</code>,
+     * <code>301 Moved
+     * Permanently</code> and <code>307 Temporary Redirect</code> status codes
+     * will result in an automatic redirect of <code>HEAD</code> and
+     * <code>GET</code> methods only. <code>POST</code> and <code>PUT</code>
+     * methods will not be automatically redirected as requiring user
+     * confirmation.
+     */
+    DEFAULT,
 
-        /**
-         * In addition to the automatic redirects handled by the
-         * {@link #DEFAULT} mode, this mode automatically redirects all
-         * <code>HEAD</code>, <code>GET</code> and <code>POST</code> requests.
-         */
-        LAX;
+    /**
+     * In addition to the automatic redirects handled by the {@link #DEFAULT}
+     * mode, this mode automatically redirects all <code>HEAD</code>,
+     * <code>GET</code> and <code>POST</code> requests.
+     */
+    LAX;
     }
 
     /** The proxy configuration for this client. */

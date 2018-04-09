@@ -110,7 +110,7 @@ public class CancellableThreePhaseProperty<S>
     public void removeListener(CancellableThreePhasePropertyListener<S, ? extends CancellableThreePhaseProperty<S>> listener)
     {
         myProperty.removeListener(
-            l -> l instanceof ListenerAdapter && Utilities.sameInstance(((ListenerAdapter<?, ?>)l).myListener, listener));
+                l -> l instanceof ListenerAdapter && Utilities.sameInstance(((ListenerAdapter<?, ?>)l).myListener, listener));
     }
 
     /**

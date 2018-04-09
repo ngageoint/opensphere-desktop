@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,15 +13,22 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * Indicates that this process has been has been accepted by the server, and processing has begun. 
+ * Indicates that this process has been has been accepted by the server, and
+ * processing has begun.
  * 
- * A human-readable text string whose contents are left open to definition by each WPS server, but is expected to include any messages the server may wish to let the clients know. Such information could include how much longer the process may take to execute, or any warning conditions that may have been encountered to date. The client may display this text to a human user. 
+ * A human-readable text string whose contents are left open to definition by
+ * each WPS server, but is expected to include any messages the server may wish
+ * to let the clients know. Such information could include how much longer the
+ * process may take to execute, or any warning conditions that may have been
+ * encountered to date. The client may display this text to a human user.
  * 
- * <p>Java class for ProcessStartedType complex type.
+ * <p>
+ * Java class for ProcessStartedType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ProcessStartedType">
@@ -44,61 +50,57 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ProcessStartedType", propOrder = {
-    "value"
-})
-public class ProcessStartedType {
+@XmlType(name = "ProcessStartedType", propOrder = { "value" })
+public class ProcessStartedType
+{
 
     @XmlValue
     protected String value;
+
     @XmlAttribute
     protected Integer percentCompleted;
 
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getValue() {
+    public String getValue()
+    {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setValue(String value) {
+    public void setValue(String value)
+    {
         this.value = value;
     }
 
     /**
      * Gets the value of the percentCompleted property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
-    public Integer getPercentCompleted() {
+    public Integer getPercentCompleted()
+    {
         return percentCompleted;
     }
 
     /**
      * Sets the value of the percentCompleted property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     * @param value allowed object is {@link Integer }
+     * 
      */
-    public void setPercentCompleted(Integer value) {
+    public void setPercentCompleted(Integer value)
+    {
         this.percentCompleted = value;
     }
 

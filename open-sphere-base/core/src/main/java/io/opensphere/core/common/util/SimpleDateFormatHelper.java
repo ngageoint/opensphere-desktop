@@ -65,7 +65,7 @@ public class SimpleDateFormatHelper
      * This is a thread safe call.
      *
      * @param sdf - the simple date format string.
-     * @param tz -t he time zone
+     * @param tz -t he  time zone
      * @return the {@link SimpleDateFormat}
      */
     public static SimpleDateFormat getSimpleDateFormat(String sdf, TimeZone tz)

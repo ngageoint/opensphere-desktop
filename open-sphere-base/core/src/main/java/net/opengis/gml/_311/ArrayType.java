@@ -5,20 +5,23 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A non-abstract generic collection type that can be used as a document element for a homogeneous collection of any GML types - Geometries, Topologies, Features ...
+ * A non-abstract generic collection type that can be used as a document element
+ * for a homogeneous collection of any GML types - Geometries, Topologies,
+ * Features ...
  * 
- * <p>Java class for ArrayType complex type.
+ * <p>
+ * Java class for ArrayType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ArrayType">
@@ -35,11 +38,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ArrayType", propOrder = {
-    "members"
-})
-public class ArrayType
-    extends AbstractGMLType
+@XmlType(name = "ArrayType", propOrder = { "members" })
+public class ArrayType extends AbstractGMLType
 {
 
     protected ArrayAssociationType members;
@@ -47,24 +47,22 @@ public class ArrayType
     /**
      * Gets the value of the members property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ArrayAssociationType }
-     *     
+     * @return possible object is {@link ArrayAssociationType }
+     * 
      */
-    public ArrayAssociationType getMembers() {
+    public ArrayAssociationType getMembers()
+    {
         return members;
     }
 
     /**
      * Sets the value of the members property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ArrayAssociationType }
-     *     
+     * @param value allowed object is {@link ArrayAssociationType }
+     * 
      */
-    public void setMembers(ArrayAssociationType value) {
+    public void setMembers(ArrayAssociationType value)
+    {
         this.members = value;
     }
 

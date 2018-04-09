@@ -442,7 +442,7 @@ public final class New
      * @param arr The input array.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     public static boolean[] booleanArray(Boolean[] arr)
@@ -456,7 +456,7 @@ public final class New
      * @param col The input collection.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     public static boolean[] booleanArray(Collection<? extends Boolean> col)
@@ -470,7 +470,7 @@ public final class New
      * @param arr The input array.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     public static byte[] byteArray(Byte[] arr)
@@ -484,7 +484,7 @@ public final class New
      * @param col The input collection.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     public static byte[] byteArray(Collection<? extends Byte> col)
@@ -528,7 +528,7 @@ public final class New
      * @param arr The input array.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     public static char[] charArray(Character[] arr)
@@ -542,7 +542,7 @@ public final class New
      * @param col The input collection.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     public static char[] charArray(Collection<? extends Character> col)
@@ -702,7 +702,7 @@ public final class New
      * @param col The input collection.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     public static double[] doubleArray(Collection<? extends Double> col)
@@ -716,7 +716,7 @@ public final class New
      * @param arr The input array.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     public static double[] doubleArray(Double[] arr)
@@ -745,7 +745,7 @@ public final class New
      * @param col The input collection.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     public static float[] floatArray(Collection<? extends Float> col)
@@ -759,7 +759,7 @@ public final class New
      * @param arr The input array.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     public static float[] floatArray(Float[] arr)
@@ -863,7 +863,7 @@ public final class New
      * @param col The input collection.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     public static int[] intArray(Collection<? extends Integer> col)
@@ -877,7 +877,7 @@ public final class New
      * @param arr The input array.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     public static int[] intArray(Integer[] arr)
@@ -1089,7 +1089,7 @@ public final class New
      * @param col The input collection.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     public static long[] longArray(Collection<? extends Long> col)
@@ -1103,7 +1103,7 @@ public final class New
      * @param arr The input array.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     public static long[] longArray(Long[] arr)
@@ -1594,7 +1594,7 @@ public final class New
      * @param col The input collection.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     @SuppressWarnings("PMD.AvoidUsingShortType")
@@ -1609,7 +1609,7 @@ public final class New
      * @param arr The input array.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     @SuppressWarnings("PMD.AvoidUsingShortType")
@@ -1784,7 +1784,7 @@ public final class New
      * @param type The type of object in the array.
      * @return The new array instance, or {@code null} if the input is
      *         {@code null}.
-     * @throws IllegalArgumentException If an object in the collection cannot be
+     * @throws IllegalArgumentException If an  object in the collection cannot be
      *             cast or un-boxed into the result array.
      */
     public static Object uncheckedArray(Collection<?> col, Class<?> type)
@@ -1847,7 +1847,7 @@ public final class New
                                 : col.size() == 1
                                         ? Collections.<T>singletonList(
                                                 col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
-                                : Collections.unmodifiableCollection(collection(col));
+                                        : Collections.unmodifiableCollection(collection(col));
     }
 
     /**
@@ -1868,7 +1868,7 @@ public final class New
                                 : col.size() == 1
                                         ? Collections.<T>singletonList(
                                                 col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
-                                : Collections.unmodifiableList(list(col));
+                                        : Collections.unmodifiableList(list(col));
     }
 
     /**
@@ -1921,7 +1921,7 @@ public final class New
                                 : col.size() == 1
                                         ? Collections.<T>singleton(
                                                 col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
-                                : Collections.unmodifiableSet(set(col));
+                                        : Collections.unmodifiableSet(set(col));
     }
 
     /**

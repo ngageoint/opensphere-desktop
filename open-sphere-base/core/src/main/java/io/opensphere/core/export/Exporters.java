@@ -42,7 +42,7 @@ public final class Exporters
      * @param toolbox The toolbox to provide to the exporters.
      * @param targetType The type of the target of the export.
      * @return The exporter.
-     * @throws ExportException If no exporter is available.
+     * @throws ExportException If no  exporter is available.
      */
     public static Exporter getExporter(Collection<?> objects, Toolbox toolbox, Class<?> targetType) throws ExportException
     {
@@ -82,7 +82,7 @@ public final class Exporters
      * @param mimeType The MIME type of the export
      * @param objects The objects to be exported.
      * @return The exporter
-     * @throws ExportException If no exporter is found.
+     * @throws ExportException If no  exporter is found.
      */
     public static Exporter loadExporter(MimeType mimeType, Collection<?> objects) throws ExportException
     {

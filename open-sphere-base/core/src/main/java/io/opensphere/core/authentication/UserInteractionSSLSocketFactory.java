@@ -92,7 +92,7 @@ public class UserInteractionSSLSocketFactory extends SSLSocketFactory
      * @param serverKey The unique id for the server.
      * @param url The url to the server.
      * @throws NoSuchAlgorithmException Thrown if SSL is not available.
-     * @throws KeyManagementException If we failed to install the key and/or
+     * @throws KeyManagementException If we  failed to install the key and/or
      *             truststore manager.
      */
     public void addServer(String serverName, String serverKey, String url) throws NoSuchAlgorithmException, KeyManagementException

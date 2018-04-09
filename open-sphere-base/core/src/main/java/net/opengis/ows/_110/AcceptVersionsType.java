@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.ows._110;
 
 import java.util.ArrayList;
@@ -16,13 +15,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Prioritized sequence of one or more specification versions accepted by client, with preferred versions listed first. See Version negotiation subclause for more information. 
+ * Prioritized sequence of one or more specification versions accepted by
+ * client, with preferred versions listed first. See Version negotiation
+ * subclause for more information.
  * 
- * <p>Java class for AcceptVersionsType complex type.
+ * <p>
+ * Java class for AcceptVersionsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AcceptVersionsType">
@@ -39,10 +42,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AcceptVersionsType", propOrder = {
-    "version"
-})
-public class AcceptVersionsType {
+@XmlType(name = "AcceptVersionsType", propOrder = { "version" })
+public class AcceptVersionsType
+{
 
     @XmlElement(name = "Version", required = true)
     protected List<String> version;
@@ -51,26 +53,28 @@ public class AcceptVersionsType {
      * Gets the value of the version property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the version property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the version property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getVersion().add(newItem);
+     * getVersion().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getVersion() {
-        if (version == null) {
+    public List<String> getVersion()
+    {
+        if (version == null)
+        {
             version = new ArrayList<String>();
         }
         return this.version;

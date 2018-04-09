@@ -45,7 +45,7 @@ public class QuotingBufferedReaderTest
     /**
      * Test {@link QuotingBufferedReader} with escapes.
      *
-     * @throws IOException If an I/O error occurs.
+     * @throws IOException If an  I/O error occurs.
      */
     @Test
     public void testEscapes() throws IOException
@@ -81,7 +81,7 @@ public class QuotingBufferedReaderTest
      * Test {@link QuotingBufferedReader} when multiple blank lines occur
      * consecutively.
      *
-     * @throws IOException If an I/O error occurs.
+     * @throws IOException If an  I/O error occurs.
      */
     @Test
     @SuppressWarnings("PMD.ConsecutiveLiteralAppends")
@@ -109,7 +109,7 @@ public class QuotingBufferedReaderTest
     /**
      * Test {@link QuotingBufferedReader} with no input.
      *
-     * @throws IOException If an I/O error occurs.
+     * @throws IOException If an  I/O error occurs.
      */
     @Test
     public void testNoInput() throws IOException
@@ -124,7 +124,7 @@ public class QuotingBufferedReaderTest
     /**
      * Test {@link QuotingBufferedReader} with no escapes or quotes.
      *
-     * @throws IOException If an I/O error occurs.
+     * @throws IOException If an  I/O error occurs.
      */
     @Test
     public void testNoQuotesOrEscapes() throws IOException
@@ -159,7 +159,7 @@ public class QuotingBufferedReaderTest
     /**
      * Test {@link QuotingBufferedReader} with quotes.
      *
-     * @throws IOException If an I/O error occurs.
+     * @throws IOException If an  I/O error occurs.
      */
     @Test
     public void testQuotes() throws IOException
@@ -196,7 +196,7 @@ public class QuotingBufferedReaderTest
     /**
      * Test {@link QuotingBufferedReader} with quotes and escapes.
      *
-     * @throws IOException If an I/O error occurs.
+     * @throws IOException If an  I/O error occurs.
      */
     @Test
     public void testQuotesAndEscapes() throws IOException

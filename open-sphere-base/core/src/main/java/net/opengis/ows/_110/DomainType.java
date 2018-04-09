@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.ows._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Valid domain (or allowed set of values) of one quantity, with its name or identifier. 
+ * Valid domain (or allowed set of values) of one quantity, with its name or
+ * identifier.
  * 
- * <p>Java class for DomainType complex type.
+ * <p>
+ * Java class for DomainType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DomainType">
@@ -35,8 +37,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DomainType")
-public class DomainType
-    extends UnNamedDomainType
+public class DomainType extends UnNamedDomainType
 {
 
     @XmlAttribute(required = true)
@@ -45,24 +46,22 @@ public class DomainType
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 

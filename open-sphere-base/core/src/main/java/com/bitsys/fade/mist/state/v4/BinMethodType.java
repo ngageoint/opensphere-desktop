@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.math.BigDecimal;
@@ -18,15 +17,17 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
- *        Defines a bin type and field.
- *       
+ * Defines a bin type and field.
  * 
- * <p>Java class for BinMethodType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for BinMethodType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="BinMethodType">
@@ -49,128 +50,128 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "BinMethodType", propOrder = {
 
 })
-public class BinMethodType {
+public class BinMethodType
+{
 
     @XmlElement(required = true)
     @XmlSchemaType(name = "token")
     protected BinMethodsEnumType type;
+
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String field;
+
     protected BigDecimal offset;
+
     protected BigDecimal width;
 
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BinMethodsEnumType }
-     *     
+     * @return possible object is {@link BinMethodsEnumType }
+     * 
      */
-    public BinMethodsEnumType getType() {
+    public BinMethodsEnumType getType()
+    {
         return type;
     }
 
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BinMethodsEnumType }
-     *     
+     * @param value allowed object is {@link BinMethodsEnumType }
+     * 
      */
-    public void setType(BinMethodsEnumType value) {
+    public void setType(BinMethodsEnumType value)
+    {
         this.type = value;
     }
 
-    public boolean isSetType() {
-        return (this.type!= null);
+    public boolean isSetType()
+    {
+        return (this.type != null);
     }
 
     /**
      * Gets the value of the field property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getField() {
+    public String getField()
+    {
         return field;
     }
 
     /**
      * Sets the value of the field property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setField(String value) {
+    public void setField(String value)
+    {
         this.field = value;
     }
 
-    public boolean isSetField() {
-        return (this.field!= null);
+    public boolean isSetField()
+    {
+        return (this.field != null);
     }
 
     /**
      * Gets the value of the offset property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     * @return possible object is {@link BigDecimal }
+     * 
      */
-    public BigDecimal getOffset() {
+    public BigDecimal getOffset()
+    {
         return offset;
     }
 
     /**
      * Sets the value of the offset property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     * @param value allowed object is {@link BigDecimal }
+     * 
      */
-    public void setOffset(BigDecimal value) {
+    public void setOffset(BigDecimal value)
+    {
         this.offset = value;
     }
 
-    public boolean isSetOffset() {
-        return (this.offset!= null);
+    public boolean isSetOffset()
+    {
+        return (this.offset != null);
     }
 
     /**
      * Gets the value of the width property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     * @return possible object is {@link BigDecimal }
+     * 
      */
-    public BigDecimal getWidth() {
+    public BigDecimal getWidth()
+    {
         return width;
     }
 
     /**
      * Sets the value of the width property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     * @param value allowed object is {@link BigDecimal }
+     * 
      */
-    public void setWidth(BigDecimal value) {
+    public void setWidth(BigDecimal value)
+    {
         this.width = value;
     }
 
-    public boolean isSetWidth() {
-        return (this.width!= null);
+    public boolean isSetWidth()
+    {
+        return (this.width != null);
     }
 
 }

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -18,13 +17,17 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A LinearRing is defined by four or more coordinate tuples, with linear interpolation between them; the first and last coordinates must be coincident.
+ * A LinearRing is defined by four or more coordinate tuples, with linear
+ * interpolation between them; the first and last coordinates must be
+ * coincident.
  * 
- * <p>Java class for LinearRingType complex type.
+ * <p>
+ * Java class for LinearRingType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LinearRingType">
@@ -50,39 +53,35 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LinearRingType", propOrder = {
-    "posOrPointPropertyOrPointRep",
-    "posList",
-    "coordinates",
-    "coord"
-})
-public class LinearRingType
-    extends AbstractRingType
+@XmlType(name = "LinearRingType", propOrder = { "posOrPointPropertyOrPointRep", "posList", "coordinates", "coord" })
+public class LinearRingType extends AbstractRingType
 {
 
-    @XmlElementRefs({
-        @XmlElementRef(name = "pos", namespace = "http://www.opengis.net/gml", type = JAXBElement.class),
+    @XmlElementRefs({ @XmlElementRef(name = "pos", namespace = "http://www.opengis.net/gml", type = JAXBElement.class),
         @XmlElementRef(name = "pointProperty", namespace = "http://www.opengis.net/gml", type = JAXBElement.class),
-        @XmlElementRef(name = "pointRep", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
-    })
+        @XmlElementRef(name = "pointRep", namespace = "http://www.opengis.net/gml", type = JAXBElement.class) })
     protected List<JAXBElement<?>> posOrPointPropertyOrPointRep;
+
     protected DirectPositionListType posList;
+
     protected CoordinatesType coordinates;
+
     protected List<CoordType> coord;
 
     /**
      * Gets the value of the posOrPointPropertyOrPointRep property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the posOrPointPropertyOrPointRep property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the posOrPointPropertyOrPointRep property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPosOrPointPropertyOrPointRep().add(newItem);
+     * getPosOrPointPropertyOrPointRep().add(newItem);
      * </pre>
      * 
      * 
@@ -94,8 +93,10 @@ public class LinearRingType
      * 
      * 
      */
-    public List<JAXBElement<?>> getPosOrPointPropertyOrPointRep() {
-        if (posOrPointPropertyOrPointRep == null) {
+    public List<JAXBElement<?>> getPosOrPointPropertyOrPointRep()
+    {
+        if (posOrPointPropertyOrPointRep == null)
+        {
             posOrPointPropertyOrPointRep = new ArrayList<JAXBElement<?>>();
         }
         return this.posOrPointPropertyOrPointRep;
@@ -104,75 +105,76 @@ public class LinearRingType
     /**
      * Gets the value of the posList property.
      * 
-     * @return
-     *     possible object is
-     *     {@link DirectPositionListType }
-     *     
+     * @return possible object is {@link DirectPositionListType }
+     * 
      */
-    public DirectPositionListType getPosList() {
+    public DirectPositionListType getPosList()
+    {
         return posList;
     }
 
     /**
      * Sets the value of the posList property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DirectPositionListType }
-     *     
+     * @param value allowed object is {@link DirectPositionListType }
+     * 
      */
-    public void setPosList(DirectPositionListType value) {
+    public void setPosList(DirectPositionListType value)
+    {
         this.posList = value;
     }
 
     /**
      * Deprecated with GML version 3.1.0. Use "posList" instead.
      * 
-     * @return
-     *     possible object is
-     *     {@link CoordinatesType }
-     *     
+     * @return possible object is {@link CoordinatesType }
+     * 
      */
-    public CoordinatesType getCoordinates() {
+    public CoordinatesType getCoordinates()
+    {
         return coordinates;
     }
 
     /**
      * Sets the value of the coordinates property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CoordinatesType }
-     *     
+     * @param value allowed object is {@link CoordinatesType }
+     * 
      */
-    public void setCoordinates(CoordinatesType value) {
+    public void setCoordinates(CoordinatesType value)
+    {
         this.coordinates = value;
     }
 
     /**
-     * Deprecated with GML version 3.0 and included for backwards compatibility with GML 2. Use "pos" elements instead.Gets the value of the coord property.
+     * Deprecated with GML version 3.0 and included for backwards compatibility
+     * with GML 2. Use "pos" elements instead.Gets the value of the coord
+     * property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the coord property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the coord property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getCoord().add(newItem);
+     * getCoord().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link CoordType }
+     * Objects of the following type(s) are allowed in the list {@link CoordType
+     * }
      * 
      * 
      */
-    public List<CoordType> getCoord() {
-        if (coord == null) {
+    public List<CoordType> getCoord()
+    {
+        if (coord == null)
+        {
             coord = new ArrayList<CoordType>();
         }
         return this.coord;

@@ -357,7 +357,7 @@ public final class Zip
      * @param fStrs collection of relative file strings. These strings contain
      *            the paths and file names relative to the <code>relDir</code>.
      * @throws FileNotFoundException if the file is not found.
-     * @throws IOException if an IOException is encountered.
+     * @throws IOException if an  IOException is encountered.
      */
     public static void zip(String zipPathAndFile, File relDir, Collection<String> fStrs) throws IOException
     {

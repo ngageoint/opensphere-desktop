@@ -5,21 +5,21 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * This type defines a container for an array of 
- *      triangle patches.
+ * This type defines a container for an array of triangle patches.
  * 
- * <p>Java class for TrianglePatchArrayPropertyType complex type.
+ * <p>
+ * Java class for TrianglePatchArrayPropertyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TrianglePatchArrayPropertyType">
@@ -37,9 +37,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TrianglePatchArrayPropertyType")
-public class TrianglePatchArrayPropertyType
-    extends SurfacePatchArrayPropertyType
+public class TrianglePatchArrayPropertyType extends SurfacePatchArrayPropertyType
 {
-
 
 }

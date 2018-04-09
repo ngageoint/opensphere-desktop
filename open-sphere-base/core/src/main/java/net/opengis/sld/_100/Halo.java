@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -36,63 +37,58 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "radius",
-    "fill"
-})
+@XmlType(name = "", propOrder = { "radius", "fill" })
 @XmlRootElement(name = "Halo")
-public class Halo {
+public class Halo
+{
 
     @XmlElement(name = "Radius")
     protected ParameterValueType radius;
+
     @XmlElement(name = "Fill")
     protected Fill fill;
 
     /**
      * Gets the value of the radius property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ParameterValueType }
-     *     
+     * @return possible object is {@link ParameterValueType }
+     * 
      */
-    public ParameterValueType getRadius() {
+    public ParameterValueType getRadius()
+    {
         return radius;
     }
 
     /**
      * Sets the value of the radius property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ParameterValueType }
-     *     
+     * @param value allowed object is {@link ParameterValueType }
+     * 
      */
-    public void setRadius(ParameterValueType value) {
+    public void setRadius(ParameterValueType value)
+    {
         this.radius = value;
     }
 
     /**
      * Gets the value of the fill property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Fill }
-     *     
+     * @return possible object is {@link Fill }
+     * 
      */
-    public Fill getFill() {
+    public Fill getFill()
+    {
         return fill;
     }
 
     /**
      * Sets the value of the fill property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Fill }
-     *     
+     * @param value allowed object is {@link Fill }
+     * 
      */
-    public void setFill(Fill value) {
+    public void setFill(Fill value)
+    {
         this.fill = value;
     }
 

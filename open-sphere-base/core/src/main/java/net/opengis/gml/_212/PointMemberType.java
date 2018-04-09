@@ -5,20 +5,21 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.gml._212;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * Restricts the geometry member to being a Point instance.
  * 
- * <p>Java class for PointMemberType complex type.
+ * <p>
+ * Java class for PointMemberType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="PointMemberType">
@@ -37,9 +38,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PointMemberType")
-public class PointMemberType
-    extends GeometryAssociationType
+public class PointMemberType extends GeometryAssociationType
 {
-
 
 }

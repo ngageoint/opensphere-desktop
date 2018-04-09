@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.ows._110;
 
 import java.util.ArrayList;
@@ -17,13 +16,16 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Complete reference to a remote or local resource, allowing including metadata about that resource. 
+ * Complete reference to a remote or local resource, allowing including metadata
+ * about that resource.
  * 
- * <p>Java class for ReferenceType complex type.
+ * <p>
+ * Java class for ReferenceType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ReferenceType">
@@ -43,49 +45,42 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ReferenceType", propOrder = {
-    "identifier",
-    "_abstract",
-    "format",
-    "metadata"
-})
-@XmlSeeAlso({
-    ServiceReferenceType.class
-})
-public class ReferenceType
-    extends AbstractReferenceBaseType
+@XmlType(name = "ReferenceType", propOrder = { "identifier", "_abstract", "format", "metadata" })
+@XmlSeeAlso({ ServiceReferenceType.class })
+public class ReferenceType extends AbstractReferenceBaseType
 {
 
     @XmlElement(name = "Identifier")
     protected CodeType identifier;
+
     @XmlElement(name = "Abstract")
     protected List<LanguageStringType> _abstract;
+
     @XmlElement(name = "Format")
     protected String format;
+
     @XmlElement(name = "Metadata")
     protected List<MetadataType> metadata;
 
     /**
-     * Optional unique identifier of the referenced resource. 
+     * Optional unique identifier of the referenced resource.
      * 
-     * @return
-     *     possible object is
-     *     {@link CodeType }
-     *     
+     * @return possible object is {@link CodeType }
+     * 
      */
-    public CodeType getIdentifier() {
+    public CodeType getIdentifier()
+    {
         return identifier;
     }
 
     /**
      * Sets the value of the identifier property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CodeType }
-     *     
+     * @param value allowed object is {@link CodeType }
+     * 
      */
-    public void setIdentifier(CodeType value) {
+    public void setIdentifier(CodeType value)
+    {
         this.identifier = value;
     }
 
@@ -93,15 +88,16 @@ public class ReferenceType
      * Gets the value of the abstract property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstract property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstract property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstract().add(newItem);
+     * getAbstract().add(newItem);
      * </pre>
      * 
      * 
@@ -111,8 +107,10 @@ public class ReferenceType
      * 
      * 
      */
-    public List<LanguageStringType> getAbstract() {
-        if (_abstract == null) {
+    public List<LanguageStringType> getAbstract()
+    {
+        if (_abstract == null)
+        {
             _abstract = new ArrayList<LanguageStringType>();
         }
         return this._abstract;
@@ -121,40 +119,42 @@ public class ReferenceType
     /**
      * Gets the value of the format property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getFormat() {
+    public String getFormat()
+    {
         return format;
     }
 
     /**
      * Sets the value of the format property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setFormat(String value) {
+    public void setFormat(String value)
+    {
         this.format = value;
     }
 
     /**
-     * Optional unordered list of additional metadata about this resource. A list of optional metadata elements for this ReferenceType could be specified in the Implementation Specification for each use of this type in a specific OWS. Gets the value of the metadata property.
+     * Optional unordered list of additional metadata about this resource. A
+     * list of optional metadata elements for this ReferenceType could be
+     * specified in the Implementation Specification for each use of this type
+     * in a specific OWS. Gets the value of the metadata property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the metadata property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the metadata property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getMetadata().add(newItem);
+     * getMetadata().add(newItem);
      * </pre>
      * 
      * 
@@ -164,8 +164,10 @@ public class ReferenceType
      * 
      * 
      */
-    public List<MetadataType> getMetadata() {
-        if (metadata == null) {
+    public List<MetadataType> getMetadata()
+    {
+        if (metadata == null)
+        {
             metadata = new ArrayList<MetadataType>();
         }
         return this.metadata;

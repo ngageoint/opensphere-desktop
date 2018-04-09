@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import java.util.ArrayList;
@@ -21,17 +20,18 @@ import javax.xml.bind.annotation.XmlType;
 import net.opengis.ows._100.BoundingBoxType;
 import net.opengis.ows._100.WGS84BoundingBoxType;
 
-
 /**
  * 
- *             This type extends DCMIRecordType to add ows:BoundingBox;
- *             it may be used to specify a spatial envelope for the
- *             catalogued resource.
- *          
+ * This type extends DCMIRecordType to add ows:BoundingBox; it may be used to
+ * specify a spatial envelope for the catalogued resource.
  * 
- * <p>Java class for RecordType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for RecordType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="RecordType">
@@ -49,16 +49,13 @@ import net.opengis.ows._100.WGS84BoundingBoxType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RecordType", propOrder = {
-    "anyText",
-    "boundingBox"
-})
-public class RecordType
-    extends DCMIRecordType
+@XmlType(name = "RecordType", propOrder = { "anyText", "boundingBox" })
+public class RecordType extends DCMIRecordType
 {
 
     @XmlElement(name = "AnyText")
     protected List<EmptyType> anyText;
+
     @XmlElementRef(name = "BoundingBox", namespace = "http://www.opengis.net/ows", type = JAXBElement.class)
     protected List<JAXBElement<? extends BoundingBoxType>> boundingBox;
 
@@ -66,26 +63,29 @@ public class RecordType
      * Gets the value of the anyText property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the anyText property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the anyText property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAnyText().add(newItem);
+     * getAnyText().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link EmptyType }
+     * Objects of the following type(s) are allowed in the list {@link EmptyType
+     * }
      * 
      * 
      */
-    public List<EmptyType> getAnyText() {
-        if (anyText == null) {
+    public List<EmptyType> getAnyText()
+    {
+        if (anyText == null)
+        {
             anyText = new ArrayList<EmptyType>();
         }
         return this.anyText;
@@ -95,15 +95,16 @@ public class RecordType
      * Gets the value of the boundingBox property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the boundingBox property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the boundingBox property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getBoundingBox().add(newItem);
+     * getBoundingBox().add(newItem);
      * </pre>
      * 
      * 
@@ -114,8 +115,10 @@ public class RecordType
      * 
      * 
      */
-    public List<JAXBElement<? extends BoundingBoxType>> getBoundingBox() {
-        if (boundingBox == null) {
+    public List<JAXBElement<? extends BoundingBoxType>> getBoundingBox()
+    {
+        if (boundingBox == null)
+        {
             boundingBox = new ArrayList<JAXBElement<? extends BoundingBoxType>>();
         }
         return this.boundingBox;

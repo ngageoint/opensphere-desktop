@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for DataType complex type.
+ * <p>
+ * Java class for DataType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DataType">
@@ -41,142 +42,141 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DataType", propOrder = {
-    "displayName",
-    "value",
-    "dataExtension"
-})
-public class DataType
-    extends AbstractObjectType
+@XmlType(name = "DataType", propOrder = { "displayName", "value", "dataExtension" })
+public class DataType extends AbstractObjectType
 {
 
     protected String displayName;
+
     @XmlElement(required = true)
     protected String value;
+
     @XmlElement(name = "DataExtension")
     protected List<Object> dataExtension;
+
     @XmlAttribute(name = "name")
     protected String name;
 
     /**
      * Gets the value of the displayName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDisplayName() {
+    public String getDisplayName()
+    {
         return displayName;
     }
 
     /**
      * Sets the value of the displayName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDisplayName(String value) {
+    public void setDisplayName(String value)
+    {
         this.displayName = value;
     }
 
-    public boolean isSetDisplayName() {
-        return (this.displayName!= null);
+    public boolean isSetDisplayName()
+    {
+        return (this.displayName != null);
     }
 
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getValue() {
+    public String getValue()
+    {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setValue(String value) {
+    public void setValue(String value)
+    {
         this.value = value;
     }
 
-    public boolean isSetValue() {
-        return (this.value!= null);
+    public boolean isSetValue()
+    {
+        return (this.value != null);
     }
 
     /**
      * Gets the value of the dataExtension property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the dataExtension property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the dataExtension property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getDataExtension().add(newItem);
+     * getDataExtension().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getDataExtension() {
-        if (dataExtension == null) {
+    public List<Object> getDataExtension()
+    {
+        if (dataExtension == null)
+        {
             dataExtension = new ArrayList<Object>();
         }
         return this.dataExtension;
     }
 
-    public boolean isSetDataExtension() {
-        return ((this.dataExtension!= null)&&(!this.dataExtension.isEmpty()));
+    public boolean isSetDataExtension()
+    {
+        return ((this.dataExtension != null) && (!this.dataExtension.isEmpty()));
     }
 
-    public void unsetDataExtension() {
+    public void unsetDataExtension()
+    {
         this.dataExtension = null;
     }
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
-    public boolean isSetName() {
-        return (this.name!= null);
+    public boolean isSetName()
+    {
+        return (this.name != null);
     }
 
 }

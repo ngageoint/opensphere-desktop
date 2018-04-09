@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for AbstractTimePrimitiveType complex type.
+ * <p>
+ * Java class for AbstractTimePrimitiveType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractTimePrimitiveType">
@@ -40,21 +41,16 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractTimePrimitiveType", propOrder = {
-    "abstractTimePrimitiveSimpleExtensionGroup",
-    "abstractTimePrimitiveObjectExtensionGroup"
-})
-@XmlSeeAlso({
-    TimeStampType.class,
-    TimeSpanType.class
-})
-public abstract class AbstractTimePrimitiveType
-    extends AbstractObjectType
+@XmlType(name = "AbstractTimePrimitiveType", propOrder = { "abstractTimePrimitiveSimpleExtensionGroup",
+    "abstractTimePrimitiveObjectExtensionGroup" })
+@XmlSeeAlso({ TimeStampType.class, TimeSpanType.class })
+public abstract class AbstractTimePrimitiveType extends AbstractObjectType
 {
 
     @XmlElement(name = "AbstractTimePrimitiveSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> abstractTimePrimitiveSimpleExtensionGroup;
+
     @XmlElement(name = "AbstractTimePrimitiveObjectExtensionGroup")
     protected List<AbstractObjectType> abstractTimePrimitiveObjectExtensionGroup;
 
@@ -62,36 +58,42 @@ public abstract class AbstractTimePrimitiveType
      * Gets the value of the abstractTimePrimitiveSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractTimePrimitiveSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractTimePrimitiveSimpleExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractTimePrimitiveSimpleExtensionGroup().add(newItem);
+     * getAbstractTimePrimitiveSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getAbstractTimePrimitiveSimpleExtensionGroup() {
-        if (abstractTimePrimitiveSimpleExtensionGroup == null) {
+    public List<Object> getAbstractTimePrimitiveSimpleExtensionGroup()
+    {
+        if (abstractTimePrimitiveSimpleExtensionGroup == null)
+        {
             abstractTimePrimitiveSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.abstractTimePrimitiveSimpleExtensionGroup;
     }
 
-    public boolean isSetAbstractTimePrimitiveSimpleExtensionGroup() {
-        return ((this.abstractTimePrimitiveSimpleExtensionGroup!= null)&&(!this.abstractTimePrimitiveSimpleExtensionGroup.isEmpty()));
+    public boolean isSetAbstractTimePrimitiveSimpleExtensionGroup()
+    {
+        return ((this.abstractTimePrimitiveSimpleExtensionGroup != null)
+                && (!this.abstractTimePrimitiveSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetAbstractTimePrimitiveSimpleExtensionGroup() {
+    public void unsetAbstractTimePrimitiveSimpleExtensionGroup()
+    {
         this.abstractTimePrimitiveSimpleExtensionGroup = null;
     }
 
@@ -99,15 +101,17 @@ public abstract class AbstractTimePrimitiveType
      * Gets the value of the abstractTimePrimitiveObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractTimePrimitiveObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractTimePrimitiveObjectExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractTimePrimitiveObjectExtensionGroup().add(newItem);
+     * getAbstractTimePrimitiveObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -117,18 +121,23 @@ public abstract class AbstractTimePrimitiveType
      * 
      * 
      */
-    public List<AbstractObjectType> getAbstractTimePrimitiveObjectExtensionGroup() {
-        if (abstractTimePrimitiveObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getAbstractTimePrimitiveObjectExtensionGroup()
+    {
+        if (abstractTimePrimitiveObjectExtensionGroup == null)
+        {
             abstractTimePrimitiveObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.abstractTimePrimitiveObjectExtensionGroup;
     }
 
-    public boolean isSetAbstractTimePrimitiveObjectExtensionGroup() {
-        return ((this.abstractTimePrimitiveObjectExtensionGroup!= null)&&(!this.abstractTimePrimitiveObjectExtensionGroup.isEmpty()));
+    public boolean isSetAbstractTimePrimitiveObjectExtensionGroup()
+    {
+        return ((this.abstractTimePrimitiveObjectExtensionGroup != null)
+                && (!this.abstractTimePrimitiveObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetAbstractTimePrimitiveObjectExtensionGroup() {
+    public void unsetAbstractTimePrimitiveObjectExtensionGroup()
+    {
         this.abstractTimePrimitiveObjectExtensionGroup = null;
     }
 

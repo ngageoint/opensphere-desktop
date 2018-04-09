@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.gml._212;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -18,17 +17,19 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
- *         All geometry elements are derived from this abstract supertype; 
- *         a geometry element may have an identifying attribute (gid). 
- *         It may be associated with a spatial reference system.
- *       
+ * All geometry elements are derived from this abstract supertype; a geometry
+ * element may have an identifying attribute (gid). It may be associated with a
+ * spatial reference system.
  * 
- * <p>Java class for AbstractGeometryType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for AbstractGeometryType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractGeometryType">
@@ -45,21 +46,17 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AbstractGeometryType")
-@XmlSeeAlso({
-    BoxType.class,
-    PointType.class,
-    LineStringType.class,
-    LinearRingType.class,
-    PolygonType.class,
-    AbstractGeometryCollectionBaseType.class
-})
-public abstract class AbstractGeometryType {
+@XmlSeeAlso({ BoxType.class, PointType.class, LineStringType.class, LinearRingType.class, PolygonType.class,
+    AbstractGeometryCollectionBaseType.class })
+public abstract class AbstractGeometryType
+{
 
     @XmlAttribute(name = "gid")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
     @XmlSchemaType(name = "ID")
     protected String gid;
+
     @XmlAttribute(name = "srsName")
     @XmlSchemaType(name = "anyURI")
     protected String srsName;
@@ -67,57 +64,55 @@ public abstract class AbstractGeometryType {
     /**
      * Gets the value of the gid property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getGid() {
+    public String getGid()
+    {
         return gid;
     }
 
     /**
      * Sets the value of the gid property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setGid(String value) {
+    public void setGid(String value)
+    {
         this.gid = value;
     }
 
-    public boolean isSetGid() {
-        return (this.gid!= null);
+    public boolean isSetGid()
+    {
+        return (this.gid != null);
     }
 
     /**
      * Gets the value of the srsName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSrsName() {
+    public String getSrsName()
+    {
         return srsName;
     }
 
     /**
      * Sets the value of the srsName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSrsName(String value) {
+    public void setSrsName(String value)
+    {
         this.srsName = value;
     }
 
-    public boolean isSetSrsName() {
-        return (this.srsName!= null);
+    public boolean isSetSrsName()
+    {
+        return (this.srsName != null);
     }
 
 }

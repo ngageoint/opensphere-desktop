@@ -38,7 +38,8 @@ public class ImageFactory
      *             recognized.
      */
     public Image createImage(InputStream stream, int contentLengthBytes, String imageFormat, boolean ddsDesired,
-            boolean useBufferedImagePool, ImageMetrics metrics) throws ImageFormatUnknownException
+            boolean useBufferedImagePool, ImageMetrics metrics)
+        throws ImageFormatUnknownException
     {
         if (ddsDesired && useBufferedImagePool)
         {
@@ -124,7 +125,8 @@ public class ImageFactory
      * @throws IOException If there is an error reading from the input stream.
      */
     public InputStream getDDSImageStream(InputStream in, String imageFormat, int contentLength, ImageMetrics metrics,
-            Executor executor) throws ImageFormatUnknownException, IOException
+            Executor executor)
+        throws ImageFormatUnknownException, IOException
     {
         try
         {
@@ -194,7 +196,8 @@ public class ImageFactory
      * @throws IOException If the image input stream cannot be created.
      */
     private void setImageInput(Image image, InputStream stream, int contentLengthBytes, ImageMetrics metrics,
-            boolean useBufferedImagePool) throws ImageFormatUnknownException, IOException
+            boolean useBufferedImagePool)
+        throws ImageFormatUnknownException, IOException
     {
         boolean success = false;
         try

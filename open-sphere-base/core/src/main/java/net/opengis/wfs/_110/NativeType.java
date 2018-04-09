@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for NativeType complex type.
+ * <p>
+ * Java class for NativeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="NativeType">
@@ -34,34 +35,34 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "NativeType")
-public class NativeType {
+public class NativeType
+{
 
     @XmlAttribute(name = "vendorId", required = true)
     protected String vendorId;
+
     @XmlAttribute(name = "safeToIgnore", required = true)
     protected boolean safeToIgnore;
 
     /**
      * Gets the value of the vendorId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getVendorId() {
+    public String getVendorId()
+    {
         return vendorId;
     }
 
     /**
      * Sets the value of the vendorId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setVendorId(String value) {
+    public void setVendorId(String value)
+    {
         this.vendorId = value;
     }
 
@@ -69,7 +70,8 @@ public class NativeType {
      * Gets the value of the safeToIgnore property.
      * 
      */
-    public boolean isSafeToIgnore() {
+    public boolean isSafeToIgnore()
+    {
         return safeToIgnore;
     }
 
@@ -77,7 +79,8 @@ public class NativeType {
      * Sets the value of the safeToIgnore property.
      * 
      */
-    public void setSafeToIgnore(boolean value) {
+    public void setSafeToIgnore(boolean value)
+    {
         this.safeToIgnore = value;
     }
 

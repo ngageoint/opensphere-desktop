@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,16 +13,18 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.Duration;
 
-
 /**
  * 
- *         Defines the fade in / fade out behavior of features displayed during 
- *         animation windows.
- *       
+ * Defines the fade in / fade out behavior of features displayed during
+ * animation windows.
  * 
- * <p>Java class for TimeFadeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for TimeFadeType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TimeFadeType">
@@ -44,67 +45,67 @@ import javax.xml.datatype.Duration;
 @XmlType(name = "TimeFadeType", propOrder = {
 
 })
-public class TimeFadeType {
+public class TimeFadeType
+{
 
     @XmlElement(required = true)
     protected Duration in;
+
     @XmlElement(required = true)
     protected Duration out;
 
     /**
      * Gets the value of the in property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Duration }
-     *     
+     * @return possible object is {@link Duration }
+     * 
      */
-    public Duration getIn() {
+    public Duration getIn()
+    {
         return in;
     }
 
     /**
      * Sets the value of the in property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Duration }
-     *     
+     * @param value allowed object is {@link Duration }
+     * 
      */
-    public void setIn(Duration value) {
+    public void setIn(Duration value)
+    {
         this.in = value;
     }
 
-    public boolean isSetIn() {
-        return (this.in!= null);
+    public boolean isSetIn()
+    {
+        return (this.in != null);
     }
 
     /**
      * Gets the value of the out property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Duration }
-     *     
+     * @return possible object is {@link Duration }
+     * 
      */
-    public Duration getOut() {
+    public Duration getOut()
+    {
         return out;
     }
 
     /**
      * Sets the value of the out property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Duration }
-     *     
+     * @param value allowed object is {@link Duration }
+     * 
      */
-    public void setOut(Duration value) {
+    public void setOut(Duration value)
+    {
         this.out = value;
     }
 
-    public boolean isSetOut() {
-        return (this.out!= null);
+    public boolean isSetOut()
+    {
+        return (this.out != null);
     }
 
 }

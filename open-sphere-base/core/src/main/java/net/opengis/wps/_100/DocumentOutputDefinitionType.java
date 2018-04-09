@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,15 +15,18 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.ows._110.LanguageStringType;
 
-
 /**
- * Definition of a format, encoding,  schema, and unit-of-measure for an output to be returned from a process. 
+ * Definition of a format, encoding, schema, and unit-of-measure for an output
+ * to be returned from a process.
  * 
- * In this use, the DescriptionType shall describe this process input or output. 
+ * In this use, the DescriptionType shall describe this process input or output.
  * 
- * <p>Java class for DocumentOutputDefinitionType complex type.
+ * <p>
+ * Java class for DocumentOutputDefinitionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DocumentOutputDefinitionType">
@@ -43,81 +45,84 @@ import net.opengis.ows._110.LanguageStringType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DocumentOutputDefinitionType", propOrder = {
-    "title",
-    "_abstract"
-})
-public class DocumentOutputDefinitionType
-    extends OutputDefinitionType
+@XmlType(name = "DocumentOutputDefinitionType", propOrder = { "title", "_abstract" })
+public class DocumentOutputDefinitionType extends OutputDefinitionType
 {
 
     @XmlElement(name = "Title", namespace = "http://www.opengis.net/ows/1.1")
     protected LanguageStringType title;
+
     @XmlElement(name = "Abstract", namespace = "http://www.opengis.net/ows/1.1")
     protected LanguageStringType _abstract;
+
     @XmlAttribute
     protected Boolean asReference;
 
     /**
-     * Title of the process output, normally available for display to a human. This element should be used if the client wishes to customize the Title in the execute response. This element should not be used if the Title provided for this output in the ProcessDescription is adequate. 
+     * Title of the process output, normally available for display to a human.
+     * This element should be used if the client wishes to customize the Title
+     * in the execute response. This element should not be used if the Title
+     * provided for this output in the ProcessDescription is adequate.
      * 
-     * @return
-     *     possible object is
-     *     {@link LanguageStringType }
-     *     
+     * @return possible object is {@link LanguageStringType }
+     * 
      */
-    public LanguageStringType getTitle() {
+    public LanguageStringType getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LanguageStringType }
-     *     
+     * @param value allowed object is {@link LanguageStringType }
+     * 
      */
-    public void setTitle(LanguageStringType value) {
+    public void setTitle(LanguageStringType value)
+    {
         this.title = value;
     }
 
     /**
-     * Brief narrative description of a process output, normally available for display to a human. This element should be used if the client wishes to customize the Abstract in the execute response. This element should not be used if the Abstract provided for this output in the ProcessDescription is adequate. 
+     * Brief narrative description of a process output, normally available for
+     * display to a human. This element should be used if the client wishes to
+     * customize the Abstract in the execute response. This element should not
+     * be used if the Abstract provided for this output in the
+     * ProcessDescription is adequate.
      * 
-     * @return
-     *     possible object is
-     *     {@link LanguageStringType }
-     *     
+     * @return possible object is {@link LanguageStringType }
+     * 
      */
-    public LanguageStringType getAbstract() {
+    public LanguageStringType getAbstract()
+    {
         return _abstract;
     }
 
     /**
      * Sets the value of the abstract property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LanguageStringType }
-     *     
+     * @param value allowed object is {@link LanguageStringType }
+     * 
      */
-    public void setAbstract(LanguageStringType value) {
+    public void setAbstract(LanguageStringType value)
+    {
         this._abstract = value;
     }
 
     /**
      * Gets the value of the asReference property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public boolean isAsReference() {
-        if (asReference == null) {
+    public boolean isAsReference()
+    {
+        if (asReference == null)
+        {
             return false;
-        } else {
+        }
+        else
+        {
             return asReference;
         }
     }
@@ -125,12 +130,11 @@ public class DocumentOutputDefinitionType
     /**
      * Sets the value of the asReference property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setAsReference(Boolean value) {
+    public void setAsReference(Boolean value)
+    {
         this.asReference = value;
     }
 

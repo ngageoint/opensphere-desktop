@@ -15,7 +15,8 @@ import javafx.util.StringConverter;
 import javafx.util.converter.LocalDateStringConverter;
 
 /**
- * A date picker panel. This is currently intended to be used with TimeInstantTextFieldController but could be made more generic.
+ * A date picker panel. This is currently intended to be used with
+ * TimeInstantTextFieldController but could be made more generic.
  */
 public class DatePicker extends ComboBoxBase<LocalDate>
 {
@@ -32,7 +33,8 @@ public class DatePicker extends ComboBoxBase<LocalDate>
     private ReadOnlyObjectWrapper<TextField> myEditor;
 
     /**
-     * A converter used to change {@link LocalDate} objects to {@link String} instances with a known format.
+     * A converter used to change {@link LocalDate} objects to {@link String}
+     * instances with a known format.
      */
     private final ObjectProperty<StringConverter<LocalDate>> myConverter = new SimpleObjectProperty<>(this, "converter", null);
 

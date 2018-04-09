@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ows._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * For OWS use in the service metadata document, the optional hoursOfService and contactInstructions elements were retained, as possibly being useful in the ServiceProvider section. 
+ * For OWS use in the service metadata document, the optional hoursOfService and
+ * contactInstructions elements were retained, as possibly being useful in the
+ * ServiceProvider section.
  * 
- * <p>Java class for ContactType complex type.
+ * <p>
+ * Java class for ContactType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ContactType">
@@ -40,143 +43,132 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ContactType", propOrder = {
-    "phone",
-    "address",
-    "onlineResource",
-    "hoursOfService",
-    "contactInstructions"
-})
-public class ContactType {
+@XmlType(name = "ContactType", propOrder = { "phone", "address", "onlineResource", "hoursOfService", "contactInstructions" })
+public class ContactType
+{
 
     @XmlElement(name = "Phone")
     protected TelephoneType phone;
+
     @XmlElement(name = "Address")
     protected AddressType address;
+
     @XmlElement(name = "OnlineResource")
     protected OnlineResourceType onlineResource;
+
     @XmlElement(name = "HoursOfService")
     protected String hoursOfService;
+
     @XmlElement(name = "ContactInstructions")
     protected String contactInstructions;
 
     /**
      * Gets the value of the phone property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TelephoneType }
-     *     
+     * @return possible object is {@link TelephoneType }
+     * 
      */
-    public TelephoneType getPhone() {
+    public TelephoneType getPhone()
+    {
         return phone;
     }
 
     /**
      * Sets the value of the phone property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TelephoneType }
-     *     
+     * @param value allowed object is {@link TelephoneType }
+     * 
      */
-    public void setPhone(TelephoneType value) {
+    public void setPhone(TelephoneType value)
+    {
         this.phone = value;
     }
 
     /**
      * Gets the value of the address property.
      * 
-     * @return
-     *     possible object is
-     *     {@link AddressType }
-     *     
+     * @return possible object is {@link AddressType }
+     * 
      */
-    public AddressType getAddress() {
+    public AddressType getAddress()
+    {
         return address;
     }
 
     /**
      * Sets the value of the address property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link AddressType }
-     *     
+     * @param value allowed object is {@link AddressType }
+     * 
      */
-    public void setAddress(AddressType value) {
+    public void setAddress(AddressType value)
+    {
         this.address = value;
     }
 
     /**
      * Gets the value of the onlineResource property.
      * 
-     * @return
-     *     possible object is
-     *     {@link OnlineResourceType }
-     *     
+     * @return possible object is {@link OnlineResourceType }
+     * 
      */
-    public OnlineResourceType getOnlineResource() {
+    public OnlineResourceType getOnlineResource()
+    {
         return onlineResource;
     }
 
     /**
      * Sets the value of the onlineResource property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link OnlineResourceType }
-     *     
+     * @param value allowed object is {@link OnlineResourceType }
+     * 
      */
-    public void setOnlineResource(OnlineResourceType value) {
+    public void setOnlineResource(OnlineResourceType value)
+    {
         this.onlineResource = value;
     }
 
     /**
      * Gets the value of the hoursOfService property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHoursOfService() {
+    public String getHoursOfService()
+    {
         return hoursOfService;
     }
 
     /**
      * Sets the value of the hoursOfService property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHoursOfService(String value) {
+    public void setHoursOfService(String value)
+    {
         this.hoursOfService = value;
     }
 
     /**
      * Gets the value of the contactInstructions property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getContactInstructions() {
+    public String getContactInstructions()
+    {
         return contactInstructions;
     }
 
     /**
      * Sets the value of the contactInstructions property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setContactInstructions(String value) {
+    public void setContactInstructions(String value)
+    {
         this.contactInstructions = value;
     }
 

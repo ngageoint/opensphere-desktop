@@ -206,7 +206,7 @@ public class RetrieveGroupIdsTask extends DatabaseTask implements ConnectionUser
      * @param pstmt The statement.
      * @param sql The SQL string.
      * @throws CacheException If there's a problem with the SQL.
-     * @throws SQLException If an argument cannot be set in the statement.
+     * @throws SQLException If an  argument cannot be set in the statement.
      * @throws NotSerializableException If the operand of the parameter is not
      *             serializable.
      */
@@ -233,12 +233,13 @@ public class RetrieveGroupIdsTask extends DatabaseTask implements ConnectionUser
      * @param param The parameter.
      * @return The next parameter index.
      * @throws CacheException If there's a problem with the SQL.
-     * @throws SQLException If an argument cannot be set in the statement.
+     * @throws SQLException If an  argument cannot be set in the statement.
      * @throws NotSerializableException If the operand of the parameter is not
      *             serializable.
      */
     protected <T extends Serializable> int prepareGroupQueryStatement(PreparedStatement pstmt, int startIndex,
-            PropertyMatcher<T> param) throws SQLException, CacheException, NotSerializableException
+            PropertyMatcher<T> param)
+        throws SQLException, CacheException, NotSerializableException
     {
         int index = startIndex;
 
@@ -279,10 +280,11 @@ public class RetrieveGroupIdsTask extends DatabaseTask implements ConnectionUser
      * @param critical If not {@code null}, the required criticality of the
      *            groups.
      * @return The index for the next parameter in the statement.
-     * @throws SQLException If an argument cannot be set in the statement.
+     * @throws SQLException If an  argument cannot be set in the statement.
      */
     protected int setStandardWhereParameters(PreparedStatement pstmt, DataModelCategory category, TimeSpan expirationRange,
-            Boolean critical) throws SQLException
+            Boolean critical)
+        throws SQLException
     {
         int index = 1;
         if (category.getFamily() != null)

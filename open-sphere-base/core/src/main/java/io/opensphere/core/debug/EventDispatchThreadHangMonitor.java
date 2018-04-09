@@ -9,7 +9,8 @@ import java.util.TimerTask;
 import org.apache.log4j.Logger;
 
 /**
- * An event queue replacement to determine if a thread has hung. This monitor is a singleton.
+ * An event queue replacement to determine if a thread has hung. This monitor is
+ * a singleton.
  */
 public class EventDispatchThreadHangMonitor extends EventQueue
 {
@@ -39,7 +40,8 @@ public class EventDispatchThreadHangMonitor extends EventQueue
     private static final long NO_CURRENT_EVENT = 0;
 
     /**
-     * The time at which the last event dispatch began. This may be initialized to {@link #NO_CURRENT_EVENT}.
+     * The time at which the last event dispatch began. This may be initialized
+     * to {@link #NO_CURRENT_EVENT}.
      */
     private long myStartedLastEventDispatchAt = NO_CURRENT_EVENT;
 
@@ -62,7 +64,8 @@ public class EventDispatchThreadHangMonitor extends EventQueue
     }
 
     /**
-     * Initializes a new timer, and schedules it to timeout after {@link #CHECK_INTERVAL_MS}.
+     * Initializes a new timer, and schedules it to timeout after
+     * {@link #CHECK_INTERVAL_MS}.
      */
     private void initTimer()
     {
@@ -73,9 +76,11 @@ public class EventDispatchThreadHangMonitor extends EventQueue
     }
 
     /**
-     * Gets the number of milliseconds elapsed since {@link #myStartedLastEventDispatchAt}.
+     * Gets the number of milliseconds elapsed since
+     * {@link #myStartedLastEventDispatchAt}.
      *
-     * @return the number of milliseconds elapsed since {@link #myStartedLastEventDispatchAt}.
+     * @return the number of milliseconds elapsed since
+     *         {@link #myStartedLastEventDispatchAt}.
      */
     protected long getElapsedTime()
     {
@@ -84,7 +89,8 @@ public class EventDispatchThreadHangMonitor extends EventQueue
     }
 
     /**
-     * Initializes monitoring of the event queue, by inserting the singleton instance into the system.
+     * Initializes monitoring of the event queue, by inserting the singleton
+     * instance into the system.
      */
     public static void initMonitoring()
     {
@@ -157,7 +163,8 @@ public class EventDispatchThreadHangMonitor extends EventQueue
         {
             if (myStartedLastEventDispatchAt == NO_CURRENT_EVENT)
             {
-                // don't destroy the timer when there's nothing happening, because it would mean a lot more setup work
+                // don't destroy the timer when there's nothing happening,
+                // because it would mean a lot more setup work
                 // on every single AWT event that gets dispatched
                 return;
             }
@@ -169,8 +176,9 @@ public class EventDispatchThreadHangMonitor extends EventQueue
         }
 
         /**
-         * Reports the hang to the long using a stack trace of the thread. This reporting operation will only occur once,
-         * depending on the state of the {@link EventDispatchThreadHangMonitor#myReportedHang} flag.
+         * Reports the hang to the long using a stack trace of the thread. This
+         * reporting operation will only occur once, depending on the state of
+         * the {@link EventDispatchThreadHangMonitor#myReportedHang} flag.
          */
         protected void reportHang()
         {

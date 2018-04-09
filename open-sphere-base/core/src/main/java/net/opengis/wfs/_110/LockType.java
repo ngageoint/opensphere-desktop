@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,21 +16,21 @@ import javax.xml.namespace.QName;
 
 import net.opengis.ogc._110.FilterType;
 
-
 /**
  * 
- *             This type defines the Lock element.  The Lock element
- *             defines a locking operation on feature instances of 
- *             a single type. An OGC Filter is used to constrain the
- *             scope of the operation.  Features to be locked can be
- *             identified individually by using their feature identifier
- *             or they can be locked by satisfying the spatial and 
- *             non-spatial constraints defined in the filter.
- *          
+ * This type defines the Lock element. The Lock element defines a locking
+ * operation on feature instances of a single type. An OGC Filter is used to
+ * constrain the scope of the operation. Features to be locked can be identified
+ * individually by using their feature identifier or they can be locked by
+ * satisfying the spatial and non-spatial constraints defined in the filter.
  * 
- * <p>Java class for LockType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for LockType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LockType">
@@ -50,87 +49,82 @@ import net.opengis.ogc._110.FilterType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LockType", propOrder = {
-    "filter"
-})
-public class LockType {
+@XmlType(name = "LockType", propOrder = { "filter" })
+public class LockType
+{
 
     @XmlElement(name = "Filter", namespace = "http://www.opengis.net/ogc")
     protected FilterType filter;
+
     @XmlAttribute(name = "handle")
     protected String handle;
+
     @XmlAttribute(name = "typeName", required = true)
     protected QName typeName;
 
     /**
      * Gets the value of the filter property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FilterType }
-     *     
+     * @return possible object is {@link FilterType }
+     * 
      */
-    public FilterType getFilter() {
+    public FilterType getFilter()
+    {
         return filter;
     }
 
     /**
      * Sets the value of the filter property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FilterType }
-     *     
+     * @param value allowed object is {@link FilterType }
+     * 
      */
-    public void setFilter(FilterType value) {
+    public void setFilter(FilterType value)
+    {
         this.filter = value;
     }
 
     /**
      * Gets the value of the handle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHandle() {
+    public String getHandle()
+    {
         return handle;
     }
 
     /**
      * Sets the value of the handle property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHandle(String value) {
+    public void setHandle(String value)
+    {
         this.handle = value;
     }
 
     /**
      * Gets the value of the typeName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link QName }
-     *     
+     * @return possible object is {@link QName }
+     * 
      */
-    public QName getTypeName() {
+    public QName getTypeName()
+    {
         return typeName;
     }
 
     /**
      * Sets the value of the typeName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link QName }
-     *     
+     * @param value allowed object is {@link QName }
+     * 
      */
-    public void setTypeName(QName value) {
+    public void setTypeName(QName value)
+    {
         this.typeName = value;
     }
 

@@ -252,7 +252,7 @@ public class RetrieveCombinedIdsTask extends DatabaseTask implements ConnectionU
      */
     protected PreparedStatement prepareGetIdStatement(String sql, int groupCount,
             Collection<? extends PropertyMatcher<?>> parameters, PreparedStatement pstmt)
-                throws SQLException, NotSerializableException, CacheException
+        throws SQLException, NotSerializableException, CacheException
     {
         int index = 1;
 
@@ -353,7 +353,8 @@ public class RetrieveCombinedIdsTask extends DatabaseTask implements ConnectionU
      * @throws CacheException If there's a database error.
      */
     protected <T> String setupValueJoinTable(Connection conn, final ValueTranslator<T> translator, final String sqlType,
-            final Collection<? extends T> values) throws CacheException
+            final Collection<? extends T> values)
+        throws CacheException
     {
         StatementAppropriator app = new StatementAppropriator(conn);
 

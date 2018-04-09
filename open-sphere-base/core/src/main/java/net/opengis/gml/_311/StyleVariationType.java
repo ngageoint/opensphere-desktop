@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,13 +13,16 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * Used to vary individual graphic parameters and attributes of the style, symbol or text.
+ * Used to vary individual graphic parameters and attributes of the style,
+ * symbol or text.
  * 
- * <p>Java class for StyleVariationType complex type.
+ * <p>
+ * Java class for StyleVariationType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="StyleVariationType">
@@ -36,87 +38,82 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "StyleVariationType", propOrder = {
-    "value"
-})
-public class StyleVariationType {
+@XmlType(name = "StyleVariationType", propOrder = { "value" })
+public class StyleVariationType
+{
 
     @XmlValue
     protected String value;
+
     @XmlAttribute(name = "styleProperty", required = true)
     protected String styleProperty;
+
     @XmlAttribute(name = "featurePropertyRange")
     protected String featurePropertyRange;
 
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getValue() {
+    public String getValue()
+    {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setValue(String value) {
+    public void setValue(String value)
+    {
         this.value = value;
     }
 
     /**
      * Gets the value of the styleProperty property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getStyleProperty() {
+    public String getStyleProperty()
+    {
         return styleProperty;
     }
 
     /**
      * Sets the value of the styleProperty property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setStyleProperty(String value) {
+    public void setStyleProperty(String value)
+    {
         this.styleProperty = value;
     }
 
     /**
      * Gets the value of the featurePropertyRange property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getFeaturePropertyRange() {
+    public String getFeaturePropertyRange()
+    {
         return featurePropertyRange;
     }
 
     /**
      * Sets the value of the featurePropertyRange property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setFeaturePropertyRange(String value) {
+    public void setFeaturePropertyRange(String value)
+    {
         this.featurePropertyRange = value;
     }
 

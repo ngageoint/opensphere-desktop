@@ -20,8 +20,8 @@ import io.opensphere.core.util.lang.Pair;
 public class ShaderProgramGLSL
 {
     /**
-     * For <code>TobjectInHashMap</code> use this as the value which means
-     * "no entry".
+     * For <code>TobjectInHashMap</code> use this as the value which means "no
+     * entry".
      */
     private static final int INT_NO_ENTRY_VALUE = -1;
 

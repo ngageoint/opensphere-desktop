@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import java.math.BigInteger;
@@ -16,17 +15,18 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Governs the behaviour of a distributed search.
- *          hopCount     - the maximum number of message hops before
- *                         the search is terminated. Each catalogue node 
- *                         decrements this value when the request is received, 
- *                         and must not forward the request if hopCount=0.
+ * Governs the behaviour of a distributed search. hopCount - the maximum number
+ * of message hops before the search is terminated. Each catalogue node
+ * decrements this value when the request is received, and must not forward the
+ * request if hopCount=0.
  * 
- * <p>Java class for DistributedSearchType complex type.
+ * <p>
+ * Java class for DistributedSearchType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DistributedSearchType">
@@ -42,7 +42,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DistributedSearchType")
-public class DistributedSearchType {
+public class DistributedSearchType
+{
 
     @XmlAttribute
     @XmlSchemaType(name = "positiveInteger")
@@ -51,15 +52,17 @@ public class DistributedSearchType {
     /**
      * Gets the value of the hopCount property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getHopCount() {
-        if (hopCount == null) {
+    public BigInteger getHopCount()
+    {
+        if (hopCount == null)
+        {
             return new BigInteger("2");
-        } else {
+        }
+        else
+        {
             return hopCount;
         }
     }
@@ -67,12 +70,11 @@ public class DistributedSearchType {
     /**
      * Sets the value of the hopCount property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setHopCount(BigInteger value) {
+    public void setHopCount(BigInteger value)
+    {
         this.hopCount = value;
     }
 

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.math.BigInteger;
@@ -18,13 +17,16 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A pass-through operation specifies that a subset of a coordinate tuple is subject to a specific coordinate operation. 
+ * A pass-through operation specifies that a subset of a coordinate tuple is
+ * subject to a specific coordinate operation.
  * 
- * <p>Java class for PassThroughOperationType complex type.
+ * <p>
+ * Java class for PassThroughOperationType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="PassThroughOperationType">
@@ -42,33 +44,33 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PassThroughOperationType", propOrder = {
-    "modifiedCoordinate",
-    "usesOperation"
-})
-public class PassThroughOperationType
-    extends AbstractCoordinateOperationType
+@XmlType(name = "PassThroughOperationType", propOrder = { "modifiedCoordinate", "usesOperation" })
+public class PassThroughOperationType extends AbstractCoordinateOperationType
 {
 
     @XmlElement(required = true)
     @XmlSchemaType(name = "positiveInteger")
     protected List<BigInteger> modifiedCoordinate;
+
     @XmlElement(required = true)
     protected OperationRefType usesOperation;
 
     /**
-     * Ordered sequence of positive integers defining the positions in a coordinate tuple of the coordinates affected by this pass-through operation. Gets the value of the modifiedCoordinate property.
+     * Ordered sequence of positive integers defining the positions in a
+     * coordinate tuple of the coordinates affected by this pass-through
+     * operation. Gets the value of the modifiedCoordinate property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the modifiedCoordinate property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the modifiedCoordinate property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getModifiedCoordinate().add(newItem);
+     * getModifiedCoordinate().add(newItem);
      * </pre>
      * 
      * 
@@ -78,8 +80,10 @@ public class PassThroughOperationType
      * 
      * 
      */
-    public List<BigInteger> getModifiedCoordinate() {
-        if (modifiedCoordinate == null) {
+    public List<BigInteger> getModifiedCoordinate()
+    {
+        if (modifiedCoordinate == null)
+        {
             modifiedCoordinate = new ArrayList<BigInteger>();
         }
         return this.modifiedCoordinate;
@@ -88,24 +92,22 @@ public class PassThroughOperationType
     /**
      * Gets the value of the usesOperation property.
      * 
-     * @return
-     *     possible object is
-     *     {@link OperationRefType }
-     *     
+     * @return possible object is {@link OperationRefType }
+     * 
      */
-    public OperationRefType getUsesOperation() {
+    public OperationRefType getUsesOperation()
+    {
         return usesOperation;
     }
 
     /**
      * Sets the value of the usesOperation property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link OperationRefType }
-     *     
+     * @param value allowed object is {@link OperationRefType }
+     * 
      */
-    public void setUsesOperation(OperationRefType value) {
+    public void setUsesOperation(OperationRefType value)
+    {
         this.usesOperation = value;
     }
 

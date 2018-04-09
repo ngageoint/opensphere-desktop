@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.util.ArrayList;
@@ -15,15 +14,17 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *         A type in which multiple query areas may be defined.
- *       
+ * A type in which multiple query areas may be defined.
  * 
- * <p>Java class for QueryAreasType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for QueryAreasType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="QueryAreasType">
@@ -40,10 +41,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "QueryAreasType", propOrder = {
-    "queryArea"
-})
-public class QueryAreasType {
+@XmlType(name = "QueryAreasType", propOrder = { "queryArea" })
+public class QueryAreasType
+{
 
     protected List<QueryAreaType> queryArea;
 
@@ -51,15 +51,16 @@ public class QueryAreasType {
      * Gets the value of the queryArea property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the queryArea property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the queryArea property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getQueryArea().add(newItem);
+     * getQueryArea().add(newItem);
      * </pre>
      * 
      * 
@@ -69,18 +70,22 @@ public class QueryAreasType {
      * 
      * 
      */
-    public List<QueryAreaType> getQueryArea() {
-        if (queryArea == null) {
+    public List<QueryAreaType> getQueryArea()
+    {
+        if (queryArea == null)
+        {
             queryArea = new ArrayList<QueryAreaType>();
         }
         return this.queryArea;
     }
 
-    public boolean isSetQueryArea() {
-        return ((this.queryArea!= null)&&(!this.queryArea.isEmpty()));
+    public boolean isSetQueryArea()
+    {
+        return ((this.queryArea != null) && (!this.queryArea.isEmpty()));
     }
 
-    public void unsetQueryArea() {
+    public void unsetQueryArea()
+    {
         this.queryArea = null;
     }
 

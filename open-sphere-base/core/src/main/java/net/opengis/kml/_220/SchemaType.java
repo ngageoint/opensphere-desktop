@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -21,11 +20,13 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
- * <p>Java class for SchemaType complex type.
+ * <p>
+ * Java class for SchemaType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SchemaType">
@@ -45,18 +46,19 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SchemaType", propOrder = {
-    "simpleField",
-    "schemaExtension"
-})
-public class SchemaType {
+@XmlType(name = "SchemaType", propOrder = { "simpleField", "schemaExtension" })
+public class SchemaType
+{
 
     @XmlElement(name = "SimpleField")
     protected List<SimpleFieldType> simpleField;
+
     @XmlElement(name = "SchemaExtension")
     protected List<Object> schemaExtension;
+
     @XmlAttribute(name = "name")
     protected String name;
+
     @XmlAttribute(name = "id")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
@@ -67,15 +69,16 @@ public class SchemaType {
      * Gets the value of the simpleField property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the simpleField property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the simpleField property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSimpleField().add(newItem);
+     * getSimpleField().add(newItem);
      * </pre>
      * 
      * 
@@ -85,18 +88,22 @@ public class SchemaType {
      * 
      * 
      */
-    public List<SimpleFieldType> getSimpleField() {
-        if (simpleField == null) {
+    public List<SimpleFieldType> getSimpleField()
+    {
+        if (simpleField == null)
+        {
             simpleField = new ArrayList<SimpleFieldType>();
         }
         return this.simpleField;
     }
 
-    public boolean isSetSimpleField() {
-        return ((this.simpleField!= null)&&(!this.simpleField.isEmpty()));
+    public boolean isSetSimpleField()
+    {
+        return ((this.simpleField != null) && (!this.simpleField.isEmpty()));
     }
 
-    public void unsetSimpleField() {
+    public void unsetSimpleField()
+    {
         this.simpleField = null;
     }
 
@@ -104,93 +111,95 @@ public class SchemaType {
      * Gets the value of the schemaExtension property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the schemaExtension property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the schemaExtension property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSchemaExtension().add(newItem);
+     * getSchemaExtension().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getSchemaExtension() {
-        if (schemaExtension == null) {
+    public List<Object> getSchemaExtension()
+    {
+        if (schemaExtension == null)
+        {
             schemaExtension = new ArrayList<Object>();
         }
         return this.schemaExtension;
     }
 
-    public boolean isSetSchemaExtension() {
-        return ((this.schemaExtension!= null)&&(!this.schemaExtension.isEmpty()));
+    public boolean isSetSchemaExtension()
+    {
+        return ((this.schemaExtension != null) && (!this.schemaExtension.isEmpty()));
     }
 
-    public void unsetSchemaExtension() {
+    public void unsetSchemaExtension()
+    {
         this.schemaExtension = null;
     }
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
-    public boolean isSetName() {
-        return (this.name!= null);
+    public boolean isSetName()
+    {
+        return (this.name != null);
     }
 
     /**
      * Gets the value of the id property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
     /**
      * Sets the value of the id property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setId(String value) {
+    public void setId(String value)
+    {
         this.id = value;
     }
 
-    public boolean isSetId() {
-        return (this.id!= null);
+    public boolean isSetId()
+    {
+        return (this.id != null);
     }
 
 }

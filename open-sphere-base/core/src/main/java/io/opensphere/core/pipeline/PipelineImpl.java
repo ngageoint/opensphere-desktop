@@ -68,8 +68,8 @@ public class PipelineImpl implements GLEventListener, Pipeline, GenericSubscribe
      * Maximum number of milliseconds that GL-dependent processing tasks are run
      * per render pass.
      */
-    private static final long GL_QUEUE_TIME_BUDGET_MILLISECONDS = Long.getLong("opensphere.pipeline.glQueueBudgetMilliseconds", 100)
-            .longValue();
+    private static final long GL_QUEUE_TIME_BUDGET_MILLISECONDS = Long
+            .getLong("opensphere.pipeline.glQueueBudgetMilliseconds", 100).longValue();
 
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(PipelineImpl.class);
@@ -84,8 +84,8 @@ public class PipelineImpl implements GLEventListener, Pipeline, GenericSubscribe
     /**
      * The time limit before a render pass is forced.
      */
-    private static final long REPAINT_TIME_LIMIT_NANOSECONDS = Long.getLong("opensphere.pipeline.repaintTimeLimitNanoseconds", 5000000)
-            .longValue();
+    private static final long REPAINT_TIME_LIMIT_NANOSECONDS = Long
+            .getLong("opensphere.pipeline.repaintTimeLimitNanoseconds", 5000000).longValue();
 
     /** The animator manager. */
     private final AnimatorManager myAnimatorManager = new AnimatorManager();
@@ -416,7 +416,8 @@ public class PipelineImpl implements GLEventListener, Pipeline, GenericSubscribe
     }
 
     /**
-     * Captures statistics for the graphics environment, using the supplied render context as a data source.
+     * Captures statistics for the graphics environment, using the supplied
+     * render context as a data source.
      *
      * @param pRenderContext the context from which statistics are read.
      */

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,13 +13,15 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Formats, encodings, and schemas supported by a process input or output. 
+ * Formats, encodings, and schemas supported by a process input or output.
  * 
- * <p>Java class for SupportedComplexDataType complex type.
+ * <p>
+ * Java class for SupportedComplexDataType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SupportedComplexDataType">
@@ -38,65 +39,58 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SupportedComplexDataType", propOrder = {
-    "_default",
-    "supported"
-})
-@XmlSeeAlso({
-    SupportedComplexDataInputType.class
-})
-public class SupportedComplexDataType {
+@XmlType(name = "SupportedComplexDataType", propOrder = { "_default", "supported" })
+@XmlSeeAlso({ SupportedComplexDataInputType.class })
+public class SupportedComplexDataType
+{
 
     @XmlElement(name = "Default", namespace = "", required = true)
     protected ComplexDataCombinationType _default;
+
     @XmlElement(name = "Supported", namespace = "", required = true)
     protected ComplexDataCombinationsType supported;
 
     /**
      * Gets the value of the default property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ComplexDataCombinationType }
-     *     
+     * @return possible object is {@link ComplexDataCombinationType }
+     * 
      */
-    public ComplexDataCombinationType getDefault() {
+    public ComplexDataCombinationType getDefault()
+    {
         return _default;
     }
 
     /**
      * Sets the value of the default property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ComplexDataCombinationType }
-     *     
+     * @param value allowed object is {@link ComplexDataCombinationType }
+     * 
      */
-    public void setDefault(ComplexDataCombinationType value) {
+    public void setDefault(ComplexDataCombinationType value)
+    {
         this._default = value;
     }
 
     /**
      * Gets the value of the supported property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ComplexDataCombinationsType }
-     *     
+     * @return possible object is {@link ComplexDataCombinationsType }
+     * 
      */
-    public ComplexDataCombinationsType getSupported() {
+    public ComplexDataCombinationsType getSupported()
+    {
         return supported;
     }
 
     /**
      * Sets the value of the supported property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ComplexDataCombinationsType }
-     *     
+     * @param value allowed object is {@link ComplexDataCombinationsType }
+     * 
      */
-    public void setSupported(ComplexDataCombinationsType value) {
+    public void setSupported(ComplexDataCombinationsType value)
+    {
         this.supported = value;
     }
 

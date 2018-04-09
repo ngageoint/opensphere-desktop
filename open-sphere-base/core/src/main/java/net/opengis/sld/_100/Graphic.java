@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -47,24 +48,21 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "externalGraphicOrMark",
-    "opacity",
-    "size",
-    "rotation"
-})
+@XmlType(name = "", propOrder = { "externalGraphicOrMark", "opacity", "size", "rotation" })
 @XmlRootElement(name = "Graphic")
-public class Graphic {
+public class Graphic
+{
 
-    @XmlElements({
-        @XmlElement(name = "ExternalGraphic", type = ExternalGraphic.class),
-        @XmlElement(name = "Mark", type = Mark.class)
-    })
+    @XmlElements({ @XmlElement(name = "ExternalGraphic", type = ExternalGraphic.class),
+        @XmlElement(name = "Mark", type = Mark.class) })
     protected List<Object> externalGraphicOrMark;
+
     @XmlElement(name = "Opacity")
     protected ParameterValueType opacity;
+
     @XmlElement(name = "Size")
     protected ParameterValueType size;
+
     @XmlElement(name = "Rotation")
     protected ParameterValueType rotation;
 
@@ -72,27 +70,29 @@ public class Graphic {
      * Gets the value of the externalGraphicOrMark property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the externalGraphicOrMark property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the externalGraphicOrMark property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getExternalGraphicOrMark().add(newItem);
+     * getExternalGraphicOrMark().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ExternalGraphic }
-     * {@link Mark }
+     * {@link ExternalGraphic } {@link Mark }
      * 
      * 
      */
-    public List<Object> getExternalGraphicOrMark() {
-        if (externalGraphicOrMark == null) {
+    public List<Object> getExternalGraphicOrMark()
+    {
+        if (externalGraphicOrMark == null)
+        {
             externalGraphicOrMark = new ArrayList<Object>();
         }
         return this.externalGraphicOrMark;
@@ -101,72 +101,66 @@ public class Graphic {
     /**
      * Gets the value of the opacity property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ParameterValueType }
-     *     
+     * @return possible object is {@link ParameterValueType }
+     * 
      */
-    public ParameterValueType getOpacity() {
+    public ParameterValueType getOpacity()
+    {
         return opacity;
     }
 
     /**
      * Sets the value of the opacity property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ParameterValueType }
-     *     
+     * @param value allowed object is {@link ParameterValueType }
+     * 
      */
-    public void setOpacity(ParameterValueType value) {
+    public void setOpacity(ParameterValueType value)
+    {
         this.opacity = value;
     }
 
     /**
      * Gets the value of the size property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ParameterValueType }
-     *     
+     * @return possible object is {@link ParameterValueType }
+     * 
      */
-    public ParameterValueType getSize() {
+    public ParameterValueType getSize()
+    {
         return size;
     }
 
     /**
      * Sets the value of the size property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ParameterValueType }
-     *     
+     * @param value allowed object is {@link ParameterValueType }
+     * 
      */
-    public void setSize(ParameterValueType value) {
+    public void setSize(ParameterValueType value)
+    {
         this.size = value;
     }
 
     /**
      * Gets the value of the rotation property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ParameterValueType }
-     *     
+     * @return possible object is {@link ParameterValueType }
+     * 
      */
-    public ParameterValueType getRotation() {
+    public ParameterValueType getRotation()
+    {
         return rotation;
     }
 
     /**
      * Sets the value of the rotation property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ParameterValueType }
-     *     
+     * @param value allowed object is {@link ParameterValueType }
+     * 
      */
-    public void setRotation(ParameterValueType value) {
+    public void setRotation(ParameterValueType value)
+    {
         this.rotation = value;
     }
 

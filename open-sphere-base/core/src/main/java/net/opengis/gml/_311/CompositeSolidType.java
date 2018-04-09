@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,14 +15,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A composite solid is a geometry type with all the geometric properties of a (primitive) solid. 
- * 				Essentially, a composite solid is a collection of solids that join in pairs on common boundary surfaces and which, when considered as a whole, form a single solid.
+ * A composite solid is a geometry type with all the geometric properties of a
+ * (primitive) solid. Essentially, a composite solid is a collection of solids
+ * that join in pairs on common boundary surfaces and which, when considered as
+ * a whole, form a single solid.
  * 
- * <p>Java class for CompositeSolidType complex type.
+ * <p>
+ * Java class for CompositeSolidType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CompositeSolidType">
@@ -40,30 +43,30 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CompositeSolidType", propOrder = {
-    "solidMember"
-})
-public class CompositeSolidType
-    extends AbstractSolidType
+@XmlType(name = "CompositeSolidType", propOrder = { "solidMember" })
+public class CompositeSolidType extends AbstractSolidType
 {
 
     @XmlElement(required = true)
     protected List<SolidPropertyType> solidMember;
 
     /**
-     * This element references or contains one solid in the composite solid. The solids are contiguous.
-     * NOTE: This definition allows for a nested structure, i.e. a CompositeSolid may use, for example, another CompositeSolid as a member.Gets the value of the solidMember property.
+     * This element references or contains one solid in the composite solid. The
+     * solids are contiguous. NOTE: This definition allows for a nested
+     * structure, i.e. a CompositeSolid may use, for example, another
+     * CompositeSolid as a member.Gets the value of the solidMember property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the solidMember property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the solidMember property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSolidMember().add(newItem);
+     * getSolidMember().add(newItem);
      * </pre>
      * 
      * 
@@ -73,8 +76,10 @@ public class CompositeSolidType
      * 
      * 
      */
-    public List<SolidPropertyType> getSolidMember() {
-        if (solidMember == null) {
+    public List<SolidPropertyType> getSolidMember()
+    {
+        if (solidMember == null)
+        {
             solidMember = new ArrayList<SolidPropertyType>();
         }
         return this.solidMember;

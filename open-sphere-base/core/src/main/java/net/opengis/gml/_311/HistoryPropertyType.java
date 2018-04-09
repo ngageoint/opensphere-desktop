@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -18,13 +17,16 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * The history relationship associates a feature with a sequence of TimeSlice instances.
+ * The history relationship associates a feature with a sequence of TimeSlice
+ * instances.
  * 
- * <p>Java class for HistoryPropertyType complex type.
+ * <p>
+ * Java class for HistoryPropertyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="HistoryPropertyType">
@@ -41,13 +43,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "HistoryPropertyType", propOrder = {
-    "timeSlice"
-})
-@XmlSeeAlso({
-    TrackType.class
-})
-public class HistoryPropertyType {
+@XmlType(name = "HistoryPropertyType", propOrder = { "timeSlice" })
+@XmlSeeAlso({ TrackType.class })
+public class HistoryPropertyType
+{
 
     @XmlElementRef(name = "_TimeSlice", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
     protected List<JAXBElement<? extends AbstractTimeSliceType>> timeSlice;
@@ -56,15 +55,16 @@ public class HistoryPropertyType {
      * Gets the value of the timeSlice property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the timeSlice property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the timeSlice property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getTimeSlice().add(newItem);
+     * getTimeSlice().add(newItem);
      * </pre>
      * 
      * 
@@ -75,8 +75,10 @@ public class HistoryPropertyType {
      * 
      * 
      */
-    public List<JAXBElement<? extends AbstractTimeSliceType>> getTimeSlice() {
-        if (timeSlice == null) {
+    public List<JAXBElement<? extends AbstractTimeSliceType>> getTimeSlice()
+    {
+        if (timeSlice == null)
+        {
             timeSlice = new ArrayList<JAXBElement<? extends AbstractTimeSliceType>>();
         }
         return this.timeSlice;

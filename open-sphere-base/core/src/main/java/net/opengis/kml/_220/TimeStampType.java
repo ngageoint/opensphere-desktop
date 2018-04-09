@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for TimeStampType complex type.
+ * <p>
+ * Java class for TimeStampType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TimeStampType">
@@ -40,85 +41,85 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TimeStampType", propOrder = {
-    "when",
-    "timeStampSimpleExtensionGroup",
-    "timeStampObjectExtensionGroup"
-})
-public class TimeStampType
-    extends AbstractTimePrimitiveType
+@XmlType(name = "TimeStampType", propOrder = { "when", "timeStampSimpleExtensionGroup", "timeStampObjectExtensionGroup" })
+public class TimeStampType extends AbstractTimePrimitiveType
 {
 
     @XmlSchemaType(name = "anySimpleType")
     protected String when;
+
     @XmlElement(name = "TimeStampSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> timeStampSimpleExtensionGroup;
+
     @XmlElement(name = "TimeStampObjectExtensionGroup")
     protected List<AbstractObjectType> timeStampObjectExtensionGroup;
 
     /**
      * Gets the value of the when property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getWhen() {
+    public String getWhen()
+    {
         return when;
     }
 
     /**
      * Sets the value of the when property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setWhen(String value) {
+    public void setWhen(String value)
+    {
         this.when = value;
     }
 
-    public boolean isSetWhen() {
-        return (this.when!= null);
+    public boolean isSetWhen()
+    {
+        return (this.when != null);
     }
 
     /**
      * Gets the value of the timeStampSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the timeStampSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the timeStampSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getTimeStampSimpleExtensionGroup().add(newItem);
+     * getTimeStampSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getTimeStampSimpleExtensionGroup() {
-        if (timeStampSimpleExtensionGroup == null) {
+    public List<Object> getTimeStampSimpleExtensionGroup()
+    {
+        if (timeStampSimpleExtensionGroup == null)
+        {
             timeStampSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.timeStampSimpleExtensionGroup;
     }
 
-    public boolean isSetTimeStampSimpleExtensionGroup() {
-        return ((this.timeStampSimpleExtensionGroup!= null)&&(!this.timeStampSimpleExtensionGroup.isEmpty()));
+    public boolean isSetTimeStampSimpleExtensionGroup()
+    {
+        return ((this.timeStampSimpleExtensionGroup != null) && (!this.timeStampSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetTimeStampSimpleExtensionGroup() {
+    public void unsetTimeStampSimpleExtensionGroup()
+    {
         this.timeStampSimpleExtensionGroup = null;
     }
 
@@ -126,15 +127,16 @@ public class TimeStampType
      * Gets the value of the timeStampObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the timeStampObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the timeStampObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getTimeStampObjectExtensionGroup().add(newItem);
+     * getTimeStampObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -144,18 +146,22 @@ public class TimeStampType
      * 
      * 
      */
-    public List<AbstractObjectType> getTimeStampObjectExtensionGroup() {
-        if (timeStampObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getTimeStampObjectExtensionGroup()
+    {
+        if (timeStampObjectExtensionGroup == null)
+        {
             timeStampObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.timeStampObjectExtensionGroup;
     }
 
-    public boolean isSetTimeStampObjectExtensionGroup() {
-        return ((this.timeStampObjectExtensionGroup!= null)&&(!this.timeStampObjectExtensionGroup.isEmpty()));
+    public boolean isSetTimeStampObjectExtensionGroup()
+    {
+        return ((this.timeStampObjectExtensionGroup != null) && (!this.timeStampObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetTimeStampObjectExtensionGroup() {
+    public void unsetTimeStampObjectExtensionGroup()
+    {
         this.timeStampObjectExtensionGroup = null;
     }
 

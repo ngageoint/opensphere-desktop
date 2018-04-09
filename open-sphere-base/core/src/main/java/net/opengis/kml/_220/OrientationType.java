@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for OrientationType complex type.
+ * <p>
+ * Java class for OrientationType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="OrientationType">
@@ -42,147 +43,146 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "OrientationType", propOrder = {
-    "heading",
-    "tilt",
-    "roll",
-    "orientationSimpleExtensionGroup",
-    "orientationObjectExtensionGroup"
-})
-public class OrientationType
-    extends AbstractObjectType
+@XmlType(name = "OrientationType", propOrder = { "heading", "tilt", "roll", "orientationSimpleExtensionGroup",
+    "orientationObjectExtensionGroup" })
+public class OrientationType extends AbstractObjectType
 {
 
     @XmlElement(defaultValue = "0.0")
     protected Double heading;
+
     @XmlElement(defaultValue = "0.0")
     protected Double tilt;
+
     @XmlElement(defaultValue = "0.0")
     protected Double roll;
+
     @XmlElement(name = "OrientationSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> orientationSimpleExtensionGroup;
+
     @XmlElement(name = "OrientationObjectExtensionGroup")
     protected List<AbstractObjectType> orientationObjectExtensionGroup;
 
     /**
      * Gets the value of the heading property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getHeading() {
+    public Double getHeading()
+    {
         return heading;
     }
 
     /**
      * Sets the value of the heading property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setHeading(Double value) {
+    public void setHeading(Double value)
+    {
         this.heading = value;
     }
 
-    public boolean isSetHeading() {
-        return (this.heading!= null);
+    public boolean isSetHeading()
+    {
+        return (this.heading != null);
     }
 
     /**
      * Gets the value of the tilt property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getTilt() {
+    public Double getTilt()
+    {
         return tilt;
     }
 
     /**
      * Sets the value of the tilt property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setTilt(Double value) {
+    public void setTilt(Double value)
+    {
         this.tilt = value;
     }
 
-    public boolean isSetTilt() {
-        return (this.tilt!= null);
+    public boolean isSetTilt()
+    {
+        return (this.tilt != null);
     }
 
     /**
      * Gets the value of the roll property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getRoll() {
+    public Double getRoll()
+    {
         return roll;
     }
 
     /**
      * Sets the value of the roll property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setRoll(Double value) {
+    public void setRoll(Double value)
+    {
         this.roll = value;
     }
 
-    public boolean isSetRoll() {
-        return (this.roll!= null);
+    public boolean isSetRoll()
+    {
+        return (this.roll != null);
     }
 
     /**
      * Gets the value of the orientationSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the orientationSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the orientationSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getOrientationSimpleExtensionGroup().add(newItem);
+     * getOrientationSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getOrientationSimpleExtensionGroup() {
-        if (orientationSimpleExtensionGroup == null) {
+    public List<Object> getOrientationSimpleExtensionGroup()
+    {
+        if (orientationSimpleExtensionGroup == null)
+        {
             orientationSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.orientationSimpleExtensionGroup;
     }
 
-    public boolean isSetOrientationSimpleExtensionGroup() {
-        return ((this.orientationSimpleExtensionGroup!= null)&&(!this.orientationSimpleExtensionGroup.isEmpty()));
+    public boolean isSetOrientationSimpleExtensionGroup()
+    {
+        return ((this.orientationSimpleExtensionGroup != null) && (!this.orientationSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetOrientationSimpleExtensionGroup() {
+    public void unsetOrientationSimpleExtensionGroup()
+    {
         this.orientationSimpleExtensionGroup = null;
     }
 
@@ -190,15 +190,16 @@ public class OrientationType
      * Gets the value of the orientationObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the orientationObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the orientationObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getOrientationObjectExtensionGroup().add(newItem);
+     * getOrientationObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -208,18 +209,22 @@ public class OrientationType
      * 
      * 
      */
-    public List<AbstractObjectType> getOrientationObjectExtensionGroup() {
-        if (orientationObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getOrientationObjectExtensionGroup()
+    {
+        if (orientationObjectExtensionGroup == null)
+        {
             orientationObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.orientationObjectExtensionGroup;
     }
 
-    public boolean isSetOrientationObjectExtensionGroup() {
-        return ((this.orientationObjectExtensionGroup!= null)&&(!this.orientationObjectExtensionGroup.isEmpty()));
+    public boolean isSetOrientationObjectExtensionGroup()
+    {
+        return ((this.orientationObjectExtensionGroup != null) && (!this.orientationObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetOrientationObjectExtensionGroup() {
+    public void unsetOrientationObjectExtensionGroup()
+    {
         this.orientationObjectExtensionGroup = null;
     }
 

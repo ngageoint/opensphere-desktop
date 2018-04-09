@@ -34,8 +34,8 @@ public class GeometryRegistryImpl extends DefaultGenericPublisher<Geometry> impl
     private final TLongObjectHashMap<Object> myDataModelMap = new TLongObjectHashMap<>();
 
     /**
-     * Whether to add geometries to the data model map. Nothing currently uses the data model map functionality so it's set to
-     * false to save memory.
+     * Whether to add geometries to the data model map. Nothing currently uses
+     * the data model map functionality so it's set to false to save memory.
      */
     private final boolean myAddToDataModelMap;
 

@@ -40,7 +40,8 @@ public class GeometryTranslator extends AbstractValueTranslator<Geometry>
      */
     @Override
     public int getValue(Class<? extends Geometry> type, long sizeBytes, int column, ResultSet rs,
-            PropertyMatcher<? extends Geometry> filter, Collection<? super Geometry> results) throws CacheException
+            PropertyMatcher<? extends Geometry> filter, Collection<? super Geometry> results)
+        throws CacheException
     {
         try
         {

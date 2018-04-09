@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * Deprecated in GML 3.1.0
  * 
- * <p>Java class for PriorityLocationPropertyType complex type.
+ * <p>
+ * Java class for PriorityLocationPropertyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="PriorityLocationPropertyType">
@@ -35,8 +36,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PriorityLocationPropertyType")
-public class PriorityLocationPropertyType
-    extends LocationPropertyType
+public class PriorityLocationPropertyType extends LocationPropertyType
 {
 
     @XmlAttribute(name = "priority")
@@ -45,24 +45,22 @@ public class PriorityLocationPropertyType
     /**
      * Gets the value of the priority property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getPriority() {
+    public String getPriority()
+    {
         return priority;
     }
 
     /**
      * Sets the value of the priority property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setPriority(String value) {
+    public void setPriority(String value)
+    {
         this.priority = value;
     }
 

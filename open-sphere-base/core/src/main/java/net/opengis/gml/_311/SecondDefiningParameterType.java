@@ -5,20 +5,26 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Definition of the second parameter that defines the shape of an ellipsoid. An ellipsoid requires two defining parameters: semi-major axis and inverse flattening or semi-major axis and semi-minor axis. When the reference body is a sphere rather than an ellipsoid, only a single defining parameter is required, namely the radius of the sphere; in that case, the semi-major axis "degenerates" into the radius of the sphere.
+ * Definition of the second parameter that defines the shape of an ellipsoid. An
+ * ellipsoid requires two defining parameters: semi-major axis and inverse
+ * flattening or semi-major axis and semi-minor axis. When the reference body is
+ * a sphere rather than an ellipsoid, only a single defining parameter is
+ * required, namely the radius of the sphere; in that case, the semi-major axis
+ * "degenerates" into the radius of the sphere.
  * 
- * <p>Java class for SecondDefiningParameterType complex type.
+ * <p>
+ * Java class for SecondDefiningParameterType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SecondDefiningParameterType">
@@ -37,86 +43,79 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SecondDefiningParameterType", propOrder = {
-    "inverseFlattening",
-    "semiMinorAxis",
-    "isSphere"
-})
-public class SecondDefiningParameterType {
+@XmlType(name = "SecondDefiningParameterType", propOrder = { "inverseFlattening", "semiMinorAxis", "isSphere" })
+public class SecondDefiningParameterType
+{
 
     protected MeasureType inverseFlattening;
+
     protected MeasureType semiMinorAxis;
+
     protected String isSphere;
 
     /**
      * Gets the value of the inverseFlattening property.
      * 
-     * @return
-     *     possible object is
-     *     {@link MeasureType }
-     *     
+     * @return possible object is {@link MeasureType }
+     * 
      */
-    public MeasureType getInverseFlattening() {
+    public MeasureType getInverseFlattening()
+    {
         return inverseFlattening;
     }
 
     /**
      * Sets the value of the inverseFlattening property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link MeasureType }
-     *     
+     * @param value allowed object is {@link MeasureType }
+     * 
      */
-    public void setInverseFlattening(MeasureType value) {
+    public void setInverseFlattening(MeasureType value)
+    {
         this.inverseFlattening = value;
     }
 
     /**
      * Gets the value of the semiMinorAxis property.
      * 
-     * @return
-     *     possible object is
-     *     {@link MeasureType }
-     *     
+     * @return possible object is {@link MeasureType }
+     * 
      */
-    public MeasureType getSemiMinorAxis() {
+    public MeasureType getSemiMinorAxis()
+    {
         return semiMinorAxis;
     }
 
     /**
      * Sets the value of the semiMinorAxis property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link MeasureType }
-     *     
+     * @param value allowed object is {@link MeasureType }
+     * 
      */
-    public void setSemiMinorAxis(MeasureType value) {
+    public void setSemiMinorAxis(MeasureType value)
+    {
         this.semiMinorAxis = value;
     }
 
     /**
      * Gets the value of the isSphere property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getIsSphere() {
+    public String getIsSphere()
+    {
         return isSphere;
     }
 
     /**
      * Sets the value of the isSphere property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setIsSphere(String value) {
+    public void setIsSphere(String value)
+    {
         this.isSphere = value;
     }
 

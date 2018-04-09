@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:24:08 PM MST 
 //
 
-
 package net.opengis.ogc._100;
 
 import java.util.ArrayList;
@@ -16,11 +15,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for Function_NamesType complex type.
+ * <p>
+ * Java class for Function_NamesType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="Function_NamesType">
@@ -37,10 +38,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Function_NamesType", propOrder = {
-    "functionName"
-})
-public class FunctionNamesType {
+@XmlType(name = "Function_NamesType", propOrder = { "functionName" })
+public class FunctionNamesType
+{
 
     @XmlElement(name = "Function_Name", required = true)
     protected List<FunctionNameType> functionName;
@@ -49,15 +49,16 @@ public class FunctionNamesType {
      * Gets the value of the functionName property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the functionName property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the functionName property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getFunctionName().add(newItem);
+     * getFunctionName().add(newItem);
      * </pre>
      * 
      * 
@@ -67,8 +68,10 @@ public class FunctionNamesType {
      * 
      * 
      */
-    public List<FunctionNameType> getFunctionName() {
-        if (functionName == null) {
+    public List<FunctionNameType> getFunctionName()
+    {
+        if (functionName == null)
+        {
             functionName = new ArrayList<FunctionNameType>();
         }
         return this.functionName;

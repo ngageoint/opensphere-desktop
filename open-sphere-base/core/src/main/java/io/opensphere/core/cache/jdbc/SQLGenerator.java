@@ -219,11 +219,12 @@ public interface SQLGenerator
      * @param critical If not {@code null}, the required criticality of the
      *            groups.
      * @return The SQL.
-     * @throws CacheException If an unsupported parameter type is encountered.
+     * @throws CacheException If an  unsupported parameter type is encountered.
      */
     String generateRetrieveGroupValuesSql(int[] groupIds, JoinTableColumn joinTableColumn, DataModelCategory category,
             Collection<? extends PropertyMatcher<?>> parameters, Collection<? extends PropertyDescriptor<?>> selectProperties,
-            TimeSpan expirationRange, Boolean critical) throws CacheException;
+            TimeSpan expirationRange, Boolean critical)
+        throws CacheException;
 
     /**
      * Build the SQL for a model ids query.

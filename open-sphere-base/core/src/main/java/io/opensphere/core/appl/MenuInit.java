@@ -247,7 +247,7 @@ public class MenuInit
             unitsMenu.add(subMenu);
         }
         unitsMenu.add(SwingUtilities.newMenuItem("Reset all to default",
-            e -> toolbox.getUnitsRegistry().resetAllPreferredUnits(e.getSource())));
+                e -> toolbox.getUnitsRegistry().resetAllPreferredUnits(e.getSource())));
         editMenu.add(unitsMenu);
     }
 

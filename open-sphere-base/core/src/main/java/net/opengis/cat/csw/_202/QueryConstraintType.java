@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,15 +15,16 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.ogc._110.FilterType;
 
-
 /**
- * A search constraint that adheres to one of the following syntaxes:
- *          Filter   - OGC filter expression
- *          CqlText  - OGC CQL predicate
+ * A search constraint that adheres to one of the following syntaxes: Filter -
+ * OGC filter expression CqlText - OGC CQL predicate
  * 
- * <p>Java class for QueryConstraintType complex type.
+ * <p>
+ * Java class for QueryConstraintType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="QueryConstraintType">
@@ -43,88 +43,82 @@ import net.opengis.ogc._110.FilterType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "QueryConstraintType", propOrder = {
-    "filter",
-    "cqlText"
-})
-public class QueryConstraintType {
+@XmlType(name = "QueryConstraintType", propOrder = { "filter", "cqlText" })
+public class QueryConstraintType
+{
 
     @XmlElement(name = "Filter", namespace = "http://www.opengis.net/ogc")
     protected FilterType filter;
+
     @XmlElement(name = "CqlText")
     protected String cqlText;
+
     @XmlAttribute(required = true)
     protected String version;
 
     /**
      * Gets the value of the filter property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FilterType }
-     *     
+     * @return possible object is {@link FilterType }
+     * 
      */
-    public FilterType getFilter() {
+    public FilterType getFilter()
+    {
         return filter;
     }
 
     /**
      * Sets the value of the filter property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FilterType }
-     *     
+     * @param value allowed object is {@link FilterType }
+     * 
      */
-    public void setFilter(FilterType value) {
+    public void setFilter(FilterType value)
+    {
         this.filter = value;
     }
 
     /**
      * Gets the value of the cqlText property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getCqlText() {
+    public String getCqlText()
+    {
         return cqlText;
     }
 
     /**
      * Sets the value of the cqlText property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setCqlText(String value) {
+    public void setCqlText(String value)
+    {
         this.cqlText = value;
     }
 
     /**
      * Gets the value of the version property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getVersion() {
+    public String getVersion()
+    {
         return version;
     }
 
     /**
      * Sets the value of the version property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setVersion(String value) {
+    public void setVersion(String value)
+    {
         this.version = value;
     }
 

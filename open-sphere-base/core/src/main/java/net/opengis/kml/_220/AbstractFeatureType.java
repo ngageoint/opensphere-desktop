@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -21,11 +20,13 @@ import javax.xml.bind.annotation.XmlType;
 
 import oasis.names.tc.ciq.xsdschema.xal._2.AddressDetails;
 
-
 /**
- * <p>Java class for AbstractFeatureType complex type.
+ * <p>
+ * Java class for AbstractFeatureType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractFeatureType">
@@ -65,17 +66,9 @@ import oasis.names.tc.ciq.xsdschema.xal._2.AddressDetails;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractFeatureType", propOrder = {
-    "rest"
-})
-@XmlSeeAlso({
-    PlacemarkType.class,
-    NetworkLinkType.class,
-    AbstractContainerType.class,
-    AbstractOverlayType.class
-})
-public abstract class AbstractFeatureType
-    extends AbstractObjectType
+@XmlType(name = "AbstractFeatureType", propOrder = { "rest" })
+@XmlSeeAlso({ PlacemarkType.class, NetworkLinkType.class, AbstractContainerType.class, AbstractOverlayType.class })
+public abstract class AbstractFeatureType extends AbstractObjectType
 {
 
     @XmlElementRefs({
@@ -98,69 +91,71 @@ public abstract class AbstractFeatureType
         @XmlElementRef(name = "AddressDetails", namespace = "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "link", namespace = "http://www.w3.org/2005/Atom", type = Link.class, required = false),
         @XmlElementRef(name = "AbstractFeatureObjectExtensionGroup", namespace = "http://www.opengis.net/kml/2.2", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "phoneNumber", namespace = "http://www.opengis.net/kml/2.2", type = JAXBElement.class, required = false)
-    })
+        @XmlElementRef(name = "phoneNumber", namespace = "http://www.opengis.net/kml/2.2", type = JAXBElement.class, required = false) })
     protected List<Object> rest;
 
     /**
-     * Gets the rest of the content model. 
+     * Gets the rest of the content model.
      * 
      * <p>
-     * You are getting this "catch-all" property because of the following reason: 
-     * The field name "Snippet" is used by two different parts of a schema. See: 
-     * line 321 of file:/C:/Users/roddya/git/OpenSphereDesktop/open-sphere-base/core/src/main/resources/schemas/state/xsd/kml/2.2.0/ogckml22.xsd
-     * line 320 of file:/C:/Users/roddya/git/OpenSphereDesktop/open-sphere-base/core/src/main/resources/schemas/state/xsd/kml/2.2.0/ogckml22.xsd
+     * You are getting this "catch-all" property because of the following
+     * reason: The field name "Snippet" is used by two different parts of a
+     * schema. See: line 321 of
+     * file:/C:/Users/roddya/git/OpenSphereDesktop/open-sphere-base/core/src/main/resources/schemas/state/xsd/kml/2.2.0/ogckml22.xsd
+     * line 320 of
+     * file:/C:/Users/roddya/git/OpenSphereDesktop/open-sphere-base/core/src/main/resources/schemas/state/xsd/kml/2.2.0/ogckml22.xsd
      * <p>
-     * To get rid of this property, apply a property customization to one 
-     * of both of the following declarations to change their names: 
-     * Gets the value of the rest property.
+     * To get rid of this property, apply a property customization to one of
+     * both of the following declarations to change their names: Gets the value
+     * of the rest property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the rest property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the rest property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getRest().add(newItem);
+     * getRest().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractStyleSelectorType }{@code >}
-     * {@link JAXBElement }{@code <}{@link StyleMapType }{@code >}
-     * {@link JAXBElement }{@code <}{@link MetadataType }{@code >}
-     * {@link JAXBElement }{@code <}{@link RegionType }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link Boolean }{@code >}
-     * {@link JAXBElement }{@code <}{@link LookAtType }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractViewType }{@code >}
-     * {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link TimeSpanType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AtomPersonConstruct }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractTimePrimitiveType }{@code >}
-     * {@link JAXBElement }{@code <}{@link Boolean }{@code >}
-     * {@link JAXBElement }{@code <}{@link ExtendedDataType }{@code >}
-     * {@link ASnippetElement }
+     * {@link JAXBElement }{@code <}{@link String }{@code >} {@link JAXBElement
+     * }{@code <}{@link String }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractStyleSelectorType }{@code >} {@link JAXBElement
+     * }{@code <}{@link StyleMapType }{@code >} {@link JAXBElement
+     * }{@code <}{@link MetadataType }{@code >} {@link JAXBElement
+     * }{@code <}{@link RegionType }{@code >} {@link JAXBElement
+     * }{@code <}{@link String }{@code >} {@link JAXBElement
+     * }{@code <}{@link Boolean }{@code >} {@link JAXBElement
+     * }{@code <}{@link LookAtType }{@code >} {@link JAXBElement
+     * }{@code <}{@link String }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractViewType }{@code >} {@link JAXBElement
+     * }{@code <}{@link Object }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractObjectType }{@code >} {@link JAXBElement
+     * }{@code <}{@link String }{@code >} {@link JAXBElement
+     * }{@code <}{@link TimeSpanType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AtomPersonConstruct }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractTimePrimitiveType }{@code >} {@link JAXBElement
+     * }{@code <}{@link Boolean }{@code >} {@link JAXBElement
+     * }{@code <}{@link ExtendedDataType }{@code >} {@link ASnippetElement }
      * {@link JAXBElement }{@code <}{@link StyleType }{@code >}
      * {@link JAXBElement }{@code <}{@link CameraType }{@code >}
      * {@link JAXBElement }{@code <}{@link AddressDetails }{@code >}
-     * {@link JAXBElement }{@code <}{@link TimeStampType }{@code >}
-     * {@link Link }
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
+     * {@link JAXBElement }{@code <}{@link TimeStampType }{@code >} {@link Link
+     * } {@link JAXBElement }{@code <}{@link String }{@code >}
      * 
      * 
      */
-    public List<Object> getRest() {
-        if (rest == null) {
+    public List<Object> getRest()
+    {
+        if (rest == null)
+        {
             rest = new ArrayList<Object>();
         }
         return this.rest;

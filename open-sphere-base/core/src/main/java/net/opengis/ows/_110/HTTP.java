@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.ows._110;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -41,31 +42,29 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "getOrPost"
-})
+@XmlType(name = "", propOrder = { "getOrPost" })
 @XmlRootElement(name = "HTTP")
-public class HTTP {
+public class HTTP
+{
 
-    @XmlElementRefs({
-        @XmlElementRef(name = "Post", namespace = "http://www.opengis.net/ows/1.1", type = JAXBElement.class),
-        @XmlElementRef(name = "Get", namespace = "http://www.opengis.net/ows/1.1", type = JAXBElement.class)
-    })
+    @XmlElementRefs({ @XmlElementRef(name = "Post", namespace = "http://www.opengis.net/ows/1.1", type = JAXBElement.class),
+        @XmlElementRef(name = "Get", namespace = "http://www.opengis.net/ows/1.1", type = JAXBElement.class) })
     protected List<JAXBElement<RequestMethodType>> getOrPost;
 
     /**
      * Gets the value of the getOrPost property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the getOrPost property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the getOrPost property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getGetOrPost().add(newItem);
+     * getGetOrPost().add(newItem);
      * </pre>
      * 
      * 
@@ -76,8 +75,10 @@ public class HTTP {
      * 
      * 
      */
-    public List<JAXBElement<RequestMethodType>> getGetOrPost() {
-        if (getOrPost == null) {
+    public List<JAXBElement<RequestMethodType>> getGetOrPost()
+    {
+        if (getOrPost == null)
+        {
             getOrPost = new ArrayList<JAXBElement<RequestMethodType>>();
         }
         return this.getOrPost;

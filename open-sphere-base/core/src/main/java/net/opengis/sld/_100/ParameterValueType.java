@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import java.io.Serializable;
@@ -24,17 +23,19 @@ import net.opengis.ogc._110.BinaryOperatorType;
 import net.opengis.ogc._110.LiteralType;
 import net.opengis.ogc._110.PropertyNameType;
 
-
 /**
  * 
- *         The "ParameterValueType" uses WFS-Filter expressions to give
- *         values for SLD graphic parameters.  A "mixed" element-content
- *         model is used with textual substitution for values.
- *       
+ * The "ParameterValueType" uses WFS-Filter expressions to give values for SLD
+ * graphic parameters. A "mixed" element-content model is used with textual
+ * substitution for values.
  * 
- * <p>Java class for ParameterValueType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for ParameterValueType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ParameterValueType">
@@ -51,13 +52,10 @@ import net.opengis.ogc._110.PropertyNameType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ParameterValueType", propOrder = {
-    "content"
-})
-@XmlSeeAlso({
-    CssParameter.class
-})
-public class ParameterValueType {
+@XmlType(name = "ParameterValueType", propOrder = { "content" })
+@XmlSeeAlso({ CssParameter.class })
+public class ParameterValueType
+{
 
     @XmlElementRef(name = "expression", namespace = "http://www.opengis.net/ogc", type = JAXBElement.class)
     @XmlMixed
@@ -65,21 +63,21 @@ public class ParameterValueType {
 
     /**
      * 
-     *         The "ParameterValueType" uses WFS-Filter expressions to give
-     *         values for SLD graphic parameters.  A "mixed" element-content
-     *         model is used with textual substitution for values.
-     *       Gets the value of the content property.
+     * The "ParameterValueType" uses WFS-Filter expressions to give values for
+     * SLD graphic parameters. A "mixed" element-content model is used with
+     * textual substitution for values. Gets the value of the content property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the content property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the content property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getContent().add(newItem);
+     * getContent().add(newItem);
      * </pre>
      * 
      * 
@@ -92,13 +90,15 @@ public class ParameterValueType {
      * {@link JAXBElement }{@code <}{@link ExpressionType }{@code >}
      * {@link JAXBElement }{@code <}{@link LiteralType }{@code >}
      * {@link JAXBElement }{@code <}{@link BinaryOperatorType }{@code >}
-     * {@link JAXBElement }{@code <}{@link FunctionType }{@code >}
-     * {@link String }
+     * {@link JAXBElement }{@code <}{@link FunctionType }{@code >} {@link String
+     * }
      * 
      * 
      */
-    public List<Serializable> getContent() {
-        if (content == null) {
+    public List<Serializable> getContent()
+    {
+        if (content == null)
+        {
             content = new ArrayList<Serializable>();
         }
         return this.content;

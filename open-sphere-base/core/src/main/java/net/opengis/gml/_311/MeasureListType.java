@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -18,15 +17,17 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * List of numbers with a uniform scale.  
- *       The value of uom (Units Of Measure) attribute is a reference to 
- *       a Reference System for the amount, either a ratio or position scale. 
+ * List of numbers with a uniform scale. The value of uom (Units Of Measure)
+ * attribute is a reference to a Reference System for the amount, either a ratio
+ * or position scale.
  * 
- * <p>Java class for MeasureListType complex type.
+ * <p>
+ * Java class for MeasureListType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="MeasureListType">
@@ -41,41 +42,45 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MeasureListType", propOrder = {
-    "value"
-})
-public class MeasureListType {
+@XmlType(name = "MeasureListType", propOrder = { "value" })
+public class MeasureListType
+{
 
     @XmlValue
     protected List<Double> value;
+
     @XmlAttribute(name = "uom", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String uom;
 
     /**
-     * XML List based on XML Schema double type.  An element of this type contains a space-separated list of double values Gets the value of the value property.
+     * XML List based on XML Schema double type. An element of this type
+     * contains a space-separated list of double values Gets the value of the
+     * value property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the value property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the value property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getValue().add(newItem);
+     * getValue().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Double }
+     * Objects of the following type(s) are allowed in the list {@link Double }
      * 
      * 
      */
-    public List<Double> getValue() {
-        if (value == null) {
+    public List<Double> getValue()
+    {
+        if (value == null)
+        {
             value = new ArrayList<Double>();
         }
         return this.value;
@@ -84,24 +89,22 @@ public class MeasureListType {
     /**
      * Gets the value of the uom property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getUom() {
+    public String getUom()
+    {
         return uom;
     }
 
     /**
      * Sets the value of the uom property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setUom(String value) {
+    public void setUom(String value)
+    {
         this.uom = value;
     }
 

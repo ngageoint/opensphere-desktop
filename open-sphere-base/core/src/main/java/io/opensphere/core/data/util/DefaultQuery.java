@@ -104,9 +104,10 @@ public class DefaultQuery implements Query
 
     /**
      * Null-tolerant method for creating an unmodifiable List from a given,
-     * possibly modifiable, Collection.  The new List is made from a copy of
-     * the original so that new List is not affected if the original is
-     * modified.  If the argument is null, then the result is also null.
+     * possibly modifiable, Collection. The new List is made from a copy of the
+     * original so that new List is not affected if the original is modified. If
+     * the argument is null, then the result is also null.
+     * 
      * @param c bla
      * @param <E> bla
      * @return bla

@@ -107,7 +107,8 @@ public class PluginStatistics
     /**
      * Gets the value of the {@link #myCompatibleApplicationVersion} field.
      *
-     * @return the value stored in the {@link #myCompatibleApplicationVersion} field.
+     * @return the value stored in the {@link #myCompatibleApplicationVersion}
+     *         field.
      */
     public String getCompatibleApplicationVersion()
     {
@@ -117,7 +118,8 @@ public class PluginStatistics
     /**
      * Sets the value of the {@link #myCompatibleApplicationVersion} field.
      *
-     * @param pCompatibleApplicationVersion the value to store in the {@link #myCompatibleApplicationVersion} field.
+     * @param pCompatibleApplicationVersion the value to store in the
+     *            {@link #myCompatibleApplicationVersion} field.
      */
     public void setCompatibleApplicationVersion(String pCompatibleApplicationVersion)
     {
@@ -157,7 +159,8 @@ public class PluginStatistics
     /**
      * Sets the value of the {@link #myPluginClass} field.
      *
-     * @param pPluginClass the value to store in the {@link #myPluginClass} field.
+     * @param pPluginClass the value to store in the {@link #myPluginClass}
+     *            field.
      */
     public void setPluginClass(String pPluginClass)
     {
@@ -177,7 +180,8 @@ public class PluginStatistics
     /**
      * Sets the value of the {@link #myDescription} field.
      *
-     * @param pDescription the value to store in the {@link #myDescription} field.
+     * @param pDescription the value to store in the {@link #myDescription}
+     *            field.
      */
     public void setDescription(String pDescription)
     {
@@ -227,7 +231,8 @@ public class PluginStatistics
     /**
      * Gets the value of the {@link #myRequiredPluginDependencies} field.
      *
-     * @return the value stored in the {@link #myRequiredPluginDependencies} field.
+     * @return the value stored in the {@link #myRequiredPluginDependencies}
+     *         field.
      */
     public List<String> getRequiredPluginDependencies()
     {
@@ -237,7 +242,8 @@ public class PluginStatistics
     /**
      * Sets the value of the {@link #myRequiredPluginDependencies} field.
      *
-     * @param pRequiredPluginDependencies the value to store in the {@link #myRequiredPluginDependencies} field.
+     * @param pRequiredPluginDependencies the value to store in the
+     *            {@link #myRequiredPluginDependencies} field.
      */
     public void setRequiredPluginDependencies(List<String> pRequiredPluginDependencies)
     {
@@ -247,7 +253,8 @@ public class PluginStatistics
     /**
      * Gets the value of the {@link #myOptionalPluginDependencies} field.
      *
-     * @return the value stored in the {@link #myOptionalPluginDependencies} field.
+     * @return the value stored in the {@link #myOptionalPluginDependencies}
+     *         field.
      */
     public List<String> getOptionalPluginDependencies()
     {
@@ -257,7 +264,8 @@ public class PluginStatistics
     /**
      * Sets the value of the {@link #myOptionalPluginDependencies} field.
      *
-     * @param pOptionalPluginDependencies the value to store in the {@link #myOptionalPluginDependencies} field.
+     * @param pOptionalPluginDependencies the value to store in the
+     *            {@link #myOptionalPluginDependencies} field.
      */
     public void setOptionalPluginDependencies(List<String> pOptionalPluginDependencies)
     {
@@ -277,7 +285,8 @@ public class PluginStatistics
     /**
      * Sets the value of the {@link #myPluginProperties} field.
      *
-     * @param pPluginProperties the value to store in the {@link #myPluginProperties} field.
+     * @param pPluginProperties the value to store in the
+     *            {@link #myPluginProperties} field.
      */
     public void setPluginProperties(List<PluginProperty> pPluginProperties)
     {

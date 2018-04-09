@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -47,98 +48,90 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "name",
-    "title",
-    "_abstract",
-    "namedLayerOrUserLayer"
-})
+@XmlType(name = "", propOrder = { "name", "title", "_abstract", "namedLayerOrUserLayer" })
 @XmlRootElement(name = "StyledLayerDescriptor")
-public class StyledLayerDescriptor {
+public class StyledLayerDescriptor
+{
 
     @XmlElement(name = "Name")
     protected String name;
+
     @XmlElement(name = "Title")
     protected String title;
+
     @XmlElement(name = "Abstract")
     protected String _abstract;
-    @XmlElements({
-        @XmlElement(name = "UserLayer", type = UserLayer.class),
-        @XmlElement(name = "NamedLayer", type = NamedLayer.class)
-    })
+
+    @XmlElements({ @XmlElement(name = "UserLayer", type = UserLayer.class),
+        @XmlElement(name = "NamedLayer", type = NamedLayer.class) })
     protected List<Object> namedLayerOrUserLayer;
+
     @XmlAttribute(required = true)
     protected String version;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
     /**
      * Gets the value of the abstract property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getAbstract() {
+    public String getAbstract()
+    {
         return _abstract;
     }
 
     /**
      * Sets the value of the abstract property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setAbstract(String value) {
+    public void setAbstract(String value)
+    {
         this._abstract = value;
     }
 
@@ -146,27 +139,29 @@ public class StyledLayerDescriptor {
      * Gets the value of the namedLayerOrUserLayer property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the namedLayerOrUserLayer property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the namedLayerOrUserLayer property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getNamedLayerOrUserLayer().add(newItem);
+     * getNamedLayerOrUserLayer().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link UserLayer }
-     * {@link NamedLayer }
+     * Objects of the following type(s) are allowed in the list {@link UserLayer
+     * } {@link NamedLayer }
      * 
      * 
      */
-    public List<Object> getNamedLayerOrUserLayer() {
-        if (namedLayerOrUserLayer == null) {
+    public List<Object> getNamedLayerOrUserLayer()
+    {
+        if (namedLayerOrUserLayer == null)
+        {
             namedLayerOrUserLayer = new ArrayList<Object>();
         }
         return this.namedLayerOrUserLayer;
@@ -175,15 +170,17 @@ public class StyledLayerDescriptor {
     /**
      * Gets the value of the version property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getVersion() {
-        if (version == null) {
+    public String getVersion()
+    {
+        if (version == null)
+        {
             return "1.0.0";
-        } else {
+        }
+        else
+        {
             return version;
         }
     }
@@ -191,12 +188,11 @@ public class StyledLayerDescriptor {
     /**
      * Sets the value of the version property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setVersion(String value) {
+    public void setVersion(String value)
+    {
         this.version = value;
     }
 

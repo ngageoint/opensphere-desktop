@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ogc._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for FunctionsType complex type.
+ * <p>
+ * Java class for FunctionsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="FunctionsType">
@@ -34,10 +35,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "FunctionsType", propOrder = {
-    "functionNames"
-})
-public class FunctionsType {
+@XmlType(name = "FunctionsType", propOrder = { "functionNames" })
+public class FunctionsType
+{
 
     @XmlElement(name = "FunctionNames", required = true)
     protected FunctionNamesType functionNames;
@@ -45,24 +45,22 @@ public class FunctionsType {
     /**
      * Gets the value of the functionNames property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FunctionNamesType }
-     *     
+     * @return possible object is {@link FunctionNamesType }
+     * 
      */
-    public FunctionNamesType getFunctionNames() {
+    public FunctionNamesType getFunctionNames()
+    {
         return functionNames;
     }
 
     /**
      * Sets the value of the functionNames property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FunctionNamesType }
-     *     
+     * @param value allowed object is {@link FunctionNamesType }
+     * 
      */
-    public void setFunctionNames(FunctionNamesType value) {
+    public void setFunctionNames(FunctionNamesType value)
+    {
         this.functionNames = value;
     }
 

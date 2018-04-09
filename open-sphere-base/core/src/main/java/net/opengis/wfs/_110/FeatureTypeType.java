@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import java.util.ArrayList;
@@ -21,17 +20,19 @@ import javax.xml.namespace.QName;
 import net.opengis.ows._100.KeywordsType;
 import net.opengis.ows._100.WGS84BoundingBoxType;
 
-
 /**
  * 
- *             An element of this type that describes a feature in an application
- *             namespace shall have an xml xmlns specifier, e.g.
- *             xmlns:bo="http://www.BlueOx.org/BlueOx"
- *          
+ * An element of this type that describes a feature in an application namespace
+ * shall have an xml xmlns specifier, e.g.
+ * xmlns:bo="http://www.BlueOx.org/BlueOx"
  * 
- * <p>Java class for FeatureTypeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for FeatureTypeType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="FeatureTypeType">
@@ -69,115 +70,109 @@ import net.opengis.ows._100.WGS84BoundingBoxType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "FeatureTypeType", propOrder = {
-    "name",
-    "title",
-    "_abstract",
-    "keywords",
-    "defaultSRS",
-    "otherSRS",
-    "noSRS",
-    "operations",
-    "outputFormats",
-    "wgs84BoundingBox",
-    "metadataURL"
-})
-public class FeatureTypeType {
+@XmlType(name = "FeatureTypeType", propOrder = { "name", "title", "_abstract", "keywords", "defaultSRS", "otherSRS", "noSRS",
+    "operations", "outputFormats", "wgs84BoundingBox", "metadataURL" })
+public class FeatureTypeType
+{
 
     @XmlElement(name = "Name", required = true)
     protected QName name;
+
     @XmlElement(name = "Title", required = true)
     protected String title;
+
     @XmlElement(name = "Abstract")
     protected String _abstract;
+
     @XmlElement(name = "Keywords", namespace = "http://www.opengis.net/ows")
     protected List<KeywordsType> keywords;
+
     @XmlElement(name = "DefaultSRS")
     @XmlSchemaType(name = "anyURI")
     protected String defaultSRS;
+
     @XmlElement(name = "OtherSRS")
     @XmlSchemaType(name = "anyURI")
     protected List<String> otherSRS;
+
     @XmlElement(name = "NoSRS")
     protected FeatureTypeType.NoSRS noSRS;
+
     @XmlElement(name = "Operations")
     protected OperationsType operations;
+
     @XmlElement(name = "OutputFormats")
     protected OutputFormatListType outputFormats;
+
     @XmlElement(name = "WGS84BoundingBox", namespace = "http://www.opengis.net/ows", required = true)
     protected List<WGS84BoundingBoxType> wgs84BoundingBox;
+
     @XmlElement(name = "MetadataURL")
     protected List<MetadataURLType> metadataURL;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link QName }
-     *     
+     * @return possible object is {@link QName }
+     * 
      */
-    public QName getName() {
+    public QName getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link QName }
-     *     
+     * @param value allowed object is {@link QName }
+     * 
      */
-    public void setName(QName value) {
+    public void setName(QName value)
+    {
         this.name = value;
     }
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
     /**
      * Gets the value of the abstract property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getAbstract() {
+    public String getAbstract()
+    {
         return _abstract;
     }
 
     /**
      * Sets the value of the abstract property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setAbstract(String value) {
+    public void setAbstract(String value)
+    {
         this._abstract = value;
     }
 
@@ -185,15 +180,16 @@ public class FeatureTypeType {
      * Gets the value of the keywords property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the keywords property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the keywords property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getKeywords().add(newItem);
+     * getKeywords().add(newItem);
      * </pre>
      * 
      * 
@@ -203,8 +199,10 @@ public class FeatureTypeType {
      * 
      * 
      */
-    public List<KeywordsType> getKeywords() {
-        if (keywords == null) {
+    public List<KeywordsType> getKeywords()
+    {
+        if (keywords == null)
+        {
             keywords = new ArrayList<KeywordsType>();
         }
         return this.keywords;
@@ -213,24 +211,22 @@ public class FeatureTypeType {
     /**
      * Gets the value of the defaultSRS property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDefaultSRS() {
+    public String getDefaultSRS()
+    {
         return defaultSRS;
     }
 
     /**
      * Sets the value of the defaultSRS property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDefaultSRS(String value) {
+    public void setDefaultSRS(String value)
+    {
         this.defaultSRS = value;
     }
 
@@ -238,26 +234,28 @@ public class FeatureTypeType {
      * Gets the value of the otherSRS property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the otherSRS property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the otherSRS property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getOtherSRS().add(newItem);
+     * getOtherSRS().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getOtherSRS() {
-        if (otherSRS == null) {
+    public List<String> getOtherSRS()
+    {
+        if (otherSRS == null)
+        {
             otherSRS = new ArrayList<String>();
         }
         return this.otherSRS;
@@ -266,72 +264,66 @@ public class FeatureTypeType {
     /**
      * Gets the value of the noSRS property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FeatureTypeType.NoSRS }
-     *     
+     * @return possible object is {@link FeatureTypeType.NoSRS }
+     * 
      */
-    public FeatureTypeType.NoSRS getNoSRS() {
+    public FeatureTypeType.NoSRS getNoSRS()
+    {
         return noSRS;
     }
 
     /**
      * Sets the value of the noSRS property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FeatureTypeType.NoSRS }
-     *     
+     * @param value allowed object is {@link FeatureTypeType.NoSRS }
+     * 
      */
-    public void setNoSRS(FeatureTypeType.NoSRS value) {
+    public void setNoSRS(FeatureTypeType.NoSRS value)
+    {
         this.noSRS = value;
     }
 
     /**
      * Gets the value of the operations property.
      * 
-     * @return
-     *     possible object is
-     *     {@link OperationsType }
-     *     
+     * @return possible object is {@link OperationsType }
+     * 
      */
-    public OperationsType getOperations() {
+    public OperationsType getOperations()
+    {
         return operations;
     }
 
     /**
      * Sets the value of the operations property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link OperationsType }
-     *     
+     * @param value allowed object is {@link OperationsType }
+     * 
      */
-    public void setOperations(OperationsType value) {
+    public void setOperations(OperationsType value)
+    {
         this.operations = value;
     }
 
     /**
      * Gets the value of the outputFormats property.
      * 
-     * @return
-     *     possible object is
-     *     {@link OutputFormatListType }
-     *     
+     * @return possible object is {@link OutputFormatListType }
+     * 
      */
-    public OutputFormatListType getOutputFormats() {
+    public OutputFormatListType getOutputFormats()
+    {
         return outputFormats;
     }
 
     /**
      * Sets the value of the outputFormats property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link OutputFormatListType }
-     *     
+     * @param value allowed object is {@link OutputFormatListType }
+     * 
      */
-    public void setOutputFormats(OutputFormatListType value) {
+    public void setOutputFormats(OutputFormatListType value)
+    {
         this.outputFormats = value;
     }
 
@@ -339,15 +331,16 @@ public class FeatureTypeType {
      * Gets the value of the wgs84BoundingBox property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the wgs84BoundingBox property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the wgs84BoundingBox property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getWGS84BoundingBox().add(newItem);
+     * getWGS84BoundingBox().add(newItem);
      * </pre>
      * 
      * 
@@ -357,8 +350,10 @@ public class FeatureTypeType {
      * 
      * 
      */
-    public List<WGS84BoundingBoxType> getWGS84BoundingBox() {
-        if (wgs84BoundingBox == null) {
+    public List<WGS84BoundingBoxType> getWGS84BoundingBox()
+    {
+        if (wgs84BoundingBox == null)
+        {
             wgs84BoundingBox = new ArrayList<WGS84BoundingBoxType>();
         }
         return this.wgs84BoundingBox;
@@ -368,15 +363,16 @@ public class FeatureTypeType {
      * Gets the value of the metadataURL property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the metadataURL property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the metadataURL property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getMetadataURL().add(newItem);
+     * getMetadataURL().add(newItem);
      * </pre>
      * 
      * 
@@ -386,18 +382,22 @@ public class FeatureTypeType {
      * 
      * 
      */
-    public List<MetadataURLType> getMetadataURL() {
-        if (metadataURL == null) {
+    public List<MetadataURLType> getMetadataURL()
+    {
+        if (metadataURL == null)
+        {
             metadataURL = new ArrayList<MetadataURLType>();
         }
         return this.metadataURL;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -412,8 +412,8 @@ public class FeatureTypeType {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "")
-    public static class NoSRS {
-
+    public static class NoSRS
+    {
 
     }
 

@@ -91,8 +91,7 @@ public class ColumnMapping implements Serializable
             return false;
         }
         ColumnMapping other = (ColumnMapping)obj;
-        return Objects.equals(myDefinedColumn, other.myDefinedColumn)
-                && Objects.equals(myLayerKey, other.myLayerKey)
+        return Objects.equals(myDefinedColumn, other.myDefinedColumn) && Objects.equals(myLayerKey, other.myLayerKey)
                 && Objects.equals(myLayerColumn, other.myLayerColumn);
     }
 

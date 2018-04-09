@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -17,13 +16,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * Container for features - follow gml:ArrayAssociationType pattern.
  * 
- * <p>Java class for FeatureArrayPropertyType complex type.
+ * <p>
+ * Java class for FeatureArrayPropertyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="FeatureArrayPropertyType">
@@ -40,10 +41,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "FeatureArrayPropertyType", propOrder = {
-    "feature"
-})
-public class FeatureArrayPropertyType {
+@XmlType(name = "FeatureArrayPropertyType", propOrder = { "feature" })
+public class FeatureArrayPropertyType
+{
 
     @XmlElementRef(name = "_Feature", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
     protected List<JAXBElement<? extends AbstractFeatureType>> feature;
@@ -52,41 +52,48 @@ public class FeatureArrayPropertyType {
      * Gets the value of the feature property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the feature property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the feature property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getFeature().add(newItem);
+     * getFeature().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link AbstractCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractDiscreteCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link MultiCurveCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link MultiSolidCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractFeatureCollectionType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractDiscreteCoverageType
+     * }{@code >} {@link JAXBElement }{@code <}{@link MultiCurveCoverageType
+     * }{@code >} {@link JAXBElement }{@code <}{@link MultiSolidCoverageType
+     * }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractFeatureCollectionType }{@code >}
      * {@link JAXBElement }{@code <}{@link ObservationType }{@code >}
      * {@link JAXBElement }{@code <}{@link DirectedObservationType }{@code >}
      * {@link JAXBElement }{@code <}{@link RectifiedGridCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link net.opengis.wfs._110.FeatureCollectionType }{@code >}
-     * {@link JAXBElement }{@code <}{@link net.opengis.gml._311.FeatureCollectionType }{@code >}
+     * {@link JAXBElement
+     * }{@code <}{@link net.opengis.wfs._110.FeatureCollectionType }{@code >}
+     * {@link JAXBElement
+     * }{@code <}{@link net.opengis.gml._311.FeatureCollectionType }{@code >}
      * {@link JAXBElement }{@code <}{@link AbstractFeatureType }{@code >}
      * {@link JAXBElement }{@code <}{@link GridCoverageType }{@code >}
      * {@link JAXBElement }{@code <}{@link MultiPointCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link DirectedObservationAtDistanceType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractContinuousCoverageType }{@code >}
+     * {@link JAXBElement }{@code <}{@link DirectedObservationAtDistanceType
+     * }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractContinuousCoverageType }{@code >}
      * {@link JAXBElement }{@code <}{@link MultiSurfaceCoverageType }{@code >}
      * 
      * 
      */
-    public List<JAXBElement<? extends AbstractFeatureType>> getFeature() {
-        if (feature == null) {
+    public List<JAXBElement<? extends AbstractFeatureType>> getFeature()
+    {
+        if (feature == null)
+        {
             feature = new ArrayList<JAXBElement<? extends AbstractFeatureType>>();
         }
         return this.feature;

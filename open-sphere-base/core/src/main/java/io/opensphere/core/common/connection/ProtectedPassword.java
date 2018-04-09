@@ -131,7 +131,7 @@ public class ProtectedPassword implements Cloneable
      * @param decryptionPassword the password to use in the decryption process.
      * @throws IllegalStateException if either the encrypted password or
      *             decryption passwords are <code>null</code>.
-     * @throws GeneralSecurityException if an error occurs while decrypting the
+     * @throws GeneralSecurityException if an  error occurs while decrypting the
      *             password.
      */
     public void decryptPassword(char[] decryptionPassword) throws GeneralSecurityException
@@ -147,7 +147,7 @@ public class ProtectedPassword implements Cloneable
      * this method returns.
      *
      * @param encryptionPassword the password to use during encryption.
-     * @throws GeneralSecurityException if an error occurs while decrypting the
+     * @throws GeneralSecurityException if an  error occurs while decrypting the
      *             password.
      * @throws IllegalStateException if either the encrypted password or
      *             decryption passwords are <code>null</code>.
@@ -169,7 +169,7 @@ public class ProtectedPassword implements Cloneable
      * @param decryptionPassword the password used to encrypt the protected
      *            password.
      * @param encryptionPassword the password to use during encryption.
-     * @throws GeneralSecurityException if an error occurs while decrypting or
+     * @throws GeneralSecurityException if an  error occurs while decrypting or
      *             encrypting the password.
      * @throws IllegalStateException if any of the encrypted, decryption or
      *             encryption passwords are <code>null</code>.
@@ -220,7 +220,7 @@ public class ProtectedPassword implements Cloneable
      * @return The decrypted password
      * @throws IllegalStateException if either the encrypted password or
      *             decryption passwords are <code>null</code>.
-     * @throws GeneralSecurityException if an error occurs while decrypting the
+     * @throws GeneralSecurityException if an  error occurs while decrypting the
      *             password.
      */
     public static char[] decryptPassword(String encryptedPassword, char[] decryptionPassword) throws GeneralSecurityException
@@ -286,7 +286,7 @@ public class ProtectedPassword implements Cloneable
      * @param password The password to encrypt
      * @param encryptionPassword the password to use during encryption.
      * @return The encrypted password
-     * @throws GeneralSecurityException if an error occurs while decrypting the
+     * @throws GeneralSecurityException if an  error occurs while decrypting the
      *             password.
      * @throws IllegalStateException if either the encrypted password or
      *             decryption passwords are <code>null</code>.

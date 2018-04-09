@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ogc._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for Scalar_CapabilitiesType complex type.
+ * <p>
+ * Java class for Scalar_CapabilitiesType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="Scalar_CapabilitiesType">
@@ -36,89 +37,82 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Scalar_CapabilitiesType", propOrder = {
-    "logicalOperators",
-    "comparisonOperators",
-    "arithmeticOperators"
-})
-public class ScalarCapabilitiesType {
+@XmlType(name = "Scalar_CapabilitiesType", propOrder = { "logicalOperators", "comparisonOperators", "arithmeticOperators" })
+public class ScalarCapabilitiesType
+{
 
     @XmlElement(name = "LogicalOperators")
     protected LogicalOperators logicalOperators;
+
     @XmlElement(name = "ComparisonOperators")
     protected ComparisonOperatorsType comparisonOperators;
+
     @XmlElement(name = "ArithmeticOperators")
     protected ArithmeticOperatorsType arithmeticOperators;
 
     /**
      * Gets the value of the logicalOperators property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LogicalOperators }
-     *     
+     * @return possible object is {@link LogicalOperators }
+     * 
      */
-    public LogicalOperators getLogicalOperators() {
+    public LogicalOperators getLogicalOperators()
+    {
         return logicalOperators;
     }
 
     /**
      * Sets the value of the logicalOperators property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LogicalOperators }
-     *     
+     * @param value allowed object is {@link LogicalOperators }
+     * 
      */
-    public void setLogicalOperators(LogicalOperators value) {
+    public void setLogicalOperators(LogicalOperators value)
+    {
         this.logicalOperators = value;
     }
 
     /**
      * Gets the value of the comparisonOperators property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ComparisonOperatorsType }
-     *     
+     * @return possible object is {@link ComparisonOperatorsType }
+     * 
      */
-    public ComparisonOperatorsType getComparisonOperators() {
+    public ComparisonOperatorsType getComparisonOperators()
+    {
         return comparisonOperators;
     }
 
     /**
      * Sets the value of the comparisonOperators property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ComparisonOperatorsType }
-     *     
+     * @param value allowed object is {@link ComparisonOperatorsType }
+     * 
      */
-    public void setComparisonOperators(ComparisonOperatorsType value) {
+    public void setComparisonOperators(ComparisonOperatorsType value)
+    {
         this.comparisonOperators = value;
     }
 
     /**
      * Gets the value of the arithmeticOperators property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ArithmeticOperatorsType }
-     *     
+     * @return possible object is {@link ArithmeticOperatorsType }
+     * 
      */
-    public ArithmeticOperatorsType getArithmeticOperators() {
+    public ArithmeticOperatorsType getArithmeticOperators()
+    {
         return arithmeticOperators;
     }
 
     /**
      * Sets the value of the arithmeticOperators property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ArithmeticOperatorsType }
-     *     
+     * @param value allowed object is {@link ArithmeticOperatorsType }
+     * 
      */
-    public void setArithmeticOperators(ArithmeticOperatorsType value) {
+    public void setArithmeticOperators(ArithmeticOperatorsType value)
+    {
         this.arithmeticOperators = value;
     }
 

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import java.math.BigInteger;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -38,16 +39,17 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "value"
-})
+@XmlType(name = "", propOrder = { "value" })
 @XmlRootElement(name = "XlinkPropertyName")
-public class XlinkPropertyName {
+public class XlinkPropertyName
+{
 
     @XmlValue
     protected String value;
+
     @XmlAttribute(name = "traverseXlinkDepth", required = true)
     protected String traverseXlinkDepth;
+
     @XmlAttribute(name = "traverseXlinkExpiry")
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger traverseXlinkExpiry;
@@ -55,72 +57,66 @@ public class XlinkPropertyName {
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getValue() {
+    public String getValue()
+    {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setValue(String value) {
+    public void setValue(String value)
+    {
         this.value = value;
     }
 
     /**
      * Gets the value of the traverseXlinkDepth property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTraverseXlinkDepth() {
+    public String getTraverseXlinkDepth()
+    {
         return traverseXlinkDepth;
     }
 
     /**
      * Sets the value of the traverseXlinkDepth property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTraverseXlinkDepth(String value) {
+    public void setTraverseXlinkDepth(String value)
+    {
         this.traverseXlinkDepth = value;
     }
 
     /**
      * Gets the value of the traverseXlinkExpiry property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getTraverseXlinkExpiry() {
+    public BigInteger getTraverseXlinkExpiry()
+    {
         return traverseXlinkExpiry;
     }
 
     /**
      * Sets the value of the traverseXlinkExpiry property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setTraverseXlinkExpiry(BigInteger value) {
+    public void setTraverseXlinkExpiry(BigInteger value)
+    {
         this.traverseXlinkExpiry = value;
     }
 

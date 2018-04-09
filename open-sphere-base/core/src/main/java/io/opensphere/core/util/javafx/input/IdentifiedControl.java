@@ -8,8 +8,9 @@ import javafx.scene.control.Skin;
 import io.opensphere.core.util.Visitor;
 
 /**
- * A wrapper around a control, in which a variable name and a title are included with the instance definition. This class itself
- * extends {@link Control}, allowing it to be used anywhere an existing control type can be used.
+ * A wrapper around a control, in which a variable name and a title are included
+ * with the instance definition. This class itself extends {@link Control},
+ * allowing it to be used anywhere an existing control type can be used.
  *
  * @param <CONTROL_TYPE> the the type of control wrapped by the instance.
  */
@@ -35,7 +36,8 @@ public class IdentifiedControl<CONTROL_TYPE extends Control> extends TitledContr
     private String myUnits;
 
     /**
-     * Creates a new control, wrapping the supplied control, and storing the variable name and title of the control.
+     * Creates a new control, wrapping the supplied control, and storing the
+     * variable name and title of the control.
      *
      * @param pVariableName The name of a variable applied to the input field.
      * @param pDisplayTitle The textual label title of the input field.
@@ -47,7 +49,8 @@ public class IdentifiedControl<CONTROL_TYPE extends Control> extends TitledContr
     }
 
     /**
-     * Creates a new control, wrapping the supplied control, and storing the variable name and title of the control.
+     * Creates a new control, wrapping the supplied control, and storing the
+     * variable name and title of the control.
      *
      * @param pVariableName The name of a variable applied to the input field.
      * @param pDisplayTitle The textual label title of the input field.
@@ -61,11 +64,13 @@ public class IdentifiedControl<CONTROL_TYPE extends Control> extends TitledContr
     }
 
     /**
-     * Creates a new control, wrapping the supplied control, and storing the variable name and title of the control.
+     * Creates a new control, wrapping the supplied control, and storing the
+     * variable name and title of the control.
      *
      * @param pVariableName The name of a variable applied to the input field.
      * @param pDisplayTitle The textual label title of the input field.
-     * @param pResultAccessorFunction The function used to get results from the control.
+     * @param pResultAccessorFunction The function used to get results from the
+     *            control.
      * @param pControl The control wrapped by the instance.
      */
     public IdentifiedControl(String pVariableName, String pDisplayTitle, Supplier<String> pResultAccessorFunction,
@@ -80,7 +85,8 @@ public class IdentifiedControl<CONTROL_TYPE extends Control> extends TitledContr
     /**
      * Sets the value of the {@link #myResultAccessorFunction} field.
      *
-     * @param pResultAccessorFunction the value to store in the {@link #myResultAccessorFunction} field.
+     * @param pResultAccessorFunction the value to store in the
+     *            {@link #myResultAccessorFunction} field.
      */
     public void setResultAccessorFunction(Supplier<String> pResultAccessorFunction)
     {
@@ -101,7 +107,8 @@ public class IdentifiedControl<CONTROL_TYPE extends Control> extends TitledContr
      * Sets the value of the {@link #myControl} field.
      *
      * @param pControl the value to store in the {@link #myControl} field.
-     * @throws UnsupportedOperationException if the control has already been set.
+     * @throws UnsupportedOperationException if the control has already been
+     *             set.
      */
     public void setControl(CONTROL_TYPE pControl)
     {

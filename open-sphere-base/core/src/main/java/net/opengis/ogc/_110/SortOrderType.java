@@ -5,18 +5,20 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ogc._110;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for SortOrderType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for SortOrderType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="SortOrderType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -29,16 +31,18 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "SortOrderType")
 @XmlEnum
-public enum SortOrderType {
+public enum SortOrderType
+{
 
-    DESC,
-    ASC;
+    DESC, ASC;
 
-    public String value() {
+    public String value()
+    {
         return name();
     }
 
-    public static SortOrderType fromValue(String v) {
+    public static SortOrderType fromValue(String v)
+    {
         return valueOf(v);
     }
 

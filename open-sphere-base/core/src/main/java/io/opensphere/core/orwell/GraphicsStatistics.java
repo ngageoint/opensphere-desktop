@@ -3,19 +3,22 @@ package io.opensphere.core.orwell;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * A container in which the statistics describing the graphics system are stored.
+ * A container in which the statistics describing the graphics system are
+ * stored.
  */
 public class GraphicsStatistics
 {
     /**
-     * The type of the underlying subsystem, i.e.: NativeWindowFactory.TYPE_KD, NativeWindowFactory.TYPE_X11, etc.
+     * The type of the underlying subsystem, i.e.: NativeWindowFactory.TYPE_KD,
+     * NativeWindowFactory.TYPE_X11, etc.
      */
     private String myGraphicsDeviceType;
 
     /**
-     * The semantic GraphicsDevice connection. On platforms supporting remote devices, e.g.: via TCP/IP network, the
-     * implementation is a unique name for each remote address. On X11 for example, the connection string should be as the
-     * following example.
+     * The semantic GraphicsDevice connection. On platforms supporting remote
+     * devices, e.g.: via TCP/IP network, the implementation is a unique name
+     * for each remote address. On X11 for example, the connection string should
+     * be as the following example.
      * <ul>
      * <li><code>:0.0</code> for a local connection</li>
      * <li><code>remote.host.net:0.0</code> for a remote connection</li>
@@ -24,8 +27,8 @@ public class GraphicsStatistics
     private String myConnection;
 
     /**
-     * The graphics device <code>unit ID</code>. The <code>unit ID</code> support multiple graphics device configurations on a
-     * local machine.
+     * The graphics device <code>unit ID</code>. The <code>unit ID</code>
+     * support multiple graphics device configurations on a local machine.
      */
     private int myUnitID;
 
@@ -90,7 +93,8 @@ public class GraphicsStatistics
     private String myGlExtensionsString;
 
     /**
-     * The platform-specific extensions string provided by the GL Implementation.
+     * The platform-specific extensions string provided by the GL
+     * Implementation.
      */
     private String myPlatformExtensionsString;
 
@@ -117,7 +121,8 @@ public class GraphicsStatistics
     /**
      * Sets the value of the {@link #myGraphicsDeviceType} field.
      *
-     * @param pGraphicsDeviceType the value to store in the {@link #myGraphicsDeviceType} field.
+     * @param pGraphicsDeviceType the value to store in the
+     *            {@link #myGraphicsDeviceType} field.
      */
     public void setGraphicsDeviceType(String pGraphicsDeviceType)
     {
@@ -177,7 +182,8 @@ public class GraphicsStatistics
     /**
      * Sets the value of the {@link #myEnvironmentIdentifier} field.
      *
-     * @param pEnvironmentIdentifier the value to store in the {@link #myEnvironmentIdentifier} field.
+     * @param pEnvironmentIdentifier the value to store in the
+     *            {@link #myEnvironmentIdentifier} field.
      */
     public void setEnvironmentIdentifier(String pEnvironmentIdentifier)
     {
@@ -197,7 +203,8 @@ public class GraphicsStatistics
     /**
      * Sets the value of the {@link #myContextVersion} field.
      *
-     * @param pContextVersion the value to store in the {@link #myContextVersion} field.
+     * @param pContextVersion the value to store in the
+     *            {@link #myContextVersion} field.
      */
     public void setContextVersion(float pContextVersion)
     {
@@ -217,7 +224,8 @@ public class GraphicsStatistics
     /**
      * Sets the value of the {@link #myGpuMemorySizeBytes} field.
      *
-     * @param pGpuMemorySizeBytes the value to store in the {@link #myGpuMemorySizeBytes} field.
+     * @param pGpuMemorySizeBytes the value to store in the
+     *            {@link #myGpuMemorySizeBytes} field.
      */
     public void setGpuMemorySizeBytes(long pGpuMemorySizeBytes)
     {
@@ -237,7 +245,8 @@ public class GraphicsStatistics
     /**
      * Sets the value of the {@link #mySwapInterval} field.
      *
-     * @param pSwapInterval the value to store in the {@link #mySwapInterval} field.
+     * @param pSwapInterval the value to store in the {@link #mySwapInterval}
+     *            field.
      */
     public void setSwapInterval(int pSwapInterval)
     {
@@ -257,7 +266,8 @@ public class GraphicsStatistics
     /**
      * Sets the value of the {@link #myGlImplBaseClassName} field.
      *
-     * @param pGlImplBaseClassName the value to store in the {@link #myGlImplBaseClassName} field.
+     * @param pGlImplBaseClassName the value to store in the
+     *            {@link #myGlImplBaseClassName} field.
      */
     public void setGlImplBaseClassName(String pGlImplBaseClassName)
     {
@@ -317,7 +327,8 @@ public class GraphicsStatistics
     /**
      * Sets the value of the {@link #myHardwareRasterizer} field.
      *
-     * @param pHardwareRasterizer the value to store in the {@link #myHardwareRasterizer} field.
+     * @param pHardwareRasterizer the value to store in the
+     *            {@link #myHardwareRasterizer} field.
      */
     public void setHardwareRasterizer(boolean pHardwareRasterizer)
     {
@@ -397,7 +408,8 @@ public class GraphicsStatistics
     /**
      * Sets the value of the {@link #myGlExtensionsString} field.
      *
-     * @param pGlExtensionsString the value to store in the {@link #myGlExtensionsString} field.
+     * @param pGlExtensionsString the value to store in the
+     *            {@link #myGlExtensionsString} field.
      */
     public void setGlExtensionsString(String pGlExtensionsString)
     {
@@ -407,7 +419,8 @@ public class GraphicsStatistics
     /**
      * Gets the value of the {@link #myPlatformExtensionsString} field.
      *
-     * @return the value stored in the {@link #myPlatformExtensionsString} field.
+     * @return the value stored in the {@link #myPlatformExtensionsString}
+     *         field.
      */
     public String getPlatformExtensionsString()
     {
@@ -417,7 +430,8 @@ public class GraphicsStatistics
     /**
      * Sets the value of the {@link #myPlatformExtensionsString} field.
      *
-     * @param pPlatformExtensionsString the value to store in the {@link #myPlatformExtensionsString} field.
+     * @param pPlatformExtensionsString the value to store in the
+     *            {@link #myPlatformExtensionsString} field.
      */
     public void setPlatformExtensionsString(String pPlatformExtensionsString)
     {
@@ -447,7 +461,8 @@ public class GraphicsStatistics
     /**
      * Gets the value of the {@link #myGlCompileShaderAvailable} field.
      *
-     * @return the value stored in the {@link #myGlCompileShaderAvailable} field.
+     * @return the value stored in the {@link #myGlCompileShaderAvailable}
+     *         field.
      */
     public boolean isGlCompileShaderAvailable()
     {
@@ -457,7 +472,8 @@ public class GraphicsStatistics
     /**
      * Sets the value of the {@link #myGlCompileShaderAvailable} field.
      *
-     * @param pGlCompileShaderAvailable the value to store in the {@link #myGlCompileShaderAvailable} field.
+     * @param pGlCompileShaderAvailable the value to store in the
+     *            {@link #myGlCompileShaderAvailable} field.
      */
     public void setGlCompileShaderAvailable(boolean pGlCompileShaderAvailable)
     {

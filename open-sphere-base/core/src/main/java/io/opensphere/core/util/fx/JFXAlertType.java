@@ -23,8 +23,7 @@ public enum JFXAlertType
      * title and header, and just an OK button for the user to click on to
      * dismiss the dialog.
      */
-    INFORMATION(getResource("Dialog.info.title"), getResource("Dialog.info.header"), "information",
-            ButtonType.OK),
+    INFORMATION(getResource("Dialog.info.title"), getResource("Dialog.info.header"), "information", ButtonType.OK),
 
     /**
      * The WARNING alert type configures the Alert dialog to appear in a way
@@ -33,8 +32,7 @@ public enum JFXAlertType
      * header, and just an OK button for the user to click on to dismiss the
      * dialog.
      */
-    WARNING(getResource("Dialog.warning.title"), getResource("Dialog.warning.header"), "warning",
-            ButtonType.OK),
+    WARNING(getResource("Dialog.warning.title"), getResource("Dialog.warning.header"), "warning", ButtonType.OK),
 
     /**
      * The CONFIRMATION alert type configures the Alert dialog to appear in a
@@ -43,8 +41,8 @@ public enum JFXAlertType
      * header, and both OK and Cancel buttons for the user to click on to
      * dismiss the dialog.
      */
-    CONFIRMATION(getResource("Dialog.confirm.title"), getResource("Dialog.confirm.header"),
-            "confirmation", ButtonType.OK, ButtonType.CANCEL),
+    CONFIRMATION(getResource("Dialog.confirm.title"), getResource("Dialog.confirm.header"), "confirmation", ButtonType.OK,
+            ButtonType.CANCEL),
 
     /**
      * The ERROR alert type configures the Alert dialog to appear in a way that
@@ -52,8 +50,7 @@ public enum JFXAlertType
      * an appropriate title and header, and just an OK button for the user to
      * click on to dismiss the dialog.
      */
-    ERROR(getResource("Dialog.error.title"), getResource("Dialog.error.header"), "error",
-            ButtonType.OK);
+    ERROR(getResource("Dialog.error.title"), getResource("Dialog.error.header"), "error", ButtonType.OK);
 
     /** The default buttons shown for the {@link JFXAlertType}. */
     private final ButtonType[] myDefaultButtons;
@@ -84,7 +81,7 @@ public enum JFXAlertType
         myStyleClass = styleClass;
         myDefaultButtons = defaultButtons;
     }
-    
+
     private static String getResource(String key)
     {
         return ResourceBundle.getBundle("com/sun/javafx/scene/control/skin/resources/controls").getString(key);

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import java.math.BigInteger;
@@ -15,16 +14,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *             Reports the total number of features affected by some kind 
- *             of write action (i.e, insert, update, delete).
- *          
+ * Reports the total number of features affected by some kind of write action
+ * (i.e, insert, update, delete).
  * 
- * <p>Java class for TransactionSummaryType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for TransactionSummaryType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TransactionSummaryType">
@@ -43,89 +44,82 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TransactionSummaryType", propOrder = {
-    "totalInserted",
-    "totalUpdated",
-    "totalDeleted"
-})
-public class TransactionSummaryType {
+@XmlType(name = "TransactionSummaryType", propOrder = { "totalInserted", "totalUpdated", "totalDeleted" })
+public class TransactionSummaryType
+{
 
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger totalInserted;
+
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger totalUpdated;
+
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger totalDeleted;
 
     /**
      * Gets the value of the totalInserted property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getTotalInserted() {
+    public BigInteger getTotalInserted()
+    {
         return totalInserted;
     }
 
     /**
      * Sets the value of the totalInserted property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setTotalInserted(BigInteger value) {
+    public void setTotalInserted(BigInteger value)
+    {
         this.totalInserted = value;
     }
 
     /**
      * Gets the value of the totalUpdated property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getTotalUpdated() {
+    public BigInteger getTotalUpdated()
+    {
         return totalUpdated;
     }
 
     /**
      * Sets the value of the totalUpdated property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setTotalUpdated(BigInteger value) {
+    public void setTotalUpdated(BigInteger value)
+    {
         this.totalUpdated = value;
     }
 
     /**
      * Gets the value of the totalDeleted property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getTotalDeleted() {
+    public BigInteger getTotalDeleted()
+    {
         return totalDeleted;
     }
 
     /**
      * Sets the value of the totalDeleted property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setTotalDeleted(BigInteger value) {
+    public void setTotalDeleted(BigInteger value)
+    {
         this.totalDeleted = value;
     }
 

@@ -38,7 +38,8 @@ public class SimplePersistentCacheDeposit<T extends Serializable> extends Defaul
      * @param category The data model category.
      * @param propertyDescriptor The property descriptor.
      * @param input The input objects.
-     * @param isNew True if this deposit is a new insert, false if its an update.
+     * @param isNew True if this deposit is a new insert, false if its an
+     *            update.
      * @param expiration The expiration date for the objects.
      */
     public SimplePersistentCacheDeposit(DataModelCategory category, PropertyDescriptor<T> propertyDescriptor,

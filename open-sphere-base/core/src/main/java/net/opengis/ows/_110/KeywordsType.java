@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.ows._110;
 
 import java.util.ArrayList;
@@ -16,13 +15,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * For OWS use, the optional thesaurusName element was omitted as being complex information that could be referenced by the codeSpace attribute of the Type element. 
+ * For OWS use, the optional thesaurusName element was omitted as being complex
+ * information that could be referenced by the codeSpace attribute of the Type
+ * element.
  * 
- * <p>Java class for KeywordsType complex type.
+ * <p>
+ * Java class for KeywordsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="KeywordsType">
@@ -40,14 +43,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "KeywordsType", propOrder = {
-    "keyword",
-    "type"
-})
-public class KeywordsType {
+@XmlType(name = "KeywordsType", propOrder = { "keyword", "type" })
+public class KeywordsType
+{
 
     @XmlElement(name = "Keyword", required = true)
     protected List<LanguageStringType> keyword;
+
     @XmlElement(name = "Type")
     protected CodeType type;
 
@@ -55,15 +57,16 @@ public class KeywordsType {
      * Gets the value of the keyword property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the keyword property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the keyword property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getKeyword().add(newItem);
+     * getKeyword().add(newItem);
      * </pre>
      * 
      * 
@@ -73,8 +76,10 @@ public class KeywordsType {
      * 
      * 
      */
-    public List<LanguageStringType> getKeyword() {
-        if (keyword == null) {
+    public List<LanguageStringType> getKeyword()
+    {
+        if (keyword == null)
+        {
             keyword = new ArrayList<LanguageStringType>();
         }
         return this.keyword;
@@ -83,24 +88,22 @@ public class KeywordsType {
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CodeType }
-     *     
+     * @return possible object is {@link CodeType }
+     * 
      */
-    public CodeType getType() {
+    public CodeType getType()
+    {
         return type;
     }
 
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CodeType }
-     *     
+     * @param value allowed object is {@link CodeType }
+     * 
      */
-    public void setType(CodeType value) {
+    public void setType(CodeType value)
+    {
         this.type = value;
     }
 

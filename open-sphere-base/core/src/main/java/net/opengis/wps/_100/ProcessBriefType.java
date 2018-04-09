@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ProcessBriefType complex type.
+ * <p>
+ * Java class for ProcessBriefType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ProcessBriefType">
@@ -42,22 +43,18 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ProcessBriefType", propOrder = {
-    "profile",
-    "wsdl"
-})
-@XmlSeeAlso({
-    ProcessDescriptionType.class
-})
-public class ProcessBriefType
-    extends DescriptionType
+@XmlType(name = "ProcessBriefType", propOrder = { "profile", "wsdl" })
+@XmlSeeAlso({ ProcessDescriptionType.class })
+public class ProcessBriefType extends DescriptionType
 {
 
     @XmlElement(name = "Profile")
     @XmlSchemaType(name = "anyURI")
     protected List<String> profile;
+
     @XmlElement(name = "WSDL")
     protected WSDL wsdl;
+
     @XmlAttribute(namespace = "http://www.opengis.net/wps/1.0.0", required = true)
     protected String processVersion;
 
@@ -65,26 +62,28 @@ public class ProcessBriefType
      * Gets the value of the profile property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the profile property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the profile property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getProfile().add(newItem);
+     * getProfile().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getProfile() {
-        if (profile == null) {
+    public List<String> getProfile()
+    {
+        if (profile == null)
+        {
             profile = new ArrayList<String>();
         }
         return this.profile;
@@ -93,48 +92,44 @@ public class ProcessBriefType
     /**
      * Location of a WSDL document which describes this process.
      * 
-     * @return
-     *     possible object is
-     *     {@link WSDL }
-     *     
+     * @return possible object is {@link WSDL }
+     * 
      */
-    public WSDL getWSDL() {
+    public WSDL getWSDL()
+    {
         return wsdl;
     }
 
     /**
      * Sets the value of the wsdl property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link WSDL }
-     *     
+     * @param value allowed object is {@link WSDL }
+     * 
      */
-    public void setWSDL(WSDL value) {
+    public void setWSDL(WSDL value)
+    {
         this.wsdl = value;
     }
 
     /**
      * Gets the value of the processVersion property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getProcessVersion() {
+    public String getProcessVersion()
+    {
         return processVersion;
     }
 
     /**
      * Sets the value of the processVersion property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setProcessVersion(String value) {
+    public void setProcessVersion(String value)
+    {
         this.processVersion = value;
     }
 

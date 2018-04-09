@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for AbstractSubStyleType complex type.
+ * <p>
+ * Java class for AbstractSubStyleType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractSubStyleType">
@@ -40,22 +41,16 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractSubStyleType", propOrder = {
-    "abstractSubStyleSimpleExtensionGroup",
-    "abstractSubStyleObjectExtensionGroup"
-})
-@XmlSeeAlso({
-    ListStyleType.class,
-    AbstractColorStyleType.class,
-    BalloonStyleType.class
-})
-public abstract class AbstractSubStyleType
-    extends AbstractObjectType
+@XmlType(name = "AbstractSubStyleType", propOrder = { "abstractSubStyleSimpleExtensionGroup",
+    "abstractSubStyleObjectExtensionGroup" })
+@XmlSeeAlso({ ListStyleType.class, AbstractColorStyleType.class, BalloonStyleType.class })
+public abstract class AbstractSubStyleType extends AbstractObjectType
 {
 
     @XmlElement(name = "AbstractSubStyleSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> abstractSubStyleSimpleExtensionGroup;
+
     @XmlElement(name = "AbstractSubStyleObjectExtensionGroup")
     protected List<AbstractObjectType> abstractSubStyleObjectExtensionGroup;
 
@@ -63,36 +58,41 @@ public abstract class AbstractSubStyleType
      * Gets the value of the abstractSubStyleSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractSubStyleSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractSubStyleSimpleExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractSubStyleSimpleExtensionGroup().add(newItem);
+     * getAbstractSubStyleSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getAbstractSubStyleSimpleExtensionGroup() {
-        if (abstractSubStyleSimpleExtensionGroup == null) {
+    public List<Object> getAbstractSubStyleSimpleExtensionGroup()
+    {
+        if (abstractSubStyleSimpleExtensionGroup == null)
+        {
             abstractSubStyleSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.abstractSubStyleSimpleExtensionGroup;
     }
 
-    public boolean isSetAbstractSubStyleSimpleExtensionGroup() {
-        return ((this.abstractSubStyleSimpleExtensionGroup!= null)&&(!this.abstractSubStyleSimpleExtensionGroup.isEmpty()));
+    public boolean isSetAbstractSubStyleSimpleExtensionGroup()
+    {
+        return ((this.abstractSubStyleSimpleExtensionGroup != null) && (!this.abstractSubStyleSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetAbstractSubStyleSimpleExtensionGroup() {
+    public void unsetAbstractSubStyleSimpleExtensionGroup()
+    {
         this.abstractSubStyleSimpleExtensionGroup = null;
     }
 
@@ -100,15 +100,17 @@ public abstract class AbstractSubStyleType
      * Gets the value of the abstractSubStyleObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractSubStyleObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractSubStyleObjectExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractSubStyleObjectExtensionGroup().add(newItem);
+     * getAbstractSubStyleObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -118,18 +120,22 @@ public abstract class AbstractSubStyleType
      * 
      * 
      */
-    public List<AbstractObjectType> getAbstractSubStyleObjectExtensionGroup() {
-        if (abstractSubStyleObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getAbstractSubStyleObjectExtensionGroup()
+    {
+        if (abstractSubStyleObjectExtensionGroup == null)
+        {
             abstractSubStyleObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.abstractSubStyleObjectExtensionGroup;
     }
 
-    public boolean isSetAbstractSubStyleObjectExtensionGroup() {
-        return ((this.abstractSubStyleObjectExtensionGroup!= null)&&(!this.abstractSubStyleObjectExtensionGroup.isEmpty()));
+    public boolean isSetAbstractSubStyleObjectExtensionGroup()
+    {
+        return ((this.abstractSubStyleObjectExtensionGroup != null) && (!this.abstractSubStyleObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetAbstractSubStyleObjectExtensionGroup() {
+    public void unsetAbstractSubStyleObjectExtensionGroup()
+    {
         this.abstractSubStyleObjectExtensionGroup = null;
     }
 

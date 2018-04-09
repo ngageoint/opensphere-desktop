@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for LookAtType complex type.
+ * <p>
+ * Java class for LookAtType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LookAtType">
@@ -48,273 +49,270 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LookAtType", propOrder = {
-    "longitude",
-    "latitude",
-    "altitude",
-    "heading",
-    "tilt",
-    "range",
-    "altitudeModeGroup",
-    "lookAtSimpleExtensionGroup",
-    "lookAtObjectExtensionGroup"
-})
-public class LookAtType
-    extends AbstractViewType
+@XmlType(name = "LookAtType", propOrder = { "longitude", "latitude", "altitude", "heading", "tilt", "range", "altitudeModeGroup",
+    "lookAtSimpleExtensionGroup", "lookAtObjectExtensionGroup" })
+public class LookAtType extends AbstractViewType
 {
 
     @XmlElement(defaultValue = "0.0")
     protected Double longitude;
+
     @XmlElement(defaultValue = "0.0")
     protected Double latitude;
+
     @XmlElement(defaultValue = "0.0")
     protected Double altitude;
+
     @XmlElement(defaultValue = "0.0")
     protected Double heading;
+
     @XmlElement(defaultValue = "0.0")
     protected Double tilt;
+
     @XmlElement(defaultValue = "0.0")
     protected Double range;
+
     @XmlElementRef(name = "altitudeModeGroup", namespace = "http://www.opengis.net/kml/2.2", type = JAXBElement.class, required = false)
     protected JAXBElement<?> altitudeModeGroup;
+
     @XmlElement(name = "LookAtSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> lookAtSimpleExtensionGroup;
+
     @XmlElement(name = "LookAtObjectExtensionGroup")
     protected List<AbstractObjectType> lookAtObjectExtensionGroup;
 
     /**
      * Gets the value of the longitude property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getLongitude() {
+    public Double getLongitude()
+    {
         return longitude;
     }
 
     /**
      * Sets the value of the longitude property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setLongitude(Double value) {
+    public void setLongitude(Double value)
+    {
         this.longitude = value;
     }
 
-    public boolean isSetLongitude() {
-        return (this.longitude!= null);
+    public boolean isSetLongitude()
+    {
+        return (this.longitude != null);
     }
 
     /**
      * Gets the value of the latitude property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getLatitude() {
+    public Double getLatitude()
+    {
         return latitude;
     }
 
     /**
      * Sets the value of the latitude property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setLatitude(Double value) {
+    public void setLatitude(Double value)
+    {
         this.latitude = value;
     }
 
-    public boolean isSetLatitude() {
-        return (this.latitude!= null);
+    public boolean isSetLatitude()
+    {
+        return (this.latitude != null);
     }
 
     /**
      * Gets the value of the altitude property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getAltitude() {
+    public Double getAltitude()
+    {
         return altitude;
     }
 
     /**
      * Sets the value of the altitude property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setAltitude(Double value) {
+    public void setAltitude(Double value)
+    {
         this.altitude = value;
     }
 
-    public boolean isSetAltitude() {
-        return (this.altitude!= null);
+    public boolean isSetAltitude()
+    {
+        return (this.altitude != null);
     }
 
     /**
      * Gets the value of the heading property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getHeading() {
+    public Double getHeading()
+    {
         return heading;
     }
 
     /**
      * Sets the value of the heading property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setHeading(Double value) {
+    public void setHeading(Double value)
+    {
         this.heading = value;
     }
 
-    public boolean isSetHeading() {
-        return (this.heading!= null);
+    public boolean isSetHeading()
+    {
+        return (this.heading != null);
     }
 
     /**
      * Gets the value of the tilt property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getTilt() {
+    public Double getTilt()
+    {
         return tilt;
     }
 
     /**
      * Sets the value of the tilt property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setTilt(Double value) {
+    public void setTilt(Double value)
+    {
         this.tilt = value;
     }
 
-    public boolean isSetTilt() {
-        return (this.tilt!= null);
+    public boolean isSetTilt()
+    {
+        return (this.tilt != null);
     }
 
     /**
      * Gets the value of the range property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getRange() {
+    public Double getRange()
+    {
         return range;
     }
 
     /**
      * Sets the value of the range property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setRange(Double value) {
+    public void setRange(Double value)
+    {
         this.range = value;
     }
 
-    public boolean isSetRange() {
-        return (this.range!= null);
+    public boolean isSetRange()
+    {
+        return (this.range != null);
     }
 
     /**
      * Gets the value of the altitudeModeGroup property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link AltitudeModeEnumType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link Object }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement
+     *         }{@code <}{@link AltitudeModeEnumType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * 
      */
-    public JAXBElement<?> getAltitudeModeGroup() {
+    public JAXBElement<?> getAltitudeModeGroup()
+    {
         return altitudeModeGroup;
     }
 
     /**
      * Sets the value of the altitudeModeGroup property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link AltitudeModeEnumType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link Object }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link AltitudeModeEnumType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * 
      */
-    public void setAltitudeModeGroup(JAXBElement<?> value) {
+    public void setAltitudeModeGroup(JAXBElement<?> value)
+    {
         this.altitudeModeGroup = value;
     }
 
-    public boolean isSetAltitudeModeGroup() {
-        return (this.altitudeModeGroup!= null);
+    public boolean isSetAltitudeModeGroup()
+    {
+        return (this.altitudeModeGroup != null);
     }
 
     /**
      * Gets the value of the lookAtSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the lookAtSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the lookAtSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLookAtSimpleExtensionGroup().add(newItem);
+     * getLookAtSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getLookAtSimpleExtensionGroup() {
-        if (lookAtSimpleExtensionGroup == null) {
+    public List<Object> getLookAtSimpleExtensionGroup()
+    {
+        if (lookAtSimpleExtensionGroup == null)
+        {
             lookAtSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.lookAtSimpleExtensionGroup;
     }
 
-    public boolean isSetLookAtSimpleExtensionGroup() {
-        return ((this.lookAtSimpleExtensionGroup!= null)&&(!this.lookAtSimpleExtensionGroup.isEmpty()));
+    public boolean isSetLookAtSimpleExtensionGroup()
+    {
+        return ((this.lookAtSimpleExtensionGroup != null) && (!this.lookAtSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetLookAtSimpleExtensionGroup() {
+    public void unsetLookAtSimpleExtensionGroup()
+    {
         this.lookAtSimpleExtensionGroup = null;
     }
 
@@ -322,15 +320,16 @@ public class LookAtType
      * Gets the value of the lookAtObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the lookAtObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the lookAtObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLookAtObjectExtensionGroup().add(newItem);
+     * getLookAtObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -340,18 +339,22 @@ public class LookAtType
      * 
      * 
      */
-    public List<AbstractObjectType> getLookAtObjectExtensionGroup() {
-        if (lookAtObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getLookAtObjectExtensionGroup()
+    {
+        if (lookAtObjectExtensionGroup == null)
+        {
             lookAtObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.lookAtObjectExtensionGroup;
     }
 
-    public boolean isSetLookAtObjectExtensionGroup() {
-        return ((this.lookAtObjectExtensionGroup!= null)&&(!this.lookAtObjectExtensionGroup.isEmpty()));
+    public boolean isSetLookAtObjectExtensionGroup()
+    {
+        return ((this.lookAtObjectExtensionGroup != null) && (!this.lookAtObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetLookAtObjectExtensionGroup() {
+    public void unsetLookAtObjectExtensionGroup()
+    {
         this.lookAtObjectExtensionGroup = null;
     }
 

@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
- * <p>Java class for ListStyleType complex type.
+ * <p>
+ * Java class for ListStyleType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ListStyleType">
@@ -45,104 +46,101 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ListStyleType", propOrder = {
-    "listItemType",
-    "bgColor",
-    "itemIcon",
-    "maxSnippetLines",
-    "listStyleSimpleExtensionGroup",
-    "listStyleObjectExtensionGroup"
-})
-public class ListStyleType
-    extends AbstractSubStyleType
+@XmlType(name = "ListStyleType", propOrder = { "listItemType", "bgColor", "itemIcon", "maxSnippetLines",
+    "listStyleSimpleExtensionGroup", "listStyleObjectExtensionGroup" })
+public class ListStyleType extends AbstractSubStyleType
 {
 
     @XmlElement(defaultValue = "check")
     @XmlSchemaType(name = "string")
     protected ListItemTypeEnumType listItemType;
+
     @XmlElement(type = String.class, defaultValue = "ffffffff")
     @XmlJavaTypeAdapter(HexBinaryAdapter.class)
     @XmlSchemaType(name = "hexBinary")
     protected byte[] bgColor;
+
     @XmlElement(name = "ItemIcon")
     protected List<ItemIconType> itemIcon;
+
     @XmlElement(defaultValue = "2")
     protected Integer maxSnippetLines;
+
     @XmlElement(name = "ListStyleSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> listStyleSimpleExtensionGroup;
+
     @XmlElement(name = "ListStyleObjectExtensionGroup")
     protected List<AbstractObjectType> listStyleObjectExtensionGroup;
 
     /**
      * Gets the value of the listItemType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ListItemTypeEnumType }
-     *     
+     * @return possible object is {@link ListItemTypeEnumType }
+     * 
      */
-    public ListItemTypeEnumType getListItemType() {
+    public ListItemTypeEnumType getListItemType()
+    {
         return listItemType;
     }
 
     /**
      * Sets the value of the listItemType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ListItemTypeEnumType }
-     *     
+     * @param value allowed object is {@link ListItemTypeEnumType }
+     * 
      */
-    public void setListItemType(ListItemTypeEnumType value) {
+    public void setListItemType(ListItemTypeEnumType value)
+    {
         this.listItemType = value;
     }
 
-    public boolean isSetListItemType() {
-        return (this.listItemType!= null);
+    public boolean isSetListItemType()
+    {
+        return (this.listItemType != null);
     }
 
     /**
      * Gets the value of the bgColor property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public byte[] getBgColor() {
+    public byte[] getBgColor()
+    {
         return bgColor;
     }
 
     /**
      * Sets the value of the bgColor property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setBgColor(byte[] value) {
+    public void setBgColor(byte[] value)
+    {
         this.bgColor = value;
     }
 
-    public boolean isSetBgColor() {
-        return (this.bgColor!= null);
+    public boolean isSetBgColor()
+    {
+        return (this.bgColor != null);
     }
 
     /**
      * Gets the value of the itemIcon property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the itemIcon property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the itemIcon property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getItemIcon().add(newItem);
+     * getItemIcon().add(newItem);
      * </pre>
      * 
      * 
@@ -152,83 +150,90 @@ public class ListStyleType
      * 
      * 
      */
-    public List<ItemIconType> getItemIcon() {
-        if (itemIcon == null) {
+    public List<ItemIconType> getItemIcon()
+    {
+        if (itemIcon == null)
+        {
             itemIcon = new ArrayList<ItemIconType>();
         }
         return this.itemIcon;
     }
 
-    public boolean isSetItemIcon() {
-        return ((this.itemIcon!= null)&&(!this.itemIcon.isEmpty()));
+    public boolean isSetItemIcon()
+    {
+        return ((this.itemIcon != null) && (!this.itemIcon.isEmpty()));
     }
 
-    public void unsetItemIcon() {
+    public void unsetItemIcon()
+    {
         this.itemIcon = null;
     }
 
     /**
      * Gets the value of the maxSnippetLines property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
-    public Integer getMaxSnippetLines() {
+    public Integer getMaxSnippetLines()
+    {
         return maxSnippetLines;
     }
 
     /**
      * Sets the value of the maxSnippetLines property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     * @param value allowed object is {@link Integer }
+     * 
      */
-    public void setMaxSnippetLines(Integer value) {
+    public void setMaxSnippetLines(Integer value)
+    {
         this.maxSnippetLines = value;
     }
 
-    public boolean isSetMaxSnippetLines() {
-        return (this.maxSnippetLines!= null);
+    public boolean isSetMaxSnippetLines()
+    {
+        return (this.maxSnippetLines != null);
     }
 
     /**
      * Gets the value of the listStyleSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the listStyleSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the listStyleSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getListStyleSimpleExtensionGroup().add(newItem);
+     * getListStyleSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getListStyleSimpleExtensionGroup() {
-        if (listStyleSimpleExtensionGroup == null) {
+    public List<Object> getListStyleSimpleExtensionGroup()
+    {
+        if (listStyleSimpleExtensionGroup == null)
+        {
             listStyleSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.listStyleSimpleExtensionGroup;
     }
 
-    public boolean isSetListStyleSimpleExtensionGroup() {
-        return ((this.listStyleSimpleExtensionGroup!= null)&&(!this.listStyleSimpleExtensionGroup.isEmpty()));
+    public boolean isSetListStyleSimpleExtensionGroup()
+    {
+        return ((this.listStyleSimpleExtensionGroup != null) && (!this.listStyleSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetListStyleSimpleExtensionGroup() {
+    public void unsetListStyleSimpleExtensionGroup()
+    {
         this.listStyleSimpleExtensionGroup = null;
     }
 
@@ -236,15 +241,16 @@ public class ListStyleType
      * Gets the value of the listStyleObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the listStyleObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the listStyleObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getListStyleObjectExtensionGroup().add(newItem);
+     * getListStyleObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -254,18 +260,22 @@ public class ListStyleType
      * 
      * 
      */
-    public List<AbstractObjectType> getListStyleObjectExtensionGroup() {
-        if (listStyleObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getListStyleObjectExtensionGroup()
+    {
+        if (listStyleObjectExtensionGroup == null)
+        {
             listStyleObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.listStyleObjectExtensionGroup;
     }
 
-    public boolean isSetListStyleObjectExtensionGroup() {
-        return ((this.listStyleObjectExtensionGroup!= null)&&(!this.listStyleObjectExtensionGroup.isEmpty()));
+    public boolean isSetListStyleObjectExtensionGroup()
+    {
+        return ((this.listStyleObjectExtensionGroup != null) && (!this.listStyleObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetListStyleObjectExtensionGroup() {
+    public void unsetListStyleObjectExtensionGroup()
+    {
         this.listStyleObjectExtensionGroup = null;
     }
 

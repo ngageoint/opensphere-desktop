@@ -37,7 +37,7 @@ public class MapManagerMenuProvider
     /** The control action manager. */
     private final ContextActionManager myControlActionManager;
 
-    /**The Event Manager. **/
+    /** The Event Manager. **/
     private final EventManager myEventManager;
 
     /** Whether to show the toast message. */

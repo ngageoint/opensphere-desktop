@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,13 +13,19 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * OrientableSurface consists of a surface and an orientation. If the orientation is "+", then the OrientableSurface is identical to the baseSurface. If the orientation is "-", then the OrientableSurface is a reference to a Surface with an up-normal that reverses the direction for this OrientableSurface, the sense of "the top of the surface".
+ * OrientableSurface consists of a surface and an orientation. If the
+ * orientation is "+", then the OrientableSurface is identical to the
+ * baseSurface. If the orientation is "-", then the OrientableSurface is a
+ * reference to a Surface with an up-normal that reverses the direction for this
+ * OrientableSurface, the sense of "the top of the surface".
  * 
- * <p>Java class for OrientableSurfaceType complex type.
+ * <p>
+ * Java class for OrientableSurfaceType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="OrientableSurfaceType">
@@ -38,54 +43,52 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "OrientableSurfaceType", propOrder = {
-    "baseSurface"
-})
-public class OrientableSurfaceType
-    extends AbstractSurfaceType
+@XmlType(name = "OrientableSurfaceType", propOrder = { "baseSurface" })
+public class OrientableSurfaceType extends AbstractSurfaceType
 {
 
     @XmlElement(required = true)
     protected SurfacePropertyType baseSurface;
+
     @XmlAttribute(name = "orientation")
     protected String orientation;
 
     /**
      * References or contains the base surface (positive orientation).
      * 
-     * @return
-     *     possible object is
-     *     {@link SurfacePropertyType }
-     *     
+     * @return possible object is {@link SurfacePropertyType }
+     * 
      */
-    public SurfacePropertyType getBaseSurface() {
+    public SurfacePropertyType getBaseSurface()
+    {
         return baseSurface;
     }
 
     /**
      * Sets the value of the baseSurface property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SurfacePropertyType }
-     *     
+     * @param value allowed object is {@link SurfacePropertyType }
+     * 
      */
-    public void setBaseSurface(SurfacePropertyType value) {
+    public void setBaseSurface(SurfacePropertyType value)
+    {
         this.baseSurface = value;
     }
 
     /**
      * Gets the value of the orientation property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getOrientation() {
-        if (orientation == null) {
+    public String getOrientation()
+    {
+        if (orientation == null)
+        {
             return "+";
-        } else {
+        }
+        else
+        {
             return orientation;
         }
     }
@@ -93,12 +96,11 @@ public class OrientableSurfaceType
     /**
      * Sets the value of the orientation property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setOrientation(String value) {
+    public void setOrientation(String value)
+    {
         this.orientation = value;
     }
 

@@ -33,7 +33,8 @@ public class CollectionUtilitiesTest
     private static final Logger LOGGER = Logger.getLogger(CollectionUtilitiesTest.class);
 
     /**
-     * Test for {@link CollectionUtilities#addIfNotContained(Collection, Collection, BiPredicate)}.
+     * Test for
+     * {@link CollectionUtilities#addIfNotContained(Collection, Collection, BiPredicate)}.
      */
     @Test
     public void testAddIfNotContained()

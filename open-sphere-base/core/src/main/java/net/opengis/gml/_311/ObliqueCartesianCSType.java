@@ -5,20 +5,23 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A two- or three-dimensional coordinate system with straight axes that are not necessarily orthogonal. An ObliqueCartesianCS shall have two or three usesAxis associations. 
+ * A two- or three-dimensional coordinate system with straight axes that are not
+ * necessarily orthogonal. An ObliqueCartesianCS shall have two or three
+ * usesAxis associations.
  * 
- * <p>Java class for ObliqueCartesianCSType complex type.
+ * <p>
+ * Java class for ObliqueCartesianCSType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ObliqueCartesianCSType">
@@ -33,9 +36,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ObliqueCartesianCSType")
-public class ObliqueCartesianCSType
-    extends AbstractCoordinateSystemType
+public class ObliqueCartesianCSType extends AbstractCoordinateSystemType
 {
-
 
 }

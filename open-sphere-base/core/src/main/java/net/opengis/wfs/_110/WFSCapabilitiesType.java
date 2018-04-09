@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,27 +16,27 @@ import javax.xml.bind.annotation.XmlType;
 import net.opengis.ogc._110.FilterCapabilities;
 import net.opengis.ows._100.CapabilitiesBaseType;
 
-
 /**
  * 
- *             XML encoded WFS GetCapabilities operation response. This
- *             document provides clients with service metadata about a
- *             specific service instance, including metadata about the
- *             tightly-coupled data served. If the server does not implement
- *             the updateSequence parameter, the server shall always return
- *             the complete Capabilities document, without the updateSequence
- *             parameter. When the server implements the updateSequence
- *             parameter and the GetCapabilities operation request included
- *             the updateSequence parameter with the current value, the server
- *             shall return this element with only the "version" and
- *             "updateSequence" attributes. Otherwise, all optional elements
- *             shall be included or not depending on the actual value of the
- *             Contents parameter in the GetCapabilities operation request.
- *          
+ * XML encoded WFS GetCapabilities operation response. This document provides
+ * clients with service metadata about a specific service instance, including
+ * metadata about the tightly-coupled data served. If the server does not
+ * implement the updateSequence parameter, the server shall always return the
+ * complete Capabilities document, without the updateSequence parameter. When
+ * the server implements the updateSequence parameter and the GetCapabilities
+ * operation request included the updateSequence parameter with the current
+ * value, the server shall return this element with only the "version" and
+ * "updateSequence" attributes. Otherwise, all optional elements shall be
+ * included or not depending on the actual value of the Contents parameter in
+ * the GetCapabilities operation request.
  * 
- * <p>Java class for WFS_CapabilitiesType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for WFS_CapabilitiesType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="WFS_CapabilitiesType">
@@ -57,119 +56,109 @@ import net.opengis.ows._100.CapabilitiesBaseType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "WFS_CapabilitiesType", propOrder = {
-    "featureTypeList",
-    "servesGMLObjectTypeList",
-    "supportsGMLObjectTypeList",
-    "filterCapabilities"
-})
+@XmlType(name = "WFS_CapabilitiesType", propOrder = { "featureTypeList", "servesGMLObjectTypeList", "supportsGMLObjectTypeList",
+    "filterCapabilities" })
 @XmlRootElement(name = "WFS_Capabilities")
-public class WFSCapabilitiesType
-    extends CapabilitiesBaseType
+public class WFSCapabilitiesType extends CapabilitiesBaseType
 {
 
     @XmlElement(name = "FeatureTypeList")
     protected FeatureTypeListType featureTypeList;
+
     @XmlElement(name = "ServesGMLObjectTypeList")
     protected GMLObjectTypeListType servesGMLObjectTypeList;
+
     @XmlElement(name = "SupportsGMLObjectTypeList")
     protected GMLObjectTypeListType supportsGMLObjectTypeList;
+
     @XmlElement(name = "Filter_Capabilities", namespace = "http://www.opengis.net/ogc", required = true)
     protected FilterCapabilities filterCapabilities;
 
     /**
      * Gets the value of the featureTypeList property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FeatureTypeListType }
-     *     
+     * @return possible object is {@link FeatureTypeListType }
+     * 
      */
-    public FeatureTypeListType getFeatureTypeList() {
+    public FeatureTypeListType getFeatureTypeList()
+    {
         return featureTypeList;
     }
 
     /**
      * Sets the value of the featureTypeList property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FeatureTypeListType }
-     *     
+     * @param value allowed object is {@link FeatureTypeListType }
+     * 
      */
-    public void setFeatureTypeList(FeatureTypeListType value) {
+    public void setFeatureTypeList(FeatureTypeListType value)
+    {
         this.featureTypeList = value;
     }
 
     /**
      * Gets the value of the servesGMLObjectTypeList property.
      * 
-     * @return
-     *     possible object is
-     *     {@link GMLObjectTypeListType }
-     *     
+     * @return possible object is {@link GMLObjectTypeListType }
+     * 
      */
-    public GMLObjectTypeListType getServesGMLObjectTypeList() {
+    public GMLObjectTypeListType getServesGMLObjectTypeList()
+    {
         return servesGMLObjectTypeList;
     }
 
     /**
      * Sets the value of the servesGMLObjectTypeList property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link GMLObjectTypeListType }
-     *     
+     * @param value allowed object is {@link GMLObjectTypeListType }
+     * 
      */
-    public void setServesGMLObjectTypeList(GMLObjectTypeListType value) {
+    public void setServesGMLObjectTypeList(GMLObjectTypeListType value)
+    {
         this.servesGMLObjectTypeList = value;
     }
 
     /**
      * Gets the value of the supportsGMLObjectTypeList property.
      * 
-     * @return
-     *     possible object is
-     *     {@link GMLObjectTypeListType }
-     *     
+     * @return possible object is {@link GMLObjectTypeListType }
+     * 
      */
-    public GMLObjectTypeListType getSupportsGMLObjectTypeList() {
+    public GMLObjectTypeListType getSupportsGMLObjectTypeList()
+    {
         return supportsGMLObjectTypeList;
     }
 
     /**
      * Sets the value of the supportsGMLObjectTypeList property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link GMLObjectTypeListType }
-     *     
+     * @param value allowed object is {@link GMLObjectTypeListType }
+     * 
      */
-    public void setSupportsGMLObjectTypeList(GMLObjectTypeListType value) {
+    public void setSupportsGMLObjectTypeList(GMLObjectTypeListType value)
+    {
         this.supportsGMLObjectTypeList = value;
     }
 
     /**
      * Gets the value of the filterCapabilities property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FilterCapabilities }
-     *     
+     * @return possible object is {@link FilterCapabilities }
+     * 
      */
-    public FilterCapabilities getFilterCapabilities() {
+    public FilterCapabilities getFilterCapabilities()
+    {
         return filterCapabilities;
     }
 
     /**
      * Sets the value of the filterCapabilities property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FilterCapabilities }
-     *     
+     * @param value allowed object is {@link FilterCapabilities }
+     * 
      */
-    public void setFilterCapabilities(FilterCapabilities value) {
+    public void setFilterCapabilities(FilterCapabilities value)
+    {
         this.filterCapabilities = value;
     }
 

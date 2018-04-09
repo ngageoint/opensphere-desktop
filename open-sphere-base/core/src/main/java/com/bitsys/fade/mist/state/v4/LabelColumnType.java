@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,11 +15,13 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
- * <p>Java class for LabelColumnType complex type.
+ * <p>
+ * Java class for LabelColumnType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LabelColumnType">
@@ -37,48 +38,50 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "LabelColumnType")
-public class LabelColumnType {
+public class LabelColumnType
+{
 
     @XmlAttribute(name = "column", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String column;
+
     @XmlAttribute(name = "showColumn", required = true)
     protected boolean showColumn;
 
     /**
      * Gets the value of the column property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getColumn() {
+    public String getColumn()
+    {
         return column;
     }
 
     /**
      * Sets the value of the column property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setColumn(String value) {
+    public void setColumn(String value)
+    {
         this.column = value;
     }
 
-    public boolean isSetColumn() {
-        return (this.column!= null);
+    public boolean isSetColumn()
+    {
+        return (this.column != null);
     }
 
     /**
      * Gets the value of the showColumn property.
      * 
      */
-    public boolean isShowColumn() {
+    public boolean isShowColumn()
+    {
         return showColumn;
     }
 
@@ -86,11 +89,13 @@ public class LabelColumnType {
      * Sets the value of the showColumn property.
      * 
      */
-    public void setShowColumn(boolean value) {
+    public void setShowColumn(boolean value)
+    {
         this.showColumn = value;
     }
 
-    public boolean isSetShowColumn() {
+    public boolean isSetShowColumn()
+    {
         return true;
     }
 

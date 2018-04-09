@@ -16,7 +16,8 @@ import io.opensphere.core.util.lang.StringUtilities;
 public class ViewChangeSupport
 {
     /** How long to allow for view updates before a warning is issued. */
-    private static final long VIEW_UPDATE_THRESHOLD_MS = Long.getLong("opensphere.viewUpdateThresholdMilliseconds", 20).longValue();
+    private static final long VIEW_UPDATE_THRESHOLD_MS = Long.getLong("opensphere.viewUpdateThresholdMilliseconds", 20)
+            .longValue();
 
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(ViewChangeSupport.class);

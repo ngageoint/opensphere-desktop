@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for LodType complex type.
+ * <p>
+ * Java class for LodType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LodType">
@@ -43,178 +44,176 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LodType", propOrder = {
-    "minLodPixels",
-    "maxLodPixels",
-    "minFadeExtent",
-    "maxFadeExtent",
-    "lodSimpleExtensionGroup",
-    "lodObjectExtensionGroup"
-})
-public class LodType
-    extends AbstractObjectType
+@XmlType(name = "LodType", propOrder = { "minLodPixels", "maxLodPixels", "minFadeExtent", "maxFadeExtent",
+    "lodSimpleExtensionGroup", "lodObjectExtensionGroup" })
+public class LodType extends AbstractObjectType
 {
 
     @XmlElement(defaultValue = "0.0")
     protected Double minLodPixels;
+
     @XmlElement(defaultValue = "-1.0")
     protected Double maxLodPixels;
+
     @XmlElement(defaultValue = "0.0")
     protected Double minFadeExtent;
+
     @XmlElement(defaultValue = "0.0")
     protected Double maxFadeExtent;
+
     @XmlElement(name = "LodSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> lodSimpleExtensionGroup;
+
     @XmlElement(name = "LodObjectExtensionGroup")
     protected List<AbstractObjectType> lodObjectExtensionGroup;
 
     /**
      * Gets the value of the minLodPixels property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getMinLodPixels() {
+    public Double getMinLodPixels()
+    {
         return minLodPixels;
     }
 
     /**
      * Sets the value of the minLodPixels property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setMinLodPixels(Double value) {
+    public void setMinLodPixels(Double value)
+    {
         this.minLodPixels = value;
     }
 
-    public boolean isSetMinLodPixels() {
-        return (this.minLodPixels!= null);
+    public boolean isSetMinLodPixels()
+    {
+        return (this.minLodPixels != null);
     }
 
     /**
      * Gets the value of the maxLodPixels property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getMaxLodPixels() {
+    public Double getMaxLodPixels()
+    {
         return maxLodPixels;
     }
 
     /**
      * Sets the value of the maxLodPixels property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setMaxLodPixels(Double value) {
+    public void setMaxLodPixels(Double value)
+    {
         this.maxLodPixels = value;
     }
 
-    public boolean isSetMaxLodPixels() {
-        return (this.maxLodPixels!= null);
+    public boolean isSetMaxLodPixels()
+    {
+        return (this.maxLodPixels != null);
     }
 
     /**
      * Gets the value of the minFadeExtent property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getMinFadeExtent() {
+    public Double getMinFadeExtent()
+    {
         return minFadeExtent;
     }
 
     /**
      * Sets the value of the minFadeExtent property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setMinFadeExtent(Double value) {
+    public void setMinFadeExtent(Double value)
+    {
         this.minFadeExtent = value;
     }
 
-    public boolean isSetMinFadeExtent() {
-        return (this.minFadeExtent!= null);
+    public boolean isSetMinFadeExtent()
+    {
+        return (this.minFadeExtent != null);
     }
 
     /**
      * Gets the value of the maxFadeExtent property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getMaxFadeExtent() {
+    public Double getMaxFadeExtent()
+    {
         return maxFadeExtent;
     }
 
     /**
      * Sets the value of the maxFadeExtent property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setMaxFadeExtent(Double value) {
+    public void setMaxFadeExtent(Double value)
+    {
         this.maxFadeExtent = value;
     }
 
-    public boolean isSetMaxFadeExtent() {
-        return (this.maxFadeExtent!= null);
+    public boolean isSetMaxFadeExtent()
+    {
+        return (this.maxFadeExtent != null);
     }
 
     /**
      * Gets the value of the lodSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the lodSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the lodSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLodSimpleExtensionGroup().add(newItem);
+     * getLodSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getLodSimpleExtensionGroup() {
-        if (lodSimpleExtensionGroup == null) {
+    public List<Object> getLodSimpleExtensionGroup()
+    {
+        if (lodSimpleExtensionGroup == null)
+        {
             lodSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.lodSimpleExtensionGroup;
     }
 
-    public boolean isSetLodSimpleExtensionGroup() {
-        return ((this.lodSimpleExtensionGroup!= null)&&(!this.lodSimpleExtensionGroup.isEmpty()));
+    public boolean isSetLodSimpleExtensionGroup()
+    {
+        return ((this.lodSimpleExtensionGroup != null) && (!this.lodSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetLodSimpleExtensionGroup() {
+    public void unsetLodSimpleExtensionGroup()
+    {
         this.lodSimpleExtensionGroup = null;
     }
 
@@ -222,15 +221,16 @@ public class LodType
      * Gets the value of the lodObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the lodObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the lodObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLodObjectExtensionGroup().add(newItem);
+     * getLodObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -240,18 +240,22 @@ public class LodType
      * 
      * 
      */
-    public List<AbstractObjectType> getLodObjectExtensionGroup() {
-        if (lodObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getLodObjectExtensionGroup()
+    {
+        if (lodObjectExtensionGroup == null)
+        {
             lodObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.lodObjectExtensionGroup;
     }
 
-    public boolean isSetLodObjectExtensionGroup() {
-        return ((this.lodObjectExtensionGroup!= null)&&(!this.lodObjectExtensionGroup.isEmpty()));
+    public boolean isSetLodObjectExtensionGroup()
+    {
+        return ((this.lodObjectExtensionGroup != null) && (!this.lodObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetLodObjectExtensionGroup() {
+    public void unsetLodObjectExtensionGroup()
+    {
         this.lodObjectExtensionGroup = null;
     }
 

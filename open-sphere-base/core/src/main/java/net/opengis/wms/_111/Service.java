@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:39 PM MST 
 //
 
-
 package net.opengis.wms._111;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,230 +13,213 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "name",
-    "title",
-    "_abstract",
-    "keywordList",
-    "onlineResource",
-    "contactInformation",
-    "fees",
-    "accessConstraints"
-})
+@XmlType(name = "", propOrder = { "name", "title", "_abstract", "keywordList", "onlineResource", "contactInformation", "fees",
+    "accessConstraints" })
 @XmlRootElement(name = "Service")
-public class Service {
+public class Service
+{
 
     @XmlElement(name = "Name", required = true)
     protected String name;
+
     @XmlElement(name = "Title", required = true)
     protected String title;
+
     @XmlElement(name = "Abstract")
     protected String _abstract;
+
     @XmlElement(name = "KeywordList")
     protected KeywordList keywordList;
+
     @XmlElement(name = "OnlineResource", required = true)
     protected OnlineResource onlineResource;
+
     @XmlElement(name = "ContactInformation")
     protected ContactInformation contactInformation;
+
     @XmlElement(name = "Fees")
     protected String fees;
+
     @XmlElement(name = "AccessConstraints")
     protected String accessConstraints;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
     /**
      * Gets the value of the abstract property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getAbstract() {
+    public String getAbstract()
+    {
         return _abstract;
     }
 
     /**
      * Sets the value of the abstract property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setAbstract(String value) {
+    public void setAbstract(String value)
+    {
         this._abstract = value;
     }
 
     /**
      * Gets the value of the keywordList property.
      * 
-     * @return
-     *     possible object is
-     *     {@link KeywordList }
-     *     
+     * @return possible object is {@link KeywordList }
+     * 
      */
-    public KeywordList getKeywordList() {
+    public KeywordList getKeywordList()
+    {
         return keywordList;
     }
 
     /**
      * Sets the value of the keywordList property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link KeywordList }
-     *     
+     * @param value allowed object is {@link KeywordList }
+     * 
      */
-    public void setKeywordList(KeywordList value) {
+    public void setKeywordList(KeywordList value)
+    {
         this.keywordList = value;
     }
 
     /**
      * Gets the value of the onlineResource property.
      * 
-     * @return
-     *     possible object is
-     *     {@link OnlineResource }
-     *     
+     * @return possible object is {@link OnlineResource }
+     * 
      */
-    public OnlineResource getOnlineResource() {
+    public OnlineResource getOnlineResource()
+    {
         return onlineResource;
     }
 
     /**
      * Sets the value of the onlineResource property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link OnlineResource }
-     *     
+     * @param value allowed object is {@link OnlineResource }
+     * 
      */
-    public void setOnlineResource(OnlineResource value) {
+    public void setOnlineResource(OnlineResource value)
+    {
         this.onlineResource = value;
     }
 
     /**
      * Gets the value of the contactInformation property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ContactInformation }
-     *     
+     * @return possible object is {@link ContactInformation }
+     * 
      */
-    public ContactInformation getContactInformation() {
+    public ContactInformation getContactInformation()
+    {
         return contactInformation;
     }
 
     /**
      * Sets the value of the contactInformation property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ContactInformation }
-     *     
+     * @param value allowed object is {@link ContactInformation }
+     * 
      */
-    public void setContactInformation(ContactInformation value) {
+    public void setContactInformation(ContactInformation value)
+    {
         this.contactInformation = value;
     }
 
     /**
      * Gets the value of the fees property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getFees() {
+    public String getFees()
+    {
         return fees;
     }
 
     /**
      * Sets the value of the fees property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setFees(String value) {
+    public void setFees(String value)
+    {
         this.fees = value;
     }
 
     /**
      * Gets the value of the accessConstraints property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getAccessConstraints() {
+    public String getAccessConstraints()
+    {
         return accessConstraints;
     }
 
     /**
      * Sets the value of the accessConstraints property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setAccessConstraints(String value) {
+    public void setAccessConstraints(String value)
+    {
         this.accessConstraints = value;
     }
 

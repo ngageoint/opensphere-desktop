@@ -9,17 +9,20 @@ import javafx.scene.control.ButtonBar;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * An implementation of the {@link ObservableButtonBar} in which custom labels may be applied to the buttons.
+ * An implementation of the {@link ObservableButtonBar} in which custom labels
+ * may be applied to the buttons.
  */
 public class LabeledObservableButtonBar extends ObservableButtonBar
 {
     /**
-     * The property used to track the disable property. This is bound to all buttons except cancel buttons.
+     * The property used to track the disable property. This is bound to all
+     * buttons except cancel buttons.
      */
     private final BooleanProperty myDisableButtonsProperty;
 
     /**
-     * Creates a new button bar, using the {@link ButtonBar#BUTTON_ORDER_WINDOWS} button order.
+     * Creates a new button bar, using the
+     * {@link ButtonBar#BUTTON_ORDER_WINDOWS} button order.
      *
      * @see javafx.scene.control.ButtonBar#BUTTON_ORDER_WINDOWS
      */
@@ -47,9 +50,10 @@ public class LabeledObservableButtonBar extends ObservableButtonBar
     }
 
     /**
-     * Adds a button to the button bar. The button will not contain an icon, and will use the value of
-     * {@link javafx.scene.control.ButtonBar.ButtonData#toString()} from the <code>pButtonData</code> parameter as the text of the
-     * button.
+     * Adds a button to the button bar. The button will not contain an icon, and
+     * will use the value of
+     * {@link javafx.scene.control.ButtonBar.ButtonData#toString()} from the
+     * <code>pButtonData</code> parameter as the text of the button.
      *
      * @param pButtonData the button data from which the button will be created.
      * @return the current instance of the button bar, to allow call chaining.
@@ -60,8 +64,9 @@ public class LabeledObservableButtonBar extends ObservableButtonBar
     }
 
     /**
-     * Adds a button to the button bar. The button will not contain an icon, and will use the supplied text for the button's
-     * content. The button will be bound to the supplied {@link javafx.scene.control.ButtonBar.ButtonData}.
+     * Adds a button to the button bar. The button will not contain an icon, and
+     * will use the supplied text for the button's content. The button will be
+     * bound to the supplied {@link javafx.scene.control.ButtonBar.ButtonData}.
      *
      * @param pButtonText the text of the button to create.
      * @param pButtonData the button data from which the button will be created.
@@ -73,8 +78,10 @@ public class LabeledObservableButtonBar extends ObservableButtonBar
     }
 
     /**
-     * Adds a button to the button bar. The button will not the supplied icon (if not null), and will use the supplied text for
-     * the button's content. The button will be bound to the supplied {@link javafx.scene.control.ButtonBar.ButtonData}.
+     * Adds a button to the button bar. The button will not the supplied icon
+     * (if not null), and will use the supplied text for the button's content.
+     * The button will be bound to the supplied
+     * {@link javafx.scene.control.ButtonBar.ButtonData}.
      *
      * @param pButtonText the text of the button to create.
      * @param pIcon the icon for the button.

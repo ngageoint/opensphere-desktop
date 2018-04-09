@@ -51,7 +51,8 @@ public class PolylineGeometry extends AbstractColorGeometry
      *             build a valid polyline.
      */
     public PolylineGeometry(PolylineGeometry.Builder<?> builder, PolylineRenderProperties renderProperties,
-            Constraints constraints) throws IllegalArgumentException
+            Constraints constraints)
+        throws IllegalArgumentException
     {
         super(builder, renderProperties, constraints);
         if (renderProperties.getWidth() < 0.)

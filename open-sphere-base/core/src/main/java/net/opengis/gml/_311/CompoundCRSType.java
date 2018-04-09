@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,13 +15,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A coordinate reference system describing the position of points through two or more independent coordinate reference systems. 
+ * A coordinate reference system describing the position of points through two
+ * or more independent coordinate reference systems.
  * 
- * <p>Java class for CompoundCRSType complex type.
+ * <p>
+ * Java class for CompoundCRSType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CompoundCRSType">
@@ -39,29 +41,29 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CompoundCRSType", propOrder = {
-    "includesCRS"
-})
-public class CompoundCRSType
-    extends AbstractReferenceSystemType
+@XmlType(name = "CompoundCRSType", propOrder = { "includesCRS" })
+public class CompoundCRSType extends AbstractReferenceSystemType
 {
 
     @XmlElement(required = true)
     protected List<CoordinateReferenceSystemRefType> includesCRS;
 
     /**
-     * Ordered sequence of associations to all the component coordinate reference systems included in this compound coordinate reference system. Gets the value of the includesCRS property.
+     * Ordered sequence of associations to all the component coordinate
+     * reference systems included in this compound coordinate reference system.
+     * Gets the value of the includesCRS property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the includesCRS property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the includesCRS property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getIncludesCRS().add(newItem);
+     * getIncludesCRS().add(newItem);
      * </pre>
      * 
      * 
@@ -71,8 +73,10 @@ public class CompoundCRSType
      * 
      * 
      */
-    public List<CoordinateReferenceSystemRefType> getIncludesCRS() {
-        if (includesCRS == null) {
+    public List<CoordinateReferenceSystemRefType> getIncludesCRS()
+    {
+        if (includesCRS == null)
+        {
             includesCRS = new ArrayList<CoordinateReferenceSystemRefType>();
         }
         return this.includesCRS;

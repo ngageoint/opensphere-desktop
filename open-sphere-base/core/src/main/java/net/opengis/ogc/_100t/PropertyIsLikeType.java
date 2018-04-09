@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.ogc._100t;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for PropertyIsLikeType complex type.
+ * <p>
+ * Java class for PropertyIsLikeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="PropertyIsLikeType">
@@ -39,163 +40,158 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PropertyIsLikeType", propOrder = {
-    "propertyName",
-    "literal"
-})
-public class PropertyIsLikeType
-    extends ComparisonOpsType
+@XmlType(name = "PropertyIsLikeType", propOrder = { "propertyName", "literal" })
+public class PropertyIsLikeType extends ComparisonOpsType
 {
 
     @XmlElement(name = "PropertyName", required = true)
     protected PropertyNameType propertyName;
+
     @XmlElement(name = "Literal", required = true)
     protected LiteralType literal;
+
     @XmlAttribute(name = "wildCard", required = true)
     protected String wildCard;
+
     @XmlAttribute(name = "singleChar", required = true)
     protected String singleChar;
+
     @XmlAttribute(name = "escape", required = true)
     protected String escape;
 
     /**
      * Gets the value of the propertyName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PropertyNameType }
-     *     
+     * @return possible object is {@link PropertyNameType }
+     * 
      */
-    public PropertyNameType getPropertyName() {
+    public PropertyNameType getPropertyName()
+    {
         return propertyName;
     }
 
     /**
      * Sets the value of the propertyName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PropertyNameType }
-     *     
+     * @param value allowed object is {@link PropertyNameType }
+     * 
      */
-    public void setPropertyName(PropertyNameType value) {
+    public void setPropertyName(PropertyNameType value)
+    {
         this.propertyName = value;
     }
 
-    public boolean isSetPropertyName() {
-        return (this.propertyName!= null);
+    public boolean isSetPropertyName()
+    {
+        return (this.propertyName != null);
     }
 
     /**
      * Gets the value of the literal property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LiteralType }
-     *     
+     * @return possible object is {@link LiteralType }
+     * 
      */
-    public LiteralType getLiteral() {
+    public LiteralType getLiteral()
+    {
         return literal;
     }
 
     /**
      * Sets the value of the literal property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LiteralType }
-     *     
+     * @param value allowed object is {@link LiteralType }
+     * 
      */
-    public void setLiteral(LiteralType value) {
+    public void setLiteral(LiteralType value)
+    {
         this.literal = value;
     }
 
-    public boolean isSetLiteral() {
-        return (this.literal!= null);
+    public boolean isSetLiteral()
+    {
+        return (this.literal != null);
     }
 
     /**
      * Gets the value of the wildCard property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getWildCard() {
+    public String getWildCard()
+    {
         return wildCard;
     }
 
     /**
      * Sets the value of the wildCard property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setWildCard(String value) {
+    public void setWildCard(String value)
+    {
         this.wildCard = value;
     }
 
-    public boolean isSetWildCard() {
-        return (this.wildCard!= null);
+    public boolean isSetWildCard()
+    {
+        return (this.wildCard != null);
     }
 
     /**
      * Gets the value of the singleChar property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSingleChar() {
+    public String getSingleChar()
+    {
         return singleChar;
     }
 
     /**
      * Sets the value of the singleChar property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSingleChar(String value) {
+    public void setSingleChar(String value)
+    {
         this.singleChar = value;
     }
 
-    public boolean isSetSingleChar() {
-        return (this.singleChar!= null);
+    public boolean isSetSingleChar()
+    {
+        return (this.singleChar != null);
     }
 
     /**
      * Gets the value of the escape property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getEscape() {
+    public String getEscape()
+    {
         return escape;
     }
 
     /**
      * Sets the value of the escape property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setEscape(String value) {
+    public void setEscape(String value)
+    {
         this.escape = value;
     }
 
-    public boolean isSetEscape() {
-        return (this.escape!= null);
+    public boolean isSetEscape()
+    {
+        return (this.escape != null);
     }
 
 }

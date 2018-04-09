@@ -70,8 +70,8 @@ public class PointSetRendererBuffered<T extends PointSetGeometry> extends Abstra
     }
 
     @Override
-    protected void doRenderPoints(RenderContext rc, Collection<? extends T> input, Collection<? super T> rejects, PickManager pickManager,
-            ModelDataRetriever<T> dataRetriever, TimeRenderData renderData)
+    protected void doRenderPoints(RenderContext rc, Collection<? extends T> input, Collection<? super T> rejects,
+            PickManager pickManager, ModelDataRetriever<T> dataRetriever, TimeRenderData renderData)
     {
         try
         {

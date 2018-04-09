@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,11 +15,13 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.ows._110.CodeType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -39,92 +40,85 @@ import net.opengis.ows._110.CodeType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "identifier",
-    "dataInputs",
-    "responseForm"
-})
+@XmlType(name = "", propOrder = { "identifier", "dataInputs", "responseForm" })
 @XmlRootElement(name = "Execute")
-public class Execute
-    extends RequestBaseType
+public class Execute extends RequestBaseType
 {
 
     @XmlElement(name = "Identifier", namespace = "http://www.opengis.net/ows/1.1", required = true)
     protected CodeType identifier;
+
     @XmlElement(name = "DataInputs")
     protected DataInputsType dataInputs;
+
     @XmlElement(name = "ResponseForm")
     protected ResponseFormType responseForm;
 
     /**
-     * Identifier of the Process to be executed. This Process identifier shall be as listed in the ProcessOfferings section of the WPS Capabilities document. 
+     * Identifier of the Process to be executed. This Process identifier shall
+     * be as listed in the ProcessOfferings section of the WPS Capabilities
+     * document.
      * 
-     * @return
-     *     possible object is
-     *     {@link CodeType }
-     *     
+     * @return possible object is {@link CodeType }
+     * 
      */
-    public CodeType getIdentifier() {
+    public CodeType getIdentifier()
+    {
         return identifier;
     }
 
     /**
      * Sets the value of the identifier property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CodeType }
-     *     
+     * @param value allowed object is {@link CodeType }
+     * 
      */
-    public void setIdentifier(CodeType value) {
+    public void setIdentifier(CodeType value)
+    {
         this.identifier = value;
     }
 
     /**
      * Gets the value of the dataInputs property.
      * 
-     * @return
-     *     possible object is
-     *     {@link DataInputsType }
-     *     
+     * @return possible object is {@link DataInputsType }
+     * 
      */
-    public DataInputsType getDataInputs() {
+    public DataInputsType getDataInputs()
+    {
         return dataInputs;
     }
 
     /**
      * Sets the value of the dataInputs property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DataInputsType }
-     *     
+     * @param value allowed object is {@link DataInputsType }
+     * 
      */
-    public void setDataInputs(DataInputsType value) {
+    public void setDataInputs(DataInputsType value)
+    {
         this.dataInputs = value;
     }
 
     /**
      * Gets the value of the responseForm property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ResponseFormType }
-     *     
+     * @return possible object is {@link ResponseFormType }
+     * 
      */
-    public ResponseFormType getResponseForm() {
+    public ResponseFormType getResponseForm()
+    {
         return responseForm;
     }
 
     /**
      * Sets the value of the responseForm property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ResponseFormType }
-     *     
+     * @param value allowed object is {@link ResponseFormType }
+     * 
      */
-    public void setResponseForm(ResponseFormType value) {
+    public void setResponseForm(ResponseFormType value)
+    {
         this.responseForm = value;
     }
 

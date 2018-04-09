@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,24 +12,25 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *           Request to a WFS to perform the GetCapabilities operation.
- *           This operation allows a client to retrieve a Capabilities
- *           XML document providing metadata for the specific WFS server.
+ * Request to a WFS to perform the GetCapabilities operation. This operation
+ * allows a client to retrieve a Capabilities XML document providing metadata
+ * for the specific WFS server.
  * 
- *           The GetCapapbilities element is used to request that a Web Feature
- *           Service generate an XML document describing the organization
- *           providing the service, the WFS operations that the service
- *           supports, a list of feature types that the service can operate
- *           on and list of filtering capabilities that the service support.
- *           Such an XML document is called a capabilities document.
- *        
+ * The GetCapapbilities element is used to request that a Web Feature Service
+ * generate an XML document describing the organization providing the service,
+ * the WFS operations that the service supports, a list of feature types that
+ * the service can operate on and list of filtering capabilities that the
+ * service support. Such an XML document is called a capabilities document.
  * 
- * <p>Java class for GetCapabilitiesType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for GetCapabilitiesType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GetCapabilitiesType">
@@ -46,8 +46,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GetCapabilitiesType")
-public class GetCapabilitiesType
-    extends net.opengis.ows._100.GetCapabilitiesType
+public class GetCapabilitiesType extends net.opengis.ows._100.GetCapabilitiesType
 {
 
     @XmlAttribute(name = "service")
@@ -56,15 +55,17 @@ public class GetCapabilitiesType
     /**
      * Gets the value of the service property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getService() {
-        if (service == null) {
+    public String getService()
+    {
+        if (service == null)
+        {
             return "WFS";
-        } else {
+        }
+        else
+        {
             return service;
         }
     }
@@ -72,12 +73,11 @@ public class GetCapabilitiesType
     /**
      * Sets the value of the service property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setService(String value) {
+    public void setService(String value)
+    {
         this.service = value;
     }
 

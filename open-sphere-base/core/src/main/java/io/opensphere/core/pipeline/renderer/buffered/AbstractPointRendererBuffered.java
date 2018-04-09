@@ -92,8 +92,8 @@ public abstract class AbstractPointRendererBuffered<T extends AbstractRenderable
             prepareRenderContext(rc);
 
             TimeSpan groupTimeSpan = renderData.getGroupTimeSpan();
-            getFadedRenderingHelper().renderEachTimeSpan(
-                    rc, groupTimeSpan, () -> doRenderPoints(rc, input, rejected, pickManager, dataRetriever, renderData));
+            getFadedRenderingHelper().renderEachTimeSpan(rc, groupTimeSpan,
+                    () -> doRenderPoints(rc, input, rejected, pickManager, dataRetriever, renderData));
 
             // If close() was called during rendering, clean the buffers one
             // more time to catch anything that was just generated.

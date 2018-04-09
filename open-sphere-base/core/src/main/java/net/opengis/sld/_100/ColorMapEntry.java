@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -38,110 +39,106 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
 @XmlRootElement(name = "ColorMapEntry")
-public class ColorMapEntry {
+public class ColorMapEntry
+{
 
     @XmlAttribute(required = true)
     protected String color;
+
     @XmlAttribute
     protected Double opacity;
+
     @XmlAttribute
     protected Double quantity;
+
     @XmlAttribute
     protected String label;
 
     /**
      * Gets the value of the color property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getColor() {
+    public String getColor()
+    {
         return color;
     }
 
     /**
      * Sets the value of the color property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setColor(String value) {
+    public void setColor(String value)
+    {
         this.color = value;
     }
 
     /**
      * Gets the value of the opacity property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getOpacity() {
+    public Double getOpacity()
+    {
         return opacity;
     }
 
     /**
      * Sets the value of the opacity property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setOpacity(Double value) {
+    public void setOpacity(Double value)
+    {
         this.opacity = value;
     }
 
     /**
      * Gets the value of the quantity property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getQuantity() {
+    public Double getQuantity()
+    {
         return quantity;
     }
 
     /**
      * Sets the value of the quantity property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setQuantity(Double value) {
+    public void setQuantity(Double value)
+    {
         this.quantity = value;
     }
 
     /**
      * Gets the value of the label property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLabel() {
+    public String getLabel()
+    {
         return label;
     }
 
     /**
      * Sets the value of the label property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLabel(String value) {
+    public void setLabel(String value)
+    {
         this.label = value;
     }
 

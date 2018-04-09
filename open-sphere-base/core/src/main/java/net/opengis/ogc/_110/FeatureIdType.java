@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ogc._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
- * <p>Java class for FeatureIdType complex type.
+ * <p>
+ * Java class for FeatureIdType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="FeatureIdType">
@@ -37,8 +38,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FeatureIdType")
-public class FeatureIdType
-    extends AbstractIdType
+public class FeatureIdType extends AbstractIdType
 {
 
     @XmlAttribute(name = "fid", required = true)
@@ -50,24 +50,22 @@ public class FeatureIdType
     /**
      * Gets the value of the fid property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getFid() {
+    public String getFid()
+    {
         return fid;
     }
 
     /**
      * Sets the value of the fid property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setFid(String value) {
+    public void setFid(String value)
+    {
         this.fid = value;
     }
 

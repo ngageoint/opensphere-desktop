@@ -5,19 +5,21 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ResultType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for ResultType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="ResultType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -31,8 +33,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "ResultType")
 @XmlEnum
-public enum ResultType {
-
+public enum ResultType
+{
 
     /**
      * Include results in the response.
@@ -49,25 +51,30 @@ public enum ResultType {
     HITS("hits"),
 
     /**
-     * Validate the request and return an Acknowledgement message if it 
-     * 	      is valid. Continue processing the request asynchronously.
+     * Validate the request and return an Acknowledgement message if it is
+     * valid. Continue processing the request asynchronously.
      * 
      */
     @XmlEnumValue("validate")
     VALIDATE("validate");
     private final String value;
 
-    ResultType(String v) {
+    ResultType(String v)
+    {
         value = v;
     }
 
-    public String value() {
+    public String value()
+    {
         return value;
     }
 
-    public static ResultType fromValue(String v) {
-        for (ResultType c: ResultType.values()) {
-            if (c.value.equals(v)) {
+    public static ResultType fromValue(String v)
+    {
+        for (ResultType c : ResultType.values())
+        {
+            if (c.value.equals(v))
+            {
                 return c;
             }
         }

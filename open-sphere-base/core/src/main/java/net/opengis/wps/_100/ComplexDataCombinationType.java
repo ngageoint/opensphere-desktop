@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Identifies the default Format, Encoding, and Schema supported for this input or output. The process shall expect input in or produce output in this combination of Format/Encoding/Schema unless the Execute request specifies otherwise.. 
+ * Identifies the default Format, Encoding, and Schema supported for this input
+ * or output. The process shall expect input in or produce output in this
+ * combination of Format/Encoding/Schema unless the Execute request specifies
+ * otherwise..
  * 
- * <p>Java class for ComplexDataCombinationType complex type.
+ * <p>
+ * Java class for ComplexDataCombinationType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ComplexDataCombinationType">
@@ -36,10 +40,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ComplexDataCombinationType", propOrder = {
-    "format"
-})
-public class ComplexDataCombinationType {
+@XmlType(name = "ComplexDataCombinationType", propOrder = { "format" })
+public class ComplexDataCombinationType
+{
 
     @XmlElement(name = "Format", namespace = "", required = true)
     protected ComplexDataDescriptionType format;
@@ -47,24 +50,22 @@ public class ComplexDataCombinationType {
     /**
      * Gets the value of the format property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ComplexDataDescriptionType }
-     *     
+     * @return possible object is {@link ComplexDataDescriptionType }
+     * 
      */
-    public ComplexDataDescriptionType getFormat() {
+    public ComplexDataDescriptionType getFormat()
+    {
         return format;
     }
 
     /**
      * Sets the value of the format property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ComplexDataDescriptionType }
-     *     
+     * @param value allowed object is {@link ComplexDataDescriptionType }
+     * 
      */
-    public void setFormat(ComplexDataDescriptionType value) {
+    public void setFormat(ComplexDataDescriptionType value)
+    {
         this.format = value;
     }
 

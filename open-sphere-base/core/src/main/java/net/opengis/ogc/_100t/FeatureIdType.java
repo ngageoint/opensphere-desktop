@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.ogc._100t;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for FeatureIdType complex type.
+ * <p>
+ * Java class for FeatureIdType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="FeatureIdType">
@@ -34,7 +35,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FeatureIdType")
-public class FeatureIdType {
+public class FeatureIdType
+{
 
     @XmlAttribute(name = "fid", required = true)
     @XmlSchemaType(name = "anyURI")
@@ -43,29 +45,28 @@ public class FeatureIdType {
     /**
      * Gets the value of the fid property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getFid() {
+    public String getFid()
+    {
         return fid;
     }
 
     /**
      * Sets the value of the fid property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setFid(String value) {
+    public void setFid(String value)
+    {
         this.fid = value;
     }
 
-    public boolean isSetFid() {
-        return (this.fid!= null);
+    public boolean isSetFid()
+    {
+        return (this.fid != null);
     }
 
 }

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import java.util.ArrayList;
@@ -16,17 +15,19 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *             The TransactionResults element may be used to report exception
- *             codes and messages for all actions of a transaction that failed
- *             to complete successfully.
- *          
+ * The TransactionResults element may be used to report exception codes and
+ * messages for all actions of a transaction that failed to complete
+ * successfully.
  * 
- * <p>Java class for TransactionResultsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for TransactionResultsType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TransactionResultsType">
@@ -43,10 +44,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TransactionResultsType", propOrder = {
-    "action"
-})
-public class TransactionResultsType {
+@XmlType(name = "TransactionResultsType", propOrder = { "action" })
+public class TransactionResultsType
+{
 
     @XmlElement(name = "Action")
     protected List<ActionType> action;
@@ -55,15 +55,16 @@ public class TransactionResultsType {
      * Gets the value of the action property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the action property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the action property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAction().add(newItem);
+     * getAction().add(newItem);
      * </pre>
      * 
      * 
@@ -73,8 +74,10 @@ public class TransactionResultsType {
      * 
      * 
      */
-    public List<ActionType> getAction() {
-        if (action == null) {
+    public List<ActionType> getAction()
+    {
+        if (action == null)
+        {
             action = new ArrayList<ActionType>();
         }
         return this.action;

@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -41,93 +42,86 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "name",
-    "remoteOWS",
-    "layerFeatureConstraints",
-    "userStyle"
-})
+@XmlType(name = "", propOrder = { "name", "remoteOWS", "layerFeatureConstraints", "userStyle" })
 @XmlRootElement(name = "UserLayer")
-public class UserLayer {
+public class UserLayer
+{
 
     @XmlElement(name = "Name")
     protected String name;
+
     @XmlElement(name = "RemoteOWS")
     protected RemoteOWS remoteOWS;
+
     @XmlElement(name = "LayerFeatureConstraints", required = true)
     protected LayerFeatureConstraints layerFeatureConstraints;
+
     @XmlElement(name = "UserStyle", required = true)
     protected List<UserStyle> userStyle;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
     /**
      * Gets the value of the remoteOWS property.
      * 
-     * @return
-     *     possible object is
-     *     {@link RemoteOWS }
-     *     
+     * @return possible object is {@link RemoteOWS }
+     * 
      */
-    public RemoteOWS getRemoteOWS() {
+    public RemoteOWS getRemoteOWS()
+    {
         return remoteOWS;
     }
 
     /**
      * Sets the value of the remoteOWS property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link RemoteOWS }
-     *     
+     * @param value allowed object is {@link RemoteOWS }
+     * 
      */
-    public void setRemoteOWS(RemoteOWS value) {
+    public void setRemoteOWS(RemoteOWS value)
+    {
         this.remoteOWS = value;
     }
 
     /**
      * Gets the value of the layerFeatureConstraints property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LayerFeatureConstraints }
-     *     
+     * @return possible object is {@link LayerFeatureConstraints }
+     * 
      */
-    public LayerFeatureConstraints getLayerFeatureConstraints() {
+    public LayerFeatureConstraints getLayerFeatureConstraints()
+    {
         return layerFeatureConstraints;
     }
 
     /**
      * Sets the value of the layerFeatureConstraints property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LayerFeatureConstraints }
-     *     
+     * @param value allowed object is {@link LayerFeatureConstraints }
+     * 
      */
-    public void setLayerFeatureConstraints(LayerFeatureConstraints value) {
+    public void setLayerFeatureConstraints(LayerFeatureConstraints value)
+    {
         this.layerFeatureConstraints = value;
     }
 
@@ -135,26 +129,29 @@ public class UserLayer {
      * Gets the value of the userStyle property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the userStyle property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the userStyle property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getUserStyle().add(newItem);
+     * getUserStyle().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link UserStyle }
+     * Objects of the following type(s) are allowed in the list {@link UserStyle
+     * }
      * 
      * 
      */
-    public List<UserStyle> getUserStyle() {
-        if (userStyle == null) {
+    public List<UserStyle> getUserStyle()
+    {
+        if (userStyle == null)
+        {
             userStyle = new ArrayList<UserStyle>();
         }
         return this.userStyle;

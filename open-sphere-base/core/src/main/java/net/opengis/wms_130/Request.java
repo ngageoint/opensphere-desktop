@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:41 PM MST 
 //
 
-
 package net.opengis.wms_130;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -41,93 +42,86 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "getCapabilities",
-    "getMap",
-    "getFeatureInfo",
-    "extendedOperation"
-})
+@XmlType(name = "", propOrder = { "getCapabilities", "getMap", "getFeatureInfo", "extendedOperation" })
 @XmlRootElement(name = "Request")
-public class Request {
+public class Request
+{
 
     @XmlElement(name = "GetCapabilities", required = true)
     protected OperationType getCapabilities;
+
     @XmlElement(name = "GetMap", required = true)
     protected OperationType getMap;
+
     @XmlElement(name = "GetFeatureInfo")
     protected OperationType getFeatureInfo;
+
     @XmlElement(name = "_ExtendedOperation")
     protected List<OperationType> extendedOperation;
 
     /**
      * Gets the value of the getCapabilities property.
      * 
-     * @return
-     *     possible object is
-     *     {@link OperationType }
-     *     
+     * @return possible object is {@link OperationType }
+     * 
      */
-    public OperationType getGetCapabilities() {
+    public OperationType getGetCapabilities()
+    {
         return getCapabilities;
     }
 
     /**
      * Sets the value of the getCapabilities property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link OperationType }
-     *     
+     * @param value allowed object is {@link OperationType }
+     * 
      */
-    public void setGetCapabilities(OperationType value) {
+    public void setGetCapabilities(OperationType value)
+    {
         this.getCapabilities = value;
     }
 
     /**
      * Gets the value of the getMap property.
      * 
-     * @return
-     *     possible object is
-     *     {@link OperationType }
-     *     
+     * @return possible object is {@link OperationType }
+     * 
      */
-    public OperationType getGetMap() {
+    public OperationType getGetMap()
+    {
         return getMap;
     }
 
     /**
      * Sets the value of the getMap property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link OperationType }
-     *     
+     * @param value allowed object is {@link OperationType }
+     * 
      */
-    public void setGetMap(OperationType value) {
+    public void setGetMap(OperationType value)
+    {
         this.getMap = value;
     }
 
     /**
      * Gets the value of the getFeatureInfo property.
      * 
-     * @return
-     *     possible object is
-     *     {@link OperationType }
-     *     
+     * @return possible object is {@link OperationType }
+     * 
      */
-    public OperationType getGetFeatureInfo() {
+    public OperationType getGetFeatureInfo()
+    {
         return getFeatureInfo;
     }
 
     /**
      * Sets the value of the getFeatureInfo property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link OperationType }
-     *     
+     * @param value allowed object is {@link OperationType }
+     * 
      */
-    public void setGetFeatureInfo(OperationType value) {
+    public void setGetFeatureInfo(OperationType value)
+    {
         this.getFeatureInfo = value;
     }
 
@@ -135,15 +129,16 @@ public class Request {
      * Gets the value of the extendedOperation property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the extendedOperation property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the extendedOperation property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getExtendedOperation().add(newItem);
+     * getExtendedOperation().add(newItem);
      * </pre>
      * 
      * 
@@ -153,8 +148,10 @@ public class Request {
      * 
      * 
      */
-    public List<OperationType> getExtendedOperation() {
-        if (extendedOperation == null) {
+    public List<OperationType> getExtendedOperation()
+    {
+        if (extendedOperation == null)
+        {
             extendedOperation = new ArrayList<OperationType>();
         }
         return this.extendedOperation;

@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.gml._212;
 
 import java.util.ArrayList;
@@ -18,18 +17,19 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *         A geometry collection must include one or more geometries, referenced 
- *         through geometryMember elements. User-defined geometry collections 
- *         that accept GML geometry classes as members must instantiate--or 
- *         derive from--this type.
- *       
+ * A geometry collection must include one or more geometries, referenced through
+ * geometryMember elements. User-defined geometry collections that accept GML
+ * geometry classes as members must instantiate--or derive from--this type.
  * 
- * <p>Java class for GeometryCollectionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for GeometryCollectionType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GeometryCollectionType">
@@ -46,16 +46,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GeometryCollectionType", propOrder = {
-    "geometryMember"
-})
-@XmlSeeAlso({
-    MultiPointType.class,
-    MultiLineStringType.class,
-    MultiPolygonType.class
-})
-public class GeometryCollectionType
-    extends AbstractGeometryCollectionBaseType
+@XmlType(name = "GeometryCollectionType", propOrder = { "geometryMember" })
+@XmlSeeAlso({ MultiPointType.class, MultiLineStringType.class, MultiPolygonType.class })
+public class GeometryCollectionType extends AbstractGeometryCollectionBaseType
 {
 
     @XmlElementRef(name = "geometryMember", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
@@ -65,15 +58,16 @@ public class GeometryCollectionType
      * Gets the value of the geometryMember property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the geometryMember property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the geometryMember property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getGeometryMember().add(newItem);
+     * getGeometryMember().add(newItem);
      * </pre>
      * 
      * 
@@ -86,18 +80,22 @@ public class GeometryCollectionType
      * 
      * 
      */
-    public List<JAXBElement<? extends GeometryAssociationType>> getGeometryMember() {
-        if (geometryMember == null) {
+    public List<JAXBElement<? extends GeometryAssociationType>> getGeometryMember()
+    {
+        if (geometryMember == null)
+        {
             geometryMember = new ArrayList<JAXBElement<? extends GeometryAssociationType>>();
         }
         return this.geometryMember;
     }
 
-    public boolean isSetGeometryMember() {
-        return ((this.geometryMember!= null)&&(!this.geometryMember.isEmpty()));
+    public boolean isSetGeometryMember()
+    {
+        return ((this.geometryMember != null) && (!this.geometryMember.isEmpty()));
     }
 
-    public void unsetGeometryMember() {
+    public void unsetGeometryMember()
+    {
         this.geometryMember = null;
     }
 

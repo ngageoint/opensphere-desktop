@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.math.BigDecimal;
@@ -18,17 +17,19 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
- *         A definition of an style for displaying a feature using an icon. All 
- *         features in the layer will use the same configuration, and icons will 
- *         be displayed for each feature in the layer, as configured in the style.
- *       
+ * A definition of an style for displaying a feature using an icon. All features
+ * in the layer will use the same configuration, and icons will be displayed for
+ * each feature in the layer, as configured in the style.
  * 
- * <p>Java class for IconStyleType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for IconStyleType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="IconStyleType">
@@ -54,213 +55,213 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "IconStyleType", propOrder = {
 
 })
-public class IconStyleType {
+public class IconStyleType
+{
 
     protected BigDecimal iconDefaultPointSize;
+
     @XmlSchemaType(name = "token")
     protected IconDefaultType iconDefaultTo;
+
     protected BigDecimal iconScale;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String defaultIconURL;
+
     protected BigInteger iconXOffset;
+
     protected BigInteger iconYOffset;
+
     protected Boolean mixIconElementColor;
 
     /**
      * Gets the value of the iconDefaultPointSize property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     * @return possible object is {@link BigDecimal }
+     * 
      */
-    public BigDecimal getIconDefaultPointSize() {
+    public BigDecimal getIconDefaultPointSize()
+    {
         return iconDefaultPointSize;
     }
 
     /**
      * Sets the value of the iconDefaultPointSize property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     * @param value allowed object is {@link BigDecimal }
+     * 
      */
-    public void setIconDefaultPointSize(BigDecimal value) {
+    public void setIconDefaultPointSize(BigDecimal value)
+    {
         this.iconDefaultPointSize = value;
     }
 
-    public boolean isSetIconDefaultPointSize() {
-        return (this.iconDefaultPointSize!= null);
+    public boolean isSetIconDefaultPointSize()
+    {
+        return (this.iconDefaultPointSize != null);
     }
 
     /**
      * Gets the value of the iconDefaultTo property.
      * 
-     * @return
-     *     possible object is
-     *     {@link IconDefaultType }
-     *     
+     * @return possible object is {@link IconDefaultType }
+     * 
      */
-    public IconDefaultType getIconDefaultTo() {
+    public IconDefaultType getIconDefaultTo()
+    {
         return iconDefaultTo;
     }
 
     /**
      * Sets the value of the iconDefaultTo property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link IconDefaultType }
-     *     
+     * @param value allowed object is {@link IconDefaultType }
+     * 
      */
-    public void setIconDefaultTo(IconDefaultType value) {
+    public void setIconDefaultTo(IconDefaultType value)
+    {
         this.iconDefaultTo = value;
     }
 
-    public boolean isSetIconDefaultTo() {
-        return (this.iconDefaultTo!= null);
+    public boolean isSetIconDefaultTo()
+    {
+        return (this.iconDefaultTo != null);
     }
 
     /**
      * Gets the value of the iconScale property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     * @return possible object is {@link BigDecimal }
+     * 
      */
-    public BigDecimal getIconScale() {
+    public BigDecimal getIconScale()
+    {
         return iconScale;
     }
 
     /**
      * Sets the value of the iconScale property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     * @param value allowed object is {@link BigDecimal }
+     * 
      */
-    public void setIconScale(BigDecimal value) {
+    public void setIconScale(BigDecimal value)
+    {
         this.iconScale = value;
     }
 
-    public boolean isSetIconScale() {
-        return (this.iconScale!= null);
+    public boolean isSetIconScale()
+    {
+        return (this.iconScale != null);
     }
 
     /**
      * Gets the value of the defaultIconURL property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDefaultIconURL() {
+    public String getDefaultIconURL()
+    {
         return defaultIconURL;
     }
 
     /**
      * Sets the value of the defaultIconURL property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDefaultIconURL(String value) {
+    public void setDefaultIconURL(String value)
+    {
         this.defaultIconURL = value;
     }
 
-    public boolean isSetDefaultIconURL() {
-        return (this.defaultIconURL!= null);
+    public boolean isSetDefaultIconURL()
+    {
+        return (this.defaultIconURL != null);
     }
 
     /**
      * Gets the value of the iconXOffset property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getIconXOffset() {
+    public BigInteger getIconXOffset()
+    {
         return iconXOffset;
     }
 
     /**
      * Sets the value of the iconXOffset property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setIconXOffset(BigInteger value) {
+    public void setIconXOffset(BigInteger value)
+    {
         this.iconXOffset = value;
     }
 
-    public boolean isSetIconXOffset() {
-        return (this.iconXOffset!= null);
+    public boolean isSetIconXOffset()
+    {
+        return (this.iconXOffset != null);
     }
 
     /**
      * Gets the value of the iconYOffset property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getIconYOffset() {
+    public BigInteger getIconYOffset()
+    {
         return iconYOffset;
     }
 
     /**
      * Sets the value of the iconYOffset property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setIconYOffset(BigInteger value) {
+    public void setIconYOffset(BigInteger value)
+    {
         this.iconYOffset = value;
     }
 
-    public boolean isSetIconYOffset() {
-        return (this.iconYOffset!= null);
+    public boolean isSetIconYOffset()
+    {
+        return (this.iconYOffset != null);
     }
 
     /**
      * Gets the value of the mixIconElementColor property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isMixIconElementColor() {
+    public Boolean isMixIconElementColor()
+    {
         return mixIconElementColor;
     }
 
     /**
      * Sets the value of the mixIconElementColor property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setMixIconElementColor(Boolean value) {
+    public void setMixIconElementColor(Boolean value)
+    {
         this.mixIconElementColor = value;
     }
 
-    public boolean isSetMixIconElementColor() {
-        return (this.mixIconElementColor!= null);
+    public boolean isSetMixIconElementColor()
+    {
+        return (this.mixIconElementColor != null);
     }
 
 }

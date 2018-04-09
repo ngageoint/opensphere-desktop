@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import java.util.ArrayList;
@@ -16,15 +15,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Returns the actual values for some property. In general this is a
- *          subset of the value domain (that is, set of permissible values),
- *          although in some cases these may be the same.
+ * Returns the actual values for some property. In general this is a subset of
+ * the value domain (that is, set of permissible values), although in some cases
+ * these may be the same.
  * 
- * <p>Java class for GetDomainResponseType complex type.
+ * <p>
+ * Java class for GetDomainResponseType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GetDomainResponseType">
@@ -41,10 +42,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetDomainResponseType", propOrder = {
-    "domainValues"
-})
-public class GetDomainResponseType {
+@XmlType(name = "GetDomainResponseType", propOrder = { "domainValues" })
+public class GetDomainResponseType
+{
 
     @XmlElement(name = "DomainValues", required = true)
     protected List<DomainValuesType> domainValues;
@@ -53,15 +53,16 @@ public class GetDomainResponseType {
      * Gets the value of the domainValues property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the domainValues property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the domainValues property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getDomainValues().add(newItem);
+     * getDomainValues().add(newItem);
      * </pre>
      * 
      * 
@@ -71,8 +72,10 @@ public class GetDomainResponseType {
      * 
      * 
      */
-    public List<DomainValuesType> getDomainValues() {
-        if (domainValues == null) {
+    public List<DomainValuesType> getDomainValues()
+    {
+        if (domainValues == null)
+        {
             domainValues = new ArrayList<DomainValuesType>();
         }
         return this.domainValues;

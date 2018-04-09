@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ScaleType complex type.
+ * <p>
+ * Java class for ScaleType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ScaleType">
@@ -42,147 +43,145 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ScaleType", propOrder = {
-    "x",
-    "y",
-    "z",
-    "scaleSimpleExtensionGroup",
-    "scaleObjectExtensionGroup"
-})
-public class ScaleType
-    extends AbstractObjectType
+@XmlType(name = "ScaleType", propOrder = { "x", "y", "z", "scaleSimpleExtensionGroup", "scaleObjectExtensionGroup" })
+public class ScaleType extends AbstractObjectType
 {
 
     @XmlElement(defaultValue = "1.0")
     protected Double x;
+
     @XmlElement(defaultValue = "1.0")
     protected Double y;
+
     @XmlElement(defaultValue = "1.0")
     protected Double z;
+
     @XmlElement(name = "ScaleSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> scaleSimpleExtensionGroup;
+
     @XmlElement(name = "ScaleObjectExtensionGroup")
     protected List<AbstractObjectType> scaleObjectExtensionGroup;
 
     /**
      * Gets the value of the x property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getX() {
+    public Double getX()
+    {
         return x;
     }
 
     /**
      * Sets the value of the x property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setX(Double value) {
+    public void setX(Double value)
+    {
         this.x = value;
     }
 
-    public boolean isSetX() {
-        return (this.x!= null);
+    public boolean isSetX()
+    {
+        return (this.x != null);
     }
 
     /**
      * Gets the value of the y property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getY() {
+    public Double getY()
+    {
         return y;
     }
 
     /**
      * Sets the value of the y property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setY(Double value) {
+    public void setY(Double value)
+    {
         this.y = value;
     }
 
-    public boolean isSetY() {
-        return (this.y!= null);
+    public boolean isSetY()
+    {
+        return (this.y != null);
     }
 
     /**
      * Gets the value of the z property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getZ() {
+    public Double getZ()
+    {
         return z;
     }
 
     /**
      * Sets the value of the z property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setZ(Double value) {
+    public void setZ(Double value)
+    {
         this.z = value;
     }
 
-    public boolean isSetZ() {
-        return (this.z!= null);
+    public boolean isSetZ()
+    {
+        return (this.z != null);
     }
 
     /**
      * Gets the value of the scaleSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the scaleSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the scaleSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getScaleSimpleExtensionGroup().add(newItem);
+     * getScaleSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getScaleSimpleExtensionGroup() {
-        if (scaleSimpleExtensionGroup == null) {
+    public List<Object> getScaleSimpleExtensionGroup()
+    {
+        if (scaleSimpleExtensionGroup == null)
+        {
             scaleSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.scaleSimpleExtensionGroup;
     }
 
-    public boolean isSetScaleSimpleExtensionGroup() {
-        return ((this.scaleSimpleExtensionGroup!= null)&&(!this.scaleSimpleExtensionGroup.isEmpty()));
+    public boolean isSetScaleSimpleExtensionGroup()
+    {
+        return ((this.scaleSimpleExtensionGroup != null) && (!this.scaleSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetScaleSimpleExtensionGroup() {
+    public void unsetScaleSimpleExtensionGroup()
+    {
         this.scaleSimpleExtensionGroup = null;
     }
 
@@ -190,15 +189,16 @@ public class ScaleType
      * Gets the value of the scaleObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the scaleObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the scaleObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getScaleObjectExtensionGroup().add(newItem);
+     * getScaleObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -208,18 +208,22 @@ public class ScaleType
      * 
      * 
      */
-    public List<AbstractObjectType> getScaleObjectExtensionGroup() {
-        if (scaleObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getScaleObjectExtensionGroup()
+    {
+        if (scaleObjectExtensionGroup == null)
+        {
             scaleObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.scaleObjectExtensionGroup;
     }
 
-    public boolean isSetScaleObjectExtensionGroup() {
-        return ((this.scaleObjectExtensionGroup!= null)&&(!this.scaleObjectExtensionGroup.isEmpty()));
+    public boolean isSetScaleObjectExtensionGroup()
+    {
+        return ((this.scaleObjectExtensionGroup != null) && (!this.scaleObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetScaleObjectExtensionGroup() {
+    public void unsetScaleObjectExtensionGroup()
+    {
         this.scaleObjectExtensionGroup = null;
     }
 

@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for BoundaryType complex type.
+ * <p>
+ * Java class for BoundaryType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="BoundaryType">
@@ -40,83 +41,85 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "BoundaryType", propOrder = {
-    "linearRing",
-    "boundarySimpleExtensionGroup",
-    "boundaryObjectExtensionGroup"
-})
-public class BoundaryType {
+@XmlType(name = "BoundaryType", propOrder = { "linearRing", "boundarySimpleExtensionGroup", "boundaryObjectExtensionGroup" })
+public class BoundaryType
+{
 
     @XmlElement(name = "LinearRing")
     protected LinearRingType linearRing;
+
     @XmlElement(name = "BoundarySimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> boundarySimpleExtensionGroup;
+
     @XmlElement(name = "BoundaryObjectExtensionGroup")
     protected List<AbstractObjectType> boundaryObjectExtensionGroup;
 
     /**
      * Gets the value of the linearRing property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LinearRingType }
-     *     
+     * @return possible object is {@link LinearRingType }
+     * 
      */
-    public LinearRingType getLinearRing() {
+    public LinearRingType getLinearRing()
+    {
         return linearRing;
     }
 
     /**
      * Sets the value of the linearRing property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LinearRingType }
-     *     
+     * @param value allowed object is {@link LinearRingType }
+     * 
      */
-    public void setLinearRing(LinearRingType value) {
+    public void setLinearRing(LinearRingType value)
+    {
         this.linearRing = value;
     }
 
-    public boolean isSetLinearRing() {
-        return (this.linearRing!= null);
+    public boolean isSetLinearRing()
+    {
+        return (this.linearRing != null);
     }
 
     /**
      * Gets the value of the boundarySimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the boundarySimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the boundarySimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getBoundarySimpleExtensionGroup().add(newItem);
+     * getBoundarySimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getBoundarySimpleExtensionGroup() {
-        if (boundarySimpleExtensionGroup == null) {
+    public List<Object> getBoundarySimpleExtensionGroup()
+    {
+        if (boundarySimpleExtensionGroup == null)
+        {
             boundarySimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.boundarySimpleExtensionGroup;
     }
 
-    public boolean isSetBoundarySimpleExtensionGroup() {
-        return ((this.boundarySimpleExtensionGroup!= null)&&(!this.boundarySimpleExtensionGroup.isEmpty()));
+    public boolean isSetBoundarySimpleExtensionGroup()
+    {
+        return ((this.boundarySimpleExtensionGroup != null) && (!this.boundarySimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetBoundarySimpleExtensionGroup() {
+    public void unsetBoundarySimpleExtensionGroup()
+    {
         this.boundarySimpleExtensionGroup = null;
     }
 
@@ -124,15 +127,16 @@ public class BoundaryType {
      * Gets the value of the boundaryObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the boundaryObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the boundaryObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getBoundaryObjectExtensionGroup().add(newItem);
+     * getBoundaryObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -142,18 +146,22 @@ public class BoundaryType {
      * 
      * 
      */
-    public List<AbstractObjectType> getBoundaryObjectExtensionGroup() {
-        if (boundaryObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getBoundaryObjectExtensionGroup()
+    {
+        if (boundaryObjectExtensionGroup == null)
+        {
             boundaryObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.boundaryObjectExtensionGroup;
     }
 
-    public boolean isSetBoundaryObjectExtensionGroup() {
-        return ((this.boundaryObjectExtensionGroup!= null)&&(!this.boundaryObjectExtensionGroup.isEmpty()));
+    public boolean isSetBoundaryObjectExtensionGroup()
+    {
+        return ((this.boundaryObjectExtensionGroup != null) && (!this.boundaryObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetBoundaryObjectExtensionGroup() {
+    public void unsetBoundaryObjectExtensionGroup()
+    {
         this.boundaryObjectExtensionGroup = null;
     }
 

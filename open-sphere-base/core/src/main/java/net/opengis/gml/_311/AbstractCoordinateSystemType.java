@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -17,13 +16,23 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A coordinate system (CS) is the set of coordinate system axes that spans a given coordinate space. A CS is derived from a set of (mathematical) rules for specifying how coordinates in a given space are to be assigned to points. The coordinate values in a coordinate tuple shall be recorded in the order in which the coordinate system axes associations are recorded, whenever those coordinates use a coordinate reference system that uses this coordinate system. This abstract complexType shall not be used, extended, or restricted, in an Application Schema, to define a concrete subtype with a meaning equivalent to a concrete subtype specified in this document. 
+ * A coordinate system (CS) is the set of coordinate system axes that spans a
+ * given coordinate space. A CS is derived from a set of (mathematical) rules
+ * for specifying how coordinates in a given space are to be assigned to points.
+ * The coordinate values in a coordinate tuple shall be recorded in the order in
+ * which the coordinate system axes associations are recorded, whenever those
+ * coordinates use a coordinate reference system that uses this coordinate
+ * system. This abstract complexType shall not be used, extended, or restricted,
+ * in an Application Schema, to define a concrete subtype with a meaning
+ * equivalent to a concrete subtype specified in this document.
  * 
- * <p>Java class for AbstractCoordinateSystemType complex type.
+ * <p>
+ * Java class for AbstractCoordinateSystemType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractCoordinateSystemType">
@@ -42,45 +51,36 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractCoordinateSystemType", propOrder = {
-    "csID",
-    "remarks",
-    "usesAxis"
-})
-@XmlSeeAlso({
-    ObliqueCartesianCSType.class,
-    VerticalCSType.class,
-    LinearCSType.class,
-    SphericalCSType.class,
-    EllipsoidalCSType.class,
-    CartesianCSType.class,
-    CylindricalCSType.class,
-    TemporalCSType.class,
-    UserDefinedCSType.class,
-    PolarCSType.class
-})
-public abstract class AbstractCoordinateSystemType
-    extends AbstractCoordinateSystemBaseType
+@XmlType(name = "AbstractCoordinateSystemType", propOrder = { "csID", "remarks", "usesAxis" })
+@XmlSeeAlso({ ObliqueCartesianCSType.class, VerticalCSType.class, LinearCSType.class, SphericalCSType.class,
+    EllipsoidalCSType.class, CartesianCSType.class, CylindricalCSType.class, TemporalCSType.class, UserDefinedCSType.class,
+    PolarCSType.class })
+public abstract class AbstractCoordinateSystemType extends AbstractCoordinateSystemBaseType
 {
 
     protected List<IdentifierType> csID;
+
     protected StringOrRefType remarks;
+
     @XmlElement(required = true)
     protected List<CoordinateSystemAxisRefType> usesAxis;
 
     /**
-     * Set of alternative identifications of this coordinate system. The first csID, if any, is normally the primary identification code, and any others are aliases. Gets the value of the csID property.
+     * Set of alternative identifications of this coordinate system. The first
+     * csID, if any, is normally the primary identification code, and any others
+     * are aliases. Gets the value of the csID property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the csID property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the csID property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getCsID().add(newItem);
+     * getCsID().add(newItem);
      * </pre>
      * 
      * 
@@ -90,50 +90,53 @@ public abstract class AbstractCoordinateSystemType
      * 
      * 
      */
-    public List<IdentifierType> getCsID() {
-        if (csID == null) {
+    public List<IdentifierType> getCsID()
+    {
+        if (csID == null)
+        {
             csID = new ArrayList<IdentifierType>();
         }
         return this.csID;
     }
 
     /**
-     * Comments on or information about this coordinate system, including data source information. 
+     * Comments on or information about this coordinate system, including data
+     * source information.
      * 
-     * @return
-     *     possible object is
-     *     {@link StringOrRefType }
-     *     
+     * @return possible object is {@link StringOrRefType }
+     * 
      */
-    public StringOrRefType getRemarks() {
+    public StringOrRefType getRemarks()
+    {
         return remarks;
     }
 
     /**
      * Sets the value of the remarks property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link StringOrRefType }
-     *     
+     * @param value allowed object is {@link StringOrRefType }
+     * 
      */
-    public void setRemarks(StringOrRefType value) {
+    public void setRemarks(StringOrRefType value)
+    {
         this.remarks = value;
     }
 
     /**
-     * Ordered sequence of associations to the coordinate system axes included in this coordinate system. Gets the value of the usesAxis property.
+     * Ordered sequence of associations to the coordinate system axes included
+     * in this coordinate system. Gets the value of the usesAxis property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the usesAxis property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the usesAxis property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getUsesAxis().add(newItem);
+     * getUsesAxis().add(newItem);
      * </pre>
      * 
      * 
@@ -143,8 +146,10 @@ public abstract class AbstractCoordinateSystemType
      * 
      * 
      */
-    public List<CoordinateSystemAxisRefType> getUsesAxis() {
-        if (usesAxis == null) {
+    public List<CoordinateSystemAxisRefType> getUsesAxis()
+    {
+        if (usesAxis == null)
+        {
             usesAxis = new ArrayList<CoordinateSystemAxisRefType>();
         }
         return this.usesAxis;

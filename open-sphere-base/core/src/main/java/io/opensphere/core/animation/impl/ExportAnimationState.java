@@ -131,7 +131,8 @@ public class ExportAnimationState
          * current interval such that the start of the current interval is equal
          * to the start of the loop interval.
          */
-        @XmlEnumValue("taperEndSnapStart") TAPER_END_SNAP_START,
+        @XmlEnumValue("taperEndSnapStart")
+        TAPER_END_SNAP_START,
 
         /**
          * Advance the current interval so that the end of the current interval
@@ -140,7 +141,8 @@ public class ExportAnimationState
          * current interval end to the start of the loop interval and advance
          * from there.
          */
-        @XmlEnumValue("taperEndTaperStart") TAPER_END_TAPER_START,
+        @XmlEnumValue("taperEndTaperStart")
+        TAPER_END_TAPER_START,
 
         ;
     }
@@ -152,13 +154,16 @@ public class ExportAnimationState
     public enum PlayState
     {
         /** Animation is playing forward. */
-        @XmlEnumValue("Forward") FORWARD,
+        @XmlEnumValue("Forward")
+        FORWARD,
 
         /** Animation is playing in reverse. */
-        @XmlEnumValue("Reverse") REVERSE,
+        @XmlEnumValue("Reverse")
+        REVERSE,
 
         /** Animation is stopped. */
-        @XmlEnumValue("Stop") STOP,
+        @XmlEnumValue("Stop")
+        STOP,
 
         ;
     }

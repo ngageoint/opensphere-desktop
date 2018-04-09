@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.util.ArrayList;
@@ -18,15 +17,17 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
- *         A collection of one or more 'url' elements
- *       
+ * A collection of one or more 'url' elements
  * 
- * <p>Java class for UrlsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for UrlsType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="UrlsType">
@@ -43,10 +44,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UrlsType", propOrder = {
-    "url"
-})
-public class UrlsType {
+@XmlType(name = "UrlsType", propOrder = { "url" })
+public class UrlsType
+{
 
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
@@ -56,36 +56,40 @@ public class UrlsType {
      * Gets the value of the url property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the url property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the url property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getUrl().add(newItem);
+     * getUrl().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getUrl() {
-        if (url == null) {
+    public List<String> getUrl()
+    {
+        if (url == null)
+        {
             url = new ArrayList<String>();
         }
         return this.url;
     }
 
-    public boolean isSetUrl() {
-        return ((this.url!= null)&&(!this.url.isEmpty()));
+    public boolean isSetUrl()
+    {
+        return ((this.url != null) && (!this.url.isEmpty()));
     }
 
-    public void unsetUrl() {
+    public void unsetUrl()
+    {
         this.url = null;
     }
 

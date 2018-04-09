@@ -104,7 +104,8 @@ public final class HttpUtilities
     }
 
     /**
-     * Performs a POST request to the given URL and returns the response as a {@link CancellableInputStream}.
+     * Performs a POST request to the given URL and returns the response as a
+     * {@link CancellableInputStream}.
      *
      * @param url the URL
      * @param postData the post data

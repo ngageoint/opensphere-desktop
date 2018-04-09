@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import java.util.ArrayList;
@@ -19,13 +18,15 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * Identifies a list of languages supported by this service.
  * 
- * <p>Java class for LanguagesType complex type.
+ * <p>
+ * Java class for LanguagesType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LanguagesType">
@@ -42,10 +43,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LanguagesType", propOrder = {
-    "language"
-})
-public class LanguagesType {
+@XmlType(name = "LanguagesType", propOrder = { "language" })
+public class LanguagesType
+{
 
     @XmlElement(name = "Language", namespace = "http://www.opengis.net/ows/1.1", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
@@ -53,29 +53,33 @@ public class LanguagesType {
     protected List<String> language;
 
     /**
-     * Identifier of a language supported by the service.  This language identifier shall be as specified in IETF RFC 4646.Gets the value of the language property.
+     * Identifier of a language supported by the service. This language
+     * identifier shall be as specified in IETF RFC 4646.Gets the value of the
+     * language property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the language property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the language property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLanguage().add(newItem);
+     * getLanguage().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getLanguage() {
-        if (language == null) {
+    public List<String> getLanguage()
+    {
+        if (language == null)
+        {
             language = new ArrayList<String>();
         }
         return this.language;

@@ -34,7 +34,7 @@ public class ShapefileZipUtil
      *            used <code>System.getProperty("java.io.tmpdir")</code>
      * @return the first <code>ESRIShapefile</code> found in the Zip or
      *         <code>null</code> if one was not found.
-     * @throws IOException if an error occurs while processing the Zip.
+     * @throws IOException if an  error occurs while processing the Zip.
      */
     public static ESRIShapefile createFromZipFile(ZipInputStream zipStream, String pOutputDir) throws IOException
     {

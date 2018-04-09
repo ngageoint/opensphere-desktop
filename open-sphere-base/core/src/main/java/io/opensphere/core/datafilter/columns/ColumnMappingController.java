@@ -37,8 +37,8 @@ public interface ColumnMappingController
      *
      * @param layers The layer type keys, paired with a list of their columns,
      *            to check for mappings.
-     * @return A map of the layers mapped to their original column names whose value is the defined
-     *         column name.
+     * @return A map of the layers mapped to their original column names whose
+     *         value is the defined column name.
      */
     Map<String, Map<String, String>> getDefinedColumns(List<Pair<String, List<String>>> layers);
 

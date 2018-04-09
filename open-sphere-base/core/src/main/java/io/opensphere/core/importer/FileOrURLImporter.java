@@ -16,12 +16,10 @@ import javax.swing.TransferHandler.DropLocation;
 public interface FileOrURLImporter
 {
     /** The COMPARE_BY_NAME. */
-    Comparator<FileOrURLImporter> LEX_ORDER =
-            ((o1, o2) -> o1.getName().compareTo(o2.getName()));
+    Comparator<FileOrURLImporter> LEX_ORDER = ((o1, o2) -> o1.getName().compareTo(o2.getName()));
 
     /** A comparator for ordering importers by precedence. */
-    Comparator<FileOrURLImporter> PREC_ORDER =
-            ((o1, o2) -> Integer.compare(o1.getPrecedence(), o2.getPrecedence()));
+    Comparator<FileOrURLImporter> PREC_ORDER = ((o1, o2) -> Integer.compare(o1.getPrecedence(), o2.getPrecedence()));
 
     /**
      * Provides a file to the importer so that the importer can determine if it

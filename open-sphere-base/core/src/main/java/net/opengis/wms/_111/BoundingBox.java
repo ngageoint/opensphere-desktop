@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:39 PM MST 
 //
 
-
 package net.opengis.wms._111;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,33 +15,39 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
 @XmlRootElement(name = "BoundingBox")
-public class BoundingBox {
+public class BoundingBox
+{
 
     @XmlAttribute(name = "SRS", required = true)
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String srs;
+
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String minx;
+
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String miny;
+
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String maxx;
+
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String maxy;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String resx;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String resy;
@@ -50,168 +55,154 @@ public class BoundingBox {
     /**
      * Gets the value of the srs property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSRS() {
+    public String getSRS()
+    {
         return srs;
     }
 
     /**
      * Sets the value of the srs property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSRS(String value) {
+    public void setSRS(String value)
+    {
         this.srs = value;
     }
 
     /**
      * Gets the value of the minx property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMinx() {
+    public String getMinx()
+    {
         return minx;
     }
 
     /**
      * Sets the value of the minx property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMinx(String value) {
+    public void setMinx(String value)
+    {
         this.minx = value;
     }
 
     /**
      * Gets the value of the miny property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMiny() {
+    public String getMiny()
+    {
         return miny;
     }
 
     /**
      * Sets the value of the miny property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMiny(String value) {
+    public void setMiny(String value)
+    {
         this.miny = value;
     }
 
     /**
      * Gets the value of the maxx property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMaxx() {
+    public String getMaxx()
+    {
         return maxx;
     }
 
     /**
      * Sets the value of the maxx property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMaxx(String value) {
+    public void setMaxx(String value)
+    {
         this.maxx = value;
     }
 
     /**
      * Gets the value of the maxy property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMaxy() {
+    public String getMaxy()
+    {
         return maxy;
     }
 
     /**
      * Sets the value of the maxy property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMaxy(String value) {
+    public void setMaxy(String value)
+    {
         this.maxy = value;
     }
 
     /**
      * Gets the value of the resx property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getResx() {
+    public String getResx()
+    {
         return resx;
     }
 
     /**
      * Sets the value of the resx property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setResx(String value) {
+    public void setResx(String value)
+    {
         this.resx = value;
     }
 
     /**
      * Gets the value of the resy property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getResy() {
+    public String getResy()
+    {
         return resy;
     }
 
     /**
      * Sets the value of the resy property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setResy(String value) {
+    public void setResy(String value)
+    {
         this.resy = value;
     }
 

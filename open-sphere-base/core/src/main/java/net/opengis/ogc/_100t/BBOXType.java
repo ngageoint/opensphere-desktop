@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.ogc._100t;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,11 +14,13 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.gml._212.BoxType;
 
-
 /**
- * <p>Java class for BBOXType complex type.
+ * <p>
+ * Java class for BBOXType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="BBOXType">
@@ -37,73 +38,68 @@ import net.opengis.gml._212.BoxType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "BBOXType", propOrder = {
-    "propertyName",
-    "box"
-})
-public class BBOXType
-    extends SpatialOpsType
+@XmlType(name = "BBOXType", propOrder = { "propertyName", "box" })
+public class BBOXType extends SpatialOpsType
 {
 
     @XmlElement(name = "PropertyName", required = true)
     protected PropertyNameType propertyName;
+
     @XmlElement(name = "Box", namespace = "http://www.opengis.net/gml", required = true)
     protected BoxType box;
 
     /**
      * Gets the value of the propertyName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PropertyNameType }
-     *     
+     * @return possible object is {@link PropertyNameType }
+     * 
      */
-    public PropertyNameType getPropertyName() {
+    public PropertyNameType getPropertyName()
+    {
         return propertyName;
     }
 
     /**
      * Sets the value of the propertyName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PropertyNameType }
-     *     
+     * @param value allowed object is {@link PropertyNameType }
+     * 
      */
-    public void setPropertyName(PropertyNameType value) {
+    public void setPropertyName(PropertyNameType value)
+    {
         this.propertyName = value;
     }
 
-    public boolean isSetPropertyName() {
-        return (this.propertyName!= null);
+    public boolean isSetPropertyName()
+    {
+        return (this.propertyName != null);
     }
 
     /**
      * Gets the value of the box property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BoxType }
-     *     
+     * @return possible object is {@link BoxType }
+     * 
      */
-    public BoxType getBox() {
+    public BoxType getBox()
+    {
         return box;
     }
 
     /**
      * Sets the value of the box property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BoxType }
-     *     
+     * @param value allowed object is {@link BoxType }
+     * 
      */
-    public void setBox(BoxType value) {
+    public void setBox(BoxType value)
+    {
         this.box = value;
     }
 
-    public boolean isSetBox() {
-        return (this.box!= null);
+    public boolean isSetBox()
+    {
+        return (this.box != null);
     }
 
 }

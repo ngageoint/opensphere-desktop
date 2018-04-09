@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,13 +15,15 @@ import javax.xml.bind.annotation.XmlType;
 import net.opengis.ows._110.CodeType;
 import net.opengis.ows._110.LanguageStringType;
 
-
 /**
- * Value of one input to a process. 
+ * Value of one input to a process.
  * 
- * <p>Java class for InputType complex type.
+ * <p>
+ * Java class for InputType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="InputType">
@@ -42,143 +43,134 @@ import net.opengis.ows._110.LanguageStringType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "InputType", propOrder = {
-    "identifier",
-    "title",
-    "_abstract",
-    "reference",
-    "data"
-})
-public class InputType {
+@XmlType(name = "InputType", propOrder = { "identifier", "title", "_abstract", "reference", "data" })
+public class InputType
+{
 
     @XmlElement(name = "Identifier", namespace = "http://www.opengis.net/ows/1.1", required = true)
     protected CodeType identifier;
+
     @XmlElement(name = "Title", namespace = "http://www.opengis.net/ows/1.1")
     protected LanguageStringType title;
+
     @XmlElement(name = "Abstract", namespace = "http://www.opengis.net/ows/1.1")
     protected LanguageStringType _abstract;
+
     @XmlElement(name = "Reference")
     protected InputReferenceType reference;
+
     @XmlElement(name = "Data")
     protected DataType data;
 
     /**
-     * Unambiguous identifier or name of a process, unique for this server, or unambiguous identifier or name of an output, unique for this process. 
+     * Unambiguous identifier or name of a process, unique for this server, or
+     * unambiguous identifier or name of an output, unique for this process.
      * 
-     * @return
-     *     possible object is
-     *     {@link CodeType }
-     *     
+     * @return possible object is {@link CodeType }
+     * 
      */
-    public CodeType getIdentifier() {
+    public CodeType getIdentifier()
+    {
         return identifier;
     }
 
     /**
      * Sets the value of the identifier property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CodeType }
-     *     
+     * @param value allowed object is {@link CodeType }
+     * 
      */
-    public void setIdentifier(CodeType value) {
+    public void setIdentifier(CodeType value)
+    {
         this.identifier = value;
     }
 
     /**
-     * Title of a process or output, normally available for display to a human. 
+     * Title of a process or output, normally available for display to a human.
      * 
-     * @return
-     *     possible object is
-     *     {@link LanguageStringType }
-     *     
+     * @return possible object is {@link LanguageStringType }
+     * 
      */
-    public LanguageStringType getTitle() {
+    public LanguageStringType getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LanguageStringType }
-     *     
+     * @param value allowed object is {@link LanguageStringType }
+     * 
      */
-    public void setTitle(LanguageStringType value) {
+    public void setTitle(LanguageStringType value)
+    {
         this.title = value;
     }
 
     /**
-     * Brief narrative description of a process or output, normally available for display to a human. 
+     * Brief narrative description of a process or output, normally available
+     * for display to a human.
      * 
-     * @return
-     *     possible object is
-     *     {@link LanguageStringType }
-     *     
+     * @return possible object is {@link LanguageStringType }
+     * 
      */
-    public LanguageStringType getAbstract() {
+    public LanguageStringType getAbstract()
+    {
         return _abstract;
     }
 
     /**
      * Sets the value of the abstract property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LanguageStringType }
-     *     
+     * @param value allowed object is {@link LanguageStringType }
+     * 
      */
-    public void setAbstract(LanguageStringType value) {
+    public void setAbstract(LanguageStringType value)
+    {
         this._abstract = value;
     }
 
     /**
      * Gets the value of the reference property.
      * 
-     * @return
-     *     possible object is
-     *     {@link InputReferenceType }
-     *     
+     * @return possible object is {@link InputReferenceType }
+     * 
      */
-    public InputReferenceType getReference() {
+    public InputReferenceType getReference()
+    {
         return reference;
     }
 
     /**
      * Sets the value of the reference property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link InputReferenceType }
-     *     
+     * @param value allowed object is {@link InputReferenceType }
+     * 
      */
-    public void setReference(InputReferenceType value) {
+    public void setReference(InputReferenceType value)
+    {
         this.reference = value;
     }
 
     /**
      * Gets the value of the data property.
      * 
-     * @return
-     *     possible object is
-     *     {@link DataType }
-     *     
+     * @return possible object is {@link DataType }
+     * 
      */
-    public DataType getData() {
+    public DataType getData()
+    {
         return data;
     }
 
     /**
      * Sets the value of the data property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DataType }
-     *     
+     * @param value allowed object is {@link DataType }
+     * 
      */
-    public void setData(DataType value) {
+    public void setData(DataType value)
+    {
         this.data = value;
     }
 

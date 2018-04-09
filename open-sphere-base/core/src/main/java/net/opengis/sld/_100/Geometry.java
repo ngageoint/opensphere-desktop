@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,12 +15,13 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.ogc._110.PropertyNameType;
 
-
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -38,11 +38,10 @@ import net.opengis.ogc._110.PropertyNameType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "propertyName"
-})
+@XmlType(name = "", propOrder = { "propertyName" })
 @XmlRootElement(name = "Geometry")
-public class Geometry {
+public class Geometry
+{
 
     @XmlElement(name = "PropertyName", namespace = "http://www.opengis.net/ogc", required = true)
     protected PropertyNameType propertyName;
@@ -50,24 +49,22 @@ public class Geometry {
     /**
      * Gets the value of the propertyName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PropertyNameType }
-     *     
+     * @return possible object is {@link PropertyNameType }
+     * 
      */
-    public PropertyNameType getPropertyName() {
+    public PropertyNameType getPropertyName()
+    {
         return propertyName;
     }
 
     /**
      * Sets the value of the propertyName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PropertyNameType }
-     *     
+     * @param value allowed object is {@link PropertyNameType }
+     * 
      */
-    public void setPropertyName(PropertyNameType value) {
+    public void setPropertyName(PropertyNameType value)
+    {
         this.propertyName = value;
     }
 

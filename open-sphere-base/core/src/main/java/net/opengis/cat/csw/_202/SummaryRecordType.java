@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import java.util.ArrayList;
@@ -23,17 +22,18 @@ import org.purl.dc.elements._1.SimpleLiteral;
 import net.opengis.ows._100.BoundingBoxType;
 import net.opengis.ows._100.WGS84BoundingBoxType;
 
-
 /**
  * 
- *             This type defines a summary representation of the common record
- *             format.  It extends AbstractRecordType to include the core
- *             properties.
- *          
+ * This type defines a summary representation of the common record format. It
+ * extends AbstractRecordType to include the core properties.
  * 
- * <p>Java class for SummaryRecordType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for SummaryRecordType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SummaryRecordType">
@@ -59,40 +59,38 @@ import net.opengis.ows._100.WGS84BoundingBoxType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SummaryRecordType", propOrder = {
-    "identifier",
-    "title",
-    "type",
-    "subject",
-    "format",
-    "relation",
-    "modified",
-    "_abstract",
-    "spatial",
-    "boundingBox"
-})
-public class SummaryRecordType
-    extends AbstractRecordType
+@XmlType(name = "SummaryRecordType", propOrder = { "identifier", "title", "type", "subject", "format", "relation", "modified",
+    "_abstract", "spatial", "boundingBox" })
+public class SummaryRecordType extends AbstractRecordType
 {
 
     @XmlElementRef(name = "identifier", namespace = "http://purl.org/dc/elements/1.1/", type = JAXBElement.class)
     protected List<JAXBElement<SimpleLiteral>> identifier;
+
     @XmlElementRef(name = "title", namespace = "http://purl.org/dc/elements/1.1/", type = JAXBElement.class)
     protected List<JAXBElement<SimpleLiteral>> title;
+
     @XmlElement(namespace = "http://purl.org/dc/elements/1.1/")
     protected SimpleLiteral type;
+
     @XmlElement(namespace = "http://purl.org/dc/elements/1.1/")
     protected List<SimpleLiteral> subject;
+
     @XmlElementRef(name = "format", namespace = "http://purl.org/dc/elements/1.1/", type = JAXBElement.class)
     protected List<JAXBElement<SimpleLiteral>> format;
+
     @XmlElementRef(name = "relation", namespace = "http://purl.org/dc/elements/1.1/", type = JAXBElement.class)
     protected List<JAXBElement<SimpleLiteral>> relation;
+
     @XmlElement(namespace = "http://purl.org/dc/terms/")
     protected List<SimpleLiteral> modified;
+
     @XmlElement(name = "abstract", namespace = "http://purl.org/dc/terms/")
     protected List<SimpleLiteral> _abstract;
+
     @XmlElement(namespace = "http://purl.org/dc/terms/")
     protected List<SimpleLiteral> spatial;
+
     @XmlElementRef(name = "BoundingBox", namespace = "http://www.opengis.net/ows", type = JAXBElement.class)
     protected List<JAXBElement<? extends BoundingBoxType>> boundingBox;
 
@@ -100,15 +98,16 @@ public class SummaryRecordType
      * Gets the value of the identifier property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the identifier property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the identifier property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getIdentifier().add(newItem);
+     * getIdentifier().add(newItem);
      * </pre>
      * 
      * 
@@ -119,8 +118,10 @@ public class SummaryRecordType
      * 
      * 
      */
-    public List<JAXBElement<SimpleLiteral>> getIdentifier() {
-        if (identifier == null) {
+    public List<JAXBElement<SimpleLiteral>> getIdentifier()
+    {
+        if (identifier == null)
+        {
             identifier = new ArrayList<JAXBElement<SimpleLiteral>>();
         }
         return this.identifier;
@@ -130,15 +131,16 @@ public class SummaryRecordType
      * Gets the value of the title property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the title property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the title property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getTitle().add(newItem);
+     * getTitle().add(newItem);
      * </pre>
      * 
      * 
@@ -149,8 +151,10 @@ public class SummaryRecordType
      * 
      * 
      */
-    public List<JAXBElement<SimpleLiteral>> getTitle() {
-        if (title == null) {
+    public List<JAXBElement<SimpleLiteral>> getTitle()
+    {
+        if (title == null)
+        {
             title = new ArrayList<JAXBElement<SimpleLiteral>>();
         }
         return this.title;
@@ -159,24 +163,22 @@ public class SummaryRecordType
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SimpleLiteral }
-     *     
+     * @return possible object is {@link SimpleLiteral }
+     * 
      */
-    public SimpleLiteral getType() {
+    public SimpleLiteral getType()
+    {
         return type;
     }
 
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SimpleLiteral }
-     *     
+     * @param value allowed object is {@link SimpleLiteral }
+     * 
      */
-    public void setType(SimpleLiteral value) {
+    public void setType(SimpleLiteral value)
+    {
         this.type = value;
     }
 
@@ -184,15 +186,16 @@ public class SummaryRecordType
      * Gets the value of the subject property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the subject property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the subject property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSubject().add(newItem);
+     * getSubject().add(newItem);
      * </pre>
      * 
      * 
@@ -202,8 +205,10 @@ public class SummaryRecordType
      * 
      * 
      */
-    public List<SimpleLiteral> getSubject() {
-        if (subject == null) {
+    public List<SimpleLiteral> getSubject()
+    {
+        if (subject == null)
+        {
             subject = new ArrayList<SimpleLiteral>();
         }
         return this.subject;
@@ -213,15 +218,16 @@ public class SummaryRecordType
      * Gets the value of the format property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the format property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the format property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getFormat().add(newItem);
+     * getFormat().add(newItem);
      * </pre>
      * 
      * 
@@ -233,8 +239,10 @@ public class SummaryRecordType
      * 
      * 
      */
-    public List<JAXBElement<SimpleLiteral>> getFormat() {
-        if (format == null) {
+    public List<JAXBElement<SimpleLiteral>> getFormat()
+    {
+        if (format == null)
+        {
             format = new ArrayList<JAXBElement<SimpleLiteral>>();
         }
         return this.format;
@@ -244,15 +252,16 @@ public class SummaryRecordType
      * Gets the value of the relation property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the relation property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the relation property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getRelation().add(newItem);
+     * getRelation().add(newItem);
      * </pre>
      * 
      * 
@@ -275,8 +284,10 @@ public class SummaryRecordType
      * 
      * 
      */
-    public List<JAXBElement<SimpleLiteral>> getRelation() {
-        if (relation == null) {
+    public List<JAXBElement<SimpleLiteral>> getRelation()
+    {
+        if (relation == null)
+        {
             relation = new ArrayList<JAXBElement<SimpleLiteral>>();
         }
         return this.relation;
@@ -286,15 +297,16 @@ public class SummaryRecordType
      * Gets the value of the modified property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the modified property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the modified property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getModified().add(newItem);
+     * getModified().add(newItem);
      * </pre>
      * 
      * 
@@ -304,8 +316,10 @@ public class SummaryRecordType
      * 
      * 
      */
-    public List<SimpleLiteral> getModified() {
-        if (modified == null) {
+    public List<SimpleLiteral> getModified()
+    {
+        if (modified == null)
+        {
             modified = new ArrayList<SimpleLiteral>();
         }
         return this.modified;
@@ -315,15 +329,16 @@ public class SummaryRecordType
      * Gets the value of the abstract property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstract property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstract property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstract().add(newItem);
+     * getAbstract().add(newItem);
      * </pre>
      * 
      * 
@@ -333,8 +348,10 @@ public class SummaryRecordType
      * 
      * 
      */
-    public List<SimpleLiteral> getAbstract() {
-        if (_abstract == null) {
+    public List<SimpleLiteral> getAbstract()
+    {
+        if (_abstract == null)
+        {
             _abstract = new ArrayList<SimpleLiteral>();
         }
         return this._abstract;
@@ -344,15 +361,16 @@ public class SummaryRecordType
      * Gets the value of the spatial property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the spatial property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the spatial property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSpatial().add(newItem);
+     * getSpatial().add(newItem);
      * </pre>
      * 
      * 
@@ -362,8 +380,10 @@ public class SummaryRecordType
      * 
      * 
      */
-    public List<SimpleLiteral> getSpatial() {
-        if (spatial == null) {
+    public List<SimpleLiteral> getSpatial()
+    {
+        if (spatial == null)
+        {
             spatial = new ArrayList<SimpleLiteral>();
         }
         return this.spatial;
@@ -373,15 +393,16 @@ public class SummaryRecordType
      * Gets the value of the boundingBox property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the boundingBox property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the boundingBox property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getBoundingBox().add(newItem);
+     * getBoundingBox().add(newItem);
      * </pre>
      * 
      * 
@@ -392,8 +413,10 @@ public class SummaryRecordType
      * 
      * 
      */
-    public List<JAXBElement<? extends BoundingBoxType>> getBoundingBox() {
-        if (boundingBox == null) {
+    public List<JAXBElement<? extends BoundingBoxType>> getBoundingBox()
+    {
+        if (boundingBox == null)
+        {
             boundingBox = new ArrayList<JAXBElement<? extends BoundingBoxType>>();
         }
         return this.boundingBox;

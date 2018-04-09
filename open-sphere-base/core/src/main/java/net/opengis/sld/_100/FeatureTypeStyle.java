@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -43,123 +44,114 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "name",
-    "title",
-    "_abstract",
-    "featureTypeName",
-    "semanticTypeIdentifier",
-    "rule"
-})
+@XmlType(name = "", propOrder = { "name", "title", "_abstract", "featureTypeName", "semanticTypeIdentifier", "rule" })
 @XmlRootElement(name = "FeatureTypeStyle")
-public class FeatureTypeStyle {
+public class FeatureTypeStyle
+{
 
     @XmlElement(name = "Name")
     protected String name;
+
     @XmlElement(name = "Title")
     protected String title;
+
     @XmlElement(name = "Abstract")
     protected String _abstract;
+
     @XmlElement(name = "FeatureTypeName")
     protected String featureTypeName;
+
     @XmlElement(name = "SemanticTypeIdentifier")
     protected List<String> semanticTypeIdentifier;
+
     @XmlElement(name = "Rule", required = true)
     protected List<Rule> rule;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
     /**
      * Gets the value of the abstract property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getAbstract() {
+    public String getAbstract()
+    {
         return _abstract;
     }
 
     /**
      * Sets the value of the abstract property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setAbstract(String value) {
+    public void setAbstract(String value)
+    {
         this._abstract = value;
     }
 
     /**
      * Gets the value of the featureTypeName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getFeatureTypeName() {
+    public String getFeatureTypeName()
+    {
         return featureTypeName;
     }
 
     /**
      * Sets the value of the featureTypeName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setFeatureTypeName(String value) {
+    public void setFeatureTypeName(String value)
+    {
         this.featureTypeName = value;
     }
 
@@ -167,26 +159,28 @@ public class FeatureTypeStyle {
      * Gets the value of the semanticTypeIdentifier property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the semanticTypeIdentifier property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the semanticTypeIdentifier property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSemanticTypeIdentifier().add(newItem);
+     * getSemanticTypeIdentifier().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getSemanticTypeIdentifier() {
-        if (semanticTypeIdentifier == null) {
+    public List<String> getSemanticTypeIdentifier()
+    {
+        if (semanticTypeIdentifier == null)
+        {
             semanticTypeIdentifier = new ArrayList<String>();
         }
         return this.semanticTypeIdentifier;
@@ -196,26 +190,28 @@ public class FeatureTypeStyle {
      * Gets the value of the rule property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the rule property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the rule property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getRule().add(newItem);
+     * getRule().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Rule }
+     * Objects of the following type(s) are allowed in the list {@link Rule }
      * 
      * 
      */
-    public List<Rule> getRule() {
-        if (rule == null) {
+    public List<Rule> getRule()
+    {
+        if (rule == null)
+        {
             rule = new ArrayList<Rule>();
         }
         return this.rule;

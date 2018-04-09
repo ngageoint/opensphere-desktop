@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * A surface patch defines a homogenuous portion of a surface.
  * 
- * <p>Java class for AbstractSurfacePatchType complex type.
+ * <p>
+ * Java class for AbstractSurfacePatchType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractSurfacePatchType">
@@ -36,13 +37,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AbstractSurfacePatchType")
-@XmlSeeAlso({
-    RectangleType.class,
-    PolygonPatchType.class,
-    TriangleType.class,
-    AbstractParametricCurveSurfaceType.class
-})
-public abstract class AbstractSurfacePatchType {
-
+@XmlSeeAlso({ RectangleType.class, PolygonPatchType.class, TriangleType.class, AbstractParametricCurveSurfaceType.class })
+public abstract class AbstractSurfacePatchType
+{
 
 }

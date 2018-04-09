@@ -147,7 +147,8 @@ public class StreamUtilitiesTest
     }
 
     /**
-     * Test {@link StreamUtilities#filterDowncast(java.util.stream.Stream, Class)}.
+     * Test
+     * {@link StreamUtilities#filterDowncast(java.util.stream.Stream, Class)}.
      */
     @Test
     public void testFilterDowcast()

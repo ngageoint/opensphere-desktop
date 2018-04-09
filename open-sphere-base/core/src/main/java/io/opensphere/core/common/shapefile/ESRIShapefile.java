@@ -189,7 +189,7 @@ public class ESRIShapefile implements Collection<ShapefileRecord>
      *            files will remain.
      * @return the first <code>ESRIShapefile</code> found in the Zip or
      *         <code>null</code> if one was not found.
-     * @throws IOException if an error occurs while processing the Zip.
+     * @throws IOException if an  error occurs while processing the Zip.
      */
     public static ESRIShapefile createFromZipFile(ZipInputStream zipStream, String outputDir, boolean inDeleteFiles)
         throws IOException
@@ -608,7 +608,7 @@ public class ESRIShapefile implements Collection<ShapefileRecord>
     /**
      * Closes then deletes the shapefile.
      *
-     * @throws IOException if an error occurs while closing or deleting the
+     * @throws IOException if an  error occurs while closing or deleting the
      *             shapefile.
      */
     public void delete() throws IOException

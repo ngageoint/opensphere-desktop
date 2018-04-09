@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ogc._110;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for BinaryComparisonOpType complex type.
+ * <p>
+ * Java class for BinaryComparisonOpType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="BinaryComparisonOpType">
@@ -40,15 +41,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "BinaryComparisonOpType", propOrder = {
-    "expression"
-})
-public class BinaryComparisonOpType
-    extends ComparisonOpsType
+@XmlType(name = "BinaryComparisonOpType", propOrder = { "expression" })
+public class BinaryComparisonOpType extends ComparisonOpsType
 {
 
     @XmlElementRef(name = "expression", namespace = "http://www.opengis.net/ogc", type = JAXBElement.class)
     protected List<JAXBElement<?>> expression;
+
     @XmlAttribute(name = "matchCase")
     protected Boolean matchCase;
 
@@ -56,15 +55,16 @@ public class BinaryComparisonOpType
      * Gets the value of the expression property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the expression property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the expression property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getExpression().add(newItem);
+     * getExpression().add(newItem);
      * </pre>
      * 
      * 
@@ -81,8 +81,10 @@ public class BinaryComparisonOpType
      * 
      * 
      */
-    public List<JAXBElement<?>> getExpression() {
-        if (expression == null) {
+    public List<JAXBElement<?>> getExpression()
+    {
+        if (expression == null)
+        {
             expression = new ArrayList<JAXBElement<?>>();
         }
         return this.expression;
@@ -91,15 +93,17 @@ public class BinaryComparisonOpType
     /**
      * Gets the value of the matchCase property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public boolean isMatchCase() {
-        if (matchCase == null) {
+    public boolean isMatchCase()
+    {
+        if (matchCase == null)
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return matchCase;
         }
     }
@@ -107,12 +111,11 @@ public class BinaryComparisonOpType
     /**
      * Sets the value of the matchCase property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setMatchCase(Boolean value) {
+    public void setMatchCase(Boolean value)
+    {
         this.matchCase = value;
     }
 

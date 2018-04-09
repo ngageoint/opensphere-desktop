@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,13 +15,15 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-
 /**
- * Description of the status of process execution. 
+ * Description of the status of process execution.
  * 
- * <p>Java class for StatusType complex type.
+ * <p>
+ * Java class for StatusType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="StatusType">
@@ -44,25 +45,26 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "StatusType", propOrder = {
-    "processAccepted",
-    "processStarted",
-    "processPaused",
-    "processSucceeded",
-    "processFailed"
-})
-public class StatusType {
+@XmlType(name = "StatusType", propOrder = { "processAccepted", "processStarted", "processPaused", "processSucceeded",
+    "processFailed" })
+public class StatusType
+{
 
     @XmlElement(name = "ProcessAccepted")
     protected String processAccepted;
+
     @XmlElement(name = "ProcessStarted")
     protected ProcessStartedType processStarted;
+
     @XmlElement(name = "ProcessPaused")
     protected ProcessStartedType processPaused;
+
     @XmlElement(name = "ProcessSucceeded")
     protected String processSucceeded;
+
     @XmlElement(name = "ProcessFailed")
     protected ProcessFailedType processFailed;
+
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar creationTime;
@@ -70,144 +72,132 @@ public class StatusType {
     /**
      * Gets the value of the processAccepted property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getProcessAccepted() {
+    public String getProcessAccepted()
+    {
         return processAccepted;
     }
 
     /**
      * Sets the value of the processAccepted property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setProcessAccepted(String value) {
+    public void setProcessAccepted(String value)
+    {
         this.processAccepted = value;
     }
 
     /**
      * Gets the value of the processStarted property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ProcessStartedType }
-     *     
+     * @return possible object is {@link ProcessStartedType }
+     * 
      */
-    public ProcessStartedType getProcessStarted() {
+    public ProcessStartedType getProcessStarted()
+    {
         return processStarted;
     }
 
     /**
      * Sets the value of the processStarted property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ProcessStartedType }
-     *     
+     * @param value allowed object is {@link ProcessStartedType }
+     * 
      */
-    public void setProcessStarted(ProcessStartedType value) {
+    public void setProcessStarted(ProcessStartedType value)
+    {
         this.processStarted = value;
     }
 
     /**
      * Gets the value of the processPaused property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ProcessStartedType }
-     *     
+     * @return possible object is {@link ProcessStartedType }
+     * 
      */
-    public ProcessStartedType getProcessPaused() {
+    public ProcessStartedType getProcessPaused()
+    {
         return processPaused;
     }
 
     /**
      * Sets the value of the processPaused property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ProcessStartedType }
-     *     
+     * @param value allowed object is {@link ProcessStartedType }
+     * 
      */
-    public void setProcessPaused(ProcessStartedType value) {
+    public void setProcessPaused(ProcessStartedType value)
+    {
         this.processPaused = value;
     }
 
     /**
      * Gets the value of the processSucceeded property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getProcessSucceeded() {
+    public String getProcessSucceeded()
+    {
         return processSucceeded;
     }
 
     /**
      * Sets the value of the processSucceeded property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setProcessSucceeded(String value) {
+    public void setProcessSucceeded(String value)
+    {
         this.processSucceeded = value;
     }
 
     /**
      * Gets the value of the processFailed property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ProcessFailedType }
-     *     
+     * @return possible object is {@link ProcessFailedType }
+     * 
      */
-    public ProcessFailedType getProcessFailed() {
+    public ProcessFailedType getProcessFailed()
+    {
         return processFailed;
     }
 
     /**
      * Sets the value of the processFailed property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ProcessFailedType }
-     *     
+     * @param value allowed object is {@link ProcessFailedType }
+     * 
      */
-    public void setProcessFailed(ProcessFailedType value) {
+    public void setProcessFailed(ProcessFailedType value)
+    {
         this.processFailed = value;
     }
 
     /**
      * Gets the value of the creationTime property.
      * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     * @return possible object is {@link XMLGregorianCalendar }
+     * 
      */
-    public XMLGregorianCalendar getCreationTime() {
+    public XMLGregorianCalendar getCreationTime()
+    {
         return creationTime;
     }
 
     /**
      * Sets the value of the creationTime property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     * @param value allowed object is {@link XMLGregorianCalendar }
+     * 
      */
-    public void setCreationTime(XMLGregorianCalendar value) {
+    public void setCreationTime(XMLGregorianCalendar value)
+    {
         this.creationTime = value;
     }
 

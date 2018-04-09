@@ -44,7 +44,7 @@ public interface HttpClient
      *
      * @param httpRequest the HTTP request to execute.
      * @return the response from the request.
-     * @throws IOException if an error occurs while processing the request or
+     * @throws IOException if an  error occurs while processing the request or
      *             response.
      */
     HttpResponse execute(final HttpRequest httpRequest) throws IOException;

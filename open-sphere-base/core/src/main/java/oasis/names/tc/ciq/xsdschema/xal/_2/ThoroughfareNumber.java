@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package oasis.names.tc.ciq.xsdschema.xal._2;
 
 import java.util.HashMap;
@@ -23,11 +22,13 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -71,246 +72,246 @@ import javax.xml.namespace.QName;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "content"
-})
+@XmlType(name = "", propOrder = { "content" })
 @XmlRootElement(name = "ThoroughfareNumber")
-public class ThoroughfareNumber {
+public class ThoroughfareNumber
+{
 
     @XmlValue
     protected String content;
+
     @XmlAttribute(name = "NumberType")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String numberType;
+
     @XmlAttribute(name = "Type")
     @XmlSchemaType(name = "anySimpleType")
     protected String type;
+
     @XmlAttribute(name = "Indicator")
     @XmlSchemaType(name = "anySimpleType")
     protected String indicator;
+
     @XmlAttribute(name = "IndicatorOccurrence")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String indicatorOccurrence;
+
     @XmlAttribute(name = "NumberOccurrence")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String numberOccurrence;
+
     @XmlAttribute(name = "Code")
     @XmlSchemaType(name = "anySimpleType")
     protected String code;
+
     @XmlAnyAttribute
     private Map<QName, String> otherAttributes = new HashMap<QName, String>();
 
     /**
      * Gets the value of the content property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getContent() {
+    public String getContent()
+    {
         return content;
     }
 
     /**
      * Sets the value of the content property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setContent(String value) {
+    public void setContent(String value)
+    {
         this.content = value;
     }
 
-    public boolean isSetContent() {
-        return (this.content!= null);
+    public boolean isSetContent()
+    {
+        return (this.content != null);
     }
 
     /**
      * Gets the value of the numberType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getNumberType() {
+    public String getNumberType()
+    {
         return numberType;
     }
 
     /**
      * Sets the value of the numberType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setNumberType(String value) {
+    public void setNumberType(String value)
+    {
         this.numberType = value;
     }
 
-    public boolean isSetNumberType() {
-        return (this.numberType!= null);
+    public boolean isSetNumberType()
+    {
+        return (this.numberType != null);
     }
 
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getType() {
+    public String getType()
+    {
         return type;
     }
 
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setType(String value) {
+    public void setType(String value)
+    {
         this.type = value;
     }
 
-    public boolean isSetType() {
-        return (this.type!= null);
+    public boolean isSetType()
+    {
+        return (this.type != null);
     }
 
     /**
      * Gets the value of the indicator property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getIndicator() {
+    public String getIndicator()
+    {
         return indicator;
     }
 
     /**
      * Sets the value of the indicator property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setIndicator(String value) {
+    public void setIndicator(String value)
+    {
         this.indicator = value;
     }
 
-    public boolean isSetIndicator() {
-        return (this.indicator!= null);
+    public boolean isSetIndicator()
+    {
+        return (this.indicator != null);
     }
 
     /**
      * Gets the value of the indicatorOccurrence property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getIndicatorOccurrence() {
+    public String getIndicatorOccurrence()
+    {
         return indicatorOccurrence;
     }
 
     /**
      * Sets the value of the indicatorOccurrence property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setIndicatorOccurrence(String value) {
+    public void setIndicatorOccurrence(String value)
+    {
         this.indicatorOccurrence = value;
     }
 
-    public boolean isSetIndicatorOccurrence() {
-        return (this.indicatorOccurrence!= null);
+    public boolean isSetIndicatorOccurrence()
+    {
+        return (this.indicatorOccurrence != null);
     }
 
     /**
      * Gets the value of the numberOccurrence property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getNumberOccurrence() {
+    public String getNumberOccurrence()
+    {
         return numberOccurrence;
     }
 
     /**
      * Sets the value of the numberOccurrence property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setNumberOccurrence(String value) {
+    public void setNumberOccurrence(String value)
+    {
         this.numberOccurrence = value;
     }
 
-    public boolean isSetNumberOccurrence() {
-        return (this.numberOccurrence!= null);
+    public boolean isSetNumberOccurrence()
+    {
+        return (this.numberOccurrence != null);
     }
 
     /**
      * Gets the value of the code property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getCode() {
+    public String getCode()
+    {
         return code;
     }
 
     /**
      * Sets the value of the code property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setCode(String value) {
+    public void setCode(String value)
+    {
         this.code = value;
     }
 
-    public boolean isSetCode() {
-        return (this.code!= null);
+    public boolean isSetCode()
+    {
+        return (this.code != null);
     }
 
     /**
-     * Gets a map that contains attributes that aren't bound to any typed property on this class.
+     * Gets a map that contains attributes that aren't bound to any typed
+     * property on this class.
      * 
      * <p>
-     * the map is keyed by the name of the attribute and 
-     * the value is the string value of the attribute.
+     * the map is keyed by the name of the attribute and the value is the string
+     * value of the attribute.
      * 
-     * the map returned by this method is live, and you can add new attribute
-     * by updating the map directly. Because of this design, there's no setter.
+     * the map returned by this method is live, and you can add new attribute by
+     * updating the map directly. Because of this design, there's no setter.
      * 
      * 
-     * @return
-     *     always non-null
+     * @return always non-null
      */
-    public Map<QName, String> getOtherAttributes() {
+    public Map<QName, String> getOtherAttributes()
+    {
         return otherAttributes;
     }
 

@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -20,11 +19,13 @@ import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for PointType complex type.
+ * <p>
+ * Java class for PointType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="PointType">
@@ -45,122 +46,124 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PointType", propOrder = {
-    "extrude",
-    "altitudeModeGroup",
-    "coordinates",
-    "pointSimpleExtensionGroup",
-    "pointObjectExtensionGroup"
-})
-public class PointType
-    extends AbstractGeometryType
+@XmlType(name = "PointType", propOrder = { "extrude", "altitudeModeGroup", "coordinates", "pointSimpleExtensionGroup",
+    "pointObjectExtensionGroup" })
+public class PointType extends AbstractGeometryType
 {
 
     @XmlElement(defaultValue = "0")
     protected Boolean extrude;
+
     @XmlElementRef(name = "altitudeModeGroup", namespace = "http://www.opengis.net/kml/2.2", type = JAXBElement.class, required = false)
     protected JAXBElement<?> altitudeModeGroup;
+
     @XmlList
     @XmlSchemaType(name = "anySimpleType")
     protected List<String> coordinates;
+
     @XmlElement(name = "PointSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> pointSimpleExtensionGroup;
+
     @XmlElement(name = "PointObjectExtensionGroup")
     protected List<AbstractObjectType> pointObjectExtensionGroup;
 
     /**
      * Gets the value of the extrude property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isExtrude() {
+    public Boolean isExtrude()
+    {
         return extrude;
     }
 
     /**
      * Sets the value of the extrude property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setExtrude(Boolean value) {
+    public void setExtrude(Boolean value)
+    {
         this.extrude = value;
     }
 
-    public boolean isSetExtrude() {
-        return (this.extrude!= null);
+    public boolean isSetExtrude()
+    {
+        return (this.extrude != null);
     }
 
     /**
      * Gets the value of the altitudeModeGroup property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link AltitudeModeEnumType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link Object }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement
+     *         }{@code <}{@link AltitudeModeEnumType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * 
      */
-    public JAXBElement<?> getAltitudeModeGroup() {
+    public JAXBElement<?> getAltitudeModeGroup()
+    {
         return altitudeModeGroup;
     }
 
     /**
      * Sets the value of the altitudeModeGroup property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link AltitudeModeEnumType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link Object }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link AltitudeModeEnumType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * 
      */
-    public void setAltitudeModeGroup(JAXBElement<?> value) {
+    public void setAltitudeModeGroup(JAXBElement<?> value)
+    {
         this.altitudeModeGroup = value;
     }
 
-    public boolean isSetAltitudeModeGroup() {
-        return (this.altitudeModeGroup!= null);
+    public boolean isSetAltitudeModeGroup()
+    {
+        return (this.altitudeModeGroup != null);
     }
 
     /**
      * Gets the value of the coordinates property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the coordinates property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the coordinates property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getCoordinates().add(newItem);
+     * getCoordinates().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getCoordinates() {
-        if (coordinates == null) {
+    public List<String> getCoordinates()
+    {
+        if (coordinates == null)
+        {
             coordinates = new ArrayList<String>();
         }
         return this.coordinates;
     }
 
-    public boolean isSetCoordinates() {
-        return ((this.coordinates!= null)&&(!this.coordinates.isEmpty()));
+    public boolean isSetCoordinates()
+    {
+        return ((this.coordinates != null) && (!this.coordinates.isEmpty()));
     }
 
-    public void unsetCoordinates() {
+    public void unsetCoordinates()
+    {
         this.coordinates = null;
     }
 
@@ -168,36 +171,40 @@ public class PointType
      * Gets the value of the pointSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the pointSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the pointSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPointSimpleExtensionGroup().add(newItem);
+     * getPointSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getPointSimpleExtensionGroup() {
-        if (pointSimpleExtensionGroup == null) {
+    public List<Object> getPointSimpleExtensionGroup()
+    {
+        if (pointSimpleExtensionGroup == null)
+        {
             pointSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.pointSimpleExtensionGroup;
     }
 
-    public boolean isSetPointSimpleExtensionGroup() {
-        return ((this.pointSimpleExtensionGroup!= null)&&(!this.pointSimpleExtensionGroup.isEmpty()));
+    public boolean isSetPointSimpleExtensionGroup()
+    {
+        return ((this.pointSimpleExtensionGroup != null) && (!this.pointSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetPointSimpleExtensionGroup() {
+    public void unsetPointSimpleExtensionGroup()
+    {
         this.pointSimpleExtensionGroup = null;
     }
 
@@ -205,15 +212,16 @@ public class PointType
      * Gets the value of the pointObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the pointObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the pointObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPointObjectExtensionGroup().add(newItem);
+     * getPointObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -223,18 +231,22 @@ public class PointType
      * 
      * 
      */
-    public List<AbstractObjectType> getPointObjectExtensionGroup() {
-        if (pointObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getPointObjectExtensionGroup()
+    {
+        if (pointObjectExtensionGroup == null)
+        {
             pointObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.pointObjectExtensionGroup;
     }
 
-    public boolean isSetPointObjectExtensionGroup() {
-        return ((this.pointObjectExtensionGroup!= null)&&(!this.pointObjectExtensionGroup.isEmpty()));
+    public boolean isSetPointObjectExtensionGroup()
+    {
+        return ((this.pointObjectExtensionGroup != null) && (!this.pointObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetPointObjectExtensionGroup() {
+    public void unsetPointObjectExtensionGroup()
+    {
         this.pointObjectExtensionGroup = null;
     }
 

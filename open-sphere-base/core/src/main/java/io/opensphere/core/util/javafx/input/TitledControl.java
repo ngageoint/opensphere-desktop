@@ -1,7 +1,8 @@
 package io.opensphere.core.util.javafx.input;
 
 /**
- * An extension of the Control class, in which a title is associated with the control.
+ * An extension of the Control class, in which a title is associated with the
+ * control.
  */
 public abstract class TitledControl extends VisitableControl
 {

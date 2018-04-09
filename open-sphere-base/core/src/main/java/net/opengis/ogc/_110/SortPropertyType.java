@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ogc._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for SortPropertyType complex type.
+ * <p>
+ * Java class for SortPropertyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SortPropertyType">
@@ -35,62 +36,57 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SortPropertyType", propOrder = {
-    "propertyName",
-    "sortOrder"
-})
-public class SortPropertyType {
+@XmlType(name = "SortPropertyType", propOrder = { "propertyName", "sortOrder" })
+public class SortPropertyType
+{
 
     @XmlElement(name = "PropertyName", required = true)
     protected PropertyNameType propertyName;
+
     @XmlElement(name = "SortOrder")
     protected SortOrderType sortOrder;
 
     /**
      * Gets the value of the propertyName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PropertyNameType }
-     *     
+     * @return possible object is {@link PropertyNameType }
+     * 
      */
-    public PropertyNameType getPropertyName() {
+    public PropertyNameType getPropertyName()
+    {
         return propertyName;
     }
 
     /**
      * Sets the value of the propertyName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PropertyNameType }
-     *     
+     * @param value allowed object is {@link PropertyNameType }
+     * 
      */
-    public void setPropertyName(PropertyNameType value) {
+    public void setPropertyName(PropertyNameType value)
+    {
         this.propertyName = value;
     }
 
     /**
      * Gets the value of the sortOrder property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SortOrderType }
-     *     
+     * @return possible object is {@link SortOrderType }
+     * 
      */
-    public SortOrderType getSortOrder() {
+    public SortOrderType getSortOrder()
+    {
         return sortOrder;
     }
 
     /**
      * Sets the value of the sortOrder property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SortOrderType }
-     *     
+     * @param value allowed object is {@link SortOrderType }
+     * 
      */
-    public void setSortOrder(SortOrderType value) {
+    public void setSortOrder(SortOrderType value)
+    {
         this.sortOrder = value;
     }
 

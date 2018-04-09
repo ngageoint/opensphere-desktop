@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import java.util.ArrayList;
@@ -21,11 +20,13 @@ import javax.xml.namespace.QName;
 
 import net.opengis.ogc._110.FilterType;
 
-
 /**
- * <p>Java class for UpdateElementType complex type.
+ * <p>
+ * Java class for UpdateElementType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="UpdateElementType">
@@ -47,47 +48,49 @@ import net.opengis.ogc._110.FilterType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UpdateElementType", propOrder = {
-    "property",
-    "filter"
-})
-public class UpdateElementType {
+@XmlType(name = "UpdateElementType", propOrder = { "property", "filter" })
+public class UpdateElementType
+{
 
     @XmlElement(name = "Property", required = true)
     protected List<PropertyType> property;
+
     @XmlElement(name = "Filter", namespace = "http://www.opengis.net/ogc")
     protected FilterType filter;
+
     @XmlAttribute(name = "handle")
     protected String handle;
+
     @XmlAttribute(name = "typeName", required = true)
     protected QName typeName;
+
     @XmlAttribute(name = "inputFormat")
     protected String inputFormat;
+
     @XmlAttribute(name = "srsName")
     @XmlSchemaType(name = "anyURI")
     protected String srsName;
 
     /**
      * 
-     *                   Changing or updating a feature instance means that
-     *                   the current value of one or more properties of
-     *                   the feature are replaced with new values.  The Update
-     *                   element contains  one or more Property elements.  A
-     *                   Property element contains the name or a feature property
-     *                   who's value is to be changed and the replacement value
-     *                   for that property.
-     *                Gets the value of the property property.
+     * Changing or updating a feature instance means that the current value of
+     * one or more properties of the feature are replaced with new values. The
+     * Update element contains one or more Property elements. A Property element
+     * contains the name or a feature property who's value is to be changed and
+     * the replacement value for that property. Gets the value of the property
+     * property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the property property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the property property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getProperty().add(newItem);
+     * getProperty().add(newItem);
      * </pre>
      * 
      * 
@@ -97,8 +100,10 @@ public class UpdateElementType {
      * 
      * 
      */
-    public List<PropertyType> getProperty() {
-        if (property == null) {
+    public List<PropertyType> getProperty()
+    {
+        if (property == null)
+        {
             property = new ArrayList<PropertyType>();
         }
         return this.property;
@@ -106,98 +111,92 @@ public class UpdateElementType {
 
     /**
      * 
-     *                   The Filter element is used to constrain the scope
-     *                   of the update operation to those features identified
-     *                   by the filter.  Feature instances can be specified
-     *                   explicitly and individually using the identifier of
-     *                   each feature instance OR a set of features to be
-     *                   operated on can be identified by specifying spatial
-     *                   and non-spatial constraints in the filter.
-     *                   If no filter is specified then update operation 
-     *                   applies to all feature instances.
-     *                
+     * The Filter element is used to constrain the scope of the update operation
+     * to those features identified by the filter. Feature instances can be
+     * specified explicitly and individually using the identifier of each
+     * feature instance OR a set of features to be operated on can be identified
+     * by specifying spatial and non-spatial constraints in the filter. If no
+     * filter is specified then update operation applies to all feature
+     * instances.
      * 
-     * @return
-     *     possible object is
-     *     {@link FilterType }
-     *     
+     * 
+     * @return possible object is {@link FilterType }
+     * 
      */
-    public FilterType getFilter() {
+    public FilterType getFilter()
+    {
         return filter;
     }
 
     /**
      * Sets the value of the filter property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FilterType }
-     *     
+     * @param value allowed object is {@link FilterType }
+     * 
      */
-    public void setFilter(FilterType value) {
+    public void setFilter(FilterType value)
+    {
         this.filter = value;
     }
 
     /**
      * Gets the value of the handle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHandle() {
+    public String getHandle()
+    {
         return handle;
     }
 
     /**
      * Sets the value of the handle property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHandle(String value) {
+    public void setHandle(String value)
+    {
         this.handle = value;
     }
 
     /**
      * Gets the value of the typeName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link QName }
-     *     
+     * @return possible object is {@link QName }
+     * 
      */
-    public QName getTypeName() {
+    public QName getTypeName()
+    {
         return typeName;
     }
 
     /**
      * Sets the value of the typeName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link QName }
-     *     
+     * @param value allowed object is {@link QName }
+     * 
      */
-    public void setTypeName(QName value) {
+    public void setTypeName(QName value)
+    {
         this.typeName = value;
     }
 
     /**
      * Gets the value of the inputFormat property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getInputFormat() {
-        if (inputFormat == null) {
+    public String getInputFormat()
+    {
+        if (inputFormat == null)
+        {
             return "x-application/gml:3";
-        } else {
+        }
+        else
+        {
             return inputFormat;
         }
     }
@@ -205,36 +204,33 @@ public class UpdateElementType {
     /**
      * Sets the value of the inputFormat property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setInputFormat(String value) {
+    public void setInputFormat(String value)
+    {
         this.inputFormat = value;
     }
 
     /**
      * Gets the value of the srsName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSrsName() {
+    public String getSrsName()
+    {
         return srsName;
     }
 
     /**
      * Sets the value of the srsName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSrsName(String value) {
+    public void setSrsName(String value)
+    {
         this.srsName = value;
     }
 

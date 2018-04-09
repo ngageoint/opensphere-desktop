@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Encapsulates a ring to represent properties in features or geometry collections.
+ * Encapsulates a ring to represent properties in features or geometry
+ * collections.
  * 
- * <p>Java class for RingPropertyType complex type.
+ * <p>
+ * Java class for RingPropertyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="RingPropertyType">
@@ -36,10 +38,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RingPropertyType", propOrder = {
-    "ring"
-})
-public class RingPropertyType {
+@XmlType(name = "RingPropertyType", propOrder = { "ring" })
+public class RingPropertyType
+{
 
     @XmlElement(name = "Ring", required = true)
     protected RingType ring;
@@ -47,24 +48,22 @@ public class RingPropertyType {
     /**
      * Gets the value of the ring property.
      * 
-     * @return
-     *     possible object is
-     *     {@link RingType }
-     *     
+     * @return possible object is {@link RingType }
+     * 
      */
-    public RingType getRing() {
+    public RingType getRing()
+    {
         return ring;
     }
 
     /**
      * Sets the value of the ring property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link RingType }
-     *     
+     * @param value allowed object is {@link RingType }
+     * 
      */
-    public void setRing(RingType value) {
+    public void setRing(RingType value)
+    {
         this.ring = value;
     }
 

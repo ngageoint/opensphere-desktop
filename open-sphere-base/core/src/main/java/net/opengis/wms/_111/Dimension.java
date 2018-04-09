@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:39 PM MST 
 //
 
-
 package net.opengis.wms._111;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,21 +15,23 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
 @XmlRootElement(name = "Dimension")
-public class Dimension {
+public class Dimension
+{
 
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String name;
+
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String units;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String unitSymbol;
@@ -38,72 +39,66 @@ public class Dimension {
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
     /**
      * Gets the value of the units property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getUnits() {
+    public String getUnits()
+    {
         return units;
     }
 
     /**
      * Sets the value of the units property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setUnits(String value) {
+    public void setUnits(String value)
+    {
         this.units = value;
     }
 
     /**
      * Gets the value of the unitSymbol property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getUnitSymbol() {
+    public String getUnitSymbol()
+    {
         return unitSymbol;
     }
 
     /**
      * Sets the value of the unitSymbol property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setUnitSymbol(String value) {
+    public void setUnitSymbol(String value)
+    {
         this.unitSymbol = value;
     }
 

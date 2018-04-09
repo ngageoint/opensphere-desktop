@@ -60,7 +60,8 @@ class DBASEPortion implements Collection<Object[]>
          * Language driver (reserved) Byte n/a Byte 30 Reserved Byte[2] n/a Byte
          * 32 Table Field descriptor Array Byte[32] n/a Byte 64-n repeated for
          * each field Byte[32] n/a Byte n Terminator "0Dh" Byte n/a Byte n+1
-         * ASCII Records separated by a "space" (20h) Fields are not separated */
+         * ASCII Records separated by a "space" (20h) Fields are not
+         * separated */
         // Expanding out, java doesn't do unsigned
         long numRecords;
 
@@ -417,7 +418,7 @@ class DBASEPortion implements Collection<Object[]>
     /**
      * Deletes the file managed by this class.
      *
-     * @throws IOException if an error occurs while closing the input/output
+     * @throws IOException if an  error occurs while closing the input/output
      *             streams.
      */
     public void delete() throws IOException

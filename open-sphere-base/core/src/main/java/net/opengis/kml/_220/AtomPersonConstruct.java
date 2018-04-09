@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for atomPersonConstruct complex type.
+ * <p>
+ * Java class for atomPersonConstruct complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="atomPersonConstruct">
@@ -41,54 +42,56 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "atomPersonConstruct", namespace = "http://www.w3.org/2005/Atom", propOrder = {
-    "nameOrUriOrEmail"
-})
-public class AtomPersonConstruct {
+@XmlType(name = "atomPersonConstruct", namespace = "http://www.w3.org/2005/Atom", propOrder = { "nameOrUriOrEmail" })
+public class AtomPersonConstruct
+{
 
     @XmlElementRefs({
         @XmlElementRef(name = "name", namespace = "http://www.w3.org/2005/Atom", type = AtomName.class, required = false),
         @XmlElementRef(name = "uri", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "email", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false)
-    })
+        @XmlElementRef(name = "email", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false) })
     protected List<JAXBElement<String>> nameOrUriOrEmail;
 
     /**
      * Gets the value of the nameOrUriOrEmail property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the nameOrUriOrEmail property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the nameOrUriOrEmail property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getNameOrUriOrEmail().add(newItem);
+     * getNameOrUriOrEmail().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link AtomName }
+     * {@link JAXBElement }{@code <}{@link String }{@code >} {@link JAXBElement
+     * }{@code <}{@link String }{@code >} {@link AtomName }
      * 
      * 
      */
-    public List<JAXBElement<String>> getNameOrUriOrEmail() {
-        if (nameOrUriOrEmail == null) {
+    public List<JAXBElement<String>> getNameOrUriOrEmail()
+    {
+        if (nameOrUriOrEmail == null)
+        {
             nameOrUriOrEmail = new ArrayList<JAXBElement<String>>();
         }
         return this.nameOrUriOrEmail;
     }
 
-    public boolean isSetNameOrUriOrEmail() {
-        return ((this.nameOrUriOrEmail!= null)&&(!this.nameOrUriOrEmail.isEmpty()));
+    public boolean isSetNameOrUriOrEmail()
+    {
+        return ((this.nameOrUriOrEmail != null) && (!this.nameOrUriOrEmail.isEmpty()));
     }
 
-    public void unsetNameOrUriOrEmail() {
+    public void unsetNameOrUriOrEmail()
+    {
         this.nameOrUriOrEmail = null;
     }
 

@@ -7,27 +7,24 @@ package com.bitsys.common.http.auth;
  */
 public interface CredentialsProvider
 {
-   /**
-    * Clears all credentials.
-    */
-   void clear();
+    /**
+     * Clears all credentials.
+     */
+    void clear();
 
-   /**
-    * Sets the credentials for the given authentication scope.
-    *
-    * @param scope
-    *           the authentication scope.
-    * @param credentials
-    *           the credentials.
-    */
-   void setCredentials(AuthenticationScope scope, Credentials credentials);
+    /**
+     * Sets the credentials for the given authentication scope.
+     *
+     * @param scope the authentication scope.
+     * @param credentials the credentials.
+     */
+    void setCredentials(AuthenticationScope scope, Credentials credentials);
 
-   /**
-    * Returns the credentials for the given authentication scope.
-    *
-    * @param scope
-    *           the authentication scope.
-    * @return the credentials.
-    */
-   Credentials getCredentials(AuthenticationScope scope);
+    /**
+     * Returns the credentials for the given authentication scope.
+     *
+     * @param scope the authentication scope.
+     * @return the credentials.
+     */
+    Credentials getCredentials(AuthenticationScope scope);
 }

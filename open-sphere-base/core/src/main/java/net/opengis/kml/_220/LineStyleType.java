@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for LineStyleType complex type.
+ * <p>
+ * Java class for LineStyleType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LineStyleType">
@@ -40,85 +41,85 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LineStyleType", propOrder = {
-    "width",
-    "lineStyleSimpleExtensionGroup",
-    "lineStyleObjectExtensionGroup"
-})
-public class LineStyleType
-    extends AbstractColorStyleType
+@XmlType(name = "LineStyleType", propOrder = { "width", "lineStyleSimpleExtensionGroup", "lineStyleObjectExtensionGroup" })
+public class LineStyleType extends AbstractColorStyleType
 {
 
     @XmlElement(defaultValue = "1.0")
     protected Double width;
+
     @XmlElement(name = "LineStyleSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> lineStyleSimpleExtensionGroup;
+
     @XmlElement(name = "LineStyleObjectExtensionGroup")
     protected List<AbstractObjectType> lineStyleObjectExtensionGroup;
 
     /**
      * Gets the value of the width property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getWidth() {
+    public Double getWidth()
+    {
         return width;
     }
 
     /**
      * Sets the value of the width property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setWidth(Double value) {
+    public void setWidth(Double value)
+    {
         this.width = value;
     }
 
-    public boolean isSetWidth() {
-        return (this.width!= null);
+    public boolean isSetWidth()
+    {
+        return (this.width != null);
     }
 
     /**
      * Gets the value of the lineStyleSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the lineStyleSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the lineStyleSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLineStyleSimpleExtensionGroup().add(newItem);
+     * getLineStyleSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getLineStyleSimpleExtensionGroup() {
-        if (lineStyleSimpleExtensionGroup == null) {
+    public List<Object> getLineStyleSimpleExtensionGroup()
+    {
+        if (lineStyleSimpleExtensionGroup == null)
+        {
             lineStyleSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.lineStyleSimpleExtensionGroup;
     }
 
-    public boolean isSetLineStyleSimpleExtensionGroup() {
-        return ((this.lineStyleSimpleExtensionGroup!= null)&&(!this.lineStyleSimpleExtensionGroup.isEmpty()));
+    public boolean isSetLineStyleSimpleExtensionGroup()
+    {
+        return ((this.lineStyleSimpleExtensionGroup != null) && (!this.lineStyleSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetLineStyleSimpleExtensionGroup() {
+    public void unsetLineStyleSimpleExtensionGroup()
+    {
         this.lineStyleSimpleExtensionGroup = null;
     }
 
@@ -126,15 +127,16 @@ public class LineStyleType
      * Gets the value of the lineStyleObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the lineStyleObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the lineStyleObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLineStyleObjectExtensionGroup().add(newItem);
+     * getLineStyleObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -144,18 +146,22 @@ public class LineStyleType
      * 
      * 
      */
-    public List<AbstractObjectType> getLineStyleObjectExtensionGroup() {
-        if (lineStyleObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getLineStyleObjectExtensionGroup()
+    {
+        if (lineStyleObjectExtensionGroup == null)
+        {
             lineStyleObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.lineStyleObjectExtensionGroup;
     }
 
-    public boolean isSetLineStyleObjectExtensionGroup() {
-        return ((this.lineStyleObjectExtensionGroup!= null)&&(!this.lineStyleObjectExtensionGroup.isEmpty()));
+    public boolean isSetLineStyleObjectExtensionGroup()
+    {
+        return ((this.lineStyleObjectExtensionGroup != null) && (!this.lineStyleObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetLineStyleObjectExtensionGroup() {
+    public void unsetLineStyleObjectExtensionGroup()
+    {
         this.lineStyleObjectExtensionGroup = null;
     }
 

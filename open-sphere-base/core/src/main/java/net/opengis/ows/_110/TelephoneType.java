@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.ows._110;
 
 import java.util.ArrayList;
@@ -16,13 +15,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Telephone numbers for contacting the responsible individual or organization. 
+ * Telephone numbers for contacting the responsible individual or organization.
  * 
- * <p>Java class for TelephoneType complex type.
+ * <p>
+ * Java class for TelephoneType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TelephoneType">
@@ -40,14 +41,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TelephoneType", propOrder = {
-    "voice",
-    "facsimile"
-})
-public class TelephoneType {
+@XmlType(name = "TelephoneType", propOrder = { "voice", "facsimile" })
+public class TelephoneType
+{
 
     @XmlElement(name = "Voice")
     protected List<String> voice;
+
     @XmlElement(name = "Facsimile")
     protected List<String> facsimile;
 
@@ -55,26 +55,28 @@ public class TelephoneType {
      * Gets the value of the voice property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the voice property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the voice property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getVoice().add(newItem);
+     * getVoice().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getVoice() {
-        if (voice == null) {
+    public List<String> getVoice()
+    {
+        if (voice == null)
+        {
             voice = new ArrayList<String>();
         }
         return this.voice;
@@ -84,26 +86,28 @@ public class TelephoneType {
      * Gets the value of the facsimile property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the facsimile property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the facsimile property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getFacsimile().add(newItem);
+     * getFacsimile().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getFacsimile() {
-        if (facsimile == null) {
+    public List<String> getFacsimile()
+    {
+        if (facsimile == null)
+        {
             facsimile = new ArrayList<String>();
         }
         return this.facsimile;

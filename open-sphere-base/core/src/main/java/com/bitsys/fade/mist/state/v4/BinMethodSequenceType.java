@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.util.ArrayList;
@@ -15,15 +14,17 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *        Collection of bin methods
- *       
+ * Collection of bin methods
  * 
- * <p>Java class for BinMethodSequenceType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for BinMethodSequenceType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="BinMethodSequenceType">
@@ -40,10 +41,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "BinMethodSequenceType", propOrder = {
-    "bin"
-})
-public class BinMethodSequenceType {
+@XmlType(name = "BinMethodSequenceType", propOrder = { "bin" })
+public class BinMethodSequenceType
+{
 
     protected List<BinMethodType> bin;
 
@@ -51,15 +51,16 @@ public class BinMethodSequenceType {
      * Gets the value of the bin property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the bin property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the bin property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getBin().add(newItem);
+     * getBin().add(newItem);
      * </pre>
      * 
      * 
@@ -69,18 +70,22 @@ public class BinMethodSequenceType {
      * 
      * 
      */
-    public List<BinMethodType> getBin() {
-        if (bin == null) {
+    public List<BinMethodType> getBin()
+    {
+        if (bin == null)
+        {
             bin = new ArrayList<BinMethodType>();
         }
         return this.bin;
     }
 
-    public boolean isSetBin() {
-        return ((this.bin!= null)&&(!this.bin.isEmpty()));
+    public boolean isSetBin()
+    {
+        return ((this.bin != null) && (!this.bin.isEmpty()));
     }
 
-    public void unsetBin() {
+    public void unsetBin()
+    {
         this.bin = null;
     }
 

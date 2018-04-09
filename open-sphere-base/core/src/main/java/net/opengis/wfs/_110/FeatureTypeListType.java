@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import java.util.ArrayList;
@@ -16,15 +15,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *             A list of feature types available from  this server.
- *          
+ * A list of feature types available from this server.
  * 
- * <p>Java class for FeatureTypeListType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for FeatureTypeListType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="FeatureTypeListType">
@@ -42,38 +43,35 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "FeatureTypeListType", propOrder = {
-    "operations",
-    "featureType"
-})
-public class FeatureTypeListType {
+@XmlType(name = "FeatureTypeListType", propOrder = { "operations", "featureType" })
+public class FeatureTypeListType
+{
 
     @XmlElement(name = "Operations")
     protected OperationsType operations;
+
     @XmlElement(name = "FeatureType", required = true)
     protected List<FeatureTypeType> featureType;
 
     /**
      * Gets the value of the operations property.
      * 
-     * @return
-     *     possible object is
-     *     {@link OperationsType }
-     *     
+     * @return possible object is {@link OperationsType }
+     * 
      */
-    public OperationsType getOperations() {
+    public OperationsType getOperations()
+    {
         return operations;
     }
 
     /**
      * Sets the value of the operations property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link OperationsType }
-     *     
+     * @param value allowed object is {@link OperationsType }
+     * 
      */
-    public void setOperations(OperationsType value) {
+    public void setOperations(OperationsType value)
+    {
         this.operations = value;
     }
 
@@ -81,15 +79,16 @@ public class FeatureTypeListType {
      * Gets the value of the featureType property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the featureType property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the featureType property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getFeatureType().add(newItem);
+     * getFeatureType().add(newItem);
      * </pre>
      * 
      * 
@@ -99,8 +98,10 @@ public class FeatureTypeListType {
      * 
      * 
      */
-    public List<FeatureTypeType> getFeatureType() {
-        if (featureType == null) {
+    public List<FeatureTypeType> getFeatureType()
+    {
+        if (featureType == null)
+        {
             featureType = new ArrayList<FeatureTypeType>();
         }
         return this.featureType;

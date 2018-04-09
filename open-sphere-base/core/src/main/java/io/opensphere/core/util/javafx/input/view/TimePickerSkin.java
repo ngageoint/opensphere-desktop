@@ -119,7 +119,8 @@ public class TimePickerSkin extends AbstractComboBoxPopupControl<LocalTime>
     @Override
     protected TextField getEditor()
     {
-        // Use getSkinnable() here because this method is called from the super constructor before datePicker is initialized.
+        // Use getSkinnable() here because this method is called from the super
+        // constructor before datePicker is initialized.
         return ((TimePicker)getSkinnable()).getEditor();
     }
 
@@ -161,7 +162,8 @@ public class TimePickerSkin extends AbstractComboBoxPopupControl<LocalTime>
     {
         if (!getPopup().isShowing() && myPicker.isShowing())
         {
-            // Popup was dismissed. Maybe user clicked outside or typed ESCAPE. Make sure DateTimePicker button is in sync.
+            // Popup was dismissed. Maybe user clicked outside or typed ESCAPE.
+            // Make sure DateTimePicker button is in sync.
             myPicker.hide();
         }
     }

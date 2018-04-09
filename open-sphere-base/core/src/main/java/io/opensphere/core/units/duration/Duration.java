@@ -1132,7 +1132,7 @@ public abstract class Duration implements Cloneable, Serializable, Comparable<Du
      * @param expected The expected reference units.
      *
      * @return The magnitude.
-     * @throws InconvertibleUnits If my reference units do not match the
+     * @throws InconvertibleUnits If my  reference units do not match the
      *             expected reference units.
      */
     protected abstract BigDecimal inReferenceUnits(Class<? extends Duration> expected);

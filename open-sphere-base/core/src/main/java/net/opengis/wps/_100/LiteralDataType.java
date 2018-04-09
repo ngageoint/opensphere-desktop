@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,15 +14,18 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * One simple literal value (such as an integer or real number) that is embedded in the Execute operation request or response. 
+ * One simple literal value (such as an integer or real number) that is embedded
+ * in the Execute operation request or response.
  * 
  * String containing the Literal value (e.g., "49").
  * 
- * <p>Java class for LiteralDataType complex type.
+ * <p>
+ * Java class for LiteralDataType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LiteralDataType">
@@ -39,16 +41,17 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LiteralDataType", propOrder = {
-    "value"
-})
-public class LiteralDataType {
+@XmlType(name = "LiteralDataType", propOrder = { "value" })
+public class LiteralDataType
+{
 
     @XmlValue
     protected String value;
+
     @XmlAttribute
     @XmlSchemaType(name = "anyURI")
     protected String dataType;
+
     @XmlAttribute
     @XmlSchemaType(name = "anyURI")
     protected String uom;
@@ -56,72 +59,66 @@ public class LiteralDataType {
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getValue() {
+    public String getValue()
+    {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setValue(String value) {
+    public void setValue(String value)
+    {
         this.value = value;
     }
 
     /**
      * Gets the value of the dataType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDataType() {
+    public String getDataType()
+    {
         return dataType;
     }
 
     /**
      * Sets the value of the dataType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDataType(String value) {
+    public void setDataType(String value)
+    {
         this.dataType = value;
     }
 
     /**
      * Gets the value of the uom property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getUom() {
+    public String getUom()
+    {
         return uom;
     }
 
     /**
      * Sets the value of the uom property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setUom(String value) {
+    public void setUom(String value)
+    {
         this.uom = value;
     }
 

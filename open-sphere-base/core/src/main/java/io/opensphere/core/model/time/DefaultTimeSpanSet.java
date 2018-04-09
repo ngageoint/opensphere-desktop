@@ -42,7 +42,7 @@ public class DefaultTimeSpanSet implements TimeSpanSet
      * Instantiates a new DefaultTimeSpanSet.
      *
      * @param ts the initial {@link TimeSpan}
-     * @throws IllegalArgumentException if ts is unbounded
+     * @throws IllegalArgumentException if ts  is unbounded
      */
     public DefaultTimeSpanSet(TimeSpan ts)
     {

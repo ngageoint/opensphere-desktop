@@ -5,20 +5,22 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * An ArcByBulge is an arc string with only one arc unit, i.e. two control points and one bulge.
+ * An ArcByBulge is an arc string with only one arc unit, i.e. two control
+ * points and one bulge.
  * 
- * <p>Java class for ArcByBulgeType complex type.
+ * <p>
+ * Java class for ArcByBulgeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ArcByBulgeType">
@@ -47,9 +49,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ArcByBulgeType")
-public class ArcByBulgeType
-    extends ArcStringByBulgeType
+public class ArcByBulgeType extends ArcStringByBulgeType
 {
-
 
 }

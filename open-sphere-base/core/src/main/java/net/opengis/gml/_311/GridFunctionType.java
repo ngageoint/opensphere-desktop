@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.math.BigInteger;
@@ -18,13 +17,16 @@ import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Defines how values in the domain are mapped to the range set. The start point and the sequencing rule are specified here.
+ * Defines how values in the domain are mapped to the range set. The start point
+ * and the sequencing rule are specified here.
  * 
- * <p>Java class for GridFunctionType complex type.
+ * <p>
+ * Java class for GridFunctionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GridFunctionType">
@@ -42,40 +44,35 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GridFunctionType", propOrder = {
-    "sequenceRule",
-    "startPoint"
-})
-@XmlSeeAlso({
-    IndexMapType.class
-})
-public class GridFunctionType {
+@XmlType(name = "GridFunctionType", propOrder = { "sequenceRule", "startPoint" })
+@XmlSeeAlso({ IndexMapType.class })
+public class GridFunctionType
+{
 
     protected SequenceRuleType sequenceRule;
+
     @XmlList
     protected List<BigInteger> startPoint;
 
     /**
      * Gets the value of the sequenceRule property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SequenceRuleType }
-     *     
+     * @return possible object is {@link SequenceRuleType }
+     * 
      */
-    public SequenceRuleType getSequenceRule() {
+    public SequenceRuleType getSequenceRule()
+    {
         return sequenceRule;
     }
 
     /**
      * Sets the value of the sequenceRule property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SequenceRuleType }
-     *     
+     * @param value allowed object is {@link SequenceRuleType }
+     * 
      */
-    public void setSequenceRule(SequenceRuleType value) {
+    public void setSequenceRule(SequenceRuleType value)
+    {
         this.sequenceRule = value;
     }
 
@@ -83,15 +80,16 @@ public class GridFunctionType {
      * Gets the value of the startPoint property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the startPoint property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the startPoint property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getStartPoint().add(newItem);
+     * getStartPoint().add(newItem);
      * </pre>
      * 
      * 
@@ -101,8 +99,10 @@ public class GridFunctionType {
      * 
      * 
      */
-    public List<BigInteger> getStartPoint() {
-        if (startPoint == null) {
+    public List<BigInteger> getStartPoint()
+    {
+        if (startPoint == null)
+        {
             startPoint = new ArrayList<BigInteger>();
         }
         return this.startPoint;

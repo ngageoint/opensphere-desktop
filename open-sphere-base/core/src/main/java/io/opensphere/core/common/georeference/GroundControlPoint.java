@@ -199,7 +199,7 @@ public class GroundControlPoint
     /**
      * Set the pixel value(x image value).
      *
-     * @param pixel - x image value
+     * @param pixel - x   image value
      */
     public void setPixel(double pixel)
     {

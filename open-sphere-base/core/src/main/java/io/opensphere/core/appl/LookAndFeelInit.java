@@ -20,7 +20,8 @@ public class LookAndFeelInit
     /**
      * Set the look and feel of the GUI.
      *
-     * @throws UnsupportedLookAndFeelException If the look and feel is not supported.
+     * @throws UnsupportedLookAndFeelException If the look and feel is not
+     *             supported.
      */
     public void setLookAndFeel() throws UnsupportedLookAndFeelException
     {

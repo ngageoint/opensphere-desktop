@@ -18,7 +18,10 @@ public class RotateImageProcessor extends AbstractChainedImageProcessor
     /** The rotation in clockwise degrees from straight up. */
     private final double myRotation;
 
-    /** Whether to crop the rotated image so it appears the same size as the normal image. */
+    /**
+     * Whether to crop the rotated image so it appears the same size as the
+     * normal image.
+     */
     private final boolean myCropImage;
 
     /** The map manager. */
@@ -45,8 +48,10 @@ public class RotateImageProcessor extends AbstractChainedImageProcessor
      * Constructor.
      *
      * @param rotation The rotation in clockwise degrees from straight up
-     * @param cropImage Whether to crop the rotated image so it appears the same size as the normal image
-     * @param mapManager The map manager. Supplying this will rotate the image relative to the viewer heading.
+     * @param cropImage Whether to crop the rotated image so it appears the same
+     *            size as the normal image
+     * @param mapManager The map manager. Supplying this will rotate the image
+     *            relative to the viewer heading.
      */
     public RotateImageProcessor(double rotation, boolean cropImage, MapManager mapManager)
     {
@@ -108,7 +113,8 @@ public class RotateImageProcessor extends AbstractChainedImageProcessor
             AffineTransformOp op = new AffineTransformOp(transform, myInterpolationType);
             BufferedImage processedImage = op.filter(image, null);
 
-            // The rotated image is larger than the original, so crop it so that it appears as the right size
+            // The rotated image is larger than the original, so crop it so that
+            // it appears as the right size
             if (myCropImage)
             {
                 processedImage = processedImage.getSubimage((processedImage.getWidth() - image.getWidth()) / 2,

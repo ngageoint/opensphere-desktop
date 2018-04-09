@@ -32,7 +32,8 @@ public class StringTranslator extends AbstractValueTranslator<String>
      */
     @Override
     public int getValue(Class<? extends String> type, long sizeBytes, int column, ResultSet rs,
-            PropertyMatcher<? extends String> filter, Collection<? super String> results) throws CacheException
+            PropertyMatcher<? extends String> filter, Collection<? super String> results)
+        throws CacheException
     {
         try
         {

@@ -604,7 +604,8 @@ public final class FileUtilities
         final List<String> lines = new ArrayList<>();
         try
         {
-            final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), DEFAULT_CHARSET));
+            final BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(new FileInputStream(file), DEFAULT_CHARSET));
             try
             {
                 for (String line; (line = bufferedReader.readLine()) != null;)

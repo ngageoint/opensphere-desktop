@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for DeleteType complex type.
+ * <p>
+ * Java class for DeleteType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DeleteType">
@@ -38,10 +39,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DeleteType", propOrder = {
-    "abstractFeatureGroup"
-})
-public class DeleteType {
+@XmlType(name = "DeleteType", propOrder = { "abstractFeatureGroup" })
+public class DeleteType
+{
 
     @XmlElementRef(name = "AbstractFeatureGroup", namespace = "http://www.opengis.net/kml/2.2", type = JAXBElement.class, required = false)
     protected List<JAXBElement<? extends AbstractFeatureType>> abstractFeatureGroup;
@@ -50,15 +50,16 @@ public class DeleteType {
      * Gets the value of the abstractFeatureGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractFeatureGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractFeatureGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractFeatureGroup().add(newItem);
+     * getAbstractFeatureGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -77,18 +78,22 @@ public class DeleteType {
      * 
      * 
      */
-    public List<JAXBElement<? extends AbstractFeatureType>> getAbstractFeatureGroup() {
-        if (abstractFeatureGroup == null) {
+    public List<JAXBElement<? extends AbstractFeatureType>> getAbstractFeatureGroup()
+    {
+        if (abstractFeatureGroup == null)
+        {
             abstractFeatureGroup = new ArrayList<JAXBElement<? extends AbstractFeatureType>>();
         }
         return this.abstractFeatureGroup;
     }
 
-    public boolean isSetAbstractFeatureGroup() {
-        return ((this.abstractFeatureGroup!= null)&&(!this.abstractFeatureGroup.isEmpty()));
+    public boolean isSetAbstractFeatureGroup()
+    {
+        return ((this.abstractFeatureGroup != null) && (!this.abstractFeatureGroup.isEmpty()));
     }
 
-    public void unsetAbstractFeatureGroup() {
+    public void unsetAbstractFeatureGroup()
+    {
         this.abstractFeatureGroup = null;
     }
 

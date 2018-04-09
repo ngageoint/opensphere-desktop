@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.util.ArrayList;
@@ -17,16 +16,18 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.ogc._100t.FilterType;
 
-
 /**
  * 
- *         A collection of filters used to narrow the set of results from query 
- *         operations.
- *       
+ * A collection of filters used to narrow the set of results from query
+ * operations.
  * 
- * <p>Java class for FiltersType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for FiltersType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="FiltersType">
@@ -43,10 +44,9 @@ import net.opengis.ogc._100t.FilterType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "FiltersType", propOrder = {
-    "filter"
-})
-public class FiltersType {
+@XmlType(name = "FiltersType", propOrder = { "filter" })
+public class FiltersType
+{
 
     protected List<FilterType> filter;
 
@@ -54,15 +54,16 @@ public class FiltersType {
      * Gets the value of the filter property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the filter property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the filter property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getFilter().add(newItem);
+     * getFilter().add(newItem);
      * </pre>
      * 
      * 
@@ -72,18 +73,22 @@ public class FiltersType {
      * 
      * 
      */
-    public List<FilterType> getFilter() {
-        if (filter == null) {
+    public List<FilterType> getFilter()
+    {
+        if (filter == null)
+        {
             filter = new ArrayList<FilterType>();
         }
         return this.filter;
     }
 
-    public boolean isSetFilter() {
-        return ((this.filter!= null)&&(!this.filter.isEmpty()));
+    public boolean isSetFilter()
+    {
+        return ((this.filter != null) && (!this.filter.isEmpty()));
     }
 
-    public void unsetFilter() {
+    public void unsetFilter()
+    {
         this.filter = null;
     }
 

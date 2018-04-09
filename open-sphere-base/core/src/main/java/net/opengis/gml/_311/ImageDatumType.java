@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * An image datum defines the origin of an image coordinate reference system, and is used in a local context only. For more information, see OGC Abstract Specification Topic 2. 
+ * An image datum defines the origin of an image coordinate reference system,
+ * and is used in a local context only. For more information, see OGC Abstract
+ * Specification Topic 2.
  * 
- * <p>Java class for ImageDatumType complex type.
+ * <p>
+ * Java class for ImageDatumType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ImageDatumType">
@@ -36,11 +39,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ImageDatumType", propOrder = {
-    "pixelInCell"
-})
-public class ImageDatumType
-    extends AbstractDatumType
+@XmlType(name = "ImageDatumType", propOrder = { "pixelInCell" })
+public class ImageDatumType extends AbstractDatumType
 {
 
     @XmlElement(required = true)
@@ -49,24 +49,22 @@ public class ImageDatumType
     /**
      * Gets the value of the pixelInCell property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PixelInCellType }
-     *     
+     * @return possible object is {@link PixelInCellType }
+     * 
      */
-    public PixelInCellType getPixelInCell() {
+    public PixelInCellType getPixelInCell()
+    {
         return pixelInCell;
     }
 
     /**
      * Sets the value of the pixelInCell property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PixelInCellType }
-     *     
+     * @param value allowed object is {@link PixelInCellType }
+     * 
      */
-    public void setPixelInCell(PixelInCellType value) {
+    public void setPixelInCell(PixelInCellType value)
+    {
         this.pixelInCell = value;
     }
 

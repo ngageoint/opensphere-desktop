@@ -381,8 +381,8 @@ public class DefaultHttpClient implements CloseableHttpClient
     private void newCreateHttpClient()
     {
         // Configure the timeouts.
-        final RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(options.getConnectTimeout()*1000)
-                .setSocketTimeout(options.getReadTimeout()*1000).build();
+        final RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(options.getConnectTimeout() * 1000)
+                .setSocketTimeout(options.getReadTimeout() * 1000).build();
 
         // Configure the connection manager.
         // TODO: The schemeRegistry needs to be reproduced.
@@ -391,8 +391,7 @@ public class DefaultHttpClient implements CloseableHttpClient
         connManager.setMaxTotal(getOptions().getMaxConnections());
 
         // Configure the proxying route planner.
-        final HttpRoutePlanner routePlanner = new DynamicProxyRoutePlanner(
-                getOptions().getProxyConfig().getProxyResolver());
+        final HttpRoutePlanner routePlanner = new DynamicProxyRoutePlanner(getOptions().getProxyConfig().getProxyResolver());
         // TODO: The proxy credentials need to be provided.
 
         final HttpClientBuilder builder = HttpClientBuilder.create();
@@ -486,8 +485,7 @@ public class DefaultHttpClient implements CloseableHttpClient
                     socket.setEnabledCipherSuites(sslConfig.getEnabledCipherSuites());
                 }
             };
-            final SSLSocketFactory socketFactory = new EnhancedSSLSocketFactory(sslContext, hostNameVerifier,
-                    customizer);
+            final SSLSocketFactory socketFactory = new EnhancedSSLSocketFactory(sslContext, hostNameVerifier, customizer);
             final Scheme https = new Scheme("https", 443, socketFactory);
             schemeRegistry.register(https);
         }
@@ -533,8 +531,7 @@ public class DefaultHttpClient implements CloseableHttpClient
         else if (!sslConfig.getClientCertificates().isEmpty())
         {
             final KeyManagerFactory factory = KeyManagerFactory.getInstance("NewSunX509");
-            final ManagerFactoryParameters factoryParameters = new KeyStoreBuilderParameters(
-                    sslConfig.getClientCertificates());
+            final ManagerFactoryParameters factoryParameters = new KeyStoreBuilderParameters(sslConfig.getClientCertificates());
             factory.init(factoryParameters);
             final KeyManager[] defaultKeyManagers = factory.getKeyManagers();
             keyManagers = new KeyManager[defaultKeyManagers.length];
@@ -574,8 +571,7 @@ public class DefaultHttpClient implements CloseableHttpClient
         }
         else
         {
-            final TrustManagerFactory factory = TrustManagerFactory
-                    .getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            final TrustManagerFactory factory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
 
             if (sslConfig.getPkixBuilderParameters() != null)
             {

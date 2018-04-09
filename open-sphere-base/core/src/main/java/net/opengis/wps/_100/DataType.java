@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,13 +14,16 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.ows._110.BoundingBoxType;
 
-
 /**
- * Identifies the form of this input or output value, and provides supporting information. 
+ * Identifies the form of this input or output value, and provides supporting
+ * information.
  * 
- * <p>Java class for DataType complex type.
+ * <p>
+ * Java class for DataType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DataType">
@@ -40,89 +42,82 @@ import net.opengis.ows._110.BoundingBoxType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DataType", propOrder = {
-    "complexData",
-    "literalData",
-    "boundingBoxData"
-})
-public class DataType {
+@XmlType(name = "DataType", propOrder = { "complexData", "literalData", "boundingBoxData" })
+public class DataType
+{
 
     @XmlElement(name = "ComplexData")
     protected ComplexDataType complexData;
+
     @XmlElement(name = "LiteralData")
     protected LiteralDataType literalData;
+
     @XmlElement(name = "BoundingBoxData")
     protected BoundingBoxType boundingBoxData;
 
     /**
      * Gets the value of the complexData property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ComplexDataType }
-     *     
+     * @return possible object is {@link ComplexDataType }
+     * 
      */
-    public ComplexDataType getComplexData() {
+    public ComplexDataType getComplexData()
+    {
         return complexData;
     }
 
     /**
      * Sets the value of the complexData property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ComplexDataType }
-     *     
+     * @param value allowed object is {@link ComplexDataType }
+     * 
      */
-    public void setComplexData(ComplexDataType value) {
+    public void setComplexData(ComplexDataType value)
+    {
         this.complexData = value;
     }
 
     /**
      * Gets the value of the literalData property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LiteralDataType }
-     *     
+     * @return possible object is {@link LiteralDataType }
+     * 
      */
-    public LiteralDataType getLiteralData() {
+    public LiteralDataType getLiteralData()
+    {
         return literalData;
     }
 
     /**
      * Sets the value of the literalData property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LiteralDataType }
-     *     
+     * @param value allowed object is {@link LiteralDataType }
+     * 
      */
-    public void setLiteralData(LiteralDataType value) {
+    public void setLiteralData(LiteralDataType value)
+    {
         this.literalData = value;
     }
 
     /**
      * Gets the value of the boundingBoxData property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BoundingBoxType }
-     *     
+     * @return possible object is {@link BoundingBoxType }
+     * 
      */
-    public BoundingBoxType getBoundingBoxData() {
+    public BoundingBoxType getBoundingBoxData()
+    {
         return boundingBoxData;
     }
 
     /**
      * Sets the value of the boundingBoxData property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BoundingBoxType }
-     *     
+     * @param value allowed object is {@link BoundingBoxType }
+     * 
      */
-    public void setBoundingBoxData(BoundingBoxType value) {
+    public void setBoundingBoxData(BoundingBoxType value)
+    {
         this.boundingBoxData = value;
     }
 

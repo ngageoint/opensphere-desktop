@@ -74,7 +74,7 @@ public class EncryptedPrivateKeyAndCertChain implements Cloneable
      * Get the certificate chain.
      *
      * @return The certificate chain.
-     * @throws CertificateException If a certificate cannot be decoded.
+     * @throws CertificateException If a   certificate cannot be decoded.
      */
     public List<? extends X509Certificate> getCertificateChain() throws CertificateException
     {
@@ -207,7 +207,7 @@ public class EncryptedPrivateKeyAndCertChain implements Cloneable
      * @param cipherFactory A factory for creating the encryption cipher.
      * @throws PrivateKeyProviderException If there is an error with the private
      *             key provider.
-     * @throws CertificateEncodingException If a certificate cannot be encoded.
+     * @throws CertificateEncodingException If a   certificate cannot be encoded.
      * @throws CipherException If the private key cannot be encrypted.
      */
     public void setPrivateKeyProvider(PrivateKeyProvider in, CipherFactory cipherFactory)

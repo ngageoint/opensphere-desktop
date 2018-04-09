@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -36,91 +37,82 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "geometry",
-    "fill",
-    "stroke"
-})
-public class PolygonSymbolizer
-    extends SymbolizerType
+@XmlType(name = "", propOrder = { "geometry", "fill", "stroke" })
+public class PolygonSymbolizer extends SymbolizerType
 {
 
     @XmlElement(name = "Geometry")
     protected Geometry geometry;
+
     @XmlElement(name = "Fill")
     protected Fill fill;
+
     @XmlElement(name = "Stroke")
     protected Stroke stroke;
 
     /**
      * Gets the value of the geometry property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Geometry }
-     *     
+     * @return possible object is {@link Geometry }
+     * 
      */
-    public Geometry getGeometry() {
+    public Geometry getGeometry()
+    {
         return geometry;
     }
 
     /**
      * Sets the value of the geometry property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Geometry }
-     *     
+     * @param value allowed object is {@link Geometry }
+     * 
      */
-    public void setGeometry(Geometry value) {
+    public void setGeometry(Geometry value)
+    {
         this.geometry = value;
     }
 
     /**
      * Gets the value of the fill property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Fill }
-     *     
+     * @return possible object is {@link Fill }
+     * 
      */
-    public Fill getFill() {
+    public Fill getFill()
+    {
         return fill;
     }
 
     /**
      * Sets the value of the fill property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Fill }
-     *     
+     * @param value allowed object is {@link Fill }
+     * 
      */
-    public void setFill(Fill value) {
+    public void setFill(Fill value)
+    {
         this.fill = value;
     }
 
     /**
      * Gets the value of the stroke property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Stroke }
-     *     
+     * @return possible object is {@link Stroke }
+     * 
      */
-    public Stroke getStroke() {
+    public Stroke getStroke()
+    {
         return stroke;
     }
 
     /**
      * Sets the value of the stroke property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Stroke }
-     *     
+     * @param value allowed object is {@link Stroke }
+     * 
      */
-    public void setStroke(Stroke value) {
+    public void setStroke(Stroke value)
+    {
         this.stroke = value;
     }
 

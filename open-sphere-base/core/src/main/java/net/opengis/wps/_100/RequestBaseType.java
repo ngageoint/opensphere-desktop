@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,13 +13,17 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * WPS operation request base, for all WPS operations except GetCapabilities. In this XML encoding, no "request" parameter is included, since the element name specifies the specific operation.
+ * WPS operation request base, for all WPS operations except GetCapabilities. In
+ * this XML encoding, no "request" parameter is included, since the element name
+ * specifies the specific operation.
  * 
- * <p>Java class for RequestBaseType complex type.
+ * <p>
+ * Java class for RequestBaseType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="RequestBaseType">
@@ -38,31 +41,33 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RequestBaseType")
-@XmlSeeAlso({
-    Execute.class,
-    DescribeProcess.class
-})
-public class RequestBaseType {
+@XmlSeeAlso({ Execute.class, DescribeProcess.class })
+public class RequestBaseType
+{
 
     @XmlAttribute(required = true)
     protected String service;
+
     @XmlAttribute(required = true)
     protected String version;
+
     @XmlAttribute
     protected String language;
 
     /**
      * Gets the value of the service property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getService() {
-        if (service == null) {
+    public String getService()
+    {
+        if (service == null)
+        {
             return "WPS";
-        } else {
+        }
+        else
+        {
             return service;
         }
     }
@@ -70,27 +75,28 @@ public class RequestBaseType {
     /**
      * Sets the value of the service property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setService(String value) {
+    public void setService(String value)
+    {
         this.service = value;
     }
 
     /**
      * Gets the value of the version property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getVersion() {
-        if (version == null) {
+    public String getVersion()
+    {
+        if (version == null)
+        {
             return "1.0.0";
-        } else {
+        }
+        else
+        {
             return version;
         }
     }
@@ -98,36 +104,33 @@ public class RequestBaseType {
     /**
      * Sets the value of the version property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setVersion(String value) {
+    public void setVersion(String value)
+    {
         this.version = value;
     }
 
     /**
      * Gets the value of the language property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLanguage() {
+    public String getLanguage()
+    {
         return language;
     }
 
     /**
      * Sets the value of the language property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLanguage(String value) {
+    public void setLanguage(String value)
+    {
         this.language = value;
     }
 

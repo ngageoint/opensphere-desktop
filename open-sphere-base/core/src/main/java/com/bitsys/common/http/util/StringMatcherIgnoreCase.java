@@ -10,33 +10,32 @@ import com.google.common.base.Predicate;
  */
 public class StringMatcherIgnoreCase implements Predicate<String>
 {
-   /** The value for comparison. */
-   private final String value;
+    /** The value for comparison. */
+    private final String value;
 
-   /**
-    * Constructs a <code>StringMatcher</code>.
-    *
-    * @param value
-    *           the value for comparison.
-    */
-   public StringMatcherIgnoreCase(final String value)
-   {
-      this.value = value;
-   }
+    /**
+     * Constructs a <code>StringMatcher</code>.
+     *
+     * @param value the value for comparison.
+     */
+    public StringMatcherIgnoreCase(final String value)
+    {
+        this.value = value;
+    }
 
-   /**
-    * Returns the value for comparison.
-    *
-    * @return the value for comparison.
-    */
-   public String getValue()
-   {
-      return value;
-   }
+    /**
+     * Returns the value for comparison.
+     *
+     * @return the value for comparison.
+     */
+    public String getValue()
+    {
+        return value;
+    }
 
-   @Override
-   public boolean apply(final String value)
-   {
-      return StringUtils.equalsIgnoreCase(value, this.value);
-   }
+    @Override
+    public boolean apply(final String value)
+    {
+        return StringUtils.equalsIgnoreCase(value, this.value);
+    }
 }

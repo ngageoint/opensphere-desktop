@@ -11,7 +11,8 @@ import javafx.scene.input.MouseEvent;
 import io.opensphere.core.util.javafx.input.view.behavior.AbstractBehavior;
 
 /**
- * An extension of the {@link SkinBase} class, in which behavior support is added to the skin hierarchy.
+ * An extension of the {@link SkinBase} class, in which behavior support is
+ * added to the skin hierarchy.
  *
  * @param <C> The type of control to which the skin is bound.
  * @param <B> The type of behavior to which the skin is bound.
@@ -19,11 +20,14 @@ import io.opensphere.core.util.javafx.input.view.behavior.AbstractBehavior;
 public class AbstractBehaviorSkin<C extends Control, B extends AbstractBehavior<C>> extends SkinBase<C>
 {
     /**
-     * The {@link AbstractBehavior} that encapsulates the interaction with the {@link Control} from this {@code Skin}. The
-     * {@code Skin} does not modify the {@code Control} directly, but rather redirects events into the {@code AbstractBehavior}
-     * which then handles the events by modifying internal state and public state in the {@code Control}. Generally, specific
-     * {@code Skin} implementations will require specific {@code AbstractBehavior} implementations. For example, a ButtonSkin
-     * might require a ButtonBehavior.
+     * The {@link AbstractBehavior} that encapsulates the interaction with the
+     * {@link Control} from this {@code Skin}. The {@code Skin} does not modify
+     * the {@code Control} directly, but rather redirects events into the
+     * {@code AbstractBehavior} which then handles the events by modifying
+     * internal state and public state in the {@code Control}. Generally,
+     * specific {@code Skin} implementations will require specific
+     * {@code AbstractBehavior} implementations. For example, a ButtonSkin might
+     * require a ButtonBehavior.
      */
     private B myBehavior;
 
@@ -33,14 +37,16 @@ public class AbstractBehaviorSkin<C extends Control, B extends AbstractBehavior<
     private MultiplePropertyChangeListenerHandler myChangeListenerHandler;
 
     /**
-     * Forwards mouse events received by a MouseListener to the behavior. Note that this pattern is used to remove some of the
-     * anonymous inner classes which would otherwise have to created.
+     * Forwards mouse events received by a MouseListener to the behavior. Note
+     * that this pattern is used to remove some of the anonymous inner classes
+     * which would otherwise have to created.
      */
     private final EventHandler<MouseEvent> myMouseHandler;
 
     /**
-     * Forwards {@link ContextMenuEvent}s received to the behavior. Note that this pattern is used to remove some of the anonymous
-     * inner classes which would otherwise have to created.
+     * Forwards {@link ContextMenuEvent}s received to the behavior. Note that
+     * this pattern is used to remove some of the anonymous inner classes which
+     * would otherwise have to created.
      *
      */
     private final EventHandler<ContextMenuEvent> myContextMenuHandler;
@@ -84,7 +90,8 @@ public class AbstractBehaviorSkin<C extends Control, B extends AbstractBehavior<
     }
 
     /**
-     * An event handler method used to process a mouse event, and distribute the event to the behavior.
+     * An event handler method used to process a mouse event, and distribute the
+     * event to the behavior.
      *
      * @param pEvent the event to process.
      * @throws AssertionError if the event type is not recognized.
@@ -150,10 +157,12 @@ public class AbstractBehaviorSkin<C extends Control, B extends AbstractBehavior<
     }
 
     /**
-     * Subclasses can invoke this method to register that we want to listen to property change events for the given property.
+     * Subclasses can invoke this method to register that we want to listen to
+     * property change events for the given property.
      *
      * @param pProperty the property to which to bind the listener handler.
-     * @param pChangeEventName the name of the event that will be propagated when the property changes.
+     * @param pChangeEventName the name of the event that will be propagated
+     *            when the property changes.
      */
     protected final void registerChangeListener(ObservableValue<?> pProperty, String pChangeEventName)
     {
@@ -165,9 +174,11 @@ public class AbstractBehaviorSkin<C extends Control, B extends AbstractBehavior<
     }
 
     /**
-     * Skin subclasses will override this method to handle changes in corresponding control's properties.
+     * Skin subclasses will override this method to handle changes in
+     * corresponding control's properties.
      *
-     * @param pChangeEventName the name of the event that will be propagated when the property changes.
+     * @param pChangeEventName the name of the event that will be propagated
+     *            when the property changes.
      */
     protected void handleControlPropertyChanged(String pChangeEventName)
     {

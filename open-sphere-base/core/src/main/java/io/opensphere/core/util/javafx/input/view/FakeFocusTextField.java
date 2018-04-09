@@ -35,7 +35,8 @@ public class FakeFocusTextField extends TextField
     /**
      * {@inheritDoc}
      *
-     * @see javafx.scene.control.TextInputControl#queryAccessibleAttribute(javafx.scene.AccessibleAttribute, java.lang.Object[])
+     * @see javafx.scene.control.TextInputControl#queryAccessibleAttribute(javafx.scene.AccessibleAttribute,
+     *      java.lang.Object[])
      */
     @Override
     public Object queryAccessibleAttribute(AccessibleAttribute attribute, Object... parameters)
@@ -43,8 +44,9 @@ public class FakeFocusTextField extends TextField
         switch (attribute)
         {
             case FOCUS_ITEM:
-                /* Internally comboBox reassign its focus the text field. For the accessibility perspective it is more meaningful
-                 * if the focus stays with the comboBox control. */
+                /* Internally comboBox reassign its focus the text field. For
+                 * the accessibility perspective it is more meaningful if the
+                 * focus stays with the comboBox control. */
                 return getParent();
             default:
                 return super.queryAccessibleAttribute(attribute, parameters);

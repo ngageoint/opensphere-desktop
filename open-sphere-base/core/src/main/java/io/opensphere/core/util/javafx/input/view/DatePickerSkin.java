@@ -9,7 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 
 /**
- * An implementation of the {@link AbstractComboBoxPopupControl} class for use with the OpenSphere Date Picker.
+ * An implementation of the {@link AbstractComboBoxPopupControl} class for use
+ * with the OpenSphere Date Picker.
  */
 public class DatePickerSkin extends AbstractComboBoxPopupControl<LocalDate>
 {
@@ -39,7 +40,8 @@ public class DatePickerSkin extends AbstractComboBoxPopupControl<LocalDate>
 
         this.myDatePicker = pDatePicker;
 
-        // The "arrow" is actually a rectangular SVG icon resembling a calendar. Round the size of the icon to whole integers to
+        // The "arrow" is actually a rectangular SVG icon resembling a calendar.
+        // Round the size of the icon to whole integers to
         // get sharp edges.
         getIcon().paddingProperty().addListener(new PaddedInvalidationListener(getIcon()));
 
@@ -66,7 +68,8 @@ public class DatePickerSkin extends AbstractComboBoxPopupControl<LocalDate>
     /**
      * {@inheritDoc}
      *
-     * @see javafx.scene.control.SkinBase#computeMinWidth(double, double, double, double, double)
+     * @see javafx.scene.control.SkinBase#computeMinWidth(double, double,
+     *      double, double, double)
      */
     @Override
     protected double computeMinWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset)
@@ -144,7 +147,8 @@ public class DatePickerSkin extends AbstractComboBoxPopupControl<LocalDate>
     @Override
     protected TextField getEditor()
     {
-        // Use getSkinnable() here because this method is called from the super constructor before datePicker is initialized.
+        // Use getSkinnable() here because this method is called from the super
+        // constructor before datePicker is initialized.
         return ((DatePicker)getSkinnable()).getEditor();
     }
 
@@ -185,7 +189,8 @@ public class DatePickerSkin extends AbstractComboBoxPopupControl<LocalDate>
     {
         if (!getPopup().isShowing() && myDatePicker.isShowing())
         {
-            // Popup was dismissed. Maybe user clicked outside or typed ESCAPE. Make sure DateTimePicker button is in sync.
+            // Popup was dismissed. Maybe user clicked outside or typed ESCAPE.
+            // Make sure DateTimePicker button is in sync.
             myDatePicker.hide();
         }
     }

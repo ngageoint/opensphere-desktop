@@ -443,8 +443,8 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
                         modelCoords.add(vertex.getCoordinates().asVector3d());
                     }
 
-                    meshData = new PolygonMeshData(modelCoords, null, block.getIndices(), null, null, block.getTesseraVertexCount(),
-                            false);
+                    meshData = new PolygonMeshData(modelCoords, null, block.getIndices(), null, null,
+                            block.getTesseraVertexCount(), false);
                 }
             }
         }

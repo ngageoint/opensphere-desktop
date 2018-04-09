@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,13 +15,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A CompositeCurve is defined by a sequence of (orientable) curves such that the each curve in the sequence terminates at the start point of the subsequent curve in the list.
+ * A CompositeCurve is defined by a sequence of (orientable) curves such that
+ * the each curve in the sequence terminates at the start point of the
+ * subsequent curve in the list.
  * 
- * <p>Java class for CompositeCurveType complex type.
+ * <p>
+ * Java class for CompositeCurveType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CompositeCurveType">
@@ -39,30 +42,31 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CompositeCurveType", propOrder = {
-    "curveMember"
-})
-public class CompositeCurveType
-    extends AbstractCurveType
+@XmlType(name = "CompositeCurveType", propOrder = { "curveMember" })
+public class CompositeCurveType extends AbstractCurveType
 {
 
     @XmlElement(required = true)
     protected List<CurvePropertyType> curveMember;
 
     /**
-     * This element references or contains one curve in the composite curve. The curves are contiguous, the collection of curves is ordered.
-     * NOTE: This definition allows for a nested structure, i.e. a CompositeCurve may use, for example, another CompositeCurve as a curve member.Gets the value of the curveMember property.
+     * This element references or contains one curve in the composite curve. The
+     * curves are contiguous, the collection of curves is ordered. NOTE: This
+     * definition allows for a nested structure, i.e. a CompositeCurve may use,
+     * for example, another CompositeCurve as a curve member.Gets the value of
+     * the curveMember property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the curveMember property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the curveMember property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getCurveMember().add(newItem);
+     * getCurveMember().add(newItem);
      * </pre>
      * 
      * 
@@ -72,8 +76,10 @@ public class CompositeCurveType
      * 
      * 
      */
-    public List<CurvePropertyType> getCurveMember() {
-        if (curveMember == null) {
+    public List<CurvePropertyType> getCurveMember()
+    {
+        if (curveMember == null)
+        {
             curveMember = new ArrayList<CurvePropertyType>();
         }
         return this.curveMember;

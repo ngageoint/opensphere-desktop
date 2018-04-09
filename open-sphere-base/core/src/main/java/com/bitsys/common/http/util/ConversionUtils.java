@@ -15,52 +15,49 @@ import org.apache.http.message.BasicNameValuePair;
  */
 public final class ConversionUtils
 {
-   /**
-    * Constructs a <code>ConversionUtils</code>.
-    */
-   private ConversionUtils()
-   {
-   }
+    /**
+     * Constructs a <code>ConversionUtils</code>.
+     */
+    private ConversionUtils()
+    {
+    }
 
-   /**
-    * Converts an Apache {@link NameValuePair} to a {@link Pair}.
-    *
-    * @param pair
-    *           the Apache pair to convert.
-    * @return the converted pair.
-    */
-   public static Pair<String, String> toPair(final NameValuePair pair)
-   {
-      return new ImmutablePair<>(pair.getName(), pair.getValue());
-   }
+    /**
+     * Converts an Apache {@link NameValuePair} to a {@link Pair}.
+     *
+     * @param pair the Apache pair to convert.
+     * @return the converted pair.
+     */
+    public static Pair<String, String> toPair(final NameValuePair pair)
+    {
+        return new ImmutablePair<>(pair.getName(), pair.getValue());
+    }
 
-   /**
-    * Converts an {@link Entry} to an Apache {@link NameValuePair}.
-    *
-    * @param entry
-    *           the entry to convert.
-    * @return the converted Apache pair.
-    */
-   public static NameValuePair toNameValuePair(final Entry<String, String> entry)
-   {
-      return new BasicNameValuePair(entry.getKey(), entry.getValue());
-   }
+    /**
+     * Converts an {@link Entry} to an Apache {@link NameValuePair}.
+     *
+     * @param entry the entry to convert.
+     * @return the converted Apache pair.
+     */
+    public static NameValuePair toNameValuePair(final Entry<String, String> entry)
+    {
+        return new BasicNameValuePair(entry.getKey(), entry.getValue());
+    }
 
-   /**
-    * Converts the iterable of {@link Entry Entries} to a collection of Apache
-    * {@link NameValuePair}s.
-    *
-    * @param entries
-    *           the entries to convert.
-    * @return the converted pair.
-    */
-   public static Collection<? extends NameValuePair> toNameValuePairs(final Iterable<? extends Entry<String, String>> entries)
-   {
-      final List<NameValuePair> apacheList = new ArrayList<>();
-      for (final Entry<String, String> entry : entries)
-      {
-         apacheList.add(toNameValuePair(entry));
-      }
-      return apacheList;
-   }
+    /**
+     * Converts the iterable of {@link Entry Entries} to a collection of Apache
+     * {@link NameValuePair}s.
+     *
+     * @param entries the entries to convert.
+     * @return the converted pair.
+     */
+    public static Collection<? extends NameValuePair> toNameValuePairs(final Iterable<? extends Entry<String, String>> entries)
+    {
+        final List<NameValuePair> apacheList = new ArrayList<>();
+        for (final Entry<String, String> entry : entries)
+        {
+            apacheList.add(toNameValuePair(entry));
+        }
+        return apacheList;
+    }
 }

@@ -174,7 +174,7 @@ public class PolygonRendererImmediate extends AbstractRenderer<PolygonGeometry>
                                         ((PolygonRenderProperties)renderProps).getFillColorRenderProperties());
                             }
                             GL2Utilities.renderWithTransform(rc, geo.getRenderProperties().getTransform(),
-                                () -> PolygonRenderUtil.drawPolygonMesh(rc.getGL(), fillData));
+                                    () -> PolygonRenderUtil.drawPolygonMesh(rc.getGL(), fillData));
                         }
                     }
                 }

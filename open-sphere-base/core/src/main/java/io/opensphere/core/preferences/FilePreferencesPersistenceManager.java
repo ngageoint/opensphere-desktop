@@ -53,8 +53,8 @@ public class FilePreferencesPersistenceManager implements PreferencesPersistence
      */
     public FilePreferencesPersistenceManager()
     {
-        this(StringUtilities.expandProperties(System.getProperty("opensphere.path.runtime"), System.getProperties()) + File.separator
-                + "prefs");
+        this(StringUtilities.expandProperties(System.getProperty("opensphere.path.runtime"), System.getProperties())
+                + File.separator + "prefs");
     }
 
     /**

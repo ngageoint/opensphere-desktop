@@ -5,19 +5,21 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for SuccessionType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for SuccessionType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="SuccessionType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -32,29 +34,32 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "SuccessionType")
 @XmlEnum
-public enum SuccessionType {
+public enum SuccessionType
+{
 
     @XmlEnumValue("substitution")
-    SUBSTITUTION("substitution"),
-    @XmlEnumValue("division")
-    DIVISION("division"),
-    @XmlEnumValue("fusion")
-    FUSION("fusion"),
-    @XmlEnumValue("initiation")
+    SUBSTITUTION("substitution"), @XmlEnumValue("division")
+    DIVISION("division"), @XmlEnumValue("fusion")
+    FUSION("fusion"), @XmlEnumValue("initiation")
     INITIATION("initiation");
     private final String value;
 
-    SuccessionType(String v) {
+    SuccessionType(String v)
+    {
         value = v;
     }
 
-    public String value() {
+    public String value()
+    {
         return value;
     }
 
-    public static SuccessionType fromValue(String v) {
-        for (SuccessionType c: SuccessionType.values()) {
-            if (c.value.equals(v)) {
+    public static SuccessionType fromValue(String v)
+    {
+        for (SuccessionType c : SuccessionType.values())
+        {
+            if (c.value.equals(v))
+            {
                 return c;
             }
         }

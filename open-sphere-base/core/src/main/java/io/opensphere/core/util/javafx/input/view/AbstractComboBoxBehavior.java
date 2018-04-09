@@ -16,9 +16,11 @@ import javafx.scene.input.MouseEvent;
 import io.opensphere.core.util.javafx.input.view.behavior.AbstractBehavior;
 
 /**
- * An extension of the {@link AbstractBehavior} class, in which combo-box specific behaviors are added.
+ * An extension of the {@link AbstractBehavior} class, in which combo-box
+ * specific behaviors are added.
  *
- * @param <T> The data type contained within the combo box to which the behavior is bound.
+ * @param <T> The data type contained within the combo box to which the behavior
+ *            is bound.
  */
 public class AbstractComboBoxBehavior<T> extends AbstractBehavior<ComboBoxBase<T>>
 {
@@ -28,7 +30,8 @@ public class AbstractComboBoxBehavior<T> extends AbstractBehavior<ComboBoxBase<T
     private boolean myMouseInsideButton;
 
     /**
-     * A flag used to determine if the popup should be shown on mouse release (it should not be shown in some cases).
+     * A flag used to determine if the popup should be shown on mouse release
+     * (it should not be shown in some cases).
      */
     private boolean myShowPopupOnMouseRelease = true;
 
@@ -50,9 +53,11 @@ public class AbstractComboBoxBehavior<T> extends AbstractBehavior<ComboBoxBase<T
     }
 
     /**
-     * Arms the ComboBox based on the supplied event. The event must be valid for the combo box to arm (a valid event is defined
-     * as the primary mouse button is the only button that is clicked, and no modifier keys were pressed when the click event
-     * occurred). An armed ComboBox will show a popup list on the next expected UI gesture.
+     * Arms the ComboBox based on the supplied event. The event must be valid
+     * for the combo box to arm (a valid event is defined as the primary mouse
+     * button is the only button that is clicked, and no modifier keys were
+     * pressed when the click event occurred). An armed ComboBox will show a
+     * popup list on the next expected UI gesture.
      *
      * @param pEvent the event triggered by the mouse click.
      */
@@ -69,7 +74,8 @@ public class AbstractComboBoxBehavior<T> extends AbstractBehavior<ComboBoxBase<T
     }
 
     /**
-     * Arms the ComboBox. An armed ComboBox will show a popup list on the next expected UI gesture.
+     * Arms the ComboBox. An armed ComboBox will show a popup list on the next
+     * expected UI gesture.
      */
     public void arm()
     {

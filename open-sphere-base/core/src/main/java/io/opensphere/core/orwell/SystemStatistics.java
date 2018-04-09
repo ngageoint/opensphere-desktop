@@ -1,7 +1,8 @@
 package io.opensphere.core.orwell;
 
 /**
- * A container in which the statistics describing the operating system are stored.
+ * A container in which the statistics describing the operating system are
+ * stored.
  */
 public class SystemStatistics
 {
@@ -31,23 +32,27 @@ public class SystemStatistics
     private double mySystemLoadAverage;
 
     /**
-    * The version of the Java Management Specification implemented by the underlying virtual machine.
-    */
+     * The version of the Java Management Specification implemented by the
+     * underlying virtual machine.
+     */
     private String myManagementSpecVersion;
 
     /**
-    * The name of the Java specification implemented by the underlying virtual machine.
-    */
+     * The name of the Java specification implemented by the underlying virtual
+     * machine.
+     */
     private String mySpecName;
 
     /**
-    * The vendor providing the implementation of the Java specification in the underlying virtual machine.
-    */
+     * The vendor providing the implementation of the Java specification in the
+     * underlying virtual machine.
+     */
     private String mySpecVendor;
 
     /**
-    *  The version of the Java specification implemented by the underlying virtual machine.
-    */
+     * The version of the Java specification implemented by the underlying
+     * virtual machine.
+     */
     private String mySpecVersion;
 
     /**
@@ -56,7 +61,8 @@ public class SystemStatistics
     private String myJavaVmName;
 
     /**
-     * The vendor that provided the implementation of the underlying virtual machine.
+     * The vendor that provided the implementation of the underlying virtual
+     * machine.
      */
     private String myJavaVmVendor;
 
@@ -78,7 +84,8 @@ public class SystemStatistics
     /**
      * Sets the value of the {@link #myArchitecture} field.
      *
-     * @param pArchitecture the value to store in the {@link #myArchitecture} field.
+     * @param pArchitecture the value to store in the {@link #myArchitecture}
+     *            field.
      */
     public void setArchitecture(String pArchitecture)
     {
@@ -98,7 +105,8 @@ public class SystemStatistics
     /**
      * Sets the value of the {@link #myAvailableProcessors} field.
      *
-     * @param pAvailableProcessors the value to store in the {@link #myAvailableProcessors} field.
+     * @param pAvailableProcessors the value to store in the
+     *            {@link #myAvailableProcessors} field.
      */
     public void setAvailableProcessors(long pAvailableProcessors)
     {
@@ -118,7 +126,8 @@ public class SystemStatistics
     /**
      * Sets the value of the {@link #myOperatingSystemName} field.
      *
-     * @param pOperatingSystemName the value to store in the {@link #myOperatingSystemName} field.
+     * @param pOperatingSystemName the value to store in the
+     *            {@link #myOperatingSystemName} field.
      */
     public void setOperatingSystemName(String pOperatingSystemName)
     {
@@ -138,7 +147,8 @@ public class SystemStatistics
     /**
      * Sets the value of the {@link #myOperatingSystemVersion} field.
      *
-     * @param pOperatingSystemVersion the value to store in the {@link #myOperatingSystemVersion} field.
+     * @param pOperatingSystemVersion the value to store in the
+     *            {@link #myOperatingSystemVersion} field.
      */
     public void setOperatingSystemVersion(String pOperatingSystemVersion)
     {
@@ -158,7 +168,8 @@ public class SystemStatistics
     /**
      * Sets the value of the {@link #mySystemLoadAverage} field.
      *
-     * @param pSystemLoadAverage the value to store in the {@link #mySystemLoadAverage} field.
+     * @param pSystemLoadAverage the value to store in the
+     *            {@link #mySystemLoadAverage} field.
      */
     public void setSystemLoadAverage(double pSystemLoadAverage)
     {
@@ -178,8 +189,8 @@ public class SystemStatistics
     /**
      * Sets the value of the {@link #myManagementSpecVersion} field.
      *
-     * @param pManagementSpecVersion
-     *            the value to store in the {@link #myManagementSpecVersion} field.
+     * @param pManagementSpecVersion the value to store in the
+     *            {@link #myManagementSpecVersion} field.
      */
     public void setManagementSpecVersion(String pManagementSpecVersion)
     {
@@ -199,8 +210,7 @@ public class SystemStatistics
     /**
      * Sets the value of the {@link #mySpecName} field.
      *
-     * @param pSpecName
-     *            the value to store in the {@link #mySpecName} field.
+     * @param pSpecName the value to store in the {@link #mySpecName} field.
      */
     public void setSpecName(String pSpecName)
     {
@@ -220,8 +230,7 @@ public class SystemStatistics
     /**
      * Sets the value of the {@link #mySpecVendor} field.
      *
-     * @param pSpecVendor
-     *            the value to store in the {@link #mySpecVendor} field.
+     * @param pSpecVendor the value to store in the {@link #mySpecVendor} field.
      */
     public void setSpecVendor(String pSpecVendor)
     {
@@ -241,8 +250,8 @@ public class SystemStatistics
     /**
      * Sets the value of the {@link #mySpecVersion} field.
      *
-     * @param pSpecVersion
-     *            the value to store in the {@link #mySpecVersion} field.
+     * @param pSpecVersion the value to store in the {@link #mySpecVersion}
+     *            field.
      */
     public void setSpecVersion(String pSpecVersion)
     {
@@ -262,8 +271,7 @@ public class SystemStatistics
     /**
      * Sets the value of the {@link #myJavaVmName} field.
      *
-     * @param pJavaVmName
-     *            the value to store in the {@link #myJavaVmName} field.
+     * @param pJavaVmName the value to store in the {@link #myJavaVmName} field.
      */
     public void setJavaVmName(String pJavaVmName)
     {
@@ -283,8 +291,8 @@ public class SystemStatistics
     /**
      * Sets the value of the {@link #myJavaVmVendor} field.
      *
-     * @param pJavaVmVendor
-     *            the value to store in the {@link #myJavaVmVendor} field.
+     * @param pJavaVmVendor the value to store in the {@link #myJavaVmVendor}
+     *            field.
      */
     public void setJavaVmVendor(String pJavaVmVendor)
     {
@@ -304,8 +312,8 @@ public class SystemStatistics
     /**
      * Sets the value of the {@link #myJavaVmVersion} field.
      *
-     * @param pJavaVmVersion
-     *            the value to store in the {@link #myJavaVmVersion} field.
+     * @param pJavaVmVersion the value to store in the {@link #myJavaVmVersion}
+     *            field.
      */
     public void setJavaVmVersion(String pJavaVmVersion)
     {

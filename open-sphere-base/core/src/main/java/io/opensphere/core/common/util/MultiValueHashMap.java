@@ -779,7 +779,8 @@ public class MultiValueHashMap<KEY_TYPE, VALUE_TYPE> extends AbstractMultiMap<KE
         /* no need to do any checking to see if there's an existing entry here.
          * If it's null, the new entry will just assume there's no entry, and
          * overwrite it. If it is not null, the new entry will store the
-         * existing entry as its next pointer, and overwrite the bucket entry. */
+         * existing entry as its next pointer, and overwrite the bucket
+         * entry. */
         Entry<KEY_TYPE, VALUE_TYPE> existingEntry = table[bucketIndex];
 
         table[bucketIndex] = new Entry<>(pHash, pKey, pValue, existingEntry);

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import java.util.ArrayList;
@@ -16,22 +15,22 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *             Reports the list of identifiers of all features created 
- *             by a transaction request.  New features are created using
- *             the Insert action and the list of idetifiers must be 
- *             presented in the same order as the Insert actions were
- *             encountered in the transaction request.  Features may
- *             optionally be correlated with identifiers using the 
- *             handle attribute (if it was specified on the Insert 
- *             element).
- *          
+ * Reports the list of identifiers of all features created by a transaction
+ * request. New features are created using the Insert action and the list of
+ * idetifiers must be presented in the same order as the Insert actions were
+ * encountered in the transaction request. Features may optionally be correlated
+ * with identifiers using the handle attribute (if it was specified on the
+ * Insert element).
  * 
- * <p>Java class for InsertResultsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for InsertResultsType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="InsertResultsType">
@@ -48,10 +47,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "InsertResultsType", propOrder = {
-    "feature"
-})
-public class InsertResultsType {
+@XmlType(name = "InsertResultsType", propOrder = { "feature" })
+public class InsertResultsType
+{
 
     @XmlElement(name = "Feature", required = true)
     protected List<InsertedFeatureType> feature;
@@ -60,15 +58,16 @@ public class InsertResultsType {
      * Gets the value of the feature property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the feature property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the feature property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getFeature().add(newItem);
+     * getFeature().add(newItem);
      * </pre>
      * 
      * 
@@ -78,8 +77,10 @@ public class InsertResultsType {
      * 
      * 
      */
-    public List<InsertedFeatureType> getFeature() {
-        if (feature == null) {
+    public List<InsertedFeatureType> getFeature()
+    {
+        if (feature == null)
+        {
             feature = new ArrayList<InsertedFeatureType>();
         }
         return this.feature;

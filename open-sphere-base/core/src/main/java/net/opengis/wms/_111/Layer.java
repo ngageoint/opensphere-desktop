@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:39 PM MST 
 //
 
-
 package net.opengis.wms._111;
 
 import java.util.ArrayList;
@@ -21,101 +20,109 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "name",
-    "title",
-    "_abstract",
-    "keywordList",
-    "srs",
-    "latLonBoundingBox",
-    "boundingBox",
-    "dimension",
-    "extent",
-    "attribution",
-    "authorityURL",
-    "identifier",
-    "metadataURL",
-    "dataURL",
-    "featureListURL",
-    "style",
-    "scaleHint",
-    "layer"
-})
+@XmlType(name = "", propOrder = { "name", "title", "_abstract", "keywordList", "srs", "latLonBoundingBox", "boundingBox",
+    "dimension", "extent", "attribution", "authorityURL", "identifier", "metadataURL", "dataURL", "featureListURL", "style",
+    "scaleHint", "layer" })
 @XmlRootElement(name = "Layer")
-public class Layer {
+public class Layer
+{
 
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String queryable;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String cascaded;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String opaque;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String noSubsets;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String fixedWidth;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String fixedHeight;
+
     @XmlElement(name = "Name")
     protected String name;
+
     @XmlElement(name = "Title", required = true)
     protected String title;
+
     @XmlElement(name = "Abstract")
     protected String _abstract;
+
     @XmlElement(name = "KeywordList")
     protected KeywordList keywordList;
+
     @XmlElement(name = "SRS")
     protected List<SRS> srs;
+
     @XmlElement(name = "LatLonBoundingBox")
     protected LatLonBoundingBox latLonBoundingBox;
+
     @XmlElement(name = "BoundingBox")
     protected List<BoundingBox> boundingBox;
+
     @XmlElement(name = "Dimension")
     protected List<Dimension> dimension;
+
     @XmlElement(name = "Extent")
     protected List<Extent> extent;
+
     @XmlElement(name = "Attribution")
     protected Attribution attribution;
+
     @XmlElement(name = "AuthorityURL")
     protected List<AuthorityURL> authorityURL;
+
     @XmlElement(name = "Identifier")
     protected List<Identifier> identifier;
+
     @XmlElement(name = "MetadataURL")
     protected List<MetadataURL> metadataURL;
+
     @XmlElement(name = "DataURL")
     protected List<DataURL> dataURL;
+
     @XmlElement(name = "FeatureListURL")
     protected List<FeatureListURL> featureListURL;
+
     @XmlElement(name = "Style")
     protected List<Style> style;
+
     @XmlElement(name = "ScaleHint")
     protected ScaleHint scaleHint;
+
     @XmlElement(name = "Layer")
     protected List<Layer> layer;
 
     /**
      * Gets the value of the queryable property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getQueryable() {
-        if (queryable == null) {
+    public String getQueryable()
+    {
+        if (queryable == null)
+        {
             return "0";
-        } else {
+        }
+        else
+        {
             return queryable;
         }
     }
@@ -123,51 +130,50 @@ public class Layer {
     /**
      * Sets the value of the queryable property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setQueryable(String value) {
+    public void setQueryable(String value)
+    {
         this.queryable = value;
     }
 
     /**
      * Gets the value of the cascaded property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getCascaded() {
+    public String getCascaded()
+    {
         return cascaded;
     }
 
     /**
      * Sets the value of the cascaded property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setCascaded(String value) {
+    public void setCascaded(String value)
+    {
         this.cascaded = value;
     }
 
     /**
      * Gets the value of the opaque property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getOpaque() {
-        if (opaque == null) {
+    public String getOpaque()
+    {
+        if (opaque == null)
+        {
             return "0";
-        } else {
+        }
+        else
+        {
             return opaque;
         }
     }
@@ -175,27 +181,28 @@ public class Layer {
     /**
      * Sets the value of the opaque property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setOpaque(String value) {
+    public void setOpaque(String value)
+    {
         this.opaque = value;
     }
 
     /**
      * Gets the value of the noSubsets property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getNoSubsets() {
-        if (noSubsets == null) {
+    public String getNoSubsets()
+    {
+        if (noSubsets == null)
+        {
             return "0";
-        } else {
+        }
+        else
+        {
             return noSubsets;
         }
     }
@@ -203,156 +210,143 @@ public class Layer {
     /**
      * Sets the value of the noSubsets property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setNoSubsets(String value) {
+    public void setNoSubsets(String value)
+    {
         this.noSubsets = value;
     }
 
     /**
      * Gets the value of the fixedWidth property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getFixedWidth() {
+    public String getFixedWidth()
+    {
         return fixedWidth;
     }
 
     /**
      * Sets the value of the fixedWidth property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setFixedWidth(String value) {
+    public void setFixedWidth(String value)
+    {
         this.fixedWidth = value;
     }
 
     /**
      * Gets the value of the fixedHeight property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getFixedHeight() {
+    public String getFixedHeight()
+    {
         return fixedHeight;
     }
 
     /**
      * Sets the value of the fixedHeight property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setFixedHeight(String value) {
+    public void setFixedHeight(String value)
+    {
         this.fixedHeight = value;
     }
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
     /**
      * Gets the value of the abstract property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getAbstract() {
+    public String getAbstract()
+    {
         return _abstract;
     }
 
     /**
      * Sets the value of the abstract property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setAbstract(String value) {
+    public void setAbstract(String value)
+    {
         this._abstract = value;
     }
 
     /**
      * Gets the value of the keywordList property.
      * 
-     * @return
-     *     possible object is
-     *     {@link KeywordList }
-     *     
+     * @return possible object is {@link KeywordList }
+     * 
      */
-    public KeywordList getKeywordList() {
+    public KeywordList getKeywordList()
+    {
         return keywordList;
     }
 
     /**
      * Sets the value of the keywordList property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link KeywordList }
-     *     
+     * @param value allowed object is {@link KeywordList }
+     * 
      */
-    public void setKeywordList(KeywordList value) {
+    public void setKeywordList(KeywordList value)
+    {
         this.keywordList = value;
     }
 
@@ -360,26 +354,28 @@ public class Layer {
      * Gets the value of the srs property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the srs property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the srs property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSRS().add(newItem);
+     * getSRS().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link SRS }
+     * Objects of the following type(s) are allowed in the list {@link SRS }
      * 
      * 
      */
-    public List<SRS> getSRS() {
-        if (srs == null) {
+    public List<SRS> getSRS()
+    {
+        if (srs == null)
+        {
             srs = new ArrayList<SRS>();
         }
         return this.srs;
@@ -388,24 +384,22 @@ public class Layer {
     /**
      * Gets the value of the latLonBoundingBox property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LatLonBoundingBox }
-     *     
+     * @return possible object is {@link LatLonBoundingBox }
+     * 
      */
-    public LatLonBoundingBox getLatLonBoundingBox() {
+    public LatLonBoundingBox getLatLonBoundingBox()
+    {
         return latLonBoundingBox;
     }
 
     /**
      * Sets the value of the latLonBoundingBox property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LatLonBoundingBox }
-     *     
+     * @param value allowed object is {@link LatLonBoundingBox }
+     * 
      */
-    public void setLatLonBoundingBox(LatLonBoundingBox value) {
+    public void setLatLonBoundingBox(LatLonBoundingBox value)
+    {
         this.latLonBoundingBox = value;
     }
 
@@ -413,15 +407,16 @@ public class Layer {
      * Gets the value of the boundingBox property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the boundingBox property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the boundingBox property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getBoundingBox().add(newItem);
+     * getBoundingBox().add(newItem);
      * </pre>
      * 
      * 
@@ -431,8 +426,10 @@ public class Layer {
      * 
      * 
      */
-    public List<BoundingBox> getBoundingBox() {
-        if (boundingBox == null) {
+    public List<BoundingBox> getBoundingBox()
+    {
+        if (boundingBox == null)
+        {
             boundingBox = new ArrayList<BoundingBox>();
         }
         return this.boundingBox;
@@ -442,26 +439,29 @@ public class Layer {
      * Gets the value of the dimension property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the dimension property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the dimension property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getDimension().add(newItem);
+     * getDimension().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Dimension }
+     * Objects of the following type(s) are allowed in the list {@link Dimension
+     * }
      * 
      * 
      */
-    public List<Dimension> getDimension() {
-        if (dimension == null) {
+    public List<Dimension> getDimension()
+    {
+        if (dimension == null)
+        {
             dimension = new ArrayList<Dimension>();
         }
         return this.dimension;
@@ -471,26 +471,28 @@ public class Layer {
      * Gets the value of the extent property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the extent property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the extent property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getExtent().add(newItem);
+     * getExtent().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Extent }
+     * Objects of the following type(s) are allowed in the list {@link Extent }
      * 
      * 
      */
-    public List<Extent> getExtent() {
-        if (extent == null) {
+    public List<Extent> getExtent()
+    {
+        if (extent == null)
+        {
             extent = new ArrayList<Extent>();
         }
         return this.extent;
@@ -499,24 +501,22 @@ public class Layer {
     /**
      * Gets the value of the attribution property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Attribution }
-     *     
+     * @return possible object is {@link Attribution }
+     * 
      */
-    public Attribution getAttribution() {
+    public Attribution getAttribution()
+    {
         return attribution;
     }
 
     /**
      * Sets the value of the attribution property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Attribution }
-     *     
+     * @param value allowed object is {@link Attribution }
+     * 
      */
-    public void setAttribution(Attribution value) {
+    public void setAttribution(Attribution value)
+    {
         this.attribution = value;
     }
 
@@ -524,15 +524,16 @@ public class Layer {
      * Gets the value of the authorityURL property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the authorityURL property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the authorityURL property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAuthorityURL().add(newItem);
+     * getAuthorityURL().add(newItem);
      * </pre>
      * 
      * 
@@ -542,8 +543,10 @@ public class Layer {
      * 
      * 
      */
-    public List<AuthorityURL> getAuthorityURL() {
-        if (authorityURL == null) {
+    public List<AuthorityURL> getAuthorityURL()
+    {
+        if (authorityURL == null)
+        {
             authorityURL = new ArrayList<AuthorityURL>();
         }
         return this.authorityURL;
@@ -553,15 +556,16 @@ public class Layer {
      * Gets the value of the identifier property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the identifier property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the identifier property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getIdentifier().add(newItem);
+     * getIdentifier().add(newItem);
      * </pre>
      * 
      * 
@@ -571,8 +575,10 @@ public class Layer {
      * 
      * 
      */
-    public List<Identifier> getIdentifier() {
-        if (identifier == null) {
+    public List<Identifier> getIdentifier()
+    {
+        if (identifier == null)
+        {
             identifier = new ArrayList<Identifier>();
         }
         return this.identifier;
@@ -582,15 +588,16 @@ public class Layer {
      * Gets the value of the metadataURL property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the metadataURL property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the metadataURL property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getMetadataURL().add(newItem);
+     * getMetadataURL().add(newItem);
      * </pre>
      * 
      * 
@@ -600,8 +607,10 @@ public class Layer {
      * 
      * 
      */
-    public List<MetadataURL> getMetadataURL() {
-        if (metadataURL == null) {
+    public List<MetadataURL> getMetadataURL()
+    {
+        if (metadataURL == null)
+        {
             metadataURL = new ArrayList<MetadataURL>();
         }
         return this.metadataURL;
@@ -611,26 +620,28 @@ public class Layer {
      * Gets the value of the dataURL property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the dataURL property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the dataURL property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getDataURL().add(newItem);
+     * getDataURL().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link DataURL }
+     * Objects of the following type(s) are allowed in the list {@link DataURL }
      * 
      * 
      */
-    public List<DataURL> getDataURL() {
-        if (dataURL == null) {
+    public List<DataURL> getDataURL()
+    {
+        if (dataURL == null)
+        {
             dataURL = new ArrayList<DataURL>();
         }
         return this.dataURL;
@@ -640,15 +651,16 @@ public class Layer {
      * Gets the value of the featureListURL property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the featureListURL property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the featureListURL property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getFeatureListURL().add(newItem);
+     * getFeatureListURL().add(newItem);
      * </pre>
      * 
      * 
@@ -658,8 +670,10 @@ public class Layer {
      * 
      * 
      */
-    public List<FeatureListURL> getFeatureListURL() {
-        if (featureListURL == null) {
+    public List<FeatureListURL> getFeatureListURL()
+    {
+        if (featureListURL == null)
+        {
             featureListURL = new ArrayList<FeatureListURL>();
         }
         return this.featureListURL;
@@ -669,26 +683,28 @@ public class Layer {
      * Gets the value of the style property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the style property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the style property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getStyle().add(newItem);
+     * getStyle().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Style }
+     * Objects of the following type(s) are allowed in the list {@link Style }
      * 
      * 
      */
-    public List<Style> getStyle() {
-        if (style == null) {
+    public List<Style> getStyle()
+    {
+        if (style == null)
+        {
             style = new ArrayList<Style>();
         }
         return this.style;
@@ -697,24 +713,22 @@ public class Layer {
     /**
      * Gets the value of the scaleHint property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ScaleHint }
-     *     
+     * @return possible object is {@link ScaleHint }
+     * 
      */
-    public ScaleHint getScaleHint() {
+    public ScaleHint getScaleHint()
+    {
         return scaleHint;
     }
 
     /**
      * Sets the value of the scaleHint property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ScaleHint }
-     *     
+     * @param value allowed object is {@link ScaleHint }
+     * 
      */
-    public void setScaleHint(ScaleHint value) {
+    public void setScaleHint(ScaleHint value)
+    {
         this.scaleHint = value;
     }
 
@@ -722,26 +736,28 @@ public class Layer {
      * Gets the value of the layer property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the layer property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the layer property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLayer().add(newItem);
+     * getLayer().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Layer }
+     * Objects of the following type(s) are allowed in the list {@link Layer }
      * 
      * 
      */
-    public List<Layer> getLayer() {
-        if (layer == null) {
+    public List<Layer> getLayer()
+    {
+        if (layer == null)
+        {
             layer = new ArrayList<Layer>();
         }
         return this.layer;

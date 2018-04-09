@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,13 +15,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A MultiSolid is defined by one or more Solids, referenced through solidMember elements.
+ * A MultiSolid is defined by one or more Solids, referenced through solidMember
+ * elements.
  * 
- * <p>Java class for MultiSolidType complex type.
+ * <p>
+ * Java class for MultiSolidType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="MultiSolidType">
@@ -40,15 +42,12 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MultiSolidType", propOrder = {
-    "solidMember",
-    "solidMemberList"
-})
-public class MultiSolidType
-    extends AbstractGeometricAggregateType
+@XmlType(name = "MultiSolidType", propOrder = { "solidMember", "solidMemberList" })
+public class MultiSolidType extends AbstractGeometricAggregateType
 {
 
     protected List<SolidPropertyType> solidMember;
+
     @XmlElement(name = "solidMembers")
     protected SolidArrayPropertyType solidMemberList;
 
@@ -56,15 +55,16 @@ public class MultiSolidType
      * Gets the value of the solidMember property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the solidMember property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the solidMember property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSolidMember().add(newItem);
+     * getSolidMember().add(newItem);
      * </pre>
      * 
      * 
@@ -74,8 +74,10 @@ public class MultiSolidType
      * 
      * 
      */
-    public List<SolidPropertyType> getSolidMember() {
-        if (solidMember == null) {
+    public List<SolidPropertyType> getSolidMember()
+    {
+        if (solidMember == null)
+        {
             solidMember = new ArrayList<SolidPropertyType>();
         }
         return this.solidMember;
@@ -84,24 +86,22 @@ public class MultiSolidType
     /**
      * Gets the value of the solidMemberList property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SolidArrayPropertyType }
-     *     
+     * @return possible object is {@link SolidArrayPropertyType }
+     * 
      */
-    public SolidArrayPropertyType getSolidMemberList() {
+    public SolidArrayPropertyType getSolidMemberList()
+    {
         return solidMemberList;
     }
 
     /**
      * Sets the value of the solidMemberList property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SolidArrayPropertyType }
-     *     
+     * @param value allowed object is {@link SolidArrayPropertyType }
+     * 
      */
-    public void setSolidMemberList(SolidArrayPropertyType value) {
+    public void setSolidMemberList(SolidArrayPropertyType value)
+    {
         this.solidMemberList = value;
     }
 

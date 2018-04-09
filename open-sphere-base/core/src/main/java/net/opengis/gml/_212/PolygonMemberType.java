@@ -5,20 +5,21 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.gml._212;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * Restricts the geometry member to being a Polygon instance.
  * 
- * <p>Java class for PolygonMemberType complex type.
+ * <p>
+ * Java class for PolygonMemberType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="PolygonMemberType">
@@ -37,9 +38,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PolygonMemberType")
-public class PolygonMemberType
-    extends GeometryAssociationType
+public class PolygonMemberType extends GeometryAssociationType
 {
-
 
 }

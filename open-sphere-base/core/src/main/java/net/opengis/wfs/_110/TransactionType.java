@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import java.util.ArrayList;
@@ -18,19 +17,20 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *             The TransactionType defines the Transaction operation.  A
- *             Transaction element contains one or more Insert, Update
- *             Delete and Native elements that allow a client application
- *             to create, modify or remove feature instances from the 
- *             feature repository that a Web Feature Service controls.
- *          
+ * The TransactionType defines the Transaction operation. A Transaction element
+ * contains one or more Insert, Update Delete and Native elements that allow a
+ * client application to create, modify or remove feature instances from the
+ * feature repository that a Web Feature Service controls.
  * 
- * <p>Java class for TransactionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for TransactionType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TransactionType">
@@ -54,61 +54,53 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TransactionType", propOrder = {
-    "lockId",
-    "insertOrUpdateOrDelete"
-})
-public class TransactionType
-    extends BaseRequestType
+@XmlType(name = "TransactionType", propOrder = { "lockId", "insertOrUpdateOrDelete" })
+public class TransactionType extends BaseRequestType
 {
 
     @XmlElement(name = "LockId")
     protected String lockId;
-    @XmlElements({
-        @XmlElement(name = "Update", type = UpdateElementType.class),
-        @XmlElement(name = "Insert", type = InsertElementType.class),
-        @XmlElement(name = "Native", type = NativeType.class),
-        @XmlElement(name = "Delete", type = DeleteElementType.class)
-    })
+
+    @XmlElements({ @XmlElement(name = "Update", type = UpdateElementType.class),
+        @XmlElement(name = "Insert", type = InsertElementType.class), @XmlElement(name = "Native", type = NativeType.class),
+        @XmlElement(name = "Delete", type = DeleteElementType.class) })
     protected List<Object> insertOrUpdateOrDelete;
+
     @XmlAttribute(name = "releaseAction")
     protected AllSomeType releaseAction;
 
     /**
      * 
-     *                         In order for a client application to operate upon
-     *                         locked feature instances, the Transaction request
-     *                         must include the LockId element.  The content of
-     *                         this element must be the lock identifier the client
-     *                         application obtained from a previous
-     *                         GetFeatureWithLock or LockFeature operation.
+     * In order for a client application to operate upon locked feature
+     * instances, the Transaction request must include the LockId element. The
+     * content of this element must be the lock identifier the client
+     * application obtained from a previous GetFeatureWithLock or LockFeature
+     * operation.
      * 
-     *                         If the correct lock identifier is specified the Web
-     *                         Feature Service knows that the client application may
-     *                         operate upon the locked feature instances.
+     * If the correct lock identifier is specified the Web Feature Service knows
+     * that the client application may operate upon the locked feature
+     * instances.
      * 
-     *                         No LockId element needs to be specified to operate upon
-     *                         unlocked features.
-     *                      
+     * No LockId element needs to be specified to operate upon unlocked
+     * features.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * 
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLockId() {
+    public String getLockId()
+    {
         return lockId;
     }
 
     /**
      * Sets the value of the lockId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLockId(String value) {
+    public void setLockId(String value)
+    {
         this.lockId = value;
     }
 
@@ -116,29 +108,30 @@ public class TransactionType
      * Gets the value of the insertOrUpdateOrDelete property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the insertOrUpdateOrDelete property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the insertOrUpdateOrDelete property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getInsertOrUpdateOrDelete().add(newItem);
+     * getInsertOrUpdateOrDelete().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link UpdateElementType }
-     * {@link InsertElementType }
-     * {@link NativeType }
+     * {@link UpdateElementType } {@link InsertElementType } {@link NativeType }
      * {@link DeleteElementType }
      * 
      * 
      */
-    public List<Object> getInsertOrUpdateOrDelete() {
-        if (insertOrUpdateOrDelete == null) {
+    public List<Object> getInsertOrUpdateOrDelete()
+    {
+        if (insertOrUpdateOrDelete == null)
+        {
             insertOrUpdateOrDelete = new ArrayList<Object>();
         }
         return this.insertOrUpdateOrDelete;
@@ -147,24 +140,22 @@ public class TransactionType
     /**
      * Gets the value of the releaseAction property.
      * 
-     * @return
-     *     possible object is
-     *     {@link AllSomeType }
-     *     
+     * @return possible object is {@link AllSomeType }
+     * 
      */
-    public AllSomeType getReleaseAction() {
+    public AllSomeType getReleaseAction()
+    {
         return releaseAction;
     }
 
     /**
      * Sets the value of the releaseAction property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link AllSomeType }
-     *     
+     * @param value allowed object is {@link AllSomeType }
+     * 
      */
-    public void setReleaseAction(AllSomeType value) {
+    public void setReleaseAction(AllSomeType value)
+    {
         this.releaseAction = value;
     }
 

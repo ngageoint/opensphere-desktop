@@ -24,8 +24,9 @@ import io.opensphere.core.util.registry.GenericRegistry;
 public interface Toolbox
 {
     /**
-     * Gets the statistics manager. The statistics manager allows for various parts
-     * of the application to contribute statistics for logging or other uses.
+     * Gets the statistics manager. The statistics manager allows for various
+     * parts of the application to contribute statistics for logging or other
+     * uses.
      *
      * @return an instance of the statistics manager.
      */

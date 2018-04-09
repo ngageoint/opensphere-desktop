@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Partially defines the origin of a temporal coordinate reference system. This type restricts the AbstractDatumType to remove the "anchorPoint" and "realizationEpoch" elements. 
+ * Partially defines the origin of a temporal coordinate reference system. This
+ * type restricts the AbstractDatumType to remove the "anchorPoint" and
+ * "realizationEpoch" elements.
  * 
- * <p>Java class for TemporalDatumBaseType complex type.
+ * <p>
+ * Java class for TemporalDatumBaseType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TemporalDatumBaseType">
@@ -42,12 +45,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TemporalDatumBaseType")
-@XmlSeeAlso({
-    TemporalDatumType.class
-})
-public abstract class TemporalDatumBaseType
-    extends AbstractDatumType
+@XmlSeeAlso({ TemporalDatumType.class })
+public abstract class TemporalDatumBaseType extends AbstractDatumType
 {
-
 
 }

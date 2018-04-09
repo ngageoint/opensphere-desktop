@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,11 +15,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for AbstractTopoPrimitiveType complex type.
+ * <p>
+ * Java class for AbstractTopoPrimitiveType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractTopoPrimitiveType">
@@ -38,36 +39,29 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractTopoPrimitiveType", propOrder = {
-    "isolated",
-    "container"
-})
-@XmlSeeAlso({
-    EdgeType.class,
-    NodeType.class,
-    TopoSolidType.class,
-    FaceType.class
-})
-public abstract class AbstractTopoPrimitiveType
-    extends AbstractTopologyType
+@XmlType(name = "AbstractTopoPrimitiveType", propOrder = { "isolated", "container" })
+@XmlSeeAlso({ EdgeType.class, NodeType.class, TopoSolidType.class, FaceType.class })
+public abstract class AbstractTopoPrimitiveType extends AbstractTopologyType
 {
 
     protected List<IsolatedPropertyType> isolated;
+
     protected ContainerPropertyType container;
 
     /**
      * Gets the value of the isolated property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the isolated property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the isolated property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getIsolated().add(newItem);
+     * getIsolated().add(newItem);
      * </pre>
      * 
      * 
@@ -77,8 +71,10 @@ public abstract class AbstractTopoPrimitiveType
      * 
      * 
      */
-    public List<IsolatedPropertyType> getIsolated() {
-        if (isolated == null) {
+    public List<IsolatedPropertyType> getIsolated()
+    {
+        if (isolated == null)
+        {
             isolated = new ArrayList<IsolatedPropertyType>();
         }
         return this.isolated;
@@ -87,24 +83,22 @@ public abstract class AbstractTopoPrimitiveType
     /**
      * Gets the value of the container property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ContainerPropertyType }
-     *     
+     * @return possible object is {@link ContainerPropertyType }
+     * 
      */
-    public ContainerPropertyType getContainer() {
+    public ContainerPropertyType getContainer()
+    {
         return container;
     }
 
     /**
      * Sets the value of the container property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ContainerPropertyType }
-     *     
+     * @param value allowed object is {@link ContainerPropertyType }
+     * 
      */
-    public void setContainer(ContainerPropertyType value) {
+    public void setContainer(ContainerPropertyType value)
+    {
         this.container = value;
     }
 

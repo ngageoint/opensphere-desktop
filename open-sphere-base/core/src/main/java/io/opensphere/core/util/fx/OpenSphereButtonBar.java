@@ -28,6 +28,7 @@ public class OpenSphereButtonBar extends ObservableButtonBar
 
     /**
      * Factory method for instances that show only the "OK" button.
+     * 
      * @return a button bar
      */
     public static OpenSphereButtonBar okay()
@@ -37,6 +38,7 @@ public class OpenSphereButtonBar extends ObservableButtonBar
 
     /**
      * Factory method for instances that show the "OK" and "Cancel" buttons.
+     * 
      * @return a button bar
      */
     public static OpenSphereButtonBar okayCancel()

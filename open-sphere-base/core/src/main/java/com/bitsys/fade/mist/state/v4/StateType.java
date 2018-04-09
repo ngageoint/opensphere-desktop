@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,19 +16,21 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
- *         A saved state is used to preserve the state of a FADE tool, to allow 
- *         others to see the same viewpoint and data sets, and to allow a user to 
- *         resume working where they left off. The state includes camera look 
- *         angles and locations, animation and temporal information, data layers 
- *         and zoom levels, and many other items.
- *       
+ * A saved state is used to preserve the state of a FADE tool, to allow others
+ * to see the same viewpoint and data sets, and to allow a user to resume
+ * working where they left off. The state includes camera look angles and
+ * locations, animation and temporal information, data layers and zoom levels,
+ * and many other items.
  * 
- * <p>Java class for StateType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for StateType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="StateType">
@@ -62,29 +63,43 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "StateType", propOrder = {
 
 })
-public class StateType {
+public class StateType
+{
 
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String title;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String description;
+
     protected TagsType tags;
+
     protected MapType map;
+
     protected ExclusionAreasType exclusionAreas;
+
     protected FiltersType filters;
+
     protected LayersType dataLayers;
+
     protected LayersType localData;
+
     protected LayersType mapLayers;
+
     protected QueryAreasType queryAreas;
+
     protected QueryEntriesType queryEntries;
+
     protected TimeType time;
+
     @XmlAttribute(name = "source", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String source;
+
     @XmlAttribute(name = "version", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
@@ -93,393 +108,379 @@ public class StateType {
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
-    public boolean isSetTitle() {
-        return (this.title!= null);
+    public boolean isSetTitle()
+    {
+        return (this.title != null);
     }
 
     /**
      * Gets the value of the description property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
     /**
      * Sets the value of the description property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDescription(String value) {
+    public void setDescription(String value)
+    {
         this.description = value;
     }
 
-    public boolean isSetDescription() {
-        return (this.description!= null);
+    public boolean isSetDescription()
+    {
+        return (this.description != null);
     }
 
     /**
      * Gets the value of the tags property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TagsType }
-     *     
+     * @return possible object is {@link TagsType }
+     * 
      */
-    public TagsType getTags() {
+    public TagsType getTags()
+    {
         return tags;
     }
 
     /**
      * Sets the value of the tags property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TagsType }
-     *     
+     * @param value allowed object is {@link TagsType }
+     * 
      */
-    public void setTags(TagsType value) {
+    public void setTags(TagsType value)
+    {
         this.tags = value;
     }
 
-    public boolean isSetTags() {
-        return (this.tags!= null);
+    public boolean isSetTags()
+    {
+        return (this.tags != null);
     }
 
     /**
      * Gets the value of the map property.
      * 
-     * @return
-     *     possible object is
-     *     {@link MapType }
-     *     
+     * @return possible object is {@link MapType }
+     * 
      */
-    public MapType getMap() {
+    public MapType getMap()
+    {
         return map;
     }
 
     /**
      * Sets the value of the map property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link MapType }
-     *     
+     * @param value allowed object is {@link MapType }
+     * 
      */
-    public void setMap(MapType value) {
+    public void setMap(MapType value)
+    {
         this.map = value;
     }
 
-    public boolean isSetMap() {
-        return (this.map!= null);
+    public boolean isSetMap()
+    {
+        return (this.map != null);
     }
 
     /**
      * Gets the value of the exclusionAreas property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ExclusionAreasType }
-     *     
+     * @return possible object is {@link ExclusionAreasType }
+     * 
      */
-    public ExclusionAreasType getExclusionAreas() {
+    public ExclusionAreasType getExclusionAreas()
+    {
         return exclusionAreas;
     }
 
     /**
      * Sets the value of the exclusionAreas property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ExclusionAreasType }
-     *     
+     * @param value allowed object is {@link ExclusionAreasType }
+     * 
      */
-    public void setExclusionAreas(ExclusionAreasType value) {
+    public void setExclusionAreas(ExclusionAreasType value)
+    {
         this.exclusionAreas = value;
     }
 
-    public boolean isSetExclusionAreas() {
-        return (this.exclusionAreas!= null);
+    public boolean isSetExclusionAreas()
+    {
+        return (this.exclusionAreas != null);
     }
 
     /**
      * Gets the value of the filters property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FiltersType }
-     *     
+     * @return possible object is {@link FiltersType }
+     * 
      */
-    public FiltersType getFilters() {
+    public FiltersType getFilters()
+    {
         return filters;
     }
 
     /**
      * Sets the value of the filters property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FiltersType }
-     *     
+     * @param value allowed object is {@link FiltersType }
+     * 
      */
-    public void setFilters(FiltersType value) {
+    public void setFilters(FiltersType value)
+    {
         this.filters = value;
     }
 
-    public boolean isSetFilters() {
-        return (this.filters!= null);
+    public boolean isSetFilters()
+    {
+        return (this.filters != null);
     }
 
     /**
      * Gets the value of the dataLayers property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LayersType }
-     *     
+     * @return possible object is {@link LayersType }
+     * 
      */
-    public LayersType getDataLayers() {
+    public LayersType getDataLayers()
+    {
         return dataLayers;
     }
 
     /**
      * Sets the value of the dataLayers property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LayersType }
-     *     
+     * @param value allowed object is {@link LayersType }
+     * 
      */
-    public void setDataLayers(LayersType value) {
+    public void setDataLayers(LayersType value)
+    {
         this.dataLayers = value;
     }
 
-    public boolean isSetDataLayers() {
-        return (this.dataLayers!= null);
+    public boolean isSetDataLayers()
+    {
+        return (this.dataLayers != null);
     }
 
     /**
      * Gets the value of the localData property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LayersType }
-     *     
+     * @return possible object is {@link LayersType }
+     * 
      */
-    public LayersType getLocalData() {
+    public LayersType getLocalData()
+    {
         return localData;
     }
 
     /**
      * Sets the value of the localData property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LayersType }
-     *     
+     * @param value allowed object is {@link LayersType }
+     * 
      */
-    public void setLocalData(LayersType value) {
+    public void setLocalData(LayersType value)
+    {
         this.localData = value;
     }
 
-    public boolean isSetLocalData() {
-        return (this.localData!= null);
+    public boolean isSetLocalData()
+    {
+        return (this.localData != null);
     }
 
     /**
      * Gets the value of the mapLayers property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LayersType }
-     *     
+     * @return possible object is {@link LayersType }
+     * 
      */
-    public LayersType getMapLayers() {
+    public LayersType getMapLayers()
+    {
         return mapLayers;
     }
 
     /**
      * Sets the value of the mapLayers property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LayersType }
-     *     
+     * @param value allowed object is {@link LayersType }
+     * 
      */
-    public void setMapLayers(LayersType value) {
+    public void setMapLayers(LayersType value)
+    {
         this.mapLayers = value;
     }
 
-    public boolean isSetMapLayers() {
-        return (this.mapLayers!= null);
+    public boolean isSetMapLayers()
+    {
+        return (this.mapLayers != null);
     }
 
     /**
      * Gets the value of the queryAreas property.
      * 
-     * @return
-     *     possible object is
-     *     {@link QueryAreasType }
-     *     
+     * @return possible object is {@link QueryAreasType }
+     * 
      */
-    public QueryAreasType getQueryAreas() {
+    public QueryAreasType getQueryAreas()
+    {
         return queryAreas;
     }
 
     /**
      * Sets the value of the queryAreas property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link QueryAreasType }
-     *     
+     * @param value allowed object is {@link QueryAreasType }
+     * 
      */
-    public void setQueryAreas(QueryAreasType value) {
+    public void setQueryAreas(QueryAreasType value)
+    {
         this.queryAreas = value;
     }
 
-    public boolean isSetQueryAreas() {
-        return (this.queryAreas!= null);
+    public boolean isSetQueryAreas()
+    {
+        return (this.queryAreas != null);
     }
 
     /**
      * Gets the value of the queryEntries property.
      * 
-     * @return
-     *     possible object is
-     *     {@link QueryEntriesType }
-     *     
+     * @return possible object is {@link QueryEntriesType }
+     * 
      */
-    public QueryEntriesType getQueryEntries() {
+    public QueryEntriesType getQueryEntries()
+    {
         return queryEntries;
     }
 
     /**
      * Sets the value of the queryEntries property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link QueryEntriesType }
-     *     
+     * @param value allowed object is {@link QueryEntriesType }
+     * 
      */
-    public void setQueryEntries(QueryEntriesType value) {
+    public void setQueryEntries(QueryEntriesType value)
+    {
         this.queryEntries = value;
     }
 
-    public boolean isSetQueryEntries() {
-        return (this.queryEntries!= null);
+    public boolean isSetQueryEntries()
+    {
+        return (this.queryEntries != null);
     }
 
     /**
      * Gets the value of the time property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TimeType }
-     *     
+     * @return possible object is {@link TimeType }
+     * 
      */
-    public TimeType getTime() {
+    public TimeType getTime()
+    {
         return time;
     }
 
     /**
      * Sets the value of the time property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TimeType }
-     *     
+     * @param value allowed object is {@link TimeType }
+     * 
      */
-    public void setTime(TimeType value) {
+    public void setTime(TimeType value)
+    {
         this.time = value;
     }
 
-    public boolean isSetTime() {
-        return (this.time!= null);
+    public boolean isSetTime()
+    {
+        return (this.time != null);
     }
 
     /**
      * Gets the value of the source property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSource() {
+    public String getSource()
+    {
         return source;
     }
 
     /**
      * Sets the value of the source property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSource(String value) {
+    public void setSource(String value)
+    {
         this.source = value;
     }
 
-    public boolean isSetSource() {
-        return (this.source!= null);
+    public boolean isSetSource()
+    {
+        return (this.source != null);
     }
 
     /**
      * Gets the value of the version property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getVersion() {
+    public String getVersion()
+    {
         return version;
     }
 
     /**
      * Sets the value of the version property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setVersion(String value) {
+    public void setVersion(String value)
+    {
         this.version = value;
     }
 
-    public boolean isSetVersion() {
-        return (this.version!= null);
+    public boolean isSetVersion()
+    {
+        return (this.version != null);
     }
 
 }

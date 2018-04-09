@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,17 +15,19 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
- *         A container in which the set of time-related configuration items are 
- *         defined, including data load interval, data display intervals, 
- *         animation intervals, and other items.
- *       
+ * A container in which the set of time-related configuration items are defined,
+ * including data load interval, data display intervals, animation intervals,
+ * and other items.
  * 
- * <p>Java class for TimeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for TimeType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TimeType">
@@ -54,278 +55,278 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "TimeType", propOrder = {
 
 })
-public class TimeType {
+public class TimeType
+{
 
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String interval;
+
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String current;
+
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String advance;
+
     protected TimeSequenceType playIntervals;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String duration;
+
     protected TimeAnimationType animation;
+
     protected HeldIntervalsType heldIntervals;
+
     protected TimeFadeType fade;
+
     protected Boolean live;
 
     /**
      * Gets the value of the interval property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getInterval() {
+    public String getInterval()
+    {
         return interval;
     }
 
     /**
      * Sets the value of the interval property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setInterval(String value) {
+    public void setInterval(String value)
+    {
         this.interval = value;
     }
 
-    public boolean isSetInterval() {
-        return (this.interval!= null);
+    public boolean isSetInterval()
+    {
+        return (this.interval != null);
     }
 
     /**
      * Gets the value of the current property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getCurrent() {
+    public String getCurrent()
+    {
         return current;
     }
 
     /**
      * Sets the value of the current property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setCurrent(String value) {
+    public void setCurrent(String value)
+    {
         this.current = value;
     }
 
-    public boolean isSetCurrent() {
-        return (this.current!= null);
+    public boolean isSetCurrent()
+    {
+        return (this.current != null);
     }
 
     /**
      * Gets the value of the advance property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getAdvance() {
+    public String getAdvance()
+    {
         return advance;
     }
 
     /**
      * Sets the value of the advance property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setAdvance(String value) {
+    public void setAdvance(String value)
+    {
         this.advance = value;
     }
 
-    public boolean isSetAdvance() {
-        return (this.advance!= null);
+    public boolean isSetAdvance()
+    {
+        return (this.advance != null);
     }
 
     /**
      * Gets the value of the playIntervals property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TimeSequenceType }
-     *     
+     * @return possible object is {@link TimeSequenceType }
+     * 
      */
-    public TimeSequenceType getPlayIntervals() {
+    public TimeSequenceType getPlayIntervals()
+    {
         return playIntervals;
     }
 
     /**
      * Sets the value of the playIntervals property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TimeSequenceType }
-     *     
+     * @param value allowed object is {@link TimeSequenceType }
+     * 
      */
-    public void setPlayIntervals(TimeSequenceType value) {
+    public void setPlayIntervals(TimeSequenceType value)
+    {
         this.playIntervals = value;
     }
 
-    public boolean isSetPlayIntervals() {
-        return (this.playIntervals!= null);
+    public boolean isSetPlayIntervals()
+    {
+        return (this.playIntervals != null);
     }
 
     /**
      * Gets the value of the duration property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDuration() {
+    public String getDuration()
+    {
         return duration;
     }
 
     /**
      * Sets the value of the duration property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDuration(String value) {
+    public void setDuration(String value)
+    {
         this.duration = value;
     }
 
-    public boolean isSetDuration() {
-        return (this.duration!= null);
+    public boolean isSetDuration()
+    {
+        return (this.duration != null);
     }
 
     /**
      * Gets the value of the animation property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TimeAnimationType }
-     *     
+     * @return possible object is {@link TimeAnimationType }
+     * 
      */
-    public TimeAnimationType getAnimation() {
+    public TimeAnimationType getAnimation()
+    {
         return animation;
     }
 
     /**
      * Sets the value of the animation property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TimeAnimationType }
-     *     
+     * @param value allowed object is {@link TimeAnimationType }
+     * 
      */
-    public void setAnimation(TimeAnimationType value) {
+    public void setAnimation(TimeAnimationType value)
+    {
         this.animation = value;
     }
 
-    public boolean isSetAnimation() {
-        return (this.animation!= null);
+    public boolean isSetAnimation()
+    {
+        return (this.animation != null);
     }
 
     /**
      * Gets the value of the heldIntervals property.
      * 
-     * @return
-     *     possible object is
-     *     {@link HeldIntervalsType }
-     *     
+     * @return possible object is {@link HeldIntervalsType }
+     * 
      */
-    public HeldIntervalsType getHeldIntervals() {
+    public HeldIntervalsType getHeldIntervals()
+    {
         return heldIntervals;
     }
 
     /**
      * Sets the value of the heldIntervals property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link HeldIntervalsType }
-     *     
+     * @param value allowed object is {@link HeldIntervalsType }
+     * 
      */
-    public void setHeldIntervals(HeldIntervalsType value) {
+    public void setHeldIntervals(HeldIntervalsType value)
+    {
         this.heldIntervals = value;
     }
 
-    public boolean isSetHeldIntervals() {
-        return (this.heldIntervals!= null);
+    public boolean isSetHeldIntervals()
+    {
+        return (this.heldIntervals != null);
     }
 
     /**
      * Gets the value of the fade property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TimeFadeType }
-     *     
+     * @return possible object is {@link TimeFadeType }
+     * 
      */
-    public TimeFadeType getFade() {
+    public TimeFadeType getFade()
+    {
         return fade;
     }
 
     /**
      * Sets the value of the fade property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TimeFadeType }
-     *     
+     * @param value allowed object is {@link TimeFadeType }
+     * 
      */
-    public void setFade(TimeFadeType value) {
+    public void setFade(TimeFadeType value)
+    {
         this.fade = value;
     }
 
-    public boolean isSetFade() {
-        return (this.fade!= null);
+    public boolean isSetFade()
+    {
+        return (this.fade != null);
     }
 
     /**
      * Gets the value of the live property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isLive() {
+    public Boolean isLive()
+    {
         return live;
     }
 
     /**
      * Sets the value of the live property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setLive(Boolean value) {
+    public void setLive(Boolean value)
+    {
         this.live = value;
     }
 
-    public boolean isSetLive() {
-        return (this.live!= null);
+    public boolean isSetLive()
+    {
+        return (this.live != null);
     }
 
 }

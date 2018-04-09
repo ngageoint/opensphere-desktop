@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -39,172 +40,157 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "geometry",
-    "label",
-    "font",
-    "labelPlacement",
-    "halo",
-    "fill"
-})
-public class TextSymbolizer
-    extends SymbolizerType
+@XmlType(name = "", propOrder = { "geometry", "label", "font", "labelPlacement", "halo", "fill" })
+public class TextSymbolizer extends SymbolizerType
 {
 
     @XmlElement(name = "Geometry")
     protected Geometry geometry;
+
     @XmlElement(name = "Label")
     protected ParameterValueType label;
+
     @XmlElement(name = "Font")
     protected Font font;
+
     @XmlElement(name = "LabelPlacement")
     protected LabelPlacement labelPlacement;
+
     @XmlElement(name = "Halo")
     protected Halo halo;
+
     @XmlElement(name = "Fill")
     protected Fill fill;
 
     /**
      * Gets the value of the geometry property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Geometry }
-     *     
+     * @return possible object is {@link Geometry }
+     * 
      */
-    public Geometry getGeometry() {
+    public Geometry getGeometry()
+    {
         return geometry;
     }
 
     /**
      * Sets the value of the geometry property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Geometry }
-     *     
+     * @param value allowed object is {@link Geometry }
+     * 
      */
-    public void setGeometry(Geometry value) {
+    public void setGeometry(Geometry value)
+    {
         this.geometry = value;
     }
 
     /**
      * Gets the value of the label property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ParameterValueType }
-     *     
+     * @return possible object is {@link ParameterValueType }
+     * 
      */
-    public ParameterValueType getLabel() {
+    public ParameterValueType getLabel()
+    {
         return label;
     }
 
     /**
      * Sets the value of the label property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ParameterValueType }
-     *     
+     * @param value allowed object is {@link ParameterValueType }
+     * 
      */
-    public void setLabel(ParameterValueType value) {
+    public void setLabel(ParameterValueType value)
+    {
         this.label = value;
     }
 
     /**
      * Gets the value of the font property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Font }
-     *     
+     * @return possible object is {@link Font }
+     * 
      */
-    public Font getFont() {
+    public Font getFont()
+    {
         return font;
     }
 
     /**
      * Sets the value of the font property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Font }
-     *     
+     * @param value allowed object is {@link Font }
+     * 
      */
-    public void setFont(Font value) {
+    public void setFont(Font value)
+    {
         this.font = value;
     }
 
     /**
      * Gets the value of the labelPlacement property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LabelPlacement }
-     *     
+     * @return possible object is {@link LabelPlacement }
+     * 
      */
-    public LabelPlacement getLabelPlacement() {
+    public LabelPlacement getLabelPlacement()
+    {
         return labelPlacement;
     }
 
     /**
      * Sets the value of the labelPlacement property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LabelPlacement }
-     *     
+     * @param value allowed object is {@link LabelPlacement }
+     * 
      */
-    public void setLabelPlacement(LabelPlacement value) {
+    public void setLabelPlacement(LabelPlacement value)
+    {
         this.labelPlacement = value;
     }
 
     /**
      * Gets the value of the halo property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Halo }
-     *     
+     * @return possible object is {@link Halo }
+     * 
      */
-    public Halo getHalo() {
+    public Halo getHalo()
+    {
         return halo;
     }
 
     /**
      * Sets the value of the halo property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Halo }
-     *     
+     * @param value allowed object is {@link Halo }
+     * 
      */
-    public void setHalo(Halo value) {
+    public void setHalo(Halo value)
+    {
         this.halo = value;
     }
 
     /**
      * Gets the value of the fill property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Fill }
-     *     
+     * @return possible object is {@link Fill }
+     * 
      */
-    public Fill getFill() {
+    public Fill getFill()
+    {
         return fill;
     }
 
     /**
      * Sets the value of the fill property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Fill }
-     *     
+     * @param value allowed object is {@link Fill }
+     * 
      */
-    public void setFill(Fill value) {
+    public void setFill(Fill value)
+    {
         this.fill = value;
     }
 

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:24:08 PM MST 
 //
 
-
 package net.opengis.ogc._100;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -40,14 +41,14 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "serviceException"
-})
+@XmlType(name = "", propOrder = { "serviceException" })
 @XmlRootElement(name = "ServiceExceptionReport")
-public class ServiceExceptionReport {
+public class ServiceExceptionReport
+{
 
     @XmlElement(name = "ServiceException")
     protected List<ServiceExceptionType> serviceException;
+
     @XmlAttribute
     protected String version;
 
@@ -55,15 +56,16 @@ public class ServiceExceptionReport {
      * Gets the value of the serviceException property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the serviceException property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the serviceException property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getServiceException().add(newItem);
+     * getServiceException().add(newItem);
      * </pre>
      * 
      * 
@@ -73,8 +75,10 @@ public class ServiceExceptionReport {
      * 
      * 
      */
-    public List<ServiceExceptionType> getServiceException() {
-        if (serviceException == null) {
+    public List<ServiceExceptionType> getServiceException()
+    {
+        if (serviceException == null)
+        {
             serviceException = new ArrayList<ServiceExceptionType>();
         }
         return this.serviceException;
@@ -83,15 +87,17 @@ public class ServiceExceptionReport {
     /**
      * Gets the value of the version property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getVersion() {
-        if (version == null) {
+    public String getVersion()
+    {
+        if (version == null)
+        {
             return "1.2.0";
-        } else {
+        }
+        else
+        {
             return version;
         }
     }
@@ -99,12 +105,11 @@ public class ServiceExceptionReport {
     /**
      * Sets the value of the version property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setVersion(String value) {
+    public void setVersion(String value)
+    {
         this.version = value;
     }
 

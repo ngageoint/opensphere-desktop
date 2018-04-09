@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,13 +15,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * Description of a spatial and/or temporal reference system used by a dataset.
  * 
- * <p>Java class for AbstractReferenceSystemType complex type.
+ * <p>
+ * Java class for AbstractReferenceSystemType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractReferenceSystemType">
@@ -42,44 +43,36 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractReferenceSystemType", propOrder = {
-    "srsID",
-    "remarks",
-    "validArea",
-    "scope"
-})
-@XmlSeeAlso({
-    GeographicCRSType.class,
-    TemporalCRSType.class,
-    ImageCRSType.class,
-    VerticalCRSType.class,
-    EngineeringCRSType.class,
-    GeocentricCRSType.class,
-    AbstractGeneralDerivedCRSType.class,
-    CompoundCRSType.class
-})
-public abstract class AbstractReferenceSystemType
-    extends AbstractReferenceSystemBaseType
+@XmlType(name = "AbstractReferenceSystemType", propOrder = { "srsID", "remarks", "validArea", "scope" })
+@XmlSeeAlso({ GeographicCRSType.class, TemporalCRSType.class, ImageCRSType.class, VerticalCRSType.class, EngineeringCRSType.class,
+    GeocentricCRSType.class, AbstractGeneralDerivedCRSType.class, CompoundCRSType.class })
+public abstract class AbstractReferenceSystemType extends AbstractReferenceSystemBaseType
 {
 
     protected List<IdentifierType> srsID;
+
     protected StringOrRefType remarks;
+
     protected ExtentType validArea;
+
     protected String scope;
 
     /**
-     * Set of alterative identifications of this reference system. The first srsID, if any, is normally the primary identification code, and any others are aliases.Gets the value of the srsID property.
+     * Set of alterative identifications of this reference system. The first
+     * srsID, if any, is normally the primary identification code, and any
+     * others are aliases.Gets the value of the srsID property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the srsID property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the srsID property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSrsID().add(newItem);
+     * getSrsID().add(newItem);
      * </pre>
      * 
      * 
@@ -89,82 +82,79 @@ public abstract class AbstractReferenceSystemType
      * 
      * 
      */
-    public List<IdentifierType> getSrsID() {
-        if (srsID == null) {
+    public List<IdentifierType> getSrsID()
+    {
+        if (srsID == null)
+        {
             srsID = new ArrayList<IdentifierType>();
         }
         return this.srsID;
     }
 
     /**
-     * Comments on or information about this reference system, including source information.
+     * Comments on or information about this reference system, including source
+     * information.
      * 
-     * @return
-     *     possible object is
-     *     {@link StringOrRefType }
-     *     
+     * @return possible object is {@link StringOrRefType }
+     * 
      */
-    public StringOrRefType getRemarks() {
+    public StringOrRefType getRemarks()
+    {
         return remarks;
     }
 
     /**
      * Sets the value of the remarks property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link StringOrRefType }
-     *     
+     * @param value allowed object is {@link StringOrRefType }
+     * 
      */
-    public void setRemarks(StringOrRefType value) {
+    public void setRemarks(StringOrRefType value)
+    {
         this.remarks = value;
     }
 
     /**
      * Gets the value of the validArea property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ExtentType }
-     *     
+     * @return possible object is {@link ExtentType }
+     * 
      */
-    public ExtentType getValidArea() {
+    public ExtentType getValidArea()
+    {
         return validArea;
     }
 
     /**
      * Sets the value of the validArea property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ExtentType }
-     *     
+     * @param value allowed object is {@link ExtentType }
+     * 
      */
-    public void setValidArea(ExtentType value) {
+    public void setValidArea(ExtentType value)
+    {
         this.validArea = value;
     }
 
     /**
      * Gets the value of the scope property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getScope() {
+    public String getScope()
+    {
         return scope;
     }
 
     /**
      * Sets the value of the scope property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setScope(String value) {
+    public void setScope(String value)
+    {
         this.scope = value;
     }
 

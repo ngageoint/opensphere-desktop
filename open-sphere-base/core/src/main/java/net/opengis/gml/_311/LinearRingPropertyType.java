@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Encapsulates a ring to represent properties in features or geometry collections.
+ * Encapsulates a ring to represent properties in features or geometry
+ * collections.
  * 
- * <p>Java class for LinearRingPropertyType complex type.
+ * <p>
+ * Java class for LinearRingPropertyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LinearRingPropertyType">
@@ -36,10 +38,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LinearRingPropertyType", propOrder = {
-    "linearRing"
-})
-public class LinearRingPropertyType {
+@XmlType(name = "LinearRingPropertyType", propOrder = { "linearRing" })
+public class LinearRingPropertyType
+{
 
     @XmlElement(name = "LinearRing")
     protected LinearRingType linearRing;
@@ -47,24 +48,22 @@ public class LinearRingPropertyType {
     /**
      * Gets the value of the linearRing property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LinearRingType }
-     *     
+     * @return possible object is {@link LinearRingType }
+     * 
      */
-    public LinearRingType getLinearRing() {
+    public LinearRingType getLinearRing()
+    {
         return linearRing;
     }
 
     /**
      * Sets the value of the linearRing property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LinearRingType }
-     *     
+     * @param value allowed object is {@link LinearRingType }
+     * 
      */
-    public void setLinearRing(LinearRingType value) {
+    public void setLinearRing(LinearRingType value)
+    {
         this.linearRing = value;
     }
 

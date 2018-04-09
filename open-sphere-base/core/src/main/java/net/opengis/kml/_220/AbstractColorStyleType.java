@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -20,11 +19,13 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
- * <p>Java class for AbstractColorStyleType complex type.
+ * <p>
+ * Java class for AbstractColorStyleType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractColorStyleType">
@@ -44,125 +45,122 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractColorStyleType", propOrder = {
-    "color",
-    "colorMode",
-    "abstractColorStyleSimpleExtensionGroup",
-    "abstractColorStyleObjectExtensionGroup"
-})
-@XmlSeeAlso({
-    LineStyleType.class,
-    LabelStyleType.class,
-    PolyStyleType.class,
-    IconStyleType.class
-})
-public abstract class AbstractColorStyleType
-    extends AbstractSubStyleType
+@XmlType(name = "AbstractColorStyleType", propOrder = { "color", "colorMode", "abstractColorStyleSimpleExtensionGroup",
+    "abstractColorStyleObjectExtensionGroup" })
+@XmlSeeAlso({ LineStyleType.class, LabelStyleType.class, PolyStyleType.class, IconStyleType.class })
+public abstract class AbstractColorStyleType extends AbstractSubStyleType
 {
 
     @XmlElement(type = String.class, defaultValue = "ffffffff")
     @XmlJavaTypeAdapter(HexBinaryAdapter.class)
     @XmlSchemaType(name = "hexBinary")
     protected byte[] color;
+
     @XmlElement(defaultValue = "normal")
     @XmlSchemaType(name = "string")
     protected ColorModeEnumType colorMode;
+
     @XmlElement(name = "AbstractColorStyleSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> abstractColorStyleSimpleExtensionGroup;
+
     @XmlElement(name = "AbstractColorStyleObjectExtensionGroup")
     protected List<AbstractObjectType> abstractColorStyleObjectExtensionGroup;
 
     /**
      * Gets the value of the color property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public byte[] getColor() {
+    public byte[] getColor()
+    {
         return color;
     }
 
     /**
      * Sets the value of the color property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setColor(byte[] value) {
+    public void setColor(byte[] value)
+    {
         this.color = value;
     }
 
-    public boolean isSetColor() {
-        return (this.color!= null);
+    public boolean isSetColor()
+    {
+        return (this.color != null);
     }
 
     /**
      * Gets the value of the colorMode property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ColorModeEnumType }
-     *     
+     * @return possible object is {@link ColorModeEnumType }
+     * 
      */
-    public ColorModeEnumType getColorMode() {
+    public ColorModeEnumType getColorMode()
+    {
         return colorMode;
     }
 
     /**
      * Sets the value of the colorMode property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ColorModeEnumType }
-     *     
+     * @param value allowed object is {@link ColorModeEnumType }
+     * 
      */
-    public void setColorMode(ColorModeEnumType value) {
+    public void setColorMode(ColorModeEnumType value)
+    {
         this.colorMode = value;
     }
 
-    public boolean isSetColorMode() {
-        return (this.colorMode!= null);
+    public boolean isSetColorMode()
+    {
+        return (this.colorMode != null);
     }
 
     /**
      * Gets the value of the abstractColorStyleSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractColorStyleSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractColorStyleSimpleExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractColorStyleSimpleExtensionGroup().add(newItem);
+     * getAbstractColorStyleSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getAbstractColorStyleSimpleExtensionGroup() {
-        if (abstractColorStyleSimpleExtensionGroup == null) {
+    public List<Object> getAbstractColorStyleSimpleExtensionGroup()
+    {
+        if (abstractColorStyleSimpleExtensionGroup == null)
+        {
             abstractColorStyleSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.abstractColorStyleSimpleExtensionGroup;
     }
 
-    public boolean isSetAbstractColorStyleSimpleExtensionGroup() {
-        return ((this.abstractColorStyleSimpleExtensionGroup!= null)&&(!this.abstractColorStyleSimpleExtensionGroup.isEmpty()));
+    public boolean isSetAbstractColorStyleSimpleExtensionGroup()
+    {
+        return ((this.abstractColorStyleSimpleExtensionGroup != null)
+                && (!this.abstractColorStyleSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetAbstractColorStyleSimpleExtensionGroup() {
+    public void unsetAbstractColorStyleSimpleExtensionGroup()
+    {
         this.abstractColorStyleSimpleExtensionGroup = null;
     }
 
@@ -170,15 +168,17 @@ public abstract class AbstractColorStyleType
      * Gets the value of the abstractColorStyleObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractColorStyleObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractColorStyleObjectExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractColorStyleObjectExtensionGroup().add(newItem);
+     * getAbstractColorStyleObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -188,18 +188,23 @@ public abstract class AbstractColorStyleType
      * 
      * 
      */
-    public List<AbstractObjectType> getAbstractColorStyleObjectExtensionGroup() {
-        if (abstractColorStyleObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getAbstractColorStyleObjectExtensionGroup()
+    {
+        if (abstractColorStyleObjectExtensionGroup == null)
+        {
             abstractColorStyleObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.abstractColorStyleObjectExtensionGroup;
     }
 
-    public boolean isSetAbstractColorStyleObjectExtensionGroup() {
-        return ((this.abstractColorStyleObjectExtensionGroup!= null)&&(!this.abstractColorStyleObjectExtensionGroup.isEmpty()));
+    public boolean isSetAbstractColorStyleObjectExtensionGroup()
+    {
+        return ((this.abstractColorStyleObjectExtensionGroup != null)
+                && (!this.abstractColorStyleObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetAbstractColorStyleObjectExtensionGroup() {
+    public void unsetAbstractColorStyleObjectExtensionGroup()
+    {
         this.abstractColorStyleObjectExtensionGroup = null;
     }
 

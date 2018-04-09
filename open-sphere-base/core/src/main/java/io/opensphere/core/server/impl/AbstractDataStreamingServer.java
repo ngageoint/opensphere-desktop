@@ -77,7 +77,7 @@ public abstract class AbstractDataStreamingServer<T> extends AbstractStreamingSe
      * @param streamId the stream ID
      * @param inputStream The stream of new data.
      * @return The data
-     * @throws IOException if an exception is thrown getting the data
+     * @throws IOException if an  exception is thrown getting the data
      */
     protected abstract T getData(String stream, UUID streamId, InputStream inputStream) throws IOException;
 
@@ -89,8 +89,8 @@ public abstract class AbstractDataStreamingServer<T> extends AbstractStreamingSe
      * @param url The url
      * @param target The type of object being read.
      * @return the data object
-     * @throws IOException If a problem occurs reading from the URL
-     * @throws JAXBException If a problem occurs parsing the results
+     * @throws IOException If a   problem occurs reading from the URL
+     * @throws JAXBException If a   problem occurs parsing the results
      */
     protected <D> D requestData(URL url, Class<D> target) throws IOException, JAXBException
     {
@@ -120,7 +120,8 @@ public abstract class AbstractDataStreamingServer<T> extends AbstractStreamingSe
         }
         catch (IOException | RuntimeException | Error e)
         {
-            // Decrement success, because it was incorrectly incremented if we got here
+            // Decrement success, because it was incorrectly incremented if we
+            // got here
             getSuccessCount().decrementAndGet();
             error(streamId, e);
         }

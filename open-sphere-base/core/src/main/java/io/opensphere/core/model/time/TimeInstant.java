@@ -72,8 +72,9 @@ public abstract class TimeInstant implements Comparable<TimeInstant>, Serializab
     }
 
     /**
-     * Find the maximum of one or two TimeInstant values.  If both arguments
-     * are null, then the method returns null.
+     * Find the maximum of one or two TimeInstant values. If both arguments are
+     * null, then the method returns null.
+     * 
      * @param t1 one TimeInstant
      * @param t2 another TimeInstant
      * @return the largest of the non-null arguments, or null
@@ -90,8 +91,9 @@ public abstract class TimeInstant implements Comparable<TimeInstant>, Serializab
     }
 
     /**
-     * Find the minimum of one or two TimeInstant values.  If both arguments
-     * are null, then the method returns null.
+     * Find the minimum of one or two TimeInstant values. If both arguments are
+     * null, then the method returns null.
+     * 
      * @param t1 one TimeInstant
      * @param t2 another TimeInstant
      * @return the smallest of the non-null arguments, or null

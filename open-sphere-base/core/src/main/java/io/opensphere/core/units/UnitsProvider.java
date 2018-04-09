@@ -55,7 +55,7 @@ public interface UnitsProvider<T>
      * @param longLabel The long label.
      * @return The object.
      * @throws InvalidUnitsException If the units are invalid.
-     * @throws UnitsParseException If no units could be found to match the
+     * @throws UnitsParseException If no  units could be found to match the
      *             label.
      */
     T fromMagnitudeAndLongLabel(Number magnitude, String longLabel);
@@ -67,7 +67,7 @@ public interface UnitsProvider<T>
      * @param selectionLabel The selection label.
      * @return The object.
      * @throws InvalidUnitsException If the units are invalid.
-     * @throws UnitsParseException If no units could be found to match the
+     * @throws UnitsParseException If no  units could be found to match the
      *             label.
      */
     T fromMagnitudeAndSelectionLabel(Number magnitude, String selectionLabel);
@@ -79,7 +79,7 @@ public interface UnitsProvider<T>
      * @param shortLabel The short label.
      * @return The object.
      * @throws InvalidUnitsException If the units are invalid.
-     * @throws UnitsParseException If no units could be found to match the
+     * @throws UnitsParseException If no  units could be found to match the
      *             label.
      */
     T fromMagnitudeAndShortLabel(Number magnitude, String shortLabel);

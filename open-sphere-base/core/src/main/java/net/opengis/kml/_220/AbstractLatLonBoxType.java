@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for AbstractLatLonBoxType complex type.
+ * <p>
+ * Java class for AbstractLatLonBoxType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractLatLonBoxType">
@@ -44,182 +45,178 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractLatLonBoxType", propOrder = {
-    "north",
-    "south",
-    "east",
-    "west",
-    "abstractLatLonBoxSimpleExtensionGroup",
-    "abstractLatLonBoxObjectExtensionGroup"
-})
-@XmlSeeAlso({
-    LatLonBoxType.class,
-    LatLonAltBoxType.class
-})
-public abstract class AbstractLatLonBoxType
-    extends AbstractObjectType
+@XmlType(name = "AbstractLatLonBoxType", propOrder = { "north", "south", "east", "west", "abstractLatLonBoxSimpleExtensionGroup",
+    "abstractLatLonBoxObjectExtensionGroup" })
+@XmlSeeAlso({ LatLonBoxType.class, LatLonAltBoxType.class })
+public abstract class AbstractLatLonBoxType extends AbstractObjectType
 {
 
     @XmlElement(defaultValue = "180.0")
     protected Double north;
+
     @XmlElement(defaultValue = "-180.0")
     protected Double south;
+
     @XmlElement(defaultValue = "180.0")
     protected Double east;
+
     @XmlElement(defaultValue = "-180.0")
     protected Double west;
+
     @XmlElement(name = "AbstractLatLonBoxSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> abstractLatLonBoxSimpleExtensionGroup;
+
     @XmlElement(name = "AbstractLatLonBoxObjectExtensionGroup")
     protected List<AbstractObjectType> abstractLatLonBoxObjectExtensionGroup;
 
     /**
      * Gets the value of the north property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getNorth() {
+    public Double getNorth()
+    {
         return north;
     }
 
     /**
      * Sets the value of the north property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setNorth(Double value) {
+    public void setNorth(Double value)
+    {
         this.north = value;
     }
 
-    public boolean isSetNorth() {
-        return (this.north!= null);
+    public boolean isSetNorth()
+    {
+        return (this.north != null);
     }
 
     /**
      * Gets the value of the south property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getSouth() {
+    public Double getSouth()
+    {
         return south;
     }
 
     /**
      * Sets the value of the south property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setSouth(Double value) {
+    public void setSouth(Double value)
+    {
         this.south = value;
     }
 
-    public boolean isSetSouth() {
-        return (this.south!= null);
+    public boolean isSetSouth()
+    {
+        return (this.south != null);
     }
 
     /**
      * Gets the value of the east property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getEast() {
+    public Double getEast()
+    {
         return east;
     }
 
     /**
      * Sets the value of the east property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setEast(Double value) {
+    public void setEast(Double value)
+    {
         this.east = value;
     }
 
-    public boolean isSetEast() {
-        return (this.east!= null);
+    public boolean isSetEast()
+    {
+        return (this.east != null);
     }
 
     /**
      * Gets the value of the west property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getWest() {
+    public Double getWest()
+    {
         return west;
     }
 
     /**
      * Sets the value of the west property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setWest(Double value) {
+    public void setWest(Double value)
+    {
         this.west = value;
     }
 
-    public boolean isSetWest() {
-        return (this.west!= null);
+    public boolean isSetWest()
+    {
+        return (this.west != null);
     }
 
     /**
      * Gets the value of the abstractLatLonBoxSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractLatLonBoxSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractLatLonBoxSimpleExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractLatLonBoxSimpleExtensionGroup().add(newItem);
+     * getAbstractLatLonBoxSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getAbstractLatLonBoxSimpleExtensionGroup() {
-        if (abstractLatLonBoxSimpleExtensionGroup == null) {
+    public List<Object> getAbstractLatLonBoxSimpleExtensionGroup()
+    {
+        if (abstractLatLonBoxSimpleExtensionGroup == null)
+        {
             abstractLatLonBoxSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.abstractLatLonBoxSimpleExtensionGroup;
     }
 
-    public boolean isSetAbstractLatLonBoxSimpleExtensionGroup() {
-        return ((this.abstractLatLonBoxSimpleExtensionGroup!= null)&&(!this.abstractLatLonBoxSimpleExtensionGroup.isEmpty()));
+    public boolean isSetAbstractLatLonBoxSimpleExtensionGroup()
+    {
+        return ((this.abstractLatLonBoxSimpleExtensionGroup != null) && (!this.abstractLatLonBoxSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetAbstractLatLonBoxSimpleExtensionGroup() {
+    public void unsetAbstractLatLonBoxSimpleExtensionGroup()
+    {
         this.abstractLatLonBoxSimpleExtensionGroup = null;
     }
 
@@ -227,15 +224,17 @@ public abstract class AbstractLatLonBoxType
      * Gets the value of the abstractLatLonBoxObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractLatLonBoxObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractLatLonBoxObjectExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractLatLonBoxObjectExtensionGroup().add(newItem);
+     * getAbstractLatLonBoxObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -245,18 +244,22 @@ public abstract class AbstractLatLonBoxType
      * 
      * 
      */
-    public List<AbstractObjectType> getAbstractLatLonBoxObjectExtensionGroup() {
-        if (abstractLatLonBoxObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getAbstractLatLonBoxObjectExtensionGroup()
+    {
+        if (abstractLatLonBoxObjectExtensionGroup == null)
+        {
             abstractLatLonBoxObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.abstractLatLonBoxObjectExtensionGroup;
     }
 
-    public boolean isSetAbstractLatLonBoxObjectExtensionGroup() {
-        return ((this.abstractLatLonBoxObjectExtensionGroup!= null)&&(!this.abstractLatLonBoxObjectExtensionGroup.isEmpty()));
+    public boolean isSetAbstractLatLonBoxObjectExtensionGroup()
+    {
+        return ((this.abstractLatLonBoxObjectExtensionGroup != null) && (!this.abstractLatLonBoxObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetAbstractLatLonBoxObjectExtensionGroup() {
+    public void unsetAbstractLatLonBoxObjectExtensionGroup()
+    {
         this.abstractLatLonBoxObjectExtensionGroup = null;
     }
 

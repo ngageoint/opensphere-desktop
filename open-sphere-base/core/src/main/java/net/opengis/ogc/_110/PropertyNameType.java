@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ogc._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * <p>Java class for PropertyNameType complex type.
+ * <p>
+ * Java class for PropertyNameType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="PropertyNameType">
@@ -35,30 +36,28 @@ import javax.xml.bind.annotation.XmlValue;
 public class PropertyNameType
 //extends ExpressionType
 {
-@XmlValue
-protected String value;
+    @XmlValue
+    protected String value;
 
-/**
-* Gets the value of the value property.
-*
-* @return
-*     possible object is
-*     {@link String }
-*
-*/
-public String getValue() {
-   return value;
-}
+    /**
+     * Gets the value of the value property.
+     *
+     * @return possible object is {@link String }
+     *
+     */
+    public String getValue()
+    {
+        return value;
+    }
 
-/**
-* Sets the value of the value property.
-*
-* @param value
-*     allowed object is
-*     {@link String }
-*
-*/
-public void setValue(String value) {
-   this.value = value;
-}
+    /**
+     * Sets the value of the value property.
+     *
+     * @param value allowed object is {@link String }
+     *
+     */
+    public void setValue(String value)
+    {
+        this.value = value;
+    }
 }

@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,16 +15,18 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
- *         A declaration of an animation sequence, including the loop behavior, 
- *         loop interval, time per frame, and state of play.
- *       
+ * A declaration of an animation sequence, including the loop behavior, loop
+ * interval, time per frame, and state of play.
  * 
- * <p>Java class for TimeAnimationType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for TimeAnimationType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TimeAnimationType">
@@ -48,14 +49,18 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "TimeAnimationType", propOrder = {
 
 })
-public class TimeAnimationType {
+public class TimeAnimationType
+{
 
     @XmlSchemaType(name = "token")
     protected LoopBehaviorType loopBehavior;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String loop;
+
     protected int millisPerFrame;
+
     @XmlElement(required = true)
     @XmlSchemaType(name = "token")
     protected PlayStateType playState;
@@ -63,64 +68,63 @@ public class TimeAnimationType {
     /**
      * Gets the value of the loopBehavior property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LoopBehaviorType }
-     *     
+     * @return possible object is {@link LoopBehaviorType }
+     * 
      */
-    public LoopBehaviorType getLoopBehavior() {
+    public LoopBehaviorType getLoopBehavior()
+    {
         return loopBehavior;
     }
 
     /**
      * Sets the value of the loopBehavior property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LoopBehaviorType }
-     *     
+     * @param value allowed object is {@link LoopBehaviorType }
+     * 
      */
-    public void setLoopBehavior(LoopBehaviorType value) {
+    public void setLoopBehavior(LoopBehaviorType value)
+    {
         this.loopBehavior = value;
     }
 
-    public boolean isSetLoopBehavior() {
-        return (this.loopBehavior!= null);
+    public boolean isSetLoopBehavior()
+    {
+        return (this.loopBehavior != null);
     }
 
     /**
      * Gets the value of the loop property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLoop() {
+    public String getLoop()
+    {
         return loop;
     }
 
     /**
      * Sets the value of the loop property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLoop(String value) {
+    public void setLoop(String value)
+    {
         this.loop = value;
     }
 
-    public boolean isSetLoop() {
-        return (this.loop!= null);
+    public boolean isSetLoop()
+    {
+        return (this.loop != null);
     }
 
     /**
      * Gets the value of the millisPerFrame property.
      * 
      */
-    public int getMillisPerFrame() {
+    public int getMillisPerFrame()
+    {
         return millisPerFrame;
     }
 
@@ -128,40 +132,41 @@ public class TimeAnimationType {
      * Sets the value of the millisPerFrame property.
      * 
      */
-    public void setMillisPerFrame(int value) {
+    public void setMillisPerFrame(int value)
+    {
         this.millisPerFrame = value;
     }
 
-    public boolean isSetMillisPerFrame() {
+    public boolean isSetMillisPerFrame()
+    {
         return true;
     }
 
     /**
      * Gets the value of the playState property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PlayStateType }
-     *     
+     * @return possible object is {@link PlayStateType }
+     * 
      */
-    public PlayStateType getPlayState() {
+    public PlayStateType getPlayState()
+    {
         return playState;
     }
 
     /**
      * Sets the value of the playState property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PlayStateType }
-     *     
+     * @param value allowed object is {@link PlayStateType }
+     * 
      */
-    public void setPlayState(PlayStateType value) {
+    public void setPlayState(PlayStateType value)
+    {
         this.playState = value;
     }
 
-    public boolean isSetPlayState() {
-        return (this.playState!= null);
+    public boolean isSetPlayState()
+    {
+        return (this.playState != null);
     }
 
 }

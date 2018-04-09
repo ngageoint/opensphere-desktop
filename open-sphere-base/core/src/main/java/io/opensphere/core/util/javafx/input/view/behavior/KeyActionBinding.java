@@ -11,7 +11,8 @@ import javafx.scene.input.KeyCode;
 public class KeyActionBinding
 {
     /**
-     * The set of modifier key codes bound with the action. These include Shift, Control, Alt, Meta, Command, etc.
+     * The set of modifier key codes bound with the action. These include Shift,
+     * Control, Alt, Meta, Command, etc.
      */
     private final Set<KeyCode> myModifiers;
 
@@ -26,14 +27,15 @@ public class KeyActionBinding
     private final String myAction;
 
     /**
-     * Creates a new binding between the key code and the action. The binding will not include any of the modifier keys (shift,
-     * control, alt, or meta).
+     * Creates a new binding between the key code and the action. The binding
+     * will not include any of the modifier keys (shift, control, alt, or meta).
      *
      * @param pCode the code of the key to which the action is bound.
      * @param pAction the action to bind to the key code.
      * @param pModifiers the set of modifier keys to apply to the binding.
-     * @throws IllegalArgumentException if one or more of the supplied modifiers is represented by a {@link KeyCode} that returns
-     *             false for a call to the {@link KeyCode#isModifierKey()} method.
+     * @throws IllegalArgumentException if one or more of the supplied modifiers
+     *             is represented by a {@link KeyCode} that returns false for a
+     *             call to the {@link KeyCode#isModifierKey()} method.
      */
     public KeyActionBinding(KeyCode pCode, String pAction, KeyCode... pModifiers)
     {
@@ -75,7 +77,8 @@ public class KeyActionBinding
     }
 
     /**
-     * Tests to determine if the Alt key is included as part of the action binding.
+     * Tests to determine if the Alt key is included as part of the action
+     * binding.
      *
      * @return true if the Alt key is included as part of the binding.
      */
@@ -85,7 +88,8 @@ public class KeyActionBinding
     }
 
     /**
-     * Tests to determine if the Ctrl key is included as part of the action binding.
+     * Tests to determine if the Ctrl key is included as part of the action
+     * binding.
      *
      * @return true if the Alt key is included as part of the binding.
      */
@@ -95,7 +99,8 @@ public class KeyActionBinding
     }
 
     /**
-     * Tests to determine if the Meta key is included as part of the action binding.
+     * Tests to determine if the Meta key is included as part of the action
+     * binding.
      *
      * @return true if the Alt key is included as part of the binding.
      */
@@ -105,7 +110,8 @@ public class KeyActionBinding
     }
 
     /**
-     * Tests to determine if the Shift key is included as part of the action binding.
+     * Tests to determine if the Shift key is included as part of the action
+     * binding.
      *
      * @return true if the Alt key is included as part of the binding.
      */

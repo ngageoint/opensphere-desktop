@@ -5,20 +5,22 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ows._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * This type is adapted from the general BoundingBoxType, with modified contents and documentation for use with the 2D WGS 84 coordinate reference system. 
+ * This type is adapted from the general BoundingBoxType, with modified contents
+ * and documentation for use with the 2D WGS 84 coordinate reference system.
  * 
- * <p>Java class for WGS84BoundingBoxType complex type.
+ * <p>
+ * Java class for WGS84BoundingBoxType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="WGS84BoundingBoxType">
@@ -39,9 +41,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "WGS84BoundingBoxType")
-public class WGS84BoundingBoxType
-    extends BoundingBoxType
+public class WGS84BoundingBoxType extends BoundingBoxType
 {
-
 
 }

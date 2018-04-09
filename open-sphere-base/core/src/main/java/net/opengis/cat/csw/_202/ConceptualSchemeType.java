@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ConceptualSchemeType complex type.
+ * <p>
+ * Java class for ConceptualSchemeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ConceptualSchemeType">
@@ -37,18 +38,17 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ConceptualSchemeType", propOrder = {
-    "name",
-    "document",
-    "authority"
-})
-public class ConceptualSchemeType {
+@XmlType(name = "ConceptualSchemeType", propOrder = { "name", "document", "authority" })
+public class ConceptualSchemeType
+{
 
     @XmlElement(name = "Name", required = true)
     protected String name;
+
     @XmlElement(name = "Document", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String document;
+
     @XmlElement(name = "Authority", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String authority;
@@ -56,72 +56,66 @@ public class ConceptualSchemeType {
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
     /**
      * Gets the value of the document property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDocument() {
+    public String getDocument()
+    {
         return document;
     }
 
     /**
      * Sets the value of the document property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDocument(String value) {
+    public void setDocument(String value)
+    {
         this.document = value;
     }
 
     /**
      * Gets the value of the authority property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getAuthority() {
+    public String getAuthority()
+    {
         return authority;
     }
 
     /**
      * Sets the value of the authority property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setAuthority(String value) {
+    public void setAuthority(String value)
+    {
         this.authority = value;
     }
 

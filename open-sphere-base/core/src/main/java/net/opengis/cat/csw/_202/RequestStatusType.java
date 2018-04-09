@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,20 +14,20 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-
 /**
  * 
- *             This element provides information about the status of the
- *             search request.
+ * This element provides information about the status of the search request.
  * 
- *             status    - status of the search
- *             timestamp - the date and time when the result set was modified 
- *                         (ISO 8601 format: YYYY-MM-DDThh:mm:ss[+|-]hh:mm).
- *          
+ * status - status of the search timestamp - the date and time when the result
+ * set was modified (ISO 8601 format: YYYY-MM-DDThh:mm:ss[+|-]hh:mm).
  * 
- * <p>Java class for RequestStatusType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for RequestStatusType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="RequestStatusType">
@@ -44,7 +43,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RequestStatusType")
-public class RequestStatusType {
+public class RequestStatusType
+{
 
     @XmlAttribute
     @XmlSchemaType(name = "dateTime")
@@ -53,24 +53,22 @@ public class RequestStatusType {
     /**
      * Gets the value of the timestamp property.
      * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     * @return possible object is {@link XMLGregorianCalendar }
+     * 
      */
-    public XMLGregorianCalendar getTimestamp() {
+    public XMLGregorianCalendar getTimestamp()
+    {
         return timestamp;
     }
 
     /**
      * Sets the value of the timestamp property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     * @param value allowed object is {@link XMLGregorianCalendar }
+     * 
      */
-    public void setTimestamp(XMLGregorianCalendar value) {
+    public void setTimestamp(XMLGregorianCalendar value)
+    {
         this.timestamp = value;
     }
 

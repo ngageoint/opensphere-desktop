@@ -12,7 +12,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
 /**
- * An abstract base class for custom editable combo boxes, with a display node and custom popup.
+ * An abstract base class for custom editable combo boxes, with a display node
+ * and custom popup.
  *
  * @param <T> The datatype contained within the combo box.
  */
@@ -24,7 +25,8 @@ public abstract class AbstractComboBoxSkin<T> extends AbstractBehaviorSkin<Combo
     private static final int DEFAULT_EDITOR_HEIGHT = 21;
 
     /**
-     * The content area in which the value is displayed when the popup is not shown.
+     * The content area in which the value is displayed when the popup is not
+     * shown.
      */
     private Node myDisplayNode;
 
@@ -34,7 +36,8 @@ public abstract class AbstractComboBoxSkin<T> extends AbstractBehaviorSkin<Combo
     private final StackPane myPopupLauncher;
 
     /**
-     * The component in which the graphic is displayed. This is used as the {@link StackPane}'s graphic.
+     * The component in which the graphic is displayed. This is used as the
+     * {@link StackPane}'s graphic.
      */
     private final Region myIcon;
 
@@ -86,21 +89,23 @@ public abstract class AbstractComboBoxSkin<T> extends AbstractBehaviorSkin<Combo
     }
 
     /**
-     * This method should return a Node that will be positioned within the ComboBox 'button' area.
+     * This method should return a Node that will be positioned within the
+     * ComboBox 'button' area.
      *
      * @return the component used as the display / editor node.
      */
     public abstract Node getDisplayNode();
 
     /**
-     * This method will be called when the ComboBox popup should be displayed. It is up to specific skin implementations to
-     * determine how this is handled.
+     * This method will be called when the ComboBox popup should be displayed.
+     * It is up to specific skin implementations to determine how this is
+     * handled.
      */
     public abstract void show();
 
     /**
-     * This method will be called when the ComboBox popup should be hidden. It is up to specific skin implementations to determine
-     * how this is handled.
+     * This method will be called when the ComboBox popup should be hidden. It
+     * is up to specific skin implementations to determine how this is handled.
      */
     public abstract void hide();
 
@@ -117,12 +122,14 @@ public abstract class AbstractComboBoxSkin<T> extends AbstractBehaviorSkin<Combo
     /**
      * {@inheritDoc}
      *
-     * @see javafx.scene.control.SkinBase#layoutChildren(double, double, double, double)
+     * @see javafx.scene.control.SkinBase#layoutChildren(double, double, double,
+     *      double)
      */
     @Override
     protected void layoutChildren(double pContentX, double pContentY, double pContentWidth, double pContentHeight)
     {
-        // if the display / editor node hasn't been initialized, take care of that now:
+        // if the display / editor node hasn't been initialized, take care of
+        // that now:
         if (myDisplayNode == null)
         {
             updateDisplayArea();
@@ -143,8 +150,10 @@ public abstract class AbstractComboBoxSkin<T> extends AbstractBehaviorSkin<Combo
     }
 
     /**
-     * This method lazily initializes the display node, updating it from the implementing subclass. This also allows for the
-     * editable state of the editor to be changed at runtime, and for the display node to be changed by the subclass.
+     * This method lazily initializes the display node, updating it from the
+     * implementing subclass. This also allows for the editable state of the
+     * editor to be changed at runtime, and for the display node to be changed
+     * by the subclass.
      */
     protected void updateDisplayArea()
     {
@@ -168,7 +177,8 @@ public abstract class AbstractComboBoxSkin<T> extends AbstractBehaviorSkin<Combo
     /**
      * {@inheritDoc}
      *
-     * @see javafx.scene.control.SkinBase#computePrefWidth(double, double, double, double, double)
+     * @see javafx.scene.control.SkinBase#computePrefWidth(double, double,
+     *      double, double, double)
      */
     @Override
     protected double computePrefWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset)
@@ -189,7 +199,8 @@ public abstract class AbstractComboBoxSkin<T> extends AbstractBehaviorSkin<Combo
     /**
      * {@inheritDoc}
      *
-     * @see javafx.scene.control.SkinBase#computePrefHeight(double, double, double, double, double)
+     * @see javafx.scene.control.SkinBase#computePrefHeight(double, double,
+     *      double, double, double)
      */
     @Override
     protected double computePrefHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset)
@@ -216,7 +227,8 @@ public abstract class AbstractComboBoxSkin<T> extends AbstractBehaviorSkin<Combo
     /**
      * {@inheritDoc}
      *
-     * @see javafx.scene.control.SkinBase#computeMaxWidth(double, double, double, double, double)
+     * @see javafx.scene.control.SkinBase#computeMaxWidth(double, double,
+     *      double, double, double)
      */
     @Override
     protected double computeMaxWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset)
@@ -227,7 +239,8 @@ public abstract class AbstractComboBoxSkin<T> extends AbstractBehaviorSkin<Combo
     /**
      * {@inheritDoc}
      *
-     * @see javafx.scene.control.SkinBase#computeMaxHeight(double, double, double, double, double)
+     * @see javafx.scene.control.SkinBase#computeMaxHeight(double, double,
+     *      double, double, double)
      */
     @Override
     protected double computeMaxHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset)
@@ -238,7 +251,8 @@ public abstract class AbstractComboBoxSkin<T> extends AbstractBehaviorSkin<Combo
     /**
      * {@inheritDoc}
      *
-     * @see javafx.scene.control.SkinBase#computeBaselineOffset(double, double, double, double)
+     * @see javafx.scene.control.SkinBase#computeBaselineOffset(double, double,
+     *      double, double)
      */
     @Override
     protected double computeBaselineOffset(double topInset, double rightInset, double bottomInset, double leftInset)
@@ -257,8 +271,8 @@ public abstract class AbstractComboBoxSkin<T> extends AbstractBehaviorSkin<Combo
     }
 
     /**
-     * An event handler method used to handle a focus change. When the focus is lost, the {@link #handleFocusLoss()} method is
-     * called.
+     * An event handler method used to handle a focus change. When the focus is
+     * lost, the {@link #handleFocusLoss()} method is called.
      *
      * @param pFocused true if the focus was gained, false otherwise.
      */
@@ -271,8 +285,9 @@ public abstract class AbstractComboBoxSkin<T> extends AbstractBehaviorSkin<Combo
     }
 
     /**
-     * An overridable focus handler method in which the skin handles the loss of focus. The default implementation hides the
-     * underlying {@link Skinnable} component.
+     * An overridable focus handler method in which the skin handles the loss of
+     * focus. The default implementation hides the underlying {@link Skinnable}
+     * component.
      */
     protected void handleFocusLoss()
     {

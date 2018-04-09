@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.gml._212;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,19 +13,21 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
  * 
- *         Coordinates can be included in a single string, but there is no 
- *         facility for validating string content. The value of the 'cs' attribute 
- *         is the separator for coordinate values, and the value of the 'ts' 
- *         attribute gives the tuple separator (a single space by default); the 
- *         default values may be changed to reflect local usage.
- *       
+ * Coordinates can be included in a single string, but there is no facility for
+ * validating string content. The value of the 'cs' attribute is the separator
+ * for coordinate values, and the value of the 'ts' attribute gives the tuple
+ * separator (a single space by default); the default values may be changed to
+ * reflect local usage.
  * 
- * <p>Java class for CoordinatesType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for CoordinatesType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CoordinatesType">
@@ -43,60 +44,63 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CoordinatesType", propOrder = {
-    "value"
-})
-public class CoordinatesType {
+@XmlType(name = "CoordinatesType", propOrder = { "value" })
+public class CoordinatesType
+{
 
     @XmlValue
     protected String value;
+
     @XmlAttribute(name = "decimal")
     protected String decimal;
+
     @XmlAttribute(name = "cs")
     protected String cs;
+
     @XmlAttribute(name = "ts")
     protected String ts;
 
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getValue() {
+    public String getValue()
+    {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setValue(String value) {
+    public void setValue(String value)
+    {
         this.value = value;
     }
 
-    public boolean isSetValue() {
-        return (this.value!= null);
+    public boolean isSetValue()
+    {
+        return (this.value != null);
     }
 
     /**
      * Gets the value of the decimal property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDecimal() {
-        if (decimal == null) {
+    public String getDecimal()
+    {
+        if (decimal == null)
+        {
             return ".";
-        } else {
+        }
+        else
+        {
             return decimal;
         }
     }
@@ -104,31 +108,33 @@ public class CoordinatesType {
     /**
      * Sets the value of the decimal property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDecimal(String value) {
+    public void setDecimal(String value)
+    {
         this.decimal = value;
     }
 
-    public boolean isSetDecimal() {
-        return (this.decimal!= null);
+    public boolean isSetDecimal()
+    {
+        return (this.decimal != null);
     }
 
     /**
      * Gets the value of the cs property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getCs() {
-        if (cs == null) {
+    public String getCs()
+    {
+        if (cs == null)
+        {
             return ",";
-        } else {
+        }
+        else
+        {
             return cs;
         }
     }
@@ -136,31 +142,33 @@ public class CoordinatesType {
     /**
      * Sets the value of the cs property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setCs(String value) {
+    public void setCs(String value)
+    {
         this.cs = value;
     }
 
-    public boolean isSetCs() {
-        return (this.cs!= null);
+    public boolean isSetCs()
+    {
+        return (this.cs != null);
     }
 
     /**
      * Gets the value of the ts property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTs() {
-        if (ts == null) {
+    public String getTs()
+    {
+        if (ts == null)
+        {
             return " ";
-        } else {
+        }
+        else
+        {
             return ts;
         }
     }
@@ -168,17 +176,17 @@ public class CoordinatesType {
     /**
      * Sets the value of the ts property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTs(String value) {
+    public void setTs(String value)
+    {
         this.ts = value;
     }
 
-    public boolean isSetTs() {
-        return (this.ts!= null);
+    public boolean isSetTs()
+    {
+        return (this.ts != null);
     }
 
 }

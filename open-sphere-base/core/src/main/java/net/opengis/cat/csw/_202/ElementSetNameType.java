@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.namespace.QName;
 
-
 /**
- * <p>Java class for ElementSetNameType complex type.
+ * <p>
+ * Java class for ElementSetNameType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ElementSetNameType">
@@ -37,39 +38,36 @@ import javax.xml.namespace.QName;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ElementSetNameType", propOrder = {
-    "value"
-})
-public class ElementSetNameType {
+@XmlType(name = "ElementSetNameType", propOrder = { "value" })
+public class ElementSetNameType
+{
 
     @XmlValue
     protected ElementSetType value;
+
     @XmlAttribute
     protected List<QName> typeNames;
 
     /**
-     * Named subsets of catalogue object properties; these
-     *          views are mapped to a specific information model and
-     *          are defined in an application profile.
+     * Named subsets of catalogue object properties; these views are mapped to a
+     * specific information model and are defined in an application profile.
      * 
-     * @return
-     *     possible object is
-     *     {@link ElementSetType }
-     *     
+     * @return possible object is {@link ElementSetType }
+     * 
      */
-    public ElementSetType getValue() {
+    public ElementSetType getValue()
+    {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ElementSetType }
-     *     
+     * @param value allowed object is {@link ElementSetType }
+     * 
      */
-    public void setValue(ElementSetType value) {
+    public void setValue(ElementSetType value)
+    {
         this.value = value;
     }
 
@@ -77,26 +75,28 @@ public class ElementSetNameType {
      * Gets the value of the typeNames property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the typeNames property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the typeNames property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getTypeNames().add(newItem);
+     * getTypeNames().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link QName }
+     * Objects of the following type(s) are allowed in the list {@link QName }
      * 
      * 
      */
-    public List<QName> getTypeNames() {
-        if (typeNames == null) {
+    public List<QName> getTypeNames()
+    {
+        if (typeNames == null)
+        {
             typeNames = new ArrayList<QName>();
         }
         return this.typeNames;

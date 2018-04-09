@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.math.BigInteger;
@@ -20,13 +19,17 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * An unrectified grid, which is a network composed of two or more sets of equally spaced parallel lines in which the members of each set intersect the members of the other sets at right angles.
+ * An unrectified grid, which is a network composed of two or more sets of
+ * equally spaced parallel lines in which the members of each set intersect the
+ * members of the other sets at right angles.
  * 
- * <p>Java class for GridType complex type.
+ * <p>
+ * Java class for GridType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GridType">
@@ -45,21 +48,17 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GridType", propOrder = {
-    "limits",
-    "axisName"
-})
-@XmlSeeAlso({
-    RectifiedGridType.class
-})
-public class GridType
-    extends AbstractGeometryType
+@XmlType(name = "GridType", propOrder = { "limits", "axisName" })
+@XmlSeeAlso({ RectifiedGridType.class })
+public class GridType extends AbstractGeometryType
 {
 
     @XmlElement(required = true)
     protected GridLimitsType limits;
+
     @XmlElement(required = true)
     protected List<String> axisName;
+
     @XmlAttribute(name = "dimension", required = true)
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger dimension;
@@ -67,24 +66,22 @@ public class GridType
     /**
      * Gets the value of the limits property.
      * 
-     * @return
-     *     possible object is
-     *     {@link GridLimitsType }
-     *     
+     * @return possible object is {@link GridLimitsType }
+     * 
      */
-    public GridLimitsType getLimits() {
+    public GridLimitsType getLimits()
+    {
         return limits;
     }
 
     /**
      * Sets the value of the limits property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link GridLimitsType }
-     *     
+     * @param value allowed object is {@link GridLimitsType }
+     * 
      */
-    public void setLimits(GridLimitsType value) {
+    public void setLimits(GridLimitsType value)
+    {
         this.limits = value;
     }
 
@@ -92,26 +89,28 @@ public class GridType
      * Gets the value of the axisName property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the axisName property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the axisName property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAxisName().add(newItem);
+     * getAxisName().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getAxisName() {
-        if (axisName == null) {
+    public List<String> getAxisName()
+    {
+        if (axisName == null)
+        {
             axisName = new ArrayList<String>();
         }
         return this.axisName;
@@ -120,24 +119,22 @@ public class GridType
     /**
      * Gets the value of the dimension property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getDimension() {
+    public BigInteger getDimension()
+    {
         return dimension;
     }
 
     /**
      * Sets the value of the dimension property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setDimension(BigInteger value) {
+    public void setDimension(BigInteger value)
+    {
         this.dimension = value;
     }
 

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,16 +13,18 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *             XML encoded WFS operation request base, for all operations
- *             except GetCapabilities.
- *          
+ * XML encoded WFS operation request base, for all operations except
+ * GetCapabilities.
  * 
- * <p>Java class for BaseRequestType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for BaseRequestType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="BaseRequestType">
@@ -41,35 +42,34 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "BaseRequestType")
-@XmlSeeAlso({
-    TransactionType.class,
-    LockFeatureType.class,
-    GetFeatureType.class,
-    GetFeatureWithLockType.class,
-    GetGmlObjectType.class,
-    DescribeFeatureTypeType.class
-})
-public abstract class BaseRequestType {
+@XmlSeeAlso({ TransactionType.class, LockFeatureType.class, GetFeatureType.class, GetFeatureWithLockType.class,
+    GetGmlObjectType.class, DescribeFeatureTypeType.class })
+public abstract class BaseRequestType
+{
 
     @XmlAttribute(name = "service")
     protected String service;
+
     @XmlAttribute(name = "version")
     protected String version;
+
     @XmlAttribute(name = "handle")
     protected String handle;
 
     /**
      * Gets the value of the service property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getService() {
-        if (service == null) {
+    public String getService()
+    {
+        if (service == null)
+        {
             return "WFS";
-        } else {
+        }
+        else
+        {
             return service;
         }
     }
@@ -77,27 +77,28 @@ public abstract class BaseRequestType {
     /**
      * Sets the value of the service property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setService(String value) {
+    public void setService(String value)
+    {
         this.service = value;
     }
 
     /**
      * Gets the value of the version property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getVersion() {
-        if (version == null) {
+    public String getVersion()
+    {
+        if (version == null)
+        {
             return "1.1.0";
-        } else {
+        }
+        else
+        {
             return version;
         }
     }
@@ -105,36 +106,33 @@ public abstract class BaseRequestType {
     /**
      * Sets the value of the version property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setVersion(String value) {
+    public void setVersion(String value)
+    {
         this.version = value;
     }
 
     /**
      * Gets the value of the handle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHandle() {
+    public String getHandle()
+    {
         return handle;
     }
 
     /**
      * Sets the value of the handle property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHandle(String value) {
+    public void setHandle(String value)
+    {
         this.handle = value;
     }
 

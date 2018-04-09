@@ -36,7 +36,7 @@ public class GeometryProcessorConfigurations
      *
      * @param url The URL.
      * @return The configuration.
-     * @throws JAXBException If an error occurs.
+     * @throws JAXBException If an  error occurs.
      */
     public static GeometryProcessorConfigurations load(URL url) throws JAXBException
     {

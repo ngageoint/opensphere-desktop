@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.ows._110;
 
 import java.util.ArrayList;
@@ -17,13 +16,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Logical group of one or more references to remote and/or local resources, allowing including metadata about that group. A Group can be used instead of a Manifest that can only contain one group. 
+ * Logical group of one or more references to remote and/or local resources,
+ * allowing including metadata about that group. A Group can be used instead of
+ * a Manifest that can only contain one group.
  * 
- * <p>Java class for ReferenceGroupType complex type.
+ * <p>
+ * Java class for ReferenceGroupType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ReferenceGroupType">
@@ -40,11 +43,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ReferenceGroupType", propOrder = {
-    "abstractReferenceBase"
-})
-public class ReferenceGroupType
-    extends BasicIdentificationType
+@XmlType(name = "ReferenceGroupType", propOrder = { "abstractReferenceBase" })
+public class ReferenceGroupType extends BasicIdentificationType
 {
 
     @XmlElementRef(name = "AbstractReferenceBase", namespace = "http://www.opengis.net/ows/1.1", type = JAXBElement.class)
@@ -54,15 +54,16 @@ public class ReferenceGroupType
      * Gets the value of the abstractReferenceBase property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractReferenceBase property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractReferenceBase property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractReferenceBase().add(newItem);
+     * getAbstractReferenceBase().add(newItem);
      * </pre>
      * 
      * 
@@ -74,8 +75,10 @@ public class ReferenceGroupType
      * 
      * 
      */
-    public List<JAXBElement<? extends AbstractReferenceBaseType>> getAbstractReferenceBase() {
-        if (abstractReferenceBase == null) {
+    public List<JAXBElement<? extends AbstractReferenceBaseType>> getAbstractReferenceBase()
+    {
+        if (abstractReferenceBase == null)
+        {
             abstractReferenceBase = new ArrayList<JAXBElement<? extends AbstractReferenceBaseType>>();
         }
         return this.abstractReferenceBase;

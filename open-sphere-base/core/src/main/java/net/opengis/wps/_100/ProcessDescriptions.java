@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -38,12 +39,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "processDescription"
-})
+@XmlType(name = "", propOrder = { "processDescription" })
 @XmlRootElement(name = "ProcessDescriptions")
-public class ProcessDescriptions
-    extends ResponseBaseType
+public class ProcessDescriptions extends ResponseBaseType
 {
 
     @XmlElement(name = "ProcessDescription", namespace = "", required = true)
@@ -53,15 +51,16 @@ public class ProcessDescriptions
      * Gets the value of the processDescription property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the processDescription property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the processDescription property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getProcessDescription().add(newItem);
+     * getProcessDescription().add(newItem);
      * </pre>
      * 
      * 
@@ -71,8 +70,10 @@ public class ProcessDescriptions
      * 
      * 
      */
-    public List<ProcessDescriptionType> getProcessDescription() {
-        if (processDescription == null) {
+    public List<ProcessDescriptionType> getProcessDescription()
+    {
+        if (processDescription == null)
+        {
             processDescription = new ArrayList<ProcessDescriptionType>();
         }
         return this.processDescription;

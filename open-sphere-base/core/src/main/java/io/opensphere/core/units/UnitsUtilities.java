@@ -112,7 +112,8 @@ public final class UnitsUtilities
      *             cannot be found.
      */
     public static <S> S createFromShortLabelString(UnitsProvider<S> unitsProvider, Class<? extends Number> valueType,
-            String label) throws UnitsParseException
+            String label)
+        throws UnitsParseException
     {
         Pair<String, String> splitLabel = splitLabel(label);
         Class<? extends S> unitType = unitsProvider.getUnitsWithShortLabel(splitLabel.getSecondObject());

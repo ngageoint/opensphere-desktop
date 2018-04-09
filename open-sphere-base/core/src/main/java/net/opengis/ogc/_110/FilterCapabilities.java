@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ogc._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -37,90 +38,83 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "spatialCapabilities",
-    "scalarCapabilities",
-    "idCapabilities"
-})
+@XmlType(name = "", propOrder = { "spatialCapabilities", "scalarCapabilities", "idCapabilities" })
 @XmlRootElement(name = "Filter_Capabilities")
-public class FilterCapabilities {
+public class FilterCapabilities
+{
 
     @XmlElement(name = "Spatial_Capabilities", required = true)
     protected SpatialCapabilitiesType spatialCapabilities;
+
     @XmlElement(name = "Scalar_Capabilities", required = true)
     protected ScalarCapabilitiesType scalarCapabilities;
+
     @XmlElement(name = "Id_Capabilities", required = true)
     protected IdCapabilitiesType idCapabilities;
 
     /**
      * Gets the value of the spatialCapabilities property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SpatialCapabilitiesType }
-     *     
+     * @return possible object is {@link SpatialCapabilitiesType }
+     * 
      */
-    public SpatialCapabilitiesType getSpatialCapabilities() {
+    public SpatialCapabilitiesType getSpatialCapabilities()
+    {
         return spatialCapabilities;
     }
 
     /**
      * Sets the value of the spatialCapabilities property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SpatialCapabilitiesType }
-     *     
+     * @param value allowed object is {@link SpatialCapabilitiesType }
+     * 
      */
-    public void setSpatialCapabilities(SpatialCapabilitiesType value) {
+    public void setSpatialCapabilities(SpatialCapabilitiesType value)
+    {
         this.spatialCapabilities = value;
     }
 
     /**
      * Gets the value of the scalarCapabilities property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ScalarCapabilitiesType }
-     *     
+     * @return possible object is {@link ScalarCapabilitiesType }
+     * 
      */
-    public ScalarCapabilitiesType getScalarCapabilities() {
+    public ScalarCapabilitiesType getScalarCapabilities()
+    {
         return scalarCapabilities;
     }
 
     /**
      * Sets the value of the scalarCapabilities property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ScalarCapabilitiesType }
-     *     
+     * @param value allowed object is {@link ScalarCapabilitiesType }
+     * 
      */
-    public void setScalarCapabilities(ScalarCapabilitiesType value) {
+    public void setScalarCapabilities(ScalarCapabilitiesType value)
+    {
         this.scalarCapabilities = value;
     }
 
     /**
      * Gets the value of the idCapabilities property.
      * 
-     * @return
-     *     possible object is
-     *     {@link IdCapabilitiesType }
-     *     
+     * @return possible object is {@link IdCapabilitiesType }
+     * 
      */
-    public IdCapabilitiesType getIdCapabilities() {
+    public IdCapabilitiesType getIdCapabilities()
+    {
         return idCapabilities;
     }
 
     /**
      * Sets the value of the idCapabilities property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link IdCapabilitiesType }
-     *     
+     * @param value allowed object is {@link IdCapabilitiesType }
+     * 
      */
-    public void setIdCapabilities(IdCapabilitiesType value) {
+    public void setIdCapabilities(IdCapabilitiesType value)
+    {
         this.idCapabilities = value;
     }
 

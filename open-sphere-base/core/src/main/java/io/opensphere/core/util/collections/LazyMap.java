@@ -210,7 +210,7 @@ public class LazyMap<K, V> extends WrappedMap<K, V>
      *
      * @param key The key whose value is to be returned.
      * @return The value.
-     * @throws IllegalStateException If no factory was specified when this map
+     * @throws IllegalStateException If no  factory was specified when this map
      *             was constructed.
      */
     @Override

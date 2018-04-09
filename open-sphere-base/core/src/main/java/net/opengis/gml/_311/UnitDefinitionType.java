@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,13 +13,19 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Definition of a unit of measure (or uom). The definition includes a quantityType property, which indicates the phenomenon to which the units apply, and a catalogSymbol, which gives the short symbol used for this unit. This element is used when the relationship of this unit to other units or units systems is unknown.
+ * Definition of a unit of measure (or uom). The definition includes a
+ * quantityType property, which indicates the phenomenon to which the units
+ * apply, and a catalogSymbol, which gives the short symbol used for this unit.
+ * This element is used when the relationship of this unit to other units or
+ * units systems is unknown.
  * 
- * <p>Java class for UnitDefinitionType complex type.
+ * <p>
+ * Java class for UnitDefinitionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="UnitDefinitionType">
@@ -38,68 +43,57 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UnitDefinitionType", propOrder = {
-    "quantityType",
-    "catalogSymbol"
-})
-@XmlSeeAlso({
-    DerivedUnitType.class,
-    ConventionalUnitType.class,
-    BaseUnitType.class
-})
-public class UnitDefinitionType
-    extends DefinitionType
+@XmlType(name = "UnitDefinitionType", propOrder = { "quantityType", "catalogSymbol" })
+@XmlSeeAlso({ DerivedUnitType.class, ConventionalUnitType.class, BaseUnitType.class })
+public class UnitDefinitionType extends DefinitionType
 {
 
     @XmlElement(required = true)
     protected StringOrRefType quantityType;
+
     protected CodeType catalogSymbol;
 
     /**
      * Gets the value of the quantityType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link StringOrRefType }
-     *     
+     * @return possible object is {@link StringOrRefType }
+     * 
      */
-    public StringOrRefType getQuantityType() {
+    public StringOrRefType getQuantityType()
+    {
         return quantityType;
     }
 
     /**
      * Sets the value of the quantityType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link StringOrRefType }
-     *     
+     * @param value allowed object is {@link StringOrRefType }
+     * 
      */
-    public void setQuantityType(StringOrRefType value) {
+    public void setQuantityType(StringOrRefType value)
+    {
         this.quantityType = value;
     }
 
     /**
      * Gets the value of the catalogSymbol property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CodeType }
-     *     
+     * @return possible object is {@link CodeType }
+     * 
      */
-    public CodeType getCatalogSymbol() {
+    public CodeType getCatalogSymbol()
+    {
         return catalogSymbol;
     }
 
     /**
      * Sets the value of the catalogSymbol property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CodeType }
-     *     
+     * @param value allowed object is {@link CodeType }
+     * 
      */
-    public void setCatalogSymbol(CodeType value) {
+    public void setCatalogSymbol(CodeType value)
+    {
         this.catalogSymbol = value;
     }
 

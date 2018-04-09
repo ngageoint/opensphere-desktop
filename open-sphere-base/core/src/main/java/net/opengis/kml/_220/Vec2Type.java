@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for vec2Type complex type.
+ * <p>
+ * Java class for vec2Type complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="vec2Type">
@@ -36,29 +37,35 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "vec2Type")
-public class Vec2Type {
+public class Vec2Type
+{
 
     @XmlAttribute(name = "x")
     protected Double x;
+
     @XmlAttribute(name = "y")
     protected Double y;
+
     @XmlAttribute(name = "xunits")
     protected UnitsEnumType xunits;
+
     @XmlAttribute(name = "yunits")
     protected UnitsEnumType yunits;
 
     /**
      * Gets the value of the x property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public double getX() {
-        if (x == null) {
-            return  1.0D;
-        } else {
+    public double getX()
+    {
+        if (x == null)
+        {
+            return 1.0D;
+        }
+        else
+        {
             return x;
         }
     }
@@ -66,35 +73,38 @@ public class Vec2Type {
     /**
      * Sets the value of the x property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setX(double value) {
+    public void setX(double value)
+    {
         this.x = value;
     }
 
-    public boolean isSetX() {
-        return (this.x!= null);
+    public boolean isSetX()
+    {
+        return (this.x != null);
     }
 
-    public void unsetX() {
+    public void unsetX()
+    {
         this.x = null;
     }
 
     /**
      * Gets the value of the y property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public double getY() {
-        if (y == null) {
-            return  1.0D;
-        } else {
+    public double getY()
+    {
+        if (y == null)
+        {
+            return 1.0D;
+        }
+        else
+        {
             return y;
         }
     }
@@ -102,35 +112,38 @@ public class Vec2Type {
     /**
      * Sets the value of the y property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setY(double value) {
+    public void setY(double value)
+    {
         this.y = value;
     }
 
-    public boolean isSetY() {
-        return (this.y!= null);
+    public boolean isSetY()
+    {
+        return (this.y != null);
     }
 
-    public void unsetY() {
+    public void unsetY()
+    {
         this.y = null;
     }
 
     /**
      * Gets the value of the xunits property.
      * 
-     * @return
-     *     possible object is
-     *     {@link UnitsEnumType }
-     *     
+     * @return possible object is {@link UnitsEnumType }
+     * 
      */
-    public UnitsEnumType getXunits() {
-        if (xunits == null) {
+    public UnitsEnumType getXunits()
+    {
+        if (xunits == null)
+        {
             return UnitsEnumType.FRACTION;
-        } else {
+        }
+        else
+        {
             return xunits;
         }
     }
@@ -138,31 +151,33 @@ public class Vec2Type {
     /**
      * Sets the value of the xunits property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link UnitsEnumType }
-     *     
+     * @param value allowed object is {@link UnitsEnumType }
+     * 
      */
-    public void setXunits(UnitsEnumType value) {
+    public void setXunits(UnitsEnumType value)
+    {
         this.xunits = value;
     }
 
-    public boolean isSetXunits() {
-        return (this.xunits!= null);
+    public boolean isSetXunits()
+    {
+        return (this.xunits != null);
     }
 
     /**
      * Gets the value of the yunits property.
      * 
-     * @return
-     *     possible object is
-     *     {@link UnitsEnumType }
-     *     
+     * @return possible object is {@link UnitsEnumType }
+     * 
      */
-    public UnitsEnumType getYunits() {
-        if (yunits == null) {
+    public UnitsEnumType getYunits()
+    {
+        if (yunits == null)
+        {
             return UnitsEnumType.FRACTION;
-        } else {
+        }
+        else
+        {
             return yunits;
         }
     }
@@ -170,17 +185,17 @@ public class Vec2Type {
     /**
      * Sets the value of the yunits property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link UnitsEnumType }
-     *     
+     * @param value allowed object is {@link UnitsEnumType }
+     * 
      */
-    public void setYunits(UnitsEnumType value) {
+    public void setYunits(UnitsEnumType value)
+    {
         this.yunits = value;
     }
 
-    public boolean isSetYunits() {
-        return (this.yunits!= null);
+    public boolean isSetYunits()
+    {
+        return (this.yunits != null);
     }
 
 }

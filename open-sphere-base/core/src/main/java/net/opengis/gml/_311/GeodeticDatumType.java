@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A geodetic datum defines the precise location and orientation in 3-dimensional space of a defined ellipsoid (or sphere) that approximates the shape of the earth, or of a Cartesian coordinate system centered in this ellipsoid (or sphere). 
+ * A geodetic datum defines the precise location and orientation in
+ * 3-dimensional space of a defined ellipsoid (or sphere) that approximates the
+ * shape of the earth, or of a Cartesian coordinate system centered in this
+ * ellipsoid (or sphere).
  * 
- * <p>Java class for GeodeticDatumType complex type.
+ * <p>
+ * Java class for GeodeticDatumType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GeodeticDatumType">
@@ -37,64 +41,57 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GeodeticDatumType", propOrder = {
-    "usesPrimeMeridian",
-    "usesEllipsoid"
-})
-public class GeodeticDatumType
-    extends AbstractDatumType
+@XmlType(name = "GeodeticDatumType", propOrder = { "usesPrimeMeridian", "usesEllipsoid" })
+public class GeodeticDatumType extends AbstractDatumType
 {
 
     @XmlElement(required = true)
     protected PrimeMeridianRefType usesPrimeMeridian;
+
     @XmlElement(required = true)
     protected EllipsoidRefType usesEllipsoid;
 
     /**
      * Gets the value of the usesPrimeMeridian property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PrimeMeridianRefType }
-     *     
+     * @return possible object is {@link PrimeMeridianRefType }
+     * 
      */
-    public PrimeMeridianRefType getUsesPrimeMeridian() {
+    public PrimeMeridianRefType getUsesPrimeMeridian()
+    {
         return usesPrimeMeridian;
     }
 
     /**
      * Sets the value of the usesPrimeMeridian property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PrimeMeridianRefType }
-     *     
+     * @param value allowed object is {@link PrimeMeridianRefType }
+     * 
      */
-    public void setUsesPrimeMeridian(PrimeMeridianRefType value) {
+    public void setUsesPrimeMeridian(PrimeMeridianRefType value)
+    {
         this.usesPrimeMeridian = value;
     }
 
     /**
      * Gets the value of the usesEllipsoid property.
      * 
-     * @return
-     *     possible object is
-     *     {@link EllipsoidRefType }
-     *     
+     * @return possible object is {@link EllipsoidRefType }
+     * 
      */
-    public EllipsoidRefType getUsesEllipsoid() {
+    public EllipsoidRefType getUsesEllipsoid()
+    {
         return usesEllipsoid;
     }
 
     /**
      * Sets the value of the usesEllipsoid property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link EllipsoidRefType }
-     *     
+     * @param value allowed object is {@link EllipsoidRefType }
+     * 
      */
-    public void setUsesEllipsoid(EllipsoidRefType value) {
+    public void setUsesEllipsoid(EllipsoidRefType value)
+    {
         this.usesEllipsoid = value;
     }
 

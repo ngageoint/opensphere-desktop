@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.util.ArrayList;
@@ -18,16 +17,18 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
- *         A collection of one or more 'tag' elements, used to categorize the 
- *         saved state.
- *       
+ * A collection of one or more 'tag' elements, used to categorize the saved
+ * state.
  * 
- * <p>Java class for TagsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for TagsType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TagsType">
@@ -44,10 +45,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TagsType", propOrder = {
-    "tag"
-})
-public class TagsType {
+@XmlType(name = "TagsType", propOrder = { "tag" })
+public class TagsType
+{
 
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
@@ -57,36 +57,40 @@ public class TagsType {
      * Gets the value of the tag property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the tag property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the tag property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getTag().add(newItem);
+     * getTag().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getTag() {
-        if (tag == null) {
+    public List<String> getTag()
+    {
+        if (tag == null)
+        {
             tag = new ArrayList<String>();
         }
         return this.tag;
     }
 
-    public boolean isSetTag() {
-        return ((this.tag!= null)&&(!this.tag.isEmpty()));
+    public boolean isSetTag()
+    {
+        return ((this.tag != null) && (!this.tag.isEmpty()));
     }
 
-    public void unsetTag() {
+    public void unsetTag()
+    {
         this.tag = null;
     }
 

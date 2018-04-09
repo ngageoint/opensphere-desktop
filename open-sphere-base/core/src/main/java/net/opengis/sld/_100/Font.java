@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -38,11 +39,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "cssParameter"
-})
+@XmlType(name = "", propOrder = { "cssParameter" })
 @XmlRootElement(name = "Font")
-public class Font {
+public class Font
+{
 
     @XmlElement(name = "CssParameter")
     protected List<CssParameter> cssParameter;
@@ -51,15 +51,16 @@ public class Font {
      * Gets the value of the cssParameter property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the cssParameter property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the cssParameter property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getCssParameter().add(newItem);
+     * getCssParameter().add(newItem);
      * </pre>
      * 
      * 
@@ -69,8 +70,10 @@ public class Font {
      * 
      * 
      */
-    public List<CssParameter> getCssParameter() {
-        if (cssParameter == null) {
+    public List<CssParameter> getCssParameter()
+    {
+        if (cssParameter == null)
+        {
             cssParameter = new ArrayList<CssParameter>();
         }
         return this.cssParameter;

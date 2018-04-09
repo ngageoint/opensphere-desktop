@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.util.ArrayList;
@@ -19,15 +18,17 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
- *         A declaration of a time sequence.
- *       
+ * A declaration of a time sequence.
  * 
- * <p>Java class for TimeSequenceType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for TimeSequenceType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TimeSequenceType">
@@ -44,10 +45,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TimeSequenceType", propOrder = {
-    "interval"
-})
-public class TimeSequenceType {
+@XmlType(name = "TimeSequenceType", propOrder = { "interval" })
+public class TimeSequenceType
+{
 
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
@@ -58,36 +58,40 @@ public class TimeSequenceType {
      * Gets the value of the interval property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the interval property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the interval property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getInterval().add(newItem);
+     * getInterval().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getInterval() {
-        if (interval == null) {
+    public List<String> getInterval()
+    {
+        if (interval == null)
+        {
             interval = new ArrayList<String>();
         }
         return this.interval;
     }
 
-    public boolean isSetInterval() {
-        return ((this.interval!= null)&&(!this.interval.isEmpty()));
+    public boolean isSetInterval()
+    {
+        return ((this.interval != null) && (!this.interval.isEmpty()));
     }
 
-    public void unsetInterval() {
+    public void unsetInterval()
+    {
         this.interval = null;
     }
 

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,22 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * An entry in a dictionary of definitions that contains a GML object which references a remote definition object. This entry is expected to be convenient in allowing multiple elements in one XML document to contain short (abbreviated XPointer) references, which are resolved to an external definition provided in a Dictionary element in the same XML document. Specialized descendents of this dictionaryEntry might be restricted in an application schema to allow only including specified types of definitions as valid entries in a dictionary. 
+ * An entry in a dictionary of definitions that contains a GML object which
+ * references a remote definition object. This entry is expected to be
+ * convenient in allowing multiple elements in one XML document to contain short
+ * (abbreviated XPointer) references, which are resolved to an external
+ * definition provided in a Dictionary element in the same XML document.
+ * Specialized descendents of this dictionaryEntry might be restricted in an
+ * application schema to allow only including specified types of definitions as
+ * valid entries in a dictionary.
  * 
- * <p>Java class for IndirectEntryType complex type.
+ * <p>
+ * Java class for IndirectEntryType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="IndirectEntryType">
@@ -36,10 +44,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "IndirectEntryType", propOrder = {
-    "definitionProxy"
-})
-public class IndirectEntryType {
+@XmlType(name = "IndirectEntryType", propOrder = { "definitionProxy" })
+public class IndirectEntryType
+{
 
     @XmlElement(name = "DefinitionProxy", required = true)
     protected DefinitionProxyType definitionProxy;
@@ -47,24 +54,22 @@ public class IndirectEntryType {
     /**
      * Gets the value of the definitionProxy property.
      * 
-     * @return
-     *     possible object is
-     *     {@link DefinitionProxyType }
-     *     
+     * @return possible object is {@link DefinitionProxyType }
+     * 
      */
-    public DefinitionProxyType getDefinitionProxy() {
+    public DefinitionProxyType getDefinitionProxy()
+    {
         return definitionProxy;
     }
 
     /**
      * Sets the value of the definitionProxy property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DefinitionProxyType }
-     *     
+     * @param value allowed object is {@link DefinitionProxyType }
+     * 
      */
-    public void setDefinitionProxy(DefinitionProxyType value) {
+    public void setDefinitionProxy(DefinitionProxyType value)
+    {
         this.definitionProxy = value;
     }
 

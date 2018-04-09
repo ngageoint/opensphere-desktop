@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for AliasType complex type.
+ * <p>
+ * Java class for AliasType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AliasType">
@@ -41,116 +42,115 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AliasType", propOrder = {
-    "targetHref",
-    "sourceHref",
-    "aliasSimpleExtensionGroup",
-    "aliasObjectExtensionGroup"
-})
-public class AliasType
-    extends AbstractObjectType
+@XmlType(name = "AliasType", propOrder = { "targetHref", "sourceHref", "aliasSimpleExtensionGroup", "aliasObjectExtensionGroup" })
+public class AliasType extends AbstractObjectType
 {
 
     @XmlSchemaType(name = "anyURI")
     protected String targetHref;
+
     @XmlSchemaType(name = "anyURI")
     protected String sourceHref;
+
     @XmlElement(name = "AliasSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> aliasSimpleExtensionGroup;
+
     @XmlElement(name = "AliasObjectExtensionGroup")
     protected List<AbstractObjectType> aliasObjectExtensionGroup;
 
     /**
      * Gets the value of the targetHref property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTargetHref() {
+    public String getTargetHref()
+    {
         return targetHref;
     }
 
     /**
      * Sets the value of the targetHref property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTargetHref(String value) {
+    public void setTargetHref(String value)
+    {
         this.targetHref = value;
     }
 
-    public boolean isSetTargetHref() {
-        return (this.targetHref!= null);
+    public boolean isSetTargetHref()
+    {
+        return (this.targetHref != null);
     }
 
     /**
      * Gets the value of the sourceHref property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSourceHref() {
+    public String getSourceHref()
+    {
         return sourceHref;
     }
 
     /**
      * Sets the value of the sourceHref property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSourceHref(String value) {
+    public void setSourceHref(String value)
+    {
         this.sourceHref = value;
     }
 
-    public boolean isSetSourceHref() {
-        return (this.sourceHref!= null);
+    public boolean isSetSourceHref()
+    {
+        return (this.sourceHref != null);
     }
 
     /**
      * Gets the value of the aliasSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the aliasSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the aliasSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAliasSimpleExtensionGroup().add(newItem);
+     * getAliasSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getAliasSimpleExtensionGroup() {
-        if (aliasSimpleExtensionGroup == null) {
+    public List<Object> getAliasSimpleExtensionGroup()
+    {
+        if (aliasSimpleExtensionGroup == null)
+        {
             aliasSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.aliasSimpleExtensionGroup;
     }
 
-    public boolean isSetAliasSimpleExtensionGroup() {
-        return ((this.aliasSimpleExtensionGroup!= null)&&(!this.aliasSimpleExtensionGroup.isEmpty()));
+    public boolean isSetAliasSimpleExtensionGroup()
+    {
+        return ((this.aliasSimpleExtensionGroup != null) && (!this.aliasSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetAliasSimpleExtensionGroup() {
+    public void unsetAliasSimpleExtensionGroup()
+    {
         this.aliasSimpleExtensionGroup = null;
     }
 
@@ -158,15 +158,16 @@ public class AliasType
      * Gets the value of the aliasObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the aliasObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the aliasObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAliasObjectExtensionGroup().add(newItem);
+     * getAliasObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -176,18 +177,22 @@ public class AliasType
      * 
      * 
      */
-    public List<AbstractObjectType> getAliasObjectExtensionGroup() {
-        if (aliasObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getAliasObjectExtensionGroup()
+    {
+        if (aliasObjectExtensionGroup == null)
+        {
             aliasObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.aliasObjectExtensionGroup;
     }
 
-    public boolean isSetAliasObjectExtensionGroup() {
-        return ((this.aliasObjectExtensionGroup!= null)&&(!this.aliasObjectExtensionGroup.isEmpty()));
+    public boolean isSetAliasObjectExtensionGroup()
+    {
+        return ((this.aliasObjectExtensionGroup != null) && (!this.aliasObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetAliasObjectExtensionGroup() {
+    public void unsetAliasObjectExtensionGroup()
+    {
         this.aliasObjectExtensionGroup = null;
     }
 

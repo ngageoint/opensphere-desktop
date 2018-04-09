@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,18 +15,18 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-
 /**
- * This is a general acknowledgement response message for all requests 
- *          that may be processed in an asynchronous manner.
- *          EchoedRequest - Echoes the submitted request message
- *          RequestId     - identifier for polling purposes (if no response 
- *                          handler is available, or the URL scheme is
- *                          unsupported)
+ * This is a general acknowledgement response message for all requests that may
+ * be processed in an asynchronous manner. EchoedRequest - Echoes the submitted
+ * request message RequestId - identifier for polling purposes (if no response
+ * handler is available, or the URL scheme is unsupported)
  * 
- * <p>Java class for AcknowledgementType complex type.
+ * <p>
+ * Java class for AcknowledgementType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AcknowledgementType">
@@ -46,17 +45,17 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AcknowledgementType", propOrder = {
-    "echoedRequest",
-    "requestId"
-})
-public class AcknowledgementType {
+@XmlType(name = "AcknowledgementType", propOrder = { "echoedRequest", "requestId" })
+public class AcknowledgementType
+{
 
     @XmlElement(name = "EchoedRequest", required = true)
     protected EchoedRequestType echoedRequest;
+
     @XmlElement(name = "RequestId")
     @XmlSchemaType(name = "anyURI")
     protected String requestId;
+
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar timeStamp;
@@ -64,72 +63,66 @@ public class AcknowledgementType {
     /**
      * Gets the value of the echoedRequest property.
      * 
-     * @return
-     *     possible object is
-     *     {@link EchoedRequestType }
-     *     
+     * @return possible object is {@link EchoedRequestType }
+     * 
      */
-    public EchoedRequestType getEchoedRequest() {
+    public EchoedRequestType getEchoedRequest()
+    {
         return echoedRequest;
     }
 
     /**
      * Sets the value of the echoedRequest property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link EchoedRequestType }
-     *     
+     * @param value allowed object is {@link EchoedRequestType }
+     * 
      */
-    public void setEchoedRequest(EchoedRequestType value) {
+    public void setEchoedRequest(EchoedRequestType value)
+    {
         this.echoedRequest = value;
     }
 
     /**
      * Gets the value of the requestId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getRequestId() {
+    public String getRequestId()
+    {
         return requestId;
     }
 
     /**
      * Sets the value of the requestId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setRequestId(String value) {
+    public void setRequestId(String value)
+    {
         this.requestId = value;
     }
 
     /**
      * Gets the value of the timeStamp property.
      * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     * @return possible object is {@link XMLGregorianCalendar }
+     * 
      */
-    public XMLGregorianCalendar getTimeStamp() {
+    public XMLGregorianCalendar getTimeStamp()
+    {
         return timeStamp;
     }
 
     /**
      * Sets the value of the timeStamp property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     * @param value allowed object is {@link XMLGregorianCalendar }
+     * 
      */
-    public void setTimeStamp(XMLGregorianCalendar value) {
+    public void setTimeStamp(XMLGregorianCalendar value)
+    {
         this.timeStamp = value;
     }
 

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.math.BigDecimal;
@@ -18,18 +17,20 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * This type extends the built-in xsd:decimal simple type to allow floating-point 
- *       values for temporal length. According to  the ISO 11404 model you have to use 
- *       positiveInteger together with appropriate values for radix and factor. The 
- *       resolution of the time interval is to one radix ^(-factor) of the specified 
- *       time unit (e.g. unit="second", radix="10", factor="3" specifies a resolution 
- *       of milliseconds). It is a subtype of TimeDurationType.
+ * This type extends the built-in xsd:decimal simple type to allow
+ * floating-point values for temporal length. According to the ISO 11404 model
+ * you have to use positiveInteger together with appropriate values for radix
+ * and factor. The resolution of the time interval is to one radix ^(-factor) of
+ * the specified time unit (e.g. unit="second", radix="10", factor="3" specifies
+ * a resolution of milliseconds). It is a subtype of TimeDurationType.
  * 
- * <p>Java class for TimeIntervalLengthType complex type.
+ * <p>
+ * Java class for TimeIntervalLengthType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TimeIntervalLengthType">
@@ -46,114 +47,108 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TimeIntervalLengthType", propOrder = {
-    "value"
-})
-public class TimeIntervalLengthType {
+@XmlType(name = "TimeIntervalLengthType", propOrder = { "value" })
+public class TimeIntervalLengthType
+{
 
     @XmlValue
     protected BigDecimal value;
+
     @XmlAttribute(name = "unit", required = true)
     protected String unit;
+
     @XmlAttribute(name = "radix")
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger radix;
+
     @XmlAttribute(name = "factor")
     protected BigInteger factor;
 
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     * @return possible object is {@link BigDecimal }
+     * 
      */
-    public BigDecimal getValue() {
+    public BigDecimal getValue()
+    {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     * @param value allowed object is {@link BigDecimal }
+     * 
      */
-    public void setValue(BigDecimal value) {
+    public void setValue(BigDecimal value)
+    {
         this.value = value;
     }
 
     /**
      * Gets the value of the unit property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getUnit() {
+    public String getUnit()
+    {
         return unit;
     }
 
     /**
      * Sets the value of the unit property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setUnit(String value) {
+    public void setUnit(String value)
+    {
         this.unit = value;
     }
 
     /**
      * Gets the value of the radix property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getRadix() {
+    public BigInteger getRadix()
+    {
         return radix;
     }
 
     /**
      * Sets the value of the radix property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setRadix(BigInteger value) {
+    public void setRadix(BigInteger value)
+    {
         this.radix = value;
     }
 
     /**
      * Gets the value of the factor property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getFactor() {
+    public BigInteger getFactor()
+    {
         return factor;
     }
 
     /**
      * Sets the value of the factor property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setFactor(BigInteger value) {
+    public void setFactor(BigInteger value)
+    {
         this.factor = value;
     }
 

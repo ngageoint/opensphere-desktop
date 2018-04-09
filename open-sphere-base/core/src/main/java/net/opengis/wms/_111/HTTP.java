@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:39 PM MST 
 //
 
-
 package net.opengis.wms._111;
 
 import java.util.ArrayList;
@@ -18,48 +17,46 @@ import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "getOrPost"
-})
+@XmlType(name = "", propOrder = { "getOrPost" })
 @XmlRootElement(name = "HTTP")
-public class HTTP {
+public class HTTP
+{
 
-    @XmlElements({
-        @XmlElement(name = "Get", required = true, type = Get.class),
-        @XmlElement(name = "Post", required = true, type = Post.class)
-    })
+    @XmlElements({ @XmlElement(name = "Get", required = true, type = Get.class),
+        @XmlElement(name = "Post", required = true, type = Post.class) })
     protected List<Object> getOrPost;
 
     /**
      * Gets the value of the getOrPost property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the getOrPost property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the getOrPost property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getGetOrPost().add(newItem);
+     * getGetOrPost().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Get }
+     * Objects of the following type(s) are allowed in the list {@link Get }
      * {@link Post }
      * 
      * 
      */
-    public List<Object> getGetOrPost() {
-        if (getOrPost == null) {
+    public List<Object> getGetOrPost()
+    {
+        if (getOrPost == null)
+        {
             getOrPost = new ArrayList<Object>();
         }
         return this.getOrPost;

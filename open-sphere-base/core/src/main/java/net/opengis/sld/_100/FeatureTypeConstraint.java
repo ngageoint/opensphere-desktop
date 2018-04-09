@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.ogc._110.FilterType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -42,66 +43,61 @@ import net.opengis.ogc._110.FilterType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "featureTypeName",
-    "filter",
-    "extent"
-})
+@XmlType(name = "", propOrder = { "featureTypeName", "filter", "extent" })
 @XmlRootElement(name = "FeatureTypeConstraint")
-public class FeatureTypeConstraint {
+public class FeatureTypeConstraint
+{
 
     @XmlElement(name = "FeatureTypeName")
     protected String featureTypeName;
+
     @XmlElement(name = "Filter", namespace = "http://www.opengis.net/ogc")
     protected FilterType filter;
+
     @XmlElement(name = "Extent")
     protected List<Extent> extent;
 
     /**
      * Gets the value of the featureTypeName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getFeatureTypeName() {
+    public String getFeatureTypeName()
+    {
         return featureTypeName;
     }
 
     /**
      * Sets the value of the featureTypeName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setFeatureTypeName(String value) {
+    public void setFeatureTypeName(String value)
+    {
         this.featureTypeName = value;
     }
 
     /**
      * Gets the value of the filter property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FilterType }
-     *     
+     * @return possible object is {@link FilterType }
+     * 
      */
-    public FilterType getFilter() {
+    public FilterType getFilter()
+    {
         return filter;
     }
 
     /**
      * Sets the value of the filter property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FilterType }
-     *     
+     * @param value allowed object is {@link FilterType }
+     * 
      */
-    public void setFilter(FilterType value) {
+    public void setFilter(FilterType value)
+    {
         this.filter = value;
     }
 
@@ -109,26 +105,28 @@ public class FeatureTypeConstraint {
      * Gets the value of the extent property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the extent property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the extent property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getExtent().add(newItem);
+     * getExtent().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Extent }
+     * Objects of the following type(s) are allowed in the list {@link Extent }
      * 
      * 
      */
-    public List<Extent> getExtent() {
-        if (extent == null) {
+    public List<Extent> getExtent()
+    {
+        if (extent == null)
+        {
             extent = new ArrayList<Extent>();
         }
         return this.extent;

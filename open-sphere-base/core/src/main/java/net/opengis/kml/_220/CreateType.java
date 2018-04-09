@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for CreateType complex type.
+ * <p>
+ * Java class for CreateType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CreateType">
@@ -38,10 +39,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CreateType", propOrder = {
-    "abstractContainerGroup"
-})
-public class CreateType {
+@XmlType(name = "CreateType", propOrder = { "abstractContainerGroup" })
+public class CreateType
+{
 
     @XmlElementRef(name = "AbstractContainerGroup", namespace = "http://www.opengis.net/kml/2.2", type = JAXBElement.class, required = false)
     protected List<JAXBElement<? extends AbstractContainerType>> abstractContainerGroup;
@@ -50,15 +50,16 @@ public class CreateType {
      * Gets the value of the abstractContainerGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractContainerGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractContainerGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractContainerGroup().add(newItem);
+     * getAbstractContainerGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -70,18 +71,22 @@ public class CreateType {
      * 
      * 
      */
-    public List<JAXBElement<? extends AbstractContainerType>> getAbstractContainerGroup() {
-        if (abstractContainerGroup == null) {
+    public List<JAXBElement<? extends AbstractContainerType>> getAbstractContainerGroup()
+    {
+        if (abstractContainerGroup == null)
+        {
             abstractContainerGroup = new ArrayList<JAXBElement<? extends AbstractContainerType>>();
         }
         return this.abstractContainerGroup;
     }
 
-    public boolean isSetAbstractContainerGroup() {
-        return ((this.abstractContainerGroup!= null)&&(!this.abstractContainerGroup.isEmpty()));
+    public boolean isSetAbstractContainerGroup()
+    {
+        return ((this.abstractContainerGroup != null) && (!this.abstractContainerGroup.isEmpty()));
     }
 
-    public void unsetAbstractContainerGroup() {
+    public void unsetAbstractContainerGroup()
+    {
         this.abstractContainerGroup = null;
     }
 

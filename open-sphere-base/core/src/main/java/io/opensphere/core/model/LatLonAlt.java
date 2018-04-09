@@ -288,7 +288,7 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
     }
 
     /**
-     * Normalize a latitude to be between -90 and 90.  This is terrible.
+     * Normalize a latitude to be between -90 and 90. This is terrible.
      *
      * @param in The input latitude.
      * @return The normalized latitude.
@@ -424,6 +424,7 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
 
     /**
      * Convert the decimal latitude to degrees plus decimal minutes.
+     * 
      * @param deg decimal degrees latitude
      * @param roundOff digits after the decimal point for minutes
      * @return the requested latitude String
@@ -436,6 +437,7 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
     /**
      * Convert the decimal latitude to degrees plus decimal minutes, using the
      * provided symbols for degrees and minutes.
+     * 
      * @param deg decimal degrees latitude
      * @param roundOff digits after the decimal point for minutes
      * @param degSym symbol for degrees
@@ -449,6 +451,7 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
 
     /**
      * Convert the decimal longitude to degrees plus decimal minutes.
+     * 
      * @param deg decimal degrees longitude
      * @param roundOff digits after the decimal point for minutes
      * @return the requested longitude String
@@ -461,6 +464,7 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
     /**
      * Convert the decimal longitude to degrees plus decimal minutes, using the
      * provided symbols for degrees and minutes.
+     * 
      * @param deg decimal degrees longitude
      * @param roundOff digits after the decimal point for minutes
      * @param degSym symbol for degrees
@@ -474,9 +478,10 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
 
     /**
      * Construct a DecimalFormat with the specified number of digits before and
-     * after the decimal point.  Regardless of input, at least one digit is
-     * always allowed.  If no digits after the decimal point are requested,
-     * then the decimal point is omitted.
+     * after the decimal point. Regardless of input, at least one digit is
+     * always allowed. If no digits after the decimal point are requested, then
+     * the decimal point is omitted.
+     * 
      * @param whole digits to the left of the decimal point
      * @param frac digits after the decimal point
      * @return the generated DecimalFormat
@@ -496,6 +501,7 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
     /**
      * Worker method for formatting degrees latitude or longitude as integer
      * degrees plus decimal minutes.
+     * 
      * @param decDeg decimal degrees value
      * @param roundOff number of digits for decimal minutes
      * @param degSym symbol for degrees
@@ -504,8 +510,7 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
      * @param negSuffix 'S' for latitude or 'W' for longitude
      * @return see above
      */
-    private static String degToDdm(double decDeg, int roundOff, char degSym,
-            char minSym, char posSuffix, char negSuffix)
+    private static String degToDdm(double decDeg, int roundOff, char degSym, char minSym, char posSuffix, char negSuffix)
     {
         StringBuilder buf = degToDdmBuf(decDeg, roundOff, degSym, minSym);
         if (0.0 <= decDeg)
@@ -517,6 +522,7 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
 
     /**
      * Calculate the formatted DDM value without sign indicator.
+     * 
      * @param decDeg decimal degrees value
      * @param roundOff number of digits for decimal minutes
      * @return see above
@@ -528,6 +534,7 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
 
     /**
      * Calculate the formatted DDM value without sign indicator.
+     * 
      * @param decDeg decimal degrees value
      * @param roundOff number of digits for decimal minutes
      * @param degSym symbol for degrees
@@ -1032,12 +1039,13 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
         private static Map<String, CoordFormat> strMap = new TreeMap<>();
         static
         {
-            for (CoordFormat f :  values())
+            for (CoordFormat f : values())
                 strMap.put(f.toString(), f);
         }
 
         /**
          * Get the matching CoordFormat.
+         * 
          * @param str display text thereof
          * @return it
          */

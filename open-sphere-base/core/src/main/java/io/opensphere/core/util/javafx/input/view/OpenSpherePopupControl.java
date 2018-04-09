@@ -6,7 +6,8 @@ import javafx.scene.control.Control;
 import javafx.scene.control.PopupControl;
 
 /**
- * A popup control extended to accept the root of the popup, and the content of the popup.
+ * A popup control extended to accept the root of the popup, and the content of
+ * the popup.
  *
  * @param <T> the content type of the control from which the popup is launched.
  */

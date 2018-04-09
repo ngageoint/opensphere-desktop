@@ -35,45 +35,61 @@ public class LatLonAltParser
 
     /** Separator characters including minutes/seconds. */
     private static final String SEP = "\\s'\",:";
+
     /** Decimal point. */
     private static final String PERIOD = ".";
+
     /** Degree symbol. */
     private static final String DEG = "\u00b0";
 
     /** Optional separator group, not including the degree symbol. */
     private static final String G_SEP = "[" + SEP + PERIOD + "]*";
+
     /** Forced separator group, not including the degree symbol. */
     private static final String F_SEP = "[" + SEP + PERIOD + "]+";
+
     /** Optional separator group, including the degree symbol. */
     private static final String G_DEG = "[" + SEP + PERIOD + DEG + "]*";
+
     /** Forced separator group, including the degree symbol. */
     private static final String F_DEG = "[" + SEP + PERIOD + DEG + "]+";
 
     /** Latitude direction indicator group. */
     private static final String NS = "([NS])?";
+
     /** Longitude direction indicator group. */
     private static final String EW = "([EW])?";
+
     /** Forced two-digit minutes or seconds group. */
     private static final String F_60 = "([0-5][0-9])";
+
     /** One- or two-digit minutes or seconds group. */
     private static final String G_60 = "([0-5]?[0-9])";
+
     /** Optional decimal fraction group. */
     private static final String G_FRAC = "(?:[.]([0-9]*))?";
+
     /** One- or two-digit latitude with optional zero padding. */
     private static final String G_LAT = "([-+]?0*?0?[0-9]?[0-9])";
+
     /** Forced two-digit latitude. */
     private static final String F_LAT = "([-+]?[0-9][0-9])";
+
     /** One- to three-digit longitude with optional zero padding. */
     private static final String G_LON = "([-+]?(?:0?(?:[0-2]?[0-9]?[0-9]|3[0-5][0-9]|360)))";
+
     /** Forced three-digit longitude. */
     private static final String F_LON = "([-+]?(?:[0-2][0-9][0-9]|3[0-5][0-9]|360))";
 
     /** Minutes and seconds fields with forced digits and optional spacing. */
     private static final String G_MM_SS = "(?:" + F_60 + "(?:" + G_SEP + F_60 + G_FRAC + ")?)?";
+
     /** Minutes and seconds fields with optional digits and forced spacing. */
     private static final String F_MM_SS = "(?:" + G_60 + "(?:" + F_SEP + "(?:" + G_60 + G_FRAC + ")?)?)?";
+
     /** Decimal minutes field with extra digits optional. */
     private static final String G_DMIN = "([0-5]?[0-9](?:[.][0-9]+)?)";
+
     /** Decimal minutes field with all digits forced. */
     private static final String F_DMIN = "([0-5][0-9](?:[.]?[0-9]+)?)?";
 
@@ -90,8 +106,8 @@ public class LatLonAltParser
             NS + G_LAT + G_DEG + G_MM_SS + G_SEP + NS, 2, 3, 4, 5, 6, 1, 6);
 
     /** The pattern for longitude DDDMMSS. */
-    private static final Coord LON_DDDMMSS = new Coord(CoordType.LON, CoordFormat.DMS,
-            EW + G_LON + G_DEG + G_MM_SS + G_SEP + EW, 2, 3, 4, 5, 6, 1, 6);
+    private static final Coord LON_DDDMMSS = new Coord(CoordType.LON, CoordFormat.DMS, EW + G_LON + G_DEG + G_MM_SS + G_SEP + EW,
+            2, 3, 4, 5, 6, 1, 6);
 
     /** The pattern for latitude DDMMSS with symbols. */
     private static final Coord LAT_DDMMSS_SYM = new Coord(CoordType.LAT, CoordFormat.DMS,
@@ -125,28 +141,29 @@ public class LatLonAltParser
     private static final Coord LON_DEG_DMIN_SYM = new Coord(CoordType.LON, CoordFormat.DDM,
             EW + G_LON + "[" + SEP + DEG + "]+" + G_DMIN + G_SEP + EW, 2, 3, -1, -1, 4, 1, 4);
 
-    /** Map of latitude parsers by CoordFormat key.  */
+    /** Map of latitude parsers by CoordFormat key. */
     private static Map<CoordFormat, Coord[]> latByFormat = new TreeMap<>();
-    /** Map of latitude parsers by CoordFormat key.  */
+
+    /** Map of latitude parsers by CoordFormat key. */
     private static Map<CoordFormat, Coord[]> lonByFormat = new TreeMap<>();
     static
     {
-        latByFormat.put(CoordFormat.DECIMAL, new Coord[] {LAT_DECIMAL});
-        latByFormat.put(CoordFormat.DMS, new Coord[] {LAT_DDMMSS, LAT_DDMMSS_SYM, LAT_DDMMSSSSS});
-        latByFormat.put(CoordFormat.DDM, new Coord[] {LAT_DEG_DMIN, LAT_DEG_DMIN_SYM});
+        latByFormat.put(CoordFormat.DECIMAL, new Coord[] { LAT_DECIMAL });
+        latByFormat.put(CoordFormat.DMS, new Coord[] { LAT_DDMMSS, LAT_DDMMSS_SYM, LAT_DDMMSSSSS });
+        latByFormat.put(CoordFormat.DDM, new Coord[] { LAT_DEG_DMIN, LAT_DEG_DMIN_SYM });
 
-        lonByFormat.put(CoordFormat.DECIMAL, new Coord[] {LON_DECIMAL});
-        lonByFormat.put(CoordFormat.DMS, new Coord[] {LON_DDDMMSS, LON_DDDMMSS_SYM, LON_DDDMMSSSSS});
-        lonByFormat.put(CoordFormat.DDM, new Coord[] {LON_DEG_DMIN, LON_DEG_DMIN_SYM});
+        lonByFormat.put(CoordFormat.DECIMAL, new Coord[] { LON_DECIMAL });
+        lonByFormat.put(CoordFormat.DMS, new Coord[] { LON_DDDMMSS, LON_DDDMMSS_SYM, LON_DDDMMSSSSS });
+        lonByFormat.put(CoordFormat.DDM, new Coord[] { LON_DEG_DMIN, LON_DEG_DMIN_SYM });
     }
 
     /** The possible latitude coordinates, in priority order. */
-    private static final Coord[] POSSIBLE_LAT_COORDS = new Coord[] {
-            LAT_DECIMAL, LAT_DEG_DMIN_SYM, LAT_DDMMSS_SYM, LAT_DDMMSS, LAT_DDMMSSSSS, LAT_DEG_DMIN};
+    private static final Coord[] POSSIBLE_LAT_COORDS = new Coord[] { LAT_DECIMAL, LAT_DEG_DMIN_SYM, LAT_DDMMSS_SYM, LAT_DDMMSS,
+        LAT_DDMMSSSSS, LAT_DEG_DMIN };
 
     /** The possible longitude coordinates, in priority order. */
-    private static final Coord[] POSSIBLE_LON_COORDS = new Coord[] {
-            LON_DECIMAL, LON_DEG_DMIN_SYM, LON_DDDMMSS_SYM, LON_DDDMMSS, LON_DDDMMSSSSS, LON_DEG_DMIN};
+    private static final Coord[] POSSIBLE_LON_COORDS = new Coord[] { LON_DECIMAL, LON_DEG_DMIN_SYM, LON_DDDMMSS_SYM, LON_DDDMMSS,
+        LON_DDDMMSSSSS, LON_DEG_DMIN };
 
     /** List of possible lat/lon patterns. */
     private static Collection<Coords> latLonOptions = New.collection();
@@ -228,25 +245,25 @@ public class LatLonAltParser
 
     /**
      * Test whether there is any latitude format that can handle the input.
+     * 
      * @param latString the input
      * @return see above
      */
     public static boolean validLat(String latString)
     {
-        return !Double.isNaN(parseLat(latString, CoordFormat.DECIMAL))
-                || !Double.isNaN(parseLat(latString, CoordFormat.DMS))
+        return !Double.isNaN(parseLat(latString, CoordFormat.DECIMAL)) || !Double.isNaN(parseLat(latString, CoordFormat.DMS))
                 || !Double.isNaN(parseLat(latString, CoordFormat.DDM));
     }
 
     /**
      * Test whether there is any longitude format that can handle the input.
+     * 
      * @param lonString the input
      * @return see above
      */
     public static boolean validLon(String lonString)
     {
-        return !Double.isNaN(parseLon(lonString, CoordFormat.DECIMAL))
-                || !Double.isNaN(parseLon(lonString, CoordFormat.DMS))
+        return !Double.isNaN(parseLon(lonString, CoordFormat.DECIMAL)) || !Double.isNaN(parseLon(lonString, CoordFormat.DMS))
                 || !Double.isNaN(parseLon(lonString, CoordFormat.DDM));
     }
 
@@ -440,6 +457,7 @@ public class LatLonAltParser
     /**
      * Parse the minutes field, correctly handling the case where a decimal
      * point is omitted but implied.
+     * 
      * @param min the minutes field String
      * @return the number of minutes represented
      */
@@ -485,11 +503,13 @@ public class LatLonAltParser
     }
 
     /**
-     * Parse a latitude or a longitude from a given string, expecting that the string is a decimal number.
+     * Parse a latitude or a longitude from a given string, expecting that the
+     * string is a decimal number.
      *
      * @param input The string to parse.
      * @param coordType The coordinate type.
-     * @return The latitude parsed from the string, or {@link Double#NaN} if it could not be parsed.
+     * @return The latitude parsed from the string, or {@link Double#NaN} if it
+     *         could not be parsed.
      */
     private static double parseDecimalAngle(String input, CoordType coordType)
     {

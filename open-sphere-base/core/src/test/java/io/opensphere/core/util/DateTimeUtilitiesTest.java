@@ -53,7 +53,7 @@ public class DateTimeUtilitiesTest
     /**
      * Test for {@link DateTimeUtilities#parse(java.text.DateFormat, String)}.
      *
-     * @throws ParseException If a parse exception occurs
+     * @throws ParseException If a   parse exception occurs
      */
     @Test
     public void testParse() throws ParseException

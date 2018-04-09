@@ -7,15 +7,15 @@ package com.bitsys.common.http.message;
  */
 public interface Abortable
 {
-   /**
-    * Aborts execution.
-    */
-   void abort();
+    /**
+     * Aborts execution.
+     */
+    void abort();
 
-   /**
-    * Indicates if there has been a request to abort the execution.
-    *
-    * @return <code>true</code> if the {@link #abort()} method has been called.
-    */
-   boolean isAborted();
+    /**
+     * Indicates if there has been a request to abort the execution.
+     *
+     * @return <code>true</code> if the {@link #abort()} method has been called.
+     */
+    boolean isAborted();
 }

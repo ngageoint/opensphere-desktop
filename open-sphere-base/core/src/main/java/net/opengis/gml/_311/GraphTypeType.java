@@ -5,18 +5,20 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for GraphTypeType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for GraphTypeType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="GraphTypeType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -29,16 +31,18 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "GraphTypeType")
 @XmlEnum
-public enum GraphTypeType {
+public enum GraphTypeType
+{
 
-    TREE,
-    BICONNECTED;
+    TREE, BICONNECTED;
 
-    public String value() {
+    public String value()
+    {
         return name();
     }
 
-    public static GraphTypeType fromValue(String v) {
+    public static GraphTypeType fromValue(String v)
+    {
         return valueOf(v);
     }
 

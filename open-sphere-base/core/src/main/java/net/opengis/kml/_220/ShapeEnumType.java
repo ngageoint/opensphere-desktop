@@ -5,19 +5,21 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for shapeEnumType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for shapeEnumType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="shapeEnumType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -31,27 +33,31 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "shapeEnumType")
 @XmlEnum
-public enum ShapeEnumType {
+public enum ShapeEnumType
+{
 
     @XmlEnumValue("rectangle")
-    RECTANGLE("rectangle"),
-    @XmlEnumValue("cylinder")
-    CYLINDER("cylinder"),
-    @XmlEnumValue("sphere")
+    RECTANGLE("rectangle"), @XmlEnumValue("cylinder")
+    CYLINDER("cylinder"), @XmlEnumValue("sphere")
     SPHERE("sphere");
     private final String value;
 
-    ShapeEnumType(String v) {
+    ShapeEnumType(String v)
+    {
         value = v;
     }
 
-    public String value() {
+    public String value()
+    {
         return value;
     }
 
-    public static ShapeEnumType fromValue(String v) {
-        for (ShapeEnumType c: ShapeEnumType.values()) {
-            if (c.value.equals(v)) {
+    public static ShapeEnumType fromValue(String v)
+    {
+        for (ShapeEnumType c : ShapeEnumType.values())
+        {
+            if (c.value.equals(v))
+            {
                 return c;
             }
         }

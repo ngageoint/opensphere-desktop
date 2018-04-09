@@ -67,7 +67,7 @@ public class XMLUtilitiesTest implements StartElementInspector
      * Test for {@link XMLUtilities#marshalJAXBableToElement(JAXBable)}.
      *
      * @throws JAXBException If there is an unexpected exception.
-     * @throws ClassNotFoundException If a class cannot be loaded.
+     * @throws ClassNotFoundException If a   class cannot be loaded.
      */
     @Test
     @SuppressWarnings("PMD.EmptyCatchBlock")
@@ -204,8 +204,7 @@ public class XMLUtilitiesTest implements StartElementInspector
     }
 
     /**
-     * Test for
-     * {@link XMLUtilities#jaxbClone(Object, Class)}.
+     * Test for {@link XMLUtilities#jaxbClone(Object, Class)}.
      *
      * @throws JAXBException If the test fails.
      */

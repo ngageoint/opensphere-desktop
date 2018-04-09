@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import java.util.ArrayList;
@@ -16,11 +15,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for OperationsType complex type.
+ * <p>
+ * Java class for OperationsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="OperationsType">
@@ -37,10 +38,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "OperationsType", propOrder = {
-    "operation"
-})
-public class OperationsType {
+@XmlType(name = "OperationsType", propOrder = { "operation" })
+public class OperationsType
+{
 
     @XmlElement(name = "Operation", required = true)
     protected List<OperationType> operation;
@@ -49,15 +49,16 @@ public class OperationsType {
      * Gets the value of the operation property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the operation property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the operation property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getOperation().add(newItem);
+     * getOperation().add(newItem);
      * </pre>
      * 
      * 
@@ -67,8 +68,10 @@ public class OperationsType {
      * 
      * 
      */
-    public List<OperationType> getOperation() {
-        if (operation == null) {
+    public List<OperationType> getOperation()
+    {
+        if (operation == null)
+        {
             operation = new ArrayList<OperationType>();
         }
         return this.operation;
