@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -17,13 +16,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A container for an array of solids. The elements are always contained in the array property, referencing geometry elements or arrays of geometry elements is not supported.
+ * A container for an array of solids. The elements are always contained in the
+ * array property, referencing geometry elements or arrays of geometry elements
+ * is not supported.
  * 
- * <p>Java class for SolidArrayPropertyType complex type.
+ * <p>
+ * Java class for SolidArrayPropertyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SolidArrayPropertyType">
@@ -40,10 +43,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SolidArrayPropertyType", propOrder = {
-    "solid"
-})
-public class SolidArrayPropertyType {
+@XmlType(name = "SolidArrayPropertyType", propOrder = { "solid" })
+public class SolidArrayPropertyType
+{
 
     @XmlElementRef(name = "_Solid", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
     protected List<JAXBElement<? extends AbstractSolidType>> solid;
@@ -52,15 +54,16 @@ public class SolidArrayPropertyType {
      * Gets the value of the solid property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the solid property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the solid property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSolid().add(newItem);
+     * getSolid().add(newItem);
      * </pre>
      * 
      * 
@@ -72,8 +75,10 @@ public class SolidArrayPropertyType {
      * 
      * 
      */
-    public List<JAXBElement<? extends AbstractSolidType>> getSolid() {
-        if (solid == null) {
+    public List<JAXBElement<? extends AbstractSolidType>> getSolid()
+    {
+        if (solid == null)
+        {
             solid = new ArrayList<JAXBElement<? extends AbstractSolidType>>();
         }
         return this.solid;

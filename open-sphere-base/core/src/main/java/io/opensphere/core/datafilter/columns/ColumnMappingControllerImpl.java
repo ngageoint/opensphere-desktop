@@ -143,7 +143,7 @@ public class ColumnMappingControllerImpl implements MutableColumnMappingControll
                                         definedColumns.put(layer1.getFirstObject(), New.map());
                                     }
 
-                                    if(!definedColumns.containsKey(layer2.getFirstObject()))
+                                    if (!definedColumns.containsKey(layer2.getFirstObject()))
                                     {
                                         definedColumns.put(layer2.getFirstObject(), New.map());
                                     }

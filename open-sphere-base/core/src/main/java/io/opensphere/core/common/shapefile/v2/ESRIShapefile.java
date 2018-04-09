@@ -321,7 +321,7 @@ public class ESRIShapefile implements Collection<ShapefileRecord>
     /**
      * Closes then deletes the shapefile.
      *
-     * @throws IOException if an error occurs while closing or deleting the
+     * @throws IOException if an  error occurs while closing or deleting the
      *             shapefile.
      */
     public void delete() throws IOException

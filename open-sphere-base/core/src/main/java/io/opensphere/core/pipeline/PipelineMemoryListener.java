@@ -51,7 +51,8 @@ public class PipelineMemoryListener implements MemoryListener
         final long maxSizeBytesVM = (long)(maxSizeRatio * Runtime.getRuntime().maxMemory());
         final double defaultLowWaterFraction = .7;
 
-        final double lowWaterFraction = Utilities.parseSystemProperty("opensphere.geometryCache.vmLowWaterFraction", defaultLowWaterFraction);
+        final double lowWaterFraction = Utilities.parseSystemProperty("opensphere.geometryCache.vmLowWaterFraction",
+                defaultLowWaterFraction);
 
         myCache.setLowWaterBytesVM((int)(maxSizeBytesVM * lowWaterFraction));
         myCache.setMaxSizeBytesVM(maxSizeBytesVM);

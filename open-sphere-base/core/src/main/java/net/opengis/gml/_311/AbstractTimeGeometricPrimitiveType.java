@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,17 +14,19 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * The abstract supertype for temporal geometric primitives.
- *        A temporal geometry must be associated with a temporal reference system via URI. 
- *        The Gregorian calendar with UTC is the default reference system, following ISO 
- *        8601. Other reference systems in common use include the GPS calendar and the 
- *        Julian calendar.
+ * The abstract supertype for temporal geometric primitives. A temporal geometry
+ * must be associated with a temporal reference system via URI. The Gregorian
+ * calendar with UTC is the default reference system, following ISO 8601. Other
+ * reference systems in common use include the GPS calendar and the Julian
+ * calendar.
  * 
- * <p>Java class for AbstractTimeGeometricPrimitiveType complex type.
+ * <p>
+ * Java class for AbstractTimeGeometricPrimitiveType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractTimeGeometricPrimitiveType">
@@ -41,12 +42,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AbstractTimeGeometricPrimitiveType")
-@XmlSeeAlso({
-    TimePeriodType.class,
-    TimeInstantType.class
-})
-public abstract class AbstractTimeGeometricPrimitiveType
-    extends AbstractTimePrimitiveType
+@XmlSeeAlso({ TimePeriodType.class, TimeInstantType.class })
+public abstract class AbstractTimeGeometricPrimitiveType extends AbstractTimePrimitiveType
 {
 
     @XmlAttribute(name = "frame")
@@ -56,15 +53,17 @@ public abstract class AbstractTimeGeometricPrimitiveType
     /**
      * Gets the value of the frame property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getFrame() {
-        if (frame == null) {
+    public String getFrame()
+    {
+        if (frame == null)
+        {
             return "#ISO-8601";
-        } else {
+        }
+        else
+        {
             return frame;
         }
     }
@@ -72,12 +71,11 @@ public abstract class AbstractTimeGeometricPrimitiveType
     /**
      * Sets the value of the frame property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setFrame(String value) {
+    public void setFrame(String value)
+    {
         this.frame = value;
     }
 

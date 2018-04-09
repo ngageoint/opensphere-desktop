@@ -144,7 +144,7 @@ public final class DateTextFieldFormat
      *
      * @param text the string
      * @return the parsed Date
-     * @throws ParseException if an exception occurs while parsing
+     * @throws ParseException if an  exception occurs while parsing
      */
     public Date parse(String text) throws ParseException
     {

@@ -8,7 +8,8 @@ import javafx.scene.control.ButtonBar;
 import io.opensphere.core.util.NonSuckingObservable;
 
 /**
- * An abstract extension of the {@link ButtonBar} class, in which a click observer is provided for handling custom click events.
+ * An abstract extension of the {@link ButtonBar} class, in which a click
+ * observer is provided for handling custom click events.
  */
 public class ObservableButtonBar extends ButtonBar
 {

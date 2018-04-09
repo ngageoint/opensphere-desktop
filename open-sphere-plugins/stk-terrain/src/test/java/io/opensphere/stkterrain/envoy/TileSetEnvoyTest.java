@@ -22,7 +22,6 @@ import io.opensphere.core.data.CacheDepositReceiver;
 import io.opensphere.core.data.DataRegistry;
 import io.opensphere.core.data.QueryException;
 import io.opensphere.core.data.util.DataModelCategory;
-import io.opensphere.core.matchers.EasyMockHelper;
 import io.opensphere.core.server.HttpServer;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.server.ServerProvider;
@@ -34,6 +33,7 @@ import io.opensphere.core.util.io.CancellableInputStream;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.stkterrain.model.TileSet;
 import io.opensphere.stkterrain.util.Constants;
+import io.opensphere.test.core.matchers.EasyMockHelper;
 
 /**
  * Unit test for the {@link TileSetEnvoy} class.
@@ -194,8 +194,7 @@ public class TileSetEnvoyTest
     @SuppressWarnings("unchecked")
     private long[] addModelsAnswer()
     {
-        DefaultCacheDeposit<TileSet> deposit = (DefaultCacheDeposit<TileSet>)EasyMock
-                .getCurrentArguments()[0];
+        DefaultCacheDeposit<TileSet> deposit = (DefaultCacheDeposit<TileSet>)EasyMock.getCurrentArguments()[0];
 
         DataModelCategory category = deposit.getCategory();
         DataModelCategory expected = new DataModelCategory(ourTestServer, TileSet.class.getName(), TileSet.class.getName());
@@ -227,8 +226,7 @@ public class TileSetEnvoyTest
     {
         DataRegistry dataRegistry = support.createMock(DataRegistry.class);
 
-        EasyMock.expect(dataRegistry.addModels(EasyMock.isA(DefaultCacheDeposit.class)))
-                .andAnswer(this::addModelsAnswer);
+        EasyMock.expect(dataRegistry.addModels(EasyMock.isA(DefaultCacheDeposit.class))).andAnswer(this::addModelsAnswer);
 
         return dataRegistry;
     }

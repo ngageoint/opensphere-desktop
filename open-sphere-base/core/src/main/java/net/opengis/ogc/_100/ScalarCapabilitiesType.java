@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:24:08 PM MST 
 //
 
-
 package net.opengis.ogc._100;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for Scalar_CapabilitiesType complex type.
+ * <p>
+ * Java class for Scalar_CapabilitiesType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="Scalar_CapabilitiesType">
@@ -40,44 +41,45 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Scalar_CapabilitiesType", propOrder = {
-    "logicalOperatorsOrComparisonOperatorsOrArithmeticOperators"
-})
-public class ScalarCapabilitiesType {
+@XmlType(name = "Scalar_CapabilitiesType", propOrder = { "logicalOperatorsOrComparisonOperatorsOrArithmeticOperators" })
+public class ScalarCapabilitiesType
+{
 
-    @XmlElements({
-        @XmlElement(name = "Arithmetic_Operators", type = ArithmeticOperatorsType.class),
+    @XmlElements({ @XmlElement(name = "Arithmetic_Operators", type = ArithmeticOperatorsType.class),
         @XmlElement(name = "Comparison_Operators", type = ComparisonOperatorsType.class),
-        @XmlElement(name = "Logical_Operators", type = LogicalOperators.class)
-    })
+        @XmlElement(name = "Logical_Operators", type = LogicalOperators.class) })
     protected List<Object> logicalOperatorsOrComparisonOperatorsOrArithmeticOperators;
 
     /**
-     * Gets the value of the logicalOperatorsOrComparisonOperatorsOrArithmeticOperators property.
+     * Gets the value of the
+     * logicalOperatorsOrComparisonOperatorsOrArithmeticOperators property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the logicalOperatorsOrComparisonOperatorsOrArithmeticOperators property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the
+     * logicalOperatorsOrComparisonOperatorsOrArithmeticOperators property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLogicalOperatorsOrComparisonOperatorsOrArithmeticOperators().add(newItem);
+     * getLogicalOperatorsOrComparisonOperatorsOrArithmeticOperators().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ArithmeticOperatorsType }
-     * {@link ComparisonOperatorsType }
+     * {@link ArithmeticOperatorsType } {@link ComparisonOperatorsType }
      * {@link LogicalOperators }
      * 
      * 
      */
-    public List<Object> getLogicalOperatorsOrComparisonOperatorsOrArithmeticOperators() {
-        if (logicalOperatorsOrComparisonOperatorsOrArithmeticOperators == null) {
+    public List<Object> getLogicalOperatorsOrComparisonOperatorsOrArithmeticOperators()
+    {
+        if (logicalOperatorsOrComparisonOperatorsOrArithmeticOperators == null)
+        {
             logicalOperatorsOrComparisonOperatorsOrArithmeticOperators = new ArrayList<Object>();
         }
         return this.logicalOperatorsOrComparisonOperatorsOrArithmeticOperators;

@@ -30,6 +30,6 @@ public class ProxyRoutePlanner implements HttpRoutePlanner
     @Override
     public HttpRoute determineRoute(HttpHost target, HttpRequest request, HttpContext context) throws HttpException
     {
-    	return new HttpRoute(target, null, myProxy, "https".equalsIgnoreCase(target.getSchemeName()));
+        return new HttpRoute(target, null, myProxy, "https".equalsIgnoreCase(target.getSchemeName()));
     }
 }

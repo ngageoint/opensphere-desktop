@@ -34,7 +34,8 @@ public final class EllipseGeometryUtilities
      * non-zero altitude, the ellipse will enlarge as the altitude increases.
      *
      * @param builder The geometry builder.
-     * @param arcAmountDeg The amount of the arc to draw on either side from the angle (in degrees).
+     * @param arcAmountDeg The amount of the arc to draw on either side from the
+     *            angle (in degrees).
      * @return The projected vertices.
      */
     public static List<? extends GeographicPosition> createProjectedVertices(ProjectedBuilder builder, double arcAmountDeg)

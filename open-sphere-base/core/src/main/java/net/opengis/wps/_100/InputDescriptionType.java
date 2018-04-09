@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import java.math.BigInteger;
@@ -17,15 +16,17 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Description of an input to a process. 
+ * Description of an input to a process.
  * 
- * In this use, the DescriptionType shall describe this process input. 
+ * In this use, the DescriptionType shall describe this process input.
  * 
- * <p>Java class for InputDescriptionType complex type.
+ * <p>
+ * Java class for InputDescriptionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="InputDescriptionType">
@@ -44,24 +45,23 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "InputDescriptionType", propOrder = {
-    "complexData",
-    "literalData",
-    "boundingBoxData"
-})
-public class InputDescriptionType
-    extends DescriptionType
+@XmlType(name = "InputDescriptionType", propOrder = { "complexData", "literalData", "boundingBoxData" })
+public class InputDescriptionType extends DescriptionType
 {
 
     @XmlElement(name = "ComplexData", namespace = "")
     protected SupportedComplexDataInputType complexData;
+
     @XmlElement(name = "LiteralData", namespace = "")
     protected LiteralInputType literalData;
+
     @XmlElement(name = "BoundingBoxData", namespace = "")
     protected SupportedCRSsType boundingBoxData;
+
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger minOccurs;
+
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger maxOccurs;
@@ -69,120 +69,110 @@ public class InputDescriptionType
     /**
      * Gets the value of the complexData property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SupportedComplexDataInputType }
-     *     
+     * @return possible object is {@link SupportedComplexDataInputType }
+     * 
      */
-    public SupportedComplexDataInputType getComplexData() {
+    public SupportedComplexDataInputType getComplexData()
+    {
         return complexData;
     }
 
     /**
      * Sets the value of the complexData property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SupportedComplexDataInputType }
-     *     
+     * @param value allowed object is {@link SupportedComplexDataInputType }
+     * 
      */
-    public void setComplexData(SupportedComplexDataInputType value) {
+    public void setComplexData(SupportedComplexDataInputType value)
+    {
         this.complexData = value;
     }
 
     /**
      * Gets the value of the literalData property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LiteralInputType }
-     *     
+     * @return possible object is {@link LiteralInputType }
+     * 
      */
-    public LiteralInputType getLiteralData() {
+    public LiteralInputType getLiteralData()
+    {
         return literalData;
     }
 
     /**
      * Sets the value of the literalData property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LiteralInputType }
-     *     
+     * @param value allowed object is {@link LiteralInputType }
+     * 
      */
-    public void setLiteralData(LiteralInputType value) {
+    public void setLiteralData(LiteralInputType value)
+    {
         this.literalData = value;
     }
 
     /**
      * Gets the value of the boundingBoxData property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SupportedCRSsType }
-     *     
+     * @return possible object is {@link SupportedCRSsType }
+     * 
      */
-    public SupportedCRSsType getBoundingBoxData() {
+    public SupportedCRSsType getBoundingBoxData()
+    {
         return boundingBoxData;
     }
 
     /**
      * Sets the value of the boundingBoxData property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SupportedCRSsType }
-     *     
+     * @param value allowed object is {@link SupportedCRSsType }
+     * 
      */
-    public void setBoundingBoxData(SupportedCRSsType value) {
+    public void setBoundingBoxData(SupportedCRSsType value)
+    {
         this.boundingBoxData = value;
     }
 
     /**
      * Gets the value of the minOccurs property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getMinOccurs() {
+    public BigInteger getMinOccurs()
+    {
         return minOccurs;
     }
 
     /**
      * Sets the value of the minOccurs property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setMinOccurs(BigInteger value) {
+    public void setMinOccurs(BigInteger value)
+    {
         this.minOccurs = value;
     }
 
     /**
      * Gets the value of the maxOccurs property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getMaxOccurs() {
+    public BigInteger getMaxOccurs()
+    {
         return maxOccurs;
     }
 
     /**
      * Sets the value of the maxOccurs property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setMaxOccurs(BigInteger value) {
+    public void setMaxOccurs(BigInteger value)
+    {
         this.maxOccurs = value;
     }
 

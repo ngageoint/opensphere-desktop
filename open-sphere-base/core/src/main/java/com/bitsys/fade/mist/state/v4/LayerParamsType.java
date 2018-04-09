@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.w3c.dom.Element;
 
-
 /**
- * <p>Java class for LayerParamsType complex type.
+ * <p>
+ * Java class for LayerParamsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LayerParamsType">
@@ -39,10 +40,9 @@ import org.w3c.dom.Element;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LayerParamsType", propOrder = {
-    "any"
-})
-public class LayerParamsType {
+@XmlType(name = "LayerParamsType", propOrder = { "any" })
+public class LayerParamsType
+{
 
     @XmlAnyElement(lax = true)
     protected List<Object> any;
@@ -51,37 +51,41 @@ public class LayerParamsType {
      * Gets the value of the any property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the any property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the any property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAny().add(newItem);
+     * getAny().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Element }
+     * Objects of the following type(s) are allowed in the list {@link Element }
      * {@link Object }
      * 
      * 
      */
-    public List<Object> getAny() {
-        if (any == null) {
+    public List<Object> getAny()
+    {
+        if (any == null)
+        {
             any = new ArrayList<Object>();
         }
         return this.any;
     }
 
-    public boolean isSetAny() {
-        return ((this.any!= null)&&(!this.any.isEmpty()));
+    public boolean isSetAny()
+    {
+        return ((this.any != null) && (!this.any.isEmpty()));
     }
 
-    public void unsetAny() {
+    public void unsetAny()
+    {
         this.any = null;
     }
 

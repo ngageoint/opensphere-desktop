@@ -36,26 +36,28 @@ public final class DateTextFieldFormat
     /**
      * The date/time format.
      */
-    public static final DateTextFieldFormat DATE_TIME =
-            new DateTextFieldFormat(DateTimeFormats.DATE_TIME_FORMAT, matcher -> matchesDateTime(matcher), 150);
+    public static final DateTextFieldFormat DATE_TIME = new DateTextFieldFormat(DateTimeFormats.DATE_TIME_FORMAT,
+            matcher -> matchesDateTime(matcher), 150);
 
     /**
      * The date format.
      */
-    public static final DateTextFieldFormat DATE =
-            new DateTextFieldFormat(DateTimeFormats.DATE_FORMAT, matcher -> matchesDate(matcher), 90);
+    public static final DateTextFieldFormat DATE = new DateTextFieldFormat(DateTimeFormats.DATE_FORMAT,
+            matcher -> matchesDate(matcher), 90);
 
     /**
      * The month format.
      */
-    public static final DateTextFieldFormat MONTH =
-            new DateTextFieldFormat("yyyy-MM", matcher -> MathUtil.between(Integer.parseInt(matcher.group(2)), 1, 12), 67);
+    public static final DateTextFieldFormat MONTH = new DateTextFieldFormat("yyyy-MM",
+            matcher -> MathUtil.between(Integer.parseInt(matcher.group(2)), 1, 12), 67);
 
     /**
-     * Tests to determine if the supplied regular expression {@link Matcher} matches a date / time pattern.
+     * Tests to determine if the supplied regular expression {@link Matcher}
+     * matches a date / time pattern.
      *
      * @param matcher the matcher to test.
-     * @return true if the matcher matches the date / time pattern, false otherwise.
+     * @return true if the matcher matches the date / time pattern, false
+     *         otherwise.
      */
     private static boolean matchesDateTime(Matcher matcher)
     {
@@ -75,10 +77,12 @@ public final class DateTextFieldFormat
     }
 
     /**
-     * Tests to determine if the supplied regular expression {@link Matcher} matches a simple date pattern with no time component.
+     * Tests to determine if the supplied regular expression {@link Matcher}
+     * matches a simple date pattern with no time component.
      *
      * @param matcher the matcher to test.
-     * @return true if the matcher matches the simple date pattern, false otherwise.
+     * @return true if the matcher matches the simple date pattern, false
+     *         otherwise.
      */
     private static boolean matchesDate(Matcher matcher)
     {
@@ -159,7 +163,7 @@ public final class DateTextFieldFormat
      *
      * @param text the string
      * @return the parsed Date
-     * @throws ParseException if an exception occurs while parsing
+     * @throws ParseException if an  exception occurs while parsing
      */
     public Date parse(String text) throws ParseException
     {
@@ -167,7 +171,8 @@ public final class DateTextFieldFormat
     }
 
     /**
-     * Converts the given date text into a format that can be understood by myFormat.
+     * Converts the given date text into a format that can be understood by
+     * myFormat.
      *
      * @param text the date text
      * @return the date text in the known format

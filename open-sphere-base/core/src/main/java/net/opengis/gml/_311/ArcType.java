@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * An Arc is an arc string with only one arc unit, i.e. three control points.
  * 
- * <p>Java class for ArcType complex type.
+ * <p>
+ * Java class for ArcType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ArcType">
@@ -46,12 +47,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ArcType")
-@XmlSeeAlso({
-    CircleType.class
-})
-public class ArcType
-    extends ArcStringType
+@XmlSeeAlso({ CircleType.class })
+public class ArcType extends ArcStringType
 {
-
 
 }

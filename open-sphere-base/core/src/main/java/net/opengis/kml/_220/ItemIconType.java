@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ItemIconType complex type.
+ * <p>
+ * Java class for ItemIconType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ItemIconType">
@@ -42,23 +43,20 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ItemIconType", propOrder = {
-    "state",
-    "href",
-    "itemIconSimpleExtensionGroup",
-    "itemIconObjectExtensionGroup"
-})
-public class ItemIconType
-    extends AbstractObjectType
+@XmlType(name = "ItemIconType", propOrder = { "state", "href", "itemIconSimpleExtensionGroup", "itemIconObjectExtensionGroup" })
+public class ItemIconType extends AbstractObjectType
 {
 
     @XmlList
     @XmlSchemaType(name = "anySimpleType")
     protected List<ItemIconStateEnumType> state;
+
     protected String href;
+
     @XmlElement(name = "ItemIconSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> itemIconSimpleExtensionGroup;
+
     @XmlElement(name = "ItemIconObjectExtensionGroup")
     protected List<AbstractObjectType> itemIconObjectExtensionGroup;
 
@@ -66,15 +64,16 @@ public class ItemIconType
      * Gets the value of the state property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the state property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the state property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getState().add(newItem);
+     * getState().add(newItem);
      * </pre>
      * 
      * 
@@ -84,83 +83,90 @@ public class ItemIconType
      * 
      * 
      */
-    public List<ItemIconStateEnumType> getState() {
-        if (state == null) {
+    public List<ItemIconStateEnumType> getState()
+    {
+        if (state == null)
+        {
             state = new ArrayList<ItemIconStateEnumType>();
         }
         return this.state;
     }
 
-    public boolean isSetState() {
-        return ((this.state!= null)&&(!this.state.isEmpty()));
+    public boolean isSetState()
+    {
+        return ((this.state != null) && (!this.state.isEmpty()));
     }
 
-    public void unsetState() {
+    public void unsetState()
+    {
         this.state = null;
     }
 
     /**
      * Gets the value of the href property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHref() {
+    public String getHref()
+    {
         return href;
     }
 
     /**
      * Sets the value of the href property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHref(String value) {
+    public void setHref(String value)
+    {
         this.href = value;
     }
 
-    public boolean isSetHref() {
-        return (this.href!= null);
+    public boolean isSetHref()
+    {
+        return (this.href != null);
     }
 
     /**
      * Gets the value of the itemIconSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the itemIconSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the itemIconSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getItemIconSimpleExtensionGroup().add(newItem);
+     * getItemIconSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getItemIconSimpleExtensionGroup() {
-        if (itemIconSimpleExtensionGroup == null) {
+    public List<Object> getItemIconSimpleExtensionGroup()
+    {
+        if (itemIconSimpleExtensionGroup == null)
+        {
             itemIconSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.itemIconSimpleExtensionGroup;
     }
 
-    public boolean isSetItemIconSimpleExtensionGroup() {
-        return ((this.itemIconSimpleExtensionGroup!= null)&&(!this.itemIconSimpleExtensionGroup.isEmpty()));
+    public boolean isSetItemIconSimpleExtensionGroup()
+    {
+        return ((this.itemIconSimpleExtensionGroup != null) && (!this.itemIconSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetItemIconSimpleExtensionGroup() {
+    public void unsetItemIconSimpleExtensionGroup()
+    {
         this.itemIconSimpleExtensionGroup = null;
     }
 
@@ -168,15 +174,16 @@ public class ItemIconType
      * Gets the value of the itemIconObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the itemIconObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the itemIconObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getItemIconObjectExtensionGroup().add(newItem);
+     * getItemIconObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -186,18 +193,22 @@ public class ItemIconType
      * 
      * 
      */
-    public List<AbstractObjectType> getItemIconObjectExtensionGroup() {
-        if (itemIconObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getItemIconObjectExtensionGroup()
+    {
+        if (itemIconObjectExtensionGroup == null)
+        {
             itemIconObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.itemIconObjectExtensionGroup;
     }
 
-    public boolean isSetItemIconObjectExtensionGroup() {
-        return ((this.itemIconObjectExtensionGroup!= null)&&(!this.itemIconObjectExtensionGroup.isEmpty()));
+    public boolean isSetItemIconObjectExtensionGroup()
+    {
+        return ((this.itemIconObjectExtensionGroup != null) && (!this.itemIconObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetItemIconObjectExtensionGroup() {
+    public void unsetItemIconObjectExtensionGroup()
+    {
         this.itemIconObjectExtensionGroup = null;
     }
 

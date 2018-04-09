@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -20,11 +19,13 @@ import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for LineStringType complex type.
+ * <p>
+ * Java class for LineStringType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LineStringType">
@@ -46,153 +47,154 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LineStringType", propOrder = {
-    "extrude",
-    "tessellate",
-    "altitudeModeGroup",
-    "coordinates",
-    "lineStringSimpleExtensionGroup",
-    "lineStringObjectExtensionGroup"
-})
-public class LineStringType
-    extends AbstractGeometryType
+@XmlType(name = "LineStringType", propOrder = { "extrude", "tessellate", "altitudeModeGroup", "coordinates",
+    "lineStringSimpleExtensionGroup", "lineStringObjectExtensionGroup" })
+public class LineStringType extends AbstractGeometryType
 {
 
     @XmlElement(defaultValue = "0")
     protected Boolean extrude;
+
     @XmlElement(defaultValue = "0")
     protected Boolean tessellate;
+
     @XmlElementRef(name = "altitudeModeGroup", namespace = "http://www.opengis.net/kml/2.2", type = JAXBElement.class, required = false)
     protected JAXBElement<?> altitudeModeGroup;
+
     @XmlList
     @XmlSchemaType(name = "anySimpleType")
     protected List<String> coordinates;
+
     @XmlElement(name = "LineStringSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> lineStringSimpleExtensionGroup;
+
     @XmlElement(name = "LineStringObjectExtensionGroup")
     protected List<AbstractObjectType> lineStringObjectExtensionGroup;
 
     /**
      * Gets the value of the extrude property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isExtrude() {
+    public Boolean isExtrude()
+    {
         return extrude;
     }
 
     /**
      * Sets the value of the extrude property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setExtrude(Boolean value) {
+    public void setExtrude(Boolean value)
+    {
         this.extrude = value;
     }
 
-    public boolean isSetExtrude() {
-        return (this.extrude!= null);
+    public boolean isSetExtrude()
+    {
+        return (this.extrude != null);
     }
 
     /**
      * Gets the value of the tessellate property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isTessellate() {
+    public Boolean isTessellate()
+    {
         return tessellate;
     }
 
     /**
      * Sets the value of the tessellate property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setTessellate(Boolean value) {
+    public void setTessellate(Boolean value)
+    {
         this.tessellate = value;
     }
 
-    public boolean isSetTessellate() {
-        return (this.tessellate!= null);
+    public boolean isSetTessellate()
+    {
+        return (this.tessellate != null);
     }
 
     /**
      * Gets the value of the altitudeModeGroup property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link AltitudeModeEnumType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link Object }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement
+     *         }{@code <}{@link AltitudeModeEnumType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * 
      */
-    public JAXBElement<?> getAltitudeModeGroup() {
+    public JAXBElement<?> getAltitudeModeGroup()
+    {
         return altitudeModeGroup;
     }
 
     /**
      * Sets the value of the altitudeModeGroup property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link AltitudeModeEnumType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link Object }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link AltitudeModeEnumType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * 
      */
-    public void setAltitudeModeGroup(JAXBElement<?> value) {
+    public void setAltitudeModeGroup(JAXBElement<?> value)
+    {
         this.altitudeModeGroup = value;
     }
 
-    public boolean isSetAltitudeModeGroup() {
-        return (this.altitudeModeGroup!= null);
+    public boolean isSetAltitudeModeGroup()
+    {
+        return (this.altitudeModeGroup != null);
     }
 
     /**
      * Gets the value of the coordinates property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the coordinates property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the coordinates property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getCoordinates().add(newItem);
+     * getCoordinates().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getCoordinates() {
-        if (coordinates == null) {
+    public List<String> getCoordinates()
+    {
+        if (coordinates == null)
+        {
             coordinates = new ArrayList<String>();
         }
         return this.coordinates;
     }
 
-    public boolean isSetCoordinates() {
-        return ((this.coordinates!= null)&&(!this.coordinates.isEmpty()));
+    public boolean isSetCoordinates()
+    {
+        return ((this.coordinates != null) && (!this.coordinates.isEmpty()));
     }
 
-    public void unsetCoordinates() {
+    public void unsetCoordinates()
+    {
         this.coordinates = null;
     }
 
@@ -200,36 +202,40 @@ public class LineStringType
      * Gets the value of the lineStringSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the lineStringSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the lineStringSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLineStringSimpleExtensionGroup().add(newItem);
+     * getLineStringSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getLineStringSimpleExtensionGroup() {
-        if (lineStringSimpleExtensionGroup == null) {
+    public List<Object> getLineStringSimpleExtensionGroup()
+    {
+        if (lineStringSimpleExtensionGroup == null)
+        {
             lineStringSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.lineStringSimpleExtensionGroup;
     }
 
-    public boolean isSetLineStringSimpleExtensionGroup() {
-        return ((this.lineStringSimpleExtensionGroup!= null)&&(!this.lineStringSimpleExtensionGroup.isEmpty()));
+    public boolean isSetLineStringSimpleExtensionGroup()
+    {
+        return ((this.lineStringSimpleExtensionGroup != null) && (!this.lineStringSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetLineStringSimpleExtensionGroup() {
+    public void unsetLineStringSimpleExtensionGroup()
+    {
         this.lineStringSimpleExtensionGroup = null;
     }
 
@@ -237,15 +243,16 @@ public class LineStringType
      * Gets the value of the lineStringObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the lineStringObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the lineStringObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLineStringObjectExtensionGroup().add(newItem);
+     * getLineStringObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -255,18 +262,22 @@ public class LineStringType
      * 
      * 
      */
-    public List<AbstractObjectType> getLineStringObjectExtensionGroup() {
-        if (lineStringObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getLineStringObjectExtensionGroup()
+    {
+        if (lineStringObjectExtensionGroup == null)
+        {
             lineStringObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.lineStringObjectExtensionGroup;
     }
 
-    public boolean isSetLineStringObjectExtensionGroup() {
-        return ((this.lineStringObjectExtensionGroup!= null)&&(!this.lineStringObjectExtensionGroup.isEmpty()));
+    public boolean isSetLineStringObjectExtensionGroup()
+    {
+        return ((this.lineStringObjectExtensionGroup != null) && (!this.lineStringObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetLineStringObjectExtensionGroup() {
+    public void unsetLineStringObjectExtensionGroup()
+    {
         this.lineStringObjectExtensionGroup = null;
     }
 

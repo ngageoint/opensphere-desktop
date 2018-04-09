@@ -53,7 +53,7 @@ public class DeprecatedJDependTest
      * Runs jdeps for the current package.
      *
      * @return the output lines
-     * @throws IOException if a problem occurred running jdeps
+     * @throws IOException if a   problem occurred running jdeps
      */
     private List<String> runJdeps() throws IOException
     {

@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.ogc._100t;
 
 import javax.xml.bind.JAXBElement;
@@ -25,11 +24,13 @@ import net.opengis.gml._212.MultiPolygonType;
 import net.opengis.gml._212.PointType;
 import net.opengis.gml._212.PolygonType;
 
-
 /**
- * <p>Java class for DistanceBufferType complex type.
+ * <p>
+ * Java class for DistanceBufferType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DistanceBufferType">
@@ -48,122 +49,122 @@ import net.opengis.gml._212.PolygonType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DistanceBufferType", propOrder = {
-    "propertyName",
-    "geometry",
-    "distance"
-})
-public class DistanceBufferType
-    extends SpatialOpsType
+@XmlType(name = "DistanceBufferType", propOrder = { "propertyName", "geometry", "distance" })
+public class DistanceBufferType extends SpatialOpsType
 {
 
     @XmlElement(name = "PropertyName", required = true)
     protected PropertyNameType propertyName;
+
     @XmlElementRef(name = "_Geometry", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
     protected JAXBElement<? extends AbstractGeometryType> geometry;
+
     @XmlElement(name = "Distance", required = true)
     protected DistanceType distance;
 
     /**
      * Gets the value of the propertyName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PropertyNameType }
-     *     
+     * @return possible object is {@link PropertyNameType }
+     * 
      */
-    public PropertyNameType getPropertyName() {
+    public PropertyNameType getPropertyName()
+    {
         return propertyName;
     }
 
     /**
      * Sets the value of the propertyName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PropertyNameType }
-     *     
+     * @param value allowed object is {@link PropertyNameType }
+     * 
      */
-    public void setPropertyName(PropertyNameType value) {
+    public void setPropertyName(PropertyNameType value)
+    {
         this.propertyName = value;
     }
 
-    public boolean isSetPropertyName() {
-        return (this.propertyName!= null);
+    public boolean isSetPropertyName()
+    {
+        return (this.propertyName != null);
     }
 
     /**
      * Gets the value of the geometry property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link MultiPointType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiPolygonType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link LineStringType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiLineStringType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link GeometryCollectionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PointType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link GeometryCollectionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractGeometryType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link LinearRingType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PolygonType }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement
+     *         }{@code <}{@link MultiPointType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link MultiPolygonType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link LineStringType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link MultiLineStringType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link GeometryCollectionType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link PointType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link GeometryCollectionType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link AbstractGeometryType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link LinearRingType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link PolygonType
+     *         }{@code >}
+     * 
      */
-    public JAXBElement<? extends AbstractGeometryType> getGeometry() {
+    public JAXBElement<? extends AbstractGeometryType> getGeometry()
+    {
         return geometry;
     }
 
     /**
      * Sets the value of the geometry property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link MultiPointType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiPolygonType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link LineStringType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link MultiLineStringType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link GeometryCollectionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PointType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link GeometryCollectionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractGeometryType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link LinearRingType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PolygonType }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link MultiPointType }{@code >} {@link JAXBElement
+     *            }{@code <}{@link MultiPolygonType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link LineStringType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link MultiLineStringType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link GeometryCollectionType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link PointType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link GeometryCollectionType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link AbstractGeometryType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link LinearRingType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link PolygonType }{@code >}
+     * 
      */
-    public void setGeometry(JAXBElement<? extends AbstractGeometryType> value) {
+    public void setGeometry(JAXBElement<? extends AbstractGeometryType> value)
+    {
         this.geometry = value;
     }
 
-    public boolean isSetGeometry() {
-        return (this.geometry!= null);
+    public boolean isSetGeometry()
+    {
+        return (this.geometry != null);
     }
 
     /**
      * Gets the value of the distance property.
      * 
-     * @return
-     *     possible object is
-     *     {@link DistanceType }
-     *     
+     * @return possible object is {@link DistanceType }
+     * 
      */
-    public DistanceType getDistance() {
+    public DistanceType getDistance()
+    {
         return distance;
     }
 
     /**
      * Sets the value of the distance property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DistanceType }
-     *     
+     * @param value allowed object is {@link DistanceType }
+     * 
      */
-    public void setDistance(DistanceType value) {
+    public void setDistance(DistanceType value)
+    {
         this.distance = value;
     }
 
-    public boolean isSetDistance() {
-        return (this.distance!= null);
+    public boolean isSetDistance()
+    {
+        return (this.distance != null);
     }
 
 }

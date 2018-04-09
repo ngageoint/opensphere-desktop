@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javafx.application.Platform;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Control;
-
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.fx.FXUtilities;
@@ -21,6 +17,9 @@ import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.wps.config.v2.ProcessSetting;
 import io.opensphere.wps.ui.detail.provider.DecorationUtils;
 import io.opensphere.wps.util.WpsUtilities;
+import javafx.application.Platform;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
 import net.opengis.wps._100.InputDescriptionType;
 
 /** Links layer and column. */
@@ -61,7 +60,7 @@ public class LayerColumnLinker
                 ComboBox<String> columnBox = (ComboBox<String>)control.getControl();
                 ComboBox<String> layerBox = (ComboBox<String>)layerControl.getControl();
                 FXUtilities.addListenerAndInit(layerBox.valueProperty(),
-                    layer -> handleLayerChange(layer, inputDescription, columnBox, processSetting));
+                        layer -> handleLayerChange(layer, inputDescription, columnBox, processSetting));
             }
         }
     }

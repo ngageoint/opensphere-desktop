@@ -2,6 +2,7 @@ package io.opensphere.core.preferences;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
@@ -146,10 +147,7 @@ class Preference<T>
         {
             try
             {
-                if (getValue().equals(other.getValue()))
-                {
-                    return true;
-                }
+                return Objects.equals(getValue(), other.getValue());
             }
             catch (JAXBException e)
             {

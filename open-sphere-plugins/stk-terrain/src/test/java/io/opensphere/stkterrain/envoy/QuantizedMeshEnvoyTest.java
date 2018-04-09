@@ -30,7 +30,6 @@ import io.opensphere.core.data.QueryException;
 import io.opensphere.core.data.util.DataModelCategory;
 import io.opensphere.core.data.util.PropertyValueReceiver;
 import io.opensphere.core.data.util.SimpleQuery;
-import io.opensphere.core.matchers.EasyMockHelper;
 import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.ZYXImageKey;
@@ -46,6 +45,7 @@ import io.opensphere.stkterrain.model.TileSetMetadata;
 import io.opensphere.stkterrain.model.mesh.QuantizedMesh;
 import io.opensphere.stkterrain.model.mesh.QuantizedMeshTest;
 import io.opensphere.stkterrain.util.Constants;
+import io.opensphere.test.core.matchers.EasyMockHelper;
 
 /**
  * Unit test for {@link QuantizedMeshEnvoy}.
@@ -357,8 +357,8 @@ public class QuantizedMeshEnvoyTest
         if (metadata != null)
         {
             HttpServer server = support.createMock(HttpServer.class);
-            EasyMock.expect(server.sendGet(EasyMockHelper.eq(url), EasyMock.isA(Map.class),
-                    EasyMock.isA(ResponseValues.class))).andAnswer(() -> sendGetAnswer(responseCode, exception));
+            EasyMock.expect(server.sendGet(EasyMockHelper.eq(url), EasyMock.isA(Map.class), EasyMock.isA(ResponseValues.class)))
+                    .andAnswer(() -> sendGetAnswer(responseCode, exception));
 
             ServerProvider<HttpServer> provider = support.createMock(ServerProvider.class);
             EasyMock.expect(provider.getServer(EasyMockHelper.eq(url))).andReturn(server);

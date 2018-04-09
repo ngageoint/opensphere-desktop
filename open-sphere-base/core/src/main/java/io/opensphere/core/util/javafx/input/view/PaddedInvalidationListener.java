@@ -6,7 +6,8 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.Region;
 
 /**
- * An invalidation listener that preserves the padding of the to-be-invalidated region.
+ * An invalidation listener that preserves the padding of the to-be-invalidated
+ * region.
  */
 public class PaddedInvalidationListener implements InvalidationListener
 {

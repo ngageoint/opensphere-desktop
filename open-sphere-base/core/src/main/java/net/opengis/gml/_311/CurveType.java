@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,15 +12,21 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Curve is a 1-dimensional primitive. Curves are continuous, connected, and have a measurable length in terms of the coordinate system. 
- * 				A curve is composed of one or more curve segments. Each curve segment within a curve may be defined using a different interpolation method. The curve segments are connected to one another, with the end point of each segment except the last being the start point of the next segment in the segment list.
- * 				The orientation of the curve is positive.
+ * Curve is a 1-dimensional primitive. Curves are continuous, connected, and
+ * have a measurable length in terms of the coordinate system. A curve is
+ * composed of one or more curve segments. Each curve segment within a curve may
+ * be defined using a different interpolation method. The curve segments are
+ * connected to one another, with the end point of each segment except the last
+ * being the start point of the next segment in the segment list. The
+ * orientation of the curve is positive.
  * 
- * <p>Java class for CurveType complex type.
+ * <p>
+ * Java class for CurveType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CurveType">
@@ -38,11 +43,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CurveType", propOrder = {
-    "segments"
-})
-public class CurveType
-    extends AbstractCurveType
+@XmlType(name = "CurveType", propOrder = { "segments" })
+public class CurveType extends AbstractCurveType
 {
 
     @XmlElement(required = true)
@@ -51,24 +53,22 @@ public class CurveType
     /**
      * This element encapsulates the segments of the curve.
      * 
-     * @return
-     *     possible object is
-     *     {@link CurveSegmentArrayPropertyType }
-     *     
+     * @return possible object is {@link CurveSegmentArrayPropertyType }
+     * 
      */
-    public CurveSegmentArrayPropertyType getSegments() {
+    public CurveSegmentArrayPropertyType getSegments()
+    {
         return segments;
     }
 
     /**
      * Sets the value of the segments property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CurveSegmentArrayPropertyType }
-     *     
+     * @param value allowed object is {@link CurveSegmentArrayPropertyType }
+     * 
      */
-    public void setSegments(CurveSegmentArrayPropertyType value) {
+    public void setSegments(CurveSegmentArrayPropertyType value)
+    {
         this.segments = value;
     }
 

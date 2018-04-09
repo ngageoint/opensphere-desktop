@@ -3,7 +3,8 @@ package io.opensphere.core.event;
 import io.opensphere.core.model.GeographicBoundingBox;
 
 /**
- * An event that describes something that took place in a region, either creating, deleting, or other region events.
+ * An event that describes something that took place in a region, either
+ * creating, deleting, or other region events.
  */
 public class RegionEvent extends AbstractSingleStateEvent implements SourceableEvent
 {
@@ -23,7 +24,8 @@ public class RegionEvent extends AbstractSingleStateEvent implements SourceableE
     private final GeographicBoundingBox myRegion;
 
     /**
-     * Creates a new event to notify registered listeners of a region selection event.
+     * Creates a new event to notify registered listeners of a region selection
+     * event.
      *
      * @param pSource The Object that originated this event.
      * @param pType The type of region event that occurred.

@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -22,11 +21,13 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
- * <p>Java class for AbstractObjectType complex type.
+ * <p>
+ * Java class for AbstractObjectType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractObjectType">
@@ -44,42 +45,25 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractObjectType", propOrder = {
-    "objectSimpleExtensionGroup"
-})
-@XmlSeeAlso({
-    OrientationType.class,
-    ItemIconType.class,
-    ImagePyramidType.class,
-    ViewVolumeType.class,
-    ResourceMapType.class,
-    RegionType.class,
-    PairType.class,
-    LocationType.class,
-    SchemaDataType.class,
-    LodType.class,
-    AbstractViewType.class,
-    AbstractStyleSelectorType.class,
-    AbstractSubStyleType.class,
-    AbstractFeatureType.class,
-    AbstractTimePrimitiveType.class,
-    DataType.class,
-    ScaleType.class,
-    AliasType.class,
-    AbstractGeometryType.class,
-    BasicLinkType.class,
-    AbstractLatLonBoxType.class
-})
-public abstract class AbstractObjectType {
+@XmlType(name = "AbstractObjectType", propOrder = { "objectSimpleExtensionGroup" })
+@XmlSeeAlso({ OrientationType.class, ItemIconType.class, ImagePyramidType.class, ViewVolumeType.class, ResourceMapType.class,
+    RegionType.class, PairType.class, LocationType.class, SchemaDataType.class, LodType.class, AbstractViewType.class,
+    AbstractStyleSelectorType.class, AbstractSubStyleType.class, AbstractFeatureType.class, AbstractTimePrimitiveType.class,
+    DataType.class, ScaleType.class, AliasType.class, AbstractGeometryType.class, BasicLinkType.class,
+    AbstractLatLonBoxType.class })
+public abstract class AbstractObjectType
+{
 
     @XmlElement(name = "ObjectSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> objectSimpleExtensionGroup;
+
     @XmlAttribute(name = "id")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
     @XmlSchemaType(name = "ID")
     protected String id;
+
     @XmlAttribute(name = "targetId")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "NCName")
@@ -89,93 +73,95 @@ public abstract class AbstractObjectType {
      * Gets the value of the objectSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the objectSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the objectSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getObjectSimpleExtensionGroup().add(newItem);
+     * getObjectSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getObjectSimpleExtensionGroup() {
-        if (objectSimpleExtensionGroup == null) {
+    public List<Object> getObjectSimpleExtensionGroup()
+    {
+        if (objectSimpleExtensionGroup == null)
+        {
             objectSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.objectSimpleExtensionGroup;
     }
 
-    public boolean isSetObjectSimpleExtensionGroup() {
-        return ((this.objectSimpleExtensionGroup!= null)&&(!this.objectSimpleExtensionGroup.isEmpty()));
+    public boolean isSetObjectSimpleExtensionGroup()
+    {
+        return ((this.objectSimpleExtensionGroup != null) && (!this.objectSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetObjectSimpleExtensionGroup() {
+    public void unsetObjectSimpleExtensionGroup()
+    {
         this.objectSimpleExtensionGroup = null;
     }
 
     /**
      * Gets the value of the id property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
     /**
      * Sets the value of the id property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setId(String value) {
+    public void setId(String value)
+    {
         this.id = value;
     }
 
-    public boolean isSetId() {
-        return (this.id!= null);
+    public boolean isSetId()
+    {
+        return (this.id != null);
     }
 
     /**
      * Gets the value of the targetId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTargetId() {
+    public String getTargetId()
+    {
         return targetId;
     }
 
     /**
      * Sets the value of the targetId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTargetId(String value) {
+    public void setTargetId(String value)
+    {
         this.targetId = value;
     }
 
-    public boolean isSetTargetId() {
-        return (this.targetId!= null);
+    public boolean isSetTargetId()
+    {
+        return (this.targetId != null);
     }
 
 }

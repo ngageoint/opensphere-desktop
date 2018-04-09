@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ows._100;
 
 import java.util.ArrayList;
@@ -17,14 +16,19 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * Human-readable descriptive information for the object it is included within.
- * This type shall be extended if needed for specific OWS use to include additional metadata for each type of information. This type shall not be restricted for a specific OWS to change the multiplicity (or optionality) of some elements. 
+ * This type shall be extended if needed for specific OWS use to include
+ * additional metadata for each type of information. This type shall not be
+ * restricted for a specific OWS to change the multiplicity (or optionality) of
+ * some elements.
  * 
- * <p>Java class for DescriptionType complex type.
+ * <p>
+ * Java class for DescriptionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DescriptionType">
@@ -43,69 +47,61 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DescriptionType", propOrder = {
-    "title",
-    "_abstract",
-    "keywords"
-})
-@XmlSeeAlso({
-    IdentificationType.class,
-    ServiceIdentification.class
-})
-public class DescriptionType {
+@XmlType(name = "DescriptionType", propOrder = { "title", "_abstract", "keywords" })
+@XmlSeeAlso({ IdentificationType.class, ServiceIdentification.class })
+public class DescriptionType
+{
 
     @XmlElement(name = "Title")
     protected String title;
+
     @XmlElement(name = "Abstract")
     protected String _abstract;
+
     @XmlElement(name = "Keywords")
     protected List<KeywordsType> keywords;
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
     /**
      * Gets the value of the abstract property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getAbstract() {
+    public String getAbstract()
+    {
         return _abstract;
     }
 
     /**
      * Sets the value of the abstract property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setAbstract(String value) {
+    public void setAbstract(String value)
+    {
         this._abstract = value;
     }
 
@@ -113,15 +109,16 @@ public class DescriptionType {
      * Gets the value of the keywords property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the keywords property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the keywords property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getKeywords().add(newItem);
+     * getKeywords().add(newItem);
      * </pre>
      * 
      * 
@@ -131,8 +128,10 @@ public class DescriptionType {
      * 
      * 
      */
-    public List<KeywordsType> getKeywords() {
-        if (keywords == null) {
+    public List<KeywordsType> getKeywords()
+    {
+        if (keywords == null)
+        {
             keywords = new ArrayList<KeywordsType>();
         }
         return this.keywords;

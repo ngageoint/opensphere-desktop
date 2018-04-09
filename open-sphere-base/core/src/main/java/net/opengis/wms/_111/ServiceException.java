@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:40 PM MST 
 //
 
-
 package net.opengis.wms._111;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,68 +16,63 @@ import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "value"
-})
+@XmlType(name = "", propOrder = { "value" })
 @XmlRootElement(name = "ServiceException")
-public class ServiceException {
+public class ServiceException
+{
 
     @XmlAttribute
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String code;
+
     @XmlValue
     protected String value;
 
     /**
      * Gets the value of the code property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getCode() {
+    public String getCode()
+    {
         return code;
     }
 
     /**
      * Sets the value of the code property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setCode(String value) {
+    public void setCode(String value)
+    {
         this.code = value;
     }
 
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getvalue() {
+    public String getvalue()
+    {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setvalue(String value) {
+    public void setvalue(String value)
+    {
         this.value = value;
     }
 

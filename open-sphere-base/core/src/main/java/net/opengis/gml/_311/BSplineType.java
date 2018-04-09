@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.math.BigInteger;
@@ -23,13 +22,19 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A B-Spline is a piecewise parametric polynomial or rational curve described in terms of control points and basis functions. Knots are breakpoints on the curve that connect its pieces. They are given as a non-decreasing sequence of real numbers. If the weights in the knots are equal then it is a polynomial spline. The degree is the algebraic degree of the basis functions.
+ * A B-Spline is a piecewise parametric polynomial or rational curve described
+ * in terms of control points and basis functions. Knots are breakpoints on the
+ * curve that connect its pieces. They are given as a non-decreasing sequence of
+ * real numbers. If the weights in the knots are equal then it is a polynomial
+ * spline. The degree is the algebraic degree of the basis functions.
  * 
- * <p>Java class for BSplineType complex type.
+ * <p>
+ * Java class for BSplineType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="BSplineType">
@@ -59,37 +64,33 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "BSplineType", propOrder = {
-    "posOrPointPropertyOrPointRep",
-    "posList",
-    "coordinates",
-    "degree",
-    "knot"
-})
-@XmlSeeAlso({
-    BezierType.class
-})
-public class BSplineType
-    extends AbstractCurveSegmentType
+@XmlType(name = "BSplineType", propOrder = { "posOrPointPropertyOrPointRep", "posList", "coordinates", "degree", "knot" })
+@XmlSeeAlso({ BezierType.class })
+public class BSplineType extends AbstractCurveSegmentType
 {
 
-    @XmlElementRefs({
-        @XmlElementRef(name = "pos", namespace = "http://www.opengis.net/gml", type = JAXBElement.class),
+    @XmlElementRefs({ @XmlElementRef(name = "pos", namespace = "http://www.opengis.net/gml", type = JAXBElement.class),
         @XmlElementRef(name = "pointProperty", namespace = "http://www.opengis.net/gml", type = JAXBElement.class),
-        @XmlElementRef(name = "pointRep", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
-    })
+        @XmlElementRef(name = "pointRep", namespace = "http://www.opengis.net/gml", type = JAXBElement.class) })
     protected List<JAXBElement<?>> posOrPointPropertyOrPointRep;
+
     protected DirectPositionListType posList;
+
     protected CoordinatesType coordinates;
+
     @XmlElement(required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger degree;
+
     @XmlElement(required = true)
     protected List<KnotPropertyType> knot;
+
     @XmlAttribute(name = "interpolation")
     protected CurveInterpolationType interpolation;
+
     @XmlAttribute(name = "isPolynomial")
     protected Boolean isPolynomial;
+
     @XmlAttribute(name = "knotType")
     protected KnotTypesType knotType;
 
@@ -97,15 +98,16 @@ public class BSplineType
      * Gets the value of the posOrPointPropertyOrPointRep property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the posOrPointPropertyOrPointRep property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the posOrPointPropertyOrPointRep property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPosOrPointPropertyOrPointRep().add(newItem);
+     * getPosOrPointPropertyOrPointRep().add(newItem);
      * </pre>
      * 
      * 
@@ -117,8 +119,10 @@ public class BSplineType
      * 
      * 
      */
-    public List<JAXBElement<?>> getPosOrPointPropertyOrPointRep() {
-        if (posOrPointPropertyOrPointRep == null) {
+    public List<JAXBElement<?>> getPosOrPointPropertyOrPointRep()
+    {
+        if (posOrPointPropertyOrPointRep == null)
+        {
             posOrPointPropertyOrPointRep = new ArrayList<JAXBElement<?>>();
         }
         return this.posOrPointPropertyOrPointRep;
@@ -127,72 +131,66 @@ public class BSplineType
     /**
      * Gets the value of the posList property.
      * 
-     * @return
-     *     possible object is
-     *     {@link DirectPositionListType }
-     *     
+     * @return possible object is {@link DirectPositionListType }
+     * 
      */
-    public DirectPositionListType getPosList() {
+    public DirectPositionListType getPosList()
+    {
         return posList;
     }
 
     /**
      * Sets the value of the posList property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DirectPositionListType }
-     *     
+     * @param value allowed object is {@link DirectPositionListType }
+     * 
      */
-    public void setPosList(DirectPositionListType value) {
+    public void setPosList(DirectPositionListType value)
+    {
         this.posList = value;
     }
 
     /**
      * Deprecated with GML version 3.1.0. Use "posList" instead.
      * 
-     * @return
-     *     possible object is
-     *     {@link CoordinatesType }
-     *     
+     * @return possible object is {@link CoordinatesType }
+     * 
      */
-    public CoordinatesType getCoordinates() {
+    public CoordinatesType getCoordinates()
+    {
         return coordinates;
     }
 
     /**
      * Sets the value of the coordinates property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CoordinatesType }
-     *     
+     * @param value allowed object is {@link CoordinatesType }
+     * 
      */
-    public void setCoordinates(CoordinatesType value) {
+    public void setCoordinates(CoordinatesType value)
+    {
         this.coordinates = value;
     }
 
     /**
      * Gets the value of the degree property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getDegree() {
+    public BigInteger getDegree()
+    {
         return degree;
     }
 
     /**
      * Sets the value of the degree property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setDegree(BigInteger value) {
+    public void setDegree(BigInteger value)
+    {
         this.degree = value;
     }
 
@@ -200,15 +198,16 @@ public class BSplineType
      * Gets the value of the knot property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the knot property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the knot property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getKnot().add(newItem);
+     * getKnot().add(newItem);
      * </pre>
      * 
      * 
@@ -218,8 +217,10 @@ public class BSplineType
      * 
      * 
      */
-    public List<KnotPropertyType> getKnot() {
-        if (knot == null) {
+    public List<KnotPropertyType> getKnot()
+    {
+        if (knot == null)
+        {
             knot = new ArrayList<KnotPropertyType>();
         }
         return this.knot;
@@ -228,15 +229,17 @@ public class BSplineType
     /**
      * Gets the value of the interpolation property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CurveInterpolationType }
-     *     
+     * @return possible object is {@link CurveInterpolationType }
+     * 
      */
-    public CurveInterpolationType getInterpolation() {
-        if (interpolation == null) {
+    public CurveInterpolationType getInterpolation()
+    {
+        if (interpolation == null)
+        {
             return CurveInterpolationType.POLYNOMIAL_SPLINE;
-        } else {
+        }
+        else
+        {
             return interpolation;
         }
     }
@@ -244,60 +247,55 @@ public class BSplineType
     /**
      * Sets the value of the interpolation property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CurveInterpolationType }
-     *     
+     * @param value allowed object is {@link CurveInterpolationType }
+     * 
      */
-    public void setInterpolation(CurveInterpolationType value) {
+    public void setInterpolation(CurveInterpolationType value)
+    {
         this.interpolation = value;
     }
 
     /**
      * Gets the value of the isPolynomial property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isIsPolynomial() {
+    public Boolean isIsPolynomial()
+    {
         return isPolynomial;
     }
 
     /**
      * Sets the value of the isPolynomial property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setIsPolynomial(Boolean value) {
+    public void setIsPolynomial(Boolean value)
+    {
         this.isPolynomial = value;
     }
 
     /**
      * Gets the value of the knotType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link KnotTypesType }
-     *     
+     * @return possible object is {@link KnotTypesType }
+     * 
      */
-    public KnotTypesType getKnotType() {
+    public KnotTypesType getKnotType()
+    {
         return knotType;
     }
 
     /**
      * Sets the value of the knotType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link KnotTypesType }
-     *     
+     * @param value allowed object is {@link KnotTypesType }
+     * 
      */
-    public void setKnotType(KnotTypesType value) {
+    public void setKnotType(KnotTypesType value)
+    {
         this.knotType = value;
     }
 

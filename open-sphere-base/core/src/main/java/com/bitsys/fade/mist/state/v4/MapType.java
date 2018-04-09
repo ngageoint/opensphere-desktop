@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,16 +15,18 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.kml._220.CameraType;
 
-
 /**
  * 
- *         A complex type in which the details of the Map projection and camera 
- *         location are encapsulated.
- *       
+ * A complex type in which the details of the Map projection and camera location
+ * are encapsulated.
  * 
- * <p>Java class for MapType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for MapType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="MapType">
@@ -46,71 +47,71 @@ import net.opengis.kml._220.CameraType;
 @XmlType(name = "MapType", propOrder = {
 
 })
-public class MapType {
+public class MapType
+{
 
     @XmlElement(name = "Camera", namespace = "http://www.opengis.net/kml/2.2", required = true)
     protected CameraType camera;
+
     @XmlElement(required = true)
     @XmlSchemaType(name = "token")
     protected ProjectionType projection;
 
     /**
      * 
-     *             The specifications of the camera location, expressed as a KML 
-     *             CameraType element, including location, tilt, roll, and zoom.
-     *           
+     * The specifications of the camera location, expressed as a KML CameraType
+     * element, including location, tilt, roll, and zoom.
      * 
-     * @return
-     *     possible object is
-     *     {@link CameraType }
-     *     
+     * 
+     * @return possible object is {@link CameraType }
+     * 
      */
-    public CameraType getCamera() {
+    public CameraType getCamera()
+    {
         return camera;
     }
 
     /**
      * Sets the value of the camera property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CameraType }
-     *     
+     * @param value allowed object is {@link CameraType }
+     * 
      */
-    public void setCamera(CameraType value) {
+    public void setCamera(CameraType value)
+    {
         this.camera = value;
     }
 
-    public boolean isSetCamera() {
-        return (this.camera!= null);
+    public boolean isSetCamera()
+    {
+        return (this.camera != null);
     }
 
     /**
      * Gets the value of the projection property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ProjectionType }
-     *     
+     * @return possible object is {@link ProjectionType }
+     * 
      */
-    public ProjectionType getProjection() {
+    public ProjectionType getProjection()
+    {
         return projection;
     }
 
     /**
      * Sets the value of the projection property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ProjectionType }
-     *     
+     * @param value allowed object is {@link ProjectionType }
+     * 
      */
-    public void setProjection(ProjectionType value) {
+    public void setProjection(ProjectionType value)
+    {
         this.projection = value;
     }
 
-    public boolean isSetProjection() {
-        return (this.projection!= null);
+    public boolean isSetProjection()
+    {
+        return (this.projection != null);
     }
 
 }

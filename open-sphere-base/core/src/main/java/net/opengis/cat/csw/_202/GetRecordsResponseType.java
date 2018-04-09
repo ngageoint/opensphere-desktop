@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,17 +14,19 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *             The response message for a GetRecords request. Some or all of the 
- *             matching records may be included as children of the SearchResults 
- *             element. The RequestId is only included if the client specified it.
- *          
+ * The response message for a GetRecords request. Some or all of the matching
+ * records may be included as children of the SearchResults element. The
+ * RequestId is only included if the client specified it.
  * 
- * <p>Java class for GetRecordsResponseType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for GetRecordsResponseType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GetRecordsResponseType">
@@ -45,116 +46,108 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetRecordsResponseType", propOrder = {
-    "requestId",
-    "searchStatus",
-    "searchResults"
-})
-public class GetRecordsResponseType {
+@XmlType(name = "GetRecordsResponseType", propOrder = { "requestId", "searchStatus", "searchResults" })
+public class GetRecordsResponseType
+{
 
     @XmlElement(name = "RequestId")
     @XmlSchemaType(name = "anyURI")
     protected String requestId;
+
     @XmlElement(name = "SearchStatus", required = true)
     protected RequestStatusType searchStatus;
+
     @XmlElement(name = "SearchResults", required = true)
     protected SearchResultsType searchResults;
+
     @XmlAttribute
     protected String version;
 
     /**
      * Gets the value of the requestId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getRequestId() {
+    public String getRequestId()
+    {
         return requestId;
     }
 
     /**
      * Sets the value of the requestId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setRequestId(String value) {
+    public void setRequestId(String value)
+    {
         this.requestId = value;
     }
 
     /**
      * Gets the value of the searchStatus property.
      * 
-     * @return
-     *     possible object is
-     *     {@link RequestStatusType }
-     *     
+     * @return possible object is {@link RequestStatusType }
+     * 
      */
-    public RequestStatusType getSearchStatus() {
+    public RequestStatusType getSearchStatus()
+    {
         return searchStatus;
     }
 
     /**
      * Sets the value of the searchStatus property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link RequestStatusType }
-     *     
+     * @param value allowed object is {@link RequestStatusType }
+     * 
      */
-    public void setSearchStatus(RequestStatusType value) {
+    public void setSearchStatus(RequestStatusType value)
+    {
         this.searchStatus = value;
     }
 
     /**
      * Gets the value of the searchResults property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SearchResultsType }
-     *     
+     * @return possible object is {@link SearchResultsType }
+     * 
      */
-    public SearchResultsType getSearchResults() {
+    public SearchResultsType getSearchResults()
+    {
         return searchResults;
     }
 
     /**
      * Sets the value of the searchResults property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SearchResultsType }
-     *     
+     * @param value allowed object is {@link SearchResultsType }
+     * 
      */
-    public void setSearchResults(SearchResultsType value) {
+    public void setSearchResults(SearchResultsType value)
+    {
         this.searchResults = value;
     }
 
     /**
      * Gets the value of the version property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getVersion() {
+    public String getVersion()
+    {
         return version;
     }
 
     /**
      * Sets the value of the version property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setVersion(String value) {
+    public void setVersion(String value)
+    {
         this.version = value;
     }
 

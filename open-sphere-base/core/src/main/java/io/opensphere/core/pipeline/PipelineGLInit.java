@@ -13,13 +13,8 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.media.nativewindow.AbstractGraphicsDevice;
-import javax.media.opengl.GL;
-import javax.media.opengl.GLContext;
-import javax.media.opengl.GLProfile;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -27,9 +22,15 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+
+import com.jogamp.nativewindow.AbstractGraphicsDevice;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GLContext;
+import com.jogamp.opengl.GLProfile;
 
 import io.opensphere.core.geometry.AbstractGeometry.RenderMode;
 import io.opensphere.core.geometry.Geometry;
@@ -340,7 +341,8 @@ public class PipelineGLInit
         LOGGER.info("GPU memory is " + absoluteCacheSizeBytesGPU / (1 << 20) + " MiB (" + absoluteCacheSizeBytesGPU + " B)");
 
         final double defaultGPUSizeFraction = .95;
-        final double gpuSizeFraction = Utilities.parseSystemProperty("opensphere.geometryCache.gpuSizeFraction", defaultGPUSizeFraction);
+        final double gpuSizeFraction = Utilities.parseSystemProperty("opensphere.geometryCache.gpuSizeFraction",
+                defaultGPUSizeFraction);
 
         final double defaultLowWaterFraction = .7;
         final double lowWaterFraction = Utilities.parseSystemProperty("opensphere.geometryCache.gpuLowWaterFraction",
@@ -362,8 +364,8 @@ public class PipelineGLInit
      */
     private void logGLInfo(GL gl)
     {
-        final AbstractGraphicsDevice device = gl.getContext().getGLDrawable().getNativeSurface().getGraphicsConfiguration().getScreen()
-                .getDevice();
+        final AbstractGraphicsDevice device = gl.getContext().getGLDrawable().getNativeSurface().getGraphicsConfiguration()
+                .getScreen().getDevice();
         final GLContext ctx = gl.getContext();
 
         ToStringHelper helper = new ToStringHelper((Class<?>)null, 0);
@@ -579,7 +581,7 @@ public class PipelineGLInit
             dialog.setTitle("Warning");
             dialog.initialize(createSummaryPanel(VIABILITY_WARNING), createDetailsPanel(sb.toString()), myPrefs,
                     "hideViabilityMessage");
-            dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             dialog.setLocationRelativeTo(myComponent);
             dialog.setVisible(true);
         });
@@ -601,7 +603,7 @@ public class PipelineGLInit
 
                 dialog.initialize(createSummaryPanel(DISPLAY_LIST_WARNING), (Component)null, myPrefs, "hideDisplayListMessage",
                         "OK", enableLabel);
-                dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                 dialog.setLocationRelativeTo(myComponent);
                 dialog.setVisible(true);
                 if (dialog.getSelection() == enableLabel)
@@ -626,7 +628,7 @@ public class PipelineGLInit
             final String disableLabel = "Disable Safe Mode";
             dialog.initialize(createSummaryPanel(SAFE_MODE_WARNING), (Component)null, myPrefs, "hideSafeModeMessage", "OK",
                     disableLabel);
-            dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             dialog.setLocationRelativeTo(myComponent);
             dialog.setVisible(true);
             if (dialog.getSelection() == disableLabel)

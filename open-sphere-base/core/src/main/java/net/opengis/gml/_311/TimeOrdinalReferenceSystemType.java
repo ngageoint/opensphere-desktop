@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,15 +15,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * In an ordinal reference system the order of events in time can be well 
- *       established, but the magnitude of the intervals between them can not be 
- *       accurately determined (e.g. a stratigraphic sequence).
+ * In an ordinal reference system the order of events in time can be well
+ * established, but the magnitude of the intervals between them can not be
+ * accurately determined (e.g. a stratigraphic sequence).
  * 
- * <p>Java class for TimeOrdinalReferenceSystemType complex type.
+ * <p>
+ * Java class for TimeOrdinalReferenceSystemType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TimeOrdinalReferenceSystemType">
@@ -41,11 +42,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TimeOrdinalReferenceSystemType", propOrder = {
-    "component"
-})
-public class TimeOrdinalReferenceSystemType
-    extends AbstractTimeReferenceSystemType
+@XmlType(name = "TimeOrdinalReferenceSystemType", propOrder = { "component" })
+public class TimeOrdinalReferenceSystemType extends AbstractTimeReferenceSystemType
 {
 
     @XmlElement(required = true)
@@ -55,15 +53,16 @@ public class TimeOrdinalReferenceSystemType
      * Gets the value of the component property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the component property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the component property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getComponent().add(newItem);
+     * getComponent().add(newItem);
      * </pre>
      * 
      * 
@@ -73,8 +72,10 @@ public class TimeOrdinalReferenceSystemType
      * 
      * 
      */
-    public List<TimeOrdinalEraPropertyType> getComponent() {
-        if (component == null) {
+    public List<TimeOrdinalEraPropertyType> getComponent()
+    {
+        if (component == null)
+        {
             component = new ArrayList<TimeOrdinalEraPropertyType>();
         }
         return this.component;

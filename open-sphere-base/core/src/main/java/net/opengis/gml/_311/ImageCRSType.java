@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * An engineering coordinate reference system applied to locations in images. Image coordinate reference systems are treated as a separate sub-type because a separate user community exists for images with its own terms of reference. 
+ * An engineering coordinate reference system applied to locations in images.
+ * Image coordinate reference systems are treated as a separate sub-type because
+ * a separate user community exists for images with its own terms of reference.
  * 
- * <p>Java class for ImageCRSType complex type.
+ * <p>
+ * Java class for ImageCRSType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ImageCRSType">
@@ -40,89 +43,80 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ImageCRSType", propOrder = {
-    "usesCartesianCS",
-    "usesObliqueCartesianCS",
-    "usesImageDatum"
-})
-public class ImageCRSType
-    extends AbstractReferenceSystemType
+@XmlType(name = "ImageCRSType", propOrder = { "usesCartesianCS", "usesObliqueCartesianCS", "usesImageDatum" })
+public class ImageCRSType extends AbstractReferenceSystemType
 {
 
     protected CartesianCSRefType usesCartesianCS;
+
     protected ObliqueCartesianCSRefType usesObliqueCartesianCS;
+
     @XmlElement(required = true)
     protected ImageDatumRefType usesImageDatum;
 
     /**
      * Gets the value of the usesCartesianCS property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CartesianCSRefType }
-     *     
+     * @return possible object is {@link CartesianCSRefType }
+     * 
      */
-    public CartesianCSRefType getUsesCartesianCS() {
+    public CartesianCSRefType getUsesCartesianCS()
+    {
         return usesCartesianCS;
     }
 
     /**
      * Sets the value of the usesCartesianCS property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CartesianCSRefType }
-     *     
+     * @param value allowed object is {@link CartesianCSRefType }
+     * 
      */
-    public void setUsesCartesianCS(CartesianCSRefType value) {
+    public void setUsesCartesianCS(CartesianCSRefType value)
+    {
         this.usesCartesianCS = value;
     }
 
     /**
      * Gets the value of the usesObliqueCartesianCS property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ObliqueCartesianCSRefType }
-     *     
+     * @return possible object is {@link ObliqueCartesianCSRefType }
+     * 
      */
-    public ObliqueCartesianCSRefType getUsesObliqueCartesianCS() {
+    public ObliqueCartesianCSRefType getUsesObliqueCartesianCS()
+    {
         return usesObliqueCartesianCS;
     }
 
     /**
      * Sets the value of the usesObliqueCartesianCS property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ObliqueCartesianCSRefType }
-     *     
+     * @param value allowed object is {@link ObliqueCartesianCSRefType }
+     * 
      */
-    public void setUsesObliqueCartesianCS(ObliqueCartesianCSRefType value) {
+    public void setUsesObliqueCartesianCS(ObliqueCartesianCSRefType value)
+    {
         this.usesObliqueCartesianCS = value;
     }
 
     /**
      * Gets the value of the usesImageDatum property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ImageDatumRefType }
-     *     
+     * @return possible object is {@link ImageDatumRefType }
+     * 
      */
-    public ImageDatumRefType getUsesImageDatum() {
+    public ImageDatumRefType getUsesImageDatum()
+    {
         return usesImageDatum;
     }
 
     /**
      * Sets the value of the usesImageDatum property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ImageDatumRefType }
-     *     
+     * @param value allowed object is {@link ImageDatumRefType }
+     * 
      */
-    public void setUsesImageDatum(ImageDatumRefType value) {
+    public void setUsesImageDatum(ImageDatumRefType value)
+    {
         this.usesImageDatum = value;
     }
 

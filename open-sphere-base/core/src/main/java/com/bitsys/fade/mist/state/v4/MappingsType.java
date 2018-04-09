@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.util.ArrayList;
@@ -15,16 +14,18 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *         A container in which multiple formats may be defined. The formats type 
- *         allows the state to define multiple MIME types for a given entity. 
- *       
+ * A container in which multiple formats may be defined. The formats type allows
+ * the state to define multiple MIME types for a given entity.
  * 
- * <p>Java class for MappingsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for MappingsType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="MappingsType">
@@ -41,10 +42,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MappingsType", propOrder = {
-    "mapping"
-})
-public class MappingsType {
+@XmlType(name = "MappingsType", propOrder = { "mapping" })
+public class MappingsType
+{
 
     protected List<MappingType> mapping;
 
@@ -52,15 +52,16 @@ public class MappingsType {
      * Gets the value of the mapping property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the mapping property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the mapping property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getMapping().add(newItem);
+     * getMapping().add(newItem);
      * </pre>
      * 
      * 
@@ -70,18 +71,22 @@ public class MappingsType {
      * 
      * 
      */
-    public List<MappingType> getMapping() {
-        if (mapping == null) {
+    public List<MappingType> getMapping()
+    {
+        if (mapping == null)
+        {
             mapping = new ArrayList<MappingType>();
         }
         return this.mapping;
     }
 
-    public boolean isSetMapping() {
-        return ((this.mapping!= null)&&(!this.mapping.isEmpty()));
+    public boolean isSetMapping()
+    {
+        return ((this.mapping != null) && (!this.mapping.isEmpty()));
     }
 
-    public void unsetMapping() {
+    public void unsetMapping()
+    {
         this.mapping = null;
     }
 

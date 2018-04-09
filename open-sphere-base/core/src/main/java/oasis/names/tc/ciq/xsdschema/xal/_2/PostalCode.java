@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package oasis.names.tc.ciq.xsdschema.xal._2;
 
 import java.util.ArrayList;
@@ -25,11 +24,13 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.namespace.QName;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -106,29 +107,30 @@ import javax.xml.namespace.QName;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "addressLine",
-    "postalCodeNumber",
-    "postalCodeNumberExtension",
-    "postTown",
-    "any"
-})
+@XmlType(name = "", propOrder = { "addressLine", "postalCodeNumber", "postalCodeNumberExtension", "postTown", "any" })
 @XmlRootElement(name = "PostalCode")
-public class PostalCode {
+public class PostalCode
+{
 
     @XmlElement(name = "AddressLine")
     protected List<AddressLine> addressLine;
+
     @XmlElement(name = "PostalCodeNumber")
     protected List<PostalCode.PostalCodeNumber> postalCodeNumber;
+
     @XmlElement(name = "PostalCodeNumberExtension")
     protected List<PostalCode.PostalCodeNumberExtension> postalCodeNumberExtension;
+
     @XmlElement(name = "PostTown")
     protected PostalCode.PostTown postTown;
+
     @XmlAnyElement(lax = true)
     protected List<Object> any;
+
     @XmlAttribute(name = "Type")
     @XmlSchemaType(name = "anySimpleType")
     protected String type;
+
     @XmlAnyAttribute
     private Map<QName, String> otherAttributes = new HashMap<QName, String>();
 
@@ -136,15 +138,16 @@ public class PostalCode {
      * Gets the value of the addressLine property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the addressLine property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the addressLine property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAddressLine().add(newItem);
+     * getAddressLine().add(newItem);
      * </pre>
      * 
      * 
@@ -154,18 +157,22 @@ public class PostalCode {
      * 
      * 
      */
-    public List<AddressLine> getAddressLine() {
-        if (addressLine == null) {
+    public List<AddressLine> getAddressLine()
+    {
+        if (addressLine == null)
+        {
             addressLine = new ArrayList<AddressLine>();
         }
         return this.addressLine;
     }
 
-    public boolean isSetAddressLine() {
-        return ((this.addressLine!= null)&&(!this.addressLine.isEmpty()));
+    public boolean isSetAddressLine()
+    {
+        return ((this.addressLine != null) && (!this.addressLine.isEmpty()));
     }
 
-    public void unsetAddressLine() {
+    public void unsetAddressLine()
+    {
         this.addressLine = null;
     }
 
@@ -173,15 +180,16 @@ public class PostalCode {
      * Gets the value of the postalCodeNumber property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the postalCodeNumber property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the postalCodeNumber property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPostalCodeNumber().add(newItem);
+     * getPostalCodeNumber().add(newItem);
      * </pre>
      * 
      * 
@@ -191,18 +199,22 @@ public class PostalCode {
      * 
      * 
      */
-    public List<PostalCode.PostalCodeNumber> getPostalCodeNumber() {
-        if (postalCodeNumber == null) {
+    public List<PostalCode.PostalCodeNumber> getPostalCodeNumber()
+    {
+        if (postalCodeNumber == null)
+        {
             postalCodeNumber = new ArrayList<PostalCode.PostalCodeNumber>();
         }
         return this.postalCodeNumber;
     }
 
-    public boolean isSetPostalCodeNumber() {
-        return ((this.postalCodeNumber!= null)&&(!this.postalCodeNumber.isEmpty()));
+    public boolean isSetPostalCodeNumber()
+    {
+        return ((this.postalCodeNumber != null) && (!this.postalCodeNumber.isEmpty()));
     }
 
-    public void unsetPostalCodeNumber() {
+    public void unsetPostalCodeNumber()
+    {
         this.postalCodeNumber = null;
     }
 
@@ -210,15 +222,16 @@ public class PostalCode {
      * Gets the value of the postalCodeNumberExtension property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the postalCodeNumberExtension property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the postalCodeNumberExtension property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPostalCodeNumberExtension().add(newItem);
+     * getPostalCodeNumberExtension().add(newItem);
      * </pre>
      * 
      * 
@@ -228,137 +241,146 @@ public class PostalCode {
      * 
      * 
      */
-    public List<PostalCode.PostalCodeNumberExtension> getPostalCodeNumberExtension() {
-        if (postalCodeNumberExtension == null) {
+    public List<PostalCode.PostalCodeNumberExtension> getPostalCodeNumberExtension()
+    {
+        if (postalCodeNumberExtension == null)
+        {
             postalCodeNumberExtension = new ArrayList<PostalCode.PostalCodeNumberExtension>();
         }
         return this.postalCodeNumberExtension;
     }
 
-    public boolean isSetPostalCodeNumberExtension() {
-        return ((this.postalCodeNumberExtension!= null)&&(!this.postalCodeNumberExtension.isEmpty()));
+    public boolean isSetPostalCodeNumberExtension()
+    {
+        return ((this.postalCodeNumberExtension != null) && (!this.postalCodeNumberExtension.isEmpty()));
     }
 
-    public void unsetPostalCodeNumberExtension() {
+    public void unsetPostalCodeNumberExtension()
+    {
         this.postalCodeNumberExtension = null;
     }
 
     /**
      * Gets the value of the postTown property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PostalCode.PostTown }
-     *     
+     * @return possible object is {@link PostalCode.PostTown }
+     * 
      */
-    public PostalCode.PostTown getPostTown() {
+    public PostalCode.PostTown getPostTown()
+    {
         return postTown;
     }
 
     /**
      * Sets the value of the postTown property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PostalCode.PostTown }
-     *     
+     * @param value allowed object is {@link PostalCode.PostTown }
+     * 
      */
-    public void setPostTown(PostalCode.PostTown value) {
+    public void setPostTown(PostalCode.PostTown value)
+    {
         this.postTown = value;
     }
 
-    public boolean isSetPostTown() {
-        return (this.postTown!= null);
+    public boolean isSetPostTown()
+    {
+        return (this.postTown != null);
     }
 
     /**
      * Gets the value of the any property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the any property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the any property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAny().add(newItem);
+     * getAny().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getAny() {
-        if (any == null) {
+    public List<Object> getAny()
+    {
+        if (any == null)
+        {
             any = new ArrayList<Object>();
         }
         return this.any;
     }
 
-    public boolean isSetAny() {
-        return ((this.any!= null)&&(!this.any.isEmpty()));
+    public boolean isSetAny()
+    {
+        return ((this.any != null) && (!this.any.isEmpty()));
     }
 
-    public void unsetAny() {
+    public void unsetAny()
+    {
         this.any = null;
     }
 
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getType() {
+    public String getType()
+    {
         return type;
     }
 
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setType(String value) {
+    public void setType(String value)
+    {
         this.type = value;
     }
 
-    public boolean isSetType() {
-        return (this.type!= null);
+    public boolean isSetType()
+    {
+        return (this.type != null);
     }
 
     /**
-     * Gets a map that contains attributes that aren't bound to any typed property on this class.
+     * Gets a map that contains attributes that aren't bound to any typed
+     * property on this class.
      * 
      * <p>
-     * the map is keyed by the name of the attribute and 
-     * the value is the string value of the attribute.
+     * the map is keyed by the name of the attribute and the value is the string
+     * value of the attribute.
      * 
-     * the map returned by this method is live, and you can add new attribute
-     * by updating the map directly. Because of this design, there's no setter.
+     * the map returned by this method is live, and you can add new attribute by
+     * updating the map directly. Because of this design, there's no setter.
      * 
      * 
-     * @return
-     *     always non-null
+     * @return always non-null
      */
-    public Map<QName, String> getOtherAttributes() {
+    public Map<QName, String> getOtherAttributes()
+    {
         return otherAttributes;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -398,22 +420,23 @@ public class PostalCode {
      * 
      */
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "addressLine",
-        "postTownName",
-        "postTownSuffix"
-    })
-    public static class PostTown {
+    @XmlType(name = "", propOrder = { "addressLine", "postTownName", "postTownSuffix" })
+    public static class PostTown
+    {
 
         @XmlElement(name = "AddressLine")
         protected List<AddressLine> addressLine;
+
         @XmlElement(name = "PostTownName")
         protected List<PostalCode.PostTown.PostTownName> postTownName;
+
         @XmlElement(name = "PostTownSuffix")
         protected PostalCode.PostTown.PostTownSuffix postTownSuffix;
+
         @XmlAttribute(name = "Type")
         @XmlSchemaType(name = "anySimpleType")
         protected String type;
+
         @XmlAnyAttribute
         private Map<QName, String> otherAttributes = new HashMap<QName, String>();
 
@@ -421,15 +444,16 @@ public class PostalCode {
          * Gets the value of the addressLine property.
          * 
          * <p>
-         * This accessor method returns a reference to the live list,
-         * not a snapshot. Therefore any modification you make to the
-         * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the addressLine property.
+         * This accessor method returns a reference to the live list, not a
+         * snapshot. Therefore any modification you make to the returned list
+         * will be present inside the JAXB object. This is why there is not a
+         * <CODE>set</CODE> method for the addressLine property.
          * 
          * <p>
          * For example, to add a new item, do as follows:
+         * 
          * <pre>
-         *    getAddressLine().add(newItem);
+         * getAddressLine().add(newItem);
          * </pre>
          * 
          * 
@@ -439,18 +463,22 @@ public class PostalCode {
          * 
          * 
          */
-        public List<AddressLine> getAddressLine() {
-            if (addressLine == null) {
+        public List<AddressLine> getAddressLine()
+        {
+            if (addressLine == null)
+            {
                 addressLine = new ArrayList<AddressLine>();
             }
             return this.addressLine;
         }
 
-        public boolean isSetAddressLine() {
-            return ((this.addressLine!= null)&&(!this.addressLine.isEmpty()));
+        public boolean isSetAddressLine()
+        {
+            return ((this.addressLine != null) && (!this.addressLine.isEmpty()));
         }
 
-        public void unsetAddressLine() {
+        public void unsetAddressLine()
+        {
             this.addressLine = null;
         }
 
@@ -458,15 +486,16 @@ public class PostalCode {
          * Gets the value of the postTownName property.
          * 
          * <p>
-         * This accessor method returns a reference to the live list,
-         * not a snapshot. Therefore any modification you make to the
-         * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the postTownName property.
+         * This accessor method returns a reference to the live list, not a
+         * snapshot. Therefore any modification you make to the returned list
+         * will be present inside the JAXB object. This is why there is not a
+         * <CODE>set</CODE> method for the postTownName property.
          * 
          * <p>
          * For example, to add a new item, do as follows:
+         * 
          * <pre>
-         *    getPostTownName().add(newItem);
+         * getPostTownName().add(newItem);
          * </pre>
          * 
          * 
@@ -476,100 +505,108 @@ public class PostalCode {
          * 
          * 
          */
-        public List<PostalCode.PostTown.PostTownName> getPostTownName() {
-            if (postTownName == null) {
+        public List<PostalCode.PostTown.PostTownName> getPostTownName()
+        {
+            if (postTownName == null)
+            {
                 postTownName = new ArrayList<PostalCode.PostTown.PostTownName>();
             }
             return this.postTownName;
         }
 
-        public boolean isSetPostTownName() {
-            return ((this.postTownName!= null)&&(!this.postTownName.isEmpty()));
+        public boolean isSetPostTownName()
+        {
+            return ((this.postTownName != null) && (!this.postTownName.isEmpty()));
         }
 
-        public void unsetPostTownName() {
+        public void unsetPostTownName()
+        {
             this.postTownName = null;
         }
 
         /**
          * Gets the value of the postTownSuffix property.
          * 
-         * @return
-         *     possible object is
-         *     {@link PostalCode.PostTown.PostTownSuffix }
-         *     
+         * @return possible object is
+         *         {@link PostalCode.PostTown.PostTownSuffix }
+         * 
          */
-        public PostalCode.PostTown.PostTownSuffix getPostTownSuffix() {
+        public PostalCode.PostTown.PostTownSuffix getPostTownSuffix()
+        {
             return postTownSuffix;
         }
 
         /**
          * Sets the value of the postTownSuffix property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link PostalCode.PostTown.PostTownSuffix }
-         *     
+         * @param value allowed object is
+         *            {@link PostalCode.PostTown.PostTownSuffix }
+         * 
          */
-        public void setPostTownSuffix(PostalCode.PostTown.PostTownSuffix value) {
+        public void setPostTownSuffix(PostalCode.PostTown.PostTownSuffix value)
+        {
             this.postTownSuffix = value;
         }
 
-        public boolean isSetPostTownSuffix() {
-            return (this.postTownSuffix!= null);
+        public boolean isSetPostTownSuffix()
+        {
+            return (this.postTownSuffix != null);
         }
 
         /**
          * Gets the value of the type property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getType() {
+        public String getType()
+        {
             return type;
         }
 
         /**
          * Sets the value of the type property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setType(String value) {
+        public void setType(String value)
+        {
             this.type = value;
         }
 
-        public boolean isSetType() {
-            return (this.type!= null);
+        public boolean isSetType()
+        {
+            return (this.type != null);
         }
 
         /**
-         * Gets a map that contains attributes that aren't bound to any typed property on this class.
+         * Gets a map that contains attributes that aren't bound to any typed
+         * property on this class.
          * 
          * <p>
-         * the map is keyed by the name of the attribute and 
-         * the value is the string value of the attribute.
+         * the map is keyed by the name of the attribute and the value is the
+         * string value of the attribute.
          * 
-         * the map returned by this method is live, and you can add new attribute
-         * by updating the map directly. Because of this design, there's no setter.
+         * the map returned by this method is live, and you can add new
+         * attribute by updating the map directly. Because of this design,
+         * there's no setter.
          * 
          * 
-         * @return
-         *     always non-null
+         * @return always non-null
          */
-        public Map<QName, String> getOtherAttributes() {
+        public Map<QName, String> getOtherAttributes()
+        {
             return otherAttributes;
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
+         * <p>
+         * Java class for anonymous complex type.
          * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
          * 
          * <pre>
          * &lt;complexType>
@@ -586,131 +623,134 @@ public class PostalCode {
          * 
          */
         @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "", propOrder = {
-            "content"
-        })
-        public static class PostTownName {
+        @XmlType(name = "", propOrder = { "content" })
+        public static class PostTownName
+        {
 
             @XmlValue
             protected String content;
+
             @XmlAttribute(name = "Type")
             @XmlSchemaType(name = "anySimpleType")
             protected String type;
+
             @XmlAttribute(name = "Code")
             @XmlSchemaType(name = "anySimpleType")
             protected String code;
+
             @XmlAnyAttribute
             private Map<QName, String> otherAttributes = new HashMap<QName, String>();
 
             /**
              * Gets the value of the content property.
              * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             * @return possible object is {@link String }
+             * 
              */
-            public String getContent() {
+            public String getContent()
+            {
                 return content;
             }
 
             /**
              * Sets the value of the content property.
              * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             * @param value allowed object is {@link String }
+             * 
              */
-            public void setContent(String value) {
+            public void setContent(String value)
+            {
                 this.content = value;
             }
 
-            public boolean isSetContent() {
-                return (this.content!= null);
+            public boolean isSetContent()
+            {
+                return (this.content != null);
             }
 
             /**
              * Gets the value of the type property.
              * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             * @return possible object is {@link String }
+             * 
              */
-            public String getType() {
+            public String getType()
+            {
                 return type;
             }
 
             /**
              * Sets the value of the type property.
              * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             * @param value allowed object is {@link String }
+             * 
              */
-            public void setType(String value) {
+            public void setType(String value)
+            {
                 this.type = value;
             }
 
-            public boolean isSetType() {
-                return (this.type!= null);
+            public boolean isSetType()
+            {
+                return (this.type != null);
             }
 
             /**
              * Gets the value of the code property.
              * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             * @return possible object is {@link String }
+             * 
              */
-            public String getCode() {
+            public String getCode()
+            {
                 return code;
             }
 
             /**
              * Sets the value of the code property.
              * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             * @param value allowed object is {@link String }
+             * 
              */
-            public void setCode(String value) {
+            public void setCode(String value)
+            {
                 this.code = value;
             }
 
-            public boolean isSetCode() {
-                return (this.code!= null);
+            public boolean isSetCode()
+            {
+                return (this.code != null);
             }
 
             /**
-             * Gets a map that contains attributes that aren't bound to any typed property on this class.
+             * Gets a map that contains attributes that aren't bound to any
+             * typed property on this class.
              * 
              * <p>
-             * the map is keyed by the name of the attribute and 
-             * the value is the string value of the attribute.
+             * the map is keyed by the name of the attribute and the value is
+             * the string value of the attribute.
              * 
-             * the map returned by this method is live, and you can add new attribute
-             * by updating the map directly. Because of this design, there's no setter.
+             * the map returned by this method is live, and you can add new
+             * attribute by updating the map directly. Because of this design,
+             * there's no setter.
              * 
              * 
-             * @return
-             *     always non-null
+             * @return always non-null
              */
-            public Map<QName, String> getOtherAttributes() {
+            public Map<QName, String> getOtherAttributes()
+            {
                 return otherAttributes;
             }
 
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
+         * <p>
+         * Java class for anonymous complex type.
          * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
          * 
          * <pre>
          * &lt;complexType>
@@ -726,90 +766,91 @@ public class PostalCode {
          * 
          */
         @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "", propOrder = {
-            "content"
-        })
-        public static class PostTownSuffix {
+        @XmlType(name = "", propOrder = { "content" })
+        public static class PostTownSuffix
+        {
 
             @XmlValue
             protected String content;
+
             @XmlAttribute(name = "Code")
             @XmlSchemaType(name = "anySimpleType")
             protected String code;
+
             @XmlAnyAttribute
             private Map<QName, String> otherAttributes = new HashMap<QName, String>();
 
             /**
              * Gets the value of the content property.
              * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             * @return possible object is {@link String }
+             * 
              */
-            public String getContent() {
+            public String getContent()
+            {
                 return content;
             }
 
             /**
              * Sets the value of the content property.
              * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             * @param value allowed object is {@link String }
+             * 
              */
-            public void setContent(String value) {
+            public void setContent(String value)
+            {
                 this.content = value;
             }
 
-            public boolean isSetContent() {
-                return (this.content!= null);
+            public boolean isSetContent()
+            {
+                return (this.content != null);
             }
 
             /**
              * Gets the value of the code property.
              * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             * @return possible object is {@link String }
+             * 
              */
-            public String getCode() {
+            public String getCode()
+            {
                 return code;
             }
 
             /**
              * Sets the value of the code property.
              * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             * @param value allowed object is {@link String }
+             * 
              */
-            public void setCode(String value) {
+            public void setCode(String value)
+            {
                 this.code = value;
             }
 
-            public boolean isSetCode() {
-                return (this.code!= null);
+            public boolean isSetCode()
+            {
+                return (this.code != null);
             }
 
             /**
-             * Gets a map that contains attributes that aren't bound to any typed property on this class.
+             * Gets a map that contains attributes that aren't bound to any
+             * typed property on this class.
              * 
              * <p>
-             * the map is keyed by the name of the attribute and 
-             * the value is the string value of the attribute.
+             * the map is keyed by the name of the attribute and the value is
+             * the string value of the attribute.
              * 
-             * the map returned by this method is live, and you can add new attribute
-             * by updating the map directly. Because of this design, there's no setter.
+             * the map returned by this method is live, and you can add new
+             * attribute by updating the map directly. Because of this design,
+             * there's no setter.
              * 
              * 
-             * @return
-             *     always non-null
+             * @return always non-null
              */
-            public Map<QName, String> getOtherAttributes() {
+            public Map<QName, String> getOtherAttributes()
+            {
                 return otherAttributes;
             }
 
@@ -817,11 +858,13 @@ public class PostalCode {
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -838,131 +881,134 @@ public class PostalCode {
      * 
      */
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "content"
-    })
-    public static class PostalCodeNumber {
+    @XmlType(name = "", propOrder = { "content" })
+    public static class PostalCodeNumber
+    {
 
         @XmlValue
         protected String content;
+
         @XmlAttribute(name = "Type")
         @XmlSchemaType(name = "anySimpleType")
         protected String type;
+
         @XmlAttribute(name = "Code")
         @XmlSchemaType(name = "anySimpleType")
         protected String code;
+
         @XmlAnyAttribute
         private Map<QName, String> otherAttributes = new HashMap<QName, String>();
 
         /**
          * Gets the value of the content property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getContent() {
+        public String getContent()
+        {
             return content;
         }
 
         /**
          * Sets the value of the content property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setContent(String value) {
+        public void setContent(String value)
+        {
             this.content = value;
         }
 
-        public boolean isSetContent() {
-            return (this.content!= null);
+        public boolean isSetContent()
+        {
+            return (this.content != null);
         }
 
         /**
          * Gets the value of the type property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getType() {
+        public String getType()
+        {
             return type;
         }
 
         /**
          * Sets the value of the type property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setType(String value) {
+        public void setType(String value)
+        {
             this.type = value;
         }
 
-        public boolean isSetType() {
-            return (this.type!= null);
+        public boolean isSetType()
+        {
+            return (this.type != null);
         }
 
         /**
          * Gets the value of the code property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getCode() {
+        public String getCode()
+        {
             return code;
         }
 
         /**
          * Sets the value of the code property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setCode(String value) {
+        public void setCode(String value)
+        {
             this.code = value;
         }
 
-        public boolean isSetCode() {
-            return (this.code!= null);
+        public boolean isSetCode()
+        {
+            return (this.code != null);
         }
 
         /**
-         * Gets a map that contains attributes that aren't bound to any typed property on this class.
+         * Gets a map that contains attributes that aren't bound to any typed
+         * property on this class.
          * 
          * <p>
-         * the map is keyed by the name of the attribute and 
-         * the value is the string value of the attribute.
+         * the map is keyed by the name of the attribute and the value is the
+         * string value of the attribute.
          * 
-         * the map returned by this method is live, and you can add new attribute
-         * by updating the map directly. Because of this design, there's no setter.
+         * the map returned by this method is live, and you can add new
+         * attribute by updating the map directly. Because of this design,
+         * there's no setter.
          * 
          * 
-         * @return
-         *     always non-null
+         * @return always non-null
          */
-        public Map<QName, String> getOtherAttributes() {
+        public Map<QName, String> getOtherAttributes()
+        {
             return otherAttributes;
         }
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -980,152 +1026,153 @@ public class PostalCode {
      * 
      */
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "content"
-    })
-    public static class PostalCodeNumberExtension {
+    @XmlType(name = "", propOrder = { "content" })
+    public static class PostalCodeNumberExtension
+    {
 
         @XmlValue
         protected String content;
+
         @XmlAttribute(name = "Type")
         @XmlSchemaType(name = "anySimpleType")
         protected String type;
+
         @XmlAttribute(name = "NumberExtensionSeparator")
         @XmlSchemaType(name = "anySimpleType")
         protected String numberExtensionSeparator;
+
         @XmlAttribute(name = "Code")
         @XmlSchemaType(name = "anySimpleType")
         protected String code;
+
         @XmlAnyAttribute
         private Map<QName, String> otherAttributes = new HashMap<QName, String>();
 
         /**
          * Gets the value of the content property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getContent() {
+        public String getContent()
+        {
             return content;
         }
 
         /**
          * Sets the value of the content property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setContent(String value) {
+        public void setContent(String value)
+        {
             this.content = value;
         }
 
-        public boolean isSetContent() {
-            return (this.content!= null);
+        public boolean isSetContent()
+        {
+            return (this.content != null);
         }
 
         /**
          * Gets the value of the type property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getType() {
+        public String getType()
+        {
             return type;
         }
 
         /**
          * Sets the value of the type property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setType(String value) {
+        public void setType(String value)
+        {
             this.type = value;
         }
 
-        public boolean isSetType() {
-            return (this.type!= null);
+        public boolean isSetType()
+        {
+            return (this.type != null);
         }
 
         /**
          * Gets the value of the numberExtensionSeparator property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getNumberExtensionSeparator() {
+        public String getNumberExtensionSeparator()
+        {
             return numberExtensionSeparator;
         }
 
         /**
          * Sets the value of the numberExtensionSeparator property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setNumberExtensionSeparator(String value) {
+        public void setNumberExtensionSeparator(String value)
+        {
             this.numberExtensionSeparator = value;
         }
 
-        public boolean isSetNumberExtensionSeparator() {
-            return (this.numberExtensionSeparator!= null);
+        public boolean isSetNumberExtensionSeparator()
+        {
+            return (this.numberExtensionSeparator != null);
         }
 
         /**
          * Gets the value of the code property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getCode() {
+        public String getCode()
+        {
             return code;
         }
 
         /**
          * Sets the value of the code property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setCode(String value) {
+        public void setCode(String value)
+        {
             this.code = value;
         }
 
-        public boolean isSetCode() {
-            return (this.code!= null);
+        public boolean isSetCode()
+        {
+            return (this.code != null);
         }
 
         /**
-         * Gets a map that contains attributes that aren't bound to any typed property on this class.
+         * Gets a map that contains attributes that aren't bound to any typed
+         * property on this class.
          * 
          * <p>
-         * the map is keyed by the name of the attribute and 
-         * the value is the string value of the attribute.
+         * the map is keyed by the name of the attribute and the value is the
+         * string value of the attribute.
          * 
-         * the map returned by this method is live, and you can add new attribute
-         * by updating the map directly. Because of this design, there's no setter.
+         * the map returned by this method is live, and you can add new
+         * attribute by updating the map directly. Because of this design,
+         * there's no setter.
          * 
          * 
-         * @return
-         *     always non-null
+         * @return always non-null
          */
-        public Map<QName, String> getOtherAttributes() {
+        public Map<QName, String> getOtherAttributes()
+        {
             return otherAttributes;
         }
 

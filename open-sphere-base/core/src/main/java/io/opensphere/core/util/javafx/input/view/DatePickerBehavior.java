@@ -25,11 +25,13 @@ public class DatePickerBehavior extends AbstractComboBoxBehavior<LocalDate>
     @Override
     public void onAutoHide()
     {
-        // when we click on some non-interactive part of the calendar - we do not want to hide.
+        // when we click on some non-interactive part of the calendar - we do
+        // not want to hide.
         DatePicker datePicker = (DatePicker)getControl();
         DatePickerSkin cpSkin = (DatePickerSkin)datePicker.getSkin();
         cpSkin.syncWithAutoUpdate();
-        // if the DateTimePicker is no longer showing, then invoke the super method to keep its show/hide state in sync.
+        // if the DateTimePicker is no longer showing, then invoke the super
+        // method to keep its show/hide state in sync.
         if (!datePicker.isShowing())
         {
             super.onAutoHide();

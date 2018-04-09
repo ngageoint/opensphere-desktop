@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -20,11 +19,13 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for KmlType complex type.
+ * <p>
+ * Java class for KmlType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="KmlType">
@@ -45,134 +46,143 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "KmlType", propOrder = {
-    "networkLinkControl",
-    "abstractFeatureGroup",
-    "kmlSimpleExtensionGroup",
-    "kmlObjectExtensionGroup"
-})
-public class KmlType {
+@XmlType(name = "KmlType", propOrder = { "networkLinkControl", "abstractFeatureGroup", "kmlSimpleExtensionGroup",
+    "kmlObjectExtensionGroup" })
+public class KmlType
+{
 
     @XmlElement(name = "NetworkLinkControl")
     protected NetworkLinkControlType networkLinkControl;
+
     @XmlElementRef(name = "AbstractFeatureGroup", namespace = "http://www.opengis.net/kml/2.2", type = JAXBElement.class, required = false)
     protected JAXBElement<? extends AbstractFeatureType> abstractFeatureGroup;
+
     @XmlElement(name = "KmlSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> kmlSimpleExtensionGroup;
+
     @XmlElement(name = "KmlObjectExtensionGroup")
     protected List<AbstractObjectType> kmlObjectExtensionGroup;
+
     @XmlAttribute(name = "hint")
     protected String hint;
 
     /**
      * Gets the value of the networkLinkControl property.
      * 
-     * @return
-     *     possible object is
-     *     {@link NetworkLinkControlType }
-     *     
+     * @return possible object is {@link NetworkLinkControlType }
+     * 
      */
-    public NetworkLinkControlType getNetworkLinkControl() {
+    public NetworkLinkControlType getNetworkLinkControl()
+    {
         return networkLinkControl;
     }
 
     /**
      * Sets the value of the networkLinkControl property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link NetworkLinkControlType }
-     *     
+     * @param value allowed object is {@link NetworkLinkControlType }
+     * 
      */
-    public void setNetworkLinkControl(NetworkLinkControlType value) {
+    public void setNetworkLinkControl(NetworkLinkControlType value)
+    {
         this.networkLinkControl = value;
     }
 
-    public boolean isSetNetworkLinkControl() {
-        return (this.networkLinkControl!= null);
+    public boolean isSetNetworkLinkControl()
+    {
+        return (this.networkLinkControl != null);
     }
 
     /**
      * Gets the value of the abstractFeatureGroup property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link PlacemarkType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractFeatureType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link DocumentType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PhotoOverlayType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link GroundOverlayType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link NetworkLinkType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractContainerType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ScreenOverlayType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractOverlayType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link FolderType }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement
+     *         }{@code <}{@link PlacemarkType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link AbstractFeatureType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link DocumentType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link PhotoOverlayType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link GroundOverlayType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link NetworkLinkType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link AbstractContainerType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link ScreenOverlayType
+     *         }{@code >} {@link JAXBElement
+     *         }{@code <}{@link AbstractOverlayType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link FolderType }{@code >}
+     * 
      */
-    public JAXBElement<? extends AbstractFeatureType> getAbstractFeatureGroup() {
+    public JAXBElement<? extends AbstractFeatureType> getAbstractFeatureGroup()
+    {
         return abstractFeatureGroup;
     }
 
     /**
      * Sets the value of the abstractFeatureGroup property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link PlacemarkType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractFeatureType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link DocumentType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PhotoOverlayType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link GroundOverlayType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link NetworkLinkType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractContainerType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ScreenOverlayType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractOverlayType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link FolderType }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link PlacemarkType }{@code >} {@link JAXBElement
+     *            }{@code <}{@link AbstractFeatureType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link DocumentType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link PhotoOverlayType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link GroundOverlayType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link NetworkLinkType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link AbstractContainerType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link ScreenOverlayType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link AbstractOverlayType
+     *            }{@code >} {@link JAXBElement }{@code <}{@link FolderType
+     *            }{@code >}
+     * 
      */
-    public void setAbstractFeatureGroup(JAXBElement<? extends AbstractFeatureType> value) {
+    public void setAbstractFeatureGroup(JAXBElement<? extends AbstractFeatureType> value)
+    {
         this.abstractFeatureGroup = value;
     }
 
-    public boolean isSetAbstractFeatureGroup() {
-        return (this.abstractFeatureGroup!= null);
+    public boolean isSetAbstractFeatureGroup()
+    {
+        return (this.abstractFeatureGroup != null);
     }
 
     /**
      * Gets the value of the kmlSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the kmlSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the kmlSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getKmlSimpleExtensionGroup().add(newItem);
+     * getKmlSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getKmlSimpleExtensionGroup() {
-        if (kmlSimpleExtensionGroup == null) {
+    public List<Object> getKmlSimpleExtensionGroup()
+    {
+        if (kmlSimpleExtensionGroup == null)
+        {
             kmlSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.kmlSimpleExtensionGroup;
     }
 
-    public boolean isSetKmlSimpleExtensionGroup() {
-        return ((this.kmlSimpleExtensionGroup!= null)&&(!this.kmlSimpleExtensionGroup.isEmpty()));
+    public boolean isSetKmlSimpleExtensionGroup()
+    {
+        return ((this.kmlSimpleExtensionGroup != null) && (!this.kmlSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetKmlSimpleExtensionGroup() {
+    public void unsetKmlSimpleExtensionGroup()
+    {
         this.kmlSimpleExtensionGroup = null;
     }
 
@@ -180,15 +190,16 @@ public class KmlType {
      * Gets the value of the kmlObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the kmlObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the kmlObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getKmlObjectExtensionGroup().add(newItem);
+     * getKmlObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -198,47 +209,50 @@ public class KmlType {
      * 
      * 
      */
-    public List<AbstractObjectType> getKmlObjectExtensionGroup() {
-        if (kmlObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getKmlObjectExtensionGroup()
+    {
+        if (kmlObjectExtensionGroup == null)
+        {
             kmlObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.kmlObjectExtensionGroup;
     }
 
-    public boolean isSetKmlObjectExtensionGroup() {
-        return ((this.kmlObjectExtensionGroup!= null)&&(!this.kmlObjectExtensionGroup.isEmpty()));
+    public boolean isSetKmlObjectExtensionGroup()
+    {
+        return ((this.kmlObjectExtensionGroup != null) && (!this.kmlObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetKmlObjectExtensionGroup() {
+    public void unsetKmlObjectExtensionGroup()
+    {
         this.kmlObjectExtensionGroup = null;
     }
 
     /**
      * Gets the value of the hint property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHint() {
+    public String getHint()
+    {
         return hint;
     }
 
     /**
      * Sets the value of the hint property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHint(String value) {
+    public void setHint(String value)
+    {
         this.hint = value;
     }
 
-    public boolean isSetHint() {
-        return (this.hint!= null);
+    public boolean isSetHint()
+    {
+        return (this.hint != null);
     }
 
 }

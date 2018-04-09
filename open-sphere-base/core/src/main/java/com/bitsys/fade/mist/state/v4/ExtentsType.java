@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.math.BigDecimal;
@@ -17,16 +16,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *         A container in which multiple spatial extends may be defined, to aid
- *         in rendering content.
- *       
+ * A container in which multiple spatial extends may be defined, to aid in
+ * rendering content.
  * 
- * <p>Java class for ExtentsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for ExtentsType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ExtentsType">
@@ -43,10 +44,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ExtentsType", propOrder = {
-    "extent"
-})
-public class ExtentsType {
+@XmlType(name = "ExtentsType", propOrder = { "extent" })
+public class ExtentsType
+{
 
     @XmlElement(required = true)
     protected List<BigDecimal> extent;
@@ -55,15 +55,16 @@ public class ExtentsType {
      * Gets the value of the extent property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the extent property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the extent property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getExtent().add(newItem);
+     * getExtent().add(newItem);
      * </pre>
      * 
      * 
@@ -73,18 +74,22 @@ public class ExtentsType {
      * 
      * 
      */
-    public List<BigDecimal> getExtent() {
-        if (extent == null) {
+    public List<BigDecimal> getExtent()
+    {
+        if (extent == null)
+        {
             extent = new ArrayList<BigDecimal>();
         }
         return this.extent;
     }
 
-    public boolean isSetExtent() {
-        return ((this.extent!= null)&&(!this.extent.isEmpty()));
+    public boolean isSetExtent()
+    {
+        return ((this.extent != null) && (!this.extent.isEmpty()));
     }
 
-    public void unsetExtent() {
+    public void unsetExtent()
+    {
         this.extent = null;
     }
 

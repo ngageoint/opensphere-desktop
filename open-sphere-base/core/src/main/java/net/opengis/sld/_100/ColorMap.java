@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -38,11 +39,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "colorMapEntry"
-})
+@XmlType(name = "", propOrder = { "colorMapEntry" })
 @XmlRootElement(name = "ColorMap")
-public class ColorMap {
+public class ColorMap
+{
 
     @XmlElement(name = "ColorMapEntry")
     protected List<ColorMapEntry> colorMapEntry;
@@ -51,15 +51,16 @@ public class ColorMap {
      * Gets the value of the colorMapEntry property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the colorMapEntry property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the colorMapEntry property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getColorMapEntry().add(newItem);
+     * getColorMapEntry().add(newItem);
      * </pre>
      * 
      * 
@@ -69,8 +70,10 @@ public class ColorMap {
      * 
      * 
      */
-    public List<ColorMapEntry> getColorMapEntry() {
-        if (colorMapEntry == null) {
+    public List<ColorMapEntry> getColorMapEntry()
+    {
+        if (colorMapEntry == null)
+        {
             colorMapEntry = new ArrayList<ColorMapEntry>();
         }
         return this.colorMapEntry;

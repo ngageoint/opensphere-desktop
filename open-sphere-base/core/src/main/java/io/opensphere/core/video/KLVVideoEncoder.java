@@ -15,6 +15,7 @@ public interface KLVVideoEncoder extends Closeable
     /**
      * Completes the encoding process.
      */
+    @Override
     void close();
 
     /**

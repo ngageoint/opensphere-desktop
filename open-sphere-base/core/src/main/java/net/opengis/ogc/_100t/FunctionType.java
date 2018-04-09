@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.ogc._100t;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for FunctionType complex type.
+ * <p>
+ * Java class for FunctionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="FunctionType">
@@ -40,15 +41,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "FunctionType", propOrder = {
-    "expression"
-})
-public class FunctionType
-    extends ExpressionType
+@XmlType(name = "FunctionType", propOrder = { "expression" })
+public class FunctionType extends ExpressionType
 {
 
     @XmlElementRef(name = "expression", namespace = "http://www.opengis.net/ogc", type = JAXBElement.class, required = false)
     protected List<JAXBElement<?>> expression;
+
     @XmlAttribute(name = "name", required = true)
     protected String name;
 
@@ -56,15 +55,16 @@ public class FunctionType
      * Gets the value of the expression property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the expression property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the expression property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getExpression().add(newItem);
+     * getExpression().add(newItem);
      * </pre>
      * 
      * 
@@ -81,47 +81,50 @@ public class FunctionType
      * 
      * 
      */
-    public List<JAXBElement<?>> getExpression() {
-        if (expression == null) {
+    public List<JAXBElement<?>> getExpression()
+    {
+        if (expression == null)
+        {
             expression = new ArrayList<JAXBElement<?>>();
         }
         return this.expression;
     }
 
-    public boolean isSetExpression() {
-        return ((this.expression!= null)&&(!this.expression.isEmpty()));
+    public boolean isSetExpression()
+    {
+        return ((this.expression != null) && (!this.expression.isEmpty()));
     }
 
-    public void unsetExpression() {
+    public void unsetExpression()
+    {
         this.expression = null;
     }
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
-    public boolean isSetName() {
-        return (this.name!= null);
+    public boolean isSetName()
+    {
+        return (this.name != null);
     }
 
 }

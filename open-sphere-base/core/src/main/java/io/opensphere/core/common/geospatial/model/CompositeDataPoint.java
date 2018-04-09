@@ -61,9 +61,9 @@ public class CompositeDataPoint extends io.opensphere.core.common.geospatial.mod
             totalLon += subPoints.get(i).getLon();
             time += subPoints.get(i).getDate().getTime();
         }
-        lat = totalLat / (double)subPoints.size();
-        lon = totalLon / (double)subPoints.size();
-        time = time / (long)subPoints.size();
+        lat = totalLat / subPoints.size();
+        lon = totalLon / subPoints.size();
+        time = time / subPoints.size();
         setDate(new Date(time));
     }
 

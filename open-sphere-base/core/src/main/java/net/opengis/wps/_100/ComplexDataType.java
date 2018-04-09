@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import java.util.ArrayList;
@@ -25,13 +24,17 @@ import javax.xml.namespace.QName;
 
 import org.w3c.dom.Element;
 
-
 /**
- * Complex data (such as an image), including a definition of the complex value data structure (i.e., schema, format, and encoding).  May be an ows:Manifest data structure.
+ * Complex data (such as an image), including a definition of the complex value
+ * data structure (i.e., schema, format, and encoding). May be an ows:Manifest
+ * data structure.
  * 
- * <p>Java class for ComplexDataType complex type.
+ * <p>
+ * Java class for ComplexDataType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ComplexDataType">
@@ -47,50 +50,57 @@ import org.w3c.dom.Element;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ComplexDataType", propOrder = {
-    "content"
-})
-public class ComplexDataType {
+@XmlType(name = "ComplexDataType", propOrder = { "content" })
+public class ComplexDataType
+{
 
     @XmlMixed
     @XmlAnyElement
     protected List<Object> content;
+
     @XmlAttribute
     protected String mimeType;
+
     @XmlAttribute
     @XmlSchemaType(name = "anyURI")
     protected String encoding;
+
     @XmlAttribute
     @XmlSchemaType(name = "anyURI")
     protected String schema;
+
     @XmlAnyAttribute
     private Map<QName, String> otherAttributes = new HashMap<QName, String>();
 
     /**
-     * Complex data (such as an image), including a definition of the complex value data structure (i.e., schema, format, and encoding).  May be an ows:Manifest data structure.Gets the value of the content property.
+     * Complex data (such as an image), including a definition of the complex
+     * value data structure (i.e., schema, format, and encoding). May be an
+     * ows:Manifest data structure.Gets the value of the content property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the content property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the content property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getContent().add(newItem);
+     * getContent().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Element }
+     * Objects of the following type(s) are allowed in the list {@link Element }
      * {@link String }
      * 
      * 
      */
-    public List<Object> getContent() {
-        if (content == null) {
+    public List<Object> getContent()
+    {
+        if (content == null)
+        {
             content = new ArrayList<Object>();
         }
         return this.content;
@@ -99,90 +109,85 @@ public class ComplexDataType {
     /**
      * Gets the value of the mimeType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMimeType() {
+    public String getMimeType()
+    {
         return mimeType;
     }
 
     /**
      * Sets the value of the mimeType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMimeType(String value) {
+    public void setMimeType(String value)
+    {
         this.mimeType = value;
     }
 
     /**
      * Gets the value of the encoding property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getEncoding() {
+    public String getEncoding()
+    {
         return encoding;
     }
 
     /**
      * Sets the value of the encoding property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setEncoding(String value) {
+    public void setEncoding(String value)
+    {
         this.encoding = value;
     }
 
     /**
      * Gets the value of the schema property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSchema() {
+    public String getSchema()
+    {
         return schema;
     }
 
     /**
      * Sets the value of the schema property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSchema(String value) {
+    public void setSchema(String value)
+    {
         this.schema = value;
     }
 
     /**
-     * Gets a map that contains attributes that aren't bound to any typed property on this class.
+     * Gets a map that contains attributes that aren't bound to any typed
+     * property on this class.
      * 
      * <p>
-     * the map is keyed by the name of the attribute and 
-     * the value is the string value of the attribute.
+     * the map is keyed by the name of the attribute and the value is the string
+     * value of the attribute.
      * 
-     * the map returned by this method is live, and you can add new attribute
-     * by updating the map directly. Because of this design, there's no setter.
+     * the map returned by this method is live, and you can add new attribute by
+     * updating the map directly. Because of this design, there's no setter.
      * 
      * 
-     * @return
-     *     always non-null
+     * @return always non-null
      */
-    public Map<QName, String> getOtherAttributes() {
+    public Map<QName, String> getOtherAttributes()
+    {
         return otherAttributes;
     }
 

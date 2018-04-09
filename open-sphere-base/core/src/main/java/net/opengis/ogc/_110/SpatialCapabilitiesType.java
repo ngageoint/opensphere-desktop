@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ogc._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for Spatial_CapabilitiesType complex type.
+ * <p>
+ * Java class for Spatial_CapabilitiesType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="Spatial_CapabilitiesType">
@@ -35,62 +36,57 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Spatial_CapabilitiesType", propOrder = {
-    "geometryOperands",
-    "spatialOperators"
-})
-public class SpatialCapabilitiesType {
+@XmlType(name = "Spatial_CapabilitiesType", propOrder = { "geometryOperands", "spatialOperators" })
+public class SpatialCapabilitiesType
+{
 
     @XmlElement(name = "GeometryOperands", required = true)
     protected GeometryOperandsType geometryOperands;
+
     @XmlElement(name = "SpatialOperators", required = true)
     protected SpatialOperatorsType spatialOperators;
 
     /**
      * Gets the value of the geometryOperands property.
      * 
-     * @return
-     *     possible object is
-     *     {@link GeometryOperandsType }
-     *     
+     * @return possible object is {@link GeometryOperandsType }
+     * 
      */
-    public GeometryOperandsType getGeometryOperands() {
+    public GeometryOperandsType getGeometryOperands()
+    {
         return geometryOperands;
     }
 
     /**
      * Sets the value of the geometryOperands property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link GeometryOperandsType }
-     *     
+     * @param value allowed object is {@link GeometryOperandsType }
+     * 
      */
-    public void setGeometryOperands(GeometryOperandsType value) {
+    public void setGeometryOperands(GeometryOperandsType value)
+    {
         this.geometryOperands = value;
     }
 
     /**
      * Gets the value of the spatialOperators property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SpatialOperatorsType }
-     *     
+     * @return possible object is {@link SpatialOperatorsType }
+     * 
      */
-    public SpatialOperatorsType getSpatialOperators() {
+    public SpatialOperatorsType getSpatialOperators()
+    {
         return spatialOperators;
     }
 
     /**
      * Sets the value of the spatialOperators property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SpatialOperatorsType }
-     *     
+     * @param value allowed object is {@link SpatialOperatorsType }
+     * 
      */
-    public void setSpatialOperators(SpatialOperatorsType value) {
+    public void setSpatialOperators(SpatialOperatorsType value)
+    {
         this.spatialOperators = value;
     }
 

@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.ogc._100t;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for LogicOpsType complex type.
+ * <p>
+ * Java class for LogicOpsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LogicOpsType">
@@ -32,11 +33,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "LogicOpsType")
-@XmlSeeAlso({
-    OriginalBinaryLogicOpType.class,
-    UnaryLogicOpType.class
-})
-public abstract class LogicOpsType {
-
+@XmlSeeAlso({ OriginalBinaryLogicOpType.class, UnaryLogicOpType.class })
+public abstract class LogicOpsType
+{
 
 }

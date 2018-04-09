@@ -28,22 +28,26 @@ public class AbstractViewModel<T> implements ViewModel<T>
     private final BooleanProperty myValidProperty = new SimpleBooleanProperty(false);
 
     /**
-     * An observable field in which the required state of the model is maintained.
+     * An observable field in which the required state of the model is
+     * maintained.
      */
     private final BooleanProperty myRequiredProperty = new SimpleBooleanProperty(false);
 
     /**
-     * An observable field in which the enabled state of the model is maintained.
+     * An observable field in which the enabled state of the model is
+     * maintained.
      */
     private final BooleanProperty myEnabledProperty = new SimpleBooleanProperty(true);
 
     /**
-     * An observable field in which the visible state of the model is maintained.
+     * An observable field in which the visible state of the model is
+     * maintained.
      */
     private final BooleanProperty myVisibleProperty = new SimpleBooleanProperty(true);
 
     /**
-     * An observable field in which the validating state of the model is maintained.
+     * An observable field in which the validating state of the model is
+     * maintained.
      */
     private final BooleanProperty myValidatingProperty = new SimpleBooleanProperty(true);
 

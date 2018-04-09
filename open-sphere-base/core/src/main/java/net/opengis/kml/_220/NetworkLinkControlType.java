@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for NetworkLinkControlType complex type.
+ * <p>
+ * Java class for NetworkLinkControlType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="NetworkLinkControlType">
@@ -51,361 +52,360 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "NetworkLinkControlType", propOrder = {
-    "minRefreshPeriod",
-    "maxSessionLength",
-    "cookie",
-    "message",
-    "linkName",
-    "linkDescription",
-    "linkSnippet",
-    "expires",
-    "update",
-    "abstractViewGroup",
-    "networkLinkControlSimpleExtensionGroup",
-    "networkLinkControlObjectExtensionGroup"
-})
-public class NetworkLinkControlType {
+@XmlType(name = "NetworkLinkControlType", propOrder = { "minRefreshPeriod", "maxSessionLength", "cookie", "message", "linkName",
+    "linkDescription", "linkSnippet", "expires", "update", "abstractViewGroup", "networkLinkControlSimpleExtensionGroup",
+    "networkLinkControlObjectExtensionGroup" })
+public class NetworkLinkControlType
+{
 
     @XmlElement(defaultValue = "0.0")
     protected Double minRefreshPeriod;
+
     @XmlElement(defaultValue = "-1.0")
     protected Double maxSessionLength;
+
     protected String cookie;
+
     protected String message;
+
     protected String linkName;
+
     protected String linkDescription;
+
     protected SnippetType linkSnippet;
+
     @XmlSchemaType(name = "anySimpleType")
     protected String expires;
+
     @XmlElement(name = "Update")
     protected UpdateType update;
+
     @XmlElementRef(name = "AbstractViewGroup", namespace = "http://www.opengis.net/kml/2.2", type = JAXBElement.class, required = false)
     protected JAXBElement<? extends AbstractViewType> abstractViewGroup;
+
     @XmlElement(name = "NetworkLinkControlSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> networkLinkControlSimpleExtensionGroup;
+
     @XmlElement(name = "NetworkLinkControlObjectExtensionGroup")
     protected List<AbstractObjectType> networkLinkControlObjectExtensionGroup;
 
     /**
      * Gets the value of the minRefreshPeriod property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getMinRefreshPeriod() {
+    public Double getMinRefreshPeriod()
+    {
         return minRefreshPeriod;
     }
 
     /**
      * Sets the value of the minRefreshPeriod property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setMinRefreshPeriod(Double value) {
+    public void setMinRefreshPeriod(Double value)
+    {
         this.minRefreshPeriod = value;
     }
 
-    public boolean isSetMinRefreshPeriod() {
-        return (this.minRefreshPeriod!= null);
+    public boolean isSetMinRefreshPeriod()
+    {
+        return (this.minRefreshPeriod != null);
     }
 
     /**
      * Gets the value of the maxSessionLength property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getMaxSessionLength() {
+    public Double getMaxSessionLength()
+    {
         return maxSessionLength;
     }
 
     /**
      * Sets the value of the maxSessionLength property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setMaxSessionLength(Double value) {
+    public void setMaxSessionLength(Double value)
+    {
         this.maxSessionLength = value;
     }
 
-    public boolean isSetMaxSessionLength() {
-        return (this.maxSessionLength!= null);
+    public boolean isSetMaxSessionLength()
+    {
+        return (this.maxSessionLength != null);
     }
 
     /**
      * Gets the value of the cookie property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getCookie() {
+    public String getCookie()
+    {
         return cookie;
     }
 
     /**
      * Sets the value of the cookie property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setCookie(String value) {
+    public void setCookie(String value)
+    {
         this.cookie = value;
     }
 
-    public boolean isSetCookie() {
-        return (this.cookie!= null);
+    public boolean isSetCookie()
+    {
+        return (this.cookie != null);
     }
 
     /**
      * Gets the value of the message property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMessage() {
+    public String getMessage()
+    {
         return message;
     }
 
     /**
      * Sets the value of the message property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMessage(String value) {
+    public void setMessage(String value)
+    {
         this.message = value;
     }
 
-    public boolean isSetMessage() {
-        return (this.message!= null);
+    public boolean isSetMessage()
+    {
+        return (this.message != null);
     }
 
     /**
      * Gets the value of the linkName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLinkName() {
+    public String getLinkName()
+    {
         return linkName;
     }
 
     /**
      * Sets the value of the linkName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLinkName(String value) {
+    public void setLinkName(String value)
+    {
         this.linkName = value;
     }
 
-    public boolean isSetLinkName() {
-        return (this.linkName!= null);
+    public boolean isSetLinkName()
+    {
+        return (this.linkName != null);
     }
 
     /**
      * Gets the value of the linkDescription property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLinkDescription() {
+    public String getLinkDescription()
+    {
         return linkDescription;
     }
 
     /**
      * Sets the value of the linkDescription property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLinkDescription(String value) {
+    public void setLinkDescription(String value)
+    {
         this.linkDescription = value;
     }
 
-    public boolean isSetLinkDescription() {
-        return (this.linkDescription!= null);
+    public boolean isSetLinkDescription()
+    {
+        return (this.linkDescription != null);
     }
 
     /**
      * Gets the value of the linkSnippet property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SnippetType }
-     *     
+     * @return possible object is {@link SnippetType }
+     * 
      */
-    public SnippetType getLinkSnippet() {
+    public SnippetType getLinkSnippet()
+    {
         return linkSnippet;
     }
 
     /**
      * Sets the value of the linkSnippet property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SnippetType }
-     *     
+     * @param value allowed object is {@link SnippetType }
+     * 
      */
-    public void setLinkSnippet(SnippetType value) {
+    public void setLinkSnippet(SnippetType value)
+    {
         this.linkSnippet = value;
     }
 
-    public boolean isSetLinkSnippet() {
-        return (this.linkSnippet!= null);
+    public boolean isSetLinkSnippet()
+    {
+        return (this.linkSnippet != null);
     }
 
     /**
      * Gets the value of the expires property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getExpires() {
+    public String getExpires()
+    {
         return expires;
     }
 
     /**
      * Sets the value of the expires property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setExpires(String value) {
+    public void setExpires(String value)
+    {
         this.expires = value;
     }
 
-    public boolean isSetExpires() {
-        return (this.expires!= null);
+    public boolean isSetExpires()
+    {
+        return (this.expires != null);
     }
 
     /**
      * Gets the value of the update property.
      * 
-     * @return
-     *     possible object is
-     *     {@link UpdateType }
-     *     
+     * @return possible object is {@link UpdateType }
+     * 
      */
-    public UpdateType getUpdate() {
+    public UpdateType getUpdate()
+    {
         return update;
     }
 
     /**
      * Sets the value of the update property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link UpdateType }
-     *     
+     * @param value allowed object is {@link UpdateType }
+     * 
      */
-    public void setUpdate(UpdateType value) {
+    public void setUpdate(UpdateType value)
+    {
         this.update = value;
     }
 
-    public boolean isSetUpdate() {
-        return (this.update!= null);
+    public boolean isSetUpdate()
+    {
+        return (this.update != null);
     }
 
     /**
      * Gets the value of the abstractViewGroup property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link LookAtType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link CameraType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractViewType }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement }{@code <}{@link LookAtType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link CameraType
+     *         }{@code >} {@link JAXBElement }{@code <}{@link AbstractViewType
+     *         }{@code >}
+     * 
      */
-    public JAXBElement<? extends AbstractViewType> getAbstractViewGroup() {
+    public JAXBElement<? extends AbstractViewType> getAbstractViewGroup()
+    {
         return abstractViewGroup;
     }
 
     /**
      * Sets the value of the abstractViewGroup property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link LookAtType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link CameraType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AbstractViewType }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link LookAtType }{@code >} {@link JAXBElement
+     *            }{@code <}{@link CameraType }{@code >} {@link JAXBElement
+     *            }{@code <}{@link AbstractViewType }{@code >}
+     * 
      */
-    public void setAbstractViewGroup(JAXBElement<? extends AbstractViewType> value) {
+    public void setAbstractViewGroup(JAXBElement<? extends AbstractViewType> value)
+    {
         this.abstractViewGroup = value;
     }
 
-    public boolean isSetAbstractViewGroup() {
-        return (this.abstractViewGroup!= null);
+    public boolean isSetAbstractViewGroup()
+    {
+        return (this.abstractViewGroup != null);
     }
 
     /**
      * Gets the value of the networkLinkControlSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the networkLinkControlSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the networkLinkControlSimpleExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getNetworkLinkControlSimpleExtensionGroup().add(newItem);
+     * getNetworkLinkControlSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getNetworkLinkControlSimpleExtensionGroup() {
-        if (networkLinkControlSimpleExtensionGroup == null) {
+    public List<Object> getNetworkLinkControlSimpleExtensionGroup()
+    {
+        if (networkLinkControlSimpleExtensionGroup == null)
+        {
             networkLinkControlSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.networkLinkControlSimpleExtensionGroup;
     }
 
-    public boolean isSetNetworkLinkControlSimpleExtensionGroup() {
-        return ((this.networkLinkControlSimpleExtensionGroup!= null)&&(!this.networkLinkControlSimpleExtensionGroup.isEmpty()));
+    public boolean isSetNetworkLinkControlSimpleExtensionGroup()
+    {
+        return ((this.networkLinkControlSimpleExtensionGroup != null)
+                && (!this.networkLinkControlSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetNetworkLinkControlSimpleExtensionGroup() {
+    public void unsetNetworkLinkControlSimpleExtensionGroup()
+    {
         this.networkLinkControlSimpleExtensionGroup = null;
     }
 
@@ -413,15 +413,17 @@ public class NetworkLinkControlType {
      * Gets the value of the networkLinkControlObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the networkLinkControlObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the networkLinkControlObjectExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getNetworkLinkControlObjectExtensionGroup().add(newItem);
+     * getNetworkLinkControlObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -431,18 +433,23 @@ public class NetworkLinkControlType {
      * 
      * 
      */
-    public List<AbstractObjectType> getNetworkLinkControlObjectExtensionGroup() {
-        if (networkLinkControlObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getNetworkLinkControlObjectExtensionGroup()
+    {
+        if (networkLinkControlObjectExtensionGroup == null)
+        {
             networkLinkControlObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.networkLinkControlObjectExtensionGroup;
     }
 
-    public boolean isSetNetworkLinkControlObjectExtensionGroup() {
-        return ((this.networkLinkControlObjectExtensionGroup!= null)&&(!this.networkLinkControlObjectExtensionGroup.isEmpty()));
+    public boolean isSetNetworkLinkControlObjectExtensionGroup()
+    {
+        return ((this.networkLinkControlObjectExtensionGroup != null)
+                && (!this.networkLinkControlObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetNetworkLinkControlObjectExtensionGroup() {
+    public void unsetNetworkLinkControlObjectExtensionGroup()
+    {
         this.networkLinkControlObjectExtensionGroup = null;
     }
 

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -19,13 +18,15 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * Bounding shape.
  * 
- * <p>Java class for BoundingShapeType complex type.
+ * <p>
+ * Java class for BoundingShapeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="BoundingShapeType">
@@ -45,14 +46,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "BoundingShapeType", propOrder = {
-    "envelope",
-    "_null"
-})
-public class BoundingShapeType {
+@XmlType(name = "BoundingShapeType", propOrder = { "envelope", "_null" })
+public class BoundingShapeType
+{
 
     @XmlElementRef(name = "Envelope", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
     protected JAXBElement<? extends EnvelopeType> envelope;
+
     @XmlList
     @XmlElement(name = "Null")
     protected List<String> _null;
@@ -60,53 +60,55 @@ public class BoundingShapeType {
     /**
      * Gets the value of the envelope property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link EnvelopeType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link EnvelopeWithTimePeriodType }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement
+     *         }{@code <}{@link EnvelopeType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link EnvelopeWithTimePeriodType }{@code >}
+     * 
      */
-    public JAXBElement<? extends EnvelopeType> getEnvelope() {
+    public JAXBElement<? extends EnvelopeType> getEnvelope()
+    {
         return envelope;
     }
 
     /**
      * Sets the value of the envelope property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link EnvelopeType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link EnvelopeWithTimePeriodType }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link EnvelopeType }{@code >} {@link JAXBElement
+     *            }{@code <}{@link EnvelopeWithTimePeriodType }{@code >}
+     * 
      */
-    public void setEnvelope(JAXBElement<? extends EnvelopeType> value) {
-        this.envelope = ((JAXBElement<? extends EnvelopeType> ) value);
+    public void setEnvelope(JAXBElement<? extends EnvelopeType> value)
+    {
+        this.envelope = (value);
     }
 
     /**
      * Gets the value of the null property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the null property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the null property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getNull().add(newItem);
+     * getNull().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getNull() {
-        if (_null == null) {
+    public List<String> getNull()
+    {
+        if (_null == null)
+        {
             _null = new ArrayList<String>();
         }
         return this._null;

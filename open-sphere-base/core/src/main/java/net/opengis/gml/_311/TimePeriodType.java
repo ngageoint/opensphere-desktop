@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.Duration;
 
-
 /**
- * <p>Java class for TimePeriodType complex type.
+ * <p>
+ * Java class for TimePeriodType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TimePeriodType">
@@ -42,166 +43,151 @@ import javax.xml.datatype.Duration;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TimePeriodType", propOrder = {
-    "beginPosition",
-    "begin",
-    "endPosition",
-    "end",
-    "duration",
-    "timeInterval"
-})
-public class TimePeriodType
-    extends AbstractTimeGeometricPrimitiveType
+@XmlType(name = "TimePeriodType", propOrder = { "beginPosition", "begin", "endPosition", "end", "duration", "timeInterval" })
+public class TimePeriodType extends AbstractTimeGeometricPrimitiveType
 {
 
     protected TimePositionType beginPosition;
+
     protected TimeInstantPropertyType begin;
+
     protected TimePositionType endPosition;
+
     protected TimeInstantPropertyType end;
+
     protected Duration duration;
+
     protected TimeIntervalLengthType timeInterval;
 
     /**
      * Gets the value of the beginPosition property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TimePositionType }
-     *     
+     * @return possible object is {@link TimePositionType }
+     * 
      */
-    public TimePositionType getBeginPosition() {
+    public TimePositionType getBeginPosition()
+    {
         return beginPosition;
     }
 
     /**
      * Sets the value of the beginPosition property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TimePositionType }
-     *     
+     * @param value allowed object is {@link TimePositionType }
+     * 
      */
-    public void setBeginPosition(TimePositionType value) {
+    public void setBeginPosition(TimePositionType value)
+    {
         this.beginPosition = value;
     }
 
     /**
      * Gets the value of the begin property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TimeInstantPropertyType }
-     *     
+     * @return possible object is {@link TimeInstantPropertyType }
+     * 
      */
-    public TimeInstantPropertyType getBegin() {
+    public TimeInstantPropertyType getBegin()
+    {
         return begin;
     }
 
     /**
      * Sets the value of the begin property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TimeInstantPropertyType }
-     *     
+     * @param value allowed object is {@link TimeInstantPropertyType }
+     * 
      */
-    public void setBegin(TimeInstantPropertyType value) {
+    public void setBegin(TimeInstantPropertyType value)
+    {
         this.begin = value;
     }
 
     /**
      * Gets the value of the endPosition property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TimePositionType }
-     *     
+     * @return possible object is {@link TimePositionType }
+     * 
      */
-    public TimePositionType getEndPosition() {
+    public TimePositionType getEndPosition()
+    {
         return endPosition;
     }
 
     /**
      * Sets the value of the endPosition property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TimePositionType }
-     *     
+     * @param value allowed object is {@link TimePositionType }
+     * 
      */
-    public void setEndPosition(TimePositionType value) {
+    public void setEndPosition(TimePositionType value)
+    {
         this.endPosition = value;
     }
 
     /**
      * Gets the value of the end property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TimeInstantPropertyType }
-     *     
+     * @return possible object is {@link TimeInstantPropertyType }
+     * 
      */
-    public TimeInstantPropertyType getEnd() {
+    public TimeInstantPropertyType getEnd()
+    {
         return end;
     }
 
     /**
      * Sets the value of the end property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TimeInstantPropertyType }
-     *     
+     * @param value allowed object is {@link TimeInstantPropertyType }
+     * 
      */
-    public void setEnd(TimeInstantPropertyType value) {
+    public void setEnd(TimeInstantPropertyType value)
+    {
         this.end = value;
     }
 
     /**
      * Gets the value of the duration property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Duration }
-     *     
+     * @return possible object is {@link Duration }
+     * 
      */
-    public Duration getDuration() {
+    public Duration getDuration()
+    {
         return duration;
     }
 
     /**
      * Sets the value of the duration property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Duration }
-     *     
+     * @param value allowed object is {@link Duration }
+     * 
      */
-    public void setDuration(Duration value) {
+    public void setDuration(Duration value)
+    {
         this.duration = value;
     }
 
     /**
      * Gets the value of the timeInterval property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TimeIntervalLengthType }
-     *     
+     * @return possible object is {@link TimeIntervalLengthType }
+     * 
      */
-    public TimeIntervalLengthType getTimeInterval() {
+    public TimeIntervalLengthType getTimeInterval()
+    {
         return timeInterval;
     }
 
     /**
      * Sets the value of the timeInterval property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TimeIntervalLengthType }
-     *     
+     * @param value allowed object is {@link TimeIntervalLengthType }
+     * 
      */
-    public void setTimeInterval(TimeIntervalLengthType value) {
+    public void setTimeInterval(TimeIntervalLengthType value)
+    {
         this.timeInterval = value;
     }
 

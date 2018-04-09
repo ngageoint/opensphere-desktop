@@ -24,7 +24,8 @@ public abstract class AbstractValueTranslator<T> implements ValueTranslator<T>
      */
     @Override
     public int getValue(PropertyDescriptor<? extends T> propertyDescriptor, int column, ResultSet rs,
-            PropertyMatcher<? extends T> filter, Collection<? super T> results) throws CacheException
+            PropertyMatcher<? extends T> filter, Collection<? super T> results)
+        throws CacheException
     {
         return getValue(propertyDescriptor.getType(), propertyDescriptor.getEstimatedValueSizeBytes(), column, rs, filter,
                 results);

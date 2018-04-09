@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -15,13 +14,21 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A solid is the basis for 3-dimensional geometry. The extent of a solid is defined by the boundary surfaces (shells). A shell is represented by a composite surface, where every  shell is used to represent a single connected component of the boundary of a solid. It consists of a composite surface (a list of orientable surfaces) connected in a topological cycle (an object whose boundary is empty). Unlike a Ring, a Shell's elements have no natural sort order. Like Rings, Shells are simple.
+ * A solid is the basis for 3-dimensional geometry. The extent of a solid is
+ * defined by the boundary surfaces (shells). A shell is represented by a
+ * composite surface, where every shell is used to represent a single connected
+ * component of the boundary of a solid. It consists of a composite surface (a
+ * list of orientable surfaces) connected in a topological cycle (an object
+ * whose boundary is empty). Unlike a Ring, a Shell's elements have no natural
+ * sort order. Like Rings, Shells are simple.
  * 
- * <p>Java class for SolidType complex type.
+ * <p>
+ * Java class for SolidType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SolidType">
@@ -39,38 +46,33 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SolidType", propOrder = {
-    "exterior",
-    "interior"
-})
-public class SolidType
-    extends AbstractSolidType
+@XmlType(name = "SolidType", propOrder = { "exterior", "interior" })
+public class SolidType extends AbstractSolidType
 {
 
     protected SurfacePropertyType exterior;
+
     protected List<SurfacePropertyType> interior;
 
     /**
      * Gets the value of the exterior property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SurfacePropertyType }
-     *     
+     * @return possible object is {@link SurfacePropertyType }
+     * 
      */
-    public SurfacePropertyType getExterior() {
+    public SurfacePropertyType getExterior()
+    {
         return exterior;
     }
 
     /**
      * Sets the value of the exterior property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SurfacePropertyType }
-     *     
+     * @param value allowed object is {@link SurfacePropertyType }
+     * 
      */
-    public void setExterior(SurfacePropertyType value) {
+    public void setExterior(SurfacePropertyType value)
+    {
         this.exterior = value;
     }
 
@@ -78,15 +80,16 @@ public class SolidType
      * Gets the value of the interior property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the interior property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the interior property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getInterior().add(newItem);
+     * getInterior().add(newItem);
      * </pre>
      * 
      * 
@@ -96,8 +99,10 @@ public class SolidType
      * 
      * 
      */
-    public List<SurfacePropertyType> getInterior() {
-        if (interior == null) {
+    public List<SurfacePropertyType> getInterior()
+    {
+        if (interior == null)
+        {
             interior = new ArrayList<SurfacePropertyType>();
         }
         return this.interior;

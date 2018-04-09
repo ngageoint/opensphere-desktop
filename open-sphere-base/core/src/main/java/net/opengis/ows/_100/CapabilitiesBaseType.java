@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ows._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,13 +13,26 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * XML encoded GetCapabilities operation response. This document provides clients with service metadata about a specific service instance, usually including metadata about the tightly-coupled data served. If the server does not implement the updateSequence parameter, the server shall always return the complete Capabilities document, without the updateSequence parameter. When the server implements the updateSequence parameter and the GetCapabilities operation request included the updateSequence parameter with the current value, the server shall return this element with only the "version" and "updateSequence" attributes. Otherwise, all optional elements shall be included or not depending on the actual value of the Contents parameter in the GetCapabilities operation request. This base type shall be extended by each specific OWS to include the additional contents needed. 
+ * XML encoded GetCapabilities operation response. This document provides
+ * clients with service metadata about a specific service instance, usually
+ * including metadata about the tightly-coupled data served. If the server does
+ * not implement the updateSequence parameter, the server shall always return
+ * the complete Capabilities document, without the updateSequence parameter.
+ * When the server implements the updateSequence parameter and the
+ * GetCapabilities operation request included the updateSequence parameter with
+ * the current value, the server shall return this element with only the
+ * "version" and "updateSequence" attributes. Otherwise, all optional elements
+ * shall be included or not depending on the actual value of the Contents
+ * parameter in the GetCapabilities operation request. This base type shall be
+ * extended by each specific OWS to include the additional contents needed.
  * 
- * <p>Java class for CapabilitiesBaseType complex type.
+ * <p>
+ * Java class for CapabilitiesBaseType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CapabilitiesBaseType">
@@ -41,141 +53,132 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CapabilitiesBaseType", propOrder = {
-    "serviceIdentification",
-    "serviceProvider",
-    "operationsMetadata"
-})
-public class CapabilitiesBaseType {
+@XmlType(name = "CapabilitiesBaseType", propOrder = { "serviceIdentification", "serviceProvider", "operationsMetadata" })
+public class CapabilitiesBaseType
+{
 
     @XmlElement(name = "ServiceIdentification")
     protected ServiceIdentification serviceIdentification;
+
     @XmlElement(name = "ServiceProvider")
     protected ServiceProvider serviceProvider;
+
     @XmlElement(name = "OperationsMetadata")
     protected OperationsMetadata operationsMetadata;
+
     @XmlAttribute(name = "version", required = true)
     protected String version;
+
     @XmlAttribute(name = "updateSequence")
     protected String updateSequence;
 
     /**
      * Gets the value of the serviceIdentification property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ServiceIdentification }
-     *     
+     * @return possible object is {@link ServiceIdentification }
+     * 
      */
-    public ServiceIdentification getServiceIdentification() {
+    public ServiceIdentification getServiceIdentification()
+    {
         return serviceIdentification;
     }
 
     /**
      * Sets the value of the serviceIdentification property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ServiceIdentification }
-     *     
+     * @param value allowed object is {@link ServiceIdentification }
+     * 
      */
-    public void setServiceIdentification(ServiceIdentification value) {
+    public void setServiceIdentification(ServiceIdentification value)
+    {
         this.serviceIdentification = value;
     }
 
     /**
      * Gets the value of the serviceProvider property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ServiceProvider }
-     *     
+     * @return possible object is {@link ServiceProvider }
+     * 
      */
-    public ServiceProvider getServiceProvider() {
+    public ServiceProvider getServiceProvider()
+    {
         return serviceProvider;
     }
 
     /**
      * Sets the value of the serviceProvider property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ServiceProvider }
-     *     
+     * @param value allowed object is {@link ServiceProvider }
+     * 
      */
-    public void setServiceProvider(ServiceProvider value) {
+    public void setServiceProvider(ServiceProvider value)
+    {
         this.serviceProvider = value;
     }
 
     /**
      * Gets the value of the operationsMetadata property.
      * 
-     * @return
-     *     possible object is
-     *     {@link OperationsMetadata }
-     *     
+     * @return possible object is {@link OperationsMetadata }
+     * 
      */
-    public OperationsMetadata getOperationsMetadata() {
+    public OperationsMetadata getOperationsMetadata()
+    {
         return operationsMetadata;
     }
 
     /**
      * Sets the value of the operationsMetadata property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link OperationsMetadata }
-     *     
+     * @param value allowed object is {@link OperationsMetadata }
+     * 
      */
-    public void setOperationsMetadata(OperationsMetadata value) {
+    public void setOperationsMetadata(OperationsMetadata value)
+    {
         this.operationsMetadata = value;
     }
 
     /**
      * Gets the value of the version property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getVersion() {
+    public String getVersion()
+    {
         return version;
     }
 
     /**
      * Sets the value of the version property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setVersion(String value) {
+    public void setVersion(String value)
+    {
         this.version = value;
     }
 
     /**
      * Gets the value of the updateSequence property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getUpdateSequence() {
+    public String getUpdateSequence()
+    {
         return updateSequence;
     }
 
     /**
      * Sets the value of the updateSequence property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setUpdateSequence(String value) {
+    public void setUpdateSequence(String value)
+    {
         this.updateSequence = value;
     }
 

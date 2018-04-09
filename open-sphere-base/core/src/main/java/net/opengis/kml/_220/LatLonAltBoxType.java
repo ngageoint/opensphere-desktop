@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for LatLonAltBoxType complex type.
+ * <p>
+ * Java class for LatLonAltBoxType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LatLonAltBoxType">
@@ -44,149 +45,151 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LatLonAltBoxType", propOrder = {
-    "minAltitude",
-    "maxAltitude",
-    "altitudeModeGroup",
-    "latLonAltBoxSimpleExtensionGroup",
-    "latLonAltBoxObjectExtensionGroup"
-})
-public class LatLonAltBoxType
-    extends AbstractLatLonBoxType
+@XmlType(name = "LatLonAltBoxType", propOrder = { "minAltitude", "maxAltitude", "altitudeModeGroup",
+    "latLonAltBoxSimpleExtensionGroup", "latLonAltBoxObjectExtensionGroup" })
+public class LatLonAltBoxType extends AbstractLatLonBoxType
 {
 
     @XmlElement(defaultValue = "0.0")
     protected Double minAltitude;
+
     @XmlElement(defaultValue = "0.0")
     protected Double maxAltitude;
+
     @XmlElementRef(name = "altitudeModeGroup", namespace = "http://www.opengis.net/kml/2.2", type = JAXBElement.class, required = false)
     protected JAXBElement<?> altitudeModeGroup;
+
     @XmlElement(name = "LatLonAltBoxSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> latLonAltBoxSimpleExtensionGroup;
+
     @XmlElement(name = "LatLonAltBoxObjectExtensionGroup")
     protected List<AbstractObjectType> latLonAltBoxObjectExtensionGroup;
 
     /**
      * Gets the value of the minAltitude property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getMinAltitude() {
+    public Double getMinAltitude()
+    {
         return minAltitude;
     }
 
     /**
      * Sets the value of the minAltitude property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setMinAltitude(Double value) {
+    public void setMinAltitude(Double value)
+    {
         this.minAltitude = value;
     }
 
-    public boolean isSetMinAltitude() {
-        return (this.minAltitude!= null);
+    public boolean isSetMinAltitude()
+    {
+        return (this.minAltitude != null);
     }
 
     /**
      * Gets the value of the maxAltitude property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getMaxAltitude() {
+    public Double getMaxAltitude()
+    {
         return maxAltitude;
     }
 
     /**
      * Sets the value of the maxAltitude property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setMaxAltitude(Double value) {
+    public void setMaxAltitude(Double value)
+    {
         this.maxAltitude = value;
     }
 
-    public boolean isSetMaxAltitude() {
-        return (this.maxAltitude!= null);
+    public boolean isSetMaxAltitude()
+    {
+        return (this.maxAltitude != null);
     }
 
     /**
      * Gets the value of the altitudeModeGroup property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link AltitudeModeEnumType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link Object }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement
+     *         }{@code <}{@link AltitudeModeEnumType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * 
      */
-    public JAXBElement<?> getAltitudeModeGroup() {
+    public JAXBElement<?> getAltitudeModeGroup()
+    {
         return altitudeModeGroup;
     }
 
     /**
      * Sets the value of the altitudeModeGroup property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link AltitudeModeEnumType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link Object }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link AltitudeModeEnumType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * 
      */
-    public void setAltitudeModeGroup(JAXBElement<?> value) {
+    public void setAltitudeModeGroup(JAXBElement<?> value)
+    {
         this.altitudeModeGroup = value;
     }
 
-    public boolean isSetAltitudeModeGroup() {
-        return (this.altitudeModeGroup!= null);
+    public boolean isSetAltitudeModeGroup()
+    {
+        return (this.altitudeModeGroup != null);
     }
 
     /**
      * Gets the value of the latLonAltBoxSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the latLonAltBoxSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the latLonAltBoxSimpleExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLatLonAltBoxSimpleExtensionGroup().add(newItem);
+     * getLatLonAltBoxSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getLatLonAltBoxSimpleExtensionGroup() {
-        if (latLonAltBoxSimpleExtensionGroup == null) {
+    public List<Object> getLatLonAltBoxSimpleExtensionGroup()
+    {
+        if (latLonAltBoxSimpleExtensionGroup == null)
+        {
             latLonAltBoxSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.latLonAltBoxSimpleExtensionGroup;
     }
 
-    public boolean isSetLatLonAltBoxSimpleExtensionGroup() {
-        return ((this.latLonAltBoxSimpleExtensionGroup!= null)&&(!this.latLonAltBoxSimpleExtensionGroup.isEmpty()));
+    public boolean isSetLatLonAltBoxSimpleExtensionGroup()
+    {
+        return ((this.latLonAltBoxSimpleExtensionGroup != null) && (!this.latLonAltBoxSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetLatLonAltBoxSimpleExtensionGroup() {
+    public void unsetLatLonAltBoxSimpleExtensionGroup()
+    {
         this.latLonAltBoxSimpleExtensionGroup = null;
     }
 
@@ -194,15 +197,17 @@ public class LatLonAltBoxType
      * Gets the value of the latLonAltBoxObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the latLonAltBoxObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the latLonAltBoxObjectExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLatLonAltBoxObjectExtensionGroup().add(newItem);
+     * getLatLonAltBoxObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -212,18 +217,22 @@ public class LatLonAltBoxType
      * 
      * 
      */
-    public List<AbstractObjectType> getLatLonAltBoxObjectExtensionGroup() {
-        if (latLonAltBoxObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getLatLonAltBoxObjectExtensionGroup()
+    {
+        if (latLonAltBoxObjectExtensionGroup == null)
+        {
             latLonAltBoxObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.latLonAltBoxObjectExtensionGroup;
     }
 
-    public boolean isSetLatLonAltBoxObjectExtensionGroup() {
-        return ((this.latLonAltBoxObjectExtensionGroup!= null)&&(!this.latLonAltBoxObjectExtensionGroup.isEmpty()));
+    public boolean isSetLatLonAltBoxObjectExtensionGroup()
+    {
+        return ((this.latLonAltBoxObjectExtensionGroup != null) && (!this.latLonAltBoxObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetLatLonAltBoxObjectExtensionGroup() {
+    public void unsetLatLonAltBoxObjectExtensionGroup()
+    {
         this.latLonAltBoxObjectExtensionGroup = null;
     }
 

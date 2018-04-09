@@ -4,7 +4,7 @@ import java.nio.Buffer;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 import javax.annotation.Nullable;
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.pipeline.util.RenderContext;

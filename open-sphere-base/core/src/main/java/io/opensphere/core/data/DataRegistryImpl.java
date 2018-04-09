@@ -869,7 +869,8 @@ public class DataRegistryImpl implements DataRegistry
      *             serializable.
      */
     private Collection<? extends MutableQueryTracker> determineCacheSatisfactions(MultiQueryTracker tracker,
-            List<IntervalPropertyValueSet> unsatisfied) throws NotSerializableException, CacheException
+            List<IntervalPropertyValueSet> unsatisfied)
+        throws NotSerializableException, CacheException
     {
         Collection<MutableQueryTracker> cacheTrackers;
         if (tracker.isIntervalQuery())
@@ -1117,7 +1118,8 @@ public class DataRegistryImpl implements DataRegistry
      * @throws CacheException If the properties cannot be retrieved.
      */
     private int retrievePropertyValues(MutableQueryTracker tracker, int startIndex, long[] ids,
-            Collection<? extends PropertyValueReceiver<?>> receivers) throws CacheException
+            Collection<? extends PropertyValueReceiver<?>> receivers)
+        throws CacheException
     {
         if (tracker.isCancelled())
         {
@@ -1273,8 +1275,8 @@ public class DataRegistryImpl implements DataRegistry
     }
 
     /**
-     * Implementation of {@link io.opensphere.core.data.util.Satisfaction}
-     * that tracks the ids that satisfy the query.
+     * Implementation of {@link io.opensphere.core.data.util.Satisfaction} that
+     * tracks the ids that satisfy the query.
      */
     protected static class IdSatisfaction extends SingleSatisfaction
     {

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.ows._110;
 
 import java.util.ArrayList;
@@ -16,13 +15,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Unordered list of one or more groups of references to remote and/or local resources. 
+ * Unordered list of one or more groups of references to remote and/or local
+ * resources.
  * 
- * <p>Java class for ManifestType complex type.
+ * <p>
+ * Java class for ManifestType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ManifestType">
@@ -39,11 +41,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ManifestType", propOrder = {
-    "referenceGroup"
-})
-public class ManifestType
-    extends BasicIdentificationType
+@XmlType(name = "ManifestType", propOrder = { "referenceGroup" })
+public class ManifestType extends BasicIdentificationType
 {
 
     @XmlElement(name = "ReferenceGroup", required = true)
@@ -53,15 +52,16 @@ public class ManifestType
      * Gets the value of the referenceGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the referenceGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the referenceGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getReferenceGroup().add(newItem);
+     * getReferenceGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -71,8 +71,10 @@ public class ManifestType
      * 
      * 
      */
-    public List<ReferenceGroupType> getReferenceGroup() {
-        if (referenceGroup == null) {
+    public List<ReferenceGroupType> getReferenceGroup()
+    {
+        if (referenceGroup == null)
+        {
             referenceGroup = new ArrayList<ReferenceGroupType>();
         }
         return this.referenceGroup;

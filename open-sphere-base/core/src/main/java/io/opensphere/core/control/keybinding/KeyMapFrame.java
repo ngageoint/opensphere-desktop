@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
@@ -239,7 +240,7 @@ public class KeyMapFrame extends AbstractInternalFrame
         if (myControlKeySP == null)
         {
             myControlKeySP = new JScrollPane(getControlKeyPanel());
-            myControlKeySP.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            myControlKeySP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         }
         return myControlKeySP;
     }
@@ -377,7 +378,7 @@ public class KeyMapFrame extends AbstractInternalFrame
         if (myShortcutKeySP == null)
         {
             myShortcutKeySP = new JScrollPane(getShortcutKeyPanel());
-            myShortcutKeySP.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            myShortcutKeySP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         }
         return myShortcutKeySP;
     }

@@ -15,9 +15,9 @@ import org.junit.Test;
 import com.vividsolutions.jts.geom.Geometry;
 
 import io.opensphere.core.datafilter.DataFilter;
-import io.opensphere.core.matchers.EasyMockHelper;
 import io.opensphere.core.server.StreamHandler;
 import io.opensphere.core.util.concurrent.FixedThreadPoolExecutor;
+import io.opensphere.test.core.matchers.EasyMockHelper;
 
 /**
  * Tests the {@link WPSStreamingServer} class.

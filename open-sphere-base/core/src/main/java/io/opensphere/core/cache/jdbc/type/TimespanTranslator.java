@@ -34,7 +34,8 @@ public class TimespanTranslator extends AbstractValueTranslator<TimeSpan>
      */
     @Override
     public int getValue(Class<? extends TimeSpan> type, long sizeBytes, int column, ResultSet rs,
-            PropertyMatcher<? extends TimeSpan> filter, Collection<? super TimeSpan> results) throws CacheException
+            PropertyMatcher<? extends TimeSpan> filter, Collection<? super TimeSpan> results)
+        throws CacheException
     {
         try
         {

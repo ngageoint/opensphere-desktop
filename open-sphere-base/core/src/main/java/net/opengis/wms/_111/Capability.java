@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:39 PM MST 
 //
 
-
 package net.opengis.wms._111;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,149 +13,137 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "request",
-    "exception",
-    "vendorSpecificCapabilities",
-    "userDefinedSymbolization",
-    "layer"
-})
+@XmlType(name = "", propOrder = { "request", "exception", "vendorSpecificCapabilities", "userDefinedSymbolization", "layer" })
 @XmlRootElement(name = "Capability")
-public class Capability {
+public class Capability
+{
 
     @XmlElement(name = "Request", required = true)
     protected Request request;
+
     @XmlElement(name = "Exception", required = true)
     protected Exception exception;
+
     @XmlElement(name = "VendorSpecificCapabilities")
     protected VendorSpecificCapabilities vendorSpecificCapabilities;
+
     @XmlElement(name = "UserDefinedSymbolization")
     protected UserDefinedSymbolization userDefinedSymbolization;
+
     @XmlElement(name = "Layer")
     protected Layer layer;
 
     /**
      * Gets the value of the request property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Request }
-     *     
+     * @return possible object is {@link Request }
+     * 
      */
-    public Request getRequest() {
+    public Request getRequest()
+    {
         return request;
     }
 
     /**
      * Sets the value of the request property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Request }
-     *     
+     * @param value allowed object is {@link Request }
+     * 
      */
-    public void setRequest(Request value) {
+    public void setRequest(Request value)
+    {
         this.request = value;
     }
 
     /**
      * Gets the value of the exception property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Exception }
-     *     
+     * @return possible object is {@link Exception }
+     * 
      */
-    public Exception getException() {
+    public Exception getException()
+    {
         return exception;
     }
 
     /**
      * Sets the value of the exception property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Exception }
-     *     
+     * @param value allowed object is {@link Exception }
+     * 
      */
-    public void setException(Exception value) {
+    public void setException(Exception value)
+    {
         this.exception = value;
     }
 
     /**
      * Gets the value of the vendorSpecificCapabilities property.
      * 
-     * @return
-     *     possible object is
-     *     {@link VendorSpecificCapabilities }
-     *     
+     * @return possible object is {@link VendorSpecificCapabilities }
+     * 
      */
-    public VendorSpecificCapabilities getVendorSpecificCapabilities() {
+    public VendorSpecificCapabilities getVendorSpecificCapabilities()
+    {
         return vendorSpecificCapabilities;
     }
 
     /**
      * Sets the value of the vendorSpecificCapabilities property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link VendorSpecificCapabilities }
-     *     
+     * @param value allowed object is {@link VendorSpecificCapabilities }
+     * 
      */
-    public void setVendorSpecificCapabilities(VendorSpecificCapabilities value) {
+    public void setVendorSpecificCapabilities(VendorSpecificCapabilities value)
+    {
         this.vendorSpecificCapabilities = value;
     }
 
     /**
      * Gets the value of the userDefinedSymbolization property.
      * 
-     * @return
-     *     possible object is
-     *     {@link UserDefinedSymbolization }
-     *     
+     * @return possible object is {@link UserDefinedSymbolization }
+     * 
      */
-    public UserDefinedSymbolization getUserDefinedSymbolization() {
+    public UserDefinedSymbolization getUserDefinedSymbolization()
+    {
         return userDefinedSymbolization;
     }
 
     /**
      * Sets the value of the userDefinedSymbolization property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link UserDefinedSymbolization }
-     *     
+     * @param value allowed object is {@link UserDefinedSymbolization }
+     * 
      */
-    public void setUserDefinedSymbolization(UserDefinedSymbolization value) {
+    public void setUserDefinedSymbolization(UserDefinedSymbolization value)
+    {
         this.userDefinedSymbolization = value;
     }
 
     /**
      * Gets the value of the layer property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Layer }
-     *     
+     * @return possible object is {@link Layer }
+     * 
      */
-    public Layer getLayer() {
+    public Layer getLayer()
+    {
         return layer;
     }
 
     /**
      * Sets the value of the layer property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Layer }
-     *     
+     * @param value allowed object is {@link Layer }
+     * 
      */
-    public void setLayer(Layer value) {
+    public void setLayer(Layer value)
+    {
         this.layer = value;
     }
 

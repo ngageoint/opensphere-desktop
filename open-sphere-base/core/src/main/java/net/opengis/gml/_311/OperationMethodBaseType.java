@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Basic encoding for operation method objects, simplifying and restricting the DefinitionType as needed. 
+ * Basic encoding for operation method objects, simplifying and restricting the
+ * DefinitionType as needed.
  * 
- * <p>Java class for OperationMethodBaseType complex type.
+ * <p>
+ * Java class for OperationMethodBaseType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="OperationMethodBaseType">
@@ -39,12 +41,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "OperationMethodBaseType")
-@XmlSeeAlso({
-    OperationMethodType.class
-})
-public abstract class OperationMethodBaseType
-    extends DefinitionType
+@XmlSeeAlso({ OperationMethodType.class })
+public abstract class OperationMethodBaseType extends DefinitionType
 {
-
 
 }

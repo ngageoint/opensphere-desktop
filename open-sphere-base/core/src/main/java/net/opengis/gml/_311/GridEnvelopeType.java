@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.math.BigInteger;
@@ -18,13 +17,18 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Provides grid coordinate values for the diametrically opposed corners of an envelope that bounds a section of grid. The value of a single coordinate is the number of offsets from the origin of the grid in the direction of a specific axis.
+ * Provides grid coordinate values for the diametrically opposed corners of an
+ * envelope that bounds a section of grid. The value of a single coordinate is
+ * the number of offsets from the origin of the grid in the direction of a
+ * specific axis.
  * 
- * <p>Java class for GridEnvelopeType complex type.
+ * <p>
+ * Java class for GridEnvelopeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GridEnvelopeType">
@@ -42,15 +46,14 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GridEnvelopeType", propOrder = {
-    "low",
-    "high"
-})
-public class GridEnvelopeType {
+@XmlType(name = "GridEnvelopeType", propOrder = { "low", "high" })
+public class GridEnvelopeType
+{
 
     @XmlList
     @XmlElement(required = true)
     protected List<BigInteger> low;
+
     @XmlList
     @XmlElement(required = true)
     protected List<BigInteger> high;
@@ -59,15 +62,16 @@ public class GridEnvelopeType {
      * Gets the value of the low property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the low property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the low property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLow().add(newItem);
+     * getLow().add(newItem);
      * </pre>
      * 
      * 
@@ -77,8 +81,10 @@ public class GridEnvelopeType {
      * 
      * 
      */
-    public List<BigInteger> getLow() {
-        if (low == null) {
+    public List<BigInteger> getLow()
+    {
+        if (low == null)
+        {
             low = new ArrayList<BigInteger>();
         }
         return this.low;
@@ -88,15 +94,16 @@ public class GridEnvelopeType {
      * Gets the value of the high property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the high property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the high property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getHigh().add(newItem);
+     * getHigh().add(newItem);
      * </pre>
      * 
      * 
@@ -106,8 +113,10 @@ public class GridEnvelopeType {
      * 
      * 
      */
-    public List<BigInteger> getHigh() {
-        if (high == null) {
+    public List<BigInteger> getHigh()
+    {
+        if (high == null)
+        {
             high = new ArrayList<BigInteger>();
         }
         return this.high;

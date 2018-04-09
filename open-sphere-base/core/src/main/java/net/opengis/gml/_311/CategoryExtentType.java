@@ -5,20 +5,22 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Restriction of list type to store a 2-point range of ordinal values. If one member is a null, then this is a single ended interval.
+ * Restriction of list type to store a 2-point range of ordinal values. If one
+ * member is a null, then this is a single ended interval.
  * 
- * <p>Java class for CategoryExtentType complex type.
+ * <p>
+ * Java class for CategoryExtentType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CategoryExtentType">
@@ -33,9 +35,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CategoryExtentType")
-public class CategoryExtentType
-    extends CodeOrNullListType
+public class CategoryExtentType extends CodeOrNullListType
 {
-
 
 }

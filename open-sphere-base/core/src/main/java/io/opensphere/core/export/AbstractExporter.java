@@ -53,8 +53,8 @@ public abstract class AbstractExporter implements Exporter
      * Export to a file.
      *
      * @param file The file.
-     * @throws IOException If a problem occurs writing to the target.
-     * @throws ExportException If a problem occurs during export.
+     * @throws IOException If a   problem occurs writing to the target.
+     * @throws ExportException If a   problem occurs during export.
      * @return the file exported to.
      */
     public File export(File file) throws IOException, ExportException
@@ -86,7 +86,7 @@ public abstract class AbstractExporter implements Exporter
      * Export to a DOM node.
      *
      * @param node The node.
-     * @throws ExportException If a problem occurs during export.
+     * @throws ExportException If a   problem occurs during export.
      */
     public void export(Node node) throws ExportException
     {

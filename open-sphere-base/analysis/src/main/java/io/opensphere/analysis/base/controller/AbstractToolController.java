@@ -9,11 +9,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
-import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.StringProperty;
-import javafx.scene.paint.Color;
-
 import io.opensphere.analysis.base.model.BinType;
 import io.opensphere.analysis.base.model.DataType;
 import io.opensphere.analysis.base.model.SettingsModel;
@@ -54,6 +49,10 @@ import io.opensphere.mantle.data.event.DataTypeInfoColorChangeEvent;
 import io.opensphere.mantle.data.event.DataTypeInfoMetaDataKeyAddedChangeEvent;
 import io.opensphere.mantle.data.event.DataTypeInfoMetaDataKeyRemovedChangeEvent;
 import io.opensphere.mantle.data.util.DataElementLookupUtils;
+import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
+import javafx.scene.paint.Color;
 
 /** Abstract tool controller. */
 public abstract class AbstractToolController extends EventListenerService

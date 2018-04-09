@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
 
 import org.apache.log4j.Logger;
 
@@ -166,16 +166,12 @@ public class LabelRendererImmediate extends AbstractRenderer<LabelGeometry> impl
                                     lastColor = lRen.getShadowColorARGB();
                                     GLUtilities.setRendererColor(rend, lastColor);
                                 }
-                                drawMultiLine(rend, label.getText(),
-                                        vector.getX() + lRen.getShadowOffsetX(),
-                                        vector.getY() + lRen.getShadowOffsetY(),
-                                        -modelCoords.getBaselineDelta());
+                                drawMultiLine(rend, label.getText(), vector.getX() + lRen.getShadowOffsetX(),
+                                        vector.getY() + lRen.getShadowOffsetY(), -modelCoords.getBaselineDelta());
                             }
 
-                            lastColor = GLUtilities.setRendererColor(rend,
-                                    pickManager, rc.getRenderMode(), label, lastColor);
-                            drawMultiLine(rend, label.getText(), vector.getX(),
-                                    vector.getY(), -modelCoords.getBaselineDelta());
+                            lastColor = GLUtilities.setRendererColor(rend, pickManager, rc.getRenderMode(), label, lastColor);
+                            drawMultiLine(rend, label.getText(), vector.getX(), vector.getY(), -modelCoords.getBaselineDelta());
                         }
                     }
                 }
@@ -195,7 +191,7 @@ public class LabelRendererImmediate extends AbstractRenderer<LabelGeometry> impl
         float dy = (float)dy0;
         String[] lines = txt.split("\\n");
         y -= (lines.length - 1) * dy;
-        for (String ln :  lines)
+        for (String ln : lines)
         {
             rend.draw3D(ln, x, y, 0f, 1f);
             y += dy;

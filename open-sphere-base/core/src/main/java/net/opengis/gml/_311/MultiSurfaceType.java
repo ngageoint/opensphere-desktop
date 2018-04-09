@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,13 +15,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A MultiSurface is defined by one or more Surfaces, referenced through surfaceMember elements.
+ * A MultiSurface is defined by one or more Surfaces, referenced through
+ * surfaceMember elements.
  * 
- * <p>Java class for MultiSurfaceType complex type.
+ * <p>
+ * Java class for MultiSurfaceType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="MultiSurfaceType">
@@ -40,15 +42,12 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MultiSurfaceType", propOrder = {
-    "surfaceMember",
-    "surfaceMemberList"
-})
-public class MultiSurfaceType
-    extends AbstractGeometricAggregateType
+@XmlType(name = "MultiSurfaceType", propOrder = { "surfaceMember", "surfaceMemberList" })
+public class MultiSurfaceType extends AbstractGeometricAggregateType
 {
 
     protected List<SurfacePropertyType> surfaceMember;
+
     @XmlElement(name = "surfaceMembers")
     protected SurfaceArrayPropertyType surfaceMemberList;
 
@@ -56,15 +55,16 @@ public class MultiSurfaceType
      * Gets the value of the surfaceMember property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the surfaceMember property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the surfaceMember property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSurfaceMember().add(newItem);
+     * getSurfaceMember().add(newItem);
      * </pre>
      * 
      * 
@@ -74,8 +74,10 @@ public class MultiSurfaceType
      * 
      * 
      */
-    public List<SurfacePropertyType> getSurfaceMember() {
-        if (surfaceMember == null) {
+    public List<SurfacePropertyType> getSurfaceMember()
+    {
+        if (surfaceMember == null)
+        {
             surfaceMember = new ArrayList<SurfacePropertyType>();
         }
         return this.surfaceMember;
@@ -84,24 +86,22 @@ public class MultiSurfaceType
     /**
      * Gets the value of the surfaceMemberList property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SurfaceArrayPropertyType }
-     *     
+     * @return possible object is {@link SurfaceArrayPropertyType }
+     * 
      */
-    public SurfaceArrayPropertyType getSurfaceMemberList() {
+    public SurfaceArrayPropertyType getSurfaceMemberList()
+    {
         return surfaceMemberList;
     }
 
     /**
      * Sets the value of the surfaceMemberList property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SurfaceArrayPropertyType }
-     *     
+     * @param value allowed object is {@link SurfaceArrayPropertyType }
+     * 
      */
-    public void setSurfaceMemberList(SurfaceArrayPropertyType value) {
+    public void setSurfaceMemberList(SurfaceArrayPropertyType value)
+    {
         this.surfaceMemberList = value;
     }
 

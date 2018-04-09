@@ -13,8 +13,8 @@ import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.terrain.util.ElevationImageReaderException;
-import io.opensphere.core.testutils.TestUtils;
 import io.opensphere.stkterrain.model.mesh.QuantizedMesh;
+import io.opensphere.test.core.testutils.TestUtils;
 
 /**
  * Unit test for {@link STKElevationImageReader}.
@@ -44,6 +44,7 @@ public class STKElevationImageReaderTestFunctional
 
         assertEquals(1276.74,
                 reader.readElevation(new GeographicPosition(LatLonAlt.createFromDegrees(40, -105)), mesh, bounds, true), 0.01d);
-        assertEquals(-Short.MIN_VALUE, reader.readElevation(new GeographicPosition(LatLonAlt.createFromDegrees(40, -105)), null, bounds, true), 0);
+        assertEquals(-Short.MIN_VALUE,
+                reader.readElevation(new GeographicPosition(LatLonAlt.createFromDegrees(40, -105)), null, bounds, true), 0);
     }
 }

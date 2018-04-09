@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,13 +14,19 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Reference to a unit of measure definition that applies to all the numerical values described by the element containing this element. Notice that a complexType which needs to include the uom attribute can do so by extending this complexType. Alternately, this complexType can be used as a pattern for a new complexType.
+ * Reference to a unit of measure definition that applies to all the numerical
+ * values described by the element containing this element. Notice that a
+ * complexType which needs to include the uom attribute can do so by extending
+ * this complexType. Alternately, this complexType can be used as a pattern for
+ * a new complexType.
  * 
- * <p>Java class for UnitOfMeasureType complex type.
+ * <p>
+ * Java class for UnitOfMeasureType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="UnitOfMeasureType">
@@ -39,11 +44,9 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "UnitOfMeasureType")
-@XmlSeeAlso({
-    ConversionToPreferredUnitType.class,
-    DerivationUnitTermType.class
-})
-public class UnitOfMeasureType {
+@XmlSeeAlso({ ConversionToPreferredUnitType.class, DerivationUnitTermType.class })
+public class UnitOfMeasureType
+{
 
     @XmlAttribute(name = "uom", required = true)
     @XmlSchemaType(name = "anyURI")
@@ -52,24 +55,22 @@ public class UnitOfMeasureType {
     /**
      * Gets the value of the uom property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getUom() {
+    public String getUom()
+    {
         return uom;
     }
 
     /**
      * Sets the value of the uom property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setUom(String value) {
+    public void setUom(String value)
+    {
         this.uom = value;
     }
 

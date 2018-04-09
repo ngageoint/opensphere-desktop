@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,13 +13,16 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Listing of the Coordinate Reference System (CRS) support for this process input or output. 
+ * Listing of the Coordinate Reference System (CRS) support for this process
+ * input or output.
  * 
- * <p>Java class for SupportedCRSsType complex type.
+ * <p>
+ * Java class for SupportedCRSsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SupportedCRSsType">
@@ -48,70 +50,67 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SupportedCRSsType", propOrder = {
-    "_default",
-    "supported"
-})
-public class SupportedCRSsType {
+@XmlType(name = "SupportedCRSsType", propOrder = { "_default", "supported" })
+public class SupportedCRSsType
+{
 
     @XmlElement(name = "Default", namespace = "", required = true)
     protected SupportedCRSsType.Default _default;
+
     @XmlElement(name = "Supported", namespace = "", required = true)
     protected CRSsType supported;
 
     /**
      * Gets the value of the default property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SupportedCRSsType.Default }
-     *     
+     * @return possible object is {@link SupportedCRSsType.Default }
+     * 
      */
-    public SupportedCRSsType.Default getDefault() {
+    public SupportedCRSsType.Default getDefault()
+    {
         return _default;
     }
 
     /**
      * Sets the value of the default property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SupportedCRSsType.Default }
-     *     
+     * @param value allowed object is {@link SupportedCRSsType.Default }
+     * 
      */
-    public void setDefault(SupportedCRSsType.Default value) {
+    public void setDefault(SupportedCRSsType.Default value)
+    {
         this._default = value;
     }
 
     /**
      * Gets the value of the supported property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CRSsType }
-     *     
+     * @return possible object is {@link CRSsType }
+     * 
      */
-    public CRSsType getSupported() {
+    public CRSsType getSupported()
+    {
         return supported;
     }
 
     /**
      * Sets the value of the supported property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CRSsType }
-     *     
+     * @param value allowed object is {@link CRSsType }
+     * 
      */
-    public void setSupported(CRSsType value) {
+    public void setSupported(CRSsType value)
+    {
         this.supported = value;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -128,10 +127,9 @@ public class SupportedCRSsType {
      * 
      */
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "crs"
-    })
-    public static class Default {
+    @XmlType(name = "", propOrder = { "crs" })
+    public static class Default
+    {
 
         @XmlElement(name = "CRS", namespace = "", required = true)
         @XmlSchemaType(name = "anyURI")
@@ -140,24 +138,22 @@ public class SupportedCRSsType {
         /**
          * Gets the value of the crs property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getCRS() {
+        public String getCRS()
+        {
             return crs;
         }
 
         /**
          * Sets the value of the crs property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setCRS(String value) {
+        public void setCRS(String value)
+        {
             this.crs = value;
         }
 

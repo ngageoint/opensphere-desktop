@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ogc._110;
 
 import java.util.ArrayList;
@@ -16,11 +15,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ComparisonOperatorsType complex type.
+ * <p>
+ * Java class for ComparisonOperatorsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ComparisonOperatorsType">
@@ -37,10 +38,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ComparisonOperatorsType", propOrder = {
-    "comparisonOperator"
-})
-public class ComparisonOperatorsType {
+@XmlType(name = "ComparisonOperatorsType", propOrder = { "comparisonOperator" })
+public class ComparisonOperatorsType
+{
 
     @XmlElement(name = "ComparisonOperator", required = true)
     protected List<ComparisonOperatorType> comparisonOperator;
@@ -49,15 +49,16 @@ public class ComparisonOperatorsType {
      * Gets the value of the comparisonOperator property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the comparisonOperator property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the comparisonOperator property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getComparisonOperator().add(newItem);
+     * getComparisonOperator().add(newItem);
      * </pre>
      * 
      * 
@@ -67,8 +68,10 @@ public class ComparisonOperatorsType {
      * 
      * 
      */
-    public List<ComparisonOperatorType> getComparisonOperator() {
-        if (comparisonOperator == null) {
+    public List<ComparisonOperatorType> getComparisonOperator()
+    {
+        if (comparisonOperator == null)
+        {
             comparisonOperator = new ArrayList<ComparisonOperatorType>();
         }
         return this.comparisonOperator;

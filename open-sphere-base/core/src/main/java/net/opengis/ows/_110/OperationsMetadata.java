@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.ows._110;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -41,48 +42,53 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "operation",
-    "parameter",
-    "constraint",
-    "extendedCapabilities"
-})
+@XmlType(name = "", propOrder = { "operation", "parameter", "constraint", "extendedCapabilities" })
 @XmlRootElement(name = "OperationsMetadata")
-public class OperationsMetadata {
+public class OperationsMetadata
+{
 
     @XmlElement(name = "Operation", required = true)
     protected List<Operation> operation;
+
     @XmlElement(name = "Parameter")
     protected List<DomainType> parameter;
+
     @XmlElement(name = "Constraint")
     protected List<DomainType> constraint;
+
     @XmlElement(name = "ExtendedCapabilities")
     protected Object extendedCapabilities;
 
     /**
-     * Metadata for unordered list of all the (requests for) operations that this server interface implements. The list of required and optional operations implemented shall be specified in the Implementation Specification for this service. Gets the value of the operation property.
+     * Metadata for unordered list of all the (requests for) operations that
+     * this server interface implements. The list of required and optional
+     * operations implemented shall be specified in the Implementation
+     * Specification for this service. Gets the value of the operation property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the operation property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the operation property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getOperation().add(newItem);
+     * getOperation().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Operation }
+     * Objects of the following type(s) are allowed in the list {@link Operation
+     * }
      * 
      * 
      */
-    public List<Operation> getOperation() {
-        if (operation == null) {
+    public List<Operation> getOperation()
+    {
+        if (operation == null)
+        {
             operation = new ArrayList<Operation>();
         }
         return this.operation;
@@ -92,15 +98,16 @@ public class OperationsMetadata {
      * Gets the value of the parameter property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the parameter property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the parameter property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getParameter().add(newItem);
+     * getParameter().add(newItem);
      * </pre>
      * 
      * 
@@ -110,8 +117,10 @@ public class OperationsMetadata {
      * 
      * 
      */
-    public List<DomainType> getParameter() {
-        if (parameter == null) {
+    public List<DomainType> getParameter()
+    {
+        if (parameter == null)
+        {
             parameter = new ArrayList<DomainType>();
         }
         return this.parameter;
@@ -121,15 +130,16 @@ public class OperationsMetadata {
      * Gets the value of the constraint property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the constraint property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the constraint property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getConstraint().add(newItem);
+     * getConstraint().add(newItem);
      * </pre>
      * 
      * 
@@ -139,8 +149,10 @@ public class OperationsMetadata {
      * 
      * 
      */
-    public List<DomainType> getConstraint() {
-        if (constraint == null) {
+    public List<DomainType> getConstraint()
+    {
+        if (constraint == null)
+        {
             constraint = new ArrayList<DomainType>();
         }
         return this.constraint;
@@ -149,24 +161,22 @@ public class OperationsMetadata {
     /**
      * Gets the value of the extendedCapabilities property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
+     * @return possible object is {@link Object }
+     * 
      */
-    public Object getExtendedCapabilities() {
+    public Object getExtendedCapabilities()
+    {
         return extendedCapabilities;
     }
 
     /**
      * Sets the value of the extendedCapabilities property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
+     * @param value allowed object is {@link Object }
+     * 
      */
-    public void setExtendedCapabilities(Object value) {
+    public void setExtendedCapabilities(Object value)
+    {
         this.extendedCapabilities = value;
     }
 

@@ -138,7 +138,7 @@ public class Bifurcated2DAreaTree
     /**
      *
      * @param aShape - the shape to check for intersections
-     * @param fineSearch - if true the fine Area.intersects is used, rather than
+     * @param fineSearch - if  true the fine Area.intersects is used, rather than
      *            just bounds intersection
      * @return a {@link Set} of {@link Shape} that intersected the search shape
      */
@@ -218,7 +218,7 @@ public class Bifurcated2DAreaTree
          * @param shapeToTest - the shape to check for intersections
          * @param foundShapes - the set to add result to when found, if null one
          *            is created and returned
-         * @param fineSearch - if true the fine Area.intersects is used, rather
+         * @param fineSearch - if  true the fine Area.intersects is used, rather
          *            than just bounds intersection
          * @return the result set, same object as foundShapes if foundShapes
          *         wasn't null or a new set.

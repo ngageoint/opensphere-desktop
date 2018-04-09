@@ -5,20 +5,24 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A three-dimensional coordinate system with one distance measured from the origin and two angular coordinates. Not to be confused with an ellipsoidal coordinate system based on an ellipsoid "degenerated" into a sphere. A SphericalCS shall have three usesAxis associations. 
+ * A three-dimensional coordinate system with one distance measured from the
+ * origin and two angular coordinates. Not to be confused with an ellipsoidal
+ * coordinate system based on an ellipsoid "degenerated" into a sphere. A
+ * SphericalCS shall have three usesAxis associations.
  * 
- * <p>Java class for SphericalCSType complex type.
+ * <p>
+ * Java class for SphericalCSType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SphericalCSType">
@@ -33,9 +37,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SphericalCSType")
-public class SphericalCSType
-    extends AbstractCoordinateSystemType
+public class SphericalCSType extends AbstractCoordinateSystemType
 {
-
 
 }

@@ -36,7 +36,7 @@ public class DataRegistryImplTest
      * .
      *
      * @throws CacheException If there is a cache error.
-     * @throws NotSerializableException If a value is not serializable.
+     * @throws NotSerializableException If a   value is not serializable.
      * @throws InterruptedException If the test is interrupted.
      */
     @SuppressWarnings("unchecked")

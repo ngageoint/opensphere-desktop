@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * [complexType of] The style descriptor for topologies of a feature. Describes individual topology elements styles.
+ * [complexType of] The style descriptor for topologies of a feature. Describes
+ * individual topology elements styles.
  * 
- * <p>Java class for TopologyStyleType complex type.
+ * <p>
+ * Java class for TopologyStyleType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TopologyStyleType">
@@ -42,140 +44,129 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TopologyStyleType", propOrder = {
-    "symbol",
-    "style",
-    "labelStyle"
-})
-public class TopologyStyleType
-    extends BaseStyleDescriptorType
+@XmlType(name = "TopologyStyleType", propOrder = { "symbol", "style", "labelStyle" })
+public class TopologyStyleType extends BaseStyleDescriptorType
 {
 
     protected SymbolType symbol;
+
     protected String style;
+
     protected LabelStylePropertyType labelStyle;
+
     @XmlAttribute(name = "topologyProperty")
     protected String topologyProperty;
+
     @XmlAttribute(name = "topologyType")
     protected String topologyType;
 
     /**
      * Gets the value of the symbol property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SymbolType }
-     *     
+     * @return possible object is {@link SymbolType }
+     * 
      */
-    public SymbolType getSymbol() {
+    public SymbolType getSymbol()
+    {
         return symbol;
     }
 
     /**
      * Sets the value of the symbol property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SymbolType }
-     *     
+     * @param value allowed object is {@link SymbolType }
+     * 
      */
-    public void setSymbol(SymbolType value) {
+    public void setSymbol(SymbolType value)
+    {
         this.symbol = value;
     }
 
     /**
      * Gets the value of the style property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getStyle() {
+    public String getStyle()
+    {
         return style;
     }
 
     /**
      * Sets the value of the style property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setStyle(String value) {
+    public void setStyle(String value)
+    {
         this.style = value;
     }
 
     /**
      * Gets the value of the labelStyle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LabelStylePropertyType }
-     *     
+     * @return possible object is {@link LabelStylePropertyType }
+     * 
      */
-    public LabelStylePropertyType getLabelStyle() {
+    public LabelStylePropertyType getLabelStyle()
+    {
         return labelStyle;
     }
 
     /**
      * Sets the value of the labelStyle property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LabelStylePropertyType }
-     *     
+     * @param value allowed object is {@link LabelStylePropertyType }
+     * 
      */
-    public void setLabelStyle(LabelStylePropertyType value) {
+    public void setLabelStyle(LabelStylePropertyType value)
+    {
         this.labelStyle = value;
     }
 
     /**
      * Gets the value of the topologyProperty property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTopologyProperty() {
+    public String getTopologyProperty()
+    {
         return topologyProperty;
     }
 
     /**
      * Sets the value of the topologyProperty property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTopologyProperty(String value) {
+    public void setTopologyProperty(String value)
+    {
         this.topologyProperty = value;
     }
 
     /**
      * Gets the value of the topologyType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTopologyType() {
+    public String getTopologyType()
+    {
         return topologyType;
     }
 
     /**
      * Sets the value of the topologyType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTopologyType(String value) {
+    public void setTopologyType(String value)
+    {
         this.topologyType = value;
     }
 

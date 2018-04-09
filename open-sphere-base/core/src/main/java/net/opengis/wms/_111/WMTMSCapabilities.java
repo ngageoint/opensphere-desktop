@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:39 PM MST 
 //
 
-
 package net.opengis.wms._111;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,41 +16,43 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "service",
-    "capability"
-})
+@XmlType(name = "", propOrder = { "service", "capability" })
 @XmlRootElement(name = "WMT_MS_Capabilities")
-public class WMTMSCapabilities {
+public class WMTMSCapabilities
+{
 
     @XmlAttribute
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String version;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String updateSequence;
+
     @XmlElement(name = "Service", required = true)
     protected Service service;
+
     @XmlElement(name = "Capability", required = true)
     protected Capability capability;
 
     /**
      * Gets the value of the version property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getVersion() {
-        if (version == null) {
+    public String getVersion()
+    {
+        if (version == null)
+        {
             return "1.1.1";
-        } else {
+        }
+        else
+        {
             return version;
         }
     }
@@ -59,84 +60,77 @@ public class WMTMSCapabilities {
     /**
      * Sets the value of the version property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setVersion(String value) {
+    public void setVersion(String value)
+    {
         this.version = value;
     }
 
     /**
      * Gets the value of the updateSequence property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getUpdateSequence() {
+    public String getUpdateSequence()
+    {
         return updateSequence;
     }
 
     /**
      * Sets the value of the updateSequence property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setUpdateSequence(String value) {
+    public void setUpdateSequence(String value)
+    {
         this.updateSequence = value;
     }
 
     /**
      * Gets the value of the service property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Service }
-     *     
+     * @return possible object is {@link Service }
+     * 
      */
-    public Service getService() {
+    public Service getService()
+    {
         return service;
     }
 
     /**
      * Sets the value of the service property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Service }
-     *     
+     * @param value allowed object is {@link Service }
+     * 
      */
-    public void setService(Service value) {
+    public void setService(Service value)
+    {
         this.service = value;
     }
 
     /**
      * Gets the value of the capability property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Capability }
-     *     
+     * @return possible object is {@link Capability }
+     * 
      */
-    public Capability getCapability() {
+    public Capability getCapability()
+    {
         return capability;
     }
 
     /**
      * Sets the value of the capability property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Capability }
-     *     
+     * @param value allowed object is {@link Capability }
+     * 
      */
-    public void setCapability(Capability value) {
+    public void setCapability(Capability value)
+    {
         this.capability = value;
     }
 

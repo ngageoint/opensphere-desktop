@@ -10,7 +10,7 @@ public final class EqualsHelper
      *
      * @param values The pairs to compare.
      * @return <code>true</code> if all the pairs are equal.
-     * @throws ArrayIndexOutOfBoundsException if an odd number of objects is
+     * @throws ArrayIndexOutOfBoundsException if an  odd number of objects is
      *             passed in.
      * @see #equals(Object, Object)
      */
@@ -44,7 +44,7 @@ public final class EqualsHelper
      *
      * @param objs The pairs to compare.
      * @return <code>true</code> if all the pairs are equal.
-     * @throws ArrayIndexOutOfBoundsException if an odd number of objects is
+     * @throws ArrayIndexOutOfBoundsException if an  odd number of objects is
      *             passed in.
      * @see #equals(Object, Object)
      */
@@ -81,7 +81,7 @@ public final class EqualsHelper
      *
      * @param values The pairs to compare.
      * @return <code>true</code> if all the pairs are equal.
-     * @throws ArrayIndexOutOfBoundsException if an odd number of objects is
+     * @throws ArrayIndexOutOfBoundsException if an  odd number of objects is
      *             passed in.
      * @see #equals(Object, Object)
      */
@@ -103,7 +103,7 @@ public final class EqualsHelper
      *
      * @param values The pairs to compare.
      * @return <code>true</code> if all the pairs are equal.
-     * @throws ArrayIndexOutOfBoundsException if an odd number of objects is
+     * @throws ArrayIndexOutOfBoundsException if an  odd number of objects is
      *             passed in.
      * @see #equals(Object, Object)
      */

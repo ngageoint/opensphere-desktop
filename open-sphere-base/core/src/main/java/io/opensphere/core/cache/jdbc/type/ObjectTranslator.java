@@ -33,7 +33,8 @@ public class ObjectTranslator extends AbstractValueTranslator<Object>
      */
     @Override
     public int getValue(Class<? extends Object> type, long sizeBytes, int column, ResultSet rs,
-            PropertyMatcher<? extends Object> filter, Collection<Object> results) throws CacheException
+            PropertyMatcher<? extends Object> filter, Collection<Object> results)
+        throws CacheException
     {
         try
         {

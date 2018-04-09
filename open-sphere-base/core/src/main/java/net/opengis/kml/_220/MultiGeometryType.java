@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for MultiGeometryType complex type.
+ * <p>
+ * Java class for MultiGeometryType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="MultiGeometryType">
@@ -42,20 +43,18 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MultiGeometryType", propOrder = {
-    "abstractGeometryGroup",
-    "multiGeometrySimpleExtensionGroup",
-    "multiGeometryObjectExtensionGroup"
-})
-public class MultiGeometryType
-    extends AbstractGeometryType
+@XmlType(name = "MultiGeometryType", propOrder = { "abstractGeometryGroup", "multiGeometrySimpleExtensionGroup",
+    "multiGeometryObjectExtensionGroup" })
+public class MultiGeometryType extends AbstractGeometryType
 {
 
     @XmlElementRef(name = "AbstractGeometryGroup", namespace = "http://www.opengis.net/kml/2.2", type = JAXBElement.class, required = false)
     protected List<JAXBElement<? extends AbstractGeometryType>> abstractGeometryGroup;
+
     @XmlElement(name = "MultiGeometrySimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> multiGeometrySimpleExtensionGroup;
+
     @XmlElement(name = "MultiGeometryObjectExtensionGroup")
     protected List<AbstractObjectType> multiGeometryObjectExtensionGroup;
 
@@ -63,15 +62,16 @@ public class MultiGeometryType
      * Gets the value of the abstractGeometryGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractGeometryGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractGeometryGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractGeometryGroup().add(newItem);
+     * getAbstractGeometryGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -87,18 +87,22 @@ public class MultiGeometryType
      * 
      * 
      */
-    public List<JAXBElement<? extends AbstractGeometryType>> getAbstractGeometryGroup() {
-        if (abstractGeometryGroup == null) {
+    public List<JAXBElement<? extends AbstractGeometryType>> getAbstractGeometryGroup()
+    {
+        if (abstractGeometryGroup == null)
+        {
             abstractGeometryGroup = new ArrayList<JAXBElement<? extends AbstractGeometryType>>();
         }
         return this.abstractGeometryGroup;
     }
 
-    public boolean isSetAbstractGeometryGroup() {
-        return ((this.abstractGeometryGroup!= null)&&(!this.abstractGeometryGroup.isEmpty()));
+    public boolean isSetAbstractGeometryGroup()
+    {
+        return ((this.abstractGeometryGroup != null) && (!this.abstractGeometryGroup.isEmpty()));
     }
 
-    public void unsetAbstractGeometryGroup() {
+    public void unsetAbstractGeometryGroup()
+    {
         this.abstractGeometryGroup = null;
     }
 
@@ -106,36 +110,41 @@ public class MultiGeometryType
      * Gets the value of the multiGeometrySimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the multiGeometrySimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the multiGeometrySimpleExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getMultiGeometrySimpleExtensionGroup().add(newItem);
+     * getMultiGeometrySimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getMultiGeometrySimpleExtensionGroup() {
-        if (multiGeometrySimpleExtensionGroup == null) {
+    public List<Object> getMultiGeometrySimpleExtensionGroup()
+    {
+        if (multiGeometrySimpleExtensionGroup == null)
+        {
             multiGeometrySimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.multiGeometrySimpleExtensionGroup;
     }
 
-    public boolean isSetMultiGeometrySimpleExtensionGroup() {
-        return ((this.multiGeometrySimpleExtensionGroup!= null)&&(!this.multiGeometrySimpleExtensionGroup.isEmpty()));
+    public boolean isSetMultiGeometrySimpleExtensionGroup()
+    {
+        return ((this.multiGeometrySimpleExtensionGroup != null) && (!this.multiGeometrySimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetMultiGeometrySimpleExtensionGroup() {
+    public void unsetMultiGeometrySimpleExtensionGroup()
+    {
         this.multiGeometrySimpleExtensionGroup = null;
     }
 
@@ -143,15 +152,17 @@ public class MultiGeometryType
      * Gets the value of the multiGeometryObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the multiGeometryObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the multiGeometryObjectExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getMultiGeometryObjectExtensionGroup().add(newItem);
+     * getMultiGeometryObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -161,18 +172,22 @@ public class MultiGeometryType
      * 
      * 
      */
-    public List<AbstractObjectType> getMultiGeometryObjectExtensionGroup() {
-        if (multiGeometryObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getMultiGeometryObjectExtensionGroup()
+    {
+        if (multiGeometryObjectExtensionGroup == null)
+        {
             multiGeometryObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.multiGeometryObjectExtensionGroup;
     }
 
-    public boolean isSetMultiGeometryObjectExtensionGroup() {
-        return ((this.multiGeometryObjectExtensionGroup!= null)&&(!this.multiGeometryObjectExtensionGroup.isEmpty()));
+    public boolean isSetMultiGeometryObjectExtensionGroup()
+    {
+        return ((this.multiGeometryObjectExtensionGroup != null) && (!this.multiGeometryObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetMultiGeometryObjectExtensionGroup() {
+    public void unsetMultiGeometryObjectExtensionGroup()
+    {
         this.multiGeometryObjectExtensionGroup = null;
     }
 

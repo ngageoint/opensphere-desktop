@@ -5,19 +5,21 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for viewRefreshModeEnumType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for viewRefreshModeEnumType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="viewRefreshModeEnumType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -32,29 +34,32 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "viewRefreshModeEnumType")
 @XmlEnum
-public enum ViewRefreshModeEnumType {
+public enum ViewRefreshModeEnumType
+{
 
     @XmlEnumValue("never")
-    NEVER("never"),
-    @XmlEnumValue("onRequest")
-    ON_REQUEST("onRequest"),
-    @XmlEnumValue("onStop")
-    ON_STOP("onStop"),
-    @XmlEnumValue("onRegion")
+    NEVER("never"), @XmlEnumValue("onRequest")
+    ON_REQUEST("onRequest"), @XmlEnumValue("onStop")
+    ON_STOP("onStop"), @XmlEnumValue("onRegion")
     ON_REGION("onRegion");
     private final String value;
 
-    ViewRefreshModeEnumType(String v) {
+    ViewRefreshModeEnumType(String v)
+    {
         value = v;
     }
 
-    public String value() {
+    public String value()
+    {
         return value;
     }
 
-    public static ViewRefreshModeEnumType fromValue(String v) {
-        for (ViewRefreshModeEnumType c: ViewRefreshModeEnumType.values()) {
-            if (c.value.equals(v)) {
+    public static ViewRefreshModeEnumType fromValue(String v)
+    {
+        for (ViewRefreshModeEnumType c : ViewRefreshModeEnumType.values())
+        {
+            if (c.value.equals(v))
+            {
                 return c;
             }
         }

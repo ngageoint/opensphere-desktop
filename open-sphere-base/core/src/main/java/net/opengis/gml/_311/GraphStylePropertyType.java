@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,11 +14,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for GraphStylePropertyType complex type.
+ * <p>
+ * Java class for GraphStylePropertyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GraphStylePropertyType">
@@ -38,121 +39,125 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GraphStylePropertyType", propOrder = {
-    "graphStyle"
-})
-public class GraphStylePropertyType {
+@XmlType(name = "GraphStylePropertyType", propOrder = { "graphStyle" })
+public class GraphStylePropertyType
+{
 
     @XmlElement(name = "GraphStyle")
     protected GraphStyleType graphStyle;
+
     @XmlAttribute(name = "about")
     @XmlSchemaType(name = "anyURI")
     protected String about;
+
     @XmlAttribute(name = "remoteSchema", namespace = "http://www.opengis.net/gml")
     @XmlSchemaType(name = "anyURI")
     protected String remoteSchema;
+
     @XmlAttribute(name = "type", namespace = "http://www.w3.org/1999/xlink")
     protected String type;
+
     @XmlAttribute(name = "href", namespace = "http://www.w3.org/1999/xlink")
     @XmlSchemaType(name = "anyURI")
     protected String href;
+
     @XmlAttribute(name = "role", namespace = "http://www.w3.org/1999/xlink")
     @XmlSchemaType(name = "anyURI")
     protected String role;
+
     @XmlAttribute(name = "arcrole", namespace = "http://www.w3.org/1999/xlink")
     @XmlSchemaType(name = "anyURI")
     protected String arcrole;
+
     @XmlAttribute(name = "title", namespace = "http://www.w3.org/1999/xlink")
     protected String title;
+
     @XmlAttribute(name = "show", namespace = "http://www.w3.org/1999/xlink")
     protected String show;
+
     @XmlAttribute(name = "actuate", namespace = "http://www.w3.org/1999/xlink")
     protected String actuate;
 
     /**
      * Gets the value of the graphStyle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link GraphStyleType }
-     *     
+     * @return possible object is {@link GraphStyleType }
+     * 
      */
-    public GraphStyleType getGraphStyle() {
+    public GraphStyleType getGraphStyle()
+    {
         return graphStyle;
     }
 
     /**
      * Sets the value of the graphStyle property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link GraphStyleType }
-     *     
+     * @param value allowed object is {@link GraphStyleType }
+     * 
      */
-    public void setGraphStyle(GraphStyleType value) {
+    public void setGraphStyle(GraphStyleType value)
+    {
         this.graphStyle = value;
     }
 
     /**
      * Gets the value of the about property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getAbout() {
+    public String getAbout()
+    {
         return about;
     }
 
     /**
      * Sets the value of the about property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setAbout(String value) {
+    public void setAbout(String value)
+    {
         this.about = value;
     }
 
     /**
      * Gets the value of the remoteSchema property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getRemoteSchema() {
+    public String getRemoteSchema()
+    {
         return remoteSchema;
     }
 
     /**
      * Sets the value of the remoteSchema property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setRemoteSchema(String value) {
+    public void setRemoteSchema(String value)
+    {
         this.remoteSchema = value;
     }
 
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getType() {
-        if (type == null) {
+    public String getType()
+    {
+        if (type == null)
+        {
             return "simple";
-        } else {
+        }
+        else
+        {
             return type;
         }
     }
@@ -160,156 +165,143 @@ public class GraphStylePropertyType {
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setType(String value) {
+    public void setType(String value)
+    {
         this.type = value;
     }
 
     /**
      * Gets the value of the href property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHref() {
+    public String getHref()
+    {
         return href;
     }
 
     /**
      * Sets the value of the href property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHref(String value) {
+    public void setHref(String value)
+    {
         this.href = value;
     }
 
     /**
      * Gets the value of the role property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getRole() {
+    public String getRole()
+    {
         return role;
     }
 
     /**
      * Sets the value of the role property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setRole(String value) {
+    public void setRole(String value)
+    {
         this.role = value;
     }
 
     /**
      * Gets the value of the arcrole property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getArcrole() {
+    public String getArcrole()
+    {
         return arcrole;
     }
 
     /**
      * Sets the value of the arcrole property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setArcrole(String value) {
+    public void setArcrole(String value)
+    {
         this.arcrole = value;
     }
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
     /**
      * Gets the value of the show property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getShow() {
+    public String getShow()
+    {
         return show;
     }
 
     /**
      * Sets the value of the show property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setShow(String value) {
+    public void setShow(String value)
+    {
         this.show = value;
     }
 
     /**
      * Gets the value of the actuate property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getActuate() {
+    public String getActuate()
+    {
         return actuate;
     }
 
     /**
      * Sets the value of the actuate property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setActuate(String value) {
+    public void setActuate(String value)
+    {
         this.actuate = value;
     }
 

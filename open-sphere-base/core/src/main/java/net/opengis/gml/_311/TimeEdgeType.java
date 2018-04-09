@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * Type declaration of the element "TimeEdge".
  * 
- * <p>Java class for TimeEdgeType complex type.
+ * <p>
+ * Java class for TimeEdgeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TimeEdgeType">
@@ -38,90 +39,81 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TimeEdgeType", propOrder = {
-    "start",
-    "end",
-    "extent"
-})
-public class TimeEdgeType
-    extends AbstractTimeTopologyPrimitiveType
+@XmlType(name = "TimeEdgeType", propOrder = { "start", "end", "extent" })
+public class TimeEdgeType extends AbstractTimeTopologyPrimitiveType
 {
 
     @XmlElement(required = true)
     protected TimeNodePropertyType start;
+
     @XmlElement(required = true)
     protected TimeNodePropertyType end;
+
     protected TimePeriodPropertyType extent;
 
     /**
      * Gets the value of the start property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TimeNodePropertyType }
-     *     
+     * @return possible object is {@link TimeNodePropertyType }
+     * 
      */
-    public TimeNodePropertyType getStart() {
+    public TimeNodePropertyType getStart()
+    {
         return start;
     }
 
     /**
      * Sets the value of the start property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TimeNodePropertyType }
-     *     
+     * @param value allowed object is {@link TimeNodePropertyType }
+     * 
      */
-    public void setStart(TimeNodePropertyType value) {
+    public void setStart(TimeNodePropertyType value)
+    {
         this.start = value;
     }
 
     /**
      * Gets the value of the end property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TimeNodePropertyType }
-     *     
+     * @return possible object is {@link TimeNodePropertyType }
+     * 
      */
-    public TimeNodePropertyType getEnd() {
+    public TimeNodePropertyType getEnd()
+    {
         return end;
     }
 
     /**
      * Sets the value of the end property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TimeNodePropertyType }
-     *     
+     * @param value allowed object is {@link TimeNodePropertyType }
+     * 
      */
-    public void setEnd(TimeNodePropertyType value) {
+    public void setEnd(TimeNodePropertyType value)
+    {
         this.end = value;
     }
 
     /**
      * Gets the value of the extent property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TimePeriodPropertyType }
-     *     
+     * @return possible object is {@link TimePeriodPropertyType }
+     * 
      */
-    public TimePeriodPropertyType getExtent() {
+    public TimePeriodPropertyType getExtent()
+    {
         return extent;
     }
 
     /**
      * Sets the value of the extent property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TimePeriodPropertyType }
-     *     
+     * @param value allowed object is {@link TimePeriodPropertyType }
+     * 
      */
-    public void setExtent(TimePeriodPropertyType value) {
+    public void setExtent(TimePeriodPropertyType value)
+    {
         this.extent = value;
     }
 

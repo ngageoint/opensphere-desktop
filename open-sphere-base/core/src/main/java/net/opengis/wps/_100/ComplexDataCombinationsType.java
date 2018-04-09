@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import java.util.ArrayList;
@@ -16,13 +15,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Identifies valid combinations of Format, Encoding, and Schema supported for this input or output. The process shall expect input in or produce output in this combination of Format/Encoding/Schema unless the Execute request specifies otherwise.. 
+ * Identifies valid combinations of Format, Encoding, and Schema supported for
+ * this input or output. The process shall expect input in or produce output in
+ * this combination of Format/Encoding/Schema unless the Execute request
+ * specifies otherwise..
  * 
- * <p>Java class for ComplexDataCombinationsType complex type.
+ * <p>
+ * Java class for ComplexDataCombinationsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ComplexDataCombinationsType">
@@ -39,10 +43,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ComplexDataCombinationsType", propOrder = {
-    "format"
-})
-public class ComplexDataCombinationsType {
+@XmlType(name = "ComplexDataCombinationsType", propOrder = { "format" })
+public class ComplexDataCombinationsType
+{
 
     @XmlElement(name = "Format", namespace = "", required = true)
     protected List<ComplexDataDescriptionType> format;
@@ -51,15 +54,16 @@ public class ComplexDataCombinationsType {
      * Gets the value of the format property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the format property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the format property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getFormat().add(newItem);
+     * getFormat().add(newItem);
      * </pre>
      * 
      * 
@@ -69,8 +73,10 @@ public class ComplexDataCombinationsType {
      * 
      * 
      */
-    public List<ComplexDataDescriptionType> getFormat() {
-        if (format == null) {
+    public List<ComplexDataDescriptionType> getFormat()
+    {
+        if (format == null)
+        {
             format = new ArrayList<ComplexDataDescriptionType>();
         }
         return this.format;

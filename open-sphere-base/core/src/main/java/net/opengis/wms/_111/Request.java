@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:39 PM MST 
 //
 
-
 package net.opengis.wms._111;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,203 +13,188 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "getCapabilities",
-    "getMap",
-    "getFeatureInfo",
-    "describeLayer",
-    "getLegendGraphic",
-    "getStyles",
-    "putStyles"
-})
+@XmlType(name = "", propOrder = { "getCapabilities", "getMap", "getFeatureInfo", "describeLayer", "getLegendGraphic", "getStyles",
+    "putStyles" })
 @XmlRootElement(name = "Request")
-public class Request {
+public class Request
+{
 
     @XmlElement(name = "GetCapabilities", required = true)
     protected GetCapabilities getCapabilities;
+
     @XmlElement(name = "GetMap", required = true)
     protected GetMap getMap;
+
     @XmlElement(name = "GetFeatureInfo")
     protected GetFeatureInfo getFeatureInfo;
+
     @XmlElement(name = "DescribeLayer")
     protected DescribeLayer describeLayer;
+
     @XmlElement(name = "GetLegendGraphic")
     protected GetLegendGraphic getLegendGraphic;
+
     @XmlElement(name = "GetStyles")
     protected GetStyles getStyles;
+
     @XmlElement(name = "PutStyles")
     protected PutStyles putStyles;
 
     /**
      * Gets the value of the getCapabilities property.
      * 
-     * @return
-     *     possible object is
-     *     {@link GetCapabilities }
-     *     
+     * @return possible object is {@link GetCapabilities }
+     * 
      */
-    public GetCapabilities getGetCapabilities() {
+    public GetCapabilities getGetCapabilities()
+    {
         return getCapabilities;
     }
 
     /**
      * Sets the value of the getCapabilities property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link GetCapabilities }
-     *     
+     * @param value allowed object is {@link GetCapabilities }
+     * 
      */
-    public void setGetCapabilities(GetCapabilities value) {
+    public void setGetCapabilities(GetCapabilities value)
+    {
         this.getCapabilities = value;
     }
 
     /**
      * Gets the value of the getMap property.
      * 
-     * @return
-     *     possible object is
-     *     {@link GetMap }
-     *     
+     * @return possible object is {@link GetMap }
+     * 
      */
-    public GetMap getGetMap() {
+    public GetMap getGetMap()
+    {
         return getMap;
     }
 
     /**
      * Sets the value of the getMap property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link GetMap }
-     *     
+     * @param value allowed object is {@link GetMap }
+     * 
      */
-    public void setGetMap(GetMap value) {
+    public void setGetMap(GetMap value)
+    {
         this.getMap = value;
     }
 
     /**
      * Gets the value of the getFeatureInfo property.
      * 
-     * @return
-     *     possible object is
-     *     {@link GetFeatureInfo }
-     *     
+     * @return possible object is {@link GetFeatureInfo }
+     * 
      */
-    public GetFeatureInfo getGetFeatureInfo() {
+    public GetFeatureInfo getGetFeatureInfo()
+    {
         return getFeatureInfo;
     }
 
     /**
      * Sets the value of the getFeatureInfo property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link GetFeatureInfo }
-     *     
+     * @param value allowed object is {@link GetFeatureInfo }
+     * 
      */
-    public void setGetFeatureInfo(GetFeatureInfo value) {
+    public void setGetFeatureInfo(GetFeatureInfo value)
+    {
         this.getFeatureInfo = value;
     }
 
     /**
      * Gets the value of the describeLayer property.
      * 
-     * @return
-     *     possible object is
-     *     {@link DescribeLayer }
-     *     
+     * @return possible object is {@link DescribeLayer }
+     * 
      */
-    public DescribeLayer getDescribeLayer() {
+    public DescribeLayer getDescribeLayer()
+    {
         return describeLayer;
     }
 
     /**
      * Sets the value of the describeLayer property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DescribeLayer }
-     *     
+     * @param value allowed object is {@link DescribeLayer }
+     * 
      */
-    public void setDescribeLayer(DescribeLayer value) {
+    public void setDescribeLayer(DescribeLayer value)
+    {
         this.describeLayer = value;
     }
 
     /**
      * Gets the value of the getLegendGraphic property.
      * 
-     * @return
-     *     possible object is
-     *     {@link GetLegendGraphic }
-     *     
+     * @return possible object is {@link GetLegendGraphic }
+     * 
      */
-    public GetLegendGraphic getGetLegendGraphic() {
+    public GetLegendGraphic getGetLegendGraphic()
+    {
         return getLegendGraphic;
     }
 
     /**
      * Sets the value of the getLegendGraphic property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link GetLegendGraphic }
-     *     
+     * @param value allowed object is {@link GetLegendGraphic }
+     * 
      */
-    public void setGetLegendGraphic(GetLegendGraphic value) {
+    public void setGetLegendGraphic(GetLegendGraphic value)
+    {
         this.getLegendGraphic = value;
     }
 
     /**
      * Gets the value of the getStyles property.
      * 
-     * @return
-     *     possible object is
-     *     {@link GetStyles }
-     *     
+     * @return possible object is {@link GetStyles }
+     * 
      */
-    public GetStyles getGetStyles() {
+    public GetStyles getGetStyles()
+    {
         return getStyles;
     }
 
     /**
      * Sets the value of the getStyles property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link GetStyles }
-     *     
+     * @param value allowed object is {@link GetStyles }
+     * 
      */
-    public void setGetStyles(GetStyles value) {
+    public void setGetStyles(GetStyles value)
+    {
         this.getStyles = value;
     }
 
     /**
      * Gets the value of the putStyles property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PutStyles }
-     *     
+     * @return possible object is {@link PutStyles }
+     * 
      */
-    public PutStyles getPutStyles() {
+    public PutStyles getPutStyles()
+    {
         return putStyles;
     }
 
     /**
      * Sets the value of the putStyles property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PutStyles }
-     *     
+     * @param value allowed object is {@link PutStyles }
+     * 
      */
-    public void setPutStyles(PutStyles value) {
+    public void setPutStyles(PutStyles value)
+    {
         this.putStyles = value;
     }
 

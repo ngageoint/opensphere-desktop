@@ -5,10 +5,9 @@ package com.bitsys.common.http.ssl;
  */
 public final class LenientHostNameVerifier implements HostNameVerifier
 {
-   @Override
-   public boolean allowInvalidHostName(final String host, final String[] cns,
-                                       final String[] subjectAlts, final String reason)
-   {
-      return true;
-   }
+    @Override
+    public boolean allowInvalidHostName(final String host, final String[] cns, final String[] subjectAlts, final String reason)
+    {
+        return true;
+    }
 }

@@ -124,7 +124,7 @@ public class RetrieveDataModelCategoriesTask extends DatabaseTask implements Sta
      *
      * @param rs The result set.
      * @return The {@link DataModelCategory}s.
-     * @throws SQLException If a database error occurs.
+     * @throws SQLException If a   database error occurs.
      */
     protected List<DataModelCategory> convertResultSetToDataModelCategories(ResultSet rs) throws SQLException
     {

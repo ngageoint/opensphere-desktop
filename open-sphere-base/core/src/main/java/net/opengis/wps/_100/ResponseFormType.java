@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * Defines the response type of the WPS, either raw data or XML document
  * 
- * <p>Java class for ResponseFormType complex type.
+ * <p>
+ * Java class for ResponseFormType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ResponseFormType">
@@ -37,62 +38,57 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ResponseFormType", propOrder = {
-    "responseDocument",
-    "rawDataOutput"
-})
-public class ResponseFormType {
+@XmlType(name = "ResponseFormType", propOrder = { "responseDocument", "rawDataOutput" })
+public class ResponseFormType
+{
 
     @XmlElement(name = "ResponseDocument")
     protected ResponseDocumentType responseDocument;
+
     @XmlElement(name = "RawDataOutput")
     protected OutputDefinitionType rawDataOutput;
 
     /**
      * Gets the value of the responseDocument property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ResponseDocumentType }
-     *     
+     * @return possible object is {@link ResponseDocumentType }
+     * 
      */
-    public ResponseDocumentType getResponseDocument() {
+    public ResponseDocumentType getResponseDocument()
+    {
         return responseDocument;
     }
 
     /**
      * Sets the value of the responseDocument property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ResponseDocumentType }
-     *     
+     * @param value allowed object is {@link ResponseDocumentType }
+     * 
      */
-    public void setResponseDocument(ResponseDocumentType value) {
+    public void setResponseDocument(ResponseDocumentType value)
+    {
         this.responseDocument = value;
     }
 
     /**
      * Gets the value of the rawDataOutput property.
      * 
-     * @return
-     *     possible object is
-     *     {@link OutputDefinitionType }
-     *     
+     * @return possible object is {@link OutputDefinitionType }
+     * 
      */
-    public OutputDefinitionType getRawDataOutput() {
+    public OutputDefinitionType getRawDataOutput()
+    {
         return rawDataOutput;
     }
 
     /**
      * Sets the value of the rawDataOutput property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link OutputDefinitionType }
-     *     
+     * @param value allowed object is {@link OutputDefinitionType }
+     * 
      */
-    public void setRawDataOutput(OutputDefinitionType value) {
+    public void setRawDataOutput(OutputDefinitionType value)
+    {
         this.rawDataOutput = value;
     }
 

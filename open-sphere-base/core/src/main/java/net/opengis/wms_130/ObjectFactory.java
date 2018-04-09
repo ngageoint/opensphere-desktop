@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:41 PM MST 
 //
 
-
 package net.opengis.wms_130;
 
 import java.math.BigInteger;
@@ -15,66 +14,96 @@ import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 
-
 /**
- * This object contains factory methods for each 
- * Java content interface and Java element interface 
- * generated in the net.opengis.wms._130 package. 
- * <p>An ObjectFactory allows you to programatically 
- * construct new instances of the Java representation 
- * for XML content. The Java representation of XML 
- * content can consist of schema derived interfaces 
- * and classes representing the binding of schema 
- * type definitions, element declarations and model 
- * groups.  Factory methods for each of these are 
- * provided in this class.
+ * This object contains factory methods for each Java content interface and Java
+ * element interface generated in the net.opengis.wms._130 package.
+ * <p>
+ * An ObjectFactory allows you to programatically construct new instances of the
+ * Java representation for XML content. The Java representation of XML content
+ * can consist of schema derived interfaces and classes representing the binding
+ * of schema type definitions, element declarations and model groups. Factory
+ * methods for each of these are provided in this class.
  * 
  */
 @XmlRegistry
-public class ObjectFactory {
+public class ObjectFactory
+{
 
     private final static QName _Name_QNAME = new QName("http://www.opengis.net/wms", "Name");
+
     private final static QName _MinScaleDenominator_QNAME = new QName("http://www.opengis.net/wms", "MinScaleDenominator");
+
     private final static QName _PostCode_QNAME = new QName("http://www.opengis.net/wms", "PostCode");
+
     private final static QName _MaxHeight_QNAME = new QName("http://www.opengis.net/wms", "MaxHeight");
+
     private final static QName _Address_QNAME = new QName("http://www.opengis.net/wms", "Address");
-    private final static QName _ContactFacsimileTelephone_QNAME = new QName("http://www.opengis.net/wms", "ContactFacsimileTelephone");
+
+    private final static QName _ContactFacsimileTelephone_QNAME = new QName("http://www.opengis.net/wms",
+            "ContactFacsimileTelephone");
+
     private final static QName _AddressType_QNAME = new QName("http://www.opengis.net/wms", "AddressType");
+
     private final static QName _ContactVoiceTelephone_QNAME = new QName("http://www.opengis.net/wms", "ContactVoiceTelephone");
+
     private final static QName _Abstract_QNAME = new QName("http://www.opengis.net/wms", "Abstract");
+
     private final static QName _MaxWidth_QNAME = new QName("http://www.opengis.net/wms", "MaxWidth");
+
     private final static QName _AccessConstraints_QNAME = new QName("http://www.opengis.net/wms", "AccessConstraints");
+
     private final static QName _ExtendedCapabilities_QNAME = new QName("http://www.opengis.net/wms", "_ExtendedCapabilities");
+
     private final static QName _ContactPerson_QNAME = new QName("http://www.opengis.net/wms", "ContactPerson");
+
     private final static QName _GetCapabilities_QNAME = new QName("http://www.opengis.net/wms", "GetCapabilities");
+
     private final static QName _LayerLimit_QNAME = new QName("http://www.opengis.net/wms", "LayerLimit");
+
     private final static QName _ContactOrganization_QNAME = new QName("http://www.opengis.net/wms", "ContactOrganization");
+
     private final static QName _ExtendedOperation_QNAME = new QName("http://www.opengis.net/wms", "_ExtendedOperation");
+
     private final static QName _Country_QNAME = new QName("http://www.opengis.net/wms", "Country");
+
     private final static QName _City_QNAME = new QName("http://www.opengis.net/wms", "City");
+
     private final static QName _Title_QNAME = new QName("http://www.opengis.net/wms", "Title");
+
     private final static QName _Fees_QNAME = new QName("http://www.opengis.net/wms", "Fees");
+
     private final static QName _GetMap_QNAME = new QName("http://www.opengis.net/wms", "GetMap");
+
     private final static QName _GetFeatureInfo_QNAME = new QName("http://www.opengis.net/wms", "GetFeatureInfo");
+
     private final static QName _StateOrProvince_QNAME = new QName("http://www.opengis.net/wms", "StateOrProvince");
+
     private final static QName _Format_QNAME = new QName("http://www.opengis.net/wms", "Format");
+
     private final static QName _CRS_QNAME = new QName("http://www.opengis.net/wms", "CRS");
+
     private final static QName _MaxScaleDenominator_QNAME = new QName("http://www.opengis.net/wms", "MaxScaleDenominator");
-    private final static QName _ContactElectronicMailAddress_QNAME = new QName("http://www.opengis.net/wms", "ContactElectronicMailAddress");
+
+    private final static QName _ContactElectronicMailAddress_QNAME = new QName("http://www.opengis.net/wms",
+            "ContactElectronicMailAddress");
+
     private final static QName _ContactPosition_QNAME = new QName("http://www.opengis.net/wms", "ContactPosition");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: net.opengis.wms._130
+     * Create a new ObjectFactory that can be used to create new instances of
+     * schema derived classes for package: net.opengis.wms._130
      * 
      */
-    public ObjectFactory() {
+    public ObjectFactory()
+    {
     }
 
     /**
      * Create an instance of {@link Get }
      * 
      */
-    public Get createGet() {
+    public Get createGet()
+    {
         return new Get();
     }
 
@@ -82,7 +111,8 @@ public class ObjectFactory {
      * Create an instance of {@link WMSCapabilities }
      * 
      */
-    public WMSCapabilities createWMSCapabilities() {
+    public WMSCapabilities createWMSCapabilities()
+    {
         return new WMSCapabilities();
     }
 
@@ -90,7 +120,8 @@ public class ObjectFactory {
      * Create an instance of {@link StyleSheetURL }
      * 
      */
-    public StyleSheetURL createStyleSheetURL() {
+    public StyleSheetURL createStyleSheetURL()
+    {
         return new StyleSheetURL();
     }
 
@@ -98,7 +129,8 @@ public class ObjectFactory {
      * Create an instance of {@link ContactPersonPrimary }
      * 
      */
-    public ContactPersonPrimary createContactPersonPrimary() {
+    public ContactPersonPrimary createContactPersonPrimary()
+    {
         return new ContactPersonPrimary();
     }
 
@@ -106,7 +138,8 @@ public class ObjectFactory {
      * Create an instance of {@link OperationType }
      * 
      */
-    public OperationType createOperationType() {
+    public OperationType createOperationType()
+    {
         return new OperationType();
     }
 
@@ -114,7 +147,8 @@ public class ObjectFactory {
      * Create an instance of {@link KeywordList }
      * 
      */
-    public KeywordList createKeywordList() {
+    public KeywordList createKeywordList()
+    {
         return new KeywordList();
     }
 
@@ -122,7 +156,8 @@ public class ObjectFactory {
      * Create an instance of {@link Service }
      * 
      */
-    public Service createService() {
+    public Service createService()
+    {
         return new Service();
     }
 
@@ -130,7 +165,8 @@ public class ObjectFactory {
      * Create an instance of {@link StyleURL }
      * 
      */
-    public StyleURL createStyleURL() {
+    public StyleURL createStyleURL()
+    {
         return new StyleURL();
     }
 
@@ -138,7 +174,8 @@ public class ObjectFactory {
      * Create an instance of {@link Post }
      * 
      */
-    public Post createPost() {
+    public Post createPost()
+    {
         return new Post();
     }
 
@@ -146,7 +183,8 @@ public class ObjectFactory {
      * Create an instance of {@link LegendURL }
      * 
      */
-    public LegendURL createLegendURL() {
+    public LegendURL createLegendURL()
+    {
         return new LegendURL();
     }
 
@@ -154,7 +192,8 @@ public class ObjectFactory {
      * Create an instance of {@link Style }
      * 
      */
-    public Style createStyle() {
+    public Style createStyle()
+    {
         return new Style();
     }
 
@@ -162,7 +201,8 @@ public class ObjectFactory {
      * Create an instance of {@link ContactInformation }
      * 
      */
-    public ContactInformation createContactInformation() {
+    public ContactInformation createContactInformation()
+    {
         return new ContactInformation();
     }
 
@@ -170,7 +210,8 @@ public class ObjectFactory {
      * Create an instance of {@link Keyword }
      * 
      */
-    public Keyword createKeyword() {
+    public Keyword createKeyword()
+    {
         return new Keyword();
     }
 
@@ -178,7 +219,8 @@ public class ObjectFactory {
      * Create an instance of {@link MetadataURL }
      * 
      */
-    public MetadataURL createMetadataURL() {
+    public MetadataURL createMetadataURL()
+    {
         return new MetadataURL();
     }
 
@@ -186,7 +228,8 @@ public class ObjectFactory {
      * Create an instance of {@link BoundingBox }
      * 
      */
-    public BoundingBox createBoundingBox() {
+    public BoundingBox createBoundingBox()
+    {
         return new BoundingBox();
     }
 
@@ -194,7 +237,8 @@ public class ObjectFactory {
      * Create an instance of {@link Capability }
      * 
      */
-    public Capability createCapability() {
+    public Capability createCapability()
+    {
         return new Capability();
     }
 
@@ -202,7 +246,8 @@ public class ObjectFactory {
      * Create an instance of {@link DataURL }
      * 
      */
-    public DataURL createDataURL() {
+    public DataURL createDataURL()
+    {
         return new DataURL();
     }
 
@@ -210,7 +255,8 @@ public class ObjectFactory {
      * Create an instance of {@link HTTP }
      * 
      */
-    public HTTP createHTTP() {
+    public HTTP createHTTP()
+    {
         return new HTTP();
     }
 
@@ -218,7 +264,8 @@ public class ObjectFactory {
      * Create an instance of {@link Attribution }
      * 
      */
-    public Attribution createAttribution() {
+    public Attribution createAttribution()
+    {
         return new Attribution();
     }
 
@@ -226,7 +273,8 @@ public class ObjectFactory {
      * Create an instance of {@link LogoURL }
      * 
      */
-    public LogoURL createLogoURL() {
+    public LogoURL createLogoURL()
+    {
         return new LogoURL();
     }
 
@@ -234,7 +282,8 @@ public class ObjectFactory {
      * Create an instance of {@link OnlineResource }
      * 
      */
-    public OnlineResource createOnlineResource() {
+    public OnlineResource createOnlineResource()
+    {
         return new OnlineResource();
     }
 
@@ -242,7 +291,8 @@ public class ObjectFactory {
      * Create an instance of {@link ContactAddress }
      * 
      */
-    public ContactAddress createContactAddress() {
+    public ContactAddress createContactAddress()
+    {
         return new ContactAddress();
     }
 
@@ -250,7 +300,8 @@ public class ObjectFactory {
      * Create an instance of {@link DCPType }
      * 
      */
-    public DCPType createDCPType() {
+    public DCPType createDCPType()
+    {
         return new DCPType();
     }
 
@@ -258,7 +309,8 @@ public class ObjectFactory {
      * Create an instance of {@link Request }
      * 
      */
-    public Request createRequest() {
+    public Request createRequest()
+    {
         return new Request();
     }
 
@@ -266,7 +318,8 @@ public class ObjectFactory {
      * Create an instance of {@link Layer }
      * 
      */
-    public Layer createLayer() {
+    public Layer createLayer()
+    {
         return new Layer();
     }
 
@@ -274,7 +327,8 @@ public class ObjectFactory {
      * Create an instance of {@link EXGeographicBoundingBox }
      * 
      */
-    public EXGeographicBoundingBox createEXGeographicBoundingBox() {
+    public EXGeographicBoundingBox createEXGeographicBoundingBox()
+    {
         return new EXGeographicBoundingBox();
     }
 
@@ -282,7 +336,8 @@ public class ObjectFactory {
      * Create an instance of {@link FeatureListURL }
      * 
      */
-    public FeatureListURL createFeatureListURL() {
+    public FeatureListURL createFeatureListURL()
+    {
         return new FeatureListURL();
     }
 
@@ -290,7 +345,8 @@ public class ObjectFactory {
      * Create an instance of {@link Dimension }
      * 
      */
-    public Dimension createDimension() {
+    public Dimension createDimension()
+    {
         return new Dimension();
     }
 
@@ -298,7 +354,8 @@ public class ObjectFactory {
      * Create an instance of {@link AuthorityURL }
      * 
      */
-    public AuthorityURL createAuthorityURL() {
+    public AuthorityURL createAuthorityURL()
+    {
         return new AuthorityURL();
     }
 
@@ -306,7 +363,8 @@ public class ObjectFactory {
      * Create an instance of {@link Identifier }
      * 
      */
-    public Identifier createIdentifier() {
+    public Identifier createIdentifier()
+    {
         return new Identifier();
     }
 
@@ -314,268 +372,327 @@ public class ObjectFactory {
      * Create an instance of {@link Exception }
      * 
      */
-    public Exception createException() {
+    public Exception createException()
+    {
         return new Exception();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "Name")
-    public JAXBElement<String> createName(String value) {
+    public JAXBElement<String> createName(String value)
+    {
         return new JAXBElement<String>(_Name_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Double }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link Double
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "MinScaleDenominator")
-    public JAXBElement<Double> createMinScaleDenominator(Double value) {
+    public JAXBElement<Double> createMinScaleDenominator(Double value)
+    {
         return new JAXBElement<Double>(_MinScaleDenominator_QNAME, Double.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "PostCode")
-    public JAXBElement<String> createPostCode(String value) {
+    public JAXBElement<String> createPostCode(String value)
+    {
         return new JAXBElement<String>(_PostCode_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link BigInteger }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link BigInteger
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "MaxHeight")
-    public JAXBElement<BigInteger> createMaxHeight(BigInteger value) {
+    public JAXBElement<BigInteger> createMaxHeight(BigInteger value)
+    {
         return new JAXBElement<BigInteger>(_MaxHeight_QNAME, BigInteger.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "Address")
-    public JAXBElement<String> createAddress(String value) {
+    public JAXBElement<String> createAddress(String value)
+    {
         return new JAXBElement<String>(_Address_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "ContactFacsimileTelephone")
-    public JAXBElement<String> createContactFacsimileTelephone(String value) {
+    public JAXBElement<String> createContactFacsimileTelephone(String value)
+    {
         return new JAXBElement<String>(_ContactFacsimileTelephone_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "AddressType")
-    public JAXBElement<String> createAddressType(String value) {
+    public JAXBElement<String> createAddressType(String value)
+    {
         return new JAXBElement<String>(_AddressType_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "ContactVoiceTelephone")
-    public JAXBElement<String> createContactVoiceTelephone(String value) {
+    public JAXBElement<String> createContactVoiceTelephone(String value)
+    {
         return new JAXBElement<String>(_ContactVoiceTelephone_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "Abstract")
-    public JAXBElement<String> createAbstract(String value) {
+    public JAXBElement<String> createAbstract(String value)
+    {
         return new JAXBElement<String>(_Abstract_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link BigInteger }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link BigInteger
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "MaxWidth")
-    public JAXBElement<BigInteger> createMaxWidth(BigInteger value) {
+    public JAXBElement<BigInteger> createMaxWidth(BigInteger value)
+    {
         return new JAXBElement<BigInteger>(_MaxWidth_QNAME, BigInteger.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "AccessConstraints")
-    public JAXBElement<String> createAccessConstraints(String value) {
+    public JAXBElement<String> createAccessConstraints(String value)
+    {
         return new JAXBElement<String>(_AccessConstraints_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "_ExtendedCapabilities")
-    public JAXBElement<Object> createExtendedCapabilities(Object value) {
+    public JAXBElement<Object> createExtendedCapabilities(Object value)
+    {
         return new JAXBElement<Object>(_ExtendedCapabilities_QNAME, Object.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "ContactPerson")
-    public JAXBElement<String> createContactPerson(String value) {
+    public JAXBElement<String> createContactPerson(String value)
+    {
         return new JAXBElement<String>(_ContactPerson_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link OperationType }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link OperationType
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "GetCapabilities")
-    public JAXBElement<OperationType> createGetCapabilities(OperationType value) {
+    public JAXBElement<OperationType> createGetCapabilities(OperationType value)
+    {
         return new JAXBElement<OperationType>(_GetCapabilities_QNAME, OperationType.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link BigInteger }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link BigInteger
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "LayerLimit")
-    public JAXBElement<BigInteger> createLayerLimit(BigInteger value) {
+    public JAXBElement<BigInteger> createLayerLimit(BigInteger value)
+    {
         return new JAXBElement<BigInteger>(_LayerLimit_QNAME, BigInteger.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "ContactOrganization")
-    public JAXBElement<String> createContactOrganization(String value) {
+    public JAXBElement<String> createContactOrganization(String value)
+    {
         return new JAXBElement<String>(_ContactOrganization_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link OperationType }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link OperationType
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "_ExtendedOperation")
-    public JAXBElement<OperationType> createExtendedOperation(OperationType value) {
+    public JAXBElement<OperationType> createExtendedOperation(OperationType value)
+    {
         return new JAXBElement<OperationType>(_ExtendedOperation_QNAME, OperationType.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "Country")
-    public JAXBElement<String> createCountry(String value) {
+    public JAXBElement<String> createCountry(String value)
+    {
         return new JAXBElement<String>(_Country_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "City")
-    public JAXBElement<String> createCity(String value) {
+    public JAXBElement<String> createCity(String value)
+    {
         return new JAXBElement<String>(_City_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "Title")
-    public JAXBElement<String> createTitle(String value) {
+    public JAXBElement<String> createTitle(String value)
+    {
         return new JAXBElement<String>(_Title_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "Fees")
-    public JAXBElement<String> createFees(String value) {
+    public JAXBElement<String> createFees(String value)
+    {
         return new JAXBElement<String>(_Fees_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link OperationType }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link OperationType
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "GetMap")
-    public JAXBElement<OperationType> createGetMap(OperationType value) {
+    public JAXBElement<OperationType> createGetMap(OperationType value)
+    {
         return new JAXBElement<OperationType>(_GetMap_QNAME, OperationType.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link OperationType }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link OperationType
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "GetFeatureInfo")
-    public JAXBElement<OperationType> createGetFeatureInfo(OperationType value) {
+    public JAXBElement<OperationType> createGetFeatureInfo(OperationType value)
+    {
         return new JAXBElement<OperationType>(_GetFeatureInfo_QNAME, OperationType.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "StateOrProvince")
-    public JAXBElement<String> createStateOrProvince(String value) {
+    public JAXBElement<String> createStateOrProvince(String value)
+    {
         return new JAXBElement<String>(_StateOrProvince_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "Format")
-    public JAXBElement<String> createFormat(String value) {
+    public JAXBElement<String> createFormat(String value)
+    {
         return new JAXBElement<String>(_Format_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "CRS")
-    public JAXBElement<String> createCRS(String value) {
+    public JAXBElement<String> createCRS(String value)
+    {
         return new JAXBElement<String>(_CRS_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Double }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link Double
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "MaxScaleDenominator")
-    public JAXBElement<Double> createMaxScaleDenominator(Double value) {
+    public JAXBElement<Double> createMaxScaleDenominator(Double value)
+    {
         return new JAXBElement<Double>(_MaxScaleDenominator_QNAME, Double.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "ContactElectronicMailAddress")
-    public JAXBElement<String> createContactElectronicMailAddress(String value) {
+    public JAXBElement<String> createContactElectronicMailAddress(String value)
+    {
         return new JAXBElement<String>(_ContactElectronicMailAddress_QNAME, String.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.opengis.net/wms", name = "ContactPosition")
-    public JAXBElement<String> createContactPosition(String value) {
+    public JAXBElement<String> createContactPosition(String value)
+    {
         return new JAXBElement<String>(_ContactPosition_QNAME, String.class, null, value);
     }
 

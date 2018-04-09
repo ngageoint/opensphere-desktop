@@ -12,7 +12,7 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.controlpanels.columnlabels.model.ColumnLabel;
 import io.opensphere.controlpanels.columnlabels.model.ColumnLabels;
@@ -29,7 +29,7 @@ public class ColumnLabelRowBinderTestDisplay
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

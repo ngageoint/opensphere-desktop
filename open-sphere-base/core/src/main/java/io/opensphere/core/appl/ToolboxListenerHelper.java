@@ -77,7 +77,8 @@ public class ToolboxListenerHelper extends CompositeService
     private final Map<Transformer, ThreadedGenericTransceiver<Geometry>> myGeometryTransceivers;
 
     /**
-     * A collection of tools to be used to interact with the rest of the application.
+     * A collection of tools to be used to interact with the rest of the
+     * application.
      */
     private final Toolbox myToolbox;
 
@@ -118,9 +119,8 @@ public class ToolboxListenerHelper extends CompositeService
                 if (transformer != null)
                 {
                     final int priority = 5;
-                    ThreadedGenericTransceiver<Geometry> transceiver = new ThreadedGenericTransceiver<>(1,
-                            new NamedThreadFactory("GeometryReceiver" + myGeometryTransceiverId.getAndIncrement(), priority,
-                                    Thread.MAX_PRIORITY));
+                    ThreadedGenericTransceiver<Geometry> transceiver = new ThreadedGenericTransceiver<>(1, new NamedThreadFactory(
+                            "GeometryReceiver" + myGeometryTransceiverId.getAndIncrement(), priority, Thread.MAX_PRIORITY));
                     transceiver.addSubscriber(myToolbox.getGeometryRegistry());
                     transformer.addSubscriber(transceiver);
                     myGeometryTransceivers.put(transformer, transceiver);

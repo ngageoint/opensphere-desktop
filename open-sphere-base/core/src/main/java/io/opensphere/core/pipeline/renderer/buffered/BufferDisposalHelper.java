@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 import io.opensphere.core.pipeline.cache.CacheContentListener;
 import io.opensphere.core.pipeline.cache.CacheContentListener.ContentChangeType;

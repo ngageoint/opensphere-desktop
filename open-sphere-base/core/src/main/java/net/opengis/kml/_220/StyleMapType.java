@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for StyleMapType complex type.
+ * <p>
+ * Java class for StyleMapType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="StyleMapType">
@@ -40,20 +41,17 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "StyleMapType", propOrder = {
-    "pair",
-    "styleMapSimpleExtensionGroup",
-    "styleMapObjectExtensionGroup"
-})
-public class StyleMapType
-    extends AbstractStyleSelectorType
+@XmlType(name = "StyleMapType", propOrder = { "pair", "styleMapSimpleExtensionGroup", "styleMapObjectExtensionGroup" })
+public class StyleMapType extends AbstractStyleSelectorType
 {
 
     @XmlElement(name = "Pair")
     protected List<PairType> pair;
+
     @XmlElement(name = "StyleMapSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> styleMapSimpleExtensionGroup;
+
     @XmlElement(name = "StyleMapObjectExtensionGroup")
     protected List<AbstractObjectType> styleMapObjectExtensionGroup;
 
@@ -61,36 +59,41 @@ public class StyleMapType
      * Gets the value of the pair property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the pair property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the pair property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPair().add(newItem);
+     * getPair().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link PairType }
+     * Objects of the following type(s) are allowed in the list {@link PairType
+     * }
      * 
      * 
      */
-    public List<PairType> getPair() {
-        if (pair == null) {
+    public List<PairType> getPair()
+    {
+        if (pair == null)
+        {
             pair = new ArrayList<PairType>();
         }
         return this.pair;
     }
 
-    public boolean isSetPair() {
-        return ((this.pair!= null)&&(!this.pair.isEmpty()));
+    public boolean isSetPair()
+    {
+        return ((this.pair != null) && (!this.pair.isEmpty()));
     }
 
-    public void unsetPair() {
+    public void unsetPair()
+    {
         this.pair = null;
     }
 
@@ -98,36 +101,40 @@ public class StyleMapType
      * Gets the value of the styleMapSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the styleMapSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the styleMapSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getStyleMapSimpleExtensionGroup().add(newItem);
+     * getStyleMapSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getStyleMapSimpleExtensionGroup() {
-        if (styleMapSimpleExtensionGroup == null) {
+    public List<Object> getStyleMapSimpleExtensionGroup()
+    {
+        if (styleMapSimpleExtensionGroup == null)
+        {
             styleMapSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.styleMapSimpleExtensionGroup;
     }
 
-    public boolean isSetStyleMapSimpleExtensionGroup() {
-        return ((this.styleMapSimpleExtensionGroup!= null)&&(!this.styleMapSimpleExtensionGroup.isEmpty()));
+    public boolean isSetStyleMapSimpleExtensionGroup()
+    {
+        return ((this.styleMapSimpleExtensionGroup != null) && (!this.styleMapSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetStyleMapSimpleExtensionGroup() {
+    public void unsetStyleMapSimpleExtensionGroup()
+    {
         this.styleMapSimpleExtensionGroup = null;
     }
 
@@ -135,15 +142,16 @@ public class StyleMapType
      * Gets the value of the styleMapObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the styleMapObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the styleMapObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getStyleMapObjectExtensionGroup().add(newItem);
+     * getStyleMapObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -153,18 +161,22 @@ public class StyleMapType
      * 
      * 
      */
-    public List<AbstractObjectType> getStyleMapObjectExtensionGroup() {
-        if (styleMapObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getStyleMapObjectExtensionGroup()
+    {
+        if (styleMapObjectExtensionGroup == null)
+        {
             styleMapObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.styleMapObjectExtensionGroup;
     }
 
-    public boolean isSetStyleMapObjectExtensionGroup() {
-        return ((this.styleMapObjectExtensionGroup!= null)&&(!this.styleMapObjectExtensionGroup.isEmpty()));
+    public boolean isSetStyleMapObjectExtensionGroup()
+    {
+        return ((this.styleMapObjectExtensionGroup != null) && (!this.styleMapObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetStyleMapObjectExtensionGroup() {
+    public void unsetStyleMapObjectExtensionGroup()
+    {
         this.styleMapObjectExtensionGroup = null;
     }
 

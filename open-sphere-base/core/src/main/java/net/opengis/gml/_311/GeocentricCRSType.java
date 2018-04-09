@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A 3D coordinate reference system with the origin at the approximate centre of mass of the earth. A geocentric CRS deals with the earth's curvature by taking a 3D spatial view, which obviates the need to model the earth's curvature. 
+ * A 3D coordinate reference system with the origin at the approximate centre of
+ * mass of the earth. A geocentric CRS deals with the earth's curvature by
+ * taking a 3D spatial view, which obviates the need to model the earth's
+ * curvature.
  * 
- * <p>Java class for GeocentricCRSType complex type.
+ * <p>
+ * Java class for GeocentricCRSType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GeocentricCRSType">
@@ -40,89 +44,80 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GeocentricCRSType", propOrder = {
-    "usesCartesianCS",
-    "usesSphericalCS",
-    "usesGeodeticDatum"
-})
-public class GeocentricCRSType
-    extends AbstractReferenceSystemType
+@XmlType(name = "GeocentricCRSType", propOrder = { "usesCartesianCS", "usesSphericalCS", "usesGeodeticDatum" })
+public class GeocentricCRSType extends AbstractReferenceSystemType
 {
 
     protected CartesianCSRefType usesCartesianCS;
+
     protected SphericalCSRefType usesSphericalCS;
+
     @XmlElement(required = true)
     protected GeodeticDatumRefType usesGeodeticDatum;
 
     /**
      * Gets the value of the usesCartesianCS property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CartesianCSRefType }
-     *     
+     * @return possible object is {@link CartesianCSRefType }
+     * 
      */
-    public CartesianCSRefType getUsesCartesianCS() {
+    public CartesianCSRefType getUsesCartesianCS()
+    {
         return usesCartesianCS;
     }
 
     /**
      * Sets the value of the usesCartesianCS property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CartesianCSRefType }
-     *     
+     * @param value allowed object is {@link CartesianCSRefType }
+     * 
      */
-    public void setUsesCartesianCS(CartesianCSRefType value) {
+    public void setUsesCartesianCS(CartesianCSRefType value)
+    {
         this.usesCartesianCS = value;
     }
 
     /**
      * Gets the value of the usesSphericalCS property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SphericalCSRefType }
-     *     
+     * @return possible object is {@link SphericalCSRefType }
+     * 
      */
-    public SphericalCSRefType getUsesSphericalCS() {
+    public SphericalCSRefType getUsesSphericalCS()
+    {
         return usesSphericalCS;
     }
 
     /**
      * Sets the value of the usesSphericalCS property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SphericalCSRefType }
-     *     
+     * @param value allowed object is {@link SphericalCSRefType }
+     * 
      */
-    public void setUsesSphericalCS(SphericalCSRefType value) {
+    public void setUsesSphericalCS(SphericalCSRefType value)
+    {
         this.usesSphericalCS = value;
     }
 
     /**
      * Gets the value of the usesGeodeticDatum property.
      * 
-     * @return
-     *     possible object is
-     *     {@link GeodeticDatumRefType }
-     *     
+     * @return possible object is {@link GeodeticDatumRefType }
+     * 
      */
-    public GeodeticDatumRefType getUsesGeodeticDatum() {
+    public GeodeticDatumRefType getUsesGeodeticDatum()
+    {
         return usesGeodeticDatum;
     }
 
     /**
      * Sets the value of the usesGeodeticDatum property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link GeodeticDatumRefType }
-     *     
+     * @param value allowed object is {@link GeodeticDatumRefType }
+     * 
      */
-    public void setUsesGeodeticDatum(GeodeticDatumRefType value) {
+    public void setUsesGeodeticDatum(GeodeticDatumRefType value)
+    {
         this.usesGeodeticDatum = value;
     }
 

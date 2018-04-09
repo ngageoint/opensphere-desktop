@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
 
 import org.apache.log4j.Logger;
 
@@ -91,7 +91,7 @@ public class PolygonRendererBuffered extends AbstractRenderer<PolygonGeometry> i
                     isDebugFeatureOn("TessellationLines"));
 
             myFadedRenderingHelper.renderEachTimeSpan(rc, renderData.getGroupTimeSpan(),
-                () -> doRender(rc, input, rejected, pickManager, dataRetriever, renderData));
+                    () -> doRender(rc, input, rejected, pickManager, dataRetriever, renderData));
         }
         finally
         {

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import java.util.ArrayList;
@@ -34,17 +33,18 @@ import net.opengis.gml._311.MultiSurfaceCoverageType;
 import net.opengis.gml._311.ObservationType;
 import net.opengis.gml._311.RectifiedGridCoverageType;
 
-
 /**
  * 
- *             An Insert element may contain a feature collection or one 
- *             or more feature instances to be inserted into the 
- *             repository.
- *          
+ * An Insert element may contain a feature collection or one or more feature
+ * instances to be inserted into the repository.
  * 
- * <p>Java class for InsertElementType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for InsertElementType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="InsertElementType">
@@ -65,19 +65,22 @@ import net.opengis.gml._311.RectifiedGridCoverageType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "InsertElementType", propOrder = {
-    "feature"
-})
-public class InsertElementType {
+@XmlType(name = "InsertElementType", propOrder = { "feature" })
+public class InsertElementType
+{
 
     @XmlElementRef(name = "_Feature", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
     protected List<JAXBElement<? extends AbstractFeatureType>> feature;
+
     @XmlAttribute(name = "idgen")
     protected IdentifierGenerationOptionType idgen;
+
     @XmlAttribute(name = "handle")
     protected String handle;
+
     @XmlAttribute(name = "inputFormat")
     protected String inputFormat;
+
     @XmlAttribute(name = "srsName")
     @XmlSchemaType(name = "anyURI")
     protected String srsName;
@@ -86,41 +89,48 @@ public class InsertElementType {
      * Gets the value of the feature property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the feature property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the feature property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getFeature().add(newItem);
+     * getFeature().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link AbstractCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractDiscreteCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link MultiCurveCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link MultiSolidCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractFeatureCollectionType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractDiscreteCoverageType
+     * }{@code >} {@link JAXBElement }{@code <}{@link MultiCurveCoverageType
+     * }{@code >} {@link JAXBElement }{@code <}{@link MultiSolidCoverageType
+     * }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractFeatureCollectionType }{@code >}
      * {@link JAXBElement }{@code <}{@link ObservationType }{@code >}
      * {@link JAXBElement }{@code <}{@link DirectedObservationType }{@code >}
      * {@link JAXBElement }{@code <}{@link RectifiedGridCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link net.opengis.wfs._110.FeatureCollectionType }{@code >}
-     * {@link JAXBElement }{@code <}{@link net.opengis.gml._311.FeatureCollectionType }{@code >}
+     * {@link JAXBElement
+     * }{@code <}{@link net.opengis.wfs._110.FeatureCollectionType }{@code >}
+     * {@link JAXBElement
+     * }{@code <}{@link net.opengis.gml._311.FeatureCollectionType }{@code >}
      * {@link JAXBElement }{@code <}{@link AbstractFeatureType }{@code >}
      * {@link JAXBElement }{@code <}{@link GridCoverageType }{@code >}
      * {@link JAXBElement }{@code <}{@link MultiPointCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link DirectedObservationAtDistanceType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractContinuousCoverageType }{@code >}
+     * {@link JAXBElement }{@code <}{@link DirectedObservationAtDistanceType
+     * }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractContinuousCoverageType }{@code >}
      * {@link JAXBElement }{@code <}{@link MultiSurfaceCoverageType }{@code >}
      * 
      * 
      */
-    public List<JAXBElement<? extends AbstractFeatureType>> getFeature() {
-        if (feature == null) {
+    public List<JAXBElement<? extends AbstractFeatureType>> getFeature()
+    {
+        if (feature == null)
+        {
             feature = new ArrayList<JAXBElement<? extends AbstractFeatureType>>();
         }
         return this.feature;
@@ -129,15 +139,17 @@ public class InsertElementType {
     /**
      * Gets the value of the idgen property.
      * 
-     * @return
-     *     possible object is
-     *     {@link IdentifierGenerationOptionType }
-     *     
+     * @return possible object is {@link IdentifierGenerationOptionType }
+     * 
      */
-    public IdentifierGenerationOptionType getIdgen() {
-        if (idgen == null) {
+    public IdentifierGenerationOptionType getIdgen()
+    {
+        if (idgen == null)
+        {
             return IdentifierGenerationOptionType.GENERATE_NEW;
-        } else {
+        }
+        else
+        {
             return idgen;
         }
     }
@@ -145,51 +157,50 @@ public class InsertElementType {
     /**
      * Sets the value of the idgen property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link IdentifierGenerationOptionType }
-     *     
+     * @param value allowed object is {@link IdentifierGenerationOptionType }
+     * 
      */
-    public void setIdgen(IdentifierGenerationOptionType value) {
+    public void setIdgen(IdentifierGenerationOptionType value)
+    {
         this.idgen = value;
     }
 
     /**
      * Gets the value of the handle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHandle() {
+    public String getHandle()
+    {
         return handle;
     }
 
     /**
      * Sets the value of the handle property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHandle(String value) {
+    public void setHandle(String value)
+    {
         this.handle = value;
     }
 
     /**
      * Gets the value of the inputFormat property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getInputFormat() {
-        if (inputFormat == null) {
+    public String getInputFormat()
+    {
+        if (inputFormat == null)
+        {
             return "text/xml; subtype=gml/3.1.1";
-        } else {
+        }
+        else
+        {
             return inputFormat;
         }
     }
@@ -197,36 +208,33 @@ public class InsertElementType {
     /**
      * Sets the value of the inputFormat property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setInputFormat(String value) {
+    public void setInputFormat(String value)
+    {
         this.inputFormat = value;
     }
 
     /**
      * Gets the value of the srsName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSrsName() {
+    public String getSrsName()
+    {
         return srsName;
     }
 
     /**
      * Sets the value of the srsName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSrsName(String value) {
+    public void setSrsName(String value)
+    {
         this.srsName = value;
     }
 

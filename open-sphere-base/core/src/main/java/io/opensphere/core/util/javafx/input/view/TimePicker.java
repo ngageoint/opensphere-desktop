@@ -43,16 +43,17 @@ public class TimePicker extends ComboBoxBase<LocalTime>
     private ReadOnlyObjectWrapper<TextField> myEditor;
 
     /**
-     * A converter used to change {@link LocalTime} objects to {@link String} instances with a known format.
+     * A converter used to change {@link LocalTime} objects to {@link String}
+     * instances with a known format.
      */
     private final ObjectProperty<StringConverter<LocalTime>> myConverter = new SimpleObjectProperty<>(this, "converter", null);
 
     /**
      * Create a symmetric (format/parse) converter with the default locale.
      */
-    private final StringConverter<LocalTime> myDefaultConverter = new LocalTimeStringConverter(new DateTimeFormatterBuilder()
-            .appendValue(HOUR_OF_DAY, 2).appendLiteral(':').appendValue(MINUTE_OF_HOUR, 2).optionalStart().appendLiteral(':')
-            .appendValue(SECOND_OF_MINUTE, 2).toFormatter(),
+    private final StringConverter<LocalTime> myDefaultConverter = new LocalTimeStringConverter(
+            new DateTimeFormatterBuilder().appendValue(HOUR_OF_DAY, 2).appendLiteral(':').appendValue(MINUTE_OF_HOUR, 2)
+                    .optionalStart().appendLiteral(':').appendValue(SECOND_OF_MINUTE, 2).toFormatter(),
             DateTimeFormatter.ISO_LOCAL_TIME);
 
     /**
@@ -73,7 +74,8 @@ public class TimePicker extends ComboBoxBase<LocalTime>
     }
 
     /**
-     * Processes a change, populating the underlying picker if and only if the time pattern matches the input.
+     * Processes a change, populating the underlying picker if and only if the
+     * time pattern matches the input.
      *
      * @param pNewValue the value to process.
      */

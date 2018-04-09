@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import java.util.ArrayList;
@@ -19,20 +18,20 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
 
-
 /**
- * This request allows a user to discover elements of the
- *          information model supported by the catalogue. If no TypeName 
- *          elements are included, then all of the schemas for the 
- *          information model must be returned.
- *       
- *          schemaLanguage - preferred schema language
- *                           (W3C XML Schema by default)
- *          outputFormat - preferred output format (application/xml by default)
+ * This request allows a user to discover elements of the information model
+ * supported by the catalogue. If no TypeName elements are included, then all of
+ * the schemas for the information model must be returned.
  * 
- * <p>Java class for DescribeRecordType complex type.
+ * schemaLanguage - preferred schema language (W3C XML Schema by default)
+ * outputFormat - preferred output format (application/xml by default)
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for DescribeRecordType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DescribeRecordType">
@@ -51,17 +50,16 @@ import javax.xml.namespace.QName;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DescribeRecordType", propOrder = {
-    "typeName"
-})
-public class DescribeRecordType
-    extends RequestBaseType
+@XmlType(name = "DescribeRecordType", propOrder = { "typeName" })
+public class DescribeRecordType extends RequestBaseType
 {
 
     @XmlElement(name = "TypeName")
     protected List<QName> typeName;
+
     @XmlAttribute
     protected String outputFormat;
+
     @XmlAttribute
     @XmlSchemaType(name = "anyURI")
     protected String schemaLanguage;
@@ -70,26 +68,28 @@ public class DescribeRecordType
      * Gets the value of the typeName property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the typeName property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the typeName property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getTypeName().add(newItem);
+     * getTypeName().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link QName }
+     * Objects of the following type(s) are allowed in the list {@link QName }
      * 
      * 
      */
-    public List<QName> getTypeName() {
-        if (typeName == null) {
+    public List<QName> getTypeName()
+    {
+        if (typeName == null)
+        {
             typeName = new ArrayList<QName>();
         }
         return this.typeName;
@@ -98,15 +98,17 @@ public class DescribeRecordType
     /**
      * Gets the value of the outputFormat property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getOutputFormat() {
-        if (outputFormat == null) {
+    public String getOutputFormat()
+    {
+        if (outputFormat == null)
+        {
             return "application/xml";
-        } else {
+        }
+        else
+        {
             return outputFormat;
         }
     }
@@ -114,27 +116,28 @@ public class DescribeRecordType
     /**
      * Sets the value of the outputFormat property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setOutputFormat(String value) {
+    public void setOutputFormat(String value)
+    {
         this.outputFormat = value;
     }
 
     /**
      * Gets the value of the schemaLanguage property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSchemaLanguage() {
-        if (schemaLanguage == null) {
+    public String getSchemaLanguage()
+    {
+        if (schemaLanguage == null)
+        {
             return "http://www.w3.org/XML/Schema";
-        } else {
+        }
+        else
+        {
             return schemaLanguage;
         }
     }
@@ -142,12 +145,11 @@ public class DescribeRecordType
     /**
      * Sets the value of the schemaLanguage property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSchemaLanguage(String value) {
+    public void setSchemaLanguage(String value)
+    {
         this.schemaLanguage = value;
     }
 

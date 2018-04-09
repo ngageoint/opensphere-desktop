@@ -9,8 +9,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * A replacement event queue that can be swapped into the application to provide notice when events have taken too long to
- * process.
+ * A replacement event queue that can be swapped into the application to provide
+ * notice when events have taken too long to process.
  */
 public final class WatchdogDebugEventQueue extends EventQueue
 {
@@ -84,13 +84,17 @@ public final class WatchdogDebugEventQueue extends EventQueue
     }
 
     /**
-     * Adds a new watchdog to the event queue, configured using the supplied arguments. The watchdog will bet timed using the
-     * supplied long (expressing milliseconds), and when the timer expires, the watchdog will check to determine if the event is
-     * still active. If so, it will print a stack trace. If the watchdog is repetitive, the timer will begin again.
+     * Adds a new watchdog to the event queue, configured using the supplied
+     * arguments. The watchdog will bet timed using the supplied long
+     * (expressing milliseconds), and when the timer expires, the watchdog will
+     * check to determine if the event is still active. If so, it will print a
+     * stack trace. If the watchdog is repetitive, the timer will begin again.
      *
-     * @param pMaxProcessingTime the maximum amount of time to use for the timer.
+     * @param pMaxProcessingTime the maximum amount of time to use for the
+     *            timer.
      * @param pListener The listener to notify when the watch dog is complete.
-     * @param pRepetitive A flag used to allow multiple notifications for the same event.
+     * @param pRepetitive A flag used to allow multiple notifications for the
+     *            same event.
      */
     public void addWatchdog(long pMaxProcessingTime, ActionListener pListener, boolean pRepetitive)
     {
@@ -99,12 +103,14 @@ public final class WatchdogDebugEventQueue extends EventQueue
     }
 
     /**
-     * A timer task responsible for notifying a listener when a task is taking too long.
+     * A timer task responsible for notifying a listener when a task is taking
+     * too long.
      */
     public class Watchdog extends TimerTask
     {
         /**
-         * The maximum amount of time that the watch dog is allowed to process before the listener is notified.
+         * The maximum amount of time that the watch dog is allowed to process
+         * before the listener is notified.
          */
         private final long myMaxProcessingTime;
 
@@ -124,12 +130,15 @@ public final class WatchdogDebugEventQueue extends EventQueue
         private AWTEvent myLastReportedEvent;
 
         /**
-         * Creates a new watch dog timer, which will notify a registered listener after the timeout has occurred.
+         * Creates a new watch dog timer, which will notify a registered
+         * listener after the timeout has occurred.
          *
-         * @param pMaxProcessingTime The maximum amount of time that the watch dog is allowed to process before the listener is
-         *            notified.
-         * @param pListener The listener to notify when the watch dog is complete.
-         * @param pRepetitive A flag used to allow multiple notifications for the same event.
+         * @param pMaxProcessingTime The maximum amount of time that the watch
+         *            dog is allowed to process before the listener is notified.
+         * @param pListener The listener to notify when the watch dog is
+         *            complete.
+         * @param pRepetitive A flag used to allow multiple notifications for
+         *            the same event.
          */
         public Watchdog(long pMaxProcessingTime, ActionListener pListener, boolean pRepetitive)
         {

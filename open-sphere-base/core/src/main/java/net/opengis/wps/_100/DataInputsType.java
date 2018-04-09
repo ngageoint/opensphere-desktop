@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import java.util.ArrayList;
@@ -16,13 +15,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * List of the Inputs provided as part of the Execute Request. 
+ * List of the Inputs provided as part of the Execute Request.
  * 
- * <p>Java class for DataInputsType complex type.
+ * <p>
+ * Java class for DataInputsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DataInputsType">
@@ -39,10 +40,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DataInputsType", propOrder = {
-    "input"
-})
-public class DataInputsType {
+@XmlType(name = "DataInputsType", propOrder = { "input" })
+public class DataInputsType
+{
 
     @XmlElement(name = "Input", required = true)
     protected List<InputType> input;
@@ -51,26 +51,29 @@ public class DataInputsType {
      * Gets the value of the input property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the input property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the input property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getInput().add(newItem);
+     * getInput().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link InputType }
+     * Objects of the following type(s) are allowed in the list {@link InputType
+     * }
      * 
      * 
      */
-    public List<InputType> getInput() {
-        if (input == null) {
+    public List<InputType> getInput()
+    {
+        if (input == null)
+        {
             input = new ArrayList<InputType>();
         }
         return this.input;

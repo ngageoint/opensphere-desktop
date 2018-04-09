@@ -2,7 +2,7 @@ package io.opensphere.core.common.convolve;
 
 /**
  * Basic linear algebra and other tooling in support of the LeastSqLineLocator
- * class (q.v.).  Also included is a fairly extensive collection of graphical
+ * class (q.v.). Also included is a fairly extensive collection of graphical
  * testing tools.
  */
 public class LeastSqLineSupport
@@ -68,8 +68,8 @@ public class LeastSqLineSupport
     }
 
     /**
-     * Multiply the transpose of <i>u</i> by <i>v</i> without modifying
-     * <i>u</i> or explicitly calculating its transpose.
+     * Multiply the transpose of <i>u</i> by <i>v</i> without modifying <i>u</i>
+     * or explicitly calculating its transpose.
      *
      * @param u the transpose of the multiplicand (left)
      * @param v the multiplyer (right)
@@ -89,8 +89,8 @@ public class LeastSqLineSupport
     }
 
     /**
-     * Multiply <i>u</i> by the transpose of <i>v</i> without modifying
-     * <i>v</i> or explicitly calculating its transpose.
+     * Multiply <i>u</i> by the transpose of <i>v</i> without modifying <i>v</i>
+     * or explicitly calculating its transpose.
      *
      * @param u the multiplicand (left)
      * @param v the transpose of the multiplyer (right)
@@ -110,8 +110,8 @@ public class LeastSqLineSupport
     }
 
     /**
-     * Apply transform matrix <i>u</i> to vector <i>v</i> and return the
-     * result as a new vector.
+     * Apply transform matrix <i>u</i> to vector <i>v</i> and return the result
+     * as a new vector.
      *
      * @param u the transform matrix
      * @param v the vector
@@ -129,9 +129,9 @@ public class LeastSqLineSupport
     }
 
     /**
-     * Apply the transpose of matrix <i>u</i> to vector <i>v</i> and return
-     * the result as a new vector.  Matrix <i>u</i> is not modified, nor is
-     * its transpose explicitly calculated.
+     * Apply the transpose of matrix <i>u</i> to vector <i>v</i> and return the
+     * result as a new vector. Matrix <i>u</i> is not modified, nor is its
+     * transpose explicitly calculated.
      *
      * @param u the transpose of the transform matrix
      * @param v the vector
@@ -177,9 +177,9 @@ public class LeastSqLineSupport
     }
 
     /**
-     * Find an arbitrary power of a diagonalizable 2x2 matrix.  Suitability
-     * for the operation is assumed, so the caller is responsible for any
-     * checking that may be necessary.
+     * Find an arbitrary power of a diagonalizable 2x2 matrix. Suitability for
+     * the operation is assumed, so the caller is responsible for any checking
+     * that may be necessary.
      *
      * @param u the matrix
      * @param p the power
@@ -190,14 +190,14 @@ public class LeastSqLineSupport
         double[] lambda = eigenVal2x2(u);
         double[][] basis = eigenVec2x2(u, lambda);
 
-        double[][] diag = new double[][] {{Math.pow(lambda[0], p), 0.0},
-            {0.0, Math.pow(lambda[1], p)}};
+        double[][] diag = new double[][] { { Math.pow(lambda[0], p), 0.0 }, { 0.0, Math.pow(lambda[1], p) } };
         return multStarMatrix(basis, multMatrix(diag, basis));
     }
 
     /**
      * Calculate a coefficient describing how readily inverted <i>m</i> is.
      * Closer to zero is worse.
+     * 
      * @param m a 2x2 matrix
      * @return the condition factor
      */
@@ -212,9 +212,9 @@ public class LeastSqLineSupport
     }
 
     /**
-     * Calculate the inverse of a 2x2 matrix, if possible.  Suitability for
-     * the operation is assumed, so the caller is responsible for any checking
-     * that may be necessary.
+     * Calculate the inverse of a 2x2 matrix, if possible. Suitability for the
+     * operation is assumed, so the caller is responsible for any checking that
+     * may be necessary.
      *
      * @param u the matrix
      * @return the inverse of <i>u</i>
@@ -222,8 +222,7 @@ public class LeastSqLineSupport
     public static double[][] inverse2x2(double[][] u)
     {
         double d = u[0][0] * u[1][1] - u[0][1] * u[1][0];
-        return new double[][] {{u[1][1] / d, -u[0][1] / d},
-            {-u[1][0] / d, u[0][0] / d}};
+        return new double[][] { { u[1][1] / d, -u[0][1] / d }, { -u[1][0] / d, u[0][0] / d } };
     }
 
     /**
@@ -235,13 +234,12 @@ public class LeastSqLineSupport
      */
     public static double[] eigenVal2x2(double[][] m)
     {
-        return solveQuadratic(new double[] {
-            m[0][0] * m[1][1] - m[0][1] * m[1][0], -m[0][0] - m[1][1], 1.0});
+        return solveQuadratic(new double[] { m[0][0] * m[1][1] - m[0][1] * m[1][0], -m[0][0] - m[1][1], 1.0 });
     }
 
     /**
-     * Find the eigenvectors of the matrix given its eigenvalues.  The matrix
-     * is assumed to be diagonalizable.
+     * Find the eigenvectors of the matrix given its eigenvalues. The matrix is
+     * assumed to be diagonalizable.
      *
      * @param m the matrix
      * @param lambda the eigenvalues of <i>m</i>
@@ -254,10 +252,11 @@ public class LeastSqLineSupport
             return null;
         // both eigenvalues are the same => all vectors are eigenvectors
         if (lambda.length == 1)
-            return new double[][] {{1.0, 0.0}, {0.0, 1.0}};
+            return new double[][] { { 1.0, 0.0 }, { 0.0, 1.0 } };
 
-        // find eigenvectors for the two distinct eigenvalues in descending order
-        return new double[][] {eigenVec(m, lambda[0]), eigenVec(m, lambda[1])};
+        // find eigenvectors for the two distinct eigenvalues in descending
+        // order
+        return new double[][] { eigenVec(m, lambda[0]), eigenVec(m, lambda[1]) };
     }
 
     /**
@@ -272,8 +271,8 @@ public class LeastSqLineSupport
         double c0 = m[0][0] - lambda;
         double c1 = m[0][1];
         if (c0 != 0.0 || c1 != 0.0)
-            return orthUnit(new double[] {c0, c1});
-        return orthUnit(new double[] {m[1][0], m[1][1] - lambda});
+            return orthUnit(new double[] { c0, c1 });
+        return orthUnit(new double[] { m[1][0], m[1][1] - lambda });
     }
 
     /**
@@ -284,13 +283,14 @@ public class LeastSqLineSupport
      */
     private static double[] orthUnit(double[] u)
     {
-        double[] v = new double[] {-u[1], u[0]};
+        double[] v = new double[] { -u[1], u[0] };
         normalize(v);
         return v;
     }
 
     /**
      * Calculate the magnitude of the given vector.
+     * 
      * @param v the vector
      * @return the magnitude
      */
@@ -310,7 +310,7 @@ public class LeastSqLineSupport
     }
 
     /**
-     * Find the real roots of a quadratic polynomial.  In the degenerate case
+     * Find the real roots of a quadratic polynomial. In the degenerate case
      * where the quadratic coefficient is zero, a linear solution is found.
      *
      * @param p the coefficients in order of increasing degree
@@ -325,9 +325,9 @@ public class LeastSqLineSupport
             return new double[0];
         double denom = 2.0 * p[2];
         if (discr == 0.0)
-            return new double[] {-p[1] / denom};
+            return new double[] { -p[1] / denom };
         double rootDiscr = Math.sqrt(discr);
-        return new double[] {(-p[1] + rootDiscr) / denom, (-p[1] - rootDiscr) / denom};
+        return new double[] { (-p[1] + rootDiscr) / denom, (-p[1] - rootDiscr) / denom };
     }
 
     /**
@@ -340,11 +340,12 @@ public class LeastSqLineSupport
     {
         if (p[1] == 0)
             return new double[0];
-        return new double[] {-p[0] / p[1]};
+        return new double[] { -p[0] / p[1] };
     }
 
     /**
      * Square function.
+     * 
      * @param t a value
      * @return <i>t</i> squared
      */

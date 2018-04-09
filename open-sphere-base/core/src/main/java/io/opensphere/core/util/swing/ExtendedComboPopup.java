@@ -3,6 +3,7 @@ package io.opensphere.core.util.swing;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 
+import javax.swing.JComboBox;
 import javax.swing.plaf.basic.BasicComboPopup;
 
 /**
@@ -27,7 +28,7 @@ public class ExtendedComboPopup extends BasicComboPopup
      */
     public ExtendedComboPopup(ExtendedComboBox<?> combo)
     {
-        super(combo);
+        super((JComboBox<Object>)combo);
         myComboBox = combo;
     }
 

@@ -114,7 +114,7 @@ public class CacheUtilities
      *
      * @param rs The result set.
      * @return The {@link DataModelCategory}s.
-     * @throws SQLException If a database error occurs.
+     * @throws SQLException If a   database error occurs.
      */
     public DataModelCategory[] convertResultSetToDataModelCategories(ResultSet rs) throws SQLException
     {
@@ -153,7 +153,7 @@ public class CacheUtilities
      *
      * @param rs The result set.
      * @return The array of integers.
-     * @throws SQLException If a database error occurs.
+     * @throws SQLException If a   database error occurs.
      */
     public int[] convertResultSetToIntArray(ResultSet rs) throws SQLException
     {
@@ -169,7 +169,7 @@ public class CacheUtilities
      * @param typeMapper A type mapper. Only required if there are filter
      *            parameters.
      * @return The array of integers.
-     * @throws SQLException If a database error occurs.
+     * @throws SQLException If a   database error occurs.
      */
     public int[] convertResultSetToIntArray(ResultSet rs, Collection<? extends IntervalPropertyMatcher<?>> resultFilterParameters,
             TypeMapper typeMapper)
@@ -246,7 +246,7 @@ public class CacheUtilities
      *
      * @param rs The result set.
      * @return The array of longs.
-     * @throws SQLException If a database error occurs.
+     * @throws SQLException If a   database error occurs.
      */
     public long[] convertResultSetToLongArray(ResultSet rs) throws SQLException
     {
@@ -497,7 +497,7 @@ public class CacheUtilities
      * @param sql The sql statement.
      * @return The array of counts of updated rows.
      *
-     * @throws CacheException If an error occurs.
+     * @throws CacheException If an  error occurs.
      */
     public int[] executeBatch(Statement stmt, String sql) throws CacheException
     {
@@ -557,7 +557,7 @@ public class CacheUtilities
      * @param sql The sql statement.
      * @return The result set.
      *
-     * @throws CacheException If an error occurs.
+     * @throws CacheException If an  error occurs.
      */
     public ResultSet executeQuery(PreparedStatement pstmt, String sql) throws CacheException
     {
@@ -686,7 +686,7 @@ public class CacheUtilities
      * @param sql The sql statement.
      * @return The count of updated rows.
      *
-     * @throws CacheException If an error occurs.
+     * @throws CacheException If an  error occurs.
      */
     public int executeUpdate(PreparedStatement pstmt, String sql) throws CacheException
     {
@@ -714,7 +714,7 @@ public class CacheUtilities
      * @param sql The sql statement.
      * @return The count of updated rows.
      *
-     * @throws CacheException If an error occurs.
+     * @throws CacheException If an  error occurs.
      */
     public int executeUpdate(Statement stmt, String sql) throws CacheException
     {
@@ -1132,8 +1132,8 @@ public class CacheUtilities
      * @param rs The result set.
      * @param parameters The query parameters.
      * @return The collection of geometries.
-     * @throws CacheException If a geometry is corrupt.
-     * @throws SQLException If a database error occurs.
+     * @throws CacheException If a   geometry is corrupt.
+     * @throws SQLException If a   database error occurs.
      */
     public Collection<SpaceTime> readSpaceTimes(ResultSet rs, List<? extends PropertyMatcher<?>> parameters)
         throws CacheException, SQLException

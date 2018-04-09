@@ -1,6 +1,6 @@
 package io.opensphere.core.scenegraph;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 /**
  * A {@link SceneGraphParameter} that can be used to group objects that need the

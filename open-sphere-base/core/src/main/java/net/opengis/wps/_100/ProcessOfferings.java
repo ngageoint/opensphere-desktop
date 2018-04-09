@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -38,11 +39,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "process"
-})
+@XmlType(name = "", propOrder = { "process" })
 @XmlRootElement(name = "ProcessOfferings")
-public class ProcessOfferings {
+public class ProcessOfferings
+{
 
     @XmlElement(name = "Process", required = true)
     protected List<ProcessBriefType> process;
@@ -51,15 +51,16 @@ public class ProcessOfferings {
      * Gets the value of the process property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the process property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the process property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getProcess().add(newItem);
+     * getProcess().add(newItem);
      * </pre>
      * 
      * 
@@ -69,8 +70,10 @@ public class ProcessOfferings {
      * 
      * 
      */
-    public List<ProcessBriefType> getProcess() {
-        if (process == null) {
+    public List<ProcessBriefType> getProcess()
+    {
+        if (process == null)
+        {
             process = new ArrayList<ProcessBriefType>();
         }
         return this.process;

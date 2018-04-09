@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.log4j.Logger;
+
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -41,11 +43,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-import org.apache.log4j.Logger;
-
 /**
- * The full content for the DatePicker popup. This class could probably be used more or less as-is with an embeddable type of date
- * picker that doesn't use a popup.
+ * The full content for the DatePicker popup. This class could probably be used
+ * more or less as-is with an embeddable type of date picker that doesn't use a
+ * popup.
  */
 @SuppressWarnings("PMD.GodClass")
 public class DatePickerContent extends VBox
@@ -218,10 +219,11 @@ public class DatePickerContent extends VBox
     }
 
     /**
-     * An event handler method that detects if focus has been given to the grid pane. If not, propagates the focus loss throughout
-     * the subcomponents.
+     * An event handler method that detects if focus has been given to the grid
+     * pane. If not, propagates the focus loss throughout the subcomponents.
      *
-     * @param oldFocusOwner the component that had focus before the event took place.
+     * @param oldFocusOwner the component that had focus before the event took
+     *            place.
      * @param newFocusOwner the component that gained focus in the event.
      */
     protected void handleFocusChange(Node oldFocusOwner, Node newFocusOwner)
@@ -241,13 +243,17 @@ public class DatePickerContent extends VBox
     }
 
     /**
-     * An event handler method used to adjust how focus events are propagated across the scene. If the old scene is not null, the
-     * supplied listener is removed from the old scene. If the new scene is not null, the supplied listener is added to the new
-     * scene.
+     * An event handler method used to adjust how focus events are propagated
+     * across the scene. If the old scene is not null, the supplied listener is
+     * removed from the old scene. If the new scene is not null, the supplied
+     * listener is added to the new scene.
      *
-     * @param pListener the listener to add or remove from the scene for focus event receipt.
-     * @param oldScene the scene from which to unregister the supplied listener, if the scene is not null.
-     * @param newScene the scene to which to register the supplied listener, if the scene is not null.
+     * @param pListener the listener to add or remove from the scene for focus
+     *            event receipt.
+     * @param oldScene the scene from which to unregister the supplied listener,
+     *            if the scene is not null.
+     * @param newScene the scene to which to register the supplied listener, if
+     *            the scene is not null.
      */
     protected void adjustFocus(final WeakChangeListener<Node> pListener, Scene oldScene, Scene newScene)
     {
@@ -330,7 +336,8 @@ public class DatePickerContent extends VBox
             }
         }
 
-        // Consume all key events except those that control showing the popup and traversal.
+        // Consume all key events except those that control showing the popup
+        // and traversal.
         switch (pEvent.getCode())
         {
             case F4:
@@ -499,7 +506,8 @@ public class DatePickerContent extends VBox
             myGridPane.add(myDayNameCells.get(i), i + nCols - myDaysPerWeek, 1);
         }
 
-        // setup: 6 rows of daysPerWeek (which is the maximum number of cells required in the worst case layout)
+        // setup: 6 rows of daysPerWeek (which is the maximum number of cells
+        // required in the worst case layout)
         for (int row = 0; row < 6; row++)
         {
             for (int col = 0; col < myDaysPerWeek; col++)
@@ -517,7 +525,8 @@ public class DatePickerContent extends VBox
         // first day of week, 1 = monday, 7 = sunday
         int firstDayOfWeek = WeekFields.of(getLocale()).getFirstDayOfWeek().getValue();
 
-        // july 13th 2009 is a Monday, so a firstDayOfWeek=1 must come out of the 13th
+        // july 13th 2009 is a Monday, so a firstDayOfWeek=1 must come out of
+        // the 13th
         LocalDate date = LocalDate.of(2009, 7, 12 + firstDayOfWeek);
         for (int i = 0; i < myDaysPerWeek; i++)
         {
@@ -648,7 +657,8 @@ public class DatePickerContent extends VBox
                 String name = STANDALONE_MONTH_FORMATTER.withLocale(getLocale()).format(yearMonth);
                 if (Character.isDigit(name.charAt(0)))
                 {
-                    // Fallback. The standalone format returned a number, so use standard format instead.
+                    // Fallback. The standalone format returned a number, so use
+                    // standard format instead.
                     name = MONTH_FORMATTER.withLocale(getLocale()).format(yearMonth);
                 }
 
@@ -659,7 +669,8 @@ public class DatePickerContent extends VBox
     }
 
     /**
-     * Updates the month / year pane when the value of either the month or the year field changes.
+     * Updates the month / year pane when the value of either the month or the
+     * year field changes.
      */
     protected void updateMonthYearPane()
     {
@@ -685,10 +696,13 @@ public class DatePickerContent extends VBox
     }
 
     /**
-     * Formats the month component of the supplied year / month value as a word instead of a number.
+     * Formats the month component of the supplied year / month value as a word
+     * instead of a number.
      *
-     * @param yearMonth the year / month value from which to extract the month component.
-     * @return a String in which the month is contained as a word instead of a number.
+     * @param yearMonth the year / month value from which to extract the month
+     *            component.
+     * @return a String in which the month is contained as a word instead of a
+     *         number.
      */
     protected String formatMonth(YearMonth yearMonth)
     {
@@ -699,7 +713,8 @@ public class DatePickerContent extends VBox
             String str = STANDALONE_MONTH_FORMATTER.withLocale(getLocale()).withChronology(IsoChronology.INSTANCE).format(cDate);
             if (Character.isDigit(str.charAt(0)))
             {
-                // Fallback. The standalone format returned a number, so use standard format instead.
+                // Fallback. The standalone format returned a number, so use
+                // standard format instead.
                 str = MONTH_FORMATTER.withLocale(getLocale()).withChronology(IsoChronology.INSTANCE).format(cDate);
             }
             return titleCaseWord(str);
@@ -713,9 +728,11 @@ public class DatePickerContent extends VBox
     }
 
     /**
-     * Formats the year component of the supplied year / month value as a four-digit year.
+     * Formats the year component of the supplied year / month value as a
+     * four-digit year.
      *
-     * @param yearMonth the year / month value from which to extract the year component.
+     * @param yearMonth the year / month value from which to extract the year
+     *            component.
      * @return a String in which the year is contained as a four-digit year.
      */
     protected String formatYear(YearMonth yearMonth)
@@ -810,9 +827,11 @@ public class DatePickerContent extends VBox
      * Shifts the content's selected cell to the supplied {@link DateCell}.
      *
      * @param dateCell the cell to which to move the selection.
-     * @param offset the offset from the supplied cell by which to move the selection.
+     * @param offset the offset from the supplied cell by which to move the
+     *            selection.
      * @param unit the units in which the offset is expressed.
-     * @param focusDayCell a flag used to force the supplied dateCell to request focus after movement.
+     * @param focusDayCell a flag used to force the supplied dateCell to request
+     *            focus after movement.
      */
     public void goToDayCell(DateCell dateCell, int offset, ChronoUnit unit, boolean focusDayCell)
     {
@@ -820,11 +839,14 @@ public class DatePickerContent extends VBox
     }
 
     /**
-     * Moves the selected date forward from the currently selected date by the supplied offset.
+     * Moves the selected date forward from the currently selected date by the
+     * supplied offset.
      *
-     * @param offset the offset from the currently selected cell by which to move the selection.
+     * @param offset the offset from the currently selected cell by which to
+     *            move the selection.
      * @param unit the units in which the offset is expressed.
-     * @param focusDayCell a flag used to force the supplied dateCell to request focus after movement.
+     * @param focusDayCell a flag used to force the supplied dateCell to request
+     *            focus after movement.
      */
     protected void forward(int offset, ChronoUnit unit, boolean focusDayCell)
     {
@@ -838,7 +860,8 @@ public class DatePickerContent extends VBox
     }
 
     /**
-     * Adjusts the calendar view to the supplied date, and optionally grabs focus.
+     * Adjusts the calendar view to the supplied date, and optionally grabs
+     * focus.
      *
      * @param date the date to which to adjust the view.
      * @param focusDayCell a flag used to force the calendar view to grab focus.
@@ -939,8 +962,8 @@ public class DatePickerContent extends VBox
     }
 
     /**
-     * An event handler method used to react to a mouse event. If the primary button is used to trigger the event, the target day
-     * cell is selected.
+     * An event handler method used to react to a mouse event. If the primary
+     * button is used to trigger the event, the target day cell is selected.
      *
      * @param pEvent the event to process.
      */

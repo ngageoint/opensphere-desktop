@@ -567,13 +567,15 @@ public class DefaultRangedLongSet implements RangedLongSet
                         // Check boundary conditions first.
                         if (insertIndex == 0)
                         {
-                            // Check if we are before the first block if we overlap
+                            // Check if we are before the first block if we
+                            // overlap
                             // with the first block.
                             found = myBlockList.get(insertIndex).containsValue(value);
                         }
                         else if (insertIndex == size)
                         {
-                            // Check if we are after the end block for overlap on
+                            // Check if we are after the end block for overlap
+                            // on
                             // the last block.
                             found = myBlockList.get(size - 1).containsValue(value);
                         }
@@ -1134,7 +1136,8 @@ public class DefaultRangedLongSet implements RangedLongSet
         int idx = Collections.binarySearch(myBlockList, insertBlock);
         if (idx < 0) // No exact match but might be contained.
         {
-            // Represents where compression should start, unless -1, then no compression
+            // Represents where compression should start, unless -1, then no
+            // compression
             int compressIndex = -1;
             // Convert binary search result to an insert index
             int insertIndex = -1 * (idx + 1);

@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -44,69 +45,62 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "name",
-    "layerFeatureConstraints",
-    "namedStyleOrUserStyle"
-})
+@XmlType(name = "", propOrder = { "name", "layerFeatureConstraints", "namedStyleOrUserStyle" })
 @XmlRootElement(name = "NamedLayer")
-public class NamedLayer {
+public class NamedLayer
+{
 
     @XmlElement(name = "Name", required = true)
     protected String name;
+
     @XmlElement(name = "LayerFeatureConstraints")
     protected LayerFeatureConstraints layerFeatureConstraints;
-    @XmlElements({
-        @XmlElement(name = "NamedStyle", type = NamedStyle.class),
-        @XmlElement(name = "UserStyle", type = UserStyle.class)
-    })
+
+    @XmlElements({ @XmlElement(name = "NamedStyle", type = NamedStyle.class),
+        @XmlElement(name = "UserStyle", type = UserStyle.class) })
     protected List<Object> namedStyleOrUserStyle;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
     /**
      * Gets the value of the layerFeatureConstraints property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LayerFeatureConstraints }
-     *     
+     * @return possible object is {@link LayerFeatureConstraints }
+     * 
      */
-    public LayerFeatureConstraints getLayerFeatureConstraints() {
+    public LayerFeatureConstraints getLayerFeatureConstraints()
+    {
         return layerFeatureConstraints;
     }
 
     /**
      * Sets the value of the layerFeatureConstraints property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LayerFeatureConstraints }
-     *     
+     * @param value allowed object is {@link LayerFeatureConstraints }
+     * 
      */
-    public void setLayerFeatureConstraints(LayerFeatureConstraints value) {
+    public void setLayerFeatureConstraints(LayerFeatureConstraints value)
+    {
         this.layerFeatureConstraints = value;
     }
 
@@ -114,27 +108,29 @@ public class NamedLayer {
      * Gets the value of the namedStyleOrUserStyle property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the namedStyleOrUserStyle property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the namedStyleOrUserStyle property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getNamedStyleOrUserStyle().add(newItem);
+     * getNamedStyleOrUserStyle().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link NamedStyle }
-     * {@link UserStyle }
+     * {@link NamedStyle } {@link UserStyle }
      * 
      * 
      */
-    public List<Object> getNamedStyleOrUserStyle() {
-        if (namedStyleOrUserStyle == null) {
+    public List<Object> getNamedStyleOrUserStyle()
+    {
+        if (namedStyleOrUserStyle == null)
+        {
             namedStyleOrUserStyle = new ArrayList<Object>();
         }
         return this.namedStyleOrUserStyle;

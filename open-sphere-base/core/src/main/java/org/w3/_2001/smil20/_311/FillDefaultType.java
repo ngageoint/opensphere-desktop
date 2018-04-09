@@ -5,19 +5,21 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package org.w3._2001.smil20._311;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for fillDefaultType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for fillDefaultType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="fillDefaultType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -34,33 +36,34 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "fillDefaultType")
 @XmlEnum
-public enum FillDefaultType {
+public enum FillDefaultType
+{
 
     @XmlEnumValue("remove")
-    REMOVE("remove"),
-    @XmlEnumValue("freeze")
-    FREEZE("freeze"),
-    @XmlEnumValue("hold")
-    HOLD("hold"),
-    @XmlEnumValue("auto")
-    AUTO("auto"),
-    @XmlEnumValue("inherit")
-    INHERIT("inherit"),
-    @XmlEnumValue("transition")
+    REMOVE("remove"), @XmlEnumValue("freeze")
+    FREEZE("freeze"), @XmlEnumValue("hold")
+    HOLD("hold"), @XmlEnumValue("auto")
+    AUTO("auto"), @XmlEnumValue("inherit")
+    INHERIT("inherit"), @XmlEnumValue("transition")
     TRANSITION("transition");
     private final String value;
 
-    FillDefaultType(String v) {
+    FillDefaultType(String v)
+    {
         value = v;
     }
 
-    public String value() {
+    public String value()
+    {
         return value;
     }
 
-    public static FillDefaultType fromValue(String v) {
-        for (FillDefaultType c: FillDefaultType.values()) {
-            if (c.value.equals(v)) {
+    public static FillDefaultType fromValue(String v)
+    {
+        for (FillDefaultType c : FillDefaultType.values())
+        {
+            if (c.value.equals(v))
+            {
                 return c;
             }
         }

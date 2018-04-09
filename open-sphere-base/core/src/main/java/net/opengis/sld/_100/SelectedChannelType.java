@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for SelectedChannelType complex type.
+ * <p>
+ * Java class for SelectedChannelType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SelectedChannelType">
@@ -35,62 +36,57 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SelectedChannelType", propOrder = {
-    "sourceChannelName",
-    "contrastEnhancement"
-})
-public class SelectedChannelType {
+@XmlType(name = "SelectedChannelType", propOrder = { "sourceChannelName", "contrastEnhancement" })
+public class SelectedChannelType
+{
 
     @XmlElement(name = "SourceChannelName", required = true)
     protected String sourceChannelName;
+
     @XmlElement(name = "ContrastEnhancement")
     protected ContrastEnhancement contrastEnhancement;
 
     /**
      * Gets the value of the sourceChannelName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSourceChannelName() {
+    public String getSourceChannelName()
+    {
         return sourceChannelName;
     }
 
     /**
      * Sets the value of the sourceChannelName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSourceChannelName(String value) {
+    public void setSourceChannelName(String value)
+    {
         this.sourceChannelName = value;
     }
 
     /**
      * Gets the value of the contrastEnhancement property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ContrastEnhancement }
-     *     
+     * @return possible object is {@link ContrastEnhancement }
+     * 
      */
-    public ContrastEnhancement getContrastEnhancement() {
+    public ContrastEnhancement getContrastEnhancement()
+    {
         return contrastEnhancement;
     }
 
     /**
      * Sets the value of the contrastEnhancement property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ContrastEnhancement }
-     *     
+     * @param value allowed object is {@link ContrastEnhancement }
+     * 
      */
-    public void setContrastEnhancement(ContrastEnhancement value) {
+    public void setContrastEnhancement(ContrastEnhancement value)
+    {
         this.contrastEnhancement = value;
     }
 

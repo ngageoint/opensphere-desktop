@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package oasis.names.tc.ciq.xsdschema.xal._2;
 
 import javax.xml.bind.JAXBElement;
@@ -13,38 +12,39 @@ import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 
-
 /**
- * This object contains factory methods for each 
- * Java content interface and Java element interface 
- * generated in the oasis.names.tc.ciq.xsdschema.xal._2 package. 
- * <p>An ObjectFactory allows you to programatically 
- * construct new instances of the Java representation 
- * for XML content. The Java representation of XML 
- * content can consist of schema derived interfaces 
- * and classes representing the binding of schema 
- * type definitions, element declarations and model 
- * groups.  Factory methods for each of these are 
- * provided in this class.
+ * This object contains factory methods for each Java content interface and Java
+ * element interface generated in the oasis.names.tc.ciq.xsdschema.xal._2
+ * package.
+ * <p>
+ * An ObjectFactory allows you to programatically construct new instances of the
+ * Java representation for XML content. The Java representation of XML content
+ * can consist of schema derived interfaces and classes representing the binding
+ * of schema type definitions, element declarations and model groups. Factory
+ * methods for each of these are provided in this class.
  * 
  */
 @XmlRegistry
-public class ObjectFactory {
+public class ObjectFactory
+{
 
     private final static QName _AddressDetails_QNAME = new QName("urn:oasis:names:tc:ciq:xsdschema:xAL:2.0", "AddressDetails");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: oasis.names.tc.ciq.xsdschema.xal._2
+     * Create a new ObjectFactory that can be used to create new instances of
+     * schema derived classes for package: oasis.names.tc.ciq.xsdschema.xal._2
      * 
      */
-    public ObjectFactory() {
+    public ObjectFactory()
+    {
     }
 
     /**
      * Create an instance of {@link Thoroughfare }
      * 
      */
-    public Thoroughfare createThoroughfare() {
+    public Thoroughfare createThoroughfare()
+    {
         return new Thoroughfare();
     }
 
@@ -52,7 +52,8 @@ public class ObjectFactory {
      * Create an instance of {@link Premise }
      * 
      */
-    public Premise createPremise() {
+    public Premise createPremise()
+    {
         return new Premise();
     }
 
@@ -60,7 +61,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostalCode }
      * 
      */
-    public PostalCode createPostalCode() {
+    public PostalCode createPostalCode()
+    {
         return new PostalCode();
     }
 
@@ -68,7 +70,8 @@ public class ObjectFactory {
      * Create an instance of {@link AdministrativeArea }
      * 
      */
-    public AdministrativeArea createAdministrativeArea() {
+    public AdministrativeArea createAdministrativeArea()
+    {
         return new AdministrativeArea();
     }
 
@@ -76,7 +79,8 @@ public class ObjectFactory {
      * Create an instance of {@link Locality }
      * 
      */
-    public Locality createLocality() {
+    public Locality createLocality()
+    {
         return new Locality();
     }
 
@@ -84,7 +88,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostBox }
      * 
      */
-    public PostBox createPostBox() {
+    public PostBox createPostBox()
+    {
         return new PostBox();
     }
 
@@ -92,7 +97,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostOffice }
      * 
      */
-    public PostOffice createPostOffice() {
+    public PostOffice createPostOffice()
+    {
         return new PostOffice();
     }
 
@@ -100,7 +106,8 @@ public class ObjectFactory {
      * Create an instance of {@link Department }
      * 
      */
-    public Department createDepartment() {
+    public Department createDepartment()
+    {
         return new Department();
     }
 
@@ -108,7 +115,8 @@ public class ObjectFactory {
      * Create an instance of {@link AddressDetails }
      * 
      */
-    public AddressDetails createAddressDetails() {
+    public AddressDetails createAddressDetails()
+    {
         return new AddressDetails();
     }
 
@@ -116,7 +124,8 @@ public class ObjectFactory {
      * Create an instance of {@link AddressDetails.Country }
      * 
      */
-    public AddressDetails.Country createAddressDetailsCountry() {
+    public AddressDetails.Country createAddressDetailsCountry()
+    {
         return new AddressDetails.Country();
     }
 
@@ -124,7 +133,8 @@ public class ObjectFactory {
      * Create an instance of {@link AddressDetails.PostalServiceElements }
      * 
      */
-    public AddressDetails.PostalServiceElements createAddressDetailsPostalServiceElements() {
+    public AddressDetails.PostalServiceElements createAddressDetailsPostalServiceElements()
+    {
         return new AddressDetails.PostalServiceElements();
     }
 
@@ -132,7 +142,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostalRouteType }
      * 
      */
-    public PostalRouteType createPostalRouteType() {
+    public PostalRouteType createPostalRouteType()
+    {
         return new PostalRouteType();
     }
 
@@ -140,7 +151,8 @@ public class ObjectFactory {
      * Create an instance of {@link LargeMailUserType }
      * 
      */
-    public LargeMailUserType createLargeMailUserType() {
+    public LargeMailUserType createLargeMailUserType()
+    {
         return new LargeMailUserType();
     }
 
@@ -148,7 +160,8 @@ public class ObjectFactory {
      * Create an instance of {@link AdministrativeArea.SubAdministrativeArea }
      * 
      */
-    public AdministrativeArea.SubAdministrativeArea createAdministrativeAreaSubAdministrativeArea() {
+    public AdministrativeArea.SubAdministrativeArea createAdministrativeAreaSubAdministrativeArea()
+    {
         return new AdministrativeArea.SubAdministrativeArea();
     }
 
@@ -156,7 +169,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostalCode.PostTown }
      * 
      */
-    public PostalCode.PostTown createPostalCodePostTown() {
+    public PostalCode.PostTown createPostalCodePostTown()
+    {
         return new PostalCode.PostTown();
     }
 
@@ -164,7 +178,8 @@ public class ObjectFactory {
      * Create an instance of {@link MailStopType }
      * 
      */
-    public MailStopType createMailStopType() {
+    public MailStopType createMailStopType()
+    {
         return new MailStopType();
     }
 
@@ -172,7 +187,8 @@ public class ObjectFactory {
      * Create an instance of {@link FirmType }
      * 
      */
-    public FirmType createFirmType() {
+    public FirmType createFirmType()
+    {
         return new FirmType();
     }
 
@@ -180,7 +196,8 @@ public class ObjectFactory {
      * Create an instance of {@link SubPremiseType }
      * 
      */
-    public SubPremiseType createSubPremiseType() {
+    public SubPremiseType createSubPremiseType()
+    {
         return new SubPremiseType();
     }
 
@@ -188,7 +205,8 @@ public class ObjectFactory {
      * Create an instance of {@link Premise.PremiseNumberRange }
      * 
      */
-    public Premise.PremiseNumberRange createPremisePremiseNumberRange() {
+    public Premise.PremiseNumberRange createPremisePremiseNumberRange()
+    {
         return new Premise.PremiseNumberRange();
     }
 
@@ -196,7 +214,8 @@ public class ObjectFactory {
      * Create an instance of {@link DependentLocalityType }
      * 
      */
-    public DependentLocalityType createDependentLocalityType() {
+    public DependentLocalityType createDependentLocalityType()
+    {
         return new DependentLocalityType();
     }
 
@@ -204,7 +223,8 @@ public class ObjectFactory {
      * Create an instance of {@link Thoroughfare.ThoroughfareNumberRange }
      * 
      */
-    public Thoroughfare.ThoroughfareNumberRange createThoroughfareThoroughfareNumberRange() {
+    public Thoroughfare.ThoroughfareNumberRange createThoroughfareThoroughfareNumberRange()
+    {
         return new Thoroughfare.ThoroughfareNumberRange();
     }
 
@@ -212,7 +232,8 @@ public class ObjectFactory {
      * Create an instance of {@link AddressLine }
      * 
      */
-    public AddressLine createAddressLine() {
+    public AddressLine createAddressLine()
+    {
         return new AddressLine();
     }
 
@@ -220,7 +241,8 @@ public class ObjectFactory {
      * Create an instance of {@link ThoroughfareNumber }
      * 
      */
-    public ThoroughfareNumber createThoroughfareNumber() {
+    public ThoroughfareNumber createThoroughfareNumber()
+    {
         return new ThoroughfareNumber();
     }
 
@@ -228,7 +250,8 @@ public class ObjectFactory {
      * Create an instance of {@link ThoroughfareNumberPrefix }
      * 
      */
-    public ThoroughfareNumberPrefix createThoroughfareNumberPrefix() {
+    public ThoroughfareNumberPrefix createThoroughfareNumberPrefix()
+    {
         return new ThoroughfareNumberPrefix();
     }
 
@@ -236,7 +259,8 @@ public class ObjectFactory {
      * Create an instance of {@link ThoroughfareNumberSuffix }
      * 
      */
-    public ThoroughfareNumberSuffix createThoroughfareNumberSuffix() {
+    public ThoroughfareNumberSuffix createThoroughfareNumberSuffix()
+    {
         return new ThoroughfareNumberSuffix();
     }
 
@@ -244,7 +268,8 @@ public class ObjectFactory {
      * Create an instance of {@link ThoroughfarePreDirectionType }
      * 
      */
-    public ThoroughfarePreDirectionType createThoroughfarePreDirectionType() {
+    public ThoroughfarePreDirectionType createThoroughfarePreDirectionType()
+    {
         return new ThoroughfarePreDirectionType();
     }
 
@@ -252,7 +277,8 @@ public class ObjectFactory {
      * Create an instance of {@link ThoroughfareLeadingTypeType }
      * 
      */
-    public ThoroughfareLeadingTypeType createThoroughfareLeadingTypeType() {
+    public ThoroughfareLeadingTypeType createThoroughfareLeadingTypeType()
+    {
         return new ThoroughfareLeadingTypeType();
     }
 
@@ -260,7 +286,8 @@ public class ObjectFactory {
      * Create an instance of {@link ThoroughfareNameType }
      * 
      */
-    public ThoroughfareNameType createThoroughfareNameType() {
+    public ThoroughfareNameType createThoroughfareNameType()
+    {
         return new ThoroughfareNameType();
     }
 
@@ -268,7 +295,8 @@ public class ObjectFactory {
      * Create an instance of {@link ThoroughfareTrailingTypeType }
      * 
      */
-    public ThoroughfareTrailingTypeType createThoroughfareTrailingTypeType() {
+    public ThoroughfareTrailingTypeType createThoroughfareTrailingTypeType()
+    {
         return new ThoroughfareTrailingTypeType();
     }
 
@@ -276,7 +304,8 @@ public class ObjectFactory {
      * Create an instance of {@link ThoroughfarePostDirectionType }
      * 
      */
-    public ThoroughfarePostDirectionType createThoroughfarePostDirectionType() {
+    public ThoroughfarePostDirectionType createThoroughfarePostDirectionType()
+    {
         return new ThoroughfarePostDirectionType();
     }
 
@@ -284,7 +313,8 @@ public class ObjectFactory {
      * Create an instance of {@link Thoroughfare.DependentThoroughfare }
      * 
      */
-    public Thoroughfare.DependentThoroughfare createThoroughfareDependentThoroughfare() {
+    public Thoroughfare.DependentThoroughfare createThoroughfareDependentThoroughfare()
+    {
         return new Thoroughfare.DependentThoroughfare();
     }
 
@@ -292,7 +322,8 @@ public class ObjectFactory {
      * Create an instance of {@link Premise.PremiseName }
      * 
      */
-    public Premise.PremiseName createPremisePremiseName() {
+    public Premise.PremiseName createPremisePremiseName()
+    {
         return new Premise.PremiseName();
     }
 
@@ -300,7 +331,8 @@ public class ObjectFactory {
      * Create an instance of {@link Premise.PremiseLocation }
      * 
      */
-    public Premise.PremiseLocation createPremisePremiseLocation() {
+    public Premise.PremiseLocation createPremisePremiseLocation()
+    {
         return new Premise.PremiseLocation();
     }
 
@@ -308,7 +340,8 @@ public class ObjectFactory {
      * Create an instance of {@link PremiseNumber }
      * 
      */
-    public PremiseNumber createPremiseNumber() {
+    public PremiseNumber createPremiseNumber()
+    {
         return new PremiseNumber();
     }
 
@@ -316,7 +349,8 @@ public class ObjectFactory {
      * Create an instance of {@link PremiseNumberPrefix }
      * 
      */
-    public PremiseNumberPrefix createPremiseNumberPrefix() {
+    public PremiseNumberPrefix createPremiseNumberPrefix()
+    {
         return new PremiseNumberPrefix();
     }
 
@@ -324,7 +358,8 @@ public class ObjectFactory {
      * Create an instance of {@link PremiseNumberSuffix }
      * 
      */
-    public PremiseNumberSuffix createPremiseNumberSuffix() {
+    public PremiseNumberSuffix createPremiseNumberSuffix()
+    {
         return new PremiseNumberSuffix();
     }
 
@@ -332,7 +367,8 @@ public class ObjectFactory {
      * Create an instance of {@link BuildingNameType }
      * 
      */
-    public BuildingNameType createBuildingNameType() {
+    public BuildingNameType createBuildingNameType()
+    {
         return new BuildingNameType();
     }
 
@@ -340,7 +376,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostalCode.PostalCodeNumber }
      * 
      */
-    public PostalCode.PostalCodeNumber createPostalCodePostalCodeNumber() {
+    public PostalCode.PostalCodeNumber createPostalCodePostalCodeNumber()
+    {
         return new PostalCode.PostalCodeNumber();
     }
 
@@ -348,7 +385,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostalCode.PostalCodeNumberExtension }
      * 
      */
-    public PostalCode.PostalCodeNumberExtension createPostalCodePostalCodeNumberExtension() {
+    public PostalCode.PostalCodeNumberExtension createPostalCodePostalCodeNumberExtension()
+    {
         return new PostalCode.PostalCodeNumberExtension();
     }
 
@@ -356,7 +394,8 @@ public class ObjectFactory {
      * Create an instance of {@link AdministrativeArea.AdministrativeAreaName }
      * 
      */
-    public AdministrativeArea.AdministrativeAreaName createAdministrativeAreaAdministrativeAreaName() {
+    public AdministrativeArea.AdministrativeAreaName createAdministrativeAreaAdministrativeAreaName()
+    {
         return new AdministrativeArea.AdministrativeAreaName();
     }
 
@@ -364,7 +403,8 @@ public class ObjectFactory {
      * Create an instance of {@link Locality.LocalityName }
      * 
      */
-    public Locality.LocalityName createLocalityLocalityName() {
+    public Locality.LocalityName createLocalityLocalityName()
+    {
         return new Locality.LocalityName();
     }
 
@@ -372,7 +412,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostBox.PostBoxNumber }
      * 
      */
-    public PostBox.PostBoxNumber createPostBoxPostBoxNumber() {
+    public PostBox.PostBoxNumber createPostBoxPostBoxNumber()
+    {
         return new PostBox.PostBoxNumber();
     }
 
@@ -380,7 +421,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostBox.PostBoxNumberPrefix }
      * 
      */
-    public PostBox.PostBoxNumberPrefix createPostBoxPostBoxNumberPrefix() {
+    public PostBox.PostBoxNumberPrefix createPostBoxPostBoxNumberPrefix()
+    {
         return new PostBox.PostBoxNumberPrefix();
     }
 
@@ -388,7 +430,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostBox.PostBoxNumberSuffix }
      * 
      */
-    public PostBox.PostBoxNumberSuffix createPostBoxPostBoxNumberSuffix() {
+    public PostBox.PostBoxNumberSuffix createPostBoxPostBoxNumberSuffix()
+    {
         return new PostBox.PostBoxNumberSuffix();
     }
 
@@ -396,7 +439,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostBox.PostBoxNumberExtension }
      * 
      */
-    public PostBox.PostBoxNumberExtension createPostBoxPostBoxNumberExtension() {
+    public PostBox.PostBoxNumberExtension createPostBoxPostBoxNumberExtension()
+    {
         return new PostBox.PostBoxNumberExtension();
     }
 
@@ -404,7 +448,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostOffice.PostOfficeName }
      * 
      */
-    public PostOffice.PostOfficeName createPostOfficePostOfficeName() {
+    public PostOffice.PostOfficeName createPostOfficePostOfficeName()
+    {
         return new PostOffice.PostOfficeName();
     }
 
@@ -412,7 +457,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostOffice.PostOfficeNumber }
      * 
      */
-    public PostOffice.PostOfficeNumber createPostOfficePostOfficeNumber() {
+    public PostOffice.PostOfficeNumber createPostOfficePostOfficeNumber()
+    {
         return new PostOffice.PostOfficeNumber();
     }
 
@@ -420,7 +466,8 @@ public class ObjectFactory {
      * Create an instance of {@link XAL }
      * 
      */
-    public XAL createXAL() {
+    public XAL createXAL()
+    {
         return new XAL();
     }
 
@@ -428,7 +475,8 @@ public class ObjectFactory {
      * Create an instance of {@link CountryName }
      * 
      */
-    public CountryName createCountryName() {
+    public CountryName createCountryName()
+    {
         return new CountryName();
     }
 
@@ -436,7 +484,8 @@ public class ObjectFactory {
      * Create an instance of {@link Department.DepartmentName }
      * 
      */
-    public Department.DepartmentName createDepartmentDepartmentName() {
+    public Department.DepartmentName createDepartmentDepartmentName()
+    {
         return new Department.DepartmentName();
     }
 
@@ -444,7 +493,8 @@ public class ObjectFactory {
      * Create an instance of {@link AddressLinesType }
      * 
      */
-    public AddressLinesType createAddressLinesType() {
+    public AddressLinesType createAddressLinesType()
+    {
         return new AddressLinesType();
     }
 
@@ -452,7 +502,8 @@ public class ObjectFactory {
      * Create an instance of {@link AddressDetails.Address }
      * 
      */
-    public AddressDetails.Address createAddressDetailsAddress() {
+    public AddressDetails.Address createAddressDetailsAddress()
+    {
         return new AddressDetails.Address();
     }
 
@@ -460,87 +511,108 @@ public class ObjectFactory {
      * Create an instance of {@link AddressDetails.Country.CountryNameCode }
      * 
      */
-    public AddressDetails.Country.CountryNameCode createAddressDetailsCountryCountryNameCode() {
+    public AddressDetails.Country.CountryNameCode createAddressDetailsCountryCountryNameCode()
+    {
         return new AddressDetails.Country.CountryNameCode();
     }
 
     /**
-     * Create an instance of {@link AddressDetails.PostalServiceElements.AddressIdentifier }
+     * Create an instance of
+     * {@link AddressDetails.PostalServiceElements.AddressIdentifier }
      * 
      */
-    public AddressDetails.PostalServiceElements.AddressIdentifier createAddressDetailsPostalServiceElementsAddressIdentifier() {
+    public AddressDetails.PostalServiceElements.AddressIdentifier createAddressDetailsPostalServiceElementsAddressIdentifier()
+    {
         return new AddressDetails.PostalServiceElements.AddressIdentifier();
     }
 
     /**
-     * Create an instance of {@link AddressDetails.PostalServiceElements.EndorsementLineCode }
+     * Create an instance of
+     * {@link AddressDetails.PostalServiceElements.EndorsementLineCode }
      * 
      */
-    public AddressDetails.PostalServiceElements.EndorsementLineCode createAddressDetailsPostalServiceElementsEndorsementLineCode() {
+    public AddressDetails.PostalServiceElements.EndorsementLineCode createAddressDetailsPostalServiceElementsEndorsementLineCode()
+    {
         return new AddressDetails.PostalServiceElements.EndorsementLineCode();
     }
 
     /**
-     * Create an instance of {@link AddressDetails.PostalServiceElements.KeyLineCode }
+     * Create an instance of
+     * {@link AddressDetails.PostalServiceElements.KeyLineCode }
      * 
      */
-    public AddressDetails.PostalServiceElements.KeyLineCode createAddressDetailsPostalServiceElementsKeyLineCode() {
+    public AddressDetails.PostalServiceElements.KeyLineCode createAddressDetailsPostalServiceElementsKeyLineCode()
+    {
         return new AddressDetails.PostalServiceElements.KeyLineCode();
     }
 
     /**
-     * Create an instance of {@link AddressDetails.PostalServiceElements.Barcode }
+     * Create an instance of
+     * {@link AddressDetails.PostalServiceElements.Barcode }
      * 
      */
-    public AddressDetails.PostalServiceElements.Barcode createAddressDetailsPostalServiceElementsBarcode() {
+    public AddressDetails.PostalServiceElements.Barcode createAddressDetailsPostalServiceElementsBarcode()
+    {
         return new AddressDetails.PostalServiceElements.Barcode();
     }
 
     /**
-     * Create an instance of {@link AddressDetails.PostalServiceElements.SortingCode }
+     * Create an instance of
+     * {@link AddressDetails.PostalServiceElements.SortingCode }
      * 
      */
-    public AddressDetails.PostalServiceElements.SortingCode createAddressDetailsPostalServiceElementsSortingCode() {
+    public AddressDetails.PostalServiceElements.SortingCode createAddressDetailsPostalServiceElementsSortingCode()
+    {
         return new AddressDetails.PostalServiceElements.SortingCode();
     }
 
     /**
-     * Create an instance of {@link AddressDetails.PostalServiceElements.AddressLatitude }
+     * Create an instance of
+     * {@link AddressDetails.PostalServiceElements.AddressLatitude }
      * 
      */
-    public AddressDetails.PostalServiceElements.AddressLatitude createAddressDetailsPostalServiceElementsAddressLatitude() {
+    public AddressDetails.PostalServiceElements.AddressLatitude createAddressDetailsPostalServiceElementsAddressLatitude()
+    {
         return new AddressDetails.PostalServiceElements.AddressLatitude();
     }
 
     /**
-     * Create an instance of {@link AddressDetails.PostalServiceElements.AddressLatitudeDirection }
+     * Create an instance of
+     * {@link AddressDetails.PostalServiceElements.AddressLatitudeDirection }
      * 
      */
-    public AddressDetails.PostalServiceElements.AddressLatitudeDirection createAddressDetailsPostalServiceElementsAddressLatitudeDirection() {
+    public AddressDetails.PostalServiceElements.AddressLatitudeDirection createAddressDetailsPostalServiceElementsAddressLatitudeDirection()
+    {
         return new AddressDetails.PostalServiceElements.AddressLatitudeDirection();
     }
 
     /**
-     * Create an instance of {@link AddressDetails.PostalServiceElements.AddressLongitude }
+     * Create an instance of
+     * {@link AddressDetails.PostalServiceElements.AddressLongitude }
      * 
      */
-    public AddressDetails.PostalServiceElements.AddressLongitude createAddressDetailsPostalServiceElementsAddressLongitude() {
+    public AddressDetails.PostalServiceElements.AddressLongitude createAddressDetailsPostalServiceElementsAddressLongitude()
+    {
         return new AddressDetails.PostalServiceElements.AddressLongitude();
     }
 
     /**
-     * Create an instance of {@link AddressDetails.PostalServiceElements.AddressLongitudeDirection }
+     * Create an instance of
+     * {@link AddressDetails.PostalServiceElements.AddressLongitudeDirection }
      * 
      */
-    public AddressDetails.PostalServiceElements.AddressLongitudeDirection createAddressDetailsPostalServiceElementsAddressLongitudeDirection() {
+    public AddressDetails.PostalServiceElements.AddressLongitudeDirection createAddressDetailsPostalServiceElementsAddressLongitudeDirection()
+    {
         return new AddressDetails.PostalServiceElements.AddressLongitudeDirection();
     }
 
     /**
-     * Create an instance of {@link AddressDetails.PostalServiceElements.SupplementaryPostalServiceData }
+     * Create an instance of
+     * {@link AddressDetails.PostalServiceElements.SupplementaryPostalServiceData }
      * 
      */
-    public AddressDetails.PostalServiceElements.SupplementaryPostalServiceData createAddressDetailsPostalServiceElementsSupplementaryPostalServiceData() {
+    public AddressDetails.PostalServiceElements.SupplementaryPostalServiceData createAddressDetailsPostalServiceElementsSupplementaryPostalServiceData()
+    {
         return new AddressDetails.PostalServiceElements.SupplementaryPostalServiceData();
     }
 
@@ -548,7 +620,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostalRouteType.PostalRouteName }
      * 
      */
-    public PostalRouteType.PostalRouteName createPostalRouteTypePostalRouteName() {
+    public PostalRouteType.PostalRouteName createPostalRouteTypePostalRouteName()
+    {
         return new PostalRouteType.PostalRouteName();
     }
 
@@ -556,7 +629,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostalRouteType.PostalRouteNumber }
      * 
      */
-    public PostalRouteType.PostalRouteNumber createPostalRouteTypePostalRouteNumber() {
+    public PostalRouteType.PostalRouteNumber createPostalRouteTypePostalRouteNumber()
+    {
         return new PostalRouteType.PostalRouteNumber();
     }
 
@@ -564,7 +638,8 @@ public class ObjectFactory {
      * Create an instance of {@link LargeMailUserType.LargeMailUserName }
      * 
      */
-    public LargeMailUserType.LargeMailUserName createLargeMailUserTypeLargeMailUserName() {
+    public LargeMailUserType.LargeMailUserName createLargeMailUserTypeLargeMailUserName()
+    {
         return new LargeMailUserType.LargeMailUserName();
     }
 
@@ -572,15 +647,18 @@ public class ObjectFactory {
      * Create an instance of {@link LargeMailUserType.LargeMailUserIdentifier }
      * 
      */
-    public LargeMailUserType.LargeMailUserIdentifier createLargeMailUserTypeLargeMailUserIdentifier() {
+    public LargeMailUserType.LargeMailUserIdentifier createLargeMailUserTypeLargeMailUserIdentifier()
+    {
         return new LargeMailUserType.LargeMailUserIdentifier();
     }
 
     /**
-     * Create an instance of {@link AdministrativeArea.SubAdministrativeArea.SubAdministrativeAreaName }
+     * Create an instance of
+     * {@link AdministrativeArea.SubAdministrativeArea.SubAdministrativeAreaName }
      * 
      */
-    public AdministrativeArea.SubAdministrativeArea.SubAdministrativeAreaName createAdministrativeAreaSubAdministrativeAreaSubAdministrativeAreaName() {
+    public AdministrativeArea.SubAdministrativeArea.SubAdministrativeAreaName createAdministrativeAreaSubAdministrativeAreaSubAdministrativeAreaName()
+    {
         return new AdministrativeArea.SubAdministrativeArea.SubAdministrativeAreaName();
     }
 
@@ -588,7 +666,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostalCode.PostTown.PostTownName }
      * 
      */
-    public PostalCode.PostTown.PostTownName createPostalCodePostTownPostTownName() {
+    public PostalCode.PostTown.PostTownName createPostalCodePostTownPostTownName()
+    {
         return new PostalCode.PostTown.PostTownName();
     }
 
@@ -596,7 +675,8 @@ public class ObjectFactory {
      * Create an instance of {@link PostalCode.PostTown.PostTownSuffix }
      * 
      */
-    public PostalCode.PostTown.PostTownSuffix createPostalCodePostTownPostTownSuffix() {
+    public PostalCode.PostTown.PostTownSuffix createPostalCodePostTownPostTownSuffix()
+    {
         return new PostalCode.PostTown.PostTownSuffix();
     }
 
@@ -604,7 +684,8 @@ public class ObjectFactory {
      * Create an instance of {@link MailStopType.MailStopName }
      * 
      */
-    public MailStopType.MailStopName createMailStopTypeMailStopName() {
+    public MailStopType.MailStopName createMailStopTypeMailStopName()
+    {
         return new MailStopType.MailStopName();
     }
 
@@ -612,7 +693,8 @@ public class ObjectFactory {
      * Create an instance of {@link MailStopType.MailStopNumber }
      * 
      */
-    public MailStopType.MailStopNumber createMailStopTypeMailStopNumber() {
+    public MailStopType.MailStopNumber createMailStopTypeMailStopNumber()
+    {
         return new MailStopType.MailStopNumber();
     }
 
@@ -620,7 +702,8 @@ public class ObjectFactory {
      * Create an instance of {@link FirmType.FirmName }
      * 
      */
-    public FirmType.FirmName createFirmTypeFirmName() {
+    public FirmType.FirmName createFirmTypeFirmName()
+    {
         return new FirmType.FirmName();
     }
 
@@ -628,7 +711,8 @@ public class ObjectFactory {
      * Create an instance of {@link SubPremiseType.SubPremiseName }
      * 
      */
-    public SubPremiseType.SubPremiseName createSubPremiseTypeSubPremiseName() {
+    public SubPremiseType.SubPremiseName createSubPremiseTypeSubPremiseName()
+    {
         return new SubPremiseType.SubPremiseName();
     }
 
@@ -636,7 +720,8 @@ public class ObjectFactory {
      * Create an instance of {@link SubPremiseType.SubPremiseLocation }
      * 
      */
-    public SubPremiseType.SubPremiseLocation createSubPremiseTypeSubPremiseLocation() {
+    public SubPremiseType.SubPremiseLocation createSubPremiseTypeSubPremiseLocation()
+    {
         return new SubPremiseType.SubPremiseLocation();
     }
 
@@ -644,7 +729,8 @@ public class ObjectFactory {
      * Create an instance of {@link SubPremiseType.SubPremiseNumber }
      * 
      */
-    public SubPremiseType.SubPremiseNumber createSubPremiseTypeSubPremiseNumber() {
+    public SubPremiseType.SubPremiseNumber createSubPremiseTypeSubPremiseNumber()
+    {
         return new SubPremiseType.SubPremiseNumber();
     }
 
@@ -652,7 +738,8 @@ public class ObjectFactory {
      * Create an instance of {@link SubPremiseType.SubPremiseNumberPrefix }
      * 
      */
-    public SubPremiseType.SubPremiseNumberPrefix createSubPremiseTypeSubPremiseNumberPrefix() {
+    public SubPremiseType.SubPremiseNumberPrefix createSubPremiseTypeSubPremiseNumberPrefix()
+    {
         return new SubPremiseType.SubPremiseNumberPrefix();
     }
 
@@ -660,64 +747,79 @@ public class ObjectFactory {
      * Create an instance of {@link SubPremiseType.SubPremiseNumberSuffix }
      * 
      */
-    public SubPremiseType.SubPremiseNumberSuffix createSubPremiseTypeSubPremiseNumberSuffix() {
+    public SubPremiseType.SubPremiseNumberSuffix createSubPremiseTypeSubPremiseNumberSuffix()
+    {
         return new SubPremiseType.SubPremiseNumberSuffix();
     }
 
     /**
-     * Create an instance of {@link Premise.PremiseNumberRange.PremiseNumberRangeFrom }
+     * Create an instance of
+     * {@link Premise.PremiseNumberRange.PremiseNumberRangeFrom }
      * 
      */
-    public Premise.PremiseNumberRange.PremiseNumberRangeFrom createPremisePremiseNumberRangePremiseNumberRangeFrom() {
+    public Premise.PremiseNumberRange.PremiseNumberRangeFrom createPremisePremiseNumberRangePremiseNumberRangeFrom()
+    {
         return new Premise.PremiseNumberRange.PremiseNumberRangeFrom();
     }
 
     /**
-     * Create an instance of {@link Premise.PremiseNumberRange.PremiseNumberRangeTo }
+     * Create an instance of
+     * {@link Premise.PremiseNumberRange.PremiseNumberRangeTo }
      * 
      */
-    public Premise.PremiseNumberRange.PremiseNumberRangeTo createPremisePremiseNumberRangePremiseNumberRangeTo() {
+    public Premise.PremiseNumberRange.PremiseNumberRangeTo createPremisePremiseNumberRangePremiseNumberRangeTo()
+    {
         return new Premise.PremiseNumberRange.PremiseNumberRangeTo();
     }
 
     /**
-     * Create an instance of {@link DependentLocalityType.DependentLocalityName }
+     * Create an instance of
+     * {@link DependentLocalityType.DependentLocalityName }
      * 
      */
-    public DependentLocalityType.DependentLocalityName createDependentLocalityTypeDependentLocalityName() {
+    public DependentLocalityType.DependentLocalityName createDependentLocalityTypeDependentLocalityName()
+    {
         return new DependentLocalityType.DependentLocalityName();
     }
 
     /**
-     * Create an instance of {@link DependentLocalityType.DependentLocalityNumber }
+     * Create an instance of
+     * {@link DependentLocalityType.DependentLocalityNumber }
      * 
      */
-    public DependentLocalityType.DependentLocalityNumber createDependentLocalityTypeDependentLocalityNumber() {
+    public DependentLocalityType.DependentLocalityNumber createDependentLocalityTypeDependentLocalityNumber()
+    {
         return new DependentLocalityType.DependentLocalityNumber();
     }
 
     /**
-     * Create an instance of {@link Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberFrom }
+     * Create an instance of
+     * {@link Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberFrom }
      * 
      */
-    public Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberFrom createThoroughfareThoroughfareNumberRangeThoroughfareNumberFrom() {
+    public Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberFrom createThoroughfareThoroughfareNumberRangeThoroughfareNumberFrom()
+    {
         return new Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberFrom();
     }
 
     /**
-     * Create an instance of {@link Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberTo }
+     * Create an instance of
+     * {@link Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberTo }
      * 
      */
-    public Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberTo createThoroughfareThoroughfareNumberRangeThoroughfareNumberTo() {
+    public Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberTo createThoroughfareThoroughfareNumberRangeThoroughfareNumberTo()
+    {
         return new Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberTo();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AddressDetails }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link AddressDetails
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0", name = "AddressDetails")
-    public JAXBElement<AddressDetails> createAddressDetails(AddressDetails value) {
+    public JAXBElement<AddressDetails> createAddressDetails(AddressDetails value)
+    {
         return new JAXBElement<AddressDetails>(_AddressDetails_QNAME, AddressDetails.class, null, value);
     }
 

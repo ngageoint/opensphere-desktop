@@ -10,15 +10,14 @@ import java.util.List;
  */
 public interface ProxyResolver
 {
-   /**
-    * Determines the proxy host configuration(s) from the given destination URL.
-    *
-    * @param destination
-    *           the destination URL.
-    * @return the list of proxy host configurations.
-    * @throws IOException
-    *            if an error occurs generating the list of proxy host
-    *            configuration.
-    */
-   List<ProxyHostConfig> getProxyServer(URL destination) throws IOException;
+    /**
+     * Determines the proxy host configuration(s) from the given destination
+     * URL.
+     *
+     * @param destination the destination URL.
+     * @return the list of proxy host configurations.
+     * @throws IOException if an  error occurs generating the list of proxy host
+     *             configuration.
+     */
+    List<ProxyHostConfig> getProxyServer(URL destination) throws IOException;
 }

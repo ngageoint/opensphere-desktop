@@ -178,7 +178,8 @@ public abstract class SimpleEnvoy<T> extends AbstractEnvoy implements DataRegist
     }
 
     /**
-     * Performs a GET request to the given URL and returns the response as a {@link CancellableInputStream}.
+     * Performs a GET request to the given URL and returns the response as a
+     * {@link CancellableInputStream}.
      *
      * @param url the URL
      * @return The input stream
@@ -190,10 +191,12 @@ public abstract class SimpleEnvoy<T> extends AbstractEnvoy implements DataRegist
     }
 
     /**
-     * Performs a GET request to the given URL and returns the response as a {@link CancellableInputStream}.
+     * Performs a GET request to the given URL and returns the response as a
+     * {@link CancellableInputStream}.
      *
      * @param url the URL
-     * @param extraHeaderValues Any extra header information to add to the post request.
+     * @param extraHeaderValues Any extra header information to add to the post
+     *            request.
      * @return The input stream
      * @throws QueryException If something went wrong
      */
@@ -253,7 +256,7 @@ public abstract class SimpleEnvoy<T> extends AbstractEnvoy implements DataRegist
      *
      * @param inputStream the input stream
      * @return the items to be deposited
-     * @throws IOException if a problem occurred reading the stream
+     * @throws IOException if a   problem occurred reading the stream
      */
     protected abstract Collection<T> parseDepositItems(CancellableInputStream inputStream) throws IOException;
 

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import java.util.ArrayList;
@@ -21,16 +20,18 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.w3c.dom.Element;
 
-
 /**
- * A schema component includes a schema fragment (type
- *          definition) or an entire schema from some target namespace;
- *          the schema language is identified by URI. If the component
- *          is a schema fragment its parent MUST be referenced (parentSchema).
+ * A schema component includes a schema fragment (type definition) or an entire
+ * schema from some target namespace; the schema language is identified by URI.
+ * If the component is a schema fragment its parent MUST be referenced
+ * (parentSchema).
  * 
- * <p>Java class for SchemaComponentType complex type.
+ * <p>
+ * Java class for SchemaComponentType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SchemaComponentType">
@@ -50,53 +51,56 @@ import org.w3c.dom.Element;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SchemaComponentType", propOrder = {
-    "content"
-})
-public class SchemaComponentType {
+@XmlType(name = "SchemaComponentType", propOrder = { "content" })
+public class SchemaComponentType
+{
 
     @XmlMixed
     @XmlAnyElement(lax = true)
     protected List<Object> content;
+
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "anyURI")
     protected String targetNamespace;
+
     @XmlAttribute
     @XmlSchemaType(name = "anyURI")
     protected String parentSchema;
+
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "anyURI")
     protected String schemaLanguage;
 
     /**
-     * A schema component includes a schema fragment (type
-     *          definition) or an entire schema from some target namespace;
-     *          the schema language is identified by URI. If the component
-     *          is a schema fragment its parent MUST be referenced (parentSchema).Gets the value of the content property.
+     * A schema component includes a schema fragment (type definition) or an
+     * entire schema from some target namespace; the schema language is
+     * identified by URI. If the component is a schema fragment its parent MUST
+     * be referenced (parentSchema).Gets the value of the content property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the content property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the content property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getContent().add(newItem);
+     * getContent().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     * {@link Element }
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link String }
+     * {@link Element } {@link Object }
      * 
      * 
      */
-    public List<Object> getContent() {
-        if (content == null) {
+    public List<Object> getContent()
+    {
+        if (content == null)
+        {
             content = new ArrayList<Object>();
         }
         return this.content;
@@ -105,72 +109,66 @@ public class SchemaComponentType {
     /**
      * Gets the value of the targetNamespace property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTargetNamespace() {
+    public String getTargetNamespace()
+    {
         return targetNamespace;
     }
 
     /**
      * Sets the value of the targetNamespace property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTargetNamespace(String value) {
+    public void setTargetNamespace(String value)
+    {
         this.targetNamespace = value;
     }
 
     /**
      * Gets the value of the parentSchema property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getParentSchema() {
+    public String getParentSchema()
+    {
         return parentSchema;
     }
 
     /**
      * Sets the value of the parentSchema property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setParentSchema(String value) {
+    public void setParentSchema(String value)
+    {
         this.parentSchema = value;
     }
 
     /**
      * Gets the value of the schemaLanguage property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSchemaLanguage() {
+    public String getSchemaLanguage()
+    {
         return schemaLanguage;
     }
 
     /**
      * Sets the value of the schemaLanguage property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSchemaLanguage(String value) {
+    public void setSchemaLanguage(String value)
+    {
         this.schemaLanguage = value;
     }
 

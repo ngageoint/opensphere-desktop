@@ -707,8 +707,7 @@ public final class StringUtilities
             for (final Entry<String, String> entry : props.entrySet())
             {
                 @SuppressWarnings("unchecked")
-                final
-                T value = (T)valueOf.invoke(null, entry.getValue());
+                final T value = (T)valueOf.invoke(null, entry.getValue());
                 result.put(entry.getKey(), value);
             }
             return result;

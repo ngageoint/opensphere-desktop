@@ -13,7 +13,7 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.fx.FXUtilities;
@@ -41,7 +41,7 @@ public class FeatureActionTitledPaneBinderTestDisplay
     @Test
     public void testAddAction()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -82,7 +82,7 @@ public class FeatureActionTitledPaneBinderTestDisplay
     @Test
     public void testRemoveGroup()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -115,7 +115,7 @@ public class FeatureActionTitledPaneBinderTestDisplay
     @Test
     public void testAllChecked()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -165,7 +165,7 @@ public class FeatureActionTitledPaneBinderTestDisplay
     @Test
     public void testGroupRename()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -205,7 +205,7 @@ public class FeatureActionTitledPaneBinderTestDisplay
     @Test
     public void testNoneChecked()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -255,7 +255,7 @@ public class FeatureActionTitledPaneBinderTestDisplay
     @Test
     public void testSelectAll()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -320,7 +320,7 @@ public class FeatureActionTitledPaneBinderTestDisplay
     @Test
     public void testSomeChecked()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

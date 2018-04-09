@@ -737,7 +737,7 @@ public class ImageIOImage extends Image implements DDSEncodableImage
      *
      * @param in The stream.
      * @throws IOException If there is an error reading from the stream.
-     * @throws ClassNotFoundException If a class from the stream cannot be
+     * @throws ClassNotFoundException If a   class from the stream cannot be
      *             loaded.
      */
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException

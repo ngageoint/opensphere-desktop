@@ -5,19 +5,21 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for gridOriginEnumType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for gridOriginEnumType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="gridOriginEnumType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -30,25 +32,30 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "gridOriginEnumType")
 @XmlEnum
-public enum GridOriginEnumType {
+public enum GridOriginEnumType
+{
 
     @XmlEnumValue("lowerLeft")
-    LOWER_LEFT("lowerLeft"),
-    @XmlEnumValue("upperLeft")
+    LOWER_LEFT("lowerLeft"), @XmlEnumValue("upperLeft")
     UPPER_LEFT("upperLeft");
     private final String value;
 
-    GridOriginEnumType(String v) {
+    GridOriginEnumType(String v)
+    {
         value = v;
     }
 
-    public String value() {
+    public String value()
+    {
         return value;
     }
 
-    public static GridOriginEnumType fromValue(String v) {
-        for (GridOriginEnumType c: GridOriginEnumType.values()) {
-            if (c.value.equals(v)) {
+    public static GridOriginEnumType fromValue(String v)
+    {
+        for (GridOriginEnumType c : GridOriginEnumType.values())
+        {
+            if (c.value.equals(v))
+            {
                 return c;
             }
         }

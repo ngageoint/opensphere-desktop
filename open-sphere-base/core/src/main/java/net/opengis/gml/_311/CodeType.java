@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,17 +15,19 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * Name or code with an (optional) authority.  Text token.  
- *       If the codeSpace attribute is present, then its value should identify a dictionary, thesaurus 
- *       or authority for the term, such as the organisation who assigned the value, 
- *       or the dictionary from which it is taken.  
- *       A text string with an optional codeSpace attribute. 
+ * Name or code with an (optional) authority. Text token. If the codeSpace
+ * attribute is present, then its value should identify a dictionary, thesaurus
+ * or authority for the term, such as the organisation who assigned the value,
+ * or the dictionary from which it is taken. A text string with an optional
+ * codeSpace attribute.
  * 
- * <p>Java class for CodeType complex type.
+ * <p>
+ * Java class for CodeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CodeType">
@@ -41,18 +42,14 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CodeType", propOrder = {
-    "value"
-})
-@XmlSeeAlso({
-    DerivedCRSTypeType.class,
-    VerticalDatumTypeType.class,
-    PixelInCellType.class
-})
-public class CodeType {
+@XmlType(name = "CodeType", propOrder = { "value" })
+@XmlSeeAlso({ DerivedCRSTypeType.class, VerticalDatumTypeType.class, PixelInCellType.class })
+public class CodeType
+{
 
     @XmlValue
     protected String value;
+
     @XmlAttribute(name = "codeSpace")
     @XmlSchemaType(name = "anyURI")
     protected String codeSpace;
@@ -60,48 +57,44 @@ public class CodeType {
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getValue() {
+    public String getValue()
+    {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setValue(String value) {
+    public void setValue(String value)
+    {
         this.value = value;
     }
 
     /**
      * Gets the value of the codeSpace property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getCodeSpace() {
+    public String getCodeSpace()
+    {
         return codeSpace;
     }
 
     /**
      * Sets the value of the codeSpace property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setCodeSpace(String value) {
+    public void setCodeSpace(String value)
+    {
         this.codeSpace = value;
     }
 

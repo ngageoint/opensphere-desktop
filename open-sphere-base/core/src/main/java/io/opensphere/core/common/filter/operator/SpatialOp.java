@@ -23,74 +23,73 @@ public class SpatialOp extends Operator
      */
     public enum SpatialOperatorType
     {
-        /**
-         * From Simple Feature Specification for SQL 1.1: <code>true</code> if
-         * two geometries are equal.
-         */
-        EQUALS,
+    /**
+     * From Simple Feature Specification for SQL 1.1: <code>true</code> if two
+     * geometries are equal.
+     */
+    EQUALS,
 
-        /**
-         * From Simple Feature Specification for SQL 1.1: <code>true</code> if
-         * the intersection of two geometries is the empty set.
-         */
-        DISJOINT,
+    /**
+     * From Simple Feature Specification for SQL 1.1: <code>true</code> if the
+     * intersection of two geometries is the empty set.
+     */
+    DISJOINT,
 
-        /**
-         * From Simple Feature Specification for SQL 1.1: <code>true</code> if
-         * the only points in common between two geometries list in the union of
-         * the boundaries of the geometries.
-         */
-        TOUCHES,
+    /**
+     * From Simple Feature Specification for SQL 1.1: <code>true</code> if the
+     * only points in common between two geometries list in the union of the
+     * boundaries of the geometries.
+     */
+    TOUCHES,
 
-        /**
-         * From Simple Feature Specification for SQL 1.1: <code>true</code> if
-         * the geometry is completely contained in the operator's geometry.
-         */
-        WITHIN,
+    /**
+     * From Simple Feature Specification for SQL 1.1: <code>true</code> if the
+     * geometry is completely contained in the operator's geometry.
+     */
+    WITHIN,
 
-        /**
-         * From Simple Feature Specification for SQL 1.1: <code>true</code> if
-         * the intersection of two geometries results in a value of the same
-         * dimension as the geometries but is different from the original
-         * geometries.
-         */
-        OVERLAPS,
+    /**
+     * From Simple Feature Specification for SQL 1.1: <code>true</code> if the
+     * intersection of two geometries results in a value of the same dimension
+     * as the geometries but is different from the original geometries.
+     */
+    OVERLAPS,
 
-        /**
-         * From Simple Feature Specification for SQL 1.1: <code>true</code> if
-         * the intersection of two geometries results in a value whose dimension
-         * is less than the maximum dimension of the geometries and the
-         * intersection value includes points interior to both geometries, and
-         * the intersection value is not equal to either geometry.
-         */
-        CROSSES,
+    /**
+     * From Simple Feature Specification for SQL 1.1: <code>true</code> if the
+     * intersection of two geometries results in a value whose dimension is less
+     * than the maximum dimension of the geometries and the intersection value
+     * includes points interior to both geometries, and the intersection value
+     * is not equal to either geometry.
+     */
+    CROSSES,
 
-        /**
-         * From Simple Feature Specification for SQL 1.1: <code>true</code> if
-         * the intersection of a geometry and the operator's geometry is not
-         * empty. This is the opposite of {@link #DISJOINT}.
-         */
-        INTERSECTS,
+    /**
+     * From Simple Feature Specification for SQL 1.1: <code>true</code> if the
+     * intersection of a geometry and the operator's geometry is not empty. This
+     * is the opposite of {@link #DISJOINT}.
+     */
+    INTERSECTS,
 
-        /**
-         * From Simple Feature Specification for SQL 1.1: <code>true</code> if
-         * the geometry is completely contained in the operator's geometry.
-         */
-        CONTAINS,
+    /**
+     * From Simple Feature Specification for SQL 1.1: <code>true</code> if the
+     * geometry is completely contained in the operator's geometry.
+     */
+    CONTAINS,
 
-        /**
-         * From Filter Encoding Implementation Specification 1.1.0:
-         * <code>true</code> if a geometry is within a specified distance from
-         * the operator's geometry.
-         */
-        DWITHIN,
+    /**
+     * From Filter Encoding Implementation Specification 1.1.0:
+     * <code>true</code> if a geometry is within a specified distance from the
+     * operator's geometry.
+     */
+    DWITHIN,
 
-        /**
-         * From Filter Encoding Implementation Specification 1.1.0:
-         * <code>true</code> if a geometry is beyond a specified distance from
-         * the operator's geometry.
-         */
-        BEYOND,
+    /**
+     * From Filter Encoding Implementation Specification 1.1.0:
+     * <code>true</code> if a geometry is beyond a specified distance from the
+     * operator's geometry.
+     */
+    BEYOND,
     }
 
     /**

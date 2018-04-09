@@ -5,19 +5,21 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for unitsEnumType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for unitsEnumType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="unitsEnumType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -31,27 +33,31 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "unitsEnumType")
 @XmlEnum
-public enum UnitsEnumType {
+public enum UnitsEnumType
+{
 
     @XmlEnumValue("fraction")
-    FRACTION("fraction"),
-    @XmlEnumValue("pixels")
-    PIXELS("pixels"),
-    @XmlEnumValue("insetPixels")
+    FRACTION("fraction"), @XmlEnumValue("pixels")
+    PIXELS("pixels"), @XmlEnumValue("insetPixels")
     INSET_PIXELS("insetPixels");
     private final String value;
 
-    UnitsEnumType(String v) {
+    UnitsEnumType(String v)
+    {
         value = v;
     }
 
-    public String value() {
+    public String value()
+    {
         return value;
     }
 
-    public static UnitsEnumType fromValue(String v) {
-        for (UnitsEnumType c: UnitsEnumType.values()) {
-            if (c.value.equals(v)) {
+    public static UnitsEnumType fromValue(String v)
+    {
+        for (UnitsEnumType c : UnitsEnumType.values())
+        {
+            if (c.value.equals(v))
+            {
                 return c;
             }
         }

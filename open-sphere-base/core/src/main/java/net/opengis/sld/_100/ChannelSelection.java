@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -40,117 +41,108 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "redChannel",
-    "greenChannel",
-    "blueChannel",
-    "grayChannel"
-})
+@XmlType(name = "", propOrder = { "redChannel", "greenChannel", "blueChannel", "grayChannel" })
 @XmlRootElement(name = "ChannelSelection")
-public class ChannelSelection {
+public class ChannelSelection
+{
 
     @XmlElement(name = "RedChannel")
     protected SelectedChannelType redChannel;
+
     @XmlElement(name = "GreenChannel")
     protected SelectedChannelType greenChannel;
+
     @XmlElement(name = "BlueChannel")
     protected SelectedChannelType blueChannel;
+
     @XmlElement(name = "GrayChannel")
     protected SelectedChannelType grayChannel;
 
     /**
      * Gets the value of the redChannel property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SelectedChannelType }
-     *     
+     * @return possible object is {@link SelectedChannelType }
+     * 
      */
-    public SelectedChannelType getRedChannel() {
+    public SelectedChannelType getRedChannel()
+    {
         return redChannel;
     }
 
     /**
      * Sets the value of the redChannel property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SelectedChannelType }
-     *     
+     * @param value allowed object is {@link SelectedChannelType }
+     * 
      */
-    public void setRedChannel(SelectedChannelType value) {
+    public void setRedChannel(SelectedChannelType value)
+    {
         this.redChannel = value;
     }
 
     /**
      * Gets the value of the greenChannel property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SelectedChannelType }
-     *     
+     * @return possible object is {@link SelectedChannelType }
+     * 
      */
-    public SelectedChannelType getGreenChannel() {
+    public SelectedChannelType getGreenChannel()
+    {
         return greenChannel;
     }
 
     /**
      * Sets the value of the greenChannel property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SelectedChannelType }
-     *     
+     * @param value allowed object is {@link SelectedChannelType }
+     * 
      */
-    public void setGreenChannel(SelectedChannelType value) {
+    public void setGreenChannel(SelectedChannelType value)
+    {
         this.greenChannel = value;
     }
 
     /**
      * Gets the value of the blueChannel property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SelectedChannelType }
-     *     
+     * @return possible object is {@link SelectedChannelType }
+     * 
      */
-    public SelectedChannelType getBlueChannel() {
+    public SelectedChannelType getBlueChannel()
+    {
         return blueChannel;
     }
 
     /**
      * Sets the value of the blueChannel property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SelectedChannelType }
-     *     
+     * @param value allowed object is {@link SelectedChannelType }
+     * 
      */
-    public void setBlueChannel(SelectedChannelType value) {
+    public void setBlueChannel(SelectedChannelType value)
+    {
         this.blueChannel = value;
     }
 
     /**
      * Gets the value of the grayChannel property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SelectedChannelType }
-     *     
+     * @return possible object is {@link SelectedChannelType }
+     * 
      */
-    public SelectedChannelType getGrayChannel() {
+    public SelectedChannelType getGrayChannel()
+    {
         return grayChannel;
     }
 
     /**
      * Sets the value of the grayChannel property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SelectedChannelType }
-     *     
+     * @param value allowed object is {@link SelectedChannelType }
+     * 
      */
-    public void setGrayChannel(SelectedChannelType value) {
+    public void setGrayChannel(SelectedChannelType value)
+    {
         this.grayChannel = value;
     }
 

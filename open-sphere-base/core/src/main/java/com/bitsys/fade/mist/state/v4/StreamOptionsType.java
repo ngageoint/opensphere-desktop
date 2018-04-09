@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.math.BigInteger;
@@ -17,15 +16,17 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
- *        Layer option related to streaming layers.
- *       
+ * Layer option related to streaming layers.
  * 
- * <p>Java class for StreamOptionsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for StreamOptionsType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="StreamOptionsType">
@@ -50,183 +51,183 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "StreamOptionsType", propOrder = {
 
 })
-public class StreamOptionsType {
+public class StreamOptionsType
+{
 
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String layer;
+
     protected BigInteger threshold;
+
     protected Boolean ageOffActive;
+
     protected BigInteger ageOffTime;
+
     protected Boolean play;
+
     protected BinSettingsType binSettings;
 
     /**
      * Gets the value of the layer property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLayer() {
+    public String getLayer()
+    {
         return layer;
     }
 
     /**
      * Sets the value of the layer property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLayer(String value) {
+    public void setLayer(String value)
+    {
         this.layer = value;
     }
 
-    public boolean isSetLayer() {
-        return (this.layer!= null);
+    public boolean isSetLayer()
+    {
+        return (this.layer != null);
     }
 
     /**
      * Gets the value of the threshold property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getThreshold() {
+    public BigInteger getThreshold()
+    {
         return threshold;
     }
 
     /**
      * Sets the value of the threshold property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setThreshold(BigInteger value) {
+    public void setThreshold(BigInteger value)
+    {
         this.threshold = value;
     }
 
-    public boolean isSetThreshold() {
-        return (this.threshold!= null);
+    public boolean isSetThreshold()
+    {
+        return (this.threshold != null);
     }
 
     /**
      * Gets the value of the ageOffActive property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isAgeOffActive() {
+    public Boolean isAgeOffActive()
+    {
         return ageOffActive;
     }
 
     /**
      * Sets the value of the ageOffActive property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setAgeOffActive(Boolean value) {
+    public void setAgeOffActive(Boolean value)
+    {
         this.ageOffActive = value;
     }
 
-    public boolean isSetAgeOffActive() {
-        return (this.ageOffActive!= null);
+    public boolean isSetAgeOffActive()
+    {
+        return (this.ageOffActive != null);
     }
 
     /**
      * Gets the value of the ageOffTime property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getAgeOffTime() {
+    public BigInteger getAgeOffTime()
+    {
         return ageOffTime;
     }
 
     /**
      * Sets the value of the ageOffTime property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setAgeOffTime(BigInteger value) {
+    public void setAgeOffTime(BigInteger value)
+    {
         this.ageOffTime = value;
     }
 
-    public boolean isSetAgeOffTime() {
-        return (this.ageOffTime!= null);
+    public boolean isSetAgeOffTime()
+    {
+        return (this.ageOffTime != null);
     }
 
     /**
      * Gets the value of the play property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isPlay() {
+    public Boolean isPlay()
+    {
         return play;
     }
 
     /**
      * Sets the value of the play property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setPlay(Boolean value) {
+    public void setPlay(Boolean value)
+    {
         this.play = value;
     }
 
-    public boolean isSetPlay() {
-        return (this.play!= null);
+    public boolean isSetPlay()
+    {
+        return (this.play != null);
     }
 
     /**
      * Gets the value of the binSettings property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BinSettingsType }
-     *     
+     * @return possible object is {@link BinSettingsType }
+     * 
      */
-    public BinSettingsType getBinSettings() {
+    public BinSettingsType getBinSettings()
+    {
         return binSettings;
     }
 
     /**
      * Sets the value of the binSettings property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BinSettingsType }
-     *     
+     * @param value allowed object is {@link BinSettingsType }
+     * 
      */
-    public void setBinSettings(BinSettingsType value) {
+    public void setBinSettings(BinSettingsType value)
+    {
         this.binSettings = value;
     }
 
-    public boolean isSetBinSettings() {
-        return (this.binSettings!= null);
+    public boolean isSetBinSettings()
+    {
+        return (this.binSettings != null);
     }
 
 }

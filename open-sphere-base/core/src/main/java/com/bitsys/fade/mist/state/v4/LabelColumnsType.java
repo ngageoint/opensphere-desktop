@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.util.ArrayList;
@@ -15,11 +14,13 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for LabelColumnsType complex type.
+ * <p>
+ * Java class for LabelColumnsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LabelColumnsType">
@@ -36,10 +37,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LabelColumnsType", propOrder = {
-    "label"
-})
-public class LabelColumnsType {
+@XmlType(name = "LabelColumnsType", propOrder = { "label" })
+public class LabelColumnsType
+{
 
     protected List<LabelColumnType> label;
 
@@ -47,15 +47,16 @@ public class LabelColumnsType {
      * Gets the value of the label property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the label property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the label property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLabel().add(newItem);
+     * getLabel().add(newItem);
      * </pre>
      * 
      * 
@@ -65,18 +66,22 @@ public class LabelColumnsType {
      * 
      * 
      */
-    public List<LabelColumnType> getLabel() {
-        if (label == null) {
+    public List<LabelColumnType> getLabel()
+    {
+        if (label == null)
+        {
             label = new ArrayList<LabelColumnType>();
         }
         return this.label;
     }
 
-    public boolean isSetLabel() {
-        return ((this.label!= null)&&(!this.label.isEmpty()));
+    public boolean isSetLabel()
+    {
+        return ((this.label != null) && (!this.label.isEmpty()));
     }
 
-    public void unsetLabel() {
+    public void unsetLabel()
+    {
         this.label = null;
     }
 

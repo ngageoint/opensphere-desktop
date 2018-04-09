@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for SimpleFieldType complex type.
+ * <p>
+ * Java class for SimpleFieldType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SimpleFieldType">
@@ -41,139 +42,141 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SimpleFieldType", propOrder = {
-    "displayName",
-    "simpleFieldExtension"
-})
-public class SimpleFieldType {
+@XmlType(name = "SimpleFieldType", propOrder = { "displayName", "simpleFieldExtension" })
+public class SimpleFieldType
+{
 
     protected String displayName;
+
     @XmlElement(name = "SimpleFieldExtension")
     protected List<Object> simpleFieldExtension;
+
     @XmlAttribute(name = "type")
     protected String type;
+
     @XmlAttribute(name = "name")
     protected String name;
 
     /**
      * Gets the value of the displayName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDisplayName() {
+    public String getDisplayName()
+    {
         return displayName;
     }
 
     /**
      * Sets the value of the displayName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDisplayName(String value) {
+    public void setDisplayName(String value)
+    {
         this.displayName = value;
     }
 
-    public boolean isSetDisplayName() {
-        return (this.displayName!= null);
+    public boolean isSetDisplayName()
+    {
+        return (this.displayName != null);
     }
 
     /**
      * Gets the value of the simpleFieldExtension property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the simpleFieldExtension property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the simpleFieldExtension property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSimpleFieldExtension().add(newItem);
+     * getSimpleFieldExtension().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getSimpleFieldExtension() {
-        if (simpleFieldExtension == null) {
+    public List<Object> getSimpleFieldExtension()
+    {
+        if (simpleFieldExtension == null)
+        {
             simpleFieldExtension = new ArrayList<Object>();
         }
         return this.simpleFieldExtension;
     }
 
-    public boolean isSetSimpleFieldExtension() {
-        return ((this.simpleFieldExtension!= null)&&(!this.simpleFieldExtension.isEmpty()));
+    public boolean isSetSimpleFieldExtension()
+    {
+        return ((this.simpleFieldExtension != null) && (!this.simpleFieldExtension.isEmpty()));
     }
 
-    public void unsetSimpleFieldExtension() {
+    public void unsetSimpleFieldExtension()
+    {
         this.simpleFieldExtension = null;
     }
 
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getType() {
+    public String getType()
+    {
         return type;
     }
 
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setType(String value) {
+    public void setType(String value)
+    {
         this.type = value;
     }
 
-    public boolean isSetType() {
-        return (this.type!= null);
+    public boolean isSetType()
+    {
+        return (this.type != null);
     }
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
-    public boolean isSetName() {
-        return (this.name!= null);
+    public boolean isSetName()
+    {
+        return (this.name != null);
     }
 
 }

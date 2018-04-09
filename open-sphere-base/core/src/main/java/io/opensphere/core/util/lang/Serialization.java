@@ -51,7 +51,7 @@ public final class Serialization
      * @return The byte array.
      * @throws IOException If the object could not be serialized due to a stream
      *             error.
-     * @throws NotSerializableException If a member of the object does not
+     * @throws NotSerializableException If a   member of the object does not
      *             implement the {@link Serializable} interface.
      */
     public static byte[] serialize(Serializable object) throws IOException
@@ -73,7 +73,7 @@ public final class Serialization
      * @return The input stream
      * @throws IOException If the object could not be serialized due to a stream
      *             error.
-     * @throws NotSerializableException If a member of the object does not
+     * @throws NotSerializableException If a   member of the object does not
      *             implement the {@link Serializable} interface.
      */
     public static InputStream serializeToStream(final Serializable object) throws IOException
@@ -91,7 +91,7 @@ public final class Serialization
      * @return The input stream
      * @throws IOException If the object could not be serialized due to a stream
      *             error.
-     * @throws NotSerializableException If a member of the object does not
+     * @throws NotSerializableException If a   member of the object does not
      *             implement the {@link Serializable} interface.
      */
     public static InputStream serializeToStream(final Serializable object, Executor executor) throws IOException

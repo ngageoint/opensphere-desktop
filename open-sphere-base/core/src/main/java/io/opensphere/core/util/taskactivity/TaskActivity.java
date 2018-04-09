@@ -2,14 +2,13 @@ package io.opensphere.core.util.taskactivity;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.StringProperty;
-
 import javax.annotation.concurrent.ThreadSafe;
 
 import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
 import io.opensphere.core.util.javafx.ConcurrentStringProperty;
+import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  * A task activity for display in a TaskActivityPanel.

@@ -18,7 +18,7 @@ public class ZipEntryNameIteratorTest
     /**
      * Test {@link ZipEntryNameIterator}.
      *
-     * @throws IOException If a test stream has an error.
+     * @throws IOException If a   test stream has an error.
      */
     @Test
     public void test() throws IOException

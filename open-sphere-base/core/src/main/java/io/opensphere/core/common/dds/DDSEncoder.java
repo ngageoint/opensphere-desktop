@@ -590,7 +590,8 @@ public class DDSEncoder
             d3b = (d3b ^ d3b >> 31) - (d3b >> 31);
             int d3 = d3r + d3g + d3b;
             /* int b0 = d0 > d3 ? 1 : 0; int b1 = d1 > d2 ? 1 : 0; int b2 = d0 >
-             * d2 ? 1 : 0; int b3 = d1 > d3 ? 1 : 0; int b4 = d2 > d3 ? 1 : 0; */
+             * d2 ? 1 : 0; int b3 = d1 > d3 ? 1 : 0; int b4 = d2 > d3 ? 1 :
+             * 0; */
             // Java's insistence that a comparison operator returns a logical
             // boolean and not
             // an integer causes the above code, which has a ton of branches and

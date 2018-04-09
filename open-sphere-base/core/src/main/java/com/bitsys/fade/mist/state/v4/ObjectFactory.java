@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import javax.xml.bind.JAXBElement;
@@ -13,38 +12,38 @@ import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 
-
 /**
- * This object contains factory methods for each 
- * Java content interface and Java element interface 
- * generated in the com.bitsys.fade.mist.state.v4 package. 
- * <p>An ObjectFactory allows you to programatically 
- * construct new instances of the Java representation 
- * for XML content. The Java representation of XML 
- * content can consist of schema derived interfaces 
- * and classes representing the binding of schema 
- * type definitions, element declarations and model 
- * groups.  Factory methods for each of these are 
- * provided in this class.
+ * This object contains factory methods for each Java content interface and Java
+ * element interface generated in the com.bitsys.fade.mist.state.v4 package.
+ * <p>
+ * An ObjectFactory allows you to programatically construct new instances of the
+ * Java representation for XML content. The Java representation of XML content
+ * can consist of schema derived interfaces and classes representing the binding
+ * of schema type definitions, element declarations and model groups. Factory
+ * methods for each of these are provided in this class.
  * 
  */
 @XmlRegistry
-public class ObjectFactory {
+public class ObjectFactory
+{
 
     private final static QName _State_QNAME = new QName("http://www.bit-sys.com/mist/state/v4", "state");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.bitsys.fade.mist.state.v4
+     * Create a new ObjectFactory that can be used to create new instances of
+     * schema derived classes for package: com.bitsys.fade.mist.state.v4
      * 
      */
-    public ObjectFactory() {
+    public ObjectFactory()
+    {
     }
 
     /**
      * Create an instance of {@link StateType }
      * 
      */
-    public StateType createStateType() {
+    public StateType createStateType()
+    {
         return new StateType();
     }
 
@@ -52,7 +51,8 @@ public class ObjectFactory {
      * Create an instance of {@link MappingType }
      * 
      */
-    public MappingType createMappingType() {
+    public MappingType createMappingType()
+    {
         return new MappingType();
     }
 
@@ -60,7 +60,8 @@ public class ObjectFactory {
      * Create an instance of {@link NameValueType }
      * 
      */
-    public NameValueType createNameValueType() {
+    public NameValueType createNameValueType()
+    {
         return new NameValueType();
     }
 
@@ -68,7 +69,8 @@ public class ObjectFactory {
      * Create an instance of {@link HeldIntervalType }
      * 
      */
-    public HeldIntervalType createHeldIntervalType() {
+    public HeldIntervalType createHeldIntervalType()
+    {
         return new HeldIntervalType();
     }
 
@@ -76,7 +78,8 @@ public class ObjectFactory {
      * Create an instance of {@link ExtentsType }
      * 
      */
-    public ExtentsType createExtentsType() {
+    public ExtentsType createExtentsType()
+    {
         return new ExtentsType();
     }
 
@@ -84,7 +87,8 @@ public class ObjectFactory {
      * Create an instance of {@link ProjectionsType }
      * 
      */
-    public ProjectionsType createProjectionsType() {
+    public ProjectionsType createProjectionsType()
+    {
         return new ProjectionsType();
     }
 
@@ -92,7 +96,8 @@ public class ObjectFactory {
      * Create an instance of {@link MapType }
      * 
      */
-    public MapType createMapType() {
+    public MapType createMapType()
+    {
         return new MapType();
     }
 
@@ -100,7 +105,8 @@ public class ObjectFactory {
      * Create an instance of {@link BinMethodSequenceType }
      * 
      */
-    public BinMethodSequenceType createBinMethodSequenceType() {
+    public BinMethodSequenceType createBinMethodSequenceType()
+    {
         return new BinMethodSequenceType();
     }
 
@@ -108,7 +114,8 @@ public class ObjectFactory {
      * Create an instance of {@link QueryEntryType }
      * 
      */
-    public QueryEntryType createQueryEntryType() {
+    public QueryEntryType createQueryEntryType()
+    {
         return new QueryEntryType();
     }
 
@@ -116,7 +123,8 @@ public class ObjectFactory {
      * Create an instance of {@link LayerParamsType }
      * 
      */
-    public LayerParamsType createLayerParamsType() {
+    public LayerParamsType createLayerParamsType()
+    {
         return new LayerParamsType();
     }
 
@@ -124,7 +132,8 @@ public class ObjectFactory {
      * Create an instance of {@link LabelColumnType }
      * 
      */
-    public LabelColumnType createLabelColumnType() {
+    public LabelColumnType createLabelColumnType()
+    {
         return new LabelColumnType();
     }
 
@@ -132,7 +141,8 @@ public class ObjectFactory {
      * Create an instance of {@link BinMethodType }
      * 
      */
-    public BinMethodType createBinMethodType() {
+    public BinMethodType createBinMethodType()
+    {
         return new BinMethodType();
     }
 
@@ -140,7 +150,8 @@ public class ObjectFactory {
      * Create an instance of {@link ColumnsType }
      * 
      */
-    public ColumnsType createColumnsType() {
+    public ColumnsType createColumnsType()
+    {
         return new ColumnsType();
     }
 
@@ -148,7 +159,8 @@ public class ObjectFactory {
      * Create an instance of {@link IconStyleType }
      * 
      */
-    public IconStyleType createIconStyleType() {
+    public IconStyleType createIconStyleType()
+    {
         return new IconStyleType();
     }
 
@@ -156,7 +168,8 @@ public class ObjectFactory {
      * Create an instance of {@link QueryAreasType }
      * 
      */
-    public QueryAreasType createQueryAreasType() {
+    public QueryAreasType createQueryAreasType()
+    {
         return new QueryAreasType();
     }
 
@@ -164,7 +177,8 @@ public class ObjectFactory {
      * Create an instance of {@link NameValueSequenceType }
      * 
      */
-    public NameValueSequenceType createNameValueSequenceType() {
+    public NameValueSequenceType createNameValueSequenceType()
+    {
         return new NameValueSequenceType();
     }
 
@@ -172,7 +186,8 @@ public class ObjectFactory {
      * Create an instance of {@link LayerType }
      * 
      */
-    public LayerType createLayerType() {
+    public LayerType createLayerType()
+    {
         return new LayerType();
     }
 
@@ -180,7 +195,8 @@ public class ObjectFactory {
      * Create an instance of {@link LayersType }
      * 
      */
-    public LayersType createLayersType() {
+    public LayersType createLayersType()
+    {
         return new LayersType();
     }
 
@@ -188,7 +204,8 @@ public class ObjectFactory {
      * Create an instance of {@link TimeSequenceType }
      * 
      */
-    public TimeSequenceType createTimeSequenceType() {
+    public TimeSequenceType createTimeSequenceType()
+    {
         return new TimeSequenceType();
     }
 
@@ -196,7 +213,8 @@ public class ObjectFactory {
      * Create an instance of {@link ColorModelType }
      * 
      */
-    public ColorModelType createColorModelType() {
+    public ColorModelType createColorModelType()
+    {
         return new ColorModelType();
     }
 
@@ -204,7 +222,8 @@ public class ObjectFactory {
      * Create an instance of {@link HeldIntervalsType }
      * 
      */
-    public HeldIntervalsType createHeldIntervalsType() {
+    public HeldIntervalsType createHeldIntervalsType()
+    {
         return new HeldIntervalsType();
     }
 
@@ -212,7 +231,8 @@ public class ObjectFactory {
      * Create an instance of {@link UrlsType }
      * 
      */
-    public UrlsType createUrlsType() {
+    public UrlsType createUrlsType()
+    {
         return new UrlsType();
     }
 
@@ -220,7 +240,8 @@ public class ObjectFactory {
      * Create an instance of {@link TagsType }
      * 
      */
-    public TagsType createTagsType() {
+    public TagsType createTagsType()
+    {
         return new TagsType();
     }
 
@@ -228,7 +249,8 @@ public class ObjectFactory {
      * Create an instance of {@link TimeType }
      * 
      */
-    public TimeType createTimeType() {
+    public TimeType createTimeType()
+    {
         return new TimeType();
     }
 
@@ -236,7 +258,8 @@ public class ObjectFactory {
      * Create an instance of {@link QueryAreaType }
      * 
      */
-    public QueryAreaType createQueryAreaType() {
+    public QueryAreaType createQueryAreaType()
+    {
         return new QueryAreaType();
     }
 
@@ -244,7 +267,8 @@ public class ObjectFactory {
      * Create an instance of {@link FiltersType }
      * 
      */
-    public FiltersType createFiltersType() {
+    public FiltersType createFiltersType()
+    {
         return new FiltersType();
     }
 
@@ -252,7 +276,8 @@ public class ObjectFactory {
      * Create an instance of {@link QueryEntriesType }
      * 
      */
-    public QueryEntriesType createQueryEntriesType() {
+    public QueryEntriesType createQueryEntriesType()
+    {
         return new QueryEntriesType();
     }
 
@@ -260,7 +285,8 @@ public class ObjectFactory {
      * Create an instance of {@link BasicFeatureStyleType }
      * 
      */
-    public BasicFeatureStyleType createBasicFeatureStyleType() {
+    public BasicFeatureStyleType createBasicFeatureStyleType()
+    {
         return new BasicFeatureStyleType();
     }
 
@@ -268,7 +294,8 @@ public class ObjectFactory {
      * Create an instance of {@link TimeAnimationType }
      * 
      */
-    public TimeAnimationType createTimeAnimationType() {
+    public TimeAnimationType createTimeAnimationType()
+    {
         return new TimeAnimationType();
     }
 
@@ -276,7 +303,8 @@ public class ObjectFactory {
      * Create an instance of {@link TimeFadeType }
      * 
      */
-    public TimeFadeType createTimeFadeType() {
+    public TimeFadeType createTimeFadeType()
+    {
         return new TimeFadeType();
     }
 
@@ -284,7 +312,8 @@ public class ObjectFactory {
      * Create an instance of {@link ExclusionAreasType }
      * 
      */
-    public ExclusionAreasType createExclusionAreasType() {
+    public ExclusionAreasType createExclusionAreasType()
+    {
         return new ExclusionAreasType();
     }
 
@@ -292,7 +321,8 @@ public class ObjectFactory {
      * Create an instance of {@link StyleType }
      * 
      */
-    public StyleType createStyleType() {
+    public StyleType createStyleType()
+    {
         return new StyleType();
     }
 
@@ -300,7 +330,8 @@ public class ObjectFactory {
      * Create an instance of {@link GraphViewType }
      * 
      */
-    public GraphViewType createGraphViewType() {
+    public GraphViewType createGraphViewType()
+    {
         return new GraphViewType();
     }
 
@@ -308,7 +339,8 @@ public class ObjectFactory {
      * Create an instance of {@link StylesType }
      * 
      */
-    public StylesType createStylesType() {
+    public StylesType createStylesType()
+    {
         return new StylesType();
     }
 
@@ -316,7 +348,8 @@ public class ObjectFactory {
      * Create an instance of {@link LabelColumnsType }
      * 
      */
-    public LabelColumnsType createLabelColumnsType() {
+    public LabelColumnsType createLabelColumnsType()
+    {
         return new LabelColumnsType();
     }
 
@@ -324,7 +357,8 @@ public class ObjectFactory {
      * Create an instance of {@link ExclusionAreaType }
      * 
      */
-    public ExclusionAreaType createExclusionAreaType() {
+    public ExclusionAreaType createExclusionAreaType()
+    {
         return new ExclusionAreaType();
     }
 
@@ -332,7 +366,8 @@ public class ObjectFactory {
      * Create an instance of {@link MappingsType }
      * 
      */
-    public MappingsType createMappingsType() {
+    public MappingsType createMappingsType()
+    {
         return new MappingsType();
     }
 
@@ -340,7 +375,8 @@ public class ObjectFactory {
      * Create an instance of {@link FormatsType }
      * 
      */
-    public FormatsType createFormatsType() {
+    public FormatsType createFormatsType()
+    {
         return new FormatsType();
     }
 
@@ -348,7 +384,8 @@ public class ObjectFactory {
      * Create an instance of {@link StreamOptionsType }
      * 
      */
-    public StreamOptionsType createStreamOptionsType() {
+    public StreamOptionsType createStreamOptionsType()
+    {
         return new StreamOptionsType();
     }
 
@@ -356,7 +393,8 @@ public class ObjectFactory {
      * Create an instance of {@link ObjectPreviewType }
      * 
      */
-    public ObjectPreviewType createObjectPreviewType() {
+    public ObjectPreviewType createObjectPreviewType()
+    {
         return new ObjectPreviewType();
     }
 
@@ -364,16 +402,19 @@ public class ObjectFactory {
      * Create an instance of {@link BinSettingsType }
      * 
      */
-    public BinSettingsType createBinSettingsType() {
+    public BinSettingsType createBinSettingsType()
+    {
         return new BinSettingsType();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link StateType }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link StateType
+     * }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.bit-sys.com/mist/state/v4", name = "state")
-    public JAXBElement<StateType> createState(StateType value) {
+    public JAXBElement<StateType> createState(StateType value)
+    {
         return new JAXBElement<StateType>(_State_QNAME, StateType.class, null, value);
     }
 

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.ows._110.CodeType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -40,41 +41,46 @@ import net.opengis.ows._110.CodeType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "identifier"
-})
+@XmlType(name = "", propOrder = { "identifier" })
 @XmlRootElement(name = "DescribeProcess")
-public class DescribeProcess
-    extends RequestBaseType
+public class DescribeProcess extends RequestBaseType
 {
 
     @XmlElement(name = "Identifier", namespace = "http://www.opengis.net/ows/1.1", required = true)
     protected List<CodeType> identifier;
 
     /**
-     * Unordered list of one or more identifiers of the processes for which the client is requesting detailed descriptions. This element shall be repeated for each process for which a description is requested. These Identifiers are unordered, but the WPS shall return the process descriptions in the order in which they were requested.Gets the value of the identifier property.
+     * Unordered list of one or more identifiers of the processes for which the
+     * client is requesting detailed descriptions. This element shall be
+     * repeated for each process for which a description is requested. These
+     * Identifiers are unordered, but the WPS shall return the process
+     * descriptions in the order in which they were requested.Gets the value of
+     * the identifier property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the identifier property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the identifier property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getIdentifier().add(newItem);
+     * getIdentifier().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link CodeType }
+     * Objects of the following type(s) are allowed in the list {@link CodeType
+     * }
      * 
      * 
      */
-    public List<CodeType> getIdentifier() {
-        if (identifier == null) {
+    public List<CodeType> getIdentifier()
+    {
+        if (identifier == null)
+        {
             identifier = new ArrayList<CodeType>();
         }
         return this.identifier;

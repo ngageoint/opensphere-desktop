@@ -5,19 +5,21 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for colorModeEnumType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for colorModeEnumType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="colorModeEnumType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -30,25 +32,30 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "colorModeEnumType")
 @XmlEnum
-public enum ColorModeEnumType {
+public enum ColorModeEnumType
+{
 
     @XmlEnumValue("normal")
-    NORMAL("normal"),
-    @XmlEnumValue("random")
+    NORMAL("normal"), @XmlEnumValue("random")
     RANDOM("random");
     private final String value;
 
-    ColorModeEnumType(String v) {
+    ColorModeEnumType(String v)
+    {
         value = v;
     }
 
-    public String value() {
+    public String value()
+    {
         return value;
     }
 
-    public static ColorModeEnumType fromValue(String v) {
-        for (ColorModeEnumType c: ColorModeEnumType.values()) {
-            if (c.value.equals(v)) {
+    public static ColorModeEnumType fromValue(String v)
+    {
+        for (ColorModeEnumType c : ColorModeEnumType.values())
+        {
+            if (c.value.equals(v))
+            {
                 return c;
             }
         }

@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -36,63 +37,58 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "brightnessOnly",
-    "reliefFactor"
-})
+@XmlType(name = "", propOrder = { "brightnessOnly", "reliefFactor" })
 @XmlRootElement(name = "ShadedRelief")
-public class ShadedRelief {
+public class ShadedRelief
+{
 
     @XmlElement(name = "BrightnessOnly")
     protected Boolean brightnessOnly;
+
     @XmlElement(name = "ReliefFactor")
     protected Double reliefFactor;
 
     /**
      * Gets the value of the brightnessOnly property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isBrightnessOnly() {
+    public Boolean isBrightnessOnly()
+    {
         return brightnessOnly;
     }
 
     /**
      * Sets the value of the brightnessOnly property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setBrightnessOnly(Boolean value) {
+    public void setBrightnessOnly(Boolean value)
+    {
         this.brightnessOnly = value;
     }
 
     /**
      * Gets the value of the reliefFactor property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getReliefFactor() {
+    public Double getReliefFactor()
+    {
         return reliefFactor;
     }
 
     /**
      * Sets the value of the reliefFactor property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setReliefFactor(Double value) {
+    public void setReliefFactor(Double value)
+    {
         this.reliefFactor = value;
     }
 

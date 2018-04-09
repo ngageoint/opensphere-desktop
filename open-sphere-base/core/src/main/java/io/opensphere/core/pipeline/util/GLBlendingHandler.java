@@ -3,8 +3,8 @@ package io.opensphere.core.pipeline.util;
 import java.util.EnumMap;
 import java.util.Map;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
 
 import io.opensphere.core.geometry.renderproperties.BlendingConfigGL;
 import io.opensphere.core.geometry.renderproperties.BlendingConfigGL.BlendFactor;

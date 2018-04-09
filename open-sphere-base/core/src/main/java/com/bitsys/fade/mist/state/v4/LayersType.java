@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.util.ArrayList;
@@ -16,15 +15,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *         A collection of layers referenced in the saved state.
- *       
+ * A collection of layers referenced in the saved state.
  * 
- * <p>Java class for LayersType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for LayersType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LayersType">
@@ -42,12 +43,12 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LayersType", propOrder = {
-    "layer"
-})
-public class LayersType {
+@XmlType(name = "LayersType", propOrder = { "layer" })
+public class LayersType
+{
 
     protected List<LayerType> layer;
+
     @XmlAttribute(name = "type", required = true)
     protected LayersCollectionType type;
 
@@ -55,65 +56,69 @@ public class LayersType {
      * Gets the value of the layer property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the layer property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the layer property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLayer().add(newItem);
+     * getLayer().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link LayerType }
+     * Objects of the following type(s) are allowed in the list {@link LayerType
+     * }
      * 
      * 
      */
-    public List<LayerType> getLayer() {
-        if (layer == null) {
+    public List<LayerType> getLayer()
+    {
+        if (layer == null)
+        {
             layer = new ArrayList<LayerType>();
         }
         return this.layer;
     }
 
-    public boolean isSetLayer() {
-        return ((this.layer!= null)&&(!this.layer.isEmpty()));
+    public boolean isSetLayer()
+    {
+        return ((this.layer != null) && (!this.layer.isEmpty()));
     }
 
-    public void unsetLayer() {
+    public void unsetLayer()
+    {
         this.layer = null;
     }
 
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LayersCollectionType }
-     *     
+     * @return possible object is {@link LayersCollectionType }
+     * 
      */
-    public LayersCollectionType getType() {
+    public LayersCollectionType getType()
+    {
         return type;
     }
 
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LayersCollectionType }
-     *     
+     * @param value allowed object is {@link LayersCollectionType }
+     * 
      */
-    public void setType(LayersCollectionType value) {
+    public void setType(LayersCollectionType value)
+    {
         this.type = value;
     }
 
-    public boolean isSetType() {
-        return (this.type!= null);
+    public boolean isSetType()
+    {
+        return (this.type != null);
     }
 
 }

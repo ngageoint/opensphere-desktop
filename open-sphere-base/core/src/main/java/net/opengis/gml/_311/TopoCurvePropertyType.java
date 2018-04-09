@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for TopoCurvePropertyType complex type.
+ * <p>
+ * Java class for TopoCurvePropertyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TopoCurvePropertyType">
@@ -34,10 +35,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TopoCurvePropertyType", propOrder = {
-    "topoCurve"
-})
-public class TopoCurvePropertyType {
+@XmlType(name = "TopoCurvePropertyType", propOrder = { "topoCurve" })
+public class TopoCurvePropertyType
+{
 
     @XmlElement(name = "TopoCurve", required = true)
     protected TopoCurveType topoCurve;
@@ -45,24 +45,22 @@ public class TopoCurvePropertyType {
     /**
      * Gets the value of the topoCurve property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TopoCurveType }
-     *     
+     * @return possible object is {@link TopoCurveType }
+     * 
      */
-    public TopoCurveType getTopoCurve() {
+    public TopoCurveType getTopoCurve()
+    {
         return topoCurve;
     }
 
     /**
      * Sets the value of the topoCurve property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TopoCurveType }
-     *     
+     * @param value allowed object is {@link TopoCurveType }
+     * 
      */
-    public void setTopoCurve(TopoCurveType value) {
+    public void setTopoCurve(TopoCurveType value)
+    {
         this.topoCurve = value;
     }
 

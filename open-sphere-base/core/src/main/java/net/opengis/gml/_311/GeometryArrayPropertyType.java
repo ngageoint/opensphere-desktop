@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -17,14 +16,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A container for an array of geometry elements. The elements are always contained in the array property, 
- * 			referencing geometry elements or arrays of geometry elements is not supported.
+ * A container for an array of geometry elements. The elements are always
+ * contained in the array property, referencing geometry elements or arrays of
+ * geometry elements is not supported.
  * 
- * <p>Java class for GeometryArrayPropertyType complex type.
+ * <p>
+ * Java class for GeometryArrayPropertyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GeometryArrayPropertyType">
@@ -41,10 +43,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GeometryArrayPropertyType", propOrder = {
-    "geometry"
-})
-public class GeometryArrayPropertyType {
+@XmlType(name = "GeometryArrayPropertyType", propOrder = { "geometry" })
+public class GeometryArrayPropertyType
+{
 
     @XmlElementRef(name = "_Geometry", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
     protected List<JAXBElement<? extends AbstractGeometryType>> geometry;
@@ -53,15 +54,16 @@ public class GeometryArrayPropertyType {
      * Gets the value of the geometry property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the geometry property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the geometry property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getGeometry().add(newItem);
+     * getGeometry().add(newItem);
      * </pre>
      * 
      * 
@@ -69,8 +71,8 @@ public class GeometryArrayPropertyType {
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link MultiCurveType }{@code >}
      * {@link JAXBElement }{@code <}{@link RingType }{@code >}
-     * {@link JAXBElement }{@code <}{@link TinType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractGeometricPrimitiveType }{@code >}
+     * {@link JAXBElement }{@code <}{@link TinType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractGeometricPrimitiveType }{@code >}
      * {@link JAXBElement }{@code <}{@link AbstractSurfaceType }{@code >}
      * {@link JAXBElement }{@code <}{@link SurfaceType }{@code >}
      * {@link JAXBElement }{@code <}{@link MultiGeometryType }{@code >}
@@ -86,9 +88,9 @@ public class GeometryArrayPropertyType {
      * {@link JAXBElement }{@code <}{@link SolidType }{@code >}
      * {@link JAXBElement }{@code <}{@link TriangulatedSurfaceType }{@code >}
      * {@link JAXBElement }{@code <}{@link MultiLineStringType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractGeometricAggregateType }{@code >}
-     * {@link JAXBElement }{@code <}{@link OrientableSurfaceType }{@code >}
-     * {@link JAXBElement }{@code <}{@link GridType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractGeometricAggregateType
+     * }{@code >} {@link JAXBElement }{@code <}{@link OrientableSurfaceType
+     * }{@code >} {@link JAXBElement }{@code <}{@link GridType }{@code >}
      * {@link JAXBElement }{@code <}{@link MultiPolygonType }{@code >}
      * {@link JAXBElement }{@code <}{@link PolygonType }{@code >}
      * {@link JAXBElement }{@code <}{@link CompositeSolidType }{@code >}
@@ -104,8 +106,10 @@ public class GeometryArrayPropertyType {
      * 
      * 
      */
-    public List<JAXBElement<? extends AbstractGeometryType>> getGeometry() {
-        if (geometry == null) {
+    public List<JAXBElement<? extends AbstractGeometryType>> getGeometry()
+    {
+        if (geometry == null)
+        {
             geometry = new ArrayList<JAXBElement<? extends AbstractGeometryType>>();
         }
         return this.geometry;

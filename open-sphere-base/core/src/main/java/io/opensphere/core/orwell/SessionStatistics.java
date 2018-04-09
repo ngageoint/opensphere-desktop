@@ -36,7 +36,8 @@ public class SessionStatistics
     private String myRuntimeName;
 
     /**
-     * The set of arguments provided as input to the application when it was invoked.
+     * The set of arguments provided as input to the application when it was
+     * invoked.
      */
     private final List<String> myInputArguments = New.list();
 
@@ -98,7 +99,8 @@ public class SessionStatistics
     /**
      * Sets the value of the {@link #myBootClasspath} field.
      *
-     * @param pBootClasspath the value to store in the {@link #myBootClasspath} field.
+     * @param pBootClasspath the value to store in the {@link #myBootClasspath}
+     *            field.
      */
     public void setBootClasspath(String pBootClasspath)
     {
@@ -118,7 +120,8 @@ public class SessionStatistics
     /**
      * Sets the value of the {@link #myLibraryPath} field.
      *
-     * @param pLibraryPath the value to store in the {@link #myLibraryPath} field.
+     * @param pLibraryPath the value to store in the {@link #myLibraryPath}
+     *            field.
      */
     public void setLibraryPath(String pLibraryPath)
     {
@@ -138,7 +141,8 @@ public class SessionStatistics
     /**
      * Sets the value of the {@link #myRuntimeName} field.
      *
-     * @param pRuntimeName the value to store in the {@link #myRuntimeName} field.
+     * @param pRuntimeName the value to store in the {@link #myRuntimeName}
+     *            field.
      */
     public void setRuntimeName(String pRuntimeName)
     {

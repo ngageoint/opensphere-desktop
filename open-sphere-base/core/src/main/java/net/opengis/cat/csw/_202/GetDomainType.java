@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,14 +13,16 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Requests the actual values of some specified request parameter 
- *         or other data element.
+ * Requests the actual values of some specified request parameter or other data
+ * element.
  * 
- * <p>Java class for GetDomainType complex type.
+ * <p>
+ * Java class for GetDomainType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GetDomainType">
@@ -41,17 +42,14 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetDomainType", propOrder = {
-    "propertyName",
-    "parameterName"
-})
-public class GetDomainType
-    extends RequestBaseType
+@XmlType(name = "GetDomainType", propOrder = { "propertyName", "parameterName" })
+public class GetDomainType extends RequestBaseType
 {
 
     @XmlElement(name = "PropertyName")
     @XmlSchemaType(name = "anyURI")
     protected String propertyName;
+
     @XmlElement(name = "ParameterName")
     @XmlSchemaType(name = "anyURI")
     protected String parameterName;
@@ -59,48 +57,44 @@ public class GetDomainType
     /**
      * Gets the value of the propertyName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getPropertyName() {
+    public String getPropertyName()
+    {
         return propertyName;
     }
 
     /**
      * Sets the value of the propertyName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setPropertyName(String value) {
+    public void setPropertyName(String value)
+    {
         this.propertyName = value;
     }
 
     /**
      * Gets the value of the parameterName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getParameterName() {
+    public String getParameterName()
+    {
         return parameterName;
     }
 
     /**
      * Sets the value of the parameterName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setParameterName(String value) {
+    public void setParameterName(String value)
+    {
         this.parameterName = value;
     }
 

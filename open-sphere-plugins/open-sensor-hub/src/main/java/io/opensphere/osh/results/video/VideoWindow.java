@@ -5,16 +5,15 @@ import java.awt.EventQueue;
 import java.awt.Window;
 import java.io.ByteArrayInputStream;
 
+import javax.swing.JDialog;
+
+import io.opensphere.mantle.data.DataTypeInfo;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import javax.swing.JDialog;
-
-import io.opensphere.mantle.data.DataTypeInfo;
 
 /** A video window. */
 public class VideoWindow extends JDialog

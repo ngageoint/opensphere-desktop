@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import java.util.ArrayList;
@@ -21,11 +20,13 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.ogc._110.FilterType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -52,228 +53,212 @@ import net.opengis.ogc._110.FilterType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "name",
-    "title",
-    "_abstract",
-    "legendGraphic",
-    "filter",
-    "elseFilter",
-    "minScaleDenominator",
-    "maxScaleDenominator",
-    "symbolizer"
-})
+@XmlType(name = "", propOrder = { "name", "title", "_abstract", "legendGraphic", "filter", "elseFilter", "minScaleDenominator",
+    "maxScaleDenominator", "symbolizer" })
 @XmlRootElement(name = "Rule")
-public class Rule {
+public class Rule
+{
 
     @XmlElement(name = "Name")
     protected String name;
+
     @XmlElement(name = "Title")
     protected String title;
+
     @XmlElement(name = "Abstract")
     protected String _abstract;
+
     @XmlElement(name = "LegendGraphic")
     protected LegendGraphic legendGraphic;
+
     @XmlElement(name = "Filter", namespace = "http://www.opengis.net/ogc")
     protected FilterType filter;
+
     @XmlElement(name = "ElseFilter")
     protected ElseFilter elseFilter;
+
     @XmlElement(name = "MinScaleDenominator")
     protected Double minScaleDenominator;
+
     @XmlElement(name = "MaxScaleDenominator")
     protected Double maxScaleDenominator;
+
     @XmlElementRef(name = "Symbolizer", namespace = "http://www.opengis.net/sld", type = JAXBElement.class)
     protected List<JAXBElement<? extends SymbolizerType>> symbolizer;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
     /**
      * Gets the value of the abstract property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getAbstract() {
+    public String getAbstract()
+    {
         return _abstract;
     }
 
     /**
      * Sets the value of the abstract property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setAbstract(String value) {
+    public void setAbstract(String value)
+    {
         this._abstract = value;
     }
 
     /**
      * Gets the value of the legendGraphic property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LegendGraphic }
-     *     
+     * @return possible object is {@link LegendGraphic }
+     * 
      */
-    public LegendGraphic getLegendGraphic() {
+    public LegendGraphic getLegendGraphic()
+    {
         return legendGraphic;
     }
 
     /**
      * Sets the value of the legendGraphic property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LegendGraphic }
-     *     
+     * @param value allowed object is {@link LegendGraphic }
+     * 
      */
-    public void setLegendGraphic(LegendGraphic value) {
+    public void setLegendGraphic(LegendGraphic value)
+    {
         this.legendGraphic = value;
     }
 
     /**
      * Gets the value of the filter property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FilterType }
-     *     
+     * @return possible object is {@link FilterType }
+     * 
      */
-    public FilterType getFilter() {
+    public FilterType getFilter()
+    {
         return filter;
     }
 
     /**
      * Sets the value of the filter property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FilterType }
-     *     
+     * @param value allowed object is {@link FilterType }
+     * 
      */
-    public void setFilter(FilterType value) {
+    public void setFilter(FilterType value)
+    {
         this.filter = value;
     }
 
     /**
      * Gets the value of the elseFilter property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ElseFilter }
-     *     
+     * @return possible object is {@link ElseFilter }
+     * 
      */
-    public ElseFilter getElseFilter() {
+    public ElseFilter getElseFilter()
+    {
         return elseFilter;
     }
 
     /**
      * Sets the value of the elseFilter property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ElseFilter }
-     *     
+     * @param value allowed object is {@link ElseFilter }
+     * 
      */
-    public void setElseFilter(ElseFilter value) {
+    public void setElseFilter(ElseFilter value)
+    {
         this.elseFilter = value;
     }
 
     /**
      * Gets the value of the minScaleDenominator property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getMinScaleDenominator() {
+    public Double getMinScaleDenominator()
+    {
         return minScaleDenominator;
     }
 
     /**
      * Sets the value of the minScaleDenominator property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setMinScaleDenominator(Double value) {
+    public void setMinScaleDenominator(Double value)
+    {
         this.minScaleDenominator = value;
     }
 
     /**
      * Gets the value of the maxScaleDenominator property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getMaxScaleDenominator() {
+    public Double getMaxScaleDenominator()
+    {
         return maxScaleDenominator;
     }
 
     /**
      * Sets the value of the maxScaleDenominator property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setMaxScaleDenominator(Double value) {
+    public void setMaxScaleDenominator(Double value)
+    {
         this.maxScaleDenominator = value;
     }
 
@@ -281,15 +266,16 @@ public class Rule {
      * Gets the value of the symbolizer property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the symbolizer property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the symbolizer property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSymbolizer().add(newItem);
+     * getSymbolizer().add(newItem);
      * </pre>
      * 
      * 
@@ -304,8 +290,10 @@ public class Rule {
      * 
      * 
      */
-    public List<JAXBElement<? extends SymbolizerType>> getSymbolizer() {
-        if (symbolizer == null) {
+    public List<JAXBElement<? extends SymbolizerType>> getSymbolizer()
+    {
+        if (symbolizer == null)
+        {
             symbolizer = new ArrayList<JAXBElement<? extends SymbolizerType>>();
         }
         return this.symbolizer;

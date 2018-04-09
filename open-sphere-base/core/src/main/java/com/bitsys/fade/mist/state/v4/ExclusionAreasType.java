@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.util.ArrayList;
@@ -15,15 +14,17 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *         A collection of areas used to exclude data from query operations.
- *       
+ * A collection of areas used to exclude data from query operations.
  * 
- * <p>Java class for ExclusionAreasType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for ExclusionAreasType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ExclusionAreasType">
@@ -40,10 +41,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ExclusionAreasType", propOrder = {
-    "exclusionArea"
-})
-public class ExclusionAreasType {
+@XmlType(name = "ExclusionAreasType", propOrder = { "exclusionArea" })
+public class ExclusionAreasType
+{
 
     protected List<ExclusionAreaType> exclusionArea;
 
@@ -51,15 +51,16 @@ public class ExclusionAreasType {
      * Gets the value of the exclusionArea property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the exclusionArea property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the exclusionArea property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getExclusionArea().add(newItem);
+     * getExclusionArea().add(newItem);
      * </pre>
      * 
      * 
@@ -69,18 +70,22 @@ public class ExclusionAreasType {
      * 
      * 
      */
-    public List<ExclusionAreaType> getExclusionArea() {
-        if (exclusionArea == null) {
+    public List<ExclusionAreaType> getExclusionArea()
+    {
+        if (exclusionArea == null)
+        {
             exclusionArea = new ArrayList<ExclusionAreaType>();
         }
         return this.exclusionArea;
     }
 
-    public boolean isSetExclusionArea() {
-        return ((this.exclusionArea!= null)&&(!this.exclusionArea.isEmpty()));
+    public boolean isSetExclusionArea()
+    {
+        return ((this.exclusionArea != null) && (!this.exclusionArea.isEmpty()));
     }
 
-    public void unsetExclusionArea() {
+    public void unsetExclusionArea()
+    {
         this.exclusionArea = null;
     }
 

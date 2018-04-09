@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,15 +14,17 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
- *         Defines a color model
- *       
+ * Defines a color model
  * 
- * <p>Java class for ColorModelType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for ColorModelType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ColorModelType">
@@ -45,96 +46,96 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "ColorModelType", propOrder = {
 
 })
-public class ColorModelType {
+public class ColorModelType
+{
 
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String colorMethod;
+
     protected NameValueSequenceType manualColors;
+
     protected BinMethodType binMethod;
 
     /**
      * Gets the value of the colorMethod property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getColorMethod() {
+    public String getColorMethod()
+    {
         return colorMethod;
     }
 
     /**
      * Sets the value of the colorMethod property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setColorMethod(String value) {
+    public void setColorMethod(String value)
+    {
         this.colorMethod = value;
     }
 
-    public boolean isSetColorMethod() {
-        return (this.colorMethod!= null);
+    public boolean isSetColorMethod()
+    {
+        return (this.colorMethod != null);
     }
 
     /**
      * Gets the value of the manualColors property.
      * 
-     * @return
-     *     possible object is
-     *     {@link NameValueSequenceType }
-     *     
+     * @return possible object is {@link NameValueSequenceType }
+     * 
      */
-    public NameValueSequenceType getManualColors() {
+    public NameValueSequenceType getManualColors()
+    {
         return manualColors;
     }
 
     /**
      * Sets the value of the manualColors property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link NameValueSequenceType }
-     *     
+     * @param value allowed object is {@link NameValueSequenceType }
+     * 
      */
-    public void setManualColors(NameValueSequenceType value) {
+    public void setManualColors(NameValueSequenceType value)
+    {
         this.manualColors = value;
     }
 
-    public boolean isSetManualColors() {
-        return (this.manualColors!= null);
+    public boolean isSetManualColors()
+    {
+        return (this.manualColors != null);
     }
 
     /**
      * Gets the value of the binMethod property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BinMethodType }
-     *     
+     * @return possible object is {@link BinMethodType }
+     * 
      */
-    public BinMethodType getBinMethod() {
+    public BinMethodType getBinMethod()
+    {
         return binMethod;
     }
 
     /**
      * Sets the value of the binMethod property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BinMethodType }
-     *     
+     * @param value allowed object is {@link BinMethodType }
+     * 
      */
-    public void setBinMethod(BinMethodType value) {
+    public void setBinMethod(BinMethodType value)
+    {
         this.binMethod = value;
     }
 
-    public boolean isSetBinMethod() {
-        return (this.binMethod!= null);
+    public boolean isSetBinMethod()
+    {
+        return (this.binMethod != null);
     }
 
 }

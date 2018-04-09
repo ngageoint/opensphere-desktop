@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -17,13 +16,15 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * A feature collection contains zero or more features.
  * 
- * <p>Java class for AbstractFeatureCollectionType complex type.
+ * <p>
+ * Java class for AbstractFeatureCollectionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractFeatureCollectionType">
@@ -41,18 +42,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractFeatureCollectionType", propOrder = {
-    "featureMember",
-    "featureMemberList"
-})
-@XmlSeeAlso({
-    net.opengis.gml._311.FeatureCollectionType.class
-})
-public abstract class AbstractFeatureCollectionType
-    extends AbstractFeatureType
+@XmlType(name = "AbstractFeatureCollectionType", propOrder = { "featureMember", "featureMemberList" })
+@XmlSeeAlso({ net.opengis.gml._311.FeatureCollectionType.class })
+public abstract class AbstractFeatureCollectionType extends AbstractFeatureType
 {
 
     protected List<FeaturePropertyType> featureMember;
+
     @XmlElement(name = "featureMembers")
     protected FeatureArrayPropertyType featureMemberList;
 
@@ -60,15 +56,16 @@ public abstract class AbstractFeatureCollectionType
      * Gets the value of the featureMember property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the featureMember property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the featureMember property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getFeatureMember().add(newItem);
+     * getFeatureMember().add(newItem);
      * </pre>
      * 
      * 
@@ -78,8 +75,10 @@ public abstract class AbstractFeatureCollectionType
      * 
      * 
      */
-    public List<FeaturePropertyType> getFeatureMember() {
-        if (featureMember == null) {
+    public List<FeaturePropertyType> getFeatureMember()
+    {
+        if (featureMember == null)
+        {
             featureMember = new ArrayList<FeaturePropertyType>();
         }
         return this.featureMember;
@@ -88,24 +87,22 @@ public abstract class AbstractFeatureCollectionType
     /**
      * Gets the value of the featureMemberList property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FeatureArrayPropertyType }
-     *     
+     * @return possible object is {@link FeatureArrayPropertyType }
+     * 
      */
-    public FeatureArrayPropertyType getFeatureMemberList() {
+    public FeatureArrayPropertyType getFeatureMemberList()
+    {
         return featureMemberList;
     }
 
     /**
      * Sets the value of the featureMemberList property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FeatureArrayPropertyType }
-     *     
+     * @param value allowed object is {@link FeatureArrayPropertyType }
+     * 
      */
-    public void setFeatureMemberList(FeatureArrayPropertyType value) {
+    public void setFeatureMemberList(FeatureArrayPropertyType value)
+    {
         this.featureMemberList = value;
     }
 

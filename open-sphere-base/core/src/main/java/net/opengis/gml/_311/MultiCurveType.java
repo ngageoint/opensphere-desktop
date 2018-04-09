@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,13 +15,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A MultiCurve is defined by one or more Curves, referenced through curveMember elements.
+ * A MultiCurve is defined by one or more Curves, referenced through curveMember
+ * elements.
  * 
- * <p>Java class for MultiCurveType complex type.
+ * <p>
+ * Java class for MultiCurveType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="MultiCurveType">
@@ -40,15 +42,12 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MultiCurveType", propOrder = {
-    "curveMember",
-    "curveMemberList"
-})
-public class MultiCurveType
-    extends AbstractGeometricAggregateType
+@XmlType(name = "MultiCurveType", propOrder = { "curveMember", "curveMemberList" })
+public class MultiCurveType extends AbstractGeometricAggregateType
 {
 
     protected List<CurvePropertyType> curveMember;
+
     @XmlElement(name = "curveMembers")
     protected CurveArrayPropertyType curveMemberList;
 
@@ -56,15 +55,16 @@ public class MultiCurveType
      * Gets the value of the curveMember property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the curveMember property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the curveMember property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getCurveMember().add(newItem);
+     * getCurveMember().add(newItem);
      * </pre>
      * 
      * 
@@ -74,8 +74,10 @@ public class MultiCurveType
      * 
      * 
      */
-    public List<CurvePropertyType> getCurveMember() {
-        if (curveMember == null) {
+    public List<CurvePropertyType> getCurveMember()
+    {
+        if (curveMember == null)
+        {
             curveMember = new ArrayList<CurvePropertyType>();
         }
         return this.curveMember;
@@ -84,24 +86,22 @@ public class MultiCurveType
     /**
      * Gets the value of the curveMemberList property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CurveArrayPropertyType }
-     *     
+     * @return possible object is {@link CurveArrayPropertyType }
+     * 
      */
-    public CurveArrayPropertyType getCurveMemberList() {
+    public CurveArrayPropertyType getCurveMemberList()
+    {
         return curveMemberList;
     }
 
     /**
      * Sets the value of the curveMemberList property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CurveArrayPropertyType }
-     *     
+     * @param value allowed object is {@link CurveArrayPropertyType }
+     * 
      */
-    public void setCurveMemberList(CurveArrayPropertyType value) {
+    public void setCurveMemberList(CurveArrayPropertyType value)
+    {
         this.curveMemberList = value;
     }
 

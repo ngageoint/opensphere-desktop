@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.ogc._100t;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for BinaryLogicOpType complex type.
+ * <p>
+ * Java class for BinaryLogicOpType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="BinaryLogicOpType">
@@ -42,36 +43,32 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "comparisonOpsOrSpatialOpsOrLogicOps"
-})
-@XmlSeeAlso({
-    BinaryLogicOpType.class
-})
-public class OriginalBinaryLogicOpType
-    extends LogicOpsType
+@XmlType(name = "", propOrder = { "comparisonOpsOrSpatialOpsOrLogicOps" })
+@XmlSeeAlso({ BinaryLogicOpType.class })
+public class OriginalBinaryLogicOpType extends LogicOpsType
 {
 
     @XmlElementRefs({
         @XmlElementRef(name = "logicOps", namespace = "http://www.opengis.net/ogc", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "comparisonOps", namespace = "http://www.opengis.net/ogc", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "spatialOps", namespace = "http://www.opengis.net/ogc", type = JAXBElement.class, required = false)
-    })
+        @XmlElementRef(name = "spatialOps", namespace = "http://www.opengis.net/ogc", type = JAXBElement.class, required = false) })
     protected List<JAXBElement<?>> comparisonOpsOrSpatialOpsOrLogicOps;
 
     /**
      * Gets the value of the comparisonOpsOrSpatialOpsOrLogicOps property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the comparisonOpsOrSpatialOpsOrLogicOps property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the comparisonOpsOrSpatialOpsOrLogicOps
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getComparisonOpsOrSpatialOpsOrLogicOps().add(newItem);
+     * getComparisonOpsOrSpatialOpsOrLogicOps().add(newItem);
      * </pre>
      * 
      * 
@@ -106,18 +103,22 @@ public class OriginalBinaryLogicOpType
      * 
      * 
      */
-    public List<JAXBElement<?>> getComparisonOpsOrSpatialOpsOrLogicOps() {
-        if (comparisonOpsOrSpatialOpsOrLogicOps == null) {
+    public List<JAXBElement<?>> getComparisonOpsOrSpatialOpsOrLogicOps()
+    {
+        if (comparisonOpsOrSpatialOpsOrLogicOps == null)
+        {
             comparisonOpsOrSpatialOpsOrLogicOps = new ArrayList<JAXBElement<?>>();
         }
         return this.comparisonOpsOrSpatialOpsOrLogicOps;
     }
 
-    public boolean isSetComparisonOpsOrSpatialOpsOrLogicOps() {
-        return ((this.comparisonOpsOrSpatialOpsOrLogicOps!= null)&&(!this.comparisonOpsOrSpatialOpsOrLogicOps.isEmpty()));
+    public boolean isSetComparisonOpsOrSpatialOpsOrLogicOps()
+    {
+        return ((this.comparisonOpsOrSpatialOpsOrLogicOps != null) && (!this.comparisonOpsOrSpatialOpsOrLogicOps.isEmpty()));
     }
 
-    public void unsetComparisonOpsOrSpatialOpsOrLogicOps() {
+    public void unsetComparisonOpsOrSpatialOpsOrLogicOps()
+    {
         this.comparisonOpsOrSpatialOpsOrLogicOps = null;
     }
 

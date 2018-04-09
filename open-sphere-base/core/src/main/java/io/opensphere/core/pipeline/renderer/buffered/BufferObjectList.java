@@ -4,7 +4,7 @@ import java.util.AbstractList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 import io.opensphere.core.pipeline.util.RenderContext;
 import io.opensphere.core.util.Immutable;

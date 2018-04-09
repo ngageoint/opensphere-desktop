@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ResourceMapType complex type.
+ * <p>
+ * Java class for ResourceMapType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ResourceMapType">
@@ -40,20 +41,17 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ResourceMapType", propOrder = {
-    "alias",
-    "resourceMapSimpleExtensionGroup",
-    "resourceMapObjectExtensionGroup"
-})
-public class ResourceMapType
-    extends AbstractObjectType
+@XmlType(name = "ResourceMapType", propOrder = { "alias", "resourceMapSimpleExtensionGroup", "resourceMapObjectExtensionGroup" })
+public class ResourceMapType extends AbstractObjectType
 {
 
     @XmlElement(name = "Alias")
     protected List<AliasType> alias;
+
     @XmlElement(name = "ResourceMapSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> resourceMapSimpleExtensionGroup;
+
     @XmlElement(name = "ResourceMapObjectExtensionGroup")
     protected List<AbstractObjectType> resourceMapObjectExtensionGroup;
 
@@ -61,36 +59,41 @@ public class ResourceMapType
      * Gets the value of the alias property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the alias property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the alias property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAlias().add(newItem);
+     * getAlias().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link AliasType }
+     * Objects of the following type(s) are allowed in the list {@link AliasType
+     * }
      * 
      * 
      */
-    public List<AliasType> getAlias() {
-        if (alias == null) {
+    public List<AliasType> getAlias()
+    {
+        if (alias == null)
+        {
             alias = new ArrayList<AliasType>();
         }
         return this.alias;
     }
 
-    public boolean isSetAlias() {
-        return ((this.alias!= null)&&(!this.alias.isEmpty()));
+    public boolean isSetAlias()
+    {
+        return ((this.alias != null) && (!this.alias.isEmpty()));
     }
 
-    public void unsetAlias() {
+    public void unsetAlias()
+    {
         this.alias = null;
     }
 
@@ -98,36 +101,40 @@ public class ResourceMapType
      * Gets the value of the resourceMapSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the resourceMapSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the resourceMapSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getResourceMapSimpleExtensionGroup().add(newItem);
+     * getResourceMapSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getResourceMapSimpleExtensionGroup() {
-        if (resourceMapSimpleExtensionGroup == null) {
+    public List<Object> getResourceMapSimpleExtensionGroup()
+    {
+        if (resourceMapSimpleExtensionGroup == null)
+        {
             resourceMapSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.resourceMapSimpleExtensionGroup;
     }
 
-    public boolean isSetResourceMapSimpleExtensionGroup() {
-        return ((this.resourceMapSimpleExtensionGroup!= null)&&(!this.resourceMapSimpleExtensionGroup.isEmpty()));
+    public boolean isSetResourceMapSimpleExtensionGroup()
+    {
+        return ((this.resourceMapSimpleExtensionGroup != null) && (!this.resourceMapSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetResourceMapSimpleExtensionGroup() {
+    public void unsetResourceMapSimpleExtensionGroup()
+    {
         this.resourceMapSimpleExtensionGroup = null;
     }
 
@@ -135,15 +142,16 @@ public class ResourceMapType
      * Gets the value of the resourceMapObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the resourceMapObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the resourceMapObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getResourceMapObjectExtensionGroup().add(newItem);
+     * getResourceMapObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -153,18 +161,22 @@ public class ResourceMapType
      * 
      * 
      */
-    public List<AbstractObjectType> getResourceMapObjectExtensionGroup() {
-        if (resourceMapObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getResourceMapObjectExtensionGroup()
+    {
+        if (resourceMapObjectExtensionGroup == null)
+        {
             resourceMapObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.resourceMapObjectExtensionGroup;
     }
 
-    public boolean isSetResourceMapObjectExtensionGroup() {
-        return ((this.resourceMapObjectExtensionGroup!= null)&&(!this.resourceMapObjectExtensionGroup.isEmpty()));
+    public boolean isSetResourceMapObjectExtensionGroup()
+    {
+        return ((this.resourceMapObjectExtensionGroup != null) && (!this.resourceMapObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetResourceMapObjectExtensionGroup() {
+    public void unsetResourceMapObjectExtensionGroup()
+    {
         this.resourceMapObjectExtensionGroup = null;
     }
 

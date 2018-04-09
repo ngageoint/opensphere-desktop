@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -17,13 +16,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * A container for an array of curve segments.
  * 
- * <p>Java class for CurveSegmentArrayPropertyType complex type.
+ * <p>
+ * Java class for CurveSegmentArrayPropertyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CurveSegmentArrayPropertyType">
@@ -40,10 +41,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CurveSegmentArrayPropertyType", propOrder = {
-    "curveSegment"
-})
-public class CurveSegmentArrayPropertyType {
+@XmlType(name = "CurveSegmentArrayPropertyType", propOrder = { "curveSegment" })
+public class CurveSegmentArrayPropertyType
+{
 
     @XmlElementRef(name = "_CurveSegment", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
     protected List<JAXBElement<? extends AbstractCurveSegmentType>> curveSegment;
@@ -52,15 +52,16 @@ public class CurveSegmentArrayPropertyType {
      * Gets the value of the curveSegment property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the curveSegment property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the curveSegment property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getCurveSegment().add(newItem);
+     * getCurveSegment().add(newItem);
      * </pre>
      * 
      * 
@@ -78,15 +79,17 @@ public class CurveSegmentArrayPropertyType {
      * {@link JAXBElement }{@code <}{@link GeodesicStringType }{@code >}
      * {@link JAXBElement }{@code <}{@link CircleByCenterPointType }{@code >}
      * {@link JAXBElement }{@code <}{@link ArcByBulgeType }{@code >}
-     * {@link JAXBElement }{@code <}{@link ArcType }{@code >}
-     * {@link JAXBElement }{@code <}{@link OffsetCurveType }{@code >}
-     * {@link JAXBElement }{@code <}{@link ArcStringType }{@code >}
-     * {@link JAXBElement }{@code <}{@link BezierType }{@code >}
+     * {@link JAXBElement }{@code <}{@link ArcType }{@code >} {@link JAXBElement
+     * }{@code <}{@link OffsetCurveType }{@code >} {@link JAXBElement
+     * }{@code <}{@link ArcStringType }{@code >} {@link JAXBElement
+     * }{@code <}{@link BezierType }{@code >}
      * 
      * 
      */
-    public List<JAXBElement<? extends AbstractCurveSegmentType>> getCurveSegment() {
-        if (curveSegment == null) {
+    public List<JAXBElement<? extends AbstractCurveSegmentType>> getCurveSegment()
+    {
+        if (curveSegment == null)
+        {
             curveSegment = new ArrayList<JAXBElement<? extends AbstractCurveSegmentType>>();
         }
         return this.curveSegment;

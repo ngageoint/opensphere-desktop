@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,15 +16,17 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
- *         Defines fixed mapping types
- *       
+ * Defines fixed mapping types
  * 
- * <p>Java class for MappingType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for MappingType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="MappingType">
@@ -53,278 +54,278 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "MappingType", propOrder = {
 
 })
-public class MappingType {
+public class MappingType
+{
 
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String field;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String toField;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String format;
+
     protected Boolean applyTime;
+
     protected Boolean removeField;
+
     protected Boolean keepOriginal;
+
     @XmlSchemaType(name = "token")
     protected MappingUnits units;
+
     @XmlSchemaType(name = "token")
     protected MappingSubType subType;
+
     @XmlAttribute(name = "type", required = true)
     protected MappingTypes type;
 
     /**
      * Gets the value of the field property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getField() {
+    public String getField()
+    {
         return field;
     }
 
     /**
      * Sets the value of the field property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setField(String value) {
+    public void setField(String value)
+    {
         this.field = value;
     }
 
-    public boolean isSetField() {
-        return (this.field!= null);
+    public boolean isSetField()
+    {
+        return (this.field != null);
     }
 
     /**
      * Gets the value of the toField property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getToField() {
+    public String getToField()
+    {
         return toField;
     }
 
     /**
      * Sets the value of the toField property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setToField(String value) {
+    public void setToField(String value)
+    {
         this.toField = value;
     }
 
-    public boolean isSetToField() {
-        return (this.toField!= null);
+    public boolean isSetToField()
+    {
+        return (this.toField != null);
     }
 
     /**
      * Gets the value of the format property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getFormat() {
+    public String getFormat()
+    {
         return format;
     }
 
     /**
      * Sets the value of the format property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setFormat(String value) {
+    public void setFormat(String value)
+    {
         this.format = value;
     }
 
-    public boolean isSetFormat() {
-        return (this.format!= null);
+    public boolean isSetFormat()
+    {
+        return (this.format != null);
     }
 
     /**
      * Gets the value of the applyTime property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isApplyTime() {
+    public Boolean isApplyTime()
+    {
         return applyTime;
     }
 
     /**
      * Sets the value of the applyTime property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setApplyTime(Boolean value) {
+    public void setApplyTime(Boolean value)
+    {
         this.applyTime = value;
     }
 
-    public boolean isSetApplyTime() {
-        return (this.applyTime!= null);
+    public boolean isSetApplyTime()
+    {
+        return (this.applyTime != null);
     }
 
     /**
      * Gets the value of the removeField property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isRemoveField() {
+    public Boolean isRemoveField()
+    {
         return removeField;
     }
 
     /**
      * Sets the value of the removeField property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setRemoveField(Boolean value) {
+    public void setRemoveField(Boolean value)
+    {
         this.removeField = value;
     }
 
-    public boolean isSetRemoveField() {
-        return (this.removeField!= null);
+    public boolean isSetRemoveField()
+    {
+        return (this.removeField != null);
     }
 
     /**
      * Gets the value of the keepOriginal property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isKeepOriginal() {
+    public Boolean isKeepOriginal()
+    {
         return keepOriginal;
     }
 
     /**
      * Sets the value of the keepOriginal property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setKeepOriginal(Boolean value) {
+    public void setKeepOriginal(Boolean value)
+    {
         this.keepOriginal = value;
     }
 
-    public boolean isSetKeepOriginal() {
-        return (this.keepOriginal!= null);
+    public boolean isSetKeepOriginal()
+    {
+        return (this.keepOriginal != null);
     }
 
     /**
      * Gets the value of the units property.
      * 
-     * @return
-     *     possible object is
-     *     {@link MappingUnits }
-     *     
+     * @return possible object is {@link MappingUnits }
+     * 
      */
-    public MappingUnits getUnits() {
+    public MappingUnits getUnits()
+    {
         return units;
     }
 
     /**
      * Sets the value of the units property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link MappingUnits }
-     *     
+     * @param value allowed object is {@link MappingUnits }
+     * 
      */
-    public void setUnits(MappingUnits value) {
+    public void setUnits(MappingUnits value)
+    {
         this.units = value;
     }
 
-    public boolean isSetUnits() {
-        return (this.units!= null);
+    public boolean isSetUnits()
+    {
+        return (this.units != null);
     }
 
     /**
      * Gets the value of the subType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link MappingSubType }
-     *     
+     * @return possible object is {@link MappingSubType }
+     * 
      */
-    public MappingSubType getSubType() {
+    public MappingSubType getSubType()
+    {
         return subType;
     }
 
     /**
      * Sets the value of the subType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link MappingSubType }
-     *     
+     * @param value allowed object is {@link MappingSubType }
+     * 
      */
-    public void setSubType(MappingSubType value) {
+    public void setSubType(MappingSubType value)
+    {
         this.subType = value;
     }
 
-    public boolean isSetSubType() {
-        return (this.subType!= null);
+    public boolean isSetSubType()
+    {
+        return (this.subType != null);
     }
 
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link MappingTypes }
-     *     
+     * @return possible object is {@link MappingTypes }
+     * 
      */
-    public MappingTypes getType() {
+    public MappingTypes getType()
+    {
         return type;
     }
 
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link MappingTypes }
-     *     
+     * @param value allowed object is {@link MappingTypes }
+     * 
      */
-    public void setType(MappingTypes value) {
+    public void setType(MappingTypes value)
+    {
         this.type = value;
     }
 
-    public boolean isSetType() {
-        return (this.type!= null);
+    public boolean isSetType()
+    {
+        return (this.type != null);
     }
 
 }

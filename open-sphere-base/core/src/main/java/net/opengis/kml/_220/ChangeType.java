@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ChangeType complex type.
+ * <p>
+ * Java class for ChangeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ChangeType">
@@ -38,10 +39,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ChangeType", propOrder = {
-    "abstractObjectGroup"
-})
-public class ChangeType {
+@XmlType(name = "ChangeType", propOrder = { "abstractObjectGroup" })
+public class ChangeType
+{
 
     @XmlElementRef(name = "AbstractObjectGroup", namespace = "http://www.opengis.net/kml/2.2", type = JAXBElement.class, required = false)
     protected List<JAXBElement<? extends AbstractObjectType>> abstractObjectGroup;
@@ -50,15 +50,16 @@ public class ChangeType {
      * Gets the value of the abstractObjectGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractObjectGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractObjectGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractObjectGroup().add(newItem);
+     * getAbstractObjectGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -143,48 +144,52 @@ public class ChangeType {
      * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
      * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
      * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
-     * {@link JAXBElement }{@code <}{@link LodType }{@code >}
-     * {@link JAXBElement }{@code <}{@link LookAtType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
-     * {@link JAXBElement }{@code <}{@link ListStyleType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractViewType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
-     * {@link JAXBElement }{@code <}{@link ImagePyramidType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
-     * {@link JAXBElement }{@code <}{@link LinearRingType }{@code >}
-     * {@link JAXBElement }{@code <}{@link SchemaDataType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractGeometryType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
-     * {@link JAXBElement }{@code <}{@link LineStringType }{@code >}
-     * {@link JAXBElement }{@code <}{@link PhotoOverlayType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractObjectType }{@code >}
-     * {@link JAXBElement }{@code <}{@link LatLonAltBoxType }{@code >}
-     * {@link JAXBElement }{@code <}{@link ViewVolumeType }{@code >}
-     * {@link JAXBElement }{@code <}{@link FolderType }{@code >}
+     * {@link JAXBElement }{@code <}{@link LodType }{@code >} {@link JAXBElement
+     * }{@code <}{@link LookAtType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractObjectType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractObjectType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractObjectType }{@code >} {@link JAXBElement
+     * }{@code <}{@link ListStyleType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractViewType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractObjectType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractObjectType }{@code >} {@link JAXBElement
+     * }{@code <}{@link ImagePyramidType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractObjectType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractObjectType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractObjectType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractObjectType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractObjectType }{@code >} {@link JAXBElement
+     * }{@code <}{@link LinearRingType }{@code >} {@link JAXBElement
+     * }{@code <}{@link SchemaDataType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractObjectType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractObjectType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractGeometryType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractObjectType }{@code >} {@link JAXBElement
+     * }{@code <}{@link LineStringType }{@code >} {@link JAXBElement
+     * }{@code <}{@link PhotoOverlayType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractObjectType }{@code >} {@link JAXBElement
+     * }{@code <}{@link LatLonAltBoxType }{@code >} {@link JAXBElement
+     * }{@code <}{@link ViewVolumeType }{@code >} {@link JAXBElement
+     * }{@code <}{@link FolderType }{@code >}
      * 
      * 
      */
-    public List<JAXBElement<? extends AbstractObjectType>> getAbstractObjectGroup() {
-        if (abstractObjectGroup == null) {
+    public List<JAXBElement<? extends AbstractObjectType>> getAbstractObjectGroup()
+    {
+        if (abstractObjectGroup == null)
+        {
             abstractObjectGroup = new ArrayList<JAXBElement<? extends AbstractObjectType>>();
         }
         return this.abstractObjectGroup;
     }
 
-    public boolean isSetAbstractObjectGroup() {
-        return ((this.abstractObjectGroup!= null)&&(!this.abstractObjectGroup.isEmpty()));
+    public boolean isSetAbstractObjectGroup()
+    {
+        return ((this.abstractObjectGroup != null) && (!this.abstractObjectGroup.isEmpty()));
     }
 
-    public void unsetAbstractObjectGroup() {
+    public void unsetAbstractObjectGroup()
+    {
         this.abstractObjectGroup = null;
     }
 

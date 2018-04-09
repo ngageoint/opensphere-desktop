@@ -5,24 +5,24 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
-public class ASnippetElement
-    extends JAXBElement<SnippetType>
+public class ASnippetElement extends JAXBElement<SnippetType>
 {
 
     protected final static QName NAME = new QName("http://www.opengis.net/kml/2.2", "Snippet");
 
-    public ASnippetElement(SnippetType value) {
-        super(NAME, ((Class) SnippetType.class), null, value);
+    public ASnippetElement(SnippetType value)
+    {
+        super(NAME, (SnippetType.class), null, value);
     }
 
-    public ASnippetElement() {
-        super(NAME, ((Class) SnippetType.class), null, null);
+    public ASnippetElement()
+    {
+        super(NAME, (SnippetType.class), null, null);
     }
 
 }

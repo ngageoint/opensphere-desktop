@@ -17,8 +17,6 @@ import javax.swing.ImageIcon;
 
 import org.apache.log4j.Logger;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import io.opensphere.core.units.duration.Duration;
 import io.opensphere.core.units.duration.Nanoseconds;
 import io.opensphere.core.util.image.IconUtil;
@@ -171,7 +169,7 @@ public final class FXUtilities
      * @param timeout The amount of time to wait for the page to load before
      *            timing out.
      * @param engineConsumer A consumer for the web engine.
-     * @throws ExecutionException If an error is thrown by the WebEngine.
+     * @throws ExecutionException If an  error is thrown by the WebEngine.
      * @throws InterruptedException If the thread is interrupted.
      * @throws TimeoutException If the request runs out of time.
      */
@@ -190,7 +188,7 @@ public final class FXUtilities
      * @param timeout The amount of time to wait for the page to load before
      *            timing out.
      * @param engineConsumer A consumer for the web engine.
-     * @throws ExecutionException If an error is thrown by the WebEngine.
+     * @throws ExecutionException If an  error is thrown by the WebEngine.
      * @throws InterruptedException If the thread is interrupted.
      * @throws TimeoutException If the request runs out of time.
      */
@@ -478,7 +476,7 @@ public final class FXUtilities
 
     /**
      * Runs the runnable on the fx application thread if the calling thread is
-     * not already a the fx thread.
+     * not already a the fx thread. Does not wait for the runnable to complete.
      *
      * @param runnable The code to execute on the fx thread.
      */
@@ -496,7 +494,7 @@ public final class FXUtilities
 
     /**
      * Runs the runnable on the fx application thread if the calling thread is
-     * not already a the fx thread.
+     * not already a the fx thread. Waits if necessary.
      *
      * @param runnable The code to execute on the fx thread.
      */
@@ -505,10 +503,30 @@ public final class FXUtilities
         if (Platform.isFxApplicationThread())
         {
             runnable.run();
+            return;
         }
-        else
+
+        // queue on JavaFX thread and wait for completion
+        final CountDownLatch doneLatch = new CountDownLatch(1);
+        Platform.runLater(() ->
         {
-            PlatformImpl.runAndWait(runnable);
+            try
+            {
+                runnable.run();
+            }
+            finally
+            {
+                doneLatch.countDown();
+            }
+        });
+
+        try
+        {
+            doneLatch.await();
+        }
+        catch (InterruptedException e)
+        {
+            LOG.error(e, e);
         }
     }
 
@@ -575,7 +593,7 @@ public final class FXUtilities
      *            timing out.
      * @param engineLoader A consumer responsible for loading the web engine.
      * @param engineConsumer A consumer for the web engine once it's loaded.
-     * @throws ExecutionException If an error is thrown by the WebEngine.
+     * @throws ExecutionException If an  error is thrown by the WebEngine.
      * @throws InterruptedException If the thread is interrupted.
      * @throws TimeoutException If the request runs out of time.
      */
@@ -590,7 +608,8 @@ public final class FXUtilities
 
         final AtomicReference<Throwable> errorProp = new AtomicReference<>();
         final CountDownLatch latch = new CountDownLatch(1);
-        PlatformImpl.startup(new Runnable()
+
+        Runnable toRun = new Runnable()
         {
             @Override
             public void run()
@@ -599,7 +618,18 @@ public final class FXUtilities
                 engineSaver.set(eng);
                 engineLoader.accept(eng);
             }
-        });
+        };
+        try
+        {
+            // The JavaFX platform should only be started once. A number of
+            // actions start it automatically, such as creating a SwingJFXPane.
+            Platform.startup(toRun);
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started, so execute the runnable regardless.
+            runOnFXThread(toRun);
+        }
 
         if (!latch.await(Nanoseconds.get(timeout).longValue(), TimeUnit.NANOSECONDS))
         {

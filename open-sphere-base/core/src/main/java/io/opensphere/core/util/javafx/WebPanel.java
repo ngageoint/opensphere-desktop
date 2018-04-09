@@ -48,7 +48,8 @@ public class WebPanel extends JFXPanel
     private transient volatile Consumer<String> myTitleListener;
 
     /**
-     * An optional Cascading Style Sheet that can be used to modify rendering behavior.
+     * An optional Cascading Style Sheet that can be used to modify rendering
+     * behavior.
      */
     private transient volatile String myStylesheet;
 
@@ -67,9 +68,11 @@ public class WebPanel extends JFXPanel
     }
 
     /**
-     * Creates a new web panel, initialized with the supplied cascading style sheet.
+     * Creates a new web panel, initialized with the supplied cascading style
+     * sheet.
      *
-     * @param pStylesheet a full Cascading Style Sheet that can be used to modify rendering behavior, expressed as a String.
+     * @param pStylesheet a full Cascading Style Sheet that can be used to
+     *            modify rendering behavior, expressed as a String.
      */
     public WebPanel(String pStylesheet)
     {

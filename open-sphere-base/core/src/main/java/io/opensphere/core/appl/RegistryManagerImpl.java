@@ -95,7 +95,7 @@ public class RegistryManagerImpl
             adds.stream().filter(importerPredicate)
                     .forEach(f -> myImporterRegistry.addImporter((FileOrURLImporter)((HUDJInternalFrame)f).getInternalFrame()));
             removes.stream().filter(importerPredicate).forEach(
-                f -> myImporterRegistry.removeImporter((FileOrURLImporter)((HUDJInternalFrame)f).getInternalFrame()));
+                    f -> myImporterRegistry.removeImporter((FileOrURLImporter)((HUDJInternalFrame)f).getInternalFrame()));
         }
     };
 

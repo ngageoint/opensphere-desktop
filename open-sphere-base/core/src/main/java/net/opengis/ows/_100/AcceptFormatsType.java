@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ows._100;
 
 import java.util.ArrayList;
@@ -16,13 +15,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Prioritized sequence of zero or more GetCapabilities operation response formats desired by client, with preferred formats listed first. Each response format shall be identified by its MIME type. See AcceptFormats parameter use subclause for more information. 
+ * Prioritized sequence of zero or more GetCapabilities operation response
+ * formats desired by client, with preferred formats listed first. Each response
+ * format shall be identified by its MIME type. See AcceptFormats parameter use
+ * subclause for more information.
  * 
- * <p>Java class for AcceptFormatsType complex type.
+ * <p>
+ * Java class for AcceptFormatsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AcceptFormatsType">
@@ -39,10 +43,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AcceptFormatsType", propOrder = {
-    "outputFormat"
-})
-public class AcceptFormatsType {
+@XmlType(name = "AcceptFormatsType", propOrder = { "outputFormat" })
+public class AcceptFormatsType
+{
 
     @XmlElement(name = "OutputFormat")
     protected List<String> outputFormat;
@@ -51,26 +54,28 @@ public class AcceptFormatsType {
      * Gets the value of the outputFormat property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the outputFormat property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the outputFormat property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getOutputFormat().add(newItem);
+     * getOutputFormat().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getOutputFormat() {
-        if (outputFormat == null) {
+    public List<String> getOutputFormat()
+    {
+        if (outputFormat == null)
+        {
             outputFormat = new ArrayList<String>();
         }
         return this.outputFormat;

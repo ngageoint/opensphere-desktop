@@ -5,23 +5,24 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.gml._212;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *         A MultiPolygon is defined by one or more Polygons, referenced through 
- *         polygonMember elements. 
- *       
+ * A MultiPolygon is defined by one or more Polygons, referenced through
+ * polygonMember elements.
  * 
- * <p>Java class for MultiPolygonType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for MultiPolygonType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="MultiPolygonType">
@@ -41,9 +42,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MultiPolygonType")
-public class MultiPolygonType
-    extends GeometryCollectionType
+public class MultiPolygonType extends GeometryCollectionType
 {
-
 
 }

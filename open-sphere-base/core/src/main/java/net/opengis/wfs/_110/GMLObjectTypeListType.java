@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import java.util.ArrayList;
@@ -16,11 +15,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for GMLObjectTypeListType complex type.
+ * <p>
+ * Java class for GMLObjectTypeListType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GMLObjectTypeListType">
@@ -37,10 +38,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GMLObjectTypeListType", propOrder = {
-    "gmlObjectType"
-})
-public class GMLObjectTypeListType {
+@XmlType(name = "GMLObjectTypeListType", propOrder = { "gmlObjectType" })
+public class GMLObjectTypeListType
+{
 
     @XmlElement(name = "GMLObjectType", required = true)
     protected List<GMLObjectTypeType> gmlObjectType;
@@ -49,15 +49,16 @@ public class GMLObjectTypeListType {
      * Gets the value of the gmlObjectType property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the gmlObjectType property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the gmlObjectType property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getGMLObjectType().add(newItem);
+     * getGMLObjectType().add(newItem);
      * </pre>
      * 
      * 
@@ -67,8 +68,10 @@ public class GMLObjectTypeListType {
      * 
      * 
      */
-    public List<GMLObjectTypeType> getGMLObjectType() {
-        if (gmlObjectType == null) {
+    public List<GMLObjectTypeType> getGMLObjectType()
+    {
+        if (gmlObjectType == null)
+        {
             gmlObjectType = new ArrayList<GMLObjectTypeType>();
         }
         return this.gmlObjectType;

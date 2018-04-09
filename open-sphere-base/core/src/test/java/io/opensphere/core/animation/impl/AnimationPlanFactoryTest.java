@@ -17,7 +17,8 @@ import io.opensphere.core.util.collections.New;
 public class AnimationPlanFactoryTest
 {
     /**
-     * Tests {@link AnimationPlanFactory#createDefaultAnimationPlan(TimeSpan, Duration, java.util.Collection)}.
+     * Tests
+     * {@link AnimationPlanFactory#createDefaultAnimationPlan(TimeSpan, Duration, java.util.Collection)}.
      *
      * @exception ParseException if one of the times cannot be parsed.
      */

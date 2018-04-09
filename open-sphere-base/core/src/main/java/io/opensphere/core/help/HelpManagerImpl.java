@@ -119,7 +119,8 @@ public class HelpManagerImpl implements HelpManager
                         // remove index XML file.
                         myIndexHelper.removeFile();
                         // remove master XML file.
-                        final File masterFile = new File(myHelpFileDirectory.getAbsolutePath() + File.separator + MASTER_FILE_NAME);
+                        final File masterFile = new File(
+                                myHelpFileDirectory.getAbsolutePath() + File.separator + MASTER_FILE_NAME);
                         if (!masterFile.delete())
                         {
                             LOGGER.warn("Unable to remove the help system master file.");
@@ -204,8 +205,7 @@ public class HelpManagerImpl implements HelpManager
         strBuf.append(File.separator);
         strBuf.append(SEARCH_DIR);
         @SuppressWarnings("PMD.PrematureDeclaration")
-        final
-        String dbAbsPath = strBuf.toString();
+        final String dbAbsPath = strBuf.toString();
         strBuf.append(File.separator);
         strBuf.append(SEARCH_CONFIG);
 

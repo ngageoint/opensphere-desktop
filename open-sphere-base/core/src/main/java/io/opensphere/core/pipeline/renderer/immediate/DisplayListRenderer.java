@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
 
 import org.apache.log4j.Logger;
 
@@ -137,7 +137,8 @@ public class DisplayListRenderer<T extends Geometry> extends AbstractRenderer<T>
         if (compileList)
         {
             // Changed this from GL_COMPILE_AND_EXECUTE to GL_COMPILE because
-            // GL_COMPILE_AND_EXECUTE would cause the application to crash on machines
+            // GL_COMPILE_AND_EXECUTE would cause the application to crash on
+            // machines
             // with ATI cards with driver version 14.5.
             rc.getGL().getGL2().glNewList(listId, GL2.GL_COMPILE);
             try

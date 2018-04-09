@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,19 +14,20 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
- *         A definition of a single held interval for data animation. The data 
- *         that temporally falls within the held interval will be displayed for 
- *         the entire animation, allowing for change detection to occur. A held 
- *         interval may be configured for a single layer, or all layers currently 
- *         loaded in the tool.
- *       
+ * A definition of a single held interval for data animation. The data that
+ * temporally falls within the held interval will be displayed for the entire
+ * animation, allowing for change detection to occur. A held interval may be
+ * configured for a single layer, or all layers currently loaded in the tool.
  * 
- * <p>Java class for HeldIntervalType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for HeldIntervalType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="HeldIntervalType">
@@ -45,15 +45,14 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "HeldIntervalType", propOrder = {
-    "key",
-    "interval"
-})
-public class HeldIntervalType {
+@XmlType(name = "HeldIntervalType", propOrder = { "key", "interval" })
+public class HeldIntervalType
+{
 
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String key;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String interval;
@@ -61,57 +60,55 @@ public class HeldIntervalType {
     /**
      * Gets the value of the key property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getKey() {
+    public String getKey()
+    {
         return key;
     }
 
     /**
      * Sets the value of the key property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setKey(String value) {
+    public void setKey(String value)
+    {
         this.key = value;
     }
 
-    public boolean isSetKey() {
-        return (this.key!= null);
+    public boolean isSetKey()
+    {
+        return (this.key != null);
     }
 
     /**
      * Gets the value of the interval property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getInterval() {
+    public String getInterval()
+    {
         return interval;
     }
 
     /**
      * Sets the value of the interval property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setInterval(String value) {
+    public void setInterval(String value)
+    {
         this.interval = value;
     }
 
-    public boolean isSetInterval() {
-        return (this.interval!= null);
+    public boolean isSetInterval()
+    {
+        return (this.interval != null);
     }
 
 }

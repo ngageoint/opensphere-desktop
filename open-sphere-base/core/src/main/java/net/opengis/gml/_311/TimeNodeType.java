@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -15,13 +14,15 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * Type declaration of the element "TimeNode".
  * 
- * <p>Java class for TimeNodeType complex type.
+ * <p>
+ * Java class for TimeNodeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TimeNodeType">
@@ -40,32 +41,30 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TimeNodeType", propOrder = {
-    "previousEdge",
-    "nextEdge",
-    "position"
-})
-public class TimeNodeType
-    extends AbstractTimeTopologyPrimitiveType
+@XmlType(name = "TimeNodeType", propOrder = { "previousEdge", "nextEdge", "position" })
+public class TimeNodeType extends AbstractTimeTopologyPrimitiveType
 {
 
     protected List<TimeEdgePropertyType> previousEdge;
+
     protected List<TimeEdgePropertyType> nextEdge;
+
     protected TimeInstantPropertyType position;
 
     /**
      * Gets the value of the previousEdge property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the previousEdge property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the previousEdge property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPreviousEdge().add(newItem);
+     * getPreviousEdge().add(newItem);
      * </pre>
      * 
      * 
@@ -75,8 +74,10 @@ public class TimeNodeType
      * 
      * 
      */
-    public List<TimeEdgePropertyType> getPreviousEdge() {
-        if (previousEdge == null) {
+    public List<TimeEdgePropertyType> getPreviousEdge()
+    {
+        if (previousEdge == null)
+        {
             previousEdge = new ArrayList<TimeEdgePropertyType>();
         }
         return this.previousEdge;
@@ -86,15 +87,16 @@ public class TimeNodeType
      * Gets the value of the nextEdge property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the nextEdge property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the nextEdge property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getNextEdge().add(newItem);
+     * getNextEdge().add(newItem);
      * </pre>
      * 
      * 
@@ -104,8 +106,10 @@ public class TimeNodeType
      * 
      * 
      */
-    public List<TimeEdgePropertyType> getNextEdge() {
-        if (nextEdge == null) {
+    public List<TimeEdgePropertyType> getNextEdge()
+    {
+        if (nextEdge == null)
+        {
             nextEdge = new ArrayList<TimeEdgePropertyType>();
         }
         return this.nextEdge;
@@ -114,24 +118,22 @@ public class TimeNodeType
     /**
      * Gets the value of the position property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TimeInstantPropertyType }
-     *     
+     * @return possible object is {@link TimeInstantPropertyType }
+     * 
      */
-    public TimeInstantPropertyType getPosition() {
+    public TimeInstantPropertyType getPosition()
+    {
         return position;
     }
 
     /**
      * Sets the value of the position property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TimeInstantPropertyType }
-     *     
+     * @param value allowed object is {@link TimeInstantPropertyType }
+     * 
      */
-    public void setPosition(TimeInstantPropertyType value) {
+    public void setPosition(TimeInstantPropertyType value)
+    {
         this.position = value;
     }
 

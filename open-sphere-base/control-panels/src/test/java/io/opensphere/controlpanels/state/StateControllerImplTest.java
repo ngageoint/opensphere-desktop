@@ -16,9 +16,9 @@ import org.xml.sax.SAXException;
 
 import com.bitsys.fade.mist.state.v4.StateType;
 
-import io.opensphere.core.matchers.EasyMockHelper;
 import io.opensphere.core.modulestate.ModuleStateManager;
 import io.opensphere.core.util.XMLUtilities;
+import io.opensphere.test.core.matchers.EasyMockHelper;
 
 /**
  * Test {@link StateControllerImpl}.

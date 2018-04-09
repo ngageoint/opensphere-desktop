@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import java.util.ArrayList;
@@ -24,15 +23,17 @@ import net.opengis.ogc._110.FilterType;
 import net.opengis.ogc._110.FunctionType;
 import net.opengis.ogc._110.SortByType;
 
-
 /**
  * 
- *             The Query element is of type QueryType.
- *          
+ * The Query element is of type QueryType.
  * 
- * <p>Java class for QueryType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for QueryType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="QueryType">
@@ -59,29 +60,30 @@ import net.opengis.ogc._110.SortByType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "QueryType", propOrder = {
-    "propertyNameOrXlinkPropertyNameOrFunction",
-    "filter",
-    "sortBy"
-})
-public class QueryType {
+@XmlType(name = "QueryType", propOrder = { "propertyNameOrXlinkPropertyNameOrFunction", "filter", "sortBy" })
+public class QueryType
+{
 
-    @XmlElements({
-        @XmlElement(name = "XlinkPropertyName", type = XlinkPropertyName.class),
+    @XmlElements({ @XmlElement(name = "XlinkPropertyName", type = XlinkPropertyName.class),
         @XmlElement(name = "Function", namespace = "http://www.opengis.net/ogc", type = FunctionType.class),
-        @XmlElement(name = "PropertyName", type = String.class)
-    })
+        @XmlElement(name = "PropertyName", type = String.class) })
     protected List<Object> propertyNameOrXlinkPropertyNameOrFunction;
+
     @XmlElement(name = "Filter", namespace = "http://www.opengis.net/ogc")
     protected FilterType filter;
+
     @XmlElement(name = "SortBy", namespace = "http://www.opengis.net/ogc")
     protected SortByType sortBy;
+
     @XmlAttribute(name = "handle")
     protected String handle;
+
     @XmlAttribute(name = "typeName", required = true)
     protected List<QName> typeName;
+
     @XmlAttribute(name = "featureVersion")
     protected String featureVersion;
+
     @XmlAttribute(name = "srsName")
     @XmlSchemaType(name = "anyURI")
     protected String srsName;
@@ -90,28 +92,30 @@ public class QueryType {
      * Gets the value of the propertyNameOrXlinkPropertyNameOrFunction property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the propertyNameOrXlinkPropertyNameOrFunction property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the propertyNameOrXlinkPropertyNameOrFunction
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPropertyNameOrXlinkPropertyNameOrFunction().add(newItem);
+     * getPropertyNameOrXlinkPropertyNameOrFunction().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link XlinkPropertyName }
-     * {@link FunctionType }
-     * {@link String }
+     * {@link XlinkPropertyName } {@link FunctionType } {@link String }
      * 
      * 
      */
-    public List<Object> getPropertyNameOrXlinkPropertyNameOrFunction() {
-        if (propertyNameOrXlinkPropertyNameOrFunction == null) {
+    public List<Object> getPropertyNameOrXlinkPropertyNameOrFunction()
+    {
+        if (propertyNameOrXlinkPropertyNameOrFunction == null)
+        {
             propertyNameOrXlinkPropertyNameOrFunction = new ArrayList<Object>();
         }
         return this.propertyNameOrXlinkPropertyNameOrFunction;
@@ -119,83 +123,76 @@ public class QueryType {
 
     /**
      * 
-     *                 The Filter element is used to define spatial and/or non-spatial
-     *                 constraints on query.  Spatial constrains use GML3 to specify
-     *                 the constraining geometry.  A full description of the Filter
-     *                 element can be found in the Filter Encoding Implementation
-     *                 Specification.
-     *              
+     * The Filter element is used to define spatial and/or non-spatial
+     * constraints on query. Spatial constrains use GML3 to specify the
+     * constraining geometry. A full description of the Filter element can be
+     * found in the Filter Encoding Implementation Specification.
      * 
-     * @return
-     *     possible object is
-     *     {@link FilterType }
-     *     
+     * 
+     * @return possible object is {@link FilterType }
+     * 
      */
-    public FilterType getFilter() {
+    public FilterType getFilter()
+    {
         return filter;
     }
 
     /**
      * Sets the value of the filter property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FilterType }
-     *     
+     * @param value allowed object is {@link FilterType }
+     * 
      */
-    public void setFilter(FilterType value) {
+    public void setFilter(FilterType value)
+    {
         this.filter = value;
     }
 
     /**
      * 
-     *                 The SortBy element is used specify property names whose
-     *                 values should be used to order (upon presentation) the
-     *                 set of feature instances that satisfy the query.
-     *              
+     * The SortBy element is used specify property names whose values should be
+     * used to order (upon presentation) the set of feature instances that
+     * satisfy the query.
      * 
-     * @return
-     *     possible object is
-     *     {@link SortByType }
-     *     
+     * 
+     * @return possible object is {@link SortByType }
+     * 
      */
-    public SortByType getSortBy() {
+    public SortByType getSortBy()
+    {
         return sortBy;
     }
 
     /**
      * Sets the value of the sortBy property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SortByType }
-     *     
+     * @param value allowed object is {@link SortByType }
+     * 
      */
-    public void setSortBy(SortByType value) {
+    public void setSortBy(SortByType value)
+    {
         this.sortBy = value;
     }
 
     /**
      * Gets the value of the handle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHandle() {
+    public String getHandle()
+    {
         return handle;
     }
 
     /**
      * Sets the value of the handle property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHandle(String value) {
+    public void setHandle(String value)
+    {
         this.handle = value;
     }
 
@@ -203,26 +200,28 @@ public class QueryType {
      * Gets the value of the typeName property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the typeName property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the typeName property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getTypeName().add(newItem);
+     * getTypeName().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link QName }
+     * Objects of the following type(s) are allowed in the list {@link QName }
      * 
      * 
      */
-    public List<QName> getTypeName() {
-        if (typeName == null) {
+    public List<QName> getTypeName()
+    {
+        if (typeName == null)
+        {
             typeName = new ArrayList<QName>();
         }
         return this.typeName;
@@ -231,48 +230,44 @@ public class QueryType {
     /**
      * Gets the value of the featureVersion property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getFeatureVersion() {
+    public String getFeatureVersion()
+    {
         return featureVersion;
     }
 
     /**
      * Sets the value of the featureVersion property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setFeatureVersion(String value) {
+    public void setFeatureVersion(String value)
+    {
         this.featureVersion = value;
     }
 
     /**
      * Gets the value of the srsName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSrsName() {
+    public String getSrsName()
+    {
         return srsName;
     }
 
     /**
      * Sets the value of the srsName property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSrsName(String value) {
+    public void setSrsName(String value)
+    {
         this.srsName = value;
     }
 

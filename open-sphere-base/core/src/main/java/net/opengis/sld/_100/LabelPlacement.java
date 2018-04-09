@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -36,63 +37,58 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "pointPlacement",
-    "linePlacement"
-})
+@XmlType(name = "", propOrder = { "pointPlacement", "linePlacement" })
 @XmlRootElement(name = "LabelPlacement")
-public class LabelPlacement {
+public class LabelPlacement
+{
 
     @XmlElement(name = "PointPlacement")
     protected PointPlacement pointPlacement;
+
     @XmlElement(name = "LinePlacement")
     protected LinePlacement linePlacement;
 
     /**
      * Gets the value of the pointPlacement property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PointPlacement }
-     *     
+     * @return possible object is {@link PointPlacement }
+     * 
      */
-    public PointPlacement getPointPlacement() {
+    public PointPlacement getPointPlacement()
+    {
         return pointPlacement;
     }
 
     /**
      * Sets the value of the pointPlacement property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PointPlacement }
-     *     
+     * @param value allowed object is {@link PointPlacement }
+     * 
      */
-    public void setPointPlacement(PointPlacement value) {
+    public void setPointPlacement(PointPlacement value)
+    {
         this.pointPlacement = value;
     }
 
     /**
      * Gets the value of the linePlacement property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LinePlacement }
-     *     
+     * @return possible object is {@link LinePlacement }
+     * 
      */
-    public LinePlacement getLinePlacement() {
+    public LinePlacement getLinePlacement()
+    {
         return linePlacement;
     }
 
     /**
      * Sets the value of the linePlacement property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LinePlacement }
-     *     
+     * @param value allowed object is {@link LinePlacement }
+     * 
      */
-    public void setLinePlacement(LinePlacement value) {
+    public void setLinePlacement(LinePlacement value)
+    {
         this.linePlacement = value;
     }
 

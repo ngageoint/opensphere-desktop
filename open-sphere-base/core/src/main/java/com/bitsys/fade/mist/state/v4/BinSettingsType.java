@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.math.BigInteger;
@@ -16,15 +15,17 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *         Defines a constrained bin.
- *       
+ * Defines a constrained bin.
  * 
- * <p>Java class for BinSettingsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for BinSettingsType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="BinSettingsType">
@@ -46,96 +47,96 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "BinSettingsType", propOrder = {
 
 })
-public class BinSettingsType {
+public class BinSettingsType
+{
 
     protected Boolean active;
+
     @XmlElement(required = true)
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger binSize;
+
     protected BinMethodSequenceType bins;
 
     /**
      * Gets the value of the active property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isActive() {
+    public Boolean isActive()
+    {
         return active;
     }
 
     /**
      * Sets the value of the active property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setActive(Boolean value) {
+    public void setActive(Boolean value)
+    {
         this.active = value;
     }
 
-    public boolean isSetActive() {
-        return (this.active!= null);
+    public boolean isSetActive()
+    {
+        return (this.active != null);
     }
 
     /**
      * Gets the value of the binSize property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getBinSize() {
+    public BigInteger getBinSize()
+    {
         return binSize;
     }
 
     /**
      * Sets the value of the binSize property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setBinSize(BigInteger value) {
+    public void setBinSize(BigInteger value)
+    {
         this.binSize = value;
     }
 
-    public boolean isSetBinSize() {
-        return (this.binSize!= null);
+    public boolean isSetBinSize()
+    {
+        return (this.binSize != null);
     }
 
     /**
      * Gets the value of the bins property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BinMethodSequenceType }
-     *     
+     * @return possible object is {@link BinMethodSequenceType }
+     * 
      */
-    public BinMethodSequenceType getBins() {
+    public BinMethodSequenceType getBins()
+    {
         return bins;
     }
 
     /**
      * Sets the value of the bins property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BinMethodSequenceType }
-     *     
+     * @param value allowed object is {@link BinMethodSequenceType }
+     * 
      */
-    public void setBins(BinMethodSequenceType value) {
+    public void setBins(BinMethodSequenceType value)
+    {
         this.bins = value;
     }
 
-    public boolean isSetBins() {
-        return (this.bins!= null);
+    public boolean isSetBins()
+    {
+        return (this.bins != null);
     }
 
 }

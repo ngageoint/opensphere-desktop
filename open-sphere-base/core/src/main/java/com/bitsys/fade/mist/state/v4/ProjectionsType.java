@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.util.ArrayList;
@@ -18,15 +17,17 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
- *         A collection of one or more 'projection' elements
- *       
+ * A collection of one or more 'projection' elements
  * 
- * <p>Java class for ProjectionsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for ProjectionsType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ProjectionsType">
@@ -43,10 +44,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ProjectionsType", propOrder = {
-    "projection"
-})
-public class ProjectionsType {
+@XmlType(name = "ProjectionsType", propOrder = { "projection" })
+public class ProjectionsType
+{
 
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
@@ -56,36 +56,40 @@ public class ProjectionsType {
      * Gets the value of the projection property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the projection property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the projection property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getProjection().add(newItem);
+     * getProjection().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getProjection() {
-        if (projection == null) {
+    public List<String> getProjection()
+    {
+        if (projection == null)
+        {
             projection = new ArrayList<String>();
         }
         return this.projection;
     }
 
-    public boolean isSetProjection() {
-        return ((this.projection!= null)&&(!this.projection.isEmpty()));
+    public boolean isSetProjection()
+    {
+        return ((this.projection != null) && (!this.projection.isEmpty()));
     }
 
-    public void unsetProjection() {
+    public void unsetProjection()
+    {
         this.projection = null;
     }
 

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.math.BigDecimal;
@@ -17,15 +16,17 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-
 /**
- * In every calendar, years are numbered relative to the date of a 
- *       reference event that defines a calendar era. 
- *       In this implementation, we omit the back-pointer "datingSystem".
+ * In every calendar, years are numbered relative to the date of a reference
+ * event that defines a calendar era. In this implementation, we omit the
+ * back-pointer "datingSystem".
  * 
- * <p>Java class for TimeCalendarEraType complex type.
+ * <p>
+ * Java class for TimeCalendarEraType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TimeCalendarEraType">
@@ -45,119 +46,108 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TimeCalendarEraType", propOrder = {
-    "referenceEvent",
-    "referenceDate",
-    "julianReference",
-    "epochOfUse"
-})
-public class TimeCalendarEraType
-    extends DefinitionType
+@XmlType(name = "TimeCalendarEraType", propOrder = { "referenceEvent", "referenceDate", "julianReference", "epochOfUse" })
+public class TimeCalendarEraType extends DefinitionType
 {
 
     @XmlElement(required = true)
     protected StringOrRefType referenceEvent;
+
     @XmlElement(defaultValue = "0001-01-01")
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar referenceDate;
+
     @XmlElement(required = true)
     protected BigDecimal julianReference;
+
     @XmlElement(required = true)
     protected TimePeriodPropertyType epochOfUse;
 
     /**
      * Gets the value of the referenceEvent property.
      * 
-     * @return
-     *     possible object is
-     *     {@link StringOrRefType }
-     *     
+     * @return possible object is {@link StringOrRefType }
+     * 
      */
-    public StringOrRefType getReferenceEvent() {
+    public StringOrRefType getReferenceEvent()
+    {
         return referenceEvent;
     }
 
     /**
      * Sets the value of the referenceEvent property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link StringOrRefType }
-     *     
+     * @param value allowed object is {@link StringOrRefType }
+     * 
      */
-    public void setReferenceEvent(StringOrRefType value) {
+    public void setReferenceEvent(StringOrRefType value)
+    {
         this.referenceEvent = value;
     }
 
     /**
      * Gets the value of the referenceDate property.
      * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     * @return possible object is {@link XMLGregorianCalendar }
+     * 
      */
-    public XMLGregorianCalendar getReferenceDate() {
+    public XMLGregorianCalendar getReferenceDate()
+    {
         return referenceDate;
     }
 
     /**
      * Sets the value of the referenceDate property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     * @param value allowed object is {@link XMLGregorianCalendar }
+     * 
      */
-    public void setReferenceDate(XMLGregorianCalendar value) {
+    public void setReferenceDate(XMLGregorianCalendar value)
+    {
         this.referenceDate = value;
     }
 
     /**
      * Gets the value of the julianReference property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     * @return possible object is {@link BigDecimal }
+     * 
      */
-    public BigDecimal getJulianReference() {
+    public BigDecimal getJulianReference()
+    {
         return julianReference;
     }
 
     /**
      * Sets the value of the julianReference property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     * @param value allowed object is {@link BigDecimal }
+     * 
      */
-    public void setJulianReference(BigDecimal value) {
+    public void setJulianReference(BigDecimal value)
+    {
         this.julianReference = value;
     }
 
     /**
      * Gets the value of the epochOfUse property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TimePeriodPropertyType }
-     *     
+     * @return possible object is {@link TimePeriodPropertyType }
+     * 
      */
-    public TimePeriodPropertyType getEpochOfUse() {
+    public TimePeriodPropertyType getEpochOfUse()
+    {
         return epochOfUse;
     }
 
     /**
      * Sets the value of the epochOfUse property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link TimePeriodPropertyType }
-     *     
+     * @param value allowed object is {@link TimePeriodPropertyType }
+     * 
      */
-    public void setEpochOfUse(TimePeriodPropertyType value) {
+    public void setEpochOfUse(TimePeriodPropertyType value)
+    {
         this.epochOfUse = value;
     }
 

@@ -41,8 +41,8 @@ public interface Exporter
      * @param target The object to write to. This is just a hint; the exporter
      *            may not actually write to the given object.
      *
-     * @throws IOException If a problem occurs writing to the target.
-     * @throws ExportException If a problem occurs during export.
+     * @throws IOException If a   problem occurs writing to the target.
+     * @throws ExportException If a   problem occurs during export.
      * @return the file exported to.
      */
     File export(Object target) throws IOException, ExportException;

@@ -16,8 +16,10 @@ import javafx.scene.input.MouseEvent;
 import io.opensphere.core.util.collections.New;
 
 /**
- * An abstract base implementation of a behavior, in which default implementations are provided for all behaviors. Each provided
- * implementation is a no-op, allowing sub-classes to only implement behaviors in which they are interested.
+ * An abstract base implementation of a behavior, in which default
+ * implementations are provided for all behaviors. Each provided implementation
+ * is a no-op, allowing sub-classes to only implement behaviors in which they
+ * are interested.
  *
  * @param <C> the type of control supported by the behavior.
  */
@@ -29,7 +31,8 @@ public class AbstractBehavior<C extends Control> implements MouseBehavior<C>, Ke
     private final C myControl;
 
     /**
-     * Listens to any focus events on the Control and calls behavior methods as a result.
+     * Listens to any focus events on the Control and calls behavior methods as
+     * a result.
      */
     private final InvalidationListener myFocusListener = property -> focusChanged();
 
@@ -193,7 +196,8 @@ public class AbstractBehavior<C extends Control> implements MouseBehavior<C>, Ke
     /**
      * {@inheritDoc}
      *
-     * @see KeyBehavior#bind(javafx.scene.input.KeyCode, java.lang.String, javafx.scene.input.KeyCode[])
+     * @see KeyBehavior#bind(javafx.scene.input.KeyCode, java.lang.String,
+     *      javafx.scene.input.KeyCode[])
      */
     @Override
     public void bind(KeyCode pCode, String pAction, KeyCode... pModifiers)
@@ -219,9 +223,10 @@ public class AbstractBehavior<C extends Control> implements MouseBehavior<C>, Ke
      * Locates the set of bindings that correlate to the supplied parameters.
      *
      * @param pCode the code for which to search.
-     * @param pModifiers the optional modifiers to apply to the code during the search.
-     * @return the {@link Collection} of bindings correlating to the supplied code and modifiers, or an empty collection if none
-     *         are found.
+     * @param pModifiers the optional modifiers to apply to the code during the
+     *            search.
+     * @return the {@link Collection} of bindings correlating to the supplied
+     *         code and modifiers, or an empty collection if none are found.
      */
     protected Collection<KeyActionBinding> findBindings(KeyCode pCode, KeyCode... pModifiers)
     {
@@ -234,7 +239,8 @@ public class AbstractBehavior<C extends Control> implements MouseBehavior<C>, Ke
         }
         for (KeyActionBinding binding : myBindings)
         {
-            // only remove bindings that have the same modifiers for the supplied binding.
+            // only remove bindings that have the same modifiers for the
+            // supplied binding.
             if (binding.getCode() == pCode && binding.getModifiers().equals(modifiers))
             {
                 bindingsToRemove.add(binding);

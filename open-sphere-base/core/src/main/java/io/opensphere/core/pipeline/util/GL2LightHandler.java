@@ -3,10 +3,10 @@ package io.opensphere.core.pipeline.util;
 import java.util.EnumMap;
 import java.util.Map;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.media.opengl.GL2ES1;
-import javax.media.opengl.fixedfunc.GLLightingFunc;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GL2ES1;
+import com.jogamp.opengl.fixedfunc.GLLightingFunc;
 
 import io.opensphere.core.geometry.renderproperties.LightingModelConfigGL;
 import io.opensphere.core.geometry.renderproperties.LightingModelConfigGL.ColorMaterialModeParameterType;

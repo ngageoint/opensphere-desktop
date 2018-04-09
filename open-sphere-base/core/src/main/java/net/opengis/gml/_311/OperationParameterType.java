@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -15,13 +14,18 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * The definition of a parameter used by an operation method. Most parameter values are numeric, but other types of parameter values are possible. This complexType is expected to be used or extended for all operation methods, without defining operation-method-specialized element names.  
+ * The definition of a parameter used by an operation method. Most parameter
+ * values are numeric, but other types of parameter values are possible. This
+ * complexType is expected to be used or extended for all operation methods,
+ * without defining operation-method-specialized element names.
  * 
- * <p>Java class for OperationParameterType complex type.
+ * <p>
+ * Java class for OperationParameterType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="OperationParameterType">
@@ -39,30 +43,30 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "OperationParameterType", propOrder = {
-    "parameterID",
-    "remarks"
-})
-public class OperationParameterType
-    extends OperationParameterBaseType
+@XmlType(name = "OperationParameterType", propOrder = { "parameterID", "remarks" })
+public class OperationParameterType extends OperationParameterBaseType
 {
 
     protected List<IdentifierType> parameterID;
+
     protected StringOrRefType remarks;
 
     /**
-     * Set of alternative identifications of this operation parameter. The first parameterID, if any, is normally the primary identification code, and any others are aliases. Gets the value of the parameterID property.
+     * Set of alternative identifications of this operation parameter. The first
+     * parameterID, if any, is normally the primary identification code, and any
+     * others are aliases. Gets the value of the parameterID property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the parameterID property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the parameterID property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getParameterID().add(newItem);
+     * getParameterID().add(newItem);
      * </pre>
      * 
      * 
@@ -72,34 +76,35 @@ public class OperationParameterType
      * 
      * 
      */
-    public List<IdentifierType> getParameterID() {
-        if (parameterID == null) {
+    public List<IdentifierType> getParameterID()
+    {
+        if (parameterID == null)
+        {
             parameterID = new ArrayList<IdentifierType>();
         }
         return this.parameterID;
     }
 
     /**
-     * Comments on or information about this operation parameter, including source information. 
+     * Comments on or information about this operation parameter, including
+     * source information.
      * 
-     * @return
-     *     possible object is
-     *     {@link StringOrRefType }
-     *     
+     * @return possible object is {@link StringOrRefType }
+     * 
      */
-    public StringOrRefType getRemarks() {
+    public StringOrRefType getRemarks()
+    {
         return remarks;
     }
 
     /**
      * Sets the value of the remarks property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link StringOrRefType }
-     *     
+     * @param value allowed object is {@link StringOrRefType }
+     * 
      */
-    public void setRemarks(StringOrRefType value) {
+    public void setRemarks(StringOrRefType value)
+    {
         this.remarks = value;
     }
 

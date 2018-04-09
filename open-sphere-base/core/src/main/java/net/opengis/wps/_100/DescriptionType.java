@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import java.util.ArrayList;
@@ -21,13 +20,15 @@ import net.opengis.ows._110.CodeType;
 import net.opengis.ows._110.LanguageStringType;
 import net.opengis.ows._110.MetadataType;
 
-
 /**
- * Description of a WPS process or output object. 
+ * Description of a WPS process or output object.
  * 
- * <p>Java class for DescriptionType complex type.
+ * <p>
+ * Java class for DescriptionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DescriptionType">
@@ -47,114 +48,109 @@ import net.opengis.ows._110.MetadataType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DescriptionType", propOrder = {
-    "identifier",
-    "title",
-    "_abstract",
-    "metadata"
-})
-@XmlSeeAlso({
-    ProcessBriefType.class,
-    OutputDataType.class,
-    InputDescriptionType.class,
-    OutputDescriptionType.class
-})
-public class DescriptionType {
+@XmlType(name = "DescriptionType", propOrder = { "identifier", "title", "_abstract", "metadata" })
+@XmlSeeAlso({ ProcessBriefType.class, OutputDataType.class, InputDescriptionType.class, OutputDescriptionType.class })
+public class DescriptionType
+{
 
     @XmlElement(name = "Identifier", namespace = "http://www.opengis.net/ows/1.1", required = true)
     protected CodeType identifier;
+
     @XmlElement(name = "Title", namespace = "http://www.opengis.net/ows/1.1", required = true)
     protected LanguageStringType title;
+
     @XmlElement(name = "Abstract", namespace = "http://www.opengis.net/ows/1.1")
     protected LanguageStringType _abstract;
+
     @XmlElement(name = "Metadata", namespace = "http://www.opengis.net/ows/1.1")
     protected List<MetadataType> metadata;
 
     /**
-     * Unambiguous identifier or name of a process, unique for this server, or unambiguous identifier or name of an output, unique for this process. 
+     * Unambiguous identifier or name of a process, unique for this server, or
+     * unambiguous identifier or name of an output, unique for this process.
      * 
-     * @return
-     *     possible object is
-     *     {@link CodeType }
-     *     
+     * @return possible object is {@link CodeType }
+     * 
      */
-    public CodeType getIdentifier() {
+    public CodeType getIdentifier()
+    {
         return identifier;
     }
 
     /**
      * Sets the value of the identifier property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CodeType }
-     *     
+     * @param value allowed object is {@link CodeType }
+     * 
      */
-    public void setIdentifier(CodeType value) {
+    public void setIdentifier(CodeType value)
+    {
         this.identifier = value;
     }
 
     /**
-     * Title of a process or output, normally available for display to a human. 
+     * Title of a process or output, normally available for display to a human.
      * 
-     * @return
-     *     possible object is
-     *     {@link LanguageStringType }
-     *     
+     * @return possible object is {@link LanguageStringType }
+     * 
      */
-    public LanguageStringType getTitle() {
+    public LanguageStringType getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LanguageStringType }
-     *     
+     * @param value allowed object is {@link LanguageStringType }
+     * 
      */
-    public void setTitle(LanguageStringType value) {
+    public void setTitle(LanguageStringType value)
+    {
         this.title = value;
     }
 
     /**
-     * Brief narrative description of a process or output, normally available for display to a human. 
+     * Brief narrative description of a process or output, normally available
+     * for display to a human.
      * 
-     * @return
-     *     possible object is
-     *     {@link LanguageStringType }
-     *     
+     * @return possible object is {@link LanguageStringType }
+     * 
      */
-    public LanguageStringType getAbstract() {
+    public LanguageStringType getAbstract()
+    {
         return _abstract;
     }
 
     /**
      * Sets the value of the abstract property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LanguageStringType }
-     *     
+     * @param value allowed object is {@link LanguageStringType }
+     * 
      */
-    public void setAbstract(LanguageStringType value) {
+    public void setAbstract(LanguageStringType value)
+    {
         this._abstract = value;
     }
 
     /**
-     * Optional unordered list of additional metadata about this process/input/output. A list of optional and/or required metadata elements for this process/input/output could be specified in an Application Profile for this service. Gets the value of the metadata property.
+     * Optional unordered list of additional metadata about this
+     * process/input/output. A list of optional and/or required metadata
+     * elements for this process/input/output could be specified in an
+     * Application Profile for this service. Gets the value of the metadata
+     * property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the metadata property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the metadata property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getMetadata().add(newItem);
+     * getMetadata().add(newItem);
      * </pre>
      * 
      * 
@@ -164,8 +160,10 @@ public class DescriptionType {
      * 
      * 
      */
-    public List<MetadataType> getMetadata() {
-        if (metadata == null) {
+    public List<MetadataType> getMetadata()
+    {
+        if (metadata == null)
+        {
             metadata = new ArrayList<MetadataType>();
         }
         return this.metadata;

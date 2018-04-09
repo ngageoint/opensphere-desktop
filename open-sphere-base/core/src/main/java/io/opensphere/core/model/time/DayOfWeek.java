@@ -47,7 +47,8 @@ public enum DayOfWeek
     private static final Set<String> DAY_NAMES = getDayNames();
 
     /**
-     * Returns the day of week used by the {@link Calendar} class for this Day of Week.
+     * Returns the day of week used by the {@link Calendar} class for this Day
+     * of Week.
      *
      * @return the int
      */
@@ -86,11 +87,12 @@ public enum DayOfWeek
     }
 
     /**
-     * Tests to determine if the supplied value is the name of a day of the week.
+     * Tests to determine if the supplied value is the name of a day of the
+     * week.
      *
      * @param pName the string to test.
-     * @return true if the supplied value is the name of a day of the week (regardless of case), or false otherwise (including
-     *         null).
+     * @return true if the supplied value is the name of a day of the week
+     *         (regardless of case), or false otherwise (including null).
      */
     public static boolean isDayOfWeek(String pName)
     {
@@ -117,11 +119,13 @@ public enum DayOfWeek
     }
 
     /**
-     * Gets the enum instance corresponding to the supplied day name (regardless of case).
+     * Gets the enum instance corresponding to the supplied day name (regardless
+     * of case).
      *
-     * @param pDayName the name of the day for which to get the enum instance (will return null if it doesn't contain a valid
-     *            name).
-     * @return the enum instance of the supplied day name, or null if none corresponds.
+     * @param pDayName the name of the day for which to get the enum instance
+     *            (will return null if it doesn't contain a valid name).
+     * @return the enum instance of the supplied day name, or null if none
+     *         corresponds.
      */
     public static DayOfWeek fromDayName(String pDayName)
     {

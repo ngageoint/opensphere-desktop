@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -17,14 +16,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A container for an array of curves. The elements are always contained in the array property, referencing geometry elements 
- * 			or arrays of geometry elements is not supported.
+ * A container for an array of curves. The elements are always contained in the
+ * array property, referencing geometry elements or arrays of geometry elements
+ * is not supported.
  * 
- * <p>Java class for CurveArrayPropertyType complex type.
+ * <p>
+ * Java class for CurveArrayPropertyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CurveArrayPropertyType">
@@ -41,10 +43,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CurveArrayPropertyType", propOrder = {
-    "curve"
-})
-public class CurveArrayPropertyType {
+@XmlType(name = "CurveArrayPropertyType", propOrder = { "curve" })
+public class CurveArrayPropertyType
+{
 
     @XmlElementRef(name = "_Curve", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
     protected List<JAXBElement<? extends AbstractCurveType>> curve;
@@ -53,15 +54,16 @@ public class CurveArrayPropertyType {
      * Gets the value of the curve property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the curve property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the curve property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getCurve().add(newItem);
+     * getCurve().add(newItem);
      * </pre>
      * 
      * 
@@ -75,8 +77,10 @@ public class CurveArrayPropertyType {
      * 
      * 
      */
-    public List<JAXBElement<? extends AbstractCurveType>> getCurve() {
-        if (curve == null) {
+    public List<JAXBElement<? extends AbstractCurveType>> getCurve()
+    {
+        if (curve == null)
+        {
             curve = new ArrayList<JAXBElement<? extends AbstractCurveType>>();
         }
         return this.curve;

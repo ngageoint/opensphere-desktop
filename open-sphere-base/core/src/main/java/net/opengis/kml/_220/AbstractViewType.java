@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for AbstractViewType complex type.
+ * <p>
+ * Java class for AbstractViewType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractViewType">
@@ -40,21 +41,15 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractViewType", propOrder = {
-    "abstractViewSimpleExtensionGroup",
-    "abstractViewObjectExtensionGroup"
-})
-@XmlSeeAlso({
-    CameraType.class,
-    LookAtType.class
-})
-public abstract class AbstractViewType
-    extends AbstractObjectType
+@XmlType(name = "AbstractViewType", propOrder = { "abstractViewSimpleExtensionGroup", "abstractViewObjectExtensionGroup" })
+@XmlSeeAlso({ CameraType.class, LookAtType.class })
+public abstract class AbstractViewType extends AbstractObjectType
 {
 
     @XmlElement(name = "AbstractViewSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> abstractViewSimpleExtensionGroup;
+
     @XmlElement(name = "AbstractViewObjectExtensionGroup")
     protected List<AbstractObjectType> abstractViewObjectExtensionGroup;
 
@@ -62,36 +57,41 @@ public abstract class AbstractViewType
      * Gets the value of the abstractViewSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractViewSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractViewSimpleExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractViewSimpleExtensionGroup().add(newItem);
+     * getAbstractViewSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getAbstractViewSimpleExtensionGroup() {
-        if (abstractViewSimpleExtensionGroup == null) {
+    public List<Object> getAbstractViewSimpleExtensionGroup()
+    {
+        if (abstractViewSimpleExtensionGroup == null)
+        {
             abstractViewSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.abstractViewSimpleExtensionGroup;
     }
 
-    public boolean isSetAbstractViewSimpleExtensionGroup() {
-        return ((this.abstractViewSimpleExtensionGroup!= null)&&(!this.abstractViewSimpleExtensionGroup.isEmpty()));
+    public boolean isSetAbstractViewSimpleExtensionGroup()
+    {
+        return ((this.abstractViewSimpleExtensionGroup != null) && (!this.abstractViewSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetAbstractViewSimpleExtensionGroup() {
+    public void unsetAbstractViewSimpleExtensionGroup()
+    {
         this.abstractViewSimpleExtensionGroup = null;
     }
 
@@ -99,15 +99,17 @@ public abstract class AbstractViewType
      * Gets the value of the abstractViewObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractViewObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractViewObjectExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractViewObjectExtensionGroup().add(newItem);
+     * getAbstractViewObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -117,18 +119,22 @@ public abstract class AbstractViewType
      * 
      * 
      */
-    public List<AbstractObjectType> getAbstractViewObjectExtensionGroup() {
-        if (abstractViewObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getAbstractViewObjectExtensionGroup()
+    {
+        if (abstractViewObjectExtensionGroup == null)
+        {
             abstractViewObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.abstractViewObjectExtensionGroup;
     }
 
-    public boolean isSetAbstractViewObjectExtensionGroup() {
-        return ((this.abstractViewObjectExtensionGroup!= null)&&(!this.abstractViewObjectExtensionGroup.isEmpty()));
+    public boolean isSetAbstractViewObjectExtensionGroup()
+    {
+        return ((this.abstractViewObjectExtensionGroup != null) && (!this.abstractViewObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetAbstractViewObjectExtensionGroup() {
+    public void unsetAbstractViewObjectExtensionGroup()
+    {
         this.abstractViewObjectExtensionGroup = null;
     }
 

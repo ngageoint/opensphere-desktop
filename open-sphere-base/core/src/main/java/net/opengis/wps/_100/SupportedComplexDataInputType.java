@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import java.math.BigInteger;
@@ -15,11 +14,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for SupportedComplexDataInputType complex type.
+ * <p>
+ * Java class for SupportedComplexDataInputType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SupportedComplexDataInputType">
@@ -35,8 +36,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SupportedComplexDataInputType")
-public class SupportedComplexDataInputType
-    extends SupportedComplexDataType
+public class SupportedComplexDataInputType extends SupportedComplexDataType
 {
 
     @XmlAttribute
@@ -45,24 +45,22 @@ public class SupportedComplexDataInputType
     /**
      * Gets the value of the maximumMegabytes property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getMaximumMegabytes() {
+    public BigInteger getMaximumMegabytes()
+    {
         return maximumMegabytes;
     }
 
     /**
      * Sets the value of the maximumMegabytes property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setMaximumMegabytes(BigInteger value) {
+    public void setMaximumMegabytes(BigInteger value)
+    {
         this.maximumMegabytes = value;
     }
 

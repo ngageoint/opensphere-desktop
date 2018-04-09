@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,15 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 import net.opengis.ogc._110.FilterCapabilities;
 import net.opengis.ows._100.CapabilitiesBaseType;
 
-
 /**
- * This type extends ows:CapabilitiesBaseType defined in OGC-05-008 
- *          to include information about supported OGC filter components. A 
- *          profile may extend this type to describe additional capabilities.
+ * This type extends ows:CapabilitiesBaseType defined in OGC-05-008 to include
+ * information about supported OGC filter components. A profile may extend this
+ * type to describe additional capabilities.
  * 
- * <p>Java class for CapabilitiesType complex type.
+ * <p>
+ * Java class for CapabilitiesType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CapabilitiesType">
@@ -41,11 +42,8 @@ import net.opengis.ows._100.CapabilitiesBaseType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CapabilitiesType", propOrder = {
-    "filterCapabilities"
-})
-public class CapabilitiesType
-    extends CapabilitiesBaseType
+@XmlType(name = "CapabilitiesType", propOrder = { "filterCapabilities" })
+public class CapabilitiesType extends CapabilitiesBaseType
 {
 
     @XmlElement(name = "Filter_Capabilities", namespace = "http://www.opengis.net/ogc", required = true)
@@ -54,24 +52,22 @@ public class CapabilitiesType
     /**
      * Gets the value of the filterCapabilities property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FilterCapabilities }
-     *     
+     * @return possible object is {@link FilterCapabilities }
+     * 
      */
-    public FilterCapabilities getFilterCapabilities() {
+    public FilterCapabilities getFilterCapabilities()
+    {
         return filterCapabilities;
     }
 
     /**
      * Sets the value of the filterCapabilities property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FilterCapabilities }
-     *     
+     * @param value allowed object is {@link FilterCapabilities }
+     * 
      */
-    public void setFilterCapabilities(FilterCapabilities value) {
+    public void setFilterCapabilities(FilterCapabilities value)
+    {
         this.filterCapabilities = value;
     }
 

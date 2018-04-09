@@ -59,7 +59,7 @@ public class WhatsNewPlugin extends PluginAdapter
 
     /** The web panel. */
     private WebPanel myWebPanel;
-    
+
     /** The toolbox. */
     private Toolbox myToolbox;
 
@@ -209,7 +209,7 @@ public class WhatsNewPlugin extends PluginAdapter
 
         myPrevButton = new JButton("Previous");
         myPrevButton.addActionListener(e -> updateDialog(--myCurrentIndex));
-        
+
         final JButton autoProxyWizardButton = new JButton("Run Auto-Proxy Wizard");
         autoProxyWizardButton.addActionListener(e ->
         {
@@ -238,7 +238,7 @@ public class WhatsNewPlugin extends PluginAdapter
         gbc.weightx = 1.;
         gbc.anchor = GridBagConstraints.WEST;
         buttonPanel.add(myPrevButton, gbc);
-        buttonPanel.add(autoProxyWizardButton,gbc);
+        buttonPanel.add(autoProxyWizardButton, gbc);
         gbc.anchor = GridBagConstraints.CENTER;
         buttonPanel.add(closeButton, gbc);
         gbc.anchor = GridBagConstraints.EAST;

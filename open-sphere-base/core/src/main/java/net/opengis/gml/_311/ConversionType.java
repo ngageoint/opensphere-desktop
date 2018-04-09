@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,15 +15,22 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A concrete operation on coordinates that does not include any change of Datum. The best-known example of a coordinate conversion is a map projection. The parameters describing coordinate conversions are defined rather than empirically derived. Note that some conversions have no parameters.
+ * A concrete operation on coordinates that does not include any change of
+ * Datum. The best-known example of a coordinate conversion is a map projection.
+ * The parameters describing coordinate conversions are defined rather than
+ * empirically derived. Note that some conversions have no parameters.
  * 
- * This concrete complexType can be used with all operation methods, without using an Application Schema that defines operation-method-specialized element names and contents, especially for methods with only one Conversion instance. 
+ * This concrete complexType can be used with all operation methods, without
+ * using an Application Schema that defines operation-method-specialized element
+ * names and contents, especially for methods with only one Conversion instance.
  * 
- * <p>Java class for ConversionType complex type.
+ * <p>
+ * Java class for ConversionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ConversionType">
@@ -42,55 +48,53 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ConversionType", propOrder = {
-    "usesMethod",
-    "usesValue"
-})
-public class ConversionType
-    extends AbstractGeneralConversionType
+@XmlType(name = "ConversionType", propOrder = { "usesMethod", "usesValue" })
+public class ConversionType extends AbstractGeneralConversionType
 {
 
     @XmlElement(required = true)
     protected OperationMethodRefType usesMethod;
+
     protected List<ParameterValueType> usesValue;
 
     /**
      * Gets the value of the usesMethod property.
      * 
-     * @return
-     *     possible object is
-     *     {@link OperationMethodRefType }
-     *     
+     * @return possible object is {@link OperationMethodRefType }
+     * 
      */
-    public OperationMethodRefType getUsesMethod() {
+    public OperationMethodRefType getUsesMethod()
+    {
         return usesMethod;
     }
 
     /**
      * Sets the value of the usesMethod property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link OperationMethodRefType }
-     *     
+     * @param value allowed object is {@link OperationMethodRefType }
+     * 
      */
-    public void setUsesMethod(OperationMethodRefType value) {
+    public void setUsesMethod(OperationMethodRefType value)
+    {
         this.usesMethod = value;
     }
 
     /**
-     * Unordered list of composition associations to the set of parameter values used by this conversion operation. Gets the value of the usesValue property.
+     * Unordered list of composition associations to the set of parameter values
+     * used by this conversion operation. Gets the value of the usesValue
+     * property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the usesValue property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the usesValue property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getUsesValue().add(newItem);
+     * getUsesValue().add(newItem);
      * </pre>
      * 
      * 
@@ -100,8 +104,10 @@ public class ConversionType
      * 
      * 
      */
-    public List<ParameterValueType> getUsesValue() {
-        if (usesValue == null) {
+    public List<ParameterValueType> getUsesValue()
+    {
+        if (usesValue == null)
+        {
             usesValue = new ArrayList<ParameterValueType>();
         }
         return this.usesValue;

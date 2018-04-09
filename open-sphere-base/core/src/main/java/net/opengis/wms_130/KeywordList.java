@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:41 PM MST 
 //
 
-
 package net.opengis.wms_130;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -38,11 +39,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "keyword"
-})
+@XmlType(name = "", propOrder = { "keyword" })
 @XmlRootElement(name = "KeywordList")
-public class KeywordList {
+public class KeywordList
+{
 
     @XmlElement(name = "Keyword")
     protected List<Keyword> keyword;
@@ -51,26 +51,28 @@ public class KeywordList {
      * Gets the value of the keyword property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the keyword property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the keyword property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getKeyword().add(newItem);
+     * getKeyword().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Keyword }
+     * Objects of the following type(s) are allowed in the list {@link Keyword }
      * 
      * 
      */
-    public List<Keyword> getKeyword() {
-        if (keyword == null) {
+    public List<Keyword> getKeyword()
+    {
+        if (keyword == null)
+        {
             keyword = new ArrayList<Keyword>();
         }
         return this.keyword;

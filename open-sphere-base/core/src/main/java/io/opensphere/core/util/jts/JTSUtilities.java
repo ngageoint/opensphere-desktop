@@ -692,6 +692,7 @@ public final class JTSUtilities
 
     /**
      * Confine longitude to the interval [-180, 180).
+     * 
      * @param p bla
      * @return bla
      */
@@ -713,6 +714,7 @@ public final class JTSUtilities
 
     /**
      * Confine longitude to the interval [-180, 180).
+     * 
      * @param coords bla
      * @param close use true if the endpoints much match
      * @return bla
@@ -738,6 +740,7 @@ public final class JTSUtilities
 
     /**
      * Confine longitude to the interval [-180, 180).
+     * 
      * @param c bla
      * @return bla
      */
@@ -753,6 +756,7 @@ public final class JTSUtilities
     /**
      * Adjusts the vertices of a LineString much as the namesake method for
      * Polygon.
+     * 
      * @param ln a LineString
      * @return an adjusted LineString
      */
@@ -767,9 +771,10 @@ public final class JTSUtilities
 
     /**
      * Adjusts the vertices of a Polygon that may span the antimeridian in
-     * degrees of longitude.  The result is a new Polygon that is geometrically
-     * representative of the original but whose longitude coordinates may not
-     * be confined to a specific 360-degree interval.
+     * degrees of longitude. The result is a new Polygon that is geometrically
+     * representative of the original but whose longitude coordinates may not be
+     * confined to a specific 360-degree interval.
+     * 
      * @param p the Polygon
      * @return the modified Polygon
      */
@@ -778,7 +783,7 @@ public final class JTSUtilities
         GeometryFactory fact = new GeometryFactory();
         Coordinate[] ex = joinLon(p.getExteriorRing().getCoordinates(), true);
         int nHole = p.getNumInteriorRing();
-        LinearRing[]  holes = new LinearRing[nHole];
+        LinearRing[] holes = new LinearRing[nHole];
         for (int i = 0; i < nHole; i++)
         {
             holes[i] = fact.createLinearRing(joinLon(p.getInteriorRingN(i).getCoordinates(), ex[0], true));
@@ -788,6 +793,7 @@ public final class JTSUtilities
 
     /**
      * As the namesake but with no external point of reference.
+     * 
      * @param coords set of points
      * @param close use true if the endpoints much match
      * @return adjusted points
@@ -798,8 +804,9 @@ public final class JTSUtilities
     }
 
     /**
-     * Adjust a set of points to be in a contiguous region of longitude with
-     * the specified origin point.
+     * Adjust a set of points to be in a contiguous region of longitude with the
+     * specified origin point.
+     * 
      * @param coords set of points
      * @param origin origin point
      * @param close use true if the endpoints much match
@@ -830,10 +837,11 @@ public final class JTSUtilities
     /**
      * Given a starting point as (lon, lat, alt) and an ending point, calculate
      * an equivalent ending point such that the difference in longitude always
-     * lies in the half-open interval [-180, 180).  If the original ending
-     * point already satisfies the desired condition, then it is returned
-     * unmodified; otherwise a new Coordinate with the altered longitude value
-     * is created and returned.
+     * lies in the half-open interval [-180, 180). If the original ending point
+     * already satisfies the desired condition, then it is returned unmodified;
+     * otherwise a new Coordinate with the altered longitude value is created
+     * and returned.
+     * 
      * @param c0 a starting point with longitude in degrees
      * @param c1 an ending point with longitude in degrees
      * @return see above
@@ -851,6 +859,7 @@ public final class JTSUtilities
     /**
      * Convert a longitude value in degrees to an equivalent value that is in
      * the half-open interval [-180, 180).
+     * 
      * @param x longitude in degrees
      * @return see above
      */

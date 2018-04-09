@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -41,226 +42,208 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "geometry",
-    "opacity",
-    "channelSelection",
-    "overlapBehavior",
-    "colorMap",
-    "contrastEnhancement",
-    "shadedRelief",
-    "imageOutline"
-})
-public class RasterSymbolizer
-    extends SymbolizerType
+@XmlType(name = "", propOrder = { "geometry", "opacity", "channelSelection", "overlapBehavior", "colorMap", "contrastEnhancement",
+    "shadedRelief", "imageOutline" })
+public class RasterSymbolizer extends SymbolizerType
 {
 
     @XmlElement(name = "Geometry")
     protected Geometry geometry;
+
     @XmlElement(name = "Opacity")
     protected ParameterValueType opacity;
+
     @XmlElement(name = "ChannelSelection")
     protected ChannelSelection channelSelection;
+
     @XmlElement(name = "OverlapBehavior")
     protected OverlapBehavior overlapBehavior;
+
     @XmlElement(name = "ColorMap")
     protected ColorMap colorMap;
+
     @XmlElement(name = "ContrastEnhancement")
     protected ContrastEnhancement contrastEnhancement;
+
     @XmlElement(name = "ShadedRelief")
     protected ShadedRelief shadedRelief;
+
     @XmlElement(name = "ImageOutline")
     protected ImageOutline imageOutline;
 
     /**
      * Gets the value of the geometry property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Geometry }
-     *     
+     * @return possible object is {@link Geometry }
+     * 
      */
-    public Geometry getGeometry() {
+    public Geometry getGeometry()
+    {
         return geometry;
     }
 
     /**
      * Sets the value of the geometry property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Geometry }
-     *     
+     * @param value allowed object is {@link Geometry }
+     * 
      */
-    public void setGeometry(Geometry value) {
+    public void setGeometry(Geometry value)
+    {
         this.geometry = value;
     }
 
     /**
      * Gets the value of the opacity property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ParameterValueType }
-     *     
+     * @return possible object is {@link ParameterValueType }
+     * 
      */
-    public ParameterValueType getOpacity() {
+    public ParameterValueType getOpacity()
+    {
         return opacity;
     }
 
     /**
      * Sets the value of the opacity property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ParameterValueType }
-     *     
+     * @param value allowed object is {@link ParameterValueType }
+     * 
      */
-    public void setOpacity(ParameterValueType value) {
+    public void setOpacity(ParameterValueType value)
+    {
         this.opacity = value;
     }
 
     /**
      * Gets the value of the channelSelection property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ChannelSelection }
-     *     
+     * @return possible object is {@link ChannelSelection }
+     * 
      */
-    public ChannelSelection getChannelSelection() {
+    public ChannelSelection getChannelSelection()
+    {
         return channelSelection;
     }
 
     /**
      * Sets the value of the channelSelection property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ChannelSelection }
-     *     
+     * @param value allowed object is {@link ChannelSelection }
+     * 
      */
-    public void setChannelSelection(ChannelSelection value) {
+    public void setChannelSelection(ChannelSelection value)
+    {
         this.channelSelection = value;
     }
 
     /**
      * Gets the value of the overlapBehavior property.
      * 
-     * @return
-     *     possible object is
-     *     {@link OverlapBehavior }
-     *     
+     * @return possible object is {@link OverlapBehavior }
+     * 
      */
-    public OverlapBehavior getOverlapBehavior() {
+    public OverlapBehavior getOverlapBehavior()
+    {
         return overlapBehavior;
     }
 
     /**
      * Sets the value of the overlapBehavior property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link OverlapBehavior }
-     *     
+     * @param value allowed object is {@link OverlapBehavior }
+     * 
      */
-    public void setOverlapBehavior(OverlapBehavior value) {
+    public void setOverlapBehavior(OverlapBehavior value)
+    {
         this.overlapBehavior = value;
     }
 
     /**
      * Gets the value of the colorMap property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ColorMap }
-     *     
+     * @return possible object is {@link ColorMap }
+     * 
      */
-    public ColorMap getColorMap() {
+    public ColorMap getColorMap()
+    {
         return colorMap;
     }
 
     /**
      * Sets the value of the colorMap property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ColorMap }
-     *     
+     * @param value allowed object is {@link ColorMap }
+     * 
      */
-    public void setColorMap(ColorMap value) {
+    public void setColorMap(ColorMap value)
+    {
         this.colorMap = value;
     }
 
     /**
      * Gets the value of the contrastEnhancement property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ContrastEnhancement }
-     *     
+     * @return possible object is {@link ContrastEnhancement }
+     * 
      */
-    public ContrastEnhancement getContrastEnhancement() {
+    public ContrastEnhancement getContrastEnhancement()
+    {
         return contrastEnhancement;
     }
 
     /**
      * Sets the value of the contrastEnhancement property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ContrastEnhancement }
-     *     
+     * @param value allowed object is {@link ContrastEnhancement }
+     * 
      */
-    public void setContrastEnhancement(ContrastEnhancement value) {
+    public void setContrastEnhancement(ContrastEnhancement value)
+    {
         this.contrastEnhancement = value;
     }
 
     /**
      * Gets the value of the shadedRelief property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ShadedRelief }
-     *     
+     * @return possible object is {@link ShadedRelief }
+     * 
      */
-    public ShadedRelief getShadedRelief() {
+    public ShadedRelief getShadedRelief()
+    {
         return shadedRelief;
     }
 
     /**
      * Sets the value of the shadedRelief property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ShadedRelief }
-     *     
+     * @param value allowed object is {@link ShadedRelief }
+     * 
      */
-    public void setShadedRelief(ShadedRelief value) {
+    public void setShadedRelief(ShadedRelief value)
+    {
         this.shadedRelief = value;
     }
 
     /**
      * Gets the value of the imageOutline property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ImageOutline }
-     *     
+     * @return possible object is {@link ImageOutline }
+     * 
      */
-    public ImageOutline getImageOutline() {
+    public ImageOutline getImageOutline()
+    {
         return imageOutline;
     }
 
     /**
      * Sets the value of the imageOutline property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ImageOutline }
-     *     
+     * @param value allowed object is {@link ImageOutline }
+     * 
      */
-    public void setImageOutline(ImageOutline value) {
+    public void setImageOutline(ImageOutline value)
+    {
         this.imageOutline = value;
     }
 

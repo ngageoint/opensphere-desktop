@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:41 PM MST 
 //
 
-
 package net.opengis.wms_130;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -36,63 +37,58 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "get",
-    "post"
-})
+@XmlType(name = "", propOrder = { "get", "post" })
 @XmlRootElement(name = "HTTP")
-public class HTTP {
+public class HTTP
+{
 
     @XmlElement(name = "Get", required = true)
     protected Get get;
+
     @XmlElement(name = "Post")
     protected Post post;
 
     /**
      * Gets the value of the get property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Get }
-     *     
+     * @return possible object is {@link Get }
+     * 
      */
-    public Get getGet() {
+    public Get getGet()
+    {
         return get;
     }
 
     /**
      * Sets the value of the get property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Get }
-     *     
+     * @param value allowed object is {@link Get }
+     * 
      */
-    public void setGet(Get value) {
+    public void setGet(Get value)
+    {
         this.get = value;
     }
 
     /**
      * Gets the value of the post property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Post }
-     *     
+     * @return possible object is {@link Post }
+     * 
      */
-    public Post getPost() {
+    public Post getPost()
+    {
         return post;
     }
 
     /**
      * Sets the value of the post property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Post }
-     *     
+     * @param value allowed object is {@link Post }
+     * 
      */
-    public void setPost(Post value) {
+    public void setPost(Post value)
+    {
         this.post = value;
     }
 

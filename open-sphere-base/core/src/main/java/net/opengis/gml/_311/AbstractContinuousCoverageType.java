@@ -5,20 +5,23 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A continuous coverage as defined in ISO 19123 is a coverage that can return different values for the same feature attribute at different direct positions within a single spatiotemporal object in its spatiotemporal domain
+ * A continuous coverage as defined in ISO 19123 is a coverage that can return
+ * different values for the same feature attribute at different direct positions
+ * within a single spatiotemporal object in its spatiotemporal domain
  * 
- * <p>Java class for AbstractContinuousCoverageType complex type.
+ * <p>
+ * Java class for AbstractContinuousCoverageType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractContinuousCoverageType">
@@ -35,11 +38,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractContinuousCoverageType", propOrder = {
-    "coverageFunction"
-})
-public abstract class AbstractContinuousCoverageType
-    extends AbstractCoverageType
+@XmlType(name = "AbstractContinuousCoverageType", propOrder = { "coverageFunction" })
+public abstract class AbstractContinuousCoverageType extends AbstractCoverageType
 {
 
     protected CoverageFunctionType coverageFunction;
@@ -47,24 +47,22 @@ public abstract class AbstractContinuousCoverageType
     /**
      * Gets the value of the coverageFunction property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CoverageFunctionType }
-     *     
+     * @return possible object is {@link CoverageFunctionType }
+     * 
      */
-    public CoverageFunctionType getCoverageFunction() {
+    public CoverageFunctionType getCoverageFunction()
+    {
         return coverageFunction;
     }
 
     /**
      * Sets the value of the coverageFunction property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CoverageFunctionType }
-     *     
+     * @param value allowed object is {@link CoverageFunctionType }
+     * 
      */
-    public void setCoverageFunction(CoverageFunctionType value) {
+    public void setCoverageFunction(CoverageFunctionType value)
+    {
         this.coverageFunction = value;
     }
 

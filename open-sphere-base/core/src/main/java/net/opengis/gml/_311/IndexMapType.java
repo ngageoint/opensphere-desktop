@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.math.BigInteger;
@@ -18,13 +17,20 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Exends GridFunctionType with a lookUpTable.  This contains a list of indexes of members within the rangeSet corresponding with the members of the domainSet.  The domainSet is traversed in list order if it is enumerated explicitly, or in the order specified by a SequenceRule if the domain is an implicit set.    The length of the lookUpTable corresponds with the length of the subset of the domainSet for which the coverage is defined.
+ * Exends GridFunctionType with a lookUpTable. This contains a list of indexes
+ * of members within the rangeSet corresponding with the members of the
+ * domainSet. The domainSet is traversed in list order if it is enumerated
+ * explicitly, or in the order specified by a SequenceRule if the domain is an
+ * implicit set. The length of the lookUpTable corresponds with the length of
+ * the subset of the domainSet for which the coverage is defined.
  * 
- * <p>Java class for IndexMapType complex type.
+ * <p>
+ * Java class for IndexMapType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="IndexMapType">
@@ -41,11 +47,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "IndexMapType", propOrder = {
-    "lookUpTable"
-})
-public class IndexMapType
-    extends GridFunctionType
+@XmlType(name = "IndexMapType", propOrder = { "lookUpTable" })
+public class IndexMapType extends GridFunctionType
 {
 
     @XmlList
@@ -56,15 +59,16 @@ public class IndexMapType
      * Gets the value of the lookUpTable property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the lookUpTable property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the lookUpTable property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLookUpTable().add(newItem);
+     * getLookUpTable().add(newItem);
      * </pre>
      * 
      * 
@@ -74,8 +78,10 @@ public class IndexMapType
      * 
      * 
      */
-    public List<BigInteger> getLookUpTable() {
-        if (lookUpTable == null) {
+    public List<BigInteger> getLookUpTable()
+    {
+        if (lookUpTable == null)
+        {
             lookUpTable = new ArrayList<BigInteger>();
         }
         return this.lookUpTable;

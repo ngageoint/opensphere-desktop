@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for AbstractGeometryType complex type.
+ * <p>
+ * Java class for AbstractGeometryType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractGeometryType">
@@ -40,25 +41,17 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractGeometryType", propOrder = {
-    "abstractGeometrySimpleExtensionGroup",
-    "abstractGeometryObjectExtensionGroup"
-})
-@XmlSeeAlso({
-    LinearRingType.class,
-    PolygonType.class,
-    LineStringType.class,
-    ModelType.class,
-    PointType.class,
-    MultiGeometryType.class
-})
-public abstract class AbstractGeometryType
-    extends AbstractObjectType
+@XmlType(name = "AbstractGeometryType", propOrder = { "abstractGeometrySimpleExtensionGroup",
+    "abstractGeometryObjectExtensionGroup" })
+@XmlSeeAlso({ LinearRingType.class, PolygonType.class, LineStringType.class, ModelType.class, PointType.class,
+    MultiGeometryType.class })
+public abstract class AbstractGeometryType extends AbstractObjectType
 {
 
     @XmlElement(name = "AbstractGeometrySimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> abstractGeometrySimpleExtensionGroup;
+
     @XmlElement(name = "AbstractGeometryObjectExtensionGroup")
     protected List<AbstractObjectType> abstractGeometryObjectExtensionGroup;
 
@@ -66,36 +59,41 @@ public abstract class AbstractGeometryType
      * Gets the value of the abstractGeometrySimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractGeometrySimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractGeometrySimpleExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractGeometrySimpleExtensionGroup().add(newItem);
+     * getAbstractGeometrySimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getAbstractGeometrySimpleExtensionGroup() {
-        if (abstractGeometrySimpleExtensionGroup == null) {
+    public List<Object> getAbstractGeometrySimpleExtensionGroup()
+    {
+        if (abstractGeometrySimpleExtensionGroup == null)
+        {
             abstractGeometrySimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.abstractGeometrySimpleExtensionGroup;
     }
 
-    public boolean isSetAbstractGeometrySimpleExtensionGroup() {
-        return ((this.abstractGeometrySimpleExtensionGroup!= null)&&(!this.abstractGeometrySimpleExtensionGroup.isEmpty()));
+    public boolean isSetAbstractGeometrySimpleExtensionGroup()
+    {
+        return ((this.abstractGeometrySimpleExtensionGroup != null) && (!this.abstractGeometrySimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetAbstractGeometrySimpleExtensionGroup() {
+    public void unsetAbstractGeometrySimpleExtensionGroup()
+    {
         this.abstractGeometrySimpleExtensionGroup = null;
     }
 
@@ -103,15 +101,17 @@ public abstract class AbstractGeometryType
      * Gets the value of the abstractGeometryObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractGeometryObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractGeometryObjectExtensionGroup
+     * property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractGeometryObjectExtensionGroup().add(newItem);
+     * getAbstractGeometryObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -121,18 +121,22 @@ public abstract class AbstractGeometryType
      * 
      * 
      */
-    public List<AbstractObjectType> getAbstractGeometryObjectExtensionGroup() {
-        if (abstractGeometryObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getAbstractGeometryObjectExtensionGroup()
+    {
+        if (abstractGeometryObjectExtensionGroup == null)
+        {
             abstractGeometryObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.abstractGeometryObjectExtensionGroup;
     }
 
-    public boolean isSetAbstractGeometryObjectExtensionGroup() {
-        return ((this.abstractGeometryObjectExtensionGroup!= null)&&(!this.abstractGeometryObjectExtensionGroup.isEmpty()));
+    public boolean isSetAbstractGeometryObjectExtensionGroup()
+    {
+        return ((this.abstractGeometryObjectExtensionGroup != null) && (!this.abstractGeometryObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetAbstractGeometryObjectExtensionGroup() {
+    public void unsetAbstractGeometryObjectExtensionGroup()
+    {
         this.abstractGeometryObjectExtensionGroup = null;
     }
 

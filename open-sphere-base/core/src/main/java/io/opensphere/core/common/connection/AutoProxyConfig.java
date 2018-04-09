@@ -11,20 +11,20 @@ public class AutoProxyConfig
      */
     public enum AutoProxyType
     {
-        /**
-         * Connections should be made directly, without any proxies.
-         */
-        DIRECT,
+    /**
+     * Connections should be made directly, without any proxies.
+     */
+    DIRECT,
 
-        /**
-         * The specified proxy should be used.
-         */
-        PROXY,
+    /**
+     * The specified proxy should be used.
+     */
+    PROXY,
 
-        /**
-         * The specified SOCKS server should be used.
-         */
-        SOCKS
+    /**
+     * The specified SOCKS server should be used.
+     */
+    SOCKS
     }
 
     /**

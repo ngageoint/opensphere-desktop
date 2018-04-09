@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.ogc._100t;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,11 +15,13 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
- * <p>Java class for BinaryLogicOpType complex type.
+ * <p>
+ * Java class for BinaryLogicOpType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="BinaryLogicOpType">
@@ -51,18 +52,19 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "BinaryLogicOpType")
-public class BinaryLogicOpType
-    extends OriginalBinaryLogicOpType
+public class BinaryLogicOpType extends OriginalBinaryLogicOpType
 {
 
     @XmlAttribute(name = "description")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String description;
+
     @XmlAttribute(name = "namehint")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String namehint;
+
     @XmlAttribute(name = "hint")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
@@ -71,85 +73,82 @@ public class BinaryLogicOpType
     /**
      * Gets the value of the description property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
     /**
      * Sets the value of the description property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDescription(String value) {
+    public void setDescription(String value)
+    {
         this.description = value;
     }
 
-    public boolean isSetDescription() {
-        return (this.description!= null);
+    public boolean isSetDescription()
+    {
+        return (this.description != null);
     }
 
     /**
      * Gets the value of the namehint property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getNamehint() {
+    public String getNamehint()
+    {
         return namehint;
     }
 
     /**
      * Sets the value of the namehint property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setNamehint(String value) {
+    public void setNamehint(String value)
+    {
         this.namehint = value;
     }
 
-    public boolean isSetNamehint() {
-        return (this.namehint!= null);
+    public boolean isSetNamehint()
+    {
+        return (this.namehint != null);
     }
 
     /**
      * Gets the value of the hint property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHint() {
+    public String getHint()
+    {
         return hint;
     }
 
     /**
      * Sets the value of the hint property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHint(String value) {
+    public void setHint(String value)
+    {
         this.hint = value;
     }
 
-    public boolean isSetHint() {
-        return (this.hint!= null);
+    public boolean isSetHint()
+    {
+        return (this.hint != null);
     }
 
 }

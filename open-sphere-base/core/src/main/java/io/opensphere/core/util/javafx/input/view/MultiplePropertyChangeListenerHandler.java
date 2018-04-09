@@ -9,9 +9,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WeakChangeListener;
 
 /**
- * A handler designed as a clearing house for change events. Classes may register properties with this handler, which binds to the
- * property's {@link ObservableValue} reference with a String event name. When the property changes, a single event is propagated
- * to the registering class, allowing the class to react to the change.
+ * A handler designed as a clearing house for change events. Classes may
+ * register properties with this handler, which binds to the property's
+ * {@link ObservableValue} reference with a String event name. When the property
+ * changes, a single event is propagated to the registering class, allowing the
+ * class to react to the change.
  */
 public class MultiplePropertyChangeListenerHandler
 {
@@ -21,12 +23,14 @@ public class MultiplePropertyChangeListenerHandler
     private final Consumer<String> myPropertyChangedHandler;
 
     /**
-     * A change listener used to register for notifications of changes to the bound properties.
+     * A change listener used to register for notifications of changes to the
+     * bound properties.
      */
     private final ChangeListener<Object> myPropertyChangedListener;
 
     /**
-     * A weak change listener wrapping the {@link #myPropertyChangedListener} field.
+     * A weak change listener wrapping the {@link #myPropertyChangedListener}
+     * field.
      */
     private final WeakChangeListener<Object> myWeakPropertyChangedListener;
 
@@ -36,9 +40,11 @@ public class MultiplePropertyChangeListenerHandler
     private final Map<ObservableValue<?>, String> myPropertyReferenceMap = new HashMap<>();
 
     /**
-     * Creates a new property change listener, configured with the supplied callback.
+     * Creates a new property change listener, configured with the supplied
+     * callback.
      *
-     * @param pPropertyChangedHandler The callback through which property changes are handled.
+     * @param pPropertyChangedHandler The callback through which property
+     *            changes are handled.
      */
     public MultiplePropertyChangeListenerHandler(Consumer<String> pPropertyChangedHandler)
     {
@@ -49,10 +55,12 @@ public class MultiplePropertyChangeListenerHandler
     }
 
     /**
-     * Subclasses can invoke this method to register that we want to listen to property change events for the given property.
+     * Subclasses can invoke this method to register that we want to listen to
+     * property change events for the given property.
      *
      * @param pProperty the property to which to bind the listener handler.
-     * @param pChangeEventName the name of the event that will be propagated when the property changes.
+     * @param pChangeEventName the name of the event that will be propagated
+     *            when the property changes.
      */
     public final void registerChangeListener(ObservableValue<?> pProperty, String pChangeEventName)
     {

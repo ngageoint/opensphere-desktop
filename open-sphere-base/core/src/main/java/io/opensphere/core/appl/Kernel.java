@@ -31,8 +31,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXBusyLabel;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.opensphere.core.Notify;
 import io.opensphere.core.Plugin;
@@ -178,8 +176,7 @@ public class Kernel
                         ApplicationLifecycleEvent.publishEvent(myToolbox.getEventManager(),
                                 ApplicationLifecycleEvent.Stage.MAIN_FRAME_VISIBLE);
 
-                        if ("x86".equals(System.getProperty("os.arch"))
-                                && StringUtils.isNotEmpty(System.getenv("ProgramW6432")))
+                        if ("x86".equals(System.getProperty("os.arch")) && StringUtils.isNotEmpty(System.getenv("ProgramW6432")))
                         {
                             JOptionPane.showMessageDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
                                     "<html>You are running with 32-bit Java on a 64-bit operating system. "
@@ -400,7 +397,7 @@ public class Kernel
     private void initJavaFx()
     {
         Platform.setImplicitExit(false);
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
     }

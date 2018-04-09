@@ -104,7 +104,8 @@ class MainFrameInit
      */
     public static String getMainFrameTitle()
     {
-        return StringUtilities.expandProperties(System.getProperty("opensphere.frame.title", "Title not set"), System.getProperties());
+        return StringUtilities.expandProperties(System.getProperty("opensphere.frame.title", "Title not set"),
+                System.getProperties());
     }
 
     /**

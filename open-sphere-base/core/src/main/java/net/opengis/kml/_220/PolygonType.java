@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for PolygonType complex type.
+ * <p>
+ * Java class for PolygonType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="PolygonType">
@@ -46,160 +47,157 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PolygonType", propOrder = {
-    "extrude",
-    "tessellate",
-    "altitudeModeGroup",
-    "outerBoundaryIs",
-    "innerBoundaryIs",
-    "polygonSimpleExtensionGroup",
-    "polygonObjectExtensionGroup"
-})
-public class PolygonType
-    extends AbstractGeometryType
+@XmlType(name = "PolygonType", propOrder = { "extrude", "tessellate", "altitudeModeGroup", "outerBoundaryIs", "innerBoundaryIs",
+    "polygonSimpleExtensionGroup", "polygonObjectExtensionGroup" })
+public class PolygonType extends AbstractGeometryType
 {
 
     @XmlElement(defaultValue = "0")
     protected Boolean extrude;
+
     @XmlElement(defaultValue = "0")
     protected Boolean tessellate;
+
     @XmlElementRef(name = "altitudeModeGroup", namespace = "http://www.opengis.net/kml/2.2", type = JAXBElement.class, required = false)
     protected JAXBElement<?> altitudeModeGroup;
+
     protected BoundaryType outerBoundaryIs;
+
     protected List<BoundaryType> innerBoundaryIs;
+
     @XmlElement(name = "PolygonSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> polygonSimpleExtensionGroup;
+
     @XmlElement(name = "PolygonObjectExtensionGroup")
     protected List<AbstractObjectType> polygonObjectExtensionGroup;
 
     /**
      * Gets the value of the extrude property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isExtrude() {
+    public Boolean isExtrude()
+    {
         return extrude;
     }
 
     /**
      * Sets the value of the extrude property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setExtrude(Boolean value) {
+    public void setExtrude(Boolean value)
+    {
         this.extrude = value;
     }
 
-    public boolean isSetExtrude() {
-        return (this.extrude!= null);
+    public boolean isSetExtrude()
+    {
+        return (this.extrude != null);
     }
 
     /**
      * Gets the value of the tessellate property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isTessellate() {
+    public Boolean isTessellate()
+    {
         return tessellate;
     }
 
     /**
      * Sets the value of the tessellate property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setTessellate(Boolean value) {
+    public void setTessellate(Boolean value)
+    {
         this.tessellate = value;
     }
 
-    public boolean isSetTessellate() {
-        return (this.tessellate!= null);
+    public boolean isSetTessellate()
+    {
+        return (this.tessellate != null);
     }
 
     /**
      * Gets the value of the altitudeModeGroup property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link AltitudeModeEnumType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link Object }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement
+     *         }{@code <}{@link AltitudeModeEnumType }{@code >}
+     *         {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * 
      */
-    public JAXBElement<?> getAltitudeModeGroup() {
+    public JAXBElement<?> getAltitudeModeGroup()
+    {
         return altitudeModeGroup;
     }
 
     /**
      * Sets the value of the altitudeModeGroup property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link AltitudeModeEnumType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link Object }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link AltitudeModeEnumType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * 
      */
-    public void setAltitudeModeGroup(JAXBElement<?> value) {
+    public void setAltitudeModeGroup(JAXBElement<?> value)
+    {
         this.altitudeModeGroup = value;
     }
 
-    public boolean isSetAltitudeModeGroup() {
-        return (this.altitudeModeGroup!= null);
+    public boolean isSetAltitudeModeGroup()
+    {
+        return (this.altitudeModeGroup != null);
     }
 
     /**
      * Gets the value of the outerBoundaryIs property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BoundaryType }
-     *     
+     * @return possible object is {@link BoundaryType }
+     * 
      */
-    public BoundaryType getOuterBoundaryIs() {
+    public BoundaryType getOuterBoundaryIs()
+    {
         return outerBoundaryIs;
     }
 
     /**
      * Sets the value of the outerBoundaryIs property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BoundaryType }
-     *     
+     * @param value allowed object is {@link BoundaryType }
+     * 
      */
-    public void setOuterBoundaryIs(BoundaryType value) {
+    public void setOuterBoundaryIs(BoundaryType value)
+    {
         this.outerBoundaryIs = value;
     }
 
-    public boolean isSetOuterBoundaryIs() {
-        return (this.outerBoundaryIs!= null);
+    public boolean isSetOuterBoundaryIs()
+    {
+        return (this.outerBoundaryIs != null);
     }
 
     /**
      * Gets the value of the innerBoundaryIs property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the innerBoundaryIs property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the innerBoundaryIs property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getInnerBoundaryIs().add(newItem);
+     * getInnerBoundaryIs().add(newItem);
      * </pre>
      * 
      * 
@@ -209,18 +207,22 @@ public class PolygonType
      * 
      * 
      */
-    public List<BoundaryType> getInnerBoundaryIs() {
-        if (innerBoundaryIs == null) {
+    public List<BoundaryType> getInnerBoundaryIs()
+    {
+        if (innerBoundaryIs == null)
+        {
             innerBoundaryIs = new ArrayList<BoundaryType>();
         }
         return this.innerBoundaryIs;
     }
 
-    public boolean isSetInnerBoundaryIs() {
-        return ((this.innerBoundaryIs!= null)&&(!this.innerBoundaryIs.isEmpty()));
+    public boolean isSetInnerBoundaryIs()
+    {
+        return ((this.innerBoundaryIs != null) && (!this.innerBoundaryIs.isEmpty()));
     }
 
-    public void unsetInnerBoundaryIs() {
+    public void unsetInnerBoundaryIs()
+    {
         this.innerBoundaryIs = null;
     }
 
@@ -228,36 +230,40 @@ public class PolygonType
      * Gets the value of the polygonSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the polygonSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the polygonSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPolygonSimpleExtensionGroup().add(newItem);
+     * getPolygonSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getPolygonSimpleExtensionGroup() {
-        if (polygonSimpleExtensionGroup == null) {
+    public List<Object> getPolygonSimpleExtensionGroup()
+    {
+        if (polygonSimpleExtensionGroup == null)
+        {
             polygonSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.polygonSimpleExtensionGroup;
     }
 
-    public boolean isSetPolygonSimpleExtensionGroup() {
-        return ((this.polygonSimpleExtensionGroup!= null)&&(!this.polygonSimpleExtensionGroup.isEmpty()));
+    public boolean isSetPolygonSimpleExtensionGroup()
+    {
+        return ((this.polygonSimpleExtensionGroup != null) && (!this.polygonSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetPolygonSimpleExtensionGroup() {
+    public void unsetPolygonSimpleExtensionGroup()
+    {
         this.polygonSimpleExtensionGroup = null;
     }
 
@@ -265,15 +271,16 @@ public class PolygonType
      * Gets the value of the polygonObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the polygonObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the polygonObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPolygonObjectExtensionGroup().add(newItem);
+     * getPolygonObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -283,18 +290,22 @@ public class PolygonType
      * 
      * 
      */
-    public List<AbstractObjectType> getPolygonObjectExtensionGroup() {
-        if (polygonObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getPolygonObjectExtensionGroup()
+    {
+        if (polygonObjectExtensionGroup == null)
+        {
             polygonObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.polygonObjectExtensionGroup;
     }
 
-    public boolean isSetPolygonObjectExtensionGroup() {
-        return ((this.polygonObjectExtensionGroup!= null)&&(!this.polygonObjectExtensionGroup.isEmpty()));
+    public boolean isSetPolygonObjectExtensionGroup()
+    {
+        return ((this.polygonObjectExtensionGroup != null) && (!this.polygonObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetPolygonObjectExtensionGroup() {
+    public void unsetPolygonObjectExtensionGroup()
+    {
         this.polygonObjectExtensionGroup = null;
     }
 

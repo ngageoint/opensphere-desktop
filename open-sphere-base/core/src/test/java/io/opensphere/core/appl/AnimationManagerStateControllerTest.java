@@ -648,8 +648,7 @@ public class AnimationManagerStateControllerTest
     public void testV4Incomplete()
     {
         TestAnimationManager animationManager = new TestAnimationManager();
-        AnimationManagerStateController controller = new AnimationManagerStateController(animationManager,
-                new TestTimeManager());
+        AnimationManagerStateController controller = new AnimationManagerStateController(animationManager, new TestTimeManager());
 
         // Test completely empty
         StateType state = new StateType();

@@ -68,7 +68,8 @@ public final class CollectionUtilities
      * @param <T> the type of the items
      * @param items the collection to add to
      * @param toAdd the items to possibly add
-     * @param equalityPredicate the predicate to determine equality with the items
+     * @param equalityPredicate the predicate to determine equality with the
+     *            items
      */
     public static <T> void addIfNotContained(Collection<T> items, Collection<? extends T> toAdd,
             BiPredicate<? super T, ? super T> equalityPredicate)
@@ -85,7 +86,8 @@ public final class CollectionUtilities
      * @param <T> the type of the items
      * @param items the collection
      * @param item the item to possibly add
-     * @param equalityPredicate the predicate to determine equality with the items
+     * @param equalityPredicate the predicate to determine equality with the
+     *            items
      */
     public static <T> void addIfNotContained(Collection<T> items, T item, BiPredicate<? super T, ? super T> equalityPredicate)
     {
@@ -96,7 +98,8 @@ public final class CollectionUtilities
     }
 
     /**
-     * Adds the item to the collection if it's not already contained in the collection.
+     * Adds the item to the collection if it's not already contained in the
+     * collection.
      *
      * @param <T> the type of the items
      * @param items the collection

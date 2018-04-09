@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for LatLonBoxType complex type.
+ * <p>
+ * Java class for LatLonBoxType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LatLonBoxType">
@@ -40,85 +41,85 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LatLonBoxType", propOrder = {
-    "rotation",
-    "latLonBoxSimpleExtensionGroup",
-    "latLonBoxObjectExtensionGroup"
-})
-public class LatLonBoxType
-    extends AbstractLatLonBoxType
+@XmlType(name = "LatLonBoxType", propOrder = { "rotation", "latLonBoxSimpleExtensionGroup", "latLonBoxObjectExtensionGroup" })
+public class LatLonBoxType extends AbstractLatLonBoxType
 {
 
     @XmlElement(defaultValue = "0.0")
     protected Double rotation;
+
     @XmlElement(name = "LatLonBoxSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> latLonBoxSimpleExtensionGroup;
+
     @XmlElement(name = "LatLonBoxObjectExtensionGroup")
     protected List<AbstractObjectType> latLonBoxObjectExtensionGroup;
 
     /**
      * Gets the value of the rotation property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getRotation() {
+    public Double getRotation()
+    {
         return rotation;
     }
 
     /**
      * Sets the value of the rotation property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setRotation(Double value) {
+    public void setRotation(Double value)
+    {
         this.rotation = value;
     }
 
-    public boolean isSetRotation() {
-        return (this.rotation!= null);
+    public boolean isSetRotation()
+    {
+        return (this.rotation != null);
     }
 
     /**
      * Gets the value of the latLonBoxSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the latLonBoxSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the latLonBoxSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLatLonBoxSimpleExtensionGroup().add(newItem);
+     * getLatLonBoxSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getLatLonBoxSimpleExtensionGroup() {
-        if (latLonBoxSimpleExtensionGroup == null) {
+    public List<Object> getLatLonBoxSimpleExtensionGroup()
+    {
+        if (latLonBoxSimpleExtensionGroup == null)
+        {
             latLonBoxSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.latLonBoxSimpleExtensionGroup;
     }
 
-    public boolean isSetLatLonBoxSimpleExtensionGroup() {
-        return ((this.latLonBoxSimpleExtensionGroup!= null)&&(!this.latLonBoxSimpleExtensionGroup.isEmpty()));
+    public boolean isSetLatLonBoxSimpleExtensionGroup()
+    {
+        return ((this.latLonBoxSimpleExtensionGroup != null) && (!this.latLonBoxSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetLatLonBoxSimpleExtensionGroup() {
+    public void unsetLatLonBoxSimpleExtensionGroup()
+    {
         this.latLonBoxSimpleExtensionGroup = null;
     }
 
@@ -126,15 +127,16 @@ public class LatLonBoxType
      * Gets the value of the latLonBoxObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the latLonBoxObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the latLonBoxObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLatLonBoxObjectExtensionGroup().add(newItem);
+     * getLatLonBoxObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -144,18 +146,22 @@ public class LatLonBoxType
      * 
      * 
      */
-    public List<AbstractObjectType> getLatLonBoxObjectExtensionGroup() {
-        if (latLonBoxObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getLatLonBoxObjectExtensionGroup()
+    {
+        if (latLonBoxObjectExtensionGroup == null)
+        {
             latLonBoxObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.latLonBoxObjectExtensionGroup;
     }
 
-    public boolean isSetLatLonBoxObjectExtensionGroup() {
-        return ((this.latLonBoxObjectExtensionGroup!= null)&&(!this.latLonBoxObjectExtensionGroup.isEmpty()));
+    public boolean isSetLatLonBoxObjectExtensionGroup()
+    {
+        return ((this.latLonBoxObjectExtensionGroup != null) && (!this.latLonBoxObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetLatLonBoxObjectExtensionGroup() {
+    public void unsetLatLonBoxObjectExtensionGroup()
+    {
         this.latLonBoxObjectExtensionGroup = null;
     }
 

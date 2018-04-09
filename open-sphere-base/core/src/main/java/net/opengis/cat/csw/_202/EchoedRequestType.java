@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,13 +14,15 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.w3c.dom.Element;
 
-
 /**
  * Includes a copy of the request message body.
  * 
- * <p>Java class for EchoedRequestType complex type.
+ * <p>
+ * Java class for EchoedRequestType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="EchoedRequestType">
@@ -38,10 +39,9 @@ import org.w3c.dom.Element;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "EchoedRequestType", propOrder = {
-    "any"
-})
-public class EchoedRequestType {
+@XmlType(name = "EchoedRequestType", propOrder = { "any" })
+public class EchoedRequestType
+{
 
     @XmlAnyElement(lax = true)
     protected Object any;
@@ -49,26 +49,22 @@ public class EchoedRequestType {
     /**
      * Gets the value of the any property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Element }
-     *     {@link Object }
-     *     
+     * @return possible object is {@link Element } {@link Object }
+     * 
      */
-    public Object getAny() {
+    public Object getAny()
+    {
         return any;
     }
 
     /**
      * Sets the value of the any property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Element }
-     *     {@link Object }
-     *     
+     * @param value allowed object is {@link Element } {@link Object }
+     * 
      */
-    public void setAny(Object value) {
+    public void setAny(Object value)
+    {
         this.any = value;
     }
 

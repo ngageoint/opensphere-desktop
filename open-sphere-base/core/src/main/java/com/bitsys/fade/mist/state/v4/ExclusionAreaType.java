@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -19,16 +18,18 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import net.opengis.kml._220.PolygonType;
 
-
 /**
  * 
- *         Defines a polygonal region from which data is excluded during query 
- *         operations.
- *       
+ * Defines a polygonal region from which data is excluded during query
+ * operations.
  * 
- * <p>Java class for ExclusionAreaType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for ExclusionAreaType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ExclusionAreaType">
@@ -48,21 +49,22 @@ import net.opengis.kml._220.PolygonType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ExclusionAreaType", propOrder = {
-    "polygon",
-    "layer"
-})
-public class ExclusionAreaType {
+@XmlType(name = "ExclusionAreaType", propOrder = { "polygon", "layer" })
+public class ExclusionAreaType
+{
 
     @XmlElement(name = "Polygon", namespace = "http://www.opengis.net/kml/2.2", required = true)
     protected PolygonType polygon;
+
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String layer;
+
     @XmlAttribute(name = "id", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String id;
+
     @XmlAttribute(name = "title", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
@@ -70,116 +72,112 @@ public class ExclusionAreaType {
 
     /**
      * 
-     *             The polygon from which data will be excluded.
-     *           
+     * The polygon from which data will be excluded.
      * 
-     * @return
-     *     possible object is
-     *     {@link PolygonType }
-     *     
+     * 
+     * @return possible object is {@link PolygonType }
+     * 
      */
-    public PolygonType getPolygon() {
+    public PolygonType getPolygon()
+    {
         return polygon;
     }
 
     /**
      * Sets the value of the polygon property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PolygonType }
-     *     
+     * @param value allowed object is {@link PolygonType }
+     * 
      */
-    public void setPolygon(PolygonType value) {
+    public void setPolygon(PolygonType value)
+    {
         this.polygon = value;
     }
 
-    public boolean isSetPolygon() {
-        return (this.polygon!= null);
+    public boolean isSetPolygon()
+    {
+        return (this.polygon != null);
     }
 
     /**
      * Gets the value of the layer property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLayer() {
+    public String getLayer()
+    {
         return layer;
     }
 
     /**
      * Sets the value of the layer property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLayer(String value) {
+    public void setLayer(String value)
+    {
         this.layer = value;
     }
 
-    public boolean isSetLayer() {
-        return (this.layer!= null);
+    public boolean isSetLayer()
+    {
+        return (this.layer != null);
     }
 
     /**
      * Gets the value of the id property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
     /**
      * Sets the value of the id property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setId(String value) {
+    public void setId(String value)
+    {
         this.id = value;
     }
 
-    public boolean isSetId() {
-        return (this.id!= null);
+    public boolean isSetId()
+    {
+        return (this.id != null);
     }
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
-    public boolean isSetTitle() {
-        return (this.title!= null);
+    public boolean isSetTitle()
+    {
+        return (this.title != null);
     }
 
 }

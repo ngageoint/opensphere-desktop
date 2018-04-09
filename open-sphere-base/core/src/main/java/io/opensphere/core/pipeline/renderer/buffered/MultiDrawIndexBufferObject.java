@@ -6,7 +6,7 @@ import java.nio.IntBuffer;
 import java.util.Collection;
 
 import javax.annotation.Nullable;
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 import com.jogamp.common.nio.PointerBuffer;
 
@@ -78,8 +78,8 @@ public class MultiDrawIndexBufferObject implements BufferObject
         }
         else
         {
-            rc.getGL2().glMultiDrawElements(drawMode, (IntBuffer)mySizeBuffer.rewind(), GL.GL_UNSIGNED_INT,
-                    myPointerBuffer.rewind(), myPointerBuffer.limit());
+            rc.getGL2().glMultiDrawElements(drawMode, mySizeBuffer.rewind(), GL.GL_UNSIGNED_INT, myPointerBuffer.rewind(),
+                    myPointerBuffer.limit());
             return true;
         }
     }

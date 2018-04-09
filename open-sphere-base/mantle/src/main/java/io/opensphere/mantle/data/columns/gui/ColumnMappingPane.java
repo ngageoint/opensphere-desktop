@@ -3,6 +3,12 @@ package io.opensphere.mantle.data.columns.gui;
 import java.awt.EventQueue;
 import java.util.function.Consumer;
 
+import io.opensphere.core.Toolbox;
+import io.opensphere.core.datafilter.columns.ColumnMapping;
+import io.opensphere.core.util.collections.StreamUtilities;
+import io.opensphere.core.util.fx.FXUtilities;
+import io.opensphere.core.util.image.IconUtil.IconType;
+import io.opensphere.core.util.swing.EventQueueUtilities;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -16,13 +22,6 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-
-import io.opensphere.core.Toolbox;
-import io.opensphere.core.datafilter.columns.ColumnMapping;
-import io.opensphere.core.util.collections.StreamUtilities;
-import io.opensphere.core.util.fx.FXUtilities;
-import io.opensphere.core.util.image.IconUtil.IconType;
-import io.opensphere.core.util.swing.EventQueueUtilities;
 
 /** JavaFX column mapping pane. */
 public class ColumnMappingPane extends BorderPane

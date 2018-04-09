@@ -13,52 +13,47 @@ import org.apache.http.conn.ssl.X509HostnameVerifier;
  */
 public class X509HostNameVerifierCourtRoom extends AbstractVerifier
 {
-   /** The delegated X509 host name verifier. */
-   private final X509HostnameVerifier verifier;
+    /** The delegated X509 host name verifier. */
+    private final X509HostnameVerifier verifier;
 
-   /** The host name verifier that can overrule the delegated verifier. */
-   private final HostNameVerifier judge;
+    /** The host name verifier that can overrule the delegated verifier. */
+    private final HostNameVerifier judge;
 
-   /**
-    * Constructs a <code>X509HostNameVerifierDelegate</code>.
-    *
-    * @param verifier
-    *           the delegated host name verifier.
-    */
-   public X509HostNameVerifierCourtRoom(final X509HostnameVerifier verifier,
-                                        final HostNameVerifier judge)
-   {
-      if (verifier == null)
-      {
-         throw new IllegalArgumentException(
-            "The Apache X509 host name verifier is null");
-      }
-      this.verifier = verifier;
-      if (judge == null)
-      {
-         throw new IllegalArgumentException("The host name verifier is null");
-      }
-      this.judge = judge;
-   }
+    /**
+     * Constructs a <code>X509HostNameVerifierDelegate</code>.
+     *
+     * @param verifier the delegated host name verifier.
+     */
+    public X509HostNameVerifierCourtRoom(final X509HostnameVerifier verifier, final HostNameVerifier judge)
+    {
+        if (verifier == null)
+        {
+            throw new IllegalArgumentException("The Apache X509 host name verifier is null");
+        }
+        this.verifier = verifier;
+        if (judge == null)
+        {
+            throw new IllegalArgumentException("The host name verifier is null");
+        }
+        this.judge = judge;
+    }
 
-   @Override
-   public void verify(final String host, final String[] cns,
-                      final String[] subjectAlts) throws SSLException
-   {
-      try
-      {
-         verifier.verify(host, cns, subjectAlts);
-      }
-      catch (final SSLException e)
-      {
-         final boolean allow =
-            judge.allowInvalidHostName(host, cns, subjectAlts, e.getMessage());
+    @Override
+    public void verify(final String host, final String[] cns, final String[] subjectAlts) throws SSLException
+    {
+        try
+        {
+            verifier.verify(host, cns, subjectAlts);
+        }
+        catch (final SSLException e)
+        {
+            final boolean allow = judge.allowInvalidHostName(host, cns, subjectAlts, e.getMessage());
 
-         // If the judge sustained the objection, throw the exception.
-         if (!allow)
-         {
-            throw e;
-         }
-      }
-   }
+            // If the judge sustained the objection, throw the exception.
+            if (!allow)
+            {
+                throw e;
+            }
+        }
+    }
 }

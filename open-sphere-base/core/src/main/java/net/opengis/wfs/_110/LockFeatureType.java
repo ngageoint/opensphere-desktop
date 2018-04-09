@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import java.math.BigInteger;
@@ -19,20 +18,21 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *             This type defines the LockFeature operation.  The LockFeature
- *             element contains one or more Lock elements that define which
- *             features of a particular type should be locked.  A lock
- *             identifier (lockId) is returned to the client application which
- *             can be used by subsequent operations to reference the locked
- *             features.
- *          
+ * This type defines the LockFeature operation. The LockFeature element contains
+ * one or more Lock elements that define which features of a particular type
+ * should be locked. A lock identifier (lockId) is returned to the client
+ * application which can be used by subsequent operations to reference the
+ * locked features.
  * 
- * <p>Java class for LockFeatureType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for LockFeatureType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LockFeatureType">
@@ -51,18 +51,17 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LockFeatureType", propOrder = {
-    "lock"
-})
-public class LockFeatureType
-    extends BaseRequestType
+@XmlType(name = "LockFeatureType", propOrder = { "lock" })
+public class LockFeatureType extends BaseRequestType
 {
 
     @XmlElement(name = "Lock", required = true)
     protected List<LockType> lock;
+
     @XmlAttribute(name = "expiry")
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger expiry;
+
     @XmlAttribute(name = "lockAction")
     protected AllSomeType lockAction;
 
@@ -70,26 +69,29 @@ public class LockFeatureType
      * Gets the value of the lock property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the lock property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the lock property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLock().add(newItem);
+     * getLock().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link LockType }
+     * Objects of the following type(s) are allowed in the list {@link LockType
+     * }
      * 
      * 
      */
-    public List<LockType> getLock() {
-        if (lock == null) {
+    public List<LockType> getLock()
+    {
+        if (lock == null)
+        {
             lock = new ArrayList<LockType>();
         }
         return this.lock;
@@ -98,15 +100,17 @@ public class LockFeatureType
     /**
      * Gets the value of the expiry property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getExpiry() {
-        if (expiry == null) {
+    public BigInteger getExpiry()
+    {
+        if (expiry == null)
+        {
             return new BigInteger("5");
-        } else {
+        }
+        else
+        {
             return expiry;
         }
     }
@@ -114,27 +118,28 @@ public class LockFeatureType
     /**
      * Sets the value of the expiry property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setExpiry(BigInteger value) {
+    public void setExpiry(BigInteger value)
+    {
         this.expiry = value;
     }
 
     /**
      * Gets the value of the lockAction property.
      * 
-     * @return
-     *     possible object is
-     *     {@link AllSomeType }
-     *     
+     * @return possible object is {@link AllSomeType }
+     * 
      */
-    public AllSomeType getLockAction() {
-        if (lockAction == null) {
+    public AllSomeType getLockAction()
+    {
+        if (lockAction == null)
+        {
             return AllSomeType.ALL;
-        } else {
+        }
+        else
+        {
             return lockAction;
         }
     }
@@ -142,12 +147,11 @@ public class LockFeatureType
     /**
      * Sets the value of the lockAction property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link AllSomeType }
-     *     
+     * @param value allowed object is {@link AllSomeType }
+     * 
      */
-    public void setLockAction(AllSomeType value) {
+    public void setLockAction(AllSomeType value)
+    {
         this.lockAction = value;
     }
 

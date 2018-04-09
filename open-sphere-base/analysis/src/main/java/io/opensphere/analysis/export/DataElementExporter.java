@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.io.File;
 
-import javafx.application.Platform;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -31,6 +29,7 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.taskactivity.TaskActivity;
 import io.opensphere.mantle.data.cache.DataElementCache;
 import io.opensphere.mantle.data.element.DataElement;
+import javafx.application.Platform;
 
 /**
  * Given an exporter and a {@link MetaColumnsTableModel}, this class will ask

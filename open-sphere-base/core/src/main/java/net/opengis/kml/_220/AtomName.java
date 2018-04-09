@@ -5,24 +5,24 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
-public class AtomName
-    extends JAXBElement<String>
+public class AtomName extends JAXBElement<String>
 {
 
     protected final static QName NAME = new QName("http://www.w3.org/2005/Atom", "name");
 
-    public AtomName(String value) {
-        super(NAME, ((Class) String.class), null, value);
+    public AtomName(String value)
+    {
+        super(NAME, (String.class), null, value);
     }
 
-    public AtomName() {
-        super(NAME, ((Class) String.class), null, null);
+    public AtomName()
+    {
+        super(NAME, (String.class), null, null);
     }
 
 }

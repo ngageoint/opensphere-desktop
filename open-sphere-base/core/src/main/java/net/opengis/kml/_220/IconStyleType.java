@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for IconStyleType complex type.
+ * <p>
+ * Java class for IconStyleType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="IconStyleType">
@@ -44,177 +45,175 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "IconStyleType", propOrder = {
-    "scale",
-    "heading",
-    "icon",
-    "hotSpot",
-    "iconStyleSimpleExtensionGroup",
-    "iconStyleObjectExtensionGroup"
-})
-public class IconStyleType
-    extends AbstractColorStyleType
+@XmlType(name = "IconStyleType", propOrder = { "scale", "heading", "icon", "hotSpot", "iconStyleSimpleExtensionGroup",
+    "iconStyleObjectExtensionGroup" })
+public class IconStyleType extends AbstractColorStyleType
 {
 
     @XmlElementRef(name = "scale", namespace = "http://www.opengis.net/kml/2.2", type = ScaleScalar.class, required = false)
     protected ScaleScalar scale;
+
     @XmlElement(defaultValue = "0.0")
     protected Double heading;
+
     @XmlElement(name = "Icon")
     protected BasicLinkType icon;
+
     protected Vec2Type hotSpot;
+
     @XmlElement(name = "IconStyleSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> iconStyleSimpleExtensionGroup;
+
     @XmlElement(name = "IconStyleObjectExtensionGroup")
     protected List<AbstractObjectType> iconStyleObjectExtensionGroup;
 
     /**
      * Gets the value of the scale property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ScaleScalar }
-     *     
+     * @return possible object is {@link ScaleScalar }
+     * 
      */
-    public ScaleScalar getScale() {
+    public ScaleScalar getScale()
+    {
         return scale;
     }
 
     /**
      * Sets the value of the scale property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ScaleScalar }
-     *     
+     * @param value allowed object is {@link ScaleScalar }
+     * 
      */
-    public void setScale(ScaleScalar value) {
+    public void setScale(ScaleScalar value)
+    {
         this.scale = value;
     }
 
-    public boolean isSetScale() {
-        return (this.scale!= null);
+    public boolean isSetScale()
+    {
+        return (this.scale != null);
     }
 
     /**
      * Gets the value of the heading property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getHeading() {
+    public Double getHeading()
+    {
         return heading;
     }
 
     /**
      * Sets the value of the heading property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setHeading(Double value) {
+    public void setHeading(Double value)
+    {
         this.heading = value;
     }
 
-    public boolean isSetHeading() {
-        return (this.heading!= null);
+    public boolean isSetHeading()
+    {
+        return (this.heading != null);
     }
 
     /**
      * Gets the value of the icon property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BasicLinkType }
-     *     
+     * @return possible object is {@link BasicLinkType }
+     * 
      */
-    public BasicLinkType getIcon() {
+    public BasicLinkType getIcon()
+    {
         return icon;
     }
 
     /**
      * Sets the value of the icon property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BasicLinkType }
-     *     
+     * @param value allowed object is {@link BasicLinkType }
+     * 
      */
-    public void setIcon(BasicLinkType value) {
+    public void setIcon(BasicLinkType value)
+    {
         this.icon = value;
     }
 
-    public boolean isSetIcon() {
-        return (this.icon!= null);
+    public boolean isSetIcon()
+    {
+        return (this.icon != null);
     }
 
     /**
      * Gets the value of the hotSpot property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Vec2Type }
-     *     
+     * @return possible object is {@link Vec2Type }
+     * 
      */
-    public Vec2Type getHotSpot() {
+    public Vec2Type getHotSpot()
+    {
         return hotSpot;
     }
 
     /**
      * Sets the value of the hotSpot property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Vec2Type }
-     *     
+     * @param value allowed object is {@link Vec2Type }
+     * 
      */
-    public void setHotSpot(Vec2Type value) {
+    public void setHotSpot(Vec2Type value)
+    {
         this.hotSpot = value;
     }
 
-    public boolean isSetHotSpot() {
-        return (this.hotSpot!= null);
+    public boolean isSetHotSpot()
+    {
+        return (this.hotSpot != null);
     }
 
     /**
      * Gets the value of the iconStyleSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the iconStyleSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the iconStyleSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getIconStyleSimpleExtensionGroup().add(newItem);
+     * getIconStyleSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getIconStyleSimpleExtensionGroup() {
-        if (iconStyleSimpleExtensionGroup == null) {
+    public List<Object> getIconStyleSimpleExtensionGroup()
+    {
+        if (iconStyleSimpleExtensionGroup == null)
+        {
             iconStyleSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.iconStyleSimpleExtensionGroup;
     }
 
-    public boolean isSetIconStyleSimpleExtensionGroup() {
-        return ((this.iconStyleSimpleExtensionGroup!= null)&&(!this.iconStyleSimpleExtensionGroup.isEmpty()));
+    public boolean isSetIconStyleSimpleExtensionGroup()
+    {
+        return ((this.iconStyleSimpleExtensionGroup != null) && (!this.iconStyleSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetIconStyleSimpleExtensionGroup() {
+    public void unsetIconStyleSimpleExtensionGroup()
+    {
         this.iconStyleSimpleExtensionGroup = null;
     }
 
@@ -222,15 +221,16 @@ public class IconStyleType
      * Gets the value of the iconStyleObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the iconStyleObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the iconStyleObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getIconStyleObjectExtensionGroup().add(newItem);
+     * getIconStyleObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -240,18 +240,22 @@ public class IconStyleType
      * 
      * 
      */
-    public List<AbstractObjectType> getIconStyleObjectExtensionGroup() {
-        if (iconStyleObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getIconStyleObjectExtensionGroup()
+    {
+        if (iconStyleObjectExtensionGroup == null)
+        {
             iconStyleObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.iconStyleObjectExtensionGroup;
     }
 
-    public boolean isSetIconStyleObjectExtensionGroup() {
-        return ((this.iconStyleObjectExtensionGroup!= null)&&(!this.iconStyleObjectExtensionGroup.isEmpty()));
+    public boolean isSetIconStyleObjectExtensionGroup()
+    {
+        return ((this.iconStyleObjectExtensionGroup != null) && (!this.iconStyleObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetIconStyleObjectExtensionGroup() {
+    public void unsetIconStyleObjectExtensionGroup()
+    {
         this.iconStyleObjectExtensionGroup = null;
     }
 

@@ -65,7 +65,7 @@ public final class SecurityUtilities
      */
     public static CipherEncryptedPrivateKeyProvider createCipherEncryptedPrivateKeyProvider(KeyStore keystore, String alias,
             String source, char[] password, CipherFactory cipherFactory, boolean persistable)
-                throws PrivateKeyProviderException, KeyStoreException, NoSuchAlgorithmException
+        throws PrivateKeyProviderException, KeyStoreException, NoSuchAlgorithmException
     {
         try
         {
@@ -110,7 +110,7 @@ public final class SecurityUtilities
      * Generate a password salt and put it in the given array.
      *
      * @param salt The array to contain the salt.
-     * @throws NoSuchAlgorithmException If a secure random algorithm is not
+     * @throws NoSuchAlgorithmException If a   secure random algorithm is not
      *             available.
      */
     public static void generateSalt(byte[] salt) throws NoSuchAlgorithmException

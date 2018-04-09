@@ -1245,7 +1245,7 @@ public class SimpleLatLonFormat
      *
      * @param latLonText
      * @return the {@link Point2D} with the lat/lon info
-     * @throws ParseException if an error is encountered parsing the given
+     * @throws ParseException if an  error is encountered parsing the given
      *             string
      * @throws NullPointerException if the latLonText is null
      */
@@ -1270,7 +1270,7 @@ public class SimpleLatLonFormat
      *            using parens in the pattern, in the order of occurrence, list
      *            is immediately cleared at function begin.
      * @return the {@link Point2D} with the lat/lon info
-     * @throws ParseException if an error is encountered parsing the given
+     * @throws ParseException if an  error is encountered parsing the given
      *             string
      * @throws NullPointerException if the latLonText is null
      */
@@ -1376,7 +1376,7 @@ public class SimpleLatLonFormat
      *            using parens in the pattern, in the order of occurrance, list
      *            is immediately cleared at function begin.
      * @return double, the latitude in decimal degrees north ( -90 to 90 ) *
-     * @throws ParseException if an error is encountered parsing the given
+     * @throws ParseException if an  error is encountered parsing the given
      *             string
      * @throws NullPointerException if the latLonText is null
      */
@@ -1400,7 +1400,7 @@ public class SimpleLatLonFormat
      *
      * @param text
      * @return double, the latitude in decimal degrees north ( -90 to 90 )
-     * @throws ParseException if an error is encountered parsing the given
+     * @throws ParseException if an  error is encountered parsing the given
      *             string
      * @throws NullPointerException if the latLonText is null
      */
@@ -1793,7 +1793,7 @@ public class SimpleLatLonFormat
      * helper method to make building up our list of PatternComponents easier
      *
      * @param ct - the component type
-     * @param m - a matcher for searching
+     * @param m - a   matcher for searching
      * @param pcList - the list to add the found parts to
      * @param exceptionText - extension of exception text so error messages make
      *            more sense.

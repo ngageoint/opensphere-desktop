@@ -88,7 +88,8 @@ public class ConnectionAppropriator
      * @throws CacheException If there is a database error.
      */
     public <T> T appropriateStatement(final PreparedStatementUser<T> user, boolean transaction, final String sql,
-            final String... columnNames) throws CacheException
+            final String... columnNames)
+        throws CacheException
     {
         return appropriateConnection(new ConnectionUser<T>()
         {

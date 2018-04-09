@@ -93,6 +93,11 @@ public final class ColorArrayList extends AbstractList<Color> implements Seriali
             PetrifyableTByteArrayList bytes = new PetrifyableTByteArrayList(input.size() * 4);
             for (Color color : input)
             {
+                if (color == null)
+                {
+                    color = Color.WHITE;
+                }
+
                 bytes.add((byte)color.getRed());
                 bytes.add((byte)color.getGreen());
                 bytes.add((byte)color.getBlue());

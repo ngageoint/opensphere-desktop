@@ -5,19 +5,21 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for MappingSubType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for MappingSubType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="MappingSubType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token">
@@ -35,34 +37,34 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "MappingSubType")
 @XmlEnum
-public enum MappingSubType {
+public enum MappingSubType
+{
 
     @XmlEnumValue("instant")
-    INSTANT("instant"),
-    @XmlEnumValue("start")
-    START("start"),
-    @XmlEnumValue("end")
-    END("end"),
-    @XmlEnumValue("publication")
-    PUBLICATION("publication"),
-    @XmlEnumValue("Lat/Lon")
-    LAT_LON("Lat/Lon"),
-    @XmlEnumValue("Lon/Lat")
-    LON_LAT("Lon/Lat"),
-    MGRS("MGRS");
+    INSTANT("instant"), @XmlEnumValue("start")
+    START("start"), @XmlEnumValue("end")
+    END("end"), @XmlEnumValue("publication")
+    PUBLICATION("publication"), @XmlEnumValue("Lat/Lon")
+    LAT_LON("Lat/Lon"), @XmlEnumValue("Lon/Lat")
+    LON_LAT("Lon/Lat"), MGRS("MGRS");
     private final String value;
 
-    MappingSubType(String v) {
+    MappingSubType(String v)
+    {
         value = v;
     }
 
-    public String value() {
+    public String value()
+    {
         return value;
     }
 
-    public static MappingSubType fromValue(String v) {
-        for (MappingSubType c: MappingSubType.values()) {
-            if (c.value.equals(v)) {
+    public static MappingSubType fromValue(String v)
+    {
+        for (MappingSubType c : MappingSubType.values())
+        {
+            if (c.value.equals(v))
+            {
                 return c;
             }
         }

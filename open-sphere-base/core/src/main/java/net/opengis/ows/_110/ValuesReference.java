@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.ows._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,13 +15,16 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * Human-readable name of the list of values provided by the referenced document. Can be empty string when this list has no name. 
+ * Human-readable name of the list of values provided by the referenced
+ * document. Can be empty string when this list has no name.
  * 
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -37,14 +39,14 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "value"
-})
+@XmlType(name = "", propOrder = { "value" })
 @XmlRootElement(name = "ValuesReference")
-public class ValuesReference {
+public class ValuesReference
+{
 
     @XmlValue
     protected String value;
+
     @XmlAttribute(namespace = "http://www.opengis.net/ows/1.1", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String reference;
@@ -52,48 +54,44 @@ public class ValuesReference {
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getValue() {
+    public String getValue()
+    {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setValue(String value) {
+    public void setValue(String value)
+    {
         this.value = value;
     }
 
     /**
      * Gets the value of the reference property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getReference() {
+    public String getReference()
+    {
         return reference;
     }
 
     /**
      * Sets the value of the reference property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setReference(String value) {
+    public void setReference(String value)
+    {
         this.reference = value;
     }
 

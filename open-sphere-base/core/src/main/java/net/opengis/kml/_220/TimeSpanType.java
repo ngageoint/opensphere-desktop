@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for TimeSpanType complex type.
+ * <p>
+ * Java class for TimeSpanType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TimeSpanType">
@@ -41,116 +42,115 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TimeSpanType", propOrder = {
-    "begin",
-    "end",
-    "timeSpanSimpleExtensionGroup",
-    "timeSpanObjectExtensionGroup"
-})
-public class TimeSpanType
-    extends AbstractTimePrimitiveType
+@XmlType(name = "TimeSpanType", propOrder = { "begin", "end", "timeSpanSimpleExtensionGroup", "timeSpanObjectExtensionGroup" })
+public class TimeSpanType extends AbstractTimePrimitiveType
 {
 
     @XmlSchemaType(name = "anySimpleType")
     protected String begin;
+
     @XmlSchemaType(name = "anySimpleType")
     protected String end;
+
     @XmlElement(name = "TimeSpanSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> timeSpanSimpleExtensionGroup;
+
     @XmlElement(name = "TimeSpanObjectExtensionGroup")
     protected List<AbstractObjectType> timeSpanObjectExtensionGroup;
 
     /**
      * Gets the value of the begin property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getBegin() {
+    public String getBegin()
+    {
         return begin;
     }
 
     /**
      * Sets the value of the begin property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setBegin(String value) {
+    public void setBegin(String value)
+    {
         this.begin = value;
     }
 
-    public boolean isSetBegin() {
-        return (this.begin!= null);
+    public boolean isSetBegin()
+    {
+        return (this.begin != null);
     }
 
     /**
      * Gets the value of the end property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getEnd() {
+    public String getEnd()
+    {
         return end;
     }
 
     /**
      * Sets the value of the end property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setEnd(String value) {
+    public void setEnd(String value)
+    {
         this.end = value;
     }
 
-    public boolean isSetEnd() {
-        return (this.end!= null);
+    public boolean isSetEnd()
+    {
+        return (this.end != null);
     }
 
     /**
      * Gets the value of the timeSpanSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the timeSpanSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the timeSpanSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getTimeSpanSimpleExtensionGroup().add(newItem);
+     * getTimeSpanSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getTimeSpanSimpleExtensionGroup() {
-        if (timeSpanSimpleExtensionGroup == null) {
+    public List<Object> getTimeSpanSimpleExtensionGroup()
+    {
+        if (timeSpanSimpleExtensionGroup == null)
+        {
             timeSpanSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.timeSpanSimpleExtensionGroup;
     }
 
-    public boolean isSetTimeSpanSimpleExtensionGroup() {
-        return ((this.timeSpanSimpleExtensionGroup!= null)&&(!this.timeSpanSimpleExtensionGroup.isEmpty()));
+    public boolean isSetTimeSpanSimpleExtensionGroup()
+    {
+        return ((this.timeSpanSimpleExtensionGroup != null) && (!this.timeSpanSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetTimeSpanSimpleExtensionGroup() {
+    public void unsetTimeSpanSimpleExtensionGroup()
+    {
         this.timeSpanSimpleExtensionGroup = null;
     }
 
@@ -158,15 +158,16 @@ public class TimeSpanType
      * Gets the value of the timeSpanObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the timeSpanObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the timeSpanObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getTimeSpanObjectExtensionGroup().add(newItem);
+     * getTimeSpanObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -176,18 +177,22 @@ public class TimeSpanType
      * 
      * 
      */
-    public List<AbstractObjectType> getTimeSpanObjectExtensionGroup() {
-        if (timeSpanObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getTimeSpanObjectExtensionGroup()
+    {
+        if (timeSpanObjectExtensionGroup == null)
+        {
             timeSpanObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.timeSpanObjectExtensionGroup;
     }
 
-    public boolean isSetTimeSpanObjectExtensionGroup() {
-        return ((this.timeSpanObjectExtensionGroup!= null)&&(!this.timeSpanObjectExtensionGroup.isEmpty()));
+    public boolean isSetTimeSpanObjectExtensionGroup()
+    {
+        return ((this.timeSpanObjectExtensionGroup != null) && (!this.timeSpanObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetTimeSpanObjectExtensionGroup() {
+    public void unsetTimeSpanObjectExtensionGroup()
+    {
         this.timeSpanObjectExtensionGroup = null;
     }
 

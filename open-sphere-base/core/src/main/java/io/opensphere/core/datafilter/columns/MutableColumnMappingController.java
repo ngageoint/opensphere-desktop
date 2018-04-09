@@ -14,8 +14,9 @@ public interface MutableColumnMappingController extends ColumnMappingController
     void addMapping(String definedColumn, String layerKey, String layerColumn, boolean overwrite);
 
     /**
-     * Checks whether the associate method (q.v.) would succeed without breaking any rules. Strictly speaking, this is not a
-     * mutator method, but one would only call it if one intended to make changes.
+     * Checks whether the associate method (q.v.) would succeed without breaking
+     * any rules. Strictly speaking, this is not a mutator method, but one would
+     * only call it if one intended to make changes.
      *
      * @param type1 the name of the first type to test.
      * @param col1 the name of the column for which to search.
@@ -26,13 +27,17 @@ public interface MutableColumnMappingController extends ColumnMappingController
     boolean canAssociate(String type1, String col1, String type2, String col2);
 
     /**
-     * Adds an association between the two specified fields. A "definedColumn" is not provided because one or both of the fields
-     * may already belong to a defined equivalence class, whose name(s) may not be known. If a new equivalence must be defined, it
-     * is given the name <i>col1</i>. In case the fields belong to separate equivalence classes, the two will be merged. <br>
+     * Adds an association between the two specified fields. A "definedColumn"
+     * is not provided because one or both of the fields may already belong to a
+     * defined equivalence class, whose name(s) may not be known. If a new
+     * equivalence must be defined, it is given the name <i>col1</i>. In case
+     * the fields belong to separate equivalence classes, the two will be
+     * merged. <br>
      * <br>
-     * Note: this method succeeds forcibly, ignoring more subtle considerations such as a prohibition on having two fields from
-     * the same type deemed equivalent. It is recommended to use the method canAssociate (q.v.) before calling this one to ensure
-     * consistency.
+     * Note: this method succeeds forcibly, ignoring more subtle considerations
+     * such as a prohibition on having two fields from the same type deemed
+     * equivalent. It is recommended to use the method canAssociate (q.v.)
+     * before calling this one to ensure consistency.
      *
      * @param type1 the name of the first type to associate.
      * @param col1 the name of the column for to associate.

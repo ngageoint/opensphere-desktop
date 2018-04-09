@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -17,13 +16,18 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Aggregate value built from other Values using the Composite pattern. It contains zero or an arbitrary number of valueComponent elements, and zero or one valueComponents elements.  It may be used for strongly coupled aggregates (vectors, tensors) or for arbitrary collections of values.
+ * Aggregate value built from other Values using the Composite pattern. It
+ * contains zero or an arbitrary number of valueComponent elements, and zero or
+ * one valueComponents elements. It may be used for strongly coupled aggregates
+ * (vectors, tensors) or for arbitrary collections of values.
  * 
- * <p>Java class for CompositeValueType complex type.
+ * <p>
+ * Java class for CompositeValueType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CompositeValueType">
@@ -41,18 +45,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CompositeValueType", propOrder = {
-    "valueComponent",
-    "valueComponentList"
-})
-@XmlSeeAlso({
-    ValueArrayType.class
-})
-public class CompositeValueType
-    extends AbstractGMLType
+@XmlType(name = "CompositeValueType", propOrder = { "valueComponent", "valueComponentList" })
+@XmlSeeAlso({ ValueArrayType.class })
+public class CompositeValueType extends AbstractGMLType
 {
 
     protected List<ValuePropertyType> valueComponent;
+
     @XmlElement(name = "valueComponents")
     protected ValueArrayPropertyType valueComponentList;
 
@@ -60,15 +59,16 @@ public class CompositeValueType
      * Gets the value of the valueComponent property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the valueComponent property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the valueComponent property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getValueComponent().add(newItem);
+     * getValueComponent().add(newItem);
      * </pre>
      * 
      * 
@@ -78,8 +78,10 @@ public class CompositeValueType
      * 
      * 
      */
-    public List<ValuePropertyType> getValueComponent() {
-        if (valueComponent == null) {
+    public List<ValuePropertyType> getValueComponent()
+    {
+        if (valueComponent == null)
+        {
             valueComponent = new ArrayList<ValuePropertyType>();
         }
         return this.valueComponent;
@@ -88,24 +90,22 @@ public class CompositeValueType
     /**
      * Gets the value of the valueComponentList property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ValueArrayPropertyType }
-     *     
+     * @return possible object is {@link ValueArrayPropertyType }
+     * 
      */
-    public ValueArrayPropertyType getValueComponentList() {
+    public ValueArrayPropertyType getValueComponentList()
+    {
         return valueComponentList;
     }
 
     /**
      * Sets the value of the valueComponentList property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ValueArrayPropertyType }
-     *     
+     * @param value allowed object is {@link ValueArrayPropertyType }
+     * 
      */
-    public void setValueComponentList(ValueArrayPropertyType value) {
+    public void setValueComponentList(ValueArrayPropertyType value)
+    {
         this.valueComponentList = value;
     }
 

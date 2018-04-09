@@ -3,7 +3,8 @@ package io.opensphere.core.util.javafx.input.view;
 import javafx.scene.layout.GridPane;
 
 /**
- * An extension to the standard {@link GridPane} in which the number of columns is fixed at instantiation.
+ * An extension to the standard {@link GridPane} in which the number of columns
+ * is fixed at instantiation.
  */
 public class FixedColumnGridPane extends GridPane
 {
@@ -13,7 +14,8 @@ public class FixedColumnGridPane extends GridPane
     private final int myColumnCount;
 
     /**
-     * Creates a new grid pane, accepting the number of columns to align in the grid.
+     * Creates a new grid pane, accepting the number of columns to align in the
+     * grid.
      *
      * @param pColumnCount The number of columns used in the grid.
      */

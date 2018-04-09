@@ -31,7 +31,8 @@ public interface DDSEncoder
      * @throws EncodingException If input cannot be encoded.
      */
     InputStream encodeStreaming(BufferedImage input, Image.CompressionType compression, Executor executor,
-            Runnable encodingCompleteTask) throws EncodingException;
+            Runnable encodingCompleteTask)
+        throws EncodingException;
 
     /**
      * Exception indicating an encoding error.

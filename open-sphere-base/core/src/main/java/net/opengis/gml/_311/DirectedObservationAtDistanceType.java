@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for DirectedObservationAtDistanceType complex type.
+ * <p>
+ * Java class for DirectedObservationAtDistanceType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DirectedObservationAtDistanceType">
@@ -34,11 +35,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DirectedObservationAtDistanceType", propOrder = {
-    "distance"
-})
-public class DirectedObservationAtDistanceType
-    extends DirectedObservationType
+@XmlType(name = "DirectedObservationAtDistanceType", propOrder = { "distance" })
+public class DirectedObservationAtDistanceType extends DirectedObservationType
 {
 
     @XmlElement(required = true)
@@ -47,24 +45,22 @@ public class DirectedObservationAtDistanceType
     /**
      * Gets the value of the distance property.
      * 
-     * @return
-     *     possible object is
-     *     {@link MeasureType }
-     *     
+     * @return possible object is {@link MeasureType }
+     * 
      */
-    public MeasureType getDistance() {
+    public MeasureType getDistance()
+    {
         return distance;
     }
 
     /**
      * Sets the value of the distance property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link MeasureType }
-     *     
+     * @param value allowed object is {@link MeasureType }
+     * 
      */
-    public void setDistance(MeasureType value) {
+    public void setDistance(MeasureType value)
+    {
         this.distance = value;
     }
 

@@ -36,7 +36,10 @@ public class DurationPicker extends JPanel
     /** The duration unit (UI model). */
     private final ChoiceModel<ChronoUnit> myDurationUnit;
 
-    /** Used to indicate when a listener is being fired from within another listener. */
+    /**
+     * Used to indicate when a listener is being fired from within another
+     * listener.
+     */
     private boolean myUpdating;
 
     /** The duration units provider. */

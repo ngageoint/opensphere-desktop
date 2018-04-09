@@ -136,7 +136,7 @@ public class InterruptingExecutor implements ScheduledExecutorService
     public ScheduledFuture<?> schedule(Runnable command, long delay, TimeUnit unit)
     {
         checkInterface(ScheduledExecutorService.class);
-        return ((ScheduledExecutorService)myExecutor).schedule((Runnable)new Interruptible<Void>(command), delay, unit);
+        return ((ScheduledExecutorService)myExecutor).schedule((Callable<Void>)new Interruptible<Void>(command), delay, unit);
     }
 
     @Override
@@ -195,7 +195,7 @@ public class InterruptingExecutor implements ScheduledExecutorService
     public Future<?> submit(Runnable task)
     {
         checkInterface(ExecutorService.class);
-        return ((ExecutorService)myExecutor).submit((Runnable)new Interruptible<Void>(task));
+        return ((ExecutorService)myExecutor).submit((Callable<Void>)new Interruptible<Void>(task));
     }
 
     @Override

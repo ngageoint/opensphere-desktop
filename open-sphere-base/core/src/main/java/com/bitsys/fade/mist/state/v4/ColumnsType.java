@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
- * <p>Java class for ColumnsType complex type.
+ * <p>
+ * Java class for ColumnsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ColumnsType">
@@ -39,10 +40,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ColumnsType", propOrder = {
-    "column"
-})
-public class ColumnsType {
+@XmlType(name = "ColumnsType", propOrder = { "column" })
+public class ColumnsType
+{
 
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
@@ -52,36 +52,40 @@ public class ColumnsType {
      * Gets the value of the column property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the column property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the column property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getColumn().add(newItem);
+     * getColumn().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
-    public List<String> getColumn() {
-        if (column == null) {
+    public List<String> getColumn()
+    {
+        if (column == null)
+        {
             column = new ArrayList<String>();
         }
         return this.column;
     }
 
-    public boolean isSetColumn() {
-        return ((this.column!= null)&&(!this.column.isEmpty()));
+    public boolean isSetColumn()
+    {
+        return ((this.column != null) && (!this.column.isEmpty()));
     }
 
-    public void unsetColumn() {
+    public void unsetColumn()
+    {
         this.column = null;
     }
 

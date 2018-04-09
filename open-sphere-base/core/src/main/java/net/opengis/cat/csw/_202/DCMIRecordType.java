@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import java.util.ArrayList;
@@ -20,17 +19,19 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.purl.dc.elements._1.SimpleLiteral;
 
-
 /**
  * 
- *             This type encapsulates all of the standard DCMI metadata terms,
- *             including the Dublin Core refinements; these terms may be mapped
- *             to the profile-specific information model.
- *          
+ * This type encapsulates all of the standard DCMI metadata terms, including the
+ * Dublin Core refinements; these terms may be mapped to the profile-specific
+ * information model.
  * 
- * <p>Java class for DCMIRecordType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for DCMIRecordType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DCMIRecordType">
@@ -47,14 +48,9 @@ import org.purl.dc.elements._1.SimpleLiteral;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DCMIRecordType", propOrder = {
-    "dcElement"
-})
-@XmlSeeAlso({
-    RecordType.class
-})
-public class DCMIRecordType
-    extends AbstractRecordType
+@XmlType(name = "DCMIRecordType", propOrder = { "dcElement" })
+@XmlSeeAlso({ RecordType.class })
+public class DCMIRecordType extends AbstractRecordType
 {
 
     @XmlElementRef(name = "DC-element", namespace = "http://purl.org/dc/elements/1.1/", type = JAXBElement.class)
@@ -64,15 +60,16 @@ public class DCMIRecordType
      * Gets the value of the dcElement property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the dcElement property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the dcElement property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getDCElement().add(newItem);
+     * getDCElement().add(newItem);
      * </pre>
      * 
      * 
@@ -133,8 +130,10 @@ public class DCMIRecordType
      * 
      * 
      */
-    public List<JAXBElement<SimpleLiteral>> getDCElement() {
-        if (dcElement == null) {
+    public List<JAXBElement<SimpleLiteral>> getDCElement()
+    {
+        if (dcElement == null)
+        {
             dcElement = new ArrayList<JAXBElement<SimpleLiteral>>();
         }
         return this.dcElement;

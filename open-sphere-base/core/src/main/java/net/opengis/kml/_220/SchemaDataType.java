@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for SchemaDataType complex type.
+ * <p>
+ * Java class for SchemaDataType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SchemaDataType">
@@ -41,18 +42,16 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SchemaDataType", propOrder = {
-    "simpleData",
-    "schemaDataExtension"
-})
-public class SchemaDataType
-    extends AbstractObjectType
+@XmlType(name = "SchemaDataType", propOrder = { "simpleData", "schemaDataExtension" })
+public class SchemaDataType extends AbstractObjectType
 {
 
     @XmlElement(name = "SimpleData")
     protected List<SimpleDataType> simpleData;
+
     @XmlElement(name = "SchemaDataExtension")
     protected List<Object> schemaDataExtension;
+
     @XmlAttribute(name = "schemaUrl")
     @XmlSchemaType(name = "anyURI")
     protected String schemaUrl;
@@ -61,15 +60,16 @@ public class SchemaDataType
      * Gets the value of the simpleData property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the simpleData property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the simpleData property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSimpleData().add(newItem);
+     * getSimpleData().add(newItem);
      * </pre>
      * 
      * 
@@ -79,18 +79,22 @@ public class SchemaDataType
      * 
      * 
      */
-    public List<SimpleDataType> getSimpleData() {
-        if (simpleData == null) {
+    public List<SimpleDataType> getSimpleData()
+    {
+        if (simpleData == null)
+        {
             simpleData = new ArrayList<SimpleDataType>();
         }
         return this.simpleData;
     }
 
-    public boolean isSetSimpleData() {
-        return ((this.simpleData!= null)&&(!this.simpleData.isEmpty()));
+    public boolean isSetSimpleData()
+    {
+        return ((this.simpleData != null) && (!this.simpleData.isEmpty()));
     }
 
-    public void unsetSimpleData() {
+    public void unsetSimpleData()
+    {
         this.simpleData = null;
     }
 
@@ -98,65 +102,68 @@ public class SchemaDataType
      * Gets the value of the schemaDataExtension property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the schemaDataExtension property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the schemaDataExtension property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSchemaDataExtension().add(newItem);
+     * getSchemaDataExtension().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getSchemaDataExtension() {
-        if (schemaDataExtension == null) {
+    public List<Object> getSchemaDataExtension()
+    {
+        if (schemaDataExtension == null)
+        {
             schemaDataExtension = new ArrayList<Object>();
         }
         return this.schemaDataExtension;
     }
 
-    public boolean isSetSchemaDataExtension() {
-        return ((this.schemaDataExtension!= null)&&(!this.schemaDataExtension.isEmpty()));
+    public boolean isSetSchemaDataExtension()
+    {
+        return ((this.schemaDataExtension != null) && (!this.schemaDataExtension.isEmpty()));
     }
 
-    public void unsetSchemaDataExtension() {
+    public void unsetSchemaDataExtension()
+    {
         this.schemaDataExtension = null;
     }
 
     /**
      * Gets the value of the schemaUrl property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSchemaUrl() {
+    public String getSchemaUrl()
+    {
         return schemaUrl;
     }
 
     /**
      * Sets the value of the schemaUrl property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSchemaUrl(String value) {
+    public void setSchemaUrl(String value)
+    {
         this.schemaUrl = value;
     }
 
-    public boolean isSetSchemaUrl() {
-        return (this.schemaUrl!= null);
+    public boolean isSetSchemaUrl()
+    {
+        return (this.schemaUrl != null);
     }
 
 }

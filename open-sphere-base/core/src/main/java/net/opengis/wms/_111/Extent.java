@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:39 PM MST 
 //
 
-
 package net.opengis.wms._111;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -18,95 +17,96 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "value"
-})
+@XmlType(name = "", propOrder = { "value" })
 @XmlRootElement(name = "Extent")
-public class Extent {
+public class Extent
+{
 
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String name;
+
     @XmlAttribute(name = "default")
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String _default;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String nearestValue;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String multipleValues;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String current;
+
     @XmlValue
     protected String value;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
     /**
      * Gets the value of the default property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDefault() {
+    public String getDefault()
+    {
         return _default;
     }
 
     /**
      * Sets the value of the default property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDefault(String value) {
+    public void setDefault(String value)
+    {
         this._default = value;
     }
 
     /**
      * Gets the value of the nearestValue property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getNearestValue() {
-        if (nearestValue == null) {
+    public String getNearestValue()
+    {
+        if (nearestValue == null)
+        {
             return "0";
-        } else {
+        }
+        else
+        {
             return nearestValue;
         }
     }
@@ -114,27 +114,28 @@ public class Extent {
     /**
      * Sets the value of the nearestValue property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setNearestValue(String value) {
+    public void setNearestValue(String value)
+    {
         this.nearestValue = value;
     }
 
     /**
      * Gets the value of the multipleValues property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMultipleValues() {
-        if (multipleValues == null) {
+    public String getMultipleValues()
+    {
+        if (multipleValues == null)
+        {
             return "0";
-        } else {
+        }
+        else
+        {
             return multipleValues;
         }
     }
@@ -142,27 +143,28 @@ public class Extent {
     /**
      * Sets the value of the multipleValues property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMultipleValues(String value) {
+    public void setMultipleValues(String value)
+    {
         this.multipleValues = value;
     }
 
     /**
      * Gets the value of the current property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getCurrent() {
-        if (current == null) {
+    public String getCurrent()
+    {
+        if (current == null)
+        {
             return "0";
-        } else {
+        }
+        else
+        {
             return current;
         }
     }
@@ -170,36 +172,33 @@ public class Extent {
     /**
      * Sets the value of the current property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setCurrent(String value) {
+    public void setCurrent(String value)
+    {
         this.current = value;
     }
 
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getvalue() {
+    public String getvalue()
+    {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setvalue(String value) {
+    public void setvalue(String value)
+    {
         this.value = value;
     }
 

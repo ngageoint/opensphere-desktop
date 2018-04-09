@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,13 +15,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Error estimate covariance matrix. 
+ * Error estimate covariance matrix.
  * 
- * <p>Java class for CovarianceMatrixType complex type.
+ * <p>
+ * Java class for CovarianceMatrixType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CovarianceMatrixType">
@@ -40,32 +41,34 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CovarianceMatrixType", propOrder = {
-    "unitOfMeasure",
-    "includesElement"
-})
-public class CovarianceMatrixType
-    extends AbstractPositionalAccuracyType
+@XmlType(name = "CovarianceMatrixType", propOrder = { "unitOfMeasure", "includesElement" })
+public class CovarianceMatrixType extends AbstractPositionalAccuracyType
 {
 
     @XmlElement(required = true)
     protected List<UnitOfMeasureType> unitOfMeasure;
+
     @XmlElement(required = true)
     protected List<CovarianceElementType> includesElement;
 
     /**
-     * Ordered sequence of units of measure, corresponding to the row and column index numbers of the covariance matrix, starting with row and column 1 and ending with row/column N. Each unit of measure is for the ordinate reflected in the relevant row and column of the covariance matrix. Gets the value of the unitOfMeasure property.
+     * Ordered sequence of units of measure, corresponding to the row and column
+     * index numbers of the covariance matrix, starting with row and column 1
+     * and ending with row/column N. Each unit of measure is for the ordinate
+     * reflected in the relevant row and column of the covariance matrix. Gets
+     * the value of the unitOfMeasure property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the unitOfMeasure property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the unitOfMeasure property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getUnitOfMeasure().add(newItem);
+     * getUnitOfMeasure().add(newItem);
      * </pre>
      * 
      * 
@@ -75,26 +78,33 @@ public class CovarianceMatrixType
      * 
      * 
      */
-    public List<UnitOfMeasureType> getUnitOfMeasure() {
-        if (unitOfMeasure == null) {
+    public List<UnitOfMeasureType> getUnitOfMeasure()
+    {
+        if (unitOfMeasure == null)
+        {
             unitOfMeasure = new ArrayList<UnitOfMeasureType>();
         }
         return this.unitOfMeasure;
     }
 
     /**
-     * Unordered set of elements in this covariance matrix. Because the covariance matrix is symmetrical, only the elements in the upper or lower diagonal part (including the main diagonal) of the matrix need to be specified. Any zero valued covariance elements can be omitted. Gets the value of the includesElement property.
+     * Unordered set of elements in this covariance matrix. Because the
+     * covariance matrix is symmetrical, only the elements in the upper or lower
+     * diagonal part (including the main diagonal) of the matrix need to be
+     * specified. Any zero valued covariance elements can be omitted. Gets the
+     * value of the includesElement property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the includesElement property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the includesElement property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getIncludesElement().add(newItem);
+     * getIncludesElement().add(newItem);
      * </pre>
      * 
      * 
@@ -104,8 +114,10 @@ public class CovarianceMatrixType
      * 
      * 
      */
-    public List<CovarianceElementType> getIncludesElement() {
-        if (includesElement == null) {
+    public List<CovarianceElementType> getIncludesElement()
+    {
+        if (includesElement == null)
+        {
             includesElement = new ArrayList<CovarianceElementType>();
         }
         return this.includesElement;

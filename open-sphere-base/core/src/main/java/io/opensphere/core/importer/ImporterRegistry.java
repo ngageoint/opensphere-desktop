@@ -37,8 +37,8 @@ public interface ImporterRegistry
 
     /**
      * Gets a list of the {@link FileOrURLImporter} that pass the provided
-     * {@link Predicate} sorted by the provided {@link Comparator}.  Null
-     * arguments are handled gracefully.  If <i>filter</i> is null, then all
+     * {@link Predicate} sorted by the provided {@link Comparator}. Null
+     * arguments are handled gracefully. If <i>filter</i> is null, then all
      * importers are returned, and if <i>comparator</i> is null, then the
      * resulting list is not sorted.
      *
@@ -49,11 +49,11 @@ public interface ImporterRegistry
      * @return the {@link FileOrURLImporter}s that pass the filter as a
      *         {@link List}.
      */
-    List<FileOrURLImporter> getImporters(Predicate<FileOrURLImporter> filter,
-            Comparator<FileOrURLImporter> comparator);
+    List<FileOrURLImporter> getImporters(Predicate<FileOrURLImporter> filter, Comparator<FileOrURLImporter> comparator);
 
     /**
      * Return a list of file or file group importers ordered by name.
+     * 
      * @return bla
      */
     default List<FileOrURLImporter> getFileImporters()
@@ -64,6 +64,7 @@ public interface ImporterRegistry
 
     /**
      * Return a list of url importers ordered by precedence.
+     * 
      * @return bla
      */
     default List<FileOrURLImporter> getUrlImporters()

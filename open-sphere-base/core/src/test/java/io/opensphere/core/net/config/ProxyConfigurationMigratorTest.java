@@ -12,7 +12,10 @@ import org.junit.Test;
 /** Test {@link ProxyConfigurationMigrator}. */
 public class ProxyConfigurationMigratorTest
 {
-    /** Test {@link ProxyConfigurationMigrator#convertPreferences(Map)} for the no proxy case. */
+    /**
+     * Test {@link ProxyConfigurationMigrator#convertPreferences(Map)} for the
+     * no proxy case.
+     */
     @Test
     public void testConvertPreferencesNoProxy()
     {
@@ -26,7 +29,10 @@ public class ProxyConfigurationMigratorTest
         assertTrue(configsMatch(expectedConfigs, actualConfigs));
     }
 
-    /** Test {@link ProxyConfigurationMigrator#convertPreferences(Map)} for the system proxy case. */
+    /**
+     * Test {@link ProxyConfigurationMigrator#convertPreferences(Map)} for the
+     * system proxy case.
+     */
     @Test
     public void testConvertPreferencesSystemProxy()
     {
@@ -43,7 +49,10 @@ public class ProxyConfigurationMigratorTest
         assertTrue(configsMatch(expectedConfigs, actualConfigs));
     }
 
-    /** Test {@link ProxyConfigurationMigrator#convertPreferences(Map)} for the url proxy case. */
+    /**
+     * Test {@link ProxyConfigurationMigrator#convertPreferences(Map)} for the
+     * url proxy case.
+     */
     @Test
     public void testConvertPreferencesUrlProxy()
     {
@@ -59,7 +68,10 @@ public class ProxyConfigurationMigratorTest
         assertTrue(configsMatch(expectedConfigs, actualConfigs));
     }
 
-    /** Test {@link ProxyConfigurationMigrator#convertPreferences(Map)} for the manual proxy case. */
+    /**
+     * Test {@link ProxyConfigurationMigrator#convertPreferences(Map)} for the
+     * manual proxy case.
+     */
     @Test
     public void testConvertPreferencesManualProxy()
     {
@@ -81,7 +93,8 @@ public class ProxyConfigurationMigratorTest
     }
 
     /**
-     * Test if the actual converted proxy configurations match the expected proxy configurations.
+     * Test if the actual converted proxy configurations match the expected
+     * proxy configurations.
      *
      * @param expected the expected proxy configurations
      * @param actual the actual proxy configurations

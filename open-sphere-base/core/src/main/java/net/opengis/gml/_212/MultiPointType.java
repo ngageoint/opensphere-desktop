@@ -5,23 +5,24 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.gml._212;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *         A MultiPoint is defined by one or more Points, referenced through 
- *         pointMember elements.
- *       
+ * A MultiPoint is defined by one or more Points, referenced through pointMember
+ * elements.
  * 
- * <p>Java class for MultiPointType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for MultiPointType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="MultiPointType">
@@ -41,9 +42,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MultiPointType")
-public class MultiPointType
-    extends GeometryCollectionType
+public class MultiPointType extends GeometryCollectionType
 {
-
 
 }

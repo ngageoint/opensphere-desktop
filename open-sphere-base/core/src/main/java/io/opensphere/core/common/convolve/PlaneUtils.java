@@ -8,15 +8,15 @@ import io.opensphere.core.math.WGS84EarthConstants;
 
 /**
  * This class converts localization problems on the Earth into more tractable
- * problems in the plane.  The LeastSqLineLocator is then used to estimate
+ * problems in the plane. The LeastSqLineLocator is then used to estimate
  * locations in the plane, along with the 95% confidence ellipse based on the
- * inverse exponential sum of squared distances probability density.
- * <br><br>
- * The method of the conversion is orthographic projection onto a plane
- * tangent to the idealized spherical Earth.  Though not mathematically
- * precise, this approach produces very good results when the inputs are
- * sufficiently localized.  For less localized problems, a gnomonic projection
- * might give better results, though that is not currently supported.
+ * inverse exponential sum of squared distances probability density. <br>
+ * <br>
+ * The method of the conversion is orthographic projection onto a plane tangent
+ * to the idealized spherical Earth. Though not mathematically precise, this
+ * approach produces very good results when the inputs are sufficiently
+ * localized. For less localized problems, a gnomonic projection might give
+ * better results, though that is not currently supported.
  */
 public class PlaneUtils
 {
@@ -25,8 +25,8 @@ public class PlaneUtils
 
     /**
      * Convert a confidence probability into the radius of a disk containing
-     * that portion of the probability measure for the standard bivariate
-     * normal distribution [i.e., f(x, y) = e^(-x^2 - y^2)].
+     * that portion of the probability measure for the standard bivariate normal
+     * distribution [i.e., f(x, y) = e^(-x^2 - y^2)].
      *
      * @param p the confidence probability
      * @return the confidence disk radius
@@ -64,8 +64,8 @@ public class PlaneUtils
     private double minorRadiusNmi;
 
     /**
-     * A list of indices for lines-of-bearing that do not appear to point
-     * toward the concensus location.  These outliers may be rejected before
+     * A list of indices for lines-of-bearing that do not appear to point toward
+     * the concensus location. These outliers may be rejected before
      * recalculating.
      */
     private List<Integer> badPointers = new LinkedList<>();
@@ -145,8 +145,8 @@ public class PlaneUtils
     }
 
     /**
-     * Perform the least-square-distances localization for the specified set
-     * of lines, expressed as triples of latitude, longitude, and bearing.
+     * Perform the least-square-distances localization for the specified set of
+     * lines, expressed as triples of latitude, longitude, and bearing.
      *
      * @param lobs the line-of-bearing inputs
      */
@@ -154,7 +154,7 @@ public class PlaneUtils
     {
         // first find a point on which to center the projection
         R3 avg = new R3();
-        for (LatLonBear llb :  lobs)
+        for (LatLonBear llb : lobs)
             avg.add(fromLatLon(llb.latDeg, llb.lonDeg));
         avg.nz();
 
@@ -168,7 +168,7 @@ public class PlaneUtils
         LeastSqLineLocator lsqLoc = new LeastSqLineLocator();
         lsqLoc.setNumLines(lobVecList.size());
         int i = 0;
-        for (LobVec v :  lobVecList)
+        for (LobVec v : lobVecList)
             lsqLoc.addLine(v.p0.x, v.p0.y, v.dirUnit.x, v.dirUnit.y, i++);
         lsqLoc.localize();
         errorMessage = lsqLoc.getErrorMessage();
@@ -306,14 +306,14 @@ public class PlaneUtils
     }
 
     /**
-     * This class does bidirectional conversion between points on the sphere
-     * and corresponding points on the tangent plane.  Coordinates in the
-     * plane have <i>x</i> pointing east and <i>y</i> pointing north.
-     * <br><br>
+     * This class does bidirectional conversion between points on the sphere and
+     * corresponding points on the tangent plane. Coordinates in the plane have
+     * <i>x</i> pointing east and <i>y</i> pointing north. <br>
+     * <br>
      * The projection used by this class is orthographic. It is gives good
      * results when the problem space is not too large (e.g., radius less than
-     * 20 or 30 degrees of latitude and/or longitude).
-     * <br><br>
+     * 20 or 30 degrees of latitude and/or longitude). <br>
+     * <br>
      * If that seems to be too limiting, we could use a gnomonic projection
      * instead.
      */
@@ -329,8 +329,8 @@ public class PlaneUtils
         private R3 zVec;
 
         /**
-         * Construct a Projection for a plane tangent to the unit sphere in
-         * the specified direction.
+         * Construct a Projection for a plane tangent to the unit sphere in the
+         * specified direction.
          *
          * @param origin the vector indicating the plane's origin
          * @return the created Projection instance
@@ -561,7 +561,7 @@ public class PlaneUtils
 
         /**
          * Find the projection of a vector onto the orthogonal complement of
-         * this one.  Note:  only call on unit vectors.
+         * this one. Note: only call on unit vectors.
          *
          * @param u the vector
          * @return the projection

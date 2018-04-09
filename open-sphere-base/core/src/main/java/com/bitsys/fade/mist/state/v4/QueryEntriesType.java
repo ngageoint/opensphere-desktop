@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.util.ArrayList;
@@ -15,16 +14,18 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *         A container type used to specify the set of queries to execute as part 
- *         of the state load operation.
- *       
+ * A container type used to specify the set of queries to execute as part of the
+ * state load operation.
  * 
- * <p>Java class for QueryEntriesType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for QueryEntriesType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="QueryEntriesType">
@@ -41,10 +42,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "QueryEntriesType", propOrder = {
-    "queryEntry"
-})
-public class QueryEntriesType {
+@XmlType(name = "QueryEntriesType", propOrder = { "queryEntry" })
+public class QueryEntriesType
+{
 
     protected List<QueryEntryType> queryEntry;
 
@@ -52,15 +52,16 @@ public class QueryEntriesType {
      * Gets the value of the queryEntry property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the queryEntry property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the queryEntry property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getQueryEntry().add(newItem);
+     * getQueryEntry().add(newItem);
      * </pre>
      * 
      * 
@@ -70,18 +71,22 @@ public class QueryEntriesType {
      * 
      * 
      */
-    public List<QueryEntryType> getQueryEntry() {
-        if (queryEntry == null) {
+    public List<QueryEntryType> getQueryEntry()
+    {
+        if (queryEntry == null)
+        {
             queryEntry = new ArrayList<QueryEntryType>();
         }
         return this.queryEntry;
     }
 
-    public boolean isSetQueryEntry() {
-        return ((this.queryEntry!= null)&&(!this.queryEntry.isEmpty()));
+    public boolean isSetQueryEntry()
+    {
+        return ((this.queryEntry != null) && (!this.queryEntry.isEmpty()));
     }
 
-    public void unsetQueryEntry() {
+    public void unsetQueryEntry()
+    {
         this.queryEntry = null;
     }
 

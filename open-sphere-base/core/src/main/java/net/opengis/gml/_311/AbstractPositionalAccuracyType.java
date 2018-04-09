@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Position error estimate (or accuracy) data. 
+ * Position error estimate (or accuracy) data.
  * 
- * <p>Java class for AbstractPositionalAccuracyType complex type.
+ * <p>
+ * Java class for AbstractPositionalAccuracyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AbstractPositionalAccuracyType">
@@ -36,39 +37,33 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AbstractPositionalAccuracyType", propOrder = {
-    "measureDescription"
-})
-@XmlSeeAlso({
-    RelativeInternalPositionalAccuracyType.class,
-    CovarianceMatrixType.class,
-    AbsoluteExternalPositionalAccuracyType.class
-})
-public abstract class AbstractPositionalAccuracyType {
+@XmlType(name = "AbstractPositionalAccuracyType", propOrder = { "measureDescription" })
+@XmlSeeAlso({ RelativeInternalPositionalAccuracyType.class, CovarianceMatrixType.class,
+    AbsoluteExternalPositionalAccuracyType.class })
+public abstract class AbstractPositionalAccuracyType
+{
 
     protected CodeType measureDescription;
 
     /**
      * Gets the value of the measureDescription property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CodeType }
-     *     
+     * @return possible object is {@link CodeType }
+     * 
      */
-    public CodeType getMeasureDescription() {
+    public CodeType getMeasureDescription()
+    {
         return measureDescription;
     }
 
     /**
      * Sets the value of the measureDescription property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CodeType }
-     *     
+     * @param value allowed object is {@link CodeType }
+     * 
      */
-    public void setMeasureDescription(CodeType value) {
+    public void setMeasureDescription(CodeType value)
+    {
         this.measureDescription = value;
     }
 

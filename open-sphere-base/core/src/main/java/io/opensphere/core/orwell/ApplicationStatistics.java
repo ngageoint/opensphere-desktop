@@ -30,7 +30,8 @@ public class ApplicationStatistics
     private String myApplicationUserDirectory;
 
     /**
-     * The collection of statistics describing each plugin installed on the system.
+     * The collection of statistics describing each plugin installed on the
+     * system.
      */
     private final List<PluginStatistics> myAvailablePlugins = New.list();
 
@@ -67,7 +68,8 @@ public class ApplicationStatistics
     /**
      * Sets the value of the {@link #myInstallationDate} field.
      *
-     * @param pInstallationDate the value to store in the {@link #myInstallationDate} field.
+     * @param pInstallationDate the value to store in the
+     *            {@link #myInstallationDate} field.
      */
     public void setInstallationDate(String pInstallationDate)
     {
@@ -87,7 +89,8 @@ public class ApplicationStatistics
     /**
      * Sets the value of the {@link #myInstallationLocation} field.
      *
-     * @param pInstallationLocation the value to store in the {@link #myInstallationLocation} field.
+     * @param pInstallationLocation the value to store in the
+     *            {@link #myInstallationLocation} field.
      */
     public void setInstallationLocation(String pInstallationLocation)
     {
@@ -97,7 +100,8 @@ public class ApplicationStatistics
     /**
      * Gets the value of the {@link #myApplicationUserDirectory} field.
      *
-     * @return the value stored in the {@link #myApplicationUserDirectory} field.
+     * @return the value stored in the {@link #myApplicationUserDirectory}
+     *         field.
      */
     public String getApplicationUserDirectory()
     {
@@ -107,7 +111,8 @@ public class ApplicationStatistics
     /**
      * Sets the value of the {@link #myApplicationUserDirectory} field.
      *
-     * @param pApplicationUserDirectory the value to store in the {@link #myApplicationUserDirectory} field.
+     * @param pApplicationUserDirectory the value to store in the
+     *            {@link #myApplicationUserDirectory} field.
      */
     public void setApplicationUserDirectory(String pApplicationUserDirectory)
     {

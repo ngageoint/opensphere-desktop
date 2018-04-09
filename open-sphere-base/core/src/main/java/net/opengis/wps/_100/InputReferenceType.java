@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import java.util.ArrayList;
@@ -18,13 +17,15 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Reference to an input or output value that is a web accessible resource. 
+ * Reference to an input or output value that is a web accessible resource.
  * 
- * <p>Java class for InputReferenceType complex type.
+ * <p>
+ * Java class for InputReferenceType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="InputReferenceType">
@@ -72,29 +73,33 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "InputReferenceType", propOrder = {
-    "header",
-    "body",
-    "bodyReference"
-})
-public class InputReferenceType {
+@XmlType(name = "InputReferenceType", propOrder = { "header", "body", "bodyReference" })
+public class InputReferenceType
+{
 
     @XmlElement(name = "Header")
     protected List<InputReferenceType.Header> header;
+
     @XmlElement(name = "Body")
     protected Object body;
+
     @XmlElement(name = "BodyReference")
     protected InputReferenceType.BodyReference bodyReference;
+
     @XmlAttribute(namespace = "http://www.w3.org/1999/xlink", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String href;
+
     @XmlAttribute
     protected String method;
+
     @XmlAttribute
     protected String mimeType;
+
     @XmlAttribute
     @XmlSchemaType(name = "anyURI")
     protected String encoding;
+
     @XmlAttribute
     @XmlSchemaType(name = "anyURI")
     protected String schema;
@@ -103,15 +108,16 @@ public class InputReferenceType {
      * Gets the value of the header property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the header property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the header property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getHeader().add(newItem);
+     * getHeader().add(newItem);
      * </pre>
      * 
      * 
@@ -121,8 +127,10 @@ public class InputReferenceType {
      * 
      * 
      */
-    public List<InputReferenceType.Header> getHeader() {
-        if (header == null) {
+    public List<InputReferenceType.Header> getHeader()
+    {
+        if (header == null)
+        {
             header = new ArrayList<InputReferenceType.Header>();
         }
         return this.header;
@@ -131,87 +139,85 @@ public class InputReferenceType {
     /**
      * Gets the value of the body property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
+     * @return possible object is {@link Object }
+     * 
      */
-    public Object getBody() {
+    public Object getBody()
+    {
         return body;
     }
 
     /**
      * Sets the value of the body property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
+     * @param value allowed object is {@link Object }
+     * 
      */
-    public void setBody(Object value) {
+    public void setBody(Object value)
+    {
         this.body = value;
     }
 
     /**
      * Gets the value of the bodyReference property.
      * 
-     * @return
-     *     possible object is
-     *     {@link InputReferenceType.BodyReference }
-     *     
+     * @return possible object is {@link InputReferenceType.BodyReference }
+     * 
      */
-    public InputReferenceType.BodyReference getBodyReference() {
+    public InputReferenceType.BodyReference getBodyReference()
+    {
         return bodyReference;
     }
 
     /**
      * Sets the value of the bodyReference property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link InputReferenceType.BodyReference }
-     *     
+     * @param value allowed object is {@link InputReferenceType.BodyReference }
+     * 
      */
-    public void setBodyReference(InputReferenceType.BodyReference value) {
+    public void setBodyReference(InputReferenceType.BodyReference value)
+    {
         this.bodyReference = value;
     }
 
     /**
-     * Reference to a web-accessible resource that can be used as input, or is provided by the process as output. This attribute shall contain a URL from which this input/output can be electronically retrieved. 
+     * Reference to a web-accessible resource that can be used as input, or is
+     * provided by the process as output. This attribute shall contain a URL
+     * from which this input/output can be electronically retrieved.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHref() {
+    public String getHref()
+    {
         return href;
     }
 
     /**
      * Sets the value of the href property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHref(String value) {
+    public void setHref(String value)
+    {
         this.href = value;
     }
 
     /**
      * Gets the value of the method property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMethod() {
-        if (method == null) {
+    public String getMethod()
+    {
+        if (method == null)
+        {
             return "GET";
-        } else {
+        }
+        else
+        {
             return method;
         }
     }
@@ -219,92 +225,87 @@ public class InputReferenceType {
     /**
      * Sets the value of the method property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMethod(String value) {
+    public void setMethod(String value)
+    {
         this.method = value;
     }
 
     /**
      * Gets the value of the mimeType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMimeType() {
+    public String getMimeType()
+    {
         return mimeType;
     }
 
     /**
      * Sets the value of the mimeType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMimeType(String value) {
+    public void setMimeType(String value)
+    {
         this.mimeType = value;
     }
 
     /**
      * Gets the value of the encoding property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getEncoding() {
+    public String getEncoding()
+    {
         return encoding;
     }
 
     /**
      * Sets the value of the encoding property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setEncoding(String value) {
+    public void setEncoding(String value)
+    {
         this.encoding = value;
     }
 
     /**
      * Gets the value of the schema property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getSchema() {
+    public String getSchema()
+    {
         return schema;
     }
 
     /**
      * Sets the value of the schema property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setSchema(String value) {
+    public void setSchema(String value)
+    {
         this.schema = value;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -320,43 +321,46 @@ public class InputReferenceType {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "")
-    public static class BodyReference {
+    public static class BodyReference
+    {
 
         @XmlAttribute(namespace = "http://www.w3.org/1999/xlink", required = true)
         @XmlSchemaType(name = "anyURI")
         protected String href;
 
         /**
-         * Reference to a remote document to be used as the body of the an HTTP POST request message. This attribute shall contain a URL from which this input can be electronically retrieved. 
+         * Reference to a remote document to be used as the body of the an HTTP
+         * POST request message. This attribute shall contain a URL from which
+         * this input can be electronically retrieved.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getHref() {
+        public String getHref()
+        {
             return href;
         }
 
         /**
          * Sets the value of the href property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setHref(String value) {
+        public void setHref(String value)
+        {
             this.href = value;
         }
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -373,58 +377,56 @@ public class InputReferenceType {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "")
-    public static class Header {
+    public static class Header
+    {
 
         @XmlAttribute(required = true)
         protected String key;
+
         @XmlAttribute(required = true)
         protected String value;
 
         /**
          * Gets the value of the key property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getKey() {
+        public String getKey()
+        {
             return key;
         }
 
         /**
          * Sets the value of the key property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setKey(String value) {
+        public void setKey(String value)
+        {
             this.key = value;
         }
 
         /**
          * Gets the value of the value property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getValue() {
+        public String getValue()
+        {
             return value;
         }
 
         /**
          * Sets the value of the value property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setValue(String value) {
+        public void setValue(String value)
+        {
             this.value = value;
         }
 

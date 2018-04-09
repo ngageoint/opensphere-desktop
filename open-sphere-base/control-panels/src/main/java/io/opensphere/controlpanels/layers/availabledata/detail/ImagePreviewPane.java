@@ -7,13 +7,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Collection;
 
-import javafx.application.Platform;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
-
 import io.opensphere.controlpanels.DetailPane;
 import io.opensphere.controlpanels.component.map.background.BackgroundOverlay;
 import io.opensphere.controlpanels.component.map.boundingbox.BoundingBoxOverlay;
@@ -33,6 +26,12 @@ import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.impl.GroupCategorizationUtilities;
+import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 
 /**
  * A panel on which an image and map preview are displayed in addition to the
@@ -140,7 +139,7 @@ public class ImagePreviewPane extends DetailPane
         String provider = pDataGroup.getTopParentDisplayName();
 
         Collection<String> categories = StreamUtilities.map(GroupCategorizationUtilities.getGroupCategories(pDataGroup, false),
-            input -> StringUtilities.trim(input, 's'));
+                input -> StringUtilities.trim(input, 's'));
 
         String type = StringUtilities.join(", ", categories);
 

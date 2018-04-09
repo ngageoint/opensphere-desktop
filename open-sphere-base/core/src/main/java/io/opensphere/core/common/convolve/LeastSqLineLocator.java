@@ -2,12 +2,12 @@ package io.opensphere.core.common.convolve;
 
 /**
  * Encapsulates the least-squares algorithm for approximating the intersection
- * of any number of lines in the plane.  The location found is the one that
- * minimizes the sum of the squared distances from the lines.  Also output are
- * the eigenvalues and eigenvectors of the covariance matrix, which can be
- * used to describe the probability distribution, assuming that probability
- * density is inversely proportional the exponential of the sum of the squared
- * distances from the lines.
+ * of any number of lines in the plane. The location found is the one that
+ * minimizes the sum of the squared distances from the lines. Also output are
+ * the eigenvalues and eigenvectors of the covariance matrix, which can be used
+ * to describe the probability distribution, assuming that probability density
+ * is inversely proportional the exponential of the sum of the squared distances
+ * from the lines.
  */
 public class LeastSqLineLocator
 {
@@ -49,8 +49,8 @@ public class LeastSqLineLocator
     }
 
     /**
-     * Gets the eigenvalues of the covariance matrix.  If there are two
-     * distinct values, then the larger one is first.
+     * Gets the eigenvalues of the covariance matrix. If there are two distinct
+     * values, then the larger one is first.
      *
      * @return the eigenvalues
      */
@@ -60,7 +60,7 @@ public class LeastSqLineLocator
     }
 
     /**
-     * Gets the unit-length eigenvectors of the covariance matrix.  The
+     * Gets the unit-length eigenvectors of the covariance matrix. The
      * eigenvectors are in the same order as the corresponding eigenvalues.
      *
      * @return the eigenvectors
@@ -81,8 +81,8 @@ public class LeastSqLineLocator
     }
 
     /**
-     * Find the inverse of the standard deviation matrix (standard deviation
-     * is the square-root of the covariance matrix).
+     * Find the inverse of the standard deviation matrix (standard deviation is
+     * the square-root of the covariance matrix).
      *
      * @return inverse STD
      */
@@ -113,11 +113,10 @@ public class LeastSqLineLocator
     }
 
     /**
-     * Use the parametric form of the line at index <i>i</i> to test whether
-     * the pointing angle is sufficiently close to the least-squares
-     * localization.  The method returns true if the angle (in degrees)
-     * between the ray and the bearing to the calculated location is less than
-     * the specified threshold.
+     * Use the parametric form of the line at index <i>i</i> to test whether the
+     * pointing angle is sufficiently close to the least-squares localization.
+     * The method returns true if the angle (in degrees) between the ray and the
+     * bearing to the calculated location is less than the specified threshold.
      *
      * @param i the index of the line to be tested
      * @param thresholdDeg the required angle in degrees
@@ -131,8 +130,7 @@ public class LeastSqLineLocator
         LeastSqLineSupport.addMult(bearingVector, -1.0, p[i]);
         // the dot product of the ray's direction and the normalized vector
         // is the cosine of the relative bearing
-        double cosTheta = LeastSqLineSupport.multVec(bearingVector, dp[i])
-                / LeastSqLineSupport.magnitude(bearingVector);
+        double cosTheta = LeastSqLineSupport.multVec(bearingVector, dp[i]) / LeastSqLineSupport.magnitude(bearingVector);
         // compare that to the cosine of the threshold angle
         return Math.cos(Math.toRadians(thresholdDeg)) < cosTheta;
     }
@@ -154,8 +152,9 @@ public class LeastSqLineLocator
     }
 
     /**
-     * Add a new input line in parametric form p(t) = (x0, y0) + t (dx, dy).
-     * It is converted to affine subspace form for the calculation.
+     * Add a new input line in parametric form p(t) = (x0, y0) + t (dx, dy). It
+     * is converted to affine subspace form for the calculation.
+     * 
      * @param x0 x-coordinate of a point on the line
      * @param y0 y-coordinate of a point on the line
      * @param dx x-coordinate of the direction of the line
@@ -167,28 +166,28 @@ public class LeastSqLineLocator
         double mag = Math.sqrt(LeastSqLineSupport.sq(dx) + LeastSqLineSupport.sq(dy));
 
         // keep the parametric form for later analysis
-        p[index] = new double[] {x0, y0};
-        dp[index] = new double[] {dx / mag, dy / mag};
+        p[index] = new double[] { x0, y0 };
+        dp[index] = new double[] { dx / mag, dy / mag };
 
         // convert to affine functional form
         double ax = dy / mag;
         double ay = -dx / mag;
-        a[index] = new double[] {ax, ay};
+        a[index] = new double[] { ax, ay };
         b[index] = -(ax * x0 + ay * y0);
     }
 
     /**
-     * Calculate the covariance matrix, which is the sum of the tensor
-     * products of the linear coefficient vectors with themselves.
+     * Calculate the covariance matrix, which is the sum of the tensor products
+     * of the linear coefficient vectors with themselves.
      *
      * @return the covariance matrix
      */
     private double[][] getQuadraticMatrix()
     {
-        double[][] cov = new double[][] {{0.0, 0.0}, {0.0, 0.0}};
+        double[][] cov = new double[][] { { 0.0, 0.0 }, { 0.0, 0.0 } };
         for (int i = 0; i < a.length; i++)
         {
-            double[][] row = new double[][] {a[i]};
+            double[][] row = new double[][] { a[i] };
             LeastSqLineSupport.add(cov, LeastSqLineSupport.multStarMatrix(row, row));
         }
         return cov;

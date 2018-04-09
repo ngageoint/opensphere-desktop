@@ -7,20 +7,6 @@ import java.awt.LayoutManager;
 import java.util.LinkedList;
 import java.util.List;
 
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -41,6 +27,18 @@ import io.opensphere.featureactions.model.LabelAction;
 import io.opensphere.featureactions.model.StyleAction;
 import io.opensphere.filterbuilder2.editor.FilterEditorPanel;
 import io.opensphere.mantle.data.DataTypeInfo;
+import javafx.collections.ObservableList;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 /** Shows the detail editor for feature actions. */
 @SuppressWarnings("PMD.GodClass")
@@ -95,8 +93,8 @@ public class DetailEditor
     private Runnable editEar;
 
     /**
-     * Attach a listener to be informed when editing has completed.  The
-     * listener is invoked on the JFX thread after all changes are applied.
+     * Attach a listener to be informed when editing has completed. The listener
+     * is invoked on the JFX thread after all changes are applied.
      *
      * @param ear the listener
      */
@@ -134,7 +132,7 @@ public class DetailEditor
         }
 
         createAction = new ComboBox<String>();
-        Platform.runLater(() -> refreshCreateOptions());
+        FXUtilities.runOnFXThreadAndWait(() -> refreshCreateOptions());
 
         GridPane actionRoot = new GridPane();
         actionRoot.setHgap(5);
@@ -198,7 +196,7 @@ public class DetailEditor
             addLabelAction();
         }
 
-        Platform.runLater(() -> refreshCreateOptions());
+        FXUtilities.runOnFXThreadAndWait(() -> refreshCreateOptions());
     }
 
     /**
@@ -227,7 +225,7 @@ public class DetailEditor
             // do some stuff on the swing thread
             filterEditor.applyChanges();
             // do some more stuff on the JFX thread
-            Platform.runLater(() -> applyChangesJfx());
+            FXUtilities.runOnFXThreadAndWait(() -> applyChangesJfx());
         }
     }
 
@@ -295,7 +293,7 @@ public class DetailEditor
     {
         styleEdit = null;
         actionPanes.getPanes().removeIf(p -> STYLE_TITLE.equals(p.getText()));
-        Platform.runLater(() -> refreshCreateOptions());
+        FXUtilities.runOnFXThreadAndWait(() -> refreshCreateOptions());
     }
 
     /**
@@ -348,7 +346,7 @@ public class DetailEditor
     {
         labelEdit = null;
         actionPanes.getPanes().removeIf(p -> LABEL_TITLE.equals(p.getText()));
-        Platform.runLater(() -> refreshCreateOptions());
+        FXUtilities.runOnFXThreadAndWait(() -> refreshCreateOptions());
     }
 
     /**
@@ -392,8 +390,8 @@ public class DetailEditor
     }
 
     /**
-     * A layout manager that stacks subcomponents vertically and stretches
-     * them horizontally.
+     * A layout manager that stacks subcomponents vertically and stretches them
+     * horizontally.
      */
     protected static class StackLayout implements LayoutManager
     {
@@ -415,7 +413,7 @@ public class DetailEditor
         public void attach(Container p)
         {
             host = p;
-            for (Component c :  kids)
+            for (Component c : kids)
             {
                 host.add(c);
             }
@@ -450,7 +448,7 @@ public class DetailEditor
         public Dimension minimumLayoutSize(Container parent)
         {
             Dimension d = new Dimension();
-            for (Component c :  kids)
+            for (Component c : kids)
             {
                 Dimension childPref = c.getPreferredSize();
                 d.width = Math.max(d.width, childPref.width);
@@ -465,7 +463,7 @@ public class DetailEditor
         {
             Dimension size = host.getSize();
             int y = 0;
-            for (Component c :  kids)
+            for (Component c : kids)
             {
                 int dy = Math.min(c.getPreferredSize().height, size.height - y);
                 c.setBounds(0, y, size.width, dy);

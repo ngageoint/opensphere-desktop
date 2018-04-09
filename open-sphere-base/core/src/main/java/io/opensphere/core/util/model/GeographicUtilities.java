@@ -36,7 +36,8 @@ public final class GeographicUtilities
         LatLonAlt startPoint = null;
         List<LatLonAlt> curPoly = New.list();
         Collection<List<LatLonAlt>> holes = null;
-        // Some shapefiles have duplicate successive points, so we remove them for the following logic work
+        // Some shapefiles have duplicate successive points, so we remove them
+        // for the following logic work
         List<LatLonAlt> deduped = removeDuplicates(rings);
         for (LatLonAlt lla : deduped)
         {
@@ -52,8 +53,10 @@ public final class GeographicUtilities
             {
                 if (curPoly.size() > 2)
                 {
-                    /* Exterior rings are defined in clockwise order and inner rings are defined in counter-clockwise order. Make
-                     * an exception to allow a counter-clockwise polygon if it's the only one in the list. */
+                    /* Exterior rings are defined in clockwise order and inner
+                     * rings are defined in counter-clockwise order. Make an
+                     * exception to allow a counter-clockwise polygon if it's
+                     * the only one in the list. */
                     PolygonWinding winding = getNaturalWinding(curPoly);
                     if (winding == PolygonWinding.CLOCKWISE || deduped.size() == curPoly.size())
                     {

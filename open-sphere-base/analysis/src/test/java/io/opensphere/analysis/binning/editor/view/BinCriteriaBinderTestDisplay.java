@@ -4,14 +4,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.analysis.binning.criteria.BinCriteria;
 import io.opensphere.analysis.binning.criteria.BinCriteriaElement;
@@ -29,7 +28,7 @@ public class BinCriteriaBinderTestDisplay
     @Test
     public void testAdd()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -63,7 +62,7 @@ public class BinCriteriaBinderTestDisplay
     @Test
     public void testChanges()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -100,7 +99,7 @@ public class BinCriteriaBinderTestDisplay
     @Test
     public void testInitialValues()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

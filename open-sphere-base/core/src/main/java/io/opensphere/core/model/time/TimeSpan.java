@@ -164,7 +164,7 @@ public abstract class TimeSpan implements Comparable<TimeSpan>, Serializable, Ti
     }
 
     /**
-     * Converts a start and end {@link Date} to a {@link TimeSpan}.  Unlike the
+     * Converts a start and end {@link Date} to a {@link TimeSpan}. Unlike the
      * get method with the same signature, if one boundary is null, the result
      * is a degenerate time span (a point).
      *
@@ -172,7 +172,7 @@ public abstract class TimeSpan implements Comparable<TimeSpan>, Serializable, Ti
      * @param end - the end date
      * @return a {@link TimeSpan} or TimeSpan.TIMELESS.
      */
-    public static TimeSpan spanOrPt (Date start, Date end)
+    public static TimeSpan spanOrPt(Date start, Date end)
     {
         if (start != null && end != null)
             return TimeSpan.get(start.getTime(), end.getTime());

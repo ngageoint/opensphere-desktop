@@ -215,7 +215,7 @@ public class DDSImage extends Image implements DDSEncodableImage
             }
         }
 
-        return (ByteBuffer)result.rewind();
+        return result.rewind();
     }
 
     @Override

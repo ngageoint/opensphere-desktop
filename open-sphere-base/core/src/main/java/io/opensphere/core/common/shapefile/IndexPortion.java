@@ -152,7 +152,7 @@ class IndexPortion
     /**
      * Deletes the file managed by this class.
      *
-     * @throws IOException if an error occurs while closing the input/output
+     * @throws IOException if an  error occurs while closing the input/output
      *             streams.
      */
     public void delete() throws IOException

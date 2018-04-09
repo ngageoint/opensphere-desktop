@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.ows._110.CapabilitiesBaseType;
 
-
 /**
- * <p>Java class for WPSCapabilitiesType complex type.
+ * <p>
+ * Java class for WPSCapabilitiesType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="WPSCapabilitiesType">
@@ -42,111 +43,106 @@ import net.opengis.ows._110.CapabilitiesBaseType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "WPSCapabilitiesType", propOrder = {
-    "processOfferings",
-    "languages",
-    "wsdl"
-})
-public class WPSCapabilitiesType
-    extends CapabilitiesBaseType
+@XmlType(name = "WPSCapabilitiesType", propOrder = { "processOfferings", "languages", "wsdl" })
+public class WPSCapabilitiesType extends CapabilitiesBaseType
 {
 
     @XmlElement(name = "ProcessOfferings", required = true)
     protected ProcessOfferings processOfferings;
+
     @XmlElement(name = "Languages", required = true)
     protected Languages languages;
+
     @XmlElement(name = "WSDL")
     protected WSDL wsdl;
+
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "anySimpleType")
     protected String service;
+
     @XmlAttribute(namespace = "http://www.w3.org/XML/1998/namespace", required = true)
     protected String lang;
 
     /**
      * Gets the value of the processOfferings property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ProcessOfferings }
-     *     
+     * @return possible object is {@link ProcessOfferings }
+     * 
      */
-    public ProcessOfferings getProcessOfferings() {
+    public ProcessOfferings getProcessOfferings()
+    {
         return processOfferings;
     }
 
     /**
      * Sets the value of the processOfferings property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ProcessOfferings }
-     *     
+     * @param value allowed object is {@link ProcessOfferings }
+     * 
      */
-    public void setProcessOfferings(ProcessOfferings value) {
+    public void setProcessOfferings(ProcessOfferings value)
+    {
         this.processOfferings = value;
     }
 
     /**
-     * List of the default and other languages supported by this service. 
+     * List of the default and other languages supported by this service.
      * 
-     * @return
-     *     possible object is
-     *     {@link Languages }
-     *     
+     * @return possible object is {@link Languages }
+     * 
      */
-    public Languages getLanguages() {
+    public Languages getLanguages()
+    {
         return languages;
     }
 
     /**
      * Sets the value of the languages property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Languages }
-     *     
+     * @param value allowed object is {@link Languages }
+     * 
      */
-    public void setLanguages(Languages value) {
+    public void setLanguages(Languages value)
+    {
         this.languages = value;
     }
 
     /**
      * Location of a WSDL document which describes the entire service.
      * 
-     * @return
-     *     possible object is
-     *     {@link WSDL }
-     *     
+     * @return possible object is {@link WSDL }
+     * 
      */
-    public WSDL getWSDL() {
+    public WSDL getWSDL()
+    {
         return wsdl;
     }
 
     /**
      * Sets the value of the wsdl property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link WSDL }
-     *     
+     * @param value allowed object is {@link WSDL }
+     * 
      */
-    public void setWSDL(WSDL value) {
+    public void setWSDL(WSDL value)
+    {
         this.wsdl = value;
     }
 
     /**
      * Gets the value of the service property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getService() {
-        if (service == null) {
+    public String getService()
+    {
+        if (service == null)
+        {
             return "WPS";
-        } else {
+        }
+        else
+        {
             return service;
         }
     }
@@ -154,36 +150,33 @@ public class WPSCapabilitiesType
     /**
      * Sets the value of the service property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setService(String value) {
+    public void setService(String value)
+    {
         this.service = value;
     }
 
     /**
      * Gets the value of the lang property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLang() {
+    public String getLang()
+    {
         return lang;
     }
 
     /**
      * Sets the value of the lang property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLang(String value) {
+    public void setLang(String value)
+    {
         this.lang = value;
     }
 

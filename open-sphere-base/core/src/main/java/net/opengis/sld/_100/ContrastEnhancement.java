@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -39,90 +40,83 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "normalize",
-    "histogram",
-    "gammaValue"
-})
+@XmlType(name = "", propOrder = { "normalize", "histogram", "gammaValue" })
 @XmlRootElement(name = "ContrastEnhancement")
-public class ContrastEnhancement {
+public class ContrastEnhancement
+{
 
     @XmlElement(name = "Normalize")
     protected Normalize normalize;
+
     @XmlElement(name = "Histogram")
     protected Histogram histogram;
+
     @XmlElement(name = "GammaValue")
     protected Double gammaValue;
 
     /**
      * Gets the value of the normalize property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Normalize }
-     *     
+     * @return possible object is {@link Normalize }
+     * 
      */
-    public Normalize getNormalize() {
+    public Normalize getNormalize()
+    {
         return normalize;
     }
 
     /**
      * Sets the value of the normalize property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Normalize }
-     *     
+     * @param value allowed object is {@link Normalize }
+     * 
      */
-    public void setNormalize(Normalize value) {
+    public void setNormalize(Normalize value)
+    {
         this.normalize = value;
     }
 
     /**
      * Gets the value of the histogram property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Histogram }
-     *     
+     * @return possible object is {@link Histogram }
+     * 
      */
-    public Histogram getHistogram() {
+    public Histogram getHistogram()
+    {
         return histogram;
     }
 
     /**
      * Sets the value of the histogram property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Histogram }
-     *     
+     * @param value allowed object is {@link Histogram }
+     * 
      */
-    public void setHistogram(Histogram value) {
+    public void setHistogram(Histogram value)
+    {
         this.histogram = value;
     }
 
     /**
      * Gets the value of the gammaValue property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getGammaValue() {
+    public Double getGammaValue()
+    {
         return gammaValue;
     }
 
     /**
      * Sets the value of the gammaValue property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setGammaValue(Double value) {
+    public void setGammaValue(Double value)
+    {
         this.gammaValue = value;
     }
 

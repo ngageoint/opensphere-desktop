@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,13 +15,23 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * An ordered sequence of two or more single coordinate operations. The sequence of operations is constrained by the requirement that the source coordinate reference system of step (n+1) must be the same as the target coordinate reference system of step (n). The source coordinate reference system of the first step and the target coordinate reference system of the last step are the source and target coordinate reference system associated with the concatenated operation. Instead of a forward operation, an inverse operation may be used for one or more of the operation steps mentioned above, if the inverse operation is uniquely defined by the forward operation.
+ * An ordered sequence of two or more single coordinate operations. The sequence
+ * of operations is constrained by the requirement that the source coordinate
+ * reference system of step (n+1) must be the same as the target coordinate
+ * reference system of step (n). The source coordinate reference system of the
+ * first step and the target coordinate reference system of the last step are
+ * the source and target coordinate reference system associated with the
+ * concatenated operation. Instead of a forward operation, an inverse operation
+ * may be used for one or more of the operation steps mentioned above, if the
+ * inverse operation is uniquely defined by the forward operation.
  * 
- * <p>Java class for ConcatenatedOperationType complex type.
+ * <p>
+ * Java class for ConcatenatedOperationType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ConcatenatedOperationType">
@@ -39,29 +48,29 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ConcatenatedOperationType", propOrder = {
-    "usesSingleOperation"
-})
-public class ConcatenatedOperationType
-    extends AbstractCoordinateOperationType
+@XmlType(name = "ConcatenatedOperationType", propOrder = { "usesSingleOperation" })
+public class ConcatenatedOperationType extends AbstractCoordinateOperationType
 {
 
     @XmlElement(required = true)
     protected List<SingleOperationRefType> usesSingleOperation;
 
     /**
-     * Ordered sequence of associations to the two or more single operations used by this concatenated operation. Gets the value of the usesSingleOperation property.
+     * Ordered sequence of associations to the two or more single operations
+     * used by this concatenated operation. Gets the value of the
+     * usesSingleOperation property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the usesSingleOperation property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the usesSingleOperation property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getUsesSingleOperation().add(newItem);
+     * getUsesSingleOperation().add(newItem);
      * </pre>
      * 
      * 
@@ -71,8 +80,10 @@ public class ConcatenatedOperationType
      * 
      * 
      */
-    public List<SingleOperationRefType> getUsesSingleOperation() {
-        if (usesSingleOperation == null) {
+    public List<SingleOperationRefType> getUsesSingleOperation()
+    {
+        if (usesSingleOperation == null)
+        {
             usesSingleOperation = new ArrayList<SingleOperationRefType>();
         }
         return this.usesSingleOperation;

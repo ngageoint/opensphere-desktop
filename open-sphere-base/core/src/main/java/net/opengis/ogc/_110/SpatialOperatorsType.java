@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ogc._110;
 
 import java.util.ArrayList;
@@ -16,11 +15,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for SpatialOperatorsType complex type.
+ * <p>
+ * Java class for SpatialOperatorsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SpatialOperatorsType">
@@ -37,10 +38,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SpatialOperatorsType", propOrder = {
-    "spatialOperator"
-})
-public class SpatialOperatorsType {
+@XmlType(name = "SpatialOperatorsType", propOrder = { "spatialOperator" })
+public class SpatialOperatorsType
+{
 
     @XmlElement(name = "SpatialOperator", required = true)
     protected List<SpatialOperatorType> spatialOperator;
@@ -49,15 +49,16 @@ public class SpatialOperatorsType {
      * Gets the value of the spatialOperator property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the spatialOperator property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the spatialOperator property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSpatialOperator().add(newItem);
+     * getSpatialOperator().add(newItem);
      * </pre>
      * 
      * 
@@ -67,8 +68,10 @@ public class SpatialOperatorsType {
      * 
      * 
      */
-    public List<SpatialOperatorType> getSpatialOperator() {
-        if (spatialOperator == null) {
+    public List<SpatialOperatorType> getSpatialOperator()
+    {
+        if (spatialOperator == null)
+        {
             spatialOperator = new ArrayList<SpatialOperatorType>();
         }
         return this.spatialOperator;

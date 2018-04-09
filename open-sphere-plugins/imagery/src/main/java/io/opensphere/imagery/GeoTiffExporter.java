@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import javafx.application.Platform;
-
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
@@ -40,6 +38,7 @@ import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MapVisualizationInfo;
 import io.opensphere.mantle.data.MapVisualizationType;
+import javafx.application.Platform;
 
 /**
  * Implements the Exporter interface and is inadvisably installed into the

@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for LocationType complex type.
+ * <p>
+ * Java class for LocationType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LocationType">
@@ -42,147 +43,146 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LocationType", propOrder = {
-    "longitude",
-    "latitude",
-    "altitude",
-    "locationSimpleExtensionGroup",
-    "locationObjectExtensionGroup"
-})
-public class LocationType
-    extends AbstractObjectType
+@XmlType(name = "LocationType", propOrder = { "longitude", "latitude", "altitude", "locationSimpleExtensionGroup",
+    "locationObjectExtensionGroup" })
+public class LocationType extends AbstractObjectType
 {
 
     @XmlElement(defaultValue = "0.0")
     protected Double longitude;
+
     @XmlElement(defaultValue = "0.0")
     protected Double latitude;
+
     @XmlElement(defaultValue = "0.0")
     protected Double altitude;
+
     @XmlElement(name = "LocationSimpleExtensionGroup")
     @XmlSchemaType(name = "anySimpleType")
     protected List<Object> locationSimpleExtensionGroup;
+
     @XmlElement(name = "LocationObjectExtensionGroup")
     protected List<AbstractObjectType> locationObjectExtensionGroup;
 
     /**
      * Gets the value of the longitude property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getLongitude() {
+    public Double getLongitude()
+    {
         return longitude;
     }
 
     /**
      * Sets the value of the longitude property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setLongitude(Double value) {
+    public void setLongitude(Double value)
+    {
         this.longitude = value;
     }
 
-    public boolean isSetLongitude() {
-        return (this.longitude!= null);
+    public boolean isSetLongitude()
+    {
+        return (this.longitude != null);
     }
 
     /**
      * Gets the value of the latitude property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getLatitude() {
+    public Double getLatitude()
+    {
         return latitude;
     }
 
     /**
      * Sets the value of the latitude property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setLatitude(Double value) {
+    public void setLatitude(Double value)
+    {
         this.latitude = value;
     }
 
-    public boolean isSetLatitude() {
-        return (this.latitude!= null);
+    public boolean isSetLatitude()
+    {
+        return (this.latitude != null);
     }
 
     /**
      * Gets the value of the altitude property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     * @return possible object is {@link Double }
+     * 
      */
-    public Double getAltitude() {
+    public Double getAltitude()
+    {
         return altitude;
     }
 
     /**
      * Sets the value of the altitude property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     * @param value allowed object is {@link Double }
+     * 
      */
-    public void setAltitude(Double value) {
+    public void setAltitude(Double value)
+    {
         this.altitude = value;
     }
 
-    public boolean isSetAltitude() {
-        return (this.altitude!= null);
+    public boolean isSetAltitude()
+    {
+        return (this.altitude != null);
     }
 
     /**
      * Gets the value of the locationSimpleExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the locationSimpleExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the locationSimpleExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLocationSimpleExtensionGroup().add(newItem);
+     * getLocationSimpleExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getLocationSimpleExtensionGroup() {
-        if (locationSimpleExtensionGroup == null) {
+    public List<Object> getLocationSimpleExtensionGroup()
+    {
+        if (locationSimpleExtensionGroup == null)
+        {
             locationSimpleExtensionGroup = new ArrayList<Object>();
         }
         return this.locationSimpleExtensionGroup;
     }
 
-    public boolean isSetLocationSimpleExtensionGroup() {
-        return ((this.locationSimpleExtensionGroup!= null)&&(!this.locationSimpleExtensionGroup.isEmpty()));
+    public boolean isSetLocationSimpleExtensionGroup()
+    {
+        return ((this.locationSimpleExtensionGroup != null) && (!this.locationSimpleExtensionGroup.isEmpty()));
     }
 
-    public void unsetLocationSimpleExtensionGroup() {
+    public void unsetLocationSimpleExtensionGroup()
+    {
         this.locationSimpleExtensionGroup = null;
     }
 
@@ -190,15 +190,16 @@ public class LocationType
      * Gets the value of the locationObjectExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the locationObjectExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the locationObjectExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLocationObjectExtensionGroup().add(newItem);
+     * getLocationObjectExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
@@ -208,18 +209,22 @@ public class LocationType
      * 
      * 
      */
-    public List<AbstractObjectType> getLocationObjectExtensionGroup() {
-        if (locationObjectExtensionGroup == null) {
+    public List<AbstractObjectType> getLocationObjectExtensionGroup()
+    {
+        if (locationObjectExtensionGroup == null)
+        {
             locationObjectExtensionGroup = new ArrayList<AbstractObjectType>();
         }
         return this.locationObjectExtensionGroup;
     }
 
-    public boolean isSetLocationObjectExtensionGroup() {
-        return ((this.locationObjectExtensionGroup!= null)&&(!this.locationObjectExtensionGroup.isEmpty()));
+    public boolean isSetLocationObjectExtensionGroup()
+    {
+        return ((this.locationObjectExtensionGroup != null) && (!this.locationObjectExtensionGroup.isEmpty()));
     }
 
-    public void unsetLocationObjectExtensionGroup() {
+    public void unsetLocationObjectExtensionGroup()
+    {
         this.locationObjectExtensionGroup = null;
     }
 

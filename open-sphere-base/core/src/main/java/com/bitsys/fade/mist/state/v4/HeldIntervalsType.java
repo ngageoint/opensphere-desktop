@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.util.ArrayList;
@@ -15,18 +14,20 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *         A set of data hold intervals, used in animations. A hold interval 
- *         defines an interval in which data is held and not animated (e.g.: the 
- *         data that temporally falls in this interval will be displayed for the 
- *         entire animation instead of for its defined temporal span).
- *       
+ * A set of data hold intervals, used in animations. A hold interval defines an
+ * interval in which data is held and not animated (e.g.: the data that
+ * temporally falls in this interval will be displayed for the entire animation
+ * instead of for its defined temporal span).
  * 
- * <p>Java class for HeldIntervalsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for HeldIntervalsType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="HeldIntervalsType">
@@ -43,10 +44,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "HeldIntervalsType", propOrder = {
-    "held"
-})
-public class HeldIntervalsType {
+@XmlType(name = "HeldIntervalsType", propOrder = { "held" })
+public class HeldIntervalsType
+{
 
     protected List<HeldIntervalType> held;
 
@@ -54,15 +54,16 @@ public class HeldIntervalsType {
      * Gets the value of the held property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the held property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the held property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getHeld().add(newItem);
+     * getHeld().add(newItem);
      * </pre>
      * 
      * 
@@ -72,18 +73,22 @@ public class HeldIntervalsType {
      * 
      * 
      */
-    public List<HeldIntervalType> getHeld() {
-        if (held == null) {
+    public List<HeldIntervalType> getHeld()
+    {
+        if (held == null)
+        {
             held = new ArrayList<HeldIntervalType>();
         }
         return this.held;
     }
 
-    public boolean isSetHeld() {
-        return ((this.held!= null)&&(!this.held.isEmpty()));
+    public boolean isSetHeld()
+    {
+        return ((this.held != null) && (!this.held.isEmpty()));
     }
 
-    public void unsetHeld() {
+    public void unsetHeld()
+    {
         this.held = null;
     }
 

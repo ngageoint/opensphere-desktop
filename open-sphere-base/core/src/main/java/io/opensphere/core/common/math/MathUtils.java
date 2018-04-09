@@ -21,7 +21,7 @@ public class MathUtils
         {
             sum += nums.get(i);
         }
-        return sum / (double)nums.size();
+        return sum / nums.size();
     }
 
     public static double median(List<Double> nums)
@@ -33,7 +33,7 @@ public class MathUtils
         Double[] numbers = new Double[nums.size()];
         nums.toArray(numbers);
         Arrays.sort(numbers);
-        int medianIndex = (int)nums.size() / 2;
+        int medianIndex = nums.size() / 2;
         return nums.get(medianIndex);
     }
 

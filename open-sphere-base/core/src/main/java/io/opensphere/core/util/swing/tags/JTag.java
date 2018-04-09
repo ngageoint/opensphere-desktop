@@ -104,7 +104,7 @@ public class JTag extends JPanel
         myText = text;
 
         myTextComponent = new JLabel(myText);
-        myTextComponent.setBorder(BorderFactory.createEmptyBorder(4,0,3,0));
+        myTextComponent.setBorder(BorderFactory.createEmptyBorder(4, 0, 3, 0));
         add(myTextComponent);
 
         ImageIcon icon = IconUtil.getIcon(IconType.CLOSE);

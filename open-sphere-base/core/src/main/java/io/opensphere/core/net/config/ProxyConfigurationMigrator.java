@@ -61,7 +61,8 @@ public class ProxyConfigurationMigrator implements PreConfigurationUpdateModule
         List<String> exclusions = new ArrayList<String>();
         if (preferences.get("ProxyExclusionPatterns") != null)
         {
-            // split exclusions on one or more spaces, comma and one or more spaces, or comma
+            // split exclusions on one or more spaces, comma and one or more
+            // spaces, or comma
             exclusions = Arrays.asList(preferences.get("ProxyExclusionPatterns").trim().split(" +|, +|,"));
         }
 

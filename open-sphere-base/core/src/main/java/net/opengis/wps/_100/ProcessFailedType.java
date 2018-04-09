@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,13 +14,16 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.ows._110.ExceptionReport;
 
-
 /**
- * Indicator that the process has failed to execute successfully. The reason for failure is given in the exception report. 
+ * Indicator that the process has failed to execute successfully. The reason for
+ * failure is given in the exception report.
  * 
- * <p>Java class for ProcessFailedType complex type.
+ * <p>
+ * Java class for ProcessFailedType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ProcessFailedType">
@@ -38,10 +40,9 @@ import net.opengis.ows._110.ExceptionReport;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ProcessFailedType", propOrder = {
-    "exceptionReport"
-})
-public class ProcessFailedType {
+@XmlType(name = "ProcessFailedType", propOrder = { "exceptionReport" })
+public class ProcessFailedType
+{
 
     @XmlElement(name = "ExceptionReport", namespace = "http://www.opengis.net/ows/1.1", required = true)
     protected ExceptionReport exceptionReport;
@@ -49,24 +50,22 @@ public class ProcessFailedType {
     /**
      * Gets the value of the exceptionReport property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ExceptionReport }
-     *     
+     * @return possible object is {@link ExceptionReport }
+     * 
      */
-    public ExceptionReport getExceptionReport() {
+    public ExceptionReport getExceptionReport()
+    {
         return exceptionReport;
     }
 
     /**
      * Sets the value of the exceptionReport property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ExceptionReport }
-     *     
+     * @param value allowed object is {@link ExceptionReport }
+     * 
      */
-    public void setExceptionReport(ExceptionReport value) {
+    public void setExceptionReport(ExceptionReport value)
+    {
         this.exceptionReport = value;
     }
 

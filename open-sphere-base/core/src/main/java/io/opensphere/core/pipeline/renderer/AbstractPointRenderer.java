@@ -35,7 +35,7 @@ public abstract class AbstractPointRenderer<T extends AbstractRenderableGeometry
      *
      * @param input Geometries to be grouped.
      * @return Grouped geometries.
-     * @throws ClassCastException If a geometry's render properties cannot be
+     * @throws ClassCastException If a   geometry's render properties cannot be
      *             cast to {@link PointRenderProperties}.
      */
     protected Map<RenderKey, List<T>> groupPoints(Collection<? extends T> input) throws ClassCastException

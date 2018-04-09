@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,13 +15,15 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.ows._110.DomainMetadataType;
 
-
 /**
- * Description of a literal output (or input). 
+ * Description of a literal output (or input).
  * 
- * <p>Java class for LiteralOutputType complex type.
+ * <p>
+ * Java class for LiteralOutputType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="LiteralOutputType">
@@ -40,65 +41,60 @@ import net.opengis.ows._110.DomainMetadataType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LiteralOutputType", propOrder = {
-    "dataType",
-    "uoMs"
-})
-@XmlSeeAlso({
-    LiteralInputType.class
-})
-public class LiteralOutputType {
+@XmlType(name = "LiteralOutputType", propOrder = { "dataType", "uoMs" })
+@XmlSeeAlso({ LiteralInputType.class })
+public class LiteralOutputType
+{
 
     @XmlElement(name = "DataType", namespace = "http://www.opengis.net/ows/1.1")
     protected DomainMetadataType dataType;
+
     @XmlElement(name = "UOMs", namespace = "")
     protected SupportedUOMsType uoMs;
 
     /**
-     * Data type of this set of values (e.g. integer, real, etc). This data type metadata should be included for each quantity whose data type is not a string. 
+     * Data type of this set of values (e.g. integer, real, etc). This data type
+     * metadata should be included for each quantity whose data type is not a
+     * string.
      * 
-     * @return
-     *     possible object is
-     *     {@link DomainMetadataType }
-     *     
+     * @return possible object is {@link DomainMetadataType }
+     * 
      */
-    public DomainMetadataType getDataType() {
+    public DomainMetadataType getDataType()
+    {
         return dataType;
     }
 
     /**
      * Sets the value of the dataType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DomainMetadataType }
-     *     
+     * @param value allowed object is {@link DomainMetadataType }
+     * 
      */
-    public void setDataType(DomainMetadataType value) {
+    public void setDataType(DomainMetadataType value)
+    {
         this.dataType = value;
     }
 
     /**
      * Gets the value of the uoMs property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SupportedUOMsType }
-     *     
+     * @return possible object is {@link SupportedUOMsType }
+     * 
      */
-    public SupportedUOMsType getUOMs() {
+    public SupportedUOMsType getUOMs()
+    {
         return uoMs;
     }
 
     /**
      * Sets the value of the uoMs property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SupportedUOMsType }
-     *     
+     * @param value allowed object is {@link SupportedUOMsType }
+     * 
      */
-    public void setUOMs(SupportedUOMsType value) {
+    public void setUOMs(SupportedUOMsType value)
+    {
         this.uoMs = value;
     }
 

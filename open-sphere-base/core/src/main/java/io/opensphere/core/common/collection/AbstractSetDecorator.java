@@ -23,6 +23,7 @@ public abstract class AbstractSetDecorator<E> extends AbstractCollectionDecorato
      *
      * @return the decorated set.
      */
+    @Override
     protected Set<E> getCollection()
     {
         return (Set<E>)super.getCollection();

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,15 +12,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Description of a process Output. 
+ * Description of a process Output.
  * 
- * In this use, the DescriptionType shall describe this process output. 
+ * In this use, the DescriptionType shall describe this process output.
  * 
- * <p>Java class for OutputDescriptionType complex type.
+ * <p>
+ * Java class for OutputDescriptionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="OutputDescriptionType">
@@ -36,91 +37,82 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "OutputDescriptionType", propOrder = {
-    "complexOutput",
-    "literalOutput",
-    "boundingBoxOutput"
-})
-public class OutputDescriptionType
-    extends DescriptionType
+@XmlType(name = "OutputDescriptionType", propOrder = { "complexOutput", "literalOutput", "boundingBoxOutput" })
+public class OutputDescriptionType extends DescriptionType
 {
 
     @XmlElement(name = "ComplexOutput", namespace = "")
     protected SupportedComplexDataType complexOutput;
+
     @XmlElement(name = "LiteralOutput", namespace = "")
     protected LiteralOutputType literalOutput;
+
     @XmlElement(name = "BoundingBoxOutput", namespace = "")
     protected SupportedCRSsType boundingBoxOutput;
 
     /**
      * Gets the value of the complexOutput property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SupportedComplexDataType }
-     *     
+     * @return possible object is {@link SupportedComplexDataType }
+     * 
      */
-    public SupportedComplexDataType getComplexOutput() {
+    public SupportedComplexDataType getComplexOutput()
+    {
         return complexOutput;
     }
 
     /**
      * Sets the value of the complexOutput property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SupportedComplexDataType }
-     *     
+     * @param value allowed object is {@link SupportedComplexDataType }
+     * 
      */
-    public void setComplexOutput(SupportedComplexDataType value) {
+    public void setComplexOutput(SupportedComplexDataType value)
+    {
         this.complexOutput = value;
     }
 
     /**
      * Gets the value of the literalOutput property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LiteralOutputType }
-     *     
+     * @return possible object is {@link LiteralOutputType }
+     * 
      */
-    public LiteralOutputType getLiteralOutput() {
+    public LiteralOutputType getLiteralOutput()
+    {
         return literalOutput;
     }
 
     /**
      * Sets the value of the literalOutput property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LiteralOutputType }
-     *     
+     * @param value allowed object is {@link LiteralOutputType }
+     * 
      */
-    public void setLiteralOutput(LiteralOutputType value) {
+    public void setLiteralOutput(LiteralOutputType value)
+    {
         this.literalOutput = value;
     }
 
     /**
      * Gets the value of the boundingBoxOutput property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SupportedCRSsType }
-     *     
+     * @return possible object is {@link SupportedCRSsType }
+     * 
      */
-    public SupportedCRSsType getBoundingBoxOutput() {
+    public SupportedCRSsType getBoundingBoxOutput()
+    {
         return boundingBoxOutput;
     }
 
     /**
      * Sets the value of the boundingBoxOutput property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SupportedCRSsType }
-     *     
+     * @param value allowed object is {@link SupportedCRSsType }
+     * 
      */
-    public void setBoundingBoxOutput(SupportedCRSsType value) {
+    public void setBoundingBoxOutput(SupportedCRSsType value)
+    {
         this.boundingBoxOutput = value;
     }
 

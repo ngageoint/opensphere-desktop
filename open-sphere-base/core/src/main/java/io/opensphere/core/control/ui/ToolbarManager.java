@@ -409,7 +409,7 @@ public class ToolbarManager
             SeparatorLocation separatorLocation, Insets insets)
     {
         myNorthBottomToolbarComponents
-            .add(new ToolbarComponent(getNorthBottomToolbar(), componentName, comp, relativeLoc, separatorLocation, insets));
+                .add(new ToolbarComponent(getNorthBottomToolbar(), componentName, comp, relativeLoc, separatorLocation, insets));
         registerIconButtons(comp);
         Collections.sort(myNorthBottomToolbarComponents);
 
@@ -450,7 +450,7 @@ public class ToolbarManager
             Insets insets)
     {
         myNorthToolbarComponents
-            .add(new ToolbarComponent(getNorthToolbar(), componentName, comp, order, separatorLocation, insets));
+                .add(new ToolbarComponent(getNorthToolbar(), componentName, comp, order, separatorLocation, insets));
         registerIconButtons(comp);
         Collections.sort(myNorthToolbarComponents);
         getNorthToolbar().removeAll();
@@ -489,7 +489,7 @@ public class ToolbarManager
             final SeparatorLocation separatorLocation, Insets insets)
     {
         mySouthToolbarComponents
-            .add(new ToolbarComponent(getSouthToolbar(), componentName, comp, relativeLoc, separatorLocation, insets));
+                .add(new ToolbarComponent(getSouthToolbar(), componentName, comp, relativeLoc, separatorLocation, insets));
         registerIconButtons(comp);
         Collections.sort(mySouthToolbarComponents);
 

@@ -33,10 +33,12 @@ public class MagneticHeadingCalculatorTest
 
         support.replayAll();
 
-        double magnetic = MagneticHeadingCalculator.getInstance().calculateMagneticHeading(45, LatLonAlt.createFromDegrees(25, -130), timeManager);
+        double magnetic = MagneticHeadingCalculator.getInstance().calculateMagneticHeading(45,
+                LatLonAlt.createFromDegrees(25, -130), timeManager);
         assertEquals(34.194560901507046, magnetic, 0d);
 
-        magnetic = MagneticHeadingCalculator.getInstance().calculateMagneticHeading(45, LatLonAlt.createFromDegrees(25, -130), null);
+        magnetic = MagneticHeadingCalculator.getInstance().calculateMagneticHeading(45, LatLonAlt.createFromDegrees(25, -130),
+                null);
         assertEquals(34.39553047902176, magnetic, 0d);
 
         support.verifyAll();

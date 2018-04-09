@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -16,13 +15,24 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * There is precisely one positively directed and one negatively directed node in the boundary of every edge. The negatively and positively directed nodes correspond to the start and end nodes respectively. The optional coboundary of an edge is a circular sequence of directed faces which are incident on this edge in document order. Faces which use a particular boundary edge in its positive orientation appear with positive orientation on the coboundary of the same edge. In the 2D case, the orientation of the face on the left of the edge is "+"; the orientation of the face on the right on its right is "-". An edge may optionally be realised by a 1-dimensional (curve) geometric primitive.
+ * There is precisely one positively directed and one negatively directed node
+ * in the boundary of every edge. The negatively and positively directed nodes
+ * correspond to the start and end nodes respectively. The optional coboundary
+ * of an edge is a circular sequence of directed faces which are incident on
+ * this edge in document order. Faces which use a particular boundary edge in
+ * its positive orientation appear with positive orientation on the coboundary
+ * of the same edge. In the 2D case, the orientation of the face on the left of
+ * the edge is "+"; the orientation of the face on the right on its right is
+ * "-". An edge may optionally be realised by a 1-dimensional (curve) geometric
+ * primitive.
  * 
- * <p>Java class for EdgeType complex type.
+ * <p>
+ * Java class for EdgeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="EdgeType">
@@ -41,33 +51,31 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "EdgeType", propOrder = {
-    "directedNode",
-    "directedFace",
-    "curveProperty"
-})
-public class EdgeType
-    extends AbstractTopoPrimitiveType
+@XmlType(name = "EdgeType", propOrder = { "directedNode", "directedFace", "curveProperty" })
+public class EdgeType extends AbstractTopoPrimitiveType
 {
 
     @XmlElement(required = true)
     protected List<DirectedNodePropertyType> directedNode;
+
     protected List<DirectedFacePropertyType> directedFace;
+
     protected CurvePropertyType curveProperty;
 
     /**
      * Gets the value of the directedNode property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the directedNode property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the directedNode property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getDirectedNode().add(newItem);
+     * getDirectedNode().add(newItem);
      * </pre>
      * 
      * 
@@ -77,8 +85,10 @@ public class EdgeType
      * 
      * 
      */
-    public List<DirectedNodePropertyType> getDirectedNode() {
-        if (directedNode == null) {
+    public List<DirectedNodePropertyType> getDirectedNode()
+    {
+        if (directedNode == null)
+        {
             directedNode = new ArrayList<DirectedNodePropertyType>();
         }
         return this.directedNode;
@@ -88,15 +98,16 @@ public class EdgeType
      * Gets the value of the directedFace property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the directedFace property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the directedFace property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getDirectedFace().add(newItem);
+     * getDirectedFace().add(newItem);
      * </pre>
      * 
      * 
@@ -106,8 +117,10 @@ public class EdgeType
      * 
      * 
      */
-    public List<DirectedFacePropertyType> getDirectedFace() {
-        if (directedFace == null) {
+    public List<DirectedFacePropertyType> getDirectedFace()
+    {
+        if (directedFace == null)
+        {
             directedFace = new ArrayList<DirectedFacePropertyType>();
         }
         return this.directedFace;
@@ -116,24 +129,22 @@ public class EdgeType
     /**
      * Gets the value of the curveProperty property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CurvePropertyType }
-     *     
+     * @return possible object is {@link CurvePropertyType }
+     * 
      */
-    public CurvePropertyType getCurveProperty() {
+    public CurvePropertyType getCurveProperty()
+    {
         return curveProperty;
     }
 
     /**
      * Sets the value of the curveProperty property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CurvePropertyType }
-     *     
+     * @param value allowed object is {@link CurvePropertyType }
+     * 
      */
-    public void setCurveProperty(CurvePropertyType value) {
+    public void setCurveProperty(CurvePropertyType value)
+    {
         this.curveProperty = value;
     }
 

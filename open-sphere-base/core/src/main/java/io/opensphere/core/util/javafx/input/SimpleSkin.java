@@ -5,7 +5,8 @@ import javafx.scene.control.Skin;
 import javafx.scene.control.Skinnable;
 
 /**
- * A simple skin implementation that wraps a {@link Skinnable} instance and a {@link Node}.
+ * A simple skin implementation that wraps a {@link Skinnable} instance and a
+ * {@link Node}.
  */
 public class SimpleSkin implements Skin<Skinnable>
 {

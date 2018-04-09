@@ -146,8 +146,8 @@ public final class AvailableDataPanel extends AbstractDiscoveryDataPanel impleme
             return;
         }
 
-        focusOnNode(value -> value.getDataGroupInfo() != null
-                && value.getDataGroupInfo().getId().equals(eventDataGroup.getId()), null);
+        focusOnNode(value -> value.getDataGroupInfo() != null && value.getDataGroupInfo().getId().equals(eventDataGroup.getId()),
+                null);
     };
 
     /** The my layer details coordinator. */

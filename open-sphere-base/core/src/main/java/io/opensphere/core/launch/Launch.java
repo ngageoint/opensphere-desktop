@@ -653,7 +653,7 @@ public final class Launch
      * present, it will be used. If more than one are present, then the most
      * recently created file will be used.
      *
-     * @throws IllegalStateException if no suite jars can be found in the launch
+     * @throws IllegalStateException if no  suite jars can be found in the launch
      *             directory.
      * @return the name of the suite jar with which to invoke the application.
      */

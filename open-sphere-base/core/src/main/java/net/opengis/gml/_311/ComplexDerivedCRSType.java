@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A coordinate reference system that is defined by its coordinate conversion from another coordinate reference system but is not a projected coordinate reference system. This category includes coordinate reference systems derived from a projected coordinate reference system. 
+ * A coordinate reference system that is defined by its coordinate conversion
+ * from another coordinate reference system but is not a projected coordinate
+ * reference system. This category includes coordinate reference systems derived
+ * from a projected coordinate reference system.
  * 
- * <p>Java class for DerivedCRSType complex type.
+ * <p>
+ * Java class for DerivedCRSType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DerivedCRSType">
@@ -37,64 +41,57 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DerivedCRSType", propOrder = {
-    "derivedCRSType",
-    "usesCS"
-})
-public class ComplexDerivedCRSType
-    extends AbstractGeneralDerivedCRSType
+@XmlType(name = "DerivedCRSType", propOrder = { "derivedCRSType", "usesCS" })
+public class ComplexDerivedCRSType extends AbstractGeneralDerivedCRSType
 {
 
     @XmlElement(required = true)
     protected DerivedCRSTypeType derivedCRSType;
+
     @XmlElement(required = true)
     protected CoordinateSystemRefType usesCS;
 
     /**
      * Gets the value of the derivedCRSType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link DerivedCRSTypeType }
-     *     
+     * @return possible object is {@link DerivedCRSTypeType }
+     * 
      */
-    public DerivedCRSTypeType getDerivedCRSType() {
+    public DerivedCRSTypeType getDerivedCRSType()
+    {
         return derivedCRSType;
     }
 
     /**
      * Sets the value of the derivedCRSType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DerivedCRSTypeType }
-     *     
+     * @param value allowed object is {@link DerivedCRSTypeType }
+     * 
      */
-    public void setDerivedCRSType(DerivedCRSTypeType value) {
+    public void setDerivedCRSType(DerivedCRSTypeType value)
+    {
         this.derivedCRSType = value;
     }
 
     /**
      * Gets the value of the usesCS property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CoordinateSystemRefType }
-     *     
+     * @return possible object is {@link CoordinateSystemRefType }
+     * 
      */
-    public CoordinateSystemRefType getUsesCS() {
+    public CoordinateSystemRefType getUsesCS()
+    {
         return usesCS;
     }
 
     /**
      * Sets the value of the usesCS property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CoordinateSystemRefType }
-     *     
+     * @param value allowed object is {@link CoordinateSystemRefType }
+     * 
      */
-    public void setUsesCS(CoordinateSystemRefType value) {
+    public void setUsesCS(CoordinateSystemRefType value)
+    {
         this.usesCS = value;
     }
 

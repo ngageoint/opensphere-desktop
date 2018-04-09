@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:39 PM MST 
 //
 
-
 package net.opengis.wms._111;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,16 +13,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "onlineResource"
-})
+@XmlType(name = "", propOrder = { "onlineResource" })
 @XmlRootElement(name = "Get")
-public class Get {
+public class Get
+{
 
     @XmlElement(name = "OnlineResource", required = true)
     protected OnlineResource onlineResource;
@@ -31,24 +28,22 @@ public class Get {
     /**
      * Gets the value of the onlineResource property.
      * 
-     * @return
-     *     possible object is
-     *     {@link OnlineResource }
-     *     
+     * @return possible object is {@link OnlineResource }
+     * 
      */
-    public OnlineResource getOnlineResource() {
+    public OnlineResource getOnlineResource()
+    {
         return onlineResource;
     }
 
     /**
      * Sets the value of the onlineResource property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link OnlineResource }
-     *     
+     * @param value allowed object is {@link OnlineResource }
+     * 
      */
-    public void setOnlineResource(OnlineResource value) {
+    public void setOnlineResource(OnlineResource value)
+    {
         this.onlineResource = value;
     }
 

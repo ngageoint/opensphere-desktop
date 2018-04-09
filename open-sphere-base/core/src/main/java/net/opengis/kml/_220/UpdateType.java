@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for UpdateType complex type.
+ * <p>
+ * Java class for UpdateType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="UpdateType">
@@ -46,91 +47,88 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UpdateType", propOrder = {
-    "targetHref",
-    "createOrDeleteOrChange",
-    "updateExtensionGroup"
-})
-public class UpdateType {
+@XmlType(name = "UpdateType", propOrder = { "targetHref", "createOrDeleteOrChange", "updateExtensionGroup" })
+public class UpdateType
+{
 
     @XmlElement(required = true)
     @XmlSchemaType(name = "anyURI")
     protected String targetHref;
-    @XmlElements({
-        @XmlElement(name = "Create", type = CreateType.class),
-        @XmlElement(name = "Delete", type = DeleteType.class),
-        @XmlElement(name = "Change", type = ChangeType.class),
-        @XmlElement(name = "UpdateOpExtensionGroup")
-    })
+
+    @XmlElements({ @XmlElement(name = "Create", type = CreateType.class), @XmlElement(name = "Delete", type = DeleteType.class),
+        @XmlElement(name = "Change", type = ChangeType.class), @XmlElement(name = "UpdateOpExtensionGroup") })
     protected List<Object> createOrDeleteOrChange;
+
     @XmlElement(name = "UpdateExtensionGroup")
     protected List<Object> updateExtensionGroup;
 
     /**
      * Gets the value of the targetHref property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTargetHref() {
+    public String getTargetHref()
+    {
         return targetHref;
     }
 
     /**
      * Sets the value of the targetHref property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTargetHref(String value) {
+    public void setTargetHref(String value)
+    {
         this.targetHref = value;
     }
 
-    public boolean isSetTargetHref() {
-        return (this.targetHref!= null);
+    public boolean isSetTargetHref()
+    {
+        return (this.targetHref != null);
     }
 
     /**
      * Gets the value of the createOrDeleteOrChange property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the createOrDeleteOrChange property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the createOrDeleteOrChange property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getCreateOrDeleteOrChange().add(newItem);
+     * getCreateOrDeleteOrChange().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link CreateType }
-     * {@link DeleteType }
-     * {@link ChangeType }
-     * {@link Object }
+     * {@link CreateType } {@link DeleteType } {@link ChangeType } {@link Object
+     * }
      * 
      * 
      */
-    public List<Object> getCreateOrDeleteOrChange() {
-        if (createOrDeleteOrChange == null) {
+    public List<Object> getCreateOrDeleteOrChange()
+    {
+        if (createOrDeleteOrChange == null)
+        {
             createOrDeleteOrChange = new ArrayList<Object>();
         }
         return this.createOrDeleteOrChange;
     }
 
-    public boolean isSetCreateOrDeleteOrChange() {
-        return ((this.createOrDeleteOrChange!= null)&&(!this.createOrDeleteOrChange.isEmpty()));
+    public boolean isSetCreateOrDeleteOrChange()
+    {
+        return ((this.createOrDeleteOrChange != null) && (!this.createOrDeleteOrChange.isEmpty()));
     }
 
-    public void unsetCreateOrDeleteOrChange() {
+    public void unsetCreateOrDeleteOrChange()
+    {
         this.createOrDeleteOrChange = null;
     }
 
@@ -138,36 +136,40 @@ public class UpdateType {
      * Gets the value of the updateExtensionGroup property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the updateExtensionGroup property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the updateExtensionGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getUpdateExtensionGroup().add(newItem);
+     * getUpdateExtensionGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getUpdateExtensionGroup() {
-        if (updateExtensionGroup == null) {
+    public List<Object> getUpdateExtensionGroup()
+    {
+        if (updateExtensionGroup == null)
+        {
             updateExtensionGroup = new ArrayList<Object>();
         }
         return this.updateExtensionGroup;
     }
 
-    public boolean isSetUpdateExtensionGroup() {
-        return ((this.updateExtensionGroup!= null)&&(!this.updateExtensionGroup.isEmpty()));
+    public boolean isSetUpdateExtensionGroup()
+    {
+        return ((this.updateExtensionGroup != null) && (!this.updateExtensionGroup.isEmpty()));
     }
 
-    public void unsetUpdateExtensionGroup() {
+    public void unsetUpdateExtensionGroup()
+    {
         this.updateExtensionGroup = null;
     }
 

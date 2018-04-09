@@ -58,7 +58,8 @@ public class Viewer3D extends AbstractDynamicViewer
     private static final double ourMaxOriginDistance = 2000000000.;
 
     /**
-     * The number of radians to add to the top clipping planes rotation calculation.
+     * The number of radians to add to the top clipping planes rotation
+     * calculation.
      */
     private static final double ourTopClipIncreaseAngle = .2;
 
@@ -872,7 +873,7 @@ public class Viewer3D extends AbstractDynamicViewer
      *
      * @param pos position of viewer.
      * @param dir direction of viewer.
-     * @param up up of viewer.
+     * @param up up of  viewer.
      */
     public void setView(Vector3d pos, Vector3d dir, Vector3d up)
     {

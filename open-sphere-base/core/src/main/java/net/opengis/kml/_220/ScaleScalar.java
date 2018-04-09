@@ -5,24 +5,24 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
-public class ScaleScalar
-    extends JAXBElement<Double>
+public class ScaleScalar extends JAXBElement<Double>
 {
 
     protected final static QName NAME = new QName("http://www.opengis.net/kml/2.2", "scale");
 
-    public ScaleScalar(Double value) {
-        super(NAME, ((Class) Double.class), null, value);
+    public ScaleScalar(Double value)
+    {
+        super(NAME, (Double.class), null, value);
     }
 
-    public ScaleScalar() {
-        super(NAME, ((Class) Double.class), null, null);
+    public ScaleScalar()
+    {
+        super(NAME, (Double.class), null, null);
     }
 
 }

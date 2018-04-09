@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,13 +12,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * Encapsulates a knot to use it in a geometric type.
  * 
- * <p>Java class for KnotPropertyType complex type.
+ * <p>
+ * Java class for KnotPropertyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="KnotPropertyType">
@@ -36,10 +37,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "KnotPropertyType", propOrder = {
-    "knot"
-})
-public class KnotPropertyType {
+@XmlType(name = "KnotPropertyType", propOrder = { "knot" })
+public class KnotPropertyType
+{
 
     @XmlElement(name = "Knot", required = true)
     protected KnotType knot;
@@ -47,24 +47,22 @@ public class KnotPropertyType {
     /**
      * Gets the value of the knot property.
      * 
-     * @return
-     *     possible object is
-     *     {@link KnotType }
-     *     
+     * @return possible object is {@link KnotType }
+     * 
      */
-    public KnotType getKnot() {
+    public KnotType getKnot()
+    {
         return knot;
     }
 
     /**
      * Sets the value of the knot property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link KnotType }
-     *     
+     * @param value allowed object is {@link KnotType }
+     * 
      */
-    public void setKnot(KnotType value) {
+    public void setKnot(KnotType value)
+    {
         this.knot = value;
     }
 

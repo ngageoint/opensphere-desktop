@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 import org.apache.log4j.Logger;
 
@@ -101,8 +101,8 @@ public class PointRendererBuffered<T extends PointGeometry> extends AbstractPoin
     }
 
     @Override
-    protected void doRenderPoints(RenderContext rc, Collection<? extends T> input, Collection<? super T> rejects, PickManager pickManager,
-            ModelDataRetriever<T> dataRetriever, TimeRenderData renderData)
+    protected void doRenderPoints(RenderContext rc, Collection<? extends T> input, Collection<? super T> rejects,
+            PickManager pickManager, ModelDataRetriever<T> dataRetriever, TimeRenderData renderData)
     {
         getFadedRenderingHelper().initIntervalFilter(rc, false, null);
 

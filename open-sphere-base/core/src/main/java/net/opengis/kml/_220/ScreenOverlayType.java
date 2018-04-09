@@ -5,18 +5,19 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ScreenOverlayType complex type.
+ * <p>
+ * Java class for ScreenOverlayType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ScreenOverlayType">
@@ -40,9 +41,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ScreenOverlayType")
-public class ScreenOverlayType
-    extends AbstractOverlayType
+public class ScreenOverlayType extends AbstractOverlayType
 {
-
 
 }

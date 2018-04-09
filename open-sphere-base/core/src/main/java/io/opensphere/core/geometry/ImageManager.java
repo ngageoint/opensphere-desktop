@@ -120,7 +120,8 @@ public class ImageManager
     }
 
     /**
-     * Just get the image, already.  Sheesh.
+     * Just get the image, already. Sheesh.
+     * 
      * @return the Image (already)
      */
     public Image getImage()

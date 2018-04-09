@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:24:08 PM MST 
 //
 
-
 package net.opengis.ogc._100;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for Spatial_OperatorsType complex type.
+ * <p>
+ * Java class for Spatial_OperatorsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="Spatial_OperatorsType">
@@ -48,60 +49,47 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Spatial_OperatorsType", propOrder = {
-    "bboxOrEqualsOrDisjoint"
-})
-public class SpatialOperatorsType {
+@XmlType(name = "Spatial_OperatorsType", propOrder = { "bboxOrEqualsOrDisjoint" })
+public class SpatialOperatorsType
+{
 
-    @XmlElements({
-        @XmlElement(name = "Crosses", type = Crosses.class),
-        @XmlElement(name = "Contains", type = Contains.class),
-        @XmlElement(name = "Within", type = Within.class),
-        @XmlElement(name = "Equals", type = Equals.class),
-        @XmlElement(name = "Disjoint", type = Disjoint.class),
-        @XmlElement(name = "DWithin", type = DWithin.class),
-        @XmlElement(name = "Overlaps", type = Overlaps.class),
-        @XmlElement(name = "Intersect", type = Intersect.class),
-        @XmlElement(name = "BBOX", type = BBOX.class),
-        @XmlElement(name = "Beyond", type = Beyond.class),
-        @XmlElement(name = "Touches", type = Touches.class)
-    })
+    @XmlElements({ @XmlElement(name = "Crosses", type = Crosses.class), @XmlElement(name = "Contains", type = Contains.class),
+        @XmlElement(name = "Within", type = Within.class), @XmlElement(name = "Equals", type = Equals.class),
+        @XmlElement(name = "Disjoint", type = Disjoint.class), @XmlElement(name = "DWithin", type = DWithin.class),
+        @XmlElement(name = "Overlaps", type = Overlaps.class), @XmlElement(name = "Intersect", type = Intersect.class),
+        @XmlElement(name = "BBOX", type = BBOX.class), @XmlElement(name = "Beyond", type = Beyond.class),
+        @XmlElement(name = "Touches", type = Touches.class) })
     protected List<Object> bboxOrEqualsOrDisjoint;
 
     /**
      * Gets the value of the bboxOrEqualsOrDisjoint property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the bboxOrEqualsOrDisjoint property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the bboxOrEqualsOrDisjoint property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getBBOXOrEqualsOrDisjoint().add(newItem);
+     * getBBOXOrEqualsOrDisjoint().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Crosses }
-     * {@link Contains }
-     * {@link Within }
-     * {@link Equals }
-     * {@link Disjoint }
-     * {@link DWithin }
-     * {@link Overlaps }
-     * {@link Intersect }
-     * {@link BBOX }
-     * {@link Beyond }
-     * {@link Touches }
+     * Objects of the following type(s) are allowed in the list {@link Crosses }
+     * {@link Contains } {@link Within } {@link Equals } {@link Disjoint }
+     * {@link DWithin } {@link Overlaps } {@link Intersect } {@link BBOX }
+     * {@link Beyond } {@link Touches }
      * 
      * 
      */
-    public List<Object> getBBOXOrEqualsOrDisjoint() {
-        if (bboxOrEqualsOrDisjoint == null) {
+    public List<Object> getBBOXOrEqualsOrDisjoint()
+    {
+        if (bboxOrEqualsOrDisjoint == null)
+        {
             bboxOrEqualsOrDisjoint = new ArrayList<Object>();
         }
         return this.bboxOrEqualsOrDisjoint;

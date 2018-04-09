@@ -1,7 +1,5 @@
 package io.opensphere.analysis.base.controller;
 
-import javafx.application.Platform;
-
 import io.opensphere.analysis.base.model.CommonSettingsModel;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.event.EventListenerService;
@@ -18,6 +16,7 @@ import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.event.DataTypeInfoLoadsToChangeEvent;
 import io.opensphere.mantle.data.event.DataTypeVisibilityChangeEvent;
+import javafx.application.Platform;
 
 /**
  * Controller for SettingsModel. Essentially adapts mantle data type state into
@@ -167,7 +166,7 @@ public class SettingsModelController extends EventListenerService
         if (isToolQualifiedType(layer) && !myModel.availableLayersProperty().contains(layer))
         {
             int index = CollectionUtilities.indexOf(layer, myModel.availableLayersProperty(),
-                (o1, o2) -> o1.getSourcePrefixAndDisplayNameCombo().compareTo(o2.getSourcePrefixAndDisplayNameCombo()));
+                    (o1, o2) -> o1.getSourcePrefixAndDisplayNameCombo().compareTo(o2.getSourcePrefixAndDisplayNameCombo()));
             myModel.availableLayersProperty().add(index, layer);
         }
     }

@@ -24,7 +24,7 @@ public class GeoJSONWriter extends GeoJSON
      *
      * @param geometry the geometry from which GeoJSON will be generated.
      * @param appender the output for the GeoJSON.
-     * @throws IOException if an exception occurs writing the output.
+     * @throws IOException if an  exception occurs writing the output.
      */
     public static void appendGeometry(Geometry geometry, Appendable appender) throws IOException
     {
@@ -67,7 +67,7 @@ public class GeoJSONWriter extends GeoJSON
      *
      * @param point the {@link Point} instance.
      * @param appender the output for the GeoJSON.
-     * @throws IOException if an exception occurs writing the output.
+     * @throws IOException if an  exception occurs writing the output.
      */
     public static void appendPoint(Point point, Appendable appender) throws IOException
     {
@@ -79,7 +79,7 @@ public class GeoJSONWriter extends GeoJSON
      *
      * @param point the {@link Point} instance.
      * @param appender the output for the GeoJSON.
-     * @throws IOException if an exception occurs writing the output.
+     * @throws IOException if an  exception occurs writing the output.
      */
     public static void appendPoint(Coordinate point, Appendable appender) throws IOException
     {
@@ -93,7 +93,7 @@ public class GeoJSONWriter extends GeoJSON
      *
      * @param multiPoint the {@link MultiPoint} instance.
      * @param appender the output for the GeoJSON.
-     * @throws IOException if an exception occurs writing the output.
+     * @throws IOException if an  exception occurs writing the output.
      */
     public static void appendMultiPoint(MultiPoint multiPoint, Appendable appender) throws IOException
     {
@@ -107,7 +107,7 @@ public class GeoJSONWriter extends GeoJSON
      *
      * @param lineString the {@link LineString} instance.
      * @param appender the output for the GeoJSON.
-     * @throws IOException if an exception occurs writing the output.
+     * @throws IOException if an  exception occurs writing the output.
      */
     public static void appendLineString(LineString lineString, Appendable appender) throws IOException
     {
@@ -121,7 +121,7 @@ public class GeoJSONWriter extends GeoJSON
      *
      * @param multiLine the {@link MultiLineString} instance.
      * @param appender the output for the GeoJSON.
-     * @throws IOException if an exception occurs writing the output.
+     * @throws IOException if an  exception occurs writing the output.
      */
     public static void appendMultiLineString(MultiLineString multiLine, Appendable appender) throws IOException
     {
@@ -145,7 +145,7 @@ public class GeoJSONWriter extends GeoJSON
      *
      * @param polygon the {@link Polygon} instance.
      * @param appender the output for the GeoJSON.
-     * @throws IOException if an exception occurs writing the output.
+     * @throws IOException if an  exception occurs writing the output.
      */
     public static void appendPolygon(Polygon polygon, Appendable appender) throws IOException
     {
@@ -159,7 +159,7 @@ public class GeoJSONWriter extends GeoJSON
      *
      * @param multiPolygon the {@link MultiPolygon}instance.
      * @param appender the output for the GeoJSON.
-     * @throws IOException if an exception occurs writing the output.
+     * @throws IOException if an  exception occurs writing the output.
      */
     public static void appendMultiPolygon(MultiPolygon multiPolygon, Appendable appender) throws IOException
     {
@@ -181,7 +181,7 @@ public class GeoJSONWriter extends GeoJSON
      *
      * @param collection the {@link GeometryCollection} instance.
      * @param appender the output for the GeoJSON.
-     * @throws IOException if an exception occurs writing the output.
+     * @throws IOException if an  exception occurs writing the output.
      */
     public static void appendGeometryCollection(GeometryCollection collection, Appendable appender) throws IOException
     {
@@ -205,7 +205,7 @@ public class GeoJSONWriter extends GeoJSON
      *
      * @param geometry the {@link Geometry} instance.
      * @param appender the output for the GeoJSON.
-     * @throws IOException if an exception occurs writing the output.
+     * @throws IOException if an  exception occurs writing the output.
      */
     public static void appendCrsMember(Geometry geometry, Appendable appender) throws IOException
     {
@@ -229,7 +229,7 @@ public class GeoJSONWriter extends GeoJSON
      *
      * @param point the {@link Point} instance.
      * @param appender the output for the GeoJSON.
-     * @throws IOException if an exception occurs writing the output.
+     * @throws IOException if an  exception occurs writing the output.
      */
     public static void appendBboxMember(Envelope envelope, Appendable appender) throws IOException
     {
@@ -248,7 +248,7 @@ public class GeoJSONWriter extends GeoJSON
      *
      * @param polygon the {@link Polygon} instance.
      * @param appender the output for the JSON.
-     * @throws IOException if an exception occurs writing the output.
+     * @throws IOException if an  exception occurs writing the output.
      */
     protected static void writePolygonCoordinates(Polygon polygon, Appendable appender) throws IOException
     {
@@ -271,7 +271,7 @@ public class GeoJSONWriter extends GeoJSON
      *
      * @param coordinates the coordinate array.
      * @param appender the output for the JSON.
-     * @throws IOException if an exception occurs writing the output.
+     * @throws IOException if an  exception occurs writing the output.
      */
     protected static void writeCoordinates(Coordinate[] coordinates, Appendable appender) throws IOException
     {
@@ -294,7 +294,7 @@ public class GeoJSONWriter extends GeoJSON
      *
      * @param coordinate the coordinate.
      * @param appender the output for the JSON.
-     * @throws IOException if an exception occurs writing the output.
+     * @throws IOException if an  exception occurs writing the output.
      */
     protected static void writeCoordinate(Coordinate coordinate, Appendable appender) throws IOException
     {

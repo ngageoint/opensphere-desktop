@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import java.util.ArrayList;
@@ -19,17 +18,19 @@ import javax.xml.namespace.QName;
 
 import net.opengis.ows._100.KeywordsType;
 
-
 /**
  * 
- *             An element of this type that describes a GML object in an
- *             application namespace shall have an xml xmlns specifier,
- *             e.g. xmlns:bo="http://www.BlueOx.org/BlueOx"
- *          
+ * An element of this type that describes a GML object in an application
+ * namespace shall have an xml xmlns specifier, e.g.
+ * xmlns:bo="http://www.BlueOx.org/BlueOx"
  * 
- * <p>Java class for GMLObjectTypeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for GMLObjectTypeType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GMLObjectTypeType">
@@ -50,95 +51,88 @@ import net.opengis.ows._100.KeywordsType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GMLObjectTypeType", propOrder = {
-    "name",
-    "title",
-    "_abstract",
-    "keywords",
-    "outputFormats"
-})
-public class GMLObjectTypeType {
+@XmlType(name = "GMLObjectTypeType", propOrder = { "name", "title", "_abstract", "keywords", "outputFormats" })
+public class GMLObjectTypeType
+{
 
     @XmlElement(name = "Name", required = true)
     protected QName name;
+
     @XmlElement(name = "Title")
     protected String title;
+
     @XmlElement(name = "Abstract")
     protected String _abstract;
+
     @XmlElement(name = "Keywords", namespace = "http://www.opengis.net/ows")
     protected List<KeywordsType> keywords;
+
     @XmlElement(name = "OutputFormats")
     protected OutputFormatListType outputFormats;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link QName }
-     *     
+     * @return possible object is {@link QName }
+     * 
      */
-    public QName getName() {
+    public QName getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link QName }
-     *     
+     * @param value allowed object is {@link QName }
+     * 
      */
-    public void setName(QName value) {
+    public void setName(QName value)
+    {
         this.name = value;
     }
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
     /**
      * Gets the value of the abstract property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getAbstract() {
+    public String getAbstract()
+    {
         return _abstract;
     }
 
     /**
      * Sets the value of the abstract property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setAbstract(String value) {
+    public void setAbstract(String value)
+    {
         this._abstract = value;
     }
 
@@ -146,15 +140,16 @@ public class GMLObjectTypeType {
      * Gets the value of the keywords property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the keywords property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the keywords property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getKeywords().add(newItem);
+     * getKeywords().add(newItem);
      * </pre>
      * 
      * 
@@ -164,8 +159,10 @@ public class GMLObjectTypeType {
      * 
      * 
      */
-    public List<KeywordsType> getKeywords() {
-        if (keywords == null) {
+    public List<KeywordsType> getKeywords()
+    {
+        if (keywords == null)
+        {
             keywords = new ArrayList<KeywordsType>();
         }
         return this.keywords;
@@ -174,24 +171,22 @@ public class GMLObjectTypeType {
     /**
      * Gets the value of the outputFormats property.
      * 
-     * @return
-     *     possible object is
-     *     {@link OutputFormatListType }
-     *     
+     * @return possible object is {@link OutputFormatListType }
+     * 
      */
-    public OutputFormatListType getOutputFormats() {
+    public OutputFormatListType getOutputFormats()
+    {
         return outputFormats;
     }
 
     /**
      * Sets the value of the outputFormats property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link OutputFormatListType }
-     *     
+     * @param value allowed object is {@link OutputFormatListType }
+     * 
      */
-    public void setOutputFormats(OutputFormatListType value) {
+    public void setOutputFormats(OutputFormatListType value)
+    {
         this.outputFormats = value;
     }
 

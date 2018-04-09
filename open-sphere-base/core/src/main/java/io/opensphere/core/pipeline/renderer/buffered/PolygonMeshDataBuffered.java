@@ -6,8 +6,8 @@ import java.nio.IntBuffer;
 import java.util.Collections;
 import java.util.List;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
 
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.model.ColorArrayList;
@@ -53,7 +53,9 @@ public class PolygonMeshDataBuffered extends BufferObjectList<PolygonMeshBuffere
         /** How many vertices doth a triangle have. */
         private static final int TRIANGLE_VERTEX_COUNT = 3;
 
-        /** How many vertices does a single triangle have in a triangle strip. */
+        /**
+         * How many vertices does a single triangle have in a triangle strip.
+         */
         private static final int TRIANGLE_STRIP_VERTEX_COUNT = 2;
 
         /** The tile data. */

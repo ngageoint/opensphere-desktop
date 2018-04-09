@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 import javax.swing.ToolTipManager;
 
 import org.apache.log4j.Logger;

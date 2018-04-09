@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:41 PM MST 
 //
 
-
 package net.opengis.wms_130;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -36,63 +37,58 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "contactPerson",
-    "contactOrganization"
-})
+@XmlType(name = "", propOrder = { "contactPerson", "contactOrganization" })
 @XmlRootElement(name = "ContactPersonPrimary")
-public class ContactPersonPrimary {
+public class ContactPersonPrimary
+{
 
     @XmlElement(name = "ContactPerson", required = true)
     protected String contactPerson;
+
     @XmlElement(name = "ContactOrganization", required = true)
     protected String contactOrganization;
 
     /**
      * Gets the value of the contactPerson property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getContactPerson() {
+    public String getContactPerson()
+    {
         return contactPerson;
     }
 
     /**
      * Sets the value of the contactPerson property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setContactPerson(String value) {
+    public void setContactPerson(String value)
+    {
         this.contactPerson = value;
     }
 
     /**
      * Gets the value of the contactOrganization property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getContactOrganization() {
+    public String getContactOrganization()
+    {
         return contactOrganization;
     }
 
     /**
      * Sets the value of the contactOrganization property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setContactOrganization(String value) {
+    public void setContactOrganization(String value)
+    {
         this.contactOrganization = value;
     }
 

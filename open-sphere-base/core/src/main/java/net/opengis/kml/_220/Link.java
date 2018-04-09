@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package net.opengis.kml._220;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,11 +14,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -41,21 +42,27 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
 @XmlRootElement(name = "link", namespace = "http://www.w3.org/2005/Atom")
-public class Link {
+public class Link
+{
 
     @XmlAttribute(name = "href", required = true)
     @XmlSchemaType(name = "anySimpleType")
     protected String href;
+
     @XmlAttribute(name = "rel")
     @XmlSchemaType(name = "anySimpleType")
     protected String rel;
+
     @XmlAttribute(name = "type")
     protected String type;
+
     @XmlAttribute(name = "hreflang")
     protected String hreflang;
+
     @XmlAttribute(name = "title")
     @XmlSchemaType(name = "anySimpleType")
     protected String title;
+
     @XmlAttribute(name = "length")
     @XmlSchemaType(name = "anySimpleType")
     protected String length;
@@ -63,169 +70,163 @@ public class Link {
     /**
      * Gets the value of the href property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHref() {
+    public String getHref()
+    {
         return href;
     }
 
     /**
      * Sets the value of the href property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHref(String value) {
+    public void setHref(String value)
+    {
         this.href = value;
     }
 
-    public boolean isSetHref() {
-        return (this.href!= null);
+    public boolean isSetHref()
+    {
+        return (this.href != null);
     }
 
     /**
      * Gets the value of the rel property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getRel() {
+    public String getRel()
+    {
         return rel;
     }
 
     /**
      * Sets the value of the rel property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setRel(String value) {
+    public void setRel(String value)
+    {
         this.rel = value;
     }
 
-    public boolean isSetRel() {
-        return (this.rel!= null);
+    public boolean isSetRel()
+    {
+        return (this.rel != null);
     }
 
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getType() {
+    public String getType()
+    {
         return type;
     }
 
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setType(String value) {
+    public void setType(String value)
+    {
         this.type = value;
     }
 
-    public boolean isSetType() {
-        return (this.type!= null);
+    public boolean isSetType()
+    {
+        return (this.type != null);
     }
 
     /**
      * Gets the value of the hreflang property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getHreflang() {
+    public String getHreflang()
+    {
         return hreflang;
     }
 
     /**
      * Sets the value of the hreflang property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setHreflang(String value) {
+    public void setHreflang(String value)
+    {
         this.hreflang = value;
     }
 
-    public boolean isSetHreflang() {
-        return (this.hreflang!= null);
+    public boolean isSetHreflang()
+    {
+        return (this.hreflang != null);
     }
 
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setTitle(String value) {
+    public void setTitle(String value)
+    {
         this.title = value;
     }
 
-    public boolean isSetTitle() {
-        return (this.title!= null);
+    public boolean isSetTitle()
+    {
+        return (this.title != null);
     }
 
     /**
      * Gets the value of the length property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLength() {
+    public String getLength()
+    {
         return length;
     }
 
     /**
      * Sets the value of the length property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLength(String value) {
+    public void setLength(String value)
+    {
         this.length = value;
     }
 
-    public boolean isSetLength() {
-        return (this.length!= null);
+    public boolean isSetLength()
+    {
+        return (this.length != null);
     }
 
 }

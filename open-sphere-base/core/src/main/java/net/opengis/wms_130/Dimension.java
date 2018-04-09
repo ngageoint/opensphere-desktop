@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:41 PM MST 
 //
 
-
 package net.opengis.wms_130;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,11 +14,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -40,218 +41,208 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "value"
-})
+@XmlType(name = "", propOrder = { "value" })
 @XmlRootElement(name = "Dimension")
-public class Dimension {
+public class Dimension
+{
 
     @XmlValue
     protected String value;
+
     @XmlAttribute(required = true)
     protected String name;
+
     @XmlAttribute(required = true)
     protected String units;
+
     @XmlAttribute
     protected String unitSymbol;
+
     @XmlAttribute(name = "default")
     protected String _default;
+
     @XmlAttribute
     protected Boolean multipleValues;
+
     @XmlAttribute
     protected Boolean nearestValue;
+
     @XmlAttribute
     protected Boolean current;
 
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getValue() {
+    public String getValue()
+    {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setValue(String value) {
+    public void setValue(String value)
+    {
         this.value = value;
     }
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setName(String value) {
+    public void setName(String value)
+    {
         this.name = value;
     }
 
     /**
      * Gets the value of the units property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getUnits() {
+    public String getUnits()
+    {
         return units;
     }
 
     /**
      * Sets the value of the units property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setUnits(String value) {
+    public void setUnits(String value)
+    {
         this.units = value;
     }
 
     /**
      * Gets the value of the unitSymbol property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getUnitSymbol() {
+    public String getUnitSymbol()
+    {
         return unitSymbol;
     }
 
     /**
      * Sets the value of the unitSymbol property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setUnitSymbol(String value) {
+    public void setUnitSymbol(String value)
+    {
         this.unitSymbol = value;
     }
 
     /**
      * Gets the value of the default property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDefault() {
+    public String getDefault()
+    {
         return _default;
     }
 
     /**
      * Sets the value of the default property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDefault(String value) {
+    public void setDefault(String value)
+    {
         this._default = value;
     }
 
     /**
      * Gets the value of the multipleValues property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isMultipleValues() {
+    public Boolean isMultipleValues()
+    {
         return multipleValues;
     }
 
     /**
      * Sets the value of the multipleValues property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setMultipleValues(Boolean value) {
+    public void setMultipleValues(Boolean value)
+    {
         this.multipleValues = value;
     }
 
     /**
      * Gets the value of the nearestValue property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isNearestValue() {
+    public Boolean isNearestValue()
+    {
         return nearestValue;
     }
 
     /**
      * Sets the value of the nearestValue property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setNearestValue(Boolean value) {
+    public void setNearestValue(Boolean value)
+    {
         this.nearestValue = value;
     }
 
     /**
      * Gets the value of the current property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
-    public Boolean isCurrent() {
+    public Boolean isCurrent()
+    {
         return current;
     }
 
     /**
      * Sets the value of the current property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     * @param value allowed object is {@link Boolean }
+     * 
      */
-    public void setCurrent(Boolean value) {
+    public void setCurrent(Boolean value)
+    {
         this.current = value;
     }
 

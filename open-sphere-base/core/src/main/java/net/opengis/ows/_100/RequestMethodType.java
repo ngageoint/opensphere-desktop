@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ows._100;
 
 import java.util.ArrayList;
@@ -16,13 +15,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Connect point URL and any constraints for this HTTP request method for this operation request. In the OnlineResourceType, the xlink:href attribute in the xlink:simpleLink attribute group shall be used to contain this URL. The other attributes in the xlink:simpleLink attribute group should not be used. 
+ * Connect point URL and any constraints for this HTTP request method for this
+ * operation request. In the OnlineResourceType, the xlink:href attribute in the
+ * xlink:simpleLink attribute group shall be used to contain this URL. The other
+ * attributes in the xlink:simpleLink attribute group should not be used.
  * 
- * <p>Java class for RequestMethodType complex type.
+ * <p>
+ * Java class for RequestMethodType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="RequestMethodType">
@@ -39,11 +43,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RequestMethodType", propOrder = {
-    "constraint"
-})
-public class RequestMethodType
-    extends OnlineResourceType
+@XmlType(name = "RequestMethodType", propOrder = { "constraint" })
+public class RequestMethodType extends OnlineResourceType
 {
 
     @XmlElement(name = "Constraint")
@@ -53,15 +54,16 @@ public class RequestMethodType
      * Gets the value of the constraint property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the constraint property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the constraint property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getConstraint().add(newItem);
+     * getConstraint().add(newItem);
      * </pre>
      * 
      * 
@@ -71,8 +73,10 @@ public class RequestMethodType
      * 
      * 
      */
-    public List<DomainType> getConstraint() {
-        if (constraint == null) {
+    public List<DomainType> getConstraint()
+    {
+        if (constraint == null)
+        {
             constraint = new ArrayList<DomainType>();
         }
         return this.constraint;

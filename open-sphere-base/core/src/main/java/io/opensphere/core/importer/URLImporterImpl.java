@@ -44,15 +44,15 @@ public class URLImporterImpl implements URLImporter
         catch (MalformedURLException e)
         {
             EventQueue.invokeLater(
-                () -> JOptionPane.showMessageDialog(myMainFrameProvider.get(), "URL is malformed: " + urlString));
+                    () -> JOptionPane.showMessageDialog(myMainFrameProvider.get(), "URL is malformed: " + urlString));
             return;
         }
-        List<FileOrURLImporter> importers = myImporterRegistry.getImporters(
-            input -> input.importsURLs() && input.canImport(url, null), FileOrURLImporter.PREC_ORDER);
+        List<FileOrURLImporter> importers = myImporterRegistry
+                .getImporters(input -> input.importsURLs() && input.canImport(url, null), FileOrURLImporter.PREC_ORDER);
         if (importers.isEmpty())
         {
             EventQueue.invokeLater(
-                () -> JOptionPane.showMessageDialog(myMainFrameProvider.get(), "Cannot import URL: " + urlString));
+                    () -> JOptionPane.showMessageDialog(myMainFrameProvider.get(), "Cannot import URL: " + urlString));
         }
         else
         {

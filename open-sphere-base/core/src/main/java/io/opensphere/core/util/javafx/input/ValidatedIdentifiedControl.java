@@ -11,9 +11,10 @@ import jidefx.scene.control.validation.ValidationMode;
 import jidefx.scene.control.validation.Validator;
 
 /**
- * A wrapper around a control, in which a {@link Validator} is associated with the input provider, and also contains a variable
- * name and a title of the input area. This class itself extends {@link Control}, allowing it to be used anywhere an existing
- * control type can be used.
+ * A wrapper around a control, in which a {@link Validator} is associated with
+ * the input provider, and also contains a variable name and a title of the
+ * input area. This class itself extends {@link Control}, allowing it to be used
+ * anywhere an existing control type can be used.
  *
  * @param <CONTROL_TYPE> the the type of control wrapped by the instance.
  */
@@ -42,7 +43,8 @@ public class ValidatedIdentifiedControl<CONTROL_TYPE extends Control> extends Id
     }
 
     /**
-     * Creates a new control, wrapping the supplied control, and storing the variable name and title of the control.
+     * Creates a new control, wrapping the supplied control, and storing the
+     * variable name and title of the control.
      *
      * @param pVariableName The name of a variable applied to the input field.
      * @param pDisplayTitle The textual label title of the input field.
@@ -54,12 +56,13 @@ public class ValidatedIdentifiedControl<CONTROL_TYPE extends Control> extends Id
     }
 
     /**
-     * Creates a new control, wrapping the supplied control and accessor function, and storing the variable name and title of the
-     * control.
+     * Creates a new control, wrapping the supplied control and accessor
+     * function, and storing the variable name and title of the control.
      *
      * @param pVariableName The name of a variable applied to the input field.
      * @param pDisplayTitle The textual label title of the input field.
-     * @param pResultAccessorFunction The function used to get results from the control.
+     * @param pResultAccessorFunction The function used to get results from the
+     *            control.
      * @param pControl The control wrapped by the instance.
      */
     public ValidatedIdentifiedControl(String pVariableName, String pDisplayTitle, Supplier<String> pResultAccessorFunction,
@@ -104,7 +107,8 @@ public class ValidatedIdentifiedControl<CONTROL_TYPE extends Control> extends Id
     /**
      * Sets the value of the {@link #myValidationGroup} field.
      *
-     * @param pValidationGroup the value to store in the {@link #myValidationGroup} field.
+     * @param pValidationGroup the value to store in the
+     *            {@link #myValidationGroup} field.
      */
     public void setValidationGroup(ValidationGroup pValidationGroup)
     {
@@ -135,7 +139,8 @@ public class ValidatedIdentifiedControl<CONTROL_TYPE extends Control> extends Id
     }
 
     /**
-     * Associates the control with the internally stored validation group, if it hasn't been associated already.
+     * Associates the control with the internally stored validation group, if it
+     * hasn't been associated already.
      */
     protected void associateValidationGroup()
     {
@@ -146,8 +151,9 @@ public class ValidatedIdentifiedControl<CONTROL_TYPE extends Control> extends Id
     }
 
     /**
-     * Installs the validator to the control. No action is taken if either the control or the validator is null. The control is
-     * also added to the validation group, if the group has been supplied.
+     * Installs the validator to the control. No action is taken if either the
+     * control or the validator is null. The control is also added to the
+     * validation group, if the group has been supplied.
      */
     protected void installValidator()
     {
@@ -159,8 +165,9 @@ public class ValidatedIdentifiedControl<CONTROL_TYPE extends Control> extends Id
     }
 
     /**
-     * Installs the validator to the control. No action is taken if either the control or the validator is null. The control is
-     * also added to the validation group, if the group has been supplied.
+     * Installs the validator to the control. No action is taken if either the
+     * control or the validator is null. The control is also added to the
+     * validation group, if the group has been supplied.
      *
      * @param observableValue the observable value to listen to
      */

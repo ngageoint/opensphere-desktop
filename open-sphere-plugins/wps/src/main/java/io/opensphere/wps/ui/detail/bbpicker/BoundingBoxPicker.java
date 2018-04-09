@@ -8,23 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Control;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Skin;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.Toolbox;
@@ -46,6 +29,22 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.overlay.OverlayToolboxUtils;
 import io.opensphere.overlay.SelectionModeController;
 import io.opensphere.wps.util.WpsUtilities;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.control.Control;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Skin;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import jidefx.scene.control.validation.ValidationEvent;
 
 /**

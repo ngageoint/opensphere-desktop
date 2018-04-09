@@ -563,7 +563,8 @@ public class SecurityManagerImpl implements SecurityManager
             return;
         }
 
-        final CipherFactory newCipherFactory = new CipherFactory(new DefaultSecretKeyProvider(newSecretKey), DEFAULT_TRANSFORMATION);
+        final CipherFactory newCipherFactory = new CipherFactory(new DefaultSecretKeyProvider(newSecretKey),
+                DEFAULT_TRANSFORMATION);
 
         myDisallowSecretKeyPrompting = true;
         try
@@ -763,8 +764,8 @@ public class SecurityManagerImpl implements SecurityManager
 
         do
         {
-            final CreateSecretKeyPanel createSecretKeyPanel = new CreateSecretKeyPanel(promptMessage, privateKeyAvailable, filter, this,
-                    myPreferencesRegistry);
+            final CreateSecretKeyPanel createSecretKeyPanel = new CreateSecretKeyPanel(promptMessage, privateKeyAvailable, filter,
+                    this, myPreferencesRegistry);
             final OptionDialog dialog = new OptionDialog(SwingUtilities.getWindowAncestor(myDialogParent), createSecretKeyPanel,
                     "Configure Security");
             dialog.buildAndShow();
@@ -773,7 +774,8 @@ public class SecurityManagerImpl implements SecurityManager
                 final SecurityConfiguration config = getConfig().clone();
                 try
                 {
-                    final Pair<SecretKey, CryptoConfig> pair = createSecretKeyPanel.generateSecretKeyAndCryptoConfig(CRYPT_ALGORITHM);
+                    final Pair<SecretKey, CryptoConfig> pair = createSecretKeyPanel
+                            .generateSecretKeyAndCryptoConfig(CRYPT_ALGORITHM);
                     if (pair != null)
                     {
                         result = pair.getFirstObject();
@@ -866,7 +868,7 @@ public class SecurityManagerImpl implements SecurityManager
      *
      * @param digest The expected digest.
      * @return The new secret key.
-     * @throws SecretKeyProviderException If a new secret key was not generated.
+     * @throws SecretKeyProviderException If a   new secret key was not generated.
      */
     private SecretKey handleMissingEncryptionKey(final Digest digest) throws SecretKeyProviderException
     {

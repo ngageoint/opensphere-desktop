@@ -21,7 +21,7 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.core.datafilter.DataFilterOperators.Conditional;
 import io.opensphere.core.util.collections.New;
@@ -66,7 +66,7 @@ public class SimpleFeatureActionRowBinderTestDisplay
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -137,7 +137,7 @@ public class SimpleFeatureActionRowBinderTestDisplay
     @Test
     public void testClose()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -212,7 +212,7 @@ public class SimpleFeatureActionRowBinderTestDisplay
     @Test
     public void testCopy()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -264,7 +264,7 @@ public class SimpleFeatureActionRowBinderTestDisplay
     @Test
     public void testCriteriaOptionChanges()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -331,7 +331,7 @@ public class SimpleFeatureActionRowBinderTestDisplay
     @Test
     public void testRange()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -397,7 +397,7 @@ public class SimpleFeatureActionRowBinderTestDisplay
     @Test
     public void testRemove()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

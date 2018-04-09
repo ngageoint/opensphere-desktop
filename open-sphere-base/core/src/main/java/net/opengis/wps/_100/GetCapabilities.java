@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.ows._110.AcceptVersionsType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -40,55 +41,56 @@ import net.opengis.ows._110.AcceptVersionsType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "acceptVersions"
-})
+@XmlType(name = "", propOrder = { "acceptVersions" })
 @XmlRootElement(name = "GetCapabilities")
-public class GetCapabilities {
+public class GetCapabilities
+{
 
     @XmlElement(name = "AcceptVersions")
     protected AcceptVersionsType acceptVersions;
+
     @XmlAttribute(required = true)
     protected String service;
+
     @XmlAttribute
     protected String language;
 
     /**
      * Gets the value of the acceptVersions property.
      * 
-     * @return
-     *     possible object is
-     *     {@link AcceptVersionsType }
-     *     
+     * @return possible object is {@link AcceptVersionsType }
+     * 
      */
-    public AcceptVersionsType getAcceptVersions() {
+    public AcceptVersionsType getAcceptVersions()
+    {
         return acceptVersions;
     }
 
     /**
      * Sets the value of the acceptVersions property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link AcceptVersionsType }
-     *     
+     * @param value allowed object is {@link AcceptVersionsType }
+     * 
      */
-    public void setAcceptVersions(AcceptVersionsType value) {
+    public void setAcceptVersions(AcceptVersionsType value)
+    {
         this.acceptVersions = value;
     }
 
     /**
      * Gets the value of the service property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getService() {
-        if (service == null) {
+    public String getService()
+    {
+        if (service == null)
+        {
             return "WPS";
-        } else {
+        }
+        else
+        {
             return service;
         }
     }
@@ -96,36 +98,33 @@ public class GetCapabilities {
     /**
      * Sets the value of the service property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setService(String value) {
+    public void setService(String value)
+    {
         this.service = value;
     }
 
     /**
      * Gets the value of the language property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLanguage() {
+    public String getLanguage()
+    {
         return language;
     }
 
     /**
      * Sets the value of the language property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLanguage(String value) {
+    public void setLanguage(String value)
+    {
         this.language = value;
     }
 

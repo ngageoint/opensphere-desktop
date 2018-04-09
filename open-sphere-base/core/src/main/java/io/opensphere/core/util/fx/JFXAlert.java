@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.WeakHashMap;
 import java.util.function.Supplier;
 
+import javax.swing.JDialog;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -26,10 +28,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-
-import javax.swing.JDialog;
-
-import com.sun.javafx.tk.Toolkit;
 
 /**
  * An alert dialog that renders a JavaFX component and buttons within a Swing
@@ -72,10 +70,10 @@ public class JFXAlert extends JDialog
     private volatile ButtonType myResponse;
 
     /** The supplier used to generate the content area of the dialog. */
-    private Supplier<Node> myMessageSupplier;
+    private final Supplier<Node> myMessageSupplier;
 
     /** The alert type created by the user. */
-    private JFXAlertType myAlertType;
+    private final JFXAlertType myAlertType;
 
     /**
      * Creates a new modal dialog bound to the supplied window, configured as
@@ -323,9 +321,9 @@ public class JFXAlert extends JDialog
      * <p>
      * This method must be called on the JavaFX Application thread.
      * Additionally, it must either be called from an input event handler or
-     * from the run method of a Runnable passed to
-     * {@link javafx.application.Platform#runLater Platform.runLater}. It must
-     * not be called during animation or layout processing.
+     * from the run method of a Runnable passed to {@link Platform#runLater
+     * Platform.runlater}. It must not be called during animation or layout
+     * processing.
      * </p>
      *
      * @return An {@link Optional} that contains the result. Refer to the
@@ -339,7 +337,7 @@ public class JFXAlert extends JDialog
     {
         Platform.runLater(() -> myMainPanel.setScene(createScene()));
 
-        if (!Toolkit.getToolkit().canStartNestedEventLoop())
+        if (Platform.isNestedLoopRunning())
         {
             throw new IllegalStateException("showAndWait is not allowed during animation or layout processing");
         }

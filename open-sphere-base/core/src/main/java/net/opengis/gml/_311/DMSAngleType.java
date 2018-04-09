@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.math.BigDecimal;
@@ -15,13 +14,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * Angle value provided in degree-minute-second or degree-minute format.
  * 
- * <p>Java class for DMSAngleType complex type.
+ * <p>
+ * Java class for DMSAngleType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DMSAngleType">
@@ -45,113 +46,104 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DMSAngleType", propOrder = {
-    "degrees",
-    "decimalMinutes",
-    "minutes",
-    "seconds"
-})
-public class DMSAngleType {
+@XmlType(name = "DMSAngleType", propOrder = { "degrees", "decimalMinutes", "minutes", "seconds" })
+public class DMSAngleType
+{
 
     @XmlElement(required = true)
     protected DegreesType degrees;
+
     protected BigDecimal decimalMinutes;
+
     protected Integer minutes;
+
     protected BigDecimal seconds;
 
     /**
      * Gets the value of the degrees property.
      * 
-     * @return
-     *     possible object is
-     *     {@link DegreesType }
-     *     
+     * @return possible object is {@link DegreesType }
+     * 
      */
-    public DegreesType getDegrees() {
+    public DegreesType getDegrees()
+    {
         return degrees;
     }
 
     /**
      * Sets the value of the degrees property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DegreesType }
-     *     
+     * @param value allowed object is {@link DegreesType }
+     * 
      */
-    public void setDegrees(DegreesType value) {
+    public void setDegrees(DegreesType value)
+    {
         this.degrees = value;
     }
 
     /**
      * Gets the value of the decimalMinutes property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     * @return possible object is {@link BigDecimal }
+     * 
      */
-    public BigDecimal getDecimalMinutes() {
+    public BigDecimal getDecimalMinutes()
+    {
         return decimalMinutes;
     }
 
     /**
      * Sets the value of the decimalMinutes property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     * @param value allowed object is {@link BigDecimal }
+     * 
      */
-    public void setDecimalMinutes(BigDecimal value) {
+    public void setDecimalMinutes(BigDecimal value)
+    {
         this.decimalMinutes = value;
     }
 
     /**
      * Gets the value of the minutes property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
-    public Integer getMinutes() {
+    public Integer getMinutes()
+    {
         return minutes;
     }
 
     /**
      * Sets the value of the minutes property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     * @param value allowed object is {@link Integer }
+     * 
      */
-    public void setMinutes(Integer value) {
+    public void setMinutes(Integer value)
+    {
         this.minutes = value;
     }
 
     /**
      * Gets the value of the seconds property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     * @return possible object is {@link BigDecimal }
+     * 
      */
-    public BigDecimal getSeconds() {
+    public BigDecimal getSeconds()
+    {
         return seconds;
     }
 
     /**
      * Sets the value of the seconds property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     * @param value allowed object is {@link BigDecimal }
+     * 
      */
-    public void setSeconds(BigDecimal value) {
+    public void setSeconds(BigDecimal value)
+    {
         this.seconds = value;
     }
 

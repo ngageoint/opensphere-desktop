@@ -1,6 +1,6 @@
 package io.opensphere.core.pipeline.util;
 
-import javax.media.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLAutoDrawable;
 
 import org.apache.log4j.Logger;
 

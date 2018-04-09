@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import java.math.BigInteger;
@@ -20,19 +19,20 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import net.opengis.gml._311.AbstractFeatureCollectionType;
 
-
 /**
  * 
- *             This type defines a container for the response to a 
- *             GetFeature or GetFeatureWithLock request.  If the
- *             request is GetFeatureWithLock, the lockId attribute
- *             must be populated.  The lockId attribute can otherwise
- *             be safely ignored.
- *          
+ * This type defines a container for the response to a GetFeature or
+ * GetFeatureWithLock request. If the request is GetFeatureWithLock, the lockId
+ * attribute must be populated. The lockId attribute can otherwise be safely
+ * ignored.
  * 
- * <p>Java class for FeatureCollectionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for FeatureCollectionType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="FeatureCollectionType">
@@ -51,15 +51,16 @@ import net.opengis.gml._311.AbstractFeatureCollectionType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FeatureCollectionType")
 @XmlRootElement(name = "FeatureCollection")
-public class FeatureCollectionType
-    extends AbstractFeatureCollectionType
+public class FeatureCollectionType extends AbstractFeatureCollectionType
 {
 
     @XmlAttribute(name = "lockId")
     protected String lockId;
+
     @XmlAttribute(name = "timeStamp")
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar timeStamp;
+
     @XmlAttribute(name = "numberOfFeatures")
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger numberOfFeatures;
@@ -67,72 +68,66 @@ public class FeatureCollectionType
     /**
      * Gets the value of the lockId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLockId() {
+    public String getLockId()
+    {
         return lockId;
     }
 
     /**
      * Sets the value of the lockId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLockId(String value) {
+    public void setLockId(String value)
+    {
         this.lockId = value;
     }
 
     /**
      * Gets the value of the timeStamp property.
      * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     * @return possible object is {@link XMLGregorianCalendar }
+     * 
      */
-    public XMLGregorianCalendar getTimeStamp() {
+    public XMLGregorianCalendar getTimeStamp()
+    {
         return timeStamp;
     }
 
     /**
      * Sets the value of the timeStamp property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     * @param value allowed object is {@link XMLGregorianCalendar }
+     * 
      */
-    public void setTimeStamp(XMLGregorianCalendar value) {
+    public void setTimeStamp(XMLGregorianCalendar value)
+    {
         this.timeStamp = value;
     }
 
     /**
      * Gets the value of the numberOfFeatures property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getNumberOfFeatures() {
+    public BigInteger getNumberOfFeatures()
+    {
         return numberOfFeatures;
     }
 
     /**
      * Sets the value of the numberOfFeatures property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setNumberOfFeatures(BigInteger value) {
+    public void setNumberOfFeatures(BigInteger value)
+    {
         this.numberOfFeatures = value;
     }
 

@@ -26,11 +26,11 @@ public class CertificateConfiguration implements Cloneable
      */
     public enum CertificateType
     {
-        /** PKCS12. */
-        PKCS12("PKCS12"),
+    /** PKCS12. */
+    PKCS12("PKCS12"),
 
-        /** JKS. */
-        JKS("JKS");
+    /** JKS. */
+    JKS("JKS");
 
         /**
          * The Java KeyStore type.

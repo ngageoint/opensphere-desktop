@@ -241,12 +241,11 @@ public interface Projection extends TerrainElevationProvider, ElevationChangeLis
 
     /**
      * Get a unit vector which is normal to the surface of the model at the
-     * location. If the
-     * {@link io.opensphere.core.model.Altitude.ReferenceLevel} of the
-     * position is
-     * {@link io.opensphere.core.model.Altitude.ReferenceLevel#TERRAIN} and
-     * the projection supports terrain, the vector returned will be normal to
-     * the terrain mesh.
+     * location. If the {@link io.opensphere.core.model.Altitude.ReferenceLevel}
+     * of the position is
+     * {@link io.opensphere.core.model.Altitude.ReferenceLevel#TERRAIN} and the
+     * projection supports terrain, the vector returned will be normal to the
+     * terrain mesh.
      *
      * @param inPos The position at which to get the normal.
      * @return The unit normal vector.

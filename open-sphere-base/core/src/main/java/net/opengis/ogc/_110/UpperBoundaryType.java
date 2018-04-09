@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ogc._110;
 
 import javax.xml.bind.JAXBElement;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for UpperBoundaryType complex type.
+ * <p>
+ * Java class for UpperBoundaryType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="UpperBoundaryType">
@@ -35,10 +36,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UpperBoundaryType", propOrder = {
-    "expression"
-})
-public class UpperBoundaryType {
+@XmlType(name = "UpperBoundaryType", propOrder = { "expression" })
+public class UpperBoundaryType
+{
 
     @XmlElementRef(name = "expression", namespace = "http://www.opengis.net/ogc", type = JAXBElement.class)
     protected JAXBElement<?> expression;
@@ -46,39 +46,41 @@ public class UpperBoundaryType {
     /**
      * Gets the value of the expression property.
      * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link ExpressionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link LiteralType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PropertyNameType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryOperatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link FunctionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryOperatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryOperatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryOperatorType }{@code >}
-     *     
+     * @return possible object is {@link JAXBElement
+     *         }{@code <}{@link ExpressionType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link LiteralType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link PropertyNameType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link BinaryOperatorType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link FunctionType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link BinaryOperatorType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link BinaryOperatorType }{@code >} {@link JAXBElement
+     *         }{@code <}{@link BinaryOperatorType }{@code >}
+     * 
      */
-    public JAXBElement<?> getExpression() {
+    public JAXBElement<?> getExpression()
+    {
         return expression;
     }
 
     /**
      * Sets the value of the expression property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link ExpressionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link LiteralType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link PropertyNameType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryOperatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link FunctionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryOperatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryOperatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link BinaryOperatorType }{@code >}
-     *     
+     * @param value allowed object is {@link JAXBElement
+     *            }{@code <}{@link ExpressionType }{@code >} {@link JAXBElement
+     *            }{@code <}{@link LiteralType }{@code >} {@link JAXBElement
+     *            }{@code <}{@link PropertyNameType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link BinaryOperatorType
+     *            }{@code >} {@link JAXBElement }{@code <}{@link FunctionType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link BinaryOperatorType }{@code >}
+     *            {@link JAXBElement }{@code <}{@link BinaryOperatorType
+     *            }{@code >} {@link JAXBElement
+     *            }{@code <}{@link BinaryOperatorType }{@code >}
+     * 
      */
-    public void setExpression(JAXBElement<?> value) {
-        this.expression = ((JAXBElement<?> ) value);
+    public void setExpression(JAXBElement<?> value)
+    {
+        this.expression = (value);
     }
 
 }

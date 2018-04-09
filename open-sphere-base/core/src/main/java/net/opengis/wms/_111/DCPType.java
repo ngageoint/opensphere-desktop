@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:39 PM MST 
 //
 
-
 package net.opengis.wms._111;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,16 +13,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "http"
-})
+@XmlType(name = "", propOrder = { "http" })
 @XmlRootElement(name = "DCPType")
-public class DCPType {
+public class DCPType
+{
 
     @XmlElement(name = "HTTP", required = true)
     protected HTTP http;
@@ -31,24 +28,22 @@ public class DCPType {
     /**
      * Gets the value of the http property.
      * 
-     * @return
-     *     possible object is
-     *     {@link HTTP }
-     *     
+     * @return possible object is {@link HTTP }
+     * 
      */
-    public HTTP getHTTP() {
+    public HTTP getHTTP()
+    {
         return http;
     }
 
     /**
      * Sets the value of the http property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link HTTP }
-     *     
+     * @param value allowed object is {@link HTTP }
+     * 
      */
-    public void setHTTP(HTTP value) {
+    public void setHTTP(HTTP value)
+    {
         this.http = value;
     }
 

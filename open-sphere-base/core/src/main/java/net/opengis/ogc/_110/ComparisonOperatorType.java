@@ -5,19 +5,21 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.ogc._110;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ComparisonOperatorType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for ComparisonOperatorType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="ComparisonOperatorType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -37,39 +39,37 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "ComparisonOperatorType")
 @XmlEnum
-public enum ComparisonOperatorType {
+public enum ComparisonOperatorType
+{
 
     @XmlEnumValue("LessThan")
-    LESS_THAN("LessThan"),
-    @XmlEnumValue("GreaterThan")
-    GREATER_THAN("GreaterThan"),
-    @XmlEnumValue("LessThanEqualTo")
-    LESS_THAN_EQUAL_TO("LessThanEqualTo"),
-    @XmlEnumValue("GreaterThanEqualTo")
-    GREATER_THAN_EQUAL_TO("GreaterThanEqualTo"),
-    @XmlEnumValue("EqualTo")
-    EQUAL_TO("EqualTo"),
-    @XmlEnumValue("NotEqualTo")
-    NOT_EQUAL_TO("NotEqualTo"),
-    @XmlEnumValue("Like")
-    LIKE("Like"),
-    @XmlEnumValue("Between")
-    BETWEEN("Between"),
-    @XmlEnumValue("NullCheck")
+    LESS_THAN("LessThan"), @XmlEnumValue("GreaterThan")
+    GREATER_THAN("GreaterThan"), @XmlEnumValue("LessThanEqualTo")
+    LESS_THAN_EQUAL_TO("LessThanEqualTo"), @XmlEnumValue("GreaterThanEqualTo")
+    GREATER_THAN_EQUAL_TO("GreaterThanEqualTo"), @XmlEnumValue("EqualTo")
+    EQUAL_TO("EqualTo"), @XmlEnumValue("NotEqualTo")
+    NOT_EQUAL_TO("NotEqualTo"), @XmlEnumValue("Like")
+    LIKE("Like"), @XmlEnumValue("Between")
+    BETWEEN("Between"), @XmlEnumValue("NullCheck")
     NULL_CHECK("NullCheck");
     private final String value;
 
-    ComparisonOperatorType(String v) {
+    ComparisonOperatorType(String v)
+    {
         value = v;
     }
 
-    public String value() {
+    public String value()
+    {
         return value;
     }
 
-    public static ComparisonOperatorType fromValue(String v) {
-        for (ComparisonOperatorType c: ComparisonOperatorType.values()) {
-            if (c.value.equals(v)) {
+    public static ComparisonOperatorType fromValue(String v)
+    {
+        for (ComparisonOperatorType c : ComparisonOperatorType.values())
+        {
+            if (c.value.equals(v))
+            {
                 return c;
             }
         }

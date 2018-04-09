@@ -17,8 +17,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 /**
- * A combined component that extends the {@link Control} class, allowing instances to be used for input in place of a single
- * component.
+ * A combined component that extends the {@link Control} class, allowing
+ * instances to be used for input in place of a single component.
  */
 public class CombinedDateTimePicker extends Control
 {
@@ -33,7 +33,8 @@ public class CombinedDateTimePicker extends Control
     private final TimePicker myTimePicker;
 
     /**
-     * The button used to change the control's date and time to the current value.
+     * The button used to change the control's date and time to the current
+     * value.
      */
     private final Button myNowButton;
 
@@ -48,7 +49,8 @@ public class CombinedDateTimePicker extends Control
     private final ObjectProperty<Date> myValue = new SimpleObjectProperty<>();
 
     /**
-     * Creates a new combined picker, in which a date picker and time picker are displayed on the same line.
+     * Creates a new combined picker, in which a date picker and time picker are
+     * displayed on the same line.
      */
     @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
     public CombinedDateTimePicker()
@@ -94,9 +96,11 @@ public class CombinedDateTimePicker extends Control
     }
 
     /**
-     * An event handler method used to react to a date selection change event in the {@link #myDatePicker} field. When the
-     * selected date is changed, the value is combined with the selected time, and converted to a legacy {@link Date} object. This
-     * value is then propagated through the {@link #myValue} property.
+     * An event handler method used to react to a date selection change event in
+     * the {@link #myDatePicker} field. When the selected date is changed, the
+     * value is combined with the selected time, and converted to a legacy
+     * {@link Date} object. This value is then propagated through the
+     * {@link #myValue} property.
      *
      * @param pSelectedDate the date selected by the user on the date picker.
      */
@@ -114,9 +118,11 @@ public class CombinedDateTimePicker extends Control
     }
 
     /**
-     * An event handler method used to react to a time selection change event in the {@link #myTimePicker} field. When the
-     * selected time is changed, the value is combined with the selected date, and converted to a legacy {@link Date} object. This
-     * value is then propagated through the {@link #myValue} property.
+     * An event handler method used to react to a time selection change event in
+     * the {@link #myTimePicker} field. When the selected time is changed, the
+     * value is combined with the selected date, and converted to a legacy
+     * {@link Date} object. This value is then propagated through the
+     * {@link #myValue} property.
      *
      * @param pSelectedTime the time selected by the user on the time picker.
      */

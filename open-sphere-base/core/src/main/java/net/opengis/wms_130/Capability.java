@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:41 PM MST 
 //
 
-
 package net.opengis.wms_130;
 
 import java.util.ArrayList;
@@ -17,11 +16,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -41,69 +42,64 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "request",
-    "exception",
-    "extendedCapabilities",
-    "layer"
-})
+@XmlType(name = "", propOrder = { "request", "exception", "extendedCapabilities", "layer" })
 @XmlRootElement(name = "Capability")
-public class Capability {
+public class Capability
+{
 
     @XmlElement(name = "Request", required = true)
     protected Request request;
+
     @XmlElement(name = "Exception", required = true)
     protected Exception exception;
+
     @XmlElement(name = "_ExtendedCapabilities")
     protected List<Object> extendedCapabilities;
+
     @XmlElement(name = "Layer")
     protected Layer layer;
 
     /**
      * Gets the value of the request property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Request }
-     *     
+     * @return possible object is {@link Request }
+     * 
      */
-    public Request getRequest() {
+    public Request getRequest()
+    {
         return request;
     }
 
     /**
      * Sets the value of the request property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Request }
-     *     
+     * @param value allowed object is {@link Request }
+     * 
      */
-    public void setRequest(Request value) {
+    public void setRequest(Request value)
+    {
         this.request = value;
     }
 
     /**
      * Gets the value of the exception property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Exception }
-     *     
+     * @return possible object is {@link Exception }
+     * 
      */
-    public Exception getException() {
+    public Exception getException()
+    {
         return exception;
     }
 
     /**
      * Sets the value of the exception property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Exception }
-     *     
+     * @param value allowed object is {@link Exception }
+     * 
      */
-    public void setException(Exception value) {
+    public void setException(Exception value)
+    {
         this.exception = value;
     }
 
@@ -111,26 +107,28 @@ public class Capability {
      * Gets the value of the extendedCapabilities property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the extendedCapabilities property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the extendedCapabilities property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getExtendedCapabilities().add(newItem);
+     * getExtendedCapabilities().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getExtendedCapabilities() {
-        if (extendedCapabilities == null) {
+    public List<Object> getExtendedCapabilities()
+    {
+        if (extendedCapabilities == null)
+        {
             extendedCapabilities = new ArrayList<Object>();
         }
         return this.extendedCapabilities;
@@ -139,24 +137,22 @@ public class Capability {
     /**
      * Gets the value of the layer property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Layer }
-     *     
+     * @return possible object is {@link Layer }
+     * 
      */
-    public Layer getLayer() {
+    public Layer getLayer()
+    {
         return layer;
     }
 
     /**
      * Sets the value of the layer property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Layer }
-     *     
+     * @param value allowed object is {@link Layer }
+     * 
      */
-    public void setLayer(Layer value) {
+    public void setLayer(Layer value)
+    {
         this.layer = value;
     }
 

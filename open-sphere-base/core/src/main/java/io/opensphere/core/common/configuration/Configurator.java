@@ -32,7 +32,7 @@ public class Configurator
     /**
      * Initializes the <code>CombinedConfiguration</code> instance.
      *
-     * @throws ConfigurationException if an error occurs while creating the
+     * @throws ConfigurationException if an  error occurs while creating the
      *             <code>Configuration</code> instance.
      */
     public static void initialize() throws ConfigurationException

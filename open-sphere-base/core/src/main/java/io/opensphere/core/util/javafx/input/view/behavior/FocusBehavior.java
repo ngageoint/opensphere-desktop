@@ -10,38 +10,38 @@ import javafx.scene.control.Control;
 public interface FocusBehavior<C extends Control> extends Behavior<C>
 {
     /**
-     * Calls the focus traversal engine and indicates that traversal should go the next focusTraversable Node above the current
-     * one.
+     * Calls the focus traversal engine and indicates that traversal should go
+     * the next focusTraversable Node above the current one.
      */
     void traverseUp();
 
     /**
-     * Calls the focus traversal engine and indicates that traversal should go the next focusTraversable Node below the current
-     * one.
+     * Calls the focus traversal engine and indicates that traversal should go
+     * the next focusTraversable Node below the current one.
      */
     void traverseDown();
 
     /**
-     * Calls the focus traversal engine and indicates that traversal should go the next focusTraversable Node left of the current
-     * one.
+     * Calls the focus traversal engine and indicates that traversal should go
+     * the next focusTraversable Node left of the current one.
      */
     void traverseLeft();
 
     /**
-     * Calls the focus traversal engine and indicates that traversal should go the next focusTraversable Node right of the current
-     * one.
+     * Calls the focus traversal engine and indicates that traversal should go
+     * the next focusTraversable Node right of the current one.
      */
     void traverseRight();
 
     /**
-     * Calls the focus traversal engine and indicates that traversal should go the next focusTraversable Node in the focus
-     * traversal cycle.
+     * Calls the focus traversal engine and indicates that traversal should go
+     * the next focusTraversable Node in the focus traversal cycle.
      */
     void traverseNext();
 
     /**
-     * Calls the focus traversal engine and indicates that traversal should go the previous focusTraversable Node in the focus
-     * traversal cycle.
+     * Calls the focus traversal engine and indicates that traversal should go
+     * the previous focusTraversable Node in the focus traversal cycle.
      */
     void traversePrevious();
 }

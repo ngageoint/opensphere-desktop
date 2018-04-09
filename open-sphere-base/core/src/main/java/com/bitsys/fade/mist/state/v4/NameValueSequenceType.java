@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package com.bitsys.fade.mist.state.v4;
 
 import java.util.ArrayList;
@@ -15,15 +14,17 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
- *        Collection of name - value pairs.
- *       
+ * Collection of name - value pairs.
  * 
- * <p>Java class for NameValueSequenceType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for NameValueSequenceType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="NameValueSequenceType">
@@ -40,10 +41,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "NameValueSequenceType", propOrder = {
-    "pair"
-})
-public class NameValueSequenceType {
+@XmlType(name = "NameValueSequenceType", propOrder = { "pair" })
+public class NameValueSequenceType
+{
 
     protected List<NameValueType> pair;
 
@@ -51,15 +51,16 @@ public class NameValueSequenceType {
      * Gets the value of the pair property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the pair property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the pair property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPair().add(newItem);
+     * getPair().add(newItem);
      * </pre>
      * 
      * 
@@ -69,18 +70,22 @@ public class NameValueSequenceType {
      * 
      * 
      */
-    public List<NameValueType> getPair() {
-        if (pair == null) {
+    public List<NameValueType> getPair()
+    {
+        if (pair == null)
+        {
             pair = new ArrayList<NameValueType>();
         }
         return this.pair;
     }
 
-    public boolean isSetPair() {
-        return ((this.pair!= null)&&(!this.pair.isEmpty()));
+    public boolean isSetPair()
+    {
+        return ((this.pair != null) && (!this.pair.isEmpty()));
     }
 
-    public void unsetPair() {
+    public void unsetPair()
+    {
         this.pair = null;
     }
 

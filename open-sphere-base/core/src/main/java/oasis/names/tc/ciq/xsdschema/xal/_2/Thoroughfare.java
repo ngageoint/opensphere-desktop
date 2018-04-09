@@ -5,7 +5,6 @@
 // Generated on: 2017.02.22 at 10:22:41 AM MST 
 //
 
-
 package oasis.names.tc.ciq.xsdschema.xal._2;
 
 import java.util.ArrayList;
@@ -30,11 +29,13 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -174,74 +175,80 @@ import javax.xml.namespace.QName;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "addressLine",
-    "thoroughfareNumberOrThoroughfareNumberRange",
-    "thoroughfareNumberPrefix",
-    "thoroughfareNumberSuffix",
-    "thoroughfarePreDirection",
-    "thoroughfareLeadingType",
-    "thoroughfareName",
-    "thoroughfareTrailingType",
-    "thoroughfarePostDirection",
-    "dependentThoroughfare",
-    "dependentLocality",
-    "premise",
-    "firm",
-    "postalCode",
-    "any"
-})
+@XmlType(name = "", propOrder = { "addressLine", "thoroughfareNumberOrThoroughfareNumberRange", "thoroughfareNumberPrefix",
+    "thoroughfareNumberSuffix", "thoroughfarePreDirection", "thoroughfareLeadingType", "thoroughfareName",
+    "thoroughfareTrailingType", "thoroughfarePostDirection", "dependentThoroughfare", "dependentLocality", "premise", "firm",
+    "postalCode", "any" })
 @XmlRootElement(name = "Thoroughfare")
-public class Thoroughfare {
+public class Thoroughfare
+{
 
     @XmlElement(name = "AddressLine")
     protected List<AddressLine> addressLine;
-    @XmlElements({
-        @XmlElement(name = "ThoroughfareNumber", type = ThoroughfareNumber.class),
-        @XmlElement(name = "ThoroughfareNumberRange", type = Thoroughfare.ThoroughfareNumberRange.class)
-    })
+
+    @XmlElements({ @XmlElement(name = "ThoroughfareNumber", type = ThoroughfareNumber.class),
+        @XmlElement(name = "ThoroughfareNumberRange", type = Thoroughfare.ThoroughfareNumberRange.class) })
     protected List<Object> thoroughfareNumberOrThoroughfareNumberRange;
+
     @XmlElement(name = "ThoroughfareNumberPrefix")
     protected List<ThoroughfareNumberPrefix> thoroughfareNumberPrefix;
+
     @XmlElement(name = "ThoroughfareNumberSuffix")
     protected List<ThoroughfareNumberSuffix> thoroughfareNumberSuffix;
+
     @XmlElement(name = "ThoroughfarePreDirection")
     protected ThoroughfarePreDirectionType thoroughfarePreDirection;
+
     @XmlElement(name = "ThoroughfareLeadingType")
     protected ThoroughfareLeadingTypeType thoroughfareLeadingType;
+
     @XmlElement(name = "ThoroughfareName")
     protected List<ThoroughfareNameType> thoroughfareName;
+
     @XmlElement(name = "ThoroughfareTrailingType")
     protected ThoroughfareTrailingTypeType thoroughfareTrailingType;
+
     @XmlElement(name = "ThoroughfarePostDirection")
     protected ThoroughfarePostDirectionType thoroughfarePostDirection;
+
     @XmlElement(name = "DependentThoroughfare")
     protected Thoroughfare.DependentThoroughfare dependentThoroughfare;
+
     @XmlElement(name = "DependentLocality")
     protected DependentLocalityType dependentLocality;
+
     @XmlElement(name = "Premise")
     protected Premise premise;
+
     @XmlElement(name = "Firm")
     protected FirmType firm;
+
     @XmlElement(name = "PostalCode")
     protected PostalCode postalCode;
+
     @XmlAnyElement(lax = true)
     protected List<Object> any;
+
     @XmlAttribute(name = "Type")
     @XmlSchemaType(name = "anySimpleType")
     protected String type;
+
     @XmlAttribute(name = "DependentThoroughfares")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String dependentThoroughfares;
+
     @XmlAttribute(name = "DependentThoroughfaresIndicator")
     @XmlSchemaType(name = "anySimpleType")
     protected String dependentThoroughfaresIndicator;
+
     @XmlAttribute(name = "DependentThoroughfaresConnector")
     @XmlSchemaType(name = "anySimpleType")
     protected String dependentThoroughfaresConnector;
+
     @XmlAttribute(name = "DependentThoroughfaresType")
     @XmlSchemaType(name = "anySimpleType")
     protected String dependentThoroughfaresType;
+
     @XmlAnyAttribute
     private Map<QName, String> otherAttributes = new HashMap<QName, String>();
 
@@ -249,15 +256,16 @@ public class Thoroughfare {
      * Gets the value of the addressLine property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the addressLine property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the addressLine property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAddressLine().add(newItem);
+     * getAddressLine().add(newItem);
      * </pre>
      * 
      * 
@@ -267,56 +275,67 @@ public class Thoroughfare {
      * 
      * 
      */
-    public List<AddressLine> getAddressLine() {
-        if (addressLine == null) {
+    public List<AddressLine> getAddressLine()
+    {
+        if (addressLine == null)
+        {
             addressLine = new ArrayList<AddressLine>();
         }
         return this.addressLine;
     }
 
-    public boolean isSetAddressLine() {
-        return ((this.addressLine!= null)&&(!this.addressLine.isEmpty()));
+    public boolean isSetAddressLine()
+    {
+        return ((this.addressLine != null) && (!this.addressLine.isEmpty()));
     }
 
-    public void unsetAddressLine() {
+    public void unsetAddressLine()
+    {
         this.addressLine = null;
     }
 
     /**
-     * Gets the value of the thoroughfareNumberOrThoroughfareNumberRange property.
+     * Gets the value of the thoroughfareNumberOrThoroughfareNumberRange
+     * property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the thoroughfareNumberOrThoroughfareNumberRange property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the
+     * thoroughfareNumberOrThoroughfareNumberRange property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getThoroughfareNumberOrThoroughfareNumberRange().add(newItem);
+     * getThoroughfareNumberOrThoroughfareNumberRange().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ThoroughfareNumber }
-     * {@link Thoroughfare.ThoroughfareNumberRange }
+     * {@link ThoroughfareNumber } {@link Thoroughfare.ThoroughfareNumberRange }
      * 
      * 
      */
-    public List<Object> getThoroughfareNumberOrThoroughfareNumberRange() {
-        if (thoroughfareNumberOrThoroughfareNumberRange == null) {
+    public List<Object> getThoroughfareNumberOrThoroughfareNumberRange()
+    {
+        if (thoroughfareNumberOrThoroughfareNumberRange == null)
+        {
             thoroughfareNumberOrThoroughfareNumberRange = new ArrayList<Object>();
         }
         return this.thoroughfareNumberOrThoroughfareNumberRange;
     }
 
-    public boolean isSetThoroughfareNumberOrThoroughfareNumberRange() {
-        return ((this.thoroughfareNumberOrThoroughfareNumberRange!= null)&&(!this.thoroughfareNumberOrThoroughfareNumberRange.isEmpty()));
+    public boolean isSetThoroughfareNumberOrThoroughfareNumberRange()
+    {
+        return ((this.thoroughfareNumberOrThoroughfareNumberRange != null)
+                && (!this.thoroughfareNumberOrThoroughfareNumberRange.isEmpty()));
     }
 
-    public void unsetThoroughfareNumberOrThoroughfareNumberRange() {
+    public void unsetThoroughfareNumberOrThoroughfareNumberRange()
+    {
         this.thoroughfareNumberOrThoroughfareNumberRange = null;
     }
 
@@ -324,15 +343,16 @@ public class Thoroughfare {
      * Gets the value of the thoroughfareNumberPrefix property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the thoroughfareNumberPrefix property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the thoroughfareNumberPrefix property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getThoroughfareNumberPrefix().add(newItem);
+     * getThoroughfareNumberPrefix().add(newItem);
      * </pre>
      * 
      * 
@@ -342,18 +362,22 @@ public class Thoroughfare {
      * 
      * 
      */
-    public List<ThoroughfareNumberPrefix> getThoroughfareNumberPrefix() {
-        if (thoroughfareNumberPrefix == null) {
+    public List<ThoroughfareNumberPrefix> getThoroughfareNumberPrefix()
+    {
+        if (thoroughfareNumberPrefix == null)
+        {
             thoroughfareNumberPrefix = new ArrayList<ThoroughfareNumberPrefix>();
         }
         return this.thoroughfareNumberPrefix;
     }
 
-    public boolean isSetThoroughfareNumberPrefix() {
-        return ((this.thoroughfareNumberPrefix!= null)&&(!this.thoroughfareNumberPrefix.isEmpty()));
+    public boolean isSetThoroughfareNumberPrefix()
+    {
+        return ((this.thoroughfareNumberPrefix != null) && (!this.thoroughfareNumberPrefix.isEmpty()));
     }
 
-    public void unsetThoroughfareNumberPrefix() {
+    public void unsetThoroughfareNumberPrefix()
+    {
         this.thoroughfareNumberPrefix = null;
     }
 
@@ -361,15 +385,16 @@ public class Thoroughfare {
      * Gets the value of the thoroughfareNumberSuffix property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the thoroughfareNumberSuffix property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the thoroughfareNumberSuffix property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getThoroughfareNumberSuffix().add(newItem);
+     * getThoroughfareNumberSuffix().add(newItem);
      * </pre>
      * 
      * 
@@ -379,90 +404,93 @@ public class Thoroughfare {
      * 
      * 
      */
-    public List<ThoroughfareNumberSuffix> getThoroughfareNumberSuffix() {
-        if (thoroughfareNumberSuffix == null) {
+    public List<ThoroughfareNumberSuffix> getThoroughfareNumberSuffix()
+    {
+        if (thoroughfareNumberSuffix == null)
+        {
             thoroughfareNumberSuffix = new ArrayList<ThoroughfareNumberSuffix>();
         }
         return this.thoroughfareNumberSuffix;
     }
 
-    public boolean isSetThoroughfareNumberSuffix() {
-        return ((this.thoroughfareNumberSuffix!= null)&&(!this.thoroughfareNumberSuffix.isEmpty()));
+    public boolean isSetThoroughfareNumberSuffix()
+    {
+        return ((this.thoroughfareNumberSuffix != null) && (!this.thoroughfareNumberSuffix.isEmpty()));
     }
 
-    public void unsetThoroughfareNumberSuffix() {
+    public void unsetThoroughfareNumberSuffix()
+    {
         this.thoroughfareNumberSuffix = null;
     }
 
     /**
      * Gets the value of the thoroughfarePreDirection property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ThoroughfarePreDirectionType }
-     *     
+     * @return possible object is {@link ThoroughfarePreDirectionType }
+     * 
      */
-    public ThoroughfarePreDirectionType getThoroughfarePreDirection() {
+    public ThoroughfarePreDirectionType getThoroughfarePreDirection()
+    {
         return thoroughfarePreDirection;
     }
 
     /**
      * Sets the value of the thoroughfarePreDirection property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ThoroughfarePreDirectionType }
-     *     
+     * @param value allowed object is {@link ThoroughfarePreDirectionType }
+     * 
      */
-    public void setThoroughfarePreDirection(ThoroughfarePreDirectionType value) {
+    public void setThoroughfarePreDirection(ThoroughfarePreDirectionType value)
+    {
         this.thoroughfarePreDirection = value;
     }
 
-    public boolean isSetThoroughfarePreDirection() {
-        return (this.thoroughfarePreDirection!= null);
+    public boolean isSetThoroughfarePreDirection()
+    {
+        return (this.thoroughfarePreDirection != null);
     }
 
     /**
      * Gets the value of the thoroughfareLeadingType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ThoroughfareLeadingTypeType }
-     *     
+     * @return possible object is {@link ThoroughfareLeadingTypeType }
+     * 
      */
-    public ThoroughfareLeadingTypeType getThoroughfareLeadingType() {
+    public ThoroughfareLeadingTypeType getThoroughfareLeadingType()
+    {
         return thoroughfareLeadingType;
     }
 
     /**
      * Sets the value of the thoroughfareLeadingType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ThoroughfareLeadingTypeType }
-     *     
+     * @param value allowed object is {@link ThoroughfareLeadingTypeType }
+     * 
      */
-    public void setThoroughfareLeadingType(ThoroughfareLeadingTypeType value) {
+    public void setThoroughfareLeadingType(ThoroughfareLeadingTypeType value)
+    {
         this.thoroughfareLeadingType = value;
     }
 
-    public boolean isSetThoroughfareLeadingType() {
-        return (this.thoroughfareLeadingType!= null);
+    public boolean isSetThoroughfareLeadingType()
+    {
+        return (this.thoroughfareLeadingType != null);
     }
 
     /**
      * Gets the value of the thoroughfareName property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the thoroughfareName property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the thoroughfareName property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getThoroughfareName().add(newItem);
+     * getThoroughfareName().add(newItem);
      * </pre>
      * 
      * 
@@ -472,417 +500,417 @@ public class Thoroughfare {
      * 
      * 
      */
-    public List<ThoroughfareNameType> getThoroughfareName() {
-        if (thoroughfareName == null) {
+    public List<ThoroughfareNameType> getThoroughfareName()
+    {
+        if (thoroughfareName == null)
+        {
             thoroughfareName = new ArrayList<ThoroughfareNameType>();
         }
         return this.thoroughfareName;
     }
 
-    public boolean isSetThoroughfareName() {
-        return ((this.thoroughfareName!= null)&&(!this.thoroughfareName.isEmpty()));
+    public boolean isSetThoroughfareName()
+    {
+        return ((this.thoroughfareName != null) && (!this.thoroughfareName.isEmpty()));
     }
 
-    public void unsetThoroughfareName() {
+    public void unsetThoroughfareName()
+    {
         this.thoroughfareName = null;
     }
 
     /**
      * Gets the value of the thoroughfareTrailingType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ThoroughfareTrailingTypeType }
-     *     
+     * @return possible object is {@link ThoroughfareTrailingTypeType }
+     * 
      */
-    public ThoroughfareTrailingTypeType getThoroughfareTrailingType() {
+    public ThoroughfareTrailingTypeType getThoroughfareTrailingType()
+    {
         return thoroughfareTrailingType;
     }
 
     /**
      * Sets the value of the thoroughfareTrailingType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ThoroughfareTrailingTypeType }
-     *     
+     * @param value allowed object is {@link ThoroughfareTrailingTypeType }
+     * 
      */
-    public void setThoroughfareTrailingType(ThoroughfareTrailingTypeType value) {
+    public void setThoroughfareTrailingType(ThoroughfareTrailingTypeType value)
+    {
         this.thoroughfareTrailingType = value;
     }
 
-    public boolean isSetThoroughfareTrailingType() {
-        return (this.thoroughfareTrailingType!= null);
+    public boolean isSetThoroughfareTrailingType()
+    {
+        return (this.thoroughfareTrailingType != null);
     }
 
     /**
      * Gets the value of the thoroughfarePostDirection property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ThoroughfarePostDirectionType }
-     *     
+     * @return possible object is {@link ThoroughfarePostDirectionType }
+     * 
      */
-    public ThoroughfarePostDirectionType getThoroughfarePostDirection() {
+    public ThoroughfarePostDirectionType getThoroughfarePostDirection()
+    {
         return thoroughfarePostDirection;
     }
 
     /**
      * Sets the value of the thoroughfarePostDirection property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ThoroughfarePostDirectionType }
-     *     
+     * @param value allowed object is {@link ThoroughfarePostDirectionType }
+     * 
      */
-    public void setThoroughfarePostDirection(ThoroughfarePostDirectionType value) {
+    public void setThoroughfarePostDirection(ThoroughfarePostDirectionType value)
+    {
         this.thoroughfarePostDirection = value;
     }
 
-    public boolean isSetThoroughfarePostDirection() {
-        return (this.thoroughfarePostDirection!= null);
+    public boolean isSetThoroughfarePostDirection()
+    {
+        return (this.thoroughfarePostDirection != null);
     }
 
     /**
      * Gets the value of the dependentThoroughfare property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Thoroughfare.DependentThoroughfare }
-     *     
+     * @return possible object is {@link Thoroughfare.DependentThoroughfare }
+     * 
      */
-    public Thoroughfare.DependentThoroughfare getDependentThoroughfare() {
+    public Thoroughfare.DependentThoroughfare getDependentThoroughfare()
+    {
         return dependentThoroughfare;
     }
 
     /**
      * Sets the value of the dependentThoroughfare property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Thoroughfare.DependentThoroughfare }
-     *     
+     * @param value allowed object is
+     *            {@link Thoroughfare.DependentThoroughfare }
+     * 
      */
-    public void setDependentThoroughfare(Thoroughfare.DependentThoroughfare value) {
+    public void setDependentThoroughfare(Thoroughfare.DependentThoroughfare value)
+    {
         this.dependentThoroughfare = value;
     }
 
-    public boolean isSetDependentThoroughfare() {
-        return (this.dependentThoroughfare!= null);
+    public boolean isSetDependentThoroughfare()
+    {
+        return (this.dependentThoroughfare != null);
     }
 
     /**
      * Gets the value of the dependentLocality property.
      * 
-     * @return
-     *     possible object is
-     *     {@link DependentLocalityType }
-     *     
+     * @return possible object is {@link DependentLocalityType }
+     * 
      */
-    public DependentLocalityType getDependentLocality() {
+    public DependentLocalityType getDependentLocality()
+    {
         return dependentLocality;
     }
 
     /**
      * Sets the value of the dependentLocality property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DependentLocalityType }
-     *     
+     * @param value allowed object is {@link DependentLocalityType }
+     * 
      */
-    public void setDependentLocality(DependentLocalityType value) {
+    public void setDependentLocality(DependentLocalityType value)
+    {
         this.dependentLocality = value;
     }
 
-    public boolean isSetDependentLocality() {
-        return (this.dependentLocality!= null);
+    public boolean isSetDependentLocality()
+    {
+        return (this.dependentLocality != null);
     }
 
     /**
      * Gets the value of the premise property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Premise }
-     *     
+     * @return possible object is {@link Premise }
+     * 
      */
-    public Premise getPremise() {
+    public Premise getPremise()
+    {
         return premise;
     }
 
     /**
      * Sets the value of the premise property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Premise }
-     *     
+     * @param value allowed object is {@link Premise }
+     * 
      */
-    public void setPremise(Premise value) {
+    public void setPremise(Premise value)
+    {
         this.premise = value;
     }
 
-    public boolean isSetPremise() {
-        return (this.premise!= null);
+    public boolean isSetPremise()
+    {
+        return (this.premise != null);
     }
 
     /**
      * Gets the value of the firm property.
      * 
-     * @return
-     *     possible object is
-     *     {@link FirmType }
-     *     
+     * @return possible object is {@link FirmType }
+     * 
      */
-    public FirmType getFirm() {
+    public FirmType getFirm()
+    {
         return firm;
     }
 
     /**
      * Sets the value of the firm property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link FirmType }
-     *     
+     * @param value allowed object is {@link FirmType }
+     * 
      */
-    public void setFirm(FirmType value) {
+    public void setFirm(FirmType value)
+    {
         this.firm = value;
     }
 
-    public boolean isSetFirm() {
-        return (this.firm!= null);
+    public boolean isSetFirm()
+    {
+        return (this.firm != null);
     }
 
     /**
      * Gets the value of the postalCode property.
      * 
-     * @return
-     *     possible object is
-     *     {@link PostalCode }
-     *     
+     * @return possible object is {@link PostalCode }
+     * 
      */
-    public PostalCode getPostalCode() {
+    public PostalCode getPostalCode()
+    {
         return postalCode;
     }
 
     /**
      * Sets the value of the postalCode property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link PostalCode }
-     *     
+     * @param value allowed object is {@link PostalCode }
+     * 
      */
-    public void setPostalCode(PostalCode value) {
+    public void setPostalCode(PostalCode value)
+    {
         this.postalCode = value;
     }
 
-    public boolean isSetPostalCode() {
-        return (this.postalCode!= null);
+    public boolean isSetPostalCode()
+    {
+        return (this.postalCode != null);
     }
 
     /**
      * Gets the value of the any property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the any property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the any property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAny().add(newItem);
+     * getAny().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getAny() {
-        if (any == null) {
+    public List<Object> getAny()
+    {
+        if (any == null)
+        {
             any = new ArrayList<Object>();
         }
         return this.any;
     }
 
-    public boolean isSetAny() {
-        return ((this.any!= null)&&(!this.any.isEmpty()));
+    public boolean isSetAny()
+    {
+        return ((this.any != null) && (!this.any.isEmpty()));
     }
 
-    public void unsetAny() {
+    public void unsetAny()
+    {
         this.any = null;
     }
 
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getType() {
+    public String getType()
+    {
         return type;
     }
 
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setType(String value) {
+    public void setType(String value)
+    {
         this.type = value;
     }
 
-    public boolean isSetType() {
-        return (this.type!= null);
+    public boolean isSetType()
+    {
+        return (this.type != null);
     }
 
     /**
      * Gets the value of the dependentThoroughfares property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDependentThoroughfares() {
+    public String getDependentThoroughfares()
+    {
         return dependentThoroughfares;
     }
 
     /**
      * Sets the value of the dependentThoroughfares property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDependentThoroughfares(String value) {
+    public void setDependentThoroughfares(String value)
+    {
         this.dependentThoroughfares = value;
     }
 
-    public boolean isSetDependentThoroughfares() {
-        return (this.dependentThoroughfares!= null);
+    public boolean isSetDependentThoroughfares()
+    {
+        return (this.dependentThoroughfares != null);
     }
 
     /**
      * Gets the value of the dependentThoroughfaresIndicator property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDependentThoroughfaresIndicator() {
+    public String getDependentThoroughfaresIndicator()
+    {
         return dependentThoroughfaresIndicator;
     }
 
     /**
      * Sets the value of the dependentThoroughfaresIndicator property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDependentThoroughfaresIndicator(String value) {
+    public void setDependentThoroughfaresIndicator(String value)
+    {
         this.dependentThoroughfaresIndicator = value;
     }
 
-    public boolean isSetDependentThoroughfaresIndicator() {
-        return (this.dependentThoroughfaresIndicator!= null);
+    public boolean isSetDependentThoroughfaresIndicator()
+    {
+        return (this.dependentThoroughfaresIndicator != null);
     }
 
     /**
      * Gets the value of the dependentThoroughfaresConnector property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDependentThoroughfaresConnector() {
+    public String getDependentThoroughfaresConnector()
+    {
         return dependentThoroughfaresConnector;
     }
 
     /**
      * Sets the value of the dependentThoroughfaresConnector property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDependentThoroughfaresConnector(String value) {
+    public void setDependentThoroughfaresConnector(String value)
+    {
         this.dependentThoroughfaresConnector = value;
     }
 
-    public boolean isSetDependentThoroughfaresConnector() {
-        return (this.dependentThoroughfaresConnector!= null);
+    public boolean isSetDependentThoroughfaresConnector()
+    {
+        return (this.dependentThoroughfaresConnector != null);
     }
 
     /**
      * Gets the value of the dependentThoroughfaresType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getDependentThoroughfaresType() {
+    public String getDependentThoroughfaresType()
+    {
         return dependentThoroughfaresType;
     }
 
     /**
      * Sets the value of the dependentThoroughfaresType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setDependentThoroughfaresType(String value) {
+    public void setDependentThoroughfaresType(String value)
+    {
         this.dependentThoroughfaresType = value;
     }
 
-    public boolean isSetDependentThoroughfaresType() {
-        return (this.dependentThoroughfaresType!= null);
+    public boolean isSetDependentThoroughfaresType()
+    {
+        return (this.dependentThoroughfaresType != null);
     }
 
     /**
-     * Gets a map that contains attributes that aren't bound to any typed property on this class.
+     * Gets a map that contains attributes that aren't bound to any typed
+     * property on this class.
      * 
      * <p>
-     * the map is keyed by the name of the attribute and 
-     * the value is the string value of the attribute.
+     * the map is keyed by the name of the attribute and the value is the string
+     * value of the attribute.
      * 
-     * the map returned by this method is live, and you can add new attribute
-     * by updating the map directly. Because of this design, there's no setter.
+     * the map returned by this method is live, and you can add new attribute by
+     * updating the map directly. Because of this design, there's no setter.
      * 
      * 
-     * @return
-     *     always non-null
+     * @return always non-null
      */
-    public Map<QName, String> getOtherAttributes() {
+    public Map<QName, String> getOtherAttributes()
+    {
         return otherAttributes;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -907,34 +935,36 @@ public class Thoroughfare {
      * 
      */
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "addressLine",
-        "thoroughfarePreDirection",
-        "thoroughfareLeadingType",
-        "thoroughfareName",
-        "thoroughfareTrailingType",
-        "thoroughfarePostDirection",
-        "any"
-    })
-    public static class DependentThoroughfare {
+    @XmlType(name = "", propOrder = { "addressLine", "thoroughfarePreDirection", "thoroughfareLeadingType", "thoroughfareName",
+        "thoroughfareTrailingType", "thoroughfarePostDirection", "any" })
+    public static class DependentThoroughfare
+    {
 
         @XmlElement(name = "AddressLine")
         protected List<AddressLine> addressLine;
+
         @XmlElement(name = "ThoroughfarePreDirection")
         protected ThoroughfarePreDirectionType thoroughfarePreDirection;
+
         @XmlElement(name = "ThoroughfareLeadingType")
         protected ThoroughfareLeadingTypeType thoroughfareLeadingType;
+
         @XmlElement(name = "ThoroughfareName")
         protected List<ThoroughfareNameType> thoroughfareName;
+
         @XmlElement(name = "ThoroughfareTrailingType")
         protected ThoroughfareTrailingTypeType thoroughfareTrailingType;
+
         @XmlElement(name = "ThoroughfarePostDirection")
         protected ThoroughfarePostDirectionType thoroughfarePostDirection;
+
         @XmlAnyElement(lax = true)
         protected List<Object> any;
+
         @XmlAttribute(name = "Type")
         @XmlSchemaType(name = "anySimpleType")
         protected String type;
+
         @XmlAnyAttribute
         private Map<QName, String> otherAttributes = new HashMap<QName, String>();
 
@@ -942,15 +972,16 @@ public class Thoroughfare {
          * Gets the value of the addressLine property.
          * 
          * <p>
-         * This accessor method returns a reference to the live list,
-         * not a snapshot. Therefore any modification you make to the
-         * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the addressLine property.
+         * This accessor method returns a reference to the live list, not a
+         * snapshot. Therefore any modification you make to the returned list
+         * will be present inside the JAXB object. This is why there is not a
+         * <CODE>set</CODE> method for the addressLine property.
          * 
          * <p>
          * For example, to add a new item, do as follows:
+         * 
          * <pre>
-         *    getAddressLine().add(newItem);
+         * getAddressLine().add(newItem);
          * </pre>
          * 
          * 
@@ -960,90 +991,93 @@ public class Thoroughfare {
          * 
          * 
          */
-        public List<AddressLine> getAddressLine() {
-            if (addressLine == null) {
+        public List<AddressLine> getAddressLine()
+        {
+            if (addressLine == null)
+            {
                 addressLine = new ArrayList<AddressLine>();
             }
             return this.addressLine;
         }
 
-        public boolean isSetAddressLine() {
-            return ((this.addressLine!= null)&&(!this.addressLine.isEmpty()));
+        public boolean isSetAddressLine()
+        {
+            return ((this.addressLine != null) && (!this.addressLine.isEmpty()));
         }
 
-        public void unsetAddressLine() {
+        public void unsetAddressLine()
+        {
             this.addressLine = null;
         }
 
         /**
          * Gets the value of the thoroughfarePreDirection property.
          * 
-         * @return
-         *     possible object is
-         *     {@link ThoroughfarePreDirectionType }
-         *     
+         * @return possible object is {@link ThoroughfarePreDirectionType }
+         * 
          */
-        public ThoroughfarePreDirectionType getThoroughfarePreDirection() {
+        public ThoroughfarePreDirectionType getThoroughfarePreDirection()
+        {
             return thoroughfarePreDirection;
         }
 
         /**
          * Sets the value of the thoroughfarePreDirection property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link ThoroughfarePreDirectionType }
-         *     
+         * @param value allowed object is {@link ThoroughfarePreDirectionType }
+         * 
          */
-        public void setThoroughfarePreDirection(ThoroughfarePreDirectionType value) {
+        public void setThoroughfarePreDirection(ThoroughfarePreDirectionType value)
+        {
             this.thoroughfarePreDirection = value;
         }
 
-        public boolean isSetThoroughfarePreDirection() {
-            return (this.thoroughfarePreDirection!= null);
+        public boolean isSetThoroughfarePreDirection()
+        {
+            return (this.thoroughfarePreDirection != null);
         }
 
         /**
          * Gets the value of the thoroughfareLeadingType property.
          * 
-         * @return
-         *     possible object is
-         *     {@link ThoroughfareLeadingTypeType }
-         *     
+         * @return possible object is {@link ThoroughfareLeadingTypeType }
+         * 
          */
-        public ThoroughfareLeadingTypeType getThoroughfareLeadingType() {
+        public ThoroughfareLeadingTypeType getThoroughfareLeadingType()
+        {
             return thoroughfareLeadingType;
         }
 
         /**
          * Sets the value of the thoroughfareLeadingType property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link ThoroughfareLeadingTypeType }
-         *     
+         * @param value allowed object is {@link ThoroughfareLeadingTypeType }
+         * 
          */
-        public void setThoroughfareLeadingType(ThoroughfareLeadingTypeType value) {
+        public void setThoroughfareLeadingType(ThoroughfareLeadingTypeType value)
+        {
             this.thoroughfareLeadingType = value;
         }
 
-        public boolean isSetThoroughfareLeadingType() {
-            return (this.thoroughfareLeadingType!= null);
+        public boolean isSetThoroughfareLeadingType()
+        {
+            return (this.thoroughfareLeadingType != null);
         }
 
         /**
          * Gets the value of the thoroughfareName property.
          * 
          * <p>
-         * This accessor method returns a reference to the live list,
-         * not a snapshot. Therefore any modification you make to the
-         * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the thoroughfareName property.
+         * This accessor method returns a reference to the live list, not a
+         * snapshot. Therefore any modification you make to the returned list
+         * will be present inside the JAXB object. This is why there is not a
+         * <CODE>set</CODE> method for the thoroughfareName property.
          * 
          * <p>
          * For example, to add a new item, do as follows:
+         * 
          * <pre>
-         *    getThoroughfareName().add(newItem);
+         * getThoroughfareName().add(newItem);
          * </pre>
          * 
          * 
@@ -1053,90 +1087,93 @@ public class Thoroughfare {
          * 
          * 
          */
-        public List<ThoroughfareNameType> getThoroughfareName() {
-            if (thoroughfareName == null) {
+        public List<ThoroughfareNameType> getThoroughfareName()
+        {
+            if (thoroughfareName == null)
+            {
                 thoroughfareName = new ArrayList<ThoroughfareNameType>();
             }
             return this.thoroughfareName;
         }
 
-        public boolean isSetThoroughfareName() {
-            return ((this.thoroughfareName!= null)&&(!this.thoroughfareName.isEmpty()));
+        public boolean isSetThoroughfareName()
+        {
+            return ((this.thoroughfareName != null) && (!this.thoroughfareName.isEmpty()));
         }
 
-        public void unsetThoroughfareName() {
+        public void unsetThoroughfareName()
+        {
             this.thoroughfareName = null;
         }
 
         /**
          * Gets the value of the thoroughfareTrailingType property.
          * 
-         * @return
-         *     possible object is
-         *     {@link ThoroughfareTrailingTypeType }
-         *     
+         * @return possible object is {@link ThoroughfareTrailingTypeType }
+         * 
          */
-        public ThoroughfareTrailingTypeType getThoroughfareTrailingType() {
+        public ThoroughfareTrailingTypeType getThoroughfareTrailingType()
+        {
             return thoroughfareTrailingType;
         }
 
         /**
          * Sets the value of the thoroughfareTrailingType property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link ThoroughfareTrailingTypeType }
-         *     
+         * @param value allowed object is {@link ThoroughfareTrailingTypeType }
+         * 
          */
-        public void setThoroughfareTrailingType(ThoroughfareTrailingTypeType value) {
+        public void setThoroughfareTrailingType(ThoroughfareTrailingTypeType value)
+        {
             this.thoroughfareTrailingType = value;
         }
 
-        public boolean isSetThoroughfareTrailingType() {
-            return (this.thoroughfareTrailingType!= null);
+        public boolean isSetThoroughfareTrailingType()
+        {
+            return (this.thoroughfareTrailingType != null);
         }
 
         /**
          * Gets the value of the thoroughfarePostDirection property.
          * 
-         * @return
-         *     possible object is
-         *     {@link ThoroughfarePostDirectionType }
-         *     
+         * @return possible object is {@link ThoroughfarePostDirectionType }
+         * 
          */
-        public ThoroughfarePostDirectionType getThoroughfarePostDirection() {
+        public ThoroughfarePostDirectionType getThoroughfarePostDirection()
+        {
             return thoroughfarePostDirection;
         }
 
         /**
          * Sets the value of the thoroughfarePostDirection property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link ThoroughfarePostDirectionType }
-         *     
+         * @param value allowed object is {@link ThoroughfarePostDirectionType }
+         * 
          */
-        public void setThoroughfarePostDirection(ThoroughfarePostDirectionType value) {
+        public void setThoroughfarePostDirection(ThoroughfarePostDirectionType value)
+        {
             this.thoroughfarePostDirection = value;
         }
 
-        public boolean isSetThoroughfarePostDirection() {
-            return (this.thoroughfarePostDirection!= null);
+        public boolean isSetThoroughfarePostDirection()
+        {
+            return (this.thoroughfarePostDirection != null);
         }
 
         /**
          * Gets the value of the any property.
          * 
          * <p>
-         * This accessor method returns a reference to the live list,
-         * not a snapshot. Therefore any modification you make to the
-         * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the any property.
+         * This accessor method returns a reference to the live list, not a
+         * snapshot. Therefore any modification you make to the returned list
+         * will be present inside the JAXB object. This is why there is not a
+         * <CODE>set</CODE> method for the any property.
          * 
          * <p>
          * For example, to add a new item, do as follows:
+         * 
          * <pre>
-         *    getAny().add(newItem);
+         * getAny().add(newItem);
          * </pre>
          * 
          * 
@@ -1146,74 +1183,81 @@ public class Thoroughfare {
          * 
          * 
          */
-        public List<Object> getAny() {
-            if (any == null) {
+        public List<Object> getAny()
+        {
+            if (any == null)
+            {
                 any = new ArrayList<Object>();
             }
             return this.any;
         }
 
-        public boolean isSetAny() {
-            return ((this.any!= null)&&(!this.any.isEmpty()));
+        public boolean isSetAny()
+        {
+            return ((this.any != null) && (!this.any.isEmpty()));
         }
 
-        public void unsetAny() {
+        public void unsetAny()
+        {
             this.any = null;
         }
 
         /**
          * Gets the value of the type property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getType() {
+        public String getType()
+        {
             return type;
         }
 
         /**
          * Sets the value of the type property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setType(String value) {
+        public void setType(String value)
+        {
             this.type = value;
         }
 
-        public boolean isSetType() {
-            return (this.type!= null);
+        public boolean isSetType()
+        {
+            return (this.type != null);
         }
 
         /**
-         * Gets a map that contains attributes that aren't bound to any typed property on this class.
+         * Gets a map that contains attributes that aren't bound to any typed
+         * property on this class.
          * 
          * <p>
-         * the map is keyed by the name of the attribute and 
-         * the value is the string value of the attribute.
+         * the map is keyed by the name of the attribute and the value is the
+         * string value of the attribute.
          * 
-         * the map returned by this method is live, and you can add new attribute
-         * by updating the map directly. Because of this design, there's no setter.
+         * the map returned by this method is live, and you can add new
+         * attribute by updating the map directly. Because of this design,
+         * there's no setter.
          * 
          * 
-         * @return
-         *     always non-null
+         * @return always non-null
          */
-        public Map<QName, String> getOtherAttributes() {
+        public Map<QName, String> getOtherAttributes()
+        {
             return otherAttributes;
         }
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -1293,40 +1337,47 @@ public class Thoroughfare {
      * 
      */
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "addressLine",
-        "thoroughfareNumberFrom",
-        "thoroughfareNumberTo"
-    })
-    public static class ThoroughfareNumberRange {
+    @XmlType(name = "", propOrder = { "addressLine", "thoroughfareNumberFrom", "thoroughfareNumberTo" })
+    public static class ThoroughfareNumberRange
+    {
 
         @XmlElement(name = "AddressLine")
         protected List<AddressLine> addressLine;
+
         @XmlElement(name = "ThoroughfareNumberFrom", required = true)
         protected Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberFrom thoroughfareNumberFrom;
+
         @XmlElement(name = "ThoroughfareNumberTo", required = true)
         protected Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberTo thoroughfareNumberTo;
+
         @XmlAttribute(name = "RangeType")
         @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
         protected String rangeType;
+
         @XmlAttribute(name = "Indicator")
         @XmlSchemaType(name = "anySimpleType")
         protected String indicator;
+
         @XmlAttribute(name = "Separator")
         @XmlSchemaType(name = "anySimpleType")
         protected String separator;
+
         @XmlAttribute(name = "IndicatorOccurrence")
         @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
         protected String indicatorOccurrence;
+
         @XmlAttribute(name = "NumberRangeOccurrence")
         @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
         protected String numberRangeOccurrence;
+
         @XmlAttribute(name = "Type")
         @XmlSchemaType(name = "anySimpleType")
         protected String type;
+
         @XmlAttribute(name = "Code")
         @XmlSchemaType(name = "anySimpleType")
         protected String code;
+
         @XmlAnyAttribute
         private Map<QName, String> otherAttributes = new HashMap<QName, String>();
 
@@ -1334,15 +1385,16 @@ public class Thoroughfare {
          * Gets the value of the addressLine property.
          * 
          * <p>
-         * This accessor method returns a reference to the live list,
-         * not a snapshot. Therefore any modification you make to the
-         * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the addressLine property.
+         * This accessor method returns a reference to the live list, not a
+         * snapshot. Therefore any modification you make to the returned list
+         * will be present inside the JAXB object. This is why there is not a
+         * <CODE>set</CODE> method for the addressLine property.
          * 
          * <p>
          * For example, to add a new item, do as follows:
+         * 
          * <pre>
-         *    getAddressLine().add(newItem);
+         * getAddressLine().add(newItem);
          * </pre>
          * 
          * 
@@ -1352,296 +1404,299 @@ public class Thoroughfare {
          * 
          * 
          */
-        public List<AddressLine> getAddressLine() {
-            if (addressLine == null) {
+        public List<AddressLine> getAddressLine()
+        {
+            if (addressLine == null)
+            {
                 addressLine = new ArrayList<AddressLine>();
             }
             return this.addressLine;
         }
 
-        public boolean isSetAddressLine() {
-            return ((this.addressLine!= null)&&(!this.addressLine.isEmpty()));
+        public boolean isSetAddressLine()
+        {
+            return ((this.addressLine != null) && (!this.addressLine.isEmpty()));
         }
 
-        public void unsetAddressLine() {
+        public void unsetAddressLine()
+        {
             this.addressLine = null;
         }
 
         /**
          * Gets the value of the thoroughfareNumberFrom property.
          * 
-         * @return
-         *     possible object is
-         *     {@link Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberFrom }
-         *     
+         * @return possible object is
+         *         {@link Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberFrom }
+         * 
          */
-        public Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberFrom getThoroughfareNumberFrom() {
+        public Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberFrom getThoroughfareNumberFrom()
+        {
             return thoroughfareNumberFrom;
         }
 
         /**
          * Sets the value of the thoroughfareNumberFrom property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberFrom }
-         *     
+         * @param value allowed object is
+         *            {@link Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberFrom }
+         * 
          */
-        public void setThoroughfareNumberFrom(Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberFrom value) {
+        public void setThoroughfareNumberFrom(Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberFrom value)
+        {
             this.thoroughfareNumberFrom = value;
         }
 
-        public boolean isSetThoroughfareNumberFrom() {
-            return (this.thoroughfareNumberFrom!= null);
+        public boolean isSetThoroughfareNumberFrom()
+        {
+            return (this.thoroughfareNumberFrom != null);
         }
 
         /**
          * Gets the value of the thoroughfareNumberTo property.
          * 
-         * @return
-         *     possible object is
-         *     {@link Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberTo }
-         *     
+         * @return possible object is
+         *         {@link Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberTo }
+         * 
          */
-        public Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberTo getThoroughfareNumberTo() {
+        public Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberTo getThoroughfareNumberTo()
+        {
             return thoroughfareNumberTo;
         }
 
         /**
          * Sets the value of the thoroughfareNumberTo property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberTo }
-         *     
+         * @param value allowed object is
+         *            {@link Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberTo }
+         * 
          */
-        public void setThoroughfareNumberTo(Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberTo value) {
+        public void setThoroughfareNumberTo(Thoroughfare.ThoroughfareNumberRange.ThoroughfareNumberTo value)
+        {
             this.thoroughfareNumberTo = value;
         }
 
-        public boolean isSetThoroughfareNumberTo() {
-            return (this.thoroughfareNumberTo!= null);
+        public boolean isSetThoroughfareNumberTo()
+        {
+            return (this.thoroughfareNumberTo != null);
         }
 
         /**
          * Gets the value of the rangeType property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getRangeType() {
+        public String getRangeType()
+        {
             return rangeType;
         }
 
         /**
          * Sets the value of the rangeType property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setRangeType(String value) {
+        public void setRangeType(String value)
+        {
             this.rangeType = value;
         }
 
-        public boolean isSetRangeType() {
-            return (this.rangeType!= null);
+        public boolean isSetRangeType()
+        {
+            return (this.rangeType != null);
         }
 
         /**
          * Gets the value of the indicator property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getIndicator() {
+        public String getIndicator()
+        {
             return indicator;
         }
 
         /**
          * Sets the value of the indicator property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setIndicator(String value) {
+        public void setIndicator(String value)
+        {
             this.indicator = value;
         }
 
-        public boolean isSetIndicator() {
-            return (this.indicator!= null);
+        public boolean isSetIndicator()
+        {
+            return (this.indicator != null);
         }
 
         /**
          * Gets the value of the separator property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getSeparator() {
+        public String getSeparator()
+        {
             return separator;
         }
 
         /**
          * Sets the value of the separator property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setSeparator(String value) {
+        public void setSeparator(String value)
+        {
             this.separator = value;
         }
 
-        public boolean isSetSeparator() {
-            return (this.separator!= null);
+        public boolean isSetSeparator()
+        {
+            return (this.separator != null);
         }
 
         /**
          * Gets the value of the indicatorOccurrence property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getIndicatorOccurrence() {
+        public String getIndicatorOccurrence()
+        {
             return indicatorOccurrence;
         }
 
         /**
          * Sets the value of the indicatorOccurrence property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setIndicatorOccurrence(String value) {
+        public void setIndicatorOccurrence(String value)
+        {
             this.indicatorOccurrence = value;
         }
 
-        public boolean isSetIndicatorOccurrence() {
-            return (this.indicatorOccurrence!= null);
+        public boolean isSetIndicatorOccurrence()
+        {
+            return (this.indicatorOccurrence != null);
         }
 
         /**
          * Gets the value of the numberRangeOccurrence property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getNumberRangeOccurrence() {
+        public String getNumberRangeOccurrence()
+        {
             return numberRangeOccurrence;
         }
 
         /**
          * Sets the value of the numberRangeOccurrence property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setNumberRangeOccurrence(String value) {
+        public void setNumberRangeOccurrence(String value)
+        {
             this.numberRangeOccurrence = value;
         }
 
-        public boolean isSetNumberRangeOccurrence() {
-            return (this.numberRangeOccurrence!= null);
+        public boolean isSetNumberRangeOccurrence()
+        {
+            return (this.numberRangeOccurrence != null);
         }
 
         /**
          * Gets the value of the type property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getType() {
+        public String getType()
+        {
             return type;
         }
 
         /**
          * Sets the value of the type property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setType(String value) {
+        public void setType(String value)
+        {
             this.type = value;
         }
 
-        public boolean isSetType() {
-            return (this.type!= null);
+        public boolean isSetType()
+        {
+            return (this.type != null);
         }
 
         /**
          * Gets the value of the code property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
-        public String getCode() {
+        public String getCode()
+        {
             return code;
         }
 
         /**
          * Sets the value of the code property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
-        public void setCode(String value) {
+        public void setCode(String value)
+        {
             this.code = value;
         }
 
-        public boolean isSetCode() {
-            return (this.code!= null);
+        public boolean isSetCode()
+        {
+            return (this.code != null);
         }
 
         /**
-         * Gets a map that contains attributes that aren't bound to any typed property on this class.
+         * Gets a map that contains attributes that aren't bound to any typed
+         * property on this class.
          * 
          * <p>
-         * the map is keyed by the name of the attribute and 
-         * the value is the string value of the attribute.
+         * the map is keyed by the name of the attribute and the value is the
+         * string value of the attribute.
          * 
-         * the map returned by this method is live, and you can add new attribute
-         * by updating the map directly. Because of this design, there's no setter.
+         * the map returned by this method is live, and you can add new
+         * attribute by updating the map directly. Because of this design,
+         * there's no setter.
          * 
          * 
-         * @return
-         *     always non-null
+         * @return always non-null
          */
-        public Map<QName, String> getOtherAttributes() {
+        public Map<QName, String> getOtherAttributes()
+        {
             return otherAttributes;
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
+         * <p>
+         * Java class for anonymous complex type.
          * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
          * 
          * <pre>
          * &lt;complexType>
@@ -1663,22 +1718,22 @@ public class Thoroughfare {
          * 
          */
         @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "", propOrder = {
-            "content"
-        })
-        public static class ThoroughfareNumberFrom {
+        @XmlType(name = "", propOrder = { "content" })
+        public static class ThoroughfareNumberFrom
+        {
 
             @XmlElementRefs({
                 @XmlElementRef(name = "ThoroughfareNumber", namespace = "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0", type = ThoroughfareNumber.class),
                 @XmlElementRef(name = "ThoroughfareNumberSuffix", namespace = "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0", type = ThoroughfareNumberSuffix.class),
                 @XmlElementRef(name = "ThoroughfareNumberPrefix", namespace = "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0", type = ThoroughfareNumberPrefix.class),
-                @XmlElementRef(name = "AddressLine", namespace = "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0", type = AddressLine.class)
-            })
+                @XmlElementRef(name = "AddressLine", namespace = "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0", type = AddressLine.class) })
             @XmlMixed
             protected List<Object> content;
+
             @XmlAttribute(name = "Code")
             @XmlSchemaType(name = "anySimpleType")
             protected String code;
+
             @XmlAnyAttribute
             private Map<QName, String> otherAttributes = new HashMap<QName, String>();
 
@@ -1686,96 +1741,102 @@ public class Thoroughfare {
              * Gets the value of the content property.
              * 
              * <p>
-             * This accessor method returns a reference to the live list,
-             * not a snapshot. Therefore any modification you make to the
-             * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the content property.
+             * This accessor method returns a reference to the live list, not a
+             * snapshot. Therefore any modification you make to the returned
+             * list will be present inside the JAXB object. This is why there is
+             * not a <CODE>set</CODE> method for the content property.
              * 
              * <p>
              * For example, to add a new item, do as follows:
+             * 
              * <pre>
-             *    getContent().add(newItem);
+             * getContent().add(newItem);
              * </pre>
              * 
              * 
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link AddressLine }
-             * {@link ThoroughfareNumber }
-             * {@link ThoroughfareNumberSuffix }
-             * {@link String }
+             * {@link AddressLine } {@link ThoroughfareNumber }
+             * {@link ThoroughfareNumberSuffix } {@link String }
              * {@link ThoroughfareNumberPrefix }
              * 
              * 
              */
-            public List<Object> getContent() {
-                if (content == null) {
+            public List<Object> getContent()
+            {
+                if (content == null)
+                {
                     content = new ArrayList<Object>();
                 }
                 return this.content;
             }
 
-            public boolean isSetContent() {
-                return ((this.content!= null)&&(!this.content.isEmpty()));
+            public boolean isSetContent()
+            {
+                return ((this.content != null) && (!this.content.isEmpty()));
             }
 
-            public void unsetContent() {
+            public void unsetContent()
+            {
                 this.content = null;
             }
 
             /**
              * Gets the value of the code property.
              * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             * @return possible object is {@link String }
+             * 
              */
-            public String getCode() {
+            public String getCode()
+            {
                 return code;
             }
 
             /**
              * Sets the value of the code property.
              * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             * @param value allowed object is {@link String }
+             * 
              */
-            public void setCode(String value) {
+            public void setCode(String value)
+            {
                 this.code = value;
             }
 
-            public boolean isSetCode() {
-                return (this.code!= null);
+            public boolean isSetCode()
+            {
+                return (this.code != null);
             }
 
             /**
-             * Gets a map that contains attributes that aren't bound to any typed property on this class.
+             * Gets a map that contains attributes that aren't bound to any
+             * typed property on this class.
              * 
              * <p>
-             * the map is keyed by the name of the attribute and 
-             * the value is the string value of the attribute.
+             * the map is keyed by the name of the attribute and the value is
+             * the string value of the attribute.
              * 
-             * the map returned by this method is live, and you can add new attribute
-             * by updating the map directly. Because of this design, there's no setter.
+             * the map returned by this method is live, and you can add new
+             * attribute by updating the map directly. Because of this design,
+             * there's no setter.
              * 
              * 
-             * @return
-             *     always non-null
+             * @return always non-null
              */
-            public Map<QName, String> getOtherAttributes() {
+            public Map<QName, String> getOtherAttributes()
+            {
                 return otherAttributes;
             }
 
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
+         * <p>
+         * Java class for anonymous complex type.
          * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
          * 
          * <pre>
          * &lt;complexType>
@@ -1797,22 +1858,22 @@ public class Thoroughfare {
          * 
          */
         @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "", propOrder = {
-            "content"
-        })
-        public static class ThoroughfareNumberTo {
+        @XmlType(name = "", propOrder = { "content" })
+        public static class ThoroughfareNumberTo
+        {
 
             @XmlElementRefs({
                 @XmlElementRef(name = "ThoroughfareNumber", namespace = "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0", type = ThoroughfareNumber.class),
                 @XmlElementRef(name = "ThoroughfareNumberSuffix", namespace = "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0", type = ThoroughfareNumberSuffix.class),
                 @XmlElementRef(name = "ThoroughfareNumberPrefix", namespace = "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0", type = ThoroughfareNumberPrefix.class),
-                @XmlElementRef(name = "AddressLine", namespace = "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0", type = AddressLine.class)
-            })
+                @XmlElementRef(name = "AddressLine", namespace = "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0", type = AddressLine.class) })
             @XmlMixed
             protected List<Object> content;
+
             @XmlAttribute(name = "Code")
             @XmlSchemaType(name = "anySimpleType")
             protected String code;
+
             @XmlAnyAttribute
             private Map<QName, String> otherAttributes = new HashMap<QName, String>();
 
@@ -1820,86 +1881,90 @@ public class Thoroughfare {
              * Gets the value of the content property.
              * 
              * <p>
-             * This accessor method returns a reference to the live list,
-             * not a snapshot. Therefore any modification you make to the
-             * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the content property.
+             * This accessor method returns a reference to the live list, not a
+             * snapshot. Therefore any modification you make to the returned
+             * list will be present inside the JAXB object. This is why there is
+             * not a <CODE>set</CODE> method for the content property.
              * 
              * <p>
              * For example, to add a new item, do as follows:
+             * 
              * <pre>
-             *    getContent().add(newItem);
+             * getContent().add(newItem);
              * </pre>
              * 
              * 
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link AddressLine }
-             * {@link ThoroughfareNumber }
-             * {@link ThoroughfareNumberSuffix }
-             * {@link String }
+             * {@link AddressLine } {@link ThoroughfareNumber }
+             * {@link ThoroughfareNumberSuffix } {@link String }
              * {@link ThoroughfareNumberPrefix }
              * 
              * 
              */
-            public List<Object> getContent() {
-                if (content == null) {
+            public List<Object> getContent()
+            {
+                if (content == null)
+                {
                     content = new ArrayList<Object>();
                 }
                 return this.content;
             }
 
-            public boolean isSetContent() {
-                return ((this.content!= null)&&(!this.content.isEmpty()));
+            public boolean isSetContent()
+            {
+                return ((this.content != null) && (!this.content.isEmpty()));
             }
 
-            public void unsetContent() {
+            public void unsetContent()
+            {
                 this.content = null;
             }
 
             /**
              * Gets the value of the code property.
              * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             * @return possible object is {@link String }
+             * 
              */
-            public String getCode() {
+            public String getCode()
+            {
                 return code;
             }
 
             /**
              * Sets the value of the code property.
              * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             * @param value allowed object is {@link String }
+             * 
              */
-            public void setCode(String value) {
+            public void setCode(String value)
+            {
                 this.code = value;
             }
 
-            public boolean isSetCode() {
-                return (this.code!= null);
+            public boolean isSetCode()
+            {
+                return (this.code != null);
             }
 
             /**
-             * Gets a map that contains attributes that aren't bound to any typed property on this class.
+             * Gets a map that contains attributes that aren't bound to any
+             * typed property on this class.
              * 
              * <p>
-             * the map is keyed by the name of the attribute and 
-             * the value is the string value of the attribute.
+             * the map is keyed by the name of the attribute and the value is
+             * the string value of the attribute.
              * 
-             * the map returned by this method is live, and you can add new attribute
-             * by updating the map directly. Because of this design, there's no setter.
+             * the map returned by this method is live, and you can add new
+             * attribute by updating the map directly. Because of this design,
+             * there's no setter.
              * 
              * 
-             * @return
-             *     always non-null
+             * @return always non-null
              */
-            public Map<QName, String> getOtherAttributes() {
+            public Map<QName, String> getOtherAttributes()
+            {
                 return otherAttributes;
             }
 

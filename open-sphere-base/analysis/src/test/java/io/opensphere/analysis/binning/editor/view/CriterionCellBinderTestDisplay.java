@@ -15,7 +15,7 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.analysis.binning.criteria.BinCriteria;
 import io.opensphere.analysis.binning.criteria.BinCriteriaElement;
@@ -53,7 +53,7 @@ public class CriterionCellBinderTestDisplay
     @Test
     public void testClose()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -100,7 +100,7 @@ public class CriterionCellBinderTestDisplay
     @Test
     public void testInitialDouble()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -149,7 +149,7 @@ public class CriterionCellBinderTestDisplay
     @Test
     public void testInitialDoubleAndString()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -203,7 +203,7 @@ public class CriterionCellBinderTestDisplay
     @Test
     public void testInitialString()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -251,7 +251,7 @@ public class CriterionCellBinderTestDisplay
     @Test
     public void testRemove()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -301,7 +301,7 @@ public class CriterionCellBinderTestDisplay
     @Test
     public void testViewChangeToDouble()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -350,7 +350,7 @@ public class CriterionCellBinderTestDisplay
     @Test
     public void testViewChangeToString()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 
@@ -396,7 +396,7 @@ public class CriterionCellBinderTestDisplay
     @Test
     public void testViewChangeToUnique()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

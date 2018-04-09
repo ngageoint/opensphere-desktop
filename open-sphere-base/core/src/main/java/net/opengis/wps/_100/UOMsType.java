@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import java.util.ArrayList;
@@ -18,13 +17,15 @@ import javax.xml.bind.annotation.XmlType;
 
 import net.opengis.ows._110.DomainMetadataType;
 
-
 /**
  * Identifies a UOM supported for this input or output.
  * 
- * <p>Java class for UOMsType complex type.
+ * <p>
+ * Java class for UOMsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="UOMsType">
@@ -41,27 +42,28 @@ import net.opengis.ows._110.DomainMetadataType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UOMsType", propOrder = {
-    "uom"
-})
-public class UOMsType {
+@XmlType(name = "UOMsType", propOrder = { "uom" })
+public class UOMsType
+{
 
     @XmlElement(name = "UOM", namespace = "http://www.opengis.net/ows/1.1", required = true)
     protected List<DomainMetadataType> uom;
 
     /**
-     * Reference to a UOM supported for this input or output. Gets the value of the uom property.
+     * Reference to a UOM supported for this input or output. Gets the value of
+     * the uom property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the uom property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the uom property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getUOM().add(newItem);
+     * getUOM().add(newItem);
      * </pre>
      * 
      * 
@@ -71,8 +73,10 @@ public class UOMsType {
      * 
      * 
      */
-    public List<DomainMetadataType> getUOM() {
-        if (uom == null) {
+    public List<DomainMetadataType> getUOM()
+    {
+        if (uom == null)
+        {
             uom = new ArrayList<DomainMetadataType>();
         }
         return this.uom;

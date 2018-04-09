@@ -23,13 +23,14 @@ import io.opensphere.core.util.Visitor;
 import io.opensphere.core.util.javafx.input.view.CombinedDateTimePicker;
 
 /**
- * A specialized {@link CompoundTitledControl} in which a preset combo box, and paired start and end date time pickers are
- * contained.
+ * A specialized {@link CompoundTitledControl} in which a preset combo box, and
+ * paired start and end date time pickers are contained.
  */
 public class DateTimeRangeInput extends CompoundTitledControl
 {
     /**
-     * The preset used when a user manually enters a date / time in either of the pickers.
+     * The preset used when a user manually enters a date / time in either of
+     * the pickers.
      */
     private static final String CUSTOM_PRESET = "-- Custom --";
 
@@ -54,8 +55,9 @@ public class DateTimeRangeInput extends CompoundTitledControl
     private final Toolbox myToolbox;
 
     /**
-     * A flag used to determine if the preset selector caused the change, and if so, allows change handlers to not react to value
-     * changes within the picker.
+     * A flag used to determine if the preset selector caused the change, and if
+     * so, allows change handlers to not react to value changes within the
+     * picker.
      */
     private boolean myPresetCausedChanged;
 
@@ -104,8 +106,10 @@ public class DateTimeRangeInput extends CompoundTitledControl
     /**
      * Creates a new {@link DateTimeRangeInput} using the supplied parameters.
      *
-     * @param pTitle the display title of the component to be displayed on the form.
-     * @param pStartControl the identified control to use for the start input field.
+     * @param pTitle the display title of the component to be displayed on the
+     *            form.
+     * @param pStartControl the identified control to use for the start input
+     *            field.
      * @param pEndControl the identified control to use for the end input field.
      * @param pToolbox the toolbox through which the time manager is referenced.
      */
@@ -170,8 +174,9 @@ public class DateTimeRangeInput extends CompoundTitledControl
     }
 
     /**
-     * An event handler method used to react to a value change in either of the date / time pickers. This allows for the preset
-     * {@link ComboBox}'s selected item to be changed to {@link #CUSTOM_PRESET}.
+     * An event handler method used to react to a value change in either of the
+     * date / time pickers. This allows for the preset {@link ComboBox}'s
+     * selected item to be changed to {@link #CUSTOM_PRESET}.
      */
     protected void valueChanged()
     {
@@ -182,7 +187,8 @@ public class DateTimeRangeInput extends CompoundTitledControl
     }
 
     /**
-     * An event handler method used to react to the selection of a choice within the preset selector.
+     * An event handler method used to react to the selection of a choice within
+     * the preset selector.
      *
      * @param pPresetType The preset value selected by the user.
      */
@@ -253,7 +259,8 @@ public class DateTimeRangeInput extends CompoundTitledControl
     /**
      * Convenience method used to get the start of the current week.
      *
-     * @return a {@link LocalDateTime} instance representing the preceding Sunday of the current week.
+     * @return a {@link LocalDateTime} instance representing the preceding
+     *         Sunday of the current week.
      */
     protected LocalDateTime getStartOfCurrentWeek()
     {
@@ -266,12 +273,16 @@ public class DateTimeRangeInput extends CompoundTitledControl
     }
 
     /**
-     * Adjusts the date / time pickers by the supplied offset. The offset direction is determined by the sign of the supplied
-     * offset. For example to adjust backwards by 24 hours, supply the offset parameter with -24, and the type parameter with
-     * {@link ChronoUnit#HOURS}. Likewise, to adjust forward by 24 hours, supply the offset parameter with 24 and the type
-     * parameter with {@link ChronoUnit#HOURS}. If the offset is negative, the method assumes the current date / time for the end
-     * time, and adjusts the start time by the offset. If the offset is positive, the method assumes the current date / time for
-     * the start time, and adjusts the end time by the offset.
+     * Adjusts the date / time pickers by the supplied offset. The offset
+     * direction is determined by the sign of the supplied offset. For example
+     * to adjust backwards by 24 hours, supply the offset parameter with -24,
+     * and the type parameter with {@link ChronoUnit#HOURS}. Likewise, to adjust
+     * forward by 24 hours, supply the offset parameter with 24 and the type
+     * parameter with {@link ChronoUnit#HOURS}. If the offset is negative, the
+     * method assumes the current date / time for the end time, and adjusts the
+     * start time by the offset. If the offset is positive, the method assumes
+     * the current date / time for the start time, and adjusts the end time by
+     * the offset.
      *
      * @param offset the amount by which to offset the picker.
      * @param type the units by which to adjust.
@@ -283,12 +294,16 @@ public class DateTimeRangeInput extends CompoundTitledControl
     }
 
     /**
-     * Adjusts the date / time pickers by the supplied offset. The offset direction is determined by the sign of the supplied
-     * offset. For example to adjust backwards by 24 hours, supply the offset parameter with -24, and the type parameter with
-     * {@link ChronoUnit#HOURS}. Likewise, to adjust forward by 24 hours, supply the offset parameter with 24 and the type
-     * parameter with {@link ChronoUnit#HOURS}. If the offset is negative, the method uses the supplied base date / time for the
-     * end time, and adjusts the start time by the offset. If the offset is positive, the method uses the supplied base date /
-     * time for the start time, and adjusts the end time by the offset.
+     * Adjusts the date / time pickers by the supplied offset. The offset
+     * direction is determined by the sign of the supplied offset. For example
+     * to adjust backwards by 24 hours, supply the offset parameter with -24,
+     * and the type parameter with {@link ChronoUnit#HOURS}. Likewise, to adjust
+     * forward by 24 hours, supply the offset parameter with 24 and the type
+     * parameter with {@link ChronoUnit#HOURS}. If the offset is negative, the
+     * method uses the supplied base date / time for the end time, and adjusts
+     * the start time by the offset. If the offset is positive, the method uses
+     * the supplied base date / time for the start time, and adjusts the end
+     * time by the offset.
      *
      * @param pBaseTime the time from which adjustments are made.
      * @param offset the amount by which to offset the picker.

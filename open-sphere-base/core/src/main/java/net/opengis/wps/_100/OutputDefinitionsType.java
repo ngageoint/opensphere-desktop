@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:40:25 PM MST 
 //
 
-
 package net.opengis.wps._100;
 
 import java.util.ArrayList;
@@ -16,13 +15,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Definition of a format, encoding,  schema, and unit-of-measure for an output to be returned from a process. 
+ * Definition of a format, encoding, schema, and unit-of-measure for an output
+ * to be returned from a process.
  * 
- * <p>Java class for OutputDefinitionsType complex type.
+ * <p>
+ * Java class for OutputDefinitionsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="OutputDefinitionsType">
@@ -39,10 +41,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "OutputDefinitionsType", propOrder = {
-    "output"
-})
-public class OutputDefinitionsType {
+@XmlType(name = "OutputDefinitionsType", propOrder = { "output" })
+public class OutputDefinitionsType
+{
 
     @XmlElement(name = "Output", required = true)
     protected List<DocumentOutputDefinitionType> output;
@@ -51,15 +52,16 @@ public class OutputDefinitionsType {
      * Gets the value of the output property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the output property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the output property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getOutput().add(newItem);
+     * getOutput().add(newItem);
      * </pre>
      * 
      * 
@@ -69,8 +71,10 @@ public class OutputDefinitionsType {
      * 
      * 
      */
-    public List<DocumentOutputDefinitionType> getOutput() {
-        if (output == null) {
+    public List<DocumentOutputDefinitionType> getOutput()
+    {
+        if (output == null)
+        {
             output = new ArrayList<DocumentOutputDefinitionType>();
         }
         return this.output;

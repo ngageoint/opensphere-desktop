@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import java.util.ArrayList;
@@ -18,14 +17,16 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Returns a representation of the matching entry. If there is no 
- *          matching record, the response message must be empty.
+ * Returns a representation of the matching entry. If there is no matching
+ * record, the response message must be empty.
  * 
- * <p>Java class for GetRecordByIdResponseType complex type.
+ * <p>
+ * Java class for GetRecordByIdResponseType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="GetRecordByIdResponseType">
@@ -45,14 +46,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetRecordByIdResponseType", propOrder = {
-    "abstractRecord",
-    "any"
-})
-public class GetRecordByIdResponseType {
+@XmlType(name = "GetRecordByIdResponseType", propOrder = { "abstractRecord", "any" })
+public class GetRecordByIdResponseType
+{
 
     @XmlElementRef(name = "AbstractRecord", namespace = "http://www.opengis.net/cat/csw/2.0.2", type = JAXBElement.class)
     protected List<JAXBElement<? extends AbstractRecordType>> abstractRecord;
+
     @XmlAnyElement(lax = true)
     protected List<Object> any;
 
@@ -60,15 +60,16 @@ public class GetRecordByIdResponseType {
      * Gets the value of the abstractRecord property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the abstractRecord property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the abstractRecord property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAbstractRecord().add(newItem);
+     * getAbstractRecord().add(newItem);
      * </pre>
      * 
      * 
@@ -82,8 +83,10 @@ public class GetRecordByIdResponseType {
      * 
      * 
      */
-    public List<JAXBElement<? extends AbstractRecordType>> getAbstractRecord() {
-        if (abstractRecord == null) {
+    public List<JAXBElement<? extends AbstractRecordType>> getAbstractRecord()
+    {
+        if (abstractRecord == null)
+        {
             abstractRecord = new ArrayList<JAXBElement<? extends AbstractRecordType>>();
         }
         return this.abstractRecord;
@@ -93,26 +96,28 @@ public class GetRecordByIdResponseType {
      * Gets the value of the any property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the any property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the any property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAny().add(newItem);
+     * getAny().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * 
      * 
      */
-    public List<Object> getAny() {
-        if (any == null) {
+    public List<Object> getAny()
+    {
+        if (any == null)
+        {
             any = new ArrayList<Object>();
         }
         return this.any;

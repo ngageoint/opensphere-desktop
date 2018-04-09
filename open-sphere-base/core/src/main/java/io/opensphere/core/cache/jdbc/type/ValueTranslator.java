@@ -38,7 +38,8 @@ public interface ValueTranslator<T>
      * @throws CacheException If the value cannot be retrieved.
      */
     int getValue(Class<? extends T> type, long sizeBytes, int column, ResultSet rs, PropertyMatcher<? extends T> filter,
-            Collection<? super T> results) throws CacheException;
+            Collection<? super T> results)
+        throws CacheException;
 
     /**
      * Get a value from the result set.
@@ -52,7 +53,8 @@ public interface ValueTranslator<T>
      * @throws CacheException If the value cannot be retrieved.
      */
     int getValue(PropertyDescriptor<? extends T> propertyDescriptor, int column, ResultSet rs,
-            PropertyMatcher<? extends T> filter, Collection<? super T> results) throws CacheException;
+            PropertyMatcher<? extends T> filter, Collection<? super T> results)
+        throws CacheException;
 
     /**
      * Set a value in a statement.

@@ -27,9 +27,12 @@ public class TimeAggregator<T>
      * Constructor.
      *
      * @param processor the item processor
-     * @param minDelayMilliseconds The minimum delay between when a task is submitted and when it is executed.
-     * @param maxDelayMilliseconds The (best effort) maximum delay between when one task is submitted and when the latest task is
-     *            executed. This will not cause multiple tasks to be executed concurrently, regardless of how long they take.
+     * @param minDelayMilliseconds The minimum delay between when a task is
+     *            submitted and when it is executed.
+     * @param maxDelayMilliseconds The (best effort) maximum delay between when
+     *            one task is submitted and when the latest task is executed.
+     *            This will not cause multiple tasks to be executed
+     *            concurrently, regardless of how long they take.
      */
     public TimeAggregator(Consumer<List<T>> processor, int minDelayMilliseconds, int maxDelayMilliseconds)
     {

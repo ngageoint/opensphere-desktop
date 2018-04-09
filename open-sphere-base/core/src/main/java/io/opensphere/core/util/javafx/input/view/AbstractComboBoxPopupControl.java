@@ -17,7 +17,8 @@ import javafx.stage.WindowEvent;
 import javafx.util.StringConverter;
 
 /**
- * An abstract base class used to provide control to popups for combo boxes. Instances are bound to control types.
+ * An abstract base class used to provide control to popups for combo boxes.
+ * Instances are bound to control types.
  *
  * @param <T> the control type to which the implementation is bound.
  */
@@ -59,8 +60,10 @@ public abstract class AbstractComboBoxPopupControl<T> extends AbstractComboBoxSk
         // editable input node
         this.myTextField = getEditor() != null ? getEditableInputNode() : null;
 
-        // Fix for RT-29565. Without this the textField does not have a correct preferred width at startup, as it is not part of
-        // the scene graph (and therefore has no preferred width until after the first measurements have been taken).
+        // Fix for RT-29565. Without this the textField does not have a correct
+        // preferred width at startup, as it is not part of
+        // the scene graph (and therefore has no preferred width until after the
+        // first measurements have been taken).
         if (this.myTextField != null)
         {
             getChildren().add(myTextField);
@@ -70,7 +73,8 @@ public abstract class AbstractComboBoxPopupControl<T> extends AbstractComboBoxSk
     }
 
     /**
-     * Filters the supplied key event, narrowing the set of processed keys to only those that the combo box is interested in.
+     * Filters the supplied key event, narrowing the set of processed keys to
+     * only those that the combo box is interested in.
      *
      * @param pKeyEvent the event to process.
      */
@@ -82,7 +86,8 @@ public abstract class AbstractComboBoxPopupControl<T> extends AbstractComboBoxSk
         }
         else if (!pKeyEvent.getTarget().equals(myTextField))
         {
-            // This prevents a stack overflow from our re-broadcasting of the event to the text field that occurs in the final
+            // This prevents a stack overflow from our re-broadcasting of the
+            // event to the text field that occurs in the final
             // else statement of the conditions below.
             switch (pKeyEvent.getCode())
             {
@@ -94,7 +99,8 @@ public abstract class AbstractComboBoxPopupControl<T> extends AbstractComboBoxSk
                     handleKeyEvent(pKeyEvent, true);
                     break;
                 default:
-                    // This forwards the event down into the TextField when the key event is actually received by the ComboBox.
+                    // This forwards the event down into the TextField when the
+                    // key event is actually received by the ComboBox.
                     myTextField.fireEvent(pKeyEvent.copyFor(myTextField, myTextField));
                     pKeyEvent.consume();
                     break;
@@ -103,14 +109,16 @@ public abstract class AbstractComboBoxPopupControl<T> extends AbstractComboBoxSk
     }
 
     /**
-     * An event handler method in which key events are processed and distributed to their target locations.
+     * An event handler method in which key events are processed and distributed
+     * to their target locations.
      *
      * @param pKeyEvent the event to handle.
      * @param pConsumeEvent when true, the event is consumed after processing.
      */
     protected void handleKeyEvent(KeyEvent pKeyEvent, boolean pConsumeEvent)
     {
-        // When the user hits the enter or F4 keys, respond before ever giving the event to the TextField.
+        // When the user hits the enter or F4 keys, respond before ever giving
+        // the event to the TextField.
         if (pKeyEvent.getCode() == KeyCode.ENTER)
         {
             setTextFromTextFieldIntoComboBoxValue();
@@ -207,7 +215,8 @@ public abstract class AbstractComboBoxPopupControl<T> extends AbstractComboBoxSk
     }
 
     /**
-     * Sends the supplied key event to the combo-box's parent for further processing.
+     * Sends the supplied key event to the combo-box's parent for further
+     * processing.
      *
      * @param pEvent the event to delegate to the parent for further processing.
      */
@@ -220,9 +229,11 @@ public abstract class AbstractComboBoxPopupControl<T> extends AbstractComboBoxSk
     }
 
     /**
-     * This method should return the Node that will be displayed when the user clicks on the ComboBox 'button' area.
+     * This method should return the Node that will be displayed when the user
+     * clicks on the ComboBox 'button' area.
      *
-     * @return the node that will be displayed when the user clicks on the combo box button area.
+     * @return the node that will be displayed when the user clicks on the combo
+     *         box button area.
      */
     protected abstract Node getPopupContent();
 
@@ -248,16 +259,20 @@ public abstract class AbstractComboBoxPopupControl<T> extends AbstractComboBoxSk
             myPopup.setHideOnEscape(true);
 
             myPopup.setOnAutoHide(e -> getBehavior().onAutoHide());
-            // RT-18529: We listen to mouse input that is received by the popup but that is not consumed, and assume that this is
-            // due to the mouse clicking outside of the node, but in areas such as the drop shadow.
+            // RT-18529: We listen to mouse input that is received by the popup
+            // but that is not consumed, and assume that this is
+            // due to the mouse clicking outside of the node, but in areas such
+            // as the drop shadow.
             myPopup.addEventHandler(MouseEvent.MOUSE_CLICKED, t -> getBehavior().onAutoHide());
-            // Make sure the accessibility focus returns to the combo box after the window closes (multi-line shennanigans are in
+            // Make sure the accessibility focus returns to the combo box after
+            // the window closes (multi-line shennanigans are in
             // place to keep check style happy):
             AccessibleAttribute focusNode = AccessibleAttribute.FOCUS_NODE;
             EventHandler<? super WindowEvent> eventHandler = t -> getSkinnable().notifyAccessibleAttributeChanged(focusNode);
             myPopup.addEventHandler(WindowEvent.WINDOW_HIDDEN, eventHandler);
 
-            // RT-36966 - if skinnable's scene becomes null, ensure popup is closed
+            // RT-36966 - if skinnable's scene becomes null, ensure popup is
+            // closed
             getSkinnable().sceneProperty().addListener(o -> handleSceneInvalidation(o));
         }
         return myPopup;
@@ -266,7 +281,8 @@ public abstract class AbstractComboBoxPopupControl<T> extends AbstractComboBoxSk
     /**
      * An event handler used to react to a scene becoming invalid.
      *
-     * @param pObservable the observable fired by the scene invalidation operation.
+     * @param pObservable the observable fired by the scene invalidation
+     *            operation.
      */
     protected void handleSceneInvalidation(Observable pObservable)
     {
@@ -302,7 +318,8 @@ public abstract class AbstractComboBoxPopupControl<T> extends AbstractComboBoxSk
     }
 
     /**
-     * Calculate the target location of the popup, and display it at that location.
+     * Calculate the target location of the popup, and display it at that
+     * location.
      */
     protected void positionAndShowPopup()
     {
@@ -324,7 +341,8 @@ public abstract class AbstractComboBoxPopupControl<T> extends AbstractComboBoxSk
     }
 
     /**
-     * Calculate the desired size of the popup, and apply that size to the popup's content area.
+     * Calculate the desired size of the popup, and apply that size to the
+     * popup's content area.
      */
     protected void sizePopup()
     {
@@ -371,7 +389,8 @@ public abstract class AbstractComboBoxPopupControl<T> extends AbstractComboBoxSk
     /**
      * Subclasses are responsible for getting the editor.
      *
-     * Note: ComboBoxListViewSkin should return null if editable is false, even if the ComboBox does have an editor set.
+     * Note: ComboBoxListViewSkin should return null if editable is false, even
+     * if the ComboBox does have an editor set.
      *
      * @return the component used as an editor.
      */
@@ -380,7 +399,8 @@ public abstract class AbstractComboBoxPopupControl<T> extends AbstractComboBoxSk
     /**
      * Subclasses are responsible for getting the converter.
      *
-     * @return the converter instance in which the type 'T' is converted to and from {@link String} instances.
+     * @return the converter instance in which the type 'T' is converted to and
+     *         from {@link String} instances.
      */
     protected abstract StringConverter<T> getConverter();
 

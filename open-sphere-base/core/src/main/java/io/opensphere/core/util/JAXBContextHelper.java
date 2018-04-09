@@ -44,7 +44,7 @@ public final class JAXBContextHelper
      *
      * @param classes The classes for which to make a context.
      * @return the {@link JAXBContext}
-     * @throws JAXBException If an error occurred obtaining the JAXBContext.
+     * @throws JAXBException If an  error occurred obtaining the JAXBContext.
      */
     public static JAXBContext getCachedContext(Class<?>... classes) throws JAXBException
     {
@@ -102,7 +102,7 @@ public final class JAXBContextHelper
      *
      * @param classes The classes for which to make a context.
      * @return the {@link JAXBContext}
-     * @throws JAXBException If an error occurred obtaining the JAXBContext.
+     * @throws JAXBException If an  error occurred obtaining the JAXBContext.
      */
     public static JAXBContext getCachedContext(Collection<? extends Class<?>> classes) throws JAXBException
     {
@@ -115,7 +115,7 @@ public final class JAXBContextHelper
      *
      * @param packages The packages.
      * @return The context.
-     * @throws JAXBException If an error occurred obtaining the JAXBContext.
+     * @throws JAXBException If an  error occurred obtaining the JAXBContext.
      * @see JAXBContext#newInstance(String, ClassLoader)
      */
     public static JAXBContext getCachedContext(Package... packages) throws JAXBException
@@ -144,7 +144,7 @@ public final class JAXBContextHelper
      *
      * @param contextPath Colon-separated list of package names.
      * @return the {@link JAXBContext}
-     * @throws JAXBException If an error occurred obtaining the JAXBContext.
+     * @throws JAXBException If an  error occurred obtaining the JAXBContext.
      * @see JAXBContext#newInstance(String, ClassLoader)
      */
     public static JAXBContext getCachedContext(String contextPath) throws JAXBException
@@ -195,7 +195,7 @@ public final class JAXBContextHelper
      *
      * @param classes The classes for which to make a context.
      * @return the {@link JAXBContext}
-     * @throws JAXBException If an error occurred obtaining the JAXBContext.
+     * @throws JAXBException If an  error occurred obtaining the JAXBContext.
      */
     private static JAXBContext createContext(Class<?>[] classes) throws JAXBException
     {
@@ -218,7 +218,7 @@ public final class JAXBContextHelper
      *
      * @param contextPath Colon-separated list of package names.
      * @return the {@link JAXBContext}
-     * @throws JAXBException If an error occurred obtaining the JAXBContext.
+     * @throws JAXBException If an  error occurred obtaining the JAXBContext.
      * @see JAXBContext#newInstance(String, ClassLoader)
      */
     private static JAXBContext createContext(String contextPath) throws JAXBException

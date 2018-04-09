@@ -113,7 +113,7 @@ public class CreateSecretKeyPanel extends JPanel implements Validatable
      * @param algorithm The crypto algorithm.
      * @return The secret key and crypto config, or {@code null} if there is a
      *         recoverable error.
-     * @throws NoSuchAlgorithmException If an algorithm cannot be loaded.
+     * @throws NoSuchAlgorithmException If an  algorithm cannot be loaded.
      */
     public Pair<SecretKey, CryptoConfig> generateSecretKeyAndCryptoConfig(String algorithm) throws NoSuchAlgorithmException
     {
@@ -233,7 +233,8 @@ public class CreateSecretKeyPanel extends JPanel implements Validatable
         if (myPasswordPanel == null)
         {
             final int minPasswordLength = Utilities.parseSystemProperty("opensphere.password.minLength", 0);
-            final int minPasswordCharacterCategories = Utilities.parseSystemProperty("opensphere.password.minCharacterCategories", 0);
+            final int minPasswordCharacterCategories = Utilities.parseSystemProperty("opensphere.password.minCharacterCategories",
+                    0);
             myPasswordPanel = new CreatePasswordPanel(minPasswordLength, minPasswordCharacterCategories);
             myPasswordPanel.getValidatorSupport().addAndNotifyValidationListener((Object object, final ValidationStatus valid,
                     final String message) -> myValidatorSupport.setValidationResult(valid, message));

@@ -95,8 +95,8 @@ public final class StreamUtilities
     }
 
     /**
-     * Filter a stream into a new stream that only contains objects that
-     * are instances of the given type.
+     * Filter a stream into a new stream that only contains objects that are
+     * instances of the given type.
      *
      * @param <T> The type of the returned objects.
      * @param input The input stream.

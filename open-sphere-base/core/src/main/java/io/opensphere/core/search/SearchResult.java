@@ -191,7 +191,8 @@ public class SearchResult
     /**
      * Sets the whether to have the framework create a geometry for the result.
      *
-     * @param createGeometry whether to have the framework create a geometry for the result
+     * @param createGeometry whether to have the framework create a geometry for
+     *            the result
      */
     public void setCreateGeometry(boolean createGeometry)
     {

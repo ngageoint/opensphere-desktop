@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.math.BigInteger;
@@ -21,15 +20,27 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Cubic splines are similar to line strings in that they are a sequence of segments each with its own defining function. A cubic spline uses the control points and a set of derivative parameters to define a piecewise 3rd degree polynomial interpolation. Unlike line-strings, the parameterization by arc length is not necessarily still a polynomial. 
- * 				The function describing the curve must be C2, that is, have a continuous 1st and 2nd derivative at all points, and pass through the controlPoints in the order given. Between the control points, the curve segment is defined by a cubic polynomial. At each control point, the polynomial changes in such a manner that the 1st and 2nd derivative vectors are the same from either side. The control parameters record must contain vectorAtStart, and vectorAtEnd which are the unit tangent vectors at controlPoint[1] and controlPoint[n] where n = controlPoint.count. 
- * 				Note: only the direction of the vectors is relevant, not their length.
+ * Cubic splines are similar to line strings in that they are a sequence of
+ * segments each with its own defining function. A cubic spline uses the control
+ * points and a set of derivative parameters to define a piecewise 3rd degree
+ * polynomial interpolation. Unlike line-strings, the parameterization by arc
+ * length is not necessarily still a polynomial. The function describing the
+ * curve must be C2, that is, have a continuous 1st and 2nd derivative at all
+ * points, and pass through the controlPoints in the order given. Between the
+ * control points, the curve segment is defined by a cubic polynomial. At each
+ * control point, the polynomial changes in such a manner that the 1st and 2nd
+ * derivative vectors are the same from either side. The control parameters
+ * record must contain vectorAtStart, and vectorAtEnd which are the unit tangent
+ * vectors at controlPoint[1] and controlPoint[n] where n = controlPoint.count.
+ * Note: only the direction of the vectors is relevant, not their length.
  * 
- * <p>Java class for CubicSplineType complex type.
+ * <p>
+ * Java class for CubicSplineType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CubicSplineType">
@@ -58,31 +69,29 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CubicSplineType", propOrder = {
-    "posOrPointPropertyOrPointRep",
-    "posList",
-    "coordinates",
-    "vectorAtStart",
-    "vectorAtEnd"
-})
-public class CubicSplineType
-    extends AbstractCurveSegmentType
+@XmlType(name = "CubicSplineType", propOrder = { "posOrPointPropertyOrPointRep", "posList", "coordinates", "vectorAtStart",
+    "vectorAtEnd" })
+public class CubicSplineType extends AbstractCurveSegmentType
 {
 
-    @XmlElementRefs({
-        @XmlElementRef(name = "pos", namespace = "http://www.opengis.net/gml", type = JAXBElement.class),
+    @XmlElementRefs({ @XmlElementRef(name = "pos", namespace = "http://www.opengis.net/gml", type = JAXBElement.class),
         @XmlElementRef(name = "pointProperty", namespace = "http://www.opengis.net/gml", type = JAXBElement.class),
-        @XmlElementRef(name = "pointRep", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
-    })
+        @XmlElementRef(name = "pointRep", namespace = "http://www.opengis.net/gml", type = JAXBElement.class) })
     protected List<JAXBElement<?>> posOrPointPropertyOrPointRep;
+
     protected DirectPositionListType posList;
+
     protected CoordinatesType coordinates;
+
     @XmlElement(required = true)
     protected VectorType vectorAtStart;
+
     @XmlElement(required = true)
     protected VectorType vectorAtEnd;
+
     @XmlAttribute(name = "interpolation")
     protected CurveInterpolationType interpolation;
+
     @XmlAttribute(name = "degree")
     protected BigInteger degree;
 
@@ -90,15 +99,16 @@ public class CubicSplineType
      * Gets the value of the posOrPointPropertyOrPointRep property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the posOrPointPropertyOrPointRep property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the posOrPointPropertyOrPointRep property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPosOrPointPropertyOrPointRep().add(newItem);
+     * getPosOrPointPropertyOrPointRep().add(newItem);
      * </pre>
      * 
      * 
@@ -110,8 +120,10 @@ public class CubicSplineType
      * 
      * 
      */
-    public List<JAXBElement<?>> getPosOrPointPropertyOrPointRep() {
-        if (posOrPointPropertyOrPointRep == null) {
+    public List<JAXBElement<?>> getPosOrPointPropertyOrPointRep()
+    {
+        if (posOrPointPropertyOrPointRep == null)
+        {
             posOrPointPropertyOrPointRep = new ArrayList<JAXBElement<?>>();
         }
         return this.posOrPointPropertyOrPointRep;
@@ -120,111 +132,105 @@ public class CubicSplineType
     /**
      * Gets the value of the posList property.
      * 
-     * @return
-     *     possible object is
-     *     {@link DirectPositionListType }
-     *     
+     * @return possible object is {@link DirectPositionListType }
+     * 
      */
-    public DirectPositionListType getPosList() {
+    public DirectPositionListType getPosList()
+    {
         return posList;
     }
 
     /**
      * Sets the value of the posList property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link DirectPositionListType }
-     *     
+     * @param value allowed object is {@link DirectPositionListType }
+     * 
      */
-    public void setPosList(DirectPositionListType value) {
+    public void setPosList(DirectPositionListType value)
+    {
         this.posList = value;
     }
 
     /**
      * Deprecated with GML version 3.1.0. Use "posList" instead.
      * 
-     * @return
-     *     possible object is
-     *     {@link CoordinatesType }
-     *     
+     * @return possible object is {@link CoordinatesType }
+     * 
      */
-    public CoordinatesType getCoordinates() {
+    public CoordinatesType getCoordinates()
+    {
         return coordinates;
     }
 
     /**
      * Sets the value of the coordinates property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CoordinatesType }
-     *     
+     * @param value allowed object is {@link CoordinatesType }
+     * 
      */
-    public void setCoordinates(CoordinatesType value) {
+    public void setCoordinates(CoordinatesType value)
+    {
         this.coordinates = value;
     }
 
     /**
      * Gets the value of the vectorAtStart property.
      * 
-     * @return
-     *     possible object is
-     *     {@link VectorType }
-     *     
+     * @return possible object is {@link VectorType }
+     * 
      */
-    public VectorType getVectorAtStart() {
+    public VectorType getVectorAtStart()
+    {
         return vectorAtStart;
     }
 
     /**
      * Sets the value of the vectorAtStart property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link VectorType }
-     *     
+     * @param value allowed object is {@link VectorType }
+     * 
      */
-    public void setVectorAtStart(VectorType value) {
+    public void setVectorAtStart(VectorType value)
+    {
         this.vectorAtStart = value;
     }
 
     /**
      * Gets the value of the vectorAtEnd property.
      * 
-     * @return
-     *     possible object is
-     *     {@link VectorType }
-     *     
+     * @return possible object is {@link VectorType }
+     * 
      */
-    public VectorType getVectorAtEnd() {
+    public VectorType getVectorAtEnd()
+    {
         return vectorAtEnd;
     }
 
     /**
      * Sets the value of the vectorAtEnd property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link VectorType }
-     *     
+     * @param value allowed object is {@link VectorType }
+     * 
      */
-    public void setVectorAtEnd(VectorType value) {
+    public void setVectorAtEnd(VectorType value)
+    {
         this.vectorAtEnd = value;
     }
 
     /**
      * Gets the value of the interpolation property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CurveInterpolationType }
-     *     
+     * @return possible object is {@link CurveInterpolationType }
+     * 
      */
-    public CurveInterpolationType getInterpolation() {
-        if (interpolation == null) {
+    public CurveInterpolationType getInterpolation()
+    {
+        if (interpolation == null)
+        {
             return CurveInterpolationType.CUBIC_SPLINE;
-        } else {
+        }
+        else
+        {
             return interpolation;
         }
     }
@@ -232,27 +238,28 @@ public class CubicSplineType
     /**
      * Sets the value of the interpolation property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CurveInterpolationType }
-     *     
+     * @param value allowed object is {@link CurveInterpolationType }
+     * 
      */
-    public void setInterpolation(CurveInterpolationType value) {
+    public void setInterpolation(CurveInterpolationType value)
+    {
         this.interpolation = value;
     }
 
     /**
      * Gets the value of the degree property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
-    public BigInteger getDegree() {
-        if (degree == null) {
+    public BigInteger getDegree()
+    {
+        if (degree == null)
+        {
             return new BigInteger("3");
-        } else {
+        }
+        else
+        {
             return degree;
         }
     }
@@ -260,12 +267,11 @@ public class CubicSplineType
     /**
      * Sets the value of the degree property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     * @param value allowed object is {@link BigInteger }
+     * 
      */
-    public void setDegree(BigInteger value) {
+    public void setDegree(BigInteger value)
+    {
         this.degree = value;
     }
 

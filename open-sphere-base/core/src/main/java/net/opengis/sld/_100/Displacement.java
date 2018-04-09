@@ -5,7 +5,6 @@
 // Generated on: 2010.10.06 at 03:53:52 PM EDT 
 //
 
-
 package net.opengis.sld._100;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -36,63 +37,58 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "displacementX",
-    "displacementY"
-})
+@XmlType(name = "", propOrder = { "displacementX", "displacementY" })
 @XmlRootElement(name = "Displacement")
-public class Displacement {
+public class Displacement
+{
 
     @XmlElement(name = "DisplacementX", required = true)
     protected ParameterValueType displacementX;
+
     @XmlElement(name = "DisplacementY", required = true)
     protected ParameterValueType displacementY;
 
     /**
      * Gets the value of the displacementX property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ParameterValueType }
-     *     
+     * @return possible object is {@link ParameterValueType }
+     * 
      */
-    public ParameterValueType getDisplacementX() {
+    public ParameterValueType getDisplacementX()
+    {
         return displacementX;
     }
 
     /**
      * Sets the value of the displacementX property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ParameterValueType }
-     *     
+     * @param value allowed object is {@link ParameterValueType }
+     * 
      */
-    public void setDisplacementX(ParameterValueType value) {
+    public void setDisplacementX(ParameterValueType value)
+    {
         this.displacementX = value;
     }
 
     /**
      * Gets the value of the displacementY property.
      * 
-     * @return
-     *     possible object is
-     *     {@link ParameterValueType }
-     *     
+     * @return possible object is {@link ParameterValueType }
+     * 
      */
-    public ParameterValueType getDisplacementY() {
+    public ParameterValueType getDisplacementY()
+    {
         return displacementY;
     }
 
     /**
      * Sets the value of the displacementY property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ParameterValueType }
-     *     
+     * @param value allowed object is {@link ParameterValueType }
+     * 
      */
-    public void setDisplacementY(ParameterValueType value) {
+    public void setDisplacementY(ParameterValueType value)
+    {
         this.displacementY = value;
     }
 

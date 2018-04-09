@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ActionType complex type.
+ * <p>
+ * Java class for ActionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ActionType">
@@ -37,87 +38,82 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ActionType", propOrder = {
-    "message"
-})
-public class ActionType {
+@XmlType(name = "ActionType", propOrder = { "message" })
+public class ActionType
+{
 
     @XmlElement(name = "Message")
     protected String message;
+
     @XmlAttribute(name = "locator", required = true)
     protected String locator;
+
     @XmlAttribute(name = "code")
     protected String code;
 
     /**
      * Gets the value of the message property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getMessage() {
+    public String getMessage()
+    {
         return message;
     }
 
     /**
      * Sets the value of the message property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setMessage(String value) {
+    public void setMessage(String value)
+    {
         this.message = value;
     }
 
     /**
      * Gets the value of the locator property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getLocator() {
+    public String getLocator()
+    {
         return locator;
     }
 
     /**
      * Sets the value of the locator property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setLocator(String value) {
+    public void setLocator(String value)
+    {
         this.locator = value;
     }
 
     /**
      * Gets the value of the code property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getCode() {
+    public String getCode()
+    {
         return code;
     }
 
     /**
      * Sets the value of the code property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setCode(String value) {
+    public void setCode(String value)
+    {
         this.code = value;
     }
 

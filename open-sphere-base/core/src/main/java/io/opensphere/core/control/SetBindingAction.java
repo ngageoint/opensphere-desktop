@@ -246,10 +246,9 @@ public final class SetBindingAction implements ActionListener
         if (previouslyMapped != null)
         {
             final String previous = previouslyMapped;
-            int result = JOptionPane.showConfirmDialog(myParentComponent,
-                    "The key binding\n" + "\"" + incomingBind.toString() + "\"\nis already in use by the control key,\n\""
-                            + previouslyMapped + "\".\n"
-                            + "You may assign this binding but the\nexisting binding will be lost.\n\nDo you want to use the new binding?",
+            int result = JOptionPane.showConfirmDialog(myParentComponent, "The key binding\n" + "\"" + incomingBind.toString()
+                    + "\"\nis already in use by the control key,\n\"" + previouslyMapped + "\".\n"
+                    + "You may assign this binding but the\nexisting binding will be lost.\n\nDo you want to use the new binding?",
                     "Key Binding Already In Use", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (result == JOptionPane.YES_OPTION)
             {
@@ -509,14 +508,16 @@ public final class SetBindingAction implements ActionListener
              * is to show a context menu, and not deselect the button. The
              * context menu is taken care of elsewhere in this class, but we
              * need the button to 'unclick' with the selection of the third
-             * mouse button. So, manually set its selected state to false here. */
+             * mouse button. So, manually set its selected state to false
+             * here. */
             if ((e.getModifiers() & InputEvent.BUTTON3_MASK) != 0)
             {
                 myButton.setSelected(false);
             }
             /* If the 2nd mouse button was pressed, this has no default
              * "unclick" action on the button, so deselect the button.
-             * Combinations involving button 3 have already been handled above. */
+             * Combinations involving button 3 have already been handled
+             * above. */
             else if ((e.getModifiers() & InputEvent.BUTTON2_MASK) != 0)
             {
                 myButton.setSelected(false);

@@ -6,10 +6,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.media.opengl.GL2ES1;
-import javax.media.opengl.GL2GL3;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GL2ES1;
+import com.jogamp.opengl.GL2GL3;
 
 import org.apache.log4j.Logger;
 
@@ -90,8 +90,7 @@ public class PolygonMeshRendererImmediate extends AbstractRenderer<PolygonMeshGe
 
             rc.getGL().glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
 
-            PolygonRenderUtil.setupGL(rc.getGL(), rc.getRenderMode(),
-                    false, false);
+            PolygonRenderUtil.setupGL(rc.getGL(), rc.getRenderMode(), false, false);
             rc.getGL().glDisable(GL.GL_CULL_FACE);
 
             LightingModelConfigGL lastLight = null;
@@ -139,7 +138,7 @@ public class PolygonMeshRendererImmediate extends AbstractRenderer<PolygonMeshGe
                         }
 
                         GL2Utilities.renderWithTransform(rc, geom.getRenderProperties().getTransform(),
-                            () -> PolygonRenderUtil.drawPolygonMesh(rc.getGL(), modelData.getFirstObject()));
+                                () -> PolygonRenderUtil.drawPolygonMesh(rc.getGL(), modelData.getFirstObject()));
                     }
                 }
                 finally

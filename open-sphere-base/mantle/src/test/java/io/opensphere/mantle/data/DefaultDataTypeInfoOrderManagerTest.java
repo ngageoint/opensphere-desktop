@@ -4,11 +4,11 @@ import org.easymock.Capture;
 import org.easymock.EasyMock;
 import org.junit.Test;
 
-import io.opensphere.core.matchers.EasyMockHelper;
 import io.opensphere.core.order.OrderCategory;
 import io.opensphere.core.order.OrderChangeListener;
 import io.opensphere.core.order.OrderManager;
 import io.opensphere.core.order.OrderParticipantKey;
+import io.opensphere.test.core.matchers.EasyMockHelper;
 
 /** Test for {@link DefaultDataTypeInfoOrderManager}. */
 public class DefaultDataTypeInfoOrderManagerTest

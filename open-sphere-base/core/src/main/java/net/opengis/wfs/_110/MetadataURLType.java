@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.wfs._110;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,23 +13,22 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
  * 
- *             A Web Feature Server MAY use zero or more MetadataURL
- *             elements to offer detailed, standardized metadata about
- *             the data underneath a particular feature type.  The type
- *             attribute indicates the standard to which the metadata
- *             complies; the format attribute indicates how the metadata is
- *             structured.  Two types are defined at present:
- *             'TC211' or 'ISO19115' = ISO TC211 19115; 
- *             'FGDC'                = FGDC CSDGM.
- *             'ISO19139'            = ISO 19139
- *          
+ * A Web Feature Server MAY use zero or more MetadataURL elements to offer
+ * detailed, standardized metadata about the data underneath a particular
+ * feature type. The type attribute indicates the standard to which the metadata
+ * complies; the format attribute indicates how the metadata is structured. Two
+ * types are defined at present: 'TC211' or 'ISO19115' = ISO TC211 19115; 'FGDC'
+ * = FGDC CSDGM. 'ISO19139' = ISO 19139
  * 
- * <p>Java class for MetadataURLType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for MetadataURLType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="MetadataURLType">
@@ -64,87 +62,82 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MetadataURLType", propOrder = {
-    "value"
-})
-public class MetadataURLType {
+@XmlType(name = "MetadataURLType", propOrder = { "value" })
+public class MetadataURLType
+{
 
     @XmlValue
     protected String value;
+
     @XmlAttribute(name = "type", required = true)
     protected String type;
+
     @XmlAttribute(name = "format", required = true)
     protected String format;
 
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getValue() {
+    public String getValue()
+    {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setValue(String value) {
+    public void setValue(String value)
+    {
         this.value = value;
     }
 
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getType() {
+    public String getType()
+    {
         return type;
     }
 
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setType(String value) {
+    public void setType(String value)
+    {
         this.type = value;
     }
 
     /**
      * Gets the value of the format property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
-    public String getFormat() {
+    public String getFormat()
+    {
         return format;
     }
 
     /**
      * Sets the value of the format property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
-    public void setFormat(String value) {
+    public void setFormat(String value)
+    {
         this.format = value;
     }
 

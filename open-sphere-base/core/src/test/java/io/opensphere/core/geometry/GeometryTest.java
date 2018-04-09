@@ -18,7 +18,7 @@ public class GeometryTest
     /**
      * Test that all geometry classes are immutable.
      *
-     * @throws ClassNotFoundException If a class cannot be loaded.
+     * @throws ClassNotFoundException If a   class cannot be loaded.
      */
     @Test
     public void testImmutableGeometries() throws ClassNotFoundException

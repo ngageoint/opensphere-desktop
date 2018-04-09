@@ -5,7 +5,6 @@
 // Generated on: 2010.01.22 at 02:23:57 PM MST 
 //
 
-
 package net.opengis.cat.csw._202;
 
 import java.util.ArrayList;
@@ -23,17 +22,19 @@ import org.purl.dc.elements._1.SimpleLiteral;
 import net.opengis.ows._100.BoundingBoxType;
 import net.opengis.ows._100.WGS84BoundingBoxType;
 
-
 /**
  * 
- *             This type defines a brief representation of the common record
- *             format.  It extends AbstractRecordType to include only the
- *              dc:identifier and dc:type properties.
- *          
+ * This type defines a brief representation of the common record format. It
+ * extends AbstractRecordType to include only the dc:identifier and dc:type
+ * properties.
  * 
- * <p>Java class for BriefRecordType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * Java class for BriefRecordType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="BriefRecordType">
@@ -53,22 +54,19 @@ import net.opengis.ows._100.WGS84BoundingBoxType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "BriefRecordType", propOrder = {
-    "identifier",
-    "title",
-    "type",
-    "boundingBox"
-})
-public class BriefRecordType
-    extends AbstractRecordType
+@XmlType(name = "BriefRecordType", propOrder = { "identifier", "title", "type", "boundingBox" })
+public class BriefRecordType extends AbstractRecordType
 {
 
     @XmlElementRef(name = "identifier", namespace = "http://purl.org/dc/elements/1.1/", type = JAXBElement.class)
     protected List<JAXBElement<SimpleLiteral>> identifier;
+
     @XmlElementRef(name = "title", namespace = "http://purl.org/dc/elements/1.1/", type = JAXBElement.class)
     protected List<JAXBElement<SimpleLiteral>> title;
+
     @XmlElement(namespace = "http://purl.org/dc/elements/1.1/")
     protected SimpleLiteral type;
+
     @XmlElementRef(name = "BoundingBox", namespace = "http://www.opengis.net/ows", type = JAXBElement.class)
     protected List<JAXBElement<? extends BoundingBoxType>> boundingBox;
 
@@ -76,15 +74,16 @@ public class BriefRecordType
      * Gets the value of the identifier property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the identifier property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the identifier property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getIdentifier().add(newItem);
+     * getIdentifier().add(newItem);
      * </pre>
      * 
      * 
@@ -95,8 +94,10 @@ public class BriefRecordType
      * 
      * 
      */
-    public List<JAXBElement<SimpleLiteral>> getIdentifier() {
-        if (identifier == null) {
+    public List<JAXBElement<SimpleLiteral>> getIdentifier()
+    {
+        if (identifier == null)
+        {
             identifier = new ArrayList<JAXBElement<SimpleLiteral>>();
         }
         return this.identifier;
@@ -106,15 +107,16 @@ public class BriefRecordType
      * Gets the value of the title property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the title property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the title property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getTitle().add(newItem);
+     * getTitle().add(newItem);
      * </pre>
      * 
      * 
@@ -125,8 +127,10 @@ public class BriefRecordType
      * 
      * 
      */
-    public List<JAXBElement<SimpleLiteral>> getTitle() {
-        if (title == null) {
+    public List<JAXBElement<SimpleLiteral>> getTitle()
+    {
+        if (title == null)
+        {
             title = new ArrayList<JAXBElement<SimpleLiteral>>();
         }
         return this.title;
@@ -135,24 +139,22 @@ public class BriefRecordType
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SimpleLiteral }
-     *     
+     * @return possible object is {@link SimpleLiteral }
+     * 
      */
-    public SimpleLiteral getType() {
+    public SimpleLiteral getType()
+    {
         return type;
     }
 
     /**
      * Sets the value of the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SimpleLiteral }
-     *     
+     * @param value allowed object is {@link SimpleLiteral }
+     * 
      */
-    public void setType(SimpleLiteral value) {
+    public void setType(SimpleLiteral value)
+    {
         this.type = value;
     }
 
@@ -160,15 +162,16 @@ public class BriefRecordType
      * Gets the value of the boundingBox property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the boundingBox property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the boundingBox property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getBoundingBox().add(newItem);
+     * getBoundingBox().add(newItem);
      * </pre>
      * 
      * 
@@ -179,8 +182,10 @@ public class BriefRecordType
      * 
      * 
      */
-    public List<JAXBElement<? extends BoundingBoxType>> getBoundingBox() {
-        if (boundingBox == null) {
+    public List<JAXBElement<? extends BoundingBoxType>> getBoundingBox()
+    {
+        if (boundingBox == null)
+        {
             boundingBox = new ArrayList<JAXBElement<? extends BoundingBoxType>>();
         }
         return this.boundingBox;

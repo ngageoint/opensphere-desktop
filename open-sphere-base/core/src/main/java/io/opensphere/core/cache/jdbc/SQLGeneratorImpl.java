@@ -507,7 +507,8 @@ public class SQLGeneratorImpl implements SQLGenerator
     @Override
     public String generateRetrieveGroupValuesSql(int[] groupIds, JoinTableColumn joinTableColumn, DataModelCategory category,
             Collection<? extends PropertyMatcher<?>> parameters, Collection<? extends PropertyDescriptor<?>> selectProperties,
-            TimeSpan expirationRange, Boolean critical) throws CacheException
+            TimeSpan expirationRange, Boolean critical)
+        throws CacheException
     {
         StringBuilder selectExpression = new StringBuilder(512).append(SQL.SELECT);
         StringBuilder tableExpression = new StringBuilder(256).append(SQL.FROM).append(TableNames.DATA_GROUP);
@@ -1044,7 +1045,8 @@ public class SQLGeneratorImpl implements SQLGenerator
      */
     private void processSelectProperties(Collection<? extends PropertyDescriptor<?>> selectProperties,
             StringBuilder selectExpression, StringBuilder joinExpression, Map<PropertyDescriptor<?>, PropertyMatcher<?>> propMap,
-            Map<PropertyDescriptor<?>, String> aliasMap, int startIndex) throws CacheException
+            Map<PropertyDescriptor<?>, String> aliasMap, int startIndex)
+        throws CacheException
     {
         int index = startIndex;
         for (PropertyDescriptor<?> desc : selectProperties)

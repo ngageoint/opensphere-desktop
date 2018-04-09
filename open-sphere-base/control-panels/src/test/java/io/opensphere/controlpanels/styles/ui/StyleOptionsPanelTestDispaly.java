@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
 
 import io.opensphere.controlpanels.styles.model.StyleOptions;
 import io.opensphere.controlpanels.styles.model.Styles;
@@ -24,7 +24,7 @@ public class StyleOptionsPanelTestDispaly
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
+        Platform.startup(() ->
         {
         });
 

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 12:20:41 PM MST 
 //
 
-
 package net.opengis.wms_130;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -37,25 +38,25 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "westBoundLongitude",
-    "eastBoundLongitude",
-    "southBoundLatitude",
-    "northBoundLatitude"
-})
+@XmlType(name = "", propOrder = { "westBoundLongitude", "eastBoundLongitude", "southBoundLatitude", "northBoundLatitude" })
 @XmlRootElement(name = "EX_GeographicBoundingBox")
-public class EXGeographicBoundingBox {
+public class EXGeographicBoundingBox
+{
 
     protected double westBoundLongitude;
+
     protected double eastBoundLongitude;
+
     protected double southBoundLatitude;
+
     protected double northBoundLatitude;
 
     /**
      * Gets the value of the westBoundLongitude property.
      * 
      */
-    public double getWestBoundLongitude() {
+    public double getWestBoundLongitude()
+    {
         return westBoundLongitude;
     }
 
@@ -63,7 +64,8 @@ public class EXGeographicBoundingBox {
      * Sets the value of the westBoundLongitude property.
      * 
      */
-    public void setWestBoundLongitude(double value) {
+    public void setWestBoundLongitude(double value)
+    {
         this.westBoundLongitude = value;
     }
 
@@ -71,7 +73,8 @@ public class EXGeographicBoundingBox {
      * Gets the value of the eastBoundLongitude property.
      * 
      */
-    public double getEastBoundLongitude() {
+    public double getEastBoundLongitude()
+    {
         return eastBoundLongitude;
     }
 
@@ -79,7 +82,8 @@ public class EXGeographicBoundingBox {
      * Sets the value of the eastBoundLongitude property.
      * 
      */
-    public void setEastBoundLongitude(double value) {
+    public void setEastBoundLongitude(double value)
+    {
         this.eastBoundLongitude = value;
     }
 
@@ -87,7 +91,8 @@ public class EXGeographicBoundingBox {
      * Gets the value of the southBoundLatitude property.
      * 
      */
-    public double getSouthBoundLatitude() {
+    public double getSouthBoundLatitude()
+    {
         return southBoundLatitude;
     }
 
@@ -95,7 +100,8 @@ public class EXGeographicBoundingBox {
      * Sets the value of the southBoundLatitude property.
      * 
      */
-    public void setSouthBoundLatitude(double value) {
+    public void setSouthBoundLatitude(double value)
+    {
         this.southBoundLatitude = value;
     }
 
@@ -103,7 +109,8 @@ public class EXGeographicBoundingBox {
      * Gets the value of the northBoundLatitude property.
      * 
      */
-    public double getNorthBoundLatitude() {
+    public double getNorthBoundLatitude()
+    {
         return northBoundLatitude;
     }
 
@@ -111,7 +118,8 @@ public class EXGeographicBoundingBox {
      * Sets the value of the northBoundLatitude property.
      * 
      */
-    public void setNorthBoundLatitude(double value) {
+    public void setNorthBoundLatitude(double value)
+    {
         this.northBoundLatitude = value;
     }
 

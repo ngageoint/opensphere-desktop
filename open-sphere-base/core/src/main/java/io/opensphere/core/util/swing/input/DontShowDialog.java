@@ -16,7 +16,8 @@ import io.opensphere.core.util.swing.input.controller.ControllerFactory;
 import io.opensphere.core.util.swing.input.model.BooleanModel;
 
 /**
- * Dialog that has an option to never show again. The title is used as the preference key, so it should be unique.
+ * Dialog that has an option to never show again. The title is used as the
+ * preference key, so it should be unique.
  */
 public final class DontShowDialog extends OptionDialog
 {
@@ -39,7 +40,8 @@ public final class DontShowDialog extends OptionDialog
     /**
      * Shows a confirm dialog if the preference allows it.
      *
-     * @param preferencesRegistry the preferences registry, used to remember the don't show preference
+     * @param preferencesRegistry the preferences registry, used to remember the
+     *            don't show preference
      * @param parent the parent
      * @param message the message
      * @param title the title
@@ -70,10 +72,11 @@ public final class DontShowDialog extends OptionDialog
     }
 
     /**
-     * Shows a confirm dialog if the preference allows it. This variant asks the user if they want the selected option to be
-     * remembered.
+     * Shows a confirm dialog if the preference allows it. This variant asks the
+     * user if they want the selected option to be remembered.
      *
-     * @param preferencesRegistry the preferences registry, used to remember the don't show preference
+     * @param preferencesRegistry the preferences registry, used to remember the
+     *            don't show preference
      * @param parent the parent
      * @param message the message
      * @param title the title
@@ -114,7 +117,8 @@ public final class DontShowDialog extends OptionDialog
     /**
      * Shows a message dialog if the preference allows it.
      *
-     * @param preferencesRegistry the preferences registry, used to remember the don't show preference
+     * @param preferencesRegistry the preferences registry, used to remember the
+     *            don't show preference
      * @param parent the parent
      * @param message the message
      * @param title the title
@@ -129,7 +133,8 @@ public final class DontShowDialog extends OptionDialog
     /**
      * Shows a message dialog if the preference allows it.
      *
-     * @param preferencesRegistry the preferences registry, used to remember the don't show preference
+     * @param preferencesRegistry the preferences registry, used to remember the
+     *            don't show preference
      * @param parent the parent
      * @param component the component to display
      * @param title the title
@@ -155,7 +160,8 @@ public final class DontShowDialog extends OptionDialog
     /**
      * Constructor for normal don't show dialogs.
      *
-     * @param preferencesRegistry the preferences registry, used to remember the don't show preference
+     * @param preferencesRegistry the preferences registry, used to remember the
+     *            don't show preference
      * @param parent the parent
      * @param component the component to display
      * @param title the title
@@ -170,7 +176,8 @@ public final class DontShowDialog extends OptionDialog
     /**
      * General constructor.
      *
-     * @param preferencesRegistry the preferences registry, used to remember the don't show preference
+     * @param preferencesRegistry the preferences registry, used to remember the
+     *            don't show preference
      * @param parent the parent
      * @param component the component to display
      * @param title the title

@@ -5,7 +5,6 @@
 // Generated on: 2010.01.26 at 02:04:22 PM MST 
 //
 
-
 package net.opengis.gml._311;
 
 import java.util.ArrayList;
@@ -17,16 +16,21 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * A base for derived types used to specify complex types containing an array of objects, by unspecified UML association - either composition or aggregation.  An instance of this type contains elements representing Objects.
+ * A base for derived types used to specify complex types containing an array of
+ * objects, by unspecified UML association - either composition or aggregation.
+ * An instance of this type contains elements representing Objects.
  * 
- * Ideally this type would be derived by extension of AssociationType.  
- * However, this leads to a non-deterministic content model, since both the base and the extension have minOccurs="0", and is thus prohibited in XML Schema.
+ * Ideally this type would be derived by extension of AssociationType. However,
+ * this leads to a non-deterministic content model, since both the base and the
+ * extension have minOccurs="0", and is thus prohibited in XML Schema.
  * 
- * <p>Java class for ArrayAssociationType complex type.
+ * <p>
+ * Java class for ArrayAssociationType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ArrayAssociationType">
@@ -43,10 +47,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ArrayAssociationType", propOrder = {
-    "object"
-})
-public class ArrayAssociationType {
+@XmlType(name = "ArrayAssociationType", propOrder = { "object" })
+public class ArrayAssociationType
+{
 
     @XmlElementRef(name = "_Object", namespace = "http://www.opengis.net/gml", type = JAXBElement.class)
     protected List<JAXBElement<?>> object;
@@ -55,15 +58,16 @@ public class ArrayAssociationType {
      * Gets the value of the object property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the object property.
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the object property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getObject().add(newItem);
+     * getObject().add(newItem);
      * </pre>
      * 
      * 
@@ -73,21 +77,21 @@ public class ArrayAssociationType {
      * {@link JAXBElement }{@code <}{@link PolarCSType }{@code >}
      * {@link JAXBElement }{@code <}{@link TemporalCRSType }{@code >}
      * {@link JAXBElement }{@code <}{@link RingType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractGeometricPrimitiveType }{@code >}
-     * {@link JAXBElement }{@code <}{@link MultiCurveCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link BaseUnitType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractGeometricPrimitiveType
+     * }{@code >} {@link JAXBElement }{@code <}{@link MultiCurveCoverageType
+     * }{@code >} {@link JAXBElement }{@code <}{@link BaseUnitType }{@code >}
      * {@link JAXBElement }{@code <}{@link TimeNodeType }{@code >}
      * {@link JAXBElement }{@code <}{@link CylindricalCSType }{@code >}
      * {@link JAXBElement }{@code <}{@link UnitDefinitionType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractFeatureCollectionType }{@code >}
-     * {@link JAXBElement }{@code <}{@link LinearRingType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractFeatureCollectionType
+     * }{@code >} {@link JAXBElement }{@code <}{@link LinearRingType }{@code >}
      * {@link JAXBElement }{@code <}{@link AbstractTimePrimitiveType }{@code >}
      * {@link JAXBElement }{@code <}{@link TimeEdgeType }{@code >}
      * {@link JAXBElement }{@code <}{@link LabelStyleType }{@code >}
      * {@link JAXBElement }{@code <}{@link AbstractFeatureType }{@code >}
      * {@link JAXBElement }{@code <}{@link AbstractRingType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractCoordinateOperationType }{@code >}
-     * {@link JAXBElement }{@code <}{@link ImageDatumType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractCoordinateOperationType
+     * }{@code >} {@link JAXBElement }{@code <}{@link ImageDatumType }{@code >}
      * {@link JAXBElement }{@code <}{@link DictionaryType }{@code >}
      * {@link JAXBElement }{@code <}{@link MultiLineStringType }{@code >}
      * {@link JAXBElement }{@code <}{@link TransformationType }{@code >}
@@ -101,14 +105,14 @@ public class ArrayAssociationType {
      * {@link JAXBElement }{@code <}{@link AbstractCurveType }{@code >}
      * {@link JAXBElement }{@code <}{@link CoordinateSystemAxisType }{@code >}
      * {@link JAXBElement }{@code <}{@link CartesianCSType }{@code >}
-     * {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * {@link JAXBElement }{@code <}{@link GridCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link RectifiedGridType }{@code >}
-     * {@link JAXBElement }{@code <}{@link TemporalDatumType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractGeneralOperationParameterType }{@code >}
+     * {@link JAXBElement }{@code <}{@link Object }{@code >} {@link JAXBElement
+     * }{@code <}{@link GridCoverageType }{@code >} {@link JAXBElement
+     * }{@code <}{@link RectifiedGridType }{@code >} {@link JAXBElement
+     * }{@code <}{@link TemporalDatumType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractGeneralOperationParameterType }{@code >}
      * {@link JAXBElement }{@code <}{@link MultiSurfaceCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link TimeOrdinalReferenceSystemType }{@code >}
-     * {@link JAXBElement }{@code <}{@link StyleType }{@code >}
+     * {@link JAXBElement }{@code <}{@link TimeOrdinalReferenceSystemType
+     * }{@code >} {@link JAXBElement }{@code <}{@link StyleType }{@code >}
      * {@link JAXBElement }{@code <}{@link AbstractCoverageType }{@code >}
      * {@link JAXBElement }{@code <}{@link OperationMethodType }{@code >}
      * {@link JAXBElement }{@code <}{@link AbstractTopoPrimitiveType }{@code >}
@@ -131,22 +135,22 @@ public class ArrayAssociationType {
      * {@link JAXBElement }{@code <}{@link LinearCSType }{@code >}
      * {@link JAXBElement }{@code <}{@link OrientableSurfaceType }{@code >}
      * {@link JAXBElement }{@code <}{@link MultiPolygonType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractGeneralConversionType }{@code >}
-     * {@link JAXBElement }{@code <}{@link MovingObjectStatusType }{@code >}
-     * {@link JAXBElement }{@code <}{@link GeographicCRSType }{@code >}
-     * {@link JAXBElement }{@code <}{@link ConcatenatedOperationType }{@code >}
-     * {@link JAXBElement }{@code <}{@link TimeCalendarType }{@code >}
-     * {@link JAXBElement }{@code <}{@link PrimeMeridianType }{@code >}
-     * {@link JAXBElement }{@code <}{@link VerticalCSType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractGeneralConversionType
+     * }{@code >} {@link JAXBElement }{@code <}{@link MovingObjectStatusType
+     * }{@code >} {@link JAXBElement }{@code <}{@link GeographicCRSType
+     * }{@code >} {@link JAXBElement }{@code <}{@link ConcatenatedOperationType
+     * }{@code >} {@link JAXBElement }{@code <}{@link TimeCalendarType
+     * }{@code >} {@link JAXBElement }{@code <}{@link PrimeMeridianType
+     * }{@code >} {@link JAXBElement }{@code <}{@link VerticalCSType }{@code >}
      * {@link JAXBElement }{@code <}{@link UserDefinedCSType }{@code >}
-     * {@link JAXBElement }{@code <}{@link BagType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractTimeTopologyPrimitiveType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractContinuousCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link GeocentricCRSType }{@code >}
-     * {@link JAXBElement }{@code <}{@link NodeType }{@code >}
+     * {@link JAXBElement }{@code <}{@link BagType }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractTimeTopologyPrimitiveType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractContinuousCoverageType
+     * }{@code >} {@link JAXBElement }{@code <}{@link GeocentricCRSType
+     * }{@code >} {@link JAXBElement }{@code <}{@link NodeType }{@code >}
      * {@link JAXBElement }{@code <}{@link MultiCurveType }{@code >}
-     * {@link JAXBElement }{@code <}{@link OperationParameterGroupType }{@code >}
-     * {@link JAXBElement }{@code <}{@link TinType }{@code >}
+     * {@link JAXBElement }{@code <}{@link OperationParameterGroupType
+     * }{@code >} {@link JAXBElement }{@code <}{@link TinType }{@code >}
      * {@link JAXBElement }{@code <}{@link TimeInstantType }{@code >}
      * {@link JAXBElement }{@code <}{@link TimeCoordinateSystemType }{@code >}
      * {@link JAXBElement }{@code <}{@link ObliqueCartesianCSType }{@code >}
@@ -171,51 +175,59 @@ public class ArrayAssociationType {
      * {@link JAXBElement }{@code <}{@link CurveType }{@code >}
      * {@link JAXBElement }{@code <}{@link MultiSolidType }{@code >}
      * {@link JAXBElement }{@code <}{@link PolyhedralSurfaceType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractTimeGeometricPrimitiveType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractGeneralDerivedCRSType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractTimeGeometricPrimitiveType
+     * }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractGeneralDerivedCRSType }{@code >}
      * {@link JAXBElement }{@code <}{@link GeodeticDatumType }{@code >}
      * {@link JAXBElement }{@code <}{@link TemporalCSType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractDiscreteCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link DefinitionType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractReferenceSystemType }{@code >}
-     * {@link JAXBElement }{@code <}{@link MultiPointType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractDiscreteCoverageType
+     * }{@code >} {@link JAXBElement }{@code <}{@link DefinitionType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractReferenceSystemType
+     * }{@code >} {@link JAXBElement }{@code <}{@link MultiPointType }{@code >}
      * {@link JAXBElement }{@code <}{@link LineStringType }{@code >}
      * {@link JAXBElement }{@code <}{@link AbstractGeometryType }{@code >}
      * {@link JAXBElement }{@code <}{@link GenericMetaDataType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractGeneralTransformationType }{@code >}
-     * {@link JAXBElement }{@code <}{@link net.opengis.wfs._110.FeatureCollectionType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractGeneralTransformationType
+     * }{@code >} {@link JAXBElement
+     * }{@code <}{@link net.opengis.wfs._110.FeatureCollectionType }{@code >}
      * {@link JAXBElement }{@code <}{@link CompositeCurveType }{@code >}
      * {@link JAXBElement }{@code <}{@link OrientableCurveType }{@code >}
-     * {@link JAXBElement }{@code <}{@link net.opengis.gml._311.FeatureCollectionType }{@code >}
+     * {@link JAXBElement
+     * }{@code <}{@link net.opengis.gml._311.FeatureCollectionType }{@code >}
      * {@link JAXBElement }{@code <}{@link AbstractGeometryType }{@code >}
      * {@link JAXBElement }{@code <}{@link OperationParameterType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractCoordinateOperationType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractDatumType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractTimeComplexType }{@code >}
-     * {@link JAXBElement }{@code <}{@link TopoSolidType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractGeometricAggregateType }{@code >}
-     * {@link JAXBElement }{@code <}{@link PolygonType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractCoordinateOperationType
+     * }{@code >} {@link JAXBElement }{@code <}{@link AbstractDatumType
+     * }{@code >} {@link JAXBElement }{@code <}{@link AbstractTimeComplexType
+     * }{@code >} {@link JAXBElement }{@code <}{@link TopoSolidType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractGeometricAggregateType
+     * }{@code >} {@link JAXBElement }{@code <}{@link PolygonType }{@code >}
      * {@link JAXBElement }{@code <}{@link MultiSolidCoverageType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractTimeReferenceSystemType }{@code >}
-     * {@link JAXBElement }{@code <}{@link DictionaryType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractTimeReferenceSystemType
+     * }{@code >} {@link JAXBElement }{@code <}{@link DictionaryType }{@code >}
      * {@link JAXBElement }{@code <}{@link TimeClockType }{@code >}
      * {@link JAXBElement }{@code <}{@link DirectedObservationType }{@code >}
      * {@link JAXBElement }{@code <}{@link CompositeSurfaceType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractCoordinateSystemType }{@code >}
-     * {@link JAXBElement }{@code <}{@link TopologyStyleType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractReferenceSystemType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractCoordinateSystemType
+     * }{@code >} {@link JAXBElement }{@code <}{@link TopologyStyleType
+     * }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractReferenceSystemType }{@code >}
      * {@link JAXBElement }{@code <}{@link PointType }{@code >}
      * {@link JAXBElement }{@code <}{@link ProjectedCRSType }{@code >}
-     * {@link JAXBElement }{@code <}{@link DirectedObservationAtDistanceType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractCoordinateOperationType }{@code >}
+     * {@link JAXBElement }{@code <}{@link DirectedObservationAtDistanceType
+     * }{@code >} {@link JAXBElement
+     * }{@code <}{@link AbstractCoordinateOperationType }{@code >}
      * {@link JAXBElement }{@code <}{@link TimeTopologyComplexType }{@code >}
      * {@link JAXBElement }{@code <}{@link FaceType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AbstractReferenceSystemType }{@code >}
+     * {@link JAXBElement }{@code <}{@link AbstractReferenceSystemType
+     * }{@code >}
      * 
      * 
      */
-    public List<JAXBElement<?>> getObject() {
-        if (object == null) {
+    public List<JAXBElement<?>> getObject()
+    {
+        if (object == null)
+        {
             object = new ArrayList<JAXBElement<?>>();
         }
         return this.object;

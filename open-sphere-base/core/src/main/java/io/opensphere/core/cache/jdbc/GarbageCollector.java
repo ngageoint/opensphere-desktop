@@ -30,7 +30,8 @@ public class GarbageCollector implements Runnable
      * still be running that is using the group when the group expires, so this
      * buffer allows some time for queries to finish.
      */
-    private static final int EXPIRATION_BUFFER_MS = Integer.getInteger("opensphere.db.expirationBufferMilliseconds", 60000).intValue();
+    private static final int EXPIRATION_BUFFER_MS = Integer.getInteger("opensphere.db.expirationBufferMilliseconds", 60000)
+            .intValue();
 
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(GarbageCollector.class);
