@@ -107,6 +107,7 @@ public class SearchExecutor
                 ThreadUtilities.runBackground(() -> clearableProvider.clearResults());
             }
         }
+        myModel.getResultCount().clear();
     }
 
     /**
@@ -162,5 +163,6 @@ public class SearchExecutor
             result.setSearchType(provider.getType());
         }
         myModel.getAllResults().addAll(results);
+        myModel.getResultCount().put(provider.getType(), Integer.valueOf(results.size()));
     }
 }

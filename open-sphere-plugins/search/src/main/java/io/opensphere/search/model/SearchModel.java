@@ -7,6 +7,7 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 
 import io.opensphere.core.search.SearchResult;
 
@@ -82,6 +83,10 @@ public class SearchModel
      */
     private final ObservableList<String> mySortTypes = FXCollections
             .unmodifiableObservableList(FXCollections.observableArrayList(RELEVANCE_SORT, NAME_SORT));
+
+    /** Map of provider type to result count. */
+    private final ObservableMap<String, Integer> myResultCount = FXCollections
+            .synchronizedObservableMap(FXCollections.observableHashMap());
 
     /**
      * Creates a new model, initializing all necessary fields.
@@ -272,5 +277,15 @@ public class SearchModel
     public ObservableList<String> getSortTypes()
     {
         return mySortTypes;
+    }
+
+    /**
+     * Gets the resultCount.
+     *
+     * @return the resultCount
+     */
+    public ObservableMap<String, Integer> getResultCount()
+    {
+        return myResultCount;
     }
 }
