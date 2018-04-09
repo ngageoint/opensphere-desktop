@@ -88,7 +88,15 @@ public class SearchTypeForm extends AbstractSearchPane
             if (addedCount != null)
             {
                 CheckBox checkBox = myChoices.get(change.getKey());
-                checkBox.setText(change.getKey() + " (" + addedCount + ")");
+                StringBuilder builder = new StringBuilder(change.getKey());
+                builder.append(" (").append(addedCount);
+                Integer totalCount = getModel().getTotalResultCount().get(change.getKey());
+                if (totalCount != null && totalCount.intValue() != -1 && totalCount.intValue() != addedCount.intValue())
+                {
+                    builder.append(" of ").append(totalCount);
+                }
+                builder.append(')');
+                checkBox.setText(builder.toString());
             }
 
             Integer removedCount = change.getValueRemoved();

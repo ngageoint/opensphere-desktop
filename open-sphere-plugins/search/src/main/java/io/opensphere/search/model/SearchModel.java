@@ -1,5 +1,8 @@
 package io.opensphere.search.model;
 
+import java.util.Collections;
+import java.util.Map;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
 import io.opensphere.core.search.SearchResult;
+import io.opensphere.core.util.collections.New;
 
 /**
  * The model used by the search's result panel.
@@ -87,6 +91,9 @@ public class SearchModel
     /** Map of provider type to result count. */
     private final ObservableMap<String, Integer> myResultCount = FXCollections
             .synchronizedObservableMap(FXCollections.observableHashMap());
+
+    /** Map of provider type to total result count (including skipped results). */
+    private final Map<String, Integer> myTotalResultCount = Collections.synchronizedMap(New.map());
 
     /**
      * Creates a new model, initializing all necessary fields.
@@ -280,12 +287,22 @@ public class SearchModel
     }
 
     /**
-     * Gets the resultCount.
+     * Gets the result count map.
      *
-     * @return the resultCount
+     * @return the result count map
      */
     public ObservableMap<String, Integer> getResultCount()
     {
         return myResultCount;
+    }
+
+    /**
+     * Gets the total result count map.
+     *
+     * @return the total result count map
+     */
+    public Map<String, Integer> getTotalResultCount()
+    {
+        return myTotalResultCount;
     }
 }

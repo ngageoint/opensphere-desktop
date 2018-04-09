@@ -108,6 +108,7 @@ public class SearchExecutor
             }
         }
         myModel.getResultCount().clear();
+        myModel.getTotalResultCount().clear();
     }
 
     /**
@@ -164,5 +165,6 @@ public class SearchExecutor
         }
         myModel.getAllResults().addAll(results);
         myModel.getResultCount().put(provider.getType(), Integer.valueOf(results.size()));
+        myModel.getTotalResultCount().put(provider.getType(), Integer.valueOf(provider.getTotalResultCount()));
     }
 }
