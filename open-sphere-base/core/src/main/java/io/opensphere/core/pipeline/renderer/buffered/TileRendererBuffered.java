@@ -6,12 +6,11 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GL2GL3;
-
-import org.apache.log4j.Logger;
-
 import com.jogamp.opengl.util.texture.TextureCoords;
 
 import io.opensphere.core.geometry.AbstractGeometry;
