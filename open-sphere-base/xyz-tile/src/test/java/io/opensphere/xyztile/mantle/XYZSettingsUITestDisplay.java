@@ -33,9 +33,16 @@ public class XYZSettingsUITestDisplay
     @Test
     public void test()
     {
-        Platform.startup(() ->
+        try
         {
-        });
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started
+        }
 
         EasyMockSupport support = new EasyMockSupport();
 

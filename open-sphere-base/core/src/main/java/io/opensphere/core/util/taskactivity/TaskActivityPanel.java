@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import io.opensphere.core.util.concurrent.CatchingRunnable;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.swing.EventQueueUtilities;
@@ -132,8 +133,15 @@ public class TaskActivityPanel extends JPanel
         ta.completeProperty().addListener(myListener);
         ta.labelProperty().addListener(myListener);
 
-        // Platform cannot be started twice
-        Platform.runLater(() -> myListener.invalidated(null));
+        try
+        {
+            Platform.startup(() -> myListener.invalidated(null));
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform cannot be started twice
+            FXUtilities.runOnFXThread(() -> myListener.invalidated(null));
+        }
     }
 
     /**

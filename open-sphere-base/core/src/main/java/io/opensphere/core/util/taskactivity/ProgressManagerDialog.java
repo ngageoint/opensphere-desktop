@@ -70,7 +70,16 @@ public class ProgressManagerDialog extends JDialog
 
         JFXPanel panel = new JFXPanel();
         setContentPane(panel);
-        Platform.runLater(() -> initPanel(panel));
+
+        try
+        {
+            Platform.startup(() -> initPanel(panel));
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform cannot be started twice
+            FXUtilities.runOnFXThread(() -> initPanel(panel));
+        }
     }
 
     /**

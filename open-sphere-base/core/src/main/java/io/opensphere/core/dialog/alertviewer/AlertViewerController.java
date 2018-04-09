@@ -44,11 +44,18 @@ class AlertViewerController extends EventListenerService
         super(toolbox.getEventManager(), 1);
         myToolbox = toolbox;
         myToaster = new ToastController(toolbox.getUIRegistry().getMainFrameProvider());
-        // Both PlatformImpl and this will throw if FX is already started; this
-        // really should not be called
-//        Platform.startup(() ->
-//        {
-//        });
+
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started, just ignore
+        }
+
         bindEvent(UserMessageEvent.class, this::handleUserMessageEvent);
     }
 
