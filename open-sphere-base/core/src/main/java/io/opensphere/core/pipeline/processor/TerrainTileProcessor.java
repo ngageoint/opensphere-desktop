@@ -28,6 +28,7 @@ import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.Position;
 import io.opensphere.core.pipeline.cache.CacheProvider;
 import io.opensphere.core.pipeline.processor.AbstractProcessor.State;
+import io.opensphere.core.pipeline.processor.TerrainTileProcessor.TerrainTileState;
 import io.opensphere.core.pipeline.util.TileSplitJoinHelper;
 import io.opensphere.core.projection.Projection;
 import io.opensphere.core.projection.ProjectionChangedEvent;

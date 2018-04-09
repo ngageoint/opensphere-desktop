@@ -15,11 +15,11 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.Nullable;
-import com.jogamp.opengl.GL;
-import com.jogamp.opengl.GLContext;
 
 import org.apache.log4j.Logger;
 
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureCoords;
 import com.jogamp.opengl.util.texture.TextureData;
