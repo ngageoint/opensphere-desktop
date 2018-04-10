@@ -303,6 +303,8 @@
                         <arg>--add-modules</arg>
                         <arg>java.xml.bind</arg>
                         <compilerArg>-XDignore.symbol.file</compilerArg>
+                        <arg>--add-exports</arg>
+                        <arg>javafx.graphics/com.sun.javafx.application=ALL-UNNAMED</arg>
                     </compilerArgs>
                     <fork>true</fork>
                 </configuration>
@@ -856,17 +858,17 @@
             <dependency>
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-plugin-api</artifactId>
-                <version>3.5.0</version>
+                <version>3.5.3</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-artifact</artifactId>
-                <version>3.5.0</version>
+                <version>3.5.3</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugin-tools</groupId>
                 <artifactId>maven-plugin-annotations</artifactId>
-                <version>3.5</version>
+                <version>3.5.1</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.shared</groupId>
