@@ -3,6 +3,10 @@
 .classpath
 .project
 
+# IntelliJ
+.idea/
+.iml
+
 # Maven / Other
-/target
-/.pmd
+target/
+.pmd
