@@ -17,7 +17,9 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.math.WGS84EarthConstants;
 import io.opensphere.core.model.GeographicBoundingBox;
+import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
+import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.projection.GeographicBody3D;
 import io.opensphere.core.projection.Projection;
@@ -26,6 +28,7 @@ import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.jts.JTSUtilities;
 import io.opensphere.core.util.jts.core.JTSCoreGeometryUtilities;
 import io.opensphere.core.viewer.impl.DynamicViewer;
+import io.opensphere.core.viewer.impl.Viewer2D;
 import io.opensphere.core.viewer.impl.Viewer3D;
 import io.opensphere.core.viewer.impl.ViewerAnimator;
 import io.opensphere.mantle.MantleToolbox;
@@ -84,20 +87,21 @@ public class DataElementActionUtilsImpl implements DataElementActionUtils
     @Override
     public synchronized boolean gotoSelectedFeature(long[] dataElementIds, boolean flyTo)
     {
-        GeographicBoundingBox gbb = null;
-        Projection proj = getToolbox().getMapManager().getProjection(Viewer3D.class).getSnapshot();
+        GeographicBoundingBox bbox = null;
+        Projection proj = getToolbox().getMapManager().getProjection().getSnapshot();
         for (long deId : dataElementIds)
         {
             MapGeometrySupport mgs = MantleToolboxUtils.getDataElementLookupUtils(myToolbox).getMapGeometrySupport(deId);
+            MantleToolboxUtils.getDataElementLookupUtils(myToolbox).getDataTypeInfo(deId);
             if (mgs != null)
             {
-                if (gbb == null)
+                if (bbox == null)
                 {
-                    gbb = mgs.getBoundingBox(proj);
+                    bbox = mgs.getBoundingBox(proj);
                 }
                 else
                 {
-                    gbb = GeographicBoundingBox.merge(gbb, mgs.getBoundingBox(proj));
+                    bbox = GeographicBoundingBox.merge(bbox, mgs.getBoundingBox(proj));
                 }
             }
             else
@@ -105,23 +109,14 @@ public class DataElementActionUtilsImpl implements DataElementActionUtils
                 return false;
             }
         }
-
-        if (gbb != null)
+        if (bbox != null)
         {
             if (LOGGER.isDebugEnabled())
             {
-                LOGGER.debug((flyTo ? "FLYTO: " : "GOTO: ") + gbb.toString());
+                LOGGER.debug((flyTo ? "FLYTO: " : "GOTO: ") + bbox.toSimpleString());
             }
             DynamicViewer view = myToolbox.getMapManager().getStandardViewer();
-            ViewerAnimator animator;
-            if (gbb.getWidth() > 0.0 || gbb.getHeight() > 0.0)
-            {
-                animator = new ViewerAnimator(view, gbb.getVertices(), true);
-            }
-            else
-            {
-                animator = new ViewerAnimator(view, gbb.getCenter());
-            }
+            ViewerAnimator animator = gotoBoundingBox(bbox, view);
             if (flyTo)
             {
                 animator.start();
@@ -131,8 +126,66 @@ public class DataElementActionUtilsImpl implements DataElementActionUtils
                 animator.snapToPosition();
             }
         }
-
         return true;
+    }
+
+    /**
+     * Goes to the bounding box.
+     *
+     * @param bbox the bounding box
+     * @param viewer the viewer
+     */
+    private static ViewerAnimator gotoBoundingBox(GeographicBoundingBox bbox, DynamicViewer viewer)
+    {
+        boolean isPoint = bbox.getWidth() == 0 && bbox.getHeight() == 0;
+        System.out.println("isPoint = " + isPoint + " " + "width : " + bbox.getWidth() + " height " + bbox.getHeight());
+        GeographicBoundingBox flyToBbox = null;
+        if (isPoint)
+        {
+            flyToBbox = createBbox(bbox.getLowerLeft().getLatLonAlt());
+        } else {
+            flyToBbox = expandBbox(bbox);
+        }
+        List<GeographicPosition> vertices = new ArrayList<>(2);
+        vertices.add(flyToBbox.getLowerLeft());
+        vertices.add(flyToBbox.getUpperRight());
+        return new ViewerAnimator(viewer, vertices, true);
+    }
+
+    /**
+     * Creates a bounding box for a point.
+     *
+     * @param point the point
+     * @return the bounding box
+     */
+    private static GeographicBoundingBox createBbox(LatLonAlt point)
+    {
+        final double buffer = 0.005;
+        final double altitudeScale = 1.5;
+        double altitudeBuffer = point.getAltM() / altitudeScale;
+        LatLonAlt lowerLeft = LatLonAlt.createFromDegreesMeters(point.getLatD() - buffer, point.getLonD() - buffer,
+                point.getAltM() + altitudeBuffer, ReferenceLevel.ELLIPSOID);
+        LatLonAlt upperRight = LatLonAlt.createFromDegreesMeters(point.getLatD() + buffer, point.getLonD() + buffer,
+                point.getAltM() + altitudeBuffer, ReferenceLevel.ELLIPSOID);
+        return new GeographicBoundingBox(lowerLeft, upperRight);
+    }
+    
+    /**
+     * Applies a buffer around the given bounding box.
+     *
+     * @param bbox the bounding box
+     * @return the expanded bounding box
+     */
+    private static GeographicBoundingBox expandBbox(GeographicBoundingBox bbox)
+    {
+        final double bufferRatio = 0.2;
+        double latBuffer = bbox.getDeltaLatD() * bufferRatio;
+        double lonBuffer = bbox.getDeltaLonD() * bufferRatio;
+        LatLonAlt lowerLeft = bbox.getLowerLeft().getLatLonAlt();
+        lowerLeft = LatLonAlt.createFromDegrees(lowerLeft.getLatD() - latBuffer, lowerLeft.getLonD() - lonBuffer);
+        LatLonAlt upperRight = bbox.getUpperRight().getLatLonAlt();
+        upperRight = LatLonAlt.createFromDegrees(upperRight.getLatD() + latBuffer, upperRight.getLonD() + lonBuffer);
+        return new GeographicBoundingBox(lowerLeft, upperRight);
     }
 
     @Override
@@ -244,7 +297,6 @@ public class DataElementActionUtilsImpl implements DataElementActionUtils
             {
                 setTimesOfInterest(tsOfInterest.toArray(new TimeSpan[tsOfInterest.size()]));
             }
-
             myFilterOnDTI = dtiSet != null && !dtiSet.isEmpty();
             if (myFilterOnDTI)
             {
