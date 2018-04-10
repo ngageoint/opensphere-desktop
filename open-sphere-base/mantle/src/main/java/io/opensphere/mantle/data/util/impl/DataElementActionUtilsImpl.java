@@ -138,12 +138,13 @@ public class DataElementActionUtilsImpl implements DataElementActionUtils
     private static ViewerAnimator gotoBoundingBox(GeographicBoundingBox bbox, DynamicViewer viewer)
     {
         boolean isPoint = bbox.getWidth() == 0 && bbox.getHeight() == 0;
-        System.out.println("isPoint = " + isPoint + " " + "width : " + bbox.getWidth() + " height " + bbox.getHeight());
         GeographicBoundingBox flyToBbox = null;
         if (isPoint)
         {
             flyToBbox = createBbox(bbox.getLowerLeft().getLatLonAlt());
-        } else {
+        }
+        else
+        {
             flyToBbox = expandBbox(bbox);
         }
         List<GeographicPosition> vertices = new ArrayList<>(2);
@@ -169,7 +170,7 @@ public class DataElementActionUtilsImpl implements DataElementActionUtils
                 point.getAltM() + altitudeBuffer, ReferenceLevel.ELLIPSOID);
         return new GeographicBoundingBox(lowerLeft, upperRight);
     }
-    
+
     /**
      * Applies a buffer around the given bounding box.
      *
