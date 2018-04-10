@@ -5,8 +5,9 @@
 
 # IntelliJ
 .idea/
-.iml
+**.iml
 
 # Maven / Other
 target/
 .pmd
+bin/
