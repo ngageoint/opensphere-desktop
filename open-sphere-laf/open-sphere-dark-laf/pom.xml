@@ -35,17 +35,6 @@
 					</archive>
 				</configuration>
 			</plugin>
-			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <compilerArgs>
-                        <arg>--add-exports</arg>
-                        <arg>java.desktop/sun.swing=ALL-UNNAMED</arg>
-                    </compilerArgs>
-                    <fork>true</fork>
-                </configuration>
-            </plugin>
 		</plugins>
 	</build>
 </project>
