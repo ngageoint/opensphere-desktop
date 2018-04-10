@@ -2,11 +2,10 @@ package io.opensphere.core.search;
 
 import java.util.List;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.util.collections.New;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 /**
  * Represents a single result from a search provider.
@@ -21,6 +20,9 @@ public class SearchResult
 
     /** A more detailed text of the result, if there is one. */
     private String myDescription;
+
+    /** An even more detailed text of the result, if there is one. */
+    private String myFullDescription;
 
     /**
      * The locations of the search result. One location means a point will be
@@ -196,5 +198,25 @@ public class SearchResult
     public void setCreateGeometry(boolean createGeometry)
     {
         myCreateGeometry = createGeometry;
+    }
+
+    /**
+     * Gets the full description.
+     *
+     * @return the full description
+     */
+    public String getFullDescription()
+    {
+        return myFullDescription;
+    }
+
+    /**
+     * Sets the full description.
+     *
+     * @param fullDescription the full description
+     */
+    public void setFullDescription(String fullDescription)
+    {
+        myFullDescription = fullDescription;
     }
 }
