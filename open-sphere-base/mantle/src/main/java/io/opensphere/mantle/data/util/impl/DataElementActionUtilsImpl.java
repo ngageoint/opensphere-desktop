@@ -92,7 +92,6 @@ public class DataElementActionUtilsImpl implements DataElementActionUtils
         for (long deId : dataElementIds)
         {
             MapGeometrySupport mgs = MantleToolboxUtils.getDataElementLookupUtils(myToolbox).getMapGeometrySupport(deId);
-            MantleToolboxUtils.getDataElementLookupUtils(myToolbox).getDataTypeInfo(deId);
             if (mgs != null)
             {
                 if (bbox == null)
