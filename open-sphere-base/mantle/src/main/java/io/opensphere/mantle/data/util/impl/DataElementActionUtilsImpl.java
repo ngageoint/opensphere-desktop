@@ -17,9 +17,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.math.WGS84EarthConstants;
 import io.opensphere.core.model.GeographicBoundingBox;
-import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
-import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.projection.GeographicBody3D;
 import io.opensphere.core.projection.Projection;
@@ -28,9 +26,7 @@ import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.jts.JTSUtilities;
 import io.opensphere.core.util.jts.core.JTSCoreGeometryUtilities;
 import io.opensphere.core.viewer.impl.DynamicViewer;
-import io.opensphere.core.viewer.impl.Viewer2D;
 import io.opensphere.core.viewer.impl.Viewer3D;
-import io.opensphere.core.viewer.impl.ViewerAnimator;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.cache.CacheEntryView;
@@ -115,11 +111,11 @@ public class DataElementActionUtilsImpl implements DataElementActionUtils
                 LOGGER.debug((flyTo ? "FLYTO: " : "GOTO: ") + bbox.toSimpleString());
             }
             DynamicViewer view = myToolbox.getMapManager().getStandardViewer();
-            DataTypeActionUtils.gotoBoundingBox(bbox, view,flyTo);
+            DataTypeActionUtils.gotoBoundingBox(bbox, view, flyTo);
         }
         return true;
     }
-    
+
     @Override
     public void purgeDataElements(final DataTypeInfo dtiHint, final long[] idsToPurge, Component confirmDialogParentComponent)
     {

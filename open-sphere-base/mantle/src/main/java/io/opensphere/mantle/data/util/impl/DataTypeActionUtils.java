@@ -49,7 +49,7 @@ public final class DataTypeActionUtils
      *
      * @param bbox the bounding box
      * @param viewer the viewer
-     * @param flyTo the flyTo animation
+     * @param flyTo fly to bounding box if true, snap to if false
      */
     public static void gotoBoundingBox(GeographicBoundingBox bbox, DynamicViewer viewer, boolean flyTo)
     {
