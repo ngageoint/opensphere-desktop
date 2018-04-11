@@ -2,10 +2,11 @@ package io.opensphere.core.search;
 
 import java.util.List;
 
-import io.opensphere.core.model.LatLonAlt;
-import io.opensphere.core.util.collections.New;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+
+import io.opensphere.core.model.LatLonAlt;
+import io.opensphere.core.util.collections.New;
 
 /**
  * Represents a single result from a search provider.
@@ -41,13 +42,13 @@ public class SearchResult
     private String myText;
 
     /** The property in which the focus of the element is maintained. */
-    private final BooleanProperty myFocusedProperty = new SimpleBooleanProperty(false);
+    private final BooleanProperty myFocusedProperty = new SimpleBooleanProperty(this, null, false);
 
     /** The property in which the hovered state of the element is maintained. */
-    private final BooleanProperty myHoveredProperty = new SimpleBooleanProperty(false);
+    private final BooleanProperty myHoveredProperty = new SimpleBooleanProperty(this, null, false);
 
     /** The property in which the selection state is maintained. */
-    private final BooleanProperty mySelectedProperty = new SimpleBooleanProperty(false);
+    private final BooleanProperty mySelectedProperty = new SimpleBooleanProperty(this, null, false);
 
     /** Whether to have the framework create a geometry for the result. */
     private boolean myCreateGeometry = true;
