@@ -61,6 +61,20 @@ public interface DynamicViewer extends Viewer
     double getHeading();
 
     /**
+     * The Viewer animates movement to the view.
+     * 
+     * @param flyTo fly to the location.
+     */
+    void setFlyTo(boolean flyTo);
+
+    /**
+     * Is the viewer going to animate movement to the view.
+     * 
+     * @return fly to or not.
+     */
+    boolean isFlyTo();
+
+    /**
      * Get the mapContext.
      *
      * @return the mapContext

@@ -17,6 +17,7 @@ import io.opensphere.mantle.data.DataTypeInfo;
  */
 public final class DataTypeActionUtils
 {
+
     /**
      * Goes to the data type's locations if they exist.
      *
@@ -62,11 +63,22 @@ public final class DataTypeActionUtils
         {
             flyToBbox = expandBbox(bbox);
         }
-
         List<GeographicPosition> vertices = new ArrayList<>(2);
         vertices.add(flyToBbox.getLowerLeft());
         vertices.add(flyToBbox.getUpperRight());
-        new ViewerAnimator(viewer, vertices, true).start();
+        animate(viewer, vertices);
+    }
+
+    private static void animate(DynamicViewer viewer, List<GeographicPosition> vertices)
+    {
+        if (viewer.isFlyTo())
+        {
+            new ViewerAnimator(viewer, vertices, true).start();
+        }
+        else
+        {
+            new ViewerAnimator(viewer, vertices, true).snapToPosition();
+        }
     }
 
     /**

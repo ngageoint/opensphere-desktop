@@ -115,79 +115,12 @@ public class DataElementActionUtilsImpl implements DataElementActionUtils
                 LOGGER.debug((flyTo ? "FLYTO: " : "GOTO: ") + bbox.toSimpleString());
             }
             DynamicViewer view = myToolbox.getMapManager().getStandardViewer();
-            ViewerAnimator animator = gotoBoundingBox(bbox, view);
-            if (flyTo)
-            {
-                animator.start();
-            }
-            else
-            {
-                animator.snapToPosition();
-            }
+            view.setFlyTo(flyTo);
+            DataTypeActionUtils.gotoBoundingBox(bbox, view);
         }
         return true;
     }
-
-    /**
-     * Goes to the bounding box.
-     *
-     * @param bbox the bounding box
-     * @param viewer the viewer
-     */
-    private static ViewerAnimator gotoBoundingBox(GeographicBoundingBox bbox, DynamicViewer viewer)
-    {
-        boolean isPoint = bbox.getWidth() == 0 && bbox.getHeight() == 0;
-        GeographicBoundingBox flyToBbox = null;
-        if (isPoint)
-        {
-            flyToBbox = createBbox(bbox.getLowerLeft().getLatLonAlt());
-        }
-        else
-        {
-            flyToBbox = expandBbox(bbox);
-        }
-        List<GeographicPosition> vertices = new ArrayList<>(2);
-        vertices.add(flyToBbox.getLowerLeft());
-        vertices.add(flyToBbox.getUpperRight());
-        return new ViewerAnimator(viewer, vertices, true);
-    }
-
-    /**
-     * Creates a bounding box for a point.
-     *
-     * @param point the point
-     * @return the bounding box
-     */
-    private static GeographicBoundingBox createBbox(LatLonAlt point)
-    {
-        final double buffer = 0.005;
-        final double altitudeScale = 1.5;
-        double altitudeBuffer = point.getAltM() / altitudeScale;
-        LatLonAlt lowerLeft = LatLonAlt.createFromDegreesMeters(point.getLatD() - buffer, point.getLonD() - buffer,
-                point.getAltM() + altitudeBuffer, ReferenceLevel.ELLIPSOID);
-        LatLonAlt upperRight = LatLonAlt.createFromDegreesMeters(point.getLatD() + buffer, point.getLonD() + buffer,
-                point.getAltM() + altitudeBuffer, ReferenceLevel.ELLIPSOID);
-        return new GeographicBoundingBox(lowerLeft, upperRight);
-    }
-
-    /**
-     * Applies a buffer around the given bounding box.
-     *
-     * @param bbox the bounding box
-     * @return the expanded bounding box
-     */
-    private static GeographicBoundingBox expandBbox(GeographicBoundingBox bbox)
-    {
-        final double bufferRatio = 0.2;
-        double latBuffer = bbox.getDeltaLatD() * bufferRatio;
-        double lonBuffer = bbox.getDeltaLonD() * bufferRatio;
-        LatLonAlt lowerLeft = bbox.getLowerLeft().getLatLonAlt();
-        lowerLeft = LatLonAlt.createFromDegrees(lowerLeft.getLatD() - latBuffer, lowerLeft.getLonD() - lonBuffer);
-        LatLonAlt upperRight = bbox.getUpperRight().getLatLonAlt();
-        upperRight = LatLonAlt.createFromDegrees(upperRight.getLatD() + latBuffer, upperRight.getLonD() + lonBuffer);
-        return new GeographicBoundingBox(lowerLeft, upperRight);
-    }
-
+    
     @Override
     public void purgeDataElements(final DataTypeInfo dtiHint, final long[] idsToPurge, Component confirmDialogParentComponent)
     {
