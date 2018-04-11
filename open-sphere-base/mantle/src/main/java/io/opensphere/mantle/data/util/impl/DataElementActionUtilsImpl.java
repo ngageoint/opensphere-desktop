@@ -27,7 +27,6 @@ import io.opensphere.core.util.jts.JTSUtilities;
 import io.opensphere.core.util.jts.core.JTSCoreGeometryUtilities;
 import io.opensphere.core.viewer.impl.DynamicViewer;
 import io.opensphere.core.viewer.impl.Viewer3D;
-import io.opensphere.core.viewer.impl.ViewerAnimator;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.cache.CacheEntryView;
@@ -84,20 +83,20 @@ public class DataElementActionUtilsImpl implements DataElementActionUtils
     @Override
     public synchronized boolean gotoSelectedFeature(long[] dataElementIds, boolean flyTo)
     {
-        GeographicBoundingBox gbb = null;
-        Projection proj = getToolbox().getMapManager().getProjection(Viewer3D.class).getSnapshot();
+        GeographicBoundingBox bbox = null;
+        Projection proj = getToolbox().getMapManager().getProjection().getSnapshot();
         for (long deId : dataElementIds)
         {
             MapGeometrySupport mgs = MantleToolboxUtils.getDataElementLookupUtils(myToolbox).getMapGeometrySupport(deId);
             if (mgs != null)
             {
-                if (gbb == null)
+                if (bbox == null)
                 {
-                    gbb = mgs.getBoundingBox(proj);
+                    bbox = mgs.getBoundingBox(proj);
                 }
                 else
                 {
-                    gbb = GeographicBoundingBox.merge(gbb, mgs.getBoundingBox(proj));
+                    bbox = GeographicBoundingBox.merge(bbox, mgs.getBoundingBox(proj));
                 }
             }
             else
@@ -105,33 +104,15 @@ public class DataElementActionUtilsImpl implements DataElementActionUtils
                 return false;
             }
         }
-
-        if (gbb != null)
+        if (bbox != null)
         {
             if (LOGGER.isDebugEnabled())
             {
-                LOGGER.debug((flyTo ? "FLYTO: " : "GOTO: ") + gbb.toString());
+                LOGGER.debug((flyTo ? "FLYTO: " : "GOTO: ") + bbox.toSimpleString());
             }
             DynamicViewer view = myToolbox.getMapManager().getStandardViewer();
-            ViewerAnimator animator;
-            if (gbb.getWidth() > 0.0 || gbb.getHeight() > 0.0)
-            {
-                animator = new ViewerAnimator(view, gbb.getVertices(), true);
-            }
-            else
-            {
-                animator = new ViewerAnimator(view, gbb.getCenter());
-            }
-            if (flyTo)
-            {
-                animator.start();
-            }
-            else
-            {
-                animator.snapToPosition();
-            }
+            DataTypeActionUtils.gotoBoundingBox(bbox, view, flyTo);
         }
-
         return true;
     }
 
@@ -244,7 +225,6 @@ public class DataElementActionUtilsImpl implements DataElementActionUtils
             {
                 setTimesOfInterest(tsOfInterest.toArray(new TimeSpan[tsOfInterest.size()]));
             }
-
             myFilterOnDTI = dtiSet != null && !dtiSet.isEmpty();
             if (myFilterOnDTI)
             {
