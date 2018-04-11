@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.WeakHashMap;
 import java.util.function.Supplier;
 
+import javax.swing.JDialog;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -26,10 +28,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-
-import javax.swing.JDialog;
-
-import com.sun.javafx.tk.Toolkit;
 
 /**
  * An alert dialog that renders a JavaFX component and buttons within a Swing
@@ -72,10 +70,10 @@ public class JFXAlert extends JDialog
     private volatile ButtonType myResponse;
 
     /** The supplier used to generate the content area of the dialog. */
-    private Supplier<Node> myMessageSupplier;
+    private final Supplier<Node> myMessageSupplier;
 
     /** The alert type created by the user. */
-    private JFXAlertType myAlertType;
+    private final JFXAlertType myAlertType;
 
     /**
      * Creates a new modal dialog bound to the supplied window, configured as
@@ -339,10 +337,13 @@ public class JFXAlert extends JDialog
     {
         Platform.runLater(() -> myMainPanel.setScene(createScene()));
 
-        if (!Toolkit.getToolkit().canStartNestedEventLoop())
-        {
-            throw new IllegalStateException("showAndWait is not allowed during animation or layout processing");
-        }
+        // Let's assume that a nested event loop is possible no matter what.
+        // What's the worst that could happen?
+        // if (!Toolkit.getToolkit().canStartNestedEventLoop())
+        // {
+        // throw new IllegalStateException("showAndWait is not allowed during
+        // animation or layout processing");
+        // }
 
         getContentPane().add(myMainPanel, BorderLayout.CENTER);
         pack();
