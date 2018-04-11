@@ -10,18 +10,10 @@ import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.core.datafilter.DataFilterOperators.Conditional;
 import io.opensphere.core.util.collections.New;
@@ -39,6 +31,13 @@ import io.opensphere.filterbuilder.filter.v1.Group;
 import io.opensphere.mantle.controller.DataTypeController;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MetaDataInfo;
+import javafx.application.Platform;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 /**
  * Unit test for {@link SimpleFeatureActionRowBinder}.
@@ -60,16 +59,28 @@ public class SimpleFeatureActionRowBinderTestDisplay
      */
     private static final String ourLayerId = "I am layer";
 
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests initial setup.
      */
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         SimpleFeatureActionRowView view = createView(support);
@@ -137,10 +148,6 @@ public class SimpleFeatureActionRowBinderTestDisplay
     @Test
     public void testClose()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         SimpleFeatureActionRowView view = createView(support);
@@ -212,10 +219,6 @@ public class SimpleFeatureActionRowBinderTestDisplay
     @Test
     public void testCopy()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         SimpleFeatureActionRowView view = createView(support);
@@ -264,10 +267,6 @@ public class SimpleFeatureActionRowBinderTestDisplay
     @Test
     public void testCriteriaOptionChanges()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         SimpleFeatureActionRowView view = createView(support);
@@ -331,10 +330,6 @@ public class SimpleFeatureActionRowBinderTestDisplay
     @Test
     public void testRange()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         SimpleFeatureActionRowView view = createView(support);
@@ -397,10 +392,6 @@ public class SimpleFeatureActionRowBinderTestDisplay
     @Test
     public void testRemove()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         SimpleFeatureActionRowView view = createView(support);

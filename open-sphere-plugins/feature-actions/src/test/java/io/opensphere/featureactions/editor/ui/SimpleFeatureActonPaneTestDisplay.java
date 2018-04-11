@@ -12,9 +12,8 @@ import java.util.function.Supplier;
 
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.Toolbox;
@@ -39,6 +38,7 @@ import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
@@ -65,6 +65,22 @@ public class SimpleFeatureActonPaneTestDisplay
     private static final DefaultDataTypeInfo ourTestLayer = new DefaultDataTypeInfo(null, "bla", ourLayerId, ourLayerName,
             ourLayerName, true);
 
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests when the user creates a new feature action.
      *
@@ -73,10 +89,6 @@ public class SimpleFeatureActonPaneTestDisplay
     @Test
     public void testCreate() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CountDownLatch latch = new CountDownLatch(1);
@@ -145,10 +157,6 @@ public class SimpleFeatureActonPaneTestDisplay
     @Test
     public void testDelete() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CountDownLatch latch = new CountDownLatch(1);
@@ -225,10 +233,6 @@ public class SimpleFeatureActonPaneTestDisplay
     @Test
     public void testRead() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CountDownLatch latch = new CountDownLatch(1);
@@ -297,10 +301,6 @@ public class SimpleFeatureActonPaneTestDisplay
     @Test
     public void testUpdate() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CountDownLatch latch = new CountDownLatch(1);

@@ -6,16 +6,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.analysis.binning.criteria.BinCriteria;
 import io.opensphere.analysis.binning.criteria.BinCriteriaElement;
@@ -26,6 +20,11 @@ import io.opensphere.analysis.binning.editor.model.BinCriteriaModel;
 import io.opensphere.analysis.binning.editor.model.CriterionModel;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
+import javafx.application.Platform;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 /**
  * Unit test for {@link CriterionCellBinder}.
@@ -47,16 +46,28 @@ public class CriterionCellBinderTestDisplay
      */
     private static final String ourStringField2 = "stringField2";
 
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests when binder is closed.
      */
     @Test
     public void testClose()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CriterionCellView view = createView(support);
@@ -100,10 +111,6 @@ public class CriterionCellBinderTestDisplay
     @Test
     public void testInitialDouble()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CriterionCellView view = createView(support);
@@ -149,10 +156,6 @@ public class CriterionCellBinderTestDisplay
     @Test
     public void testInitialDoubleAndString()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CriterionCellView view = createView(support);
@@ -203,10 +206,6 @@ public class CriterionCellBinderTestDisplay
     @Test
     public void testInitialString()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CriterionCellView view = createView(support);
@@ -251,10 +250,6 @@ public class CriterionCellBinderTestDisplay
     @Test
     public void testRemove()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CriterionCellView view = createView(support);
@@ -301,10 +296,6 @@ public class CriterionCellBinderTestDisplay
     @Test
     public void testViewChangeToDouble()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CriterionCellView view = createView(support);
@@ -350,10 +341,6 @@ public class CriterionCellBinderTestDisplay
     @Test
     public void testViewChangeToString()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CriterionCellView view = createView(support);
@@ -396,10 +383,6 @@ public class CriterionCellBinderTestDisplay
     @Test
     public void testViewChangeToUnique()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CriterionCellView view = createView(support);

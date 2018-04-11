@@ -4,17 +4,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import javafx.scene.control.Accordion;
-
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.featureactions.editor.model.SimpleFeatureAction;
 import io.opensphere.featureactions.editor.model.SimpleFeatureActionGroup;
 import io.opensphere.featureactions.editor.model.SimpleFeatureActions;
 import io.opensphere.featureactions.model.FeatureAction;
+import javafx.application.Platform;
+import javafx.scene.control.Accordion;
 
 /**
  * Unit test for {@link FeatureActionTitledPaneBinder}.
@@ -29,16 +28,28 @@ public class FeatureActionTitledPaneTestDisplay
      */
     private static final String ourLayerId = "theLayerId";
 
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests adding an action.
      */
     @Test
     public void testAddAction()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         SimpleFeatureActionGroup group = new SimpleFeatureActionGroup();
 
         SimpleFeatureActions actions = new SimpleFeatureActions(ourLayerId);
@@ -63,10 +74,6 @@ public class FeatureActionTitledPaneTestDisplay
     @Test
     public void testAllChecked()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         SimpleFeatureActionGroup group = new SimpleFeatureActionGroup();
 
         FeatureAction action1 = new FeatureAction();
@@ -104,10 +111,6 @@ public class FeatureActionTitledPaneTestDisplay
     @Test
     public void testGroupRename()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         SimpleFeatureActionGroup group = new SimpleFeatureActionGroup();
         group.setGroupName(ourGroupName);
 
@@ -135,10 +138,6 @@ public class FeatureActionTitledPaneTestDisplay
     @Test
     public void testNoneChecked()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         SimpleFeatureActionGroup group = new SimpleFeatureActionGroup();
 
         FeatureAction action1 = new FeatureAction();
@@ -176,10 +175,6 @@ public class FeatureActionTitledPaneTestDisplay
     @Test
     public void testSelectAll()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         SimpleFeatureActionGroup group = new SimpleFeatureActionGroup();
         group.setGroupName(ourGroupName);
 
@@ -232,10 +227,6 @@ public class FeatureActionTitledPaneTestDisplay
     @Test
     public void testSomeChecked()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         SimpleFeatureActionGroup group = new SimpleFeatureActionGroup();
 
         FeatureAction action1 = new FeatureAction();

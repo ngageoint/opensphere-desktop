@@ -6,9 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.analysis.binning.criteria.BinCriteria;
 import io.opensphere.analysis.binning.criteria.BinCriteriaElement;
@@ -18,6 +17,7 @@ import io.opensphere.analysis.binning.editor.model.BinCriteriaModel;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.lang.Pair;
+import javafx.application.Platform;
 
 /**
  * Unit test for {@link CriterionCell}.
@@ -39,16 +39,28 @@ public class CriterionCellTestDisplay
      */
     private static final String ourStringField2 = "stringField2";
 
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests editing an existing criteria.
      */
     @Test
     public void testEdit()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         BinCriteriaModel model = createMainModel();
 
         BinCriteriaElement element = new BinCriteriaElement();
@@ -94,10 +106,6 @@ public class CriterionCellTestDisplay
     @Test
     public void testNew()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         BinCriteriaModel model = createMainModel();
 
         BinCriteriaElement element = new BinCriteriaElement();
@@ -128,10 +136,6 @@ public class CriterionCellTestDisplay
     @Test
     public void testRemove()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         BinCriteriaModel model = createMainModel();
 
         BinCriteriaElement element = new BinCriteriaElement();

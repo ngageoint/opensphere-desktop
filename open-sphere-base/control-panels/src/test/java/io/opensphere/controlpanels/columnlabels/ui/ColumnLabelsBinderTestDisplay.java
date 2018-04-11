@@ -4,34 +4,45 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.controlpanels.columnlabels.model.ColumnLabel;
 import io.opensphere.controlpanels.columnlabels.model.ColumnLabels;
+import javafx.application.Platform;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
 
 /**
  * Unit test for {@link ColumnLabelsBinder}.
  */
 public class ColumnLabelsBinderTestDisplay
 {
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests when the user clicks add.
      */
     @Test
     public void testCreate()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         ColumnLabelsView view = createView(support);
@@ -73,10 +84,6 @@ public class ColumnLabelsBinderTestDisplay
     @Test
     public void testDelete()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         ColumnLabelsView view = createView(support);
@@ -112,10 +119,6 @@ public class ColumnLabelsBinderTestDisplay
     @Test
     public void testMove()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         ColumnLabelsView view = createView(support);

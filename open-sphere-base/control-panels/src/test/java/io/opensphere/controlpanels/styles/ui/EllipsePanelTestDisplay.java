@@ -7,9 +7,8 @@ import java.util.List;
 
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.controlpanels.styles.model.EllipseModel;
 import io.opensphere.core.UnitsRegistry;
@@ -18,22 +17,35 @@ import io.opensphere.core.units.length.Meters;
 import io.opensphere.core.units.length.NauticalMiles;
 import io.opensphere.core.units.length.StatuteMiles;
 import io.opensphere.core.util.collections.New;
+import javafx.application.Platform;
 
 /**
  * Unit test for {@link EllipsePanel}.
  */
 public class EllipsePanelTestDisplay
 {
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests the UI.
      */
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         List<String> availableUnits = New.list("nautical miles", "statute miles", "meters");
