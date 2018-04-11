@@ -174,20 +174,6 @@
                         <target>9</target>
                         <compilerArgs>
                             <arg>-XDignore.symbol.file</arg>
-                            <arg>--add-modules</arg>
-	                        <arg>java.xml.bind</arg>
-	                        <arg>--add-exports</arg>
-	                        <arg>javafx.graphics/com.sun.javafx.application=ALL-UNNAMED</arg>
-	                        <arg>--add-exports</arg>
-	                        <arg>java.xml/com.sun.org.apache.xml.internal.utils=ALL-UNNAMED</arg>
-	                        <arg>--add-exports</arg>
-	                        <arg>java.desktop/sun.awt.geom=ALL-UNNAMED</arg>
-	                        <arg>--add-exports</arg>
-	                        <arg>javafx.controls/com.sun.javafx.scene.control.skin.resources=ALL-UNNAMED</arg>
-	                        <arg>--add-exports</arg>
-	                        <arg>java.desktop/com.sun.imageio.plugins.common=ALL-UNNAMED</arg>
-	                        <arg>--add-exports</arg>
-	                        <arg>javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED</arg>
                             <compilerArg>-XDignore.symbol.file</compilerArg>
                         </compilerArgs>
                         <fork>true</fork>
@@ -309,6 +295,27 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                	<source>9</source>
+                	<target>9</target>
+                	<compilerArgs>
+                		<arg>--add-modules</arg>
+                        <arg>java.xml.bind</arg>
+                        <arg>--add-exports</arg>
+                        <arg>javafx.graphics/com.sun.javafx.application=ALL-UNNAMED</arg>
+                        <arg>--add-exports</arg>
+                        <arg>java.xml/com.sun.org.apache.xml.internal.utils=ALL-UNNAMED</arg>
+                        <arg>--add-exports</arg>
+                        <arg>java.desktop/sun.awt.geom=ALL-UNNAMED</arg>
+                        <arg>--add-exports</arg>
+                        <arg>javafx.controls/com.sun.javafx.scene.control.skin.resources=ALL-UNNAMED</arg>
+                        <arg>--add-exports</arg>
+                        <arg>java.desktop/com.sun.imageio.plugins.common=ALL-UNNAMED</arg>
+                        <arg>--add-exports</arg>
+                        <arg>javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED</arg>
+                	</compilerArgs>
+                	<fork>true</fork>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
