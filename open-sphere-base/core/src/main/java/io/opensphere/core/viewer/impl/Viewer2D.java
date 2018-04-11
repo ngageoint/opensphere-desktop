@@ -70,9 +70,6 @@ public class Viewer2D extends AbstractDynamicViewer
     /** Position of the viewer. */
     private final ViewerPosition2D myPosition = new ViewerPosition2D();
 
-    /** Animation for the viewer. */
-    private volatile boolean flyTo = true;
-
     /** Listener for preference changes. */
     private final PreferenceChangeListener myPreferenceChangeListener = new PreferenceChangeListener()
     {

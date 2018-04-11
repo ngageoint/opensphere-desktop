@@ -144,9 +144,6 @@ public class Viewer3D extends AbstractDynamicViewer
     /** The top clipping plane. */
     private final Plane myTopClip = new Plane();
 
-    /** Animation for the viewer. */
-    private volatile boolean flyTo = true;
-
     /**
      * Construct me.
      *
