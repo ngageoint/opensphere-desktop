@@ -1420,7 +1420,6 @@ public class Viewer3D extends AbstractDynamicViewer
     @Override
     public boolean isFlyTo()
     {
-        // TODO Auto-generated method stub
         return flyTo;
     }
 }
