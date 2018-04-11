@@ -177,7 +177,6 @@ public class Viewer2D extends AbstractDynamicViewer
     @Override
     public MapContext<DynamicViewer> getMapContext()
     {
-        // HEre
         return myMapContext;
     }
 
@@ -658,7 +657,6 @@ public class Viewer2D extends AbstractDynamicViewer
         @XmlJavaTypeAdapter(MutableVector3d.Vector3dAdapter.class)
         public Vector3d getLocation()
         {
-            // here
             return myLocation;
         }
 
