@@ -116,6 +116,7 @@ public class ViewerAnimator
             Object point = points.iterator().next();
             Collection<? extends Vector3d> modelPoints = null;
             Vector3d centroidModel = null;
+
             if (point instanceof GeographicPosition)
             {
                 modelPoints = myViewer.getMapContext().getProjection()
@@ -131,6 +132,7 @@ public class ViewerAnimator
                 modelPoints = (Collection<? extends Vector3d>)points;
                 centroidModel = (Vector3d)centroidHint;
             }
+
             if (modelPoints == null)
             {
                 myDestination = myViewer.getPosition();
@@ -265,9 +267,11 @@ public class ViewerAnimator
             myFuture.cancel(false);
         }
         TrajectoryGenerator arcGen = myViewer.getTrajectoryGenerator(type == null ? TrajectoryGeneratorType.ARC : type);
+
         List<TrajectorySegment> trajectorySegments = Collections
                 .singletonList(new TrajectorySegment(myViewer.getPosition(), myDestination));
         List<ViewerPosition> trajectory = arcGen.generateTrajectory(trajectorySegments);
+
         GeographicPosition geoPosition;
         if (myDestination instanceof ViewerPosition3D)
         {
@@ -278,12 +282,14 @@ public class ViewerAnimator
             geoPosition = myViewer.getMapContext().getProjection().convertToPosition(myDestination.getLocation(),
                     ReferenceLevel.ELLIPSOID);
         }
+
         myAnimatorTask = new AnimatorTask(trajectory, geoPosition);
         final long delayMilliseconds = 0L;
         final double oneThousand = 1000.0;
         // millisecond period = 1000/fps (Don't go slower than one frame a
         // second)
         final long periodMilliseconds = fps < 1 ? 1000 : (long)Math.ceil(oneThousand / fps);
+
         myFuture = CommonTimer.scheduleAtFixedRate(myAnimatorTask, delayMilliseconds, periodMilliseconds);
         myViewer.addObserver(myViewerObserver);
     }
@@ -360,6 +366,7 @@ public class ViewerAnimator
         public synchronized void run()
         {
             myViewer.setPosition(myTrajectory.get(myStep));
+
             if (++myStep == myTrajectory.size())
             {
                 /**
