@@ -26,8 +26,6 @@ import javax.xml.transform.stream.StreamSource;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXParseException;
 
-import com.sun.org.apache.xml.internal.utils.DefaultErrorHandler;
-
 import de.micromata.opengis.kml.v_2_2_0.Document;
 import de.micromata.opengis.kml.v_2_2_0.Feature;
 import de.micromata.opengis.kml.v_2_2_0.Folder;
@@ -315,13 +313,13 @@ public class KMLProcessor
 
         // Create the transformer factory
         TransformerFactory factory = TransformerFactory.newInstance();
-        factory.setErrorListener(new DefaultErrorHandler());
+        factory.setErrorListener(new DefaultErrorListener());
 
         try
         {
             // Create the transformer
             Transformer transformer = factory.newTemplates(xslSource).newTransformer();
-            transformer.setErrorListener(new DefaultErrorHandler());
+            transformer.setErrorListener(new DefaultErrorListener());
 
             // Create the output stream
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

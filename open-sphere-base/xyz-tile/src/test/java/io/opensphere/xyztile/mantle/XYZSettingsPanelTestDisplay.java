@@ -2,14 +2,12 @@ package io.opensphere.xyztile.mantle;
 
 import static org.junit.Assert.assertEquals;
 
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
-
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import io.opensphere.xyztile.model.XYZSettings;
+import javafx.application.Platform;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 
 /**
  * Unit test for {@link XYZSettingsPanel}.
@@ -22,9 +20,16 @@ public class XYZSettingsPanelTestDisplay
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
+        try
         {
-        });
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
 
         XYZSettings settings = new XYZSettings();
         settings.setMaxZoomLevelDefault(19);

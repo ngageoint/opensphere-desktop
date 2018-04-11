@@ -282,5 +282,9 @@
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
         </dependency>
+        <dependency>
+        	<groupId>javax.activation</groupId>
+        	<artifactId>javax.activation-api</artifactId>
+        </dependency>
     </dependencies>
 </project>

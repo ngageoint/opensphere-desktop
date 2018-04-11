@@ -2,20 +2,18 @@ package io.opensphere.xyztile.mantle;
 
 import static org.junit.Assert.assertEquals;
 
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.xyztile.model.Projection;
 import io.opensphere.xyztile.model.XYZServerInfo;
 import io.opensphere.xyztile.model.XYZSettings;
 import io.opensphere.xyztile.model.XYZTileLayerInfo;
+import javafx.application.Platform;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 
 /**
  * Unit test for {@link XYZSettingsUI}.
@@ -33,9 +31,16 @@ public class XYZSettingsUITestDisplay
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
+        try
         {
-        });
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
 
         EasyMockSupport support = new EasyMockSupport();
 
