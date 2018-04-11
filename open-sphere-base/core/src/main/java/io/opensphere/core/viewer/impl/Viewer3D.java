@@ -1410,16 +1410,4 @@ public class Viewer3D extends AbstractDynamicViewer
             myGeoPosition = geoPosition;
         }
     }
-
-    @Override
-    public void setFlyTo(boolean flyTo)
-    {
-        this.flyTo = flyTo;
-    }
-
-    @Override
-    public boolean isFlyTo()
-    {
-        return flyTo;
-    }
 }

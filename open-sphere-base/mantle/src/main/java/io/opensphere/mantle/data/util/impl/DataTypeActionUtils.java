@@ -17,7 +17,6 @@ import io.opensphere.mantle.data.DataTypeInfo;
  */
 public final class DataTypeActionUtils
 {
-
     /**
      * Goes to the data type's locations if they exist.
      *
@@ -29,7 +28,7 @@ public final class DataTypeActionUtils
         GeographicBoundingBox bbox = dataType.getBoundingBox();
         if (bbox != null)
         {
-            gotoBoundingBox(bbox, viewer);
+            gotoBoundingBox(bbox, viewer, true);
         }
     }
 
@@ -42,7 +41,7 @@ public final class DataTypeActionUtils
     public static void gotoLocations(Collection<? extends LatLonAlt> locations, DynamicViewer viewer)
     {
         GeographicBoundingBox bbox = GeographicBoundingBox.getMinimumBoundingBoxLLA(locations);
-        gotoBoundingBox(bbox, viewer);
+        gotoBoundingBox(bbox, viewer, true);
     }
 
     /**
@@ -50,8 +49,9 @@ public final class DataTypeActionUtils
      *
      * @param bbox the bounding box
      * @param viewer the viewer
+     * @param flyTo the flyTo animation
      */
-    public static void gotoBoundingBox(GeographicBoundingBox bbox, DynamicViewer viewer)
+    public static void gotoBoundingBox(GeographicBoundingBox bbox, DynamicViewer viewer, boolean flyTo)
     {
         boolean isPoint = bbox.getWidth() == 0 && bbox.getHeight() == 0;
         GeographicBoundingBox flyToBbox;
@@ -66,12 +66,7 @@ public final class DataTypeActionUtils
         List<GeographicPosition> vertices = new ArrayList<>(2);
         vertices.add(flyToBbox.getLowerLeft());
         vertices.add(flyToBbox.getUpperRight());
-        animate(viewer, vertices);
-    }
-
-    private static void animate(DynamicViewer viewer, List<GeographicPosition> vertices)
-    {
-        if (viewer.isFlyTo())
+        if (flyTo)
         {
             new ViewerAnimator(viewer, vertices, true).start();
         }

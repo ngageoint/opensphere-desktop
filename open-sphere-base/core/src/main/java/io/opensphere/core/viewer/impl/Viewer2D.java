@@ -712,16 +712,4 @@ public class Viewer2D extends AbstractDynamicViewer
             myScale = scale;
         }
     }
-
-    @Override
-    public void setFlyTo(boolean flyTo)
-    {
-        this.flyTo = flyTo;
-    }
-
-    @Override
-    public boolean isFlyTo()
-    {
-        return flyTo;
-    }
 }

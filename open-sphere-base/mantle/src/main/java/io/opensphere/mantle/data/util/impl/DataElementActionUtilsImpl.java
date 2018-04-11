@@ -115,8 +115,7 @@ public class DataElementActionUtilsImpl implements DataElementActionUtils
                 LOGGER.debug((flyTo ? "FLYTO: " : "GOTO: ") + bbox.toSimpleString());
             }
             DynamicViewer view = myToolbox.getMapManager().getStandardViewer();
-            view.setFlyTo(flyTo);
-            DataTypeActionUtils.gotoBoundingBox(bbox, view);
+            DataTypeActionUtils.gotoBoundingBox(bbox, view,flyTo);
         }
         return true;
     }
