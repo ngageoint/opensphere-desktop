@@ -1,8 +1,8 @@
 package io.opensphere.core.util.fx;
 
-import javafx.scene.control.ButtonType;
+import java.util.ResourceBundle;
 
-import com.sun.javafx.scene.control.skin.resources.ControlResources;
+import javafx.scene.control.ButtonType;
 
 /**
  * An enumeration containing the available, pre-built alert types that the
@@ -23,8 +23,7 @@ public enum JFXAlertType
      * title and header, and just an OK button for the user to click on to
      * dismiss the dialog.
      */
-    INFORMATION(ControlResources.getString("Dialog.info.title"), ControlResources.getString("Dialog.info.header"), "information",
-            ButtonType.OK),
+    INFORMATION(getString("Dialog.info.title"), getString("Dialog.info.header"), "information", ButtonType.OK),
 
     /**
      * The WARNING alert type configures the Alert dialog to appear in a way
@@ -33,8 +32,7 @@ public enum JFXAlertType
      * header, and just an OK button for the user to click on to dismiss the
      * dialog.
      */
-    WARNING(ControlResources.getString("Dialog.warning.title"), ControlResources.getString("Dialog.warning.header"), "warning",
-            ButtonType.OK),
+    WARNING(getString("Dialog.warning.title"), getString("Dialog.warning.header"), "warning", ButtonType.OK),
 
     /**
      * The CONFIRMATION alert type configures the Alert dialog to appear in a
@@ -43,8 +41,8 @@ public enum JFXAlertType
      * header, and both OK and Cancel buttons for the user to click on to
      * dismiss the dialog.
      */
-    CONFIRMATION(ControlResources.getString("Dialog.confirm.title"), ControlResources.getString("Dialog.confirm.header"),
-            "confirmation", ButtonType.OK, ButtonType.CANCEL),
+    CONFIRMATION(getString("Dialog.confirm.title"), getString("Dialog.confirm.header"), "confirmation", ButtonType.OK,
+            ButtonType.CANCEL),
 
     /**
      * The ERROR alert type configures the Alert dialog to appear in a way that
@@ -52,8 +50,7 @@ public enum JFXAlertType
      * an appropriate title and header, and just an OK button for the user to
      * click on to dismiss the dialog.
      */
-    ERROR(ControlResources.getString("Dialog.error.title"), ControlResources.getString("Dialog.error.header"), "error",
-            ButtonType.OK);
+    ERROR(getString("Dialog.error.title"), getString("Dialog.error.header"), "error", ButtonType.OK);
 
     /** The default buttons shown for the {@link JFXAlertType}. */
     private final ButtonType[] myDefaultButtons;
@@ -123,5 +120,22 @@ public enum JFXAlertType
     public ButtonType[] getDefaultButtons()
     {
         return myDefaultButtons;
+    }
+
+    /**
+     * Look up a string in the properties file corresponding to the default
+     * locale (i.e. the application's locale). If not found, the search then
+     * falls back to the base controls.properties file, containing the default
+     * string (usually English).
+     *
+     * Via com.sun.javafx.scene.control.skin.resources
+     *
+     * @param key the key to look up
+     * @return the string
+     */
+    private static String getString(String key)
+    {
+        final String BASE_NAME = "com/sun/javafx/scene/control/skin/resources/controls";
+        return ResourceBundle.getBundle(BASE_NAME).getString(key);
     }
 }
