@@ -72,5 +72,9 @@
 			<groupId>org.apache.avro</groupId>
 			<artifactId>avro</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
 	</dependencies>
 </project>
