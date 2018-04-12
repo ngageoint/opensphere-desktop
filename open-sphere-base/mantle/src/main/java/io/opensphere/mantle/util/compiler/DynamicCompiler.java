@@ -3,7 +3,13 @@ package io.opensphere.mantle.util.compiler;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.ServiceLoader;
 import java.util.concurrent.locks.ReentrantLock;
 
 import javax.tools.Diagnostic;
@@ -74,7 +80,14 @@ public class DynamicCompiler
         {
             StringJavaFileObject strFile = new StringJavaFileObject(fullName, javaCode);
             Iterable<? extends JavaFileObject> units = Arrays.asList(strFile);
+
+            ArrayList<String> moduleNames = new ArrayList<>();
+            moduleNames.add("java.base");
+            moduleNames.add("ALL-UNNAMED");
+
             CompilationTask task = myCompiler.getTask(null, myManager, myCollector, null, null, units);
+            task.addModules(moduleNames);
+
             long start = System.nanoTime();
             boolean status = task.call().booleanValue();
             if (status)
@@ -127,20 +140,45 @@ public class DynamicCompiler
     private JavaCompiler getCompiler()
     {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+
         if (compiler == null)
         {
-            // Try loading the compiler from the context class loader.
             try
             {
-                compiler = Class
-                        .forName("com.sun.tools.javac.api.JavacTool", false, Thread.currentThread().getContextClassLoader())
-                        .asSubclass(JavaCompiler.class).newInstance();
-            }
-            catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoClassDefFoundError e)
-            {
-                if (LOGGER.isDebugEnabled())
+                Iterator<JavaCompiler> iter = ServiceLoader.load(JavaCompiler.class).iterator();
+                do
                 {
-                    LOGGER.debug(e, e);
+                    compiler = iter.next();
+                }
+                while (iter.hasNext() && compiler == null);
+            }
+            catch (NoSuchElementException ex)
+            {
+                // Try loading the compiler from the context class loader.
+                // This is almost guaranteed to not work, as
+                // com.sun.tools.javac.api.JavacTool is not accessible. Plus
+                // we've already tried the serviceloader, so this shouldn't
+                // exist.
+                try
+                {
+                    Class<JavaCompiler> clazz = (Class<JavaCompiler>)Class
+                            .forName("com.sun.tools.javac.api.JavacTool", false, Thread.currentThread().getContextClassLoader())
+                            .asSubclass(JavaCompiler.class);
+
+                    Constructor<JavaCompiler>[] constructors = (Constructor<JavaCompiler>[])clazz.getConstructors();
+
+                    if (constructors.length > 0)
+                    {
+                        compiler = constructors[0].newInstance();
+                    }
+                }
+                catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoClassDefFoundError
+                        | IllegalArgumentException | InvocationTargetException | SecurityException e)
+                {
+                    if (LOGGER.isDebugEnabled())
+                    {
+                        LOGGER.debug(e, e);
+                    }
                 }
             }
         }
