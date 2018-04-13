@@ -198,7 +198,6 @@ public class WFSDataTypeBuilder
 
             // The metadata info for the new data type.
             WFSMetaDataInfo metaDataInfo = new WFSMetaDataInfo(myToolbox, columnManager);
-            populateMetaData(metaDataInfo, wfsDTI, state);
 
             String stateIdSuffix = " (" + stateId + ")";
             String typeName = state.getId();
@@ -217,6 +216,7 @@ public class WFSDataTypeBuilder
             newDti = new WFSDataType(myToolbox, wfsDTI.getSourcePrefix(), newTypeKey, typeName, displayName, metaDataInfo,
                     configuration);
             metaDataInfo.setDataTypeInfo(newDti);
+            populateMetaData(metaDataInfo, wfsDTI, state);
 
             newDti.setUrl(state.getUrl());
             newDti.setVisible(state.isVisible(), this);
