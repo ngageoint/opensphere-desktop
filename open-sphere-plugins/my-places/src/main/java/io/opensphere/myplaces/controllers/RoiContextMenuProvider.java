@@ -5,11 +5,11 @@ import java.util.List;
 
 import javax.swing.JMenuItem;
 
-import de.micromata.opengis.kml.v_2_2_0.Point;
+import de.micromata.opengis.kml.v_2_2_0.Placemark;
+import de.micromata.opengis.kml.v_2_2_0.Polygon;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.geometry.PolygonGeometry;
-import io.opensphere.kml.gx.Track;
 import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.myplaces.models.MyPlacesDataTypeInfo;
@@ -32,7 +32,7 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupCont
     {
         myToolbox = toolbox;
     }
-    
+
     @Override
     public List<JMenuItem> getMenuItems(String contextId, DataGroupContextKey key)
     {
@@ -40,14 +40,14 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupCont
         if (key.getDataType() instanceof MyPlacesDataTypeInfo)
         {
             MyPlacesDataTypeInfo type = (MyPlacesDataTypeInfo)key.getDataType();
-            Object placemarkGeom = type.getKmlPlacemark().getGeometry();
+            Placemark kmlPlacemark = type.getKmlPlacemark();
 
-            if (placemarkGeom instanceof Track || placemarkGeom instanceof Point)
+            if (!(kmlPlacemark.getGeometry() instanceof Polygon))
             {
                 return menuItems;
             }
 
-            PolygonGeometry geom = RegionUtils.createGeometry(type.getKmlPlacemark());
+            PolygonGeometry geom = RegionUtils.createGeometry(kmlPlacemark);
             menuItems = MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().getGeometryMenuItems(geom);
         }
         return menuItems;
