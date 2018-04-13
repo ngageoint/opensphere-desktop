@@ -6,6 +6,8 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextActionManager;
@@ -49,6 +51,10 @@ public class MergePluginTest
     @Test
     public void test()
     {
+        PlatformImpl.startup(() ->
+        {
+        });
+
         EasyMockSupport support = new EasyMockSupport();
 
         Toolbox toolbox = createToolbox(support);
