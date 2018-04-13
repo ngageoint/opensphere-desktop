@@ -199,32 +199,37 @@ public final class NumberUtilities
      */
     public static BigDecimal toBigDecimal(Number number)
     {
+        BigDecimal returnValue = null;
         if (number instanceof BigDecimal)
         {
-            return (BigDecimal)number;
+            returnValue = (BigDecimal)number;
         }
         if (number instanceof BigInteger)
         {
-            return new BigDecimal((BigInteger)number);
+            returnValue = new BigDecimal((BigInteger)number);
         }
         if (number instanceof Byte || number instanceof Short || number instanceof Integer || number instanceof Long)
         {
-            return new BigDecimal(number.longValue());
+            returnValue = new BigDecimal(number.longValue());
         }
         if (number instanceof Float || number instanceof Double)
         {
-            return new BigDecimal(number.doubleValue());
+            returnValue = new BigDecimal(number.doubleValue());
+        }
+        else
+        {
+            try
+            {
+                returnValue = new BigDecimal(number.toString());
+            }
+            catch (final NumberFormatException e)
+            {
+                throw new RuntimeException("The given number (\"" + number + "\" of class " + number.getClass().getName()
+                        + ") does not have a parsable string representation", e);
+            }
         }
 
-        try
-        {
-            return new BigDecimal(number.toString());
-        }
-        catch (final NumberFormatException e)
-        {
-            throw new RuntimeException("The given number (\"" + number + "\" of class " + number.getClass().getName()
-                    + ") does not have a parsable string representation", e);
-        }
+        return returnValue;
     }
 
     /**
@@ -236,15 +241,16 @@ public final class NumberUtilities
      */
     public static boolean isSpecial(Number value)
     {
+        boolean returnValue = false;
         if (value instanceof Double)
         {
-            return Double.isNaN(value.doubleValue()) || Double.isInfinite(value.doubleValue());
+            returnValue = Double.isNaN(value.doubleValue()) || Double.isInfinite(value.doubleValue());
         }
         else if (value instanceof Float)
         {
-            return Float.isNaN(value.floatValue()) || Float.isInfinite(value.floatValue());
+            returnValue = Float.isNaN(value.floatValue()) || Float.isInfinite(value.floatValue());
         }
-        return false;
+        return returnValue;
     }
 
     /**
@@ -262,11 +268,16 @@ public final class NumberUtilities
      */
     public static int compare(Number left, Number right)
     {
+        int returnValue;
         if (NumberUtilities.isSpecial(left) || NumberUtilities.isSpecial(right))
         {
-            return Double.compare(left.doubleValue(), right.doubleValue());
+            returnValue = Double.compare(left.doubleValue(), right.doubleValue());
         }
-        return NumberUtilities.toBigDecimal(left).compareTo(NumberUtilities.toBigDecimal(right));
+        else
+        {
+            returnValue = NumberUtilities.toBigDecimal(left).compareTo(NumberUtilities.toBigDecimal(right));
+        }
+        return returnValue;
     }
 
     /** Disallow instantiation. */
