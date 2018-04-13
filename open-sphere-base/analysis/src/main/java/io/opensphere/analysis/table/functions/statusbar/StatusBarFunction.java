@@ -1,4 +1,4 @@
-package io.opensphere.analysis.table.functions;
+package io.opensphere.analysis.table.functions.statusbar;
 
 import java.util.Set;
 

@@ -1,34 +1,33 @@
-package io.opensphere.analysis.table.functions;
+package io.opensphere.analysis.table.functions.statusbar;
 
 import javax.swing.JTable;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.lang.NumberUtilities;
 
-/** Representation of Table Selection Maximum. */
-public class Max extends StatusBarFunction
+/** Representation of Table Cell Summation. */
+public class Sum extends StatusBarFunction
 {
     /**
-     * Constructs a Max function.
+     * Constructs a Sum function.
      *
      * @param toolbox The toolbox through which application state is accessed.
      */
-    public Max(Toolbox toolbox)
+    public Sum(Toolbox toolbox)
     {
-        super(toolbox, "%-10.3f", "Maximum Value");
+        super(toolbox, "%-10.3f", "Sum");
     }
 
     /**
-     * Determines the maximum value of the selected cells in a given table.
+     * Sums the selected cells in a given table.
      *
      * @override
-     * @return the maximum value, of 0.0 if nothing is selected
      */
     @SuppressWarnings("boxing")
     @Override
     public Number execute(JTable table)
     {
-        double max = 0.0;
+        double sum = 0.0;
 
         int[] rows = table.getSelectedRows();
         int[] cols = table.getSelectedColumns();
@@ -36,10 +35,10 @@ public class Max extends StatusBarFunction
         {
             for (int c : cols)
             {
-                max = Math.max(max, NumberUtilities.parseDouble(table.getValueAt(r, c), 0.0));
+                sum += NumberUtilities.parseDouble(table.getValueAt(r, c), 0.0);
             }
         }
 
-        return max;
+        return sum;
     }
 }

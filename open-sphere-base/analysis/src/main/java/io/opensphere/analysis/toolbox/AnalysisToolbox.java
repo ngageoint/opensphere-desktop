@@ -1,7 +1,7 @@
 package io.opensphere.analysis.toolbox;
 
 import io.opensphere.analysis.base.model.CommonSettingsModel;
-import io.opensphere.analysis.table.functions.StatusBarFunctionFactory;
+import io.opensphere.analysis.table.functions.statusbar.StatusBarFunctionFactory;
 import io.opensphere.core.PluginToolbox;
 import io.opensphere.core.Toolbox;
 
