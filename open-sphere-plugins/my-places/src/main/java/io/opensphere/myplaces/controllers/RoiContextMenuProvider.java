@@ -20,7 +20,6 @@ import io.opensphere.myplaces.specific.regions.utils.RegionUtils;
  */
 public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupContextKey>
 {
-
     /** The toolbox. */
     private final Toolbox myToolbox;
 
@@ -28,7 +27,6 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupCont
      * Constructs region of interest context menu provider.
      *
      * @param toolbox The toolbox.
-     * @param model The my places model.
      */
     public RoiContextMenuProvider(Toolbox toolbox)
     {
@@ -41,7 +39,6 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupCont
         List<JMenuItem> menuItems = Collections.emptyList();
         if (key.getDataType() instanceof MyPlacesDataTypeInfo)
         {
-
             MyPlacesDataTypeInfo type = (MyPlacesDataTypeInfo)key.getDataType();
             Object placemarkGeom = type.getKmlPlacemark().getGeometry();
 
@@ -61,5 +58,4 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupCont
     {
         return 6;
     }
-
 }
