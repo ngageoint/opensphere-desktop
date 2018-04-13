@@ -2,15 +2,20 @@ package io.opensphere.analysis.table.functions;
 
 import javax.swing.JTable;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.lang.NumberUtilities;
 
 /** Representation of Table Selection Maximum. */
-public class Max extends SpreadsheetFunction
+public class Max extends StatusBarFunction
 {
-    /** Constructs a Max function. */
-    public Max()
+    /**
+     * Constructs a Max function.
+     *
+     * @param toolbox The toolbox through which application state is accessed.
+     */
+    public Max(Toolbox toolbox)
     {
-        super("%-10.3f", "Maximum Value");
+        super(toolbox, "%-10.3f", "Maximum Value");
     }
 
     /**

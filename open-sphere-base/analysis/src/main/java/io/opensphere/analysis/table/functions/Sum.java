@@ -2,15 +2,20 @@ package io.opensphere.analysis.table.functions;
 
 import javax.swing.JTable;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.lang.NumberUtilities;
 
 /** Representation of Table Cell Summation. */
-public class Sum extends SpreadsheetFunction
+public class Sum extends StatusBarFunction
 {
-    /** Constructs a Sum function. */
-    public Sum()
+    /**
+     * Constructs a Sum function.
+     *
+     * @param toolbox The toolbox through which application state is accessed.
+     */
+    public Sum(Toolbox toolbox)
     {
-        super("%-10.3f", "Sum");
+        super(toolbox, "%-10.3f", "Sum");
     }
 
     /**

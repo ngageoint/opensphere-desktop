@@ -1,5 +1,8 @@
 package io.opensphere.core.util.lang;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 /**
  * Generic number utilities.
  */
@@ -186,6 +189,84 @@ public final class NumberUtilities
     public static double toDouble(Number value, double defaultValue)
     {
         return value != null ? value.doubleValue() : defaultValue;
+    }
+
+    /**
+     * Converts the supplied value to a {@link BigDecimal}.
+     *
+     * @param number the value to convert to a {@link BigDecimal}.
+     * @return the {@link BigDecimal} equivalent of the supplied value.
+     */
+    public static BigDecimal toBigDecimal(Number number)
+    {
+        if (number instanceof BigDecimal)
+        {
+            return (BigDecimal)number;
+        }
+        if (number instanceof BigInteger)
+        {
+            return new BigDecimal((BigInteger)number);
+        }
+        if (number instanceof Byte || number instanceof Short || number instanceof Integer || number instanceof Long)
+        {
+            return new BigDecimal(number.longValue());
+        }
+        if (number instanceof Float || number instanceof Double)
+        {
+            return new BigDecimal(number.doubleValue());
+        }
+
+        try
+        {
+            return new BigDecimal(number.toString());
+        }
+        catch (final NumberFormatException e)
+        {
+            throw new RuntimeException("The given number (\"" + number + "\" of class " + number.getClass().getName()
+                    + ") does not have a parsable string representation", e);
+        }
+    }
+
+    /**
+     * Tests to determine if the supplied number is a special case, such as
+     * {@link Double#NaN} or infinity.
+     *
+     * @param value the value to test.
+     * @return true if the supplied value is a special case, false otherwise.
+     */
+    public static boolean isSpecial(Number value)
+    {
+        if (value instanceof Double)
+        {
+            return Double.isNaN(value.doubleValue()) || Double.isInfinite(value.doubleValue());
+        }
+        else if (value instanceof Float)
+        {
+            return Float.isNaN(value.floatValue()) || Float.isInfinite(value.floatValue());
+        }
+        return false;
+    }
+
+    /**
+     * Compares the supplied values, determining if the left side is greater
+     * than or less than the right side. If they're equivalent, the method will
+     * return zero.
+     *
+     * @param left the left hand side of the comparison.
+     * @param right the right hand side of the comparison.
+     * @return the result of the comparison. If the left side of the comparison
+     *         is is numerically equal to the right side, a value of 0 is
+     *         returned; a value less than 0 if left is numerically less than
+     *         right; and a value greater than 0 if left is numerically greater
+     *         than right.
+     */
+    public static int compare(Number left, Number right)
+    {
+        if (NumberUtilities.isSpecial(left) || NumberUtilities.isSpecial(right))
+        {
+            return Double.compare(left.doubleValue(), right.doubleValue());
+        }
+        return NumberUtilities.toBigDecimal(left).compareTo(NumberUtilities.toBigDecimal(right));
     }
 
     /** Disallow instantiation. */

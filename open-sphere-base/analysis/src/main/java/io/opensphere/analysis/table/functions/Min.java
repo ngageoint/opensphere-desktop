@@ -6,18 +6,23 @@ import java.util.Optional;
 
 import javax.swing.JTable;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.lang.NumberUtilities;
 
 /**
  * Representation of Table Selection Minimum. Does not include non-numeric
  * cells.
  */
-public class Min extends SpreadsheetFunction
+public class Min extends StatusBarFunction
 {
-    /** Constructs a Min function. */
-    public Min()
+    /**
+     * Constructs a Min function.
+     *
+     * @param toolbox The toolbox through which application state is accessed.
+     */
+    public Min(Toolbox toolbox)
     {
-        super("%-10.3f", "Minimum Value");
+        super(toolbox, "%-10.3f", "Minimum Value");
     }
 
     /**
