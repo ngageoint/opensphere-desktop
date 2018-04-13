@@ -1,21 +1,26 @@
-package io.opensphere.analysis.table.functions;
+package io.opensphere.analysis.table.functions.statusbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTable;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.lang.NumberUtilities;
 
 /**
  * Representation of Table Selection Median. Does not include non-numeric cells.
  */
-public class Median extends SpreadsheetFunction
+public class Median extends StatusBarFunction
 {
-    /** Constructs a Median function. */
-    public Median()
+    /**
+     * Constructs a Median function.
+     *
+     * @param toolbox The toolbox through which application state is accessed.
+     */
+    public Median(Toolbox toolbox)
     {
-        super("%-10.3f", "Median Value");
+        super(toolbox, "%-10.3f", "Median Value");
     }
 
     /**
