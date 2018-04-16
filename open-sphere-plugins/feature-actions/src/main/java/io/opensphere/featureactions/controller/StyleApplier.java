@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
+
 import gnu.trove.map.hash.TLongObjectHashMap;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.Geometry;
@@ -20,6 +22,7 @@ import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.element.VisualizationState;
 import io.opensphere.mantle.data.element.event.consolidated.ConsolidatedDataElementColorChangeEvent;
+import io.opensphere.mantle.data.geom.MapGeometrySupport;
 import io.opensphere.mantle.data.geom.style.FeatureVisualizationStyle;
 import io.opensphere.mantle.transformer.MapDataElementTransformer;
 import io.opensphere.mantle.transformer.impl.StyleMapDataElementTransformer;
@@ -32,6 +35,9 @@ import io.opensphere.mantle.util.MantleToolboxUtils;
 /** Applies style actions. */
 public class StyleApplier implements ActionApplier
 {
+    /** Logger. */
+    private static final Logger LOGGER = Logger.getLogger(StyleApplier.class);
+
     /** The mantle toolbox. */
     private final MantleToolbox myMantleToolbox;
 
@@ -59,15 +65,25 @@ public class StyleApplier implements ActionApplier
         StyleTransformerGeometryProcessor provider = getGeometryProcessor(dataType);
         if (provider != null)
         {
-            FeatureVisualizationStyle defaultStyle = provider.getStyle(elements.iterator().next().getMapGeometrySupport(), -1);
-            FeatureVisualizationStyle style = myStyleFactory.newStyle(actions, dataType, defaultStyle);
-            if (style != null)
-            {
-                waitForGeometries(provider, elements);
+            MapGeometrySupport mapGeometrySupport = elements.stream().filter(element -> element.getMapGeometrySupport() != null)
+                    .findFirst().get().getMapGeometrySupport();
 
-                // Run it on the right executor because the mantle style code is
-                // not thread-safe
-                provider.getExecutor().execute(() -> applyStyle(style, elements, provider, actions));
+            if (mapGeometrySupport != null)
+            {
+                FeatureVisualizationStyle defaultStyle = provider.getStyle(mapGeometrySupport, -1);
+                FeatureVisualizationStyle style = myStyleFactory.newStyle(actions, dataType, defaultStyle);
+                if (style != null)
+                {
+                    waitForGeometries(provider, elements);
+
+                    // Run it on the right executor because the mantle style code is
+                    // not thread-safe
+                    provider.getExecutor().execute(() -> applyStyle(style, elements, provider, actions));
+                }
+            }
+            else
+            {
+                LOGGER.error("Could not find a map geometry support");
             }
         }
     }
