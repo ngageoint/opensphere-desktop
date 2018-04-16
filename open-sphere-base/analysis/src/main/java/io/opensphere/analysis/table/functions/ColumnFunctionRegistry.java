@@ -24,9 +24,9 @@ public class ColumnFunctionRegistry
     }
 
     /**
-     * Adds the supplied function to the factory.
+     * Adds the supplied function to the registry.
      *
-     * @param function the function to add to the factory.
+     * @param function the function to add to the registry.
      */
     public void addFunction(ColumnFunction function)
     {

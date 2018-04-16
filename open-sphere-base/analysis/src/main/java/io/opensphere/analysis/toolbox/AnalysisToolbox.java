@@ -16,7 +16,7 @@ public final class AnalysisToolbox implements PluginToolbox
     private final StatusBarFunctionFactory myStatusBarFunctionFactory;
 
     /** The factory used to generate column functions. */
-    private final ColumnFunctionRegistry myColumnFunctionFactory;
+    private final ColumnFunctionRegistry myColumnFunctionRegistry;
 
     /**
      * Creates a new toolbox instance.
@@ -27,7 +27,7 @@ public final class AnalysisToolbox implements PluginToolbox
     public AnalysisToolbox(Toolbox toolbox)
     {
         myStatusBarFunctionFactory = new StatusBarFunctionFactory(toolbox);
-        myColumnFunctionFactory = new ColumnFunctionRegistry(toolbox);
+        myColumnFunctionRegistry = new ColumnFunctionRegistry(toolbox);
     }
 
     @Override
@@ -38,13 +38,13 @@ public final class AnalysisToolbox implements PluginToolbox
 
     /**
      * Gets the value of the columnFunctionFactory
-     * ({@link #myColumnFunctionFactory}) field.
+     * ({@link #myColumnFunctionRegistry}) field.
      *
-     * @return the value stored in the {@link #myColumnFunctionFactory} field.
+     * @return the value stored in the {@link #myColumnFunctionRegistry} field.
      */
-    public ColumnFunctionRegistry getColumnFunctionFactory()
+    public ColumnFunctionRegistry getColumnFunctionRegistry()
     {
-        return myColumnFunctionFactory;
+        return myColumnFunctionRegistry;
     }
 
     /**
