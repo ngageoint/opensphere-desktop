@@ -2,9 +2,6 @@ package io.opensphere.analysis.table.functions;
 
 import java.util.List;
 
-import com.bitsys.mist.analysis.table.functions.column.NumericDeltaFunction;
-import com.bitsys.mist.analysis.table.functions.column.TimeDeltaFunction;
-
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.collections.New;
 
@@ -24,9 +21,6 @@ public class ColumnFunctionFactory
     public ColumnFunctionFactory(Toolbox toolbox)
     {
         myFunctionValues = New.list();
-
-        myFunctionValues.add(new NumericDeltaFunction());
-        myFunctionValues.add(new TimeDeltaFunction());
     }
 
     /**
