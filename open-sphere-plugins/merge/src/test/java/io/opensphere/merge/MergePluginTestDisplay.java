@@ -31,17 +31,15 @@ import io.opensphere.merge.ui.MergeContextSingleSelectionMenuProvider;
 /**
  * Unit test for {@link MergePlugin}.
  */
-public class MergePluginTest
+public class MergePluginTestDisplay
 {
     /**
-     * Mimics the weak reference to the context provider, ensures plugin does it
-     * correctly.
+     * Mimics the weak reference to the context provider, ensures plugin does it correctly.
      */
     private WeakReference<MergeContextMenuProvider> myMenuProvider;
 
     /**
-     * Mimics the weak reference toe the context provider, ensures plugin does
-     * it correctly.
+     * Mimics the weak reference toe the context provider, ensures plugin does it correctly.
      */
     private WeakReference<MergeContextSingleSelectionMenuProvider> mySingleMenuProvider;
 
@@ -93,7 +91,8 @@ public class MergePluginTest
                 EasyMock.eq(DataGroupContextKey.class), EasyMock.isA(MergeContextSingleSelectionMenuProvider.class));
         EasyMock.expectLastCall().andAnswer(() ->
         {
-            mySingleMenuProvider = new WeakReference<>((MergeContextSingleSelectionMenuProvider)EasyMock.getCurrentArguments()[2]);
+            mySingleMenuProvider = new WeakReference<>(
+                    (MergeContextSingleSelectionMenuProvider)EasyMock.getCurrentArguments()[2]);
             return null;
         });
 
