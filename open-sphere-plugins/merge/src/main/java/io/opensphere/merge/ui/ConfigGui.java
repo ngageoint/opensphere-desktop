@@ -1,26 +1,28 @@
 package io.opensphere.merge.ui;
 
 import java.awt.Dimension;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.swing.SwingUtilities;
 
 import io.opensphere.core.Notify;
 import io.opensphere.core.Notify.Method;
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.core.util.lang.ThreadUtilities;
+import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.cache.DataElementCache;
-import io.opensphere.merge.layout.GenericLayout;
-import io.opensphere.merge.layout.LayMode;
-import io.opensphere.merge.layout.LinearLayout;
 import io.opensphere.merge.model.JoinModel;
 import io.opensphere.merge.model.MergePrefs;
-import javafx.scene.control.Label;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.TextAlignment;
 
 /**
  * Facilitates management of existing join configurations.
@@ -28,91 +30,78 @@ import javafx.scene.control.Label;
 public class ConfigGui
 {
     /** System Toolbox. */
-    private Toolbox tools;
+    private Toolbox myToolbox;
 
     /** The DataGroupController. */
-    private DataGroupController groupCtrl;
+    private DataGroupController myDataGroupController;
 
     /** Used to get the element counts. */
-    private DataElementCache dataCache;
+    private DataElementCache myDataCache;
 
     /** This GUI's host dialog. */
-    private JFXDialog dialog;
+    private JFXDialog myDialog;
 
     /** Manager for layers formed by joining. */
-    private JoinManager joinMan;
-
-    /** Top layout component. */
-    private final LinearLayout vLay = LinearLayout.col();
+    private JoinManager myJoinManager;
 
     /** GUI root. */
-    private final GenericLayout mainPane = new GenericLayout(vLay);
-    {
-        mainPane.getRoot().setBorder(GuiUtil.emptyBorder(5.0));
-    }
+    private final ListView<MergePrefs.Join> myMainPane;
 
     /** Persistent data model. */
-    private MergePrefs prefs;
+    private MergePrefs myPreferences;
 
     /** Rows; each one represents a join configuration. */
-    private final List<CfgRow> rows = new LinkedList<>();
+    private final ObservableList<MergePrefs.Join> myDataRows = new ObservableMergeList<>();
 
     /** Callback for saving (this class does not handle persistence). */
-    private Runnable saveEar;
+    private Runnable mySaveCallback;
+
+    /**
+     * Constructs ConfigGui.
+     *
+     * @param tb
+     * @param jm
+     * @param callback
+     */
+    public ConfigGui(Toolbox tb, JoinManager jm, Runnable callback)
+    {
+        myToolbox = tb;
+        myJoinManager = jm;
+        mySaveCallback = callback;
+
+        MantleToolbox mtb = tb.getPluginToolboxRegistry().getPluginToolbox(MantleToolbox.class);
+        myDataGroupController = mtb.getDataGroupController();
+        myDataCache = mtb.getDataElementCache();
+
+        myMainPane = new ListView<MergePrefs.Join>(myDataRows);
+        myMainPane.setCellFactory((view) ->
+        {
+            return new MergeFormatCell();
+        });
+        myMainPane.setSelectionModel(null);
+
+        myDialog = GuiUtil.okDialog(tb, "Joins/Merges");
+        myDialog.setSize(new Dimension(450, 450));
+    }
 
     /** Show the dialog, creating it if necessary. */
     public void show()
     {
-        if (dialog != null && dialog.isVisible())
+        if (!myDialog.isVisible())
         {
-            dialog.setVisible(true);
-            return;
+            // Closing the window clears the scene, so we'll need to do this
+            // every time.
+            myDialog.setFxNode(GuiUtil.vScroll(myMainPane));
+            myDialog.setVisible(true);
         }
-        dialog = GuiUtil.okDialog(tools, "Joins/Merges");
-        dialog.setFxNode(GuiUtil.vScroll(mainPane.getRoot()));
-        dialog.setSize(new Dimension(450, 450));
-        dialog.setVisible(true);
-    }
-
-    /**
-     * Receive a reference to the system Toolbox.
-     *
-     * @param tb the Toolbox
-     */
-    public void setTools(Toolbox tb)
-    {
-        tools = tb;
-        MantleToolbox mtb = tools.getPluginToolboxRegistry().getPluginToolbox(MantleToolbox.class);
-        groupCtrl = mtb.getDataGroupController();
-        dataCache = mtb.getDataElementCache();
-    }
-
-    /**
-     * Receive a reference to the JoinManager.
-     *
-     * @param jm the JoinManager
-     */
-    public void setJoinMan(JoinManager jm)
-    {
-        joinMan = jm;
-    }
-
-    /**
-     * Specify a callback for saving.
-     *
-     * @param ear callback
-     */
-    public void setSaveEar(Runnable ear)
-    {
-        saveEar = ear;
     }
 
     /** Inform the interested party, if any, of a change to persist. */
     private void fireSave()
     {
-        if (saveEar != null)
+        if (mySaveCallback != null)
         {
-            saveEar.run();
+            mySaveCallback.run();
         }
     }
 
@@ -123,70 +112,67 @@ public class ConfigGui
      */
     public void setData(MergePrefs p)
     {
-        prefs = p;
-        rows.clear();
-        for (MergePrefs.Join j : prefs.getJoins())
-        {
-            rows.add(new CfgRow(j));
-        }
-        layoutGui();
+        myPreferences = p;
+        myDataRows.clear();
+
+        myDataRows.addAll(myPreferences.getJoins());
     }
 
-    /** Like, lay out the GUI, ya know? */
-    private void layoutGui()
+    /**
+     * @param j
+     */
+    public void addJoin(MergePrefs.Join j)
     {
-        vLay.clear();
-        boolean first = true;
-        for (CfgRow r : rows)
-        {
-            if (!first)
-            {
-                vLay.addSpace(5.0);
-            }
-            first = false;
-            vLay.addAcross(r.row);
-        }
+        myDataRows.add(j);
     }
 
-    /** Aggregation of stuff related to a single join config. */
-    private class CfgRow
+    /** A ListCell for viewing Merge/Join items. */
+    private class MergeFormatCell extends ListCell<MergePrefs.Join>
     {
         /** Name String. */
-        public String name;
+        public String myName;
 
         /** Reference to the preference object. */
-        public MergePrefs.Join mpj;
+        public MergePrefs.Join myItem;
 
-        /** For displaying the name. */
-        private final Label lbl = new Label();
-
-        /** Layout mechanism for this row. */
-        public LinearLayout row = LinearLayout.row();
-
-        /**
-         * Create.
-         *
-         * @param j join config
-         */
-        public CfgRow(MergePrefs.Join j)
+        /** Constructor. Does nothing. */
+        public MergeFormatCell()
         {
-            mpj = j;
-            name = j.name;
-            lbl.setText(name);
-            layout();
         }
 
-        /** Place subcomponents within the layout. */
-        public void layout()
+        @Override
+        protected void updateItem(MergePrefs.Join item, boolean empty)
         {
-            row.clear();
-            row.add(lbl, LayMode.STRETCH, 50.0, 1.0);
-            row.addSpace(15);
-            row.add(GuiUtil.button("Update", () -> ThreadUtilities.runCpu(() -> update())));
-            row.addSpace(5.0);
-            row.add(GuiUtil.button("Edit", () -> SwingUtilities.invokeLater(() -> edit())));
-            row.addSpace(5.0);
-            row.add(GuiUtil.button("Delete", () -> delete()));
+            super.updateItem(item, empty);
+
+            setText(null);
+            setGraphic(null);
+
+            setTextAlignment(TextAlignment.JUSTIFY);
+            setContentDisplay(ContentDisplay.RIGHT);
+
+            if (!empty && item != null)
+            {
+                HBox myLabelBox = new HBox();
+
+                myItem = item;
+                myName = item.name;
+
+                Button updateButton = new Button("Update");
+                updateButton.setOnAction((evt) -> ThreadUtilities.runCpu(() -> update()));
+
+                Button editButton = new Button("Edit");
+                editButton.setOnAction((evt) -> EventQueueUtilities.runOnEDT(() -> edit()));
+
+                Button deleteButton = new Button("Delete");
+                deleteButton.setOnAction((evt) -> ThreadUtilities.runCpu(() -> delete()));
+
+                ObservableList<Node> children = myLabelBox.getChildren();
+                children.addAll(updateButton, editButton, deleteButton);
+
+                setText(myName);
+                setGraphic(myLabelBox);
+            }
         }
 
         /**
@@ -208,9 +194,9 @@ public class ConfigGui
             }
 
             // check all participating layers for existence of metadata
-            for (MergePrefs.LayerParam lp : mpj.params)
+            for (MergePrefs.LayerParam lp : myItem.params)
             {
-                DataTypeInfo t = groupCtrl.findMemberById(lp.typeKey);
+                DataTypeInfo t = myDataGroupController.findMemberById(lp.typeKey);
                 // Mantle must be aware of the layer
                 if (t == null)
                 {
@@ -233,7 +219,7 @@ public class ConfigGui
                     return croak(disp + " is not active.", effect);
                 }
                 // ... and actually have some records
-                if (dataCache.getElementCountForType(t) <= 0)
+                if (myDataCache.getElementCountForType(t) <= 0)
                 {
                     return croak(disp + " is empty.", effect);
                 }
@@ -261,7 +247,7 @@ public class ConfigGui
             {
                 return;
             }
-            joinMan.handleJoin(mpj);
+            myJoinManager.handleJoin(myItem);
         }
 
         /** Spawn the config editor for this join, if possible. */
@@ -273,12 +259,12 @@ public class ConfigGui
                 return;
             }
             JoinGui gui = new JoinGui();
-            JFXDialog edDialog = GuiUtil.okCancelDialog(dialog, "Edit Join");
+            JFXDialog edDialog = GuiUtil.okCancelDialog(myDialog, "Edit Join");
             edDialog.setFxNode(GuiUtil.vScroll(gui.getMainPane()));
             edDialog.setAcceptEar(() -> acceptEdits(gui.getModel()));
             edDialog.setSize(new Dimension(450, 450));
-            gui.setup(tools, edDialog);
-            gui.setData(mpj);
+            gui.setup(myToolbox, edDialog);
+            gui.setData(myItem);
             edDialog.setVisible(true);
         }
 
@@ -289,23 +275,19 @@ public class ConfigGui
          */
         private void acceptEdits(JoinModel m)
         {
-            mpj = prefs.editJoinModel(mpj, m);
-            name = m.getJoinName();
-            lbl.setText(name);
-
-            // persist the change
+            MergePrefs.Join newModel = myPreferences.editJoinModel(myItem, m);
             fireSave();
+
+            FXUtilities.runOnFXThread(() -> myDataRows.set(getIndex(), newModel));
         }
 
         /** Delete this join config. */
         private void delete()
         {
-            rows.remove(this);
-            layoutGui();
-            prefs.delete(name);
-
-            // persist the change
+            myPreferences.delete(myName);
             fireSave();
+
+            FXUtilities.runOnFXThread(() -> myDataRows.remove(myItem));
         }
     }
 }
