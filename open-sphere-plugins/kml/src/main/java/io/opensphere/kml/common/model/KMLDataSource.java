@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -158,6 +159,10 @@ public class KMLDataSource extends AbstractDataSource implements SingleFileDataS
     /** The outcome tracker. */
     @XmlTransient
     private final OutcomeTracker myOutcomeTracker = new OutcomeTracker();
+
+    /** Optional pruner to remove features from the results. A value of true keeps the result, false removes it. */
+    @XmlTransient
+    private Predicate<Feature> myFeaturePruner;
 
     /**
      * Associate this data source with a handler.
@@ -884,6 +889,26 @@ public class KMLDataSource extends AbstractDataSource implements SingleFileDataS
             {
             }
         }
+    }
+
+    /**
+     * Gets the featurePruner.
+     *
+     * @return the featurePruner
+     */
+    public Predicate<Feature> getFeaturePruner()
+    {
+        return myFeaturePruner;
+    }
+
+    /**
+     * Sets the featurePruner.
+     *
+     * @param featurePruner the featurePruner
+     */
+    public void setFeaturePruner(Predicate<Feature> featurePruner)
+    {
+        myFeaturePruner = featurePruner;
     }
 
     /**
