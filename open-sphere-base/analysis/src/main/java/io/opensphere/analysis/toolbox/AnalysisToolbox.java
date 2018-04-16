@@ -1,7 +1,7 @@
 package io.opensphere.analysis.toolbox;
 
 import io.opensphere.analysis.base.model.CommonSettingsModel;
-import io.opensphere.analysis.table.functions.ColumnFunctionFactory;
+import io.opensphere.analysis.table.functions.ColumnFunctionRegistry;
 import io.opensphere.analysis.table.functions.statusbar.StatusBarFunctionFactory;
 import io.opensphere.core.PluginToolbox;
 import io.opensphere.core.Toolbox;
@@ -16,7 +16,7 @@ public final class AnalysisToolbox implements PluginToolbox
     private final StatusBarFunctionFactory myStatusBarFunctionFactory;
 
     /** The factory used to generate column functions. */
-    private final ColumnFunctionFactory myColumnFunctionFactory;
+    private final ColumnFunctionRegistry myColumnFunctionFactory;
 
     /**
      * Creates a new toolbox instance.
@@ -27,7 +27,7 @@ public final class AnalysisToolbox implements PluginToolbox
     public AnalysisToolbox(Toolbox toolbox)
     {
         myStatusBarFunctionFactory = new StatusBarFunctionFactory(toolbox);
-        myColumnFunctionFactory = new ColumnFunctionFactory(toolbox);
+        myColumnFunctionFactory = new ColumnFunctionRegistry(toolbox);
     }
 
     @Override
@@ -42,7 +42,7 @@ public final class AnalysisToolbox implements PluginToolbox
      *
      * @return the value stored in the {@link #myColumnFunctionFactory} field.
      */
-    public ColumnFunctionFactory getColumnFunctionFactory()
+    public ColumnFunctionRegistry getColumnFunctionFactory()
     {
         return myColumnFunctionFactory;
     }

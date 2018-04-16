@@ -6,9 +6,9 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.collections.New;
 
 /**
- * A factory use to instantiate column functions.
+ * A registry use to register and instantiate column functions.
  */
-public class ColumnFunctionFactory
+public class ColumnFunctionRegistry
 {
     /** Function values. */
     private final List<ColumnFunction> myFunctionValues;
@@ -18,7 +18,7 @@ public class ColumnFunctionFactory
      *
      * @param toolbox The toolbox through which application state is accessed.
      */
-    public ColumnFunctionFactory(Toolbox toolbox)
+    public ColumnFunctionRegistry(Toolbox toolbox)
     {
         myFunctionValues = New.list();
     }

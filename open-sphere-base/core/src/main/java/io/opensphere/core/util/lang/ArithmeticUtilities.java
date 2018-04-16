@@ -20,37 +20,56 @@ public final class ArithmeticUtilities
     /**
      * Calculates the sum of the supplied numbers, and returns the result.
      *
-     * @param leftNumber the left number portion of the sum.
-     * @param rightNumber the right number portion of the sum.
+     * @param numbers the numbers for which to calculate the sum.
      * @return the calculated sum.
      */
-    public static Number sum(Number leftNumber, Number rightNumber)
+    public static Number sum(Number... numbers)
     {
         Number returnValue = null;
-        Collection<Number> numbers = Arrays.asList(leftNumber, rightNumber);
-        if (leftNumber instanceof Double || leftNumber instanceof Float || rightNumber instanceof Double
-                || rightNumber instanceof Float)
+        Collection<Number> numberCollection = Arrays.asList(numbers);
+        int doubleCount = 0;
+        int longCount = 0;
+        int integerCount = 0;
+        int bigDecimalCount = 0;
+        for (Number number : numberCollection)
         {
-            returnValue = numbers.stream().collect(Collectors.summingDouble(x -> x.doubleValue()));
+            if (number instanceof Double || number instanceof Float)
+            {
+                doubleCount++;
+            }
+            else if (number instanceof Long)
+            {
+                longCount++;
+            }
+            else if (number instanceof Integer || number instanceof Short)
+            {
+                integerCount++;
+            }
+            else
+            {
+                bigDecimalCount++;
+            }
         }
-        else if (leftNumber instanceof Long || rightNumber instanceof Long)
-        {
-            returnValue = numbers.stream().collect(Collectors.summingLong(x -> x.longValue()));
-        }
-        else if (leftNumber instanceof Integer || leftNumber instanceof Short || rightNumber instanceof Integer
-                || rightNumber instanceof Short)
-        {
-            returnValue = numbers.stream().collect(Collectors.summingInt(x -> x.intValue()));
-        }
-        else
+
+        if (bigDecimalCount > 0)
         {
             BigDecimal sum = BigDecimal.ZERO;
-            for (Number number : numbers)
-            {
-                sum = sum.add(new BigDecimal(number.toString()));
-            }
+            numberCollection.stream().map(n -> new BigDecimal(n.toString())).forEach(bd -> sum.add(bd));
             returnValue = sum;
         }
+        else if (doubleCount > 0)
+        {
+            returnValue = numberCollection.stream().collect(Collectors.summingDouble(x -> x.doubleValue()));
+        }
+        else if (longCount > 0)
+        {
+            returnValue = numberCollection.stream().collect(Collectors.summingLong(x -> x.longValue()));
+        }
+        else if (integerCount > 0)
+        {
+            returnValue = numberCollection.stream().collect(Collectors.summingInt(x -> x.intValue()));
+        }
+
         return returnValue;
     }
 
