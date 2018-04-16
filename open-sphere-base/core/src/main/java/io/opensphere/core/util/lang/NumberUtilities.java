@@ -233,27 +233,6 @@ public final class NumberUtilities
     }
 
     /**
-     * Tests to determine if the supplied number is a special case, such as
-     * {@link Double#NaN} or infinity.
-     *
-     * @param value the value to test.
-     * @return true if the supplied value is a special case, false otherwise.
-     */
-    public static boolean isSpecial(Number value)
-    {
-        boolean returnValue = false;
-        if (value instanceof Double)
-        {
-            returnValue = Double.isNaN(value.doubleValue()) || Double.isInfinite(value.doubleValue());
-        }
-        else if (value instanceof Float)
-        {
-            returnValue = Float.isNaN(value.floatValue()) || Float.isInfinite(value.floatValue());
-        }
-        return returnValue;
-    }
-
-    /**
      * Compares the supplied values, determining if the left side is greater
      * than or less than the right side. If they're equivalent, the method will
      * return zero.
@@ -269,13 +248,31 @@ public final class NumberUtilities
     public static int compare(Number left, Number right)
     {
         int returnValue;
-        if (NumberUtilities.isSpecial(left) || NumberUtilities.isSpecial(right))
+        if (ArithmeticUtilities.isSpecial(left) || ArithmeticUtilities.isSpecial(right))
         {
             returnValue = Double.compare(left.doubleValue(), right.doubleValue());
         }
         else
         {
             returnValue = NumberUtilities.toBigDecimal(left).compareTo(NumberUtilities.toBigDecimal(right));
+        }
+        return returnValue;
+    }
+
+    /**
+     * Gets the supplied value as an Number, or null if the value cannot be
+     * converted.
+     *
+     * @param value the value to convert.
+     * @return a Number equivalent to the supplied value, or null if it cannot
+     *         be converted.
+     */
+    public static Number getNumericValue(Object value)
+    {
+        Number returnValue = null;
+        if (value instanceof Number)
+        {
+            returnValue = (Number)value;
         }
         return returnValue;
     }
