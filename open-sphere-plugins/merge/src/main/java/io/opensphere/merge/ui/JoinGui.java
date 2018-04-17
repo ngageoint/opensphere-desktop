@@ -217,7 +217,7 @@ public class JoinGui
         MetaDataInfo meta = row.layer.getMetaDataInfo();
         if (meta != null)
         {
-            row.colCombo.getItems().addAll(new TreeSet<>(meta.getKeyNames()));
+            row.colCombo.getItems().addAll(meta.getKeyNames());
         }
         selectFirst(row.colCombo);
         // set a tooltip for the ComboBox
