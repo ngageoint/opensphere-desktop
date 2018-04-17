@@ -240,9 +240,9 @@ public class IconFeatureVisualizationStyle extends AbstractLocationFeatureVisual
                 IconImageProvider ip = determineIconProvider(iconId, bd, null);
 
                 boolean isProjectionSensitive = false;
-                if (isRotationEnabled())
+                if (isRotationEnabled() && bd.getMDP() != null)
                 {
-                    Float heading = getHeadingValue(bd);
+                    Float heading = getHeadingValue(bd.getMDP());
                     if (heading != null)
                     {
                         ip = determineIconProvider(iconId, bd,
@@ -874,17 +874,17 @@ public class IconFeatureVisualizationStyle extends AbstractLocationFeatureVisual
     /**
      * Gets the heading value.
      *
-     * @param bd the builder data
+     * @param metaDataProvider the meta data provider
      * @return the heading value
      */
-    private Float getHeadingValue(FeatureIndividualGeometryBuilderData bd)
+    private Float getHeadingValue(MetaDataProvider metaDataProvider)
     {
         Float heading = null;
 
         String headingColumn = getHeadingColumn();
         if (headingColumn != null)
         {
-            Object value = bd.getMDP().getValue(headingColumn);
+            Object value = metaDataProvider.getValue(headingColumn);
             if (value instanceof Number)
             {
                 heading = Float.valueOf(((Number)value).floatValue());
