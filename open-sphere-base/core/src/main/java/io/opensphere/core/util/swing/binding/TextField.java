@@ -2,13 +2,13 @@ package io.opensphere.core.util.swing.binding;
 
 import java.awt.EventQueue;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
-
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 
 /**
  * JTextField that provides some basic JavaFX-like binding.
@@ -42,13 +42,13 @@ public class TextField extends JTextField implements AutoCloseable
             @Override
             public void removeUpdate(DocumentEvent e)
             {
-                /* intentionally blank */
+                uiChanged(e);
             }
 
             @Override
             public void insertUpdate(DocumentEvent e)
             {
-                /* intentionally blank */
+                uiChanged(e);
             }
 
             @Override
@@ -80,13 +80,13 @@ public class TextField extends JTextField implements AutoCloseable
             @Override
             public void removeUpdate(DocumentEvent e)
             {
-                /* intentionally blank */
+                uiChanged(e);
             }
 
             @Override
             public void insertUpdate(DocumentEvent e)
             {
-                /* intentionally blank */
+                uiChanged(e);
             }
 
             @Override
