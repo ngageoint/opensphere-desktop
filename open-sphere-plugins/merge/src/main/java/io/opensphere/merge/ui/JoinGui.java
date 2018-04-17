@@ -2,7 +2,6 @@ package io.opensphere.merge.ui;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeSet;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.ValidationStatus;
