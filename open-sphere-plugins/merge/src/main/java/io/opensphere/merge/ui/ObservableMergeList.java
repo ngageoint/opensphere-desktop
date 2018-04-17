@@ -7,13 +7,13 @@ import javafx.collections.ModifiableObservableListBase;
 
 /**
  * An modifiable observable list that is backed by an ArrayList.
- * 
+ *
  * @param <E> the type the list can contain
  */
 public class ObservableMergeList<E> extends ModifiableObservableListBase<E>
 {
     /** The ArrayList providing the internals of the ObservableList. */
-    private final List<E> delegate = new ArrayList<>();
+    private final List<E> delegate = new ArrayList<>(0);
 
     @Override
     public E get(int index)

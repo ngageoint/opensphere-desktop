@@ -74,4 +74,11 @@ public class MergedDataRow implements Serializable
     {
         return myTimeSpan;
     }
+
+    @Override
+    public String toString()
+    {
+        return "MergedDataRow{\"data\": " + myData.toString() + ", \"geometry\": " + myGeometry.toString() + ", \"timespan\": "
+                + myTimeSpan.toString() + "}";
+    }
 }

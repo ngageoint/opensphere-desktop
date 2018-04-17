@@ -19,10 +19,11 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Control;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.TextAlignment;
 
 /**
  * Facilitates management of existing join configurations.
@@ -45,7 +46,7 @@ public class ConfigGui
     private JoinManager myJoinManager;
 
     /** GUI root. */
-    private final ListView<MergePrefs.Join> myMainPane;
+    private final ScrollPane myMainPane;
 
     /** Persistent data model. */
     private MergePrefs myPreferences;
@@ -73,12 +74,16 @@ public class ConfigGui
         myDataGroupController = mtb.getDataGroupController();
         myDataCache = mtb.getDataElementCache();
 
-        myMainPane = new ListView<MergePrefs.Join>(myDataRows);
-        myMainPane.setCellFactory((view) ->
+        ListView<MergePrefs.Join> listView = new ListView<MergePrefs.Join>(myDataRows);
+        listView.setCellFactory((view) ->
         {
             return new MergeFormatCell();
         });
-        myMainPane.setSelectionModel(null);
+        // Ignore all events that the ListView would otherwise handle.
+        listView.setSelectionModel(null);
+        listView.setEventDispatcher(null);
+
+        myMainPane = GuiUtil.vScroll(listView);
 
         myDialog = GuiUtil.okDialog(tb, "Joins/Merges");
         myDialog.setSize(new Dimension(450, 450));
@@ -91,7 +96,7 @@ public class ConfigGui
         {
             // Closing the window clears the scene, so we'll need to do this
             // every time.
-            myDialog.setFxNode(GuiUtil.vScroll(myMainPane));
+            myDialog.setFxNode(myMainPane);
             myDialog.setVisible(true);
         }
     }
@@ -119,11 +124,34 @@ public class ConfigGui
     }
 
     /**
-     * @param j
+     * Adds a new Join to the data list.
+     *
+     * @param join the join to add
      */
-    public void addJoin(MergePrefs.Join j)
+    public void addJoin(MergePrefs.Join join)
     {
-        myDataRows.add(j);
+        myDataRows.add(join);
+    }
+
+    /**
+     * Removes a Join from the data list.
+     *
+     * @param join the join to remove
+     */
+    public void removeJoin(MergePrefs.Join join)
+    {
+        myDataRows.remove(join);
+    }
+
+    /**
+     * Replaces the Join in the data list at the given index with a new one.
+     *
+     * @param index the index to replace
+     * @param join the new join
+     */
+    public void replaceJoin(int index, MergePrefs.Join join)
+    {
+        myDataRows.set(index, join);
     }
 
     /** A ListCell for viewing Merge/Join items. */
@@ -148,15 +176,21 @@ public class ConfigGui
             setText(null);
             setGraphic(null);
 
-            setTextAlignment(TextAlignment.JUSTIFY);
-            setContentDisplay(ContentDisplay.RIGHT);
-
             if (!empty && item != null)
             {
-                HBox myLabelBox = new HBox();
-
                 myItem = item;
                 myName = item.name;
+
+                // Set label style.
+                setContentDisplay(ContentDisplay.RIGHT);
+                setEllipsisString("...");
+                setGraphicTextGap(25.);
+
+                setPrefWidth(0.);
+                setMaxWidth(Control.USE_PREF_SIZE);
+
+                // Construct buttons.
+                HBox myLabelBox = new HBox();
 
                 Button updateButton = new Button("Update");
                 updateButton.setOnAction((evt) -> ThreadUtilities.runCpu(() -> update()));
@@ -170,6 +204,7 @@ public class ConfigGui
                 ObservableList<Node> children = myLabelBox.getChildren();
                 children.addAll(updateButton, editButton, deleteButton);
 
+                // Init label.
                 setText(myName);
                 setGraphic(myLabelBox);
             }
@@ -278,7 +313,7 @@ public class ConfigGui
             MergePrefs.Join newModel = myPreferences.editJoinModel(myItem, m);
             fireSave();
 
-            FXUtilities.runOnFXThread(() -> myDataRows.set(getIndex(), newModel));
+            FXUtilities.runOnFXThread(() -> replaceJoin(getIndex(), newModel));
         }
 
         /** Delete this join config. */
@@ -287,7 +322,7 @@ public class ConfigGui
             myPreferences.delete(myName);
             fireSave();
 
-            FXUtilities.runOnFXThread(() -> myDataRows.remove(myItem));
+            FXUtilities.runOnFXThread(() -> removeJoin(myItem));
         }
     }
 }

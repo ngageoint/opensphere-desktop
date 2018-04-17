@@ -39,7 +39,7 @@ public class MergePlugin extends PluginAdapter
     private final JoinManager myJoinManager = new JoinManager();
 
     /** GUI for managing join configurations. */
-    private ConfigGui myJoinGui;
+    private ConfigGui myJoinConfigGui;
 
     /** Provides the menu options when right clicking on multiple layers. */
     private MergeContextMenuProvider myMenuProvider;
@@ -68,7 +68,7 @@ public class MergePlugin extends PluginAdapter
 
         // add a menu item that maps to the showEditor method
         SwingUtilities.invokeLater(() -> GuiUtil.addMenuItem(GuiUtil.getMainMenu(myToolbox, MenuBarRegistry.EDIT_MENU),
-                "Joins/Merges", () -> myJoinGui.show()));
+                "Joins/Merges", () -> myJoinConfigGui.show()));
 
         // if sysPrefs are null, probably the system is broken
         mySystemPreferences = myToolbox.getPreferencesRegistry().getPreferences(MergePlugin.class);
@@ -85,8 +85,8 @@ public class MergePlugin extends PluginAdapter
 
         EventQueueUtilities.runOnEDT(() ->
         {
-            myJoinGui = new ConfigGui(tb, myJoinManager, () -> writePrefs());
-            myJoinGui.setData(myMergePreferences);
+            myJoinConfigGui = new ConfigGui(tb, myJoinManager, () -> writePrefs());
+            myJoinConfigGui.setData(myMergePreferences);
         });
     }
 
@@ -98,7 +98,7 @@ public class MergePlugin extends PluginAdapter
     private void addJoin(JoinModel m)
     {
         MergePrefs.Join join = myMergePreferences.addJoinModel(m);
-        FXUtilities.runOnFXThread(() -> myJoinGui.addJoin(join));
+        FXUtilities.runOnFXThread(() -> myJoinConfigGui.addJoin(join));
         writePrefs();
     }
 

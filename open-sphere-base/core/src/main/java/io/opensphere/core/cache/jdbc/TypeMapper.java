@@ -512,10 +512,10 @@ public class TypeMapper
         final Class<? extends Object>[] columnTypes = propertyDescriptor.getColumnTypes();
         final int[] activeColumns = propertyDescriptor.getActiveColumns();
         final ValueTranslator<? extends Object>[] translators = new ValueTranslator<?>[activeColumns.length];
-        for (int index = 0; index < activeColumns.length;)
+        for (int index = 0; index < activeColumns.length; index++)
         {
             final ValueTranslator<?> valueTranslator = getValueTranslator(columnTypes[activeColumns[index]]);
-            translators[index++] = valueTranslator;
+            translators[index] = valueTranslator;
         }
         return new ValueTranslator<Object[]>()
         {
@@ -527,14 +527,16 @@ public class TypeMapper
 
             @Override
             public int getValue(Class<? extends Object[]> type, long sizeBytes, int column, ResultSet rs,
-                    PropertyMatcher<? extends Object[]> filter, Collection<? super Object[]> results) throws CacheException
+                    PropertyMatcher<? extends Object[]> filter, Collection<? super Object[]> results)
+                throws CacheException
             {
                 throw new UnsupportedOperationException("Object[] value translator requires property descriptor.");
             }
 
             @Override
             public int getValue(PropertyDescriptor<? extends Object[]> unused, int startColumn, ResultSet rs,
-                    PropertyMatcher<? extends Object[]> filter, Collection<? super Object[]> results) throws CacheException
+                    PropertyMatcher<? extends Object[]> filter, Collection<? super Object[]> results)
+                throws CacheException
             {
                 int column = startColumn;
                 final Collection<Object> rowResults = new ArrayList<>(translators.length);
@@ -574,7 +576,8 @@ public class TypeMapper
              */
             @SuppressWarnings({ "rawtypes", "unchecked" })
             private int getColumnValue(ValueTranslator columnTranslator, Class type, long sizeBytes, int column, ResultSet rs,
-                    PropertyMatcher<? extends Object[]> filter, Collection results) throws CacheException
+                    PropertyMatcher<? extends Object[]> filter, Collection results)
+                throws CacheException
             {
                 return columnTranslator.getValue(type, sizeBytes, column, rs, filter, results);
             }
@@ -584,7 +587,8 @@ public class TypeMapper
              */
             @SuppressWarnings({ "unchecked" })
             private <T> int setColumnValue(ValueTranslator<T> columnTranslator, PreparedStatement pstmt, int column, Object value,
-                    boolean forInsert) throws CacheException, SQLException
+                    boolean forInsert)
+                throws CacheException, SQLException
             {
                 return columnTranslator.setValue(pstmt, column, (T)value, forInsert);
             }
