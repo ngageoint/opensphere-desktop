@@ -151,7 +151,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     /** The Constant ourDefaultNodeSizeParameter. */
     public static final VisualizationStyleParameter ourDefaultArrowLengthParameter = new VisualizationStyleParameter(
-            ourArrowLengthPropertyKey, "Arrow Length", Float.valueOf(10f), Float.class,
+            ourArrowLengthPropertyKey, "Arrow Size", Float.valueOf(10f), Float.class,
             new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
 
     /** The Constant ourDefaultOriginPointSizeParameter. */
@@ -166,8 +166,8 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     /** The length mode style parameter. */
     public static final VisualizationStyleParameter ourDefaultLengthModeParameter = new VisualizationStyleParameter(
-            ourLengthModePropertyKey, "Length", MANUAL_MODE, String.class, new VisualizationStyleParameterFlags(false, false),
-            ParameterHint.hint(false, false));
+            ourLengthModePropertyKey, "Line Length", MANUAL_MODE, String.class,
+            new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
 
     /** The length column style parameter. */
     public static final VisualizationStyleParameter ourDefaultLengthColumnParameter = new VisualizationStyleParameter(
@@ -617,6 +617,8 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         AbstractStyleParameterEditorPanel filler = new BlankPanel();
         showArrowPanel.getSiblingComponents().add(arrowLenPanel);
         showArrowPanel.getSiblingComponents().add(filler);
+
+        manualLengthPanel.getLengthBinding().bind(arrowLenPanel);
 
         visDepend = new EditorPanelVisibilityDependency(panel, arrowLenPanel);
         visDepend.addConstraint(new ParameterVisibilityConstraint(ourShowArrowPropertyKey, true, Boolean.TRUE));
