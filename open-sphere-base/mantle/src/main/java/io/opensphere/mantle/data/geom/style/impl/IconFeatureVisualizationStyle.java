@@ -141,7 +141,7 @@ public class IconFeatureVisualizationStyle extends AbstractLocationFeatureVisual
 
     /** The Constant ourDefaultMixIconAndElementColorParameter. */
     public static final VisualizationStyleParameter ourDefaultMixIconAndElementColorParameter = new VisualizationStyleParameter(
-            ourMixIconColorWithElementColrPropertyKey, "Mix Icon/Element Color", Boolean.FALSE, Boolean.class,
+            ourMixIconColorWithElementColrPropertyKey, "Mix Icon/Element Color", Boolean.TRUE, Boolean.class,
             new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
 
     /** The Constant ourDefaultPointSizeParameter. */
