@@ -618,7 +618,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         showArrowPanel.getSiblingComponents().add(arrowLenPanel);
         showArrowPanel.getSiblingComponents().add(filler);
 
-        manualLengthPanel.getLengthBinding().bind(arrowLenPanel);
+        manualLengthPanel.getLengthBinding().addListener(arrowLenPanel);
 
         visDepend = new EditorPanelVisibilityDependency(panel, arrowLenPanel);
         visDepend.addConstraint(new ParameterVisibilityConstraint(ourShowArrowPropertyKey, true, Boolean.TRUE));

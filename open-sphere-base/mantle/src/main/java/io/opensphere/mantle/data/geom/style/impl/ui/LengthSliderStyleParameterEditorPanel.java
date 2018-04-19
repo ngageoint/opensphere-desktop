@@ -22,8 +22,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.text.DefaultFormatter;
 
 import io.opensphere.core.units.length.Length;
-import io.opensphere.core.units.length.LengthBinding;
 import io.opensphere.core.util.MathUtil;
+import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
@@ -32,7 +32,7 @@ import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
  * A panel for editing a length style parameter.
  */
 public class LengthSliderStyleParameterEditorPanel extends AbstractStyleParameterEditorPanel
-        implements ChangeListener, ActionListener
+        implements ChangeListener, ActionListener, io.opensphere.core.util.ChangeListener<Length>
 {
     /** The Constant SHOW_SLIDER_LABELS. */
     public static final String SHOW_SLIDER_LABELS = "SHOW_SLIDER_LABELS";
@@ -166,23 +166,23 @@ public class LengthSliderStyleParameterEditorPanel extends AbstractStyleParamete
 
             myLengthSlider.setValue(val);
         }
-        else if (e.getSource() instanceof LengthBinding)
+    }
+
+    @Override
+    public void changed(ObservableValue<? extends Length> observable, Length oldValue, Length newValue)
+    {
+        int val = myLengthSlider.getValue();
+        int convertedMax = Length.create(myDisplayUnits, newValue).getMagnitudeObj().intValue();
+        convertedMax = Math.max(convertedMax, myLengthSlider.getMinimum());
+
+        if (convertedMax < val)
         {
-            LengthBinding source = (LengthBinding)e.getSource();
-
-            int val = myLengthSlider.getValue();
-            int convertedMax = Length.create(myDisplayUnits, source.getLength()).getMagnitudeObj().intValue();
-            convertedMax = Math.max(convertedMax, myLengthSlider.getMinimum());
-
-            if (convertedMax < val)
-            {
-                val = convertedMax;
-                myLengthSlider.setValue(val);
-            }
-
-            myLengthSlider.setMaximum(convertedMax);
-            myLengthSpinner.setModel(new SpinnerNumberModel(val, myLengthSlider.getMinimum(), convertedMax, 1));
+            val = convertedMax;
+            myLengthSlider.setValue(val);
         }
+
+        myLengthSlider.setMaximum(convertedMax);
+        myLengthSpinner.setModel(new SpinnerNumberModel(val, myLengthSlider.getMinimum(), convertedMax, 1));
     }
 
     /**

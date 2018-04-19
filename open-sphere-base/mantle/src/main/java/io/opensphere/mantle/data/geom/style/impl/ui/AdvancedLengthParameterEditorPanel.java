@@ -12,7 +12,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.text.DefaultFormatter;
 
 import io.opensphere.core.units.length.Length;
-import io.opensphere.core.units.length.LengthBinding;
+import io.opensphere.core.util.StrongObservableValue;
 import io.opensphere.core.util.swing.ComponentUtilities;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.core.util.swing.SwingUtilities;
@@ -33,7 +33,7 @@ public class AdvancedLengthParameterEditorPanel extends AbstractStyleParameterEd
     private final JSlider myLengthSlider;
 
     /** A binding to the current {@link #myLengthSlider} value. */
-    private final LengthBinding myLengthBinding;
+    private final StrongObservableValue<Length> myLengthBinding;
 
     /** The value label. */
     private final JLabel myValueLabel;
@@ -58,7 +58,8 @@ public class AdvancedLengthParameterEditorPanel extends AbstractStyleParameterEd
         int magnitude = (int)value.getMagnitude();
         int maxValue = Math.max(2 * magnitude, 1);
 
-        myLengthBinding = new LengthBinding(value);
+        myLengthBinding = new StrongObservableValue<>();
+        myLengthBinding.accept(value);
 
         myMaxValueSpinner = new JSpinner(new SpinnerNumberModel(maxValue, 1, 9_999_999, 1));
         JFormattedTextField textField = ((JSpinner.DefaultEditor)myMaxValueSpinner.getEditor()).getTextField();
@@ -94,7 +95,7 @@ public class AdvancedLengthParameterEditorPanel extends AbstractStyleParameterEd
      *
      * @return the binding
      */
-    public LengthBinding getLengthBinding()
+    public StrongObservableValue<Length> getLengthBinding()
     {
         return myLengthBinding;
     }
@@ -135,7 +136,7 @@ public class AdvancedLengthParameterEditorPanel extends AbstractStyleParameterEd
         setParamValue(value);
         // Our binding is to a LOB arrow; the maximum size of the arrow head is
         // half the size of the line.
-        myLengthBinding.changeLength(value.multiplyBy(0.5));
+        myLengthBinding.set(value.multiplyBy(0.5), true);
         myValueLabel.setText(String.valueOf((int)value.getMagnitude()));
     }
 
