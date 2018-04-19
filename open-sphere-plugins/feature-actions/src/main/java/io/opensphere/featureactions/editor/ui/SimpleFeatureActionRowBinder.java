@@ -1,11 +1,15 @@
 package io.opensphere.featureactions.editor.ui;
 
+import java.util.Observer;
+
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
+import io.opensphere.controlpanels.styles.model.StyleOptions;
+import io.opensphere.controlpanels.styles.model.Styles;
 import io.opensphere.featureactions.editor.controller.FilterActionAdapter;
 import io.opensphere.featureactions.editor.controller.SimpleFeatureActionController;
 import io.opensphere.featureactions.editor.model.CriteriaOptions;
@@ -39,6 +43,12 @@ public class SimpleFeatureActionRowBinder
     /** The view to bind to. */
     private final SimpleFeatureActionRowView myView;
 
+    /** The use icon model observer. */
+    private Observer myUseIconObserver;
+
+    /** The use icon UI listener. */
+    private ChangeListener<Boolean> myUseIconListener;
+
     /**
      * Constructs a new binder.
      *
@@ -71,6 +81,7 @@ public class SimpleFeatureActionRowBinder
         myView.getColorPicker().valueProperty().unbindBidirectional(myModel.colorProperty());
         myView.getCopyButton().setOnAction(null);
         myView.getRemoveButton().setOnAction(null);
+        unbindUseIconCheckBox();
         myModel.getOption().removeListener(myOptionsListener);
     }
 
@@ -92,6 +103,7 @@ public class SimpleFeatureActionRowBinder
         myView.getColorPicker().valueProperty().bindBidirectional(myModel.colorProperty());
         myView.getCopyButton().setOnAction(myCopyHandler);
         myView.getRemoveButton().setOnAction(myRemovedHandler);
+        bindUseIconCheckBox();
         myView.setEditListener(() -> updateVisibleElements());
         myModel.getOption().addListener(myOptionsListener);
     }
@@ -116,6 +128,12 @@ public class SimpleFeatureActionRowBinder
 
         boolean style = myModel.getFeatureAction().getActions().stream().anyMatch(a -> a instanceof StyleAction);
         myView.getColorPicker().setVisible(style);
+        myView.getUseIconCheckBox().setVisible(style);
+        StyleAction styleAction = getStyleAction();
+        if (styleAction != null)
+        {
+            myView.getUseIconCheckBox().setSelected(styleAction.getStyleOptions().getStyle() == Styles.ICON);
+        }
         if (myView.getIconPicker() != null)
         {
             myView.getIconPicker().setVisible(style);
@@ -127,5 +145,58 @@ public class SimpleFeatureActionRowBinder
     private void handleRemove()
     {
         myController.remove();
+    }
+
+    /**
+     * Bi-directionally binds the 'use icon' checkbox to the model.
+     */
+    private void bindUseIconCheckBox()
+    {
+        StyleAction styleAction = getStyleAction();
+        if (styleAction != null)
+        {
+            myView.getUseIconCheckBox().setSelected(styleAction.getStyleOptions().getStyle() == Styles.ICON);
+            myUseIconObserver = (o, arg) ->
+            {
+                if (StyleOptions.STYLE_PROP.equals(arg))
+                {
+                    myView.getUseIconCheckBox().setSelected(((StyleOptions)o).getStyle() == Styles.ICON);
+                }
+            };
+            styleAction.getStyleOptions().addObserver(myUseIconObserver);
+        }
+        myUseIconListener = (obs, o, n) ->
+        {
+            StyleAction action = getStyleAction();
+            if (action != null)
+            {
+                action.getStyleOptions().setStyle(n.booleanValue() ? Styles.ICON : Styles.POINT);
+            }
+        };
+        myView.getUseIconCheckBox().selectedProperty().addListener(myUseIconListener);
+    }
+
+    /**
+     * Bi-directionally unbinds the 'use icon' checkbox from the model.
+     */
+    private void unbindUseIconCheckBox()
+    {
+        StyleAction styleAction = getStyleAction();
+        if (styleAction != null && myUseIconObserver != null)
+        {
+            styleAction.getStyleOptions().deleteObserver(myUseIconObserver);
+        }
+        myView.getUseIconCheckBox().selectedProperty().removeListener(myUseIconListener);
+    }
+
+    /**
+     * Gets the style action from the feature action.
+     *
+     * @return the style action, or null
+     */
+    private StyleAction getStyleAction()
+    {
+        return (StyleAction)myModel.getFeatureAction().getActions().stream().filter(a -> a instanceof StyleAction).findAny()
+                .orElse(null);
     }
 }
