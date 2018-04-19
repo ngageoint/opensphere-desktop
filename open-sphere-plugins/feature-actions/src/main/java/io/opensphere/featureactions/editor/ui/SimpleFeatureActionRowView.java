@@ -88,6 +88,13 @@ public interface SimpleFeatureActionRowView
     Button getRemoveButton();
 
     /**
+     * Gets the use icon check box.
+     *
+     * @return the use icon check box.
+     */
+    CheckBox getUseIconCheckBox();
+
+    /**
      * Gets the value text field.
      *
      * @return The value text field.
