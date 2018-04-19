@@ -114,7 +114,6 @@ public class FeatureActionsController extends EventListenerService
             {
                 if (!evt.isNewIsDefaultStyle())
                 {
-                    System.out.println("Schedule model change");
                     myProcrastinatingExecutor.execute(() -> handleModelChange(evt.getDTIKey()));
                 }
             }
