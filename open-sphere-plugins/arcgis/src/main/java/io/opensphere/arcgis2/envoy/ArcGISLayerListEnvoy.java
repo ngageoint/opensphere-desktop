@@ -359,8 +359,8 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
                 if ((serverIndex = split.indexOf(serverType)) >= 0)
                 {
                     builder.setPath(split.subList(servicesIndex + 1, serverIndex));
+                    break;
                 }
-                break;
             }
         }
         builder.setURL(url);
