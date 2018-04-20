@@ -132,7 +132,7 @@ public final class UrlUtilities
             }
             catch (MalformedURLException e)
             {
-                LOGGER.error(e.toString());
+                LOGGER.error(e.toString(), e);
             }
         }
         return url;

@@ -1,18 +1,23 @@
 package io.opensphere.arcgis2.envoy;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
 
 import io.opensphere.arcgis2.model.ArcGISLayer;
 import io.opensphere.arcgis2.model.FolderInfo;
@@ -54,8 +59,22 @@ import io.opensphere.server.util.JsonUtils;
 /** Envoy that talks to an ArcGIS server to get its layer list via json. */
 public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryDataProvider
 {
+
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(ArcGISLayerListEnvoy.class);
+
+    /**
+     * A regular expression pattern used to determine if the user has entered a
+     * URL that is a subpath of the main ArcGIS server (so as to avoid
+     * configuring the entire server).
+     */
+    private static final Pattern SUBPATH_PATTERN = Pattern.compile("^.*rest/services(/.+)$");
+
+    /**
+     * A regular expression pattern used to determine if the user has entered a
+     * URL that contains the ArcGIS server component.
+     */
+    private static final Pattern SERVER_SUBPATH_PATTERN = Pattern.compile("^.*/(Map|Feature|GP|Globe|Image)(Server)$");
 
     /**
      * Constructor.
@@ -83,6 +102,7 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
     @Override
     public void open()
     {
+        /* intentionally blank */
     }
 
     @Override
@@ -102,23 +122,70 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
             throw new QueryException("Server URL must be provided in category.");
         }
 
-        URL url;
-        try
+        DataModelCategory localCategory = new DataModelCategory(category.getSource(), category.getFamily(),
+                category.getCategory());
+
+        String includedSubpath = null;
+        Matcher matcher = SUBPATH_PATTERN.matcher(localCategory.getCategory());
+        if (matcher.matches())
         {
-            url = new URL(category.getCategory());
-        }
-        catch (MalformedURLException e)
-        {
-            throw new QueryException("Could not form URL for category [" + category.getCategory() + "]: " + e.getMessage(), e);
+            String subpath = matcher.group(1);
+            localCategory = localCategory.withCategory(localCategory.getCategory().replace(subpath, ""));
+
+            // strip the leading slash from the subpath, and if there's a server
+            // component, remove it from the subpath:
+            includedSubpath = removeServerComponent(subpath.substring(1));
         }
 
+        queryImpl(localCategory, queryReceiver, UrlUtilities.toURL(localCategory.getCategory()), includedSubpath);
+    }
+
+    /**
+     * Examines the supplied subpath, looking for an ArcGIS server component. If
+     * found, it is removed and the truncated string is returned. If not found,
+     * the original string is returned unmolested.
+     *
+     * @param subpath the subpath to examine.
+     * @return the supplied subpath, stripped of any ArcGIS Server components,
+     *         if present.
+     */
+    protected String removeServerComponent(String subpath)
+    {
+        String returnValue = subpath;
+        Matcher serverMatcher = SERVER_SUBPATH_PATTERN.matcher(subpath);
+        if (serverMatcher.matches())
+        {
+            returnValue = subpath.replace("/" + serverMatcher.group(1) + serverMatcher.group(2), "");
+        }
+        return returnValue;
+    }
+
+    /**
+     * Recursively executes a series HTTP GET queries against the supplied URL,
+     * and processes the results. the included subpath is used to determine if
+     * only a subset of the folders should be retrieved. The subpath is used to
+     * limit the number of recursions to only those items which match it or a
+     * substring of it.
+     *
+     * @param category the {@link DataModelCategory} for which to query.
+     * @param queryReceiver the receiver to process the results.
+     * @param url the URL to which the query is sent.
+     * @param includedSubpath the optional subpath to use for restricting the
+     *            number of recursions.
+     * @throws QueryException if the query cannot be executed.
+     * @throws InterruptedException if the processing of the results is
+     *             interrupted.
+     */
+    private void queryImpl(DataModelCategory category, final CacheDepositReceiver queryReceiver, URL url, String includedSubpath)
+        throws QueryException, InterruptedException
+    {
         CancellableInputStream is = getJsonStream(url);
 
         if (is != null)
         {
             try
             {
-                FolderInfo info = JsonUtils.createMapper().readValue(is, FolderInfo.class);
+                FolderInfo info = parseResponse(url, is);
 
                 Collection<Map<String, Object>> layers = CollectionUtilities.concat(info.getLayers(), info.getTables());
                 if (!layers.isEmpty())
@@ -129,22 +196,28 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
 
                 for (String folder : info.getFolders())
                 {
-                    String folderUrl = UrlUtilities.concatUrlFragments(category.getCategory(), folder);
-                    queryFolder(category, folderUrl, queryReceiver);
+                    if (StringUtils.startsWith(includedSubpath, folder) || includedSubpath == null)
+                    {
+                        String folderUrl = UrlUtilities.concatUrlFragments(category.getCategory(), folder);
+                        queryFolder(category, folderUrl, queryReceiver, includedSubpath);
+                    }
                 }
 
                 for (Service service : info.getServices())
                 {
                     String name = service.getName();
-                    int indexOfSlash = name.indexOf('/');
-                    if (indexOfSlash >= 0 && indexOfSlash + 1 < name.length())
+                    if (StringUtils.startsWith(includedSubpath, name) || includedSubpath == null)
                     {
-                        name = name.substring(indexOfSlash + 1);
-                    }
-                    String type = service.getType();
-                    String folderUrl = UrlUtilities.concatUrlFragments(category.getCategory(), name, type);
+                        int indexOfSlash = name.indexOf('/');
+                        if (indexOfSlash >= 0 && indexOfSlash + 1 < name.length())
+                        {
+                            name = name.substring(indexOfSlash + 1);
+                        }
+                        String type = service.getType();
+                        String folderUrl = UrlUtilities.concatUrlFragments(category.getCategory(), name, type);
 
-                    queryFolder(category, folderUrl, queryReceiver);
+                        queryFolder(category, folderUrl, queryReceiver, includedSubpath);
+                    }
                 }
             }
             catch (JsonParseException e)
@@ -167,19 +240,52 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
     }
 
     /**
+     * Reads the response from the supplied URL from the supplied input stream.
+     * If debug is enabled, the response is logged before parsing.
+     *
+     * @param url the URL from which the response was received.
+     * @param is the input stream to read.
+     * @return a {@link FolderInfo} object containing the unmarshalled JSON
+     *         response.
+     * @throws IOException if the input stream cannot be read.
+     * @throws JsonParseException if the contents of the input stream cannot be
+     *             processed as JSON data.
+     * @throws JsonMappingException if the contents of the input stream cannot
+     *             be processed as JSON data.
+     */
+    private FolderInfo parseResponse(URL url, InputStream is) throws IOException, JsonParseException, JsonMappingException
+    {
+        FolderInfo info;
+        if (LOGGER.isDebugEnabled())
+        {
+            Charset charset = Charset.forName(System.getProperty("opensphere.charset", "UTF-8"));
+            String jsonResponse = IOUtils.toString(is, charset);
+            LOGGER.debug(url + ": " + jsonResponse);
+            info = JsonUtils.createMapper().readValue(jsonResponse, FolderInfo.class);
+        }
+        else
+        {
+            info = JsonUtils.createMapper().readValue(is, FolderInfo.class);
+        }
+        return info;
+    }
+
+    /**
      * Start a query for a subfolder on the server.
      *
      * @param category The category for the current folder.
      * @param folderUrl The URL for the subfolder.
      * @param queryReceiver The receiver for the layers.
+     * @param includedSubpath the subpath to include in requests.
      * @throws QueryException If the query fails.
      * @throws InterruptedException If the thread is interrupted.
      */
-    private void queryFolder(DataModelCategory category, String folderUrl, CacheDepositReceiver queryReceiver)
+    private void queryFolder(DataModelCategory category, String folderUrl, CacheDepositReceiver queryReceiver,
+            String includedSubpath)
         throws InterruptedException, QueryException
     {
-        DataModelCategory nextDMC = category.withCategory(folderUrl);
-        query(nextDMC, null, null, null, 0, null, queryReceiver);
+        queryImpl(category.withCategory(folderUrl), queryReceiver,
+                UrlUtilities.toURL(category.withCategory(folderUrl).getCategory()), includedSubpath);
     }
 
     /**
@@ -199,6 +305,10 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
         try
         {
             URL actualUrl = new URL(url.toString() + "?f=json");
+            if (LOGGER.isTraceEnabled())
+            {
+                LOGGER.trace("GET: " + actualUrl);
+            }
             is = serverConnection.sendGet(actualUrl, response);
             if (MimeType.HTML.toString().equals(response.getContentType()))
             {
@@ -250,6 +360,18 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
             {
                 builder.setPath(split.subList(servicesIndex + 1, serverIndex));
             }
+            else if ((serverIndex = split.indexOf("GPServer")) >= 0)
+            {
+                builder.setPath(split.subList(servicesIndex + 1, serverIndex));
+            }
+            else if ((serverIndex = split.indexOf("GlobeServer")) >= 0)
+            {
+                builder.setPath(split.subList(servicesIndex + 1, serverIndex));
+            }
+            else if ((serverIndex = split.indexOf("ImageServer")) >= 0)
+            {
+                builder.setPath(split.subList(servicesIndex + 1, serverIndex));
+            }
         }
         builder.setURL(url);
 
@@ -258,7 +380,11 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
         boolean isFirst = true;
         for (Map<String, Object> layer : layers)
         {
-            if (Boolean.TRUE.equals(layer.get("defaultVisibility")))
+            // as long as the layer doesn't declare itself invisible by default,
+            // process it (changed from only processing layers that declared
+            // themselves visible, and some servers just omit this tag
+            // entirely):
+            if (!Boolean.FALSE.equals(layer.get("defaultVisibility")))
             {
                 populateBuilder(builder, info, layer);
                 ArcGISLayer arcLayer = new ArcGISLayer(builder);
