@@ -360,6 +360,7 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
                 {
                     builder.setPath(split.subList(servicesIndex + 1, serverIndex));
                 }
+                break;
             }
         }
         builder.setURL(url);
