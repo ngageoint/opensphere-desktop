@@ -5,11 +5,11 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,9 +59,12 @@ import io.opensphere.server.util.JsonUtils;
 /** Envoy that talks to an ArcGIS server to get its layer list via json. */
 public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryDataProvider
 {
-
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(ArcGISLayerListEnvoy.class);
+
+    /** A set of server endpoint types recognized by the envoy. */
+    private static final Set<String> ARCGIS_SERVER_ENDPOINTS = New.set("MapServer", "FeatureServer", "GPServer", "GlobeServer",
+            "ImageServer");
 
     /**
      * A regular expression pattern used to determine if the user has entered a
@@ -258,8 +261,7 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
         FolderInfo info;
         if (LOGGER.isDebugEnabled())
         {
-            Charset charset = Charset.forName(System.getProperty("opensphere.charset", "UTF-8"));
-            String jsonResponse = IOUtils.toString(is, charset);
+            String jsonResponse = IOUtils.toString(is, StringUtilities.DEFAULT_CHARSET);
             LOGGER.debug(url + ": " + jsonResponse);
             info = JsonUtils.createMapper().readValue(jsonResponse, FolderInfo.class);
         }
@@ -284,8 +286,7 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
             String includedSubpath)
         throws InterruptedException, QueryException
     {
-        queryImpl(category.withCategory(folderUrl), queryReceiver,
-                UrlUtilities.toURL(category.withCategory(folderUrl).getCategory()), includedSubpath);
+        queryImpl(category.withCategory(folderUrl), queryReceiver, UrlUtilities.toURL(folderUrl), includedSubpath);
     }
 
     /**
@@ -349,28 +350,16 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
         ArcGISLayer.Builder builder = new ArcGISLayer.Builder();
         List<String> split = Arrays.asList(url.toString().split("/"));
         int servicesIndex = split.indexOf("services");
+
         if (servicesIndex >= 0)
         {
             int serverIndex;
-            if ((serverIndex = split.indexOf("MapServer")) >= 0)
+            for (String serverType : ARCGIS_SERVER_ENDPOINTS)
             {
-                builder.setPath(split.subList(servicesIndex + 1, serverIndex));
-            }
-            else if ((serverIndex = split.indexOf("FeatureServer")) >= 0)
-            {
-                builder.setPath(split.subList(servicesIndex + 1, serverIndex));
-            }
-            else if ((serverIndex = split.indexOf("GPServer")) >= 0)
-            {
-                builder.setPath(split.subList(servicesIndex + 1, serverIndex));
-            }
-            else if ((serverIndex = split.indexOf("GlobeServer")) >= 0)
-            {
-                builder.setPath(split.subList(servicesIndex + 1, serverIndex));
-            }
-            else if ((serverIndex = split.indexOf("ImageServer")) >= 0)
-            {
-                builder.setPath(split.subList(servicesIndex + 1, serverIndex));
+                if ((serverIndex = split.indexOf(serverType)) >= 0)
+                {
+                    builder.setPath(split.subList(servicesIndex + 1, serverIndex));
+                }
             }
         }
         builder.setURL(url);
