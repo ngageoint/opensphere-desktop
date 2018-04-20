@@ -28,7 +28,7 @@ import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
 /**
  * The Class GroupedStyleParameterEditorPanel.
  */
-public class GroupedStyleParameterEditorPanel extends AbstractVisualizationControlPanel
+public class GroupedStyleParameterEditorPanel extends AbstractGroupedVisualizationControlPanel
 {
     /**
      * serialVersionUID.
@@ -85,6 +85,7 @@ public class GroupedStyleParameterEditorPanel extends AbstractVisualizationContr
      *
      * @param group the group
      */
+    @Override
     public void addGroup(StyleParameterEditorGroupPanel group)
     {
         synchronized (myParameterGroups)
@@ -204,4 +205,9 @@ public class GroupedStyleParameterEditorPanel extends AbstractVisualizationContr
         taPanel.setPreferredSize(new Dimension(300, height));
         return taPanel;
     }
+
+	@Override
+	public void addGroupAtTop(StyleParameterEditorGroupPanel group) {
+		return;
+	}
 }
