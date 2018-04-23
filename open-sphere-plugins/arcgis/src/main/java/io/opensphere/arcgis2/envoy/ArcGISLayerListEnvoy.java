@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -24,8 +23,6 @@ import io.opensphere.arcgis2.model.ArcGISLayer;
 import io.opensphere.arcgis2.model.FolderInfo;
 import io.opensphere.arcgis2.model.Service;
 import io.opensphere.arcgis2.model.TileInfo;
-import io.opensphere.core.Notify;
-import io.opensphere.core.Notify.Method;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.api.adapter.AbstractEnvoy;
 import io.opensphere.core.cache.CacheDeposit;
@@ -324,17 +321,8 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
         }
         catch (IOException | URISyntaxException e)
         {
-            if (e instanceof UnknownHostException)
-            {
-                throw new QueryException(e);
-            }
-            else
-            {
-                String message = "Failed to get layers from server at url [" + url + "]: " + e;
-                Notify.warn(message, Method.ALERT_HIDDEN);
-                LOGGER.warn(message);
-            }
-            is = null;
+            String message = "Failed to get layers from server at url [" + url + "]: " + e;
+            throw new QueryException(message, e);
         }
         if (response.getResponseCode() != HttpURLConnection.HTTP_OK && response.getResponseCode() != 0)
         {
