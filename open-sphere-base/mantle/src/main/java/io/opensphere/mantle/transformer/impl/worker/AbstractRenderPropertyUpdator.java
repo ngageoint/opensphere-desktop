@@ -1,21 +1,17 @@
 package io.opensphere.mantle.transformer.impl.worker;
 
+import java.util.IdentityHashMap;
+import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
-
+import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.renderproperties.RenderProperties;
-import io.opensphere.mantle.data.geom.factory.RenderPropertyPool;
-import io.opensphere.mantle.data.geom.factory.impl.DefaultRenderPropertyPool;
 
 /**
  * The Class AllRenderPropertyUpdator.
  */
 public abstract class AbstractRenderPropertyUpdator implements Runnable
 {
-    /** Logger reference. */
-    private static final Logger LOGGER = Logger.getLogger(AbstractRenderPropertyUpdator.class);
-
     /** The Provider. */
     private final DataElementTransformerWorkerDataProvider myProvider;
 
@@ -46,21 +42,24 @@ public abstract class AbstractRenderPropertyUpdator implements Runnable
         return myProvider;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void run()
     {
-        RenderPropertyPool rpp = DefaultRenderPropertyPool.createPool(myProvider.getDataType(), myProvider.getGeometrySet(),
-                myProvider.getHiddenGeometrySet());
-        Set<RenderProperties> rpSet = rpp.values();
-        for (RenderProperties rp : rpSet)
+        // Get a set of unique render property objects
+        Map<RenderProperties, Object> renderPropertyMap = new IdentityHashMap<>();
+        for (Geometry geometry : myProvider.getGeometrySet())
+        {
+            renderPropertyMap.put(geometry.getRenderProperties(), null);
+        }
+        for (Geometry geometry : myProvider.getHiddenGeometrySet())
+        {
+            renderPropertyMap.put(geometry.getRenderProperties(), null);
+        }
+        Set<RenderProperties> renderProperties = renderPropertyMap.keySet();
+
+        for (RenderProperties rp : renderProperties)
         {
             adjust(rp);
         }
-        if (LOGGER.isTraceEnabled())
-        {
-            LOGGER.trace("AllRenderPropertyUpdator: RenderPropertyPoolSize: " + rpp.size());
-        }
-        rpp.clearPool();
     }
 }

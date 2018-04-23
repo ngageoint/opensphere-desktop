@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.bitsys.fade.mist.state.v4.LayerType;
 import com.bitsys.fade.mist.state.v4.StateType;
 
 import io.opensphere.core.Toolbox;
@@ -98,10 +99,21 @@ public class WFSStateActivator
         serverStateController.activateServers(state);
 
         List<WFSLayerState> states = ServerStateUtilities.getWfsLayers(serverToolbox.getLayerConfigurationManager(), state)
-                .stream().map(SaveStateV4ToV3Translator::toLayerState).collect(Collectors.toList());
+                .stream().map(this::convertLayer).collect(Collectors.toList());
         List<DataGroupInfo> stateGroups = createAndActivateGroups(id, states);
 
         return new WFSStateGroup(id, stateGroups, states);
+    }
+
+    /**
+     * Converts the state layer to a WFSLayerState.
+     *
+     * @param layerType the state layer
+     * @return the WFSLayerState
+     */
+    protected WFSLayerState convertLayer(LayerType layerType)
+    {
+        return SaveStateV4ToV3Translator.toLayerState(layerType);
     }
 
     /**

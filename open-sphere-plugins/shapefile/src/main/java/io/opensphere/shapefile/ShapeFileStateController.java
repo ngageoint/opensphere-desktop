@@ -246,7 +246,6 @@ public class ShapeFileStateController extends AbstractLayerStateController<Shape
         layer.setVisible(dataSource.isVisible());
         layer.setBaseColor(StateUtilities.formatColor(dataSource.getShapeColor()));
         layer.setTemporal(Boolean.valueOf(dataType.getBasicVisualizationInfo().getLoadsTo().isTimelineEnabled()));
-        layer.setAnalyze(Boolean.valueOf(dataType.getBasicVisualizationInfo().getLoadsTo().isAnalysisEnabled()));
         layer.setAnimate(Boolean.TRUE.toString());
         layer.setLoad(Boolean.TRUE);
         layer.setSpatial(Boolean.TRUE);

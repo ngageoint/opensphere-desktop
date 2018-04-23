@@ -202,6 +202,7 @@ public class WFSStateSaver
             wfsLayerState.setDisableEmptyColumns(wfsMDI.isAutomaticallyDisableEmptyColumns());
 
             wfsLayerState.setLoadsTo(wfsType.getBasicVisualizationInfo().getLoadsTo());
+            wfsLayerState.setMetaData(dataType.getMetaDataInfo());
 
             stateLayers.add(wfsLayerState);
         }

@@ -22,6 +22,9 @@ public class SearchResult
     /** A more detailed text of the result, if there is one. */
     private String myDescription;
 
+    /** An even more detailed text of the result, if there is one. */
+    private String myFullDescription;
+
     /**
      * The locations of the search result. One location means a point will be
      * drawn on the globe representing this result, multiple locations means a
@@ -39,13 +42,13 @@ public class SearchResult
     private String myText;
 
     /** The property in which the focus of the element is maintained. */
-    private final BooleanProperty myFocusedProperty = new SimpleBooleanProperty(false);
+    private final BooleanProperty myFocusedProperty = new SimpleBooleanProperty(this, null, false);
 
     /** The property in which the hovered state of the element is maintained. */
-    private final BooleanProperty myHoveredProperty = new SimpleBooleanProperty(false);
+    private final BooleanProperty myHoveredProperty = new SimpleBooleanProperty(this, null, false);
 
     /** The property in which the selection state is maintained. */
-    private final BooleanProperty mySelectedProperty = new SimpleBooleanProperty(false);
+    private final BooleanProperty mySelectedProperty = new SimpleBooleanProperty(this, null, false);
 
     /** Whether to have the framework create a geometry for the result. */
     private boolean myCreateGeometry = true;
@@ -196,5 +199,25 @@ public class SearchResult
     public void setCreateGeometry(boolean createGeometry)
     {
         myCreateGeometry = createGeometry;
+    }
+
+    /**
+     * Gets the full description.
+     *
+     * @return the full description
+     */
+    public String getFullDescription()
+    {
+        return myFullDescription;
+    }
+
+    /**
+     * Sets the full description.
+     *
+     * @param fullDescription the full description
+     */
+    public void setFullDescription(String fullDescription)
+    {
+        myFullDescription = fullDescription;
     }
 }

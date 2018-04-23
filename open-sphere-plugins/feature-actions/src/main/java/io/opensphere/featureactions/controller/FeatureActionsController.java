@@ -5,8 +5,9 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -25,7 +26,7 @@ import io.opensphere.core.util.ThreadConfined;
 import io.opensphere.core.util.XMLUtilities;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
+import io.opensphere.core.util.concurrent.CommonTimer;
 import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.featureactions.model.Action;
 import io.opensphere.featureactions.model.FeatureAction;
@@ -35,9 +36,13 @@ import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.event.impl.DataElementsAddedEvent;
 import io.opensphere.mantle.controller.event.impl.DataElementsRemovedEvent;
 import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.data.VisualizationSupport;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.element.mdfilter.impl.DataFilterEvaluator;
+import io.opensphere.mantle.data.geom.style.VisualizationStyle;
+import io.opensphere.mantle.data.geom.style.VisualizationStyleDatatypeChangeEvent;
+import io.opensphere.mantle.data.geom.style.VisualizationStyleRegistry.VisualizationStyleRegistryChangeListener;
 import io.opensphere.mantle.data.geom.style.config.v1.DataTypeStyleConfig;
 import io.opensphere.mantle.data.geom.style.config.v1.StyleManagerConfig;
 import io.opensphere.mantle.data.geom.style.dialog.StyleManagerController;
@@ -55,6 +60,9 @@ public class FeatureActionsController extends EventListenerService
     /** The executor on which to handle events. */
     private final ExecutorService myExecutor = ThreadUtilities.newTerminatingFixedThreadPool("FeatureActionsController", 1);
 
+    /** Executor used to handle style registry changes. */
+    private final transient Executor myProcrastinatingExecutor = CommonTimer.createProcrastinatingExecutor(200);
+
     /** The mantle toolbox. */
     private final MantleToolbox myMantleToolbox;
 
@@ -69,6 +77,9 @@ public class FeatureActionsController extends EventListenerService
     /** The type keys for which actions have been applied. */
     @ThreadConfined("FeatureActionsController")
     private final Map<String, DataTypeStyleConfig> myTypeKeysAndStyles = New.map();
+
+    /** The style registry listener. */
+    private final VisualizationStyleRegistryChangeListener myStyleRegistryListener;
 
     /**
      * Constructor.
@@ -89,6 +100,37 @@ public class FeatureActionsController extends EventListenerService
         addService(myRegistry.getPrefs().getListenerService(Preferences.ALL_KEY, this::handleModelChange));
         addService(myPrefs.getPreferences(StyleManagerController.class).getListenerService(Preferences.ALL_KEY,
                 this::handleStyleChange));
+
+        /* This is needed because handleStyleChange() doesn't handle when 'Enable Custom Style' is checked. */
+        myStyleRegistryListener = new VisualizationStyleRegistryChangeListener()
+        {
+            @Override
+            public void visualizationStyleInstalled(Class<? extends VisualizationStyle> styleClass, Object source)
+            {
+            }
+
+            @Override
+            public void visualizationStyleDatatypeChanged(VisualizationStyleDatatypeChangeEvent evt)
+            {
+                if (!evt.isNewIsDefaultStyle())
+                {
+                    myProcrastinatingExecutor.execute(() -> handleModelChange(evt.getDTIKey()));
+                }
+            }
+
+            @Override
+            public void defaultStyleChanged(Class<? extends VisualizationSupport> mgsClass,
+                    Class<? extends VisualizationStyle> styleClass, Object source)
+            {
+            }
+        };
+    }
+
+    @Override
+    public void open()
+    {
+        super.open();
+        myMantleToolbox.getVisualizationStyleRegistry().addVisualizationStyleRegistryChangeListener(myStyleRegistryListener);
     }
 
     /**
@@ -320,12 +362,15 @@ public class FeatureActionsController extends EventListenerService
             if (value instanceof StyleManagerConfig)
             {
                 StyleManagerConfig config = (StyleManagerConfig)value;
-                for (Entry<String, DataTypeStyleConfig> entry : myTypeKeysAndStyles.entrySet())
+                for (Map.Entry<String, DataTypeStyleConfig> entry : myTypeKeysAndStyles.entrySet())
                 {
-                    DataTypeStyleConfig newConfig = config.getDataTypeStyleByTypeKey(entry.getKey());
-                    if (!EqualsHelper.equals(newConfig, entry.getValue()))
+                    String dataTypeKey = entry.getKey();
+                    DataTypeStyleConfig oldConfig = entry.getValue();
+
+                    DataTypeStyleConfig newConfig = config.getDataTypeStyleByTypeKey(dataTypeKey);
+                    if (!Objects.equals(newConfig, oldConfig))
                     {
-                        handleModelChange(entry.getKey());
+                        handleModelChange(dataTypeKey);
                     }
                 }
             }

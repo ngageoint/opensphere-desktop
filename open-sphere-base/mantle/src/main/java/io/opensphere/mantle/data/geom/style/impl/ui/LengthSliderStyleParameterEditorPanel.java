@@ -10,17 +10,20 @@ import java.util.Hashtable;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.JTextField;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.text.DefaultFormatter;
 
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.MathUtil;
-import io.opensphere.core.util.swing.ComponentUtilities;
+import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
@@ -29,7 +32,7 @@ import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
  * A panel for editing a length style parameter.
  */
 public class LengthSliderStyleParameterEditorPanel extends AbstractStyleParameterEditorPanel
-        implements ChangeListener, ActionListener
+        implements ChangeListener, ActionListener, io.opensphere.core.util.ChangeListener<Length>
 {
     /** The Constant SHOW_SLIDER_LABELS. */
     public static final String SHOW_SLIDER_LABELS = "SHOW_SLIDER_LABELS";
@@ -48,8 +51,8 @@ public class LengthSliderStyleParameterEditorPanel extends AbstractStyleParamete
     /** The Slider. */
     private final JSlider myLengthSlider;
 
-    /** The Text field. */
-    private final JTextField myLengthTextField;
+    /** The value Spinner. */
+    private final JSpinner myLengthSpinner;
 
     /** The Value. */
     private final JLabel myLengthValueLabel;
@@ -85,21 +88,24 @@ public class LengthSliderStyleParameterEditorPanel extends AbstractStyleParamete
 
         int iMax = (int)Math.floor(Length.create(displayUnits, maxLength).getMagnitude());
         int iMin = (int)Math.ceil(Length.create(displayUnits, minLength).getMagnitude());
-        int initialVal = (int)Math.round(getParameterValue().getMagnitude());
+        int initialVal = MathUtil.clamp((int)Math.round(getParameterValue().getMagnitude()), iMin, iMax);
 
         myLengthSlider = new JSlider(iMin, iMax, initialVal);
         Dictionary<Integer, Component> ht = new Hashtable<>(2);
         ht.put(Integer.valueOf(iMin), new JLabel(Integer.toString(iMin)));
         ht.put(Integer.valueOf(iMax), new JLabel(Integer.toString(iMax)));
         myLengthSlider.setLabelTable(ht);
-        myLengthSlider.setPaintLabels((Boolean)myPanelBuilder.getOtherParameter(SHOW_SLIDER_LABELS, Boolean.TRUE));
+        myLengthSlider
+                .setPaintLabels(((Boolean)myPanelBuilder.getOtherParameter(SHOW_SLIDER_LABELS, Boolean.TRUE)).booleanValue());
 
         myLengthValueLabel = new JLabel(myTextEntry ? Length.getShortLabel(displayUnits, true)
                 : Length.create(displayUnits, initialVal).toShortLabelString());
-        myLengthTextField = new JTextField(Integer.toString(myLengthSlider.getValue()));
-        myLengthTextField.addActionListener(this);
-        ComponentUtilities.setMinimumWidth(myLengthTextField, 50);
-        ComponentUtilities.setPreferredWidth(myLengthTextField, 50);
+
+        myLengthSpinner = new JSpinner(new SpinnerNumberModel(initialVal, iMin, iMax, 1));
+        JFormattedTextField textField = ((JSpinner.DefaultEditor)myLengthSpinner.getEditor()).getTextField();
+        textField.setColumns(4);
+        ((DefaultFormatter)textField.getFormatter()).setCommitsOnValidEdit(true);
+        myLengthSpinner.addChangeListener(this);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -109,7 +115,7 @@ public class LengthSliderStyleParameterEditorPanel extends AbstractStyleParamete
         {
             GridBagPanel subPanel = new GridBagPanel();
             subPanel.fillHorizontal().add(myLengthSlider);
-            subPanel.fillNone().setInsets(0, 5, 0, 0).add(myLengthTextField);
+            subPanel.fillNone().setInsets(0, 5, 0, 0).add(myLengthSpinner);
             panel.add(subPanel);
             panel.add(Box.createHorizontalStrut(5));
             panel.add(myLengthValueLabel);
@@ -140,23 +146,6 @@ public class LengthSliderStyleParameterEditorPanel extends AbstractStyleParamete
             int sliderVal = myLengthSlider.getValue();
             setParameter(sliderVal);
         }
-        else if (e.getSource() == myLengthTextField)
-        {
-            String text = myLengthTextField.getText();
-            double dVal = 0.0;
-            try
-            {
-                double max = myLengthSlider.getMaximum();
-                double min = myLengthSlider.getMinimum();
-                dVal = Double.parseDouble(text);
-                dVal = MathUtil.clamp(dVal, min, max);
-                myLengthSlider.setValue((int)dVal);
-            }
-            catch (NumberFormatException ex)
-            {
-                myLengthTextField.setText(Integer.toString(myLengthSlider.getValue()));
-            }
-        }
     }
 
     @Override
@@ -168,6 +157,32 @@ public class LengthSliderStyleParameterEditorPanel extends AbstractStyleParamete
             int value = myLengthSlider.getValue();
             updateValueLabel(value);
         }
+        else if (e.getSource() == myLengthSpinner)
+        {
+            int val = ((Integer)myLengthSpinner.getValue()).intValue();
+            int max = myLengthSlider.getMaximum();
+            int min = myLengthSlider.getMinimum();
+            val = MathUtil.clamp(val, min, max);
+
+            myLengthSlider.setValue(val);
+        }
+    }
+
+    @Override
+    public void changed(ObservableValue<? extends Length> observable, Length oldValue, Length newValue)
+    {
+        int val = myLengthSlider.getValue();
+        int convertedMax = Length.create(myDisplayUnits, newValue).getMagnitudeObj().intValue();
+        convertedMax = Math.max(convertedMax, myLengthSlider.getMinimum());
+
+        if (convertedMax < val)
+        {
+            val = convertedMax;
+            myLengthSlider.setValue(val);
+        }
+
+        myLengthSlider.setMaximum(convertedMax);
+        myLengthSpinner.setModel(new SpinnerNumberModel(val, myLengthSlider.getMinimum(), convertedMax, 1));
     }
 
     /**
@@ -177,12 +192,15 @@ public class LengthSliderStyleParameterEditorPanel extends AbstractStyleParamete
     public final void update()
     {
         double paramValue = getParameterValue().getMagnitude();
+
         myLengthSlider.removeChangeListener(this);
+
         if (myLengthSlider.getValue() != paramValue)
         {
             updateValueLabel((int)paramValue);
             myLengthSlider.setValue((int)paramValue);
         }
+
         myLengthSlider.addChangeListener(this);
     }
 
@@ -246,7 +264,7 @@ public class LengthSliderStyleParameterEditorPanel extends AbstractStyleParamete
             @Override
             public void run()
             {
-                myLengthTextField.setText(Integer.toString(value));
+                myLengthSpinner.setValue(Integer.valueOf(value));
                 myLengthValueLabel.setText(myTextEntry ? Length.getShortLabel(myDisplayUnits, true)
                         : Length.create(myDisplayUnits, value).toShortLabelString());
             }

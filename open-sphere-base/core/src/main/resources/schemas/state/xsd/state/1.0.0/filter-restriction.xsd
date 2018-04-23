@@ -8,10 +8,14 @@
     <xs:complexType name="BinaryLogicOpType">
       <xs:complexContent>
         <xs:restriction base="ogc:BinaryLogicOpType">
-          <xs:choice minOccurs="0" maxOccurs="unbounded">
-            <xs:element ref="ogc:comparisonOps" />
-            <xs:element ref="ogc:spatialOps" />
-            <xs:element ref="ogc:logicOps" />
+          <!--
+            Restrict the choice to change the minOccurs value. This allows for
+            better preservation of the visual state of filters.
+          -->
+          <xs:choice minOccurs="2" maxOccurs="unbounded">
+            <xs:element ref="ogc:comparisonOps"/>
+            <xs:element ref="ogc:spatialOps"/>
+            <xs:element ref="ogc:logicOps"/>
           </xs:choice>
         </xs:restriction>
       </xs:complexContent>

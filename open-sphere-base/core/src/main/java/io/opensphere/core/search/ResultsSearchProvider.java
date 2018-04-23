@@ -24,4 +24,14 @@ public interface ResultsSearchProvider extends SearchProvider
      *         search.
      */
     List<SearchResult> performSearch(String keyword, LatLonAlt lowerLeft, LatLonAlt upperRight, TimeSpan span);
+
+    /**
+     * Gets the total result count including skipped results.
+     *
+     * @return the total result count
+     */
+    default int getTotalResultCount()
+    {
+        return -1;
+    }
 }

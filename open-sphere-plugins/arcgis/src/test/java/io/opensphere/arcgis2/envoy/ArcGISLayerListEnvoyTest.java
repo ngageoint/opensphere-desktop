@@ -39,6 +39,26 @@ public class ArcGISLayerListEnvoyTest
     private static final String ourTestUrl = "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer";
 
     /**
+     * Tests the {@link ArcGISLayerListEnvoy#removeServerComponent(String)}
+     * method.
+     *
+     * @throws IOException Bad IO.
+     * @throws URISyntaxException bad URL.
+     */
+    @Test
+    public void removeServerComponent() throws IOException, URISyntaxException
+    {
+        EasyMockSupport support = new EasyMockSupport();
+        Toolbox toolbox = createToolbox(support, "/testLayers.json");
+        support.replayAll();
+
+        ArcGISLayerListEnvoy envoy = new ArcGISLayerListEnvoy(toolbox);
+
+        String result = envoy.removeServerComponent("foo/bar/FeatureServer");
+        assertEquals("foo/bar", result);
+    }
+
+    /**
      * Tests getting Arc layers.
      *
      * @throws URISyntaxException Bad URI.

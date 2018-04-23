@@ -58,7 +58,8 @@ public class Viewer3D extends AbstractDynamicViewer
     private static final double ourMaxOriginDistance = 2000000000.;
 
     /**
-     * The number of radians to add to the top clipping planes rotation calculation.
+     * The number of radians to add to the top clipping planes rotation
+     * calculation.
      */
     private static final double ourTopClipIncreaseAngle = .2;
 
@@ -155,7 +156,6 @@ public class Viewer3D extends AbstractDynamicViewer
         addTrajectoryGenerator(TrajectoryGeneratorType.ROTATION, new RotationTrajectoryGenerator3D());
         addTrajectoryGenerator(TrajectoryGeneratorType.FLAT, new FlatTrajectoryGenerator3D(this));
         resetClipPlanes();
-
         if (getPreferences() != null)
         {
             getPreferences().addPreferenceChangeListener(POSITION_PREF_KEY, myPreferenceChangeListener);
@@ -169,7 +169,6 @@ public class Viewer3D extends AbstractDynamicViewer
         {
             resetModelViewMatrix();
         }
-
         return new Matrix4d(getModelViewMatrix()).mult(adjustment).toFloatArray();
     }
 
@@ -197,18 +196,15 @@ public class Viewer3D extends AbstractDynamicViewer
         {
             throw new UnsupportedOperationException("3D viewer cannot create a camera for a non-3D position.");
         }
-
         Projection proj = getMapContext().getProjection(Viewer3D.class);
         if (!(proj instanceof AbstractGeographicProjection))
         {
             throw new UnsupportedOperationException(
                     "Cannot create viewer postion from geographic position for non-geographic projection.");
         }
-
         ViewerPosition3D position3D = (ViewerPosition3D)position;
         GeographicPosition location = proj.convertToPosition(position3D.getLocation(), ReferenceLevel.ELLIPSOID);
         Vector3d posToOrigin = position3D.getLocation().multiply(-1.).getNormalized();
-
         double roll;
         double tilt;
         ViewerPosition3D untilted;
@@ -231,7 +227,6 @@ public class Viewer3D extends AbstractDynamicViewer
             ViewerPosition3D unrolled = new ViewerPosition3D(position3D.getLocation(), position3D.getDir(),
                     position3D.getLocation());
             roll = unrolled.getUp().getAngleUnit(position3D.getUp(), position3D.getDir()) * MathUtil.RAD_TO_DEG;
-
             /* Get the tilt. This operation points the viewer's direction at the
              * model's origin. When the tilt is more than 90 or less than -90 we
              * need to reverse the unrolled view position's y-axis. */
@@ -245,11 +240,9 @@ public class Viewer3D extends AbstractDynamicViewer
             }
             tilt = untilted.getDir().getAngleUnit(unrolled.getDir(), unrolled.getRight()) * MathUtil.RAD_TO_DEG;
         }
-
         /* Get the heading. This operation puts view righted? */
         ViewerPosition3D righted = new ViewerPosition3D(untilted.getLocation(), untilted.getDir(), new Vector3d(0., 0., 1.));
         double heading = righted.getUp().getAngleUnit(untilted.getUp(), untilted.getDir()) * MathUtil.RAD_TO_DEG;
-
         return new KMLCompatibleCamera(location.getLatLonAlt(), heading, tilt, roll);
     }
 
@@ -368,14 +361,12 @@ public class Viewer3D extends AbstractDynamicViewer
         }
         modelIntersect = modelIntersect.getNormalized();
         Vector3d projectedIntersect = Plane.unitProjection(myPosition.getDir().multiply(-1), modelIntersect).getNormalized();
-
         // Now calculate angle between vectors (and keep sign)
         Vector3d orthogonal = myPosition.getRight().multiply(-1);
         Vector3d cross = modelIntersect.cross(projectedIntersect);
         double dot = modelIntersect.dot(projectedIntersect);
         double resultAngle = Math.atan2(orthogonal.dot(cross), dot);
         double ninetyDegrees = Math.toRadians(90);
-
         return Math.signum(resultAngle) < 0 ? -1 * (ninetyDegrees - Math.abs(resultAngle)) : ninetyDegrees - resultAngle;
     }
 
@@ -443,7 +434,6 @@ public class Viewer3D extends AbstractDynamicViewer
     {
         RectangularCylinder cardinalBounds = new RectangularCylinder(modelPoints);
         ViewerPosition3D centeredView = getCenteredView(cardinalBounds.getCenter());
-
         Vector3d[] axes = centeredView.getAxes();
         return new RectangularCylinder(modelPoints, axes[0], axes[1], axes[2]);
     }
@@ -490,7 +480,6 @@ public class Viewer3D extends AbstractDynamicViewer
             intersect = snapshot.getTerrainIntersection(
                     new Ray3d(position.getLocation(), ((ViewerPosition3D)position).getLocation().multiply(-1.)), this);
         }
-
         if (intersect == null)
         {
             Vector3d dir = position.getLocation().multiply(-1.);
@@ -524,18 +513,15 @@ public class Viewer3D extends AbstractDynamicViewer
             ViewerPosition3D position)
     {
         double ang = limitAngle ? Math.min(angleRads, mySpinAngleLimit) : angleRads;
-
         if (Double.isNaN(ang))
         {
             return null;
         }
         Matrix3d rotMat = new Matrix3d();
         rotMat.fromAngleNormalAxis(ang, spinAxis);
-
         Vector3d pos = rotMat.mult(position.getLocation());
         Vector3d dir = rotMat.mult(position.getDir());
         Vector3d up = rotMat.mult(position.getUp());
-
         return new ViewerPosition3D(pos, dir, up);
     }
 
@@ -554,10 +540,8 @@ public class Viewer3D extends AbstractDynamicViewer
         int correctedX = (int)(screenLoc.getX() - ul.getX());
         int correctedY = (int)(viewportHeight - screenLoc.getY() - ul.getY());
         Vector2i correctedScreenLoc = new Vector2i(correctedX, correctedY);
-
         Vector3d model = super.windowToModelCoords(correctedScreenLoc);
         Vector3d lookAt = model.subtract(myPosition.getLocation());
-
         return myMapContext.getProjection().getTerrainIntersection(new Ray3d(myPosition.getLocation(), lookAt), this);
     }
 
@@ -590,27 +574,22 @@ public class Viewer3D extends AbstractDynamicViewer
             throw new UnsupportedOperationException(
                     "Cannot create viewer postion from geographic position for non-geographic projection.");
         }
-
         Vector3d modelPosition = proj.convertToModel(new GeographicPosition(camera.getLocation()), Vector3d.ORIGIN);
         ViewerPosition3D viewPosition = getRightedView(modelPosition);
-
         // Heading - Z rotation
         Matrix3d rotation = new Matrix3d();
         rotation.fromAngleNormalAxis(camera.getHeading() * MathUtil.DEG_TO_RAD, viewPosition.getDir());
         Vector3d up = rotation.mult(viewPosition.getUp());
         viewPosition.setPosition(viewPosition.getLocation(), viewPosition.getDir(), up);
-
         // Tilt - X rotation
         rotation.fromAngleAxis(camera.getTilt() * MathUtil.DEG_TO_RAD, viewPosition.getRight());
         Vector3d dir = rotation.mult(viewPosition.getDir());
         up = rotation.mult(viewPosition.getUp());
         viewPosition.setPosition(viewPosition.getLocation(), dir, up);
-
         // Roll - Z rotation again
         rotation.fromAngleNormalAxis(camera.getRoll() * MathUtil.DEG_TO_RAD, viewPosition.getDir());
         up = rotation.mult(viewPosition.getUp());
         viewPosition.setPosition(viewPosition.getLocation(), viewPosition.getDir(), up);
-
         return viewPosition;
     }
 
@@ -621,7 +600,6 @@ public class Viewer3D extends AbstractDynamicViewer
         Vector3d vToB = ptB.subtract(myPosition.getLocation()).getNormalized();
         double dot = MathUtil.clamp(vToA.dot(vToB), -1., 1.);
         double angle = Math.abs(Math.acos(dot));
-
         return getViewportHeight() * angle / myHalfFOVy * 0.5;
     }
 
@@ -647,17 +625,13 @@ public class Viewer3D extends AbstractDynamicViewer
     {
         Vector3d center = bounds.getCenter();
         ViewerPosition3D centeredView = getCenteredView(center);
-
         // Zoom to to fit the bounds.
         double xSpan = bounds.getSpan(centeredView.getRight());
         double ySpan = bounds.getSpan(centeredView.getUp());
-
         double dist1 = xSpan / Math.tan(myHalfFOVx) * .5;
         double dist2 = ySpan / Math.tan(myHalfFOVy) * .5;
         double distance = Math.max(dist1, dist2);
-
         Vector3d pos = center.add(centeredView.getDir().multiply(-distance));
-
         return new ViewerPosition3D(pos, centeredView.getDir(), centeredView.getUp());
     }
 
@@ -688,7 +662,6 @@ public class Viewer3D extends AbstractDynamicViewer
             LOGGER.trace(StringUtilities.concat("Testing inView for ellipsoid [", ellipsoid, "] cullCosine [",
                     Double.valueOf(cullCosine), "]"));
         }
-
         if (isInView(ellipsoid.getCenter(), 0.))
         {
             LOGGER.trace("inView center is in view");
@@ -703,7 +676,6 @@ public class Viewer3D extends AbstractDynamicViewer
                 LOGGER.trace("not in front topClip");
                 return false;
             }
-
             Vector3d localBottomNormal = ellipsoid.normalToLocal(myBottomClip.getNormal()).getNormalized();
             Vector3d bottomEllipsePoint = ellipsoid.localToModel(localBottomNormal);
             if (!myBottomClip.isInFront(bottomEllipsePoint, 0.))
@@ -711,7 +683,6 @@ public class Viewer3D extends AbstractDynamicViewer
                 LOGGER.trace("not in front bottomClip");
                 return false;
             }
-
             Vector3d localLeftNormal = ellipsoid.normalToLocal(myLeftClip.getNormal()).getNormalized();
             Vector3d leftEllipsePoint = ellipsoid.localToModel(localLeftNormal);
             if (!myLeftClip.isInFront(leftEllipsePoint, 0.))
@@ -719,7 +690,6 @@ public class Viewer3D extends AbstractDynamicViewer
                 LOGGER.trace("not in front leftClip");
                 return false;
             }
-
             Vector3d localRightNormal = ellipsoid.normalToLocal(myRightClip.getNormal()).getNormalized();
             Vector3d rightEllipsePoint = ellipsoid.localToModel(localRightNormal);
             if (!myRightClip.isInFront(rightEllipsePoint, 0.))
@@ -727,7 +697,6 @@ public class Viewer3D extends AbstractDynamicViewer
                 LOGGER.trace("not in front rightClip");
                 return false;
             }
-
             if (myTopClip.hasIntersection(topEllipsePoint, bottomEllipsePoint)
                     || myBottomClip.hasIntersection(topEllipsePoint, bottomEllipsePoint)
                     || myRightClip.hasIntersection(leftEllipsePoint, rightEllipsePoint)
@@ -737,15 +706,12 @@ public class Viewer3D extends AbstractDynamicViewer
                 return true;
             }
         }
-
         if (cullCosine < 1. && ellipsoid.getZAxis().getNormalized().dot(getPosition().getDir()) > cullCosine)
         {
             LOGGER.trace("culled");
             return false;
         }
-
         LOGGER.trace("inView");
-
         return true;
     }
 
@@ -789,16 +755,13 @@ public class Viewer3D extends AbstractDynamicViewer
     {
         double adjustedX = pos.getX() - getViewOffset().getX();
         double adjustedY = pos.getY() - getViewOffset().getY();
-
         // get the percentage of the screen for the positions
         // then use that to get the angles off of the viewer
         // Intersect those with the earth to get the actual selection points.
         double fromXpct = adjustedX / getViewportWidth() - 0.5;
         double fromYpct = adjustedY / getViewportHeight() - 0.5;
-
         double fromXAngleChange = -fromXpct * myHalfFOVx * 2.;
         double fromYAngleChange = -fromYpct * myHalfFOVy * 2.;
-
         return rotateDir(fromXAngleChange, fromYAngleChange).getNormalized();
     }
 
@@ -889,7 +852,6 @@ public class Viewer3D extends AbstractDynamicViewer
         {
             return;
         }
-
         // Make sure that the viewer is not inside the model
         MapContext<DynamicViewer> mapContext = getMapContext();
         GeographicPosition geopos = null;
@@ -912,7 +874,6 @@ public class Viewer3D extends AbstractDynamicViewer
 //                System.out.println(geopos);
             }
         }
-
         ViewerPosition3D viewerPosition = new ViewerPosition3D(scaledPos, dir, up);
         viewerPosition.setGeoPosition(geopos);
         setPosition(viewerPosition);
@@ -936,7 +897,6 @@ public class Viewer3D extends AbstractDynamicViewer
         Vector3d endProj = Plane.unitProjection(spinAxis, to);
         double dot = MathUtil.clamp(startProj.dot(endProj), -1., 1.);
         double rotAngle = Math.acos(dot);
-
         // Determine whether the rotation is positive or negative by comparing
         // the spinAxis direction with the rotAxis direction.
         Vector3d rotAxis = startProj.cross(endProj).getNormalized();
@@ -944,9 +904,7 @@ public class Viewer3D extends AbstractDynamicViewer
         {
             rotAngle *= -1.;
         }
-
         ViewerPosition3D first = getSpinOnAxisPosition(rotAngle, spinAxis, false, getPosition());
-
         // tilt the spin axis
         Vector3d oToV = new Vector3d(first.getLocation()).getNormalized();
         if (MathUtil.isZero(Math.abs(oToV.dot(spinAxis)) - 1d))
@@ -954,10 +912,8 @@ public class Viewer3D extends AbstractDynamicViewer
             return;
         }
         Vector3d tiltPlaneNormal = oToV.cross(spinAxis).getNormalized();
-
         startProj = Plane.unitProjection(tiltPlaneNormal, from);
         endProj = Plane.unitProjection(tiltPlaneNormal, to);
-
         dot = MathUtil.clamp(startProj.dot(endProj), -1., 1.);
         rotAngle = Math.acos(dot);
         rotAxis = startProj.cross(endProj).getNormalized();
@@ -965,7 +921,6 @@ public class Viewer3D extends AbstractDynamicViewer
         {
             rotAngle *= -1.;
         }
-
         ViewerPosition3D finish = getSpinOnAxisPosition(rotAngle, tiltPlaneNormal, false, first);
         setView(finish.getLocation(), finish.getDir(), finish.getUp());
     }
@@ -990,11 +945,9 @@ public class Viewer3D extends AbstractDynamicViewer
     public String toString()
     {
         StringBuilder sb = new StringBuilder(64);
-
         sb.append("Position : ").append(myPosition);
         sb.append(", Direction : ").append(myPosition.getDir());
         sb.append(", Up : ").append(myPosition.getUp());
-
         return sb.toString();
     }
 
@@ -1016,13 +969,11 @@ public class Viewer3D extends AbstractDynamicViewer
             }
         }
         Vector3d backup = myPosition.getDir().multiply(-100);
-
         while (!myMapContext.getProjection().isOutsideModel(pos.add(pos.multiply(terrainTolerance))))
         {
             changed = true;
             pos = pos.add(backup);
         }
-
         if (changed)
         {
             ViewerPosition3D viewerPosition = new ViewerPosition3D(pos, myPosition.getDir(), myPosition.getUp());
@@ -1036,7 +987,6 @@ public class Viewer3D extends AbstractDynamicViewer
     {
         Vector3d model = super.windowToModelCoords(windowCoords);
         Vector3d lookAt = model.subtract(myPosition.getLocation());
-
         return myModel.getIntersection(new Ray3d(myPosition.getLocation(), lookAt));
     }
 
@@ -1062,9 +1012,7 @@ public class Viewer3D extends AbstractDynamicViewer
             resetProjectionMatrix();
         }
         float[] clipped = myProjectionMatrix.clone();
-
         Vector3d model = getClosestModelPosition();
-
         double elevation;
         if (myMapContext == null)
         {
@@ -1080,22 +1028,17 @@ public class Viewer3D extends AbstractDynamicViewer
                     Vector3d.ORIGIN);
             elevation = terrainModel.subtract(myPosition.getLocation()).getLength();
         }
-
         double tanHalfFov = (float)Math.tan(myHalfFOVx);
         final double minNearClipDistance = 5.;
         double near = Math.max(elevation / (2. * Math.sqrt(2. * tanHalfFov * tanHalfFov + 1.)), minNearClipDistance);
-
         double radius = myModel.getBoundingRadius();
         double far = Math.sqrt(elevation * (2. * radius + elevation));
-
         far *= clipFarToCenter ? 1 : 2;
-
         double depth = far - near;
         double c = -(far + near) / depth;
         double d = -2. * far * near / depth;
         clipped[10] = (float)c;
         clipped[14] = (float)d;
-
         return clipped;
     }
 
@@ -1108,7 +1051,6 @@ public class Viewer3D extends AbstractDynamicViewer
         myRightClip.setPoint(loc);
         myBottomClip.setPoint(loc);
         myTopClip.setPoint(loc);
-
         myRightClip.setNormal(myPosition.getRight().rotate(myPosition.getUp(), Math.PI - myHalfFOVx));
         myLeftClip.setNormal(myPosition.getRight().rotate(myPosition.getUp(), myHalfFOVx));
         myBottomClip.setNormal(myPosition.getUp().rotate(myPosition.getRight(), -myHalfFOVy));
@@ -1126,21 +1068,17 @@ public class Viewer3D extends AbstractDynamicViewer
     protected synchronized void resetModelViewMatrix()
     {
         Matrix4d transform = new Matrix4d();
-
         // translate so that the viewer is at the origin
         Matrix4d translation = new Matrix4d();
         translation.setTranslation(myPosition.getLocation().multiply(-1.));
-
         // rotate to put the viewer pointing in the -z direction with the up
         // vector along the +y axis.
         Quaternion quat = Quaternion.lookAt(myPosition.getDir().multiply(-1.), myPosition.getUp());
         Matrix4d rotation = new Matrix4d();
         rotation.setRotationQuaternion(quat);
-
         // set the transform.
         transform.multLocal(rotation);
         transform.multLocal(translation);
-
         myModelViewMatrix = transform.toFloatArray();
         setInverseModelViewMatrix(transform.invert());
         clearModelToWindowTransform();
@@ -1150,19 +1088,15 @@ public class Viewer3D extends AbstractDynamicViewer
     protected void resetProjectionMatrix()
     {
         float tan = (float)Math.tan(myHalfFOVx);
-
         synchronized (this)
         {
             resetProjectionMatrixClipped();
-
             myProjectionMatrix = new float[16];
             myProjectionMatrix[0] = 1f / tan;
             myProjectionMatrix[5] = (float)(myAspectRatio / tan);
-
             myProjectionMatrix[10] = -1f;
             myProjectionMatrix[11] = -1f;
             myProjectionMatrix[14] = -2f;
-
             clearModelToWindowTransform();
         }
     }
@@ -1238,13 +1172,11 @@ public class Viewer3D extends AbstractDynamicViewer
                 isValid = Math.abs(newPosition.getLatLonAlt().getLatD() - current.getLatD()) < ourZoomedInDegreeTolerance
                         && Math.abs(newPosition.getLatLonAlt().getLonD() - current.getLonD()) < ourZoomedInDegreeTolerance;
             }
-
             if (isValid && (newPosition.getLatLonAlt().getAltM() < 2000 || current.getAltM() < 2000))
             {
                 isValid = newPosition.getLatLonAlt().getAltM() - current.getAltM() < 1500;
             }
         }
-
         return isValid;
     }
 
