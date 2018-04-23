@@ -23,8 +23,6 @@ import io.opensphere.arcgis2.model.ArcGISLayer;
 import io.opensphere.arcgis2.model.FolderInfo;
 import io.opensphere.arcgis2.model.Service;
 import io.opensphere.arcgis2.model.TileInfo;
-import io.opensphere.core.Notify;
-import io.opensphere.core.Notify.Method;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.api.adapter.AbstractEnvoy;
 import io.opensphere.core.cache.CacheDeposit;
@@ -324,9 +322,7 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
         catch (IOException | URISyntaxException e)
         {
             String message = "Failed to get layers from server at url [" + url + "]: " + e;
-            Notify.warn(message, Method.ALERT_HIDDEN);
-            LOGGER.warn(message);
-            is = null;
+            throw new QueryException(message, e);
         }
         if (response.getResponseCode() != HttpURLConnection.HTTP_OK && response.getResponseCode() != 0)
         {
