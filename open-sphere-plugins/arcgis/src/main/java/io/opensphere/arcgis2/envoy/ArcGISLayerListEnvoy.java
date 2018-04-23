@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -323,9 +324,16 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
         }
         catch (IOException | URISyntaxException e)
         {
-            String message = "Failed to get layers from server at url [" + url + "]: " + e;
-            Notify.warn(message, Method.ALERT_HIDDEN);
-            LOGGER.warn(message);
+            if (e instanceof UnknownHostException)
+            {
+                throw new QueryException(e);
+            }
+            else
+            {
+                String message = "Failed to get layers from server at url [" + url + "]: " + e;
+                Notify.warn(message, Method.ALERT_HIDDEN);
+                LOGGER.warn(message);
+            }
             is = null;
         }
         if (response.getResponseCode() != HttpURLConnection.HTTP_OK && response.getResponseCode() != 0)
