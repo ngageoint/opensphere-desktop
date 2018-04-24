@@ -1,7 +1,5 @@
 package io.opensphere.mantle.data;
 
-import java.util.function.Predicate;
-
 /**
  * MapVisualizationType.
  */
@@ -73,14 +71,6 @@ public enum MapVisualizationType
     /** The type used for visualizing tiles composed of interpolated data. */
     INTERPOLATED_IMAGE_TILES(MapVisualizationStyleCategory.IMAGE);
 
-    /** Predicate for testing if this is a map data element type. */
-    public static final Predicate<MapVisualizationType> IS_MAP_DATA_ELEMENT_TYPE_PREDICATE = type -> type != null
-            && type.isMapDataElementType();
-
-    /** Predicate for testing if this is an annotation layer type. */
-    public static final Predicate<MapVisualizationType> IS_ANNOTATION_LAYER_PREDICATE = type -> type == MapVisualizationType.ANNOTATION_POINTS
-            || type == MapVisualizationType.ANNOTATION_REGIONS || type == MapVisualizationType.USER_TRACK_ELEMENTS;
-
     /** The Style category. */
     private final MapVisualizationStyleCategory myStyleCategory;
 
@@ -102,6 +92,16 @@ public enum MapVisualizationType
     public MapVisualizationStyleCategory getStyleCategory()
     {
         return myStyleCategory;
+    }
+
+    /**
+     * Checks if the enum is an annotation type.
+     *
+     * @return true, if it is an annotation type
+     */
+    public boolean isAnnotationType()
+    {
+        return this == ANNOTATION_POINTS || this == ANNOTATION_REGIONS || this == USER_TRACK_ELEMENTS;
     }
 
     /**

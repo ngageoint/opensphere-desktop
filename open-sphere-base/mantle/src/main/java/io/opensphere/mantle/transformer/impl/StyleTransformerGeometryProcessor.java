@@ -427,6 +427,36 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
     }
 
     /**
+     * Get a list of IDs that have not been overridden in the style manager.
+     *
+     * @return the non-overridden IDs
+     */
+    private List<Long> getNonOverriddenIds()
+    {
+        List<Long> ids;
+        List<Long> overriddenIds = myStyleManager.getOverriddenIds();
+        if (!overriddenIds.isEmpty())
+        {
+            ids = New.list();
+            Set<Long> overriddenIdSet = New.set(overriddenIds);
+            getIdSet().forEach(value ->
+            {
+                Long longValue = Long.valueOf(value);
+                if (!overriddenIdSet.contains(longValue))
+                {
+                    ids.add(longValue);
+                }
+                return true;
+            });
+        }
+        else
+        {
+            ids = getIdsAsList();
+        }
+        return ids;
+    }
+
+    /**
      * Execute if not shutdown.
      *
      * @param task the task
@@ -646,7 +676,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
                     if (colorEvent.getUpdateNumber() > myLastColorChangeUpdateNumber)
                     {
                         myLastColorChangeUpdateNumber = colorEvent.getUpdateNumber();
-                        List<Long> ids = getIdsAsList();
+                        List<Long> ids = getNonOverriddenIds();
                         if (hasMultiElementStyleType || anyStyleAlwaysRequiresGeometryRebuild)
                         {
                             rebuildAll = true;

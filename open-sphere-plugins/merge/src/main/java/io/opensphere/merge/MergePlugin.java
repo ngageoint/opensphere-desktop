@@ -99,6 +99,7 @@ public class MergePlugin extends PluginAdapter
     {
         MergePrefs.Join join = myMergePreferences.addJoinModel(m);
         FXUtilities.runOnFXThread(() -> myJoinConfigGui.addJoin(join));
+
         writePrefs();
     }
 

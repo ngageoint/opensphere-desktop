@@ -28,7 +28,7 @@ public final class DataTypeActionUtils
         GeographicBoundingBox bbox = dataType.getBoundingBox();
         if (bbox != null)
         {
-            gotoBoundingBox(bbox, viewer);
+            gotoBoundingBox(bbox, viewer, true);
         }
     }
 
@@ -41,7 +41,7 @@ public final class DataTypeActionUtils
     public static void gotoLocations(Collection<? extends LatLonAlt> locations, DynamicViewer viewer)
     {
         GeographicBoundingBox bbox = GeographicBoundingBox.getMinimumBoundingBoxLLA(locations);
-        gotoBoundingBox(bbox, viewer);
+        gotoBoundingBox(bbox, viewer, true);
     }
 
     /**
@@ -49,8 +49,9 @@ public final class DataTypeActionUtils
      *
      * @param bbox the bounding box
      * @param viewer the viewer
+     * @param flyTo fly to bounding box if true, snap to if false
      */
-    public static void gotoBoundingBox(GeographicBoundingBox bbox, DynamicViewer viewer)
+    public static void gotoBoundingBox(GeographicBoundingBox bbox, DynamicViewer viewer, boolean flyTo)
     {
         boolean isPoint = bbox.getWidth() == 0 && bbox.getHeight() == 0;
         GeographicBoundingBox flyToBbox;
@@ -62,11 +63,17 @@ public final class DataTypeActionUtils
         {
             flyToBbox = expandBbox(bbox);
         }
-
         List<GeographicPosition> vertices = new ArrayList<>(2);
         vertices.add(flyToBbox.getLowerLeft());
         vertices.add(flyToBbox.getUpperRight());
-        new ViewerAnimator(viewer, vertices, true).start();
+        if (flyTo)
+        {
+            new ViewerAnimator(viewer, vertices, true).start();
+        }
+        else
+        {
+            new ViewerAnimator(viewer, vertices, true).snapToPosition();
+        }
     }
 
     /**

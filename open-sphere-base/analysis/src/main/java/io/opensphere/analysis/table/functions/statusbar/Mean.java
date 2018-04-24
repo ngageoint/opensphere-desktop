@@ -1,4 +1,4 @@
-package io.opensphere.analysis.table.functions;
+package io.opensphere.analysis.table.functions.statusbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,17 +6,22 @@ import java.util.Optional;
 
 import javax.swing.JTable;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.lang.NumberUtilities;
 
 /**
  * Representation of Table Selection Mean. Does not include non-numeric cells.
  */
-public class Mean extends SpreadsheetFunction
+public class Mean extends StatusBarFunction
 {
-    /** Constructs a Mean function. */
-    public Mean()
+    /**
+     * Constructs a Mean function.
+     *
+     * @param toolbox The toolbox through which application state is accessed.
+     */
+    public Mean(Toolbox toolbox)
     {
-        super("%-10.3f", "Mean Value");
+        super(toolbox, "%-10.3f", "Mean Value");
     }
 
     /**

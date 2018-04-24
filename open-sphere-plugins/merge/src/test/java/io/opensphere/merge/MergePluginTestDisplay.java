@@ -25,11 +25,12 @@ import io.opensphere.mantle.data.cache.DataElementCache;
 import io.opensphere.merge.controller.MergeController;
 import io.opensphere.merge.ui.MergeContextMenuProvider;
 import io.opensphere.merge.ui.MergeContextSingleSelectionMenuProvider;
+import javafx.application.Platform;
 
 /**
  * Unit test for {@link MergePlugin}.
  */
-public class MergePluginTest
+public class MergePluginTestDisplay
 {
     /**
      * Mimics the weak reference to the context provider, ensures plugin does it
@@ -49,6 +50,17 @@ public class MergePluginTest
     @Test
     public void test()
     {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+
         EasyMockSupport support = new EasyMockSupport();
 
         Toolbox toolbox = createToolbox(support);
@@ -87,7 +99,8 @@ public class MergePluginTest
                 EasyMock.eq(DataGroupContextKey.class), EasyMock.isA(MergeContextSingleSelectionMenuProvider.class));
         EasyMock.expectLastCall().andAnswer(() ->
         {
-            mySingleMenuProvider = new WeakReference<>((MergeContextSingleSelectionMenuProvider)EasyMock.getCurrentArguments()[2]);
+            mySingleMenuProvider = new WeakReference<>(
+                    (MergeContextSingleSelectionMenuProvider)EasyMock.getCurrentArguments()[2]);
             return null;
         });
 

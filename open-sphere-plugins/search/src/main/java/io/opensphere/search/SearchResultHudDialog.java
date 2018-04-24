@@ -55,7 +55,7 @@ public class SearchResultHudDialog extends AbstractInternalFrame
 
         myResultPanel = new SearchDialogPanel(toolbox, searchModel);
         myResultPanelContainer = new JFXPanel();
-        Scene scene = new Scene(myResultPanel, 500, 800);
+        Scene scene = new Scene(myResultPanel, 600, 800);
         myResultPanelContainer.setScene(FXUtilities.addDesktopStyle(scene));
         setDefaultCloseOperation(HIDE_ON_CLOSE);
 
@@ -70,7 +70,8 @@ public class SearchResultHudDialog extends AbstractInternalFrame
             @Override
             public void internalFrameActivated(InternalFrameEvent e)
             {
-                // VORTEX-5538 Temporarily disable search notification dialog until recommended layers is added back
+                // VORTEX-5538 Temporarily disable search notification dialog
+                // until recommended layers is added back
 //                myResultPanel.setDialogVisible(true);
             }
 

@@ -13,7 +13,7 @@ import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
 /**
  * The Class GroupedMiniStyleEditorPanel.
  */
-public class GroupedMiniStyleEditorPanel extends AbstractVisualizationControlPanel
+public class GroupedMiniStyleEditorPanel extends AbstractGroupedVisualizationControlPanel
 {
     /**
      * serialVersionUID.
@@ -41,6 +41,7 @@ public class GroupedMiniStyleEditorPanel extends AbstractVisualizationControlPan
      *
      * @param group the group
      */
+    @Override
     public void addGroup(StyleParameterEditorGroupPanel group)
     {
         synchronized (myParamGroups)
@@ -55,6 +56,7 @@ public class GroupedMiniStyleEditorPanel extends AbstractVisualizationControlPan
      *
      * @param group the group
      */
+    @Override
     public void addGroupAtTop(StyleParameterEditorGroupPanel group)
     {
         synchronized (myParamGroups)

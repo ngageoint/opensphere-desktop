@@ -164,6 +164,7 @@ public class WFSPlugin extends PluginAdapter
 
         myWFSStateManager = new WFSStateController(myToolbox);
         myToolbox.getModuleStateManager().registerModuleStateController(StateConstants.MODULE_NAME, myWFSStateManager);
+        myWfsToolbox.setStateController(myWFSStateManager);
     }
 
     /**
