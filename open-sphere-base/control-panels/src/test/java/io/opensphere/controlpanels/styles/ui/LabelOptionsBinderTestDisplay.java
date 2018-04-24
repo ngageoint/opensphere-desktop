@@ -2,33 +2,44 @@ package io.opensphere.controlpanels.styles.ui;
 
 import static org.junit.Assert.assertEquals;
 
+import org.easymock.EasyMock;
+import org.easymock.EasyMockSupport;
+import org.junit.Before;
+import org.junit.Test;
+
+import io.opensphere.controlpanels.styles.model.LabelOptions;
+import javafx.application.Platform;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.paint.Color;
-
-import org.easymock.EasyMock;
-import org.easymock.EasyMockSupport;
-import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
-
-import io.opensphere.controlpanels.styles.model.LabelOptions;
 
 /**
  * Unit test for {@link LabelOptionsBinder}.
  */
 public class LabelOptionsBinderTestDisplay
 {
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Unit test.
      */
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         LabelOptionsView view = createView(support);

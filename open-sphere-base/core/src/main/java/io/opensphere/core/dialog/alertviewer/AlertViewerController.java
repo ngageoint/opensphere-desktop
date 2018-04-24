@@ -3,15 +3,9 @@ package io.opensphere.core.dialog.alertviewer;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
-import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import javax.annotation.concurrent.ThreadSafe;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.MenuBarRegistry;
@@ -22,6 +16,9 @@ import io.opensphere.core.dialog.alertviewer.toast.ToastController;
 import io.opensphere.core.event.EventListenerService;
 import io.opensphere.core.util.ThreadConfined;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /** The alert viewer controller. */
 @ThreadSafe
@@ -47,9 +44,7 @@ class AlertViewerController extends EventListenerService
         super(toolbox.getEventManager(), 1);
         myToolbox = toolbox;
         myToaster = new ToastController(toolbox.getUIRegistry().getMainFrameProvider());
-        PlatformImpl.startup(() ->
-        {
-        });
+
         bindEvent(UserMessageEvent.class, this::handleUserMessageEvent);
     }
 

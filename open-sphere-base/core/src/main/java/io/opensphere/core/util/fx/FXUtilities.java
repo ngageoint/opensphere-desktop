@@ -17,8 +17,6 @@ import javax.swing.ImageIcon;
 
 import org.apache.log4j.Logger;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import io.opensphere.core.units.duration.Duration;
 import io.opensphere.core.units.duration.Nanoseconds;
 import io.opensphere.core.util.image.IconUtil;
@@ -508,7 +506,55 @@ public final class FXUtilities
         }
         else
         {
-            PlatformImpl.runAndWait(runnable);
+            runAndWait(runnable);
+        }
+    }
+
+    /**
+     * Extracted implementation of PlatformImpl.runAndWait(Runnable r).
+     *
+     * @param runnable the runnable to execute
+     */
+    public static void runAndWait(Runnable runnable)
+    {
+        if (Platform.isFxApplicationThread())
+        {
+            try
+            {
+                runnable.run();
+            }
+            catch (Throwable t)
+            {
+                LOG.error("Exception in Runnable : runAndWait", t);
+            }
+        }
+        else
+        {
+            final CountDownLatch doneLatch = new CountDownLatch(1);
+            Platform.runLater(() ->
+            {
+                try
+                {
+                    runnable.run();
+                }
+                finally
+                {
+                    doneLatch.countDown();
+                }
+            });
+
+            // The original method checked if the JavaFX toolkit had already
+            // exited; our Kernal class ensures that will not occur until the
+            // entire application exits.
+
+            try
+            {
+                doneLatch.await();
+            }
+            catch (InterruptedException ex)
+            {
+                LOG.error("Exception in CountDownLatch : runAndWait", ex);
+            }
         }
     }
 
@@ -590,7 +636,7 @@ public final class FXUtilities
 
         final AtomicReference<Throwable> errorProp = new AtomicReference<>();
         final CountDownLatch latch = new CountDownLatch(1);
-        PlatformImpl.startup(new Runnable()
+        final Runnable webengRunner = new Runnable()
         {
             @Override
             public void run()
@@ -599,7 +645,16 @@ public final class FXUtilities
                 engineSaver.set(eng);
                 engineLoader.accept(eng);
             }
-        });
+        };
+        try
+        {
+            Platform.startup(webengRunner);
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+            Platform.runLater(webengRunner);
+        }
 
         if (!latch.await(Nanoseconds.get(timeout).longValue(), TimeUnit.NANOSECONDS))
         {

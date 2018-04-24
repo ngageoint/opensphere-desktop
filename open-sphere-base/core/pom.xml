@@ -44,19 +44,6 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <compilerArgs>
-                        <arg>-XDignore.symbol.file</arg>
-                        <compilerArg>-XDignore.symbol.file</compilerArg>
-                    </compilerArgs>
-                    <fork>true</fork>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
@@ -285,7 +272,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-bundle</artifactId>
+            <artifactId>cxf-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
@@ -294,6 +281,15 @@
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
+        </dependency>
+        <dependency>
+        	<groupId>javax.activation</groupId>
+        	<artifactId>javax.activation-api</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
         </dependency>
     </dependencies>
 </project>

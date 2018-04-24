@@ -44,5 +44,10 @@
 			<groupId>io.open-sphere</groupId>
 			<artifactId>auxiliary</artifactId>
 		</dependency>
+		
+		<dependency>
+		    <groupId>javax.xml.ws</groupId>
+		    <artifactId>jaxws-api</artifactId>
+	    </dependency>
 	</dependencies>
 </project>

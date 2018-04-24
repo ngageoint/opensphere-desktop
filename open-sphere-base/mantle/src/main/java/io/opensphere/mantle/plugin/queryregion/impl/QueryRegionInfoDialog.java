@@ -3,16 +3,7 @@ package io.opensphere.mantle.plugin.queryregion.impl;
 import java.awt.Window;
 import java.util.function.Consumer;
 
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.input.MouseEvent;
-
 import javax.swing.JDialog;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.core.datafilter.DataFilterGroup;
 import io.opensphere.core.datafilter.DataFilterRegistry;
@@ -20,6 +11,13 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.plugin.queryregion.QueryRegion;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+import javafx.scene.input.MouseEvent;
 
 /** Dialog that shows information about a query region. */
 public class QueryRegionInfoDialog extends JDialog
@@ -64,41 +62,48 @@ public class QueryRegionInfoDialog extends JDialog
         JFXPanel panel = new JFXPanel();
         setContentPane(panel);
         setVisible(true);
-        PlatformImpl.startup(() ->
+
+        Runnable showRunner = new Runnable()
         {
-            TreeItem<Object> root = new TreeItem<>("Layers for Query Region");
-            root.setExpanded(true);
-
-            myRegion.getTypeKeyToFilterMap().forEach((k, v) ->
+            @Override
+            public void run()
             {
-                DataTypeInfo dti = myDataGroupController.findMemberById(k);
-                if (dti != null)
+                TreeItem<Object> root = new TreeItem<>("Layers for Query Region");
+                root.setExpanded(true);
+
+                myRegion.getTypeKeyToFilterMap().forEach((k, v) ->
                 {
-                    TreeItem<Object> layerNode = new TreeItem<>(dti);
-                    Consumer<Object> filterAdder = o -> layerNode.getChildren().add(new TreeItem<>(o));
-                    if (v != null)
+                    DataTypeInfo dti = myDataGroupController.findMemberById(k);
+                    if (dti != null)
                     {
-                        if (v.getFilterGroup().getGroups().isEmpty())
+                        TreeItem<Object> layerNode = new TreeItem<>(dti);
+                        Consumer<Object> filterAdder = o -> layerNode.getChildren().add(new TreeItem<>(o));
+                        if (v != null)
                         {
-                            filterAdder.accept(v.getFilterGroup());
+                            if (v.getFilterGroup().getGroups().isEmpty())
+                            {
+                                filterAdder.accept(v.getFilterGroup());
+                            }
+                            else
+                            {
+                                v.getFilterGroup().getGroups().forEach(filterAdder);
+                            }
                         }
-                        else
-                        {
-                            v.getFilterGroup().getGroups().forEach(filterAdder);
-                        }
+                        root.getChildren().add(layerNode);
                     }
-                    root.getChildren().add(layerNode);
-                }
-            });
-            TreeView<Object> tree = new TreeView<>(root);
-            tree.setCellFactory(v -> new TreeCellExtension());
-            tree.setOnMouseClicked(e -> handleMouseClick(myDataFilterRegistry, tree, e));
+                });
+                TreeView<Object> tree = new TreeView<>(root);
+                tree.setCellFactory(v -> new TreeCellExtension());
+                tree.setOnMouseClicked(e -> handleMouseClick(myDataFilterRegistry, tree, e));
 
-            Scene scene = new Scene(tree);
-            FXUtilities.addDesktopStyle(scene);
+                Scene scene = new Scene(tree);
+                FXUtilities.addDesktopStyle(scene);
 
-            panel.setScene(scene);
-        });
+                panel.setScene(scene);
+            }
+        };
+
+        Platform.runLater(showRunner);
     }
 
     /**

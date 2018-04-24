@@ -12,8 +12,6 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.MenuBarRegistry;
@@ -33,6 +31,7 @@ import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.util.DataElementLookupUtils;
 import io.opensphere.merge.controller.MergeController;
 import io.opensphere.merge.model.MergeModel;
+import javafx.application.Platform;
 
 /**
  * Unit test for the {@link MergeUI}.
@@ -87,14 +86,22 @@ public class MergeUITestDisplay
 
     /**
      * Tests when the user hits the ok button.
+     * 
      * @throws InterruptedException if the test fails.
      */
     @Test
     public void testAccept() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
+        try
         {
-        });
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
 
         EasyMockSupport support = new EasyMockSupport();
 
@@ -139,9 +146,16 @@ public class MergeUITestDisplay
     @Test
     public void testMergeUI()
     {
-        PlatformImpl.startup(() ->
+        try
         {
-        });
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
 
         EasyMockSupport support = new EasyMockSupport();
 

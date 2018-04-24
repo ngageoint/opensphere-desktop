@@ -2,36 +2,47 @@ package io.opensphere.controlpanels.styles.ui;
 
 import static org.junit.Assert.assertEquals;
 
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Slider;
-import javafx.scene.paint.Color;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.controlpanels.styles.model.StyleOptions;
 import io.opensphere.controlpanels.styles.model.Styles;
 import io.opensphere.core.util.collections.New;
+import javafx.application.Platform;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
+import javafx.scene.paint.Color;
 
 /**
  * Unit test for {@link StyleOptionsBinder}.
  */
 public class StyleOptionsBinderTestDisplay
 {
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests the binding.
      */
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         StyleOptionsView view = createView(support);

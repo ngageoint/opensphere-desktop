@@ -19,8 +19,6 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.logging.LogManager;
 
-import javafx.application.Platform;
-
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -30,8 +28,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXBusyLabel;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.opensphere.core.Notify;
@@ -54,6 +50,7 @@ import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.lang.ToStringHelper;
 import io.opensphere.core.util.net.OpenSphereContentHandlerFactory;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import javafx.application.Platform;
 
 /**
  * This is the nucleus for the application, from whence all else springs. It
@@ -178,8 +175,7 @@ public class Kernel
                         ApplicationLifecycleEvent.publishEvent(myToolbox.getEventManager(),
                                 ApplicationLifecycleEvent.Stage.MAIN_FRAME_VISIBLE);
 
-                        if ("x86".equals(System.getProperty("os.arch"))
-                                && StringUtils.isNotEmpty(System.getenv("ProgramW6432")))
+                        if ("x86".equals(System.getProperty("os.arch")) && StringUtils.isNotEmpty(System.getenv("ProgramW6432")))
                         {
                             JOptionPane.showMessageDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
                                     "<html>You are running with 32-bit Java on a 64-bit operating system. "
@@ -400,9 +396,16 @@ public class Kernel
     private void initJavaFx()
     {
         Platform.setImplicitExit(false);
-        PlatformImpl.startup(() ->
+        try
         {
-        });
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
     }
 
     /**

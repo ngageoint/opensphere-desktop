@@ -18,7 +18,6 @@ import javax.tools.JavaFileManager;
 import javax.tools.JavaFileObject;
 import javax.tools.JavaFileObject.Kind;
 import javax.tools.StandardJavaFileManager;
-import javax.tools.StandardLocation;
 
 import org.apache.log4j.Logger;
 
@@ -91,30 +90,56 @@ public class DynamicClassFileManager extends ForwardingJavaFileManager<JavaFileM
     public Iterable<JavaFileObject> list(Location location, String packageName, Set<Kind> kinds, boolean recurse)
         throws IOException
     {
-        if (location == StandardLocation.PLATFORM_CLASS_PATH)
+        Iterable<JavaFileObject> result = null;
+
+        try
         {
-            return super.list(location, packageName, kinds, recurse);
+            result = super.list(location, packageName, kinds, recurse);
         }
-        else
+        catch (IOException e)
         {
-            Collection<JavaFileObject> results = New.collection();
-            Enumeration<URL> resources = Thread.currentThread().getContextClassLoader()
-                    .getResources(packageName.replaceAll("\\.", "/"));
-            while (resources.hasMoreElements())
+            result = continueList(location, packageName, kinds, recurse);
+        }
+
+        if (result == null || !result.iterator().hasNext())
+        {
+            result = continueList(location, packageName, kinds, recurse);
+        }
+
+        return result;
+    }
+
+    /**
+     * Extracted code from list for multi-use cases.
+     *
+     * @param location a location
+     * @param packageName a package name
+     * @param kinds return objects only of these kinds
+     * @param recurse if true include "subpackages"
+     * @return an Iterable of file objects matching the given criteria
+     * @throws IOException if an I/O error occurred, or if close has been called
+     *             and this file manager cannot be reopened
+     */
+    private Iterable<JavaFileObject> continueList(Location location, String packageName, Set<Kind> kinds, boolean recurse)
+        throws IOException
+    {
+        Collection<JavaFileObject> results = New.collection();
+        Enumeration<URL> resources = Thread.currentThread().getContextClassLoader()
+                .getResources(packageName.replaceAll("\\.", "/"));
+        while (resources.hasMoreElements())
+        {
+            URL url = resources.nextElement();
+            File file = new File(url.getFile());
+            if (file.isDirectory())
             {
-                URL url = resources.nextElement();
-                File file = new File(url.getFile());
-                if (file.isDirectory())
-                {
-                    getFilesInDirectory(packageName, file, results);
-                }
-                else
-                {
-                    getFilesInJar(packageName, url, results);
-                }
+                getFilesInDirectory(packageName, file, results);
             }
-            return results;
+            else
+            {
+                getFilesInJar(packageName, url, results);
+            }
         }
+        return results;
     }
 
     /**

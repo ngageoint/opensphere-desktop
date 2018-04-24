@@ -4,35 +4,46 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.controlpanels.columnlabels.model.ColumnLabel;
 import io.opensphere.controlpanels.columnlabels.model.ColumnLabels;
 import io.opensphere.core.util.collections.New;
+import javafx.application.Platform;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 
 /**
  * Unit test for {@link ColumnLabelRowBinder}.
  */
 public class ColumnLabelRowBinderTestDisplay
 {
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests the binding.
      */
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         ColumnLabelRowView view = createView(support);

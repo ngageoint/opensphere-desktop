@@ -3,31 +3,42 @@ package io.opensphere.controlpanels.styles.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import javafx.scene.paint.Color;
-
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.controlpanels.styles.model.StyleOptions;
 import io.opensphere.controlpanels.styles.model.Styles;
 import io.opensphere.core.util.collections.New;
+import javafx.application.Platform;
+import javafx.scene.paint.Color;
 
 /**
  * Unit test for {@link StyleOptionsPanel}.
  */
 public class StyleOptionsPanelTestDispaly
 {
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests the {@link StyleOptionsPanel}.
      */
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         StyleOptions model = new StyleOptions();
 
         model.setColor(java.awt.Color.RED);

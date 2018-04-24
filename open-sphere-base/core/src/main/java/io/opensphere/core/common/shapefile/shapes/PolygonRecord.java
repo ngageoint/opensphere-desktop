@@ -7,8 +7,6 @@ import java.awt.geom.Point2D;
 import java.nio.ByteBuffer;
 import java.util.List;
 
-import io.opensphere.core.common.geom.PolygonHD;
-
 /**
  * Intentionally building a separate class for Polygon, even though Polygon is
  * truly a Polyline. If we get certain that we don't need a separate class, this
@@ -228,11 +226,6 @@ public class PolygonRecord extends ShapeRecord
     public Point2D.Double[] getPoints()
     {
         return points;
-    }
-
-    public PolygonHD getAsPolygonHD()
-    {
-        return new PolygonHD(points, numPoints);
     }
 
     @Override

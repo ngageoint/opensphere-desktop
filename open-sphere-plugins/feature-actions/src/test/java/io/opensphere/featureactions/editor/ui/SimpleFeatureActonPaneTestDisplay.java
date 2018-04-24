@@ -10,16 +10,10 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 
 import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.Toolbox;
@@ -44,6 +38,11 @@ import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.control.ListView;
+import javafx.scene.control.skin.VirtualFlow;
 
 /**
  * Unit test for {@link SimpleFeatureActionPane}.
@@ -66,6 +65,22 @@ public class SimpleFeatureActonPaneTestDisplay
     private static final DefaultDataTypeInfo ourTestLayer = new DefaultDataTypeInfo(null, "bla", ourLayerId, ourLayerName,
             ourLayerName, true);
 
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests when the user creates a new feature action.
      *
@@ -74,10 +89,6 @@ public class SimpleFeatureActonPaneTestDisplay
     @Test
     public void testCreate() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CountDownLatch latch = new CountDownLatch(1);
@@ -99,7 +110,8 @@ public class SimpleFeatureActonPaneTestDisplay
             group.getActions().add(simpleAction);
         });
 
-        SimpleFeatureActionPane editor = new SimpleFeatureActionPane(toolbox, actions, group, ourTestLayer, null, new DragDropHandler(actions));
+        SimpleFeatureActionPane editor = new SimpleFeatureActionPane(toolbox, actions, group, ourTestLayer, null,
+                new DragDropHandler(actions));
 
         ListView<SimpleFeatureAction> listView = editor.getListView();
 
@@ -145,10 +157,6 @@ public class SimpleFeatureActonPaneTestDisplay
     @Test
     public void testDelete() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CountDownLatch latch = new CountDownLatch(1);
@@ -177,7 +185,8 @@ public class SimpleFeatureActonPaneTestDisplay
         support.replayAll();
 
         SimpleFeatureActionGroupAdapter adapter = new SimpleFeatureActionGroupAdapter(group);
-        SimpleFeatureActionPane editor = new SimpleFeatureActionPane(toolbox, actions, group, ourTestLayer, null, new DragDropHandler(actions));
+        SimpleFeatureActionPane editor = new SimpleFeatureActionPane(toolbox, actions, group, ourTestLayer, null,
+                new DragDropHandler(actions));
 
         ListView<SimpleFeatureAction> listView = editor.getListView();
 
@@ -224,10 +233,6 @@ public class SimpleFeatureActonPaneTestDisplay
     @Test
     public void testRead() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CountDownLatch latch = new CountDownLatch(1);
@@ -257,7 +262,8 @@ public class SimpleFeatureActonPaneTestDisplay
         support.replayAll();
 
         SimpleFeatureActionGroupAdapter adapter = new SimpleFeatureActionGroupAdapter(group);
-        SimpleFeatureActionPane editor = new SimpleFeatureActionPane(toolbox, actions, group, ourTestLayer, null, new DragDropHandler(actions));
+        SimpleFeatureActionPane editor = new SimpleFeatureActionPane(toolbox, actions, group, ourTestLayer, null,
+                new DragDropHandler(actions));
 
         ListView<SimpleFeatureAction> listView = editor.getListView();
 
@@ -295,10 +301,6 @@ public class SimpleFeatureActonPaneTestDisplay
     @Test
     public void testUpdate() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CountDownLatch latch = new CountDownLatch(1);
@@ -327,7 +329,8 @@ public class SimpleFeatureActonPaneTestDisplay
         support.replayAll();
 
         SimpleFeatureActionGroupAdapter adapter = new SimpleFeatureActionGroupAdapter(group);
-        SimpleFeatureActionPane editor = new SimpleFeatureActionPane(toolbox, actions, group, ourTestLayer, null, new DragDropHandler(actions));
+        SimpleFeatureActionPane editor = new SimpleFeatureActionPane(toolbox, actions, group, ourTestLayer, null,
+                new DragDropHandler(actions));
 
         ListView<SimpleFeatureAction> listView = editor.getListView();
 

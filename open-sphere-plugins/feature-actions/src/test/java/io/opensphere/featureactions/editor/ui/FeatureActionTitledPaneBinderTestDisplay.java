@@ -4,16 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.fx.FXUtilities;
@@ -21,6 +15,11 @@ import io.opensphere.featureactions.editor.model.SimpleFeatureAction;
 import io.opensphere.featureactions.editor.model.SimpleFeatureActionGroup;
 import io.opensphere.featureactions.editor.model.SimpleFeatureActions;
 import io.opensphere.featureactions.model.FeatureAction;
+import javafx.application.Platform;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
 
 /**
  * Unit test for {@link FeatureActionTitledPaneBinder}.
@@ -35,16 +34,28 @@ public class FeatureActionTitledPaneBinderTestDisplay
      */
     private static final String ourLayerId = "theLayerId";
 
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests adding an action.
      */
     @Test
     public void testAddAction()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         SimpleFeatureActionGroup group = new SimpleFeatureActionGroup();
@@ -82,10 +93,6 @@ public class FeatureActionTitledPaneBinderTestDisplay
     @Test
     public void testRemoveGroup()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         SimpleFeatureActionGroup group = new SimpleFeatureActionGroup();
@@ -115,10 +122,6 @@ public class FeatureActionTitledPaneBinderTestDisplay
     @Test
     public void testAllChecked()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         SimpleFeatureActionGroup group = new SimpleFeatureActionGroup();
@@ -165,10 +168,6 @@ public class FeatureActionTitledPaneBinderTestDisplay
     @Test
     public void testGroupRename()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         SimpleFeatureActionGroup group = new SimpleFeatureActionGroup();
@@ -205,10 +204,6 @@ public class FeatureActionTitledPaneBinderTestDisplay
     @Test
     public void testNoneChecked()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         SimpleFeatureActionGroup group = new SimpleFeatureActionGroup();
@@ -255,10 +250,6 @@ public class FeatureActionTitledPaneBinderTestDisplay
     @Test
     public void testSelectAll()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         SimpleFeatureActionGroup group = new SimpleFeatureActionGroup();
@@ -320,10 +311,6 @@ public class FeatureActionTitledPaneBinderTestDisplay
     @Test
     public void testSomeChecked()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         SimpleFeatureActionGroup group = new SimpleFeatureActionGroup();

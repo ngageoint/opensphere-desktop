@@ -12,9 +12,8 @@ import java.util.function.Supplier;
 
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.Toolbox;
@@ -39,6 +38,7 @@ import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import javafx.application.Platform;
 
 /**
  * Unit test for {@link SimpleFeatureActionRowBinder}.
@@ -58,17 +58,29 @@ public class SimpleFeatureActionRowTestDisplay
     private static final String ourLayerName = "We are layer";
 
     /** The test layer itself. */
-    private static final DefaultDataTypeInfo ourLayer =
-            new DefaultDataTypeInfo(null, "bla", ourLayerId, ourLayerName, ourLayerName, true);
+    private static final DefaultDataTypeInfo ourLayer = new DefaultDataTypeInfo(null, "bla", ourLayerId, ourLayerName,
+            ourLayerName, true);
+
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
 
     /** Tests initial setup. */
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         FeatureAction action = new FeatureAction();
@@ -127,10 +139,6 @@ public class SimpleFeatureActionRowTestDisplay
     @Test
     public void testNullUpdateItem()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         FeatureAction action = new FeatureAction();
@@ -173,10 +181,6 @@ public class SimpleFeatureActionRowTestDisplay
     @Test
     public void testClose()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         FeatureAction action = new FeatureAction();
@@ -244,10 +248,6 @@ public class SimpleFeatureActionRowTestDisplay
     @Test
     public void testCopy()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         FeatureAction action = new FeatureAction();
@@ -294,10 +294,6 @@ public class SimpleFeatureActionRowTestDisplay
     @Test
     public void testEditNew()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         FeatureAction action = new FeatureAction();
@@ -347,10 +343,6 @@ public class SimpleFeatureActionRowTestDisplay
     @Test
     public void testRange()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         FeatureAction action = new FeatureAction();
@@ -407,10 +399,6 @@ public class SimpleFeatureActionRowTestDisplay
     @Test
     public void testRemove()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         FeatureAction action = new FeatureAction();

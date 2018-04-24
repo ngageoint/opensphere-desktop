@@ -4,35 +4,46 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.analysis.binning.criteria.BinCriteria;
 import io.opensphere.analysis.binning.criteria.BinCriteriaElement;
 import io.opensphere.analysis.binning.editor.model.BinCriteriaModel;
 import io.opensphere.core.util.collections.New;
+import javafx.application.Platform;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 
 /**
  * Unit test for the {@link BinCriteriaBinder}.
  */
 public class BinCriteriaBinderTestDisplay
 {
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests adding a bin criteria.
      */
     @Test
     public void testAdd()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         ListView<BinCriteriaElement> listView = new ListView<>();
@@ -47,7 +58,7 @@ public class BinCriteriaBinderTestDisplay
 
         assertEquals(1, model.getCriteria().getCriterias().size());
         assertNotNull(model.getCriteria().getCriterias().get(0));
-        assertEquals(1,  listView.getItems().size());
+        assertEquals(1, listView.getItems().size());
         assertEquals(model.getCriteria().getCriterias().get(0), listView.getItems().get(0));
 
         binder.close();
@@ -63,10 +74,6 @@ public class BinCriteriaBinderTestDisplay
     @Test
     public void testChanges()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         ListView<BinCriteriaElement> listView = new ListView<>();
@@ -100,10 +107,6 @@ public class BinCriteriaBinderTestDisplay
     @Test
     public void testInitialValues()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         ListView<BinCriteriaElement> listView = new ListView<>();
