@@ -109,11 +109,8 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
     /** The loads to subscriber. */
     private final transient EventListener<DataTypeInfoLoadsToChangeEvent> myLoadsToSubscriber = this::handleLoadsToChange;
 
-    /** The toolbox. */
-    private final Toolbox myToolbox;
-
     /** The control panel toolbox. **/
-    private final ControlPanelToolbox myCpToolbox;
+    private final transient ControlPanelToolbox myCpToolbox;
 
     /** The provider panel. **/
     private final GridBagPanel myProviderPanel;
@@ -165,7 +162,6 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
     {
         super(tb);
         myLayerDetailsCoordinator = ldc;
-        myToolbox = tb;
         myCpToolbox = tb.getPluginToolboxRegistry().getPluginToolbox(ControlPanelToolbox.class);
         myProviderPanel = new GridBagPanel();
         setBorder(null);

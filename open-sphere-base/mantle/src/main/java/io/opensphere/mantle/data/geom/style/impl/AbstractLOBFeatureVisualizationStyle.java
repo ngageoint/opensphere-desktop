@@ -57,6 +57,7 @@ import io.opensphere.mantle.data.geom.style.StyleAltitudeReference;
 import io.opensphere.mantle.data.geom.style.VisualizationStyle;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleParameter;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleParameterFlags;
+import io.opensphere.mantle.data.geom.style.impl.ui.AbstractGroupedVisualizationControlPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.AbstractStyleParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.AbstractVisualizationControlPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.AdvancedLengthParameterEditorPanel;
@@ -150,7 +151,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     /** The Constant ourDefaultNodeSizeParameter. */
     public static final VisualizationStyleParameter ourDefaultArrowLengthParameter = new VisualizationStyleParameter(
-            ourArrowLengthPropertyKey, "Arrow Length", Float.valueOf(10f), Float.class,
+            ourArrowLengthPropertyKey, "Arrow Size", Float.valueOf(10f), Float.class,
             new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
 
     /** The Constant ourDefaultOriginPointSizeParameter. */
@@ -165,8 +166,8 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     /** The length mode style parameter. */
     public static final VisualizationStyleParameter ourDefaultLengthModeParameter = new VisualizationStyleParameter(
-            ourLengthModePropertyKey, "Length", MANUAL_MODE, String.class, new VisualizationStyleParameterFlags(false, false),
-            ParameterHint.hint(false, false));
+            ourLengthModePropertyKey, "Line Length", MANUAL_MODE, String.class,
+            new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
 
     /** The length column style parameter. */
     public static final VisualizationStyleParameter ourDefaultLengthColumnParameter = new VisualizationStyleParameter(
@@ -190,8 +191,8 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     /** The bearing error column style parameter. */
     public static final VisualizationStyleParameter ourDefaultBearingErrorColumnParameter = new VisualizationStyleParameter(
-            ourBearingErrorColumnPropertyKey, "Bearing Err", null, String.class,
-            new VisualizationStyleParameterFlags(true, true), ParameterHint.hint(false, true));
+            ourBearingErrorColumnPropertyKey, "Bearing Err", null, String.class, new VisualizationStyleParameterFlags(true, true),
+            ParameterHint.hint(false, true));
 
     /** The bearing error multiplier style parameter. */
     public static final VisualizationStyleParameter ourDefaultBearingErrorMultiplierParameter = new VisualizationStyleParameter(
@@ -200,8 +201,8 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
 
     /** The length error column style parameter. */
     public static final VisualizationStyleParameter ourDefaultLengthErrorColumnParameter = new VisualizationStyleParameter(
-            ourLengthErrorColumnPropertyKey, "Length Err ", null, String.class,
-            new VisualizationStyleParameterFlags(true, true), ParameterHint.hint(false, true));
+            ourLengthErrorColumnPropertyKey, "Length Err ", null, String.class, new VisualizationStyleParameterFlags(true, true),
+            ParameterHint.hint(false, true));
 
     /** The length error multiplier style parameter. */
     public static final VisualizationStyleParameter ourDefaultLengthErrorMultiplierParameter = new VisualizationStyleParameter(
@@ -491,49 +492,13 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     {
         GroupedMiniStyleEditorPanel panel = super.getMiniUIPanel();
 
-        List<AbstractStyleParameterEditorPanel> paramList = New.list();
-        MutableVisualizationStyle style = panel.getChangedStyle();
-
-        VisualizationStyleParameter vsp = style.getStyleParameter(ourLOBLineWidthPropertyKey);
-        paramList.add(new FloatSliderStyleParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(vsp.getName()), style,
-                ourLOBLineWidthPropertyKey, true, false, 1.0f, MAX_LINE_WIDTH,
-                new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(0, null)));
-
-        vsp = style.getStyleParameter(ourLOBOriginPointSizePropertyKey);
-        paramList.add(new FloatSliderStyleParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(vsp.getName()), style,
-                ourLOBOriginPointSizePropertyKey, true, false, 0.0f, MAX_POINT_SIZE,
-                new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(0, null)));
-
-        addLengthPanels(paramList, style, StyleUtils::createBasicMiniPanelBuilder, panel);
-
-        vsp = style.getStyleParameter(ourShowArrowPropertyKey);
-        CheckBoxStyleParameterEditorPanel showArrowPanel = new CheckBoxStyleParameterEditorPanel(
-                StyleUtils.createBasicMiniPanelBuilder(vsp.getName()), style, ourShowArrowPropertyKey, true);
-        paramList.add(showArrowPanel);
-
-        vsp = style.getStyleParameter(ourArrowLengthPropertyKey);
-        PanelBuilder builder = PanelBuilder.get(vsp.getName(), 5, 0, 0, 5);
+        PanelBuilder builder = PanelBuilder.get(panel.getChangedStyle().getStyleParameter(ourArrowLengthPropertyKey).getName(), 5,
+                0, 0, 5);
         builder.setOtherParameter(AbstractStyleParameterEditorPanel.PANEL_HEIGHT, Integer.valueOf(24));
         builder.setOtherParameter(FloatSliderStyleParameterEditorPanel.SHOW_SLIDER_LABELS, Boolean.FALSE);
-        AbstractStyleParameterEditorPanel arrowLenPanel = new LengthSliderStyleParameterEditorPanel(builder, style,
-                ourArrowLengthPropertyKey, false, true, MIN_ARROW_LENGTH, MAX_ARROW_LENGTH, myLengthUnits, Kilometers.class);
-        AbstractStyleParameterEditorPanel filler = new BlankPanel();
-        showArrowPanel.getSiblingComponents().add(arrowLenPanel);
-        showArrowPanel.getSiblingComponents().add(filler);
 
-        EditorPanelVisibilityDependency visDepend = new EditorPanelVisibilityDependency(panel, arrowLenPanel);
-        visDepend.addConstraint(new ParameterVisibilityConstraint(ourShowArrowPropertyKey, true, Boolean.TRUE));
-        visDepend.evaluateStyle();
-        panel.addVisibilityDependency(visDepend);
-
-        visDepend = new EditorPanelVisibilityDependency(panel, filler);
-        visDepend.addConstraint(new ParameterVisibilityConstraint(ourShowArrowPropertyKey, true, Boolean.FALSE));
-        visDepend.evaluateStyle();
-        panel.addVisibilityDependency(visDepend);
-
-        addErrorAndEllipsePanels(paramList, style, StyleUtils::createBasicMiniPanelBuilder, panel, true);
-
-        StyleParameterEditorGroupPanel paramGrp = new StyleParameterEditorGroupPanel(null, paramList, false, 1);
+        StyleParameterEditorGroupPanel paramGrp = new StyleParameterEditorGroupPanel(null,
+                getParamGroup(panel, StyleUtils::createSliderMiniPanelBuilder, builder), false, 1);
         panel.addGroupAtTop(paramGrp);
 
         return panel;
@@ -556,50 +521,44 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     {
         GroupedStyleParameterEditorPanel panel = super.getUIPanel();
 
+        StyleParameterEditorGroupPanel paramGrp = new StyleParameterEditorGroupPanel("Basic LOB Style",
+                getParamGroup(panel, PanelBuilder::get, null));
+        panel.addGroup(paramGrp);
+
+        return panel;
+    }
+
+    /**
+     * Helper method for getMiniUIPanel and getUIPanel. Prevents code
+     * duplication.
+     *
+     * @param panel the base panel to build from
+     * @param builderFunc the function that generates a PanelBuilder
+     * @param arrowBuilder an optional panel builder for arrow properties; can
+     *            be null
+     * @return a list of parameter editor panels to be condensed into a group
+     *         panel
+     */
+    private List<AbstractStyleParameterEditorPanel> getParamGroup(AbstractGroupedVisualizationControlPanel panel,
+            Function<String, PanelBuilder> builderFunc, PanelBuilder arrowBuilder)
+    {
         List<AbstractStyleParameterEditorPanel> paramList = New.list();
         MutableVisualizationStyle style = panel.getChangedStyle();
 
         VisualizationStyleParameter param = style.getStyleParameter(ourLOBLineWidthPropertyKey);
-        paramList.add(new FloatSliderStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style,
+        paramList.add(new FloatSliderStyleParameterEditorPanel(builderFunc.apply(param.getName()), style,
                 ourLOBLineWidthPropertyKey, true, false, 1.0f, MAX_LINE_WIDTH,
                 new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(0, null)));
 
         param = style.getStyleParameter(ourLOBOriginPointSizePropertyKey);
-        paramList.add(new FloatSliderStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style,
+        paramList.add(new FloatSliderStyleParameterEditorPanel(builderFunc.apply(param.getName()), style,
                 ourLOBOriginPointSizePropertyKey, true, false, 0.0f, MAX_POINT_SIZE,
                 new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(0, null)));
 
-        addLengthPanels(paramList, style, PanelBuilder::get, panel);
+        addLengthPanels(paramList, style, builderFunc, arrowBuilder, panel);
+        addErrorAndEllipsePanels(paramList, style, builderFunc, panel, false);
 
-        param = style.getStyleParameter(ourShowArrowPropertyKey);
-        CheckBoxStyleParameterEditorPanel showArrowPanel = new CheckBoxStyleParameterEditorPanel(
-                PanelBuilder.get(param.getName()), style, ourShowArrowPropertyKey, true);
-        paramList.add(showArrowPanel);
-
-        param = style.getStyleParameter(ourArrowLengthPropertyKey);
-        AbstractStyleParameterEditorPanel arrowLenPanel = new LengthSliderStyleParameterEditorPanel(
-                PanelBuilder.get(param.getName()), style, ourArrowLengthPropertyKey, false, true, MIN_ARROW_LENGTH,
-                MAX_ARROW_LENGTH, myLengthUnits, Kilometers.class);
-        AbstractStyleParameterEditorPanel filler = new BlankPanel();
-        showArrowPanel.getSiblingComponents().add(arrowLenPanel);
-        showArrowPanel.getSiblingComponents().add(filler);
-
-        EditorPanelVisibilityDependency visDepend = new EditorPanelVisibilityDependency(panel, arrowLenPanel);
-        visDepend.addConstraint(new ParameterVisibilityConstraint(ourShowArrowPropertyKey, true, Boolean.TRUE));
-        visDepend.evaluateStyle();
-        panel.addVisibilityDependency(visDepend);
-
-        visDepend = new EditorPanelVisibilityDependency(panel, filler);
-        visDepend.addConstraint(new ParameterVisibilityConstraint(ourShowArrowPropertyKey, true, Boolean.FALSE));
-        visDepend.evaluateStyle();
-        panel.addVisibilityDependency(visDepend);
-
-        addErrorAndEllipsePanels(paramList, style, PanelBuilder::get, panel, false);
-
-        StyleParameterEditorGroupPanel paramGrp = new StyleParameterEditorGroupPanel("Basic LOB Style", paramList);
-        panel.addGroup(paramGrp);
-
-        return panel;
+        return paramList;
     }
 
     /**
@@ -608,13 +567,14 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
      * @param paramList the panel list
      * @param style the style
      * @param builderBuilder the panel builder creator
+     * @param arrowBuilder an optional panel builder for arrow properties; can
+     *            be null
      * @param panel the panel that everything is being added to
      */
     private void addLengthPanels(Collection<? super AbstractStyleParameterEditorPanel> paramList, MutableVisualizationStyle style,
-            Function<String, PanelBuilder> builderBuilder, AbstractVisualizationControlPanel panel)
+            Function<String, PanelBuilder> builderBuilder, PanelBuilder arrowBuilder, AbstractVisualizationControlPanel panel)
     {
-        VisualizationStyleParameter vsp;
-        vsp = style.getStyleParameter(ourLengthModePropertyKey);
+        VisualizationStyleParameter vsp = style.getStyleParameter(ourLengthModePropertyKey);
         paramList.add(new RadioButtonParameterEditorPanel(builderBuilder.apply(vsp.getName()), style, ourLengthModePropertyKey,
                 New.list(MANUAL_MODE, COLUMN_MODE)));
 
@@ -643,6 +603,32 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
             visDepend.evaluateStyle();
             panel.addVisibilityDependency(visDepend);
         }
+
+        // Arrow stuff.
+        vsp = style.getStyleParameter(ourShowArrowPropertyKey);
+        CheckBoxStyleParameterEditorPanel showArrowPanel = new CheckBoxStyleParameterEditorPanel(
+                builderBuilder.apply(vsp.getName()), style, ourShowArrowPropertyKey, true);
+        paramList.add(showArrowPanel);
+
+        vsp = style.getStyleParameter(ourArrowLengthPropertyKey);
+        arrowBuilder = arrowBuilder == null ? builderBuilder.apply(vsp.getName()) : arrowBuilder;
+        LengthSliderStyleParameterEditorPanel arrowLenPanel = new LengthSliderStyleParameterEditorPanel(arrowBuilder, style,
+                ourArrowLengthPropertyKey, false, true, MIN_ARROW_LENGTH, MAX_ARROW_LENGTH, myLengthUnits, Kilometers.class);
+        AbstractStyleParameterEditorPanel filler = new BlankPanel();
+        showArrowPanel.getSiblingComponents().add(arrowLenPanel);
+        showArrowPanel.getSiblingComponents().add(filler);
+
+        manualLengthPanel.getLengthBinding().addListener(arrowLenPanel);
+
+        visDepend = new EditorPanelVisibilityDependency(panel, arrowLenPanel);
+        visDepend.addConstraint(new ParameterVisibilityConstraint(ourShowArrowPropertyKey, true, Boolean.TRUE));
+        visDepend.evaluateStyle();
+        panel.addVisibilityDependency(visDepend);
+
+        visDepend = new EditorPanelVisibilityDependency(panel, filler);
+        visDepend.addConstraint(new ParameterVisibilityConstraint(ourShowArrowPropertyKey, true, Boolean.FALSE));
+        visDepend.evaluateStyle();
+        panel.addVisibilityDependency(visDepend);
     }
 
     /**
@@ -728,7 +714,8 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     }
 
     /**
-     * Sets the default value for the property from the special key, if not already set.
+     * Sets the default value for the property from the special key, if not
+     * already set.
      *
      * @param style the style
      * @param dataType the data type
@@ -923,8 +910,10 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
             arcBuilder.setSemiMajorAxis(lineLengthM);
             arcBuilder.setSemiMinorAxis(lineLengthM);
             arcBuilder.setProjection(getToolbox().getMapManager().getProjection(Viewer3D.class).getSnapshot());
-            /* 37 is the default ellipse vertex count. Since bearing error can be in the range of 0 to 180, this calculation
-             * results in the appropriate number of vertices (2 - 37) depending on how long the arc is. */
+            /* 37 is the default ellipse vertex count. Since bearing error can
+             * be in the range of 0 to 180, this calculation results in the
+             * appropriate number of vertices (2 - 37) depending on how long the
+             * arc is. */
             int vertexCount = (int)Math.ceil(bearingErrorDeg / 180 * 35 + 2);
             arcBuilder.setVertexCount(vertexCount);
 

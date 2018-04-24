@@ -38,25 +38,27 @@ node {
         }
     }
 
-    stage ('Site') {
-        try {
-            sh "${env.mvnHome}/bin/mvn -T4.0C --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} site"
-            sh "${env.mvnHome}/bin/mvn -T4.0C --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} site:stage"
-        } catch (error) {
-            notifyFailed();
-            throw error;
-        }
-    }
-
     stage ('Archive Artifacts') {
         archive 'open-sphere-installers/open-sphere-installer-*/target/open-sphere-installer-*-*.jar'
     }
-
-    stage ('Archive Code Analysis') {
-        step([$class: 'PmdPublisher', canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/pmd.xml', unHealthy: ''])
-        step([$class: 'CheckStylePublisher', canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/target/checkstyle-result.xml', unHealthy: ''])
-        junit('**/target/surefire-reports/*.xml')
-        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/staging/', reportFiles: 'index.html', reportName: 'Site Documentation'])
+    
+	if(!"${env.BRANCH_NAME}".startsWith('feature')) {
+	    stage ('Site') {
+	        try {
+	            sh "${env.mvnHome}/bin/mvn -T4.0C --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} site"
+	            sh "${env.mvnHome}/bin/mvn -T4.0C --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} site:stage"
+	        } catch (error) {
+	            notifyFailed();
+	            throw error;
+	        }
+	    }
+	
+	    stage ('Archive Code Analysis') {
+	        step([$class: 'PmdPublisher', canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/pmd.xml', unHealthy: ''])
+	        step([$class: 'CheckStylePublisher', canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/target/checkstyle-result.xml', unHealthy: ''])
+	        junit('**/target/surefire-reports/*.xml')
+	        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/staging/', reportFiles: 'index.html', reportName: 'Site Documentation'])
+	    }
     }
 }
 

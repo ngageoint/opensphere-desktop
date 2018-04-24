@@ -2,7 +2,6 @@ package io.opensphere.merge.ui;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeSet;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.ValidationStatus;
@@ -217,7 +216,7 @@ public class JoinGui
         MetaDataInfo meta = row.layer.getMetaDataInfo();
         if (meta != null)
         {
-            row.colCombo.getItems().addAll(new TreeSet<>(meta.getKeyNames()));
+            row.colCombo.getItems().addAll(meta.getKeyNames());
         }
         selectFirst(row.colCombo);
         // set a tooltip for the ComboBox

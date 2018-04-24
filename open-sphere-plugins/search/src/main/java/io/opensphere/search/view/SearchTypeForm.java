@@ -43,6 +43,7 @@ public class SearchTypeForm extends AbstractSearchPane
         super(model);
         getModel().getSearchTypes().addListener(this::searchTypesChanged);
         getModel().getSelectedSearchTypes().addListener(this::selectedSearchTypesChanged);
+        getModel().getResultCount().addListener(this::resultCountChanged);
 
         myChoices = FXCollections.observableMap(New.map());
         myChoices.addListener(this::searchTypeMapChanged);
@@ -72,6 +73,39 @@ public class SearchTypeForm extends AbstractSearchPane
             checkBox.selectedProperty().addListener((o, oV, nV) -> updateSelectedSearchTypes(text, nV.booleanValue()));
             myChoices.put(text, checkBox);
         }
+    }
+
+    /**
+     * Updates the provider result counts.
+     *
+     * @param change The change event.
+     */
+    private void resultCountChanged(MapChangeListener.Change<? extends String, ? extends Integer> change)
+    {
+        FXUtilities.runOnFXThread(() ->
+        {
+            Integer addedCount = change.getValueAdded();
+            if (addedCount != null)
+            {
+                CheckBox checkBox = myChoices.get(change.getKey());
+                StringBuilder builder = new StringBuilder(change.getKey());
+                builder.append(" (").append(addedCount);
+                Integer totalCount = getModel().getTotalResultCount().get(change.getKey());
+                if (totalCount != null && totalCount.intValue() != -1 && totalCount.intValue() != addedCount.intValue())
+                {
+                    builder.append(" of ").append(totalCount);
+                }
+                builder.append(')');
+                checkBox.setText(builder.toString());
+            }
+
+            Integer removedCount = change.getValueRemoved();
+            if (removedCount != null)
+            {
+                CheckBox checkBox = myChoices.get(change.getKey());
+                checkBox.setText(change.getKey() + " (0)");
+            }
+        });
     }
 
     /**
