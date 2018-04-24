@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -490,9 +491,13 @@ public class KMLProcessor
         }
 
         // Add the children
+        Predicate<Feature> pruner = myDataSource.getFeaturePruner();
         for (Feature childFeature : childFeatures)
         {
-            convertToKMLFeature(childFeature, kmlFeature);
+            if (pruner == null || pruner.test(childFeature))
+            {
+                convertToKMLFeature(childFeature, kmlFeature);
+            }
         }
 
         return kmlFeature;

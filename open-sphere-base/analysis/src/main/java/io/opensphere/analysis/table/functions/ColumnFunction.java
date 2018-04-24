@@ -56,7 +56,7 @@ public class ColumnFunction
     public String toString()
     {
         return myName;
-    };
+    }
 
     /**
      * Builds and applies the function with whatever values it requires.

@@ -2,6 +2,7 @@ package io.opensphere.merge.algorithm;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -95,7 +96,7 @@ public class JoinData extends DatasetOperation
         JoinInfo primary = src.get(0);
         for (DataElement elt : getSupp().getRecords(primary.getType()))
         {
-            Map<String, Serializable> valMap = new TreeMap<>();
+            Map<String, Serializable> valMap = new LinkedHashMap<>();
             primary.mergeRecordWithValueMap(valMap, elt);
             Object val = elt.getMetaData().getValue(primary.getJoinKey());
             if (val == null)

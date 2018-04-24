@@ -36,16 +36,11 @@ public final class SaveStateV3ToV4Translator
     public static LayerType toLayerType(WFSLayerState layerV3)
     {
         LayerType layer = new LayerType();
-//        layerV3.getDisabledColumns();
-//        layerV3.getEllipseStyle();
-//        layerV3.getLineOfBearingStyle();
         layer.setAltitudeEnabled(Boolean.valueOf(layerV3.getBasicFeatureStyle().isUseAltitude()));
-        layer.setAnalyze(Boolean.valueOf(layerV3.getLoadsTo() == null || layerV3.getLoadsTo().isAnalysisEnabled()));
         layer.setAnimate(Boolean.toString(layerV3.isAnimate()));
         layer.setBaseColor(toColorString(layerV3.getBasicFeatureStyle().getPointColor()));
         layer.setBasicFeatureStyle(toFeatureStyle(layerV3.getBasicFeatureStyle()));
         layer.setDisabledEmptyColumns(Boolean.toString(layerV3.isDisableEmptyColumns()));
-//        layer.setFilter(Boolean.TRUE);
         layer.setIconStyle(toIconStyle(layerV3.getIconStyle()));
         layer.setId(layerV3.getId());
         layer.setLoad(Boolean.TRUE);
@@ -119,7 +114,6 @@ public final class SaveStateV3ToV4Translator
         style.setPointColor(toColorString(styleV3.getPointColor()));
         style.setPointOpacity(Integer.valueOf(styleV3.getPointOpacity()));
         style.setPointSize(BigDecimal.valueOf(styleV3.getPointSize()));
-        style.setUseAltitude(Boolean.valueOf(styleV3.isUseAltitude()));
         return style;
     }
 

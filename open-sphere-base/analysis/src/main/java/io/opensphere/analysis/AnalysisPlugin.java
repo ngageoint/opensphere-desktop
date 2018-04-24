@@ -20,7 +20,7 @@ public class AnalysisPlugin extends AbstractServicePlugin
     public void initialize(PluginLoaderData plugindata, Toolbox toolbox)
     {
         super.initialize(plugindata, toolbox);
-        addService(toolbox.getPluginToolboxRegistry().getRegistrationService(new AnalysisToolbox()));
+        addService(toolbox.getPluginToolboxRegistry().getRegistrationService(new AnalysisToolbox(toolbox)));
         startServices();
         for (Service toolService : new ToolInitializer(toolbox).createToolServices())
         {

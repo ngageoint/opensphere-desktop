@@ -303,7 +303,6 @@ public class KMLStateController extends AbstractLayerStateController<KMLDataSour
         layer.setType(KMLStateConstants.KML_LAYER_TYPE);
         layer.setVisible(dataSource.isVisible());
         layer.setTemporal(Boolean.valueOf(dataSource.isIncludeInTimeline()));
-        layer.setAnalyze(Boolean.TRUE);
         layer.setAnimate(Boolean.TRUE.toString());
         layer.setLoad(Boolean.TRUE);
         layer.setSpatial(Boolean.TRUE);

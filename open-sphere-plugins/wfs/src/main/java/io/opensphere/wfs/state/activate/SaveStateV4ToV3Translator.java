@@ -60,8 +60,7 @@ public final class SaveStateV4ToV3Translator
         layer.setType(layerV4.getType().toLowerCase());
         layer.setUrl(layerV4.getUrl());
         layer.setVisible(layerV4.isVisible());
-        layer.setLoadsTo(BooleanUtilities.toBoolean(layerV4.isTemporal()) ? LoadsTo.TIMELINE
-                : BooleanUtilities.toBoolean(layerV4.isAnalyze()) ? LoadsTo.STATIC : LoadsTo.BASE);
+        layer.setLoadsTo(BooleanUtilities.toBoolean(layerV4.isTemporal()) ? LoadsTo.TIMELINE : LoadsTo.STATIC);
     }
 
     /**
@@ -140,7 +139,7 @@ public final class SaveStateV4ToV3Translator
         {
             style.setPointSize(NumberUtilities.toFloat(styleV4.getPointSize()));
         }
-        style.setUseAltitude(BooleanUtilities.toBoolean(styleV4.isUseAltitude()));
+        style.setUseAltitude(true);
         return style;
     }
 
