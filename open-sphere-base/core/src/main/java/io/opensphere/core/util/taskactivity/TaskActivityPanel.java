@@ -132,15 +132,7 @@ public class TaskActivityPanel extends JPanel
         ta.completeProperty().addListener(myListener);
         ta.labelProperty().addListener(myListener);
 
-        try
-        {
-            Platform.startup(() -> myListener.invalidated(null));
-        }
-        catch (IllegalStateException e)
-        {
-            // Platform has already started; ignore
-            Platform.runLater(() -> myListener.invalidated(null));
-        }
+        Platform.runLater(() -> myListener.invalidated(null));
     }
 
     /**

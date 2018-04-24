@@ -44,16 +44,7 @@ class AlertViewerController extends EventListenerService
         super(toolbox.getEventManager(), 1);
         myToolbox = toolbox;
         myToaster = new ToastController(toolbox.getUIRegistry().getMainFrameProvider());
-        try
-        {
-            Platform.startup(() ->
-            {
-            });
-        }
-        catch (IllegalStateException e)
-        {
-            // Platform already started; ignore
-        }
+
         bindEvent(UserMessageEvent.class, this::handleUserMessageEvent);
     }
 

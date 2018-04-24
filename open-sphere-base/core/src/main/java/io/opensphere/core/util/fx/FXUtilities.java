@@ -169,7 +169,7 @@ public final class FXUtilities
      * @param timeout The amount of time to wait for the page to load before
      *            timing out.
      * @param engineConsumer A consumer for the web engine.
-     * @throws ExecutionException If an  error is thrown by the WebEngine.
+     * @throws ExecutionException If an error is thrown by the WebEngine.
      * @throws InterruptedException If the thread is interrupted.
      * @throws TimeoutException If the request runs out of time.
      */
@@ -188,7 +188,7 @@ public final class FXUtilities
      * @param timeout The amount of time to wait for the page to load before
      *            timing out.
      * @param engineConsumer A consumer for the web engine.
-     * @throws ExecutionException If an  error is thrown by the WebEngine.
+     * @throws ExecutionException If an error is thrown by the WebEngine.
      * @throws InterruptedException If the thread is interrupted.
      * @throws TimeoutException If the request runs out of time.
      */
@@ -525,8 +525,7 @@ public final class FXUtilities
             }
             catch (Throwable t)
             {
-                System.err.println("Exception in runnable");
-                t.printStackTrace();
+                LOG.error("Exception in Runnable : runAndWait", t);
             }
         }
         else
@@ -554,7 +553,7 @@ public final class FXUtilities
             }
             catch (InterruptedException ex)
             {
-                ex.printStackTrace();
+                LOG.error("Exception in CountDownLatch : runAndWait", ex);
             }
         }
     }
@@ -622,7 +621,7 @@ public final class FXUtilities
      *            timing out.
      * @param engineLoader A consumer responsible for loading the web engine.
      * @param engineConsumer A consumer for the web engine once it's loaded.
-     * @throws ExecutionException If an  error is thrown by the WebEngine.
+     * @throws ExecutionException If an error is thrown by the WebEngine.
      * @throws InterruptedException If the thread is interrupted.
      * @throws TimeoutException If the request runs out of time.
      */

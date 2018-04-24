@@ -45,13 +45,17 @@ public class MergePrefs
      * Include a join config represented by a JoinModel.
      *
      * @param m the JoinModel
+     * @return the created join
      */
-    public void addJoinModel(JoinModel m)
+    public Join addJoinModel(JoinModel m)
     {
         // remove any existing join with the same name
         delete(m.getJoinName());
         // now include the new one
-        joins.add(createJoin(m));
+        Join join = createJoin(m);
+        joins.add(join);
+
+        return join;
     }
 
     /**

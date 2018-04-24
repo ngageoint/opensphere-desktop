@@ -111,13 +111,14 @@ public class DynamicClassFileManager extends ForwardingJavaFileManager<JavaFileM
 
     /**
      * Extracted code from list for multi-use cases.
-     * 
-     * @param location
-     * @param packageName
-     * @param kinds
-     * @param recurse
-     * @return
-     * @throws IOException
+     *
+     * @param location a location
+     * @param packageName a package name
+     * @param kinds return objects only of these kinds
+     * @param recurse if true include "subpackages"
+     * @return an Iterable of file objects matching the given criteria
+     * @throws IOException if an I/O error occurred, or if close has been called
+     *             and this file manager cannot be reopened
      */
     private Iterable<JavaFileObject> continueList(Location location, String packageName, Set<Kind> kinds, boolean recurse)
         throws IOException
