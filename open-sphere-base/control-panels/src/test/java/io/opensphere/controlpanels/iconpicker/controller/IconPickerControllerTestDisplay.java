@@ -10,16 +10,10 @@ import java.net.URL;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.image.Image;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.controlpanels.iconpicker.model.IconPickerModel;
 import io.opensphere.core.PluginToolboxRegistry;
@@ -28,6 +22,11 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.image.Image;
 
 /**
  * Unit test for {@link IconPickerController}.
@@ -51,6 +50,22 @@ public class IconPickerControllerTestDisplay
     private static final String ourImageUrl2 = IconPickerControllerTestDisplay.class.getClassLoader()
             .getResource("images/bubble.png").toString();
 
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests showing the picker and user selects an icon.
      *
@@ -60,9 +75,6 @@ public class IconPickerControllerTestDisplay
     @Test
     public void testShowPicker() throws MalformedURLException, InterruptedException
     {
-        PlatformImpl.startup(() ->
-        {
-        });
         EasyMockSupport support = new EasyMockSupport();
 
         Toolbox toolbox = createToolbox(support);
@@ -148,9 +160,6 @@ public class IconPickerControllerTestDisplay
     @Test
     public void testShowPickerNotDefault() throws MalformedURLException, InterruptedException
     {
-        PlatformImpl.startup(() ->
-        {
-        });
         EasyMockSupport support = new EasyMockSupport();
 
         Toolbox toolbox = createToolbox(support, 23, new URL(ourImageUrl2));

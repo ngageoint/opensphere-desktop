@@ -6,8 +6,6 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextActionManager;
@@ -27,6 +25,7 @@ import io.opensphere.mantle.data.cache.DataElementCache;
 import io.opensphere.merge.controller.MergeController;
 import io.opensphere.merge.ui.MergeContextMenuProvider;
 import io.opensphere.merge.ui.MergeContextSingleSelectionMenuProvider;
+import javafx.application.Platform;
 
 /**
  * Unit test for {@link MergePlugin}.
@@ -34,12 +33,14 @@ import io.opensphere.merge.ui.MergeContextSingleSelectionMenuProvider;
 public class MergePluginTestDisplay
 {
     /**
-     * Mimics the weak reference to the context provider, ensures plugin does it correctly.
+     * Mimics the weak reference to the context provider, ensures plugin does it
+     * correctly.
      */
     private WeakReference<MergeContextMenuProvider> myMenuProvider;
 
     /**
-     * Mimics the weak reference toe the context provider, ensures plugin does it correctly.
+     * Mimics the weak reference toe the context provider, ensures plugin does
+     * it correctly.
      */
     private WeakReference<MergeContextSingleSelectionMenuProvider> mySingleMenuProvider;
 
@@ -49,9 +50,16 @@ public class MergePluginTestDisplay
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
+        try
         {
-        });
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
 
         EasyMockSupport support = new EasyMockSupport();
 

@@ -5,28 +5,40 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.controlpanels.columnlabels.model.ColumnLabels;
 import io.opensphere.core.util.collections.New;
+import javafx.application.Platform;
 
 /**
  * Unit test for {@link ColumnLabelsEditor}.
  */
 public class ColumnLabelsEditorTestDisplay
 {
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests the UI.
      */
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         ColumnLabels model = new ColumnLabels();
         model.setAlwaysShowLabels(true);
 

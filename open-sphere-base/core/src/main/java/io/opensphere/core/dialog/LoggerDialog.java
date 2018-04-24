@@ -198,9 +198,9 @@ public class LoggerDialog extends AbstractInternalFrame
         if (!text.isEmpty())
         {
             DefaultMutableTreeNode node = getRootNode();
-            for (Enumeration<DefaultMutableTreeNode> nodeEnum = node.preorderEnumeration(); nodeEnum.hasMoreElements();)
+            for (Enumeration<TreeNode> nodeEnum = node.preorderEnumeration(); nodeEnum.hasMoreElements();)
             {
-                node = nodeEnum.nextElement();
+                node = (DefaultMutableTreeNode)nodeEnum.nextElement();
                 if (node.toString().toLowerCase().contains(text.toLowerCase()))
                 {
                     mySelectedNode = node;

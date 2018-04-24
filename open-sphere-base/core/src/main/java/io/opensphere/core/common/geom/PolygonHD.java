@@ -8,8 +8,6 @@ import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import sun.awt.geom.Crossings;
-
 /**
  * The <code>PolygonHD</code> class encapsulates a description of a closed,
  * two-dimensional region within a coordinate space. This region is bounded by

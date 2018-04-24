@@ -12,9 +12,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-
 import javax.annotation.concurrent.GuardedBy;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -24,12 +21,13 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import io.opensphere.core.util.concurrent.CatchingRunnable;
 import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 
 /**
  * A JPanel that displays a scrolling marquis (when necessary) or a combination
@@ -134,7 +132,15 @@ public class TaskActivityPanel extends JPanel
         ta.completeProperty().addListener(myListener);
         ta.labelProperty().addListener(myListener);
 
-        PlatformImpl.startup(() -> myListener.invalidated(null));
+        try
+        {
+            Platform.startup(() -> myListener.invalidated(null));
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform has already started; ignore
+            Platform.runLater(() -> myListener.invalidated(null));
+        }
     }
 
     /**

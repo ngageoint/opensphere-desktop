@@ -6,16 +6,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Map;
 
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 
 import io.opensphere.analysis.binning.criteria.BinCriteria;
 import io.opensphere.analysis.binning.criteria.BinCriteriaElement;
@@ -26,6 +20,11 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MetaDataInfo;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.control.ListView;
+import javafx.scene.control.skin.VirtualFlow;
 
 /**
  * Unit test for {@link BinCriteriaEditor}.
@@ -57,16 +56,28 @@ public class BinCriteriaEditorTestDisplay
      */
     private static final String ourUniqueText = "Unique";
 
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests when the user creates a new bin criteria.
      */
     @Test
     public void testCreate()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         DataGroupController typeController = createTypeController(support);
@@ -111,10 +122,6 @@ public class BinCriteriaEditorTestDisplay
     @Test
     public void testDelete()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         DataGroupController typeController = createTypeController(support);
@@ -170,10 +177,6 @@ public class BinCriteriaEditorTestDisplay
     @Test
     public void testRead()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         DataGroupController typeController = createTypeController(support);
@@ -218,10 +221,6 @@ public class BinCriteriaEditorTestDisplay
     @Test
     public void testUpdate()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         DataGroupController typeController = createTypeController(support);

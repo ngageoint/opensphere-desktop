@@ -9,16 +9,10 @@ import java.net.URL;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.image.ImageView;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.controlpanels.iconpicker.controller.IconChooserDisplayer;
 import io.opensphere.core.PluginToolboxRegistry;
@@ -27,6 +21,11 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.image.ImageView;
 
 /**
  * Unit test for {@link IconPickerButton}.
@@ -44,6 +43,22 @@ public class IconPickerButtonTestDisplay
     private static final String ourImageUrl = IconPickerButtonTestDisplay.class.getClassLoader()
             .getResource("images/brokenimage.gif").toString();
 
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests having the user pick an icon.
      *
@@ -53,10 +68,6 @@ public class IconPickerButtonTestDisplay
     @Test
     public void test() throws MalformedURLException, InterruptedException
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         Toolbox toolbox = createToolbox(support);

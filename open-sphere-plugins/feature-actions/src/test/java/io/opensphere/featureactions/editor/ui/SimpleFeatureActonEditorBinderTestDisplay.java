@@ -12,18 +12,10 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 
 import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.Toolbox;
@@ -50,6 +42,13 @@ import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.skin.VirtualFlow;
 
 /**
  * Unit test for {@link SimpleFeatureActionPane}.
@@ -81,6 +80,22 @@ public class SimpleFeatureActonEditorBinderTestDisplay
     /** The save listener. */
     private Runnable mySaveListener;
 
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests when the user creates a new feature action group.
      *
@@ -89,10 +104,6 @@ public class SimpleFeatureActonEditorBinderTestDisplay
     @Test
     public void testCreate() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CountDownLatch latch = new CountDownLatch(1);
@@ -167,10 +178,6 @@ public class SimpleFeatureActonEditorBinderTestDisplay
     @Test
     public void testDeleteGroup() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         Toolbox toolbox = support.createMock(Toolbox.class);
@@ -205,10 +212,6 @@ public class SimpleFeatureActonEditorBinderTestDisplay
     @Test
     public void testDelete()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         Toolbox toolbox = createToolbox(support, 7);
@@ -259,10 +262,6 @@ public class SimpleFeatureActonEditorBinderTestDisplay
     @Test
     public void testRead()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         Toolbox toolbox = createToolbox(support, 22);
@@ -335,10 +334,6 @@ public class SimpleFeatureActonEditorBinderTestDisplay
     @Test
     public void testUpdate()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         Toolbox toolbox = createToolbox(support, 22);
@@ -425,10 +420,6 @@ public class SimpleFeatureActonEditorBinderTestDisplay
     @Test
     public void testUpdateGroupName()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         Toolbox toolbox = createToolbox(support, 22);
@@ -483,7 +474,8 @@ public class SimpleFeatureActonEditorBinderTestDisplay
         assertEquals(CriteriaOptions.VALUE, myRow.getOptions().valueProperty().get());
         assertEquals("B*", myRow.getValue().getText());
 
-        FXUtilities.runOnFXThreadAndWait(() -> ((FeatureActionTitledPane)editor.getAccordion().getPanes().get(0)).getTitle().setText("New Group Name"));
+        FXUtilities.runOnFXThreadAndWait(
+                () -> ((FeatureActionTitledPane)editor.getAccordion().getPanes().get(0)).getTitle().setText("New Group Name"));
 
         mySaveListener.run();
 

@@ -12,16 +12,10 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 
 import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.Toolbox;
@@ -48,6 +42,11 @@ import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.control.ListView;
+import javafx.scene.control.skin.VirtualFlow;
 
 /**
  * Unit test for {@link SimpleFeatureActionPane}.
@@ -78,6 +77,22 @@ public class SimpleFeatureActonEditorUITestDisplay
      */
     private SimpleFeatureActionRow myRow;
 
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests when the user creates a new feature action.
      *
@@ -86,10 +101,6 @@ public class SimpleFeatureActonEditorUITestDisplay
     @Test
     public void testCreate() throws InterruptedException
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         CountDownLatch latch = new CountDownLatch(1);
@@ -157,10 +168,6 @@ public class SimpleFeatureActonEditorUITestDisplay
     @Test
     public void testDelete()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         Toolbox toolbox = createToolbox(support, 7);
@@ -217,10 +224,6 @@ public class SimpleFeatureActonEditorUITestDisplay
     @Test
     public void testRead()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         Toolbox toolbox = createToolbox(support, 7);
@@ -290,10 +293,6 @@ public class SimpleFeatureActonEditorUITestDisplay
     @Test
     public void testUpdate()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         Toolbox toolbox = createToolbox(support, 7);
@@ -377,10 +376,6 @@ public class SimpleFeatureActonEditorUITestDisplay
     @Test
     public void testUpdateGroupName()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         Toolbox toolbox = createToolbox(support, 7);

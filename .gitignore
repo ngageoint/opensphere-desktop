@@ -1,8 +1,13 @@
 # Eclipse
-.settings/
-.classpath
-.project
+#.settings/
+#.classpath
+#.project
+
+# IntelliJ
+.idea/
+**.iml
 
 # Maven / Other
-/target
-/.pmd
+target/
+.pmd
+bin/

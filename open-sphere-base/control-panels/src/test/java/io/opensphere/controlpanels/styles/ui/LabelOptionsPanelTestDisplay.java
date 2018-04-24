@@ -5,16 +5,15 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
-import javafx.scene.paint.Color;
-
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.controlpanels.columnlabels.model.ColumnLabel;
 import io.opensphere.controlpanels.styles.controller.LabelOptionsController;
 import io.opensphere.controlpanels.styles.model.LabelOptions;
 import io.opensphere.core.util.collections.New;
+import javafx.application.Platform;
+import javafx.scene.paint.Color;
 
 /**
  * Unit test for {@link LabelOptionsPanel}.
@@ -24,11 +23,24 @@ public class LabelOptionsPanelTestDisplay
     /**
      * The expected columns.
      */
-    private static final List<String> expected = New.list("NAME", "DESCRIPTION",
-            "LAT", "LON", "LAT_DMS",
-            "LON_DMS", "MGRS", "SEMI_MAJOR",
-            "SEMI_MINOR", "SEMI_MAJOR_UNITS",
-            "SEMI_MINOR_UNITS", "ORIENTATION");
+    private static final List<String> expected = New.list("NAME", "DESCRIPTION", "LAT", "LON", "LAT_DMS", "LON_DMS", "MGRS",
+            "SEMI_MAJOR", "SEMI_MINOR", "SEMI_MAJOR_UNITS", "SEMI_MINOR_UNITS", "ORIENTATION");
+
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
 
     /**
      * Tests the panel.
@@ -36,10 +48,6 @@ public class LabelOptionsPanelTestDisplay
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         LabelOptions options = new LabelOptions();
         options.setColor(java.awt.Color.RED);
         options.setSize(12);

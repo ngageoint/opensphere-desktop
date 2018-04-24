@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import io.opensphere.core.util.collections.New;
@@ -29,10 +30,10 @@ public final class ButtonModelTreeUtilities
             return;
         }
 
-        Enumeration<DefaultMutableTreeNode> children = node.children();
+        Enumeration<TreeNode> children = node.children();
         while (children.hasMoreElements())
         {
-            DefaultMutableTreeNode child = children.nextElement();
+            DefaultMutableTreeNode child = (DefaultMutableTreeNode)children.nextElement();
             if (!isSelected(child))
             {
                 return;
@@ -107,10 +108,10 @@ public final class ButtonModelTreeUtilities
                 String pathElement = pathStrings[i];
 
                 boolean foundNode = false;
-                Enumeration<DefaultMutableTreeNode> children = currentNode.children();
+                Enumeration<TreeNode> children = currentNode.children();
                 while (children.hasMoreElements())
                 {
-                    DefaultMutableTreeNode child = children.nextElement();
+                    DefaultMutableTreeNode child = (DefaultMutableTreeNode)children.nextElement();
                     if (getNodeName(child).equals(pathElement))
                     {
                         currentNode = child;
@@ -145,10 +146,10 @@ public final class ButtonModelTreeUtilities
             paths.add(new TreePath(node.getPath()));
         }
 
-        Enumeration<DefaultMutableTreeNode> children = node.children();
+        Enumeration<TreeNode> children = node.children();
         while (children.hasMoreElements())
         {
-            DefaultMutableTreeNode child = children.nextElement();
+            DefaultMutableTreeNode child = (DefaultMutableTreeNode)children.nextElement();
             paths.addAll(getSelectedPaths(child));
         }
 
@@ -198,10 +199,10 @@ public final class ButtonModelTreeUtilities
             }
         }
 
-        Enumeration<DefaultMutableTreeNode> children = node.children();
+        Enumeration<TreeNode> children = node.children();
         while (children.hasMoreElements())
         {
-            numSelected += selectNodesByName(children.nextElement(), labels);
+            numSelected += selectNodesByName((DefaultMutableTreeNode)children.nextElement(), labels);
         }
 
         return numSelected;
@@ -287,10 +288,10 @@ public final class ButtonModelTreeUtilities
      */
     private static void setDescendantSelectState(DefaultMutableTreeNode node, boolean selected)
     {
-        Enumeration<DefaultMutableTreeNode> children = node.children();
+        Enumeration<TreeNode> children = node.children();
         while (children.hasMoreElements())
         {
-            DefaultMutableTreeNode child = children.nextElement();
+            DefaultMutableTreeNode child = (DefaultMutableTreeNode)children.nextElement();
             setSelected(child, selected);
         }
     }

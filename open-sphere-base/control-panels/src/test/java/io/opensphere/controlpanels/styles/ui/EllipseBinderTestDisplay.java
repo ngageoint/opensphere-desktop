@@ -5,33 +5,44 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import io.opensphere.controlpanels.styles.model.EllipseModel;
 import io.opensphere.core.util.collections.New;
+import javafx.application.Platform;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
 /**
  * Unit test for {@link EllipseBinder} class.
  */
 public class EllipseBinderTestDisplay
 {
+    /** Initializes the JavaFX platform. */
+    @Before
+    public void initialize()
+    {
+        try
+        {
+            Platform.startup(() ->
+            {
+            });
+        }
+        catch (IllegalStateException e)
+        {
+            // Platform already started; ignore
+        }
+    }
+
     /**
      * Tests the binding.
      */
     @Test
     public void test()
     {
-        PlatformImpl.startup(() ->
-        {
-        });
-
         EasyMockSupport support = new EasyMockSupport();
 
         EllipseView view = createView(support);

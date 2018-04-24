@@ -4,14 +4,12 @@ import java.util.Collection;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
-import javafx.application.Platform;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import io.opensphere.core.util.collections.CollectionUtilities;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.fx.FilterableCheckBoxListView;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.mantle.data.DataTypeInfo;
+import javafx.application.Platform;
 
 /**
  * A filterable check box list view for picking layers.
@@ -30,7 +28,7 @@ public class LayerListView extends FilterableCheckBoxListView<DataTypeInfo>
     {
         super(sort(dataTypes), TO_STRING, "Search layers");
         getListView().setTooltipProvider(
-            t -> StringUtilities.concat(t.getDisplayName(), " - ", t.getParent().getTopParentDisplayName()));
+                t -> StringUtilities.concat(t.getDisplayName(), " - ", t.getParent().getTopParentDisplayName()));
     }
 
     /**
@@ -47,7 +45,7 @@ public class LayerListView extends FilterableCheckBoxListView<DataTypeInfo>
         else
         {
             final AtomicReference<Collection<DataTypeInfo>> selections = new AtomicReference<>();
-            PlatformImpl.runAndWait(() -> selections.set(getListView().getSelections()));
+            FXUtilities.runAndWait(() -> selections.set(getListView().getSelections()));
             return selections.get();
         }
     }
