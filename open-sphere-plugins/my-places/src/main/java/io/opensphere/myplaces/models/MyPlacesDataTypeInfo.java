@@ -49,9 +49,7 @@ public class MyPlacesDataTypeInfo extends DefaultDataTypeInfo
 
     private void initialize()
     {
-        OrderParticipantKey orderKey;
-
-        orderKey = new DefaultOrderParticipantKey(DefaultOrderCategory.DEFAULT_MY_PLACES_LAYER_FAMILY,
+        OrderParticipantKey orderKey = new DefaultOrderParticipantKey(DefaultOrderCategory.DEFAULT_MY_PLACES_LAYER_FAMILY,
                 DefaultOrderCategory.MY_PLACES_CATEGORY, getTypeKey());
         setOrderKey(orderKey);
         OrderManager manager = getToolbox().getOrderManagerRegistry().getOrderManager(getOrderKey());
