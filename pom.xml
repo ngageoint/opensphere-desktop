@@ -1383,4 +1383,11 @@
             <url>${deployment.repository.url}</url>
         </snapshotRepository>
     </distributionManagement>
+    
+    <repositories>
+    	<repository>
+    		<id>apache-snapshots</id>
+    		<url>https://repository.apache.org/content/repositories/snapshots/</url>
+    	</repository>
+    </repositories>
 </project>
