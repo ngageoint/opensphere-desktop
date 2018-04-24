@@ -5,6 +5,10 @@ import java.util.Collection;
 
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.order.OrderManager;
+import io.opensphere.core.order.OrderParticipantKey;
+import io.opensphere.core.order.impl.DefaultOrderCategory;
+import io.opensphere.core.order.impl.DefaultOrderParticipantKey;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
@@ -25,19 +29,33 @@ public class MyPlacesDataTypeInfo extends DefaultDataTypeInfo
      * Responsible for launching an editor.
      */
     private final MyPlacesEditListener myTypeController;
+    
 
     /**
      * Constructs a new MyPlacesDataTypeInfo.
      *
-     * @param tb The toolbox.
+     * @param toolbox The toolbox.
      * @param placemark The placemark this data type represents.
      * @param placeTypeController Responsible for launching an editor.
      */
-    public MyPlacesDataTypeInfo(Toolbox tb, Placemark placemark, MyPlacesEditListener placeTypeController)
+    public MyPlacesDataTypeInfo(Toolbox toolbox, Placemark placemark, MyPlacesEditListener placeTypeController)
     {
-        super(tb, Constants.MY_PLACES_LABEL, placemark.getId(), placemark.getName(), placemark.getName(), false);
+        super(toolbox, Constants.MY_PLACES_LABEL, placemark.getId(), placemark.getName(), placemark.getName(), false);
         myKmlPlacemark = placemark;
         myTypeController = placeTypeController;
+        
+        initialize();
+    }
+
+    private void initialize()
+    {
+        OrderParticipantKey orderKey;
+
+        orderKey = new DefaultOrderParticipantKey(DefaultOrderCategory.DEFAULT_MY_PLACES_LAYER_FAMILY,
+                DefaultOrderCategory.MY_PLACES_CATEGORY, getTypeKey());
+        setOrderKey(orderKey);
+        OrderManager manager = getToolbox().getOrderManagerRegistry().getOrderManager(getOrderKey());
+        manager.activateParticipant(getOrderKey());
     }
 
     @Override
