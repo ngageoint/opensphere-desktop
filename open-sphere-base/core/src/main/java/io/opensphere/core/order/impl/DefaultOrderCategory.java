@@ -19,6 +19,9 @@ public class DefaultOrderCategory implements OrderCategory
     /** The family for image layer participants. */
     public static final String DEFAULT_IMAGE_LAYER_FAMILY = "Image Layer Family";
 
+    /** The family for my-places layer participants. */
+    public static final String DEFAULT_MY_PLACES_LAYER_FAMILY = "My Places Layer Family";
+
     /**
      * The category of participants who provide elevation data for earth
      * terrain.
@@ -43,6 +46,10 @@ public class DefaultOrderCategory implements OrderCategory
     /** The category for HUD and other screen coordinate based images. */
     public static final OrderCategory IMAGE_SCREEN_CATEGORY = new DefaultOrderCategory("Image Screen Layers",
             new IntRange(36000, 37000));
+    
+    /** The category for My Places. */
+    public static final OrderCategory MY_PLACES_CATEGORY = new DefaultOrderCategory("My Places Layers",
+            new IntRange(46000, 51000));
 
     /** The id of this category. */
     private final String myCategoryId;
