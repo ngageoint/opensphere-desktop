@@ -34,8 +34,6 @@ import javax.swing.plaf.metal.MetalInternalFrameTitlePane;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
 
-import sun.swing.SwingUtilities2;
-
 /**
  * The OpenSphere Dark Look and Feel component for titled internal frames area.
  */
@@ -303,12 +301,12 @@ public class OSDarkLAFInternalFrameTitlePane extends MetalInternalFrameTitlePane
 
             final FontMetrics fm = frame.getFontMetrics(getFont());
             final String frameTitle = frame.getTitle();
-            final int title_w = frameTitle != null ? SwingUtilities2.stringWidth(frame, fm, frameTitle) : 0;
+            final int title_w = frameTitle != null ? fm.stringWidth(frameTitle) : 0;
             final int title_length = frameTitle != null ? frameTitle.length() : 0;
 
             if (title_length > 2)
             {
-                final int subtitle_w = SwingUtilities2.stringWidth(frame, fm, frame.getTitle().substring(0, 2) + "...");
+                final int subtitle_w = fm.stringWidth(frame.getTitle().substring(0, 2) + "...");
                 width += title_w < subtitle_w ? title_w : subtitle_w;
             }
             else

@@ -12,16 +12,11 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
 import com.sun.javafx.application.PlatformImpl;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 
 import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.Toolbox;
@@ -48,6 +43,10 @@ import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.control.ListView;
+import javafx.scene.control.skin.VirtualFlow;
 
 /**
  * Unit test for {@link SimpleFeatureActionPane}.

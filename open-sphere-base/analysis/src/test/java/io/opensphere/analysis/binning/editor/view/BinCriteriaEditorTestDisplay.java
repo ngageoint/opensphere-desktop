@@ -6,16 +6,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Map;
 
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
 import com.sun.javafx.application.PlatformImpl;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 
 import io.opensphere.analysis.binning.criteria.BinCriteria;
 import io.opensphere.analysis.binning.criteria.BinCriteriaElement;
@@ -26,6 +21,10 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MetaDataInfo;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.control.ListView;
+import javafx.scene.control.skin.VirtualFlow;
 
 /**
  * Unit test for {@link BinCriteriaEditor}.
