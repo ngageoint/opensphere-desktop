@@ -11,8 +11,6 @@ import io.opensphere.core.order.impl.DefaultOrderCategory;
 import io.opensphere.core.order.impl.DefaultOrderParticipantKey;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
-import io.opensphere.mantle.data.DataTypeInfoOrderManager;
-import io.opensphere.mantle.data.DefaultDataTypeInfoOrderManager;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
 import io.opensphere.myplaces.constants.Constants;
 
@@ -49,21 +47,15 @@ public class MyPlacesDataTypeInfo extends DefaultDataTypeInfo
         initialize();
     }
 
-    private void initialize() {
+    private void initialize()
+    {
         OrderParticipantKey orderKey;
 
         orderKey = new DefaultOrderParticipantKey(DefaultOrderCategory.DEFAULT_MY_PLACES_LAYER_FAMILY,
                 DefaultOrderCategory.MY_PLACES_CATEGORY, getTypeKey());
         setOrderKey(orderKey);
-        int zorder = addZOrderParticipant(getOrderKey());
-
-    }
-
-    private int addZOrderParticipant(OrderParticipantKey layerKey)
-    {
-        OrderManager manager = getToolbox().getOrderManagerRegistry().getOrderManager(layerKey);
-        int zorder = manager.activateParticipant(layerKey);
-        return zorder;
+        OrderManager manager = getToolbox().getOrderManagerRegistry().getOrderManager(getOrderKey());
+        manager.activateParticipant(getOrderKey());
     }
 
     @Override
