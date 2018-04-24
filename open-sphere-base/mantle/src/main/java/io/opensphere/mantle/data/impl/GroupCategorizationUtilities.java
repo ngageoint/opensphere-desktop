@@ -57,7 +57,7 @@ public final class GroupCategorizationUtilities
         boolean tileLayer = types.contains(MapVisualizationType.IMAGE_TILE);
         boolean featureLayer = types.stream().anyMatch(t -> t != null && t.isMapDataElementType())
                 || dataGroup.hasMember(dt -> dt.getBasicVisualizationInfo().usesDataElements(), false);
-        if (types.stream().anyMatch(MapVisualizationType.IS_ANNOTATION_LAYER_PREDICATE))
+        if (types.stream().anyMatch(MapVisualizationType::isAnnotationType))
         {
             cats.add(LayerType.MYPLACES.getLabel());
         }
