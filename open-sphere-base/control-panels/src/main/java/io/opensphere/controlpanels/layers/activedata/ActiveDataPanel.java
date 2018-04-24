@@ -48,6 +48,7 @@ import io.opensphere.core.order.impl.DefaultOrderCategory;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.lang.EqualsHelper;
+import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.core.util.swing.IconButton;
@@ -57,6 +58,7 @@ import io.opensphere.core.util.swing.SwingUtilities;
 import io.opensphere.core.util.swing.tree.ButtonModelPayloadJCheckBox;
 import io.opensphere.core.util.swing.tree.TreeTableTreeCellRenderer;
 import io.opensphere.core.util.swing.tree.TreeTableTreeNode;
+import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.controller.event.DataTypeInfoFocusEvent;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
@@ -124,12 +126,12 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
                 if (LoadsToUtilities.isTimelineEnabled(dataType))
                 {
                     menuItems.add(SwingUtilities.newMenuItem("Remove from Timeline",
-                            e -> LoadsToUtilities.setIncludeInTimeline(dataType, false)));
+                        e -> LoadsToUtilities.setIncludeInTimeline(dataType, false)));
                 }
                 else
                 {
                     menuItems.add(SwingUtilities.newMenuItem("Add to Timeline",
-                            e -> LoadsToUtilities.setIncludeInTimeline(dataType, true)));
+                        e -> LoadsToUtilities.setIncludeInTimeline(dataType, true)));
                 }
             }
             if (LoadsToUtilities.allowAnalyzeSelection(dataType))
@@ -137,12 +139,12 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
                 if (LoadsToUtilities.isAnalyzeEnabled(dataType))
                 {
                     menuItems.add(SwingUtilities.newMenuItem("Remove from Analyze Window",
-                            e -> LoadsToUtilities.setIncludeInAnalyze(dataType, false)));
+                        e -> LoadsToUtilities.setIncludeInAnalyze(dataType, false)));
                 }
                 else
                 {
                     menuItems.add(SwingUtilities.newMenuItem("Add to Analyze Window",
-                            e -> LoadsToUtilities.setIncludeInAnalyze(dataType, true)));
+                        e -> LoadsToUtilities.setIncludeInAnalyze(dataType, true)));
                 }
             }
 
@@ -681,7 +683,7 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
             for (TreeTableTreeNode node : nodes)
             {
                 LayerUtilities.recursivelyAddAllDataGroupsToSet(groupsToDeactivate, node,
-                        g -> g != null && g.userActivationStateControl());
+                    g -> g != null && g.userActivationStateControl());
             }
             if (!groupsToDeactivate.isEmpty())
             {
@@ -1045,13 +1047,12 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
         PlayState playState = IconUtil.IconType.PAUSE.toString().equals(command) ? PlayState.PAUSE
                 : IconUtil.IconType.STOP.toString().equals(command) ? PlayState.STOP : PlayState.FORWARD;
 
-        for (DataGroupInfo dgi : MantleToolboxUtils.getMantleToolbox(myToolbox).getDataGroupController().getActiveGroups())
+        DataGroupController controller = MantleToolboxUtils.getMantleToolbox(myToolbox).getDataGroupController();
+        Collection<DataTypeInfo> dataTypes = controller.findActiveMembers(
+            t -> t.getStreamingSupport().isStreamingEnabled() && t.getStreamingSupport().getPlayState().get() != playState);
+        for (DataTypeInfo dataType : dataTypes)
         {
-
-            dgi.getTopParent().findMembers(dataType -> dataType.getStreamingSupport().isStreamingEnabled(), true, false).stream()
-                    .map(type -> type.getStreamingSupport().getPlayState()).filter(state -> state.get() != playState)
-                    .forEach(state -> state.set(playState));
-
+            ThreadUtilities.runCpu((Runnable)() -> dataType.getStreamingSupport().getPlayState().set(playState));
         }
     }
 

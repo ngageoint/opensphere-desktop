@@ -1,11 +1,14 @@
 package io.opensphere.search.view;
 
+import javafx.collections.ListChangeListener;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 
+import io.opensphere.core.search.SearchResult;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.search.model.SearchModel;
 
 /**
@@ -20,6 +23,9 @@ public class MetadataPane extends AbstractSearchPane
     /** The combo-box in which the sort operation is configured. */
     private final ComboBox<String> mySortDropdown;
 
+    /** The button to clear search results without affecting the search box. */
+    private final Button myClearButton;
+
     /**
      * Creates a new metadata pane bound to the supplied model.
      *
@@ -31,31 +37,62 @@ public class MetadataPane extends AbstractSearchPane
 
         setHgap(5);
 
-        ColumnConstraints columnOne = new ColumnConstraints();
-        columnOne.setFillWidth(false);
-        columnOne.setHgrow(Priority.NEVER);
-        getColumnConstraints().add(columnOne);
+        ColumnConstraints noGrow = new ColumnConstraints();
+        noGrow.setFillWidth(false);
+        noGrow.setHgrow(Priority.NEVER);
 
-        ColumnConstraints columnTwo = new ColumnConstraints();
-        columnTwo.setFillWidth(true);
-        columnTwo.setHgrow(Priority.ALWAYS);
-        getColumnConstraints().add(columnTwo);
+        ColumnConstraints grow = new ColumnConstraints();
+        grow.setFillWidth(true);
+        grow.setHgrow(Priority.ALWAYS);
+
+        getColumnConstraints().add(noGrow);
+        getColumnConstraints().add(noGrow);
+        getColumnConstraints().add(noGrow);
+        getColumnConstraints().add(grow);
 
         mySearchTermLabel = new Label();
+        Label resultCountLabel = new Label();
 
         getModel().getKeyword().bindBidirectional(mySearchTermLabel.textProperty());
+        getModel().getShownResults().addListener((ListChangeListener<SearchResult>)c -> resultsChanged(c, resultCountLabel));
 
         mySortDropdown = new ComboBox<>(getModel().getSortTypes());
         mySortDropdown.valueProperty().bindBidirectional(getModel().getSortType());
 
+        myClearButton = new Button("Clear");
+        myClearButton.setOnAction((evt) -> getModel().getKeyword().setValue(null));
+
         Label resultsFor = new Label("Showing Results for : ");
         Label sortLabel = new Label("Sort By:");
-        Region spacer = new Region();
-        spacer.setPrefWidth(100);
-        add(resultsFor, 0, 0);
-        add(mySearchTermLabel, 1, 0);
-        add(spacer, 2, 0);
-        add(sortLabel, 3, 0);
-        add(mySortDropdown, 4, 0);
+        int col = 0;
+        add(resultsFor, col++, 0);
+        add(mySearchTermLabel, col++, 0);
+        add(resultCountLabel, col++, 0);
+        add(FXUtilities.newHSpacer(), col++, 0);
+        add(sortLabel, col++, 0);
+        add(mySortDropdown, col++, 0);
+        add(myClearButton, col++, 0);
+    }
+
+    /**
+     * Updates the provider result counts.
+     *
+     * @param change The change event.
+     * @param label The label to update
+     */
+    private void resultsChanged(ListChangeListener.Change<? extends SearchResult> change, Label label)
+    {
+        FXUtilities.runOnFXThread(() ->
+        {
+            if (getModel().getKeyword().get() != null)
+            {
+                int total = getModel().getShownResults().size();
+                label.setText("(" + total + ")");
+            }
+            else
+            {
+                label.setText("");
+            }
+        });
     }
 }

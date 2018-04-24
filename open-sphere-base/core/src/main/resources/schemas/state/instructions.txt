@@ -1,5 +1,18 @@
-Run the following from OpenSphereDesktop/open-sphere-base/core/src/main/resources/schemas/state
+Instructions to generate the JAXB classes from the state schema
+---------------------------------------------------------------
 
+Clone the state repo if you haven't already:
+git clone https://github.com/ngageoint/opensphere-state-schema.git
+
+Copy everything over:
+cp -r <git-root>/opensphere-state-schema/src/main/* <git-root>/opensphere-desktop/open-sphere-base/core/src/main/resources/schemas/state/
+
+I've had to make some edits to what is checked in to get XJC to work:
+Edit bindings.xjb and change "../xsd/filter/1.0.0/filter.xsd" to "../xsd/state/1.0.0/filter-extended.xsd", and change the package names to our convention, i.e. _220 not v_2_2_0.  Alternatively you may be able to revert the changes to bindings.xjb
+Edit filter-restriction.xsd and set minOccurs="2"
+Edit state.xsd and add the StreamOptionsType type, and stream element back in
+
+Run the following from <git-root>/opensphere-desktop/open-sphere-base/core/src/main/resources/schemas/state
 xjc -extension -d ../../../java xsd/state/1.0.0/state.xsd -b xjb/bindings.xjb
 
-Either revert PropertyNameType or edit it to match the previous version in the history.
+Either revert net.opengis.ogc._100t.PropertyNameType or edit it to match the previous version in the history.

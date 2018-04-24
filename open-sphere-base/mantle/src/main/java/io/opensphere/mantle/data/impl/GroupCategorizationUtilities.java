@@ -55,8 +55,9 @@ public final class GroupCategorizationUtilities
                 .map(t -> t.getMapVisualizationInfo().getVisualizationType()).collect(Collectors.toSet());
 
         boolean tileLayer = types.contains(MapVisualizationType.IMAGE_TILE);
-        boolean featureLayer = types.stream().anyMatch(MapVisualizationType.IS_MAP_DATA_ELEMENT_TYPE_PREDICATE);
-        if (types.stream().anyMatch(MapVisualizationType.IS_ANNOTATION_LAYER_PREDICATE))
+        boolean featureLayer = types.stream().anyMatch(t -> t != null && t.isMapDataElementType())
+                || dataGroup.hasMember(dt -> dt.getBasicVisualizationInfo().usesDataElements(), false);
+        if (types.stream().anyMatch(MapVisualizationType::isAnnotationType))
         {
             cats.add(LayerType.MYPLACES.getLabel());
         }

@@ -1,6 +1,7 @@
 package io.opensphere.wfs.envoy;
 
 import io.opensphere.core.PluginToolbox;
+import io.opensphere.core.modulestate.ModuleStateController;
 
 /** A toolbox implementation for the WFS Plugin. */
 public class WFSToolbox implements PluginToolbox
@@ -14,6 +15,9 @@ public class WFSToolbox implements PluginToolbox
      * The helper class used by envoys during execution.
      */
     private WFSEnvoyHelper myEnvoyHelper;
+
+    /** The state controller. */
+    private ModuleStateController myStateController;
 
     /**
      * {@inheritDoc}
@@ -66,5 +70,25 @@ public class WFSToolbox implements PluginToolbox
     public WFSEnvoyHelper getEnvoyHelper()
     {
         return myEnvoyHelper;
+    }
+
+    /**
+     * Gets the stateController.
+     *
+     * @return the stateController
+     */
+    public ModuleStateController getStateController()
+    {
+        return myStateController;
+    }
+
+    /**
+     * Sets the stateController.
+     *
+     * @param stateController the stateController
+     */
+    public void setStateController(ModuleStateController stateController)
+    {
+        myStateController = stateController;
     }
 }

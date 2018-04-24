@@ -39,6 +39,31 @@ public class ArcGISLayerListEnvoyTest
     private static final String ourTestUrl = "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer";
 
     /**
+     * The base url.
+     */
+    private static final String ourBaseUrl = "http://services.arcgisonline.com/ArcGIS/rest/services";
+
+    /**
+     * Tests the {@link ArcGISLayerListEnvoy#removeServerComponent(String)}
+     * method.
+     *
+     * @throws IOException Bad IO.
+     * @throws URISyntaxException bad URL.
+     */
+    @Test
+    public void removeServerComponent() throws IOException, URISyntaxException
+    {
+        EasyMockSupport support = new EasyMockSupport();
+        Toolbox toolbox = createToolbox(support, "/testLayers.json");
+        support.replayAll();
+
+        ArcGISLayerListEnvoy envoy = new ArcGISLayerListEnvoy(toolbox);
+
+        String result = envoy.removeServerComponent("foo/bar/FeatureServer");
+        assertEquals("foo/bar", result);
+    }
+
+    /**
      * Tests getting Arc layers.
      *
      * @throws URISyntaxException Bad URI.
@@ -103,7 +128,7 @@ public class ArcGISLayerListEnvoyTest
      */
     private Toolbox createToolbox(EasyMockSupport support, String jsonResource) throws IOException, URISyntaxException
     {
-        URL url = new URL(ourTestUrl + "?f=json");
+        URL url = new URL(ourBaseUrl + "?f=json");
         HttpServer server = support.createMock(HttpServer.class);
         EasyMock.expect(server.sendGet(EasyMockHelper.eq(url), EasyMock.isA(ResponseValues.class))).andAnswer(() ->
         {
@@ -116,7 +141,7 @@ public class ArcGISLayerListEnvoyTest
 
         @SuppressWarnings("unchecked")
         ServerProvider<HttpServer> provider = support.createMock(ServerProvider.class);
-        EasyMock.expect(provider.getServer(EasyMockHelper.eq(new URL(ourTestUrl)))).andReturn(server);
+        EasyMock.expect(provider.getServer(EasyMock.isA(URL.class))).andReturn(server);
 
         ServerProviderRegistry serverRegistry = support.createMock(ServerProviderRegistry.class);
         EasyMock.expect(serverRegistry.getProvider(HttpServer.class)).andReturn(provider);
@@ -150,7 +175,7 @@ public class ArcGISLayerListEnvoyTest
             assertEquals(ArcGISLayer.LAYER_PROPERTY, accessor.getPropertyDescriptor());
 
             DataModelCategory expected = new DataModelCategory(ArcGISLayerListEnvoy.class.getName(), ArcGISLayer.class.getName(),
-                    ourTestUrl);
+                    ourBaseUrl);
 
             assertEquals(expected, deposit.getCategory());
             assertEquals(CacheDeposit.SESSION_END, deposit.getExpirationDate());

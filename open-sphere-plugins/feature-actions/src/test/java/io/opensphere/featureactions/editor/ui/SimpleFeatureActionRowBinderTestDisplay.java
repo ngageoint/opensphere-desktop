@@ -488,6 +488,7 @@ public class SimpleFeatureActionRowBinderTestDisplay
         EasyMock.expect(view.getComplexFilterMask()).andReturn(new Label()).anyTimes();
         EasyMock.expect(view.getStyleAbsentMask()).andReturn(new Label()).anyTimes();
         EasyMock.expect(view.getIconPicker()).andReturn(null).anyTimes();
+        EasyMock.expect(view.getUseIconCheckBox()).andReturn(new CheckBox()).anyTimes();
         view.setEditListener(EasyMock.notNull());
 
         return view;

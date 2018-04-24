@@ -121,10 +121,13 @@ public class ArcGISLayerProvider
                     .partition(layersAndParents, v -> getService(v.getFirstObject().getURL()));
             List<Pair<ArcGISLayer, DataGroupInfo>> mapLayers = serviceToLayerMap.getOrDefault("MapServer",
                     Collections.emptyList());
+            List<Pair<ArcGISLayer, DataGroupInfo>> featureLayers = serviceToLayerMap.getOrDefault("FeatureServer",
+                    Collections.emptyList());
 
             // Feature data types must be created before adding the data groups
             // to the controller.
             createFeatureTypes(mapLayers);
+            createFeatureTypes(featureLayers);
 
             mantleController.addServerGroup(serverName, sourceURL, serverGroup);
 
@@ -138,7 +141,7 @@ public class ArcGISLayerProvider
         }
         else if (tracker.getQueryStatus() == QueryTracker.QueryStatus.CANCELLED)
         {
-            LOGGER.info("The query for " + serverName +  " was canceled");
+            LOGGER.info("The query for " + serverName + " was canceled");
         }
         else
         {

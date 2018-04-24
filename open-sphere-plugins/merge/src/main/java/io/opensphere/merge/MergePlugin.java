@@ -7,6 +7,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.api.adapter.PluginAdapter;
 import io.opensphere.core.control.ui.MenuBarRegistry;
 import io.opensphere.core.preferences.Preferences;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
 import io.opensphere.mantle.data.DataGroupInfo.MultiDataGroupContextKey;
@@ -84,7 +85,7 @@ public class MergePlugin extends PluginAdapter
         {
             prefs = new MergePrefs();
         }
-        gui.setData(prefs);
+        FXUtilities.runOnFXThread(() -> gui.setData(prefs));
     }
 
     /**
@@ -95,7 +96,7 @@ public class MergePlugin extends PluginAdapter
     private void addJoin(JoinModel m)
     {
         prefs.addJoinModel(m);
-        gui.setData(prefs);
+        FXUtilities.runOnFXThread(() -> gui.setData(prefs));
         writePrefs();
     }
 

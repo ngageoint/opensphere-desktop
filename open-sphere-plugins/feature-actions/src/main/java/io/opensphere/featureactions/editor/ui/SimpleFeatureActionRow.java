@@ -2,6 +2,8 @@ package io.opensphere.featureactions.editor.ui;
 
 import java.awt.Component;
 
+import javax.swing.SwingUtilities;
+
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -12,10 +14,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-
-import javax.swing.SwingUtilities;
 
 import io.opensphere.controlpanels.iconpicker.ui.IconPickerButton;
 import io.opensphere.core.Toolbox;
@@ -89,6 +88,9 @@ public class SimpleFeatureActionRow extends ListCell<SimpleFeatureAction> implem
 
     /** The system toolbox. */
     private final Toolbox myToolbox;
+
+    /** The 'use icon' check box. */
+    private final CheckBox myUseIconCheckBox = new CheckBox("Use Icon");
 
     /** The value field. */
     private final TextField myValue = new TextField();
@@ -186,6 +188,12 @@ public class SimpleFeatureActionRow extends ListCell<SimpleFeatureAction> implem
     public Button getRemoveButton()
     {
         return myRemoveButton;
+    }
+
+    @Override
+    public CheckBox getUseIconCheckBox()
+    {
+        return myUseIconCheckBox;
     }
 
     @Override
@@ -312,13 +320,12 @@ public class SimpleFeatureActionRow extends ListCell<SimpleFeatureAction> implem
         box.add(myMaximumValue, 5, 0);
         box.add(styleMask, 6, 0, 2, 1);
         box.add(myColorPicker, 6, 0);
-        box.add(myIconPicker, 7, 0);
-        Region spacer = new Region();
-        spacer.setPrefWidth(50);
-        box.add(spacer, 8, 0);
-        box.add(myEditButton, 9, 0);
-        box.add(myCopyButton, 10, 0);
-        box.add(myRemoveButton, 11, 0);
+        box.add(myUseIconCheckBox, 7, 0);
+        box.add(myIconPicker, 8, 0);
+        box.add(FXUtilities.newHSpacer(50), 9, 0);
+        box.add(myEditButton, 10, 0);
+        box.add(myCopyButton, 11, 0);
+        box.add(myRemoveButton, 12, 0);
 
         return box;
     }

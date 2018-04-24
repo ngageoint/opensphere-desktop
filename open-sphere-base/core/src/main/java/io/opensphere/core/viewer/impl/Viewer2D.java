@@ -100,7 +100,6 @@ public class Viewer2D extends AbstractDynamicViewer
         addTrajectoryGenerator(TrajectoryGeneratorType.ARC, new FlatTrajectoryGenerator2D(this));
         addTrajectoryGenerator(TrajectoryGeneratorType.FLAT, new FlatTrajectoryGenerator2D(this));
         reset(builder);
-
         if (getPreferences() != null)
         {
             getPreferences().addPreferenceChangeListener(POSITION_PREF_KEY, myPreferenceChangeListener);
@@ -125,7 +124,6 @@ public class Viewer2D extends AbstractDynamicViewer
             double viewWidthMeters = 0.5 * (metersPerModel * proj.getModelWidth() / getScale() / widthStretch);
             return viewWidthMeters / Math.tan(0.5 * MathUtil.QUARTER_PI);
         }
-
         return 0.;
     }
 
@@ -136,14 +134,12 @@ public class Viewer2D extends AbstractDynamicViewer
         {
             throw new UnsupportedOperationException("2D viewer cannot create a camera for a non-2D position.");
         }
-
         Projection proj = getMapContext().getProjection(Viewer2D.class);
         if (!(proj instanceof AbstractGeographicProjection))
         {
             throw new UnsupportedOperationException(
                     "Cannot create viewer postion from geographic position for non-geographic projection.");
         }
-
         ViewerPosition2D position2D = (ViewerPosition2D)position;
         double alt = getAltitude();
         GeographicPosition location = proj.convertToPosition(position2D.getLocation(), ReferenceLevel.ELLIPSOID);
@@ -157,12 +153,9 @@ public class Viewer2D extends AbstractDynamicViewer
     {
         double xSpan = 2. * (myModelWidth * .5 - Math.abs(position.getX()));
         double xScale = myModelWidth / xSpan;
-
         double ySpan = 2. * (myModelHeight * .5 - Math.abs(position.getY()));
         double yScale = myModelHeight / ySpan;
-
         double scale = Math.max(getScale(), Math.min(xScale, yScale));
-
         return new ViewerPosition2D(position, scale);
     }
 
@@ -230,7 +223,6 @@ public class Viewer2D extends AbstractDynamicViewer
         matrix[12] = -(float)myPosition.getLocation().getX() * (float)getScale();
         matrix[13] = -(float)myPosition.getLocation().getY() * (float)getScale();
         matrix[15] = 1f;
-
         return matrix;
     }
 
@@ -262,7 +254,6 @@ public class Viewer2D extends AbstractDynamicViewer
         {
             modelSize = ellipsoid.getXAxis().getLength() * 2.;
         }
-
         double pctOfModel = modelSize / myModelWidth;
         double pctOfView = pctOfModel * myPosition.getScale();
         return pctOfView * getViewportWidth();
@@ -282,7 +273,6 @@ public class Viewer2D extends AbstractDynamicViewer
         orthoMatrix[5] = (float)(2. / myModelHeight / (myStretchFactor < 1. ? myStretchFactor : 1.));
         orthoMatrix[10] = 1f;
         orthoMatrix[15] = 1f;
-
         return orthoMatrix;
     }
 
@@ -375,7 +365,6 @@ public class Viewer2D extends AbstractDynamicViewer
                 * getViewportWidth();
         double dy = (ptA.getY() - ptB.getY()) * getScale() / myModelHeight * (myStretchFactor < 1. ? myStretchFactor : 1.)
                 * getViewportHeight();
-
         return Math.sqrt(dx * dx + dy * dy);
     }
 
@@ -390,7 +379,6 @@ public class Viewer2D extends AbstractDynamicViewer
 //        double scaleFactor = 20000 * 1 / Math.abs(scale);
 //
 //        return scaleFactor;
-
         return myModelWidth / myPosition.getScale();
     }
 
@@ -405,12 +393,9 @@ public class Viewer2D extends AbstractDynamicViewer
     {
         double xSpan = bounds.getSpan(new Vector3d(1., 0., 0));
         double xScale = myModelWidth / xSpan;
-
         double ySpan = bounds.getSpan(new Vector3d(0., 1., 0));
         double yScale = myModelHeight / ySpan;
-
         double scale = Math.min(xScale, yScale);
-
         return new ViewerPosition2D(bounds.getCenter(), scale);
     }
 
@@ -445,7 +430,6 @@ public class Viewer2D extends AbstractDynamicViewer
     public final void reset(Builder builder)
     {
         super.reset(builder);
-
         myMaxZoom = builder.getMaxZoom();
         myMinZoom = builder.getMinZoom();
         myModelWidth = builder.getModelWidth();
@@ -560,7 +544,6 @@ public class Viewer2D extends AbstractDynamicViewer
         Vector3d loc = Vector3d.clamp(myPosition.getLocation(), minX, maxX, minY, maxY, 0., 0.);
         myPosition.setLocation(loc);
         getEdges();
-
         resetInverseModelViewMatrix();
     }
 
@@ -588,7 +571,6 @@ public class Viewer2D extends AbstractDynamicViewer
         double maxX = myPosition.getLocation().getX() + dim.getX();
         double minY = myPosition.getLocation().getY() - dim.getY();
         double maxY = myPosition.getLocation().getY() + dim.getY();
-
         myEdges[0] = minX;
         myEdges[1] = maxX;
         myEdges[2] = minY;

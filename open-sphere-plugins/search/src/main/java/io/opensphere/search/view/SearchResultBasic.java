@@ -3,11 +3,22 @@ package io.opensphere.search.view;
 import java.io.Closeable;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
+
+import io.opensphere.core.model.LatLonAlt;
+import io.opensphere.core.search.SearchResult;
+import io.opensphere.core.units.angle.Angle;
+import io.opensphere.core.units.angle.DecimalDegrees;
+import io.opensphere.core.units.length.Length;
+import io.opensphere.core.units.length.Meters;
+import io.opensphere.core.util.Utilities;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -19,15 +30,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
-import org.apache.commons.lang3.StringUtils;
-
-import io.opensphere.core.model.LatLonAlt;
-import io.opensphere.core.search.SearchResult;
-import io.opensphere.core.units.angle.Angle;
-import io.opensphere.core.units.angle.DecimalDegrees;
-import io.opensphere.core.units.length.Length;
-import io.opensphere.core.units.length.Meters;
 
 /**
  * The basic UI to represent a {@link SearchResult}.
@@ -138,9 +140,12 @@ public class SearchResultBasic extends GridPane implements Closeable
 
         myDescription = new Label();
         myDescription.setWrapText(true);
-        myDescription.textProperty().set(myModel.getDescription());
+        String description = detailed ? Utilities.getValue(myModel.getFullDescription(), myModel.getDescription())
+                : myModel.getDescription();
+        myDescription.textProperty().set(description);
         myDescription.setTextFill(DEFAULT_TEXT_COLOR);
-        add(myDescription, 0, row++, 2, 1);
+        Node descriptionNode = detailed ? new ScrollPane(myDescription) : myDescription;
+        add(descriptionNode, 0, row++, 2, 1);
 
         if (detailed)
         {
@@ -199,7 +204,7 @@ public class SearchResultBasic extends GridPane implements Closeable
         builder.append(lon.toShortLabelString(12, 6, 'E', 'W'));
         if (alt.getMagnitude() != 0)
         {
-            builder.append(' ').append(alt.toShortLabelString());
+            builder.append("  ").append(alt.toShortLabelString(1, 3));
         }
         return builder.toString();
     }
