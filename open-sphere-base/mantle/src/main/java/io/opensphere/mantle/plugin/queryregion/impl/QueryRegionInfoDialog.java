@@ -103,15 +103,7 @@ public class QueryRegionInfoDialog extends JDialog
             }
         };
 
-        try
-        {
-            Platform.startup(showRunner);
-        }
-        catch (IllegalStateException e)
-        {
-            // Platform has already started; ignore
-            Platform.runLater(showRunner);
-        }
+        Platform.runLater(showRunner);
     }
 
     /**

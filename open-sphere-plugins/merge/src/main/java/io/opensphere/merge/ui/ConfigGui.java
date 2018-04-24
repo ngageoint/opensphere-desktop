@@ -15,6 +15,7 @@ import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.cache.DataElementCache;
 import io.opensphere.merge.model.JoinModel;
 import io.opensphere.merge.model.MergePrefs;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -52,7 +53,7 @@ public class ConfigGui
     private MergePrefs myPreferences;
 
     /** Rows; each one represents a join configuration. */
-    private final ObservableList<MergePrefs.Join> myDataRows = new ObservableMergeList<>();
+    private final ObservableList<MergePrefs.Join> myDataRows = FXCollections.observableArrayList();
 
     /** Callback for saving (this class does not handle persistence). */
     private Runnable mySaveCallback;
