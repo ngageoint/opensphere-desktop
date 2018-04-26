@@ -139,7 +139,7 @@ public class Viewer3D extends AbstractDynamicViewer
     private final Plane myRightClip = new Plane();
 
     /** The max angle by which to spin. */
-    private final double mySpinAngleLimit = MathUtil.toRadians(7);
+    private final double mySpinAngleLimit = Math.toRadians(7);
 
     /** The top clipping plane. */
     private final Plane myTopClip = new Plane();

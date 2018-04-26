@@ -38,6 +38,7 @@ public class GroupByActiveZOrderTreeBuilder extends GroupByDefaultTreeBuilder
                 addCategoriesFromFamily(zOrderCats, DefaultOrderCategory.DEFAULT_FEATURE_LAYER_FAMILY);
                 addCategoriesFromFamily(zOrderCats, DefaultOrderCategory.DEFAULT_IMAGE_LAYER_FAMILY);
                 addCategoriesFromFamily(zOrderCats, DefaultOrderCategory.DEFAULT_ELEVATION_FAMILY);
+                addCategoriesFromFamily(zOrderCats, DefaultOrderCategory.DEFAULT_MY_PLACES_LAYER_FAMILY);
                 zOrderCats.retainAll(getCategories());
                 return zOrderCats;
             }

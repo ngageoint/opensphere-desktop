@@ -259,13 +259,13 @@ public class Viewer3DControlTranslator extends AbstractViewerControlTranslator
     @Override
     public void pitchViewDown(InputEvent event)
     {
-        pitchView(MathUtil.toRadians(-PAN_FACTOR));
+        pitchView(Math.toRadians(-PAN_FACTOR));
     }
 
     @Override
     public void pitchViewUp(InputEvent event)
     {
-        pitchView(MathUtil.toRadians(PAN_FACTOR));
+        pitchView(Math.toRadians(PAN_FACTOR));
     }
 
     @Override
@@ -303,13 +303,13 @@ public class Viewer3DControlTranslator extends AbstractViewerControlTranslator
     @Override
     public void rollViewLeft(InputEvent event)
     {
-        rollView(MathUtil.toRadians(-PAN_FACTOR));
+        rollView(Math.toRadians(-PAN_FACTOR));
     }
 
     @Override
     public void rollViewRight(InputEvent event)
     {
-        rollView(MathUtil.toRadians(PAN_FACTOR));
+        rollView(Math.toRadians(PAN_FACTOR));
     }
 
     @Override
@@ -429,13 +429,13 @@ public class Viewer3DControlTranslator extends AbstractViewerControlTranslator
     @Override
     public void yawViewLeft(InputEvent event)
     {
-        yawView(MathUtil.toRadians(PAN_FACTOR));
+        yawView(Math.toRadians(PAN_FACTOR));
     }
 
     @Override
     public void yawViewRight(InputEvent event)
     {
-        yawView(MathUtil.toRadians(-PAN_FACTOR));
+        yawView(Math.toRadians(-PAN_FACTOR));
     }
 
     @Override
