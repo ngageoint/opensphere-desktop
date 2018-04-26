@@ -13,8 +13,6 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import javafx.collections.ListChangeListener;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
@@ -42,6 +40,7 @@ import io.opensphere.core.search.SearchResult;
 import io.opensphere.core.util.ObservableList;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.search.model.SearchModel;
+import javafx.collections.ListChangeListener;
 
 /**
  * Unit test for the SearchController.
@@ -634,6 +633,7 @@ public class SearchControllerTest
             EasyMock.expect(placeNames.getType()).andReturn(ourPlaceNameType).atLeastOnce();
             EasyMock.expect(placeNames.performSearch(keyword, LatLonAlt.createFromDegrees(10, 11),
                     LatLonAlt.createFromDegrees(12, 13), expectedSpan)).andReturn(New.list(result1));
+            EasyMock.expect(placeNames.getTotalResultCount()).andReturn(1);
         }
 
         ResultsViewSearchProvider layers = support.createMock(ResultsViewSearchProvider.class);
@@ -642,6 +642,7 @@ public class SearchControllerTest
             EasyMock.expect(layers.getType()).andReturn(ourLayersType).atLeastOnce();
             EasyMock.expect(layers.performSearch(keyword, LatLonAlt.createFromDegrees(10, 11),
                     LatLonAlt.createFromDegrees(12, 13), expectedSpan)).andReturn(New.list(result2));
+            EasyMock.expect(layers.getTotalResultCount()).andReturn(1);
         }
 
         Map<String, Map<String, SearchProvider>> providers = New.map();

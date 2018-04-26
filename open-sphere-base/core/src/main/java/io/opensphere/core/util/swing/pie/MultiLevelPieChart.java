@@ -23,7 +23,6 @@ import javax.swing.JComponent;
 import javax.swing.UIManager;
 
 import io.opensphere.core.util.ColorUtilities;
-import io.opensphere.core.util.MathUtil;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.pie.IconModel.IconInfo;
 
@@ -410,7 +409,7 @@ public class MultiLevelPieChart<T> extends JComponent
      */
     private Point getPoint(double modelAngle, double radius)
     {
-        double angleInRadians = MathUtil.toRadians(modelAngle);
+        double angleInRadians = Math.toRadians(modelAngle);
         double cos = Math.cos(angleInRadians);
         double sin = Math.sin(angleInRadians);
         int x = myCenterPoint.x + (int)Math.round(radius * sin);
@@ -432,7 +431,7 @@ public class MultiLevelPieChart<T> extends JComponent
      */
     private Point getPoint(double modelAngle, double radius, double itemWidth, double itemHeight, float alignmentY)
     {
-        double angleInRadians = MathUtil.toRadians(modelAngle);
+        double angleInRadians = Math.toRadians(modelAngle);
         double cos = Math.cos(angleInRadians);
         double sin = Math.sin(angleInRadians);
         double dx = (sin - 1.) * itemWidth / 2.;

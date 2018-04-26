@@ -792,28 +792,6 @@ public final class MathUtil
         return r;
     }
 
-    /**
-     * Convert from radians to degrees.
-     *
-     * @param rad angle in radians.
-     * @return angle in degrees.
-     */
-    public static double toDegrees(double rad)
-    {
-        return rad * RAD_TO_DEG;
-    }
-
-    /**
-     * Convert degrees to radians.
-     *
-     * @param deg degrees
-     * @return radians
-     */
-    public static double toRadians(double deg)
-    {
-        return deg * DEG_TO_RAD;
-    }
-
     /** Disallow class instantiation. */
     private MathUtil()
     {

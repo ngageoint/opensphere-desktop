@@ -1,8 +1,5 @@
 package io.opensphere.core.util;
 
-import java.util.Random;
-
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -423,91 +420,5 @@ public class MathUtilTest
         Assert.assertEquals(2., MathUtil.standardDeviation(2, 4, 4, 4, 5, 5, 7, 9), 0.);
         Assert.assertEquals(0., MathUtil.standardDeviation(2), 0.);
         Assert.assertTrue(Double.isNaN(MathUtil.standardDeviation()));
-    }
-
-    /**
-     * Test to verify that {@link MathUtil#toDegrees(double)} is faster than
-     * {@link Math#toDegrees(double)} (at the cost of some accuracy).
-     */
-    @Test
-    public void testToDegrees()
-    {
-        if (StringUtils.isEmpty(System.getenv("SLOW_MACHINE")))
-        {
-            int iterations = 100;
-            int blockSize = 10000;
-            double[] input = new double[blockSize];
-            double[] output = new double[blockSize];
-            long mathTime = 0L;
-            long mathUtilTime = 0L;
-            Random rand = new Random();
-            for (int i = 0; i < iterations; ++i)
-            {
-                for (int j = 0; j < blockSize; ++j)
-                {
-                    input[j] = rand.nextDouble();
-                }
-                mathUtilTime -= System.nanoTime();
-                for (int j = 0; j < blockSize; ++j)
-                {
-                    output[j] = MathUtil.toDegrees(input[j]);
-                }
-                mathUtilTime += System.nanoTime();
-                mathTime -= System.nanoTime();
-                for (int j = 0; j < blockSize; ++j)
-                {
-                    output[j] = Math.toDegrees(input[j]);
-                }
-                mathTime += System.nanoTime();
-            }
-
-            Assert.assertTrue("Time using " + MathUtil.class.getSimpleName() + " ("
-                    + (double)mathUtilTime / iterations / blockSize + " ns) should have been less than time using "
-                    + Math.class.getSimpleName() + " (" + (double)mathTime / iterations / blockSize + " ns)",
-                    mathUtilTime < mathTime);
-        }
-    }
-
-    /**
-     * Test to verify that {@link MathUtil#toRadians(double)} is faster than
-     * {@link Math#toRadians(double)} (at the cost of some accuracy).
-     */
-    @Test
-    public void testToRadians()
-    {
-        if (StringUtils.isEmpty(System.getenv("SLOW_MACHINE")))
-        {
-            int iterations = 100;
-            int blockSize = 10000;
-            double[] input = new double[blockSize];
-            double[] output = new double[blockSize];
-            long mathTime = 0L;
-            long mathUtilTime = 0L;
-            Random rand = new Random();
-            for (int i = 0; i < iterations; ++i)
-            {
-                for (int j = 0; j < blockSize; ++j)
-                {
-                    input[j] = rand.nextDouble();
-                }
-                mathUtilTime -= System.nanoTime();
-                for (int j = 0; j < blockSize; ++j)
-                {
-                    output[j] = MathUtil.toRadians(input[j]);
-                }
-                mathUtilTime += System.nanoTime();
-                mathTime -= System.nanoTime();
-                for (int j = 0; j < blockSize; ++j)
-                {
-                    output[j] = Math.toRadians(input[j]);
-                }
-                mathTime += System.nanoTime();
-            }
-
-            Assert.assertTrue("Time using " + MathUtil.class.getSimpleName() + " ("
-                    + (double)mathUtilTime / iterations / blockSize + " ns) should have been less than time using "
-                    + Math.class.getSimpleName() + " (" + (double)mathTime / iterations / blockSize + " ns)",
-                    mathUtilTime < mathTime);
-        }
     }
 }
