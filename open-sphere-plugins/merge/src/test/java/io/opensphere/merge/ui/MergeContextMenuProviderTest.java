@@ -51,7 +51,7 @@ public class MergeContextMenuProviderTest
 
         support.replayAll();
 
-        MergeContextMenuProvider provider = new MergeContextMenuProvider(toolbox);
+        MergeContextMenuProvider provider = new MergeContextMenuProvider(toolbox, null);
         Collection<? extends Component> menuItems = provider.getMenuItems(toString(), key);
 
         assertEquals(2, menuItems.size());
@@ -59,7 +59,7 @@ public class MergeContextMenuProviderTest
         assertEquals("Merge...", ((JMenuItem)iterator.next()).getText());
         assertEquals("Join...", ((JMenuItem)iterator.next()).getText());
         assertTrue(provider.getPriority() > 10);
-        assertTrue(provider.hasData(key.getActualDataTypes().toArray(new DataTypeInfo[2])));
+        assertTrue(provider.hasData(key.getActualDataTypes()));
 
         support.verifyAll();
     }
@@ -79,14 +79,14 @@ public class MergeContextMenuProviderTest
 
         support.replayAll();
 
-        MergeContextMenuProvider provider = new MergeContextMenuProvider(toolbox);
+        MergeContextMenuProvider provider = new MergeContextMenuProvider(toolbox, null);
         Collection<? extends Component> menuItems = provider.getMenuItems(toString(), key);
 
         assertEquals(2, menuItems.size());
         Iterator<? extends Component> iterator = menuItems.iterator();
         assertEquals("Merge...", ((JMenuItem)iterator.next()).getText());
         assertEquals("Join...", ((JMenuItem)iterator.next()).getText());
-        assertTrue(provider.hasData(featureLayers.toArray(new DataTypeInfo[2])));
+        assertTrue(provider.hasData(featureLayers));
 
         support.verifyAll();
     }
@@ -105,11 +105,11 @@ public class MergeContextMenuProviderTest
 
         support.replayAll();
 
-        MergeContextMenuProvider provider = new MergeContextMenuProvider(toolbox);
+        MergeContextMenuProvider provider = new MergeContextMenuProvider(toolbox, null);
         Collection<? extends Component> menuItems = provider.getMenuItems(toString(), key);
 
         assertEquals("Merge...", ((JMenuItem)menuItems.iterator().next()).getText());
-        assertFalse(provider.hasData(key.getActualDataTypes().toArray(new DataTypeInfo[2])));
+        assertFalse(provider.hasData(key.getActualDataTypes()));
 
         support.verifyAll();
     }
@@ -128,14 +128,14 @@ public class MergeContextMenuProviderTest
 
         support.replayAll();
 
-        MergeContextMenuProvider provider = new MergeContextMenuProvider(toolbox);
+        MergeContextMenuProvider provider = new MergeContextMenuProvider(toolbox, null);
         Collection<? extends Component> menuItems = provider.getMenuItems(toString(), key);
 
         assertEquals(2, menuItems.size());
         Iterator<? extends Component> iterator = menuItems.iterator();
         assertFalse(iterator.next().isEnabled());
         assertFalse(iterator.next().isEnabled());
-        assertTrue(provider.hasData(key.getActualDataTypes().toArray(new DataTypeInfo[2])));
+        assertTrue(provider.hasData(key.getActualDataTypes()));
 
         support.verifyAll();
     }
@@ -154,7 +154,7 @@ public class MergeContextMenuProviderTest
 
         support.replayAll();
 
-        MergeContextMenuProvider provider = new MergeContextMenuProvider(toolbox);
+        MergeContextMenuProvider provider = new MergeContextMenuProvider(toolbox, null);
         Collection<? extends Component> menuItems = provider.getMenuItems(toString(), key);
 
         assertEquals(0, menuItems.size());

@@ -1,5 +1,6 @@
 package io.opensphere.merge.ui;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -118,7 +119,7 @@ public class JoinGui
      *
      * @param types the layers to join
      */
-    public void setData(List<DataTypeInfo> types)
+    public void setData(Collection<? extends DataTypeInfo> types)
     {
         // sometimes (rarely) JavaFX complains if the setData method is called
         // on the current thread; shift it to the JFX thread to avoid the issue

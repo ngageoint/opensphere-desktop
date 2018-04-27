@@ -7,6 +7,8 @@ import static org.junit.Assert.assertNotNull;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
+import javafx.application.Platform;
+
 import org.apache.commons.lang3.StringUtils;
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
@@ -31,7 +33,6 @@ import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.util.DataElementLookupUtils;
 import io.opensphere.merge.controller.MergeController;
 import io.opensphere.merge.model.MergeModel;
-import javafx.application.Platform;
 
 /**
  * Unit test for the {@link MergeUI}.
@@ -86,7 +87,7 @@ public class MergeUITestDisplay
 
     /**
      * Tests when the user hits the ok button.
-     * 
+     *
      * @throws InterruptedException if the test fails.
      */
     @Test
@@ -130,7 +131,7 @@ public class MergeUITestDisplay
 
         support.replayAll();
 
-        MergeController controller = new MergeController(toolbox);
+        MergeController controller = new MergeController(toolbox, null);
         controller.setModel(model);
         MergeUI ui = new MergeUI(toolbox, controller, model);
         ui.accept();
@@ -175,7 +176,7 @@ public class MergeUITestDisplay
 
         support.replayAll();
 
-        MergeController controller = new MergeController(toolbox);
+        MergeController controller = new MergeController(toolbox, null);
         controller.setModel(model);
         MergeUI ui = new MergeUI(toolbox, controller, model);
 

@@ -1,11 +1,13 @@
 package io.opensphere.merge.model;
 
+import java.util.Collection;
 import java.util.List;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.DataTypeInfo;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 /**
  * The model for the merge UI.
@@ -32,7 +34,7 @@ public class MergeModel
      *
      * @param layers The layers that will be merged.
      */
-    public MergeModel(List<DataTypeInfo> layers)
+    public MergeModel(Collection<DataTypeInfo> layers)
     {
         myLayers = New.unmodifiableList(layers);
     }

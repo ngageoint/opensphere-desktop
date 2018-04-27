@@ -2,9 +2,7 @@ package io.opensphere.merge.ui;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -27,6 +25,7 @@ import io.opensphere.mantle.data.cache.DataElementCache;
 import io.opensphere.merge.controller.MergeController;
 import io.opensphere.merge.model.JoinModel;
 import io.opensphere.merge.model.MergeModel;
+import io.opensphere.merge.model.MergePrefs;
 
 /**
  * An abstract implementation of a menu provider, used to abstract functions
@@ -64,12 +63,13 @@ public abstract class AbstractMergeMergeContextMenuProvider<CONTEXT_KEY_TYPE ext
      * Constructs a new merge context menu provider.
      *
      * @param toolbox The system toolbox.
+     * @param mergePreferences The merge preferences.
      */
-    public AbstractMergeMergeContextMenuProvider(Toolbox toolbox)
+    public AbstractMergeMergeContextMenuProvider(Toolbox toolbox, MergePrefs mergePreferences)
     {
         myToolbox = toolbox;
         myCache = myToolbox.getPluginToolboxRegistry().getPluginToolbox(MantleToolbox.class).getDataElementCache();
-        myMergeController = new MergeController(toolbox);
+        myMergeController = new MergeController(toolbox, mergePreferences);
     }
 
     /**
@@ -117,9 +117,9 @@ public abstract class AbstractMergeMergeContextMenuProvider<CONTEXT_KEY_TYPE ext
     @Override
     public Collection<? extends Component> getMenuItems(String contextId, CONTEXT_KEY_TYPE key)
     {
-        DataTypeInfo[] dataTypes = getDataTypes(key);
-        List<Component> mergeMenus = new LinkedList<>();
-        if (dataTypes.length >= 1)
+        Collection<DataTypeInfo> dataTypes = getDataTypes(key);
+        List<Component> mergeMenus = New.list(2);
+        if (!dataTypes.isEmpty())
         {
             JMenuItem mergeMenuItem = SwingUtilities.newMenuItem("Merge...", e -> mergeRequest(dataTypes));
             JMenuItem joinMenuItem = SwingUtilities.newMenuItem("Join...", e -> joinRequest(dataTypes));
@@ -127,7 +127,7 @@ public abstract class AbstractMergeMergeContextMenuProvider<CONTEXT_KEY_TYPE ext
             mergeMenus.add(mergeMenuItem);
             mergeMenus.add(joinMenuItem);
 
-            if (dataTypes.length == 1)
+            if (dataTypes.size() == 1)
             {
                 mergeMenuItem.setEnabled(false);
                 mergeMenuItem.setToolTipText("Select two or more layers to enable merge.");
@@ -154,7 +154,7 @@ public abstract class AbstractMergeMergeContextMenuProvider<CONTEXT_KEY_TYPE ext
      *
      * @param dataTypes The data types to merge.
      */
-    protected void mergeRequest(DataTypeInfo... dataTypes)
+    protected void mergeRequest(Collection<DataTypeInfo> dataTypes)
     {
         if (!hasData(dataTypes))
         {
@@ -162,9 +162,9 @@ public abstract class AbstractMergeMergeContextMenuProvider<CONTEXT_KEY_TYPE ext
             return;
         }
 
-        MergeModel model = new MergeModel(new LinkedList<>(Arrays.asList(dataTypes)));
+        MergeModel model = new MergeModel(dataTypes);
         myMergeController.setModel(model);
-        JFXDialog dialog = GuiUtil.okCancelDialog(myToolbox, "Merge " + dataTypes.length + " Layers");
+        JFXDialog dialog = GuiUtil.okCancelDialog(myToolbox, "Merge " + dataTypes.size() + " Layers");
         dialog.setFxNode(new MergeUI(myToolbox, myMergeController, model));
         dialog.setVisible(true);
     }
@@ -174,7 +174,7 @@ public abstract class AbstractMergeMergeContextMenuProvider<CONTEXT_KEY_TYPE ext
      *
      * @param dataTypes those DataTypeInfo instances selected for joining
      */
-    protected void joinRequest(DataTypeInfo... dataTypes)
+    protected void joinRequest(Collection<? extends DataTypeInfo> dataTypes)
     {
         if (!hasData(dataTypes))
         {
@@ -188,7 +188,7 @@ public abstract class AbstractMergeMergeContextMenuProvider<CONTEXT_KEY_TYPE ext
         dialog.setAcceptEar(() -> ThreadUtilities.runCpu(() -> handleJoin(gui.getModel())));
         dialog.setSize(new Dimension(450, 450));
         gui.setup(myToolbox, dialog);
-        gui.setData(new LinkedList<>(Arrays.asList(dataTypes)));
+        gui.setData(dataTypes);
         dialog.setVisible(true);
     }
 
@@ -212,7 +212,7 @@ public abstract class AbstractMergeMergeContextMenuProvider<CONTEXT_KEY_TYPE ext
      * @param dataTypes The layers to check for data.
      * @return True if at least one layer has data to merge
      */
-    protected boolean hasData(DataTypeInfo... dataTypes)
+    protected boolean hasData(Collection<? extends DataTypeInfo> dataTypes)
     {
         for (DataTypeInfo dataType : dataTypes)
         {
@@ -230,7 +230,7 @@ public abstract class AbstractMergeMergeContextMenuProvider<CONTEXT_KEY_TYPE ext
      * @param key the context key
      * @return the data types
      */
-    protected DataTypeInfo[] getDataTypes(CONTEXT_KEY_TYPE key)
+    private Collection<DataTypeInfo> getDataTypes(CONTEXT_KEY_TYPE key)
     {
         Collection<DataTypeInfo> dataTypes = New.list(key.getDataTypes());
         for (DataGroupInfo group : key.getDataGroups())
@@ -247,6 +247,6 @@ public abstract class AbstractMergeMergeContextMenuProvider<CONTEXT_KEY_TYPE ext
             }
         }
 
-        return featureTypes.toArray(new DataTypeInfo[featureTypes.size()]);
+        return featureTypes;
     }
 }
