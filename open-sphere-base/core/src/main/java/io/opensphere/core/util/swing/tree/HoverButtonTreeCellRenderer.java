@@ -161,7 +161,7 @@ public class HoverButtonTreeCellRenderer implements TreeCellRenderer
         int textLength = text.length() - 1;
         while (textWidth > availableTextWidth && textLength >= 4)
         {
-            text = org.apache.commons.lang.StringUtils.abbreviate(text, textLength);
+            text = org.apache.commons.lang3.StringUtils.abbreviate(text, textLength);
             textWidth = fm.stringWidth(text);
             textLength--;
             abbrieviatedTextString = text;

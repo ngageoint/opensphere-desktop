@@ -10,13 +10,10 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Map;
 
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.Attributes;
-
-import io.opensphere.wfs.filter.BetterDefaultHandler;
-import io.opensphere.wfs.filter.SaxElement;
 
 /**
  * Test used to exercise the functionality of the

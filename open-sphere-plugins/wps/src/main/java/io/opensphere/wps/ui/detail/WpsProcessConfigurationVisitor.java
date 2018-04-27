@@ -2,7 +2,7 @@ package io.opensphere.wps.ui.detail;
 
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import io.opensphere.core.util.Visitor;
 import io.opensphere.wps.request.WpsProcessConfiguration;
@@ -25,10 +25,13 @@ public class WpsProcessConfigurationVisitor implements Visitor<WpsProcessConfigu
     private final ProcessDescriptionType myProcessDescriptionType;
 
     /**
-     * Creates a new visitor, configured to accept parameters for the supplied process.
+     * Creates a new visitor, configured to accept parameters for the supplied
+     * process.
      *
-     * @param pServerId the unique identifier of the server on which the process will be executed.
-     * @param pProcessDescriptionType The description of the process being visited.
+     * @param pServerId the unique identifier of the server on which the process
+     *            will be executed.
+     * @param pProcessDescriptionType The description of the process being
+     *            visited.
      */
     public WpsProcessConfigurationVisitor(String pServerId, ProcessDescriptionType pProcessDescriptionType)
     {
@@ -39,7 +42,8 @@ public class WpsProcessConfigurationVisitor implements Visitor<WpsProcessConfigu
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.core.util.Visitor#setValue(java.lang.String, java.lang.String)
+     * @see io.opensphere.core.util.Visitor#setValue(java.lang.String,
+     *      java.lang.String)
      */
     @Override
     public void setValue(String pParameterName, String pValue)

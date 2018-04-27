@@ -1,6 +1,6 @@
 package io.opensphere.core.util.javafx.input;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * An enumeration over the set of temporal types assigned to a given date field.
@@ -23,9 +23,10 @@ public enum DateFieldType
     OTHER;
 
     /**
-     * A factory method used to determine the date field type from the supplied string. The type is inferred from a temporal
-     * qualifier, such as "START", "BEGIN", "STOP", "END", etc. If the supplied text does not contain a temporal qualifier, then
-     * {@link #OTHER} is returned.
+     * A factory method used to determine the date field type from the supplied
+     * string. The type is inferred from a temporal qualifier, such as "START",
+     * "BEGIN", "STOP", "END", etc. If the supplied text does not contain a
+     * temporal qualifier, then {@link #OTHER} is returned.
      *
      * @param pType the String to process to determine the date field type.
      * @return a date field type determined based on the supplied String.

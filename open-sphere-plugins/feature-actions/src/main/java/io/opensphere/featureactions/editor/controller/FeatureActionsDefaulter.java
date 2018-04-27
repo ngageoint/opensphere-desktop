@@ -2,11 +2,7 @@ package io.opensphere.featureactions.editor.controller;
 
 import java.util.List;
 
-import javafx.collections.ListChangeListener;
-import javafx.collections.ListChangeListener.Change;
-import javafx.scene.paint.Color;
-
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.lang.NumberUtilities;
@@ -17,6 +13,9 @@ import io.opensphere.featureactions.editor.model.SimpleFeatureActions;
 import io.opensphere.featureactions.model.Action;
 import io.opensphere.featureactions.model.FeatureAction;
 import io.opensphere.featureactions.model.StyleAction;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
+import javafx.scene.paint.Color;
 
 /**
  * When the user adds a new {@link FeatureAction} this class will attempt to

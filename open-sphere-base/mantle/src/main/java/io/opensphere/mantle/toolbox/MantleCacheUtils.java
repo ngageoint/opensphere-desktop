@@ -3,7 +3,7 @@ package io.opensphere.mantle.toolbox;
 import java.io.File;
 import java.util.Properties;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.util.lang.StringUtilities;
@@ -57,7 +57,8 @@ final class MantleCacheUtils
             {
                 maxElements = (int)(inMemPoolSize * ONEHUNDRED_TEN_PERCENT);
             }
-            final String runtimeDir = StringUtilities.expandProperties(System.getProperty("opensphere.db.path"), System.getProperties());
+            final String runtimeDir = StringUtilities.expandProperties(System.getProperty("opensphere.db.path"),
+                    System.getProperties());
             File diskCacheParent = new File(runtimeDir + File.separator + "elementCache");
             final boolean useEncryption = StringUtils
                     .equalsIgnoreCase(pluginProperties.getProperty("elementDiskCacheUseEncryption", "false"), "true");

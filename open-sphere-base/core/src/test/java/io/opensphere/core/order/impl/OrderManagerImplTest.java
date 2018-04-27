@@ -2,13 +2,13 @@ package io.opensphere.core.order.impl;
 
 import java.util.Collection;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import io.opensphere.core.order.OrderCategory;
 import io.opensphere.core.order.OrderManager;
 import io.opensphere.core.order.OrderParticipantKey;
 import io.opensphere.core.util.collections.New;
-import org.junit.Assert;
 
 /** Test for {@link OrderManagerImpl}. */
 public class OrderManagerImplTest
@@ -32,7 +32,7 @@ public class OrderManagerImplTest
     private static void verifyOrder(OrderManager manager, DefaultOrderParticipantKey first, DefaultOrderParticipantKey second,
             DefaultOrderParticipantKey third, DefaultOrderParticipantKey fourth)
     {
-        int orderMin = CATEGORY.getOrderRange().getMinimumInteger();
+        int orderMin = CATEGORY.getOrderRange().getMinimum().intValue();
 
         Assert.assertTrue(manager.getParticipantMap().get(first) == orderMin);
         Assert.assertTrue(manager.getParticipantMap().get(second) == orderMin + 1);

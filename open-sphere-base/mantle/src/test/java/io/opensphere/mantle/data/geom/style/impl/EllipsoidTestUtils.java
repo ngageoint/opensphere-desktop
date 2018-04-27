@@ -3,7 +3,7 @@ package io.opensphere.mantle.data.geom.style.impl;
 import java.util.List;
 import java.util.Scanner;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 

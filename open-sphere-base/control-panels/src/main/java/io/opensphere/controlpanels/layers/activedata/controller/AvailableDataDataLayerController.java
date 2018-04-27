@@ -6,7 +6,7 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import io.opensphere.controlpanels.layers.base.AbstractDiscoveryDataLayerController;
 import io.opensphere.controlpanels.layers.base.UserConfirmer;
@@ -68,7 +68,8 @@ public class AvailableDataDataLayerController extends AbstractDiscoveryDataLayer
         PreferencesRegistry prefsRegistry = pBox.getPreferencesRegistry();
         myViewByType = prefsRegistry.getPreferences(AvailableDataDataLayerController.class).getString(VIEW_TYPE_PREFERENCE,
                 DEFAULT_VIEW_TYPE);
-        // Get the correct view by type name, older configs may have invalid ones.
+        // Get the correct view by type name, older configs may have invalid
+        // ones.
         myViewByType = myTreeBuilderProvider.getBuilder(myViewByType).getGroupByName();
 
         createPreferenceChangeListeners(prefsRegistry.getPreferences(DataDiscoveryPreferences.class));

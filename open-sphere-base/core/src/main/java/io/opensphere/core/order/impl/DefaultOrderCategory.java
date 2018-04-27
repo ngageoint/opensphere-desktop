@@ -2,7 +2,7 @@ package io.opensphere.core.order.impl;
 
 import java.util.Objects;
 
-import org.apache.commons.lang.math.IntRange;
+import org.apache.commons.lang3.Range;
 
 import io.opensphere.core.order.OrderCategory;
 import io.opensphere.core.order.impl.config.v1.OrderCategoryConfig;
@@ -24,31 +24,31 @@ public class DefaultOrderCategory implements OrderCategory
      * terrain.
      */
     public static final OrderCategory EARTH_ELEVATION_CATEGORY = new DefaultOrderCategory("Earth Terrain Layers",
-            new IntRange(10000, 20000));
+            Range.between(10000, 20000));
 
     /** The category for ordered features. */
-    public static final OrderCategory FEATURE_CATEGORY = new DefaultOrderCategory("Feature Layers", new IntRange(40000, 45000));
+    public static final OrderCategory FEATURE_CATEGORY = new DefaultOrderCategory("Feature Layers", Range.between(40000, 45000));
 
     /** The category for image layers which are base maps. */
     public static final OrderCategory IMAGE_BASE_MAP_CATEGORY = new DefaultOrderCategory("Reference Layers",
-            new IntRange(10000, 15000));
+            Range.between(10000, 15000));
 
     /** The category for image layers which are data tiles. */
-    public static final OrderCategory IMAGE_DATA_CATEGORY = new DefaultOrderCategory("Tile Layers", new IntRange(20000, 25000));
+    public static final OrderCategory IMAGE_DATA_CATEGORY = new DefaultOrderCategory("Tile Layers", Range.between(20000, 25000));
 
     /** The category for image layers which are overlay images. */
     public static final OrderCategory IMAGE_OVERLAY_CATEGORY = new DefaultOrderCategory("Image Overlay Layers",
-            new IntRange(30000, 35000));
+            Range.between(30000, 35000));
 
     /** The category for HUD and other screen coordinate based images. */
     public static final OrderCategory IMAGE_SCREEN_CATEGORY = new DefaultOrderCategory("Image Screen Layers",
-            new IntRange(36000, 37000));
+            Range.between(36000, 37000));
 
     /** The id of this category. */
     private final String myCategoryId;
 
     /** The allowable order range for this category. */
-    private final IntRange myOrderRange;
+    private final Range<Integer> myOrderRange;
 
     /**
      * Construct using a configuration.
@@ -57,19 +57,19 @@ public class DefaultOrderCategory implements OrderCategory
      */
     public DefaultOrderCategory(OrderCategoryConfig config)
     {
-        this(config.getCategoryId(), new IntRange(config.getRangeMin(), config.getRangeMax()));
+        this(config.getCategoryId(), Range.between(config.getRangeMin(), config.getRangeMax()));
     }
 
     /**
      * Constructor.
      *
      * @param categoryId The unique id of this category.
-     * @param orderRange The valid range of order values for this category.
+     * @param range The valid range of order values for this category.
      */
-    public DefaultOrderCategory(String categoryId, IntRange orderRange)
+    public DefaultOrderCategory(String categoryId, Range<Integer> range)
     {
         myCategoryId = categoryId;
-        myOrderRange = new IntRange(orderRange.getMinimumInteger(), orderRange.getMaximumInteger());
+        myOrderRange = Range.between(range.getMinimum(), range.getMaximum());
     }
 
     /**
@@ -106,17 +106,17 @@ public class DefaultOrderCategory implements OrderCategory
     @Override
     public int getOrderMax()
     {
-        return myOrderRange.getMaximumInteger();
+        return myOrderRange.getMaximum().intValue();
     }
 
     @Override
     public int getOrderMin()
     {
-        return myOrderRange.getMinimumInteger();
+        return myOrderRange.getMinimum().intValue();
     }
 
     @Override
-    public IntRange getOrderRange()
+    public Range<Integer> getOrderRange()
     {
         return myOrderRange;
     }
