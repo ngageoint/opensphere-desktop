@@ -3,7 +3,7 @@ package io.opensphere.mantle.data.geom.style.impl;
 import java.awt.Color;
 import java.util.List;
 
-import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang3.ObjectUtils;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.constraint.Constraints;

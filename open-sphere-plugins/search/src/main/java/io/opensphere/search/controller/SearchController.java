@@ -13,7 +13,7 @@ import javafx.collections.ListChangeListener.Change;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;

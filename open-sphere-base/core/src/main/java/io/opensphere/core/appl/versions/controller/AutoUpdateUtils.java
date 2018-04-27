@@ -10,8 +10,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Properties;
 
-import org.apache.commons.lang.SystemUtils;
-import org.apache.commons.lang.text.StrSubstitutor;
+import org.apache.commons.lang3.SystemUtils;
+import org.apache.commons.text.StringSubstitutor;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -169,7 +169,7 @@ public final class AutoUpdateUtils
         properties.put("version", version);
         properties.put("os", getOperatingSystemString());
 
-        urlString = StrSubstitutor.replace(urlString, properties);
+        urlString = StringSubstitutor.replace(urlString, properties);
         return urlString;
     }
 

@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.Toolbox;
@@ -27,8 +27,9 @@ import io.opensphere.server.services.ServerConnectionParams;
 import io.opensphere.server.source.OGCServerSource;
 
 /**
- * An abstract base implementation of an envoy, designed to be used to perform a single WPS request type against a single server,
- * and populating the results into the {@link DataRegistry}.
+ * An abstract base implementation of an envoy, designed to be used to perform a
+ * single WPS request type against a single server, and populating the results
+ * into the {@link DataRegistry}.
  *
  * @param <RESPONSE_TYPE> the WPS type returned by the envoy.
  */
@@ -47,12 +48,15 @@ public abstract class AbstractWpsDataRegistryEnvoy<RESPONSE_TYPE> extends Abstra
     private final PropertyDescriptor<RESPONSE_TYPE> myPropertyDescriptor;
 
     /**
-     * Creates a new envoy through which a WPS request is executed for a single server.
+     * Creates a new envoy through which a WPS request is executed for a single
+     * server.
      *
      * @param pToolbox the toolbox through which application interaction occurs.
-     * @param pServer the configuration of the server to which the query will be made.
+     * @param pServer the configuration of the server to which the query will be
+     *            made.
      * @param pRequestType The request type for which this envoy is configured.
-     * @param pPropertyDescriptor The descriptor with which data is stored to the data registry.
+     * @param pPropertyDescriptor The descriptor with which data is stored to
+     *            the data registry.
      */
     public AbstractWpsDataRegistryEnvoy(Toolbox pToolbox, ServerConnectionParams pServer, WpsRequestType pRequestType,
             PropertyDescriptor<RESPONSE_TYPE> pPropertyDescriptor)
@@ -123,15 +127,15 @@ public abstract class AbstractWpsDataRegistryEnvoy<RESPONSE_TYPE> extends Abstra
      * {@inheritDoc}
      *
      * @see io.opensphere.core.data.DataRegistryDataProvider#query(io.opensphere.core.data.util.DataModelCategory,
-     *      java.util.Collection, java.util.List, java.util.List, int, java.util.Collection,
-     *      io.opensphere.core.data.CacheDepositReceiver)
+     *      java.util.Collection, java.util.List, java.util.List, int,
+     *      java.util.Collection, io.opensphere.core.data.CacheDepositReceiver)
      */
     @SuppressWarnings("unchecked")
     @Override
     public synchronized void query(DataModelCategory pCategory, Collection<? extends Satisfaction> pSatisfactions,
             List<? extends PropertyMatcher<?>> pParameters, List<? extends OrderSpecifier> pOrderSpecifiers, int pLimit,
             Collection<? extends PropertyDescriptor<?>> pPropertyDescriptors, CacheDepositReceiver pQueryReceiver)
-                throws InterruptedException, QueryException
+        throws InterruptedException, QueryException
     {
         if (pPropertyDescriptors.size() != 1)
         {
@@ -145,16 +149,20 @@ public abstract class AbstractWpsDataRegistryEnvoy<RESPONSE_TYPE> extends Abstra
     }
 
     /**
-     * Stores the supplied response object into the Data Registry, by way of the supplied {@link CacheDepositReceiver}.
+     * Stores the supplied response object into the Data Registry, by way of the
+     * supplied {@link CacheDepositReceiver}.
      *
      * @param pCategory the category with which the data should be stored.
-     * @param pQueryReceiver the query receiver for the Data Registry that will receive the supplied results.
-     * @param pPropertyDescriptor the descriptor used to describe the format of the data to be placed into the data registry.
+     * @param pQueryReceiver the query receiver for the Data Registry that will
+     *            receive the supplied results.
+     * @param pPropertyDescriptor the descriptor used to describe the format of
+     *            the data to be placed into the data registry.
      * @param pData the response object to store in the data registry.
      * @throws QueryException if the data cannot be stored into the cache.
      */
     protected synchronized void depositToDataRegistry(DataModelCategory pCategory, CacheDepositReceiver pQueryReceiver,
-            PropertyDescriptor<RESPONSE_TYPE> pPropertyDescriptor, RESPONSE_TYPE pData) throws QueryException
+            PropertyDescriptor<RESPONSE_TYPE> pPropertyDescriptor, RESPONSE_TYPE pData)
+        throws QueryException
     {
         if (LOG.isDebugEnabled())
         {
@@ -231,14 +239,16 @@ public abstract class AbstractWpsDataRegistryEnvoy<RESPONSE_TYPE> extends Abstra
      *
      * @param pParameters the set of parameters from which to extract data.
      *
-     * @return a Map in which required parameters are defined (may be null if none are needed).
+     * @return a Map in which required parameters are defined (may be null if
+     *         none are needed).
      */
     protected abstract Map<String, String> getParameterMap(List<? extends PropertyMatcher<?>> pParameters);
 
     /**
      * Creates a parameter map unique to the implemented request type.
      *
-     * @return a Map in which the configured parameters are defined (may be null if none are needed).
+     * @return a Map in which the configured parameters are defined (may be null
+     *         if none are needed).
      */
     @Override
     protected Map<String, String> getParameterMap()

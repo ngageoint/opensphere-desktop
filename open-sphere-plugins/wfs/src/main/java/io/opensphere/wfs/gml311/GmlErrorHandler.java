@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.util.collections.New;
@@ -60,8 +60,8 @@ public class GmlErrorHandler
     public static final Set<String> RECOGNIZED_REPORT_TAGS = New.set(EXCEPTION_REPORT_TAG, SERVICE_EXCEPTION_REPORT_TAG);
 
     /**
-     * The current state of the handler. The handler will track its state as it progresses through the XML snippet. Initialized to
-     * {@link State#WAITING}.
+     * The current state of the handler. The handler will track its state as it
+     * progresses through the XML snippet. Initialized to {@link State#WAITING}.
      */
     private State myCollectState = State.WAITING;
 
@@ -76,7 +76,8 @@ public class GmlErrorHandler
     private List<GmlExceptionReport> myExceptionReports;
 
     /**
-     * Creates a new GML Error handler, ready to process all content wrapped within the supplied tag.
+     * Creates a new GML Error handler, ready to process all content wrapped
+     * within the supplied tag.
      */
     public GmlErrorHandler()
     {
@@ -97,7 +98,8 @@ public class GmlErrorHandler
      * Tests to determine if this handler will process the supplied tag.
      *
      * @param pTag the tag to inspect.
-     * @return true if the handler will process the supplied tag, false otherwise.
+     * @return true if the handler will process the supplied tag, false
+     *         otherwise.
      */
     public boolean handlesTag(String pTag)
     {
@@ -162,8 +164,9 @@ public class GmlErrorHandler
     }
 
     /**
-     * Handle a GML exception report opening tag. The tag is handled according to the current value of the {@link #myCollectState}
-     * , to avoid extra parsing.
+     * Handle a GML exception report opening tag. The tag is handled according
+     * to the current value of the {@link #myCollectState} , to avoid extra
+     * parsing.
      *
      * @param pTag the name of the GML tag to handle
      */
@@ -205,16 +208,27 @@ public class GmlErrorHandler
     /** Enum used to track the current GML Exception Report parse State. */
     private enum State
     {
-        /** The state definition used when waiting for a closing 'ExceptionText' tag. */
+        /**
+         * The state definition used when waiting for a closing 'ExceptionText'
+         * tag.
+         */
         COLLECT_EXCEPTION_TEXT,
 
-        /** The state definition used when waiting for a closing 'Exception' tag. */
+        /**
+         * The state definition used when waiting for a closing 'Exception' tag.
+         */
         COLLECT_EXCEPTION,
 
-        /** The state definition used when waiting for an opening 'ExceptionText' tag. */
+        /**
+         * The state definition used when waiting for an opening 'ExceptionText'
+         * tag.
+         */
         SEEK_EXCEPTION_TEXT,
 
-        /** The state definition used when waiting for an opening 'Exception' tag. */
+        /**
+         * The state definition used when waiting for an opening 'Exception'
+         * tag.
+         */
         SEEK_EXCEPTION,
 
         /** State while waiting for a new 'ExceptionReport' tag. */

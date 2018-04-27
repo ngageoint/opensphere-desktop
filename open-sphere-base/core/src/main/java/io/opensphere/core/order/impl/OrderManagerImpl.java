@@ -88,8 +88,8 @@ public class OrderManagerImpl implements OrderManager
 
         /* If the config has too many values, it's probably the result of a
          * faulty plugin, so clear the saved orders. */
-        if (myParticipantToOrder.size() >= myCategory.getOrderRange().getMaximumInteger()
-                - myCategory.getOrderRange().getMinimumInteger() + 1)
+        if (myParticipantToOrder.size() >= myCategory.getOrderRange().getMaximum().intValue()
+                - myCategory.getOrderRange().getMinimum().intValue() + 1)
         {
             myParticipantToOrder.clear();
             myOrderToParticipants.clear();
@@ -177,8 +177,8 @@ public class OrderManagerImpl implements OrderManager
             return myParticipantToOrder.get(participant);
         }
 
-        if (myParticipantToOrder.size() >= myCategory.getOrderRange().getMaximumInteger()
-                - myCategory.getOrderRange().getMinimumInteger() + 1)
+        if (myParticipantToOrder.size() >= myCategory.getOrderRange().getMaximum().intValue()
+                - myCategory.getOrderRange().getMinimum().intValue() + 1)
         {
             LOGGER.error("OrderManager has no room to insert new participant");
             return -1;
@@ -187,7 +187,7 @@ public class OrderManagerImpl implements OrderManager
         int order;
         if (myParticipantToOrder.isEmpty())
         {
-            order = myCategory.getOrderRange().getMinimumInteger();
+            order = myCategory.getOrderRange().getMinimum().intValue();
         }
         else
         {
@@ -327,7 +327,7 @@ public class OrderManagerImpl implements OrderManager
     public OrderManagerConfig getConfig()
     {
         OrderCategoryConfig category = new OrderCategoryConfig(myCategory.getCategoryId(),
-                myCategory.getOrderRange().getMaximumInteger(), myCategory.getOrderRange().getMinimumInteger());
+                myCategory.getOrderRange().getMaximum().intValue(), myCategory.getOrderRange().getMinimum().intValue());
         return new OrderManagerConfig(category, myFamily, getParticipantMap());
     }
 
@@ -530,13 +530,14 @@ public class OrderManagerImpl implements OrderManager
     @Override
     public int moveToBottom(OrderParticipantKey participant)
     {
-        return moveBelow(participant, myOrderToParticipants.get(myCategory.getOrderRange().getMinimumInteger()));
+        return moveBelow(participant, myOrderToParticipants.get(myCategory.getOrderRange().getMinimum().intValue()));
     }
 
     @Override
     public int moveToTop(OrderParticipantKey participant)
     {
-        int maxOrder = Arrays.stream(myOrderToParticipants.keys()).max().orElse(myCategory.getOrderRange().getMinimumInteger());
+        int maxOrder = Arrays.stream(myOrderToParticipants.keys()).max()
+                .orElse(myCategory.getOrderRange().getMinimum().intValue());
         return moveAbove(participant, myOrderToParticipants.get(maxOrder));
     }
 
@@ -564,7 +565,7 @@ public class OrderManagerImpl implements OrderManager
         int[] orders = getAllOrders();
         TObjectIntMap<OrderParticipantKey> notify = new TObjectIntHashMap<>();
 
-        int orderAssignment = myCategory.getOrderRange().getMinimumInteger();
+        int orderAssignment = myCategory.getOrderRange().getMinimum().intValue();
         for (int currentOrder : orders)
         {
             if (currentOrder != orderAssignment)

@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.impl.GroupByTreeBuilder;

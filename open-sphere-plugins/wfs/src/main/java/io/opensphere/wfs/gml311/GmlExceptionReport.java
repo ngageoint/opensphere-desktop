@@ -1,10 +1,11 @@
 package io.opensphere.wfs.gml311;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
- * A simple report, in which an exception received from a remote GML-providing service is encapsulated. The report contains both
- * an exception code, and a message describing the text.
+ * A simple report, in which an exception received from a remote GML-providing
+ * service is encapsulated. The report contains both an exception code, and a
+ * message describing the text.
  */
 public class GmlExceptionReport
 {

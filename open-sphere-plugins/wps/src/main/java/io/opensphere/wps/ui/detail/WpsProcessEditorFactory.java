@@ -7,11 +7,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javafx.scene.control.Control;
-import javafx.scene.control.Tooltip;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.WordUtils;
 import org.apache.log4j.Logger;
 
 import com.google.inject.Guice;
@@ -36,6 +33,8 @@ import io.opensphere.wps.config.v2.UiElement;
 import io.opensphere.wps.layer.WpsDataTypeInfo;
 import io.opensphere.wps.ui.detail.provider.WpsInputControlProvider;
 import io.opensphere.wps.ui.detail.provider.WpsInputControlProviderModule;
+import javafx.scene.control.Control;
+import javafx.scene.control.Tooltip;
 import jidefx.scene.control.validation.ValidationGroup;
 import net.opengis.ows._110.CodeType;
 import net.opengis.ows._110.DomainMetadataType;
@@ -139,7 +138,7 @@ public class WpsProcessEditorFactory
         Collection<IdentifiedControl<? extends Control>> controls = New.list();
 
         Map<String, InputDescriptionType> nameToInputDescription = CollectionUtilities.map(inputDescriptions,
-            i -> i.getIdentifier().getValue());
+                i -> i.getIdentifier().getValue());
 
         LayerColumnLinker linker = new LayerColumnLinker(myToolbox);
         for (UiElement uiElement : config.getUiElements())

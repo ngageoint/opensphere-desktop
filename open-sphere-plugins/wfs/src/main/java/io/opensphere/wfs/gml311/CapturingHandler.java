@@ -8,7 +8,7 @@ import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -17,7 +17,8 @@ import org.xml.sax.helpers.DefaultHandler;
 import io.opensphere.core.util.collections.New;
 
 /**
- * A specialized handler, in which an XML document is captured to a buffer, and made accessible to external users.
+ * A specialized handler, in which an XML document is captured to a buffer, and
+ * made accessible to external users.
  */
 public class CapturingHandler extends DefaultHandler
 {
@@ -27,7 +28,8 @@ public class CapturingHandler extends DefaultHandler
     private static final Logger LOG = Logger.getLogger(CapturingHandler.class);
 
     /**
-     * The stream to which output is written, which wraps the stream specified in {@link #myCaptureStream}.
+     * The stream to which output is written, which wraps the stream specified
+     * in {@link #myCaptureStream}.
      */
     private final PrintWriter myOutputStream;
 
@@ -47,7 +49,8 @@ public class CapturingHandler extends DefaultHandler
     private int myIndentLevel;
 
     /**
-     * A flag used to indicate that the last printed information was CDATA / content.
+     * A flag used to indicate that the last printed information was CDATA /
+     * content.
      */
     private boolean myLastOutputWasContent;
 
@@ -107,8 +110,8 @@ public class CapturingHandler extends DefaultHandler
     /**
      * {@inheritDoc}
      *
-     * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String,
-     *      org.xml.sax.Attributes)
+     * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String,
+     *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
     @Override
     public void startElement(String pUri, String pLocalName, String pQName, Attributes pAttributes) throws SAXException
@@ -140,7 +143,8 @@ public class CapturingHandler extends DefaultHandler
     /**
      * {@inheritDoc}
      *
-     * @see org.xml.sax.helpers.DefaultHandler#ignorableWhitespace(char[], int, int)
+     * @see org.xml.sax.helpers.DefaultHandler#ignorableWhitespace(char[], int,
+     *      int)
      */
     @Override
     public void ignorableWhitespace(char[] pCh, int pStart, int pLength) throws SAXException
@@ -150,12 +154,14 @@ public class CapturingHandler extends DefaultHandler
     }
 
     /**
-     * Gets the correct name, choosing between the local and the qualified name. The qualified name is chosen when the local name
-     * is missing or blank.
+     * Gets the correct name, choosing between the local and the qualified name.
+     * The qualified name is chosen when the local name is missing or blank.
      *
-     * @param pUri the URI of the element, used to de-reference namespace mappings.
+     * @param pUri the URI of the element, used to de-reference namespace
+     *            mappings.
      * @param pLocalName the local name, used if not null or blank.
-     * @param pQName the fully qualified name, used if the local name is missing.
+     * @param pQName the fully qualified name, used if the local name is
+     *            missing.
      * @return the name of the element.
      */
     protected String getName(String pUri, String pLocalName, String pQName)
@@ -182,7 +188,8 @@ public class CapturingHandler extends DefaultHandler
     /**
      * {@inheritDoc}
      *
-     * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
+     * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String,
+     *      java.lang.String, java.lang.String)
      */
     @Override
     public void endElement(String pUri, String pLocalName, String pQName) throws SAXException
@@ -218,7 +225,8 @@ public class CapturingHandler extends DefaultHandler
     /**
      * {@inheritDoc}
      *
-     * @see org.xml.sax.helpers.DefaultHandler#startPrefixMapping(java.lang.String, java.lang.String)
+     * @see org.xml.sax.helpers.DefaultHandler#startPrefixMapping(java.lang.String,
+     *      java.lang.String)
      */
     @Override
     public void startPrefixMapping(String pPrefix, String pUri) throws SAXException
