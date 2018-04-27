@@ -24,7 +24,11 @@ public final class DataTypeChecker
      */
     public static boolean isFeatureType(DataTypeInfo type)
     {
-        return type.getBasicVisualizationInfo() != null && type.getBasicVisualizationInfo().usesDataElements()
+        if(type == null ) {
+            return false;
+        }
+        
+        return type != null && type.getBasicVisualizationInfo() != null && type.getBasicVisualizationInfo().usesDataElements()
                 || type.getMapVisualizationInfo() != null && type.getMapVisualizationInfo().usesMapDataElements();
     }
 }

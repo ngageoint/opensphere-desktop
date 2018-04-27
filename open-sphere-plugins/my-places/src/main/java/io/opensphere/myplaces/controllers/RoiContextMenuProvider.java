@@ -42,13 +42,16 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupCont
             MyPlacesDataTypeInfo type = (MyPlacesDataTypeInfo)key.getDataType();
             Placemark kmlPlacemark = type.getKmlPlacemark();
 
-            if (!(kmlPlacemark.getGeometry() instanceof Polygon))
+            if (kmlPlacemark.getGeometry() instanceof Polygon)
+            {
+                PolygonGeometry geom = RegionUtils.createGeometry(kmlPlacemark);
+                menuItems = MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().getGeometryMenuItems(geom);
+            }
+            else
             {
                 return menuItems;
             }
 
-            PolygonGeometry geom = RegionUtils.createGeometry(kmlPlacemark);
-            menuItems = MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().getGeometryMenuItems(geom);
         }
         return menuItems;
     }
