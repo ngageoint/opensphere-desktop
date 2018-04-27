@@ -19,30 +19,32 @@ public class DefaultOrderCategory implements OrderCategory
     /** The family for image layer participants. */
     public static final String DEFAULT_IMAGE_LAYER_FAMILY = "Image Layer Family";
 
+    /** The family for my-places layer participants. */
+    public static final String DEFAULT_MY_PLACES_LAYER_FAMILY = "My Places Layer Family";
+
     /**
      * The category of participants who provide elevation data for earth
      * terrain.
      */
-    public static final OrderCategory EARTH_ELEVATION_CATEGORY = new DefaultOrderCategory("Earth Terrain Layers",
-            Range.between(10000, 20000));
+    public static final OrderCategory EARTH_ELEVATION_CATEGORY = new DefaultOrderCategory("Earth Terrain Layers", 10000, 20000);
 
     /** The category for ordered features. */
-    public static final OrderCategory FEATURE_CATEGORY = new DefaultOrderCategory("Feature Layers", Range.between(40000, 45000));
+    public static final OrderCategory FEATURE_CATEGORY = new DefaultOrderCategory("Feature Layers", 40000, 45000);
 
     /** The category for image layers which are base maps. */
-    public static final OrderCategory IMAGE_BASE_MAP_CATEGORY = new DefaultOrderCategory("Reference Layers",
-            Range.between(10000, 15000));
+    public static final OrderCategory IMAGE_BASE_MAP_CATEGORY = new DefaultOrderCategory("Reference Layers", 10000, 15000);
 
     /** The category for image layers which are data tiles. */
-    public static final OrderCategory IMAGE_DATA_CATEGORY = new DefaultOrderCategory("Tile Layers", Range.between(20000, 25000));
+    public static final OrderCategory IMAGE_DATA_CATEGORY = new DefaultOrderCategory("Tile Layers", 20000, 25000);
 
     /** The category for image layers which are overlay images. */
-    public static final OrderCategory IMAGE_OVERLAY_CATEGORY = new DefaultOrderCategory("Image Overlay Layers",
-            Range.between(30000, 35000));
+    public static final OrderCategory IMAGE_OVERLAY_CATEGORY = new DefaultOrderCategory("Image Overlay Layers", 30000, 35000);
 
     /** The category for HUD and other screen coordinate based images. */
-    public static final OrderCategory IMAGE_SCREEN_CATEGORY = new DefaultOrderCategory("Image Screen Layers",
-            Range.between(36000, 37000));
+    public static final OrderCategory IMAGE_SCREEN_CATEGORY = new DefaultOrderCategory("Image Screen Layers", 36000, 37000);
+
+    /** The category for My Places. */
+    public static final OrderCategory MY_PLACES_CATEGORY = new DefaultOrderCategory("My Places Layers", 36000, 37000);
 
     /** The id of this category. */
     private final String myCategoryId;
@@ -57,7 +59,7 @@ public class DefaultOrderCategory implements OrderCategory
      */
     public DefaultOrderCategory(OrderCategoryConfig config)
     {
-        this(config.getCategoryId(), Range.between(config.getRangeMin(), config.getRangeMax()));
+        this(config.getCategoryId(), config.getRangeMin(), config.getRangeMax());
     }
 
     /**
@@ -70,6 +72,19 @@ public class DefaultOrderCategory implements OrderCategory
     {
         myCategoryId = categoryId;
         myOrderRange = Range.between(range.getMinimum(), range.getMaximum());
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param categoryId The unique id of this category.
+     * @param minimum The minimum value for this category.
+     * @param maximum The maximum value for this category.
+     */
+    public DefaultOrderCategory(String categoryId, int minimum, int maximum)
+    {
+        myCategoryId = categoryId;
+        myOrderRange = Range.between(Integer.valueOf(minimum), Integer.valueOf(maximum));
     }
 
     /**

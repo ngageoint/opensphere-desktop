@@ -610,10 +610,13 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
                 builderBuilder.apply(vsp.getName()), style, ourShowArrowPropertyKey, true);
         paramList.add(showArrowPanel);
 
+        // Max size shouldn't be 500k meters, it should be the actual max size.
+        Length maxArrowLength = manualLengthPanel.getLengthBinding().get().multiplyBy(0.5);
+
         vsp = style.getStyleParameter(ourArrowLengthPropertyKey);
         arrowBuilder = arrowBuilder == null ? builderBuilder.apply(vsp.getName()) : arrowBuilder;
         LengthSliderStyleParameterEditorPanel arrowLenPanel = new LengthSliderStyleParameterEditorPanel(arrowBuilder, style,
-                ourArrowLengthPropertyKey, false, true, MIN_ARROW_LENGTH, MAX_ARROW_LENGTH, myLengthUnits, Kilometers.class);
+                ourArrowLengthPropertyKey, false, true, MIN_ARROW_LENGTH, maxArrowLength, myLengthUnits, Kilometers.class);
         AbstractStyleParameterEditorPanel filler = new BlankPanel();
         showArrowPanel.getSiblingComponents().add(arrowLenPanel);
         showArrowPanel.getSiblingComponents().add(filler);

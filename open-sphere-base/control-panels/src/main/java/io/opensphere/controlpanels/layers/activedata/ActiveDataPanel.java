@@ -273,23 +273,23 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
     /**
      * Instantiates a new timeline panel.
      *
-     * @param tb the {@link Toolbox}
+     * @param toolbox the {@link Toolbox}
      * @param coordinator the coordinator
      * @param controller The controller to use, or null if the default
      *            controller is acceptable.
      * @param expansionHelper The expansion helper to use to save node expansion
      *            states.
      */
-    private ActiveDataPanel(Toolbox tb, LayerDetailsCoordinator coordinator, ActiveDataDataLayerController controller,
+    private ActiveDataPanel(Toolbox toolbox, LayerDetailsCoordinator coordinator, ActiveDataDataLayerController controller,
             DiscoveryTreeExpansionHelper expansionHelper)
     {
-        super(tb);
-        myToolbox = tb;
+        super(toolbox);
+        myToolbox = toolbox;
         myLayerDetailsCoordinator = coordinator;
         if (controller == null)
         {
-            myDataLayerController = new ActiveDataDataLayerController(tb, this);
-            ContextActionManager contextManager = tb.getUIRegistry().getContextActionManager();
+            myDataLayerController = new ActiveDataDataLayerController(toolbox, this);
+            ContextActionManager contextManager = toolbox.getUIRegistry().getContextActionManager();
             contextManager.registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT, DataGroupContextKey.class,
                     myContextMenuProvider);
             contextManager.registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT, MultiDataGroupContextKey.class,
@@ -307,22 +307,22 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
         }
 
         myLoadsToChangedListener = event -> repaintTree();
-        tb.getEventManager().subscribe(DataTypeInfoLoadsToChangeEvent.class, myLoadsToChangedListener);
+        toolbox.getEventManager().subscribe(DataTypeInfoLoadsToChangeEvent.class, myLoadsToChangedListener);
         myTypeVisibilityChangeListener = event -> repaintTree();
-        tb.getEventManager().subscribe(DataTypeVisibilityChangeEvent.class, myTypeVisibilityChangeListener);
+        toolbox.getEventManager().subscribe(DataTypeVisibilityChangeEvent.class, myTypeVisibilityChangeListener);
         myDTIFocusChangeListener = this::handleDataTypeInfoFocusEvent;
-        tb.getEventManager().subscribe(DataTypeInfoFocusEvent.class, myDTIFocusChangeListener);
+        toolbox.getEventManager().subscribe(DataTypeInfoFocusEvent.class, myDTIFocusChangeListener);
 
         myDataLayerController.addListener(this);
 
-        myTreeButtonBuilders = new ActiveTreeButtonBuilders(tb, this::handleButtonClicked);
+        myTreeButtonBuilders = new ActiveTreeButtonBuilders(toolbox, this::handleButtonClicked);
         myActiveDataTreeTableTreeCellRenderer = new ActiveDataTreeTableTreeCellRenderer(
-                MantleToolboxUtils.getMantleToolbox(tb).getDataGroupController());
+                MantleToolboxUtils.getMantleToolbox(toolbox).getDataGroupController());
         myActiveDataTreeTableTreeCellRenderer.setButtonBuilders(getTreeButtonProvisioner().getButtonBuilders());
 
         if (expansionHelper == null)
         {
-            myExpansionHelper = new DiscoveryTreeExpansionHelper(tb.getPreferencesRegistry().getPreferences(getClass()),
+            myExpansionHelper = new DiscoveryTreeExpansionHelper(toolbox.getPreferencesRegistry().getPreferences(getClass()),
                     DiscoveryTreeExpansionHelper.Mode.STORE_CONTRACTIONS);
         }
         else
@@ -333,27 +333,30 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
         myExpansionHelper.loadFromPreferences();
 
         myTransferHandler = new TreeTransferHandler(
-                new ZOrderTreeTransferHandler(tb, getController().getOrderTreeEventController()));
+                new ZOrderTreeTransferHandler(toolbox, getController().getOrderTreeEventController()));
 
-        tb.getOrderManagerRegistry()
+        toolbox.getOrderManagerRegistry()
                 .getOrderManager(DefaultOrderCategory.DEFAULT_FEATURE_LAYER_FAMILY, DefaultOrderCategory.FEATURE_CATEGORY)
                 .addParticipantChangeListener(myOrderChangeListener);
-        tb.getOrderManagerRegistry()
+        toolbox.getOrderManagerRegistry()
                 .getOrderManager(DefaultOrderCategory.DEFAULT_ELEVATION_FAMILY, DefaultOrderCategory.EARTH_ELEVATION_CATEGORY)
                 .addParticipantChangeListener(myOrderChangeListener);
-        tb.getOrderManagerRegistry()
+        toolbox.getOrderManagerRegistry()
                 .getOrderManager(DefaultOrderCategory.DEFAULT_IMAGE_LAYER_FAMILY, DefaultOrderCategory.IMAGE_BASE_MAP_CATEGORY)
                 .addParticipantChangeListener(myOrderChangeListener);
-        tb.getOrderManagerRegistry()
+        toolbox.getOrderManagerRegistry()
                 .getOrderManager(DefaultOrderCategory.DEFAULT_IMAGE_LAYER_FAMILY, DefaultOrderCategory.IMAGE_DATA_CATEGORY)
                 .addParticipantChangeListener(myOrderChangeListener);
-        tb.getOrderManagerRegistry()
+        toolbox.getOrderManagerRegistry()
                 .getOrderManager(DefaultOrderCategory.DEFAULT_IMAGE_LAYER_FAMILY, DefaultOrderCategory.IMAGE_OVERLAY_CATEGORY)
+                .addParticipantChangeListener(myOrderChangeListener);
+        toolbox.getOrderManagerRegistry()
+                .getOrderManager(DefaultOrderCategory.DEFAULT_MY_PLACES_LAYER_FAMILY, DefaultOrderCategory.MY_PLACES_CATEGORY)
                 .addParticipantChangeListener(myOrderChangeListener);
 
         getController().getOrderTreeEventController().setAllowDrag(true);
 
-        MantleToolboxUtils.getMantleToolbox(tb).getDataGroupController().addActivationListener(myActivationListener);
+        MantleToolboxUtils.getMantleToolbox(toolbox).getDataGroupController().addActivationListener(myActivationListener);
     }
 
     @Override
