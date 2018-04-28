@@ -670,7 +670,6 @@ public abstract class ConfigUtils
      * @param paths Path to the map property
      * @return A <code>Map</code> or each key to it's value.
      */
-    @SuppressWarnings("unchecked")
     public Map<String, String> getMap(String... paths)
     {
         Map<String, String> map = new HashMap<>();
@@ -714,7 +713,6 @@ public abstract class ConfigUtils
      * @param paths Path to the map property
      * @return A <code>Map</code> or each key to it's value array
      */
-    @SuppressWarnings("unchecked")
     public Map<String, String[]> getMapOfArrays(String... paths)
     {
         Map<String, String[]> map = new HashMap<>();

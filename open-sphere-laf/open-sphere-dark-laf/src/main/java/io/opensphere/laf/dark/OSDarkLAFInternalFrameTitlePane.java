@@ -112,6 +112,9 @@ public class OSDarkLAFInternalFrameTitlePane extends MetalInternalFrameTitlePane
 
     private class NoFocusButton extends JButton
     {
+        /** serialVersionUID. */
+        private static final long serialVersionUID = 1;
+
         private String uiKey;
 
         public NoFocusButton(String uiKey, String opacityKey)
@@ -210,6 +213,9 @@ public class OSDarkLAFInternalFrameTitlePane extends MetalInternalFrameTitlePane
 
     public class PopAction extends AbstractAction
     {
+        /** serialVersionUID. */
+        private static final long serialVersionUID = 1;
+
         public PopAction()
         {
             super(UIManager.getString("InternalFrameTitlePane.popButtonText"));
@@ -224,6 +230,9 @@ public class OSDarkLAFInternalFrameTitlePane extends MetalInternalFrameTitlePane
 
     public class RollupAction extends AbstractAction
     {
+        /** serialVersionUID. */
+        private static final long serialVersionUID = 1;
+
         public RollupAction()
         {
             super(UIManager.getString("InternalFrameTitlePane.rollupButtonText"));

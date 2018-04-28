@@ -27,7 +27,6 @@ import java.util.function.Supplier;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
-import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -143,8 +142,10 @@ public final class SearchPanel extends JPanel implements ActionListener
     /** The Search field. */
     private GhostTextField mySearchField;
 
-    /** The button used to search in the current view. */
-    private JButton myWhatsHereButton;
+    /* The button used to search in the current view.
+     * Removed because its construction was also removed, but do not delete.
+     * private JButton myWhatsHereButton;
+     */
 
     /** The Search goto controller. */
     private final transient KeywordController mySearchGotoController;

@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import io.opensphere.core.common.geospatial.model.interfaces.IDataPoint;
 
 public class CompositeDataPoint extends io.opensphere.core.common.geospatial.model.DataPoint
 {
 
-    private static final Log LOGGER = LogFactory.getLog(CompositeDataPoint.class);
+    private static final long serialVersionUID = 1L;
 
     protected List<IDataPoint> subPoints = null;
 

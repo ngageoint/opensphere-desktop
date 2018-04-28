@@ -200,6 +200,13 @@ public abstract class AbstractVideoPlayer
                 int read = is.read(b, off, len);
                 return read;
             }
+
+            @Override
+            public void close() throws IOException
+            {
+                super.close();
+                meter.close();
+            }
         };
     }
 

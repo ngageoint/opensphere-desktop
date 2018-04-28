@@ -262,7 +262,7 @@ public class ScreenPositionManagerTest
         ControlContext globe = support.createMock(ControlContext.class);
         globe.addListener(EasyMock.isA(DiscreteEventListener.class),
                 EasyMock.eq(new DefaultMouseBinding(MouseEvent.MOUSE_PRESSED, InputEvent.BUTTON3_DOWN_MASK)),
-                EasyMock.eq(new DefaultMouseBinding(MouseEvent.MOUSE_RELEASED, InputEvent.BUTTON3_MASK)));
+                EasyMock.eq(new DefaultMouseBinding(MouseEvent.MOUSE_RELEASED, InputEvent.BUTTON3_DOWN_MASK)));
         EasyMock.expectLastCall().andAnswer(() ->
         {
             myDiscreteListener = (DiscreteEventListener)EasyMock.getCurrentArguments()[0];

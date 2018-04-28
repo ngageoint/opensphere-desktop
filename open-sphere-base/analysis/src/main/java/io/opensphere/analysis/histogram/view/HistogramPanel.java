@@ -1,6 +1,5 @@
 package io.opensphere.analysis.histogram.view;
 
-import java.awt.Component;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -121,7 +120,7 @@ public class HistogramPanel extends JFXPanel implements Closeable
      */
     void handleMouseClick(MouseEvent e)
     {
-        boolean isRightClick = (e.getModifiers() & InputEvent.BUTTON3_MASK) != 0;
+        boolean isRightClick = (e.getModifiersEx() & InputEvent.BUTTON3_DOWN_MASK) != 0;
         if (isRightClick)
         {
             JPopupMenu menu = new JPopupMenu();
@@ -281,9 +280,8 @@ public class HistogramPanel extends JFXPanel implements Closeable
      */
     private BufferedImage createBufferedImage()
     {
-        Component component = this;
-        BufferedImage image = new BufferedImage(component.getWidth(), component.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
-        component.paint(image.getGraphics());
+        BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+        paint(image.getGraphics());
         return image;
     }
 }

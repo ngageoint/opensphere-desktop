@@ -116,12 +116,11 @@ public class JAXBContextHelper
      * @return the {@link JAXBContext}
      * @throws JAXBException
      */
-    public static JAXBContext getMultiCachedContext(Class<?>... boundClasses) throws JAXBException
+    public static JAXBContext getMultiCachedContext(final Class<?>... boundClasses) throws JAXBException
     {
         JAXBContext ctx;
         createContextLock.lock();
 
-        Class<?>[] classes = boundClasses;
         String[] classNames = new String[boundClasses.length];
 
         for (int i = 0; i < boundClasses.length; i++)

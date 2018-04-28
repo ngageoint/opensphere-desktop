@@ -495,12 +495,12 @@ public class FilterHelper
         Date start = new Date();
         Date end = new Date();
         double[] bbox = { 0, 0, 90, 90 };
-        List<JAXBElement<? extends LogicOpsType>> elements = new ArrayList<>();
-        JAXBElement like = getPropertyIsLikeFragment("COLUMN", "VALUE*");
+        List<JAXBElement<? extends ComparisonOpsType>> elements = new ArrayList<>();
+        JAXBElement<PropertyIsLikeType> like = getPropertyIsLikeFragment("COLUMN", "VALUE*");
         elements.add(like);
-        JAXBElement between = getPropertyIsBetweenFragment("COLUMN", "0", "10");
+        JAXBElement<PropertyIsBetweenType> between = getPropertyIsBetweenFragment("COLUMN", "0", "10");
         elements.add(between);
-        FilterType filter = createFilter(bbox, start, end, createAndFromLogicOpsList(elements), null, null);
+        FilterType filter = createFilter(bbox, start, end, createAndFromComparisonOpsList(elements), null, null);
 
         try
         {
@@ -508,7 +508,6 @@ public class FilterHelper
         }
         catch (JAXBException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

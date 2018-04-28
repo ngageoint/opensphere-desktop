@@ -256,22 +256,22 @@ public class BinaryComparisonOp extends ComparisonOp
                 switch (getType())
                 {
                     case LESS_THAN:
-                        result = ((Comparable)obj1).compareTo(obj2) < 0;
+                        result = ((Comparable<Object>)obj1).compareTo(obj2) < 0;
                         break;
                     case LESS_THAN_OR_EQUAL_TO:
-                        result = ((Comparable)obj1).compareTo(obj2) <= 0;
+                        result = ((Comparable<Object>)obj1).compareTo(obj2) <= 0;
                         break;
                     case EQUAL_TO:
-                        result = ((Comparable)obj1).compareTo(obj2) == 0;
+                        result = ((Comparable<Object>)obj1).compareTo(obj2) == 0;
                         break;
                     case GREATER_THAN_OR_EQUAL_TO:
-                        result = ((Comparable)obj1).compareTo(obj2) >= 0;
+                        result = ((Comparable<Object>)obj1).compareTo(obj2) >= 0;
                         break;
                     case GREATER_THAN:
-                        result = ((Comparable)obj1).compareTo(obj2) > 0;
+                        result = ((Comparable<Object>)obj1).compareTo(obj2) > 0;
                         break;
                     case NOT_EQUAL_TO:
-                        result = ((Comparable)obj1).compareTo(obj2) != 0;
+                        result = ((Comparable<Object>)obj1).compareTo(obj2) != 0;
                         break;
                 }
             }

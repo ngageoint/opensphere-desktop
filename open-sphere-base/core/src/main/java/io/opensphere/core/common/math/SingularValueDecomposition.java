@@ -20,7 +20,9 @@ public class SingularValueDecomposition implements java.io.Serializable
 
     /* ------------------------ Class variables ------------------------ */
 
-    /**
+    private static final long serialVersionUID = 1L;
+
+	/**
      * Arrays for internal storage of U and V.
      *
      * @serial internal storage of U.

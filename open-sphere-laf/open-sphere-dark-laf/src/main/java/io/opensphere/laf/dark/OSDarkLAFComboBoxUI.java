@@ -148,7 +148,7 @@ public class OSDarkLAFComboBoxUI extends MetalComboBoxUI
          * @param renderPane the pane in which the button is rendered.
          * @param list the list in which choices are rendered.
          */
-        public OSDarkLAFComboBoxButton(JComboBox comboBox, Icon ic, boolean editable, CellRendererPane renderPane, JList list)
+        public OSDarkLAFComboBoxButton(JComboBox<Object> comboBox, Icon ic, boolean editable, CellRendererPane renderPane, JList<Object> list)
         {
             super(comboBox, ic, editable, renderPane, list);
 
@@ -365,7 +365,7 @@ public class OSDarkLAFComboBoxUI extends MetalComboBoxUI
             // Let the renderer paint
             if (!iconOnly && comboBox != null)
             {
-                final ListCellRenderer cellRenderer = comboBox.getRenderer();
+                final ListCellRenderer<Object> cellRenderer = comboBox.getRenderer();
                 Component comp;
                 final boolean isRenderPressed = getModel().isPressed();
                 comp = cellRenderer.getListCellRendererComponent(listBox, comboBox.getSelectedItem(), -1, isRenderPressed, false);

@@ -216,9 +216,7 @@ public class Icons
         frame.setMinimumSize(new Dimension(300, 300));
         frame.setLocationRelativeTo(null);
         frame.setLayout(new FlowLayout());
-        Color bg;
-        bg = new Color(0, 0, 255, 35);
-//        bg = Icons.BACKGROUND;
+        
         frame.add(new JLabel("31", createBoxedPlusIcon(31), SwingConstants.LEADING));
         frame.add(new JLabel("30", createBoxedPlusIcon(30), SwingConstants.LEADING));
 

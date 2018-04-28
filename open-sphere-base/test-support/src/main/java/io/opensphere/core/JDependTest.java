@@ -82,7 +82,7 @@ public class JDependTest
     private Map<String, Collection<String>> processLines(Collection<String> lines)
     {
         final Map<String, Collection<String>> dependencyMap = LazyMap.lazyMap(new HashMap<>(),
-                new InstantiateFactory(HashSet.class));
+                new InstantiateFactory<>(HashSet.class));
 
         String[] splitPackage = getClass().getName().split("\\.");
         final Pattern packagePattern = Pattern.compile("^\\s+(" + splitPackage[0] + "\\." + splitPackage[1] + "\\..*?) ");

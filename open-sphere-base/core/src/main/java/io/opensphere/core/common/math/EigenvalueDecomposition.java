@@ -21,7 +21,9 @@ public class EigenvalueDecomposition implements java.io.Serializable
 
     /* ------------------------ Class variables ------------------------ */
 
-    /**
+    private static final long serialVersionUID = 1L;
+
+	/**
      * Row and column dimension (square matrix).
      *
      * @serial matrix dimension.

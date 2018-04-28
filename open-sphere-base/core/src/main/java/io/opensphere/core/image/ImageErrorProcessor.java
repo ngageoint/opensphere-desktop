@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 
 import javax.xml.bind.JAXBException;
 
@@ -54,7 +55,7 @@ public final class ImageErrorProcessor
         String returnValue = null;
         try
         {
-            returnValue = processError(IOUtils.toString(pSourceErrorStream));
+            returnValue = processError(IOUtils.toString(pSourceErrorStream, Charset.defaultCharset()));
         }
         catch (IOException e)
         {

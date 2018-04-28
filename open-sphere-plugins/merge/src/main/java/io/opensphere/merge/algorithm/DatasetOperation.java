@@ -166,6 +166,7 @@ public class DatasetOperation
      * @param t the Serializable Object
      * @return the clone of <i>t</i>
      */
+    @SuppressWarnings("unchecked")
     private static <T> T serialClone(T t)
     {
         try

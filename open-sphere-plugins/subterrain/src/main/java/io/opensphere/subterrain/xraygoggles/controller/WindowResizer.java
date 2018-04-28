@@ -52,7 +52,7 @@ public class WindowResizer implements PickListener, DiscreteEventListener
 
         DefaultMouseBinding pressed = new DefaultMouseBinding(MouseEvent.MOUSE_PRESSED, InputEvent.BUTTON1_DOWN_MASK);
         DefaultMouseBinding drag = new DefaultMouseBinding(MouseEvent.MOUSE_DRAGGED, InputEvent.BUTTON1_DOWN_MASK);
-        DefaultMouseBinding released = new DefaultMouseBinding(MouseEvent.MOUSE_RELEASED, InputEvent.BUTTON1_MASK);
+        DefaultMouseBinding released = new DefaultMouseBinding(MouseEvent.MOUSE_RELEASED, InputEvent.BUTTON1_DOWN_MASK);
         ControlContext globeCtx = myControlRegistry.getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT);
         globeCtx.addListener(this, pressed, drag, released);
     }

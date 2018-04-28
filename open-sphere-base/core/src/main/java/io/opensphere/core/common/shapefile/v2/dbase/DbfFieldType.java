@@ -64,7 +64,7 @@ public enum DbfFieldType
             {
                 if (sVal.equals(""))
                 {
-                    returnObject = new Double(0.0);
+                    returnObject = Double.valueOf(0.);
                 }
                 else
                 {
@@ -85,7 +85,7 @@ public enum DbfFieldType
             {
                 if (sVal.trim().equals(""))
                 {
-                    returnObject = new Integer(0);
+                    returnObject = Integer.valueOf(0);
                 }
                 else
                 {
@@ -113,7 +113,7 @@ public enum DbfFieldType
                     }
                     catch (NumberFormatException e)
                     {
-                        returnObject = new Integer(0);
+                        returnObject = Integer.valueOf(0);
                         LOGGER.error("Failed to parse number value [" + sVal + "] returning 0");
                     }
                 }

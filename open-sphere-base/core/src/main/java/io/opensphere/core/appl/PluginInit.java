@@ -1,6 +1,8 @@
 package io.opensphere.core.appl;
 
 import java.awt.SplashScreen;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -325,7 +327,8 @@ class PluginInit
         try
         {
             final long t0 = System.nanoTime();
-            pluginInstance = (Plugin)c.newInstance();
+            Constructor<?> pluginConstructor = c.getConstructor();
+            pluginInstance = (Plugin)pluginConstructor.newInstance();
             final long t1 = System.nanoTime();
             if (LOGGER.isDebugEnabled())
             {
@@ -333,7 +336,7 @@ class PluginInit
                         StringUtilities.formatTimingMessage("Time to instantiate plugin " + plugindata.getId() + ": ", t1 - t0));
             }
         }
-        catch (InstantiationException | IllegalAccessException | RuntimeException e)
+        catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException | RuntimeException e)
         {
             LOGGER.error("Unable to instantiate class " + c.getName(), e);
             pluginInstance = null;

@@ -11,6 +11,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
 @JsonAutoDetect(JsonMethod.NONE)
 public class EsriSimpleLineSymbol extends EsriSymbol
 {
+    /** serialVersionUID. */
+    private static final long serialVersionUID = 1;
+
     /** My style. */
     @JsonProperty("style")
     private EsriSLSStyle myStyle;

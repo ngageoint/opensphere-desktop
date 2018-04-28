@@ -77,7 +77,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class GroupMenuItemIcon implements Icon, UIResource, Serializable
     {
-        private final int height;
+        private static final long serialVersionUID = 1L;
+
+		private final int height;
 
         private final int width;
 
@@ -115,7 +117,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class CheckBoxIcon implements Icon, UIResource, Serializable
     {
-        private final int height;
+        private static final long serialVersionUID = 1L;
+
+		private final int height;
 
         private final int width;
 
@@ -178,7 +182,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class CheckBoxMenuItemIcon implements Icon, UIResource, Serializable
     {
-        private final int height;
+        private static final long serialVersionUID = 1L;
+
+		private final int height;
 
         private final int width;
 
@@ -252,7 +258,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class ComboArrowIcon implements Icon, UIResource, Serializable
     {
-        private int height;
+        private static final long serialVersionUID = 1L;
+
+		private int height;
 
         private int width;
 
@@ -292,7 +300,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class FrameGenericIcon implements Icon, UIResource, Serializable
     {
-        private final int height;
+        private static final long serialVersionUID = 1L;
+
+		private final int height;
 
         private final String sIcono;
 
@@ -354,7 +364,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class RadioButtonIcon implements Icon, UIResource, Serializable
     {
-        private final int height;
+        private static final long serialVersionUID = 1L;
+
+		private final int height;
 
         private final int width;
 
@@ -418,7 +430,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class RadioButtonMenuItemIcon implements Icon, UIResource, Serializable
     {
-        private final int height;
+        private static final long serialVersionUID = 1L;
+
+		private final int height;
 
         private final int width;
 
@@ -493,7 +507,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class ScrollBarEastButtonIcon implements Icon, UIResource, Serializable
     {
-        private int height;
+        private static final long serialVersionUID = 1L;
+
+		private int height;
 
         private int width;
 
@@ -533,7 +549,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class ScrollBarNorthButtonIcon implements Icon, UIResource, Serializable
     {
-        private int height;
+        private static final long serialVersionUID = 1L;
+
+		private int height;
 
         private int width;
 
@@ -574,6 +592,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class ScrollBarSouthButtonIcon implements Icon, UIResource, Serializable
     {
+        /** serialVersionUID. */
+        private static final long serialVersionUID = 1;
+
         private int height;
 
         private int width;
@@ -613,6 +634,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class ScrollBarWestButtonIcon implements Icon, UIResource, Serializable
     {
+        /** serialVersionUID. */
+        private static final long serialVersionUID = 1;
+
         private int height;
 
         private int width;
@@ -652,6 +676,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class SliderHorizontalIcon implements Icon, UIResource, Serializable
     {
+        /** serialVersionUID. */
+        private static final long serialVersionUID = 1;
+
         private final int height;
 
         private final int width;
@@ -700,6 +727,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class SliderVerticalIcon implements Icon, UIResource, Serializable
     {
+        /** serialVersionUID. */
+        private static final long serialVersionUID = 1;
+
         private final int height;
 
         private final int width;
@@ -748,6 +778,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class SpinnerNextIcon implements Icon, UIResource, Serializable
     {
+        /** serialVersionUID. */
+        private static final long serialVersionUID = 1;
+
         private final int height;
 
         private final int width;
@@ -807,6 +840,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class SpinnerPreviousIcon implements Icon, UIResource, Serializable
     {
+        /** serialVersionUID. */
+        private static final long serialVersionUID = 1;
+
         private final int height;
 
         private final int width;
@@ -867,6 +903,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class TreeCollapsedIcon implements Icon, UIResource, Serializable
     {
+        /** serialVersionUID. */
+        private static final long serialVersionUID = 1;
+
         private final int width;
 
         private final int height;
@@ -916,6 +955,9 @@ public class OSDarkLAFIconFactory implements Serializable
 
     private static class TreeExpandedIcon implements Icon, UIResource, Serializable
     {
+        /** serialVersionUID. */
+        private static final long serialVersionUID = 1;
+
         private final int width;
 
         private final int height;
