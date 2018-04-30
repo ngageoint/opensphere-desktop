@@ -159,6 +159,24 @@ public class MergeController extends AbstractMantleController implements Consume
         myModel.getUserMessage().addListener((prop, old, newValue) -> checkAssociations());
     }
 
+    /**
+     * Removes everything that was created for the given merge model.
+     *
+     * @param model the merge model
+     */
+    public void removeMerge(MergeModel model)
+    {
+        DataGroupInfo group = removeLayer(model.getNewLayerName().get());
+        if (group != null)
+        {
+            DataTypeInfo dataType = group.getMembers(false).iterator().next();
+            DataModelCategory category = DataRegistryUtils.getInstance().getMergeDataCategory(dataType.getTypeKey());
+            myDataRegistry.removeModels(category, false);
+        }
+
+        myMergePreferences.getMerges().remove(model);
+    }
+
     @Override
     protected void handleGroupActivation(DataGroupActivationProperty activationProperty, ActivationState state,
             PhasedTaskCanceller canceller)

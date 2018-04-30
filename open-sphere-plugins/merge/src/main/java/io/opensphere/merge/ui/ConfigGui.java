@@ -331,9 +331,10 @@ public class ConfigGui
             }
             else
             {
-                // TODO test this
-                String groupId = myItem.getMerge().getNewLayerName().get();
-                myMergeController.removeLayer(groupId);
+                myMergeController.removeMerge(myItem.getMerge());
+
+                myMergeController.setModel(myItem.getMerge());
+                myMergeController.performMerge();
             }
         }
 
