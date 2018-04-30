@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import javax.swing.JFrame;
@@ -14,7 +15,6 @@ import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.SwingUtilities;
 import io.opensphere.mantle.crust.DataTypeChecker;
-import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
 import io.opensphere.mantle.data.DataTypeInfo;
 
@@ -93,10 +93,7 @@ public class FeatureActionsMenuProvider implements ContextMenuProvider<DataGroup
     public DataTypeInfo getDataTypes(DataGroupContextKey key)
     {
         Collection<DataTypeInfo> dataTypes = New.list(key.getDataTypes());
-        for (DataGroupInfo group : key.getDataGroups())
-        {
-            dataTypes.addAll(group.getMembers(false));
-        }
+        key.getDataGroups().stream().filter(Objects::nonNull).forEach(group -> dataTypes.addAll(group.getMembers(false)));
 
         for (DataTypeInfo layer : dataTypes)
         {

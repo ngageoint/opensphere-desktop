@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import javafx.collections.ListChangeListener;
+
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
@@ -24,7 +26,6 @@ import io.opensphere.core.search.SearchResult;
 import io.opensphere.core.util.ObservableList;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.search.model.SearchModel;
-import javafx.collections.ListChangeListener;
 
 /**
  * Unit test for {@link SearchExecutor}.
@@ -147,6 +148,7 @@ public class SearchExecutorTest
         EasyMock.expect(resultProvider.getType()).andReturn("Place Names").atLeastOnce();
         EasyMock.expect(resultProvider.performSearch(keyword, LatLonAlt.createFromDegrees(10, 11),
                 LatLonAlt.createFromDegrees(12, 13), expectedSpan)).andReturn(results);
+        EasyMock.expect(resultProvider.getTotalResultCount()).andReturn(-1).anyTimes();
 
         SearchRegistry registry = support.createMock(SearchRegistry.class);
 

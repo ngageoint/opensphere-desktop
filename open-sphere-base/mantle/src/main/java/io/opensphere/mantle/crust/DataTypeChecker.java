@@ -19,12 +19,14 @@ public final class DataTypeChecker
     /**
      * Checks to see if the specified data type is a feature layer.
      *
-     * @param type the data type to check
-     * @return true if and only if the argument is a feature layer
+     * @param dataType the data type to check
+     * @return true if and only if the argument is a feature layer, false if dataType is null
      */
-    public static boolean isFeatureType(DataTypeInfo type)
+    public static boolean isFeatureType(DataTypeInfo dataType)
     {
-        return type.getBasicVisualizationInfo() != null && type.getBasicVisualizationInfo().usesDataElements()
-                || type.getMapVisualizationInfo() != null && type.getMapVisualizationInfo().usesMapDataElements();
+        boolean isFeature = ((dataType == null) ? false
+                : dataType.getBasicVisualizationInfo() != null && dataType.getBasicVisualizationInfo().usesDataElements()
+                        || dataType.getMapVisualizationInfo() != null && dataType.getMapVisualizationInfo().usesMapDataElements());
+        return isFeature;
     }
 }
