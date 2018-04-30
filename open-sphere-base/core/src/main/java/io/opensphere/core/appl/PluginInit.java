@@ -2,7 +2,6 @@ package io.opensphere.core.appl;
 
 import java.awt.SplashScreen;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -60,12 +59,13 @@ class PluginInit
     private final ToolboxImpl myToolbox;
 
     /**
-     * Checks a plugin id against the required tree to see if it or any other of its requirements or their requirements are
-     * circular (Recursive).
+     * Checks a plugin id against the required tree to see if it or any other of
+     * its requirements or their requirements are circular (Recursive).
      *
      * @param searchId the to level plugin id to search for
      * @param curId the current plugin id to recurse
-     * @param pluginIdToPluginDepdencencySetMap map of plugin id to its set of required plugins
+     * @param pluginIdToPluginDepdencencySetMap map of plugin id to its set of
+     *            required plugins
      * @param searchPath a list in which the path of the search is documented
      * @return true, if is circular
      */
@@ -150,10 +150,12 @@ class PluginInit
     }
 
     /**
-     * Extracts plugin statistics from the supplied metadata, generates a {@link PluginStatistics} object populated with the
-     * supplied data, and returns it.
+     * Extracts plugin statistics from the supplied metadata, generates a
+     * {@link PluginStatistics} object populated with the supplied data, and
+     * returns it.
      *
-     * @param pMetadata the plugin metadata object from which statistics are gathered.
+     * @param pMetadata the plugin metadata object from which statistics are
+     *            gathered.
      * @return a statistics object populated with relevant data.
      */
     protected PluginStatistics gatherPluginStatistics(PluginLoaderData pMetadata)
@@ -192,14 +194,16 @@ class PluginInit
     }
 
     /**
-     * Check the dependencies for the plug-ins in the workingList. If all the dependencies are in the accepted plug-in set, add
-     * the plug-in being checked to the accepted plug-in set as well as the ordered list. If any dependencies have not been
-     * checked yet, leave the plug-in alone.
+     * Check the dependencies for the plug-ins in the workingList. If all the
+     * dependencies are in the accepted plug-in set, add the plug-in being
+     * checked to the accepted plug-in set as well as the ordered list. If any
+     * dependencies have not been checked yet, leave the plug-in alone.
      *
      * @param workingList The list of plug-ins to check.
      * @param acceptedPluginSet The set of already-accepted plug-ins.
      * @param orderedList The list of plug-ins ordered by interdependency.
-     * @param pluginIdToPluginDependencySetMap The map of plug-in ids to plug-in ids depended upon.
+     * @param pluginIdToPluginDependencySetMap The map of plug-in ids to plug-in
+     *            ids depended upon.
      */
     private void checkDependencies(List<PluginLoaderData> workingList, Set<String> acceptedPluginSet,
             List<PluginLoaderData> orderedList, Map<String, Set<String>> pluginIdToPluginDependencySetMap)
@@ -251,13 +255,16 @@ class PluginInit
     }
 
     /**
-     * Check the dependencies of a plugin to see if any of them failed to initialize.
+     * Check the dependencies of a plugin to see if any of them failed to
+     * initialize.
      *
-     * @param dependencyToPluginsMap The map of plugins to the plugins that depend on them.
+     * @param dependencyToPluginsMap The map of plugins to the plugins that
+     *            depend on them.
      * @param failedPluginIds The ids of the plugins that have failed.
      * @param workQueue The work queue.
      * @param data The data for the current plugin.
-     * @return {@code true} if any of this plugin's dependencies are int he failed set.
+     * @return {@code true} if any of this plugin's dependencies are int he
+     *         failed set.
      */
     private boolean checkFailedPlugins(final Map<String, Collection<PluginLoaderData>> dependencyToPluginsMap,
             final Set<String> failedPluginIds, final BlockingQueue<PluginLoaderData> workQueue, PluginLoaderData data)
@@ -281,8 +288,8 @@ class PluginInit
     }
 
     /**
-     * Create a map with keys that are the ids of plugins that are depended upon and values that are collections of the dependent
-     * plugins.
+     * Create a map with keys that are the ids of plugins that are depended upon
+     * and values that are collections of the dependent plugins.
      *
      * @param classesToLoad The collection of data for the plugins to be loaded.
      * @return The map.
@@ -336,7 +343,7 @@ class PluginInit
                         StringUtilities.formatTimingMessage("Time to instantiate plugin " + plugindata.getId() + ": ", t1 - t0));
             }
         }
-        catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException | RuntimeException e)
+        catch (ReflectiveOperationException | RuntimeException e)
         {
             LOGGER.error("Unable to instantiate class " + c.getName(), e);
             pluginInstance = null;
@@ -373,13 +380,15 @@ class PluginInit
     }
 
     /**
-     * Initialize a plugin using an executor service. If initialization if successful, add the plugin id to the
-     * {@code initializedPluginIds} collection; otherwise add it to the {@code failedPluginIds} collection. Add plugins to the
-     * {@code workQueue} that are waiting on this plugin.
+     * Initialize a plugin using an executor service. If initialization if
+     * successful, add the plugin id to the {@code initializedPluginIds}
+     * collection; otherwise add it to the {@code failedPluginIds} collection.
+     * Add plugins to the {@code workQueue} that are waiting on this plugin.
      *
      * @param data The plugin data.
      * @param executor The executor.
-     * @param dependencyToPluginsMap A map of plugins to the plugins that depend on them.
+     * @param dependencyToPluginsMap A map of plugins to the plugins that depend
+     *            on them.
      * @param initializedPluginIds The output collection of initialized plugins.
      * @param failedPluginIds The output collection of failed plugins.
      * @param workQueue The work queue.
@@ -455,8 +464,8 @@ class PluginInit
             final long t0 = System.nanoTime();
             pluginInstance.initialize(plugindata, myToolbox);
             final long initTime = System.nanoTime() - t0;
-            final String initTimeMessage = StringUtilities.formatTimingMessage("Time to initialize plugin " + plugindata.getId() + ": ",
-                    initTime);
+            final String initTimeMessage = StringUtilities
+                    .formatTimingMessage("Time to initialize plugin " + plugindata.getId() + ": ", initTime);
             LOGGER.log(initTime > 2_000_000_000 ? Level.INFO : Level.DEBUG, initTimeMessage);
             final Collection<? extends Envoy> envoys = pluginInstance.getEnvoys();
             if (envoys != null)
@@ -493,8 +502,8 @@ class PluginInit
     }
 
     /**
-     * Orders the list of {@link PluginLoaderData} so that plugins with dependencies are loaded after the plugins on which they
-     * are dependent.
+     * Orders the list of {@link PluginLoaderData} so that plugins with
+     * dependencies are loaded after the plugins on which they are dependent.
      *
      * @param classesToLoad the classes to load
      * @return the list
@@ -561,8 +570,9 @@ class PluginInit
     }
 
     /**
-     * Reads the plug-in configuration file, and attempts to initialize all the classes named therein. If there is an error, it
-     * skips that class and goes on, after printing a message.
+     * Reads the plug-in configuration file, and attempts to initialize all the
+     * classes named therein. If there is an error, it skips that class and goes
+     * on, after printing a message.
      */
     private void registerAndInitClasses()
     {
@@ -639,7 +649,8 @@ class PluginInit
     }
 
     /**
-     * Check to see if any of the plugins have been initializing too long, and log it if so.
+     * Check to see if any of the plugins have been initializing too long, and
+     * log it if so.
      *
      * @param futures The futures.
      */
@@ -655,7 +666,8 @@ class PluginInit
     }
 
     /**
-     * This class is simply for conveniently mapping plug-in metadata the proper Plug-in instances.
+     * This class is simply for conveniently mapping plug-in metadata the proper
+     * Plug-in instances.
      */
     private static class MetaAndInstance
     {

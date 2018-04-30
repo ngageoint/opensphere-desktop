@@ -1729,7 +1729,8 @@ public class SimpleLatLonFormat
 
     public static void main(String[] args)
     {
-        // String aString = "{d1}{D2}[p(]([a-zA-Z1-9]{1,3}) DDD:MM\"SS.SSS'H ([a-z]{1}) dd:mm\"ss.ss'h[l l][jj]";
+        // String aString = "{d1}{D2}[p(]([a-zA-Z1-9]{1,3}) DDD:MM\"SS.SSS'H
+        // ([a-z]{1}) dd:mm\"ss.ss'h[l l][jj]";
         // String vString = "p(afd 23:45\"44.890'W p 6:45\"23.21'Sl ljj";
 
 //        String aString = "DDD:MM\"SS.SSS'H ddd:mm\"ss.ss'h";
@@ -2382,9 +2383,7 @@ public class SimpleLatLonFormat
 
     public class RegexGroupUnallowedException extends RuntimeException
     {
-        private static final long serialVersionUID = 1L;
-
-		public RegexGroupUnallowedException()
+        public RegexGroupUnallowedException()
         {
             super();
         }

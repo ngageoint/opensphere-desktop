@@ -64,14 +64,12 @@ import java.text.NumberFormat;
 public class Matrix implements Cloneable, java.io.Serializable
 {
 
-    private static final long serialVersionUID = 1L;
-
-	/**
+    /**
      * Array for internal storage of elements.
      *
      * @serial internal array storage.
      */
-    private double[][] A;
+    private final double[][] A;
 
     /**
      * Row and column dimensions.
@@ -79,7 +77,7 @@ public class Matrix implements Cloneable, java.io.Serializable
      * @serial row dimension.
      * @serial column dimension.
      */
-    private int m, n;
+    private final int m, n;
 
     /**
      * Construct an m-by-n matrix of zeros.
