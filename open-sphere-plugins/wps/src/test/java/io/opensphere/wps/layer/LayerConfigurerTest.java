@@ -38,7 +38,6 @@ import net.opengis.wps._100.ProcessDescriptionType;
 /**
  * Unit test for {@link LayerConfigurer}.
  */
-@SuppressWarnings("restriction")
 public class LayerConfigurerTest
 {
     /**
@@ -128,7 +127,6 @@ public class LayerConfigurerTest
      *
      * @return The test configuration.
      */
-    @SuppressWarnings("restriction")
     private WpsProcessConfiguration createConfiguraton()
     {
         WpsProcessConfiguration config = new WpsProcessConfiguration("serverId", new ProcessDescriptionType());

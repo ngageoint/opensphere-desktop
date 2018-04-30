@@ -1,6 +1,7 @@
 package com.bitsys.common.http.auth;
 
-import org.apache.commons.lang3.ObjectUtils;
+import java.util.Objects;
+
 import org.apache.http.auth.AuthScope;
 
 /**
@@ -158,8 +159,7 @@ public class AuthenticationScope
    @Override
    public int hashCode()
    {
-      return ObjectUtils
-         .hashCodeMulti(getHost(), getPort(), getRealm(), getScheme());
+      return Objects.hash(getHost(), getPort(), getRealm(), getScheme());
    }
 
    /**

@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -161,19 +160,14 @@ public class DynamicCompiler
                 // exist.
                 try
                 {
-                    Class<JavaCompiler> clazz = (Class<JavaCompiler>)Class
+                    Class<? extends JavaCompiler> clazz = Class
                             .forName("com.sun.tools.javac.api.JavacTool", false, Thread.currentThread().getContextClassLoader())
                             .asSubclass(JavaCompiler.class);
 
-                    Constructor<JavaCompiler>[] constructors = (Constructor<JavaCompiler>[])clazz.getConstructors();
-
-                    if (constructors.length > 0)
-                    {
-                        compiler = constructors[0].newInstance();
-                    }
+                    Constructor<? extends JavaCompiler> constructor = clazz.getConstructor();
+                    compiler = constructor.newInstance();
                 }
-                catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoClassDefFoundError
-                        | IllegalArgumentException | InvocationTargetException | SecurityException e)
+                catch (ReflectiveOperationException | IllegalArgumentException | SecurityException e)
                 {
                     if (LOGGER.isDebugEnabled())
                     {

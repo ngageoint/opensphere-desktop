@@ -4,16 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import io.opensphere.core.common.geospatial.model.interfaces.IDataPoint;
 
 public class CompositeDataPoint extends io.opensphere.core.common.geospatial.model.DataPoint
 {
-
-    private static final Log LOGGER = LogFactory.getLog(CompositeDataPoint.class);
-
     protected List<IDataPoint> subPoints = null;
 
     public CompositeDataPoint()
@@ -61,9 +55,9 @@ public class CompositeDataPoint extends io.opensphere.core.common.geospatial.mod
             totalLon += subPoints.get(i).getLon();
             time += subPoints.get(i).getDate().getTime();
         }
-        lat = totalLat / (double)subPoints.size();
-        lon = totalLon / (double)subPoints.size();
-        time = time / (long)subPoints.size();
+        lat = totalLat / subPoints.size();
+        lon = totalLon / subPoints.size();
+        time = time / subPoints.size();
         setDate(new Date(time));
     }
 

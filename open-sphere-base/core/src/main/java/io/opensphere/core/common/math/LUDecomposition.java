@@ -24,7 +24,7 @@ public class LUDecomposition implements java.io.Serializable
      *
      * @serial internal array storage.
      */
-    private double[][] LU;
+    private final double[][] LU;
 
     /**
      * Row and column dimensions, and pivot sign.
@@ -33,14 +33,16 @@ public class LUDecomposition implements java.io.Serializable
      * @serial row dimension.
      * @serial pivot sign.
      */
-    private int m, n, pivsign;
+    private final int m, n;
+
+    private int pivsign;
 
     /**
      * Internal storage of pivot vector.
      *
      * @serial pivot vector.
      */
-    private int[] piv;
+    private final int[] piv;
 
     /* ------------------------ Constructor ------------------------ */
 
@@ -177,7 +179,9 @@ public class LUDecomposition implements java.io.Serializable
         for (int j = 0; j < n; j++)
         {
             if (LU[j][j] == 0)
+            {
                 return false;
+            }
         }
         return true;
     }
@@ -267,7 +271,7 @@ public class LUDecomposition implements java.io.Serializable
         double[] vals = new double[m];
         for (int i = 0; i < m; i++)
         {
-            vals[i] = (double)piv[i];
+            vals[i] = piv[i];
         }
         return vals;
     }
@@ -285,7 +289,7 @@ public class LUDecomposition implements java.io.Serializable
         {
             throw new IllegalArgumentException("Matrix must be square.");
         }
-        double d = (double)pivsign;
+        double d = pivsign;
         for (int j = 0; j < n; j++)
         {
             d *= LU[j][j];
@@ -308,7 +312,7 @@ public class LUDecomposition implements java.io.Serializable
         {
             throw new IllegalArgumentException("Matrix row dimensions must agree.");
         }
-        if (!this.isNonsingular())
+        if (!isNonsingular())
         {
             throw new RuntimeException("Matrix is singular.");
         }

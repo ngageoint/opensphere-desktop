@@ -68,7 +68,7 @@ public class ScreenPositionManager implements ViewChangeListener, DiscreteEventL
         calculateScreenPos(myMapManager.getScreenViewer(), myMapManager.getStandardViewer().getPitch());
         myMapManager.getViewChangeSupport().addViewChangeListener(this);
         DefaultMouseBinding pressed = new DefaultMouseBinding(MouseEvent.MOUSE_PRESSED, InputEvent.BUTTON3_DOWN_MASK);
-        DefaultMouseBinding released = new DefaultMouseBinding(MouseEvent.MOUSE_RELEASED, InputEvent.BUTTON3_MASK);
+        DefaultMouseBinding released = new DefaultMouseBinding(MouseEvent.MOUSE_RELEASED, InputEvent.BUTTON3_DOWN_MASK);
         ControlContext globeContext = myControlRegistry.getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT);
         globeContext.addListener(this, pressed, released);
     }

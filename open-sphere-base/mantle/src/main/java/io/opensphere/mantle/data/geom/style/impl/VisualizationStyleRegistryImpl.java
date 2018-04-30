@@ -2,7 +2,6 @@ package io.opensphere.mantle.data.geom.style.impl;
 
 import java.awt.Color;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -273,7 +272,7 @@ public class VisualizationStyleRegistryImpl implements VisualizationStyleRegistr
                     {
                         LOGGER.error("VisualizationStyle class " + styleClass.getName()
                                 + " Does not have a constructor that takes the Toolbox, trying no-arg constructor.");
-                        VisualizationStyle vs = styleClass.newInstance();
+                        VisualizationStyle vs = styleClass.getDeclaredConstructor().newInstance();
                         if (!vs.requiresShaders() || vs.requiresShaders() && myTileShadersSupported)
                         {
                             myDefaultStyleMap.put(styleClass, vs);
@@ -286,8 +285,7 @@ public class VisualizationStyleRegistryImpl implements VisualizationStyleRegistr
                         }
                     }
                 }
-                catch (IllegalArgumentException | SecurityException | InstantiationException | IllegalAccessException
-                        | InvocationTargetException e)
+                catch (IllegalArgumentException | ReflectiveOperationException e)
                 {
                     LOGGER.error(e);
                 }

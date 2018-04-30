@@ -69,7 +69,7 @@ public class Matrix implements Cloneable, java.io.Serializable
      *
      * @serial internal array storage.
      */
-    private double[][] A;
+    private final double[][] A;
 
     /**
      * Row and column dimensions.
@@ -77,7 +77,7 @@ public class Matrix implements Cloneable, java.io.Serializable
      * @serial row dimension.
      * @serial column dimension.
      */
-    private int m, n;
+    private final int m, n;
 
     /**
      * Construct an m-by-n matrix of zeros.
@@ -1230,7 +1230,7 @@ public class Matrix implements Cloneable, java.io.Serializable
         tokenizer.wordChars(0, 255);
         tokenizer.whitespaceChars(0, ' ');
         tokenizer.eolIsSignificant(true);
-        java.util.Vector v = new java.util.Vector();
+        java.util.Vector<Object> v = new java.util.Vector<>();
 
         // Ignore initial empty lines
         while (tokenizer.nextToken() == StreamTokenizer.TT_EOL)

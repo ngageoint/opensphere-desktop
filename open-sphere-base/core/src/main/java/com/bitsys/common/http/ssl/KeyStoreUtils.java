@@ -11,7 +11,6 @@ import java.security.cert.CertificateException;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.bitsys.common.http.util.UrlUtils;
@@ -269,8 +268,7 @@ public final class KeyStoreUtils
       // Attempt to process each of the supported key store types.
       for (final String type : getSupportedKeyStoreTypes(typeHint))
       {
-         final InputStream inputStream = keyStoreUrl.openStream();
-         try
+         try (InputStream inputStream = keyStoreUrl.openStream())
          {
             final KeyStore tmpKeyStore = KeyStore.getInstance(type);
             tmpKeyStore.load(inputStream, password);
@@ -299,10 +297,6 @@ public final class KeyStoreUtils
             {
                firstException = e;
             }
-         }
-         finally
-         {
-            IOUtils.closeQuietly(inputStream);
          }
       }
 

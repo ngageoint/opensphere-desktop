@@ -18,7 +18,6 @@ import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.action.context.GeometryContextKey;
 import io.opensphere.core.control.action.context.MultiGeometryContextKey;
 import io.opensphere.core.control.action.context.ScreenPositionContextKey;
-import io.opensphere.core.dialog.alertviewer.event.UserMessageEvent;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.PolylineGeometry;

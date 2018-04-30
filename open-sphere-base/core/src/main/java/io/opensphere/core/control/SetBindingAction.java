@@ -510,21 +510,21 @@ public final class SetBindingAction implements ActionListener
              * context menu is taken care of elsewhere in this class, but we
              * need the button to 'unclick' with the selection of the third
              * mouse button. So, manually set its selected state to false here. */
-            if ((e.getModifiers() & InputEvent.BUTTON3_MASK) != 0)
+            if ((e.getModifiersEx() & InputEvent.BUTTON3_DOWN_MASK) != 0)
             {
                 myButton.setSelected(false);
             }
             /* If the 2nd mouse button was pressed, this has no default
              * "unclick" action on the button, so deselect the button.
              * Combinations involving button 3 have already been handled above. */
-            else if ((e.getModifiers() & InputEvent.BUTTON2_MASK) != 0)
+            else if ((e.getModifiersEx() & InputEvent.BUTTON2_DOWN_MASK) != 0)
             {
                 myButton.setSelected(false);
             }
             /* if button 1 is pressed while the mouse is somewhere else on the
              * dialog and not directly over the button, the button won't
              * automatically toggle off. Toggle it off here. */
-            else if (e.getSource() != myButton && (e.getModifiers() & InputEvent.BUTTON1_MASK) != 0)
+            else if (e.getSource() != myButton && (e.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) != 0)
             {
                 myButton.setSelected(false);
             }

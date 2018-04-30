@@ -128,8 +128,8 @@ public class Convolve
             }
         }
         Vector<Number> ans = new Vector<>(2);
-        ans.add(new Double(min));
-        ans.add(new Integer(ndx));
+        ans.add(Double.valueOf(min));
+        ans.add(Integer.valueOf(ndx));
         return ans;
     }
 
@@ -148,8 +148,8 @@ public class Convolve
             }
         }
         Vector<Number> ans = new Vector<>(2);
-        ans.add(new Double(max));
-        ans.add(new Integer(ndx));
+        ans.add(Double.valueOf(max));
+        ans.add(Integer.valueOf(ndx));
         return ans;
     }
 

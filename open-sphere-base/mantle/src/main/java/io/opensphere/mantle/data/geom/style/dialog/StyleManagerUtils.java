@@ -380,9 +380,9 @@ public final class StyleManagerUtils
             exception = null;
             try
             {
-                instance = vsClass.newInstance();
+                instance = vsClass.getDeclaredConstructor().newInstance();
             }
-            catch (InstantiationException | IllegalAccessException e)
+            catch (ReflectiveOperationException e)
             {
                 exception = e;
             }

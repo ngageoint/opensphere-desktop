@@ -128,7 +128,7 @@ public abstract class AbstractComboBoxSkin<T> extends AbstractBehaviorSkin<Combo
             updateDisplayArea();
         }
 
-        final double arrowWidth = snapSize(myIcon.prefWidth(-1));
+        final double arrowWidth = snapSizeX(myIcon.prefWidth(-1));
         final double arrowButtonWidth = myPopupLauncher.snappedLeftInset() + arrowWidth + myPopupLauncher.snappedRightInset();
 
         if (myDisplayNode != null)
@@ -178,7 +178,7 @@ public abstract class AbstractComboBoxSkin<T> extends AbstractBehaviorSkin<Combo
             updateDisplayArea();
         }
 
-        final double arrowWidth = snapSize(myIcon.prefWidth(-1));
+        final double arrowWidth = snapSizeX(myIcon.prefWidth(-1));
         final double arrowButtonWidth = myPopupLauncher.snappedLeftInset() + arrowWidth + myPopupLauncher.snappedRightInset();
         final double displayNodeWidth = myDisplayNode == null ? 0 : myDisplayNode.prefWidth(height);
 

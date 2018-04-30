@@ -211,14 +211,14 @@ class AWTEventDispatcher
         {
             if (id == MouseEvent.MOUSE_WHEEL)
             {
-                retargeted = new MouseWheelEvent(target, id, me.getWhen(), me.getModifiersEx() | me.getModifiers(), x, y,
+                retargeted = new MouseWheelEvent(target, id, me.getWhen(), me.getModifiersEx(), x, y,
                         me.getXOnScreen(), me.getYOnScreen(), me.getClickCount(), me.isPopupTrigger(),
                         ((MouseWheelEvent)me).getScrollType(), ((MouseWheelEvent)me).getScrollAmount(),
                         ((MouseWheelEvent)me).getWheelRotation());
             }
             else
             {
-                retargeted = new MouseEvent(target, id, me.getWhen(), me.getModifiersEx() | me.getModifiers(), x, y,
+                retargeted = new MouseEvent(target, id, me.getWhen(), me.getModifiersEx(), x, y,
                         me.getXOnScreen(), me.getYOnScreen(), me.getClickCount(), me.isPopupTrigger(), me.getButton());
             }
 

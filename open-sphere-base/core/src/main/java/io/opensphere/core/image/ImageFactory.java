@@ -47,7 +47,7 @@ public class ImageFactory
 
         try
         {
-            final Image image = Format.getClass(imageFormat).newInstance();
+            final Image image = Format.getClass(imageFormat).getDeclaredConstructor().newInstance();
             if (ddsDesired && image instanceof DDSEncodableImage)
             {
                 // Use the buffered image pool to conserve memory. The image
@@ -75,7 +75,7 @@ public class ImageFactory
                 return image;
             }
         }
-        catch (InstantiationException | IllegalAccessException e)
+        catch (ReflectiveOperationException e)
         {
             LOGGER.error("Failed to instantiate concrete image class: " + e, e);
         }
@@ -128,7 +128,7 @@ public class ImageFactory
     {
         try
         {
-            final Image image = Format.getClass(imageFormat).newInstance();
+            final Image image = Format.getClass(imageFormat).getDeclaredConstructor().newInstance();
             if (image instanceof DDSEncodableImage)
             {
                 // Use the buffered image pool to conserve memory. The image
@@ -151,7 +151,7 @@ public class ImageFactory
                 return in;
             }
         }
-        catch (InstantiationException | IllegalAccessException e)
+        catch (ReflectiveOperationException e)
         {
             LOGGER.error("Failed to instantiate concrete image class: " + e, e);
         }

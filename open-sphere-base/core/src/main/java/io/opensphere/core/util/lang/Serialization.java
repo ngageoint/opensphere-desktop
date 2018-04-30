@@ -97,13 +97,12 @@ public final class Serialization
     public static InputStream serializeToStream(final Serializable object, Executor executor) throws IOException
     {
         PipedInputStream is = new PipedInputStream();
-        final ObjectOutputStream oos = new ObjectOutputStream(new PipedOutputStream(is));
         executor.execute(new Runnable()
         {
             @Override
             public void run()
             {
-                try
+                try (ObjectOutputStream oos = new ObjectOutputStream(new PipedOutputStream(is)))
                 {
                     oos.writeObject(object);
                 }
@@ -128,20 +127,6 @@ public final class Serialization
                     if (LOGGER.isDebugEnabled())
                     {
                         LOGGER.debug("Caught runtime exception during serialize: " + e);
-                    }
-                }
-                finally
-                {
-                    try
-                    {
-                        oos.close();
-                    }
-                    catch (IOException e)
-                    {
-                        if (LOGGER.isDebugEnabled())
-                        {
-                            LOGGER.debug("Failed to close output stream: " + e, e);
-                        }
                     }
                 }
             }

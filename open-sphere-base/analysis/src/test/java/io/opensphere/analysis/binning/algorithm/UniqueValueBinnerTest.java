@@ -16,7 +16,13 @@ import io.opensphere.analysis.binning.criteria.UniqueCriteria;
  */
 public class UniqueValueBinnerTest
 {
-    /** Tests automatic binning. */
+    /**
+     * Tests automatic binning.
+     * <p>
+     * The idea is that, even though constructed Doubles are different objects,
+     * their actual values will not be unique.
+     */
+    @SuppressWarnings("deprecation")
     @Test
     public void testAutoBin()
     {
@@ -47,6 +53,7 @@ public class UniqueValueBinnerTest
     }
 
     /** Tests custom binning. */
+    @SuppressWarnings("deprecation")
     @Test
     public void testCustomBin()
     {

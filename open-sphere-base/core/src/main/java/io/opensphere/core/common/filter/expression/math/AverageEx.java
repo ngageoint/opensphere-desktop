@@ -42,7 +42,6 @@ public class AverageEx extends FunctionEx
      *
      * @see io.opensphere.core.common.filter.expression.FunctionEx#getValueFrom(io.opensphere.core.common.filter.dto.FilterDTO)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public BigDecimal getValueFrom(FilterDTO dto)
     {

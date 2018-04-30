@@ -195,7 +195,7 @@ public class InteractiveX509TrustManager implements X509TrustManager
             "The certificate '"
                + certificate.getSubjectDN()
                + "' will not be valid until "
-               + DateFormatUtils.ISO_DATETIME_FORMAT.format(certificate
+               + DateFormatUtils.ISO_8601_EXTENDED_DATETIME_FORMAT.format(certificate
                   .getNotAfter());
          error =
             new CertificateVerificationIssue(IssueType.CERTIFICATE_NOT_YET_VALID,
@@ -207,7 +207,7 @@ public class InteractiveX509TrustManager implements X509TrustManager
             "The certificate '"
                + certificate.getSubjectDN()
                + "' expired on "
-               + DateFormatUtils.ISO_DATETIME_FORMAT.format(certificate
+               + DateFormatUtils.ISO_8601_EXTENDED_DATETIME_FORMAT.format(certificate
                   .getNotAfter());
          error =
             new CertificateVerificationIssue(IssueType.CERTIFICATE_EXPIRED,

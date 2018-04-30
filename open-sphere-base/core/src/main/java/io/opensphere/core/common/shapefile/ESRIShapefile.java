@@ -704,7 +704,7 @@ public class ESRIShapefile implements Collection<ShapefileRecord>
         {
             returnValue &= add(row);
         }
-        return false;
+        return returnValue;
     }
 
     @Override
@@ -730,7 +730,7 @@ public class ESRIShapefile implements Collection<ShapefileRecord>
         {
             returnValue &= contains(o);
         }
-        return false;
+        return returnValue;
     }
 
     @Override

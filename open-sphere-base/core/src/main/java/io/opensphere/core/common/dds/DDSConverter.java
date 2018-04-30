@@ -64,10 +64,12 @@ public class DDSConverter
         }
         fw.append(((System.currentTimeMillis() - timein) / numberOfRepeats) + "\n");
         fw.flush();
+        fw.close();
 
         FileOutputStream os = new FileOutputStream(args[2]);
         FileChannel out = os.getChannel();
         out.write(outputNotDirect);
+        os.close();
 
         ByteBuffer outputNotDirect2 = null;
         fw = new FileWriter(
@@ -104,9 +106,12 @@ public class DDSConverter
         }
         fw.append(((System.currentTimeMillis() - timein) / numberOfRepeats) + "\n");
         fw.flush();
+        fw.close();
+
         FileOutputStream os2 = new FileOutputStream(args[3]);
         FileChannel out2 = os2.getChannel();
         out2.write(outputNotDirect2);
+        os2.close();
 
         System.out.println("done...");
     }

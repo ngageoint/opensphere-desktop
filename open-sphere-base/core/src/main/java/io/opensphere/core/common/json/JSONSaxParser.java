@@ -967,35 +967,4 @@ public class JSONSaxParser
     }
 
     public static boolean ourDebug = false;
-
-//    public static void main(String[] args)
-//    {
-//        File smallFile = new File("C:/JSON/small2.txt");
-//        File medFile = new File("C:/JSON/smallQueryTest.txt");
-//        File bigFile = new File("C:/JSON/esriQueryResponse.txt");
-//        File otherFile = new File("C:/JSON/Hawaii_Tracks_formatted.json");
-//        File otherFile2 = new File("C:/JSON/Hawaii_Tracks.json");
-//
-//        //        JSONSaxParser parser = new JSONSaxParser(new JSONSaxEmptyHandler());
-//                        JSONSaxParser parser = new JSONSaxParser(new JSONSaxTestHandler());
-//        //        JSONSaxParser parser = new JSONSaxParser(new JSONSaxPrintHandler(true));
-////        JSONSaxToDomHandler handler = new JSONSaxToDomHandler();
-////        JSONSaxParser parser = new JSONSaxParser(handler);
-//
-//        try
-//        {
-//            parser.parse(new FileReader(otherFile));
-//        }
-//        catch (IOException e)
-//        {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        catch (JSONSaxParseException e)
-//        {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        //handler.getDocument().toJSON(System.out, 0);
-//    }
 }

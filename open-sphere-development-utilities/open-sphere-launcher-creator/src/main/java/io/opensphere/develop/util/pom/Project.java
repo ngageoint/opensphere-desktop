@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.commons.text.StrSubstitutor;
+import org.apache.commons.text.StringSubstitutor;
 import org.apache.log4j.Logger;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
@@ -65,7 +65,7 @@ public class Project
     private String[] myAdditionalClasspathItems;
 
     /** The substitution manager used to resolve properties. */
-    private StrSubstitutor mySubstitutor;
+    private StringSubstitutor mySubstitutor;
 
     /** The registry from which other projects are resolved. */
     private ProjectRegistry myProjectRegistry;
@@ -117,7 +117,7 @@ public class Project
                 myParent = myProjectRegistry.get(getParentCoordinate());
             }
 
-            mySubstitutor = new StrSubstitutor(PropertyMapUtils.toMap(getProperties()));
+            mySubstitutor = new StringSubstitutor(PropertyMapUtils.toMap(getProperties()));
 
             setTitle(myModel.getName());
 

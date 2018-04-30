@@ -72,11 +72,7 @@ public class MainPortionIterator implements Iterator<ShapeRecord>
         {
             LOGGER.error(e);
         }
-        catch (InstantiationException e)
-        {
-            LOGGER.error(e);
-        }
-        catch (IllegalAccessException e)
+        catch (ReflectiveOperationException e)
         {
             LOGGER.error(e);
         }

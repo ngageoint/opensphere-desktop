@@ -77,12 +77,12 @@ public final class VisibleBoundaryHelper
             {
                 geoPoints.add(projection.convertToPosition(modelVector, ReferenceLevel.ELLIPSOID));
             }
-            // Handle horizon boundaries
-            else if (view instanceof Viewer3D)
+            // Handle horizon boundaries (btw, cameraGroundWindowCoords2i will
+            // only not be null if view is a Viewer3D)
+            else if (cameraGroundWindowCoords2i != null)
             {
                 // Calculate the angle from the screen center to this screen
                 // boundary
-                @SuppressWarnings("null")
                 int x = screenBoundaryPoint.getX() - cameraGroundWindowCoords2i.getX();
                 int y = screenBoundaryPoint.getY() - cameraGroundWindowCoords2i.getY();
                 double pieSliceAngle = Math.atan((double)x / y);

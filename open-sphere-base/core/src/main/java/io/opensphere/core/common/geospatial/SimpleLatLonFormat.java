@@ -704,9 +704,7 @@ public class SimpleLatLonFormat
             @Override
             public int compare(PatternComponent o1, PatternComponent o2)
             {
-                Integer i1 = new Integer(o1.startIndex);
-                Integer i2 = new Integer(o2.startIndex);
-                return i1.compareTo(i2);
+                return Integer.compare(o1.startIndex, o2.startIndex);
             }
         });
 
@@ -1347,6 +1345,10 @@ public class SimpleLatLonFormat
                     case REGEX:
                         regexMatches.add(m.group(i));
                         break;
+                    case LITERAL:
+                        // perform default action
+                    default:
+                        break;
                 }
             }
 
@@ -1727,8 +1729,9 @@ public class SimpleLatLonFormat
 
     public static void main(String[] args)
     {
-        String aString = "{d1}{D2}[p(]([a-zA-Z1-9]{1,3}) DDD:MM\"SS.SSS'H ([a-z]{1}) dd:mm\"ss.ss'h[l l][jj]";
-        String vString = "p(afd 23:45\"44.890'W p 6:45\"23.21'Sl ljj";
+        // String aString = "{d1}{D2}[p(]([a-zA-Z1-9]{1,3}) DDD:MM\"SS.SSS'H
+        // ([a-z]{1}) dd:mm\"ss.ss'h[l l][jj]";
+        // String vString = "p(afd 23:45\"44.890'W p 6:45\"23.21'Sl ljj";
 
 //        String aString = "DDD:MM\"SS.SSS'H ddd:mm\"ss.ss'h";
 //        String vString = "123:45\"67.890'E 987:65\"43.21'N";

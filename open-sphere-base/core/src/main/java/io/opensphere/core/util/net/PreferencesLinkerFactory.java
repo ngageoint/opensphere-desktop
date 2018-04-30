@@ -114,13 +114,13 @@ public final class PreferencesLinkerFactory
                 try
                 {
                     Class<?> transformClass = Class.forName(transformClassName);
-                    Object transformObject = transformClass.newInstance();
+                    Object transformObject = transformClass.getDeclaredConstructor().newInstance();
                     if (transformObject instanceof Function)
                     {
                         transforms.add((Function<String, String>)transformObject);
                     }
                 }
-                catch (ClassNotFoundException | InstantiationException | IllegalAccessException e)
+                catch (ReflectiveOperationException e)
                 {
                     LOGGER.error(e, e);
                 }

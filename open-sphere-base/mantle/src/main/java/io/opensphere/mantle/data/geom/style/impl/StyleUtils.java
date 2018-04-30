@@ -2,8 +2,7 @@ package io.opensphere.mantle.data.geom.style.impl;
 
 import java.awt.Color;
 import java.util.List;
-
-import org.apache.commons.lang3.ObjectUtils;
+import java.util.Objects;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.constraint.Constraints;
@@ -86,13 +85,13 @@ public final class StyleUtils
             String colName = fields.get(1);
             if (Boolean.TRUE.equals(showCol))
             {
-                return colName + ":  " + ObjectUtils.toString(mdp.getValue(colName));
+                return colName + ":  " + Objects.toString(mdp.getValue(colName));
             }
-            return ObjectUtils.toString(mdp.getValue(colName));
+            return Objects.toString(mdp.getValue(colName));
         }
         if (fields.size() == 1)
         {
-            return ObjectUtils.toString(mdp.getValue(fields.get(0)));
+            return Objects.toString(mdp.getValue(fields.get(0)));
         }
         return "";
     }

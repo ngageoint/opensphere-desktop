@@ -476,20 +476,20 @@ public class OSDarkLAFMain extends JFrame
         final JPanel p2 = new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
 
-        final JComboBox cb = new JComboBox(v);
+        final JComboBox<String> cb = new JComboBox<>(v);
         cb.setMaximumSize(new Dimension(400, cb.getPreferredSize().height));
 
         p2.add(cb);
         p2.add(Box.createRigidArea(new Dimension(10, 10)));
 
-        final JComboBox cb2 = new JComboBox(v);
+        final JComboBox<String> cb2 = new JComboBox<>(v);
         cb2.setMaximumSize(new Dimension(400, cb.getPreferredSize().height));
         cb2.setEditable(true);
 
         p2.add(cb2);
         p2.add(Box.createRigidArea(new Dimension(10, 10)));
 
-        final JComboBox cb3 = new JComboBox();
+        final JComboBox<String> cb3 = new JComboBox<>();
         cb3.addItem("Option 1");
         cb3.addItem("Option 2");
         cb3.addItem("Option 3");
@@ -502,7 +502,7 @@ public class OSDarkLAFMain extends JFrame
         p2.add(cb3);
         p2.add(Box.createRigidArea(new Dimension(10, 10)));
 
-        final JList list = new JList(v);
+        final JList<String> list = new JList<>(v);
         final JScrollPane scrPan = new JScrollPane(list);
         scrPan.setPreferredSize(new Dimension(200, 80));
         p2.add(scrPan);
@@ -608,7 +608,7 @@ public class OSDarkLAFMain extends JFrame
         final DefaultTableModel dtm = new DefaultTableModel(25, 5)
         {
             @Override
-            public Class getColumnClass(int c)
+            public Class<?> getColumnClass(int c)
             {
                 if (c == 4)
                 {
@@ -632,11 +632,11 @@ public class OSDarkLAFMain extends JFrame
             {
                 if (column == 1)
                 {
-                    return new DefaultCellEditor(new JComboBox(vDa));
+                    return new DefaultCellEditor(new JComboBox<String>(vDa));
                 }
                 else if (column == 2)
                 {
-                    final JComboBox cb = new JComboBox(vDa);
+                    final JComboBox<String> cb = new JComboBox<>(vDa);
                     cb.setEditable(true);
                     return new DefaultCellEditor(cb);
                 }

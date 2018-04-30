@@ -36,7 +36,6 @@ import javafx.application.Platform;
 /**
  * Unit test for the {@link MergeUI}.
  */
-@SuppressWarnings("restriction")
 public class MergeUITestDisplay
 {
     /**

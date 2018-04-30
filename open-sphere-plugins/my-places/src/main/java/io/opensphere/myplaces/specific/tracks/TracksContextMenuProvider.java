@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -17,7 +16,6 @@ import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.control.action.context.GeometryContextKey;
-import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.units.InvalidUnitsException;
@@ -26,8 +24,6 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.DataTypeController;
 import io.opensphere.mantle.data.DataTypeInfo;
-import io.opensphere.mantle.data.element.DataElement;
-import io.opensphere.mantle.data.util.DataElementLookupUtils;
 import io.opensphere.mantle.transformer.impl.DefaultMapDataElementTransformer;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.myplaces.constants.Constants;
@@ -121,15 +117,15 @@ public class TracksContextMenuProvider implements ContextMenuProvider<GeometryCo
                 {
                     DataTypeInfo dataType = couple.getDataType();
 
-                    DataElementLookupUtils dataElementLookupUtils = MantleToolboxUtils.getDataElementLookupUtils(myToolbox);
-                    List<DataElement> dataElements = dataElementLookupUtils.getDataElements(dataType);
+                    // DataElementLookupUtils dataElementLookupUtils = MantleToolboxUtils.getDataElementLookupUtils(myToolbox);
+                    // List<DataElement> dataElements = dataElementLookupUtils.getDataElements(dataType);
 
                     MantleToolbox mantleToolbox = MantleToolboxUtils.getMantleToolbox(myToolbox);
                     DataTypeController dataTypeController = mantleToolbox.getDataTypeController();
                     DefaultMapDataElementTransformer transformer = (DefaultMapDataElementTransformer)dataTypeController
                             .getTransformerForType(dataType.getTypeKey());
 
-                    Set<Geometry> allGeometries = transformer.getGeometrySet();
+                    // Set<Geometry> allGeometries = transformer.getGeometrySet();
 
                     transformer.getDataModelIdFromGeometryId(getPriority());
 

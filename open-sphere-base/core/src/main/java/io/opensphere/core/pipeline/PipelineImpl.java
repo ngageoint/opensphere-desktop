@@ -252,9 +252,9 @@ public class PipelineImpl implements GLEventListener, Pipeline, GenericSubscribe
         ShaderRendererUtilities shaderUtilities;
         try
         {
-            shaderUtilities = (ShaderRendererUtilities)Class.forName(shaderRendererUtilitiesClass).newInstance();
+            shaderUtilities = (ShaderRendererUtilities)Class.forName(shaderRendererUtilitiesClass).getDeclaredConstructor().newInstance();
         }
-        catch (ClassNotFoundException | InstantiationException | IllegalAccessException e)
+        catch (ReflectiveOperationException e)
         {
             LOGGER.fatal("Cannot load shader utilities class [" + shaderRendererUtilitiesClass + "]: " + e, e);
             shaderUtilities = null;

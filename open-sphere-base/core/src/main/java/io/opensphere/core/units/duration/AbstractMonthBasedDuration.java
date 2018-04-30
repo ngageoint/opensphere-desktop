@@ -1,6 +1,7 @@
 package io.opensphere.core.units.duration;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import io.opensphere.core.units.InconvertibleUnits;
 
@@ -53,14 +54,14 @@ public abstract class AbstractMonthBasedDuration extends Duration
             // If I am larger than the maximum that the other duration could
             // be...
             else if (Integer.signum(getMagnitude().compareTo(
-                    o.inReferenceUnits().divide(getMinSecondsPerUnit(), DIVISION_SCALE, BigDecimal.ROUND_UP))) == signum())
+                    o.inReferenceUnits().divide(getMinSecondsPerUnit(), DIVISION_SCALE, RoundingMode.UP))) == signum())
             {
                 return signum();
             }
 
             // If I am smaller than the minimum that the other duration could
             // be...
-            else if (Integer.signum(o.inReferenceUnits().divide(getMaxSecondsPerUnit(), DIVISION_SCALE, BigDecimal.ROUND_DOWN)
+            else if (Integer.signum(o.inReferenceUnits().divide(getMaxSecondsPerUnit(), DIVISION_SCALE, RoundingMode.DOWN)
                     .compareTo(getMagnitude())) == signum())
             {
                 return -signum();
