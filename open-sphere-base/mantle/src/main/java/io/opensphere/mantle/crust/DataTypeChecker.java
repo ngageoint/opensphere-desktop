@@ -20,7 +20,7 @@ public final class DataTypeChecker
      * Checks to see if the specified data type is a feature layer.
      *
      * @param dataType the data type to check
-     * @return true if and only if the argument is a feature layer
+     * @return true if and only if the argument is a feature layer, false if dataType is null
      */
     public static boolean isFeatureType(DataTypeInfo dataType)
     {
