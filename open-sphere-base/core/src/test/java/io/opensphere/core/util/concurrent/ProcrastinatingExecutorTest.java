@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import io.opensphere.core.util.Constants;
@@ -72,6 +73,7 @@ public class ProcrastinatingExecutorTest
      * @throws InterruptedException If the executor is interrupted somehow.
      */
     @Test
+    @Ignore
     public void testMaxDelay() throws InterruptedException
     {
         if (StringUtils.isEmpty(System.getenv("SLOW_MACHINE")))
@@ -247,6 +249,7 @@ public class ProcrastinatingExecutorTest
      * @throws InterruptedException If the executor is interrupted somehow.
      */
     @Test
+    @Ignore
     public void testZeroDelay() throws InterruptedException
     {
         if (StringUtils.isEmpty(System.getenv("SLOW_MACHINE")))
