@@ -1,6 +1,14 @@
 {
+    "editor.detectIndentation": false,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 130,
+    "editor.wrappingIndent": "indent",
+    // Java Settings
     "java.configuration.updateBuildConfiguration": "interactive",
-    "java.home": "C:/Program Files/Java/jdk-9.0.4",
     "java.completion.importOrder": [
         "java",
         "javafx",
@@ -8,10 +16,5 @@
         "com",
         "org"
     ],
-
-    "editor.insertSpaces": true,
-    "editor.tabSize": 4,
-    "editor.wordWrap": "wordWrapColumn",
-    "editor.wordWrapColumn": 130,
-    "editor.wrappingIndent": "indent"
+    "java.saveActions.organizeImports": true,
 }
