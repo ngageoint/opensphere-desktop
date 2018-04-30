@@ -714,24 +714,24 @@
 				<artifactId>commons-configuration</artifactId>
 				<version>1.10</version>
 			</dependency>
-            
-            <!-- Apache Commons -->
+
+			<!-- Apache Commons -->
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
 				<version>3.7</version>
 			</dependency>
 			<dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-collections4</artifactId>
-                <version>4.1</version>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>4.1</version>
 			</dependency>
-            <dependency>
-			   <groupId>org.apache.commons</groupId>
-			   <artifactId>commons-text</artifactId>
-			   <version>1.3</version>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-text</artifactId>
+				<version>1.3</version>
 			</dependency>
-            
+
 			<dependency>
 				<groupId>org.apache.httpcomponents</groupId>
 				<artifactId>httpclient</artifactId>
@@ -1328,7 +1328,8 @@
 					</reportSet>
 				</reportSets>
 				<configuration>
-					<additionalparam>-Xdoclint:none</additionalparam>
+					<additionalOptions>-Xdoclint:none</additionalOptions>
+					<excludePackageNames>org.*,net.*,com.bitsys.fade.mist.state.v4</excludePackageNames>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -1371,6 +1372,8 @@
 				<artifactId>maven-pmd-plugin</artifactId>
 				<version>3.9.0</version>
 				<configuration>
+					<analysisCache>true</analysisCache>
+					<analysisCacheLocation>${project.build.directory}/pmd/pmd.cache</analysisCacheLocation>
 					<rulesets>
 						<ruleset>${session.executionRootDirectory}/pmd-config.xml</ruleset>
 					</rulesets>
