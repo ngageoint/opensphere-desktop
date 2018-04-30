@@ -19,8 +19,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections4.functors.InstantiateFactory;
-import org.apache.commons.collections4.map.LazyMap;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -81,8 +79,7 @@ public class JDependTest
      */
     private Map<String, Collection<String>> processLines(Collection<String> lines)
     {
-        final Map<String, Collection<String>> dependencyMap = LazyMap.lazyMap(new HashMap<>(),
-                new InstantiateFactory<>(HashSet.class));
+        final Map<String, Collection<String>> dependencyMap = new HashMap<>();
 
         String[] splitPackage = getClass().getName().split("\\.");
         final Pattern packagePattern = Pattern.compile("^\\s+(" + splitPackage[0] + "\\." + splitPackage[1] + "\\..*?) ");
@@ -100,7 +97,7 @@ public class JDependTest
             else if (currentPackage != null && dependencyMatcher.find())
             {
                 final String dependency = dependencyMatcher.group(1);
-                dependencyMap.get(currentPackage).add(dependency);
+                dependencyMap.computeIfAbsent(currentPackage, k -> new HashSet<>()).add(dependency);
             }
         }
 
