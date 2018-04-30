@@ -2,7 +2,7 @@ package io.opensphere.merge.ui;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.data.DataGroupInfo.MultiDataGroupContextKey;
-import io.opensphere.merge.model.MergePrefs;
+import io.opensphere.merge.controller.MergeController;
 
 /**
  * Adds the merge option when the user right clicks on a layer and at least 2 or
@@ -14,10 +14,10 @@ public class MergeContextMenuProvider extends AbstractMergeMergeContextMenuProvi
      * Constructs a new merge context menu provider.
      *
      * @param toolbox The system toolbox.
-     * @param mergePreferences The merge preferences.
+     * @param mergeController The merge controller.
      */
-    public MergeContextMenuProvider(Toolbox toolbox, MergePrefs mergePreferences)
+    public MergeContextMenuProvider(Toolbox toolbox, MergeController mergeController)
     {
-        super(toolbox, mergePreferences);
+        super(toolbox, mergeController);
     }
 }

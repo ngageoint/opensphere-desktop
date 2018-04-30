@@ -24,7 +24,6 @@ import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.cache.DataElementCache;
 import io.opensphere.merge.controller.MergeController;
 import io.opensphere.merge.model.JoinModel;
-import io.opensphere.merge.model.MergePrefs;
 
 /**
  * An abstract implementation of a menu provider, used to abstract functions
@@ -62,13 +61,13 @@ public abstract class AbstractMergeMergeContextMenuProvider<CONTEXT_KEY_TYPE ext
      * Constructs a new merge context menu provider.
      *
      * @param toolbox The system toolbox.
-     * @param mergePreferences The merge preferences.
+     * @param mergeController The merge controller.
      */
-    public AbstractMergeMergeContextMenuProvider(Toolbox toolbox, MergePrefs mergePreferences)
+    public AbstractMergeMergeContextMenuProvider(Toolbox toolbox, MergeController mergeController)
     {
         myToolbox = toolbox;
         myCache = myToolbox.getPluginToolboxRegistry().getPluginToolbox(MantleToolbox.class).getDataElementCache();
-        myMergeController = new MergeController(toolbox, mergePreferences);
+        myMergeController = mergeController;
     }
 
     /**

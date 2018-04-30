@@ -33,7 +33,7 @@ import io.opensphere.merge.model.MergePrefs;
 import io.opensphere.merge.model.MergePrefs.Join;
 
 /**
- * Facilitates management of existing join configurations.
+ * Facilitates management of existing join/merge configurations.
  */
 public class ConfigGui
 {
@@ -52,6 +52,9 @@ public class ConfigGui
     /** Manager for layers formed by joining. */
     private final JoinManager myJoinManager;
 
+    /** The merge controller. */
+    private final MergeController myMergeController;
+
     /** GUI root. */
     private final ScrollPane myMainPane;
 
@@ -69,12 +72,14 @@ public class ConfigGui
      *
      * @param tb the toolbox
      * @param jm the join manager
+     * @param mergeController the merge controller
      * @param callback the save callback
      */
-    public ConfigGui(Toolbox tb, JoinManager jm, Runnable callback)
+    public ConfigGui(Toolbox tb, JoinManager jm, MergeController mergeController, Runnable callback)
     {
         myToolbox = tb;
         myJoinManager = jm;
+        myMergeController = mergeController;
         mySaveCallback = callback;
 
         MantleToolbox mtb = tb.getPluginToolboxRegistry().getPluginToolbox(MantleToolbox.class);
@@ -326,7 +331,9 @@ public class ConfigGui
             }
             else
             {
-                // TODO
+                // TODO test this
+                String groupId = myItem.getMerge().getNewLayerName().get();
+                myMergeController.removeLayer(groupId);
             }
         }
 
@@ -365,8 +372,7 @@ public class ConfigGui
         private void editMerge()
         {
             MergeModel merge = myItem.getMerge();
-            MergeController mergeController = new MergeController(myToolbox, myPreferences);
-            MergeUI.showMergeDialog(merge, myToolbox, mergeController, () -> acceptMergeEdits(merge));
+            MergeUI.showMergeDialog(merge, myToolbox, null, () -> acceptMergeEdits(merge));
         }
 
         /**
