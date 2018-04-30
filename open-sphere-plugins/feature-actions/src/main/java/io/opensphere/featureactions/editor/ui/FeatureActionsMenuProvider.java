@@ -15,7 +15,6 @@ import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.SwingUtilities;
 import io.opensphere.mantle.crust.DataTypeChecker;
-import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
 import io.opensphere.mantle.data.DataTypeInfo;
 
