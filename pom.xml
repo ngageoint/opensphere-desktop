@@ -1329,6 +1329,7 @@
 				</reportSets>
 				<configuration>
 					<additionalOptions>-Xdoclint:none</additionalOptions>
+					<excludePackageNames>org.*,net.*,com.bitsys.fade.mist.state.v4</excludePackageNames>
 				</configuration>
 			</plugin>
 			<plugin>

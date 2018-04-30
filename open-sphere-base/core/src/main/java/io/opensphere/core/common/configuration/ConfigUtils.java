@@ -13,18 +13,17 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Provides configuration util methods for reading properties
+ * Provides configuration utility methods for reading properties.
  */
 public abstract class ConfigUtils
 {
-
     /**
      * The <code>Log</code> instance used for logging.
      */
     private static final Log logger = LogFactory.getLog(ConfigUtils.class);
 
     /**
-     * Property file config divider
+     * Property file configuration divider
      */
     private static final String CONFIG_DIVIDER = ".";
 
@@ -35,9 +34,9 @@ public abstract class ConfigUtils
     private String suffix;
 
     /**
-     * Set the suffix
+     * Sets the value of the suffix ({@link #suffix}) field.
      *
-     * @param suffix
+     * @param suffix the value to store in the {@link #suffix} field.
      */
     public void setSuffix(String suffix)
     {
@@ -45,17 +44,18 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get the base configuration name
+     * Get the base configuration name.
      *
-     * @return
+     * @return the base configuration name
      */
     protected abstract String getBaseConfig();
 
     /**
-     * Get the config path, appending the provided config paths
+     * Get the configuration path, appending the provided configuration paths.
      *
-     * @param paths
-     * @return
+     * @param paths the paths to append.
+     * @return a path generated using the default base configuration and the
+     *         supplied suffixes.
      */
     private String getConfigPath(String... paths)
     {
@@ -63,11 +63,12 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get the config path with the appended optional suffix, or null if no
+     * Get the configuration path with the appended optional suffix, or null if no
      * suffix
      *
-     * @param paths
-     * @return
+     * @param path the optional suffix to append.
+     * @return a path generated using the supplied path and the
+     *         internal suffix.
      */
     private String getConfigPathSuffix(String path)
     {
@@ -80,9 +81,9 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get a config sub path combining the
+     * Get a configuration sub path combining the supplied paths.
      *
-     * @param paths
+     * @param paths the paths with which to create the configuration path.
      * @return
      */
     public String createPartialConfigPath(String... paths)
@@ -91,9 +92,10 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get a config sub path combining the
+     * Get a configuration sub path combining the supplied base and suffixes.
      *
-     * @param paths
+     * @param basePath the optional base path to use in the configuration path.
+     * @param paths the paths with which to create the configuration path.
      * @return
      */
     private String createConfigPath(String basePath, String... paths)
@@ -126,9 +128,9 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get the string configured value for the provided config paths
+     * Get the string configured value for the provided configuration paths
      *
-     * @param allowNull
+     * @param allowNull a flag used to permit null values in the string.
      * @param paths
      * @return
      */
@@ -155,7 +157,7 @@ public abstract class ConfigUtils
     /**
      * Get a string array returned as a single string with the commas in tact
      *
-     * @param allowNull
+     * @param allowNull a flag used to permit null values in the string.
      * @param paths
      * @return
      */
@@ -184,9 +186,9 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get the string configured array of values for the provided config paths
+     * Get the string configured array of values for the provided configuration paths
      *
-     * @param allowEmpty
+     * @param allowEmpty a flag used to permit empty values in the array.
      * @param paths
      * @return
      */
@@ -211,9 +213,9 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get the string configured set of values for the provided config paths
+     * Get the string configured set of values for the provided configuration paths
      *
-     * @param allowEmpty
+     * @param allowEmpty a flag used to permit empty values in the set.
      * @param paths
      * @return
      */
@@ -229,10 +231,10 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get the string configured set of values for the provided config paths in
+     * Get the string configured set of values for the provided configuration paths in
      * the order they are configured
      *
-     * @param allowEmpty
+     * @param allowEmpty a flag used to permit empty values in the set.
      * @param paths
      * @return
      */
@@ -249,9 +251,9 @@ public abstract class ConfigUtils
 
     /**
      * Get the string configured set of values upper cased for the provided
-     * config paths
+     * configuration paths
      *
-     * @param allowEmpty
+     * @param allowEmpty a flag used to permit empty values in the set.
      * @param paths
      * @return
      */
@@ -267,10 +269,11 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get the string configured value for the provided config paths, set to a
+     * Get the string configured value for the provided configuration paths, set to a
      * default value if not configured
      *
-     * @param defaultValue
+     * @param defaultValue the default value to use when no configuration item
+     *            is found.
      * @param paths
      * @return
      */
@@ -291,7 +294,7 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get the integer configured value for the provided config paths
+     * Get the integer configured value for the provided configuration paths
      *
      * @param paths
      * @return
@@ -302,9 +305,11 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get the integer configured value for the provided config paths returning
+     * Get the integer configured value for the provided configuration paths returning
      * a default value if not found
      *
+     * @param defaultValue the default value to use when no configuration item
+     *            is found.
      * @param paths
      * @return
      */
@@ -317,7 +322,8 @@ public abstract class ConfigUtils
      * Get integer helper method
      *
      * @param defaultMode
-     * @param defaultValue
+     * @param defaultValue the default value to use when no configuration item
+     *            is found.
      * @param paths
      * @return
      */
@@ -345,7 +351,7 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get the long configured value for the provided config paths
+     * Get the long configured value for the provided configuration paths
      *
      * @param paths
      * @return
@@ -356,9 +362,11 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get the long configured value for the provided config paths returning a
+     * Get the long configured value for the provided configuration paths returning a
      * default value if not found
      *
+     * @param defaultValue the default value to use when no configuration item
+     *            is found.
      * @param paths
      * @return
      */
@@ -371,7 +379,8 @@ public abstract class ConfigUtils
      * Get long helper method
      *
      * @param defaultMode
-     * @param defaultValue
+     * @param defaultValue the default value to use when no configuration item
+     *            is found.
      * @param paths
      * @return
      */
@@ -399,7 +408,7 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get the boolean configured value for the provided config paths
+     * Get the boolean configured value for the provided configuration paths
      *
      * @param paths
      * @return
@@ -410,9 +419,11 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get the boolean configured value for the provided config paths returning
+     * Get the boolean configured value for the provided configuration paths returning
      * a default value if not found
      *
+     * @param defaultValue the default value to use when no configuration item
+     *            is found.
      * @param paths
      * @return
      */
@@ -424,8 +435,9 @@ public abstract class ConfigUtils
     /**
      * Get boolean helper method
      *
-     * @param defaultMode
-     * @param defaultValue
+     * @param defaultMode a flag to enable the default mode of the helper.
+     * @param defaultValue the default value to use when no configuration item
+     *            is found.
      * @param paths
      * @return
      */
@@ -446,18 +458,16 @@ public abstract class ConfigUtils
             }
             else
             {
-                value = Configurator.getConfig().getBoolean(path);
+                value = Boolean.valueOf(Configurator.getConfig().getBoolean(path));
             }
         }
         return value;
     }
 
     /**
-     * Get the double configured value for the provided config paths
+     * Get the double configured value for the provided configuration paths
      *
-     * @param defaultMode
-     * @param defaultValue
-     * @param paths
+     * @param paths the configuration paths from which to extract the double value.
      * @return
      */
     public double getDouble(String... paths)
@@ -466,12 +476,12 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get the double configured value for the provided config paths returning a
+     * Get the double configured value for the provided configuration paths returning a
      * default value if one is not found
      *
-     * @param defaultMode
-     * @param defaultValue
-     * @param paths
+     * @param defaultValue the default value to use when no configuration item
+     *            is found.
+     * @param paths the configuration paths from which to extract the double value.
      * @return
      */
     public Double getDoubleWithDefault(Double defaultValue, String... paths)
@@ -482,9 +492,10 @@ public abstract class ConfigUtils
     /**
      * Get double helper method
      *
-     * @param defaultMode
-     * @param defaultValue
-     * @param paths
+     * @param defaultMode a flag to enable the default mode of the helper.
+     * @param defaultValue the default value to use when no configuration item
+     *            is found.
+     * @param paths the configuration paths from which to extract the double value.
      * @return
      */
     private Double getDoubleHelper(boolean defaultMode, Double defaultValue, String... paths)
@@ -511,11 +522,9 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get the float configured value for the provided config paths
+     * Get the float configured value for the provided configuration paths
      *
-     * @param defaultMode
-     * @param defaultValue
-     * @param paths
+     * @param paths the configuration paths from which to extract the float value.
      * @return
      */
     public float getFloat(String... paths)
@@ -524,12 +533,11 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get the float configured value for the provided config paths returning a
+     * Get the float configured value for the provided configuration paths returning a
      * default value if one is not found
      *
-     * @param defaultMode
      * @param defaultValue
-     * @param paths
+     * @param paths the configuration paths from which to extract the float value.
      * @return
      */
     public Float getFloatWithDefault(Float defaultValue, String... paths)
@@ -538,12 +546,13 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Get float helper method
+     * Get float helper method.
      *
-     * @param defaultMode
-     * @param defaultValue
-     * @param paths
-     * @return
+     * @param defaultMode a flag to enable the default mode of the helper.
+     * @param defaultValue the default value to use when no configuration item
+     *            is found.
+     * @param paths the configuration paths from which to extract the helper.
+     * @return a Float initialized from configuration.
      */
     private Float getFloatHelper(boolean defaultMode, Float defaultValue, String... paths)
     {
@@ -562,7 +571,7 @@ public abstract class ConfigUtils
             }
             else
             {
-                value = Configurator.getConfig().getFloat(path);
+                value = Float.valueOf(Configurator.getConfig().getFloat(path));
             }
         }
         return value;
@@ -570,12 +579,12 @@ public abstract class ConfigUtils
 
     /**
      * Load a list of configuration values from a single configured value
-     * separated by the delimiter
+     * separated by the delimiter.
      *
-     * @param allowNull
-     * @param delimiter
-     * @param config
-     * @return
+     * @param allowNull a flag used to permit null values.
+     * @param delimiter the delimiter used to separate key and value pairs.
+     * @param config the key to use in looking up the value in the map.
+     * @return the list of delimiters encountered in the configuration.
      */
     public List<String> loadDelimiterList(boolean allowNull, String delimiter, String config)
     {
@@ -594,12 +603,12 @@ public abstract class ConfigUtils
 
     /**
      * Load a set of configuration values from a single configured value
-     * separated by the delimiter
+     * separated by the delimiter.
      *
-     * @param allowNull
-     * @param delimiter
-     * @param config
-     * @return
+     * @param allowNull a flag used to permit null values.
+     * @param delimiter the delimiter used to separate key and value pairs.
+     * @param config the key to use in looking up the value in the map.
+     * @return the set of delimiters encountered in the configuration.
      */
     public Set<String> loadDelimiterSet(boolean allowNull, String delimiter, String config)
     {
@@ -610,11 +619,11 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Load a config set for the provided config String starting from 1 and
-     * incrementing until not found
+     * Load a configuration set for the provided configuration String starting from 1 and
+     * incrementing until not found.
      *
-     * @param config
-     * @return
+     * @param config the key to use in looking up the value in the map.
+     * @return the set of configuration items found in the backing store.
      */
     public Set<String> loadConfigSet(String config)
     {
@@ -633,13 +642,13 @@ public abstract class ConfigUtils
     }
 
     /**
-     * Load a config map for the provided config String starting from 1 and
+     * Load a configuration map for the provided configuration String starting from 1 and
      * incrementing until not found. Each configuration is split apart by the
      * delimiter and saved to the map.
      *
-     * @param config
-     * @param delimiter
-     * @return
+     * @param config the key to use in looking up the value in the map.
+     * @param delimiter the delimiter used to separate keys and values.
+     * @return the map of configuration items, read from the backing store.
      */
     public Map<String, String> loadConfigMap(String config, String delimiter)
     {
@@ -670,7 +679,6 @@ public abstract class ConfigUtils
      * @param paths Path to the map property
      * @return A <code>Map</code> or each key to it's value.
      */
-    @SuppressWarnings("unchecked")
     public Map<String, String> getMap(String... paths)
     {
         Map<String, String> map = new HashMap<>();
@@ -714,7 +722,6 @@ public abstract class ConfigUtils
      * @param paths Path to the map property
      * @return A <code>Map</code> or each key to it's value array
      */
-    @SuppressWarnings("unchecked")
     public Map<String, String[]> getMapOfArrays(String... paths)
     {
         Map<String, String[]> map = new HashMap<>();
@@ -744,5 +751,4 @@ public abstract class ConfigUtils
 
         return map;
     }
-
 }
