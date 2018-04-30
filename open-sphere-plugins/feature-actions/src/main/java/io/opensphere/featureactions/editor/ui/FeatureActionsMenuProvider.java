@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import javax.swing.JFrame;
@@ -93,10 +94,7 @@ public class FeatureActionsMenuProvider implements ContextMenuProvider<DataGroup
     public DataTypeInfo getDataTypes(DataGroupContextKey key)
     {
         Collection<DataTypeInfo> dataTypes = New.list(key.getDataTypes());
-        for (DataGroupInfo group : key.getDataGroups())
-        {
-            dataTypes.addAll(group.getMembers(false));
-        }
+        key.getDataGroups().stream().filter(Objects::nonNull).forEach(group -> dataTypes.addAll(group.getMembers(false)));
 
         for (DataTypeInfo layer : dataTypes)
         {
