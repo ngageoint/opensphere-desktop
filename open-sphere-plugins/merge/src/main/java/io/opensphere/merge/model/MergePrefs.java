@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -12,8 +13,6 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import io.opensphere.core.util.collections.New;
-import io.opensphere.merge.model.MergePrefs.Join;
-import io.opensphere.merge.model.MergePrefs.LayerParam;
 
 /**
  * Model used to persist layer join configurations as XML. In this model, the
@@ -30,8 +29,8 @@ public class MergePrefs
 
     /** The merge models. */
     @XmlTransient
-    // TODO thread-safety
-    private final List<MergeModel> myMerges = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
+    private final ObservableList<MergeModel> myMerges = FXCollections
+            .synchronizedObservableList(FXCollections.observableArrayList());
 
     /**
      * Getter.
@@ -48,7 +47,7 @@ public class MergePrefs
      *
      * @return the merges
      */
-    public List<MergeModel> getMerges()
+    public ObservableList<MergeModel> getMerges()
     {
         return myMerges;
     }

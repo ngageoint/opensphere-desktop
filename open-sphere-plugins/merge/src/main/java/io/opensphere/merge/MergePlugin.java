@@ -1,6 +1,6 @@
 package io.opensphere.merge;
 
-import javax.swing.SwingUtilities;
+import java.awt.EventQueue;
 
 import io.opensphere.core.PluginLoaderData;
 import io.opensphere.core.Toolbox;
@@ -8,7 +8,6 @@ import io.opensphere.core.api.adapter.PluginAdapter;
 import io.opensphere.core.control.ui.MenuBarRegistry;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.util.fx.FXUtilities;
-import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
 import io.opensphere.mantle.data.DataGroupInfo.MultiDataGroupContextKey;
@@ -76,11 +75,11 @@ public class MergePlugin extends PluginAdapter
                 DataGroupContextKey.class, mySingleSelectionMenuProvider);
 
         // add a menu item that maps to the showEditor method
-        SwingUtilities.invokeLater(() -> GuiUtil.addMenuItem(GuiUtil.getMainMenu(toolbox, MenuBarRegistry.EDIT_MENU),
-                "Joins/Merges", () -> myJoinConfigGui.show()));
-
-        EventQueueUtilities.runOnEDT(() ->
+        EventQueue.invokeLater(() ->
         {
+            GuiUtil.addMenuItem(GuiUtil.getMainMenu(toolbox, MenuBarRegistry.EDIT_MENU), "Joins/Merges",
+                () -> myJoinConfigGui.show());
+
             myJoinConfigGui = new ConfigGui(toolbox, myJoinManager, () -> writePrefs());
             myJoinConfigGui.setData(myMergePreferences);
         });

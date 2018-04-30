@@ -2,7 +2,9 @@ package io.opensphere.merge.ui;
 
 import java.awt.Dimension;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -24,6 +26,7 @@ import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.cache.DataElementCache;
+import io.opensphere.merge.controller.MergeController;
 import io.opensphere.merge.model.JoinModel;
 import io.opensphere.merge.model.MergeModel;
 import io.opensphere.merge.model.MergePrefs;
@@ -119,8 +122,11 @@ public class ConfigGui
     public void setData(MergePrefs p)
     {
         myPreferences = p;
+        myPreferences.getMerges().addListener((ListChangeListener<MergeModel>)c ->
+        {
+            Platform.runLater(() -> handleMergeModelChange(c));
+        });
         myDataRows.clear();
-
         myPreferences.getJoins().stream().map(ConfigUiRow::new).forEach(myDataRows::add);
         myPreferences.getMerges().stream().map(ConfigUiRow::new).forEach(myDataRows::add);
     }
@@ -136,14 +142,30 @@ public class ConfigGui
     }
 
     /**
-     * Removes a Join from the data list.
+     * Adds a new merge to the data list.
      *
-     * @param join the join to remove
+     * @param merge the merge to add
      */
-    public void removeJoin(MergePrefs.Join join)
+    public void addMerge(MergeModel merge)
     {
-        // TODO make this work
-        myDataRows.remove(new ConfigUiRow(join));
+        myDataRows.add(new ConfigUiRow(merge));
+    }
+
+    /**
+     * Removes a row from the data list.
+     *
+     * @param row the row to remove
+     */
+    public void removeRow(ConfigUiRow row)
+    {
+        if (row.getJoin() != null)
+        {
+            myDataRows.removeIf(r -> row.getJoin().equals(r.getJoin()));
+        }
+        else
+        {
+            myDataRows.removeIf(r -> row.getMerge().equals(r.getMerge()));
+        }
     }
 
     /**
@@ -157,12 +179,26 @@ public class ConfigGui
         myDataRows.set(index, new ConfigUiRow(join));
     }
 
+    /**
+     * Handles a change in the merge model.
+     *
+     * @param change the change
+     */
+    void handleMergeModelChange(ListChangeListener.Change<? extends MergeModel> change)
+    {
+        while (change.next())
+        {
+            for (MergeModel merge : change.getRemoved())
+            {
+                myDataRows.removeIf(r -> merge.equals(r.getMerge()));
+            }
+            change.getAddedSubList().stream().map(ConfigUiRow::new).forEach(myDataRows::add);
+        }
+    }
+
     /** A ListCell for viewing Merge/Join items. */
     private class MergeFormatCell extends ListCell<ConfigUiRow>
     {
-        /** Name String. */
-        public String myName;
-
         /** Reference to the preference object. */
         public ConfigUiRow myItem;
 
@@ -277,18 +313,38 @@ public class ConfigGui
             return false;
         }
 
-        /** Recalculate this join, if possible. */
+        /** Recalculate this join/merge, if possible. */
         private void update()
         {
-            if (!checkLayers(false))
+            if (myItem.getJoin() != null)
             {
-                return;
+                if (!checkLayers(false))
+                {
+                    return;
+                }
+                myJoinManager.handleJoin(myItem.getJoin());
             }
-            myJoinManager.handleJoin(myItem.getJoin());
+            else
+            {
+                // TODO
+            }
+        }
+
+        /** Spawn the config editor for this join/merge, if possible. */
+        private void edit()
+        {
+            if (myItem.getJoin() != null)
+            {
+                editJoin();
+            }
+            else
+            {
+                editMerge();
+            }
         }
 
         /** Spawn the config editor for this join, if possible. */
-        private void edit()
+        private void editJoin()
         {
             // only edit if metadata are available
             if (!checkLayers(true))
@@ -298,11 +354,19 @@ public class ConfigGui
             JoinGui gui = new JoinGui();
             JFXDialog edDialog = GuiUtil.okCancelDialog(myDialog, "Edit Join");
             edDialog.setFxNode(GuiUtil.vScroll(gui.getMainPane()));
-            edDialog.setAcceptEar(() -> acceptEdits(gui.getModel()));
+            edDialog.setAcceptEar(() -> acceptJoinEdits(gui.getModel()));
             edDialog.setSize(new Dimension(450, 450));
             gui.setup(myToolbox, edDialog);
             gui.setData(myItem.getJoin());
             edDialog.setVisible(true);
+        }
+
+        /** Spawn the config editor for this merge, if possible. */
+        private void editMerge()
+        {
+            MergeModel merge = myItem.getMerge();
+            MergeController mergeController = new MergeController(myToolbox, myPreferences);
+            MergeUI.showMergeDialog(merge, myToolbox, mergeController, () -> acceptMergeEdits(merge));
         }
 
         /**
@@ -310,7 +374,7 @@ public class ConfigGui
          *
          * @param m editor model
          */
-        private void acceptEdits(JoinModel m)
+        private void acceptJoinEdits(JoinModel m)
         {
             MergePrefs.Join newModel = myPreferences.editJoinModel(myItem.getJoin(), m);
             fireSave();
@@ -318,13 +382,38 @@ public class ConfigGui
             FXUtilities.runOnFXThread(() -> replaceJoin(getIndex(), newModel));
         }
 
+        /**
+         * Incorporate edits into the persistent model.
+         *
+         * @param merge merge model
+         */
+        private void acceptMergeEdits(MergeModel merge)
+        {
+            // Only need to save in case the name changed.
+            fireSave();
+
+            // Trigger a change to the UI model
+            Platform.runLater(() ->
+            {
+                for (int i = 0; i < myDataRows.size(); i++)
+                {
+                    ConfigUiRow row = myDataRows.get(i);
+                    if (merge.equals(row.getMerge()))
+                    {
+                        myDataRows.set(i, row);
+                        break;
+                    }
+                }
+            });
+        }
+
         /** Delete this join config. */
         private void delete()
         {
-            myPreferences.delete(myName);
+            myPreferences.delete(myItem.getName());
             fireSave();
 
-            FXUtilities.runOnFXThread(() -> removeJoin(myItem.getJoin()));
+            FXUtilities.runOnFXThread(() -> removeRow(myItem));
         }
     }
 

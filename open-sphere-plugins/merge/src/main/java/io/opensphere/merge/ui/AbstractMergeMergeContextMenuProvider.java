@@ -24,7 +24,6 @@ import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.cache.DataElementCache;
 import io.opensphere.merge.controller.MergeController;
 import io.opensphere.merge.model.JoinModel;
-import io.opensphere.merge.model.MergeModel;
 import io.opensphere.merge.model.MergePrefs;
 
 /**
@@ -162,11 +161,7 @@ public abstract class AbstractMergeMergeContextMenuProvider<CONTEXT_KEY_TYPE ext
             return;
         }
 
-        MergeModel model = new MergeModel(dataTypes);
-        myMergeController.setModel(model);
-        JFXDialog dialog = GuiUtil.okCancelDialog(myToolbox, "Merge " + dataTypes.size() + " Layers");
-        dialog.setFxNode(new MergeUI(myToolbox, myMergeController, model));
-        dialog.setVisible(true);
+        MergeUI.showMergeDialog(dataTypes, myToolbox, myMergeController);
     }
 
     /**
