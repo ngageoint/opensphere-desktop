@@ -47,10 +47,6 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupCont
                 PolygonGeometry geom = RegionUtils.createGeometry(kmlPlacemark);
                 menuItems = MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().getGeometryMenuItems(geom);
             }
-            else
-            {
-                return menuItems;
-            }
 
         }
         return menuItems;
