@@ -1,6 +1,6 @@
 package io.opensphere.core.english;
 
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.text.WordUtils;
 
 /** An English noun. */
 public class Noun extends Word

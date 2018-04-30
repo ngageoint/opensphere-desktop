@@ -1,6 +1,6 @@
 package io.opensphere.core.common.util;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * A set of utility methods for use with Strings. Extends the Apache Commons

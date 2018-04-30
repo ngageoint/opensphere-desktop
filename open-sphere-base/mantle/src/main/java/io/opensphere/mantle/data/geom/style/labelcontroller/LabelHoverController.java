@@ -4,7 +4,7 @@ import java.awt.Font;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang.ClassUtils;
+import org.apache.commons.lang3.ClassUtils;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.Toolbox;

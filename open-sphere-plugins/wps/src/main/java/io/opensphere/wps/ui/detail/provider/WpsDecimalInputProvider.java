@@ -2,12 +2,9 @@ package io.opensphere.wps.ui.detail.provider;
 
 import java.util.function.Supplier;
 
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-
 import javax.inject.Named;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.google.inject.Singleton;
 
@@ -15,6 +12,8 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.javafx.input.ValidatedIdentifiedControl;
 import io.opensphere.wps.ui.detail.validator.BasicValidator;
 import io.opensphere.wps.ui.detail.validator.RequiredTextExaminer;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import jidefx.scene.control.validation.ValidationEvent;
 import jidefx.scene.control.validation.ValidationGroup;
 import net.opengis.wps._100.InputDescriptionType;
@@ -29,8 +28,9 @@ public class WpsDecimalInputProvider implements WpsInputControlProvider
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.wps.ui.detail.provider.WpsInputControlProvider#create(io.opensphere.core.Toolbox, java.lang.String,
-     *      net.opengis.wps._100.InputDescriptionType, java.lang.String, ValidationGroup)
+     * @see io.opensphere.wps.ui.detail.provider.WpsInputControlProvider#create(io.opensphere.core.Toolbox,
+     *      java.lang.String, net.opengis.wps._100.InputDescriptionType,
+     *      java.lang.String, ValidationGroup)
      */
     @Override
     public ValidatedIdentifiedControl<?> create(Toolbox pToolbox, String pTitle, InputDescriptionType pInputDescription,

@@ -16,7 +16,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
@@ -75,10 +75,12 @@ public class WpsExecuteProcessEnvoy extends AbstractWpsEnvoy<InputStream>
     private final WFSDataType myWfsType;
 
     /**
-     * Creates a new envoy, configured using the supplied parameters to perform WPS execute requests.
+     * Creates a new envoy, configured using the supplied parameters to perform
+     * WPS execute requests.
      *
      * @param pToolbox the toolbox through which application interaction occurs.
-     * @param pServer the parameters defining the server to which the request will be submitted.
+     * @param pServer the parameters defining the server to which the request
+     *            will be submitted.
      * @param pConfiguration a configuration describing the process to execute.
      * @param pWfsType the data type with which to associate the response data.
      */
@@ -141,7 +143,8 @@ public class WpsExecuteProcessEnvoy extends AbstractWpsEnvoy<InputStream>
     }
 
     /**
-     * Executes the configuration, generating a new data type and propagating the results.
+     * Executes the configuration, generating a new data type and propagating
+     * the results.
      */
     protected void run()
     {
@@ -276,7 +279,8 @@ public class WpsExecuteProcessEnvoy extends AbstractWpsEnvoy<InputStream>
      * Gets the set of available data types currently loaded in the application.
      *
      * @param pTypeName the name of the type to fetch.
-     * @return the set of available data types currently loaded in the application.
+     * @return the set of available data types currently loaded in the
+     *         application.
      */
     public DataTypeInfo getDataType(String pTypeName)
     {
@@ -302,7 +306,8 @@ public class WpsExecuteProcessEnvoy extends AbstractWpsEnvoy<InputStream>
      * Gets the set of available data types currently loaded in the application.
      *
      * @param pRootNode the node for which to get the data group.
-     * @return the set of available data types currently loaded in the application.
+     * @return the set of available data types currently loaded in the
+     *         application.
      */
     public synchronized DataGroupInfo getDataGroup(DataGroupInfo pRootNode)
     {
@@ -319,7 +324,8 @@ public class WpsExecuteProcessEnvoy extends AbstractWpsEnvoy<InputStream>
                     }
                 }
 
-                // if execution gets here, it means there were not found children, so create one:
+                // if execution gets here, it means there were not found
+                // children, so create one:
                 DataGroupInfo returnValue = new DefaultDataGroupInfo(false, getToolbox(), "WPS", instanceName);
                 pRootNode.addChild(returnValue, this);
                 return returnValue;
@@ -330,8 +336,10 @@ public class WpsExecuteProcessEnvoy extends AbstractWpsEnvoy<InputStream>
     }
 
     /**
-     * Creates a new {@link Execute} payload {@link InputStream} that can be transmitted as part of an WPS execute request. The
-     * supplied parameters are used to generate a new Execute object, which is then serialized into an input stream.
+     * Creates a new {@link Execute} payload {@link InputStream} that can be
+     * transmitted as part of an WPS execute request. The supplied parameters
+     * are used to generate a new Execute object, which is then serialized into
+     * an input stream.
      *
      * @param pParameters the set of parameters to encode into the payload.
      * @return an input stream in which the request payload is serialized.
@@ -368,10 +376,12 @@ public class WpsExecuteProcessEnvoy extends AbstractWpsEnvoy<InputStream>
     }
 
     /**
-     * Serializes the supplied {@link Execute} JAXB payload to an {@link InputStream} that can be processed with a request.
+     * Serializes the supplied {@link Execute} JAXB payload to an
+     * {@link InputStream} that can be processed with a request.
      *
      * @param pPayload the payload to serialize to an {@link InputStream}.
-     * @return an {@link InputStream} in which the supplied JAXB object has been serialized.
+     * @return an {@link InputStream} in which the supplied JAXB object has been
+     *         serialized.
      * @throws IOException if the supplied object cannot be serialized.
      */
     protected InputStream serializeToStream(Execute pPayload) throws IOException
@@ -395,7 +405,8 @@ public class WpsExecuteProcessEnvoy extends AbstractWpsEnvoy<InputStream>
      *
      * @param pKey the name of the identifier to apply to the input.
      * @param pValue the value of the input.
-     * @return a new {@link InputType} generated for the supplied key / value pair.
+     * @return a new {@link InputType} generated for the supplied key / value
+     *         pair.
      */
     protected InputType generateInput(String pKey, String pValue)
     {

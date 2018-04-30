@@ -4,7 +4,7 @@ import java.io.PrintStream;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class JSONSaxObject extends LinkedList<JSONSaxPair> implements JSONSaxValue, JSONComposite
 {
@@ -50,7 +50,9 @@ public class JSONSaxObject extends LinkedList<JSONSaxPair> implements JSONSaxVal
             val.toJSON(ps, pretty ? indent + 2 : indent);
 
             if (first)
+            {
                 first = false;
+            }
         }
         if (pretty)
         {

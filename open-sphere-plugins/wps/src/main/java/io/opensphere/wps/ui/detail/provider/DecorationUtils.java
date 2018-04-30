@@ -2,12 +2,11 @@ package io.opensphere.wps.ui.detail.provider;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-
-import org.apache.commons.lang.StringUtils;
-
 import jidefx.scene.control.validation.ValidationEvent;
 
 /**

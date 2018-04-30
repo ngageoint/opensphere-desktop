@@ -14,8 +14,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.text.StrSubstitutor;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringSubstitutor;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -196,7 +196,7 @@ public class MapZenSearchProvider implements ResultsSearchProvider
             String value = (String)parameter.getOperand();
             propertyMap.put(propertyName, value);
         }
-        StrSubstitutor substitutor = new StrSubstitutor(propertyMap);
+        StringSubstitutor substitutor = new StringSubstitutor(propertyMap);
         URL url;
         try
         {

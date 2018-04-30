@@ -19,8 +19,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections.functors.InstantiateFactory;
-import org.apache.commons.collections.map.LazyMap;
+import org.apache.commons.collections4.functors.InstantiateFactory;
+import org.apache.commons.collections4.map.LazyMap;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -81,7 +81,7 @@ public class JDependTest
      */
     private Map<String, Collection<String>> processLines(Collection<String> lines)
     {
-        final Map<String, Collection<String>> dependencyMap = LazyMap.decorate(new HashMap<>(),
+        final Map<String, Collection<String>> dependencyMap = LazyMap.lazyMap(new HashMap<>(),
                 new InstantiateFactory(HashSet.class));
 
         String[] splitPackage = getClass().getName().split("\\.");

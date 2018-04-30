@@ -115,7 +115,7 @@ public class OrderManagerRegistryImpl implements OrderManagerRegistry
 
             for (OrderManager existing : familyMap.values())
             {
-                if (category.getOrderRange().overlapsRange(existing.getCategory().getOrderRange()))
+                if (category.getOrderRange().isOverlappedBy(existing.getCategory().getOrderRange()))
                 {
                     LOGGER.warn("Creating category " + category.getCategoryId() + " with range " + category.getOrderRange()
                             + " which overlaps category " + existing.getCategory().getCategoryId() + " with range "
@@ -127,15 +127,15 @@ public class OrderManagerRegistryImpl implements OrderManagerRegistry
             ((OrderManagerImpl)manager).setOwningRegistry(this);
         }
 
-        if (category.getOrderRange().getMaximumInteger() != manager.getCategory().getOrderRange().getMaximumInteger()
-                || category.getOrderRange().getMinimumInteger() != manager.getCategory().getOrderRange().getMinimumInteger())
+        if (category.getOrderRange().getMaximum().intValue() != manager.getCategory().getOrderRange().getMaximum().intValue()
+                || category.getOrderRange().getMinimum().intValue() != manager.getCategory().getOrderRange().getMinimum()
+                        .intValue())
         {
             StringBuilder builder = new StringBuilder("Returning order manager with expected range ");
-            builder.append(category.getOrderRange().getMinimumInteger()).append(" to ")
-                    .append(category.getOrderRange().getMaximumInteger());
+            builder.append(category.getOrderRange().getMinimum()).append(" to ").append(category.getOrderRange().getMaximum());
             builder.append(" which is using the range ");
-            builder.append(manager.getCategory().getOrderRange().getMinimumInteger()).append(" to ")
-                    .append(manager.getCategory().getOrderRange().getMaximumInteger());
+            builder.append(manager.getCategory().getOrderRange().getMinimum()).append(" to ")
+                    .append(manager.getCategory().getOrderRange().getMaximum());
             LOGGER.warn(builder.toString());
         }
         return manager;
