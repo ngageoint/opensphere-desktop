@@ -1,8 +1,7 @@
 package io.opensphere.core.util;
 
-import org.junit.Test;
-
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Test for {@link SharedObjectPool}.
@@ -13,7 +12,7 @@ public class SharedObjectPoolTest
      * Test for {@link SharedObjectPool#get(Object)}.
      */
     @Test
-    @SuppressWarnings("PMD.IntegerInstantiation")
+    @SuppressWarnings({ "PMD.IntegerInstantiation", "deprecation" })
     public void testGet()
     {
         SharedObjectPool<Integer> pool = new SharedObjectPool<>();
@@ -38,7 +37,7 @@ public class SharedObjectPoolTest
      * Test for {@link SharedObjectPool#remove(Object)}.
      */
     @Test
-    @SuppressWarnings("PMD.IntegerInstantiation")
+    @SuppressWarnings({ "PMD.IntegerInstantiation", "deprecation" })
     public void testRemove()
     {
         SharedObjectPool<Integer> pool = new SharedObjectPool<>();

@@ -265,7 +265,7 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
             {
                 if (cl != null)
                 {
-                    dmdl = cl.newInstance();
+                    dmdl = cl.getDeclaredConstructor().newInstance();
                     dmdl.setEqualTo(el.getMetaData());
                     myMetaData = dmdl;
                 }
@@ -278,7 +278,7 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
                             : new ArrayList<Object>(convertValuesIfNecessary(deReg, el, el.getMetaData().getValues()));
                 }
             }
-            catch (InstantiationException | IllegalAccessException e)
+            catch (ReflectiveOperationException e)
             {
                 setDynamicErrorLogged();
                 myMetaData = convertValuesIfNecessary(deReg, el, el.getMetaData().getValues());

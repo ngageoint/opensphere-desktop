@@ -22,11 +22,11 @@ public class UniqueValueBinnerTest
     {
         UniqueCriteria criteria = new UniqueCriteria();
         UniqueValueBinner<Double> binner = new UniqueValueBinner<>(criteria, d -> d.toString());
-        binner.add(new Double(0));
-        binner.add(new Double(10));
-        binner.add(new Double(0.0));
-        binner.add(new Double(10.00));
-        binner.add(new Double(34));
+        binner.add(Double.valueOf(0));
+        binner.add(Double.valueOf(10));
+        binner.add(Double.valueOf(0.0));
+        binner.add(Double.valueOf(10.00));
+        binner.add(Double.valueOf(34));
 
         Assert.assertEquals(3, binner.getBinsMap().size());
 
@@ -41,7 +41,7 @@ public class UniqueValueBinnerTest
         Assert.assertEquals(1, binner.getBinsMap().get("34.0").getSize());
         Assert.assertEquals(34., binner.getBinsMap().get("34.0").getData().get(0).doubleValue(), 0.001);
 
-        binner.remove(new Double(34));
+        binner.remove(Double.valueOf(34));
 
 //        Assert.assertEquals(0, binner.getBins().get(2).getSize());
     }
@@ -54,9 +54,9 @@ public class UniqueValueBinnerTest
         List<Bin<Double>> bins = Arrays.asList(new UniqueValueBin<>("0.0", valueFunction),
                 new UniqueValueBin<>("10.0", valueFunction));
         UniqueValueBinner<Double> binner = new UniqueValueBinner<>(bins);
-        binner.add(new Double(0));
-        binner.add(new Double(10));
-        binner.add(new Double(20));
+        binner.add(Double.valueOf(0));
+        binner.add(Double.valueOf(10));
+        binner.add(Double.valueOf(20));
 
         Assert.assertEquals(2, binner.getBins().size());
         Assert.assertEquals(0., binner.getBins().get(0).getData().get(0).doubleValue(), 0.001);

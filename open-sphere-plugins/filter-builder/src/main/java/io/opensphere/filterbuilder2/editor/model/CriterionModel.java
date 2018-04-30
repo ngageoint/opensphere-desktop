@@ -305,7 +305,8 @@ public class CriterionModel extends WrappedModel<Criteria>
     }
 
     /**
-     * Checks to see if the value models need to change from TextModels to DateModels and vice versa.
+     * Checks to see if the value models need to change from TextModels to
+     * DateModels and vice versa.
      */
     private void checkModels()
     {
@@ -330,7 +331,8 @@ public class CriterionModel extends WrappedModel<Criteria>
     }
 
     /**
-     * Get the value of the model, taking the {@link Conditional#IN_LIST} operator and the special type into consideration.
+     * Get the value of the model, taking the {@link Conditional#IN_LIST}
+     * operator and the special type into consideration.
      *
      * @param value The value taken from the model.
      *
@@ -360,7 +362,8 @@ public class CriterionModel extends WrappedModel<Criteria>
     }
 
     /**
-     * Get the value of the max value model, taking the special type into consideration.
+     * Get the value of the max value model, taking the special type into
+     * consideration.
      *
      * @return The value.
      */
@@ -370,7 +373,8 @@ public class CriterionModel extends WrappedModel<Criteria>
     }
 
     /**
-     * Get the value of the value model, taking the special type into consideration.
+     * Get the value of the value model, taking the special type into
+     * consideration.
      *
      * @return The value.
      */
@@ -380,7 +384,8 @@ public class CriterionModel extends WrappedModel<Criteria>
     }
 
     /**
-     * Get the value of the model, taking the special type into consideration, but not the {@link Conditional#IN_LIST} operator.
+     * Get the value of the model, taking the special type into consideration,
+     * but not the {@link Conditional#IN_LIST} operator.
      *
      * @param value The value taken from the model.
      *
@@ -448,10 +453,10 @@ public class CriterionModel extends WrappedModel<Criteria>
 
         try
         {
-            myCriterionValue = clazz.newInstance();
-            myCriterionMaxValue = clazz.newInstance();
+            myCriterionValue = clazz.getDeclaredConstructor().newInstance();
+            myCriterionMaxValue = clazz.getDeclaredConstructor().newInstance();
         }
-        catch (InstantiationException | IllegalAccessException e)
+        catch (ReflectiveOperationException e)
         {
             LOGGER.error(e, e);
         }
@@ -472,7 +477,8 @@ public class CriterionModel extends WrappedModel<Criteria>
     }
 
     /**
-     * Update the current validator based on the value type and the special type.
+     * Update the current validator based on the value type and the special
+     * type.
      *
      * @param valueType The type of the value in the model.
      */
@@ -504,7 +510,8 @@ public class CriterionModel extends WrappedModel<Criteria>
     }
 
     /**
-     * Update the validator support in the view models using the latest validator and validator message.
+     * Update the validator support in the view models using the latest
+     * validator and validator message.
      */
     private void updateViewModelValidatorSupports()
     {

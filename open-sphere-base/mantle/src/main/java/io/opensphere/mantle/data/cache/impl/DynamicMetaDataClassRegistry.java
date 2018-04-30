@@ -296,9 +296,9 @@ public final class DynamicMetaDataClassRegistry implements ClassProvider
                         final Class<?> cl = myCompiler.compileToClass(fullyQualifiedClasssName, source);
                         if (cl != null)
                         {
-                            final DynamicMetaDataList tdc = (DynamicMetaDataList)cl.newInstance();
+                            final DynamicMetaDataList tdc = (DynamicMetaDataList)cl.getDeclaredConstructor().newInstance();
                             typeClassList.add((Class<DynamicMetaDataList>)cl);
-                            myDTIHashToClassMap.put(dtiHashCode, (Class<DynamicMetaDataList>)cl);
+                            myDTIHashToClassMap.put(Integer.valueOf(dtiHashCode), (Class<DynamicMetaDataList>)cl);
                             myClasses.put(fullyQualifiedClasssName, cl);
                             if (LOGGER.isTraceEnabled())
                             {
@@ -307,7 +307,7 @@ public final class DynamicMetaDataClassRegistry implements ClassProvider
                             return true;
                         }
                     }
-                    catch (ClassNotFoundException | InstantiationException | IllegalAccessException | ClassCastException e)
+                    catch (ReflectiveOperationException | ClassCastException e)
                     {
                         LOGGER.error(e);
                     }

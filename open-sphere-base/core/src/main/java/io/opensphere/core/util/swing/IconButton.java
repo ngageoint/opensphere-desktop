@@ -274,7 +274,7 @@ public class IconButton extends JButton implements CustomizableButton
     @Override
     protected void fireActionPerformed(ActionEvent event)
     {
-        if ((event.getModifiers() & InputEvent.BUTTON1_MASK) == 0 || myTimerCount == 0)
+        if ((event.getModifiers() & InputEvent.BUTTON1_DOWN_MASK) == 0 || myTimerCount == 0)
         {
             super.fireActionPerformed(event);
         }

@@ -10,9 +10,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.Test;
-
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Test for {@link ConcurrentLazyMap}.
@@ -53,7 +52,7 @@ public class ConcurrentLazyMapTest
                             }
                         }
 
-                        return new Float(key.floatValue());
+                        return Float.valueOf(key.floatValue());
                     }
                 });
 
