@@ -50,8 +50,8 @@ public class JDependTest
         }
         catch (final Exception e)
         {
-            PrintWriter out = new PrintWriter(new StringWriter());
-            e.printStackTrace(out);
+            StringWriter out = new StringWriter();
+            e.printStackTrace(new PrintWriter(out));
             Assert.fail(out.toString());
         }
     }
