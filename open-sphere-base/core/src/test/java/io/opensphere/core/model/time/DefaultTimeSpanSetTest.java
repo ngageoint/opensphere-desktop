@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TimeZone;
 
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 

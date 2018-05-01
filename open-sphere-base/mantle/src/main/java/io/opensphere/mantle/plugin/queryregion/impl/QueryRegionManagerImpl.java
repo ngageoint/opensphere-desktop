@@ -379,7 +379,9 @@ public class QueryRegionManagerImpl extends EventListenerService implements Quer
     private Collection<? extends PolygonGeometry> deriveQueryPolygons(Collection<? extends PolygonGeometry> input, boolean dotted)
     {
         // Do not derive new polygons if the input polygons are already known.
-        if (getQueryRegions().containsAll(input))
+        // This used to check against getQueryRegions().containsAll(input) but
+        // that makes absolutely no dang sense.
+        if (getQueryRegions().stream().filter((region) -> region.getGeometries().containsAll(input)).count() > 0)
         {
             return input;
         }

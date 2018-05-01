@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.script.ScriptException;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,9 +55,8 @@ public class AutomaticProxyResolver implements ProxyResolver
       throws IOException
    {
       final List<ProxyHostConfig> configs = new ArrayList<>();
-      final InputStream inputStream = scriptUrl.openStream();
       final String response = null;
-      try
+      try (InputStream inputStream = scriptUrl.openStream())
       {
          proxyScriptRunner.addScript(new InputStreamReader(inputStream));
          configs.addAll(proxyScriptRunner.findProxyForUrl(destination, destination.getHost()));
@@ -69,10 +67,6 @@ public class AutomaticProxyResolver implements ProxyResolver
       }
       catch (final NoSuchMethodException e) {
          throw new IllegalStateException(e);
-      }
-      finally
-      {
-         IOUtils.closeQuietly(inputStream);
       }
 
       return configs;

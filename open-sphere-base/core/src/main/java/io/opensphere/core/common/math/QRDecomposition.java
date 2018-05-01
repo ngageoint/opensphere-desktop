@@ -22,7 +22,7 @@ public class QRDecomposition implements java.io.Serializable
      *
      * @serial internal array storage.
      */
-    private double[][] QR;
+    private final double[][] QR;
 
     /**
      * Row and column dimensions.
@@ -30,14 +30,14 @@ public class QRDecomposition implements java.io.Serializable
      * @serial column dimension.
      * @serial row dimension.
      */
-    private int m, n;
+    private final int m, n;
 
     /**
      * Array for internal storage of diagonal of R.
      *
      * @serial diagonal of R.
      */
-    private double[] Rdiag;
+    private final double[] Rdiag;
 
     /* ------------------------ Constructor ------------------------ */
 
@@ -111,7 +111,9 @@ public class QRDecomposition implements java.io.Serializable
         for (int j = 0; j < n; j++)
         {
             if (Rdiag[j] == 0)
+            {
                 return false;
+            }
         }
         return true;
     }
@@ -226,7 +228,7 @@ public class QRDecomposition implements java.io.Serializable
         {
             throw new IllegalArgumentException("Matrix row dimensions must agree.");
         }
-        if (!this.isFullRank())
+        if (!isFullRank())
         {
             throw new RuntimeException("Matrix is rank deficient.");
         }

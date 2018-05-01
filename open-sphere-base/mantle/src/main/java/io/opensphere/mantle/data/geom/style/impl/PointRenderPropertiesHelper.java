@@ -71,8 +71,8 @@ public class PointRenderPropertiesHelper
             FeatureIndividualGeometryBuilderData bd, BasicVisualizationInfo basicVisInfo, MapVisualizationInfo mapVisInfo,
             boolean isSelected, Color color)
     {
-        int zOrder = bd.getVS().isSelected() ? DefaultOrderCategory.FEATURE_CATEGORY.getOrderRange().getMaximumInteger()
-                : mapVisInfo == null ? DefaultOrderCategory.FEATURE_CATEGORY.getOrderRange().getMinimumInteger()
+        int zOrder = bd.getVS().isSelected() ? DefaultOrderCategory.FEATURE_CATEGORY.getOrderRange().getMaximum().intValue()
+                : mapVisInfo == null ? DefaultOrderCategory.FEATURE_CATEGORY.getOrderRange().getMinimum().intValue()
                         : mapVisInfo.getZOrder();
         boolean pickable = basicVisInfo != null && basicVisInfo.getLoadsTo().isPickable();
         DefaultBaseAltitudeRenderProperties baseProps = new DefaultBaseAltitudeRenderProperties(zOrder, true, pickable, false);

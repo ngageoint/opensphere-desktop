@@ -119,7 +119,7 @@ public class Foo
    <rule ref="rulesets/java/clone.xml/CloneMethodMustBePublic"/>
 <!--    <rule ref="rulesets/java/comments.xml/CommentDefaultAccessModifier"/> -->
    <rule ref="rulesets/java/controversial.xml/SuspiciousOctalEscape"/>
-   <rule ref="rulesets/java/controversial.xml/UnnecessaryParentheses"/>
+   <rule ref="rulesets/java/unnecessary.xml/UnnecessaryParentheses"/>
    <rule ref="rulesets/java/controversial.xml/AvoidAccessibilityAlteration"/>
    <rule ref="rulesets/java/controversial.xml/AvoidUsingShortType">
       <priority>5</priority>
@@ -180,7 +180,6 @@ public class Foo
    <rule ref="rulesets/java/empty.xml/EmptySynchronizedBlock"/>
    <rule ref="rulesets/java/empty.xml/EmptyStatementNotInLoop"/>
    <rule ref="rulesets/java/empty.xml/EmptyInitializer"/>
-   <rule ref="rulesets/java/empty.xml/EmptyStaticInitializer"/>
    <rule ref="rulesets/java/finalizers.xml/EmptyFinalizer"/>
    <rule ref="rulesets/java/finalizers.xml/FinalizeOnlyCallsSuperFinalize"/>
    <rule ref="rulesets/java/finalizers.xml/FinalizeOverloaded"/>
@@ -258,7 +257,7 @@ public class Foo{
    <rule ref="rulesets/java/naming.xml/AvoidFieldNameMatchingMethodName"/>
    <rule ref="rulesets/java/naming.xml/NoPackage"/>
    <rule ref="rulesets/java/naming.xml/PackageCase"/>
-   <rule ref="rulesets/java/naming.xml/MisleadingVariableName">
+   <rule ref="rulesets/java/naming.xml/MIsLeadingVariableName">
       <description>&#13;
 Detects when a non-field has a name starting with 'my'.  This usually&#13;
 indicates a field and thus is confusing.&#13;
@@ -326,11 +325,11 @@ indicates a field and thus is confusing.&#13;
    <rule ref="rulesets/java/strings.xml/UselessStringValueOf"/>
    <rule ref="rulesets/java/strings.xml/StringBufferInstantiationWithChar"/>
    <rule ref="rulesets/java/strings.xml/AvoidStringBufferField"/>
-   <rule ref="rulesets/java/typeresolution.xml/LooseCoupling"/>
-   <rule ref="rulesets/java/typeresolution.xml/SignatureDeclareThrowsException"/>
+   <rule ref="rulesets/java/coupling.xml/LooseCoupling"/>
+   <rule ref="rulesets/java/strictexception.xml/SignatureDeclareThrowsException"/>
    <rule ref="rulesets/java/unnecessary.xml/UnnecessaryConversionTemporary"/>
    <rule ref="rulesets/java/unnecessary.xml/UnnecessaryReturn"/>
-   <rule ref="rulesets/java/unnecessary.xml/UnnecessaryFinalModifier"/>
+   <rule ref="rulesets/java/unnecessary.xml/UnnecessaryModifier"/>
    <rule ref="rulesets/java/unnecessary.xml/UselessOverridingMethod"/>
    <rule ref="rulesets/java/unnecessary.xml/UselessOperationOnImmutable"/>
    <rule ref="rulesets/java/unnecessary.xml/UnusedNullCheckInEquals"/>

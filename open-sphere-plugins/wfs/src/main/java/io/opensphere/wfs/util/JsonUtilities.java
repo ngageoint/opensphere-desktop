@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.DeserializationConfig.Feature;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectReader;
@@ -37,7 +38,7 @@ public final class JsonUtilities
         String jsonText = null;
         try
         {
-            jsonText = mapper.defaultPrettyPrintingWriter().writeValueAsString(jsonObj);
+            jsonText = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonObj);
         }
         catch (IOException e)
         {
@@ -58,7 +59,7 @@ public final class JsonUtilities
         try
         {
             JsonNode node = mapper.readTree(jsonString);
-            return mapper.defaultPrettyPrintingWriter().writeValueAsString(node);
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node);
         }
         catch (IOException e)
         {
@@ -78,11 +79,12 @@ public final class JsonUtilities
     public static ObjectMapper getDefaultObjectMapper(boolean failOnUnknownField)
     {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.getDeserializationConfig().enable(Feature.READ_ENUMS_USING_TO_STRING);
+        DeserializationConfig config = mapper.getDeserializationConfig().with(Feature.READ_ENUMS_USING_TO_STRING);
         if (!failOnUnknownField)
         {
-            mapper.getDeserializationConfig().disable(Feature.FAIL_ON_UNKNOWN_PROPERTIES);
+            config = config.without(Feature.FAIL_ON_UNKNOWN_PROPERTIES);
         }
+        mapper.setDeserializationConfig(config);
         return mapper;
     }
 

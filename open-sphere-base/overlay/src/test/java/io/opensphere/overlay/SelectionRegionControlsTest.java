@@ -48,7 +48,7 @@ public class SelectionRegionControlsTest
 
         Component source = new EmptyComponent();
 
-        int maskWithoutShift = -1 ^ InputEvent.SHIFT_DOWN_MASK ^ InputEvent.SHIFT_MASK;
+        int maskWithoutShift = -1 ^ InputEvent.SHIFT_DOWN_MASK ^ InputEvent.SHIFT_DOWN_MASK;
         MouseEvent e4 = new MouseEvent(source, MouseEvent.MOUSE_PRESSED, 0, maskWithoutShift | InputEvent.BUTTON1_DOWN_MASK,
                 POINT1.getX(), POINT1.getY(), 0, 0, 1, false, MouseEvent.BUTTON1);
         controlContext.mousePressed(e4);
@@ -105,7 +105,8 @@ public class SelectionRegionControlsTest
 
         support.replayAll();
 
-        SelectionRegionControls controls = new SelectionRegionControls(eventManager, mapManager, unitsRegistry, null, null, handler, controller);
+        SelectionRegionControls controls = new SelectionRegionControls(eventManager, mapManager, unitsRegistry, null, null,
+                handler, controller);
         controls.usurpRegionContext("context", SelectionMode.BOUNDING_BOX);
         controls.relinquishRegionContext("context");
 

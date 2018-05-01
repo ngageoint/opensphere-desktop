@@ -242,7 +242,7 @@ public class Feature implements Serializable
         keys = (List<String>)in.readObject();
 
         values = new ArrayList<>(keys.size());
-        for (String key : keys)
+        for (int i = 0; i < keys.size(); i++)
         {
             Object value = in.readObject();
             Object newValue = unpackValue(value);

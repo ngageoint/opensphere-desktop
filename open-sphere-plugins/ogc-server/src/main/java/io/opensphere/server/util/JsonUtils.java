@@ -1,6 +1,7 @@
 package io.opensphere.server.util;
 
 import org.codehaus.jackson.JsonParser;
+import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.DeserializationConfig.Feature;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -18,7 +19,9 @@ public final class JsonUtils
     public static ObjectMapper createMapper()
     {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.getDeserializationConfig().set(Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        DeserializationConfig config = mapper.getDeserializationConfig().without(Feature.FAIL_ON_UNKNOWN_PROPERTIES);
+        mapper.setDeserializationConfig(config);
+
         mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 
         return mapper;

@@ -4,7 +4,7 @@ import java.io.PrintStream;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class JSONSaxArray extends LinkedList<JSONSaxValue> implements JSONSaxValue, JSONComposite
 {
@@ -53,7 +53,9 @@ public class JSONSaxArray extends LinkedList<JSONSaxValue> implements JSONSaxVal
             }
 
             if (first)
+            {
                 first = false;
+            }
         }
         if (pretty)
         {

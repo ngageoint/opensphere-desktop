@@ -1,5 +1,7 @@
 package io.opensphere.analysis.binning.criteria;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,9 +76,10 @@ public final class CriteriaTypeFactory
         {
             try
             {
-                criteriaType = typeClass.newInstance();
+                Constructor<? extends CriteriaType> constructor = typeClass.getConstructor();
+                criteriaType = constructor.newInstance();
             }
-            catch (InstantiationException | IllegalAccessException e)
+            catch (NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException e)
             {
                 LOGGER.error(e, e);
             }

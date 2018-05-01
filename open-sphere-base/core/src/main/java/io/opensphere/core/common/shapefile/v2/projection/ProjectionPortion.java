@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.Collections;
 
@@ -28,7 +29,7 @@ public class ProjectionPortion
         if (mode == Mode.READ)
         {
             InputStream inputStream = new FileInputStream(myFile);
-            wkt = IOUtils.toString(inputStream);
+            wkt = IOUtils.toString(inputStream, Charset.defaultCharset());
             inputStream.close();
         }
     }

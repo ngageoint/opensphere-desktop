@@ -1,6 +1,7 @@
 package io.opensphere.core.common.shapefile.v2.main;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.channels.FileChannel;
@@ -38,7 +39,7 @@ public class MainPortionRecord
      **/
     public MainPortionRecord(ShapeRecord rec)
     {
-        this.record = rec;
+        record = rec;
     }
 
     /**
@@ -73,7 +74,7 @@ public class MainPortionRecord
 
     public void setRecord(ShapeRecord rec)
     {
-        this.record = rec;
+        record = rec;
     }
 
     /**
@@ -83,8 +84,13 @@ public class MainPortionRecord
      *         exception.
      * @throws InstantiationException
      * @throws IllegalAccessException
+     * @throws SecurityException
+     * @throws NoSuchMethodException
+     * @throws InvocationTargetException
+     * @throws IllegalArgumentException
      */
-    public boolean parseRecord(ByteBuffer buffer, ShapeHeader pHeader) throws InstantiationException, IllegalAccessException
+    public boolean parseRecord(ByteBuffer buffer, ShapeHeader pHeader) throws InstantiationException, IllegalAccessException,
+        IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
     {
 
         boolean returnValue = true;

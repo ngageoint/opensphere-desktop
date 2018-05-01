@@ -3,6 +3,7 @@
  */
 package io.opensphere.core.common.shapefile.shapes;
 
+import java.lang.reflect.InvocationTargetException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.HashMap;
@@ -45,11 +46,16 @@ public abstract class ShapeRecord
         /**
          * @throws IllegalAccessException
          * @throws InstantiationException
+         * @throws SecurityException
+         * @throws NoSuchMethodException
+         * @throws InvocationTargetException
+         * @throws IllegalArgumentException
          *
          */
-        public ShapeRecord getShapeRecordInstance() throws InstantiationException, IllegalAccessException
+        public ShapeRecord getShapeRecordInstance() throws InstantiationException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
         {
-            return shapeRecord.newInstance();
+            return shapeRecord.getDeclaredConstructor().newInstance();
         }
 
         /**

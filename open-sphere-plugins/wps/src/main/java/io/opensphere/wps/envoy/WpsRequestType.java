@@ -1,6 +1,6 @@
 package io.opensphere.wps.envoy;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Enumeration over the supported WPS Request Types.
@@ -40,10 +40,12 @@ public enum WpsRequestType
     }
 
     /**
-     * Gets the request type corresponding to the supplied value. If none is found, a null value is returned.F
+     * Gets the request type corresponding to the supplied value. If none is
+     * found, a null value is returned.F
      *
      * @param pValue the textual value of the request type to return.
-     * @return a {@link WpsRequestType} instance corresponding to the supplied text.
+     * @return a {@link WpsRequestType} instance corresponding to the supplied
+     *         text.
      */
     public static WpsRequestType fromValue(String pValue)
     {

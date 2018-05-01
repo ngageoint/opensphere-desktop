@@ -103,9 +103,6 @@ public class BinaryTimeTree<E extends TimeRange>
         }
     }
 
-    /** max number of subNodes per BNode. */
-    private int division = 2;
-
     /** maximum depth. */
     private int maxDepth = 10;
 
@@ -118,13 +115,12 @@ public class BinaryTimeTree<E extends TimeRange>
     /**
      * Construct a BTree
      *
-     * @param division maximum number of sub nodes per node.
+     * @param splitSize maximum number of sub nodes per node.
      * @param maxDepth maximum tree depth
      */
     public BinaryTimeTree(int splitSize, int maxDepth)
     {
         super();
-        // this.division = division;
         this.maxDepth = maxDepth;
         this.splitSize = splitSize;
         top = new BTreeNode();

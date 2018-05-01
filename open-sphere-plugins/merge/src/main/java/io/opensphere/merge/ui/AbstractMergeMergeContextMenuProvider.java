@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import javax.swing.JMenuItem;
@@ -18,7 +19,6 @@ import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.core.util.swing.SwingUtilities;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.crust.DataTypeChecker;
-import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfo.ContextKey;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.cache.DataElementCache;
@@ -227,19 +227,13 @@ public abstract class AbstractMergeMergeContextMenuProvider<CONTEXT_KEY_TYPE ext
     private Collection<DataTypeInfo> getDataTypes(CONTEXT_KEY_TYPE key)
     {
         Collection<DataTypeInfo> dataTypes = New.list(key.getDataTypes());
-        for (DataGroupInfo group : key.getDataGroups())
-        {
-            dataTypes.addAll(group.getMembers(false));
-        }
+
+        key.getDataGroups().stream().filter(Objects::nonNull).forEach(group -> dataTypes.addAll(group.getMembers(false)));
 
         List<DataTypeInfo> featureTypes = New.list();
-        for (DataTypeInfo layer : dataTypes)
-        {
-            if (!featureTypes.contains(layer) && DataTypeChecker.isFeatureType(layer))
-            {
-                featureTypes.add(layer);
-            }
-        }
+
+        dataTypes.stream().filter(layer -> layer != null && !featureTypes.contains(layer) && DataTypeChecker.isFeatureType(layer))
+                .forEach(layer -> featureTypes.add(layer));
 
         return featureTypes;
     }

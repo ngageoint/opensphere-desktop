@@ -2,7 +2,7 @@ package io.opensphere.core.order;
 
 import java.util.Comparator;
 
-import org.apache.commons.lang.math.IntRange;
+import org.apache.commons.lang3.Range;
 
 /**
  * Interface for categories within an order manager. A category defines as set
@@ -45,8 +45,8 @@ public interface OrderCategory
         @Override
         public int compare(OrderCategory o1, OrderCategory o2)
         {
-            int o1MinInt = o1.getOrderRange() == null ? Integer.MAX_VALUE : o1.getOrderRange().getMinimumInteger();
-            int o2MinInt = o2.getOrderRange() == null ? Integer.MAX_VALUE : o2.getOrderRange().getMinimumInteger();
+            int o1MinInt = o1.getOrderRange() == null ? Integer.MAX_VALUE : o1.getOrderRange().getMinimum().intValue();
+            int o2MinInt = o2.getOrderRange() == null ? Integer.MAX_VALUE : o2.getOrderRange().getMinimum().intValue();
             return o1MinInt == o2MinInt ? 0 : o1MinInt < o2MinInt ? -1 : 1;
         }
     };
@@ -77,5 +77,5 @@ public interface OrderCategory
      *
      * @return The allowable order range for this category.
      */
-    IntRange getOrderRange();
+    Range<Integer> getOrderRange();
 }

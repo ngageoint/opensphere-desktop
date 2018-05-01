@@ -90,16 +90,16 @@ public final class ArithmeticUtilities
         Number returnValue = null;
         if (dividend instanceof Double || dividend instanceof Float || divisor instanceof Double || divisor instanceof Float)
         {
-            returnValue = new Double(dividend.doubleValue() / divisor.doubleValue());
+            returnValue = Double.valueOf(dividend.doubleValue() / divisor.doubleValue());
         }
         else if (dividend instanceof Long || divisor instanceof Long)
         {
-            returnValue = new Long(dividend.longValue() / divisor.longValue());
+            returnValue = Long.valueOf(dividend.longValue() / divisor.longValue());
         }
         else if (dividend instanceof Integer || divisor instanceof Integer || dividend instanceof Short
                 || divisor instanceof Short)
         {
-            returnValue = new Integer(dividend.intValue() / divisor.intValue());
+            returnValue = Integer.valueOf(dividend.intValue() / divisor.intValue());
         }
         else
         {
@@ -122,15 +122,15 @@ public final class ArithmeticUtilities
         Number returnValue = null;
         if (left instanceof Double || left instanceof Float || right instanceof Double || right instanceof Float)
         {
-            returnValue = new Double(left.doubleValue() * right.doubleValue() + 0.0);
+            returnValue = Double.valueOf(left.doubleValue() * right.doubleValue() + 0.0);
         }
         else if (left instanceof Long || right instanceof Long)
         {
-            returnValue = new Long(left.longValue() * right.longValue());
+            returnValue = Long.valueOf(left.longValue() * right.longValue());
         }
         else if (left instanceof Integer || right instanceof Integer || left instanceof Short || right instanceof Short)
         {
-            returnValue = new Integer(left.intValue() * right.intValue());
+            returnValue = Integer.valueOf(left.intValue() * right.intValue());
         }
         else
         {
@@ -154,15 +154,15 @@ public final class ArithmeticUtilities
         Number returnValue = null;
         if (left instanceof Double || left instanceof Float || right instanceof Double || right instanceof Float)
         {
-            returnValue = new Double(left.doubleValue() - right.doubleValue());
+            returnValue = Double.valueOf(left.doubleValue() - right.doubleValue());
         }
         else if (left instanceof Long || right instanceof Long)
         {
-            returnValue = new Long(left.longValue() - right.longValue());
+            returnValue = Long.valueOf(left.longValue() - right.longValue());
         }
         else if (left instanceof Integer || right instanceof Integer || left instanceof Short || right instanceof Short)
         {
-            returnValue = new Integer(left.intValue() - right.intValue());
+            returnValue = Integer.valueOf(left.intValue() - right.intValue());
         }
         else
         {

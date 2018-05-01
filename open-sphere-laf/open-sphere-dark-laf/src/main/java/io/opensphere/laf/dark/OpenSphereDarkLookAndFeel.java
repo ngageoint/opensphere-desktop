@@ -63,7 +63,7 @@ public class OpenSphereDarkLookAndFeel extends MetalLookAndFeel
     {
         try
         {
-            final LookAndFeel laf = (LookAndFeel)Class.forName(UIManager.getSystemLookAndFeelClassName()).newInstance();
+            final LookAndFeel laf = (LookAndFeel)Class.forName(UIManager.getSystemLookAndFeelClassName()).getDeclaredConstructor().newInstance();
             final UIDefaults def = laf.getDefaults();
             final Enumeration<Object> keys = def.keys();
             String key;
@@ -293,7 +293,7 @@ public class OpenSphereDarkLookAndFeel extends MetalLookAndFeel
         uiDefaults.put("ToolTip.font", uiDefaults.get("Menu.font"));
 
         // Spinners
-        uiDefaults.put("Spinner.editorBorderPainted", new Boolean(false));
+        uiDefaults.put("Spinner.editorBorderPainted", Boolean.FALSE);
         uiDefaults.put("Spinner.border", OSDarkLAFBorders.getTextFieldBorder());
         uiDefaults.put("Spinner.arrowButtonBorder", BorderFactory.createEmptyBorder());
         uiDefaults.put("Spinner.nextIcon", OSDarkLAFIconFactory.getSpinnerNextIcon());
@@ -359,15 +359,15 @@ public class OpenSphereDarkLookAndFeel extends MetalLookAndFeel
         uiDefaults.put("InternalFrame.maximizeIcon", OSDarkLAFIconFactory.getFrameMaxIcon());
         uiDefaults.put("InternalFrame.iconifyIcon", OSDarkLAFIconFactory.getFrameMinIcon());
         uiDefaults.put("InternalFrame.icon", OSDarkLAFUtils.loadImageResource("/icons/Frame.png"));
-        uiDefaults.put("OSDarkLAFInternalFrameIconLit.width", new Integer(20));
-        uiDefaults.put("OSDarkLAFInternalFrameIconLit.height", new Integer(20));
+        uiDefaults.put("OSDarkLAFInternalFrameIconLit.width", Integer.valueOf(20));
+        uiDefaults.put("OSDarkLAFInternalFrameIconLit.height", Integer.valueOf(20));
 
         final Font fontIcon = ((Font)uiDefaults.get("InternalFrame.titleFont")).deriveFont(Font.BOLD);
         uiDefaults.put("DesktopIcon.font", fontIcon);
-        uiDefaults.put("OSDarkLAFDesktopIcon.width", new Integer(80));
-        uiDefaults.put("OSDarkLAFDesktopIcon.height", new Integer(60));
-        uiDefaults.put("OSDarkLAFDesktopIconBig.width", new Integer(48));
-        uiDefaults.put("OSDarkLAFDesktopIconBig.height", new Integer(48));
+        uiDefaults.put("OSDarkLAFDesktopIcon.width", Integer.valueOf(80));
+        uiDefaults.put("OSDarkLAFDesktopIcon.height", Integer.valueOf(60));
+        uiDefaults.put("OSDarkLAFDesktopIconBig.width", Integer.valueOf(48));
+        uiDefaults.put("OSDarkLAFDesktopIconBig.height", Integer.valueOf(48));
 
         uiDefaults.put("InternalFrame.activeTitleBackground", getMenuSelectedBackground());
         uiDefaults.put("InternalFrame.activeTitleGradient", getMenuSelectedBackground().darker());

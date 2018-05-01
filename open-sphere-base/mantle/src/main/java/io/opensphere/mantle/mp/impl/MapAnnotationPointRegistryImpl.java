@@ -88,14 +88,14 @@ public class MapAnnotationPointRegistryImpl
             Class<?> cl = Class.forName(persistenceHelperClass);
             if (cl != null)
             {
-                Object o = cl.newInstance();
+                Object o = cl.getDeclaredConstructor().newInstance();
                 if (o instanceof MapAnnotationRegistryPersistenceHelper)
                 {
                     myPersistenceHelper = (MapAnnotationRegistryPersistenceHelper)o;
                 }
             }
         }
-        catch (ClassNotFoundException | InstantiationException | IllegalAccessException e)
+        catch (ReflectiveOperationException e)
         {
             myPersistenceHelper = null;
             LOGGER.error(e);

@@ -26,7 +26,7 @@ public class EigenvalueDecomposition implements java.io.Serializable
      *
      * @serial matrix dimension.
      */
-    private int n;
+    private final int n;
 
     /**
      * Symmetry flag.
@@ -40,14 +40,14 @@ public class EigenvalueDecomposition implements java.io.Serializable
      *
      * @serial internal storage of eigenvalues.
      */
-    private double[] d, e;
+    private final double[] d, e;
 
     /**
      * Array for internal storage of eigenvectors.
      *
      * @serial internal storage of eigenvectors.
      */
-    private double[][] V;
+    private final double[][] V;
 
     /**
      * Array for internal storage of nonsymmetric Hessenberg form.
@@ -492,7 +492,7 @@ public class EigenvalueDecomposition implements java.io.Serializable
 
         // Initialize
 
-        int nn = this.n;
+        int nn = n;
         int n = nn - 1;
         int low = 0;
         int high = nn - 1;

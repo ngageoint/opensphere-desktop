@@ -1,6 +1,6 @@
 package io.opensphere.wps.envoy;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * An enumeration over the set of known parameters used in WPS calls.
@@ -16,7 +16,10 @@ public enum WpsParameter
     /** The name of the parameter in which the WPS version is specified. */
     VERSION("version"),
 
-    /** The name of the parameter in which the set of data inputs are supplied for the process. */
+    /**
+     * The name of the parameter in which the set of data inputs are supplied
+     * for the process.
+     */
     DATA_INPUTS("datainputs"),
 
     /** The name of the parameter in which the process ID is specified. */
@@ -28,9 +31,11 @@ public enum WpsParameter
     private String myVariableName;
 
     /**
-     * Creates a new WpsParameter enum instance, configured with the supplied variable name.
+     * Creates a new WpsParameter enum instance, configured with the supplied
+     * variable name.
      *
-     * @param pVariableName The name of the variable, as submitted in the WPS request.
+     * @param pVariableName The name of the variable, as submitted in the WPS
+     *            request.
      */
     private WpsParameter(String pVariableName)
     {
@@ -48,10 +53,12 @@ public enum WpsParameter
     }
 
     /**
-     * Locates the enum value with a variable name corresponding to the supplied value.
+     * Locates the enum value with a variable name corresponding to the supplied
+     * value.
      *
      * @param pVariableName the name of the variable for which to search.
-     * @return the {@link WpsParameter} with a variable name corresponding to the supplied value, or null if none could be found.
+     * @return the {@link WpsParameter} with a variable name corresponding to
+     *         the supplied value, or null if none could be found.
      */
     public static WpsParameter fromVariableName(String pVariableName)
     {

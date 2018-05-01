@@ -896,7 +896,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
             if (dti != null && dti.getOrderKey() != null)
             {
                 maxZOrder = getToolbox().getOrderManagerRegistry().getOrderManager(dti.getOrderKey()).getCategory()
-                        .getOrderRange().getMaximumInteger();
+                        .getOrderRange().getMaximum().intValue();
             }
             int zOrder = isSelected ? maxZOrder : vi == null ? 0 : vi.getZOrder();
             if (zOrder != brp.getZOrder())

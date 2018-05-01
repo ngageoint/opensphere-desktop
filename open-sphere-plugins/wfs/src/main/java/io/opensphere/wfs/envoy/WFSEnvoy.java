@@ -19,7 +19,6 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.avro.file.DataFileStream;
 import org.apache.avro.generic.GenericRecord;
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -620,7 +619,14 @@ public class WFSEnvoy extends AbstractWFSEnvoy
             {
                 featureConsumer.flush();
             }
-            IOUtils.closeQuietly(in);
+            try
+            {
+                in.close();
+            }
+            catch (IOException e)
+            {
+                // quietly ignore
+            }
         }
 
         return count;

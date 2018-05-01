@@ -52,9 +52,9 @@ public final class OpenSphereContentHandlerFactory implements java.net.ContentHa
         }
         try
         {
-            return cl.newInstance();
+            return cl.getDeclaredConstructor().newInstance();
         }
-        catch (InstantiationException | IllegalAccessException e)
+        catch (ReflectiveOperationException e)
         {
             LOGGER.error("Failed to instantiate content handler: " + e, e);
         }

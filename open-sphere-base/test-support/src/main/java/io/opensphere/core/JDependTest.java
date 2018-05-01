@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,8 +21,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections.functors.InstantiateFactory;
-import org.apache.commons.collections.map.LazyMap;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -48,9 +48,11 @@ public class JDependTest
                 Assert.fail(formatMessage(cycles));
             }
         }
-        catch (final IOException e)
+        catch (final Exception e)
         {
-            Assert.fail(e.toString());
+            StringWriter out = new StringWriter();
+            e.printStackTrace(new PrintWriter(out));
+            Assert.fail(e.getMessage() + ":\n" + out.toString());
         }
     }
 
@@ -81,8 +83,7 @@ public class JDependTest
      */
     private Map<String, Collection<String>> processLines(Collection<String> lines)
     {
-        final Map<String, Collection<String>> dependencyMap = LazyMap.decorate(new HashMap<>(),
-                new InstantiateFactory(HashSet.class));
+        final Map<String, Collection<String>> dependencyMap = new HashMap<>();
 
         String[] splitPackage = getClass().getName().split("\\.");
         final Pattern packagePattern = Pattern.compile("^\\s+(" + splitPackage[0] + "\\." + splitPackage[1] + "\\..*?) ");
@@ -100,7 +101,7 @@ public class JDependTest
             else if (currentPackage != null && dependencyMatcher.find())
             {
                 final String dependency = dependencyMatcher.group(1);
-                dependencyMap.get(currentPackage).add(dependency);
+                dependencyMap.computeIfAbsent(currentPackage, k -> new HashSet<>()).add(dependency);
             }
         }
 
@@ -157,8 +158,7 @@ public class JDependTest
         else if (!searchedPackages.contains(currentPackage))
         {
             searchedPackages.add(currentPackage);
-
-            for (final String dependency : dependencyMap.get(currentPackage))
+            for (final String dependency : dependencyMap.computeIfAbsent(currentPackage, k -> new HashSet<>()))
             {
                 final List<String> currentPackageList = Arrays.asList(currentPackage);
                 findCycles(cycles, searchedPackages, dependencyMap, concat(path, currentPackageList), dependency);

@@ -10,10 +10,9 @@ public class EarthMathFactory
 
     public static String VINCENTY_ELLIPSOID = Vincenty.class.getName();
 
-    @SuppressWarnings("unchecked")
     public static EarthMath getInstance(String className)
     {
-        Class clazz = null;
+        Class<?> clazz = null;
         try
         {
             clazz = Class.forName(className);
@@ -24,13 +23,9 @@ public class EarthMathFactory
         }
         try
         {
-            return (EarthMath)clazz.newInstance();
+            return (EarthMath)clazz.getDeclaredConstructor().newInstance();
         }
-        catch (InstantiationException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IllegalAccessException e)
+        catch (ReflectiveOperationException e)
         {
             e.printStackTrace();
         }

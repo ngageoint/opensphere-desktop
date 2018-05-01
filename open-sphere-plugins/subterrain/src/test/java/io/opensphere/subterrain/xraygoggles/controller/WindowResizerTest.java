@@ -279,7 +279,7 @@ public class WindowResizerTest
         globe.addListener(EasyMock.isA(DiscreteEventListener.class),
                 EasyMock.eq(new DefaultMouseBinding(MouseEvent.MOUSE_PRESSED, InputEvent.BUTTON1_DOWN_MASK)),
                 EasyMock.eq(new DefaultMouseBinding(MouseEvent.MOUSE_DRAGGED, InputEvent.BUTTON1_DOWN_MASK)),
-                EasyMock.eq(new DefaultMouseBinding(MouseEvent.MOUSE_RELEASED, InputEvent.BUTTON1_MASK)));
+                EasyMock.eq(new DefaultMouseBinding(MouseEvent.MOUSE_RELEASED, InputEvent.BUTTON1_DOWN_MASK)));
         EasyMock.expectLastCall().andAnswer(() ->
         {
             myDiscreteListener = (DiscreteEventListener)EasyMock.getCurrentArguments()[0];

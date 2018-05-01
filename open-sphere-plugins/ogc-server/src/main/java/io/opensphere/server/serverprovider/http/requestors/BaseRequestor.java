@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 
 import com.bitsys.common.http.client.HttpClient;
 import com.bitsys.common.http.entity.HttpEntity;
-import com.bitsys.common.http.message.Abortable;
 import com.bitsys.common.http.message.HttpRequest;
 import com.bitsys.common.http.message.HttpResponse;
 
@@ -139,10 +138,9 @@ public abstract class BaseRequestor
                     @Override
                     public void run()
                     {
-                        Abortable abortable = request.getAbortable();
-                        if (abortable != null)
+                        if (!request.isAborted())
                         {
-                            abortable.abort();
+                            request.abort();
                         }
                     }
                 });

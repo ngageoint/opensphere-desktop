@@ -5,17 +5,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.util.Callback;
-
 import javax.inject.Named;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.google.inject.Singleton;
 
@@ -30,6 +22,13 @@ import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.wps.ui.detail.validator.BasicValidator;
 import io.opensphere.wps.ui.detail.validator.RequiredTextExaminer;
 import io.opensphere.wps.util.WpsUtilities;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.util.Callback;
 import jidefx.scene.control.validation.ValidationEvent;
 import jidefx.scene.control.validation.ValidationGroup;
 import net.opengis.wps._100.InputDescriptionType;

@@ -32,9 +32,9 @@ public final class DiskCacheDecodeHelper
         Class<DynamicMetaDataList> cl = DynamicMetaDataClassRegistry.getInstance().getDynamicClassForHashCode(typeHashCode);
         try
         {
-            dmdl = cl.newInstance();
+            dmdl = cl.getDeclaredConstructor().newInstance();
         }
-        catch (InstantiationException | IllegalAccessException e)
+        catch (ReflectiveOperationException e)
         {
             LOGGER.error("Failed to create DynamicMetaDataList", e);
         }

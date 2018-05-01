@@ -15,9 +15,6 @@ import org.codehaus.jackson.annotate.JsonProperty;
 @JsonAutoDetect(JsonMethod.NONE)
 public class EsriClassBreaksRenderer extends EsriRenderer
 {
-    /** Serial version UID. */
-    private static final long serialVersionUID = 1L;
-
     /** My field. */
     @JsonProperty("field")
     private String myField;
@@ -95,6 +92,9 @@ public class EsriClassBreaksRenderer extends EsriRenderer
     @JsonAutoDetect(JsonMethod.NONE)
     public static class EsriClassBreakInfo extends EsriRendererInfo
     {
+        /** serialVersionUID. */
+        private static final long serialVersionUID = 1;
+
         /** My class's maximum value. */
         @JsonProperty("classMaxValue")
         private int myClassMaxValue;

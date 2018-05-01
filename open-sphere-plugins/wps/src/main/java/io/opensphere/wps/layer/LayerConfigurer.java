@@ -3,7 +3,7 @@ package io.opensphere.wps.layer;
 import java.awt.Color;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.ColorUtilities;

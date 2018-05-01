@@ -32,8 +32,8 @@ public class OSDarkLAFListUI extends BasicListUI
     }
 
     @Override
-    protected void paintCell(Graphics graph, int rowIndex, Rectangle rowBounds, ListCellRenderer cellRenderer,
-            ListModel listModel, ListSelectionModel selectionModel, int leadIndex)
+    protected void paintCell(Graphics graph, int rowIndex, Rectangle rowBounds, ListCellRenderer<Object> cellRenderer,
+            ListModel<Object> listModel, ListSelectionModel selectionModel, int leadIndex)
     {
         rowBounds.x += 1;
         super.paintCell(graph, rowIndex, rowBounds, cellRenderer, listModel, selectionModel, leadIndex);

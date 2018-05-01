@@ -3,6 +3,7 @@ package io.opensphere.mantle.data.merge;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,14 +113,14 @@ public class KeySpecification
             try
             {
                 Class<?> cl = Class.forName(specialKeyClassName);
-                sk = (SpecialKey)cl.newInstance();
+                sk = (SpecialKey)cl.getDeclaredConstructor().newInstance();
             }
             catch (ClassNotFoundException e)
             {
                 LOGGER.error("Could not find SpecialKey class: " + specialKeyClassName, e);
                 sk = null;
             }
-            catch (InstantiationException e)
+            catch (NoSuchMethodException | InvocationTargetException | InstantiationException e)
             {
                 LOGGER.error("Could not instantiate SpecialKey class: " + specialKeyClassName, e);
                 sk = null;

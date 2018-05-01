@@ -37,7 +37,6 @@ import io.opensphere.merge.model.MergeModel;
 /**
  * Unit test for the {@link MergeUI}.
  */
-@SuppressWarnings("restriction")
 public class MergeUITestDisplay
 {
     /**

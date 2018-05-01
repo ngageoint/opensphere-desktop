@@ -92,14 +92,14 @@ public class Capture extends JFrame
     {
         JMenu menu = new JMenu("File");
         JMenuItem mi = new JMenuItem("Save As...");
-        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_MASK));
+        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_DOWN_MASK));
         mi.addActionListener(e -> captureScreen());
         menu.add(mi);
 
         menu.addSeparator();
 
         mi = new JMenuItem("Exit");
-        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.ALT_MASK));
+        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.ALT_DOWN_MASK));
         mi.addActionListener(e -> dispose());
         menu.add(mi);
 
@@ -148,17 +148,17 @@ public class Capture extends JFrame
     {
         JMenu menu = new JMenu("Snapshot");
         JMenuItem mi = new JMenuItem("New");
-        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.ALT_MASK));
+        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.ALT_DOWN_MASK));
         mi.addActionListener(e -> initCapture());
         menu.add(mi);
 
         mi = new JMenuItem("Crop");
-        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.ALT_MASK));
+        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.ALT_DOWN_MASK));
         mi.addActionListener(e -> cropSnapshot());
         menu.add(mi);
 
         mi = new JMenuItem("Clear");
-        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_MASK));
+        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_DOWN_MASK));
         mi.addActionListener(e -> myImageArea.resetBackgroundColor());
         menu.add(mi);
 

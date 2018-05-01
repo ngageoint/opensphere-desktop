@@ -7,14 +7,14 @@ import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import org.apache.commons.io.IOUtils;
-
 public class KMZUtil
 {
 
     /**
      * Inspects the KMZ ZIP archive for the first file that ends with .kml and
      * returns it as an <code>InputStream</code>.
+     * <p>
+     * Call this method under a try-with-resources on the zipStream.
      *
      * @param zipStream KMZ file to inspect
      * @return The first KML file in the archive or <code>null</code> if none
@@ -28,43 +28,35 @@ public class KMZUtil
         ByteArrayOutputStream bos = null;
         ByteArrayInputStream bais = null;
 
-        try
-        {
-            ZipEntry entry;
+        ZipEntry entry;
 
-            while ((entry = zipStream.getNextEntry()) != null)
+        while ((entry = zipStream.getNextEntry()) != null)
+        {
+            if (entry.getName().toLowerCase().endsWith(".kml") && !entry.isDirectory())
             {
-                if (entry.getName().toLowerCase().endsWith(".kml") && !entry.isDirectory())
+                /* We found the root KML file. From Google's documentation:
+                    *
+                    * When Google Earth opens a KMZ file, it scans the file,
+                    * looking for the first .kml file in this list. It ignores
+                    * all subsequent .kml files, if any, in the archive. If the
+                    * archive contains multiple .kml files, you cannot be sure
+                    * which one will be found first, so you need to include
+                    * only one.) */
+                int count;
+                byte[] data = new byte[BUFFER_SIZE];
+                bos = new ByteArrayOutputStream();
+
+                while ((count = zipStream.read(data, 0, BUFFER_SIZE)) != -1)
                 {
-                    /* We found the root KML file. From Google's documentation:
-                     *
-                     * When Google Earth opens a KMZ file, it scans the file,
-                     * looking for the first .kml file in this list. It ignores
-                     * all subsequent .kml files, if any, in the archive. If the
-                     * archive contains multiple .kml files, you cannot be sure
-                     * which one will be found first, so you need to include
-                     * only one.) */
-                    int count;
-                    byte[] data = new byte[BUFFER_SIZE];
-                    bos = new ByteArrayOutputStream();
-
-                    while ((count = zipStream.read(data, 0, BUFFER_SIZE)) != -1)
-                    {
-                        bos.write(data, 0, count);
-                    }
-
-                    bos.flush();
-                    bais = new ByteArrayInputStream(bos.toByteArray());
-
-                    // we've found our file so we're done
-                    break;
+                    bos.write(data, 0, count);
                 }
+
+                bos.flush();
+                bais = new ByteArrayInputStream(bos.toByteArray());
+
+                // we've found our file so we're done
+                break;
             }
-        }
-        finally
-        {
-            IOUtils.closeQuietly(zipStream);
-            IOUtils.closeQuietly(bos);
         }
 
         return bais;

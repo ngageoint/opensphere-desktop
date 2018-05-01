@@ -120,7 +120,7 @@ public class ComponentTitledBorder implements Border, MouseListener, SwingConsta
             Point pt = me.getPoint();
             pt.translate(-LEFT_OFFSET, 0);
             myComp.setBounds(myRectangle);
-            myComp.dispatchEvent(new MouseEvent(myComp, me.getID(), me.getWhen(), me.getModifiers(), pt.x, pt.y,
+            myComp.dispatchEvent(new MouseEvent(myComp, me.getID(), me.getWhen(), me.getModifiersEx(), pt.x, pt.y,
                     me.getClickCount(), me.isPopupTrigger(), me.getButton()));
             if (!myComp.isValid())
             {

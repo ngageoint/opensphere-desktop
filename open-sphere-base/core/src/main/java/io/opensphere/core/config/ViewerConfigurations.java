@@ -190,14 +190,14 @@ public final class ViewerConfigurations
 
                 try
                 {
-                    AbstractProjection proj = (AbstractProjection)projectionClass.newInstance();
+                    AbstractProjection proj = (AbstractProjection)projectionClass.getDeclaredConstructor().newInstance();
                     result.add(proj);
                     if (proj instanceof AbstractGeographicProjection)
                     {
                         proj.useElevationOrderManager(elevationOrderManager);
                     }
                 }
-                catch (InstantiationException | IllegalAccessException | IllegalArgumentException e)
+                catch (ReflectiveOperationException | IllegalArgumentException e)
                 {
                     LOGGER.error("Failed to create projection: " + projectionClass + " " + e, e);
                 }

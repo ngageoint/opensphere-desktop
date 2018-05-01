@@ -138,6 +138,9 @@ public class PropertyUtils
                     }
                 }
 
+                // Consider making this autocloseable or something
+                pp.close();
+
                 if (logger.isInfoEnabled())
                 {
                     logger.info("Loaded properties from local: " + userFileName);

@@ -25,7 +25,7 @@ public class LocallyWeightedLeastSquares
         int totalDataCount = xArray.length;
         yEst = new double[totalDataCount];
 
-        int windowSize = new Double(bandwidthPct * totalDataCount).intValue();
+        int windowSize = Double.valueOf(bandwidthPct * totalDataCount).intValue();
 
         if (windowSize > 1)
         {
@@ -34,7 +34,6 @@ public class LocallyWeightedLeastSquares
             weights = new double[windowSize];
 
             // Construct matrix
-            Matrix X = new Matrix(windowSize, 2);
             Matrix WX = new Matrix(windowSize, 2);
             Matrix WY = new Matrix(windowSize, 1);
 

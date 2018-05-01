@@ -3,7 +3,7 @@ package io.opensphere.wps;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import io.opensphere.core.PluginLoaderData;
 import io.opensphere.core.Toolbox;
@@ -133,7 +133,8 @@ public class WpsPlugin extends PluginAdapter
     }
 
     /**
-     * Adds a new WPS Server based upon the supplied parameters. When the server is added, a request is made for its capabilities.
+     * Adds a new WPS Server based upon the supplied parameters. When the server
+     * is added, a request is made for its capabilities.
      *
      * @param pServerId the unique ID of the server to add.
      * @param pServer the connection parameters of the server to add.
@@ -156,10 +157,12 @@ public class WpsPlugin extends PluginAdapter
     }
 
     /**
-     * Find an existing WPS envoy suite in the internal cache, based on the supplied server identifier.
+     * Find an existing WPS envoy suite in the internal cache, based on the
+     * supplied server identifier.
      *
      * @param pServerId The server identifier used to match an available envoy.
-     * @return The local envoy whose URL matches the server identifier or null if none is found.
+     * @return The local envoy whose URL matches the server identifier or null
+     *         if none is found.
      */
     protected WpsEnvoySuite findEnvoySuite(String pServerId)
     {

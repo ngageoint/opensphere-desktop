@@ -92,12 +92,12 @@ public final class ContentType implements Serializable
 
    /**
     * The text/xml content type. The character set is ISO-8859-1.
-    */
+    *
    public static final ContentType TEXT_XML = new ContentType(
       org.apache.http.entity.ContentType.TEXT_XML);
 
    /**
-    * The *&#47* content type. The character set is <code>null</code>.
+    * The *&#47;* content type. The character set is <code>null</code>.
     */
    public static final ContentType WILDCARD = new ContentType(
       org.apache.http.entity.ContentType.WILDCARD);

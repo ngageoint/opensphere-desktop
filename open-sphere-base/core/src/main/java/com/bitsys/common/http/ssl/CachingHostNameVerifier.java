@@ -2,9 +2,9 @@ package com.bitsys.common.http.ssl;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Objects;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.ObjectUtils;
 
 import com.bitsys.common.http.util.cache.CacheManager;
 
@@ -55,7 +55,7 @@ public class CachingHostNameVerifier implements HostNameVerifier
       {
          final int prime = 31;
          int result = 1;
-         result = prime * result + ObjectUtils.hashCode(host);
+         result = prime * result + Objects.hashCode(host);
          result = prime * result + Arrays.hashCode(cns);
          result = prime * result + Arrays.hashCode(subjectAlts);
          return result;
