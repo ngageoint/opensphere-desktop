@@ -49,6 +49,7 @@ public class MergePlugin extends PluginAdapter
         if (mySystemPreferences != null)
         {
             myMergePreferences = mySystemPreferences.getJAXBObject(MergePrefs.class, PREFS_KEY, null);
+            myMergePreferences.prepareForRead();
         }
 
         // Jam in an empty MergePrefs in case a real one was not found
@@ -57,8 +58,10 @@ public class MergePlugin extends PluginAdapter
             myMergePreferences = new MergePrefs();
         }
 
+        Runnable saveCallback = this::writePrefs;
+
         JoinManager joinManager = new JoinManager(toolbox);
-        MergeController mergeController = new MergeController(toolbox, myMergePreferences);
+        MergeController mergeController = new MergeController(toolbox, myMergePreferences, saveCallback);
 
         myMenuProvider = new MergeContextMenuProvider(toolbox, mergeController);
         myMenuProvider.setJoinManager(joinManager);
@@ -79,7 +82,7 @@ public class MergePlugin extends PluginAdapter
             GuiUtil.addMenuItem(GuiUtil.getMainMenu(toolbox, MenuBarRegistry.EDIT_MENU), "Joins/Merges",
                 () -> myConfigGui.show());
 
-            myConfigGui = new ConfigGui(toolbox, joinManager, mergeController, () -> writePrefs());
+            myConfigGui = new ConfigGui(toolbox, joinManager, mergeController, saveCallback);
             myConfigGui.setData(myMergePreferences);
         });
     }
@@ -102,6 +105,7 @@ public class MergePlugin extends PluginAdapter
     {
         if (mySystemPreferences != null)
         {
+            myMergePreferences.prepareForSave();
             mySystemPreferences.putJAXBObject(PREFS_KEY, myMergePreferences, false, null);
         }
     }

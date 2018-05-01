@@ -93,6 +93,9 @@ public class MergeController extends AbstractMantleController implements Consume
     /** The merge preferences. */
     private final MergePrefs myMergePreferences;
 
+    /** The callback for saving preferences. */
+    private final Runnable mySaveCallback;
+
     /**
      * The type controller.
      */
@@ -103,13 +106,15 @@ public class MergeController extends AbstractMantleController implements Consume
      *
      * @param toolbox The system toolbox.
      * @param mergePreferences The merge preferences.
+     * @param saveCallback The callback for saving preferences.
      */
-    public MergeController(Toolbox toolbox, MergePrefs mergePreferences)
+    public MergeController(Toolbox toolbox, MergePrefs mergePreferences, Runnable saveCallback)
     {
         super(toolbox, ourRootGroupName);
 
         myToolbox = toolbox;
         myMergePreferences = mergePreferences;
+        mySaveCallback = saveCallback;
         MantleToolbox mantle = myToolbox.getPluginToolboxRegistry().getPluginToolbox(MantleToolbox.class);
         myElementProvider = mantle.getDataElementLookupUtils();
         myTypeController = mantle.getDataTypeController();
@@ -175,6 +180,7 @@ public class MergeController extends AbstractMantleController implements Consume
         }
 
         myMergePreferences.getMerges().remove(model);
+        mySaveCallback.run();
     }
 
     @Override
@@ -321,6 +327,7 @@ public class MergeController extends AbstractMantleController implements Consume
             }
 
             myMergePreferences.getMerges().add(myModel);
+            mySaveCallback.run();
         }
     }
 }

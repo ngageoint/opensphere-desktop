@@ -2,10 +2,13 @@ package io.opensphere.merge.model;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -21,6 +24,7 @@ import io.opensphere.core.util.collections.New;
  * loaded or active.
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class MergePrefs
 {
     /** List o' Join. */
@@ -31,6 +35,33 @@ public class MergePrefs
     @XmlTransient
     private final ObservableList<MergeModel> myMerges = FXCollections
             .synchronizedObservableList(FXCollections.observableArrayList());
+
+//    /** A copy of the merge models for persistence. */
+//    @XmlElement(name = "merge")
+//    private final List<MergeModel> myMergesToPersist = New.list();
+
+    /** A copy of the merge models for persistence. */
+    @XmlElement(name = "baba")
+    private final List<String> myMergesToPersist = New.list();
+
+    /**
+     * Prepares the bean for saving.
+     */
+    public void prepareForSave()
+    {
+        myMergesToPersist.clear();
+//        myMergesToPersist.addAll(myMerges);
+        myMergesToPersist.addAll(myMerges.stream().map(m -> m.getNewLayerName().get()).collect(Collectors.toList()));
+    }
+
+    /**
+     * Prepares the bean for being used/read.
+     */
+    public void prepareForRead()
+    {
+        System.err.println(myMergesToPersist);
+//        myMerges.addAll(myMergesToPersist);
+    }
 
     /**
      * Getter.

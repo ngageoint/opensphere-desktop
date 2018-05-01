@@ -184,7 +184,7 @@ public class MergeControllerTest
 
         support.replayAll();
 
-        MergeController controller = new MergeController(toolbox, null);
+        MergeController controller = new MergeController(toolbox, null, null);
         controller.setModel(model);
         assertEquals(ourLayer1 + " " + ourLayer2, model.getNewLayerName().get());
         assertEquals("", controller.getModel().getUserMessage().get());
@@ -227,7 +227,7 @@ public class MergeControllerTest
 
         support.replayAll();
 
-        MergeController controller = new MergeController(toolbox, null);
+        MergeController controller = new MergeController(toolbox, null, null);
         controller.setModel(model);
         assertEquals(existingLayer + " 1", model.getNewLayerName().get());
         assertEquals("", controller.getModel().getUserMessage().get());
@@ -267,7 +267,7 @@ public class MergeControllerTest
 
         support.replayAll();
 
-        MergeController controller = new MergeController(toolbox, null);
+        MergeController controller = new MergeController(toolbox, null, null);
         controller.setModel(model);
         controller.performMerge();
         assertTrue(latch.await(1, TimeUnit.SECONDS));

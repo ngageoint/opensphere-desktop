@@ -131,7 +131,7 @@ public class MergeUITestDisplay
 
         support.replayAll();
 
-        MergeController controller = new MergeController(toolbox, null);
+        MergeController controller = new MergeController(toolbox, null, null);
         controller.setModel(model);
         MergeUI ui = new MergeUI(toolbox, controller, model);
         ui.accept();
@@ -176,7 +176,7 @@ public class MergeUITestDisplay
 
         support.replayAll();
 
-        MergeController controller = new MergeController(toolbox, null);
+        MergeController controller = new MergeController(toolbox, null, null);
         controller.setModel(model);
         MergeUI ui = new MergeUI(toolbox, controller, model);
 
