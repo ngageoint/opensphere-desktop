@@ -126,7 +126,10 @@ public class JDependTest
         {
             for (final String dependency : entry.getValue())
             {
-                findCycles(cycles, searchedPackages, dependencyMap, new ArrayList<>(), dependency);
+                if (entry.getValue() != null)
+                {
+                    findCycles(cycles, searchedPackages, dependencyMap, new ArrayList<>(), dependency);
+                }
             }
         }
 
