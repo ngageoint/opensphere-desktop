@@ -105,7 +105,7 @@ public class JDependTest
             else if (currentPackage != null && dependencyMatcher.find())
             {
                 final String dependency = dependencyMatcher.group(1);
-                dependencyMap.computeIfAbsent(currentPackage, k -> new HashSet<>()).add(dependency);
+                dependencyMap.get(currentPackage).add(dependency);
             }
         }
 
