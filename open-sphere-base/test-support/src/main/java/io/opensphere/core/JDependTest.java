@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,7 +50,9 @@ public class JDependTest
         }
         catch (final IOException e)
         {
-            Assert.fail(e.toString());
+            PrintWriter out = new PrintWriter(new StringWriter());
+            e.printStackTrace(out);
+            Assert.fail(out.toString());
         }
     }
 
