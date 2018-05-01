@@ -105,11 +105,7 @@ public class JDependTest
             else if (currentPackage != null && dependencyMatcher.find())
             {
                 final String dependency = dependencyMatcher.group(1);
-                if (!dependencyMap.containsKey(currentPackage))
-                {
-                    dependencyMap.put(currentPackage, new ArrayList<>());
-                }
-                dependencyMap.get(currentPackage).add(dependency);
+                dependencyMap.computeIfAbsent(currentPackage, k -> new HashSet<>()).add(dependency);
             }
         }
 
@@ -130,10 +126,7 @@ public class JDependTest
         {
             for (final String dependency : entry.getValue())
             {
-                if (entry.getValue() != null)
-                {
-                    findCycles(cycles, searchedPackages, dependencyMap, new ArrayList<>(), dependency);
-                }
+                findCycles(cycles, searchedPackages, dependencyMap, new ArrayList<>(), dependency);
             }
         }
 
@@ -161,30 +154,22 @@ public class JDependTest
     private void findCycles(Collection<List<String>> cycles, Set<String> searchedPackages,
             Map<String, Collection<String>> dependencyMap, List<String> path, String currentPackage)
     {
-        LOG.info(currentPackage);
         if (dependencyMap == null)
         {
             throw new NullPointerException("Dependency Map is null for package '" + currentPackage + "'");
         }
-        if (currentPackage != null)
+        if (path.contains(currentPackage))
         {
-            if (path.contains(currentPackage))
+            final List<String> currentPackageList = Arrays.asList(currentPackage);
+            cycles.add(concat(path, currentPackageList));
+        }
+        else if (!searchedPackages.contains(currentPackage))
+        {
+            searchedPackages.add(currentPackage);
+            for (final String dependency : dependencyMap.get(currentPackage))
             {
                 final List<String> currentPackageList = Arrays.asList(currentPackage);
-                cycles.add(concat(path, currentPackageList));
-            }
-            else if (!searchedPackages.contains(currentPackage))
-            {
-                searchedPackages.add(currentPackage);
-
-                if (dependencyMap != null && currentPackage != null)
-                {
-                    for (final String dependency : dependencyMap.get(currentPackage))
-                    {
-                        final List<String> currentPackageList = Arrays.asList(currentPackage);
-                        findCycles(cycles, searchedPackages, dependencyMap, concat(path, currentPackageList), dependency);
-                    }
-                }
+                findCycles(cycles, searchedPackages, dependencyMap, concat(path, currentPackageList), dependency);
             }
         }
     }
