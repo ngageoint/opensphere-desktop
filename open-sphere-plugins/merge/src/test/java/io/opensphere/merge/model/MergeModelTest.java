@@ -27,8 +27,11 @@ public class MergeModelTest
         EasyMockSupport support = new EasyMockSupport();
 
         DataTypeInfo layer1 = support.createMock(DataTypeInfo.class);
+        EasyMock.expect(layer1.getTypeKey()).andReturn("layer1").anyTimes();
         DataTypeInfo layer2 = support.createMock(DataTypeInfo.class);
+        EasyMock.expect(layer2.getTypeKey()).andReturn("layer2").anyTimes();
         DataTypeInfo layer3 = support.createMock(DataTypeInfo.class);
+        EasyMock.expect(layer3.getTypeKey()).andReturn("layer3").anyTimes();
         @SuppressWarnings("unchecked")
         ChangeListener<? super String> listener = support.createMock(ChangeListener.class);
         listener.changed(EasyMock.isA(StringProperty.class), EasyMock.isNull(), EasyMock.cmpEq("merged"));

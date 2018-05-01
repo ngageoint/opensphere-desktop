@@ -180,9 +180,9 @@ public class MergeControllerTest
         ColumnMappingController mapper = createMapperNoAssociations(support);
         Toolbox toolbox = createToolbox(support, mantle, mapper);
 
-        MergeModel model = new MergeModel(layers);
-
         support.replayAll();
+
+        MergeModel model = new MergeModel(layers);
 
         MergeController controller = new MergeController(toolbox, null, null);
         controller.setModel(model);
@@ -223,9 +223,9 @@ public class MergeControllerTest
         ColumnMappingController mapper = createMapperNoAssociations(support);
         Toolbox toolbox = createToolbox(support, mantle, mapper);
 
-        MergeModel model = new MergeModel(layers);
-
         support.replayAll();
+
+        MergeModel model = new MergeModel(layers);
 
         MergeController controller = new MergeController(toolbox, null, null);
         controller.setModel(model);
@@ -262,10 +262,10 @@ public class MergeControllerTest
         ColumnMappingController mapper = createMapperMerge(support);
         Toolbox toolbox = createToolboxMerge(support, mantle, mapper);
 
+        support.replayAll();
+
         MergeModel model = new MergeModel(layers);
         model.getNewLayerName().set(ourMergeLayerName);
-
-        support.replayAll();
 
         MergeController controller = new MergeController(toolbox, null, null);
         controller.setModel(model);

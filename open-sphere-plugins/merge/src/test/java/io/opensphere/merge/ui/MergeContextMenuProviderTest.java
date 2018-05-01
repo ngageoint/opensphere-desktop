@@ -17,20 +17,15 @@ import org.junit.Test;
 
 import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.Toolbox;
-import io.opensphere.core.data.DataRegistry;
-import io.opensphere.core.datafilter.DataFilterRegistry;
-import io.opensphere.core.datafilter.columns.ColumnMappingController;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.MantleToolbox;
-import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.BasicVisualizationInfo;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfo.MultiDataGroupContextKey;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MapVisualizationInfo;
 import io.opensphere.mantle.data.cache.DataElementCache;
-import io.opensphere.merge.controller.MergeController;
 
 /**
  * Unit test for {@link MergeContextMenuProvider}.
@@ -316,15 +311,8 @@ public class MergeContextMenuProviderTest
      */
     private Toolbox createToolbox(EasyMockSupport support, DataElementCache cache)
     {
-        DataGroupController groupController = support.createNiceMock(DataGroupController.class);
-
-        EasyMock.expect(Boolean.valueOf(
-                groupController.addRootDataGroupInfo(EasyMock.isA(DataGroupInfo.class), EasyMock.isA(MergeController.class))))
-                .andReturn(Boolean.TRUE);
-
         MantleToolbox mantle = support.createNiceMock(MantleToolbox.class);
         EasyMock.expect(mantle.getDataElementCache()).andReturn(cache);
-        EasyMock.expect(mantle.getDataGroupController()).andReturn(groupController).atLeastOnce();
 
         PluginToolboxRegistry toolboxRegistry = support.createMock(PluginToolboxRegistry.class);
         EasyMock.expect(toolboxRegistry.getPluginToolbox(EasyMock.eq(MantleToolbox.class))).andReturn(mantle).atLeastOnce();
@@ -334,15 +322,6 @@ public class MergeContextMenuProviderTest
 
         EventManager eventManager = support.createNiceMock(EventManager.class);
         EasyMock.expect(toolbox.getEventManager()).andReturn(eventManager).anyTimes();
-
-        ColumnMappingController mapper = support.createMock(ColumnMappingController.class);
-
-        DataFilterRegistry filterRegistry = support.createMock(DataFilterRegistry.class);
-        EasyMock.expect(filterRegistry.getColumnMappingController()).andReturn(mapper);
-        EasyMock.expect(toolbox.getDataFilterRegistry()).andReturn(filterRegistry);
-
-        DataRegistry dataRegistry = support.createMock(DataRegistry.class);
-        EasyMock.expect(toolbox.getDataRegistry()).andReturn(dataRegistry);
 
         return toolbox;
     }

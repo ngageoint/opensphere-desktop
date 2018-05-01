@@ -74,10 +74,6 @@ public class MergeModel
      */
     public List<DataTypeInfo> getLayers()
     {
-        if (myLayers.isEmpty())
-        {
-            throw new IllegalStateException("Empty layers - please call getLayers() with the mantle toolbox instead");
-        }
         return myLayers;
     }
 

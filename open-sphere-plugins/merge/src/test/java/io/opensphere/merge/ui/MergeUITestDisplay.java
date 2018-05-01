@@ -127,9 +127,9 @@ public class MergeUITestDisplay
         EasyMock.expect(uiRegistry.getMenuBarRegistry()).andReturn(bar);
         EasyMock.expect(toolbox.getUIRegistry()).andReturn(uiRegistry);
 
-        MergeModel model = new MergeModel(New.list());
-
         support.replayAll();
+
+        MergeModel model = new MergeModel(New.list());
 
         MergeController controller = new MergeController(toolbox, null, null);
         controller.setModel(model);
@@ -172,9 +172,9 @@ public class MergeUITestDisplay
         ColumnMappingController mapper = createMapper(support);
         Toolbox toolbox = createToolbox(support, mantle, mapper);
 
-        MergeModel model = new MergeModel(layers);
-
         support.replayAll();
+
+        MergeModel model = new MergeModel(layers);
 
         MergeController controller = new MergeController(toolbox, null, null);
         controller.setModel(model);
