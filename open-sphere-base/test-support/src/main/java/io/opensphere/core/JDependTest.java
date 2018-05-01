@@ -162,23 +162,22 @@ public class JDependTest
         {
             throw new NullPointerException("Dependency Map is null for package '" + currentPackage + "'");
         }
-        if (currentPackage == null)
+        if (currentPackage != null)
         {
-            throw new NullPointerException("The current package is null. Unable to scan current package.");
-        }
-        if (path.contains(currentPackage))
-        {
-            final List<String> currentPackageList = Arrays.asList(currentPackage);
-            cycles.add(concat(path, currentPackageList));
-        }
-        else if (!searchedPackages.contains(currentPackage))
-        {
-            searchedPackages.add(currentPackage);
-
-            for (final String dependency : dependencyMap.get(currentPackage))
+            if (path.contains(currentPackage))
             {
                 final List<String> currentPackageList = Arrays.asList(currentPackage);
-                findCycles(cycles, searchedPackages, dependencyMap, concat(path, currentPackageList), dependency);
+                cycles.add(concat(path, currentPackageList));
+            }
+            else if (!searchedPackages.contains(currentPackage))
+            {
+                searchedPackages.add(currentPackage);
+
+                for (final String dependency : dependencyMap.get(currentPackage))
+                {
+                    final List<String> currentPackageList = Arrays.asList(currentPackage);
+                    findCycles(cycles, searchedPackages, dependencyMap, concat(path, currentPackageList), dependency);
+                }
             }
         }
     }
