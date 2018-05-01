@@ -13,11 +13,13 @@ public class Difference extends ColumnFunction
 
     /**
      * Maps all objects to Double, then returns their difference.
+     * <p>
+     * Non-parseable objects are mapped to the (additive) identity value
      *
      * @param objects the objects to operate on
-     * @return the sum
+     * @return the difference
      */
-    static Object performDiff(Object... objects)
+    static Double performDiff(Object... objects)
     {
         double[] diffArr = new double[objects.length];
         for (int i = 0; i < objects.length; i++)
@@ -25,6 +27,7 @@ public class Difference extends ColumnFunction
             diffArr[i] = NumberUtilities.parseDouble(objects[i], 0.);
         }
 
+        // this is gonna throw if we don't have any objects but whatever
         double diff = diffArr[0];
         for (int i = 1; i < diffArr.length; i++)
         {

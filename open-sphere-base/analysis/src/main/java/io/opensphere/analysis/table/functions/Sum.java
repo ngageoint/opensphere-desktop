@@ -13,11 +13,13 @@ public class Sum extends ColumnFunction
 
     /**
      * Maps all objects to Double, then returns their sum.
+     * <p>
+     * Non-parseable objects are mapped to the (additive) identity value
      *
      * @param objects the objects to operate on
      * @return the sum
      */
-    static Object performSum(Object... objects)
+    static Double performSum(Object... objects)
     {
         double sum = 0.;
         for (Object o : objects)

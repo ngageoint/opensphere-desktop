@@ -25,6 +25,9 @@ public class ColumnFunctionRegistry
         myFunctionValues.add(new StringJoin());
         myFunctionValues.add(new Sum());
         myFunctionValues.add(new Difference());
+        myFunctionValues.add(new Product());
+        myFunctionValues.add(new Quotient());
+        myFunctionValues.add(new Average());
     }
 
     /**
