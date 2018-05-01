@@ -173,10 +173,13 @@ public class JDependTest
             {
                 searchedPackages.add(currentPackage);
 
-                for (final String dependency : dependencyMap.get(currentPackage))
+                if (dependencyMap != null && currentPackage != null)
                 {
-                    final List<String> currentPackageList = Arrays.asList(currentPackage);
-                    findCycles(cycles, searchedPackages, dependencyMap, concat(path, currentPackageList), dependency);
+                    for (final String dependency : dependencyMap.get(currentPackage))
+                    {
+                        final List<String> currentPackageList = Arrays.asList(currentPackage);
+                        findCycles(cycles, searchedPackages, dependencyMap, concat(path, currentPackageList), dependency);
+                    }
                 }
             }
         }
