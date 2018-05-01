@@ -21,6 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,6 +30,9 @@ import org.junit.Test;
  */
 public class JDependTest
 {
+    /** Logger reference. */
+    private static final Logger LOG = Logger.getLogger(JDependTest.class);
+
     /** The default charset. */
     public static final Charset DEFAULT_CHARSET = Charset.forName(System.getProperty("opensphere.charset", "UTF-8"));
 
@@ -52,7 +56,7 @@ public class JDependTest
         {
             StringWriter out = new StringWriter();
             e.printStackTrace(new PrintWriter(out));
-            Assert.fail(out.toString());
+            Assert.fail(e.getMessage() + ":\n" + out.toString());
         }
     }
 
@@ -150,9 +154,14 @@ public class JDependTest
     private void findCycles(Collection<List<String>> cycles, Set<String> searchedPackages,
             Map<String, Collection<String>> dependencyMap, List<String> path, String currentPackage)
     {
+        LOG.info(currentPackage);
         if (dependencyMap == null)
         {
             throw new NullPointerException("Dependency Map is null for package '" + currentPackage + "'");
+        }
+        if (currentPackage == null)
+        {
+            throw new NullPointerException("The current package is null. Unable to scan current package.");
         }
         if (path.contains(currentPackage))
         {
