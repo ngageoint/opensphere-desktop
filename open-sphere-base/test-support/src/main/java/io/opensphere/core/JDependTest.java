@@ -48,11 +48,11 @@ public class JDependTest
                 Assert.fail(formatMessage(cycles));
             }
         }
-        catch (final IOException e)
+        catch (final Exception e)
         {
-            PrintWriter out = new PrintWriter(new StringWriter());
-            e.printStackTrace(out);
-            Assert.fail(out.toString());
+            StringWriter out = new StringWriter();
+            e.printStackTrace(new PrintWriter(out));
+            Assert.fail(e.getMessage() + ":\n" + out.toString());
         }
     }
 
@@ -158,8 +158,7 @@ public class JDependTest
         else if (!searchedPackages.contains(currentPackage))
         {
             searchedPackages.add(currentPackage);
-
-            for (final String dependency : dependencyMap.get(currentPackage))
+            for (final String dependency : dependencyMap.computeIfAbsent(currentPackage, k -> new HashSet<>()))
             {
                 final List<String> currentPackageList = Arrays.asList(currentPackage);
                 findCycles(cycles, searchedPackages, dependencyMap, concat(path, currentPackageList), dependency);
