@@ -105,6 +105,10 @@ public class JDependTest
             else if (currentPackage != null && dependencyMatcher.find())
             {
                 final String dependency = dependencyMatcher.group(1);
+                if (!dependencyMap.containsKey(currentPackage))
+                {
+                    dependencyMap.put(currentPackage, new ArrayList<>());
+                }
                 dependencyMap.get(currentPackage).add(dependency);
             }
         }
