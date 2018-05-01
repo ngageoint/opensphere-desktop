@@ -48,7 +48,7 @@ public class JDependTest
                 Assert.fail(formatMessage(cycles));
             }
         }
-        catch (final IOException e)
+        catch (final Exception e)
         {
             PrintWriter out = new PrintWriter(new StringWriter());
             e.printStackTrace(out);
