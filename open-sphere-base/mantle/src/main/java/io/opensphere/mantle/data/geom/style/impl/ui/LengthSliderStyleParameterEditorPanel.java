@@ -89,7 +89,7 @@ public class LengthSliderStyleParameterEditorPanel extends AbstractStyleParamete
         int iMax = Math.abs((int)Math.floor(Length.create(displayUnits, maxLength).getMagnitude()));
         int iMin = Math.abs((int)Math.ceil(Length.create(displayUnits, minLength).getMagnitude()));
 
-        // Getting some cool exceptions here but not being told what they are
+        // Slider range exception means that these might be backwards.
         int realMax = Math.max(iMax, iMin);
         int realMin = Math.min(iMax, iMin);
 
