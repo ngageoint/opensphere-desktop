@@ -21,7 +21,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -30,9 +29,6 @@ import org.junit.Test;
  */
 public class JDependTest
 {
-    /** Logger reference. */
-    private static final Logger LOG = Logger.getLogger(JDependTest.class);
-
     /** The default charset. */
     public static final Charset DEFAULT_CHARSET = Charset.forName(System.getProperty("opensphere.charset", "UTF-8"));
 
@@ -105,21 +101,11 @@ public class JDependTest
             else if (currentPackage != null && dependencyMatcher.find())
             {
                 final String dependency = dependencyMatcher.group(1);
-                dependencyMap.computeIfAbsent(currentPackage, k -> createMap(k)).add(dependency);
+                dependencyMap.computeIfAbsent(currentPackage, k -> new HashSet<>()).add(dependency);
             }
         }
 
         return dependencyMap;
-    }
-
-    /**
-     * @param key
-     * @return
-     */
-    private HashSet<String> createMap(String key)
-    {
-        LOG.info("Adding map for key '" + key + "'");
-        return new HashSet<>();
     }
 
     /**
@@ -164,12 +150,6 @@ public class JDependTest
     private void findCycles(Collection<List<String>> cycles, Set<String> searchedPackages,
             Map<String, Collection<String>> dependencyMap, List<String> path, String currentPackage)
     {
-        LOG.info("Processing package '" + currentPackage + "'");
-
-        if (dependencyMap == null)
-        {
-            throw new NullPointerException("Dependency Map is null for package '" + currentPackage + "'");
-        }
         if (path.contains(currentPackage))
         {
             final List<String> currentPackageList = Arrays.asList(currentPackage);
@@ -178,7 +158,7 @@ public class JDependTest
         else if (!searchedPackages.contains(currentPackage))
         {
             searchedPackages.add(currentPackage);
-            for (final String dependency : dependencyMap.computeIfAbsent(currentPackage, k -> createMap(k)))
+            for (final String dependency : dependencyMap.computeIfAbsent(currentPackage, k -> new HashSet<>()))
             {
                 final List<String> currentPackageList = Arrays.asList(currentPackage);
                 findCycles(cycles, searchedPackages, dependencyMap, concat(path, currentPackageList), dependency);
