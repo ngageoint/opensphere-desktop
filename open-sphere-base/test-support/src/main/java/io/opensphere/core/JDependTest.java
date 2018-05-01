@@ -105,11 +105,21 @@ public class JDependTest
             else if (currentPackage != null && dependencyMatcher.find())
             {
                 final String dependency = dependencyMatcher.group(1);
-                dependencyMap.computeIfAbsent(currentPackage, k -> new HashSet<>()).add(dependency);
+                dependencyMap.computeIfAbsent(currentPackage, k -> createMap(k)).add(dependency);
             }
         }
 
         return dependencyMap;
+    }
+
+    /**
+     * @param key
+     * @return
+     */
+    private HashSet<String> createMap(String key)
+    {
+        LOG.info("Adding map for key '" + key + "'");
+        return new HashSet<>();
     }
 
     /**
@@ -154,6 +164,8 @@ public class JDependTest
     private void findCycles(Collection<List<String>> cycles, Set<String> searchedPackages,
             Map<String, Collection<String>> dependencyMap, List<String> path, String currentPackage)
     {
+        LOG.info("Processing package '" + currentPackage + "'");
+
         if (dependencyMap == null)
         {
             throw new NullPointerException("Dependency Map is null for package '" + currentPackage + "'");
@@ -166,7 +178,7 @@ public class JDependTest
         else if (!searchedPackages.contains(currentPackage))
         {
             searchedPackages.add(currentPackage);
-            for (final String dependency : dependencyMap.get(currentPackage))
+            for (final String dependency : dependencyMap.computeIfAbsent(currentPackage, k -> createMap(k)))
             {
                 final List<String> currentPackageList = Arrays.asList(currentPackage);
                 findCycles(cycles, searchedPackages, dependencyMap, concat(path, currentPackageList), dependency);
