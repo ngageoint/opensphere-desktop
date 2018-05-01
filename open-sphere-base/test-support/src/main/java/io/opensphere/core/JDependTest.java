@@ -150,6 +150,10 @@ public class JDependTest
     private void findCycles(Collection<List<String>> cycles, Set<String> searchedPackages,
             Map<String, Collection<String>> dependencyMap, List<String> path, String currentPackage)
     {
+        if (dependencyMap == null)
+        {
+            throw new NullPointerException("Dependency Map is null for package '" + currentPackage + "'");
+        }
         if (path.contains(currentPackage))
         {
             final List<String> currentPackageList = Arrays.asList(currentPackage);
