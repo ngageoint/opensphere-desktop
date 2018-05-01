@@ -29,6 +29,7 @@ import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
 import io.opensphere.mantle.data.util.DataElementLookupUtils;
+import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.merge.algorithm.MergeData;
 import io.opensphere.merge.model.MergeModel;
 import io.opensphere.merge.model.MergePrefs;
@@ -202,7 +203,8 @@ public class MergeController extends AbstractMantleController implements Consume
             try
             {
                 List<Pair<String, List<String>>> layers = New.list();
-                for (DataTypeInfo layer : myModel.getLayers())
+                MantleToolbox mantleToolbox = MantleToolboxUtils.getMantleToolbox(myToolbox);
+                for (DataTypeInfo layer : myModel.getLayers(mantleToolbox))
                 {
                     layers.add(new Pair<>(layer.getTypeKey(), layer.getMetaDataInfo().getKeyNames()));
                 }

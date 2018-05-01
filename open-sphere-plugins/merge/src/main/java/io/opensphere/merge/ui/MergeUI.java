@@ -91,7 +91,7 @@ public class MergeUI extends BorderPane implements Editor
         {
             mergeController.setModel(model);
         }
-        JFXDialog dialog = GuiUtil.okCancelDialog(toolbox, "Merge " + model.getLayers().size() + " Layers");
+        JFXDialog dialog = GuiUtil.okCancelDialog(toolbox, "Merge " + model.getLayerCount() + " Layers");
         MergeUI mergeUI;
         if (saveAction == null)
         {

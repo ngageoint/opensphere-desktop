@@ -2,7 +2,6 @@ package io.opensphere.merge.model;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +11,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import io.opensphere.core.util.collections.New;
@@ -32,17 +30,12 @@ public class MergePrefs
     private final List<Join> joins = New.list();
 
     /** The merge models. */
-    @XmlTransient
     private final ObservableList<MergeModel> myMerges = FXCollections
             .synchronizedObservableList(FXCollections.observableArrayList());
 
-//    /** A copy of the merge models for persistence. */
-//    @XmlElement(name = "merge")
-//    private final List<MergeModel> myMergesToPersist = New.list();
-
     /** A copy of the merge models for persistence. */
-    @XmlElement(name = "baba")
-    private final List<String> myMergesToPersist = New.list();
+    @XmlElement(name = "merge")
+    private final List<MergeModel> myMergesToPersist = New.list();
 
     /**
      * Prepares the bean for saving.
@@ -50,8 +43,7 @@ public class MergePrefs
     public void prepareForSave()
     {
         myMergesToPersist.clear();
-//        myMergesToPersist.addAll(myMerges);
-        myMergesToPersist.addAll(myMerges.stream().map(m -> m.getNewLayerName().get()).collect(Collectors.toList()));
+        myMergesToPersist.addAll(myMerges);
     }
 
     /**
@@ -59,8 +51,7 @@ public class MergePrefs
      */
     public void prepareForRead()
     {
-        System.err.println(myMergesToPersist);
-//        myMerges.addAll(myMergesToPersist);
+        myMerges.addAll(myMergesToPersist);
     }
 
     /**
@@ -84,13 +75,14 @@ public class MergePrefs
     }
 
     /**
-     * Delete the named join configuration, if it exists.
+     * Delete the named join or merge configuration, if it exists.
      *
-     * @param name join name
+     * @param name join or merge name
      */
     public void delete(String name)
     {
         joins.removeIf(j -> j.name.equals(name));
+        myMerges.removeIf(m -> m.getNewLayerName().get().equals(name));
     }
 
     /**

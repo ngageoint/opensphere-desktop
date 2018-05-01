@@ -1,9 +1,7 @@
 package io.opensphere.merge.model;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -17,6 +15,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import io.opensphere.core.util.collections.New;
+import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataTypeInfo;
 
 /**
@@ -35,7 +34,7 @@ public class MergeModel
      * The type keys we are merging.
      */
     @XmlElement(name = "typeKey")
-    private final List<String> myTypeKeys;
+    private final List<String> myTypeKeys = New.list();
 
     /**
      * The new layer name.
@@ -54,8 +53,7 @@ public class MergeModel
      */
     public MergeModel()
     {
-        myLayers = Collections.emptyList();
-        myTypeKeys = Collections.emptyList();
+        myLayers = New.list();
     }
 
     /**
@@ -66,7 +64,7 @@ public class MergeModel
     public MergeModel(Collection<DataTypeInfo> layers)
     {
         myLayers = New.unmodifiableList(layers);
-        myTypeKeys = layers.stream().map(d -> d.getTypeKey()).collect(Collectors.toList());
+        layers.stream().map(d -> d.getTypeKey()).forEach(myTypeKeys::add);
     }
 
     /**
@@ -78,9 +76,34 @@ public class MergeModel
     {
         if (myLayers.isEmpty())
         {
-            throw new RuntimeException("empty layers");
+            throw new IllegalStateException("Empty layers - please call getLayers() with the mantle toolbox instead");
         }
         return myLayers;
+    }
+
+    /**
+     * Gets the layers to merge.
+     *
+     * @param mantleToolbox the mantle toolbox, to look up layers
+     * @return the layers to merge.
+     */
+    public List<DataTypeInfo> getLayers(MantleToolbox mantleToolbox)
+    {
+        if (myLayers.isEmpty())
+        {
+            myTypeKeys.stream().map(mantleToolbox::getDataTypeInfoFromKey).forEach(myLayers::add);
+        }
+        return myLayers;
+    }
+
+    /**
+     * Gets the layer count.
+     *
+     * @return the layer count
+     */
+    public int getLayerCount()
+    {
+        return !myLayers.isEmpty() ? myLayers.size() : myTypeKeys.size();
     }
 
     /**
