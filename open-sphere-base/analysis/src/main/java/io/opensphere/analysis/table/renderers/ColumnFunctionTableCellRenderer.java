@@ -46,7 +46,17 @@ public class ColumnFunctionTableCellRenderer extends NumberTableCellRenderer
     {
         if (value instanceof ColumnFunction)
         {
-            value = ((ColumnFunction)value).getValue();
+            ColumnFunction colFunc = (ColumnFunction)value;
+            int[] cols = colFunc.getColumns();
+            Object[] vals = new Object[cols.length];
+
+            for (int i = 0; i < cols.length; i++)
+            {
+                vals[i] = table.getModel().getValueAt(row, cols[i]);
+            }
+
+            // Format as Label
+            value = colFunc.getValue(vals);
         }
 
         return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);

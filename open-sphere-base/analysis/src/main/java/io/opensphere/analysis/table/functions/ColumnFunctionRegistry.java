@@ -21,6 +21,10 @@ public class ColumnFunctionRegistry
     public ColumnFunctionRegistry(Toolbox toolbox)
     {
         myFunctionValues = New.list();
+
+        myFunctionValues.add(new StringJoin());
+        myFunctionValues.add(new Sum());
+        myFunctionValues.add(new Difference());
     }
 
     /**

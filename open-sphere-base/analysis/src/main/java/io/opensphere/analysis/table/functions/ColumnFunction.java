@@ -1,55 +1,67 @@
 package io.opensphere.analysis.table.functions;
 
-import java.util.function.BiFunction;
+import java.util.Objects;
+import java.util.function.Function;
 
 /**
- * Representation of a multi-column function.
+ * Representation of a multi-column function. Constructors are used to generate
+ * templates, which are then instantiated for use via {@link #build(int...)}.
  */
 public class ColumnFunction
 {
-    /** Array of column values. */
-    private final Object[] myValues = new Object[2];
+    /** Array of column indices. Operations are executed in order. */
+    private final int[] myColumns;
 
     /** The function name. */
     private final String myName;
 
     /** The function to apply. */
-    private final BiFunction<Object, Object, Object> myFunction;
+    private final Function<Object[], Object> myFunction;
 
     /**
-     * Constructs a ColumnFunction.
+     * Constructs a ColumnFunction against any number of columns
      *
      * @param name the name of the function
-     * @param function the function to apply each value to
+     * @param columnCount the number of columns
+     * @param function the function to use
      */
-    public ColumnFunction(String name, BiFunction<Object, Object, Object> function)
+    protected ColumnFunction(String name, int columnCount, Function<Object[], Object> function)
     {
         myName = name;
+        myColumns = new int[columnCount];
         myFunction = function;
     }
 
     /**
      * Sets the values that the function will utilize.
      *
-     * @param value the value to set
-     * @param index the index to set
+     * @param index the index of the array
+     * @param column the index of the column
      */
-    public void setValue(Object value, int index)
+    public void setColumn(int index, int column)
     {
-        if (index >= 0 && index < myValues.length)
-        {
-            myValues[index] = value;
-        }
+        myColumns[index] = column;
+    }
+
+    /**
+     * Retrieves the value of {@link #myColumns}.
+     *
+     * @return the array of column indices
+     */
+    public int[] getColumns()
+    {
+        return myColumns;
     }
 
     /**
      * Returns the result of the function.
      *
+     * @param values the values to calculate against
      * @return the function result after applying to each value
      */
-    public Object getValue()
+    public String getValue(Object... values)
     {
-        return myFunction.apply(myValues[0], myValues[1]);
+        return Objects.toString(myFunction.apply(values));
     }
 
     @Override
@@ -61,15 +73,16 @@ public class ColumnFunction
     /**
      * Builds and applies the function with whatever values it requires.
      *
-     * @param left the left (initial) value
-     * @param right the right (applied) value
+     * @param columns the columns this function applies to
      * @return a readable ColumnFunction
      */
-    public ColumnFunction build(Object left, Object right)
+    public ColumnFunction build(int... columns)
     {
-        ColumnFunction result = new ColumnFunction(myName, myFunction);
-        result.setValue(left, 0);
-        result.setValue(right, 1);
+        ColumnFunction result = new ColumnFunction(myName, columns.length, myFunction);
+        for (int i = 0; i < columns.length; i++)
+        {
+            result.setColumn(i, columns[i]);
+        }
 
         return result;
     }
