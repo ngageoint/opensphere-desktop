@@ -18,6 +18,8 @@ public class ColumnFunction
     /** The function to apply. */
     private final Function<Object[], Object> myFunction;
 
+    private String myValueAsString;
+
     /**
      * Constructs a ColumnFunction against any number of columns
      *
@@ -61,13 +63,20 @@ public class ColumnFunction
      */
     public String getValue(Object... values)
     {
-        return Objects.toString(myFunction.apply(values));
+        myValueAsString = Objects.toString(myFunction.apply(values));
+        return myValueAsString;
     }
 
     @Override
     public String toString()
     {
-        return myName;
+        String returnVal = myName;
+        if (myValueAsString != null)
+        {
+            returnVal = myValueAsString;
+        }
+
+        return returnVal;
     }
 
     /**
