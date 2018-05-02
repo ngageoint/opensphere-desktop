@@ -33,7 +33,7 @@ node {
 			configFileProvider(
 				[configFile(fileId: 'opensphere-settings', variable: 'MAVEN_SETTINGS')]) {
 	            sh "${env.mvnHome}/bin/mvn $MAVEN_SETTINGS --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} clean install deploy -Pautomated ${env.REMOTE_REPO_ARGS}"
-	        })
+	        }
         } catch (error) {
             notifyFailed();
             throw error;
