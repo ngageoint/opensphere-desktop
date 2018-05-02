@@ -80,4 +80,4 @@ if not defined OPENSPHERE_CUSTOM_JVM_ARGS (
 
 set OPENSPHERE_JVM_ARGS=%OPENSPHERE_PATH_RUNTIME_ARG% %OPENSPHERE_DB_PATH_ARG% %OPENSPHERE_CACHE_SIZE_HINT_ARG% "-XX:ErrorFile=%OPENSPHERE_PATH_RUNTIME%\opensphere\vortex\logs\hs_err_pid%%p.log" -XX:+UseMembar -XX:+AggressiveOpts -XX:+UseG1GC -XX:G1ReservePercent=40 -Djava.net.preferIPv4Stack=true %OPENSPHERE_CUSTOM_JVM_ARGS%
 
-%OPENSPHERE_JAVA% %MAX_MEM_ARG% %OPENSPHERE_PATH_RUNTIME_ARG% %OPENSPHERE_DB_PATH_ARG% -cp override.jar;log4j-1.2.17.jar;core-${project.version}.jar;open-sphere-dark-laf-${project.version}.jar -splash:splash.png io.opensphere.core.launch.Launch
+%OPENSPHERE_JAVA% --add-modules java.se,java.se.ee --add-opens java.base/java.lang=java.xml.bind %MAX_MEM_ARG% %OPENSPHERE_PATH_RUNTIME_ARG% %OPENSPHERE_DB_PATH_ARG% -cp override.jar;log4j-1.2.17.jar;core-${project.version}.jar;open-sphere-dark-laf-${project.version}.jar -splash:splash.png io.opensphere.core.launch.Launch
