@@ -138,15 +138,17 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
     @Override
     public boolean addDynamicColumn(String columnName, Class<?> columnClass, Object source)
     {
+        boolean added = false;
+
         if (!myDTI.getMetaDataInfo().hasKey(columnName))
         {
-            boolean added = myDTI.getMetaDataInfo().addKey(columnName, columnClass, source);
+            added = myDTI.getMetaDataInfo().addKey(columnName, columnClass, source);
             int columnIndex = myDTI.getMetaDataInfo().getKeyNames().indexOf(columnName);
             DynamicMetadataController<?> controller = createController(myToolbox, columnIndex, myDTI);
             myDynColumnNameToValueMap.put(columnIndex, controller);
-            return added;
         }
-        return false;
+
+        return added;
     }
 
     @Override
