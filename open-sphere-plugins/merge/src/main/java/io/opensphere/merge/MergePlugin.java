@@ -80,7 +80,7 @@ public class MergePlugin extends PluginAdapter
         EventQueue.invokeLater(() ->
         {
             GuiUtil.addMenuItem(GuiUtil.getMainMenu(toolbox, MenuBarRegistry.EDIT_MENU), "Joins/Merges",
-                () -> myConfigGui.show());
+                    () -> myConfigGui.show());
 
             myConfigGui = new ConfigGui(toolbox, joinManager, mergeController, saveCallback);
             myConfigGui.setData(myMergePreferences);
