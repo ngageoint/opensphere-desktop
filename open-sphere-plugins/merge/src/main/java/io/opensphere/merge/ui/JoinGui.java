@@ -1,10 +1,23 @@
 package io.opensphere.merge.ui;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.ValidationStatus;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.DataGroupController;
@@ -17,16 +30,6 @@ import io.opensphere.merge.layout.LayMode;
 import io.opensphere.merge.layout.LinearLayout;
 import io.opensphere.merge.model.JoinModel;
 import io.opensphere.merge.model.MergePrefs;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 
 /**
  * This class houses the GUI for allowing users to request dataset joins.
@@ -116,11 +119,11 @@ public class JoinGui
      *
      * @param types the layers to join
      */
-    public void setData(List<DataTypeInfo> types)
+    public void setData(Collection<? extends DataTypeInfo> types)
     {
         // sometimes (rarely) JavaFX complains if the setData method is called
         // on the current thread; shift it to the JFX thread to avoid the issue
-        GuiUtil.invokeJfx(() ->
+        FXUtilities.runOnFXThreadAndWait(() ->
         {
             for (DataTypeInfo t : types)
             {
@@ -142,7 +145,7 @@ public class JoinGui
      */
     public void setData(MergePrefs.Join j)
     {
-        GuiUtil.invokeJfx(() ->
+        FXUtilities.runOnFXThreadAndWait(() ->
         {
             // extract name and matching method from the config
             nameField.setText(j.name);

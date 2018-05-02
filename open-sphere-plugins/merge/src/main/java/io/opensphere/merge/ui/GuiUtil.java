@@ -3,13 +3,6 @@ package io.opensphere.merge.ui;
 import java.awt.Dimension;
 import java.awt.Window;
 
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-
-import io.opensphere.core.Toolbox;
-import io.opensphere.core.control.ui.MenuBarRegistry;
-import io.opensphere.core.util.fx.JFXDialog;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -18,6 +11,13 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+
+import io.opensphere.core.Toolbox;
+import io.opensphere.core.control.ui.MenuBarRegistry;
+import io.opensphere.core.util.fx.JFXDialog;
 
 /** A collection of GUI-related static utility functions. */
 public final class GuiUtil
@@ -199,74 +199,5 @@ public final class GuiUtil
     {
         MenuBarRegistry mbr = tools.getUIRegistry().getMenuBarRegistry();
         return mbr.getMenu(MenuBarRegistry.MAIN_MENU_BAR, key);
-    }
-
-    /**
-     * Invoke the supplied Runnable on the JavaFX thread and wait for it to
-     * return before proceeding. JavaFX fails to deliver this feature, probably
-     * because they incorrectly believe thay have a good reason.
-     *
-     * @param r Runnable
-     */
-    public static void invokeJfx(Runnable r)
-    {
-        if (Platform.isFxApplicationThread())
-        {
-            r.run();
-        }
-        else
-        {
-            new JfxVehicle(r).go();
-        }
-    }
-
-    /** Encapsulate a Runnable task to be executed on the JavaFX thread. */
-    private static class JfxVehicle
-    {
-        /** The nested Runnable task. */
-        private final Runnable task;
-
-        /**
-         * Create.
-         *
-         * @param r the task to execute
-         */
-        public JfxVehicle(Runnable r)
-        {
-            task = r;
-        }
-
-        /** Perform the task. */
-        public void go()
-        {
-            synchronized (this)
-            {
-                Platform.runLater(() -> runJfx());
-                try
-                {
-                    wait();
-                }
-                catch (Exception eek)
-                {
-                    // Do not log
-                }
-            }
-        }
-
-        /** Execute on JFX Thread. */
-        private void runJfx()
-        {
-            synchronized (this)
-            {
-                try
-                {
-                    task.run();
-                }
-                finally
-                {
-                    notify();
-                }
-            }
-        }
     }
 }

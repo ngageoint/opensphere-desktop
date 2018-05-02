@@ -29,8 +29,10 @@ import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
 import io.opensphere.mantle.data.util.DataElementLookupUtils;
+import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.merge.algorithm.MergeData;
 import io.opensphere.merge.model.MergeModel;
+import io.opensphere.merge.model.MergePrefs;
 import io.opensphere.merge.model.MergedDataRow;
 
 /**
@@ -89,6 +91,12 @@ public class MergeController extends AbstractMantleController implements Consume
      */
     private final Toolbox myToolbox;
 
+    /** The merge preferences. */
+    private final MergePrefs myMergePreferences;
+
+    /** The callback for saving preferences. */
+    private final Runnable mySaveCallback;
+
     /**
      * The type controller.
      */
@@ -98,12 +106,16 @@ public class MergeController extends AbstractMantleController implements Consume
      * Constructs a new column mapping support.
      *
      * @param toolbox The system toolbox.
+     * @param mergePreferences The merge preferences.
+     * @param saveCallback The callback for saving preferences.
      */
-    public MergeController(Toolbox toolbox)
+    public MergeController(Toolbox toolbox, MergePrefs mergePreferences, Runnable saveCallback)
     {
         super(toolbox, ourRootGroupName);
 
         myToolbox = toolbox;
+        myMergePreferences = mergePreferences;
+        mySaveCallback = saveCallback;
         MantleToolbox mantle = myToolbox.getPluginToolboxRegistry().getPluginToolbox(MantleToolbox.class);
         myElementProvider = mantle.getDataElementLookupUtils();
         myTypeController = mantle.getDataTypeController();
@@ -131,10 +143,7 @@ public class MergeController extends AbstractMantleController implements Consume
      */
     public void performMerge()
     {
-        ThreadUtilities.runCpu(() ->
-        {
-            performMergeBackground();
-        });
+        ThreadUtilities.runCpu(this::performMergeBackground);
     }
 
     @Override
@@ -153,10 +162,26 @@ public class MergeController extends AbstractMantleController implements Consume
         myModel = model;
         fillDefaultName();
         checkAssociations();
-        myModel.getUserMessage().addListener((prop, old, newValue) ->
+        myModel.getUserMessage().addListener((prop, old, newValue) -> checkAssociations());
+    }
+
+    /**
+     * Removes everything that was created for the given merge model.
+     *
+     * @param model the merge model
+     */
+    public void removeMerge(MergeModel model)
+    {
+        DataGroupInfo group = removeLayer(model.getNewLayerName().get());
+        if (group != null)
         {
-            checkAssociations();
-        });
+            DataTypeInfo dataType = group.getMembers(false).iterator().next();
+            DataModelCategory category = DataRegistryUtils.getInstance().getMergeDataCategory(dataType.getTypeKey());
+            myDataRegistry.removeModels(category, false);
+        }
+
+        myMergePreferences.getMerges().remove(model);
+        mySaveCallback.run();
     }
 
     @Override
@@ -178,7 +203,8 @@ public class MergeController extends AbstractMantleController implements Consume
             try
             {
                 List<Pair<String, List<String>>> layers = New.list();
-                for (DataTypeInfo layer : myModel.getLayers())
+                MantleToolbox mantleToolbox = MantleToolboxUtils.getMantleToolbox(myToolbox);
+                for (DataTypeInfo layer : myModel.getLayers(mantleToolbox))
                 {
                     layers.add(new Pair<>(layer.getTypeKey(), layer.getMetaDataInfo().getKeyNames()));
                 }
@@ -215,10 +241,8 @@ public class MergeController extends AbstractMantleController implements Consume
         dataType.setVisible(true, this);
         dataGroup.activationProperty().addListener(myActivationListener);
         depositMergeData(dataType.getTypeKey(), data);
-        // We must deactivate then activate this data group in order for the
-        // activation listener to be executed
-        // if this data groups activation state has been saved to active
-        // already.
+        /* We must deactivate then activate this data group in order for the activation listener to be executed if this data
+         * groups activation state has been saved to active already. */
         dataGroup.activationProperty().setActive(false);
         dataGroup.activationProperty().setActive(true);
     }
@@ -303,6 +327,9 @@ public class MergeController extends AbstractMantleController implements Consume
             {
                 createLayerAndActivate(data);
             }
+
+            myMergePreferences.getMerges().add(myModel);
+            mySaveCallback.run();
         }
     }
 }

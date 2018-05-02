@@ -233,10 +233,17 @@ public abstract class AbstractMantleController extends DynamicService<String, Se
      * Removes a layer.
      *
      * @param id the unique layer ID (same as group ID)
+     * @return the removed data group, or null
      */
-    public void removeLayer(String id)
+    public DataGroupInfo removeLayer(String id)
     {
-        removeDynamicService(id);
+        DataGroupInfo removedGroup = null;
+        Service service = removeDynamicService(id);
+        if (service instanceof GroupService)
+        {
+            removedGroup = ((GroupService)service).getGroup();
+        }
+        return removedGroup;
     }
 
     /**
