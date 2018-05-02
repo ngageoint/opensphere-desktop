@@ -18,6 +18,7 @@ public class ColumnFunction
     /** The function to apply. */
     private final Function<Object[], Object> myFunction;
 
+    /** String representation of {@link #getValue(Object...)}. */
     private String myValueAsString;
 
     /**
