@@ -6,7 +6,6 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Control;
@@ -233,7 +232,7 @@ public class ConfigGui
                 setMaxWidth(Control.USE_PREF_SIZE);
 
                 // Construct buttons.
-                HBox labelBox = new HBox();
+                HBox buttonBox = new HBox(5);
 
                 Button updateButton = new Button("Update");
                 updateButton.setOnAction((evt) -> ThreadUtilities.runCpu(() -> update()));
@@ -244,12 +243,11 @@ public class ConfigGui
                 Button deleteButton = new Button("Delete");
                 deleteButton.setOnAction((evt) -> ThreadUtilities.runCpu(() -> delete()));
 
-                ObservableList<Node> children = labelBox.getChildren();
-                children.addAll(updateButton, editButton, deleteButton);
+                buttonBox.getChildren().addAll(updateButton, editButton, deleteButton);
 
                 // Init label.
                 setText(item.getName());
-                setGraphic(labelBox);
+                setGraphic(buttonBox);
             }
         }
 
