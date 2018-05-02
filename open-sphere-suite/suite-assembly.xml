@@ -13,6 +13,7 @@
 			<includes>
 				<include>io.open-sphere:*</include>
 				<include>io.open-sphere.plugins:*</include>
+				<include>com.sun.xml.bind:*</include>
 			</includes>
 			<binaries>
 				<dependencySets>
@@ -20,6 +21,7 @@
 						<includes>
 							<include>io.open-sphere:*</include>
 							<include>io.open-sphere.plugins:*</include>
+							<include>com.sun.xml.bind:*</include>
 						</includes>
 					</dependencySet>
 				</dependencySets>
