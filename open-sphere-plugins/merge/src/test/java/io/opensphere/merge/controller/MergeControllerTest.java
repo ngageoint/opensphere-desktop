@@ -180,11 +180,11 @@ public class MergeControllerTest
         ColumnMappingController mapper = createMapperNoAssociations(support);
         Toolbox toolbox = createToolbox(support, mantle, mapper);
 
-        MergeModel model = new MergeModel(layers);
-
         support.replayAll();
 
-        MergeController controller = new MergeController(toolbox);
+        MergeModel model = new MergeModel(layers);
+
+        MergeController controller = new MergeController(toolbox, null, null);
         controller.setModel(model);
         assertEquals(ourLayer1 + " " + ourLayer2, model.getNewLayerName().get());
         assertEquals("", controller.getModel().getUserMessage().get());
@@ -223,11 +223,11 @@ public class MergeControllerTest
         ColumnMappingController mapper = createMapperNoAssociations(support);
         Toolbox toolbox = createToolbox(support, mantle, mapper);
 
-        MergeModel model = new MergeModel(layers);
-
         support.replayAll();
 
-        MergeController controller = new MergeController(toolbox);
+        MergeModel model = new MergeModel(layers);
+
+        MergeController controller = new MergeController(toolbox, null, null);
         controller.setModel(model);
         assertEquals(existingLayer + " 1", model.getNewLayerName().get());
         assertEquals("", controller.getModel().getUserMessage().get());
@@ -262,12 +262,12 @@ public class MergeControllerTest
         ColumnMappingController mapper = createMapperMerge(support);
         Toolbox toolbox = createToolboxMerge(support, mantle, mapper);
 
+        support.replayAll();
+
         MergeModel model = new MergeModel(layers);
         model.getNewLayerName().set(ourMergeLayerName);
 
-        support.replayAll();
-
-        MergeController controller = new MergeController(toolbox);
+        MergeController controller = new MergeController(toolbox, null, null);
         controller.setModel(model);
         controller.performMerge();
         assertTrue(latch.await(1, TimeUnit.SECONDS));

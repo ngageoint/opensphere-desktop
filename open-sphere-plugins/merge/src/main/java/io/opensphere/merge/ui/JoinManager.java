@@ -32,13 +32,13 @@ import io.opensphere.merge.model.MergedDataRow;
 public class JoinManager
 {
     /** The system Toolbox. */
-    private Toolbox tools;
+    private final Toolbox tools;
 
     /** One of many Mantle tools. */
-    private DataGroupController groupCtrl;
+    private final DataGroupController groupCtrl;
 
     /** Supporting tools for performing join operations. */
-    private EnvSupport systemSupport;
+    private final EnvSupport systemSupport;
 
     /** For handling the Mantle. */
     private final DataUtil joinLayers = new DataUtil();
@@ -49,7 +49,7 @@ public class JoinManager
      *
      * @param tb the Toolbox
      */
-    public void setTools(Toolbox tb)
+    public JoinManager(Toolbox tb)
     {
         tools = tb;
         MantleToolbox mtb = tools.getPluginToolboxRegistry().getPluginToolbox(MantleToolbox.class);

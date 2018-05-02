@@ -1,14 +1,7 @@
 package io.opensphere.merge.ui;
 
-import io.opensphere.core.Toolbox;
-import io.opensphere.core.util.ValidatorSupport;
-import io.opensphere.core.util.fx.Editor;
-import io.opensphere.mantle.data.columns.gui.Constants;
-import io.opensphere.mantle.util.MantleToolboxUtils;
-import io.opensphere.merge.controller.ColumnAssociationsLauncher;
-import io.opensphere.merge.controller.MergeController;
-import io.opensphere.merge.controller.MergeValidator;
-import io.opensphere.merge.model.MergeModel;
+import java.util.Collection;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,6 +10,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+
+import io.opensphere.core.Toolbox;
+import io.opensphere.core.util.ValidatorSupport;
+import io.opensphere.core.util.fx.Editor;
+import io.opensphere.core.util.fx.JFXDialog;
+import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.data.columns.gui.Constants;
+import io.opensphere.mantle.util.MantleToolboxUtils;
+import io.opensphere.merge.controller.ColumnAssociationsLauncher;
+import io.opensphere.merge.controller.MergeController;
+import io.opensphere.merge.controller.MergeValidator;
+import io.opensphere.merge.model.MergeModel;
 
 /**
  * The merge UI that allows the user to set a new merged layer name and to
@@ -59,6 +64,53 @@ public class MergeUI extends BorderPane implements Editor
      * Used to validate the model.
      */
     private final MergeValidator myValidator;
+
+    /**
+     * Launches the merge ui.
+     *
+     * @param dataTypes The data types to merge.
+     * @param toolbox The toolbox.
+     * @param mergeController The merge controller.
+     */
+    public static void showMergeDialog(Collection<DataTypeInfo> dataTypes, Toolbox toolbox, MergeController mergeController)
+    {
+        showMergeDialog(new MergeModel(dataTypes), toolbox, mergeController, null);
+    }
+
+    /**
+     * Launches the merge ui.
+     *
+     * @param model The merge model.
+     * @param toolbox The toolbox.
+     * @param mergeController The merge controller.
+     * @param saveAction The override save action, or null for default behavior.
+     */
+    public static void showMergeDialog(MergeModel model, Toolbox toolbox, MergeController mergeController, Runnable saveAction)
+    {
+        if (mergeController != null)
+        {
+            mergeController.setModel(model);
+        }
+        JFXDialog dialog = GuiUtil.okCancelDialog(toolbox, "Merge " + model.getLayerCount() + " Layers");
+        MergeUI mergeUI;
+        if (saveAction == null)
+        {
+            mergeUI = new MergeUI(toolbox, mergeController, model);
+        }
+        else
+        {
+            mergeUI = new MergeUI(toolbox, mergeController, model)
+            {
+                @Override
+                public void accept()
+                {
+                    saveAction.run();
+                }
+            };
+        }
+        dialog.setFxNode(mergeUI);
+        dialog.setVisible(true);
+    }
 
     /**
      * The merge UI constructor.

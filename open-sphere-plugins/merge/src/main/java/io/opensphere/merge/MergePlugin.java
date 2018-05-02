@@ -1,6 +1,6 @@
 package io.opensphere.merge;
 
-import javax.swing.SwingUtilities;
+import java.awt.EventQueue;
 
 import io.opensphere.core.PluginLoaderData;
 import io.opensphere.core.Toolbox;
@@ -8,10 +8,10 @@ import io.opensphere.core.api.adapter.PluginAdapter;
 import io.opensphere.core.control.ui.MenuBarRegistry;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.util.fx.FXUtilities;
-import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
 import io.opensphere.mantle.data.DataGroupInfo.MultiDataGroupContextKey;
+import io.opensphere.merge.controller.MergeController;
 import io.opensphere.merge.model.JoinModel;
 import io.opensphere.merge.model.MergePrefs;
 import io.opensphere.merge.ui.ConfigGui;
@@ -26,20 +26,14 @@ public class MergePlugin extends PluginAdapter
     /** Preferences key. */
     private static final String PREFS_KEY = "merge";
 
-    /** The system Toolbox. */
-    private Toolbox myToolbox;
-
     /** Preferences object obtained from the PreferencesRegistry. */
     private Preferences mySystemPreferences;
 
     /** JAXB-enabled preferences stored by this Plugin. */
     private MergePrefs myMergePreferences;
 
-    /** Manager for join operations and layers. */
-    private final JoinManager myJoinManager = new JoinManager();
-
-    /** GUI for managing join configurations. */
-    private ConfigGui myJoinConfigGui;
+    /** GUI for managing join/merge configurations. */
+    private ConfigGui myConfigGui;
 
     /** Provides the menu options when right clicking on multiple layers. */
     private MergeContextMenuProvider myMenuProvider;
@@ -48,33 +42,14 @@ public class MergePlugin extends PluginAdapter
     private MergeContextSingleSelectionMenuProvider mySingleSelectionMenuProvider;
 
     @Override
-    public void initialize(PluginLoaderData plugindata, Toolbox tb)
+    public void initialize(PluginLoaderData plugindata, Toolbox toolbox)
     {
-        myToolbox = tb;
-
-        myJoinManager.setTools(myToolbox);
-        myMenuProvider = new MergeContextMenuProvider(myToolbox);
-        myMenuProvider.setJoinManager(myJoinManager);
-        myMenuProvider.setJoinListener(m -> addJoin(m));
-
-        mySingleSelectionMenuProvider = new MergeContextSingleSelectionMenuProvider(myToolbox);
-        mySingleSelectionMenuProvider.setJoinManager(myJoinManager);
-        mySingleSelectionMenuProvider.setJoinListener(m -> addJoin(m));
-
-        myToolbox.getUIRegistry().getContextActionManager().registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT,
-                MultiDataGroupContextKey.class, myMenuProvider);
-        myToolbox.getUIRegistry().getContextActionManager().registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT,
-                DataGroupContextKey.class, mySingleSelectionMenuProvider);
-
-        // add a menu item that maps to the showEditor method
-        SwingUtilities.invokeLater(() -> GuiUtil.addMenuItem(GuiUtil.getMainMenu(myToolbox, MenuBarRegistry.EDIT_MENU),
-                "Joins/Merges", () -> myJoinConfigGui.show()));
-
         // if sysPrefs are null, probably the system is broken
-        mySystemPreferences = myToolbox.getPreferencesRegistry().getPreferences(MergePlugin.class);
+        mySystemPreferences = toolbox.getPreferencesRegistry().getPreferences(MergePlugin.class);
         if (mySystemPreferences != null)
         {
             myMergePreferences = mySystemPreferences.getJAXBObject(MergePrefs.class, PREFS_KEY, null);
+            myMergePreferences.prepareForRead();
         }
 
         // Jam in an empty MergePrefs in case a real one was not found
@@ -83,10 +58,32 @@ public class MergePlugin extends PluginAdapter
             myMergePreferences = new MergePrefs();
         }
 
-        EventQueueUtilities.runOnEDT(() ->
+        Runnable saveCallback = this::writePrefs;
+
+        JoinManager joinManager = new JoinManager(toolbox);
+        MergeController mergeController = new MergeController(toolbox, myMergePreferences, saveCallback);
+
+        myMenuProvider = new MergeContextMenuProvider(toolbox, mergeController);
+        myMenuProvider.setJoinManager(joinManager);
+        myMenuProvider.setJoinListener(m -> addJoin(m));
+
+        mySingleSelectionMenuProvider = new MergeContextSingleSelectionMenuProvider(toolbox, mergeController);
+        mySingleSelectionMenuProvider.setJoinManager(joinManager);
+        mySingleSelectionMenuProvider.setJoinListener(m -> addJoin(m));
+
+        toolbox.getUIRegistry().getContextActionManager().registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT,
+                MultiDataGroupContextKey.class, myMenuProvider);
+        toolbox.getUIRegistry().getContextActionManager().registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT,
+                DataGroupContextKey.class, mySingleSelectionMenuProvider);
+
+        // add a menu item that maps to the showEditor method
+        EventQueue.invokeLater(() ->
         {
-            myJoinConfigGui = new ConfigGui(tb, myJoinManager, () -> writePrefs());
-            myJoinConfigGui.setData(myMergePreferences);
+            GuiUtil.addMenuItem(GuiUtil.getMainMenu(toolbox, MenuBarRegistry.EDIT_MENU), "Joins/Merges",
+                () -> myConfigGui.show());
+
+            myConfigGui = new ConfigGui(toolbox, joinManager, mergeController, saveCallback);
+            myConfigGui.setData(myMergePreferences);
         });
     }
 
@@ -98,7 +95,7 @@ public class MergePlugin extends PluginAdapter
     private void addJoin(JoinModel m)
     {
         MergePrefs.Join join = myMergePreferences.addJoinModel(m);
-        FXUtilities.runOnFXThread(() -> myJoinConfigGui.addJoin(join));
+        FXUtilities.runOnFXThread(() -> myConfigGui.addJoin(join));
 
         writePrefs();
     }
@@ -108,6 +105,7 @@ public class MergePlugin extends PluginAdapter
     {
         if (mySystemPreferences != null)
         {
+            myMergePreferences.prepareForSave();
             mySystemPreferences.putJAXBObject(PREFS_KEY, myMergePreferences, false, null);
         }
     }

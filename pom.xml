@@ -228,7 +228,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>3.0.2</version>
+					<version>3.1.0</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -1370,7 +1370,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
-				<version>3.9.0</version>
 				<configuration>
 					<analysisCache>true</analysisCache>
 					<analysisCacheLocation>${project.build.directory}/pmd/pmd.cache</analysisCacheLocation>

@@ -83,8 +83,9 @@ public class DynamicService<K, S extends Service> extends EventListenerService
      * Removes a dynamic service.
      *
      * @param key the service key
+     * @return the service that was removed, or null
      */
-    public void removeDynamicService(K key)
+    public S removeDynamicService(K key)
     {
         S service;
         synchronized (myServiceMap)
@@ -95,6 +96,7 @@ public class DynamicService<K, S extends Service> extends EventListenerService
         {
             service.close();
         }
+        return service;
     }
 
     /**

@@ -2,6 +2,18 @@ package io.opensphere.merge.ui;
 
 import java.awt.Dimension;
 
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Control;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
+
 import io.opensphere.core.Notify;
 import io.opensphere.core.Notify.Method;
 import io.opensphere.core.Toolbox;
@@ -13,38 +25,34 @@ import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.cache.DataElementCache;
+import io.opensphere.merge.controller.MergeController;
 import io.opensphere.merge.model.JoinModel;
+import io.opensphere.merge.model.MergeModel;
 import io.opensphere.merge.model.MergePrefs;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Control;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.HBox;
+import io.opensphere.merge.model.MergePrefs.Join;
 
 /**
- * Facilitates management of existing join configurations.
+ * Facilitates management of existing join/merge configurations.
  */
 public class ConfigGui
 {
     /** System Toolbox. */
-    private Toolbox myToolbox;
+    private final Toolbox myToolbox;
 
     /** The DataGroupController. */
-    private DataGroupController myDataGroupController;
+    private final DataGroupController myDataGroupController;
 
     /** Used to get the element counts. */
-    private DataElementCache myDataCache;
+    private final DataElementCache myDataCache;
 
     /** This GUI's host dialog. */
-    private JFXDialog myDialog;
+    private final JFXDialog myDialog;
 
     /** Manager for layers formed by joining. */
-    private JoinManager myJoinManager;
+    private final JoinManager myJoinManager;
+
+    /** The merge controller. */
+    private final MergeController myMergeController;
 
     /** GUI root. */
     private final ScrollPane myMainPane;
@@ -53,33 +61,32 @@ public class ConfigGui
     private MergePrefs myPreferences;
 
     /** Rows; each one represents a join configuration. */
-    private final ObservableList<MergePrefs.Join> myDataRows = FXCollections.observableArrayList();
+    private final ObservableList<ConfigUiRow> myDataRows = FXCollections.observableArrayList();
 
     /** Callback for saving (this class does not handle persistence). */
-    private Runnable mySaveCallback;
+    private final Runnable mySaveCallback;
 
     /**
      * Constructs ConfigGui.
      *
-     * @param tb
-     * @param jm
-     * @param callback
+     * @param tb the toolbox
+     * @param jm the join manager
+     * @param mergeController the merge controller
+     * @param callback the save callback
      */
-    public ConfigGui(Toolbox tb, JoinManager jm, Runnable callback)
+    public ConfigGui(Toolbox tb, JoinManager jm, MergeController mergeController, Runnable callback)
     {
         myToolbox = tb;
         myJoinManager = jm;
+        myMergeController = mergeController;
         mySaveCallback = callback;
 
         MantleToolbox mtb = tb.getPluginToolboxRegistry().getPluginToolbox(MantleToolbox.class);
         myDataGroupController = mtb.getDataGroupController();
         myDataCache = mtb.getDataElementCache();
 
-        ListView<MergePrefs.Join> listView = new ListView<MergePrefs.Join>(myDataRows);
-        listView.setCellFactory((view) ->
-        {
-            return new MergeFormatCell();
-        });
+        ListView<ConfigUiRow> listView = new ListView<>(myDataRows);
+        listView.setCellFactory(view -> new MergeFormatCell());
         // Ignore all events that the ListView would otherwise handle.
         listView.setSelectionModel(null);
         listView.setEventDispatcher(null);
@@ -119,9 +126,13 @@ public class ConfigGui
     public void setData(MergePrefs p)
     {
         myPreferences = p;
+        myPreferences.getMerges().addListener((ListChangeListener<MergeModel>)c ->
+        {
+            Platform.runLater(() -> handleMergeModelChange(c));
+        });
         myDataRows.clear();
-
-        myDataRows.addAll(myPreferences.getJoins());
+        myPreferences.getJoins().stream().map(ConfigUiRow::new).forEach(myDataRows::add);
+        myPreferences.getMerges().stream().map(ConfigUiRow::new).forEach(myDataRows::add);
     }
 
     /**
@@ -131,17 +142,34 @@ public class ConfigGui
      */
     public void addJoin(MergePrefs.Join join)
     {
-        myDataRows.add(join);
+        myDataRows.add(new ConfigUiRow(join));
     }
 
     /**
-     * Removes a Join from the data list.
+     * Adds a new merge to the data list.
      *
-     * @param join the join to remove
+     * @param merge the merge to add
      */
-    public void removeJoin(MergePrefs.Join join)
+    public void addMerge(MergeModel merge)
     {
-        myDataRows.remove(join);
+        myDataRows.add(new ConfigUiRow(merge));
+    }
+
+    /**
+     * Removes a row from the data list.
+     *
+     * @param row the row to remove
+     */
+    public void removeRow(ConfigUiRow row)
+    {
+        if (row.getJoin() != null)
+        {
+            myDataRows.removeIf(r -> row.getJoin().equals(r.getJoin()));
+        }
+        else
+        {
+            myDataRows.removeIf(r -> row.getMerge().equals(r.getMerge()));
+        }
     }
 
     /**
@@ -152,17 +180,31 @@ public class ConfigGui
      */
     public void replaceJoin(int index, MergePrefs.Join join)
     {
-        myDataRows.set(index, join);
+        myDataRows.set(index, new ConfigUiRow(join));
+    }
+
+    /**
+     * Handles a change in the merge model.
+     *
+     * @param change the change
+     */
+    void handleMergeModelChange(ListChangeListener.Change<? extends MergeModel> change)
+    {
+        while (change.next())
+        {
+            for (MergeModel merge : change.getRemoved())
+            {
+                myDataRows.removeIf(r -> merge.equals(r.getMerge()));
+            }
+            change.getAddedSubList().stream().map(ConfigUiRow::new).forEach(myDataRows::add);
+        }
     }
 
     /** A ListCell for viewing Merge/Join items. */
-    private class MergeFormatCell extends ListCell<MergePrefs.Join>
+    private class MergeFormatCell extends ListCell<ConfigUiRow>
     {
-        /** Name String. */
-        public String myName;
-
         /** Reference to the preference object. */
-        public MergePrefs.Join myItem;
+        public ConfigUiRow myItem;
 
         /** Constructor. Does nothing. */
         public MergeFormatCell()
@@ -170,7 +212,7 @@ public class ConfigGui
         }
 
         @Override
-        protected void updateItem(MergePrefs.Join item, boolean empty)
+        protected void updateItem(ConfigUiRow item, boolean empty)
         {
             super.updateItem(item, empty);
 
@@ -180,18 +222,17 @@ public class ConfigGui
             if (!empty && item != null)
             {
                 myItem = item;
-                myName = item.name;
 
                 // Set label style.
                 setContentDisplay(ContentDisplay.RIGHT);
                 setEllipsisString("...");
-                setGraphicTextGap(25.);
+                setGraphicTextGap(25);
 
-                setPrefWidth(0.);
+                setPrefWidth(0);
                 setMaxWidth(Control.USE_PREF_SIZE);
 
                 // Construct buttons.
-                HBox myLabelBox = new HBox();
+                HBox buttonBox = new HBox(5);
 
                 Button updateButton = new Button("Update");
                 updateButton.setOnAction((evt) -> ThreadUtilities.runCpu(() -> update()));
@@ -202,12 +243,11 @@ public class ConfigGui
                 Button deleteButton = new Button("Delete");
                 deleteButton.setOnAction((evt) -> ThreadUtilities.runCpu(() -> delete()));
 
-                ObservableList<Node> children = myLabelBox.getChildren();
-                children.addAll(updateButton, editButton, deleteButton);
+                buttonBox.getChildren().addAll(updateButton, editButton, deleteButton);
 
                 // Init label.
-                setText(myName);
-                setGraphic(myLabelBox);
+                setText(item.getName());
+                setGraphic(buttonBox);
             }
         }
 
@@ -230,7 +270,7 @@ public class ConfigGui
             }
 
             // check all participating layers for existence of metadata
-            for (MergePrefs.LayerParam lp : myItem.params)
+            for (MergePrefs.LayerParam lp : myItem.getJoin().params)
             {
                 DataTypeInfo t = myDataGroupController.findMemberById(lp.typeKey);
                 // Mantle must be aware of the layer
@@ -276,18 +316,41 @@ public class ConfigGui
             return false;
         }
 
-        /** Recalculate this join, if possible. */
+        /** Recalculate this join/merge, if possible. */
         private void update()
         {
-            if (!checkLayers(false))
+            if (myItem.getJoin() != null)
             {
-                return;
+                if (!checkLayers(false))
+                {
+                    return;
+                }
+                myJoinManager.handleJoin(myItem.getJoin());
             }
-            myJoinManager.handleJoin(myItem);
+            else
+            {
+                myMergeController.removeMerge(myItem.getMerge());
+
+                myMergeController.setModel(myItem.getMerge());
+                myMergeController.performMerge();
+            }
+        }
+
+        /** Spawn the config editor for this join/merge, if possible. */
+        private void edit()
+        {
+            if (myItem.getJoin() != null)
+            {
+                editJoin();
+            }
+            else
+            {
+                editMerge();
+            }
         }
 
         /** Spawn the config editor for this join, if possible. */
-        private void edit()
+        private void editJoin()
         {
             // only edit if metadata are available
             if (!checkLayers(true))
@@ -297,11 +360,18 @@ public class ConfigGui
             JoinGui gui = new JoinGui();
             JFXDialog edDialog = GuiUtil.okCancelDialog(myDialog, "Edit Join");
             edDialog.setFxNode(GuiUtil.vScroll(gui.getMainPane()));
-            edDialog.setAcceptEar(() -> acceptEdits(gui.getModel()));
+            edDialog.setAcceptEar(() -> acceptJoinEdits(gui.getModel()));
             edDialog.setSize(new Dimension(450, 450));
             gui.setup(myToolbox, edDialog);
-            gui.setData(myItem);
+            gui.setData(myItem.getJoin());
             edDialog.setVisible(true);
+        }
+
+        /** Spawn the config editor for this merge, if possible. */
+        private void editMerge()
+        {
+            MergeModel merge = myItem.getMerge();
+            MergeUI.showMergeDialog(merge, myToolbox, null, () -> acceptMergeEdits(merge));
         }
 
         /**
@@ -309,21 +379,108 @@ public class ConfigGui
          *
          * @param m editor model
          */
-        private void acceptEdits(JoinModel m)
+        private void acceptJoinEdits(JoinModel m)
         {
-            MergePrefs.Join newModel = myPreferences.editJoinModel(myItem, m);
+            MergePrefs.Join newModel = myPreferences.editJoinModel(myItem.getJoin(), m);
             fireSave();
 
             FXUtilities.runOnFXThread(() -> replaceJoin(getIndex(), newModel));
         }
 
+        /**
+         * Incorporate edits into the persistent model.
+         *
+         * @param merge merge model
+         */
+        private void acceptMergeEdits(MergeModel merge)
+        {
+            // Only need to save in case the name changed.
+            fireSave();
+
+            // Trigger a change to the UI model
+            Platform.runLater(() ->
+            {
+                for (int i = 0; i < myDataRows.size(); i++)
+                {
+                    ConfigUiRow row = myDataRows.get(i);
+                    if (merge.equals(row.getMerge()))
+                    {
+                        myDataRows.set(i, row);
+                        break;
+                    }
+                }
+            });
+        }
+
         /** Delete this join config. */
         private void delete()
         {
-            myPreferences.delete(myName);
+            myPreferences.delete(myItem.getName());
             fireSave();
 
-            FXUtilities.runOnFXThread(() -> removeJoin(myItem));
+            FXUtilities.runOnFXThread(() -> removeRow(myItem));
+        }
+    }
+
+    /** Model for a UI row. */
+    private static class ConfigUiRow
+    {
+        /** The join. */
+        private final MergePrefs.Join myJoin;
+
+        /** The merge. */
+        private final MergeModel myMerge;
+
+        /**
+         * Constructor.
+         *
+         * @param join the join
+         */
+        public ConfigUiRow(Join join)
+        {
+            myJoin = join;
+            myMerge = null;
+        }
+
+        /**
+         * Constructor.
+         *
+         * @param merge the merge
+         */
+        public ConfigUiRow(MergeModel merge)
+        {
+            myJoin = null;
+            myMerge = merge;
+        }
+
+        /**
+         * Gets the join.
+         *
+         * @return the join
+         */
+        public MergePrefs.Join getJoin()
+        {
+            return myJoin;
+        }
+
+        /**
+         * Gets the merge.
+         *
+         * @return the merge
+         */
+        public MergeModel getMerge()
+        {
+            return myMerge;
+        }
+
+        /**
+         * Gets the name of the row.
+         *
+         * @return the name
+         */
+        public String getName()
+        {
+            return myJoin != null ? myJoin.name : myMerge.getNewLayerName().get();
         }
     }
 }
