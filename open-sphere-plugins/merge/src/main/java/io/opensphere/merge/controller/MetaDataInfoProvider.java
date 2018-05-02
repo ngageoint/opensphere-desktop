@@ -73,6 +73,7 @@ public class MetaDataInfoProvider
         }
 
         addSpecialKeys(metadataInfo, mergedLayers);
+        metadataInfo.copyKeysToOriginalKeys();
 
         return metadataInfo;
     }

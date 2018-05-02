@@ -49,7 +49,6 @@ public class MergePlugin extends PluginAdapter
         if (mySystemPreferences != null)
         {
             myMergePreferences = mySystemPreferences.getJAXBObject(MergePrefs.class, PREFS_KEY, null);
-            myMergePreferences.prepareForRead();
         }
 
         // Jam in an empty MergePrefs in case a real one was not found
@@ -57,6 +56,7 @@ public class MergePlugin extends PluginAdapter
         {
             myMergePreferences = new MergePrefs();
         }
+        myMergePreferences.prepareForRead();
 
         Runnable saveCallback = this::writePrefs;
 
@@ -80,7 +80,7 @@ public class MergePlugin extends PluginAdapter
         EventQueue.invokeLater(() ->
         {
             GuiUtil.addMenuItem(GuiUtil.getMainMenu(toolbox, MenuBarRegistry.EDIT_MENU), "Joins/Merges",
-                () -> myConfigGui.show());
+                    () -> myConfigGui.show());
 
             myConfigGui = new ConfigGui(toolbox, joinManager, mergeController, saveCallback);
             myConfigGui.setData(myMergePreferences);
