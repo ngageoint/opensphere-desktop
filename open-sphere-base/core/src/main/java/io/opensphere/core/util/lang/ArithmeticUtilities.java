@@ -193,4 +193,21 @@ public final class ArithmeticUtilities
         }
         return returnValue;
     }
+
+    /**
+     * Tests to determine if any of the supplied numbers are a special case, such as
+     * {@link Double#NaN} or infinity.
+     *
+     * @param values the values to test.
+     * @return true if the supplied value is a special case, false otherwise.
+     */
+    public static boolean containsSpecial(Number... values)
+    {
+        boolean returnValue = false;
+        for (Number number : values)
+        {
+            returnValue |= isSpecial(number);
+        }
+        return returnValue;
+    }
 }

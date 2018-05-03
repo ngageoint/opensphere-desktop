@@ -38,6 +38,25 @@ public final class NumberUtilities
     }
 
     /**
+     * Attempts conversion of an object to a Double in order to determine
+     * whether or not it is a Number.
+     *
+     * @param values the objects to test
+     * @return whether the conversion was successful
+     */
+    public static boolean areAllNumbers(Object... values)
+    {
+        // assume true until proven otherwise:
+        boolean returnValue = true;
+
+        for (Object value : values)
+        {
+            returnValue &= isNumber(value);
+        }
+        return returnValue;
+    }
+
+    /**
      * Returns the primitive value of the given Integer, or the default value if
      * it's null.
      *
@@ -273,6 +292,24 @@ public final class NumberUtilities
         if (value instanceof Number)
         {
             returnValue = (Number)value;
+        }
+        return returnValue;
+    }
+
+    /**
+     * Gets the supplied values array as an array of Numbers, ordered in the
+     * same order, or null if the value cannot be converted.
+     *
+     * @param values the values to convert.
+     * @return a Number equivalent to the supplied value, or null if it cannot
+     *         be converted.
+     */
+    public static Number[] getNumericValues(Object... values)
+    {
+        Number[] returnValue = new Number[values.length];
+        for (int i = 0; i < values.length; i++)
+        {
+            returnValue[i] = getNumericValue(values[i]);
         }
         return returnValue;
     }
