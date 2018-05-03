@@ -1,6 +1,5 @@
 package io.opensphere.analysis.table.functions;
 
-import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -62,10 +61,10 @@ public class ColumnFunction
      * @param values the values to calculate against
      * @return the function result after applying to each value
      */
-    public String getValue(Object... values)
+    public Object getValue(Object... values)
     {
-        myValueAsString = Objects.toString(myFunction.apply(values));
-        return myValueAsString;
+        return myFunction.apply(values);
+//        return myValueAsString;
     }
 
     @Override
