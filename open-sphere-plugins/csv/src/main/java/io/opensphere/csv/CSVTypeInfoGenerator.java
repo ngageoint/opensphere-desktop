@@ -74,6 +74,7 @@ public final class CSVTypeInfoGenerator
                 ? DefaultBasicVisualizationInfo.LOADS_TO_ALL_TYPES : DefaultBasicVisualizationInfo.LOADS_TO_BASE_AND_STATIC;
         typeInfo.setBasicVisualizationInfo(new DefaultBasicVisualizationInfo(fileSource.getLayerSettings().getLoadsTo(),
                 supportedLoadsToTypes, fileSource.getLayerSettings().getColor(), true));
+        typeInfo.applyColorPreferences();
 
         // Set map visualization info
         if (fileSource.getParseParameters().hasCategory(ColumnType.Category.SPATIAL))

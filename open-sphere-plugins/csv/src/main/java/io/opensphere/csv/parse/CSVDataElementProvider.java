@@ -91,7 +91,7 @@ public class CSVDataElementProvider extends CsvProviderBase
     @Override
     protected Color getLayerColor()
     {
-        return myFileSource.getLayerSettings().getColor();
+        return myTypeInfo.getBasicVisualizationInfo().getTypeColor();
     }
 
     @Override

@@ -744,7 +744,8 @@ public class WFSDataType extends AbstractServerDataTypeInfo
      */
     protected void setMantleProps(MetaDataInfo properties)
     {
-        ServerBasicVisualizationInfo basicInfo = new ServerBasicVisualizationInfo(LoadsTo.STATIC, DEFAULT_TYPE_COLOR, false);
+        ServerBasicVisualizationInfo basicInfo = new ServerBasicVisualizationInfo(LoadsTo.STATIC,
+                getBasicVisualizationInfo().getTypeColor(), false);
         setBasicVisualizationInfo(basicInfo);
 
         OrderManager manager = getToolbox().getOrderManagerRegistry()
