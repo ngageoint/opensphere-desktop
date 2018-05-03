@@ -1,5 +1,6 @@
 package io.opensphere.analysis.table.functions;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -17,8 +18,8 @@ public class ColumnFunction
     /** The function to apply. */
     private final Function<Object[], Object> myFunction;
 
-    /** Final representation of {@link #getValue(Object...)}. */
-    private Object myValue;
+    /** String representation of {@link #getValue(Object...)}. */
+    private String myValueAsString;
 
     /**
      * Constructs a ColumnFunction against any number of columns
@@ -63,6 +64,18 @@ public class ColumnFunction
      */
     public Object getValue(Object... values)
     {
+        myValueAsString = Objects.toString(myFunction.apply(values));
+        return myValueAsString;
+    }
+
+    /**
+     * Returns the result of the function.
+     *
+     * @param values the values to calculate against
+     * @return the function result after applying to each value
+     */
+    public Object getValueLiteral(Object... values)
+    {
         return myFunction.apply(values);
     }
 
@@ -70,9 +83,9 @@ public class ColumnFunction
     public String toString()
     {
         String returnVal = myName;
-        if (myValue != null)
+        if (myValueAsString != null)
         {
-            returnVal = myValue.toString();
+            returnVal = myValueAsString;
         }
 
         return returnVal;
