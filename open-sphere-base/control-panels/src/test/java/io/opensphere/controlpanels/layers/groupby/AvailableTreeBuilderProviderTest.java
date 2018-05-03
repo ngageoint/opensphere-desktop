@@ -25,15 +25,12 @@ public class AvailableTreeBuilderProviderTest
         assertTrue(provider.getBuilder("ACTIVE_LAYERS") instanceof GroupByAvailableActiveLayersTreeBuilder);
         assertTrue(provider.getBuilder("Recent Updates") instanceof GroupByAvailableRecentUpdatesTreeBuilder);
         assertTrue(provider.getBuilder("RECENT_UPDATES") instanceof GroupByAvailableRecentUpdatesTreeBuilder);
-        assertTrue(provider.getBuilder("Recently Used") instanceof GroupByAvailableRecentlyActiveTreeBuilder);
-        assertTrue(provider.getBuilder("RECENTLY_ADDED") instanceof GroupByAvailableRecentlyActiveTreeBuilder);
         assertTrue(provider.getBuilder("Source") instanceof GroupBySourceTreeBuilder);
         assertTrue(provider.getBuilder("Tag") instanceof GroupByTagsTreeBuilder);
         assertTrue(provider.getBuilder("Type") instanceof GroupByTypeTreeBuilder);
 
         assertTrue(provider.getBuilder("Active".toUpperCase()) instanceof GroupByAvailableActiveLayersTreeBuilder);
         assertTrue(provider.getBuilder("Recent Updates".toUpperCase()) instanceof GroupByAvailableRecentUpdatesTreeBuilder);
-        assertTrue(provider.getBuilder("Recently Used".toUpperCase()) instanceof GroupByAvailableRecentlyActiveTreeBuilder);
         assertTrue(provider.getBuilder("Source".toUpperCase()) instanceof GroupBySourceTreeBuilder);
         assertTrue(provider.getBuilder("Tag".toUpperCase()) instanceof GroupByTagsTreeBuilder);
         assertTrue(provider.getBuilder("Type".toUpperCase()) instanceof GroupByTypeTreeBuilder);
