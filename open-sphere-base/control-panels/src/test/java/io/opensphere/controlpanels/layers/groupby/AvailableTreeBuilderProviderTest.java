@@ -46,12 +46,11 @@ public class AvailableTreeBuilderProviderTest
         AvailableTreeBuilderProvider provider = new AvailableTreeBuilderProvider();
         List<String> groupBys = provider.getGroupByTypes();
 
-        assertEquals(6, groupBys.size());
+        assertEquals(5, groupBys.size());
         assertEquals("Active", groupBys.get(0));
         assertEquals("Recent Updates", groupBys.get(1));
-        assertEquals("Recently Used", groupBys.get(2));
-        assertEquals("Source", groupBys.get(3));
-        assertEquals("Tag", groupBys.get(4));
-        assertEquals("Type", groupBys.get(5));
+        assertEquals("Source", groupBys.get(2));
+        assertEquals("Tag", groupBys.get(3));
+        assertEquals("Type", groupBys.get(4));
     }
 }
