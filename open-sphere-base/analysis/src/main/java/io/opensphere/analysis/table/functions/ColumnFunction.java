@@ -17,8 +17,8 @@ public class ColumnFunction
     /** The function to apply. */
     private final Function<Object[], Object> myFunction;
 
-    /** String representation of {@link #getValue(Object...)}. */
-    private String myValueAsString;
+    /** Final representation of {@link #getValue(Object...)}. */
+    private Object myValue;
 
     /**
      * Constructs a ColumnFunction against any number of columns
@@ -64,16 +64,15 @@ public class ColumnFunction
     public Object getValue(Object... values)
     {
         return myFunction.apply(values);
-//        return myValueAsString;
     }
 
     @Override
     public String toString()
     {
         String returnVal = myName;
-        if (myValueAsString != null)
+        if (myValue != null)
         {
-            returnVal = myValueAsString;
+            returnVal = myValue.toString();
         }
 
         return returnVal;
