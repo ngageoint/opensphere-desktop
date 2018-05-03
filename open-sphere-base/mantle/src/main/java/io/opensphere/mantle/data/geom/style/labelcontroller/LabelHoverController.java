@@ -21,7 +21,6 @@ import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.VisualizationSupport;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
-import io.opensphere.mantle.data.element.MetaDataProvider;
 import io.opensphere.mantle.data.element.event.DataElementHighlightChangeEvent;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
 import io.opensphere.mantle.data.geom.MapLocationGeometrySupport;
@@ -228,7 +227,7 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
         builder.setPosition(getLabelPosition(pMapGeometrySupport));
         builder.setHorizontalAlignment(.5f);
         builder.setVerticalAlignment(1f);
-        builder.setText(getLabelContent(pRegistryId, pStyle, pDataElement.getMetaData()));
+        builder.setText(getLabelContent(pRegistryId, pStyle, pDataElement));
         builder.setFont(Font.SANS_SERIF + " " + pStyle.getLabelSize());
         builder.setOutlined(true);
 
@@ -267,13 +266,13 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
      * @param pRegistryId the identifier of the data element for which to get
      *            the column text.
      * @param pStyle the style from which to get the value.
-     * @param pMetaData the data element's metadata from which to extract
-     *            metadata from which to get the column text.
+     * @param dataElement the data element
      * @return the text to display for the label.
      */
-    protected String getLabelContent(long pRegistryId, AbstractFeatureVisualizationStyle pStyle, MetaDataProvider pMetaData)
+    protected String getLabelContent(long pRegistryId, AbstractFeatureVisualizationStyle pStyle, DataElement dataElement)
     {
-        Object columnValue = pStyle.getLabelColumnValue(pRegistryId, pMetaData);
+        Object columnValue = pStyle.getLabelColumnValue(pRegistryId, dataElement.getDataTypeInfo().getMetaDataInfo(),
+                dataElement.getMetaData(), dataElement.getTimeSpan());
         String columnText;
         if (columnValue != null)
         {
