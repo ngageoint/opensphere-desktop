@@ -79,7 +79,9 @@ public final class StyleUtils
      * parses the input String and constructs one line of label text.
      *
      * @param in the string to parse.
+     * @param metaDataInfo the meta data info
      * @param mdp the metadata provider from which fields are extracted.
+     * @param timeSpan the time span if there is one
      * @return the string form of the column extracted from the input text.
      */
     public static String labelString(String in, MetaDataInfo metaDataInfo, MetaDataProvider mdp, TimeSpan timeSpan)
@@ -103,6 +105,15 @@ public final class StyleUtils
         return label;
     }
 
+    /**
+     * Creates a label string for the provider / column name.
+     *
+     * @param metaDataInfo the meta data info
+     * @param provider the meta data provider
+     * @param colName the column name
+     * @param timeSpan the time span
+     * @return the label string
+     */
     private static String toString(MetaDataInfo metaDataInfo, MetaDataProvider provider, String colName, TimeSpan timeSpan)
     {
         if (metaDataInfo.getSpecialTypeForKey(colName) == TimeKey.DEFAULT)

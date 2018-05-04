@@ -848,7 +848,9 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      * Gets the label column value.
      *
      * @param elementId the element id
+     * @param metaDataInfo the meta data info
      * @param mdp the {@link MetaDataProvider}
+     * @param timeSpan the time span if there is one
      * @return the label value or null if not found.
      */
     public Object getLabelColumnValue(long elementId, MetaDataInfo metaDataInfo, MetaDataProvider mdp, TimeSpan timeSpan)
@@ -874,7 +876,6 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
             {
                 if (obj instanceof String)
                 {
-                    // TODO
                     StyleUtils.appendLine(buf, StyleUtils.labelString((String)obj, metaDataInfo, mdp, timeSpan));
                 }
             }

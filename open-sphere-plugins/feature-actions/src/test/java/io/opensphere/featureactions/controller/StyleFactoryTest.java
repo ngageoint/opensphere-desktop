@@ -31,6 +31,7 @@ import io.opensphere.mantle.data.geom.style.VisualizationStyleController;
 import io.opensphere.mantle.data.geom.style.impl.IconFeatureVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.PointFeatureVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.PolylineFeatureVisualizationStyle;
+import io.opensphere.mantle.data.impl.DefaultMetaDataInfo;
 
 /**
  * Unit test for {@link StyleFactory}.
@@ -82,7 +83,7 @@ public class StyleFactoryTest
         Map<String, Object> testValues = New.map();
         testValues.put("User Name", ourUserId);
         SimpleMetaDataProvider mdp = new SimpleMetaDataProvider(testValues);
-        assertEquals(ourUserId, iconStyle.getLabelColumnValue(1, mdp));
+        assertEquals(ourUserId, iconStyle.getLabelColumnValue(1, new DefaultMetaDataInfo(), mdp, null));
         assertEquals(22, iconStyle.getLabelSize());
 
         support.verifyAll();
@@ -132,7 +133,7 @@ public class StyleFactoryTest
         Map<String, Object> testValues = New.map();
         testValues.put("Text", ourUserId);
         SimpleMetaDataProvider mdp = new SimpleMetaDataProvider(testValues);
-        assertEquals(ourUserId, iconStyle.getLabelColumnValue(1, mdp));
+        assertEquals(ourUserId, iconStyle.getLabelColumnValue(1, new DefaultMetaDataInfo(), mdp, null));
         assertEquals(11, iconStyle.getLabelSize());
 
         support.verifyAll();
@@ -174,7 +175,7 @@ public class StyleFactoryTest
         Map<String, Object> testValues = New.map();
         testValues.put("User Name", ourUserId);
         SimpleMetaDataProvider mdp = new SimpleMetaDataProvider(testValues);
-        assertEquals(ourUserId, trackStyle.getLabelColumnValue(1, mdp));
+        assertEquals(ourUserId, trackStyle.getLabelColumnValue(1, new DefaultMetaDataInfo(), mdp, null));
         assertEquals(22, trackStyle.getLabelSize());
         assertEquals(Color.GREEN, trackStyle.getColor());
 
