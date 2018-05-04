@@ -1,19 +1,23 @@
 package io.opensphere.mantle.data.geom.style.impl;
 
 import java.awt.Color;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.constraint.Constraints;
+import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.Colors;
+import io.opensphere.core.util.DateTimeFormats;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.BasicVisualizationInfo;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MapVisualizationInfo;
+import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 import io.opensphere.mantle.data.element.VisualizationState;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
@@ -23,8 +27,10 @@ import io.opensphere.mantle.data.geom.style.impl.ui.ComboBoxStyleParameterEditor
 import io.opensphere.mantle.data.geom.style.impl.ui.FloatSliderStyleParameterEditorPanel;
 import io.opensphere.mantle.data.geom.style.impl.ui.PanelBuilder;
 import io.opensphere.mantle.data.geom.util.ListSupport;
+import io.opensphere.mantle.data.impl.specialkey.TimeKey;
 import io.opensphere.mantle.util.MantleConstants;
 import io.opensphere.mantle.util.MantleToolboxUtils;
+import io.opensphere.mantle.util.TimeSpanUtility;
 
 /**
  * A collection of utility methods used in creating and maintaining styles.
@@ -73,27 +79,48 @@ public final class StyleUtils
      * parses the input String and constructs one line of label text.
      *
      * @param in the string to parse.
+     * @param metaDataInfo the meta data info
      * @param mdp the metadata provider from which fields are extracted.
+     * @param timeSpan the time span if there is one
      * @return the string form of the column extracted from the input text.
      */
-    public static String labelString(String in, MetaDataProvider mdp)
+    public static String labelString(String in, MetaDataInfo metaDataInfo, MetaDataProvider mdp, TimeSpan timeSpan)
     {
+        String label = "";
         List<String> fields = StyleUtils.listSupp.parseList(in);
         if (fields.size() > 1)
         {
             Boolean showCol = Boolean.valueOf(fields.get(0));
             String colName = fields.get(1);
+            label = toString(metaDataInfo, mdp, colName, timeSpan);
             if (Boolean.TRUE.equals(showCol))
             {
-                return colName + ":  " + Objects.toString(mdp.getValue(colName));
+                return colName + ":  " + label;
             }
-            return Objects.toString(mdp.getValue(colName));
         }
-        if (fields.size() == 1)
+        else if (fields.size() == 1)
         {
-            return Objects.toString(mdp.getValue(fields.get(0)));
+            label = toString(metaDataInfo, mdp, fields.get(0), timeSpan);
         }
-        return "";
+        return label;
+    }
+
+    /**
+     * Creates a label string for the provider / column name.
+     *
+     * @param metaDataInfo the meta data info
+     * @param provider the meta data provider
+     * @param colName the column name
+     * @param timeSpan the time span
+     * @return the label string
+     */
+    private static String toString(MetaDataInfo metaDataInfo, MetaDataProvider provider, String colName, TimeSpan timeSpan)
+    {
+        if (metaDataInfo.getSpecialTypeForKey(colName) == TimeKey.DEFAULT)
+        {
+            return TimeSpanUtility.formatTimeSpan(new SimpleDateFormat(DateTimeFormats.DATE_TIME_FORMAT), timeSpan);
+        }
+        return Objects.toString(provider.getValue(colName));
     }
 
     /**

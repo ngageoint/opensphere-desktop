@@ -29,6 +29,7 @@ import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
+import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.order.impl.DefaultOrderCategory;
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.units.length.Meters;
@@ -41,6 +42,7 @@ import io.opensphere.core.viewer.impl.Viewer3D;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MapVisualizationInfo;
 import io.opensphere.mantle.data.MapVisualizationType;
+import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.SpecialKey;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 import io.opensphere.mantle.data.element.VisualizationState;
@@ -250,7 +252,8 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
         VisualizationStyleParameter labelParameter = getStyleParameter(LABEL_ENABLED_PROPERTY_KEY);
         if (labelParameter != null && Boolean.TRUE.equals(labelParameter.getValue()))
         {
-            Object value = getLabelColumnValue(builderData.getElementId(), builderData.getMDP());
+            Object value = getLabelColumnValue(builderData.getElementId(), builderData.getDataType().getMetaDataInfo(),
+                    builderData.getMDP(), builderData.getMGS().getTimeSpan());
             if (value != null)
             {
                 added = createLabelGeometrySpecific(setToAddTo, builderData, position, c, pool, value.toString());
@@ -845,10 +848,12 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      * Gets the label column value.
      *
      * @param elementId the element id
+     * @param metaDataInfo the meta data info
      * @param mdp the {@link MetaDataProvider}
+     * @param timeSpan the time span if there is one
      * @return the label value or null if not found.
      */
-    public Object getLabelColumnValue(long elementId, MetaDataProvider mdp)
+    public Object getLabelColumnValue(long elementId, MetaDataInfo metaDataInfo, MetaDataProvider mdp, TimeSpan timeSpan)
     {
         if (mdp == null)
         {
@@ -871,7 +876,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
             {
                 if (obj instanceof String)
                 {
-                    StyleUtils.appendLine(buf, StyleUtils.labelString((String)obj, mdp));
+                    StyleUtils.appendLine(buf, StyleUtils.labelString((String)obj, metaDataInfo, mdp, timeSpan));
                 }
             }
             return buf.toString();
