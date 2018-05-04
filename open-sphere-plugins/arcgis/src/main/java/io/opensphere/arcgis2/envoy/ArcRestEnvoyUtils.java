@@ -99,7 +99,7 @@ public final class ArcRestEnvoyUtils
             {
                 throw new MalformedURLException("Error encoding filter: " + e);
             }
-            
+
         }
 
         // Request only IDs
@@ -110,7 +110,6 @@ public final class ArcRestEnvoyUtils
 
         builder.setQueryParameters(parameters);
 
-        System.out.println(builder.toURL());
         return builder.toURL();
     }
 
