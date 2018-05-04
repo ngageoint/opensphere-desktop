@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.swing.Icon;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
@@ -25,6 +26,9 @@ public class MenuOption
     /** The my tooltip. */
     private final String myTooltip;
 
+    /** Optional icon to display with the menu item. */
+    private final Icon myIcon;
+
     /** The sub options. */
     private List<MenuOption> mySubOptions;
 
@@ -41,11 +45,26 @@ public class MenuOption
      */
     public MenuOption(String label, String command, String toolTip, KeyStroke accelerator)
     {
+        this(label, command, toolTip, accelerator, null);
+    }
+
+    /**
+     * Instantiates a new selection menu option.
+     *
+     * @param label the label
+     * @param command the command
+     * @param toolTip the tool tip
+     * @param accelerator the accelerator for the menu
+     * @param icon Optional icon to display with the menu item.
+     */
+    public MenuOption(String label, String command, String toolTip, KeyStroke accelerator, Icon icon)
+    {
         Utilities.checkNull(label, "label");
         myLabel = label;
         myCommand = command;
         myTooltip = toolTip;
         myAccelerator = accelerator;
+        myIcon = icon;
     }
 
     /**
@@ -58,6 +77,19 @@ public class MenuOption
     public MenuOption(String label, String command, String toolTip)
     {
         this(label, command, toolTip, (KeyStroke)null);
+    }
+
+    /**
+     * Instantiates a new selection menu option.
+     *
+     * @param label the label
+     * @param command the command
+     * @param toolTip the tool tip
+     * @param icon Optional icon to display with the menu item.
+     */
+    public MenuOption(String label, String command, String toolTip, Icon icon)
+    {
+        this(label, command, toolTip, (KeyStroke)null, icon);
     }
 
     /**
@@ -108,6 +140,16 @@ public class MenuOption
     public String getLabel()
     {
         return myLabel;
+    }
+
+    /**
+     * Gets the value of the icon ({@link #myIcon}) field.
+     *
+     * @return the value stored in the {@link #myIcon} field.
+     */
+    public Icon getIcon()
+    {
+        return myIcon;
     }
 
     /**
@@ -190,6 +232,7 @@ public class MenuOption
         else
         {
             item = new JMenuItem(myLabel);
+
             item.setActionCommand(myCommand);
             if (myAccelerator != null)
             {
@@ -198,6 +241,10 @@ public class MenuOption
             if (myTooltip != null)
             {
                 item.setToolTipText(myTooltip);
+            }
+            if (myIcon != null)
+            {
+                item.setIcon(myIcon);
             }
             if (listener != null)
             {
