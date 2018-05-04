@@ -4,10 +4,6 @@ import java.awt.Color;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-
 import com.google.common.collect.BiMap;
 
 import io.opensphere.core.MapManager;
@@ -18,13 +14,18 @@ import io.opensphere.core.control.PickListener;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.LabelGeometry;
 import io.opensphere.core.geometry.renderproperties.ColorRenderProperties;
+import io.opensphere.core.math.Vector3d;
 import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.search.SearchResult;
 import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.viewer.impl.DynamicViewer;
+import io.opensphere.core.viewer.impl.Viewer2D;
 import io.opensphere.core.viewer.impl.ViewerAnimator;
 import io.opensphere.search.model.SearchModel;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 /**
  * Handles mouse over's and mouse clicks to and from the search result list and
@@ -296,17 +297,28 @@ public class SelectedResultHandler extends DiscreteEventAdapter implements PickL
                 if (bounds != null)
                 {
                     DynamicViewer view = myMapManager.getStandardViewer();
-                    ViewerAnimator animator;
-                    if (bounds.getWidth() > 0.0 || bounds.getHeight() > 0.0)
+
+                    if (view instanceof Viewer2D)
                     {
-                        animator = myAnimatorCreator.createAnimator(view, bounds.getVertices(), true);
+                        Vector3d dest = view.getMapContext().getProjection().convertToModel(bounds.getCenter(),
+                                new Vector3d(0., 0., 1.));
+                        view.setPosition(view.getCenteredView(dest));
                     }
                     else
                     {
-                        animator = myAnimatorCreator.createAnimator(view, bounds.getCenter());
-                    }
+                        ViewerAnimator animator;
+                        if (bounds.getWidth() > 0.0 || bounds.getHeight() > 0.0)
+                        {
+                            animator = myAnimatorCreator.createAnimator(view, bounds.getVertices(), true);
+                        }
+                        else
+                        {
 
-                    animator.start();
+                            animator = myAnimatorCreator.createAnimator(view, bounds.getCenter());
+                        }
+
+                        animator.start();
+                    }
                 }
             }
         }
