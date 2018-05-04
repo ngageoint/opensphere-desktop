@@ -90,14 +90,16 @@ public final class ArcRestEnvoyUtils
         // Add user-defined filter
         if (filter != null)
         {
+
             try
             {
-                parameters.put("where", URLEncoder.encode(filter.getSqlLikeString(), "UTF-8"));
+                parameters.put("where", URLEncoder.encode(filter.getSqlLikeString().replace("*", "%"), "UTF-8"));
             }
             catch (UnsupportedEncodingException e)
             {
                 throw new MalformedURLException("Error encoding filter: " + e);
             }
+
         }
 
         // Request only IDs
