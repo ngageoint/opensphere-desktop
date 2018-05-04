@@ -300,7 +300,6 @@ public class SelectedResultHandler extends DiscreteEventAdapter implements PickL
 
                     if (view instanceof Viewer2D)
                     {
-                        System.out.println(bounds);
                         Vector3d dest = view.getMapContext().getProjection().convertToModel(bounds.getCenter(),
                                 new Vector3d(0., 0., 1.));
                         view.setPosition(view.getCenteredView(dest));
