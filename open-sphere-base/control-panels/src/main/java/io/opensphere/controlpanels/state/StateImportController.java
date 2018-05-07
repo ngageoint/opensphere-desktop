@@ -345,7 +345,7 @@ public class StateImportController implements FileOrURLImporter
         {
             try
             {
-                StateType state = new StateV4ReaderWriter().read(is);
+                StateType state = new StateV4ReaderWriter().read(normalized);
                 SwingUtilities.invokeLater(() -> showDialog(component, state));
             }
             catch (JAXBException e)
