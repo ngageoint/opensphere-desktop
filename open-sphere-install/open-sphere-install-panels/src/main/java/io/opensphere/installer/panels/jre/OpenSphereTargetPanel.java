@@ -13,12 +13,15 @@ import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.izforge.izpack.api.data.Panel;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.gui.log.Log;
 import com.izforge.izpack.installer.data.GUIInstallData;
 import com.izforge.izpack.installer.gui.InstallerFrame;
 import com.izforge.izpack.panels.target.TargetPanel;
+import com.izforge.izpack.util.Platform.Name;
 
 /**
  * An extension to the target panel on which additional information is
@@ -121,10 +124,19 @@ public class OpenSphereTargetPanel extends TargetPanel
             private void updatePreview()
             {
                 String path = pathSelectionPanel.getPathInputField().getText();
+                if (StringUtils.isBlank(installData.getVariable("INSTALL_DRIVE"))
+                        && installData.getPlatform().getName() == Name.WINDOWS)
+                {
+                    OpenSphereTargetPanel.this.emitWarning("Directory Warning", "The selected install directory may be invalid."
+                            + "Attempting to install to a non-letter drive (such as OneDrive or another network folder) may"
+                            + "cause the install to fail.");
+                }
+
                 if (!path.endsWith(File.separator))
                 {
                     path += File.separator;
                 }
+
                 path += installData.getVariable("InstallVersion");
                 myPathPreview.setText(path);
             }
