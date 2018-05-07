@@ -1,6 +1,7 @@
 package com.bitsys.common.http.client;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.security.KeyManagementException;
@@ -19,6 +20,7 @@ import java.util.List;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
@@ -77,21 +79,38 @@ public class SslConfig
         {
             sslContext = SSLContext.getDefault();
         }
-        catch (final NoSuchAlgorithmException e)
+        catch (NoSuchAlgorithmException e)
         {
-            LOGGER.warn("Unable to retrieve default SSLContext:", e);
-            // Let's assume that it failed because of a bad truststore and
-            // not because the algorithm literally doesn't exist
+            // There's likely something wrong with our system properties. In the
+            // case that this catch block solves, it's that `truststore.jks` is
+            // in a different resource folder than the `core` project.
             try
             {
-                String TLSv1 = System.getProperty("jdk.tls.client.protocols").split(",")[0];
-                LOGGER.info("Attempting to create default context using " + TLSv1);
-                sslContext = SSLContext.getInstance(TLSv1);
-                sslContext.init(null, null, null);
+                sslContext = SSLContext.getInstance("TLS");
+                TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+                KeyStore ks = KeyStore.getInstance("JKS");
+
+                String password = System.getProperty("javax.net.ssl.trustStorePassword");
+                String store = System.getProperty("javax.net.ssl.trustStore");
+                try (InputStream stream = SslConfig.class.getClassLoader().getResourceAsStream(store))
+                {
+                    // Getting a resource as a stream via the classloader
+                    // allows us to hit external resource dependencies, as
+                    // opposed to only being able to view the resources in
+                    // `core`.
+                    ks.load(stream, password.toCharArray());
+                }
+                catch (IOException | NoSuchAlgorithmException | CertificateException ex)
+                {
+                    LOGGER.error(ex);
+                }
+
+                tmf.init(ks);
+                sslContext.init(null, tmf.getTrustManagers(), null);
             }
-            catch (NoSuchAlgorithmException | NullPointerException | IndexOutOfBoundsException | KeyManagementException e1)
+            catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException exc)
             {
-                LOGGER.error("SSLContext initialization failure: ", e1);
+                LOGGER.error(exc);
                 sslContext = null;
             }
         }
