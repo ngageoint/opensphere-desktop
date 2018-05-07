@@ -25,7 +25,7 @@ public class MyPlacesDataGroupInfo extends DefaultDataGroupInfo
     public MyPlacesDataGroupInfo(boolean rootNode, Toolbox aToolbox, Folder kmlFolder)
     {
         super(rootNode, aToolbox, "My Places", kmlFolder.getId(), kmlFolder.getName());
-        setIsFlattenable(false);
+        setIsFlattenable(true);
 
         myKmlFolder = kmlFolder;
     }
