@@ -121,7 +121,7 @@ public class MyPlacesDataGroupController implements EventListener<DataTypeVisibi
                 folder.setVisibility(Boolean.TRUE);
 
                 dataGroup = new MyPlacesDataGroupInfo(true, myToolbox, folder);
-                dataGroup.setIsFlattenable(true);
+                dataGroup.setIsFlattenable(false);
             }
 
             DataGroupController controller = MantleToolboxUtils.getMantleToolbox(myToolbox).getDataGroupController();

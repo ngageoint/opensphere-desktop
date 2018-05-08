@@ -245,15 +245,20 @@ public final class DataGroupInfoGroupByUtility
                 int subNodeCount = 0;
                 parentNode.add(catNode);
                 List<Pair<DataGroupInfo, DataTypeInfo>> typeList = catToTypeMap.get(cat);
+
                 if (typeList != null && !typeList.isEmpty())
                 {
+
                     for (Pair<DataGroupInfo, DataTypeInfo> pair : typeList)
                     {
+
                         DefaultMutableTreeNode dgiNode = new DefaultMutableTreeNode(
                                 userObjGen.createNodeUserObject(pair.getFirstObject(), pair.getSecondObject()));
                         catNode.add(dgiNode);
                         subNodeCount++;
+
                     }
+
                 }
                 catNodeUserObj.setLabel(catNodeUserObj.getLabel());
                 catNodeUserObj.setCategoryCount(subNodeCount);
@@ -296,7 +301,7 @@ public final class DataGroupInfoGroupByUtility
                 // Add the groups with children that have descendants that pass
                 // the group filter
                 List<DataGroupInfo> folderGroups = StreamUtilities.filter(dataGroups,
-                    group -> group.hasChildren() && anyGroupPassesFilter(groupFilter, group));
+                        group -> group.hasChildren() && anyGroupPassesFilter(groupFilter, group));
                 Collections.sort(folderGroups, DefaultDataGroupInfo.CASE_INSENSITIVE_DISPLAY_NAME_COMPARATOR);
 
                 for (DataGroupInfo group : folderGroups)
@@ -308,7 +313,7 @@ public final class DataGroupInfoGroupByUtility
 
                 // Add the groups with members that pass the group filter
                 List<DataGroupInfo> memberGroups = StreamUtilities.filter(dataGroups,
-                    group -> group.hasMembers(false) && (groupFilter == null || groupFilter.test(group)));
+                        group -> group.hasMembers(false) && (groupFilter == null || groupFilter.test(group)));
                 Collections.sort(memberGroups, DefaultDataGroupInfo.CASE_INSENSITIVE_DISPLAY_NAME_COMPARATOR);
 
                 for (DataGroupInfo group : memberGroups)
@@ -351,19 +356,19 @@ public final class DataGroupInfoGroupByUtility
             addToGroupIfPassesFilter(groupFilter, dgiList, dgi);
         }
 
-        Set<String> catagories = null;
+        Set<String> categories = null;
         for (DataGroupInfo dgi : dgiList)
         {
-            catagories = categorizer.getGroupCategories(dgi);
-            if (catagories != null && !catagories.isEmpty())
+            categories = categorizer.getGroupCategories(dgi);
+            if (categories != null && !categories.isEmpty())
             {
-                for (String catagory : catagories)
+                for (String category : categories)
                 {
-                    List<DataGroupInfo> list = result.get(catagory);
+                    List<DataGroupInfo> list = result.get(category);
                     if (list == null)
                     {
                         list = New.list();
-                        result.put(catagory, list);
+                        result.put(category, list);
                     }
                     list.add(dgi);
                 }
@@ -409,6 +414,7 @@ public final class DataGroupInfoGroupByUtility
             Predicate<DataGroupInfo> groupFilter, Comparator<? super DataTypeInfo> typeComparator, GroupCategorizer categorizer,
             Collection<DataGroupInfo> collection)
     {
+
         Utilities.checkNull(collection, "collection");
         Utilities.checkNull(categorizer, "categorizer");
         Map<String, List<Pair<DataGroupInfo, DataTypeInfo>>> result = New.map();
@@ -420,21 +426,21 @@ public final class DataGroupInfoGroupByUtility
             addToGroupIfPassesFilter(groupFilter, dgiList, dgi);
         }
 
-        Set<String> catagories = null;
+        Set<String> categories = null;
         for (DataGroupInfo dgi : dgiList)
         {
-            for (DataTypeInfo dti : dgi.getMembers(false))
+            for (DataTypeInfo dti : dgi.getMembers(true))
             {
-                catagories = categorizer.getTypeCategories(dti);
-                if (catagories != null && !catagories.isEmpty())
+                categories = categorizer.getTypeCategories(dti);
+                if (categories != null && !categories.isEmpty())
                 {
-                    for (String catagory : catagories)
+                    for (String category : categories)
                     {
-                        List<Pair<DataGroupInfo, DataTypeInfo>> list = result.get(catagory);
+                        List<Pair<DataGroupInfo, DataTypeInfo>> list = result.get(category);
                         if (list == null)
                         {
                             list = New.list();
-                            result.put(catagory, list);
+                            result.put(category, list);
                         }
                         list.add(new Pair<DataGroupInfo, DataTypeInfo>(dgi, dti));
                     }
