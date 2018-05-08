@@ -18,6 +18,7 @@ import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataGroupInfo;
+import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.VisualizationSupport;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
@@ -93,6 +94,7 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
     {
         if (isEventElementActive(event.getDataTypeKey()) && event.isHighlighted())
         {
+            System.out.println("drawLabel");
             drawLabel(event);
         }
         else
@@ -113,7 +115,17 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
         MantleToolbox toolbox = MantleToolboxUtils.getMantleToolbox(getToolbox());
         DataGroupInfo dataGroup = toolbox.getDataGroupController().getDataGroupInfo(dtiKey);
 
-        return dataGroup != null && dataGroup.activationProperty().isActive();
+        if (dataGroup == null)
+        {
+            // We're dealing with server data which won't have a single group
+            // and will be harder to check
+            DataTypeInfo dataInfo = toolbox.getDataTypeInfoFromKey(dtiKey);
+            List<? extends DataGroupInfo> dataGroupList = toolbox.getDataGroupController().getDataGroupInfosWithDti(dataInfo);
+
+            return dataGroupList.stream().anyMatch(dg -> dg.activationProperty().isActive());
+        }
+
+        return dataGroup.activationProperty().isActive();
     }
 
     /**
