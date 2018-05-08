@@ -125,45 +125,27 @@ public class OpenSphereTargetPanel extends TargetPanel
 
             private void updatePreview()
             {
-                String path = pathSelectionPanel.getPathInputField().getText();
-                if (!path.endsWith(File.separator))
+                String preview = pathSelectionPanel.getPathInputField().getText();
+                if (!preview.endsWith(File.separator))
                 {
-                    path += File.separator;
+                    preview += File.separator;
                 }
+                preview += installData.getVariable("InstallVersion");
 
-                path += installData.getVariable("InstallVersion");
-                myPathPreview.setText(path);
-            }
-        });
-
-        // Directory Warning listener
-        if (installData.getPlatform().getName() == Name.WINDOWS)
-        {
-            pathSelectionPanel.getPathInputField().getDocument().addDocumentListener(new DocumentListener()
-            {
-                @Override
-                public void removeUpdate(DocumentEvent e)
+                if (installData.getPlatform().getName() == Name.WINDOWS && preview.length() > 2)
                 {
-                }
-
-                @Override
-                public void insertUpdate(DocumentEvent e)
-                {
-                    String path = pathSelectionPanel.getPathInputField().getText();
-                    if (path.length() > 2 && StringUtils.isBlank(installData.getVariable("INSTALL_DRIVE")))
+                    parent.getNavigator().setNextEnabled(true);
+                    if (StringUtils.isBlank(installData.getVariable("INSTALL_DRIVE")))
                     {
-                        OpenSphereTargetPanel.this.emitWarning("Directory Warning",
-                                "The selected install directory may be invalid. Attempting to install to a non-letter drive"
-                                        + "(such as OneDrive or another network folder) may cause the install to fail.");
+                        parent.getNavigator().setNextEnabled(false);
+                        preview = "Warning: The application may only be installed to a letter drive. Installing to a network or "
+                                + "OneDrive location is not possible.";
                     }
                 }
 
-                @Override
-                public void changedUpdate(DocumentEvent e)
-                {
-                }
-            });
-        }
+                myPathPreview.setText(preview);
+            }
+        });
 
         add(new JScrollPane(myBottomInfoArea), NEXT_LINE);
     }
