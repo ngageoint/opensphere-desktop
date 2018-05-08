@@ -150,8 +150,7 @@ public class OpenSphereTargetPanel extends TargetPanel
                 public void insertUpdate(DocumentEvent e)
                 {
                     String path = pathSelectionPanel.getPathInputField().getText();
-                    if (StringUtils.isBlank(installData.getVariable("INSTALL_DRIVE"))
-                            && installData.getPlatform().getName() == Name.WINDOWS && path.length() > 2)
+                    if (path.length() > 2 && StringUtils.isBlank(installData.getVariable("INSTALL_DRIVE")))
                     {
                         OpenSphereTargetPanel.this.emitWarning("Directory Warning",
                                 "The selected install directory may be invalid. Attempting to install to a non-letter drive"
