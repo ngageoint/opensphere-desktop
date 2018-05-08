@@ -94,7 +94,6 @@ public class LabelHoverController implements EventListener<DataElementHighlightC
     {
         if (isEventElementActive(event.getDataTypeKey()) && event.isHighlighted())
         {
-            System.out.println("drawLabel");
             drawLabel(event);
         }
         else
