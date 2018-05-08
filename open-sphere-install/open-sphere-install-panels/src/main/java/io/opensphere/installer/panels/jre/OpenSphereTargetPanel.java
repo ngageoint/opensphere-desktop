@@ -132,15 +132,16 @@ public class OpenSphereTargetPanel extends TargetPanel
                 }
                 preview += installData.getVariable("InstallVersion");
 
-                if (installData.getPlatform().getName() == Name.WINDOWS && preview.length() > 2)
+                if (installData.getPlatform().getName() == Name.WINDOWS
+                        && StringUtils.isBlank(installData.getVariable("INSTALL_DRIVE")))
+                {
+                    parent.getNavigator().setNextEnabled(false);
+                    preview = "Warning: The application may only be installed to a letter drive. Installing to a network or "
+                            + "OneDrive location is not possible.";
+                }
+                else
                 {
                     parent.getNavigator().setNextEnabled(true);
-                    if (StringUtils.isBlank(installData.getVariable("INSTALL_DRIVE")))
-                    {
-                        parent.getNavigator().setNextEnabled(false);
-                        preview = "Warning: The application may only be installed to a letter drive. Installing to a network or "
-                                + "OneDrive location is not possible.";
-                    }
                 }
 
                 myPathPreview.setText(preview);
