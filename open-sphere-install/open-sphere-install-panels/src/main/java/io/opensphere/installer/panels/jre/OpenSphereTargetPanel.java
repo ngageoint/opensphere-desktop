@@ -113,25 +113,19 @@ public class OpenSphereTargetPanel extends TargetPanel
             public void insertUpdate(DocumentEvent e)
             {
                 updatePreview();
+                warnDirectory();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e)
             {
+                // this probably won't be fired according to documentation
                 updatePreview();
             }
 
             private void updatePreview()
             {
                 String path = pathSelectionPanel.getPathInputField().getText();
-                if (StringUtils.isBlank(installData.getVariable("INSTALL_DRIVE"))
-                        && installData.getPlatform().getName() == Name.WINDOWS)
-                {
-                    OpenSphereTargetPanel.this.emitWarning("Directory Warning", "The selected install directory may be invalid."
-                            + "Attempting to install to a non-letter drive (such as OneDrive or another network folder) may"
-                            + "cause the install to fail.");
-                }
-
                 if (!path.endsWith(File.separator))
                 {
                     path += File.separator;
@@ -141,6 +135,17 @@ public class OpenSphereTargetPanel extends TargetPanel
                 myPathPreview.setText(path);
             }
 
+            private void warnDirectory()
+            {
+                String path = pathSelectionPanel.getPathInputField().getText();
+                if (StringUtils.isBlank(installData.getVariable("INSTALL_DRIVE"))
+                        && installData.getPlatform().getName() == Name.WINDOWS && path.length() > 2)
+                {
+                    OpenSphereTargetPanel.this.emitWarning("Directory Warning", "The selected install directory may be invalid."
+                            + "Attempting to install to a non-letter drive (such as OneDrive or another network folder) may"
+                            + "cause the install to fail.");
+                }
+            }
         });
 
         add(new JScrollPane(myBottomInfoArea), NEXT_LINE);
