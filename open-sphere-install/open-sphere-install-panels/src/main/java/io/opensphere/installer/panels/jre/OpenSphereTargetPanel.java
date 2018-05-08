@@ -13,12 +13,15 @@ import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.izforge.izpack.api.data.Panel;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.gui.log.Log;
 import com.izforge.izpack.installer.data.GUIInstallData;
 import com.izforge.izpack.installer.gui.InstallerFrame;
 import com.izforge.izpack.panels.target.TargetPanel;
+import com.izforge.izpack.util.Platform.Name;
 
 /**
  * An extension to the target panel on which additional information is
@@ -98,6 +101,7 @@ public class OpenSphereTargetPanel extends TargetPanel
         layout.setConstraints(myPathPreview, c);
         myBottomInfoArea.add(myPathPreview);
 
+        // Path Preview listener
         pathSelectionPanel.getPathInputField().getDocument().addDocumentListener(new DocumentListener()
         {
             @Override
@@ -115,20 +119,33 @@ public class OpenSphereTargetPanel extends TargetPanel
             @Override
             public void changedUpdate(DocumentEvent e)
             {
+                // this probably won't be fired according to documentation
                 updatePreview();
             }
 
             private void updatePreview()
             {
-                String path = pathSelectionPanel.getPathInputField().getText();
-                if (!path.endsWith(File.separator))
+                String preview = pathSelectionPanel.getPathInputField().getText();
+                if (!preview.endsWith(File.separator))
                 {
-                    path += File.separator;
+                    preview += File.separator;
                 }
-                path += installData.getVariable("InstallVersion");
-                myPathPreview.setText(path);
-            }
+                preview += installData.getVariable("InstallVersion");
 
+                if (installData.getPlatform().getName() == Name.WINDOWS
+                        && StringUtils.isBlank(installData.getVariable("INSTALL_DRIVE")))
+                {
+                    parent.getNavigator().setNextEnabled(false);
+                    preview = "Warning: The application may only be installed to a letter drive. Installing to a network or "
+                            + "OneDrive location is not possible.";
+                }
+                else
+                {
+                    parent.getNavigator().setNextEnabled(true);
+                }
+
+                myPathPreview.setText(preview);
+            }
         });
 
         add(new JScrollPane(myBottomInfoArea), NEXT_LINE);
