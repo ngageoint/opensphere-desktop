@@ -101,6 +101,7 @@ public class OpenSphereTargetPanel extends TargetPanel
         layout.setConstraints(myPathPreview, c);
         myBottomInfoArea.add(myPathPreview);
 
+        // Path Preview listener
         pathSelectionPanel.getPathInputField().getDocument().addDocumentListener(new DocumentListener()
         {
             @Override
@@ -113,7 +114,6 @@ public class OpenSphereTargetPanel extends TargetPanel
             public void insertUpdate(DocumentEvent e)
             {
                 updatePreview();
-                warnDirectory();
             }
 
             @Override
@@ -134,19 +134,37 @@ public class OpenSphereTargetPanel extends TargetPanel
                 path += installData.getVariable("InstallVersion");
                 myPathPreview.setText(path);
             }
-
-            private void warnDirectory()
-            {
-                String path = pathSelectionPanel.getPathInputField().getText();
-                if (StringUtils.isBlank(installData.getVariable("INSTALL_DRIVE"))
-                        && installData.getPlatform().getName() == Name.WINDOWS && path.length() > 2)
-                {
-                    OpenSphereTargetPanel.this.emitWarning("Directory Warning", "The selected install directory may be invalid."
-                            + "Attempting to install to a non-letter drive (such as OneDrive or another network folder) may"
-                            + "cause the install to fail.");
-                }
-            }
         });
+
+        // Directory Warning listener
+        if (installData.getPlatform().getName() == Name.WINDOWS)
+        {
+            pathSelectionPanel.getPathInputField().getDocument().addDocumentListener(new DocumentListener()
+            {
+                @Override
+                public void removeUpdate(DocumentEvent e)
+                {
+                }
+
+                @Override
+                public void insertUpdate(DocumentEvent e)
+                {
+                    String path = pathSelectionPanel.getPathInputField().getText();
+                    if (StringUtils.isBlank(installData.getVariable("INSTALL_DRIVE"))
+                            && installData.getPlatform().getName() == Name.WINDOWS && path.length() > 2)
+                    {
+                        OpenSphereTargetPanel.this.emitWarning("Directory Warning",
+                                "The selected install directory may be invalid. Attempting to install to a non-letter drive"
+                                        + "(such as OneDrive or another network folder) may cause the install to fail.");
+                    }
+                }
+
+                @Override
+                public void changedUpdate(DocumentEvent e)
+                {
+                }
+            });
+        }
 
         add(new JScrollPane(myBottomInfoArea), NEXT_LINE);
     }
