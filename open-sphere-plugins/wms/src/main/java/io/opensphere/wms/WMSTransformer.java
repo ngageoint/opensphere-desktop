@@ -267,6 +267,45 @@ public class WMSTransformer extends DefaultTransformer implements TimeChangeList
         publishGeometries(addedGeoms, removedGeoms);
     }
 
+    @Override
+    public void activeTimeChanged(TimeSpan active)
+    {
+        synchronized (myLoadedGeometriesMap)
+        {
+            for (Map.Entry<WMSLayer, List<AbstractTileGeometry<?>>> entry : myLoadedGeometriesMap.entrySet())
+            {
+                WMSLayer layer = entry.getKey();
+                if (!layer.isTimeless())
+                {
+                    List<AbstractTileGeometry<?>> geometries = entry.getValue();
+                    for (AbstractTileGeometry<?> geometry : geometries)
+                    {
+                        if (geometry instanceof ConstrainableGeometry
+                                && geometry.getRenderProperties() instanceof TileRenderProperties)
+                        {
+                            TimeConstraint timeConstraint = ((ConstrainableGeometry)geometry).getConstraints()
+                                    .getTimeConstraint();
+                            TileRenderProperties renderProperties = (TileRenderProperties)geometry.getRenderProperties();
+                            if (timeConstraint.check(active))
+                            {
+                                TimeSpan tileSpan = timeConstraint.getTimeSpan();
+                                TimeSpan overlap = active.getIntersection(tileSpan);
+                                float opacity = (float)overlap.getDurationMs() / tileSpan.getDurationMs();
+                                renderProperties.setOpacity(opacity);
+                            }
+                            else
+                            {
+                                float opacity = (float)layer.getTypeInfo().getBasicVisualizationInfo().getTypeColor().getAlpha()
+                                        / 255;
+                                renderProperties.setOpacity(opacity);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * Create tile geometries for all layers that have timespans that coincide
      * with the specified list of timespans. This does not publish the
@@ -531,13 +570,14 @@ public class WMSTransformer extends DefaultTransformer implements TimeChangeList
 
         Collection<GeographicBoundingBox> fixedGrid = layer.generateFixedGrid(0);
 
-        TileRenderProperties props = layer.getTypeInfo().getMapVisualizationInfo().getTileRenderProperties();
-
         Collection<TimeSpan> timeDivisions = buildTimeDivisions(layer.getTimeSpan(), sequence);
 
         List<AbstractTileGeometry<?>> geomsForModel = New.list(timeDivisions.size() * fixedGrid.size());
         for (TimeSpan timeDivision : timeDivisions)
         {
+            // Use a render property per time division in order to be able to fade tiles that partially overlap the active span
+            TileRenderProperties props = layer.getTypeInfo().getMapVisualizationInfo().getTileRenderProperties().clone();
+
             Constraints constraints = createConstraints(viewConstraint, timeDivision, sequence, constraintKey);
 
             for (GeographicBoundingBox bbox : fixedGrid)

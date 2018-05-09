@@ -24,7 +24,6 @@ import io.opensphere.core.animation.AnimationPlan;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.model.time.TimeSpanList;
 import io.opensphere.core.units.duration.Duration;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.concurrent.CatchingRunnable;
@@ -55,6 +54,7 @@ public class WMSActiveTimeMonitor
         public void activeTimeSpansChanged(ActiveTimeSpans active)
         {
             updateTimes();
+            fireActiveTimeChanged(active.getPrimary().get(0));
         }
     };
 
@@ -180,18 +180,24 @@ public class WMSActiveTimeMonitor
      * @param addedSpans the TimeSpans that were added
      * @param removedSpans the TimeSpans that were removed
      */
-    protected void fireChanged(final Collection<? extends TimeSpan> addedSpans, final Collection<? extends TimeSpan> removedSpans)
+    protected void fireTimeSpansChanged(Collection<? extends TimeSpan> addedSpans, Collection<? extends TimeSpan> removedSpans)
     {
         if (myIsActive)
         {
-            myChangeSupport.notifyListeners(new Callback<TimeChangeListener>()
-            {
-                @Override
-                public void notify(TimeChangeListener listener)
-                {
-                    listener.timespansChanged(addedSpans, removedSpans);
-                }
-            }, myExecutor);
+            myChangeSupport.notifyListeners(listener -> listener.timespansChanged(addedSpans, removedSpans), myExecutor);
+        }
+    }
+
+    /**
+     * Notify listeners that the active time has changed.
+     *
+     * @param active The new active time
+     */
+    protected void fireActiveTimeChanged(TimeSpan active)
+    {
+        if (myIsActive)
+        {
+            myChangeSupport.notifyListeners(listener -> listener.activeTimeChanged(active), myExecutor);
         }
     }
 
@@ -265,7 +271,7 @@ public class WMSActiveTimeMonitor
 
             ThreadControl.check();
             myCurrentSequence = tilesToLoad;
-            fireChanged(added, removed);
+            fireTimeSpansChanged(added, removed);
         }
     }
 
@@ -388,7 +394,6 @@ public class WMSActiveTimeMonitor
      * Listener interface for receiving changes to the current active time
      * sequence.
      */
-    @FunctionalInterface
     public interface TimeChangeListener
     {
         /**
@@ -398,5 +403,12 @@ public class WMSActiveTimeMonitor
          * @param removed the TimeSpans that were removed
          */
         void timespansChanged(Collection<? extends TimeSpan> added, Collection<? extends TimeSpan> removed);
+
+        /**
+         * Notification to listeners when the active time changes.
+         *
+         * @param active the new active time
+         */
+        void activeTimeChanged(TimeSpan active);
     }
 }

@@ -15,7 +15,7 @@ public interface TileRenderProperties extends ColorRenderProperties
     TileRenderProperties clone();
 
     /**
-     * Get the opacity.
+     * Get the opacity. For some reason this returns a value of 0-255, unlike the setter.
      *
      * @return the opacity
      */
