@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import gnu.trove.procedure.TObjectIntProcedure;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.renderproperties.DefaultTileRenderProperties;
+import io.opensphere.core.geometry.renderproperties.ParentTileRenderProperties;
 import io.opensphere.core.geometry.renderproperties.TileRenderProperties;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.order.OrderChangeListener;
@@ -485,7 +486,7 @@ public class WMSDataTypeInfo extends AbstractServerDataTypeInfo implements WMSDa
         }
         props.setOpacity(getOpacityForLayerFromPrefs());
 
-        ServerMapVisualizationInfo mapInfo = new ServerMapVisualizationInfo(mvt, props);
+        ServerMapVisualizationInfo mapInfo = new ServerMapVisualizationInfo(mvt, new ParentTileRenderProperties(props));
         mapInfo.setDataTypeInfo(this);
         setMapVisualizationInfo(mapInfo);
 
@@ -535,7 +536,8 @@ public class WMSDataTypeInfo extends AbstractServerDataTypeInfo implements WMSDa
             props = new DefaultTileRenderProperties(0, true, false);
         }
         props.setOpacity(getOpacityForLayerFromPrefs());
-        ((DefaultMapTileVisualizationInfo)getMapVisualizationInfo()).setTileRenderProperties(props, source);
+        ((DefaultMapTileVisualizationInfo)getMapVisualizationInfo())
+                .setTileRenderProperties(new ParentTileRenderProperties(props), source);
     }
 
     /**

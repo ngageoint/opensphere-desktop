@@ -27,6 +27,7 @@ import io.opensphere.core.geometry.constraint.BoundedTimeConstraint;
 import io.opensphere.core.geometry.constraint.Constraints;
 import io.opensphere.core.geometry.constraint.TimeConstraint;
 import io.opensphere.core.geometry.constraint.ViewerPositionConstraint;
+import io.opensphere.core.geometry.renderproperties.ParentTileRenderProperties;
 import io.opensphere.core.geometry.renderproperties.TileRenderProperties;
 import io.opensphere.core.math.Vector2d;
 import io.opensphere.core.model.Altitude;
@@ -572,11 +573,15 @@ public class WMSTransformer extends DefaultTransformer implements TimeChangeList
 
         Collection<TimeSpan> timeDivisions = buildTimeDivisions(layer.getTimeSpan(), sequence);
 
+        TileRenderProperties layerRenderProperties = layer.getTypeInfo().getMapVisualizationInfo().getTileRenderProperties();
+        List<TileRenderProperties> childRenderProperties = New.list(timeDivisions.size());
+
         List<AbstractTileGeometry<?>> geomsForModel = New.list(timeDivisions.size() * fixedGrid.size());
         for (TimeSpan timeDivision : timeDivisions)
         {
             // Use a render property per time division in order to be able to fade tiles that partially overlap the active span
-            TileRenderProperties props = layer.getTypeInfo().getMapVisualizationInfo().getTileRenderProperties().clone();
+            TileRenderProperties props = layerRenderProperties.clone();
+            childRenderProperties.add(props);
 
             Constraints constraints = createConstraints(viewConstraint, timeDivision, sequence, constraintKey);
 
@@ -590,6 +595,11 @@ public class WMSTransformer extends DefaultTransformer implements TimeChangeList
                         : new TileGeometry(tileBuilder, props, constraints, layer.getTypeInfo().getTypeKey());
                 geomsForModel.add(geom);
             }
+        }
+
+        if (layerRenderProperties instanceof ParentTileRenderProperties)
+        {
+            ((ParentTileRenderProperties)layerRenderProperties).getChildren().addAll(childRenderProperties);
         }
 
         int maxTileGeneration = geomsForModel.stream().mapToInt(g -> divider.determineMaxGeneration(g)).max().orElse(0);
