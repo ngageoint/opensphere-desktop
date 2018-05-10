@@ -259,6 +259,7 @@ public class WMSTransformer extends DefaultTransformer implements TimeChangeList
         Collection<? extends Geometry> removedGeoms = Collections.emptySet();
         if (removedSpans != null && !removedSpans.isEmpty())
         {
+            removeChildRenderProperties(removedSpans);
             removedGeoms = extractGeometriesForTime(removedSpans);
         }
         if (addedSpans != null && !addedSpans.isEmpty())
@@ -596,14 +597,16 @@ public class WMSTransformer extends DefaultTransformer implements TimeChangeList
         Collection<TimeSpan> timeDivisions = buildTimeDivisions(layer.getTimeSpan(), sequence);
 
         TileRenderProperties layerRenderProperties = layer.getTypeInfo().getMapVisualizationInfo().getTileRenderProperties();
-        List<TileRenderProperties> childRenderProperties = New.list(timeDivisions.size());
 
         List<AbstractTileGeometry<?>> geomsForModel = New.list(timeDivisions.size() * fixedGrid.size());
         for (TimeSpan timeDivision : timeDivisions)
         {
             // Use a render property per time division in order to be able to fade tiles that partially overlap the active span
             TileRenderProperties props = layerRenderProperties.clone();
-            childRenderProperties.add(props);
+            if (layerRenderProperties instanceof ParentTileRenderProperties)
+            {
+                ((ParentTileRenderProperties)layerRenderProperties).getChildren().put(timeDivision, props);
+            }
 
             Constraints constraints = createConstraints(viewConstraint, timeDivision, sequence, constraintKey);
 
@@ -617,11 +620,6 @@ public class WMSTransformer extends DefaultTransformer implements TimeChangeList
                         : new TileGeometry(tileBuilder, props, constraints, layer.getTypeInfo().getTypeKey());
                 geomsForModel.add(geom);
             }
-        }
-
-        if (layerRenderProperties instanceof ParentTileRenderProperties)
-        {
-            ((ParentTileRenderProperties)layerRenderProperties).getChildren().addAll(childRenderProperties);
         }
 
         int maxTileGeneration = geomsForModel.stream().mapToInt(g -> divider.determineMaxGeneration(g)).max().orElse(0);
@@ -726,6 +724,30 @@ public class WMSTransformer extends DefaultTransformer implements TimeChangeList
         ImageManager imageManager = new ImageManager(key, layer);
         imageManager.addRequestObserver(myRequestObserver);
         return myImageMgrPool.get(imageManager);
+    }
+
+    /**
+     * Removes child render properties from the layer render properties for the time spans.
+     *
+     * @param removedSpans the time spans
+     */
+    private void removeChildRenderProperties(Collection<? extends TimeSpan> removedSpans)
+    {
+        synchronized (myLoadedGeometriesMap)
+        {
+            for (WMSLayer layer : myLoadedGeometriesMap.keySet())
+            {
+                TileRenderProperties layerRenderProperties = layer.getTypeInfo().getMapVisualizationInfo()
+                        .getTileRenderProperties();
+                if (layerRenderProperties instanceof ParentTileRenderProperties)
+                {
+                    for (TimeSpan span : removedSpans)
+                    {
+                        ((ParentTileRenderProperties)layerRenderProperties).getChildren().remove(span);
+                    }
+                }
+            }
+        }
     }
 
     /**

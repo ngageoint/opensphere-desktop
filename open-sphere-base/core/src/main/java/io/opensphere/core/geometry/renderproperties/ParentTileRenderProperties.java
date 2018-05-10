@@ -2,7 +2,10 @@ package io.opensphere.core.geometry.renderproperties;
 
 import java.awt.Color;
 import java.util.Collection;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import io.opensphere.core.model.time.TimeSpan;
 
 /** A {@link TileRenderProperties} that has children. */
 public class ParentTileRenderProperties implements TileRenderProperties
@@ -14,7 +17,7 @@ public class ParentTileRenderProperties implements TileRenderProperties
     private final TileRenderProperties myRenderProperties;
 
     /** The children render properties. */
-    private final Collection<TileRenderProperties> myChildren = new CopyOnWriteArrayList<>();
+    private final Map<TimeSpan, TileRenderProperties> myChildren = new ConcurrentHashMap<>();
 
     /**
      * Constructor.
@@ -31,7 +34,7 @@ public class ParentTileRenderProperties implements TileRenderProperties
      *
      * @return the children
      */
-    public Collection<TileRenderProperties> getChildren()
+    public Map<TimeSpan, TileRenderProperties> getChildren()
     {
         return myChildren;
     }
@@ -118,7 +121,7 @@ public class ParentTileRenderProperties implements TileRenderProperties
     public void resetShaderPropertiesToDefault()
     {
         myRenderProperties.resetShaderPropertiesToDefault();
-        for (TileRenderProperties child : myChildren)
+        for (TileRenderProperties child : myChildren.values())
         {
             child.resetShaderPropertiesToDefault();
         }
@@ -134,7 +137,7 @@ public class ParentTileRenderProperties implements TileRenderProperties
     public void setColor(Color color)
     {
         myRenderProperties.setColor(color);
-        for (TileRenderProperties child : myChildren)
+        for (TileRenderProperties child : myChildren.values())
         {
             child.setColor(color);
         }
@@ -150,7 +153,7 @@ public class ParentTileRenderProperties implements TileRenderProperties
     public void opacitizeColor(float opacity)
     {
         myRenderProperties.opacitizeColor(opacity);
-        for (TileRenderProperties child : myChildren)
+        for (TileRenderProperties child : myChildren.values())
         {
             child.opacitizeColor(opacity);
         }
@@ -166,7 +169,7 @@ public class ParentTileRenderProperties implements TileRenderProperties
     public void setBlending(BlendingConfigGL blend)
     {
         myRenderProperties.setBlending(blend);
-        for (TileRenderProperties child : myChildren)
+        for (TileRenderProperties child : myChildren.values())
         {
             child.setBlending(blend);
         }
@@ -176,7 +179,7 @@ public class ParentTileRenderProperties implements TileRenderProperties
     public void setHidden(boolean hidden)
     {
         myRenderProperties.setHidden(hidden);
-        for (TileRenderProperties child : myChildren)
+        for (TileRenderProperties child : myChildren.values())
         {
             child.setHidden(hidden);
         }
@@ -186,7 +189,7 @@ public class ParentTileRenderProperties implements TileRenderProperties
     public void setColorARGB(int color)
     {
         myRenderProperties.setColorARGB(color);
-        for (TileRenderProperties child : myChildren)
+        for (TileRenderProperties child : myChildren.values())
         {
             child.setColorARGB(color);
         }
@@ -202,7 +205,7 @@ public class ParentTileRenderProperties implements TileRenderProperties
     public void setLighting(LightingModelConfigGL lighting)
     {
         myRenderProperties.setLighting(lighting);
-        for (TileRenderProperties child : myChildren)
+        for (TileRenderProperties child : myChildren.values())
         {
             child.setLighting(lighting);
         }
@@ -212,7 +215,7 @@ public class ParentTileRenderProperties implements TileRenderProperties
     public void setObscurant(boolean obscurant)
     {
         myRenderProperties.setObscurant(obscurant);
-        for (TileRenderProperties child : myChildren)
+        for (TileRenderProperties child : myChildren.values())
         {
             child.setObscurant(obscurant);
         }
@@ -222,7 +225,7 @@ public class ParentTileRenderProperties implements TileRenderProperties
     public void setHighlightColor(Color color)
     {
         myRenderProperties.setHighlightColor(color);
-        for (TileRenderProperties child : myChildren)
+        for (TileRenderProperties child : myChildren.values())
         {
             child.setHighlightColor(color);
         }
@@ -238,7 +241,7 @@ public class ParentTileRenderProperties implements TileRenderProperties
     public void setOpacity(float opacity)
     {
         myRenderProperties.setOpacity(opacity);
-        for (TileRenderProperties child : myChildren)
+        for (TileRenderProperties child : myChildren.values())
         {
             child.setOpacity(opacity);
         }
@@ -248,7 +251,7 @@ public class ParentTileRenderProperties implements TileRenderProperties
     public void setRenderingOrder(int order)
     {
         myRenderProperties.setRenderingOrder(order);
-        for (TileRenderProperties child : myChildren)
+        for (TileRenderProperties child : myChildren.values())
         {
             child.setRenderingOrder(order);
         }
@@ -258,7 +261,7 @@ public class ParentTileRenderProperties implements TileRenderProperties
     public void setHighlightColorARGB(int color)
     {
         myRenderProperties.setHighlightColorARGB(color);
-        for (TileRenderProperties child : myChildren)
+        for (TileRenderProperties child : myChildren.values())
         {
             child.setHighlightColorARGB(color);
         }
