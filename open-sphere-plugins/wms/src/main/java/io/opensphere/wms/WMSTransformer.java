@@ -271,6 +271,16 @@ public class WMSTransformer extends DefaultTransformer implements TimeChangeList
     @Override
     public void activeTimeChanged(TimeSpan active)
     {
+        fadeTiles(active);
+    }
+
+    /**
+     * Fades tiles by the percent overlap with the active span.
+     *
+     * @param active the active span
+     */
+    private void fadeTiles(TimeSpan active)
+    {
         synchronized (myLoadedGeometriesMap)
         {
             for (Map.Entry<WMSLayer, List<AbstractTileGeometry<?>>> entry : myLoadedGeometriesMap.entrySet())
@@ -279,6 +289,8 @@ public class WMSTransformer extends DefaultTransformer implements TimeChangeList
                 if (!layer.isTimeless())
                 {
                     List<AbstractTileGeometry<?>> geometries = entry.getValue();
+
+                    Map<TimeConstraint, TileRenderProperties> constraintToPropertyMap = New.map();
                     for (AbstractTileGeometry<?> geometry : geometries)
                     {
                         if (geometry instanceof ConstrainableGeometry
@@ -287,20 +299,30 @@ public class WMSTransformer extends DefaultTransformer implements TimeChangeList
                             TimeConstraint timeConstraint = ((ConstrainableGeometry)geometry).getConstraints()
                                     .getTimeConstraint();
                             TileRenderProperties renderProperties = (TileRenderProperties)geometry.getRenderProperties();
-                            if (timeConstraint.check(active))
+                            if (timeConstraint != null)
                             {
-                                TimeSpan tileSpan = timeConstraint.getTimeSpan();
-                                TimeSpan overlap = active.getIntersection(tileSpan);
-                                float opacity = (float)overlap.getDurationMs() / tileSpan.getDurationMs();
-                                renderProperties.setOpacity(opacity);
-                            }
-                            else
-                            {
-                                float opacity = (float)layer.getTypeInfo().getBasicVisualizationInfo().getTypeColor().getAlpha()
-                                        / 255;
-                                renderProperties.setOpacity(opacity);
+                                constraintToPropertyMap.put(timeConstraint, renderProperties);
                             }
                         }
+                    }
+
+                    float layerOpacity = layer.getTypeInfo().getMapVisualizationInfo().getTileRenderProperties().getOpacity()
+                            / 255;
+                    for (Map.Entry<TimeConstraint, TileRenderProperties> propertyEntry : constraintToPropertyMap.entrySet())
+                    {
+                        TimeConstraint timeConstraint = propertyEntry.getKey();
+                        TileRenderProperties renderProperties = propertyEntry.getValue();
+
+                        float fadeMultiple = 1;
+                        if (timeConstraint.check(active))
+                        {
+                            TimeSpan tileSpan = timeConstraint.getTimeSpan();
+                            TimeSpan overlap = active.getIntersection(tileSpan);
+                            fadeMultiple = (float)overlap.getDurationMs() / tileSpan.getDurationMs();
+                        }
+
+                        float opacity = fadeMultiple * layerOpacity;
+                        renderProperties.setOpacity(opacity);
                     }
                 }
             }
