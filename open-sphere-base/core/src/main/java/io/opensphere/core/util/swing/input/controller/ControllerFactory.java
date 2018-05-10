@@ -146,7 +146,6 @@ public final class ControllerFactory
     public static <T, U extends JComponent> AbstractController<T, ? extends ViewModel<T>, U> createController(ViewModel<T> model,
             Class<U> preferredComponent, ViewSettings<T> viewSettings)
     {
-        @SuppressWarnings("unchecked")
         AbstractController<T, ? extends ViewModel<T>, U> castController = createControllerDetached(model, preferredComponent,
                 viewSettings);
 

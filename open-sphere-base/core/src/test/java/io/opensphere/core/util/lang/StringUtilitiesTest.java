@@ -178,9 +178,8 @@ public class StringUtilitiesTest
     }
 
     /**
-     * Test {@link StringUtilities#concat(StringBuilder, Object...)}.
+     * Test {@link StringUtilities#concat(StringBuilder, String...)}.
      */
-    @SuppressWarnings("boxing")
     @Test
     public void testConcat2()
     {

@@ -212,7 +212,7 @@ public final class TroveUtilities
     public static List<Long> toLongList(TLongCollection tList)
     {
         List<Long> list = New.list(tList.size());
-        tList.forEach(value -> list.add(value));
+        tList.forEach(value -> list.add(Long.valueOf(value)));
         return list;
     }
 
@@ -226,7 +226,7 @@ public final class TroveUtilities
     {
         final float loadFactor = .75f;
         Set<Long> list = New.set(Math.max((int)(tList.size() / loadFactor) + 1, 16));
-        tList.forEach(value -> list.add(value));
+        tList.forEach(value -> list.add(Long.valueOf(value)));
         return list;
     }
 

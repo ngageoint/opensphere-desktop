@@ -24,6 +24,7 @@ import io.opensphere.csvcommon.util.LocationTestUtils;
 import io.opensphere.mantle.util.MantleConstants;
 
 /** Test {@link DetectionControllerImpl}. */
+@SuppressWarnings("boxing")
 public class DetectionControllerImplTest extends EasyMockSupport
 {
     /** Test the test. */

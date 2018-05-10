@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
  *
  * @param <T> The type in the combo box.
  */
+@Deprecated
 public class AutoCompleteComboBoxListener<T> implements EventHandler<KeyEvent>
 {
     /**
@@ -48,7 +49,7 @@ public class AutoCompleteComboBoxListener<T> implements EventHandler<KeyEvent>
         myComboBox.setEditable(true);
         myComboBox.setValue(value);
         myComboBox.setOnKeyPressed(e -> comboBox.hide());
-        myComboBox.setOnKeyReleased(AutoCompleteComboBoxListener.this);
+        myComboBox.setOnKeyReleased(this);
     }
 
     @Override

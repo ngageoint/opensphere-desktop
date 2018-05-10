@@ -11,6 +11,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /** Tests for {@link ByteBufferInputStream}. */
 @SuppressFBWarnings("OS_OPEN_STREAM")
+@SuppressWarnings("resource")
 public class ByteBufferInputStreamTest
 {
     /** The capacity to use for the buffer. */

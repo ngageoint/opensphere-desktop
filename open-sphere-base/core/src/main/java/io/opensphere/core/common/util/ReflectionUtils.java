@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/** Utilities for Java language reflection. */
 public class ReflectionUtils
 {
     /**
@@ -139,7 +140,7 @@ public class ReflectionUtils
      * @param <T> The expected type of the created class.
      *
      * @param className the fully qualified class name.
-     * @param classLoader the {@link ClassLoader} to use when locating the
+     * @param classloader the {@link ClassLoader} to use when locating the
      *            className.
      * @param parameters the constructor arguments or <code>null</code> if none
      *            apply.
@@ -151,7 +152,7 @@ public class ReflectionUtils
         Object instance = null;
         try
         {
-            Class<?> clazz = Class.forName(className, Boolean.TRUE, classloader);
+            Class<?> clazz = Class.forName(className, true, classloader);
             instance = newInstance(clazz, parameters);
         }
         catch (Exception e)
@@ -201,9 +202,10 @@ public class ReflectionUtils
      * Finds a matching constructor for the given class and argument types.
      *
      * @param clazz the instance belongs to this Class
-     * @param parameters the constructor arguments or <code>null</code> if none
-     *            apply. The constructor arguments can include a "null" in place
-     *            of a class if the type couldn't be inferred from the value.
+     * @param parameterTypes the constructor arguments or <code>null</code> if
+     *            none apply. The constructor arguments can include a "null" in
+     *            place of a class if the type couldn't be inferred from the
+     *            value.
      * @return the new instance.
      */
     public static Constructor<?> getConstructor(Class<?> clazz, List<Class<?>> parameterTypes)

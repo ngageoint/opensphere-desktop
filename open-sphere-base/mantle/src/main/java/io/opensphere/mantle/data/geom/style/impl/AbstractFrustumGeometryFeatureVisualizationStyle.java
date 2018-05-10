@@ -153,14 +153,16 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
 
     @Override
     public void createCombinedGeometry(Set<Geometry> setToAddTo, FeatureCombinedGeometryBuilderData builderData,
-            RenderPropertyPool renderPropertyPool) throws IllegalArgumentException
+            RenderPropertyPool renderPropertyPool)
+        throws IllegalArgumentException
     {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public void createIndividualGeometry(Set<Geometry> setToAddTo, FeatureIndividualGeometryBuilderData builderData,
-            RenderPropertyPool renderPropertyPool) throws IllegalArgumentException
+            RenderPropertyPool renderPropertyPool)
+        throws IllegalArgumentException
     {
         FrustumGeometry geom = createFrustumGeometry(builderData, renderPropertyPool);
         if (geom != null)
@@ -600,7 +602,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
             {
                 try
                 {
-                    result = StyleUtils.convertValueToDouble(mdp.getValue(heightByColKey));
+                    result = Double.valueOf(StyleUtils.convertValueToDouble(mdp.getValue(heightByColKey)));
                 }
                 catch (NumberFormatException e)
                 {
@@ -675,8 +677,8 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
             builder.setBaseRadius(baseR);
             builder.setTopRadius(topR);
 
-            resultGeom = new FrustumGeometry(builder, featureProps, StyleUtils.createTimeConstraintsIfApplicable(basicVisInfo, mapVisInfo,
-                    bd.getMGS(), StyleUtils.getDataGroupInfoFromDti(getToolbox(), bd.getDataType())));
+            resultGeom = new FrustumGeometry(builder, featureProps, StyleUtils.createTimeConstraintsIfApplicable(basicVisInfo,
+                    mapVisInfo, bd.getMGS(), StyleUtils.getDataGroupInfoFromDti(getToolbox(), bd.getDataType())));
         }
         return resultGeom;
     }

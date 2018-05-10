@@ -14,9 +14,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
- * A stylized spinner, in which the up and down arrows are presented above and below the content area, respectively. This spinner
- * was developed for use in the time picker, to allow for each component of a clock to be spun independently. The component was
- * developed generically to allow for any numeric values to be represented.
+ * A stylized spinner, in which the up and down arrows are presented above and
+ * below the content area, respectively. This spinner was developed for use in
+ * the time picker, to allow for each component of a clock to be spun
+ * independently. The component was developed generically to allow for any
+ * numeric values to be represented.
  */
 public class BoundNumericSpinner extends VBox
 {
@@ -66,7 +68,8 @@ public class BoundNumericSpinner extends VBox
     private final IntegerProperty myValue;
 
     /**
-     * Creates a new numeric spinner, with the a minimum value of zero, and a maximum value of the supplied value.
+     * Creates a new numeric spinner, with the a minimum value of zero, and a
+     * maximum value of the supplied value.
      *
      * @param pMaxValue the maximum value of the spinner.
      */
@@ -129,9 +132,10 @@ public class BoundNumericSpinner extends VBox
     }
 
     /**
-     * Validates the supplied value. This method is used as an event handler, and is called when the {@link #myContent} field
-     * changes. This method has a side-effect of resetting the value of the {@link #myContent} field to the old value if the new
-     * value fails validation.
+     * Validates the supplied value. This method is used as an event handler,
+     * and is called when the {@link #myContent} field changes. This method has
+     * a side-effect of resetting the value of the {@link #myContent} field to
+     * the old value if the new value fails validation.
      *
      * @param pObservable the item that triggered the event.
      * @param pOldValue the original value of the field before it was changed.
@@ -156,7 +160,7 @@ public class BoundNumericSpinner extends VBox
                 }
                 else
                 {
-                    myContent.textProperty().set(String.format("%02d", value));
+                    myContent.textProperty().set(String.format("%02d", Integer.valueOf(value)));
                 }
             }
         }
@@ -179,12 +183,13 @@ public class BoundNumericSpinner extends VBox
      */
     public void set(int pValue)
     {
-        myContent.textProperty().set(String.format("%02d", pValue));
+        myContent.textProperty().set(String.format("%02d", Integer.valueOf(pValue)));
         myValue.set(pValue);
     }
 
     /**
-     * Adjusts the value of the spinner, and fires off notification through the {@link #myValue} property.
+     * Adjusts the value of the spinner, and fires off notification through the
+     * {@link #myValue} property.
      */
     public void increment()
     {
@@ -193,12 +198,13 @@ public class BoundNumericSpinner extends VBox
         {
             value -= myFieldSpan;
         }
-        myContent.textProperty().set(String.format("%02d", value));
+        myContent.textProperty().set(String.format("%02d", Integer.valueOf(value)));
         myValue.set(value);
     }
 
     /**
-     * Adjusts the value of the spinner, and fires off notification through the {@link #myValue} property.
+     * Adjusts the value of the spinner, and fires off notification through the
+     * {@link #myValue} property.
      */
     public void decrement()
     {
@@ -207,7 +213,7 @@ public class BoundNumericSpinner extends VBox
         {
             value += myFieldSpan;
         }
-        myContent.textProperty().set(String.format("%02d", value));
+        myContent.textProperty().set(String.format("%02d", Integer.valueOf(value)));
         myValue.set(value);
     }
 }

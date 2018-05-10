@@ -24,6 +24,7 @@ import io.opensphere.mantle.data.impl.specialkey.TimeKey;
 /**
  * Tests the {@link MetaDataInfoBuilder} class.
  */
+@SuppressWarnings("boxing")
 public class MetaDataInfoBuilderTest
 {
     /**

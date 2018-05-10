@@ -14,7 +14,6 @@ import io.opensphere.core.util.collections.New;
  * Utilities for managing the state of tree nodes which are backed by button
  * models.
  */
-@SuppressWarnings("unchecked")
 public final class ButtonModelTreeUtilities
 {
     /**

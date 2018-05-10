@@ -187,9 +187,6 @@ public class ImagerySourceWizardPanel
     /** The Stage. */
     private final Stage myStage = Stage.SETTINGS_STAGE;
 
-    /** The Toolbox. */
-    private final Toolbox myToolbox;
-
     /**
      * Helper function in creating panels with various parameters.
      *
@@ -257,7 +254,6 @@ public class ImagerySourceWizardPanel
     public ImagerySourceWizardPanel(Container parent, Toolbox tb, ImagerySourceGroup group, Set<IDataSource> sourcesInUse,
             IDataSourceCreator caller)
     {
-        myToolbox = tb;
         myOwner = parent;
         myImportSources = new ArrayList<>(group.getImageSources());
         myImageInfoTilePanels = new ArrayList<>();
@@ -307,7 +303,6 @@ public class ImagerySourceWizardPanel
     public ImagerySourceWizardPanel(Container parent, Toolbox tb, List<File> chosenFiles, Set<IDataSource> sourcesInUse,
             IDataSourceCreator caller)
     {
-        myToolbox = tb;
         myOwner = parent;
         myImportSources = new ArrayList<>();
         myImageInfoTilePanels = new ArrayList<>();

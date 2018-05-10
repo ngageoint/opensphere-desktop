@@ -107,7 +107,7 @@ public class DynamicEllipseStyleStateSaver extends StyleStateSaver
             }
             else if (styleKey.equals(AbstractEllipseFeatureVisualizationStyle.ourRimFadePropertyKey))
             {
-                vsp = vsp.deriveWithNewValue(myEllipseStyle.getRimFade());
+                vsp = vsp.deriveWithNewValue(Integer.valueOf(myEllipseStyle.getRimFade()));
             }
             else if (styleKey.equals(DynamicEllipseFeatureVisualization.ourSemiMajorAxisColumnKey))
             {

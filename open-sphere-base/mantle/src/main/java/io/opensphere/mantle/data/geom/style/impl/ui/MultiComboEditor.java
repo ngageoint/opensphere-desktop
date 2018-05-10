@@ -31,8 +31,10 @@ import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
 import io.opensphere.mantle.data.geom.util.ListSupport;
 
 /**
- * An editor that supports editing a list of String values. A finite Collection of allowed values is specified, and then presented
- * to the user as the options. This class also enforces a configurable maximum number of values for which the default is five.
+ * An editor that supports editing a list of String values. A finite Collection
+ * of allowed values is specified, and then presented to the user as the
+ * options. This class also enforces a configurable maximum number of values for
+ * which the default is five.
  */
 @SuppressWarnings("unchecked")
 public class MultiComboEditor extends AbstractStyleParameterEditorPanel
@@ -91,7 +93,8 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
     }
 
     /**
-     * Specify the maximum number of values allowed by this editor. The default is five.
+     * Specify the maximum number of values allowed by this editor. The default
+     * is five.
      *
      * @param n the maximum number of combo-boxes
      */
@@ -101,8 +104,9 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
     }
 
     /**
-     * Provide a ListSupport object for parsing and writing a list as a String. This allows the creator of the editor to control
-     * the format of its input/output.
+     * Provide a ListSupport object for parsing and writing a list as a String.
+     * This allows the creator of the editor to control the format of its
+     * input/output.
      *
      * @param ls support for list formatting
      */
@@ -112,8 +116,9 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
     }
 
     /**
-     * Create and layout subcomponents for this editor. Currently selected values are loaded into the editor before it is
-     * presented to the user. The superclass setup method is also called before any other work is done.
+     * Create and layout subcomponents for this editor. Currently selected
+     * values are loaded into the editor before it is presented to the user. The
+     * superclass setup method is also called before any other work is done.
      *
      * @param num true if and only if the values are numeric
      * @param opts a Collection of options to be presented in the drop-down
@@ -193,7 +198,8 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
     {
         mainPanel.removeAll();
         rowList.stream().forEach(r -> mainPanel.add(r.mainPanel));
-        // include a button and message to add another one, if less than the maximum
+        // include a button and message to add another one, if less than the
+        // maximum
         if (rowList.size() < maxBoxes)
         {
             JLabel label = new JLabel("Click the plus button to add labels.");
@@ -214,6 +220,7 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
     }
 
     // only call on AWT thread when visible
+    @SuppressWarnings("null")
     private void selectValues(List<String> vals, boolean internal)
     {
         int count = 0;
@@ -375,8 +382,9 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
     }
 
     /**
-     * This simple class unites the components associated with one displayed row within the containing editor class. It also
-     * includes some convenience methods.
+     * This simple class unites the components associated with one displayed row
+     * within the containing editor class. It also includes some convenience
+     * methods.
      */
     private class ComboRow
     {
@@ -396,6 +404,7 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         public JButton del = new IconButton(IconType.CLOSE, Color.RED);
 
         /** root container for GUI components. */
+        @SuppressWarnings("hiding")
         public JPanel mainPanel = new JPanel();
 
         {
@@ -436,8 +445,10 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         }
 
         /**
-         * Install the specified value for this row. The value should be a formatted list where the first element is a boolean and
-         * is attributed to the checkbox and the second element is a general String and is attributed to the combo-box.
+         * Install the specified value for this row. The value should be a
+         * formatted list where the first element is a boolean and is attributed
+         * to the checkbox and the second element is a general String and is
+         * attributed to the combo-box.
          *
          * @param v the formatted list of fields
          */
@@ -448,7 +459,7 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
             String sel = null;
             if (fields.size() > 1)
             {
-                check = Boolean.valueOf(fields.get(0));
+                check = Boolean.parseBoolean(fields.get(0));
                 sel = fields.get(1);
             }
             else if (fields.size() == 1)
@@ -460,8 +471,9 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         }
 
         /**
-         * Obtain a formatted list representing the current state of this row. The values are, in order, a boolean value for the
-         * checkbox and the selection from the combo-box.
+         * Obtain a formatted list representing the current state of this row.
+         * The values are, in order, a boolean value for the checkbox and the
+         * selection from the combo-box.
          *
          * @return the formatted list of fields
          */
@@ -481,9 +493,10 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
     }
 
     /**
-     * A null-tolerant wrapper for drop-down options. The toString method returns "NONE" in case the embedded reference is null;
-     * otherwise, it delegates to value's toString method. This class also implements comparison methods useful for numerical and
-     * lexical ordering.
+     * A null-tolerant wrapper for drop-down options. The toString method
+     * returns "NONE" in case the embedded reference is null; otherwise, it
+     * delegates to value's toString method. This class also implements
+     * comparison methods useful for numerical and lexical ordering.
      *
      * @param <T> the type of wrapped object
      */
@@ -516,9 +529,10 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         }
 
         /**
-         * Compare this OptionProxy to another according to lexical order. As is common practice in Java, return a negative number
-         * if this one is less than the other, a positive number if it is greater, or zero if they are equivalent. Note: this
-         * operation is not null-tolerant.
+         * Compare this OptionProxy to another according to lexical order. As is
+         * common practice in Java, return a negative number if this one is less
+         * than the other, a positive number if it is greater, or zero if they
+         * are equivalent. Note: this operation is not null-tolerant.
          *
          * @param p the other OptionProxy
          * @return an integer result (see above)
@@ -529,10 +543,12 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         }
 
         /**
-         * Compare this OptionProxy to another according to numerical order, if possible. If the embedded values are Numbers or
-         * are Strings that can be parsed as such, then they are compared as floating-point numerical values. If that comparison
-         * fails for any reason, then lexical comparison of String values is used as a fallback. Note: this operation is not
-         * null-tolerant.
+         * Compare this OptionProxy to another according to numerical order, if
+         * possible. If the embedded values are Numbers or are Strings that can
+         * be parsed as such, then they are compared as floating-point numerical
+         * values. If that comparison fails for any reason, then lexical
+         * comparison of String values is used as a fallback. Note: this
+         * operation is not null-tolerant.
          *
          * @param p the other OptionProxy
          * @return an integer result (see above)
@@ -565,7 +581,8 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
     }
 
     /**
-     * Construct a mutable List containing the specified element. If a null given, then the result is an empty List.
+     * Construct a mutable List containing the specified element. If a null
+     * given, then the result is an empty List.
      *
      * @param e the sole element of the resulting list or null
      * @param <E> the element type

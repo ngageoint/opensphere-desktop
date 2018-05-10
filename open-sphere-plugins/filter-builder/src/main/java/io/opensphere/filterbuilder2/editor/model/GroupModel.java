@@ -183,7 +183,7 @@ public class GroupModel extends WrappedModel<Group>
     }
 
     @Override
-    public String getErrorMessage()
+    public synchronized String getErrorMessage()
     {
         return myError != null ? myError : super.getErrorMessage();
     }

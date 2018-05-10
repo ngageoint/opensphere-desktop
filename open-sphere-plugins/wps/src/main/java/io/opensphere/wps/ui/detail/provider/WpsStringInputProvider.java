@@ -13,7 +13,7 @@ import com.google.inject.Singleton;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.collections.CollectionUtilities;
-import io.opensphere.core.util.fx.AutoCompleteComboBoxListener;
+import io.opensphere.core.util.fx.NewAutoCompleteComboBoxListener;
 import io.opensphere.core.util.javafx.input.IdentifiedControl;
 import io.opensphere.core.util.javafx.input.ValidatedIdentifiedControl;
 import io.opensphere.mantle.MantleToolbox;
@@ -144,7 +144,9 @@ public class WpsStringInputProvider implements WpsInputControlProvider
         returnValue.setValidator(new BasicValidator(choiceBox.getItems()::contains));
         choiceBox.addEventHandler(ValidationEvent.ANY, event -> DecorationUtils.update(choiceBox, event.getEventType()));
 
-        new AutoCompleteComboBoxListener<>(choiceBox);
+//        new AutoCompleteComboBoxListener<>(choiceBox);
+        NewAutoCompleteComboBoxListener listener = new NewAutoCompleteComboBoxListener();
+        listener.setupComboBox(choiceBox);
 
         return returnValue;
     }

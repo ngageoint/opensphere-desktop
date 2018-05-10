@@ -11,12 +11,12 @@ import io.opensphere.core.common.configuration.date.DateFormat;
 import io.opensphere.core.common.configuration.date.DateFormatsConfig;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
-import io.opensphere.csvcommon.common.datetime.ConfigurationProviderImpl;
 import io.opensphere.mantle.util.MantleConstants;
 
 /**
  * Tests the ConfigurationProviderImpl class.
  */
+@SuppressWarnings("boxing")
 public class ConfigurationProviderImplTest
 {
     /**

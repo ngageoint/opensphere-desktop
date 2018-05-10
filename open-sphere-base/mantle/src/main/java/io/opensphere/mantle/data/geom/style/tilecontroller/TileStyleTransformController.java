@@ -317,7 +317,7 @@ public class TileStyleTransformController implements VisualizationStyleRegistryC
                             @Override
                             public void run()
                             {
-                                if (dti != null && dti.getMapVisualizationInfo() != null
+                                if (dti.getMapVisualizationInfo() != null
                                         && dti.getMapVisualizationInfo().getTileRenderProperties() != null)
                                 {
                                     tileStyle.updateTileRenderProperties(dti.getMapVisualizationInfo().getTileRenderProperties());

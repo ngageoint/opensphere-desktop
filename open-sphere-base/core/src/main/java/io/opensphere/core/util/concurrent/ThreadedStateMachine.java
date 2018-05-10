@@ -910,7 +910,6 @@ public class ThreadedStateMachine<E>
      * @param toState The destination state.
      * @return A map of origin states to moving objects in those states.
      */
-    @SuppressWarnings("null")
     private Map<State, Collection<E>> determineMovingObjects(Collection<? extends E> objects, State fromState, State toState)
     {
         Map<State, Collection<E>> movingObjects = New.map();

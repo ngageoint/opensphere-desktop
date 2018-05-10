@@ -30,6 +30,7 @@ import io.opensphere.stkterrain.util.Constants;
 /**
  * Unit test for {@link STKDataGroupController}.
  */
+@SuppressWarnings("boxing")
 public class STKDataGroupControllerTest
 {
     /**

@@ -41,6 +41,7 @@ import io.opensphere.wms.state.model.WMSLayerState;
  * Tests the layer builder class.
  *
  */
+@SuppressWarnings("boxing")
 public class LayerBuilderTest
 {
     /**

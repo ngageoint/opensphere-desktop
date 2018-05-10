@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class QuotingBufferedReader extends Reader
 {
     /** The buffer of characters. */
-    private final char[] myBuffer;
+    private char[] myBuffer;
 
     /** The number of characters read into the buffer. */
     private int myBufferLength;
@@ -57,6 +57,22 @@ public class QuotingBufferedReader extends Reader
         myBuffer = new char[sz];
         myQuotes = quotes == null ? new char[0] : quotes.clone();
         myEscapes = escapes == null ? new char[0] : escapes.clone();
+    }
+
+    /**
+     * Sets the buffer size and resets {@link #myBufferLength} and
+     * {@link #myIndex}.
+     * <p>
+     * This should be used instead of creating a new QuotingBufferedReader when
+     * resetting the wrapped stream.
+     *
+     * @param size the new buffer size
+     */
+    public void setBuffer(int size)
+    {
+        myBuffer = new char[size];
+        myBufferLength = 0;
+        myIndex = 0;
     }
 
     @Override
@@ -202,5 +218,11 @@ public class QuotingBufferedReader extends Reader
         {
             return myBufferLength > myIndex || myReader.ready();
         }
+    }
+
+    @Override
+    public void reset() throws IOException
+    {
+        myReader.reset();
     }
 }

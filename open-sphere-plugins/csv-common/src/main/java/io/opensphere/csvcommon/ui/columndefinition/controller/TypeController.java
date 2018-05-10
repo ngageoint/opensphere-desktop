@@ -235,18 +235,18 @@ public class TypeController implements Observer
             LatLonColumnResults latLonResult = result.getMostLikelyLatLonColumnPair();
             PotentialLocationColumn locationColumn = result.getMostLikelyLocationColumn();
             if (latLonResult != null && latLonResult.getLatColumn() != null
-                    && latLonResult.getLatColumn().getColumnIndex() == columnId)
+                    && latLonResult.getLatColumn().getColumnIndex() == columnId.intValue())
             {
                 isPotentialLocation = true;
                 break;
             }
             else if (latLonResult != null && latLonResult.getLonColumn() != null
-                    && latLonResult.getLonColumn().getColumnIndex() == columnId)
+                    && latLonResult.getLonColumn().getColumnIndex() == columnId.intValue())
             {
                 isPotentialLocation = true;
                 break;
             }
-            else if (locationColumn != null && locationColumn.getColumnIndex() == columnId)
+            else if (locationColumn != null && locationColumn.getColumnIndex() == columnId.intValue())
             {
                 isPotentialLocation = true;
                 break;

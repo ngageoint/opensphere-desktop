@@ -131,7 +131,6 @@ public class TextureDisposalHelper implements DisposalHelper
             @Override
             public void handleCacheContentChange(CacheContentEvent<TextureHandle> event)
             {
-                @SuppressWarnings("unchecked")
                 final Collection<? extends TextureHandle> textureHandles = event.getChangedItems();
 
                 ThreadUtilities.runBackground(new Runnable()

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import io.opensphere.core.geometry.renderproperties.BaseRenderProperties;
@@ -11,9 +12,9 @@ import io.opensphere.core.geometry.renderproperties.DefaultPointRenderProperties
 import io.opensphere.core.geometry.renderproperties.PointRenderProperties;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
-import org.junit.Assert;
 
 /** Test for {@link PointSetGeometry}. */
+@SuppressWarnings("boxing")
 public class PointSetGeometryTest
 {
     /**

@@ -13,12 +13,12 @@ import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.csvcommon.config.v2.CSVParseParameters;
 import io.opensphere.csvcommon.detect.util.CSVColumnPrefsUtil;
-import io.opensphere.csvcommon.ui.controller.ImportableColumnController;
 
 /**
  * Tests the ImportableColumnController class.
  *
  */
+@SuppressWarnings("boxing")
 public class ImportableColumnControllerTest
 {
     /**

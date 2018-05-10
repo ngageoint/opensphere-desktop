@@ -152,7 +152,7 @@ public class ColumnDefinitionController extends BaseSelectedColumnObserver
 
             if (!row.isImport())
             {
-                ignoreColumns.add(row.getColumnId());
+                ignoreColumns.add(Integer.valueOf(row.getColumnId()));
             }
         }
 
@@ -206,7 +206,7 @@ public class ColumnDefinitionController extends BaseSelectedColumnObserver
             columnRow.setColumnId(index);
             columnRow.setColumnName(columnName);
 
-            if (myModel.getSelectedParameters().getColumnsToIgnore().contains(index))
+            if (myModel.getSelectedParameters().getColumnsToIgnore().contains(Integer.valueOf(index)))
             {
                 columnRow.setIsImport(false);
             }

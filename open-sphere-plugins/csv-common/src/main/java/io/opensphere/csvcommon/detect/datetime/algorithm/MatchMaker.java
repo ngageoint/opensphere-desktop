@@ -59,16 +59,18 @@ public class MatchMaker
                 for (int columnIndex = 0; columnIndex < row.size(); ++columnIndex)
                 {
                     String cell = row.get(columnIndex);
+                    Integer numColumnIndex = Integer.valueOf(columnIndex);
                     if (StringUtils.isNotEmpty(cell))
                     {
                         if (!hasCellsBeenCounted)
                         {
-                            if (!numberOfNonBlankCells.containsKey(columnIndex))
+                            if (!numberOfNonBlankCells.containsKey(numColumnIndex))
                             {
-                                numberOfNonBlankCells.put(columnIndex, 0);
+                                numberOfNonBlankCells.put(numColumnIndex, Integer.valueOf(0));
                             }
 
-                            numberOfNonBlankCells.put(columnIndex, numberOfNonBlankCells.get(columnIndex) + 1);
+                            numberOfNonBlankCells.put(numColumnIndex,
+                                    Integer.valueOf(numberOfNonBlankCells.get(numColumnIndex).intValue() + 1));
                         }
 
                         boolean matches = isEmptyRegex;
@@ -80,15 +82,15 @@ public class MatchMaker
 
                         if (matches)
                         {
-                            if (!potentialDates.containsKey(columnIndex))
+                            if (!potentialDates.containsKey(numColumnIndex))
                             {
                                 PotentialColumn potential = new PotentialColumn();
                                 potential.setColumnIndex(columnIndex);
 
-                                potentialDates.put(columnIndex, potential);
+                                potentialDates.put(numColumnIndex, potential);
                             }
 
-                            PotentialColumn potential = potentialDates.get(columnIndex);
+                            PotentialColumn potential = potentialDates.get(numColumnIndex);
 
                             String formatKey = format.getSdf();
 
@@ -144,7 +146,7 @@ public class MatchMaker
             float numberOfNonBlankCells = 0f;
             if (nonBlankCells.containsKey(entry.getKey()))
             {
-                numberOfNonBlankCells = nonBlankCells.get(entry.getKey());
+                numberOfNonBlankCells = nonBlankCells.get(entry.getKey()).floatValue();
             }
 
             PotentialColumn column = entry.getValue();

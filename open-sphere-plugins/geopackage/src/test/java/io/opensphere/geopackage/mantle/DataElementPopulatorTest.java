@@ -31,6 +31,7 @@ import io.opensphere.mantle.data.impl.specialkey.TimeKey;
 /**
  * Tests the {@link DataElementPopulator} class.
  */
+@SuppressWarnings("boxing")
 public class DataElementPopulatorTest
 {
     /**

@@ -26,14 +26,15 @@ import org.junit.Test;
 /**
  * Test for {@link CollectionUtilities}.
  */
-@SuppressWarnings({ "PMD.GodClass", "PMD.AvoidDuplicateLiterals" })
+@SuppressWarnings({ "PMD.GodClass", "PMD.AvoidDuplicateLiterals", "boxing" })
 public class CollectionUtilitiesTest
 {
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(CollectionUtilitiesTest.class);
 
     /**
-     * Test for {@link CollectionUtilities#addIfNotContained(Collection, Collection, BiPredicate)}.
+     * Test for
+     * {@link CollectionUtilities#addIfNotContained(Collection, Collection, BiPredicate)}.
      */
     @Test
     public void testAddIfNotContained()

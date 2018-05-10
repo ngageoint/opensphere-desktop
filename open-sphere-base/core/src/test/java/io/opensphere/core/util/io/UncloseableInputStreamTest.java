@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /** Test for {@link UncloseableInputStream}. */
+@SuppressWarnings("resource")
 public class UncloseableInputStreamTest
 {
     /**

@@ -3,6 +3,7 @@ package io.opensphere.core.geometry;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import io.opensphere.core.geometry.constraint.Constraints;
@@ -18,9 +19,9 @@ import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.collections.petrifyable.PetrifyableTIntArrayList;
 import io.opensphere.core.util.collections.petrifyable.PetrifyableTIntList;
-import org.junit.Assert;
 
 /** Test for {@link LabelGeometry}. */
+@SuppressWarnings("boxing")
 public class PolygonMeshGeometryTest
 {
     /**

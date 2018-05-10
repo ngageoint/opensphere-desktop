@@ -30,7 +30,7 @@ import io.opensphere.core.util.Constants;
 import io.opensphere.core.util.DateTimeFormats;
 
 /** Test for {@link TimeSpan}. */
-@SuppressWarnings("PMD.GodClass")
+@SuppressWarnings({ "PMD.GodClass", "boxing" })
 public class TimeSpanTest
 {
     /** Test for {@link TimeSpan#clamp(TimeInstant)}. */

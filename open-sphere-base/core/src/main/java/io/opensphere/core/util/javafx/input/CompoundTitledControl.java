@@ -3,6 +3,8 @@ package io.opensphere.core.util.javafx.input;
 import java.util.Arrays;
 import java.util.List;
 
+import io.opensphere.core.util.Visitable;
+import io.opensphere.core.util.Visitor;
 import javafx.geometry.HPos;
 import javafx.geometry.Orientation;
 import javafx.geometry.VPos;
@@ -13,14 +15,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import io.opensphere.core.util.Visitable;
-import io.opensphere.core.util.Visitor;
-
 /**
- * Defines a control which wraps other controls. The set of child controls is arranged according to the orientation supplied with
- * the controls.If no controls are supplied in the <code>pControls</code> variable argument array during instantiation, then the
- * caller may supply the controls one time to the {@link #setControls(Orientation, boolean, IdentifiedControl...)} method. In either
- * case, the class is immutable, and controls may not be changed once they have been set.
+ * Defines a control which wraps other controls. The set of child controls is
+ * arranged according to the orientation supplied with the controls.If no
+ * controls are supplied in the <code>pControls</code> variable argument array
+ * during instantiation, then the caller may supply the controls one time to the
+ * {@link #setControls(Orientation, boolean, IdentifiedControl...)} method. In
+ * either case, the class is immutable, and controls may not be changed once
+ * they have been set.
  */
 public class CompoundTitledControl extends TitledControl
 {
@@ -35,19 +37,24 @@ public class CompoundTitledControl extends TitledControl
     private Node myNode;
 
     /**
-     * Creates a new compound control, in which multiple child controls are contained. The orientation of the child controls is
-     * determined from the supplied orientation. If no controls are supplied in the <code>pControls</code> variable argument
-     * array, then the caller may supply the controls one time to the {@link #setControls(Orientation, boolean, IdentifiedControl...)}
-     * method.
+     * Creates a new compound control, in which multiple child controls are
+     * contained. The orientation of the child controls is determined from the
+     * supplied orientation. If no controls are supplied in the
+     * <code>pControls</code> variable argument array, then the caller may
+     * supply the controls one time to the
+     * {@link #setControls(Orientation, boolean, IdentifiedControl...)} method.
      *
-     * @param pTitle the title of the compound control, which will be displayed in a center left position for vertical
-     *            orientation.
+     * @param pTitle the title of the compound control, which will be displayed
+     *            in a center left position for vertical orientation.
      * @param pOrientation the layout of the child controls.
-     * @param pShowSubtitles if true, the title of each child control will be displayed to the left of the child control, if
-     *            false, the titles of the child controls will be omitted.
-     * @param pControls the optional set of controls to encapsulate within the compound control.
+     * @param pShowSubtitles if true, the title of each child control will be
+     *            displayed to the left of the child control, if false, the
+     *            titles of the child controls will be omitted.
+     * @param pControls the optional set of controls to encapsulate within the
+     *            compound control.
      */
-    public CompoundTitledControl(String pTitle, Orientation pOrientation, boolean pShowSubtitles, IdentifiedControl<?>... pControls)
+    public CompoundTitledControl(String pTitle, Orientation pOrientation, boolean pShowSubtitles,
+            IdentifiedControl<?>... pControls)
     {
         super(pTitle);
 
@@ -62,7 +69,8 @@ public class CompoundTitledControl extends TitledControl
     /**
      * Sets the style of the internal node to the supplied value.
      *
-     * @param pStyle The inline CSS style to use for this Node. <code>null</code> is implicitly converted to an empty String.
+     * @param pStyle The inline CSS style to use for this Node.
+     *            <code>null</code> is implicitly converted to an empty String.
      */
     protected void setNodeStyle(String pStyle)
     {
@@ -70,15 +78,19 @@ public class CompoundTitledControl extends TitledControl
     }
 
     /**
-     * Sets the set of controls within the compound control. The orientation of the child controls is determined from the supplied
-     * orientation. If the controls have already been set (the {@link #myControls} field is not null), then an
-     * {@link UnsupportedOperationException} is thrown.
+     * Sets the set of controls within the compound control. The orientation of
+     * the child controls is determined from the supplied orientation. If the
+     * controls have already been set (the {@link #myControls} field is not
+     * null), then an {@link UnsupportedOperationException} is thrown.
      *
      * @param pOrientation the layout of the child controls.
-     * @param pShowSubtitles if true, the title of each child control will be displayed to the left of the child control, if
-     *            false, the titles of the child controls will be omitted.
-     * @param pControls the optional set of controls to encapsulate within the compound control.
-     * @throws UnsupportedOperationException if the controls have already been set.
+     * @param pShowSubtitles if true, the title of each child control will be
+     *            displayed to the left of the child control, if false, the
+     *            titles of the child controls will be omitted.
+     * @param pControls the optional set of controls to encapsulate within the
+     *            compound control.
+     * @throws UnsupportedOperationException if the controls have already been
+     *             set.
      */
     protected void setControls(Orientation pOrientation, boolean pShowSubtitles, IdentifiedControl<?>... pControls)
     {
@@ -102,14 +114,18 @@ public class CompoundTitledControl extends TitledControl
     }
 
     /**
-     * Creates a {@link Node} in which the child components are laid out. This node does not include the compound control's title,
-     * as the title is usually handled by the caller in a separate controller. If <code>pShowSubtitles</code> is true, the box
-     * will be created as a grid, with labels containing the title of each child component shown on the left column of the row,
-     * and the corresponding child component shown in the right column of the row. If <code>pShowSubtitles</code> is true, the box
-     * is merely a vertical box containing each of the controls.
+     * Creates a {@link Node} in which the child components are laid out. This
+     * node does not include the compound control's title, as the title is
+     * usually handled by the caller in a separate controller. If
+     * <code>pShowSubtitles</code> is true, the box will be created as a grid,
+     * with labels containing the title of each child component shown on the
+     * left column of the row, and the corresponding child component shown in
+     * the right column of the row. If <code>pShowSubtitles</code> is true, the
+     * box is merely a vertical box containing each of the controls.
      *
-     * @param pShowSubtitles if true, the title of each child control will be displayed to the left of the child control, if
-     *            false, the titles of the child controls will be omitted.
+     * @param pShowSubtitles if true, the title of each child control will be
+     *            displayed to the left of the child control, if false, the
+     *            titles of the child controls will be omitted.
      * @param pControls the set of controls to include in the vertical box.
      * @return a Node in which the child controls are rendered.
      */
@@ -126,7 +142,7 @@ public class CompoundTitledControl extends TitledControl
                 grid.addRow(rowNumber++, label, wpsControl);
                 GridPane.setHalignment(label, HPos.RIGHT);
                 GridPane.setHalignment(wpsControl, HPos.RIGHT);
-                GridPane.setFillWidth(wpsControl, true);
+                GridPane.setFillWidth(wpsControl, Boolean.TRUE);
             }
             return grid;
         }
@@ -134,14 +150,18 @@ public class CompoundTitledControl extends TitledControl
     }
 
     /**
-     * Creates a {@link Node} in which the child components are laid out. This node does not include the compound control's title,
-     * as the title is usually handled by the caller in a separate controller. If <code>pShowSubtitles</code> is true, the box
-     * will be created as a grid, with labels containing the title of each child component shown on the top row of the column, and
-     * the corresponding child component shown in the bottom row of column. If <code>pShowSubtitles</code> is true, the box is
+     * Creates a {@link Node} in which the child components are laid out. This
+     * node does not include the compound control's title, as the title is
+     * usually handled by the caller in a separate controller. If
+     * <code>pShowSubtitles</code> is true, the box will be created as a grid,
+     * with labels containing the title of each child component shown on the top
+     * row of the column, and the corresponding child component shown in the
+     * bottom row of column. If <code>pShowSubtitles</code> is true, the box is
      * merely a horizontal box containing each of the controls.
      *
-     * @param pShowSubtitles if true, the title of each child control will be displayed to above the child control, if false, the
-     *            titles of the child controls will be omitted.
+     * @param pShowSubtitles if true, the title of each child control will be
+     *            displayed to above the child control, if false, the titles of
+     *            the child controls will be omitted.
      * @param pControls the set of controls to include in the vertical box.
      * @return a Node in which the child controls are rendered.
      */

@@ -88,7 +88,7 @@ public class DateTimeFinder
                 {
                     if (headerCell.toUpperCase().contains(excludeColumn.toUpperCase()))
                     {
-                        potentials.remove(columnIndex);
+                        potentials.remove(Integer.valueOf(columnIndex));
                     }
                 }
 

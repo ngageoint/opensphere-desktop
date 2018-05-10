@@ -55,7 +55,7 @@ import io.opensphere.mantle.data.impl.DefaultDeletableDataGroupInfo;
 /**
  * Tests the {@link GeoPackageDataGroupController} class.
  */
-@SuppressWarnings("PMD.GodClass")
+@SuppressWarnings({ "PMD.GodClass", "boxing" })
 public class GeoPackageDataGroupControllerTest
 {
     /**

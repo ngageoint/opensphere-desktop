@@ -13,13 +13,13 @@ import org.junit.Test;
 import io.opensphere.core.model.LatLonAlt.CoordFormat;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.csvcommon.format.position.LatitudeFormatter;
 import io.opensphere.csvcommon.util.LocationTestUtils;
 
 /**
  * Tests the LatitudeFormatter class.
  *
  */
+@SuppressWarnings("boxing")
 public class LatitudeFormatterTest
 {
     /**

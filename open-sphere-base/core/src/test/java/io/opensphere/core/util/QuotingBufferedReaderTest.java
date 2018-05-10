@@ -62,11 +62,12 @@ public class QuotingBufferedReaderTest
         }
 
         Reader in = new CharArrayReader(sb.toString().toCharArray());
+        QuotingBufferedReader reader = new QuotingBufferedReader(in, null, new char[] { '\\' });
 
         for (int sz = 1; sz < sb.length() + 1; ++sz)
         {
             in.reset();
-            QuotingBufferedReader reader = new QuotingBufferedReader(in, sz, null, new char[] { '\\' });
+            reader.setBuffer(sz);
 
             List<String> actual = New.list(5);
             for (String line; (line = reader.readLine()) != null;)
@@ -75,6 +76,8 @@ public class QuotingBufferedReaderTest
             }
             Assert.assertEquals("Lines do not match when buffer size is " + sz, expected, actual);
         }
+
+        reader.close();
     }
 
     /**
@@ -104,6 +107,7 @@ public class QuotingBufferedReaderTest
 
         String line = reader.readLine();
         Assert.assertEquals(dataLine, line);
+        reader.close();
     }
 
     /**
@@ -119,6 +123,7 @@ public class QuotingBufferedReaderTest
         QuotingBufferedReader reader = new QuotingBufferedReader(in, new char[] { '"', '\'' }, new char[] { '\\' });
 
         Assert.assertEquals(null, reader.readLine());
+        reader.close();
     }
 
     /**
@@ -141,11 +146,12 @@ public class QuotingBufferedReaderTest
         }
 
         Reader in = new CharArrayReader(sb.toString().toCharArray());
+        QuotingBufferedReader reader = new QuotingBufferedReader(in, null, null);
 
         for (int sz = 1; sz < sb.length() + 1; ++sz)
         {
-            in.reset();
-            QuotingBufferedReader reader = new QuotingBufferedReader(in, sz, null, null);
+            reader.reset();
+            reader.setBuffer(sz);
 
             List<String> actual = New.list(5);
             for (String line; (line = reader.readLine()) != null;)
@@ -154,6 +160,8 @@ public class QuotingBufferedReaderTest
             }
             Assert.assertEquals("Lines do not match when buffer size is " + sz, expected, actual);
         }
+
+        reader.close();
     }
 
     /**
@@ -178,11 +186,12 @@ public class QuotingBufferedReaderTest
         }
 
         Reader in = new CharArrayReader(sb.toString().toCharArray());
+        QuotingBufferedReader reader = new QuotingBufferedReader(in, new char[] { '"', '\'' }, null);
 
         for (int sz = 1; sz < sb.length() + 1; ++sz)
         {
-            in.reset();
-            QuotingBufferedReader reader = new QuotingBufferedReader(in, sz, new char[] { '"', '\'' }, null);
+            reader.reset();
+            reader.setBuffer(sz);
 
             List<String> actual = New.list(5);
             for (String line; (line = reader.readLine()) != null;)
@@ -191,6 +200,8 @@ public class QuotingBufferedReaderTest
             }
             Assert.assertEquals("Lines do not match when buffer size is " + sz, expected, actual);
         }
+
+        reader.close();
     }
 
     /**
@@ -215,11 +226,12 @@ public class QuotingBufferedReaderTest
         }
 
         Reader in = new CharArrayReader(sb.toString().toCharArray());
+        QuotingBufferedReader reader = new QuotingBufferedReader(in, new char[] { '"', '\'' }, new char[] { '\\' });
 
         for (int sz = 1; sz < sb.length() + 1; ++sz)
         {
-            in.reset();
-            QuotingBufferedReader reader = new QuotingBufferedReader(in, sz, new char[] { '"', '\'' }, new char[] { '\\' });
+            reader.reset();
+            reader.setBuffer(sz);
 
             List<String> actual = New.list(5);
             for (String line; (line = reader.readLine()) != null;)
@@ -228,5 +240,7 @@ public class QuotingBufferedReaderTest
             }
             Assert.assertEquals("Lines do not match when buffer size is " + sz, expected, actual);
         }
+
+        reader.close();
     }
 }

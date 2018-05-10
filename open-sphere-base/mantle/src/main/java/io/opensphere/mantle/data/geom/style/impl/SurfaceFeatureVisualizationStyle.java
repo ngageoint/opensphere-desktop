@@ -133,7 +133,8 @@ public class SurfaceFeatureVisualizationStyle extends AbstractFeatureVisualizati
 
     @Override
     public void createCombinedGeometry(Set<Geometry> setToAddTo, FeatureCombinedGeometryBuilderData builderData,
-            RenderPropertyPool renderPropertyPool) throws IllegalArgumentException
+            RenderPropertyPool renderPropertyPool)
+        throws IllegalArgumentException
     {
         DefaultMeshScalableRenderProperties props = new DefaultMeshScalableRenderProperties(0, true, false);
         props.setBaseAltitude((float)getLift());
@@ -193,7 +194,8 @@ public class SurfaceFeatureVisualizationStyle extends AbstractFeatureVisualizati
 
     @Override
     public void createIndividualGeometry(Set<Geometry> setToAddTo, FeatureIndividualGeometryBuilderData builderData,
-            RenderPropertyPool renderPropertyPool) throws IllegalArgumentException
+            RenderPropertyPool renderPropertyPool)
+        throws IllegalArgumentException
     {
         throw new UnsupportedOperationException("Can't create individual geometry.");
     }
@@ -261,7 +263,7 @@ public class SurfaceFeatureVisualizationStyle extends AbstractFeatureVisualizati
         paramList.add(ccPanel);
 
         EditorPanelVisibilityDependency visDepend = new EditorPanelVisibilityDependency(panel, ccPanel);
-        visDepend.addConstraint(new ParameterVisibilityConstraint(ourDifferntTopColorKey, Boolean.TRUE, true));
+        visDepend.addConstraint(new ParameterVisibilityConstraint(ourDifferntTopColorKey, true, Boolean.TRUE));
         visDepend.evaluateStyle();
         panel.addVisibilityDependency(visDepend);
 
@@ -355,7 +357,7 @@ public class SurfaceFeatureVisualizationStyle extends AbstractFeatureVisualizati
         paramList.add(ccPanel);
 
         EditorPanelVisibilityDependency visDepend = new EditorPanelVisibilityDependency(panel, ccPanel);
-        visDepend.addConstraint(new ParameterVisibilityConstraint(ourDifferntTopColorKey, Boolean.TRUE, true));
+        visDepend.addConstraint(new ParameterVisibilityConstraint(ourDifferntTopColorKey, true, Boolean.TRUE));
         visDepend.evaluateStyle();
         panel.addVisibilityDependency(visDepend);
 

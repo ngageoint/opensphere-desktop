@@ -16,6 +16,7 @@ import io.opensphere.csv.util.CsvTestUtils;
 /**
  * Generates different combinations of csv date data used for testing.
  */
+@SuppressWarnings("boxing")
 public final class DateDataGenerator
 {
     /**
@@ -47,7 +48,8 @@ public final class DateDataGenerator
      * @throws ParseException Bad parse.
      */
     public static List<List<String>> generateDayTimeUpTimeDown(DateFormat dateFormat, DateFormat timeFormat1,
-            DateFormat timeFormat2) throws ParseException
+            DateFormat timeFormat2)
+        throws ParseException
     {
         List<List<String>> data = createJunkData(2);
 
@@ -79,8 +81,7 @@ public final class DateDataGenerator
         }
 
         List<List<String>> convertToRowsColumns = convertToRowsColumns(data, new Pair<>(dateValues1, 1),
-                new Pair<>(timeValues1, 2), new Pair<>(additionalTimes, 3),
-                new Pair<>(timeValues2, 4));
+                new Pair<>(timeValues1, 2), new Pair<>(additionalTimes, 3), new Pair<>(timeValues2, 4));
 
         return convertToRowsColumns;
     }
@@ -167,8 +168,7 @@ public final class DateDataGenerator
         List<String> timeValues2 = createDateValues(timeSimpleFormat2, System.currentTimeMillis() + ourStepSize);
 
         List<List<String>> convertToRowsColumns = convertToRowsColumns(data, new Pair<>(dateValues1, 1),
-                new Pair<>(dateValues2, 2), new Pair<>(timeValues1, 4),
-                new Pair<>(timeValues2, 5));
+                new Pair<>(dateValues2, 2), new Pair<>(timeValues1, 4), new Pair<>(timeValues2, 5));
 
         return convertToRowsColumns;
     }

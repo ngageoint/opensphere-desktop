@@ -25,14 +25,13 @@ import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.mantle.data.geom.AbstractMapGeometrySupport;
 import io.opensphere.mantle.data.geom.impl.DefaultMapPolygonGeometrySupport;
-import io.opensphere.wfs.filter.FilterHandler;
-import io.opensphere.wfs.filter.SaxElement;
 import io.opensphere.wfs.gml311.AbstractGmlGeometryHandler;
 import io.opensphere.wfs.gml311.GeometryHandlerFactory;
 
 /**
  * Test used to exercise the functionality of the {@link FilterHandler} class.
  */
+@SuppressWarnings("boxing")
 public class FilterHandlerTest
 {
     /**

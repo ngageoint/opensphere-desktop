@@ -191,7 +191,6 @@ public class LoggerDialog extends AbstractInternalFrame
      *
      * @param text The text to search for (case insensitive).
      */
-    @SuppressWarnings("unchecked")
     private void search(String text)
     {
         mySelectedNode = null;

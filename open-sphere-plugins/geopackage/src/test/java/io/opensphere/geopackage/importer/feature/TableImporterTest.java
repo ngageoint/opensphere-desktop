@@ -31,6 +31,7 @@ import mil.nga.wkb.geom.GeometryType;
 /**
  * Unit test for the {@link TableImporter} class.
  */
+@SuppressWarnings("boxing")
 public class TableImporterTest
 {
     /**

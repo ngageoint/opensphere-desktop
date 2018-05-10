@@ -35,6 +35,7 @@ public class WFSStateController extends BaseWFSStateController
     /** Listener for when servers are activated or deactivated. */
     private final EventListener<? super ServerConfigEvent> myServerEventListener = new EventListener<ServerConfigEvent>()
     {
+        @SuppressWarnings("null")
         @Override
         public void notify(ServerConfigEvent event)
         {
@@ -189,7 +190,7 @@ public class WFSStateController extends BaseWFSStateController
              * WFS currently does not deactivate groups when the server is
              * deactivated. */
             return group.hasMember(
-                t -> t instanceof WFSDataType && myDataTypeController.hasDataTypeInfoForTypeKey(t.getTypeKey()), false);
+                    t -> t instanceof WFSDataType && myDataTypeController.hasDataTypeInfoForTypeKey(t.getTypeKey()), false);
         }
         return false;
     }

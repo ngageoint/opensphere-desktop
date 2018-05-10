@@ -10,7 +10,6 @@ import io.opensphere.core.common.configuration.date.DateFormat.Type;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.csvcommon.common.datetime.DateColumn;
-import io.opensphere.csvcommon.detect.datetime.algorithm.deciders.Decider;
 import io.opensphere.csvcommon.detect.datetime.model.PotentialColumn;
 import io.opensphere.csvcommon.detect.datetime.util.DateColumnValueProvider;
 
@@ -117,11 +116,13 @@ public class OneDayMultipleTimesDecider implements Decider
                         secondDate.setSecondaryColumnFormat(secondTime.getFirstObject().getPrimaryColumnFormat());
                         secondDate.setSecondaryColumnIndex(secondTime.getFirstObject().getPrimaryColumnIndex());
 
-                        int firstDateScore = (dateColumn.getSecondObject() + firstTime.getSecondObject()) / 2;
-                        int secondDateScore = (dateColumn.getSecondObject() + secondTime.getSecondObject()) / 2;
+                        int firstDateScore = (dateColumn.getSecondObject().intValue() + firstTime.getSecondObject().intValue())
+                                / 2;
+                        int secondDateScore = (dateColumn.getSecondObject().intValue() + secondTime.getSecondObject().intValue())
+                                / 2;
 
-                        results.add(new Pair<DateColumn, Integer>(firstDate, firstDateScore));
-                        results.add(new Pair<DateColumn, Integer>(secondDate, secondDateScore));
+                        results.add(new Pair<DateColumn, Integer>(firstDate, Integer.valueOf(firstDateScore)));
+                        results.add(new Pair<DateColumn, Integer>(secondDate, Integer.valueOf(secondDateScore)));
                     }
                 }
             }

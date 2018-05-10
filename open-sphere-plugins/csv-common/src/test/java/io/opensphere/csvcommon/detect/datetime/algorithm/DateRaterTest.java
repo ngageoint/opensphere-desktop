@@ -15,7 +15,6 @@ import io.opensphere.core.util.DateTimeFormats;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.csvcommon.common.datetime.DateColumnResults;
 import io.opensphere.csvcommon.detect.ValueWithConfidence;
-import io.opensphere.csvcommon.detect.datetime.algorithm.DateRater;
 import io.opensphere.csvcommon.detect.datetime.model.PotentialColumn;
 import io.opensphere.csvcommon.detect.datetime.model.SuccessfulFormat;
 import io.opensphere.csvcommon.detect.datetime.util.DateDataGenerator;
@@ -24,7 +23,7 @@ import io.opensphere.csvcommon.detect.datetime.util.DateDataGenerator;
  * Tests the DateRater class.
  *
  */
-@SuppressWarnings("PMD.GodClass")
+@SuppressWarnings({ "PMD.GodClass", "boxing" })
 public class DateRaterTest
 {
     /**

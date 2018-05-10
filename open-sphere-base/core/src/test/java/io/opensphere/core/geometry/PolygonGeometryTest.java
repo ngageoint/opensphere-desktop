@@ -2,6 +2,7 @@ package io.opensphere.core.geometry;
 
 import java.util.Arrays;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import io.opensphere.core.geometry.constraint.Constraints;
@@ -13,9 +14,9 @@ import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.LineType;
 import io.opensphere.core.model.time.TimeSpan;
-import org.junit.Assert;
 
 /** Test for {@link PolygonGeometry}. */
+@SuppressWarnings("boxing")
 public class PolygonGeometryTest
 {
     /**

@@ -2,9 +2,8 @@ package io.opensphere.core.util.rangeset;
 
 import java.util.Iterator;
 
-import org.junit.Test;
-
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Test Cases for DefaultRangedLongSet.
@@ -14,6 +13,7 @@ public class DefaultRangedLongSetTest
     /**
      * Test some of the basic functions.
      */
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void test()
     {

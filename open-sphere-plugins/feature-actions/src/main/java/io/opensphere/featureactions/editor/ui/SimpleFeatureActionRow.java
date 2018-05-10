@@ -4,6 +4,17 @@ import java.awt.Component;
 
 import javax.swing.SwingUtilities;
 
+import io.opensphere.controlpanels.iconpicker.ui.IconPickerButton;
+import io.opensphere.core.Toolbox;
+import io.opensphere.core.util.fx.FXUtilities;
+import io.opensphere.core.util.fx.NewAutoCompleteComboBoxListener;
+import io.opensphere.core.util.image.IconUtil.IconType;
+import io.opensphere.featureactions.editor.model.CriteriaOptions;
+import io.opensphere.featureactions.editor.model.SimpleFeatureAction;
+import io.opensphere.featureactions.editor.model.SimpleFeatureActionGroup;
+import io.opensphere.featureactions.editor.model.SimpleFeatureActions;
+import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.util.MantleToolboxUtils;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -16,18 +27,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
-import io.opensphere.controlpanels.iconpicker.ui.IconPickerButton;
-import io.opensphere.core.Toolbox;
-import io.opensphere.core.util.fx.AutoCompleteComboBoxListener;
-import io.opensphere.core.util.fx.FXUtilities;
-import io.opensphere.core.util.image.IconUtil.IconType;
-import io.opensphere.featureactions.editor.model.CriteriaOptions;
-import io.opensphere.featureactions.editor.model.SimpleFeatureAction;
-import io.opensphere.featureactions.editor.model.SimpleFeatureActionGroup;
-import io.opensphere.featureactions.editor.model.SimpleFeatureActions;
-import io.opensphere.mantle.data.DataTypeInfo;
-import io.opensphere.mantle.util.MantleToolboxUtils;
-
 /**
  * A User Interface representing one feature action in the list of feature
  * actions.
@@ -39,10 +38,6 @@ public class SimpleFeatureActionRow extends ListCell<SimpleFeatureAction> implem
 
     /** Contains all actions for a given layer. */
     private final SimpleFeatureActions myActions;
-
-    /** Enables the combo box to be auto completed. */
-    @SuppressWarnings("unused")
-    private final AutoCompleteComboBoxListener<String> myAutoComplete;
 
     /** Binds this ui to the model. */
     private SimpleFeatureActionRowBinder myBinder;
@@ -126,8 +121,11 @@ public class SimpleFeatureActionRow extends ListCell<SimpleFeatureAction> implem
         myActions = actions;
         myGroup = group;
         layer = type;
-        myAutoComplete = new AutoCompleteComboBoxListener<>(myField);
+//        myAutoComplete = new AutoCompleteComboBoxListener<>(myField);
         parentDialog = dialog;
+
+        NewAutoCompleteComboBoxListener listener = new NewAutoCompleteComboBoxListener();
+        listener.setupComboBox(myField);
     }
 
     @Override

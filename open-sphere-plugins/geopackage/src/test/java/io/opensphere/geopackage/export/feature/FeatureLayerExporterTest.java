@@ -56,6 +56,7 @@ import mil.nga.wkb.geom.Point;
 /**
  * Unit test for {@link FeatureLayerExporter}.
  */
+@SuppressWarnings("boxing")
 public class FeatureLayerExporterTest
 {
     /**

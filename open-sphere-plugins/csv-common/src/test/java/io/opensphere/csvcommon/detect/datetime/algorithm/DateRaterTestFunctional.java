@@ -10,15 +10,14 @@ import java.util.Map;
 import org.junit.Test;
 
 import io.opensphere.core.common.configuration.date.DateFormat;
-import io.opensphere.core.common.configuration.date.DateFormatsConfig;
 import io.opensphere.core.common.configuration.date.DateFormat.Type;
+import io.opensphere.core.common.configuration.date.DateFormatsConfig;
 import io.opensphere.core.preferences.ClasspathPreferencesPersistenceManager;
 import io.opensphere.core.preferences.InternalPreferencesIF;
 import io.opensphere.core.util.DateTimeFormats;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.csvcommon.common.datetime.DateColumnResults;
 import io.opensphere.csvcommon.detect.ValueWithConfidence;
-import io.opensphere.csvcommon.detect.datetime.algorithm.DateRater;
 import io.opensphere.csvcommon.detect.datetime.model.PotentialColumn;
 import io.opensphere.csvcommon.detect.datetime.model.SuccessfulFormat;
 import io.opensphere.csvcommon.detect.datetime.util.DateDataGenerator;
@@ -28,7 +27,7 @@ import io.opensphere.mantle.util.MantleConstants;
  * Tests the DateRater class.
  *
  */
-@SuppressWarnings("PMD.GodClass")
+@SuppressWarnings({ "PMD.GodClass", "boxing" })
 public class DateRaterTestFunctional
 {
     /**

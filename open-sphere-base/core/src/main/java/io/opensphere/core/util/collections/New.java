@@ -1838,7 +1838,6 @@ public final class New
      * @return The new unmodifiable collection, or {@code null} if the input is
      *         {@code null}.
      */
-    @SuppressWarnings({ "unchecked" /* suppresses javac warning */, "cast" })
     public static <T> Collection<? extends T> unmodifiableCollection(Collection<? extends T> col)
     {
         return col == null ? null
@@ -1847,7 +1846,7 @@ public final class New
                                 : col.size() == 1
                                         ? Collections.<T>singletonList(
                                                 col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
-                                : Collections.unmodifiableCollection(collection(col));
+                                        : Collections.unmodifiableCollection(collection(col));
     }
 
     /**
@@ -1859,7 +1858,6 @@ public final class New
      * @return The new unmodifiable list, or {@code null} if the input is
      *         {@code null}.
      */
-    @SuppressWarnings({ "unchecked" /* suppresses javac warning */, "cast" })
     public static <T> List<T> unmodifiableList(Collection<T> col)
     {
         return col == null ? null
@@ -1868,7 +1866,7 @@ public final class New
                                 : col.size() == 1
                                         ? Collections.<T>singletonList(
                                                 col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
-                                : Collections.unmodifiableList(list(col));
+                                        : Collections.unmodifiableList(list(col));
     }
 
     /**
@@ -1912,7 +1910,6 @@ public final class New
      * @return The new unmodifiable set, or {@code null} if the input is
      *         {@code null}.
      */
-    @SuppressWarnings({ "unchecked" /* suppresses javac warning */, "cast" })
     public static <T> Set<? extends T> unmodifiableSet(Collection<? extends T> col)
     {
         return col == null ? null
@@ -1921,7 +1918,7 @@ public final class New
                                 : col.size() == 1
                                         ? Collections.<T>singleton(
                                                 col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
-                                : Collections.unmodifiableSet(set(col));
+                                        : Collections.unmodifiableSet(set(col));
     }
 
     /**

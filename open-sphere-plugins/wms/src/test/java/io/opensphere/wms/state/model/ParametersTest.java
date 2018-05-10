@@ -17,6 +17,7 @@ import io.opensphere.core.util.XMLUtilities;
  * can serialize/deserialize and verifies that the xml format is as expected.
  *
  */
+@SuppressWarnings("boxing")
 public class ParametersTest
 {
     /**

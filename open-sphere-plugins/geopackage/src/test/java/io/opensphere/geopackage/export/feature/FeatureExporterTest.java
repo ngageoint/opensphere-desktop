@@ -28,6 +28,7 @@ import mil.nga.geopackage.projection.ProjectionConstants;
 /**
  * Unit test for {@link FeatureExporter}.
  */
+@SuppressWarnings("boxing")
 public class FeatureExporterTest
 {
     /**

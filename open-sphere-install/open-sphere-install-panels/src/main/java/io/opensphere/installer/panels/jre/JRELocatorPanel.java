@@ -67,8 +67,10 @@ public class JRELocatorPanel extends IzPanel implements ActionListener, Hyperlin
      */
     protected final PathSelectionPanel pathSelectionPanel;
 
+    /** The Empty Target message. */
     protected final String emptyTargetMsg;
 
+    /** The Warning message. */
     protected final String warnMsg;
 
     /**
@@ -256,6 +258,7 @@ public class JRELocatorPanel extends IzPanel implements ActionListener, Hyperlin
     /**
      * Determines if required files exist relative to the specified path
      *
+     * @param path the path to check
      * @return {@code true} if no files are required, or they exist
      */
     protected boolean checkRequiredFilesExist(String path)
@@ -329,11 +332,13 @@ public class JRELocatorPanel extends IzPanel implements ActionListener, Hyperlin
      */
     protected boolean modifyInstallation()
     {
-        return Boolean.valueOf(installData.getVariable(InstallData.MODIFY_INSTALLATION));
+        return Boolean.valueOf(installData.getVariable(InstallData.MODIFY_INSTALLATION)).booleanValue();
     }
 
     /**
      * Same as calling {@link #pathIsValid(boolean) pathIsValid(false)}.
+     *
+     * @return if path is valid
      */
     protected boolean pathIsValid()
     {
@@ -346,6 +351,7 @@ public class JRELocatorPanel extends IzPanel implements ActionListener, Hyperlin
      * can be also implemented in derived classes to handle special verification
      * of the path.
      *
+     * @param notifyUserIfInvalid whether or not to notify user on invalid path
      * @return true if existFiles are exist or not defined, else false
      */
     protected boolean pathIsValid(boolean notifyUserIfInvalid)
@@ -420,6 +426,11 @@ public class JRELocatorPanel extends IzPanel implements ActionListener, Hyperlin
         return false;
     }
 
+    /**
+     * Test the validity of the path.
+     *
+     * @return if path is valid
+     */
     protected boolean testValidPath()
     {
         String path = getPath();

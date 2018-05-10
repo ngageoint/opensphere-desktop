@@ -70,29 +70,29 @@ public class DataTypeControllerImpl implements DataTypeController
     static
     {
         // conversion for feet (which was the observed use case)
-        Double meterPerFt = Length.METERS_PER_FOOT;
+        Double meterPerFt = Double.valueOf(Length.METERS_PER_FOOT);
         scaleMap.put(Feet.FEET_LONG_LABEL1.toUpperCase(), meterPerFt);
         scaleMap.put(Feet.FEET_LONG_LABEL2.toUpperCase(), meterPerFt);
         scaleMap.put(Feet.FEET_SHORT_LABEL.toUpperCase(), meterPerFt);
 
         // conversion for nautical miles
-        Double meterPerNm = (double)NauticalMiles.METERS_PER_NAUTICAL_MILE;
+        Double meterPerNm = Double.valueOf(NauticalMiles.METERS_PER_NAUTICAL_MILE);
         scaleMap.put(NauticalMiles.NM_LONG_LABEL.toUpperCase(), meterPerNm);
         scaleMap.put(NauticalMiles.NM_SHORT_LABEL.toUpperCase(), meterPerNm);
 
         // conversion for miles
-        Double meterPerMi = StatuteMiles.FEET_PER_STATUTE_MILE * Length.METERS_PER_FOOT;
+        Double meterPerMi = Double.valueOf(StatuteMiles.FEET_PER_STATUTE_MILE * Length.METERS_PER_FOOT);
         scaleMap.put(StatuteMiles.MILES_LONG_LABEL.toUpperCase(), meterPerMi);
         scaleMap.put(StatuteMiles.MILES_SHORT_LABEL.toUpperCase(), meterPerMi);
 
         // conversion for kilometers
-        Double meterPerKm = 1000.0;
+        Double meterPerKm = Double.valueOf(1000.0);
         scaleMap.put(Kilometers.KILOMETERS_LONG_LABEL.toUpperCase(), meterPerKm);
         scaleMap.put(Kilometers.KILOMETERS_SHORT_LABEL.toUpperCase(), meterPerKm);
 
         // "conversion" for meters; actually, short-circuit to avoid unnecessary
         // work
-        Double meterPerMeter = 1.0;
+        Double meterPerMeter = Double.valueOf(1.0);
         scaleMap.put(Meters.METERS_LONG_LABEL.toUpperCase(), meterPerMeter);
         scaleMap.put(Meters.METERS_SHORT_LABEL.toUpperCase(), meterPerMeter);
     }
@@ -145,7 +145,8 @@ public class DataTypeControllerImpl implements DataTypeController
      *
      * @param toolbox the {@link Toolbox}
      * @param deCache the data element cache
-     * @param columnTypeDetector the column type detector used to find special keys.
+     * @param columnTypeDetector the column type detector used to find special
+     *            keys.
      */
     public DataTypeControllerImpl(Toolbox toolbox, DataElementCacheImpl deCache, ColumnTypeDetector columnTypeDetector)
     {
@@ -618,7 +619,6 @@ public class DataTypeControllerImpl implements DataTypeController
      * @param data the data elements to be inserted
      * @param xFormer if present, a transformer for map data elements
      * @return the ids of the inserted elements
-     * @throws CacheException in case the cache has a problem
      */
     private long[] cacheDataElements(String category, String source, Collection<? extends DataElement> data,
             Consumer<long[]> xFormer)
@@ -693,7 +693,7 @@ public class DataTypeControllerImpl implements DataTypeController
 
             // replace the "metadata"
             mdp.setValue(unitKey, "M");
-            mdp.setValue(altKey, newAlt);
+            mdp.setValue(altKey, Double.valueOf(newAlt));
 
             // alter the map geometry
             MapGeometrySupport geom = elt.getMapGeometrySupport();
@@ -720,7 +720,7 @@ public class DataTypeControllerImpl implements DataTypeController
         Double ret = scaleMap.get(unit.toUpperCase());
         if (ret != null)
         {
-            return ret;
+            return ret.doubleValue();
         }
         return 1.0;
     }
@@ -750,10 +750,6 @@ public class DataTypeControllerImpl implements DataTypeController
         if (val == null)
         {
             return Double.NaN;
-        }
-        if (val instanceof Double)
-        {
-            return (Double)val;
         }
         if (val instanceof Number)
         {

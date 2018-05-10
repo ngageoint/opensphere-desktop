@@ -377,7 +377,7 @@ public class DataUtil
             // include the new ones
             for (Long id : idList)
             {
-                newIds[j++] = id;
+                newIds[j++] = id.longValue();
             }
             mantleIds = newIds;
         }

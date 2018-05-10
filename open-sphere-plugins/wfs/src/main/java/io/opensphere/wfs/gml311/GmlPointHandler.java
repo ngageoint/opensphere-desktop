@@ -52,13 +52,13 @@ public class GmlPointHandler extends AbstractGmlGeometryHandler
 
                 if (isLatBeforeLong())
                 {
-                    myLat = Double.valueOf(arr[0]);
-                    myLon = Double.valueOf(arr[1]);
+                    myLat = Double.valueOf(arr[0]).doubleValue();
+                    myLon = Double.valueOf(arr[1]).doubleValue();
                 }
                 else
                 {
-                    myLon = Double.valueOf(arr[0]);
-                    myLat = Double.valueOf(arr[1]);
+                    myLon = Double.valueOf(arr[0]).doubleValue();
+                    myLat = Double.valueOf(arr[1]).doubleValue();
                 }
 
                 if (myLon > 180.0)

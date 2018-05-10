@@ -309,6 +309,7 @@ public class AbstractGeographicProjectionTest
     @Test
     public void testCacheEllipsoid()
     {
+        @SuppressWarnings("unchecked")
         BoundingBox<GeographicPosition> mockBox = createStrictMock(BoundingBox.class);
         Ellipsoid mockEllipsoid = createStrictMock(Ellipsoid.class);
 

@@ -59,8 +59,7 @@ public class ColumnDefinitionTableBinder implements Observer, ListSelectionListe
         {
             int currentSelection = myTable.getSelectionModel().getAnchorSelectionIndex();
             ColumnDefinitionRow selectedRow = myModel.getSelectedDefinition();
-            if (currentSelection < 0 && selectedRow != null
-                    || selectedRow != null && selectedRow.getColumnId() != currentSelection)
+            if (selectedRow != null && (currentSelection < 0 || selectedRow.getColumnId() != currentSelection))
             {
                 myTable.getSelectionModel().setSelectionInterval(selectedRow.getColumnId(), selectedRow.getColumnId());
             }

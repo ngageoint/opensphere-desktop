@@ -654,6 +654,7 @@ public class KMLProcessor
      * @param url The "URL".
      * @return {@code true} if the URL is probably local.
      */
+    @SuppressWarnings("unused")
     private static boolean isUrlLocal(KMLDataSource dataSource, String url)
     {
         if (dataSource.getContentType() == KMLContentType.KMZ)

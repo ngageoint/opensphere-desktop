@@ -7,8 +7,8 @@ import org.easymock.EasyMockSupport;
 import org.easymock.IAnswer;
 
 import io.opensphere.core.common.configuration.date.DateFormat;
-import io.opensphere.core.common.configuration.date.DateFormatsConfig;
 import io.opensphere.core.common.configuration.date.DateFormat.Type;
+import io.opensphere.core.common.configuration.date.DateFormatsConfig;
 import io.opensphere.core.preferences.ClasspathPreferencesPersistenceManager;
 import io.opensphere.core.preferences.InternalPreferencesIF;
 import io.opensphere.core.preferences.ListToolPreferences;
@@ -37,7 +37,7 @@ public final class TestDateTimeUtils
                 EasyMock.isA(DateFormatsConfig.class));
         EasyMock.expectLastCall().andReturn(config);
         preferences.getBoolean(EasyMock.isA(String.class), EasyMock.eq(false));
-        EasyMock.expectLastCall().andReturn(true);
+        EasyMock.expectLastCall().andReturn(Boolean.TRUE);
         EasyMock.expectLastCall().atLeastOnce();
 
         PreferencesRegistry registry = support.createMock(PreferencesRegistry.class);
@@ -62,7 +62,7 @@ public final class TestDateTimeUtils
                 EasyMock.isA(DateFormatsConfig.class));
         EasyMock.expectLastCall().andReturn(formats);
         preferences.getBoolean(EasyMock.isA(String.class), EasyMock.eq(false));
-        EasyMock.expectLastCall().andReturn(true);
+        EasyMock.expectLastCall().andReturn(Boolean.TRUE);
 
         PreferencesRegistry registry = support.createMock(PreferencesRegistry.class);
         registry.getPreferences(EasyMock.cmpEq(MantleConstants.USER_DATE_FORMAT_CONFIG_FILE_TOPIC));
@@ -81,7 +81,7 @@ public final class TestDateTimeUtils
     {
         Preferences preferences = support.createMock(Preferences.class);
         preferences.getBoolean(EasyMock.isA(String.class), EasyMock.eq(false));
-        EasyMock.expectLastCall().andReturn(true);
+        EasyMock.expectLastCall().andReturn(Boolean.TRUE);
         EasyMock.expectLastCall().atLeastOnce();
 
         PreferencesRegistry registry = support.createMock(PreferencesRegistry.class);
@@ -105,7 +105,7 @@ public final class TestDateTimeUtils
     {
         Preferences listPreferences = support.createMock(Preferences.class);
         listPreferences.getInt(EasyMock.cmpEq(ListToolPreferences.LIST_TOOL_TIME_PRECISION_DIGITS), EasyMock.eq(0));
-        EasyMock.expectLastCall().andReturn(precision);
+        EasyMock.expectLastCall().andReturn(Integer.valueOf(precision));
 
         PreferencesRegistry registry = support.createMock(PreferencesRegistry.class);
         registry.getPreferences(EasyMock.eq(ListToolPreferences.class));
@@ -113,7 +113,7 @@ public final class TestDateTimeUtils
 
         Preferences preferences = support.createMock(Preferences.class);
         preferences.getBoolean(EasyMock.isA(String.class), EasyMock.eq(false));
-        EasyMock.expectLastCall().andReturn(true);
+        EasyMock.expectLastCall().andReturn(Boolean.TRUE);
 
         registry.getPreferences(EasyMock.cmpEq(MantleConstants.USER_DATE_FORMAT_CONFIG_FILE_TOPIC));
         EasyMock.expectLastCall().andReturn(preferences);
@@ -164,7 +164,7 @@ public final class TestDateTimeUtils
         EasyMock.expectLastCall().atLeastOnce();
 
         preferences.getBoolean(EasyMock.isA(String.class), EasyMock.eq(false));
-        EasyMock.expectLastCall().andReturn(true);
+        EasyMock.expectLastCall().andReturn(Boolean.TRUE);
 
         PreferencesRegistry registry = support.createMock(PreferencesRegistry.class);
         registry.getPreferences(EasyMock.cmpEq(MantleConstants.USER_DATE_FORMAT_CONFIG_FILE_TOPIC));

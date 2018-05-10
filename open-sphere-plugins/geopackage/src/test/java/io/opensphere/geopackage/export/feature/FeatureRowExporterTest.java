@@ -43,6 +43,7 @@ import mil.nga.wkb.geom.Point;
 /**
  * Unit test for {@link FeatureRowExporter} class.
  */
+@SuppressWarnings("boxing")
 public class FeatureRowExporterTest
 {
     /**

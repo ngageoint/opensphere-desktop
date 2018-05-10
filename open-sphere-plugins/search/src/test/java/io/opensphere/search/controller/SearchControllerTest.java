@@ -45,6 +45,7 @@ import javafx.collections.ListChangeListener;
 /**
  * Unit test for the SearchController.
  */
+@SuppressWarnings("boxing")
 public class SearchControllerTest
 {
     /**

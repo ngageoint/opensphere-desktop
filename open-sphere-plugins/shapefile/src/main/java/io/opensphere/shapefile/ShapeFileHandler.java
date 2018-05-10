@@ -39,6 +39,7 @@ public class ShapeFileHandler extends AbstractDataSourceHandler
         super(controller);
     }
 
+    @SuppressWarnings("null")
     @Override
     public boolean addDataSource(IDataSource pSource)
     {

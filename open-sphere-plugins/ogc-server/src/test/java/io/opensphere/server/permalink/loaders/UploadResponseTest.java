@@ -1,6 +1,7 @@
 package io.opensphere.server.permalink.loaders;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
@@ -32,7 +33,7 @@ public class UploadResponseTest
         ObjectMapper mapper = JsonUtils.createMapper();
         UploadResponse response = mapper.readValue(jsonString, UploadResponse.class);
 
-        assertEquals(true, response.isSuccess());
+        assertTrue(response.isSuccess());
         assertEquals("theUrl", response.getUrl());
     }
 }

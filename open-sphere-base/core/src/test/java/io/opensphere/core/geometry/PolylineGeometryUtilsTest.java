@@ -51,6 +51,7 @@ import io.opensphere.core.model.time.TimeSpan;
  * from (2,3) to (2,4), and once in reverse, from (2,4) to (2,3). This is done
  * to verify that the algorithm properly handles repeated directed lines.
  */
+@SuppressWarnings("boxing")
 public class PolylineGeometryUtilsTest
 {
     /** Test data. */

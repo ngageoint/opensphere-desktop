@@ -24,6 +24,7 @@ import io.opensphere.server.util.ServerConstants;
  * Tests the TimeoutsConfigurer.
  *
  */
+@SuppressWarnings("boxing")
 public class TimeoutsConfigurerTest
 {
     /**

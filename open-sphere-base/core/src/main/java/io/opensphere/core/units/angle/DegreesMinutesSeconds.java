@@ -145,7 +145,8 @@ public final class DegreesMinutesSeconds extends Angle
         {
             degrees = magnitude > 0. ? degrees + 1 : degrees - 1;
         }
-        return String.format(getFormatString(width, precision), degrees, minutes, seconds);
+        return String.format(getFormatString(width, precision), Double.valueOf(degrees), Integer.valueOf(minutes),
+                Double.valueOf(seconds));
     }
 
     /**

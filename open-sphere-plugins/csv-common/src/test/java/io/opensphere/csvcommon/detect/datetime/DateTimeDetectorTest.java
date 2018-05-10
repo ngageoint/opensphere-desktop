@@ -11,8 +11,8 @@ import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
 import io.opensphere.core.common.configuration.date.DateFormat;
-import io.opensphere.core.common.configuration.date.DateFormatsConfig;
 import io.opensphere.core.common.configuration.date.DateFormat.Type;
+import io.opensphere.core.common.configuration.date.DateFormatsConfig;
 import io.opensphere.core.preferences.ClasspathPreferencesPersistenceManager;
 import io.opensphere.core.preferences.InternalPreferencesIF;
 import io.opensphere.core.preferences.Preferences;
@@ -21,7 +21,6 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.csvcommon.common.CellSampler;
 import io.opensphere.csvcommon.common.datetime.DateColumnResults;
 import io.opensphere.csvcommon.detect.ValuesWithConfidence;
-import io.opensphere.csvcommon.detect.datetime.DateTimeDetector;
 import io.opensphere.csvcommon.detect.datetime.util.DateDataGenerator;
 import io.opensphere.csvcommon.detect.util.CSVColumnPrefsUtil;
 import io.opensphere.importer.config.ColumnType;
@@ -109,7 +108,7 @@ public class DateTimeDetectorTest
         preferences.getStringList(EasyMock.cmpEq(ColumnType.TIMESTAMP.name() + "_exclude"), (List<String>)EasyMock.isNull());
         EasyMock.expectLastCall().andReturn(New.list("mod"));
         preferences.getBoolean(EasyMock.isA(String.class), EasyMock.eq(false));
-        EasyMock.expectLastCall().andReturn(true);
+        EasyMock.expectLastCall().andReturn(Boolean.TRUE);
 
         PreferencesRegistry registry = support.createMock(PreferencesRegistry.class);
         registry.getPreferences(EasyMock.cmpEq(MantleConstants.USER_DATE_FORMAT_CONFIG_FILE_TOPIC));

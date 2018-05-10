@@ -173,7 +173,7 @@ public class JRELocatorHelper
         catch (Exception e)
         {
             // Will only be happen if registry handler is good, but an
-           // exception at performing was thrown. This is an error...
+            // exception at performing was thrown. This is an error...
             e.printStackTrace();
         }
         finally
@@ -317,7 +317,7 @@ public class JRELocatorHelper
 
         for (i = 0; i < currentRange; ++i)
         {
-            if (useNotIdentifier != null && interestedEntries[i].contains(useNotIdentifier))
+            if (interestedEntries[i].contains(useNotIdentifier))
             {
                 continue;
             }

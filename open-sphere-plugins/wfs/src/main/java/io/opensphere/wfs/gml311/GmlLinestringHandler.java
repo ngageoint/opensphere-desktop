@@ -75,11 +75,11 @@ public class GmlLinestringHandler extends AbstractGmlGeometryHandler
                     {
                         if (isLat)
                         {
-                            lat = Double.valueOf(entry);
+                            lat = Double.valueOf(entry).doubleValue();
                         }
                         else
                         {
-                            lon = Double.valueOf(entry);
+                            lon = Double.valueOf(entry).doubleValue();
                             if (lon > 180.0)
                             {
                                 lon = lon - 360.0;

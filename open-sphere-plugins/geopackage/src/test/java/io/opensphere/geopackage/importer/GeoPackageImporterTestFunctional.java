@@ -49,6 +49,7 @@ import mil.nga.geopackage.GeoPackageConstants;
 /**
  * Tests the {@link GeoPackageImporter} class.
  */
+@SuppressWarnings("boxing")
 public class GeoPackageImporterTestFunctional
 {
     /**
@@ -470,7 +471,8 @@ public class GeoPackageImporterTestFunctional
      * @throws IOException Bad IO.
      */
     private List<GeoPackageLayer> runTest(String filePath, Set<String> expectedFeatureLayers, Set<String> expectedTileLayers,
-            List<GeoPackageTile> tiles, List<InputStream> tileImages) throws InterruptedException, IOException
+            List<GeoPackageTile> tiles, List<InputStream> tileImages)
+        throws InterruptedException, IOException
     {
         File geoFile = getFile(filePath);
         File existingFile = File.createTempFile("existing", "." + GeoPackageConstants.GEOPACKAGE_EXTENSION);

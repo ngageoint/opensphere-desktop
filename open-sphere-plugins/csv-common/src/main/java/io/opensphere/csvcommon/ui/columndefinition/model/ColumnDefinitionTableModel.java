@@ -183,7 +183,7 @@ public class ColumnDefinitionTableModel extends AbstractTableModel
 
         if (columnIndex == 0)
         {
-            row.setIsImport((Boolean)aValue);
+            row.setIsImport(((Boolean)aValue).booleanValue());
         }
         else if (columnIndex == 1 && StringUtils.isNotEmpty((String)aValue))
         {
