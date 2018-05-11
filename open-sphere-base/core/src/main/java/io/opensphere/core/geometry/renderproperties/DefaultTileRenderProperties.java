@@ -88,7 +88,7 @@ public class DefaultTileRenderProperties extends DefaultColorRenderProperties im
     @Override
     public float getOpacity()
     {
-        return getColor().getAlpha();
+        return (getColorARGB() >> 24) & 0xff;
     }
 
     @Override
@@ -123,6 +123,10 @@ public class DefaultTileRenderProperties extends DefaultColorRenderProperties im
     @Override
     public void setOpacity(float opacity)
     {
-        setColorARGB(getColorARGB() & 0xffffff | (int)(opacity * 0xff) << 24);
+        int alpha = Math.round(opacity * 0xff);
+        if (getOpacity() != alpha)
+        {
+            setColorARGB(getColorARGB() & 0xffffff | alpha << 24);
+        }
     }
 }

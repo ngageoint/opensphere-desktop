@@ -400,7 +400,8 @@ public class TimeBrowserPanel extends FactoryViewPanel
                         Duration activeDuration = myAnimationModel.getActiveSpanDuration().get();
                         if (Duration.containsDuration(myAnimationModel.getDataLoadDurations().get(), activeDuration))
                         {
-                            myAnimationModel.getSelectedDataLoadDuration().set(activeDuration);
+                            Duration unitDuration = new DurationUnitsProvider().getLargestIntegerUnitType(activeDuration);
+                            myAnimationModel.getSelectedDataLoadDuration().set(unitDuration);
                             myAnimationModel.getSnapToDataBoundaries().set(Boolean.TRUE);
                         }
                     }

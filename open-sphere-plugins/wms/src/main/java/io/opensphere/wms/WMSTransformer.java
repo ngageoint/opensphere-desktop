@@ -27,6 +27,7 @@ import io.opensphere.core.geometry.constraint.BoundedTimeConstraint;
 import io.opensphere.core.geometry.constraint.Constraints;
 import io.opensphere.core.geometry.constraint.TimeConstraint;
 import io.opensphere.core.geometry.constraint.ViewerPositionConstraint;
+import io.opensphere.core.geometry.renderproperties.ParentTileRenderProperties;
 import io.opensphere.core.geometry.renderproperties.TileRenderProperties;
 import io.opensphere.core.math.Vector2d;
 import io.opensphere.core.model.Altitude;
@@ -258,6 +259,7 @@ public class WMSTransformer extends DefaultTransformer implements TimeChangeList
         Collection<? extends Geometry> removedGeoms = Collections.emptySet();
         if (removedSpans != null && !removedSpans.isEmpty())
         {
+            removeChildRenderProperties(removedSpans);
             removedGeoms = extractGeometriesForTime(removedSpans);
         }
         if (addedSpans != null && !addedSpans.isEmpty())
@@ -265,6 +267,67 @@ public class WMSTransformer extends DefaultTransformer implements TimeChangeList
             addedGeoms = buildNewGeometriesForTime(addedSpans);
         }
         publishGeometries(addedGeoms, removedGeoms);
+    }
+
+    @Override
+    public void activeTimeChanged(TimeSpan active)
+    {
+        fadeTiles(active);
+    }
+
+    /**
+     * Fades tiles by the percent overlap with the active span.
+     *
+     * @param active the active span
+     */
+    private void fadeTiles(TimeSpan active)
+    {
+        synchronized (myLoadedGeometriesMap)
+        {
+            for (Map.Entry<WMSLayer, List<AbstractTileGeometry<?>>> entry : myLoadedGeometriesMap.entrySet())
+            {
+                WMSLayer layer = entry.getKey();
+                if (!layer.isTimeless())
+                {
+                    List<AbstractTileGeometry<?>> geometries = entry.getValue();
+
+                    Map<TimeConstraint, TileRenderProperties> constraintToPropertyMap = New.map();
+                    for (AbstractTileGeometry<?> geometry : geometries)
+                    {
+                        if (geometry instanceof ConstrainableGeometry
+                                && geometry.getRenderProperties() instanceof TileRenderProperties)
+                        {
+                            TimeConstraint timeConstraint = ((ConstrainableGeometry)geometry).getConstraints()
+                                    .getTimeConstraint();
+                            TileRenderProperties renderProperties = (TileRenderProperties)geometry.getRenderProperties();
+                            if (timeConstraint != null)
+                            {
+                                constraintToPropertyMap.put(timeConstraint, renderProperties);
+                            }
+                        }
+                    }
+
+                    float layerOpacity = layer.getTypeInfo().getMapVisualizationInfo().getTileRenderProperties().getOpacity()
+                            / 255;
+                    for (Map.Entry<TimeConstraint, TileRenderProperties> propertyEntry : constraintToPropertyMap.entrySet())
+                    {
+                        TimeConstraint timeConstraint = propertyEntry.getKey();
+                        TileRenderProperties renderProperties = propertyEntry.getValue();
+
+                        float fadeMultiple = 1;
+                        if (timeConstraint.check(active))
+                        {
+                            TimeSpan tileSpan = timeConstraint.getTimeSpan();
+                            TimeSpan overlap = active.getIntersection(tileSpan);
+                            fadeMultiple = (float)overlap.getDurationMs() / tileSpan.getDurationMs();
+                        }
+
+                        float opacity = fadeMultiple * layerOpacity;
+                        renderProperties.setOpacity(opacity);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -531,13 +594,20 @@ public class WMSTransformer extends DefaultTransformer implements TimeChangeList
 
         Collection<GeographicBoundingBox> fixedGrid = layer.generateFixedGrid(0);
 
-        TileRenderProperties props = layer.getTypeInfo().getMapVisualizationInfo().getTileRenderProperties();
-
         Collection<TimeSpan> timeDivisions = buildTimeDivisions(layer.getTimeSpan(), sequence);
+
+        TileRenderProperties layerRenderProperties = layer.getTypeInfo().getMapVisualizationInfo().getTileRenderProperties();
 
         List<AbstractTileGeometry<?>> geomsForModel = New.list(timeDivisions.size() * fixedGrid.size());
         for (TimeSpan timeDivision : timeDivisions)
         {
+            // Use a render property per time division in order to be able to fade tiles that partially overlap the active span
+            TileRenderProperties props = layerRenderProperties.clone();
+            if (layerRenderProperties instanceof ParentTileRenderProperties)
+            {
+                ((ParentTileRenderProperties)layerRenderProperties).getChildren().put(timeDivision, props);
+            }
+
             Constraints constraints = createConstraints(viewConstraint, timeDivision, sequence, constraintKey);
 
             for (GeographicBoundingBox bbox : fixedGrid)
@@ -654,6 +724,30 @@ public class WMSTransformer extends DefaultTransformer implements TimeChangeList
         ImageManager imageManager = new ImageManager(key, layer);
         imageManager.addRequestObserver(myRequestObserver);
         return myImageMgrPool.get(imageManager);
+    }
+
+    /**
+     * Removes child render properties from the layer render properties for the time spans.
+     *
+     * @param removedSpans the time spans
+     */
+    private void removeChildRenderProperties(Collection<? extends TimeSpan> removedSpans)
+    {
+        synchronized (myLoadedGeometriesMap)
+        {
+            for (WMSLayer layer : myLoadedGeometriesMap.keySet())
+            {
+                TileRenderProperties layerRenderProperties = layer.getTypeInfo().getMapVisualizationInfo()
+                        .getTileRenderProperties();
+                if (layerRenderProperties instanceof ParentTileRenderProperties)
+                {
+                    for (TimeSpan span : removedSpans)
+                    {
+                        ((ParentTileRenderProperties)layerRenderProperties).getChildren().remove(span);
+                    }
+                }
+            }
+        }
     }
 
     /**

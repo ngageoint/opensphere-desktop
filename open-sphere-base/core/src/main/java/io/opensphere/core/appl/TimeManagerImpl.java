@@ -26,7 +26,9 @@ import io.opensphere.core.TimeManager;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.model.time.TimeSpanList;
 import io.opensphere.core.units.InconvertibleUnits;
+import io.opensphere.core.units.duration.Days;
 import io.opensphere.core.units.duration.Duration;
+import io.opensphere.core.units.duration.Weeks;
 import io.opensphere.core.util.ChangeSupport;
 import io.opensphere.core.util.DateTimeUtilities;
 import io.opensphere.core.util.ObservableList;
@@ -613,33 +615,33 @@ final class TimeManagerImpl implements TimeManager
      */
     private void setDataLoadDuration(Set<? extends Duration> availableDataLoadDurations)
     {
-        final Duration active = getPrimaryActiveTimeSpans().getExtent().getDuration();
+        Duration active = getPrimaryActiveTimeSpans().getExtent().getDuration();
+        Duration minimumDuration = active.compareTo(new Days(27)) > 0 ? Weeks.ONE : Days.ONE;
 
         Duration selected;
         if (availableDataLoadDurations.isEmpty())
         {
             selected = null;
         }
-        else if (availableDataLoadDurations.contains(active))
+        else if (availableDataLoadDurations.contains(minimumDuration))
         {
-            selected = active;
+            selected = minimumDuration;
         }
         else
         {
             selected = null;
-            final List<Duration> sorted = New.list(availableDataLoadDurations);
-            Collections.sort(sorted);
-            for (final Duration dur : sorted)
+            List<Duration> sorted = CollectionUtilities.sort(availableDataLoadDurations);
+            for (Duration dur : sorted)
             {
                 try
                 {
-                    if (dur.compareTo(active) >= 0)
+                    if (dur.compareTo(minimumDuration) >= 0)
                     {
                         selected = dur;
                         break;
                     }
                 }
-                catch (final InconvertibleUnits e)
+                catch (InconvertibleUnits e)
                 {
                     if (LOGGER.isDebugEnabled())
                     {

@@ -84,7 +84,7 @@ public class TileGeometry extends AbstractTileGeometry<TileGeometry> implements 
             myIndividualProperties.setHighlightColor(myRenderProperties.getHighlightColor());
             myIndividualProperties.setLighting(myRenderProperties.getLighting());
             myIndividualProperties.setObscurant(myRenderProperties.isObscurant());
-            myIndividualProperties.setOpacity(myRenderProperties.getOpacity() * ColorUtilities.COLOR_COMPONENT_MAX_VALUE);
+            myIndividualProperties.setOpacity(myRenderProperties.getOpacity() / ColorUtilities.COLOR_COMPONENT_MAX_VALUE);
             myIndividualProperties.setRenderingOrder(myRenderProperties.getRenderingOrder());
 
             myIndividualProperties = null;
@@ -180,7 +180,7 @@ public class TileGeometry extends AbstractTileGeometry<TileGeometry> implements 
      */
     public boolean isTranslucent()
     {
-        return getRenderProperties().getOpacity() < 1.;
+        return getRenderProperties().getOpacity() < 255;
     }
 
     @Override
