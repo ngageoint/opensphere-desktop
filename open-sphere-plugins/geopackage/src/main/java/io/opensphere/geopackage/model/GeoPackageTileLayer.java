@@ -1,6 +1,5 @@
 package io.opensphere.geopackage.model;
 
-import java.io.Serializable;
 import java.util.Map;
 
 import io.opensphere.core.data.DataRegistry;
@@ -11,7 +10,7 @@ import io.opensphere.core.util.collections.New;
  * Contains tile specific information about a tile layer. This class is
  * serializable so it can be stored within the {@link DataRegistry}.
  */
-public class GeoPackageTileLayer extends GeoPackageLayer implements Serializable
+public class GeoPackageTileLayer extends GeoPackageLayer
 {
     /**
      * Serialization id.

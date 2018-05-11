@@ -298,6 +298,7 @@ public class KMLGeometryBuilder
      * @param highlightStyle The highlight style
      * @return The MapGeometrySupport
      */
+    @SuppressWarnings("null")
     private MapGeometrySupport createIconMapGeometrySupport(Point point, Style style, Style highlightStyle)
     {
         DefaultMapIconGeometrySupport mapGeomSupport = null;

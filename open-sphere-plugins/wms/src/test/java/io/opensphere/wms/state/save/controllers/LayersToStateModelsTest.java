@@ -31,6 +31,7 @@ import io.opensphere.wms.state.model.WMSLayerState;
  * Tests the LayersToStateModels class.
  *
  */
+@SuppressWarnings("boxing")
 public class LayersToStateModelsTest
 {
     /**

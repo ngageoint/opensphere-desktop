@@ -37,6 +37,7 @@ import io.opensphere.core.util.lang.StringUtilities;
  * Tests the FilePostRequestor class.
  *
  */
+@SuppressWarnings("boxing")
 public class FilePostRequestorTest
 {
     /**

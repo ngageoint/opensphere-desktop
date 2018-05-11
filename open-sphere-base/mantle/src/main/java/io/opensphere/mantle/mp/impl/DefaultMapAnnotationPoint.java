@@ -489,7 +489,8 @@ public class DefaultMapAnnotationPoint implements MutableMapAnnotationPoint
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.mp.MutableMapAnnotationPoint#setTimeEnabled(boolean, Object)
+     * @see io.opensphere.mantle.mp.MutableMapAnnotationPoint#setTimeEnabled(boolean,
+     *      Object)
      */
     @Override
     public void setTimeEnabled(boolean timeEnabled, Object source)
@@ -497,7 +498,7 @@ public class DefaultMapAnnotationPoint implements MutableMapAnnotationPoint
         if (timeEnabled != myTimeEnabled)
         {
             myTimeEnabled = timeEnabled;
-            fireChangeEvent(new MapAnnotationPointChangeEvent(this, myTimeEnabled, source));
+            fireChangeEvent(new MapAnnotationPointChangeEvent(this, Boolean.valueOf(myTimeEnabled), source));
         }
     }
 

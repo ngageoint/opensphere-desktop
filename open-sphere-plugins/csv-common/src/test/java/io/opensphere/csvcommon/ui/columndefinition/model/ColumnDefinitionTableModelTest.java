@@ -15,13 +15,12 @@ import org.easymock.IAnswer;
 import org.junit.Test;
 
 import io.opensphere.core.util.collections.New;
-import io.opensphere.csvcommon.ui.columndefinition.model.ColumnDefinitionRow;
-import io.opensphere.csvcommon.ui.columndefinition.model.ColumnDefinitionTableModel;
 
 /**
  * Tests ColumnDefinitionTableModel class.
  *
  */
+@SuppressWarnings("boxing")
 public class ColumnDefinitionTableModelTest
 {
     /**

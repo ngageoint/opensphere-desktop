@@ -187,7 +187,7 @@ public class AnnotationModel extends WrappedModel<Placemark>
     }
 
     @Override
-    public String getErrorMessage()
+    public synchronized String getErrorMessage()
     {
         return myError != null ? myError : super.getErrorMessage();
     }
@@ -449,8 +449,8 @@ public class AnnotationModel extends WrappedModel<Placemark>
 
         ExtendedDataUtils.putBoolean(extendedData, Constants.IS_BUBBLE_FILLED_ID, myIsBubbleFilled.get().booleanValue());
         ExtendedDataUtils.putBoolean(extendedData, Constants.IS_POLYGON_FILLED_ID, myIsPolygonFilled.get().booleanValue());
-        ExtendedDataUtils.putBoolean(extendedData, Constants.IS_ANIMATE, myAnimate.get());
-        ExtendedDataUtils.putBoolean(extendedData, Constants.IS_SHOW_IN_TIMELINE, myShowInTimeline.get());
+        ExtendedDataUtils.putBoolean(extendedData, Constants.IS_ANIMATE, myAnimate.get().booleanValue());
+        ExtendedDataUtils.putBoolean(extendedData, Constants.IS_SHOW_IN_TIMELINE, myShowInTimeline.get().booleanValue());
     }
 
     @Override
@@ -501,8 +501,8 @@ public class AnnotationModel extends WrappedModel<Placemark>
         Font font = PlacemarkUtils.getPlacemarkFont(placemark);
 
         myTextStyleModel.getFont().set(new FontWrapper(font));
-        myTextStyleModel.getBold().set(font.isBold());
-        myTextStyleModel.getItalic().set(font.isItalic());
+        myTextStyleModel.getBold().set(Boolean.valueOf(font.isBold()));
+        myTextStyleModel.getItalic().set(Boolean.valueOf(font.isItalic()));
         myTextStyleModel.getFontSize().set(Integer.valueOf(font.getSize()));
 
         if (placemark != null && placemark.getExtendedData() != null)

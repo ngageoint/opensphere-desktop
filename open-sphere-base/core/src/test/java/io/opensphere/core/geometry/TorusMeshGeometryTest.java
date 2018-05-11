@@ -1,5 +1,6 @@
 package io.opensphere.core.geometry;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import io.opensphere.core.geometry.constraint.Constraints;
@@ -11,9 +12,9 @@ import io.opensphere.core.math.Matrix3d;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.time.TimeSpan;
-import org.junit.Assert;
 
 /** Test for {@link TorusMeshGeometry}. */
+@SuppressWarnings("boxing")
 public class TorusMeshGeometryTest
 {
     /**

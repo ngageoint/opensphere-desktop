@@ -142,7 +142,7 @@ public class StreamReader implements Reader
                 newBuffer = ByteBuffer.allocate(bufferSize);
                 if (result != null)
                 {
-                    newBuffer.put((ByteBuffer)result.rewind());
+                    newBuffer.put(result.rewind());
                 }
                 result = newBuffer;
             }
@@ -159,7 +159,7 @@ public class StreamReader implements Reader
         }
         while (lastReadLength >= 0 && (myContentLength < 0 || result.limit() < myContentLength));
 
-        return (ByteBuffer)result.flip();
+        return result.flip();
     }
 
     /**

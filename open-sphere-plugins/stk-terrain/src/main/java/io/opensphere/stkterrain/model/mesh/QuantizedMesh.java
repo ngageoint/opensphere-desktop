@@ -2,7 +2,6 @@ package io.opensphere.stkterrain.model.mesh;
 
 import java.awt.Rectangle;
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -16,7 +15,7 @@ import io.opensphere.core.util.lang.ToStringHelper;
  * Stores the QuantizeMesh data and any other information needed.
  */
 @Immutable
-public class QuantizedMesh extends Image implements Serializable
+public class QuantizedMesh extends Image
 {
     /** Serialization id. */
     private static final long serialVersionUID = 1L;

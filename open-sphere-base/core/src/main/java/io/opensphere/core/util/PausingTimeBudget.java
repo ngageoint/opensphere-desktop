@@ -6,6 +6,7 @@ package io.opensphere.core.util;
 public class PausingTimeBudget extends TimeBudget
 {
     /** An indefinite time budget. */
+    @SuppressWarnings("hiding")
     public static final PausingTimeBudget INDEFINITE = new PausingTimeBudget(Long.MAX_VALUE, 0L);
 
     /** The time of the pause, if the budget is currently paused. */

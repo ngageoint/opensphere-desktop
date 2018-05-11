@@ -18,6 +18,7 @@ import io.opensphere.core.util.collections.New;
 /**
  * Unit test for the {@link GeoPackageTileLayer} class.
  */
+@SuppressWarnings("boxing")
 public class GeoPackageTileLayerTest
 {
     /**

@@ -26,6 +26,7 @@ public class ExtendedComboPopup extends BasicComboPopup
      *
      * @param combo The combo box.
      */
+    @SuppressWarnings("unchecked")
     public ExtendedComboPopup(ExtendedComboBox<?> combo)
     {
         super((JComboBox<Object>)combo);

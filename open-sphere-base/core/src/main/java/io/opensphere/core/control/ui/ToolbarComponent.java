@@ -77,8 +77,8 @@ public class ToolbarComponent implements Comparable<ToolbarComponent>
         {
             return false;
         }
-        return EqualsHelper.equals(myComponent, other.myComponent, myLocation, other.myLocation, myName, other.myName,
-                myUseSeparator, other.myUseSeparator);
+        return EqualsHelper.equals(myComponent, other.myComponent, Integer.valueOf(myLocation), Integer.valueOf(other.myLocation),
+                myName, other.myName, myUseSeparator, other.myUseSeparator);
     }
 
     /**

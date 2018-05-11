@@ -5,13 +5,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import javafx.collections.FXCollections;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.datafilter.columns.MutableColumnMappingController;
@@ -19,11 +12,17 @@ import io.opensphere.core.util.DefaultValidatorSupport;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.ValidationStatus;
 import io.opensphere.core.util.ValidatorSupport;
-import io.opensphere.core.util.fx.AutoCompleteComboBoxListener;
 import io.opensphere.core.util.fx.Editor;
+import io.opensphere.core.util.fx.NewAutoCompleteComboBoxListener;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MetaDataInfo;
+import javafx.collections.FXCollections;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 
 /** Column mapping pane. */
 public final class ColumnMappingPane extends GridPane implements Editor
@@ -279,7 +278,10 @@ public final class ColumnMappingPane extends GridPane implements Editor
     private ComboBox<String> buildComboBox(String sourceColumn, List<String> keyNames)
     {
         ComboBox<String> columnCombo = new ComboBox<>(FXCollections.observableArrayList(keyNames));
-        new AutoCompleteComboBoxListener<>(columnCombo);
+
+        NewAutoCompleteComboBoxListener listener = new NewAutoCompleteComboBoxListener();
+        listener.setupComboBox(columnCombo);
+
         String selection = getInitialSelection(sourceColumn, keyNames);
         if (selection != null)
         {

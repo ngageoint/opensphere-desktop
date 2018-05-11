@@ -21,6 +21,7 @@ public final class DynamicEnumDecoder
      *         the values are dynamic enumeration types the original list is
      *         returned.
      */
+    @SuppressWarnings("null")
     public static List<Object> decode(DynamicEnumerationRegistry reg, List<Object> source)
     {
         List<Object> result = null;

@@ -84,7 +84,8 @@ public class EsriPictureMarkerSymbol extends EsriSymbolWithOffset
         }
         catch (IOException e)
         {
-            image = null;
+            // image is either null or an IOException wasn't thrown
+            // image = null;
         }
         return image;
     }

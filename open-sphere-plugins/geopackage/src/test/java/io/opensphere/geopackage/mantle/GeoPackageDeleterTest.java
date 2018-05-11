@@ -16,6 +16,7 @@ import io.opensphere.mantle.data.DataGroupInfo;
 /**
  * Tests the {@link GeoPackageDeleter} class.
  */
+@SuppressWarnings("boxing")
 public class GeoPackageDeleterTest
 {
     /**

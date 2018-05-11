@@ -4,19 +4,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-
 import org.apache.commons.lang3.StringUtils;
 
 import io.opensphere.controlpanels.DetailPane;
@@ -29,6 +16,18 @@ import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.impl.GroupCategorizationUtilities;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 
 /**
  * An implementation of the {@link DetailPane} in which a WPS preview / editor
@@ -125,7 +124,7 @@ public class WpsDetailPanel extends DetailPane
         descriptionPane.setFitToWidth(true);
 
         grid.add(descriptionPane, 0, 2, 2, 1);
-        GridPane.setFillWidth(descriptionPane, true);
+        GridPane.setFillWidth(descriptionPane, Boolean.TRUE);
         GridPane.setHgrow(descriptionPane, Priority.ALWAYS);
         GridPane.setVgrow(descriptionPane, Priority.SOMETIMES);
 
@@ -142,7 +141,7 @@ public class WpsDetailPanel extends DetailPane
 
         myParameterFormArea = createProcessEditor();
         myParameterFormArea.setStyle("-fx-border-color: #676767; -fx-border-style: solid inside line-join miter;");
-        GridPane.setFillHeight(myParameterFormArea, true);
+        GridPane.setFillHeight(myParameterFormArea, Boolean.TRUE);
         GridPane.setHgrow(myParameterFormArea, Priority.ALWAYS);
         GridPane.setVgrow(myParameterFormArea, Priority.ALWAYS);
         grid.add(myParameterFormArea, 0, 6, 2, 1);
@@ -217,7 +216,7 @@ public class WpsDetailPanel extends DetailPane
 
         myModel.getProvider().set(pDataGroup.getTopParentDisplayName());
         myModel.getTypeList().addAll(StreamUtilities.map(GroupCategorizationUtilities.getGroupCategories(pDataGroup, false),
-            input -> StringUtilities.trim(input, 's')));
+                input -> StringUtilities.trim(input, 's')));
         myModel.getDescription().set(pDataGroup.getSummaryDescription());
 
         Collection<String> tags = New.set();

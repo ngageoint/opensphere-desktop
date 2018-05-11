@@ -17,6 +17,7 @@ import io.opensphere.mantle.data.DataTypeInfoPreferenceAssistant;
 /**
  * Unit test for {@link GeoPackageDataTypeInfo}.
  */
+@SuppressWarnings("boxing")
 public class GeoPackageDataTypeInfoTest
 {
     /**

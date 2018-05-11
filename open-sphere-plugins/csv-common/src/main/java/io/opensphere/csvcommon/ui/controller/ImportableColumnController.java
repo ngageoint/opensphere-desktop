@@ -36,7 +36,7 @@ public class ImportableColumnController
             int index = 0;
             for (String columnName : parameters.getColumnNames())
             {
-                upperCasedColumnNames.put(columnName.toUpperCase(), index);
+                upperCasedColumnNames.put(columnName.toUpperCase(), Integer.valueOf(index));
                 index++;
             }
 

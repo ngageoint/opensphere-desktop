@@ -19,6 +19,7 @@ import org.xml.sax.Attributes;
  * Test used to exercise the functionality of the
  * {@link BetterDefaultHandlerTest} class.
  */
+@SuppressWarnings("boxing")
 public class BetterDefaultHandlerTest
 {
     /**

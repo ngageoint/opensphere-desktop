@@ -31,7 +31,6 @@ import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.RedirectStrategy;
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
@@ -43,7 +42,6 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.methods.HttpTrace;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.params.ClientPNames;
-import org.apache.http.conn.routing.HttpRoutePlanner;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
@@ -51,10 +49,8 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.impl.client.DecompressingHttpClient;
 import org.apache.http.impl.client.DefaultRedirectStrategy;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.SyncBasicHttpParams;
@@ -67,21 +63,21 @@ import com.bitsys.common.http.message.Abortable;
 import com.bitsys.common.http.message.BasicHttpResponse;
 import com.bitsys.common.http.message.HttpRequest;
 import com.bitsys.common.http.message.HttpResponse;
-import com.bitsys.common.http.proxy.DynamicProxyRoutePlanner;
 import com.bitsys.common.http.ssl.CachingCertificateVerifier;
 import com.bitsys.common.http.ssl.CachingHostNameVerifier;
 import com.bitsys.common.http.ssl.ClientCertificateSelector;
 import com.bitsys.common.http.ssl.EnhancedSSLSocketFactory;
+import com.bitsys.common.http.ssl.EnhancedSSLSocketFactory.SSLSocketCustomizer;
 import com.bitsys.common.http.ssl.InteractiveX509KeyManager;
 import com.bitsys.common.http.ssl.InteractiveX509TrustManager;
 import com.bitsys.common.http.ssl.X509HostNameVerifierCourtRoom;
-import com.bitsys.common.http.ssl.EnhancedSSLSocketFactory.SSLSocketCustomizer;
 
 /**
  * This class is a thin wrapper around Apache's
  * {@link org.apache.http.client.HttpClient HttpClient} to simplify the
  * configuration.
  */
+@SuppressWarnings("deprecation")
 public class DefaultHttpClient implements CloseableHttpClient
 {
     /**
@@ -375,33 +371,29 @@ public class DefaultHttpClient implements CloseableHttpClient
         }
     }
 
-    /**
-     * This is my start at using the new API for creating an HTTP Client.
-     */
-    private void newCreateHttpClient()
-    {
-        // Configure the timeouts.
-        final RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(options.getConnectTimeout()*1000)
-                .setSocketTimeout(options.getReadTimeout()*1000).build();
-
-        // Configure the connection manager.
-        // TODO: The schemeRegistry needs to be reproduced.
-        final PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
-        connManager.setDefaultMaxPerRoute(getOptions().getMaxConnectionsPerRoute());
-        connManager.setMaxTotal(getOptions().getMaxConnections());
-
-        // Configure the proxying route planner.
-        final HttpRoutePlanner routePlanner = new DynamicProxyRoutePlanner(
-                getOptions().getProxyConfig().getProxyResolver());
-        // TODO: The proxy credentials need to be provided.
-
-        final HttpClientBuilder builder = HttpClientBuilder.create();
-        builder.setConnectionManager(connManager);
-        builder.setDefaultRequestConfig(requestConfig);
-        builder.setRoutePlanner(routePlanner);
-        final org.apache.http.impl.client.CloseableHttpClient closeableHttpClient = builder.build();
-        throw new UnsupportedOperationException("Using the new HTTP Client API is not yet supported");
-    }
+//    private void newCreateHttpClient()
+//    {
+//        // Configure the timeouts.
+//        final RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(options.getConnectTimeout() * 1000)
+//                .setSocketTimeout(options.getReadTimeout() * 1000).build();
+//
+//        // Configure the connection manager.
+//        // TODO: The schemeRegistry needs to be reproduced.
+//        final PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
+//        connManager.setDefaultMaxPerRoute(getOptions().getMaxConnectionsPerRoute());
+//        connManager.setMaxTotal(getOptions().getMaxConnections());
+//
+//        // Configure the proxying route planner.
+//        final HttpRoutePlanner routePlanner = new DynamicProxyRoutePlanner(getOptions().getProxyConfig().getProxyResolver());
+//        // TODO: The proxy credentials need to be provided.
+//
+//        final HttpClientBuilder builder = HttpClientBuilder.create();
+//        builder.setConnectionManager(connManager);
+//        builder.setDefaultRequestConfig(requestConfig);
+//        builder.setRoutePlanner(routePlanner);
+//        final org.apache.http.impl.client.CloseableHttpClient closeableHttpClient = builder.build();
+//        throw new UnsupportedOperationException("Using the new HTTP Client API is not yet supported");
+//    }
 
     /**
      * Configures the credentials provider.
@@ -439,7 +431,7 @@ public class DefaultHttpClient implements CloseableHttpClient
         defaultHttpClient.setRedirectStrategy(strategy);
 
         defaultHttpClient.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS,
-                getOptions().isAllowCircularRedirects());
+                Boolean.valueOf(getOptions().isAllowCircularRedirects()));
     }
 
     /**
@@ -486,8 +478,7 @@ public class DefaultHttpClient implements CloseableHttpClient
                     socket.setEnabledCipherSuites(sslConfig.getEnabledCipherSuites());
                 }
             };
-            final SSLSocketFactory socketFactory = new EnhancedSSLSocketFactory(sslContext, hostNameVerifier,
-                    customizer);
+            final SSLSocketFactory socketFactory = new EnhancedSSLSocketFactory(sslContext, hostNameVerifier, customizer);
             final Scheme https = new Scheme("https", 443, socketFactory);
             schemeRegistry.register(https);
         }
@@ -533,8 +524,7 @@ public class DefaultHttpClient implements CloseableHttpClient
         else if (!sslConfig.getClientCertificates().isEmpty())
         {
             final KeyManagerFactory factory = KeyManagerFactory.getInstance("NewSunX509");
-            final ManagerFactoryParameters factoryParameters = new KeyStoreBuilderParameters(
-                    sslConfig.getClientCertificates());
+            final ManagerFactoryParameters factoryParameters = new KeyStoreBuilderParameters(sslConfig.getClientCertificates());
             factory.init(factoryParameters);
             final KeyManager[] defaultKeyManagers = factory.getKeyManagers();
             keyManagers = new KeyManager[defaultKeyManagers.length];
@@ -574,8 +564,7 @@ public class DefaultHttpClient implements CloseableHttpClient
         }
         else
         {
-            final TrustManagerFactory factory = TrustManagerFactory
-                    .getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            final TrustManagerFactory factory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
 
             if (sslConfig.getPkixBuilderParameters() != null)
             {

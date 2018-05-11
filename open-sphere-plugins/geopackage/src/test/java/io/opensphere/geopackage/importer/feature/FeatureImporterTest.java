@@ -34,6 +34,7 @@ import mil.nga.wkb.geom.GeometryType;
 /**
  * Unit test for the {@link FeatureImporter} class.
  */
+@SuppressWarnings("boxing")
 public class FeatureImporterTest
 {
     /**

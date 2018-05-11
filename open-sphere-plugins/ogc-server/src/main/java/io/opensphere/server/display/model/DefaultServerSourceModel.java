@@ -87,7 +87,7 @@ public abstract class DefaultServerSourceModel<T extends ServerSource> extends W
     }
 
     @Override
-    public String getErrorMessage()
+    public synchronized String getErrorMessage()
     {
         return myError != null ? myError : super.getErrorMessage();
     }

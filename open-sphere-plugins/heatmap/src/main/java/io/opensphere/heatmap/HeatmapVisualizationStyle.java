@@ -49,12 +49,13 @@ public class HeatmapVisualizationStyle extends AbstractVisualizationStyle implem
 
     /** The default value of the intensity parameter. */
     public static final VisualizationStyleParameter DEFAULT_INTENSITY_PARAMETER = new VisualizationStyleParameter(
-            INTENSITY_PROPERTY_KEY, "Intensity", 6, Integer.class, new VisualizationStyleParameterFlags(false, false),
-            ParameterHint.hint(false, false));
+            INTENSITY_PROPERTY_KEY, "Intensity", Integer.valueOf(6), Integer.class,
+            new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
 
     /** The default value of the size parameter. */
     public static final VisualizationStyleParameter DEFAULT_SIZE_PARAMETER = new VisualizationStyleParameter(SIZE_PROPERTY_KEY,
-            "Size", 50, Integer.class, new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
+            "Size", Integer.valueOf(50), Integer.class, new VisualizationStyleParameterFlags(false, false),
+            ParameterHint.hint(false, false));
 
     /**
      * Creates a new instance of the {@link HeatmapVisualizationStyle} class.
@@ -236,18 +237,16 @@ public class HeatmapVisualizationStyle extends AbstractVisualizationStyle implem
         MutableVisualizationStyle style = panel.getChangedStyle();
 
         VisualizationStyleParameter colorPaletteParameter = style.getStyleParameter(COLOR_PALETTE_PROPERTY_KEY);
-        paramList.add(
-                new ComboBoxStyleParameterEditorPanel(PanelBuilder.get(colorPaletteParameter.getName()),
-                        style, COLOR_PALETTE_PROPERTY_KEY, false, false, false, Arrays.asList(HeatmapGradients.values())));
+        paramList.add(new ComboBoxStyleParameterEditorPanel(PanelBuilder.get(colorPaletteParameter.getName()), style,
+                COLOR_PALETTE_PROPERTY_KEY, false, false, false, Arrays.asList(HeatmapGradients.values())));
 
         VisualizationStyleParameter intensityParameter = style.getStyleParameter(INTENSITY_PROPERTY_KEY);
-        paramList.add(
-                new IntegerSliderStyleParameterEditorPanel(PanelBuilder.get(intensityParameter.getName()),
-                        style, INTENSITY_PROPERTY_KEY, true, false, 5, 50, null));
+        paramList.add(new IntegerSliderStyleParameterEditorPanel(PanelBuilder.get(intensityParameter.getName()), style,
+                INTENSITY_PROPERTY_KEY, true, false, 5, 50, null));
 
         VisualizationStyleParameter sizeParameter = style.getStyleParameter(SIZE_PROPERTY_KEY);
-        paramList.add(new IntegerSliderStyleParameterEditorPanel(PanelBuilder.get(sizeParameter.getName()),
-                style, SIZE_PROPERTY_KEY, true, false, 1, 150, null));
+        paramList.add(new IntegerSliderStyleParameterEditorPanel(PanelBuilder.get(sizeParameter.getName()), style,
+                SIZE_PROPERTY_KEY, true, false, 1, 150, null));
 
         StyleParameterEditorGroupPanel parameterGroup = new StyleParameterEditorGroupPanel("Heatmap", paramList, false, 1);
         panel.addGroup(parameterGroup);
@@ -276,7 +275,7 @@ public class HeatmapVisualizationStyle extends AbstractVisualizationStyle implem
      */
     public void setIntensity(int intensity)
     {
-        setParameter(getStyleParameter(INTENSITY_PROPERTY_KEY).deriveWithNewValue(intensity));
+        setParameter(getStyleParameter(INTENSITY_PROPERTY_KEY).deriveWithNewValue(Integer.valueOf(intensity)));
     }
 
     /**
@@ -288,7 +287,7 @@ public class HeatmapVisualizationStyle extends AbstractVisualizationStyle implem
      */
     public void setSize(int size)
     {
-        setParameter(getStyleParameter(SIZE_PROPERTY_KEY).deriveWithNewValue(size));
+        setParameter(getStyleParameter(SIZE_PROPERTY_KEY).deriveWithNewValue(Integer.valueOf(size)));
     }
 
     /**

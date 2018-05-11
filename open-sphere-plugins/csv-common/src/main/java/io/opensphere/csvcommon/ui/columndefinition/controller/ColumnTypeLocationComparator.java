@@ -27,11 +27,11 @@ public class ColumnTypeLocationComparator implements Comparator<ColumnType>, Ser
      */
     public ColumnTypeLocationComparator()
     {
-        myLocationOrders.put(ColumnType.LAT, 0);
-        myLocationOrders.put(ColumnType.LON, 1);
-        myLocationOrders.put(ColumnType.MGRS, 2);
-        myLocationOrders.put(ColumnType.POSITION, 3);
-        myLocationOrders.put(ColumnType.WKT_GEOMETRY, 4);
+        myLocationOrders.put(ColumnType.LAT, Integer.valueOf(0));
+        myLocationOrders.put(ColumnType.LON, Integer.valueOf(1));
+        myLocationOrders.put(ColumnType.MGRS, Integer.valueOf(2));
+        myLocationOrders.put(ColumnType.POSITION, Integer.valueOf(3));
+        myLocationOrders.put(ColumnType.WKT_GEOMETRY, Integer.valueOf(4));
     }
 
     @Override
@@ -54,7 +54,7 @@ public class ColumnTypeLocationComparator implements Comparator<ColumnType>, Ser
         Integer order = myLocationOrders.get(columnType);
         if (order == null)
         {
-            order = Integer.MAX_VALUE;
+            order = Integer.valueOf(Integer.MAX_VALUE);
         }
 
         return order;

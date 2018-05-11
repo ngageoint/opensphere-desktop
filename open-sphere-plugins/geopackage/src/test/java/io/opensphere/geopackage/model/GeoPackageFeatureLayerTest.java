@@ -22,6 +22,7 @@ import io.opensphere.core.util.collections.New;
 /**
  * Unit tests the {@link GeoPackageFeatureLayer} class.
  */
+@SuppressWarnings("boxing")
 public class GeoPackageFeatureLayerTest
 {
     /**

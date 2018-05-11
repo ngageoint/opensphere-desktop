@@ -25,6 +25,7 @@ import io.opensphere.core.util.rangeset.RangeLongBlock;
 /**
  * Test Cases TimeSpanSet.
  */
+@SuppressWarnings("unlikely-arg-type")
 public class DefaultTimeSpanSetTest
 {
     // TODO: Fix this doc
@@ -190,6 +191,7 @@ public class DefaultTimeSpanSetTest
      * {@link DefaultTimeSpanSet#test(DefaultTimeSpanSet.MembershipTest, TimeSpan, boolean)}
      * .
      */
+    @SuppressWarnings("javadoc")
     @Test
     public void testTest()
     {

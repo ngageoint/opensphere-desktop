@@ -84,7 +84,7 @@ public class ColumnDataAnalyzer
                 {
                     try
                     {
-                        doubleResult = Double.parseDouble(value);
+                        doubleResult = Double.valueOf(value);
                         doubleSuccess = true;
                         myData.incrementDoubleCount();
                         doubleSuccess = checkDoubleForInfinateAndNan(doubleSuccess, doubleResult);
@@ -99,7 +99,7 @@ public class ColumnDataAnalyzer
                 {
                     try
                     {
-                        floatResult = Float.parseFloat(value);
+                        floatResult = Float.valueOf(value);
                         myData.incrementFloatCount();
                         floatSuccess = checkFloatForInfNanAndPrecision(doubleSuccess, doubleResult, floatResult);
                     }

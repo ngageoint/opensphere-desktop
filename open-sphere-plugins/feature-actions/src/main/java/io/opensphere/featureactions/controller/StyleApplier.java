@@ -76,7 +76,8 @@ public class StyleApplier implements ActionApplier
                 {
                     waitForGeometries(provider, elements);
 
-                    // Run it on the right executor because the mantle style code is
+                    // Run it on the right executor because the mantle style
+                    // code is
                     // not thread-safe
                     provider.getExecutor().execute(() -> applyStyle(style, elements, provider, actions));
                 }
@@ -215,7 +216,8 @@ public class StyleApplier implements ActionApplier
     }
 
     /**
-     * Waits for geometries to show up in the provider. We need to do this to ensure we can remove the old geometries.
+     * Waits for geometries to show up in the provider. We need to do this to
+     * ensure we can remove the old geometries.
      *
      * @param provider the data provider
      * @param elements the data elements
@@ -237,7 +239,8 @@ public class StyleApplier implements ActionApplier
     }
 
     /**
-     * Worker that updates the data element's geometry's styles. This uses a single style for all geometries passed to it.
+     * Worker that updates the data element's geometry's styles. This uses a
+     * single style for all geometries passed to it.
      */
     private static class StyleUpdater extends StyleBasedUpdateGeometriesWorker
     {

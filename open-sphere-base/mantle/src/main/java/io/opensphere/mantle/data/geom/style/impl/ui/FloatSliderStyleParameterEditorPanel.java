@@ -109,7 +109,7 @@ public class FloatSliderStyleParameterEditorPanel extends AbstractStyleParameter
         ht.put(Integer.valueOf(iMin), new JLabel(myConvertor.labelValue(min)));
         ht.put(Integer.valueOf(iMax), new JLabel(myConvertor.labelValue(max)));
         mySlider.setLabelTable(ht);
-        mySlider.setPaintLabels((Boolean)myPanelBuilder.getOtherParameter(SHOW_SLIDER_LABELS, Boolean.TRUE));
+        mySlider.setPaintLabels(((Boolean)myPanelBuilder.getOtherParameter(SHOW_SLIDER_LABELS, Boolean.TRUE)).booleanValue());
 
         myValueLabel = new JLabel(myTextEntry ? myConvertor.getUnit() : createLabelWithUnit(initialVal, myConvertor));
         myTextField = new JTextField(myConvertor.labelValue(myConvertor.intToFloat(mySlider.getValue())));
@@ -379,7 +379,7 @@ public class FloatSliderStyleParameterEditorPanel extends AbstractStyleParameter
         @Override
         public String labelValue(double val)
         {
-            return String.format(myStringFormat, val);
+            return String.format(myStringFormat, Double.valueOf(val));
         }
     }
 

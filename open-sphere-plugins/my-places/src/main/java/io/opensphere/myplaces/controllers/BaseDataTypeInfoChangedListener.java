@@ -40,10 +40,10 @@ public abstract class BaseDataTypeInfoChangedListener<T>
             MyPlacesDataTypeInfo dataType = (MyPlacesDataTypeInfo)info;
             Placemark placemark = dataType.getKmlPlacemark();
 
-            boolean isVisible = placemark.isVisibility();
+            boolean isVisible = placemark.isVisibility().booleanValue();
             if (isVisible)
             {
-                placemark.setVisibility(false);
+                placemark.setVisibility(Boolean.FALSE);
                 myModel.notifyObservers();
             }
 
@@ -51,7 +51,7 @@ public abstract class BaseDataTypeInfoChangedListener<T>
 
             if (isVisible)
             {
-                dataType.getKmlPlacemark().setVisibility(true);
+                dataType.getKmlPlacemark().setVisibility(Boolean.TRUE);
                 myModel.notifyObservers();
             }
         }

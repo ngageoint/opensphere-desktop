@@ -100,7 +100,7 @@ public abstract class WrappedModel<T> extends StrongObservableValue<T> implement
     }
 
     @Override
-    public String getErrorMessage()
+    public synchronized String getErrorMessage()
     {
         String firstError = null;
 
@@ -136,7 +136,7 @@ public abstract class WrappedModel<T> extends StrongObservableValue<T> implement
     }
 
     @Override
-    public T get()
+    public synchronized T get()
     {
         return myValue;
     }

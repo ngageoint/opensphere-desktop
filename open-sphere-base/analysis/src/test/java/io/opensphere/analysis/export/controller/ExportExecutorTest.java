@@ -80,7 +80,7 @@ public class ExportExecutorTest
 
         CountDownLatch latch = new CountDownLatch(1);
         Exporter exporter = createExporter(support, dataElements, testFile, latch, null);
-        EasyMock.expect(exporter.preExport()).andReturn(Boolean.TRUE);
+        EasyMock.expect(Boolean.valueOf(exporter.preExport())).andReturn(Boolean.TRUE);
         MetaColumnsTableModel elements = createTableModel(support, dataElements);
 
         ExportOptionsModel optionsModel = new ExportOptionsModel();
@@ -132,12 +132,13 @@ public class ExportExecutorTest
 
         Exporter exporter = support.createMock(Exporter.class);
         EasyMock.expect(exporter.setObjects(EasyMock.anyObject())).andReturn(null);
-        EasyMock.expect(exporter.preExport()).andReturn(Boolean.TRUE);
+        EasyMock.expect(Boolean.valueOf(exporter.preExport())).andReturn(Boolean.TRUE);
         MetaColumnsTableModel elements = createTableModel(support, dataElements);
 
         PreferencesRegistry prefsRegistry = support.createMock(PreferencesRegistry.class);
         Preferences prefs = support.createMock(Preferences.class);
-        EasyMock.expect(prefs.getInt(ListToolPreferences.LIST_TOOL_TIME_PRECISION_DIGITS, 0)).andReturn(0);
+        EasyMock.expect(Integer.valueOf(prefs.getInt(ListToolPreferences.LIST_TOOL_TIME_PRECISION_DIGITS, 0)))
+                .andReturn(Integer.valueOf(0));
         EasyMock.expect(prefsRegistry.getPreferences(ListToolPreferences.class)).andReturn(prefs);
 
         ExportOptionsModel optionsModel = new ExportOptionsModel();
@@ -181,7 +182,7 @@ public class ExportExecutorTest
         CountDownLatch latch = new CountDownLatch(1);
         ExportException testException = new ExportException("Test exception");
         Exporter exporter = createExporter(support, dataElements, testFile, latch, testException);
-        EasyMock.expect(exporter.preExport()).andReturn(Boolean.TRUE);
+        EasyMock.expect(Boolean.valueOf(exporter.preExport())).andReturn(Boolean.TRUE);
 
         EventManager eventManager = createEventManager(support, testException, testFile, latch);
         MetaColumnsTableModel elements = createTableModel(support, dataElements);
@@ -235,7 +236,7 @@ public class ExportExecutorTest
 
         CountDownLatch latch = new CountDownLatch(1);
         Exporter exporter = createExporter(support, dataElements, testFile, latch, null);
-        EasyMock.expect(exporter.preExport()).andReturn(Boolean.TRUE);
+        EasyMock.expect(Boolean.valueOf(exporter.preExport())).andReturn(Boolean.TRUE);
 
         MetaColumnsTableModel elements = createTableModel(support, dataElements);
 
@@ -244,7 +245,7 @@ public class ExportExecutorTest
         PreferencesRegistry prefsRegistry = createPrefsRegistry(support);
 
         ExportCompleteListener listener = createListener(support, parent, testFile, dataElements.size());
-        listener = createUserAskListener(listener, parent, testFile, true);
+        listener = createUserAskListener(listener, parent, testFile, Boolean.TRUE);
 
         support.replayAll();
 
@@ -290,19 +291,20 @@ public class ExportExecutorTest
         Exporter exporter = support.createMock(Exporter.class);
         EasyMock.expect(exporter.getMimeType()).andReturn(MimeType.KML).atLeastOnce();
         EasyMock.expect(exporter.setObjects(EasyMock.anyObject())).andReturn(null).times(2);
-        EasyMock.expect(exporter.preExport()).andReturn(Boolean.TRUE);
+        EasyMock.expect(Boolean.valueOf(exporter.preExport())).andReturn(Boolean.TRUE);
 
         MetaColumnsTableModel elements = createTableModel(support, dataElements);
 
         PreferencesRegistry prefsRegistry = support.createMock(PreferencesRegistry.class);
         Preferences prefs = support.createMock(Preferences.class);
-        EasyMock.expect(prefs.getInt(ListToolPreferences.LIST_TOOL_TIME_PRECISION_DIGITS, 0)).andReturn(0);
+        EasyMock.expect(Integer.valueOf(prefs.getInt(ListToolPreferences.LIST_TOOL_TIME_PRECISION_DIGITS, 0)))
+                .andReturn(Integer.valueOf(0));
         EasyMock.expect(prefsRegistry.getPreferences(ListToolPreferences.class)).andReturn(prefs);
 
         ExportOptionsModel optionsModel = new ExportOptionsModel();
 
         ExportCompleteListener listener = support.createMock(ExportCompleteListener.class);
-        listener = createUserAskListener(listener, parent, testFile, false);
+        listener = createUserAskListener(listener, parent, testFile, Boolean.FALSE);
 
         support.replayAll();
 
@@ -381,7 +383,8 @@ public class ExportExecutorTest
      * @throws ExportException Bad export.
      */
     private Exporter createExporter(EasyMockSupport support, List<DataElement> elements, File expectedFile, CountDownLatch latch,
-            ExportException expectedException) throws IOException, ExportException
+            ExportException expectedException)
+        throws IOException, ExportException
     {
         Exporter exporter = support.createMock(Exporter.class);
         EasyMock.expect(exporter.getMimeType()).andReturn(MimeType.KML).atLeastOnce();
@@ -432,8 +435,9 @@ public class ExportExecutorTest
     private PreferencesRegistry createPrefsRegistry(EasyMockSupport support)
     {
         Preferences prefs = support.createMock(Preferences.class);
-        EasyMock.expect(prefs.getInt(EasyMock.cmpEq(ListToolPreferences.LIST_TOOL_TIME_PRECISION_DIGITS), EasyMock.eq(0)))
-                .andReturn(2);
+        EasyMock.expect(Integer
+                .valueOf(prefs.getInt(EasyMock.cmpEq(ListToolPreferences.LIST_TOOL_TIME_PRECISION_DIGITS), EasyMock.eq(0))))
+                .andReturn(Integer.valueOf(2));
 
         PreferencesRegistry registry = support.createMock(PreferencesRegistry.class);
         EasyMock.expect(registry.getPreferences(EasyMock.eq(ListToolPreferences.class))).andReturn(prefs);
@@ -452,7 +456,7 @@ public class ExportExecutorTest
     {
         MetaColumnsTableModel model = support.createMock(MetaColumnsTableModel.class);
 
-        EasyMock.expect(model.getRowCount()).andReturn(data.size()).anyTimes();
+        EasyMock.expect(Integer.valueOf(model.getRowCount())).andReturn(Integer.valueOf(data.size())).anyTimes();
         EasyMock.expect(model.getDataAt(EasyMock.anyInt())).andAnswer(() -> getDataAtAnswer(data)).anyTimes();
 
         return model;
@@ -484,8 +488,8 @@ public class ExportExecutorTest
             row.put("DATE_TIME", timeSpan);
             row.put("ROOM", "room" + i);
             row.put("MESSAGE", "message" + i);
-            row.put("LAT", 10.1 * i);
-            row.put("LON", 11.1 * i);
+            row.put("LAT", Double.valueOf(10.1 * i));
+            row.put("LON", Double.valueOf(11.1 * i));
 
             SimpleMetaDataProvider provider = new SimpleMetaDataProvider(row);
             DataElement element = new DefaultDataElement(i, timeSpan, dataType, provider);
@@ -528,9 +532,9 @@ public class ExportExecutorTest
      * @return The mocked {@link ExportCompleteListener}.
      */
     private ExportCompleteListener createUserAskListener(ExportCompleteListener listener, Component expectedParent,
-            File expectedFile, boolean canOverwrite)
+            File expectedFile, Boolean canOverwrite)
     {
-        EasyMock.expect(listener.askUserForOverwrite(EasyMock.eq(expectedParent), EasyMock.eq(expectedFile)))
+        EasyMock.expect(Boolean.valueOf(listener.askUserForOverwrite(EasyMock.eq(expectedParent), EasyMock.eq(expectedFile))))
                 .andReturn(canOverwrite);
 
         return listener;

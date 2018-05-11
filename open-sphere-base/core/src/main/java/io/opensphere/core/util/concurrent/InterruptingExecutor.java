@@ -132,6 +132,7 @@ public class InterruptingExecutor implements ScheduledExecutorService
         return ((ScheduledExecutorService)myExecutor).schedule((Callable<V>)new Interruptible<V>(callable), delay, unit);
     }
 
+    @SuppressWarnings("cast")
     @Override
     public ScheduledFuture<?> schedule(Runnable command, long delay, TimeUnit unit)
     {
@@ -191,6 +192,7 @@ public class InterruptingExecutor implements ScheduledExecutorService
         return ((ExecutorService)myExecutor).submit((Callable<T>)new Interruptible<T>(task));
     }
 
+    @SuppressWarnings("cast")
     @Override
     public Future<?> submit(Runnable task)
     {

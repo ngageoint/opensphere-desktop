@@ -230,12 +230,12 @@ public class ColumnDefinitionControllerTest
         EasyMock.expectLastCall().andReturn(getDateFormats());
         EasyMock.expectLastCall().atLeastOnce();
         formatPreferences.getBoolean(EasyMock.isA(String.class), EasyMock.eq(false));
-        EasyMock.expectLastCall().andReturn(true);
+        EasyMock.expectLastCall().andReturn(Boolean.TRUE);
         EasyMock.expectLastCall().atLeastOnce();
 
         Preferences listToolPreferences = support.createMock(Preferences.class);
         listToolPreferences.getInt(EasyMock.isA(String.class), EasyMock.eq(0));
-        EasyMock.expectLastCall().andReturn(0);
+        EasyMock.expectLastCall().andReturn(Integer.valueOf(0));
         EasyMock.expectLastCall().atLeastOnce();
 
         PreferencesRegistry registry = support.createMock(PreferencesRegistry.class);

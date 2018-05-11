@@ -86,10 +86,10 @@ public class JVMMonitor implements ActionListener
         long inUseMem = totalMem - freeMem;
         double percent = (double)inUseMem / (double)maxMem;
 
-        myNumProcessorsProvider.setValue(Runtime.getRuntime().availableProcessors());
-        myMaxMemProvider.setValue(maxMem);
-        myInUseMemProvider.setValue(inUseMem);
-        myPercentUsedProvider.setValue(percent);
+        myNumProcessorsProvider.setValue(Integer.valueOf(Runtime.getRuntime().availableProcessors()));
+        myMaxMemProvider.setValue(Long.valueOf(maxMem));
+        myInUseMemProvider.setValue(Long.valueOf(inUseMem));
+        myPercentUsedProvider.setValue(Double.valueOf(percent));
 
         Color stateColor = Color.white;
         Status stat = myToolbox.getSystemToolbox().getMemoryManager().getMemoryStatus();

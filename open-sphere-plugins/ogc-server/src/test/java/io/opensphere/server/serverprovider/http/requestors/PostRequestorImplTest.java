@@ -37,6 +37,7 @@ import io.opensphere.core.util.lang.StringUtilities;
 /**
  * Tests the GetRequestor class.
  */
+@SuppressWarnings("boxing")
 public class PostRequestorImplTest
 {
     /**
@@ -308,7 +309,8 @@ public class PostRequestorImplTest
      */
     private HttpClient createClient(EasyMockSupport support, final HttpResponse response, final URI expectedUri,
             final InputStream expectedStream, final Map<String, String> formData, final ContentType expectedContentType,
-            boolean expectHeader) throws IOException
+            boolean expectHeader)
+        throws IOException
     {
         HttpClient client = support.createMock(HttpClient.class);
 

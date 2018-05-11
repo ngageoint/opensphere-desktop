@@ -19,6 +19,7 @@ import io.opensphere.mantle.data.impl.DefaultMetaDataInfo;
 /**
  * Tests the {@link MetaDataProviderPopulator} class.
  */
+@SuppressWarnings("boxing")
 public class MetaDataProviderPopulatorTest
 {
     /**

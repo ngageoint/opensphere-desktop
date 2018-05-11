@@ -18,6 +18,7 @@ import io.opensphere.core.model.ScreenPosition;
 import io.opensphere.core.model.time.TimeSpan;
 
 /** Test for {@link GeoScreenBubbleGeometry}. */
+@SuppressWarnings("boxing")
 public class GeoScreenBubbleGeometryTest
 {
     /**

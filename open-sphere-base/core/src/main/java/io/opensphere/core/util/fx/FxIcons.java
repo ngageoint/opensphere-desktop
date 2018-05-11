@@ -10,7 +10,6 @@ import javafx.scene.paint.Color;
  * A container in which the icons from the font-awesome package are presented
  * for use.
  */
-@SuppressWarnings("restriction")
 public final class FxIcons
 {
     /**

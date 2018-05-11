@@ -213,6 +213,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     private static final Length MAX_LOB_LENGTH = new Kilometers(20000.0f);
 
     /** The Constant MAX_ARROW_LENGTH_KILOMETERS. */
+    @SuppressWarnings("unused")
     private static final Length MAX_ARROW_LENGTH = new Kilometers(500.0f);
 
     /** The minimum arrow length. */
@@ -260,6 +261,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         throw new UnsupportedOperationException();
     }
 
+    @SuppressWarnings("null")
     @Override
     public void createIndividualGeometry(Set<Geometry> setToAddTo, FeatureIndividualGeometryBuilderData bd,
             RenderPropertyPool renderPropertyPool)

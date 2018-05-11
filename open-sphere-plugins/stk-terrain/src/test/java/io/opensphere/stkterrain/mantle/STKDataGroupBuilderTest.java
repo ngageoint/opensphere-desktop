@@ -28,6 +28,7 @@ import io.opensphere.stkterrain.model.TileSetDataSource;
 /**
  * Unit test for {@link STKDataGroupBuilder}.
  */
+@SuppressWarnings("boxing")
 public class STKDataGroupBuilderTest
 {
     /**

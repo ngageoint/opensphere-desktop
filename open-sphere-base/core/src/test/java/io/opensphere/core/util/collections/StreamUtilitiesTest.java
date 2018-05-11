@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
-
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Test for {@link StreamUtilities}.
@@ -55,7 +54,7 @@ public class StreamUtilitiesTest
     }
 
     /**
-     * Test {@link StreamUtilities#filter(Iterable, Predicate)}.
+     * Test {@link StreamUtilities#filter(Collection, Predicate)}.
      */
     @Test
     public void testFilter()
@@ -147,7 +146,8 @@ public class StreamUtilitiesTest
     }
 
     /**
-     * Test {@link StreamUtilities#filterDowncast(java.util.stream.Stream, Class)}.
+     * Test
+     * {@link StreamUtilities#filterDowncast(java.util.stream.Stream, Class)}.
      */
     @Test
     public void testFilterDowcast()

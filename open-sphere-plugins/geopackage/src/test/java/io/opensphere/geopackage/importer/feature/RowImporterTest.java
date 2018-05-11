@@ -23,6 +23,7 @@ import mil.nga.wkb.geom.GeometryType;
 /**
  * Unit test for {@link RowImporter}.
  */
+@SuppressWarnings("boxing")
 public class RowImporterTest
 {
     /**

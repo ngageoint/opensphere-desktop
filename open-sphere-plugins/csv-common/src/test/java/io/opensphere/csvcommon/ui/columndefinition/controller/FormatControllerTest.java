@@ -14,8 +14,8 @@ import org.easymock.IAnswer;
 import org.junit.Test;
 
 import io.opensphere.core.common.configuration.date.DateFormat;
-import io.opensphere.core.common.configuration.date.DateFormatsConfig;
 import io.opensphere.core.common.configuration.date.DateFormat.Type;
+import io.opensphere.core.common.configuration.date.DateFormatsConfig;
 import io.opensphere.core.preferences.ClasspathPreferencesPersistenceManager;
 import io.opensphere.core.preferences.InternalPreferencesIF;
 import io.opensphere.core.preferences.Preferences;
@@ -400,7 +400,7 @@ public class FormatControllerTest
         EasyMock.expectLastCall().andReturn(config);
         EasyMock.expectLastCall().atLeastOnce();
         preferences.getBoolean(EasyMock.isA(String.class), EasyMock.eq(false));
-        EasyMock.expectLastCall().andReturn(true);
+        EasyMock.expectLastCall().andReturn(Boolean.TRUE);
         EasyMock.expectLastCall().atLeastOnce();
 
         preferences.getStringList(EasyMock.isA(String.class), (List<String>)EasyMock.isNull());

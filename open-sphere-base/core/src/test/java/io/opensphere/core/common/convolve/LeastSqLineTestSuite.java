@@ -14,51 +14,51 @@ import javax.swing.JPanel;
 
 /**
  * This class encapsulates a suite of test routines for LeastSqLineLocator and
- * LeastSqLineSupport.  See below for details on how to use it.
+ * LeastSqLineSupport. See below for details on how to use it.
  */
 public class LeastSqLineTestSuite
 {
     /** Minimum value of x. */
-    private double minX = -10.0;
+    private final double minX = -10.0;
 
     /** Maximum value of x. */
-    private double maxX = 10.0;
+    private final double maxX = 10.0;
 
     /** Minimum value of y. */
-    private double minY = -10.0;
+    private final double minY = -10.0;
 
     /** Maximum value of y. */
-    private double maxY = 10.0;
+    private final double maxY = 10.0;
 
     /** Display background color. */
-    private Color bgColor = Color.BLACK;
+    private final Color bgColor = Color.BLACK;
 
     /** Display color of x- and y-axes. */
-    private Color axisColor = Color.BLUE;
+    private final Color axisColor = Color.BLUE;
 
     /** Display color of lines other than coordinate axes. */
-    private Color lineColor = Color.WHITE;
+    private final Color lineColor = Color.WHITE;
 
     /** Display color of the points. */
-    private Color ptColor = Color.RED;
+    private final Color ptColor = Color.RED;
 
     /** Display color of ellipses. */
-    private Color ellipseColor = Color.GREEN;
+    private final Color ellipseColor = Color.GREEN;
 
     /** The displayable x-axis. */
-    private LineG xAxis = new LineG(minX, 0.0, maxX, 0.0);
+    private final LineG xAxis = new LineG(minX, 0.0, maxX, 0.0);
 
     /** The displayable y-axis. */
-    private LineG yAxis = new LineG(0.0, minY, 0.0, maxY);
+    private final LineG yAxis = new LineG(0.0, minY, 0.0, maxY);
 
     /** The list of lines to be displayed. */
-    private LinkedList<LineG> lines = new LinkedList<>();
+    private final LinkedList<LineG> lines = new LinkedList<>();
 
     /** The list of points to be displayed. */
-    private LinkedList<PointG> points = new LinkedList<>();
+    private final LinkedList<PointG> points = new LinkedList<>();
 
     /** The list of ellipses to be dsiplayed. */
-    private LinkedList<EllipseG> ellipses = new LinkedList<>();
+    private final LinkedList<EllipseG> ellipses = new LinkedList<>();
 
     /** A class for representing a line segment in model space. */
     private static class LineG
@@ -114,7 +114,9 @@ public class LeastSqLineTestSuite
         {
             double mag = Math.sqrt(sq(x) + sq(y));
             if (mag == 0.0)
+            {
                 return null;
+            }
             return new PointG(x / mag, y / mag);
         }
     }
@@ -133,12 +135,14 @@ public class LeastSqLineTestSuite
          * @param confR scale factor of the ellipse
          * @return the generated ellipse
          */
-        public static EllipseG create (double[][] cov, double[] x, double confR) {
+        public static EllipseG create(double[][] cov, double[] x, double confR)
+        {
             int n = 32;
             EllipseG ell = new EllipseG();
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
+            {
                 double theta = i * 2.0 * Math.PI / n;
-                double[] u = new double[] {Math.cos(theta), Math.sin(theta)};
+                double[] u = new double[] { Math.cos(theta), Math.sin(theta) };
                 LeastSqLineSupport.scalarMult(confR, u);
                 double[] v = LeastSqLineSupport.multVec(cov, u);
                 LeastSqLineSupport.add(v, x);
@@ -186,7 +190,7 @@ public class LeastSqLineTestSuite
     }
 
     /**
-     * Main.  Change the scenario number to select the desired test.
+     * Main. Change the scenario number to select the desired test.
      *
      * @param argv ignored
      */
@@ -201,7 +205,7 @@ public class LeastSqLineTestSuite
      */
     protected void scenario7()
     {
-        double[][] m = new double[][] {{2.0, 1.0}, {0.5, 3.0}};
+        double[][] m = new double[][] { { 2.0, 1.0 }, { 0.5, 3.0 } };
         double[][] mInv = LeastSqLineSupport.inverse2x2(m);
         double[][] id1 = LeastSqLineSupport.multMatrix(m, mInv);
         System.out.println("id1:");
@@ -214,35 +218,45 @@ public class LeastSqLineTestSuite
     }
 
     /**
-     * Test the eigenvalue and eigenvector functions for 2x2 matrices.  Each
+     * Test the eigenvalue and eigenvector functions for 2x2 matrices. Each
      * eigenvector is tested by multiplying by the matrix and dividing by the
      * eigenvalue, which should leave the vector nearly unchanged.
      */
     protected void scenario6()
     {
         System.out.println("CONF_95_RADIUS = " + PlaneUtils.CONF_95_RADIUS);
-        double[][] m = new double[][] {{2.0, 1.0}, {1.0, 3.0}};
+        double[][] m = new double[][] { { 2.0, 1.0 }, { 1.0, 3.0 } };
         double[] lambda = LeastSqLineSupport.eigenVal2x2(m);
         System.out.println("eigenvals:");
         for (int i = 0; i < lambda.length; i++)
+        {
             System.out.println(" -> " + lambda[i]);
+        }
         double[][] basis = LeastSqLineSupport.eigenVec2x2(m, lambda);
         System.out.println("basis[0]:");
         for (int i = 0; i < basis[0].length; i++)
+        {
             System.out.println(" -> " + basis[0][i]);
+        }
         double[] dopple0 = LeastSqLineSupport.multVec(m, basis[0]);
         LeastSqLineSupport.scalarMult(1.0 / lambda[0], dopple0);
         System.out.println("dopple0:");
         for (int i = 0; i < dopple0.length; i++)
+        {
             System.out.println(" -> " + dopple0[i]);
+        }
         System.out.println("basis[1]:");
         for (int i = 0; i < basis[1].length; i++)
+        {
             System.out.println(" -> " + basis[1][i]);
+        }
         double[] dopple1 = LeastSqLineSupport.multVec(m, basis[1]);
         LeastSqLineSupport.scalarMult(1.0 / lambda[1], dopple1);
         System.out.println("dopple1:");
         for (int i = 0; i < dopple1.length; i++)
+        {
             System.out.println(" -> " + dopple1[i]);
+        }
     }
 
     /**
@@ -266,7 +280,9 @@ public class LeastSqLineTestSuite
     {
         List<LineG> lineList = new LinkedList<>();
         for (int i = 0; i < 4; i++)
+        {
             lineList.add(lineOfBearing(bell(0.0, 10.0), bell(0.0, 10.0), 0.5 + bell(0.0, 1.0), bell(0.0, 1.0)));
+        }
         convolveForScenario(lineList);
         show();
     }
@@ -325,8 +341,8 @@ public class LeastSqLineTestSuite
     }
 
     /**
-     * Setup and run the least-squares localization algorithm using the
-     * resident lines.
+     * Setup and run the least-squares localization algorithm using the resident
+     * lines.
      *
      * @return the locator containing a solution
      */
@@ -348,8 +364,10 @@ public class LeastSqLineTestSuite
     {
         cw.setNumLines(lines.size());
         int i = 0;
-        for (LineG ln :  lines)
+        for (LineG ln : lines)
+        {
             cw.addLine(ln.p0.x, ln.p0.y, ln.p1.x - ln.p0.x, ln.p1.y - ln.p0.y, i++);
+        }
     }
 
     /**
@@ -359,7 +377,7 @@ public class LeastSqLineTestSuite
      * @param y y-coordinate of a point on the line
      * @param dx x-coordinate of the direction vector
      * @param dy y-coordinate of the direction vector
-     * @return
+     * @return lineg
      */
     private static LineG lineOfBearing(double x, double y, double dx, double dy)
     {
@@ -376,7 +394,9 @@ public class LeastSqLineTestSuite
     private static LineG lineOfBearing(PointG pt, PointG dir)
     {
         if (dir.x == 0.0 && dir.y == 0.0)
+        {
             return null;
+        }
         PointG dirUnit = dir.unit();
         double txNeg = -100;
         double txPos = 100;
@@ -394,13 +414,10 @@ public class LeastSqLineTestSuite
             tyPos = (10.0 - pt.y) / dirUnit.y;
         }
 
-        double tNeg = Math.min(0.0,
-                maxNeg(maxNeg(txNeg, tyNeg), maxNeg(txPos, tyPos)));
-        double tPos = Math.max(0.0,
-                minPos(minPos(txPos, tyPos), minPos(txNeg, tyNeg)));
+        double tNeg = Math.min(0.0, maxNeg(maxNeg(txNeg, tyNeg), maxNeg(txPos, tyPos)));
+        double tPos = Math.max(0.0, minPos(minPos(txPos, tyPos), minPos(txNeg, tyNeg)));
 
-        return new LineG(pt.x + tNeg * dirUnit.x, pt.y + tNeg * dirUnit.y,
-                pt.x + tPos * dirUnit.x, pt.y + tPos * dirUnit.y);
+        return new LineG(pt.x + tNeg * dirUnit.x, pt.y + tNeg * dirUnit.y, pt.x + tPos * dirUnit.x, pt.y + tPos * dirUnit.y);
     }
 
     /**
@@ -414,9 +431,13 @@ public class LeastSqLineTestSuite
     private static double minPos(double x, double y)
     {
         if (x < 0.0)
+        {
             return y;
+        }
         if (y < 0.0)
+        {
             return x;
+        }
         return Math.min(x, y);
     }
 
@@ -431,9 +452,13 @@ public class LeastSqLineTestSuite
     private static double maxNeg(double x, double y)
     {
         if (x > 0.0)
+        {
             return y;
+        }
         if (y > 0.0)
+        {
             return x;
+        }
         return Math.max(x, y);
     }
 
@@ -454,6 +479,9 @@ public class LeastSqLineTestSuite
      */
     private class Graph extends JPanel
     {
+        /** serial */
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void paint(Graphics g)
         {
@@ -472,7 +500,9 @@ public class LeastSqLineTestSuite
     private void draw(Graphics g, int w, int h)
     {
         if (w <= 0 || h <= 0)
+        {
             return;
+        }
         double x0 = (w - 1) / 2.0;
         double y0 = (h - 1) / 2.0;
         double c = Math.min(w / (maxX - minX), h / (maxY - minY));
@@ -483,14 +513,20 @@ public class LeastSqLineTestSuite
         drawLine(xAxis, g, x0, y0, c);
         drawLine(yAxis, g, x0, y0, c);
         g.setColor(lineColor);
-        for (LineG ln :  lines)
+        for (LineG ln : lines)
+        {
             drawLine(ln, g, x0, y0, c);
+        }
         g.setColor(ellipseColor);
-        for (EllipseG el :  ellipses)
+        for (EllipseG el : ellipses)
+        {
             drawEllipse(el, g, x0, y0, c);
+        }
         g.setColor(ptColor);
-        for (PointG pt :  points)
+        for (PointG pt : points)
+        {
             drawPoint(pt, g, x0, y0, c);
+        }
     }
 
     /**
@@ -519,8 +555,7 @@ public class LeastSqLineTestSuite
      */
     private static void drawLine(PointG p0, PointG p1, Graphics g, double x0, double y0, double c)
     {
-        g.drawLine(rint(x0 + c * p0.x), rint(y0 - c * p0.y),
-                rint(x0 + c * p1.x), rint(y0 - c * p1.y));
+        g.drawLine(rint(x0 + c * p0.x), rint(y0 - c * p0.y), rint(x0 + c * p1.x), rint(y0 - c * p1.y));
     }
 
     /**
@@ -550,15 +585,22 @@ public class LeastSqLineTestSuite
     {
         PointG p0 = null;
         PointG p1 = null;
-        for (PointG p2 :  e.points) {
+        for (PointG p2 : e.points)
+        {
             if (p1 != null)
+            {
                 drawLine(p1, p2, g, x0, y0, c);
+            }
             p1 = p2;
             if (p0 == null)
+            {
                 p0 = p1;
+            }
         }
         if (p1 != p0 && p1 != null)
+        {
             drawLine(p1, p0, g, x0, y0, c);
+        }
     }
 
     /**

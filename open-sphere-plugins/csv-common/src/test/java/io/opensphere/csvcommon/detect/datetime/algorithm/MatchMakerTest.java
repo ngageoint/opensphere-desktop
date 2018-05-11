@@ -12,12 +12,11 @@ import org.easymock.EasyMockSupport;
 import org.junit.Test;
 
 import io.opensphere.core.common.configuration.date.DateFormat;
-import io.opensphere.core.common.configuration.date.DateFormatsConfig;
 import io.opensphere.core.common.configuration.date.DateFormat.Type;
+import io.opensphere.core.common.configuration.date.DateFormatsConfig;
 import io.opensphere.core.preferences.ClasspathPreferencesPersistenceManager;
 import io.opensphere.core.preferences.InternalPreferencesIF;
 import io.opensphere.csvcommon.common.datetime.ConfigurationProvider;
-import io.opensphere.csvcommon.detect.datetime.algorithm.MatchMaker;
 import io.opensphere.csvcommon.detect.datetime.model.PotentialColumn;
 import io.opensphere.csvcommon.detect.datetime.model.SuccessfulFormat;
 import io.opensphere.csvcommon.util.CsvTestUtils;
@@ -27,6 +26,7 @@ import io.opensphere.mantle.util.MantleConstants;
  * Tests the MatchMaker class.
  *
  */
+@SuppressWarnings("boxing")
 public class MatchMakerTest
 {
     /**

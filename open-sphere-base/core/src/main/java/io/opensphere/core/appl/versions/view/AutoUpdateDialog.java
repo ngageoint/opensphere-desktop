@@ -48,7 +48,7 @@ public class AutoUpdateDialog extends OptionDialog
 
         boolean automaticUpdate = preferencesRegistry.getPreferences(NewVersionPlugin.class)
                 .getBoolean(AutoUpdatePreferenceKeys.UPDATE_WITHOUT_PROMPT_ENABLED_KEY, false);
-        myAutomaticInstall.set(automaticUpdate);
+        myAutomaticInstall.set(Boolean.valueOf(automaticUpdate));
 
         setTitle(title);
         setComponent(component);

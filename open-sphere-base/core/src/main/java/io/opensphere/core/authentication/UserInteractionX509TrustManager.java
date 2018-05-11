@@ -117,10 +117,14 @@ public final class UserInteractionX509TrustManager extends UserInteractionAuthen
             // Avoid starting up multiple dialogs at a time.
             synchronized (UserInteractionX509TrustManager.class)
             {
-                if (EventQueueUtilities.happyOnEdt(() -> queryUser(chain, authType)))
+                if (EventQueueUtilities.happyOnEdt(() -> queryUser(chain, authType)).booleanValue())
+                {
                     return;
+                }
                 else
+                {
                     throw ex;
+                }
             }
         }
     }

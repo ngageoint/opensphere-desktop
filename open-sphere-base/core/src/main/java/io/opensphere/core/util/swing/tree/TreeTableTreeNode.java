@@ -68,11 +68,10 @@ public class TreeTableTreeNode implements MutableTreeNode
         myChildren.add(child);
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
-    public Enumeration children()
+    public Enumeration<? extends TreeNode> children()
     {
-        return new Enumeration()
+        return new Enumeration<TreeTableTreeNode>()
         {
             private final Iterator<TreeTableTreeNode> myNodeIterator = getChildren().iterator();
 
@@ -83,7 +82,7 @@ public class TreeTableTreeNode implements MutableTreeNode
             }
 
             @Override
-            public Object nextElement()
+            public TreeTableTreeNode nextElement()
             {
                 return myNodeIterator.next();
             }

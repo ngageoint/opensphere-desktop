@@ -53,8 +53,8 @@ public class FilePreferencesPersistenceManager implements PreferencesPersistence
      */
     public FilePreferencesPersistenceManager()
     {
-        this(StringUtilities.expandProperties(System.getProperty("opensphere.path.runtime"), System.getProperties()) + File.separator
-                + "prefs");
+        this(StringUtilities.expandProperties(System.getProperty("opensphere.path.runtime"), System.getProperties())
+                + File.separator + "prefs");
     }
 
     /**
@@ -185,19 +185,21 @@ public class FilePreferencesPersistenceManager implements PreferencesPersistence
         {
             if (cipherFactory != null)
             {
-                CipherOutputStream cos;
                 try
                 {
                     final Cipher cipher = cipherFactory.initCipher(Cipher.ENCRYPT_MODE);
                     writeEncryptionParametersToStream(os, cipher);
-                    cos = new CipherOutputStream(os, cipher);
+
+                    // This is closed on `os.close()`.
+                    @SuppressWarnings("resource")
+                    final CipherOutputStream cos = new CipherOutputStream(os, cipher);
+                    os = cos;
                 }
                 catch (final CipherException e)
                 {
                     LOGGER.error("Failed to encrypt preferences: " + e, e);
                     return;
                 }
-                os = cos;
             }
             if (compressed)
             {
@@ -296,6 +298,10 @@ public class FilePreferencesPersistenceManager implements PreferencesPersistence
                     if (obj instanceof EncryptionParameters)
                     {
                         final Cipher decryptCipher = ((EncryptionParameters)obj).getDecryptCipher(cipherFactory);
+
+                        // The stream is closed on `is.close()`. Wrapped streams
+                        // are closed when their wrappers are closed.
+                        @SuppressWarnings("resource")
                         final CipherInputStream cis = new CipherInputStream(is, decryptCipher);
                         is = cis;
                     }

@@ -7,7 +7,6 @@ import io.opensphere.core.common.configuration.date.DateFormat.Type;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.csvcommon.common.datetime.DateColumn;
-import io.opensphere.csvcommon.detect.datetime.algorithm.deciders.Decider;
 import io.opensphere.csvcommon.detect.datetime.model.PotentialColumn;
 import io.opensphere.csvcommon.detect.datetime.model.SuccessfulFormat;
 import io.opensphere.csvcommon.detect.datetime.util.Constants;
@@ -38,13 +37,13 @@ public class CompositeDateTimeDecider implements Decider
         Set<Integer> dateColumns = New.set();
         for (Pair<PotentialColumn, Integer> pair : dateScores)
         {
-            dateColumns.add(pair.getFirstObject().getColumnIndex());
+            dateColumns.add(Integer.valueOf(pair.getFirstObject().getColumnIndex()));
         }
 
         List<PotentialColumn> timePotentials = New.list();
         for (PotentialColumn column : potentials)
         {
-            if (!dateColumns.contains(column.getColumnIndex()))
+            if (!dateColumns.contains(Integer.valueOf(column.getColumnIndex())))
             {
                 timePotentials.add(column);
             }
@@ -118,9 +117,9 @@ public class CompositeDateTimeDecider implements Decider
             column.setSecondaryColumnFormat(timeFormat.getFormat().getSdf());
             column.setSecondaryColumnIndex(timePart.getColumnIndex());
 
-            Integer score = (datePartScore + timePartScore) / 2;
+            int score = (datePartScore.intValue() + timePartScore.intValue()) / 2;
 
-            result.add(new Pair<DateColumn, Integer>(column, score));
+            result.add(new Pair<DateColumn, Integer>(column, Integer.valueOf(score)));
         }
 
         return result;
@@ -143,7 +142,7 @@ public class CompositeDateTimeDecider implements Decider
     {
         Pair<PotentialColumn, Integer> bestPassing = null;
 
-        Integer maxScore = Constants.THRESHOLD_SCORE;
+        Integer maxScore = Integer.valueOf(Constants.THRESHOLD_SCORE);
 
         for (Pair<PotentialColumn, Integer> score : scores)
         {

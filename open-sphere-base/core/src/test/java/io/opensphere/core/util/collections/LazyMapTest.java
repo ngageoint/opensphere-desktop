@@ -112,6 +112,7 @@ public class LazyMapTest
     /**
      * Test for {@link LazyMap#get(Object)}.
      */
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void testGet()
     {

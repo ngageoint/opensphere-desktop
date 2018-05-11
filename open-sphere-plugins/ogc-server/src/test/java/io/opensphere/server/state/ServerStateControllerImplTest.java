@@ -30,6 +30,7 @@ import io.opensphere.server.util.ServerConstants;
 /**
  * Tests the ServerStateController.
  */
+@SuppressWarnings("boxing")
 public class ServerStateControllerImplTest
 {
     /**

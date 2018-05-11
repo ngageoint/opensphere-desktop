@@ -8,6 +8,7 @@ import io.opensphere.core.util.ValidationStatus;
 /**
  * Test for {@link DoubleModel}.
  */
+@SuppressWarnings("boxing")
 public class DoubleModelTest
 {
     /**

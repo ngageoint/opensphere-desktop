@@ -31,6 +31,7 @@ import mil.nga.wkb.geom.Polygon;
 /**
  * Unit test for {@link GeometryExporter}.
  */
+@SuppressWarnings("boxing")
 public class GeometryExporterTest
 {
     /**

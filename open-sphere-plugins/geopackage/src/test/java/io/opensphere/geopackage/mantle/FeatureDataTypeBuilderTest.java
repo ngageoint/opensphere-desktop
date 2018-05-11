@@ -46,6 +46,7 @@ import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
 /**
  * Tests the {@link FeatureDataTypeBuilder} class.
  */
+@SuppressWarnings("boxing")
 public class FeatureDataTypeBuilderTest
 {
     /**

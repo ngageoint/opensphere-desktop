@@ -54,6 +54,7 @@ import io.opensphere.stkterrain.mantle.STKDataGroupController;
 /**
  * Unit test for {@link STKServerSourceController}.
  */
+@SuppressWarnings("boxing")
 public class STKServerSourceControllerTest extends GenericRegistry<Envoy>
 {
     /**

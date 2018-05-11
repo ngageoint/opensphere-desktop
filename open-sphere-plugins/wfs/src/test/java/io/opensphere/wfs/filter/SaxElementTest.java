@@ -12,11 +12,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.Attributes;
 
-import io.opensphere.wfs.filter.SaxElement;
-
 /**
  * Test used to exercise the functionality of the {@link SaxElement} class.
  */
+@SuppressWarnings("boxing")
 public class SaxElementTest
 {
     /**

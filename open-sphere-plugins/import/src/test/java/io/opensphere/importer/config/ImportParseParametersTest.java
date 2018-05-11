@@ -21,6 +21,7 @@ import io.opensphere.importer.config.ColumnType.Category;
  * Class designed to exercise the functionality of the
  * {@link ImportParseParameters} class.
  */
+@SuppressWarnings("boxing")
 public class ImportParseParametersTest
 {
     /**

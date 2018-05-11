@@ -1,7 +1,5 @@
 package io.opensphere.core.util.fx;
 
-import static io.opensphere.core.util.lang.NumberUtilities.toFloat;
-
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -463,8 +461,8 @@ public final class FXUtilities
 
         if (color != null)
         {
-            awtColor = new java.awt.Color(toFloat(color.getRed()), toFloat(color.getGreen()), toFloat(color.getBlue()),
-                    toFloat(color.getOpacity()));
+            awtColor = new java.awt.Color((float)color.getRed(), (float)color.getGreen(), (float)color.getBlue(),
+                    (float)color.getOpacity());
         }
         else
         {

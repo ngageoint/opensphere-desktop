@@ -136,7 +136,7 @@ public class JoinData extends DatasetOperation
     {
         src.stream().filter(x -> x.getType() == c.owner).findFirst().ifPresent(x ->
         {
-            if (c != null && c.definedName != null && !c.definedName.isEmpty())
+            if (c.definedName != null && !c.definedName.isEmpty())
             {
                 x.getKeepKeys().add(c.definedName);
             }

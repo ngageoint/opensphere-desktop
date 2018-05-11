@@ -1,12 +1,13 @@
 package io.opensphere.core.projection;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import io.opensphere.core.math.WGS84EarthConstants;
 import io.opensphere.core.model.LatLonAlt;
-import org.junit.Assert;
 
 /** Test for {@link GeographicBody3D}. */
+@SuppressWarnings("boxing")
 public class GeographicBody3DTest
 {
     /**

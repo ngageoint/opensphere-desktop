@@ -93,7 +93,7 @@ public final class UrlUtilities
             host = host.substring(0, portIndex);
         }
 
-        return new ThreeTuple<>(protocol, host, rtmpPort);
+        return new ThreeTuple<>(protocol, host, Integer.valueOf(rtmpPort));
     }
 
     /**

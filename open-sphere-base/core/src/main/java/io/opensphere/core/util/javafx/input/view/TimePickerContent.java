@@ -114,7 +114,8 @@ public class TimePickerContent extends VBox
         int minutes = myMinuteSpinner.value().get();
         int seconds = mySecondSpinner.value().get();
 
-        String value = String.format("%1$02d:%2$02d:%3$02d", hours, minutes, seconds);
+        String value = String.format("%1$02d:%2$02d:%3$02d", Integer.valueOf(hours), Integer.valueOf(minutes),
+                Integer.valueOf(seconds));
         LocalTime time = myTimePicker.getConverter().fromString(value);
         myTimePicker.setValue(time);
         myTimePicker.hide();

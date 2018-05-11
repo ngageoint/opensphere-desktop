@@ -45,11 +45,11 @@ public class WpsDecimalInputProvider implements WpsInputControlProvider
             {
                 valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 1000);
             }
-            double doubleValue = Double.parseDouble(pDefaultValue);
+            Double doubleValue = Double.valueOf(pDefaultValue);
             valueFactory.setValue(doubleValue);
         }
 
-        Supplier<String> resultAccessorFunction = () -> Double.toString(spinner.valueProperty().get());
+        Supplier<String> resultAccessorFunction = () -> spinner.valueProperty().get().toString();
         returnValue = new ValidatedIdentifiedControl<>(pInputDescription.getIdentifier().getValue(), pTitle,
                 resultAccessorFunction, spinner);
         returnValue.setValidationGroup(pValidationGroup);

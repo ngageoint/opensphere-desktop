@@ -155,8 +155,8 @@ public class WFSLayerAndStateTest
         assertEquals("https://somehost/ogc/wfsServer", layerState.getUrl());
         assertEquals("1.1.0", layerState.getWFSParameters().getVersion());
         assertEquals("typename", layerState.getWFSParameters().getTypeName());
-        assertEquals(true, layerState.isVisible());
-        assertEquals(true, layerState.isAnimate());
+        assertTrue(layerState.isVisible());
+        assertTrue(layerState.isAnimate());
         assertEquals("default#id#features", layerState.getId());
         assertEquals("ffff00", layerState.getBasicFeatureStyle().getPointColor());
         assertEquals(255, layerState.getBasicFeatureStyle().getPointOpacity());

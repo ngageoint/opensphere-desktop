@@ -1407,6 +1407,7 @@ public class GeometryDistributor
 
         if (!foundKey && (myAnimationPlan != null || activeTimeSpans != null))
         {
+            @SuppressWarnings("null")
             final Collection<? extends TimeSpan> timeSpans = myAnimationPlan == null ? activeTimeSpans.getPrimary()
                     : myAnimationPlan.getTimeCoverage();
             foundKey = sortByKeys(keyToGeoms, geom, hull, null, timeSpans);

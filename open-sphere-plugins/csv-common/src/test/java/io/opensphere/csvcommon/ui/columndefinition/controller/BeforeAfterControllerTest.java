@@ -29,6 +29,7 @@ import io.opensphere.mantle.util.MantleConstants;
  * Tests the BeforeAfterController class.
  *
  */
+@SuppressWarnings("boxing")
 public class BeforeAfterControllerTest
 {
     /**
@@ -304,7 +305,7 @@ public class BeforeAfterControllerTest
 
         Preferences formatPrefs = support.createNiceMock(Preferences.class);
         formatPrefs.getBoolean(EasyMock.isA(String.class), EasyMock.eq(false));
-        EasyMock.expectLastCall().andReturn(true);
+        EasyMock.expectLastCall().andReturn(Boolean.TRUE);
         EasyMock.expectLastCall().atLeastOnce();
 
         registry.getPreferences(EasyMock.eq(MantleConstants.USER_DATE_FORMAT_CONFIG_FILE_TOPIC));

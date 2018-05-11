@@ -11,7 +11,6 @@ import io.opensphere.core.common.configuration.date.DateFormat.Type;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.csvcommon.common.datetime.DateColumn;
-import io.opensphere.csvcommon.detect.datetime.algorithm.deciders.Decider;
 import io.opensphere.csvcommon.detect.datetime.model.PotentialColumn;
 import io.opensphere.csvcommon.detect.datetime.model.SuccessfulFormat;
 import io.opensphere.csvcommon.detect.datetime.util.Constants;
@@ -98,7 +97,7 @@ public abstract class SingleValueDecider implements Decider
                 if (score > getPassingScore())
                 {
                     potential.setMostSuccessfulFormat(format);
-                    Pair<PotentialColumn, Integer> pair = new Pair<>(potential, score);
+                    Pair<PotentialColumn, Integer> pair = new Pair<>(potential, Integer.valueOf(score));
                     scores.add(pair);
                     break;
                 }
@@ -111,7 +110,7 @@ public abstract class SingleValueDecider implements Decider
     @Override
     public List<Pair<DateColumn, Integer>> compileResults(List<Pair<PotentialColumn, Integer>> potentials)
     {
-        Integer maxScore = -1;
+        Integer maxScore = Integer.valueOf(-1);
         PotentialColumn bestColumn = null;
 
         for (Pair<PotentialColumn, Integer> pair : potentials)

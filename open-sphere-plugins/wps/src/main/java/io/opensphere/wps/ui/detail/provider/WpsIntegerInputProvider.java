@@ -40,7 +40,7 @@ public class WpsIntegerInputProvider implements WpsInputControlProvider
         Spinner<Integer> spinner = new Spinner<>();
         initializeSpinnerValueFactory(pDefaultValue, spinner);
 
-        Supplier<String> resultAccessorFunction = () -> Integer.toString(spinner.valueProperty().get());
+        Supplier<String> resultAccessorFunction = () -> spinner.valueProperty().get().toString();
         returnValue = new ValidatedIdentifiedControl<>(pInputDescription.getIdentifier().getValue(), pTitle,
                 resultAccessorFunction, spinner);
         returnValue.setValidationGroup(pValidationGroup);
@@ -74,12 +74,12 @@ public class WpsIntegerInputProvider implements WpsInputControlProvider
 
         if (StringUtils.isNotBlank(pDefaultValue))
         {
-            int integerValue = Integer.parseInt(pDefaultValue);
+            Integer integerValue = Integer.valueOf(pDefaultValue);
             valueFactory.setValue(integerValue);
         }
         else
         {
-            valueFactory.setValue(0);
+            valueFactory.setValue(Integer.valueOf(0));
         }
     }
 }

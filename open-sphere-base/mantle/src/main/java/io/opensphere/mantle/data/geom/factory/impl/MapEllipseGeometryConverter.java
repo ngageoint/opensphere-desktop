@@ -63,7 +63,8 @@ public final class MapEllipseGeometryConverter extends AbstractGeometryConverter
         int zOrder = visState.isSelected() ? ZOrderRenderProperties.TOP_Z : mapVisInfo == null ? 1000 : mapVisInfo.getZOrder();
 
         Constraints constraints = null;
-        if (mapVisInfo != null && basicVisInfo.getLoadsTo().isTimelineEnabled() && !geomSupport.getTimeSpan().isTimeless())
+        if (mapVisInfo != null && basicVisInfo != null && basicVisInfo.getLoadsTo().isTimelineEnabled()
+                && !geomSupport.getTimeSpan().isTimeless())
         {
             constraints = createTimeConstraints(getToolbox(), dti, geomSupport.getTimeSpan());
         }

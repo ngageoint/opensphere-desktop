@@ -342,7 +342,7 @@ public class GeometryImporter
         double z = 0;
         if (point.hasZ())
         {
-            z = point.getZ();
+            z = point.getZ().doubleValue();
         }
 
         Point transformed = toGeodetic.transform(point);

@@ -1,11 +1,11 @@
 package io.opensphere.core.util.taskactivity;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Test;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 /**
  * Tests the {@link CancellableTaskActivity} class.
@@ -29,6 +29,7 @@ public class CancellableTaskActivityTest
         activity.setProgress(.5);
 
         support.verifyAll();
+        activity.close();
     }
 
     /**

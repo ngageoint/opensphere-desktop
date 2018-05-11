@@ -8,6 +8,7 @@ import io.opensphere.core.util.ValidationStatus;
 /**
  * Test for {@link IntegerModel}.
  */
+@SuppressWarnings("boxing")
 public class IntegerModelTest
 {
     /**

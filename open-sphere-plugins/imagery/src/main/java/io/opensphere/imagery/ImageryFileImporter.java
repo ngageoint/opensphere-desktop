@@ -135,8 +135,10 @@ public class ImageryFileImporter implements FileOrURLImporter
             wizardDialog.setSize(new Dimension(900, 700));
             wizardDialog.setLayout(new BorderLayout());
             wizardDialog.setResizable(false);
-            new ImagerySourceWizardPanel(wizardDialog.getContentPane(), myController.getToolbox(), fileList, sourcesInUse,
-                    new IDataSourceCreator()
+
+            @SuppressWarnings("unused")
+            ImagerySourceWizardPanel panel = new ImagerySourceWizardPanel(wizardDialog.getContentPane(),
+                    myController.getToolbox(), fileList, sourcesInUse, new IDataSourceCreator()
                     {
                         @Override
                         public void sourceCreated(boolean successful, final IDataSource source)
@@ -228,8 +230,10 @@ public class ImageryFileImporter implements FileOrURLImporter
         wiz.setLayout(new BorderLayout());
         wiz.setResizable(false);
         final ImagerySourceGroup backupGroup = new ImagerySourceGroup(group);
-        new ImagerySourceWizardPanel(wiz.getContentPane(), myController.getToolbox(), group, sourcesInUse,
-                new IDataSourceCreator()
+
+        @SuppressWarnings("unused")
+        ImagerySourceWizardPanel panel = new ImagerySourceWizardPanel(wiz.getContentPane(), myController.getToolbox(), group,
+                sourcesInUse, new IDataSourceCreator()
                 {
                     @Override
                     public void sourceCreated(boolean successful, final IDataSource source)

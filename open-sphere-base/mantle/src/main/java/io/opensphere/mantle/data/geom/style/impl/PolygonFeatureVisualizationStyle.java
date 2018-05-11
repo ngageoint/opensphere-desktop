@@ -61,6 +61,7 @@ import io.opensphere.mantle.util.MantleConstants;
 public class PolygonFeatureVisualizationStyle extends AbstractPathVisualizationStyle
 {
     /** The Constant ourPropertyKeyPrefix. */
+    @SuppressWarnings("hiding")
     public static final String ourPropertyKeyPrefix = "PolygonFeatureVisualizationStyle";
 
     /** The Constant ourFilledPropertyKey. */
@@ -76,8 +77,8 @@ public class PolygonFeatureVisualizationStyle extends AbstractPathVisualizationS
 
     /** The Constant ourFillOpacityParameter. */
     public static final VisualizationStyleParameter ourFillOpacityParameter = new VisualizationStyleParameter(
-            ourFillOpacityPropertyKey, "Fill Opacity", 0.3f, Float.class, new VisualizationStyleParameterFlags(false, false),
-            ParameterHint.hint(false, false));
+            ourFillOpacityPropertyKey, "Fill Opacity", Float.valueOf(0.3f), Float.class,
+            new VisualizationStyleParameterFlags(false, false), ParameterHint.hint(false, false));
 
     /**
      * Instantiates a new polygon feature visualization style.
@@ -108,14 +109,16 @@ public class PolygonFeatureVisualizationStyle extends AbstractPathVisualizationS
 
     @Override
     public void createCombinedGeometry(Set<Geometry> setToAddTo, FeatureCombinedGeometryBuilderData builderData,
-            RenderPropertyPool renderPropertyPool) throws IllegalArgumentException
+            RenderPropertyPool renderPropertyPool)
+        throws IllegalArgumentException
     {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public void createIndividualGeometry(Set<Geometry> setToAddTo, FeatureIndividualGeometryBuilderData bd,
-            RenderPropertyPool renderPropertyPool) throws IllegalArgumentException
+            RenderPropertyPool renderPropertyPool)
+        throws IllegalArgumentException
     {
         PolygonGeometry polygonGeom = null;
         if (bd.getMGS() instanceof MapPolygonGeometrySupport)
@@ -255,7 +258,7 @@ public class PolygonFeatureVisualizationStyle extends AbstractPathVisualizationS
         paramList.add(fillOpacityPanel);
 
         EditorPanelVisibilityDependency visDepend = new EditorPanelVisibilityDependency(panel, fillOpacityPanel);
-        visDepend.addConstraint(new ParameterVisibilityConstraint(ourFilledPropertyKey, Boolean.TRUE, true));
+        visDepend.addConstraint(new ParameterVisibilityConstraint(ourFilledPropertyKey, true, Boolean.TRUE));
         visDepend.evaluateStyle();
         panel.addVisibilityDependency(visDepend);
 
@@ -454,6 +457,7 @@ public class PolygonFeatureVisualizationStyle extends AbstractPathVisualizationS
             }
         }
 
+        @SuppressWarnings("null")
         Vector2d center1 = longestPair.getFirstObject().getCenter();
         Vector2d center2 = longestPair.getSecondObject().getCenter();
         // Since the second segment is co-linear with the first segment's

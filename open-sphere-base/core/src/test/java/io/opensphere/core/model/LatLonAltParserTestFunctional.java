@@ -50,5 +50,6 @@ public class LatLonAltParserTestFunctional
                 }
             }
         }
+        formatter.close();
     }
 }

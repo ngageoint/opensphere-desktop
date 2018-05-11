@@ -3,6 +3,13 @@ package io.opensphere.analysis.binning.editor.view;
 import java.text.DecimalFormat;
 import java.text.ParsePosition;
 
+import io.opensphere.analysis.binning.criteria.BinCriteriaElement;
+import io.opensphere.analysis.binning.editor.controller.CriterionController;
+import io.opensphere.analysis.binning.editor.model.BinCriteriaModel;
+import io.opensphere.analysis.binning.editor.model.CriterionModel;
+import io.opensphere.core.util.fx.FXUtilities;
+import io.opensphere.core.util.fx.NewAutoCompleteComboBoxListener;
+import io.opensphere.core.util.image.IconUtil.IconType;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -13,14 +20,6 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-
-import io.opensphere.analysis.binning.criteria.BinCriteriaElement;
-import io.opensphere.analysis.binning.editor.controller.CriterionController;
-import io.opensphere.analysis.binning.editor.model.BinCriteriaModel;
-import io.opensphere.analysis.binning.editor.model.CriterionModel;
-import io.opensphere.core.util.fx.AutoCompleteComboBoxListener;
-import io.opensphere.core.util.fx.FXUtilities;
-import io.opensphere.core.util.image.IconUtil.IconType;
 
 /**
  * Represents one row in the criteria editor panel, showing the values for a
@@ -64,12 +63,6 @@ public class CriterionCell extends ListCell<BinCriteriaElement> implements Crite
     private final TextField myTolerance = new TextField();
 
     /**
-     * Enables the combo box to be auto completed.
-     */
-    @SuppressWarnings("unused")
-    private final AutoCompleteComboBoxListener<String> myAutoComplete;
-
-    /**
      * Constructs a new criterion cell UI.
      *
      * @param model The overall criteria model.
@@ -85,7 +78,9 @@ public class CriterionCell extends ListCell<BinCriteriaElement> implements Crite
 
         myBox.setAlignment(Pos.CENTER_LEFT);
         myBox.getChildren().addAll(myField, myBinType, myPlusMinus, myTolerance, FXUtilities.newHSpacer(), myRemoveButton);
-        myAutoComplete = new AutoCompleteComboBoxListener<>(myField);
+
+        NewAutoCompleteComboBoxListener listener = new NewAutoCompleteComboBoxListener();
+        listener.setupComboBox(myField);
     }
 
     @Override

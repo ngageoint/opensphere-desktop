@@ -92,32 +92,33 @@ public class DateRater
                     for (Pair<DateColumn, Integer> result : results)
                     {
                         DateColumn dateColumn = result.getFirstObject();
+                        int secondObject = result.getSecondObject().intValue();
 
                         removePotentials(potentials, dateColumn);
 
                         if (firstDate == null)
                         {
                             firstDate = dateColumn;
-                            firstDateScore = result.getSecondObject();
+                            firstDateScore = secondObject;
                         }
                         else if (secondDate == null)
                         {
                             secondDate = dateColumn;
-                            secondDateScore = result.getSecondObject();
+                            secondDateScore = secondObject;
                         }
-                        else if (firstDateScore <= result.getSecondObject()
+                        else if (firstDateScore <= result.getSecondObject().intValue()
                                 && firstDate.getPrimaryColumnIndex() > dateColumn.getPrimaryColumnIndex()
                                 && firstDate.getDateColumnType() == dateColumn.getDateColumnType())
                         {
                             firstDate = dateColumn;
-                            firstDateScore = result.getSecondObject();
+                            firstDateScore = secondObject;
                         }
-                        else if (secondDateScore <= result.getSecondObject()
+                        else if (secondDateScore <= result.getSecondObject().intValue()
                                 && secondDate.getPrimaryColumnIndex() > dateColumn.getPrimaryColumnIndex()
                                 && secondDate.getDateColumnType() == dateColumn.getDateColumnType())
                         {
                             secondDate = dateColumn;
-                            secondDateScore = result.getSecondObject();
+                            secondDateScore = secondObject;
                         }
                         else
                         {

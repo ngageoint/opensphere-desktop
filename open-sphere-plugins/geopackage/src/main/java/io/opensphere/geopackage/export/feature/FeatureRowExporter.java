@@ -64,7 +64,7 @@ public class FeatureRowExporter
                 Object value = element.getMetaData().getValue(elementColumnName);
                 if (value instanceof DoubleRange)
                 {
-                    value = ((DoubleRange)value).doubleValue();
+                    value = Double.valueOf(((DoubleRange)value).doubleValue());
                 }
                 else if (value instanceof Date)
                 {

@@ -12,20 +12,19 @@ import org.easymock.IAnswer;
 import org.junit.Test;
 
 import io.opensphere.core.common.configuration.date.DateFormat;
-import io.opensphere.core.common.configuration.date.DateFormatsConfig;
 import io.opensphere.core.common.configuration.date.DateFormat.Type;
+import io.opensphere.core.common.configuration.date.DateFormatsConfig;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.DateTimeFormats;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.csvcommon.common.datetime.ConfigurationProvider;
-import io.opensphere.csvcommon.common.datetime.Migrator;
 import io.opensphere.mantle.util.MantleConstants;
 
 /**
  * Tests the Migrator class.
  *
  */
+@SuppressWarnings("boxing")
 public class MigratorTest
 {
     /**

@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /** Test for {@link New}. */
+@SuppressWarnings("boxing")
 public class NewTest
 {
     /** Test message. */

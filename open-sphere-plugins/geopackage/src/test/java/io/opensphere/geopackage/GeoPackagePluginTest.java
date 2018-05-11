@@ -47,6 +47,7 @@ import io.opensphere.mantle.data.impl.DefaultDataGroupInfo;
 /**
  * Tests the {@link GeoPackagePlugin}.
  */
+@SuppressWarnings("boxing")
 public class GeoPackagePluginTest
 {
     /**

@@ -118,17 +118,17 @@ public class KeySpecification
             catch (ClassNotFoundException e)
             {
                 LOGGER.error("Could not find SpecialKey class: " + specialKeyClassName, e);
-                sk = null;
+//                sk = null;
             }
             catch (NoSuchMethodException | InvocationTargetException | InstantiationException e)
             {
                 LOGGER.error("Could not instantiate SpecialKey class: " + specialKeyClassName, e);
-                sk = null;
+//                sk = null;
             }
             catch (IllegalAccessException e)
             {
                 LOGGER.error(e);
-                sk = null;
+//                sk = null;
             }
         }
         return sk;

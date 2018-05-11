@@ -11,7 +11,6 @@ import io.opensphere.core.common.configuration.date.DateFormat.Type;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.csvcommon.common.datetime.DateColumn;
-import io.opensphere.csvcommon.detect.datetime.algorithm.deciders.TimeDecider;
 import io.opensphere.csvcommon.detect.datetime.model.PotentialColumn;
 import io.opensphere.csvcommon.detect.datetime.model.SuccessfulFormat;
 import io.opensphere.csvcommon.util.CsvTestUtils;
@@ -20,6 +19,7 @@ import io.opensphere.csvcommon.util.CsvTestUtils;
  * Tests the DateDecider class.
  *
  */
+@SuppressWarnings("boxing")
 public class TimeDeciderTest
 {
     /**

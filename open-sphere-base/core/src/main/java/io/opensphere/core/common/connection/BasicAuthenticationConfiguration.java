@@ -207,7 +207,7 @@ public class BasicAuthenticationConfiguration implements Cloneable
      * Return username/password from this
      * {@link BasicAuthenticationConfiguration} as a {@link ProxyConfiguration}
      *
-     * @return
+     * @return the proxy configuration
      */
     public ProxyConfiguration getAsProxyConfiguration()
     {

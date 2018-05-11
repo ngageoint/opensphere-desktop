@@ -215,7 +215,7 @@ public class GeometryExporter
     private mil.nga.wkb.geom.Point convertPoint(Point point)
     {
         mil.nga.wkb.geom.Point wkbPoint = new mil.nga.wkb.geom.Point(true, false, point.getX(), point.getY());
-        wkbPoint.setZ(point.getCoordinate().z);
+        wkbPoint.setZ(Double.valueOf(point.getCoordinate().z));
 
         return wkbPoint;
     }

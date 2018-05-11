@@ -32,7 +32,6 @@ public class AndPredicate<T> implements Predicate<T>
      * @param arg1 The first predicate.
      * @param arg2 The second predicate.
      */
-    @SuppressWarnings("unchecked")
     public AndPredicate(Predicate<? super T> arg1, Predicate<? super T> arg2)
     {
         this(Arrays.<Predicate<? super T>>asList(arg1, arg2));

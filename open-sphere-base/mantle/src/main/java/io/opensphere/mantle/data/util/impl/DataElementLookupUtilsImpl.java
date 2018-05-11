@@ -202,6 +202,20 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
     @Override
     public DataElement getDataElement(long dataElementId, DataTypeInfo dtiHint, String dataTypeInfoKeyHint)
     {
+        return getDataElement(Long.valueOf(dataElementId), dtiHint, dataTypeInfoKeyHint);
+    }
+
+    /**
+     * Long overload.
+     *
+     * @see #getDataElement(long, DataTypeInfo, String)
+     * @param dataElementId
+     * @param dtiHint
+     * @param dataTypeInfoKeyHint
+     * @return the data element
+     */
+    public DataElement getDataElement(Long dataElementId, DataTypeInfo dtiHint, String dataTypeInfoKeyHint)
+    {
         DataElement result = null;
         try
         {
@@ -377,6 +391,18 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
     @Override
     public MapGeometrySupport getMapGeometrySupport(long dataElementId)
     {
+        return getMapGeometrySupport(Long.valueOf(dataElementId));
+    }
+
+    /**
+     * Long overload.
+     *
+     * @see #getMapGeometrySupport(long)
+     * @param dataElementId
+     * @return the MapGeometrySupport or null if not found.
+     */
+    public MapGeometrySupport getMapGeometrySupport(Long dataElementId)
+    {
         SimpleResultCacheIdQuery<MapGeometrySupport> query = new SimpleResultCacheIdQuery<MapGeometrySupport>(
                 Collections.singletonList(dataElementId), new QueryAccessConstraint(false, false, false, false, true))
         {
@@ -398,6 +424,18 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
 
     @Override
     public List<Object> getMetaData(long dataElementId)
+    {
+        return getMetaData(Long.valueOf(dataElementId));
+    }
+
+    /**
+     * Long overload.
+     *
+     * @see #getMetaData(long)
+     * @param dataElementId
+     * @return the meta data List or null if id not found.
+     */
+    public List<Object> getMetaData(Long dataElementId)
     {
         SimpleResultCacheIdQuery<List<Object>> query = new SimpleResultCacheIdQuery<List<Object>>(
                 Collections.singletonList(dataElementId), new QueryAccessConstraint(false, false, false, true, false))
@@ -433,6 +471,7 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
             dataElementIds = dataElementIds.subList(0, maxToQuery);
         }
 
+        @SuppressWarnings("null")
         final int keyIndex = dti.getMetaDataInfo().getKeyIndex(keyName);
 
         SimpleResultCacheIdQuery<List<Object>> query = new SimpleResultCacheIdQuery<List<Object>>(dataElementIds,
@@ -505,6 +544,19 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
     @Override
     public MetaDataProvider getMetaDataProvider(long dataElementId)
     {
+        return getMetaDataProvider(Long.valueOf(dataElementId));
+    }
+
+    /**
+     * Long overload.
+     *
+     * @see #getMetaDataProvider(long)
+     * @param dataElementId
+     * @return the MetaDataProvider or null if the id is not in the registry or
+     *         the DataTypeInfo cannot be located for the data element.
+     */
+    public MetaDataProvider getMetaDataProvider(Long dataElementId)
+    {
         SimpleResultCacheIdQuery<Pair<String, List<Object>>> query = new SimpleResultCacheIdQuery<Pair<String, List<Object>>>(
                 Collections.singletonList(dataElementId), new QueryAccessConstraint(false, false, false, true, false))
         {
@@ -543,6 +595,18 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
     @Override
     public Long getOriginId(long dataElementId)
     {
+        return getOriginId(Long.valueOf(dataElementId));
+    }
+
+    /**
+     * Long overload.
+     *
+     * @see #getOriginId(long)
+     * @param dataElementId
+     * @return the origin id or -1 if not found.
+     */
+    public Long getOriginId(Long dataElementId)
+    {
         Long origId = null;
         SimpleResultCacheIdQuery<Long> ciq = new SimpleResultCacheIdQuery<Long>(Collections.singletonList(dataElementId),
                 new QueryAccessConstraint(false, false, true, false, false))
@@ -558,7 +622,7 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
 
         if (origId == null)
         {
-            return -1L;
+            return Long.valueOf(-1L);
         }
         else
         {
@@ -637,20 +701,28 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
     }
 
     /**
-     * Retrieves the DataElements by id. The dtiHint and dataTypeInfoKeyHint can help prevent multiple queries from running
-     * against the data model. They are used in the dtiHint first, then the dataTypeInfoKeyHint second. If neither hint is
-     * provided then they will be queried first so that the remainder of the element can be retrieved and reformed.
+     * Retrieves the DataElements by id. The dtiHint and dataTypeInfoKeyHint can
+     * help prevent multiple queries from running against the data model. They
+     * are used in the dtiHint first, then the dataTypeInfoKeyHint second. If
+     * neither hint is provided then they will be queried first so that the
+     * remainder of the element can be retrieved and reformed.
      *
-     * All of the id's requested must be of the same data type or an exception will be generated.
+     * All of the id's requested must be of the same data type or an exception
+     * will be generated.
      *
      * @param dataElementIds the data element ids to lookup
-     * @param dtiHint the {@link DataTypeInfo} for the point if known ( null if not known is okay )
-     * @param dataTypeInfoKeyHint the key for the DataTypeInfo if known ( null if not known is okay )
-     * @param ignoreMapGeometrySupport the ignore map data elements map geometry support ( don't get the extra MGS parts )
+     * @param dtiHint the {@link DataTypeInfo} for the point if known ( null if
+     *            not known is okay )
+     * @param dataTypeInfoKeyHint the key for the DataTypeInfo if known ( null
+     *            if not known is okay )
+     * @param ignoreMapGeometrySupport the ignore map data elements map geometry
+     *            support ( don't get the extra MGS parts )
      * @return the resulting data elements
-     * @throws DataElementLookupException if the dtiHint or dataTypeInfoKeyHint are the wrong type for any of the ids provided, or
-     *             if the types retrieved are of different data types, or if the data type cannot be determined, or if all the ids
-     *             cannot be retrieved.
+     * @throws DataElementLookupException if the dtiHint or dataTypeInfoKeyHint
+     *             are the wrong type for any of the ids provided, or if the
+     *             types retrieved are of different data types, or if the data
+     *             type cannot be determined, or if all the ids cannot be
+     *             retrieved.
      */
     private List<DataElement> retrieveDataElements(List<Long> dataElementIds, DataTypeInfo dtiHint, String dataTypeInfoKeyHint,
             boolean ignoreMapGeometrySupport)
