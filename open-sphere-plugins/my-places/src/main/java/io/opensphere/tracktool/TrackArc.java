@@ -288,13 +288,13 @@ public class TrackArc
                     fieldName = "Segment Duration: ";
                 }
                 String durationStr = String.format("%.3f " + segmentDuration.getShortLabel(true),
-                        segmentDuration.getMagnitude().doubleValue());
+                        Double.valueOf(segmentDuration.getMagnitude().doubleValue()));
                 lines.add(fieldName + durationStr);
             }
 
             if (myTrack.isShowVelocity())
             {
-                double velocity = Double.valueOf(
+                Double velocity = Double.valueOf(
                         Math.round(length.getDisplayMagnitude() / segmentDuration.getMagnitude().doubleValue() * PRECISION)
                                 / PRECISION);
                 String fieldName = "";
@@ -410,14 +410,14 @@ public class TrackArc
                     fieldName = "Total Duration: ";
                 }
                 String durationStr = String.format("%.3f " + totalDuration.getShortLabel(true),
-                        totalDuration.getMagnitude().doubleValue());
+                        Double.valueOf(totalDuration.getMagnitude().doubleValue()));
                 lines.add(fieldName + durationStr);
             }
 
             if (myTrack.isShowVelocity())
             {
                 double duration = totalDuration.getMagnitude().doubleValue();
-                double velocity = Double.valueOf(Math.round(length.getDisplayMagnitude() / duration * PRECISION) / PRECISION);
+                Double velocity = Double.valueOf(Math.round(length.getDisplayMagnitude() / duration * PRECISION) / PRECISION);
                 String fieldName = "";
                 if (myTrack.isShowFieldTitles())
                 {

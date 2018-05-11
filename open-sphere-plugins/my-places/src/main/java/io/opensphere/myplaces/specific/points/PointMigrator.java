@@ -83,7 +83,7 @@ public class PointMigrator implements MyPlacesMigrator
             Folder groupFolder = folder.createAndAddFolder();
             groupFolder.setName(group.getName());
             groupFolder.setId(UUID.randomUUID().toString());
-            groupFolder.setVisibility(true);
+            groupFolder.setVisibility(Boolean.TRUE);
 
             for (MapAnnotationPoint point : group.getPoints(false))
             {

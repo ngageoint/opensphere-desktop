@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LinearRing;
@@ -39,13 +39,14 @@ import io.opensphere.myplaces.constants.ImportExportHeader;
  */
 public class MyPlacesCsvExporter extends AbstractMyPlacesExporter
 {
-    /** The column headers for the CSV output.  One copy suffices. */
+    /** The column headers for the CSV output. One copy suffices. */
     private static final String CSV_HEADER = createCsvHeader();
 
     /**
-     * Create the column header String for CSV output.  The values of the
+     * Create the column header String for CSV output. The values of the
      * ImportExportHeader enum are shown in their natural order and will be
      * visited in the same order when a Placemark is expressed as CSV.
+     * 
      * @return see above
      */
     private static String createCsvHeader()
@@ -66,6 +67,7 @@ public class MyPlacesCsvExporter extends AbstractMyPlacesExporter
 
     /**
      * Convert a Placemark into a single row of CSV output.
+     * 
      * @param p a Placemark
      * @return CSV
      */
@@ -79,7 +81,7 @@ public class MyPlacesCsvExporter extends AbstractMyPlacesExporter
         Map<ImportExportHeader, String> meta = getMeta(p);
         StringBuilder buf = new StringBuilder();
         boolean first = true;
-        for (ImportExportHeader head :  ImportExportHeader.values())
+        for (ImportExportHeader head : ImportExportHeader.values())
         {
             if (!first)
             {
@@ -101,6 +103,7 @@ public class MyPlacesCsvExporter extends AbstractMyPlacesExporter
 
     /**
      * Come on, Arthur, get "meta" with me!
+     * 
      * @param p a Placemark
      * @return Placemark metadata as a map of enumerated column to value
      */
@@ -109,8 +112,8 @@ public class MyPlacesCsvExporter extends AbstractMyPlacesExporter
         // collect the relevant data and place it into a Map for easy access;
         // "extended data" is organized in unfortunate fashion typical of XML;
         // other fields accessible from Placemark that are also needed
-        Map<ImportExportHeader, String> meta = new TreeMap<>();
-        for (Data d :  p.getExtendedData().getData())
+        Map<ImportExportHeader, String> meta = new LinkedHashMap<>();
+        for (Data d : p.getExtendedData().getData())
         {
             ImportExportHeader h = ImportExportHeader.getByTitle(d.getName());
             if (h != null)
@@ -137,7 +140,7 @@ public class MyPlacesCsvExporter extends AbstractMyPlacesExporter
         }
 
         // include balloon fill and font colors from the Placemark
-        for (StyleSelector ss :  p.getStyleSelector())
+        for (StyleSelector ss : p.getStyleSelector())
         {
             Style sty = (Style)ss;
             meta.put(ImportExportHeader.BALLOON_COLOR, "0x" + sty.getIconStyle().getColor());
@@ -186,8 +189,7 @@ public class MyPlacesCsvExporter extends AbstractMyPlacesExporter
         else if (kmlGeom instanceof Polygon)
         {
             Polygon poly = (Polygon)kmlGeom;
-            LinearRing outer = f.createLinearRing(toJts(
-                    poly.getOuterBoundaryIs().getLinearRing().getCoordinates()));
+            LinearRing outer = f.createLinearRing(toJts(poly.getOuterBoundaryIs().getLinearRing().getCoordinates()));
             jtsGeom = f.createPolygon(outer, toJtsRings(poly.getInnerBoundaryIs()));
         }
         // Write to WKT, if possible
@@ -208,7 +210,7 @@ public class MyPlacesCsvExporter extends AbstractMyPlacesExporter
     {
         com.vividsolutions.jts.geom.Coordinate[] ret = new com.vividsolutions.jts.geom.Coordinate[kml.size()];
         int i = 0;
-        for (Coordinate k :  kml)
+        for (Coordinate k : kml)
         {
             ret[i++] = toJts(k);
         }
@@ -216,23 +218,26 @@ public class MyPlacesCsvExporter extends AbstractMyPlacesExporter
     }
 
     /**
-     * Converts a KML Coordinate to a JTS Coordinate.  How do you like that?
+     * Converts a KML Coordinate to a JTS Coordinate. How do you like that?
+     * 
      * @param k KML Coordinate
      * @return JTS Coordinate
      */
-    private static com.vividsolutions.jts.geom.Coordinate toJts (Coordinate k)
+    private static com.vividsolutions.jts.geom.Coordinate toJts(Coordinate k)
     {
         return new com.vividsolutions.jts.geom.Coordinate(k.getLongitude(), k.getLatitude(), k.getAltitude());
     }
 
     /**
-     * Convert a List of KML Boundary objects into a corresponding array of
-     * JTS LinearRings.  If the argument is null or empty, then this method
-     * returns null.
+     * Convert a List of KML Boundary objects into a corresponding array of JTS
+     * LinearRings. If the argument is null or empty, then this method returns
+     * null.
+     * 
      * @param bnds List of KML Boundary
      * @return array of JTS LinearRing
      */
-    private static LinearRing[] toJtsRings (List<Boundary> bnds) {
+    private static LinearRing[] toJtsRings(List<Boundary> bnds)
+    {
         if (bnds == null || bnds.isEmpty())
         {
             return null;
@@ -240,7 +245,7 @@ public class MyPlacesCsvExporter extends AbstractMyPlacesExporter
         GeometryFactory f = new GeometryFactory();
         LinearRing[] rings = new LinearRing[bnds.size()];
         int i = 0;
-        for (Boundary b :  bnds)
+        for (Boundary b : bnds)
         {
             rings[i++] = f.createLinearRing(toJts(b.getLinearRing().getCoordinates()));
         }

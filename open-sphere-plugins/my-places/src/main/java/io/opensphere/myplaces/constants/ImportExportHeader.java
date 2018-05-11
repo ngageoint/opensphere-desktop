@@ -1,6 +1,7 @@
 package io.opensphere.myplaces.constants;
 
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * An enumeration over the set of headers used in import / export operations for
@@ -214,11 +215,11 @@ public enum ImportExportHeader
     }
 
     /** Enum values indexed by the title field. */
-    private static TreeMap<String, ImportExportHeader> titleMap = new TreeMap<>();
+    private static Map<String, ImportExportHeader> titleMap = new LinkedHashMap<>();
 
     static
     {
-        for (ImportExportHeader h :  values())
+        for (ImportExportHeader h : values())
         {
             titleMap.put(h.getTitle(), h);
         }
@@ -243,12 +244,13 @@ public enum ImportExportHeader
     /**
      * Get the enum instance with the specified partial title (which may have
      * been truncated during export).
+     * 
      * @param t the title or some prefix thereof
      * @return the matching ImportExportHeader, if any, or null
      */
     public static ImportExportHeader getByPrefix(String t)
     {
-        for (ImportExportHeader h :  values())
+        for (ImportExportHeader h : values())
         {
             if (h.getTitle().startsWith(t))
             {

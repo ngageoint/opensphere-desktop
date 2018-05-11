@@ -10,10 +10,10 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
@@ -147,6 +147,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
     /**
      * Construct a DefaultMapAnnotationPoint from data contained in a row from
      * the CSV input.
+     *
      * @param row a row of CSV data values
      * @param fMap a Map of column headers to numerical indices
      * @return the derived construct
@@ -155,23 +156,23 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
     {
         DefaultMapAnnotationPoint pt = new DefaultMapAnnotationPoint(getPointRegistry().getUserDefaultPoint());
         DefaultMapAnnotationPointSettings ss = (DefaultMapAnnotationPointSettings)pt.getAnnoSettings();
-        doNonNull(b -> pt.setVisible(b, null), metaBool(ImportExportHeader.DOT_FLAG, row, fMap));
-        doNonNull(b -> ss.setAnnohide(b, null), metaBool(ImportExportHeader.BALLOON_FLAG, row, fMap));
-        doNonNull(b -> ss.setHeading(b, null), metaBool(ImportExportHeader.HEADING_FLAG, row, fMap));
-        doNonNull(b -> ss.setVelocity(b, null), metaBool(ImportExportHeader.VELOCITY_FLAG, row, fMap));
-        doNonNull(b -> ss.setDistance(b, null), metaBool(ImportExportHeader.DISTANCE_FLAG, row, fMap));
-        doNonNull(b -> ss.setAltitude(b, null), metaBool(ImportExportHeader.ALTITUDE_FLAG, row, fMap));
-        doNonNull(b -> ss.setTitle(b, null), metaBool(ImportExportHeader.TITLE_FLAG, row, fMap));
-        doNonNull(b -> ss.setFieldTitle(b, null), metaBool(ImportExportHeader.FIELD_TITLE_FLAG, row, fMap));
-        doNonNull(b -> ss.setDesc(b, null), metaBool(ImportExportHeader.DESCRIPTION_FLAG, row, fMap));
-        doNonNull(b -> ss.setDms(b, null), metaBool(ImportExportHeader.DMS_LAT_LON_FLAG, row, fMap));
-        doNonNull(b -> ss.setLatLon(b, null), metaBool(ImportExportHeader.DEC_LAT_LON_FLAG, row, fMap));
-        doNonNull(b -> ss.setMgrs(b, null), metaBool(ImportExportHeader.MGRS_FLAG, row, fMap));
-        doNonNull(b -> pt.setFilled(b, null), metaBool(ImportExportHeader.BALLOON_FILLED_FLAG, row, fMap));
+        doNonNull(b -> pt.setVisible(b.booleanValue(), null), metaBool(ImportExportHeader.DOT_FLAG, row, fMap));
+        doNonNull(b -> ss.setAnnohide(b.booleanValue(), null), metaBool(ImportExportHeader.BALLOON_FLAG, row, fMap));
+        doNonNull(b -> ss.setHeading(b.booleanValue(), null), metaBool(ImportExportHeader.HEADING_FLAG, row, fMap));
+        doNonNull(b -> ss.setVelocity(b.booleanValue(), null), metaBool(ImportExportHeader.VELOCITY_FLAG, row, fMap));
+        doNonNull(b -> ss.setDistance(b.booleanValue(), null), metaBool(ImportExportHeader.DISTANCE_FLAG, row, fMap));
+        doNonNull(b -> ss.setAltitude(b.booleanValue(), null), metaBool(ImportExportHeader.ALTITUDE_FLAG, row, fMap));
+        doNonNull(b -> ss.setTitle(b.booleanValue(), null), metaBool(ImportExportHeader.TITLE_FLAG, row, fMap));
+        doNonNull(b -> ss.setFieldTitle(b.booleanValue(), null), metaBool(ImportExportHeader.FIELD_TITLE_FLAG, row, fMap));
+        doNonNull(b -> ss.setDesc(b.booleanValue(), null), metaBool(ImportExportHeader.DESCRIPTION_FLAG, row, fMap));
+        doNonNull(b -> ss.setDms(b.booleanValue(), null), metaBool(ImportExportHeader.DMS_LAT_LON_FLAG, row, fMap));
+        doNonNull(b -> ss.setLatLon(b.booleanValue(), null), metaBool(ImportExportHeader.DEC_LAT_LON_FLAG, row, fMap));
+        doNonNull(b -> ss.setMgrs(b.booleanValue(), null), metaBool(ImportExportHeader.MGRS_FLAG, row, fMap));
+        doNonNull(b -> pt.setFilled(b.booleanValue(), null), metaBool(ImportExportHeader.BALLOON_FILLED_FLAG, row, fMap));
         doNonNull(b -> pt.setTitle(b, null), metaVal(ImportExportHeader.TITLE, row, fMap));
         doNonNull(b -> pt.setDescription(b, null), metaVal(ImportExportHeader.DESCRIPTION, row, fMap));
-        doNonNull(b -> pt.setxOffset(b, null), metaInt(ImportExportHeader.X_OFFSET, row, fMap));
-        doNonNull(b -> pt.setyOffset(b, null), metaInt(ImportExportHeader.Y_OFFSET, row, fMap));
+        doNonNull(b -> pt.setxOffset(b.intValue(), null), metaInt(ImportExportHeader.X_OFFSET, row, fMap));
+        doNonNull(b -> pt.setyOffset(b.intValue(), null), metaInt(ImportExportHeader.Y_OFFSET, row, fMap));
         doNonNull(b -> pt.setFontColor(b, null), parseColor(metaVal(ImportExportHeader.FONT_COLOR, row, fMap)));
         Color balloonColor = parseColor(metaVal(ImportExportHeader.BALLOON_COLOR, row, fMap));
         if (balloonColor != null)
@@ -180,9 +181,9 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
             pt.setColor(balloonColor, null);
         }
         doNonNull(b -> pt.setAssociatedViewName(b, null), metaVal(ImportExportHeader.ASSOCIATED_VIEW, row, fMap));
-        doNonNull(b -> pt.setLat(b, null), metaDbl(ImportExportHeader.LATITUDE, row, fMap));
-        doNonNull(b -> pt.setLon(b, null), metaDbl(ImportExportHeader.LONGITUDE, row, fMap));
-        doNonNull(b -> pt.setAltitude(b, null), metaDbl(ImportExportHeader.ALTITUDE, row, fMap));
+        doNonNull(b -> pt.setLat(b.doubleValue(), null), metaDbl(ImportExportHeader.LATITUDE, row, fMap));
+        doNonNull(b -> pt.setLon(b.doubleValue(), null), metaDbl(ImportExportHeader.LONGITUDE, row, fMap));
+        doNonNull(b -> pt.setAltitude(b.doubleValue(), null), metaDbl(ImportExportHeader.ALTITUDE, row, fMap));
 
         Date startDate = parseDate(metaVal(ImportExportHeader.START_TIME, row, fMap));
         Date endDate = parseDate(metaVal(ImportExportHeader.END_TIME, row, fMap));
@@ -203,14 +204,14 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         Integer fontStyle = metaInt(ImportExportHeader.FONT_STYLE, row, fMap);
         if (fontStyle == null)
         {
-            fontStyle = 0;
+            fontStyle = Integer.valueOf(0);
         }
         Integer fontSize = metaInt(ImportExportHeader.FONT_SIZE, row, fMap);
         if (fontSize == null)
         {
-            fontSize = 12;
+            fontSize = Integer.valueOf(12);
         }
-        pt.setFont(new Font(fontName, fontStyle, fontSize), this);
+        pt.setFont(new Font(fontName, fontStyle.intValue(), fontSize.intValue()), this);
 
         if (pt.getAnnoSettings().isMgrs())
         {
@@ -225,6 +226,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
     /**
      * Create a Folder and populate it with Placemarks derived from the CSV
      * dataset.
+     *
      * @param headers column headers for the CSV
      * @param data rows of values from the CSV
      * @param name Folder name
@@ -238,10 +240,10 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         }
         Folder f = new Folder();
         f.setName(name);
-        f.setVisibility(true);
+        f.setVisibility(Boolean.TRUE);
 
         Map<String, Integer> fMap = mapFields(headers);
-        for (String[] row :  data)
+        for (String[] row : data)
         {
             doNonNull(p -> f.addToFeature(p), getPlacemark(fMap, row));
         }
@@ -251,6 +253,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
 
     /**
      * Create a placemark from a row of values from the CSV input.
+     *
      * @param fMap a Map of column name to numerical index
      * @param row a row of input values
      * @return a Placemark
@@ -260,7 +263,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         Integer geomIndex = fMap.get(Constants.GEOM_KEY);
         if (geomIndex != null)
         {
-            Geometry geom = createGeometry(row[geomIndex]);
+            Geometry geom = createGeometry(row[geomIndex.intValue()]);
             String name = metaVal(ImportExportHeader.TITLE, row, fMap);
             String desc = metaVal(ImportExportHeader.DESCRIPTION, row, fMap);
             if (geom instanceof LineString)
@@ -283,14 +286,14 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
 
     /**
      * Construct a Placemark with a track-like geometry.
+     *
      * @param name name
      * @param geom geometry (a JTS LineString)
      * @return a Placemark
      */
     private Placemark trackMark(String name, LineString geom)
     {
-        Collection<LatLonAlt> points = JTSUtilities.convertToLatLonAlt(
-                geom.getCoordinates(), ReferenceLevel.TERRAIN);
+        Collection<LatLonAlt> points = JTSUtilities.convertToLatLonAlt(geom.getCoordinates(), ReferenceLevel.TERRAIN);
         List<TrackNode> nodes = new LinkedList<>();
         for (LatLonAlt point : points)
         {
@@ -301,6 +304,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
 
     /**
      * Construct a Placemark with a Polygon geometry.
+     *
      * @param name name
      * @param desc description
      * @param geom geometry (a JTS Polygon)
@@ -308,8 +312,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
      */
     private static Placemark polygonMark(String name, String desc, Polygon geom)
     {
-        Pair<List<LatLonAlt>, Collection<List<LatLonAlt>>> rings =
-                JTSUtilities.convertToLatLonAlt(geom, ReferenceLevel.TERRAIN);
+        Pair<List<LatLonAlt>, Collection<List<LatLonAlt>>> rings = JTSUtilities.convertToLatLonAlt(geom, ReferenceLevel.TERRAIN);
         Placemark p = RegionUtils.regionPlacemark(name, rings.getFirstObject(), rings.getSecondObject());
         p.setDescription(desc);
         return p;
@@ -317,16 +320,17 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
 
     /**
      * Construct a mapping of the column headers to their positions within the
-     * array.  The result can be used to find the named fields within each row.
+     * array. The result can be used to find the named fields within each row.
+     *
      * @param headers the array of column headers
      * @return the mapping of those headers to their numerical indices
      */
     private static Map<String, Integer> mapFields(String[] headers)
     {
-        Map<String, Integer> ret = new TreeMap<>();
+        Map<String, Integer> ret = new HashMap<>();
         for (int i = 0; i < headers.length; i++)
         {
-            ret.put(headers[i], i);
+            ret.put(headers[i], Integer.valueOf(i));
         }
         return ret;
     }
@@ -336,6 +340,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
      * literal, and 'A', 'B', 'G', and 'R' are the hexadecimal digits
      * respectively of "alpha", "blue", "green", and "red" components of the
      * encoded Color.
+     *
      * @param txt a String
      * @return a Color
      */
@@ -357,6 +362,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
 
     /**
      * Turn any non-null String into a Date according to the ISO8601 standard.
+     *
      * @param d the text-formatted date
      * @return the encoded Date, if any, or null
      */
@@ -371,16 +377,16 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         }
         catch (java.text.ParseException e)
         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error(e);
         }
         return null;
     }
 
     /**
      * Extract the raw String of a field contained in <i>row</i>, if it is
-     * present.  This is sufficient for String-valued fields, but for others
-     * some additional processing may be necessary before use.
+     * present. This is sufficient for String-valued fields, but for others some
+     * additional processing may be necessary before use.
+     *
      * @param h the enumerated field name
      * @param row the row of data
      * @param fieldMap the mapping of field names to position within <i>row</i>
@@ -393,7 +399,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         {
             return null;
         }
-        String str = row[index];
+        String str = row[index.intValue()];
         if (str == null || str.trim().isEmpty())
         {
             return null;
@@ -404,6 +410,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
     /**
      * Extract a field from the <i>row</i> and, if it is present, convert it to
      * an Integer value.
+     *
      * @param h the enumerated field name
      * @param row the row of data
      * @param fieldMap the mapping of field names to position within <i>row</i>
@@ -416,12 +423,13 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         {
             return null;
         }
-        return Integer.parseInt(str);
+        return Integer.valueOf(str);
     }
 
     /**
      * Extract a field from the <i>row</i> and, if it is present, convert it to
      * a Double value.
+     *
      * @param h the enumerated field name
      * @param row the row of data
      * @param fieldMap the mapping of field names to position within <i>row</i>
@@ -434,12 +442,13 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         {
             return null;
         }
-        return Double.parseDouble(str);
+        return Double.valueOf(str);
     }
 
     /**
      * Extract a field from the <i>row</i> and, if it is present, convert it to
      * a Boolean value.
+     *
      * @param h the enumerated field name
      * @param row the row of data
      * @param fieldMap the mapping of field names to position within <i>row</i>
@@ -452,13 +461,14 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         {
             return null;
         }
-        return "true".equals(val);
+        return Boolean.valueOf(val);
     }
 
     /**
      * A generic means of calling a function that short-circuits on a null
-     * argument.  This mechanism prevents breakage when the underlying
+     * argument. This mechanism prevents breakage when the underlying
      * implementation may not be null-tolerant.
+     *
      * @param f a function to call
      * @param v an argument for <i>f</i>, if it is not null
      */
@@ -472,14 +482,14 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
 
     /**
      * Create a QuotingBufferedReader (q.v.) for to read the specified File.
+     *
      * @param f the input File
      * @return the reader
      * @throws FileNotFoundException if the file is not found, don't you know
      */
     private static QuotingBufferedReader getInput(File f) throws FileNotFoundException
     {
-        return new QuotingBufferedReader(
-                new InputStreamReader(new FileInputStream(f), StringUtilities.DEFAULT_CHARSET),
+        return new QuotingBufferedReader(new InputStreamReader(new FileInputStream(f), StringUtilities.DEFAULT_CHARSET),
                 new char[] { QUOTE }, null);
     }
 }
