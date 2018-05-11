@@ -287,17 +287,18 @@ public class TypeMapper
                         + " in property descriptor [" + desc + "]");
             }
 
+            final String columnNamePrefix = getColumnNamePrefix(colType);
             if (TimeSpan.class.isAssignableFrom(colType))
             {
                 final String type = getSqlType(Long.class);
-                final StringBuilder sb = new StringBuilder().append(columnPrefix).append('_')
-                        .append(getColumnNamePrefix(Long.class)).append(arrayColumnIndex);
+                final StringBuilder sb = new StringBuilder().append(columnPrefix).append('_').append(columnNamePrefix)
+                        .append(arrayColumnIndex);
                 result.put(sb.toString() + "_START", type);
                 result.put(sb.toString() + "_END", type);
             }
             else
             {
-                final StringBuilder sb = new StringBuilder().append(columnPrefix).append('_').append(getColumnNamePrefix(colType))
+                final StringBuilder sb = new StringBuilder().append(columnPrefix).append('_').append(columnNamePrefix)
                         .append(arrayColumnIndex);
                 result.put(sb.toString(), getSqlType(colType));
             }
