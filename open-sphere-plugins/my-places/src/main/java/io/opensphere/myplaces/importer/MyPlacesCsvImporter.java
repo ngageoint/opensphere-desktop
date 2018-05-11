@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -156,23 +156,23 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
     {
         DefaultMapAnnotationPoint pt = new DefaultMapAnnotationPoint(getPointRegistry().getUserDefaultPoint());
         DefaultMapAnnotationPointSettings ss = (DefaultMapAnnotationPointSettings)pt.getAnnoSettings();
-        doNonNull(b -> pt.setVisible(b, null), metaBool(ImportExportHeader.DOT_FLAG, row, fMap));
-        doNonNull(b -> ss.setAnnohide(b, null), metaBool(ImportExportHeader.BALLOON_FLAG, row, fMap));
-        doNonNull(b -> ss.setHeading(b, null), metaBool(ImportExportHeader.HEADING_FLAG, row, fMap));
-        doNonNull(b -> ss.setVelocity(b, null), metaBool(ImportExportHeader.VELOCITY_FLAG, row, fMap));
-        doNonNull(b -> ss.setDistance(b, null), metaBool(ImportExportHeader.DISTANCE_FLAG, row, fMap));
-        doNonNull(b -> ss.setAltitude(b, null), metaBool(ImportExportHeader.ALTITUDE_FLAG, row, fMap));
-        doNonNull(b -> ss.setTitle(b, null), metaBool(ImportExportHeader.TITLE_FLAG, row, fMap));
-        doNonNull(b -> ss.setFieldTitle(b, null), metaBool(ImportExportHeader.FIELD_TITLE_FLAG, row, fMap));
-        doNonNull(b -> ss.setDesc(b, null), metaBool(ImportExportHeader.DESCRIPTION_FLAG, row, fMap));
-        doNonNull(b -> ss.setDms(b, null), metaBool(ImportExportHeader.DMS_LAT_LON_FLAG, row, fMap));
-        doNonNull(b -> ss.setLatLon(b, null), metaBool(ImportExportHeader.DEC_LAT_LON_FLAG, row, fMap));
-        doNonNull(b -> ss.setMgrs(b, null), metaBool(ImportExportHeader.MGRS_FLAG, row, fMap));
-        doNonNull(b -> pt.setFilled(b, null), metaBool(ImportExportHeader.BALLOON_FILLED_FLAG, row, fMap));
+        doNonNull(b -> pt.setVisible(b.booleanValue(), null), metaBool(ImportExportHeader.DOT_FLAG, row, fMap));
+        doNonNull(b -> ss.setAnnohide(b.booleanValue(), null), metaBool(ImportExportHeader.BALLOON_FLAG, row, fMap));
+        doNonNull(b -> ss.setHeading(b.booleanValue(), null), metaBool(ImportExportHeader.HEADING_FLAG, row, fMap));
+        doNonNull(b -> ss.setVelocity(b.booleanValue(), null), metaBool(ImportExportHeader.VELOCITY_FLAG, row, fMap));
+        doNonNull(b -> ss.setDistance(b.booleanValue(), null), metaBool(ImportExportHeader.DISTANCE_FLAG, row, fMap));
+        doNonNull(b -> ss.setAltitude(b.booleanValue(), null), metaBool(ImportExportHeader.ALTITUDE_FLAG, row, fMap));
+        doNonNull(b -> ss.setTitle(b.booleanValue(), null), metaBool(ImportExportHeader.TITLE_FLAG, row, fMap));
+        doNonNull(b -> ss.setFieldTitle(b.booleanValue(), null), metaBool(ImportExportHeader.FIELD_TITLE_FLAG, row, fMap));
+        doNonNull(b -> ss.setDesc(b.booleanValue(), null), metaBool(ImportExportHeader.DESCRIPTION_FLAG, row, fMap));
+        doNonNull(b -> ss.setDms(b.booleanValue(), null), metaBool(ImportExportHeader.DMS_LAT_LON_FLAG, row, fMap));
+        doNonNull(b -> ss.setLatLon(b.booleanValue(), null), metaBool(ImportExportHeader.DEC_LAT_LON_FLAG, row, fMap));
+        doNonNull(b -> ss.setMgrs(b.booleanValue(), null), metaBool(ImportExportHeader.MGRS_FLAG, row, fMap));
+        doNonNull(b -> pt.setFilled(b.booleanValue(), null), metaBool(ImportExportHeader.BALLOON_FILLED_FLAG, row, fMap));
         doNonNull(b -> pt.setTitle(b, null), metaVal(ImportExportHeader.TITLE, row, fMap));
         doNonNull(b -> pt.setDescription(b, null), metaVal(ImportExportHeader.DESCRIPTION, row, fMap));
-        doNonNull(b -> pt.setxOffset(b, null), metaInt(ImportExportHeader.X_OFFSET, row, fMap));
-        doNonNull(b -> pt.setyOffset(b, null), metaInt(ImportExportHeader.Y_OFFSET, row, fMap));
+        doNonNull(b -> pt.setxOffset(b.intValue(), null), metaInt(ImportExportHeader.X_OFFSET, row, fMap));
+        doNonNull(b -> pt.setyOffset(b.intValue(), null), metaInt(ImportExportHeader.Y_OFFSET, row, fMap));
         doNonNull(b -> pt.setFontColor(b, null), parseColor(metaVal(ImportExportHeader.FONT_COLOR, row, fMap)));
         Color balloonColor = parseColor(metaVal(ImportExportHeader.BALLOON_COLOR, row, fMap));
         if (balloonColor != null)
@@ -181,9 +181,9 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
             pt.setColor(balloonColor, null);
         }
         doNonNull(b -> pt.setAssociatedViewName(b, null), metaVal(ImportExportHeader.ASSOCIATED_VIEW, row, fMap));
-        doNonNull(b -> pt.setLat(b, null), metaDbl(ImportExportHeader.LATITUDE, row, fMap));
-        doNonNull(b -> pt.setLon(b, null), metaDbl(ImportExportHeader.LONGITUDE, row, fMap));
-        doNonNull(b -> pt.setAltitude(b, null), metaDbl(ImportExportHeader.ALTITUDE, row, fMap));
+        doNonNull(b -> pt.setLat(b.doubleValue(), null), metaDbl(ImportExportHeader.LATITUDE, row, fMap));
+        doNonNull(b -> pt.setLon(b.doubleValue(), null), metaDbl(ImportExportHeader.LONGITUDE, row, fMap));
+        doNonNull(b -> pt.setAltitude(b.doubleValue(), null), metaDbl(ImportExportHeader.ALTITUDE, row, fMap));
 
         Date startDate = parseDate(metaVal(ImportExportHeader.START_TIME, row, fMap));
         Date endDate = parseDate(metaVal(ImportExportHeader.END_TIME, row, fMap));
@@ -204,14 +204,14 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         Integer fontStyle = metaInt(ImportExportHeader.FONT_STYLE, row, fMap);
         if (fontStyle == null)
         {
-            fontStyle = 0;
+            fontStyle = Integer.valueOf(0);
         }
         Integer fontSize = metaInt(ImportExportHeader.FONT_SIZE, row, fMap);
         if (fontSize == null)
         {
-            fontSize = 12;
+            fontSize = Integer.valueOf(12);
         }
-        pt.setFont(new Font(fontName, fontStyle, fontSize), this);
+        pt.setFont(new Font(fontName, fontStyle.intValue(), fontSize.intValue()), this);
 
         if (pt.getAnnoSettings().isMgrs())
         {
@@ -240,7 +240,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         }
         Folder f = new Folder();
         f.setName(name);
-        f.setVisibility(true);
+        f.setVisibility(Boolean.TRUE);
 
         Map<String, Integer> fMap = mapFields(headers);
         for (String[] row : data)
@@ -263,7 +263,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         Integer geomIndex = fMap.get(Constants.GEOM_KEY);
         if (geomIndex != null)
         {
-            Geometry geom = createGeometry(row[geomIndex]);
+            Geometry geom = createGeometry(row[geomIndex.intValue()]);
             String name = metaVal(ImportExportHeader.TITLE, row, fMap);
             String desc = metaVal(ImportExportHeader.DESCRIPTION, row, fMap);
             if (geom instanceof LineString)
@@ -327,10 +327,10 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
      */
     private static Map<String, Integer> mapFields(String[] headers)
     {
-        Map<String, Integer> ret = new LinkedHashMap<>();
+        Map<String, Integer> ret = new HashMap<>();
         for (int i = 0; i < headers.length; i++)
         {
-            ret.put(headers[i], i);
+            ret.put(headers[i], Integer.valueOf(i));
         }
         return ret;
     }
@@ -377,8 +377,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         }
         catch (java.text.ParseException e)
         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error(e);
         }
         return null;
     }
@@ -400,7 +399,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         {
             return null;
         }
-        String str = row[index];
+        String str = row[index.intValue()];
         if (str == null || str.trim().isEmpty())
         {
             return null;
@@ -424,7 +423,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         {
             return null;
         }
-        return Integer.parseInt(str);
+        return Integer.valueOf(str);
     }
 
     /**
@@ -443,7 +442,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         {
             return null;
         }
-        return Double.parseDouble(str);
+        return Double.valueOf(str);
     }
 
     /**
@@ -462,7 +461,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         {
             return null;
         }
-        return "true".equals(val);
+        return Boolean.valueOf(val);
     }
 
     /**
