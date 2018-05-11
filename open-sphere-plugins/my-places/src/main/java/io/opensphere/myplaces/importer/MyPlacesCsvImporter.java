@@ -10,10 +10,10 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
@@ -147,6 +147,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
     /**
      * Construct a DefaultMapAnnotationPoint from data contained in a row from
      * the CSV input.
+     *
      * @param row a row of CSV data values
      * @param fMap a Map of column headers to numerical indices
      * @return the derived construct
@@ -225,6 +226,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
     /**
      * Create a Folder and populate it with Placemarks derived from the CSV
      * dataset.
+     *
      * @param headers column headers for the CSV
      * @param data rows of values from the CSV
      * @param name Folder name
@@ -241,7 +243,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         f.setVisibility(true);
 
         Map<String, Integer> fMap = mapFields(headers);
-        for (String[] row :  data)
+        for (String[] row : data)
         {
             doNonNull(p -> f.addToFeature(p), getPlacemark(fMap, row));
         }
@@ -251,6 +253,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
 
     /**
      * Create a placemark from a row of values from the CSV input.
+     *
      * @param fMap a Map of column name to numerical index
      * @param row a row of input values
      * @return a Placemark
@@ -283,14 +286,14 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
 
     /**
      * Construct a Placemark with a track-like geometry.
+     *
      * @param name name
      * @param geom geometry (a JTS LineString)
      * @return a Placemark
      */
     private Placemark trackMark(String name, LineString geom)
     {
-        Collection<LatLonAlt> points = JTSUtilities.convertToLatLonAlt(
-                geom.getCoordinates(), ReferenceLevel.TERRAIN);
+        Collection<LatLonAlt> points = JTSUtilities.convertToLatLonAlt(geom.getCoordinates(), ReferenceLevel.TERRAIN);
         List<TrackNode> nodes = new LinkedList<>();
         for (LatLonAlt point : points)
         {
@@ -301,6 +304,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
 
     /**
      * Construct a Placemark with a Polygon geometry.
+     *
      * @param name name
      * @param desc description
      * @param geom geometry (a JTS Polygon)
@@ -308,8 +312,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
      */
     private static Placemark polygonMark(String name, String desc, Polygon geom)
     {
-        Pair<List<LatLonAlt>, Collection<List<LatLonAlt>>> rings =
-                JTSUtilities.convertToLatLonAlt(geom, ReferenceLevel.TERRAIN);
+        Pair<List<LatLonAlt>, Collection<List<LatLonAlt>>> rings = JTSUtilities.convertToLatLonAlt(geom, ReferenceLevel.TERRAIN);
         Placemark p = RegionUtils.regionPlacemark(name, rings.getFirstObject(), rings.getSecondObject());
         p.setDescription(desc);
         return p;
@@ -317,13 +320,14 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
 
     /**
      * Construct a mapping of the column headers to their positions within the
-     * array.  The result can be used to find the named fields within each row.
+     * array. The result can be used to find the named fields within each row.
+     *
      * @param headers the array of column headers
      * @return the mapping of those headers to their numerical indices
      */
     private static Map<String, Integer> mapFields(String[] headers)
     {
-        Map<String, Integer> ret = new TreeMap<>();
+        Map<String, Integer> ret = new LinkedHashMap<>();
         for (int i = 0; i < headers.length; i++)
         {
             ret.put(headers[i], i);
@@ -336,6 +340,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
      * literal, and 'A', 'B', 'G', and 'R' are the hexadecimal digits
      * respectively of "alpha", "blue", "green", and "red" components of the
      * encoded Color.
+     *
      * @param txt a String
      * @return a Color
      */
@@ -357,6 +362,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
 
     /**
      * Turn any non-null String into a Date according to the ISO8601 standard.
+     *
      * @param d the text-formatted date
      * @return the encoded Date, if any, or null
      */
@@ -379,8 +385,9 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
 
     /**
      * Extract the raw String of a field contained in <i>row</i>, if it is
-     * present.  This is sufficient for String-valued fields, but for others
-     * some additional processing may be necessary before use.
+     * present. This is sufficient for String-valued fields, but for others some
+     * additional processing may be necessary before use.
+     *
      * @param h the enumerated field name
      * @param row the row of data
      * @param fieldMap the mapping of field names to position within <i>row</i>
@@ -404,6 +411,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
     /**
      * Extract a field from the <i>row</i> and, if it is present, convert it to
      * an Integer value.
+     *
      * @param h the enumerated field name
      * @param row the row of data
      * @param fieldMap the mapping of field names to position within <i>row</i>
@@ -422,6 +430,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
     /**
      * Extract a field from the <i>row</i> and, if it is present, convert it to
      * a Double value.
+     *
      * @param h the enumerated field name
      * @param row the row of data
      * @param fieldMap the mapping of field names to position within <i>row</i>
@@ -440,6 +449,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
     /**
      * Extract a field from the <i>row</i> and, if it is present, convert it to
      * a Boolean value.
+     *
      * @param h the enumerated field name
      * @param row the row of data
      * @param fieldMap the mapping of field names to position within <i>row</i>
@@ -457,8 +467,9 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
 
     /**
      * A generic means of calling a function that short-circuits on a null
-     * argument.  This mechanism prevents breakage when the underlying
+     * argument. This mechanism prevents breakage when the underlying
      * implementation may not be null-tolerant.
+     *
      * @param f a function to call
      * @param v an argument for <i>f</i>, if it is not null
      */
@@ -472,14 +483,14 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
 
     /**
      * Create a QuotingBufferedReader (q.v.) for to read the specified File.
+     *
      * @param f the input File
      * @return the reader
      * @throws FileNotFoundException if the file is not found, don't you know
      */
     private static QuotingBufferedReader getInput(File f) throws FileNotFoundException
     {
-        return new QuotingBufferedReader(
-                new InputStreamReader(new FileInputStream(f), StringUtilities.DEFAULT_CHARSET),
+        return new QuotingBufferedReader(new InputStreamReader(new FileInputStream(f), StringUtilities.DEFAULT_CHARSET),
                 new char[] { QUOTE }, null);
     }
 }
