@@ -121,7 +121,6 @@ public class SimpleFeatureActionRow extends ListCell<SimpleFeatureAction> implem
         myActions = actions;
         myGroup = group;
         layer = type;
-//        myAutoComplete = new AutoCompleteComboBoxListener<>(myField);
         parentDialog = dialog;
 
         NewAutoCompleteComboBoxListener listener = new NewAutoCompleteComboBoxListener();

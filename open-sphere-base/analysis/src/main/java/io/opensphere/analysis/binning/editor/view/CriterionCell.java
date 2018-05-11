@@ -78,7 +78,7 @@ public class CriterionCell extends ListCell<BinCriteriaElement> implements Crite
 
         myBox.setAlignment(Pos.CENTER_LEFT);
         myBox.getChildren().addAll(myField, myBinType, myPlusMinus, myTolerance, FXUtilities.newHSpacer(), myRemoveButton);
-//        myAutoComplete = new AutoCompleteComboBoxListener<>(myField);
+
         NewAutoCompleteComboBoxListener listener = new NewAutoCompleteComboBoxListener();
         listener.setupComboBox(myField);
     }

@@ -278,7 +278,7 @@ public final class ColumnMappingPane extends GridPane implements Editor
     private ComboBox<String> buildComboBox(String sourceColumn, List<String> keyNames)
     {
         ComboBox<String> columnCombo = new ComboBox<>(FXCollections.observableArrayList(keyNames));
-//        new AutoCompleteComboBoxListener<>(columnCombo);
+
         NewAutoCompleteComboBoxListener listener = new NewAutoCompleteComboBoxListener();
         listener.setupComboBox(columnCombo);
 

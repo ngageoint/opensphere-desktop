@@ -144,7 +144,6 @@ public class WpsStringInputProvider implements WpsInputControlProvider
         returnValue.setValidator(new BasicValidator(choiceBox.getItems()::contains));
         choiceBox.addEventHandler(ValidationEvent.ANY, event -> DecorationUtils.update(choiceBox, event.getEventType()));
 
-//        new AutoCompleteComboBoxListener<>(choiceBox);
         NewAutoCompleteComboBoxListener listener = new NewAutoCompleteComboBoxListener();
         listener.setupComboBox(choiceBox);
 

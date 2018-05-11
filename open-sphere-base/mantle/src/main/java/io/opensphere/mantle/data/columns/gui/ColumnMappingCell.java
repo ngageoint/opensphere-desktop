@@ -78,10 +78,11 @@ class ColumnMappingCell extends ListCell<ColumnMapping>
         layerSel.setTooltip(new Tooltip("The layer to " + Constants.MAP_VERB));
         columnSel.setTooltip(new Tooltip("The column to " + Constants.MAP_VERB));
 
-        // new AutoCompleteComboBoxListener<>(layerSel);
-//        new AutoCompleteComboBoxListener<>(columnSel);
         NewAutoCompleteComboBoxListener listener = new NewAutoCompleteComboBoxListener();
         listener.setupComboBox(columnSel);
+
+        NewAutoCompleteComboBoxListener listener2 = new NewAutoCompleteComboBoxListener();
+        listener2.setupComboBox(layerSel);
 
         layerSel.setPrefWidth(262);
         columnSel.setPrefWidth(262);
