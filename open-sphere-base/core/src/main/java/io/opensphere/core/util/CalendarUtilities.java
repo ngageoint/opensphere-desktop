@@ -109,6 +109,19 @@ public final class CalendarUtilities
     }
 
     /**
+     * Converts the given milliseconds to a {@link Calendar}.
+     *
+     * @param millis the time in UTC milliseconds from the epoch.
+     * @return the calendar
+     */
+    public static Calendar toCalendar(long millis)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(millis);
+        return cal;
+    }
+
+    /**
      * Private constructor.
      */
     private CalendarUtilities()
