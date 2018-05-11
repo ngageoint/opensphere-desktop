@@ -92,7 +92,7 @@ public class XrayTechnicianTest extends AbstractDivider<GeographicPosition>
 
         for (TileGeometry geom : expected)
         {
-            assertEquals(25, geom.getRenderProperties().getOpacity(), 0f);
+            assertEquals(26, geom.getRenderProperties().getOpacity(), 0f);
             assertFalse(geom.getRenderProperties().isObscurant());
         }
 
@@ -120,7 +120,7 @@ public class XrayTechnicianTest extends AbstractDivider<GeographicPosition>
 
         for (TileGeometry geom : expected)
         {
-            assertEquals(25, geom.getRenderProperties().getOpacity(), 0f);
+            assertEquals(26, geom.getRenderProperties().getOpacity(), 0f);
             assertFalse(geom.getRenderProperties().isObscurant());
         }
 
@@ -198,7 +198,7 @@ public class XrayTechnicianTest extends AbstractDivider<GeographicPosition>
 
         for (TileGeometry geom : expected)
         {
-            assertEquals(25, geom.getRenderProperties().getOpacity(), 0f);
+            assertEquals(26, geom.getRenderProperties().getOpacity(), 0f);
             assertFalse(geom.getRenderProperties().isObscurant());
         }
 
@@ -276,7 +276,7 @@ public class XrayTechnicianTest extends AbstractDivider<GeographicPosition>
 
         for (TileGeometry geom : expected)
         {
-            assertEquals(25, geom.getRenderProperties().getOpacity(), 0f);
+            assertEquals(26, geom.getRenderProperties().getOpacity(), 0f);
             assertFalse(geom.getRenderProperties().isObscurant());
         }
 

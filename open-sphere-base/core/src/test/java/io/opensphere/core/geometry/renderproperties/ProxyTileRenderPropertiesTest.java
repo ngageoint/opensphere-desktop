@@ -35,10 +35,10 @@ public class ProxyTileRenderPropertiesTest
         assertTrue(proxyProps.isDrawable());
         assertTrue(proxyProps.isPickable());
 
-        assertEquals(229f, proxyProps.getOpacity(), 0f);
+        assertEquals(230f, proxyProps.getOpacity(), 0f);
         proxyProps.opacitizeColor(.5f);
         assertEquals(128f, proxyProps.getOpacity(), 0f);
-        assertEquals(229f, props.getOpacity(), 0f);
+        assertEquals(230f, props.getOpacity(), 0f);
 
         support.verifyAll();
     }
@@ -256,10 +256,10 @@ public class ProxyTileRenderPropertiesTest
         support.replayAll();
 
         ProxyTileRenderProperties proxyProps = new ProxyTileRenderProperties(props);
-        assertEquals(229f, proxyProps.getOpacity(), 0f);
+        assertEquals(230f, proxyProps.getOpacity(), 0f);
         proxyProps.setOpacity(.5f);
-        assertEquals(127f, proxyProps.getOpacity(), 0f);
-        assertEquals(229f, props.getOpacity(), 0f);
+        assertEquals(128f, proxyProps.getOpacity(), 0f);
+        assertEquals(230f, props.getOpacity(), 0f);
 
         support.verifyAll();
     }

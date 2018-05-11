@@ -50,7 +50,7 @@ public class TileGeometryTest
 
         TileRenderProperties individual = geometry.getRenderProperties();
         assertTrue(individual instanceof ProxyTileRenderProperties);
-        assertEquals(127f, individual.getOpacity(), 0f);
+        assertEquals(128f, individual.getOpacity(), 0f);
         assertEquals(255f, props.getOpacity(), 0f);
 
         geometry.clearIndividualRenderProperties();
