@@ -78,9 +78,11 @@ public abstract class AbstractDataElementExporter extends AbstractExporter
      */
     protected boolean acceptSize(int size)
     {
-        return size <= 20 || JOptionPane.OK_OPTION == EventQueueUtilities.happyOnEdt(() -> Integer.valueOf(
-                JOptionPane.showConfirmDialog(getToolbox().getUIRegistry().getMainFrameProvider().get(),
-                        "Create " + size + " My Places?", "Confirm Large Copy", JOptionPane.OK_CANCEL_OPTION)));
+        return size <= 20 || JOptionPane.OK_OPTION == EventQueueUtilities
+                .happyOnEdt(() -> Integer
+                        .valueOf(JOptionPane.showConfirmDialog(getToolbox().getUIRegistry().getMainFrameProvider().get(),
+                                "Create " + size + " My Places?", "Confirm Large Copy", JOptionPane.OK_CANCEL_OPTION)))
+                .intValue();
     }
 
     /**

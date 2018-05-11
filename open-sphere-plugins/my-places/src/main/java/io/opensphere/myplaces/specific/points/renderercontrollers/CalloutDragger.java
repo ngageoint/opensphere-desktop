@@ -67,7 +67,7 @@ public class CalloutDragger implements CalloutDragListener
     @Override
     public void callOutDragged(Callout callout, int xOffset, int yOffset)
     {
-        Placemark placemark = myCalloutsToPlacemarks.get(callout.getId());
+        Placemark placemark = myCalloutsToPlacemarks.get(Long.valueOf(callout.getId()));
         if (placemark != null)
         {
             ExtendedData extendedData = placemark.getExtendedData();

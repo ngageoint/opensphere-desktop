@@ -348,7 +348,7 @@ public final class PlacemarkUtils
         }
 
         polygonStyle.setColor(ColorUtilities.convertToHexString(color, 3, 2, 1, 0));
-        polygonStyle.setOutline(true);
+        polygonStyle.setOutline(Boolean.TRUE);
 
         return style;
     }

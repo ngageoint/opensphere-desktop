@@ -70,8 +70,8 @@ public final class RegionUtils
                             ZOrderRenderProperties.TOP_Z - 1000, true, true, true);
                     fillColorProps.setColor(fillColor);
                     props = new DefaultPolygonRenderProperties(ZOrderRenderProperties.TOP_Z - 1000, true, true, fillColorProps);
-                    polyStyle.setFill(
-                            ExtendedDataUtils.getBoolean(placemark.getExtendedData(), Constants.IS_POLYGON_FILLED_ID, false));
+                    polyStyle.setFill(Boolean.valueOf(
+                            ExtendedDataUtils.getBoolean(placemark.getExtendedData(), Constants.IS_POLYGON_FILLED_ID, false)));
                 }
 
                 IconStyle iconStyle = style.getIconStyle();

@@ -145,7 +145,7 @@ public class TrackDataElementsController implements TrackRegistryListener
         int index = 0;
         for (Long id : ids)
         {
-            featureIds[index] = id;
+            featureIds[index] = id.longValue();
             index++;
         }
 
@@ -171,7 +171,7 @@ public class TrackDataElementsController implements TrackRegistryListener
         List<Long> dataElementIds = new ArrayList<>();
         for (long id : ids)
         {
-            dataElementIds.add(id);
+            dataElementIds.add(Long.valueOf(id));
         }
 
         if (!myDataElementIds.containsKey(key))
@@ -321,7 +321,7 @@ public class TrackDataElementsController implements TrackRegistryListener
         provider.setValue("Start MGRS", converter.createString(utmCoords));
         if (startPosition.getAltitude() != null)
         {
-            provider.setValue("Start Alt", startPosition.getAltitude().getMeters());
+            provider.setValue("Start Alt", Double.valueOf(startPosition.getAltitude().getMeters()));
         }
 
         provider.setValue("End Lat", Double.valueOf(Math.round(endPosition.getLatD() * precision) / precision));
@@ -332,7 +332,7 @@ public class TrackDataElementsController implements TrackRegistryListener
         provider.setValue("End MGRS", converter.createString(utmCoords));
         if (endPosition.getAltitude() != null)
         {
-            provider.setValue("End Alt", endPosition.getAltitude().getMeters());
+            provider.setValue("End Alt", Double.valueOf(endPosition.getAltitude().getMeters()));
         }
 
         double heading = GeographicBody3D.greatCircleAzimuthD(startPosition, endPosition);
