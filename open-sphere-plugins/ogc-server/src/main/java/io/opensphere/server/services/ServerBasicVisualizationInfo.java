@@ -2,6 +2,7 @@ package io.opensphere.server.services;
 
 import java.awt.Color;
 
+import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.LoadsTo;
 import io.opensphere.mantle.data.impl.DefaultBasicVisualizationInfo;
 
@@ -31,7 +32,7 @@ public class ServerBasicVisualizationInfo extends DefaultBasicVisualizationInfo
     @Override
     public void setDefaultTypeColor(Color c)
     {
-        if (getTypeColor() == null)
+        if (EqualsHelper.equalsAny(getTypeColor(), null, DEFAULT_DEFAULT_COLOR))
         {
             super.setTypeColor(c, this);
         }
