@@ -130,7 +130,7 @@ public final class EqualsHelper
      */
     public static boolean equalsAny(Object o, Object o1, Object o2)
     {
-        return o1.equals(o) || o2.equals(o);
+        return Objects.equals(o, o1) || Objects.equals(o, o2);
     }
 
     /** Disallow instantiation. */
