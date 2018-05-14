@@ -250,7 +250,7 @@ public class TypeMapper
             {
                 columnNamesToTypes.putAll(getColumnsForPropertyArrayDescriptor(base, (PropertyArrayDescriptor)desc));
             }
-            else if (desc.getType().equals(TimeSpan.class))
+            else if (TimeSpan.class.isAssignableFrom(desc.getType()))
             {
                 final String type = getSqlType(Long.class);
                 columnNamesToTypes.put(base + "_START", type);
@@ -286,10 +286,22 @@ public class TypeMapper
                 throw new IllegalArgumentException("Column type is null for active column index " + arrayColumnIndex
                         + " in property descriptor [" + desc + "]");
             }
-            final String arrayColumnPrefix = getColumnNamePrefix(colType);
-            final StringBuilder sb = new StringBuilder().append(columnPrefix).append('_').append(arrayColumnPrefix)
-                    .append(arrayColumnIndex);
-            result.put(sb.toString(), getSqlType(colType));
+
+            final String columnNamePrefix = getColumnNamePrefix(colType);
+            if (TimeSpan.class.isAssignableFrom(colType))
+            {
+                final String type = getSqlType(Long.class);
+                final StringBuilder sb = new StringBuilder().append(columnPrefix).append('_').append(columnNamePrefix)
+                        .append(arrayColumnIndex);
+                result.put(sb.toString() + "_START", type);
+                result.put(sb.toString() + "_END", type);
+            }
+            else
+            {
+                final StringBuilder sb = new StringBuilder().append(columnPrefix).append('_').append(columnNamePrefix)
+                        .append(arrayColumnIndex);
+                result.put(sb.toString(), getSqlType(colType));
+            }
         }
         return result;
     }
