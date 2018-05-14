@@ -43,6 +43,9 @@ public class DefaultBasicVisualizationInfo implements BasicVisualizationInfo
     /** The Constant TIMELINE_ONLY. */
     public static final Set<LoadsTo> LOADS_TO_TIMELINE_ONLY;
 
+    /** The default default color. */
+    public static final Color DEFAULT_DEFAULT_COLOR = Color.WHITE;
+
     /** The loads to. */
     private final ObservableValue<LoadsTo> myLoadsTo = new StrongObservableValue<>();
 
@@ -51,7 +54,7 @@ public class DefaultBasicVisualizationInfo implements BasicVisualizationInfo
     private final Set<LoadsTo> mySupportedLoadsToTypes;
 
     /** The default type color. */
-    private volatile Color myDefaultTypeColor = Color.white;
+    private volatile Color myDefaultTypeColor = DEFAULT_DEFAULT_COLOR;
 
     /** The type color. */
     private final ObservableValue<Color> myTypeColor = new StrongObservableValue<>();
@@ -261,6 +264,6 @@ public class DefaultBasicVisualizationInfo implements BasicVisualizationInfo
      */
     protected void setDefaultTypeColor(Color c)
     {
-        myDefaultTypeColor = c == null ? Color.WHITE : c;
+        myDefaultTypeColor = c == null ? DEFAULT_DEFAULT_COLOR : c;
     }
 }
