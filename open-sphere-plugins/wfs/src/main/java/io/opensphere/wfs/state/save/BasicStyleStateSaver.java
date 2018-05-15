@@ -75,12 +75,17 @@ public class BasicStyleStateSaver extends StyleStateSaver
         {
             addNonNull(vspSet, genParam(visStyle.getStyleParameter(key)));
         }
-        addNonNull(vspSet, genLabelCol(visStyle.getStyleParameter(
-                AbstractFeatureVisualizationStyle.LABEL_COLUMN_KEY_PROPERTY_KEY)));
+        addNonNull(vspSet,
+                genLabelCol(visStyle.getStyleParameter(AbstractFeatureVisualizationStyle.LABEL_COLUMN_KEY_PROPERTY_KEY)));
         return vspSet;
     }
 
-    // handles the case of label column(s)
+    /**
+     * Handles the case of label column(s).
+     *
+     * @param p the visualization style
+     * @return a derived visualization style
+     */
     private VisualizationStyleParameter genLabelCol(VisualizationStyleParameter p)
     {
         if (p == null)
@@ -107,6 +112,13 @@ public class BasicStyleStateSaver extends StyleStateSaver
         return p.deriveWithNewValue(val);
     }
 
+    /**
+     * Combines all labels into a single string.
+     *
+     * @param show ???
+     * @param col the column
+     * @return the combined label
+     */
     private static String combineLblFields(boolean show, String col)
     {
         List<String> fields = new LinkedList<>();
@@ -115,7 +127,12 @@ public class BasicStyleStateSaver extends StyleStateSaver
         return StyleUtils.listSupp.writeList(fields);
     }
 
-    // handles all of the normal cases
+    /**
+     * Handles all of the normal cases.
+     *
+     * @param p the visualization style
+     * @return the derived visualization style
+     */
     private VisualizationStyleParameter genParam(VisualizationStyleParameter p)
     {
         if (p == null)
@@ -168,6 +185,15 @@ public class BasicStyleStateSaver extends StyleStateSaver
         return null;
     }
 
+    /**
+     * Creates a singleton list.
+     * <p>
+     * Could stand to be replaced with
+     * {@link java.util.Collections#singletonList(Object)}
+     *
+     * @param e the value to build a list around
+     * @return a list consisting of a single value
+     */
     private static <E> List<E> singleton(E e)
     {
         List<E> ret = new LinkedList<>();
@@ -175,6 +201,12 @@ public class BasicStyleStateSaver extends StyleStateSaver
         return ret;
     }
 
+    /**
+     * Adds an item to a collection, as long as that item is not null.
+     *
+     * @param c the collection
+     * @param e the item to add
+     */
     private static <E> void addNonNull(Collection<E> c, E e)
     {
         if (e != null)
@@ -195,7 +227,11 @@ public class BasicStyleStateSaver extends StyleStateSaver
         storeLabelCol(visStyle.getStyleParameterValue(AbstractFeatureVisualizationStyle.LABEL_COLUMN_KEY_PROPERTY_KEY));
     }
 
-    // handles the case of label column(s)
+    /**
+     * handles the case of label column(s)
+     *
+     * @param obj the list of labels to store
+     */
     @SuppressWarnings("unchecked")
     private void storeLabelCol(Object obj)
     {
@@ -213,7 +249,7 @@ public class BasicStyleStateSaver extends StyleStateSaver
 
         myBasicFeatureStyle.clearLabelRecs();
         boolean first = true;
-        for (String col :  val)
+        for (String col : val)
         {
             List<String> fields = StyleUtils.listSupp.parseList(col);
             if (first)
@@ -225,7 +261,12 @@ public class BasicStyleStateSaver extends StyleStateSaver
         }
     }
 
-    // handles all of the normal cases
+    /**
+     * handles all of the normal cases
+     *
+     * @param key the column to store the object in
+     * @param val the object to store
+     */
     private void storeParam(String key, Object val)
     {
         if (val == null)

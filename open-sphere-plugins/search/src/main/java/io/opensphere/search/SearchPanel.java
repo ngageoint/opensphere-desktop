@@ -142,10 +142,9 @@ public final class SearchPanel extends JPanel implements ActionListener
     /** The Search field. */
     private GhostTextField mySearchField;
 
-    /* The button used to search in the current view.
-     * Removed because its construction was also removed, but do not delete.
-     * private JButton myWhatsHereButton;
-     */
+    /* The button used to search in the current view. Removed because its
+     * construction was also removed, but do not delete. private JButton
+     * myWhatsHereButton; */
 
     /** The Search goto controller. */
     private final transient KeywordController mySearchGotoController;
@@ -481,6 +480,7 @@ public final class SearchPanel extends JPanel implements ActionListener
      *
      * @return the life cycle event listener
      */
+    @SuppressWarnings("unused")
     private EventListener<ApplicationLifecycleEvent> getLifeCycleEventListener()
     {
         if (myLifeCycleEventListener == null)

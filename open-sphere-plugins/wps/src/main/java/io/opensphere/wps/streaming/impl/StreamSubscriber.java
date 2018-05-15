@@ -129,6 +129,12 @@ public class StreamSubscriber implements Subscriber
         return null;
     }
 
+    /**
+     * Normalizes a Geometry.
+     *
+     * @param g the geometry
+     * @return a normalized geometry
+     */
     private static Geometry normalize(Geometry g)
     {
         if (!(g instanceof MultiPolygon))
@@ -144,6 +150,14 @@ public class StreamSubscriber implements Subscriber
         return ret;
     }
 
+    /**
+     * Returns a single Geometry whose value is the union of two given
+     * Geometries.
+     * 
+     * @param g0 the first geometry
+     * @param g1 the second geometry
+     * @return the union of two geometries
+     */
     private static Geometry unionOf(Geometry g0, Geometry g1)
     {
         if (g0 == null)

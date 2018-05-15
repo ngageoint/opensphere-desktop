@@ -20,12 +20,16 @@ import com.izforge.izpack.util.Platform;
  */
 public class JRELocatorHelper
 {
+    /** lib/rt */
     public static final String[] testFiles = new String[] { "lib" + File.separator + "rt.jar" };
 
+    /** Java Home property. */
     public static final String JRE_VALUE_NAME = "JavaHome";
 
+    /** Java root property key. */
     public static final String JRE_ROOT_KEY = "Software\\JavaSoft\\Java Development Kit";
 
+    /** Java Home (OSX). */
     public static final String OSX_JRE_HOME = "/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home/";
 
     /**
@@ -66,7 +70,7 @@ public class JRELocatorHelper
      *
      * @param installData
      * @param handler
-     * @return
+     * @return the path
      */
     public static String getDefaultJavaPath(InstallData installData, RegistryDefaultHandler handler)
     {
@@ -111,6 +115,7 @@ public class JRELocatorHelper
      * more than one JDKs registered, that one with the highest allowed version
      * will be returned. Works only on windows. On Unix an empty string returns.
      *
+     * @param handler the registry handler
      * @return the path to the needed JDK if found in the windows registry
      */
     public static String getJavaHomeFromRegistry(RegistryDefaultHandler handler)
@@ -199,6 +204,7 @@ public class JRELocatorHelper
      * can be also implemented in derived classes to handle special verification
      * of the path.
      *
+     * @param strPath the path to check
      * @return true if existFiles are exist or not defined, else false
      */
     private static boolean pathIsValid(String strPath)
@@ -219,7 +225,7 @@ public class JRELocatorHelper
      * java version requirements.
      *
      * @param javaVersion
-     * @return
+     * @return success
      */
     private static boolean verifyVersion(String javaVersion)
     {
@@ -283,7 +289,7 @@ public class JRELocatorHelper
      * java version and strip away any extra information.
      *
      * @param javaVersion
-     * @return
+     * @return the version number
      */
     public static String extractJavaVersion(String javaVersion)
     {
@@ -341,7 +347,7 @@ public class JRELocatorHelper
      * @param currentVersion
      * @param template
      * @param isMin
-     * @return
+     * @return success
      */
     private static boolean compareVersions(String currentVersion, String template, boolean isMin)
     {

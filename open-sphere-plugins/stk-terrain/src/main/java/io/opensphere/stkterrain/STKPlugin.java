@@ -26,10 +26,12 @@ public class STKPlugin extends PluginAdapter
      */
     private AttributionTransformer myAttributionTransformer;
 
-    /**
-     * The transformer for STK terrain layers.
-     */
+    /** The transformer for STK terrain layers. */
     private STKLayerTransformer myTransformer;
+
+    /** I have no idea what this is. */
+    @SuppressWarnings("unused")
+    private EnvoyDebuggins myDebuggins;
 
     @Override
     public Collection<? extends Transformer> getTransformers()
@@ -45,6 +47,6 @@ public class STKPlugin extends PluginAdapter
         myAttributionTransformer = new AttributionTransformer(toolbox.getDataRegistry(), toolbox.getMapManager());
         ServerToolboxUtils.getServerToolbox(toolbox).getServerSourceControllerManager()
                 .setPreferencesTopic(STKServerSourceController.class, STKPlugin.class);
-        new EnvoyDebuggins(toolbox);
+        myDebuggins = new EnvoyDebuggins(toolbox);
     }
 }

@@ -43,23 +43,21 @@ import io.opensphere.myplaces.specific.points.layercontrollers.PointEditor;
  */
 public class PointTypeController extends PlaceTypeController
 {
-    /**
-     * Adds the point context menus to the layer panel.
-     */
+    /** Adds the point context menus to the layer panel. */
     private PointContextMenuProvider myContextProvider;
 
     /** The Context menu provider. */
     private transient PointGeometryContextMenuProvider myContextMenuProvider;
 
-    /**
-     * The my places model.
-     */
+    /** The my places model. */
     private MyPlacesModel myModel;
 
-    /**
-     * The toolbox.
-     */
+    /** The toolbox. */
     private Toolbox myToolbox;
+
+    /** The toolbar button for placemarks. */
+    @SuppressWarnings("unused")
+    private PlaceMarkToolbarButton myToolbarButton;
 
     /** The Mouse moved listener. */
     private final DiscreteEventAdapter myMouseMovedListener = new DiscreteEventAdapter("MapPoints", "Map Point Cursor Position",
@@ -155,7 +153,7 @@ public class PointTypeController extends PlaceTypeController
         ControlContext context = myToolbox.getControlRegistry().getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT);
         context.addListener(myMouseMovedListener, new DefaultMouseBinding(MouseEvent.MOUSE_MOVED),
                 new DefaultMouseBinding(MouseEvent.MOUSE_CLICKED));
-        new PlaceMarkToolbarButton(getEditController());
+        myToolbarButton = new PlaceMarkToolbarButton(getEditController());
         myContextMenuProvider = new PointGeometryContextMenuProvider(this, getEditController(), model);
 
         myToolbox.getEventManager().subscribe(CreateMapAnnotationPointEvent.class, myCreatePointListener);
