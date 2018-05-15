@@ -27,6 +27,7 @@ import io.opensphere.core.video.VideoTestUtil;
 /**
  * Tests the {@link KLVEncoder} class.
  */
+@SuppressWarnings("boxing")
 public class KLVEncoderTestFunctional
 {
     /**

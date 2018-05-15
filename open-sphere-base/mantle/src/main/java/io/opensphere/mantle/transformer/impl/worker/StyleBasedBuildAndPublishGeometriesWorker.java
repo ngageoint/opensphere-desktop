@@ -212,7 +212,7 @@ public class StyleBasedBuildAndPublishGeometriesWorker extends AbstractDataEleme
             getProvider().getIdSet().addAll(CollectionUtilities.listView(myIds));
             // Remove this to ensure we don't have filtered ids in the id
             // set.
-            getProvider().getIdSet().remove(DataElement.FILTERED_AS_LONG);
+            getProvider().getIdSet().remove(DataElement.FILTERED_AS_LONG.longValue());
             getProvider().getGeometrySet().addAll(visGeometrySet);
             getProvider().getHiddenGeometrySet().addAll(hiddenGeometrySet);
 

@@ -47,12 +47,6 @@ import io.opensphere.mantle.util.MantleConstants;
 @SuppressWarnings("PMD.GodClass")
 public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends AbstractLocationFeatureVisualizationStyle
 {
-    /** The Constant DECIMAL_FORMAT. */
-    private static final String DECIMAL_FORMAT = "%.0f";
-
-    /** The Constant TO_PERCENT_MULTIPLIER. */
-    private static final double TO_PERCENT_MULTIPLIER = 100.0;
-
     /** The Constant MAX_HEIGHT_POWER. */
     private static final float MAX_HEIGHT_POWER = 10.0f;
 
@@ -252,54 +246,19 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
         VisualizationStyleParameter param = style.getStyleParameter(ourWidthScalePropertyKey);
         paramList.add(new FloatSliderStyleParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(param.getName()), style,
                 ourWidthScalePropertyKey, true, false, 0.0f, MAX_WIDTH_SCALE,
-                new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null, DECIMAL_FORMAT)
-                {
-                    @Override
-                    public String labelValue(double val)
-                    {
-                        double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
-                    }
-                }));
+                VisualizationStyleLabelConverters.BASIC_PERCENT_DECIMAL));
 
         param = style.getStyleParameter(ourTopScalePropertyKey);
         paramList.add(new FloatSliderStyleParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(param.getName()), style,
-                ourTopScalePropertyKey, true, false, 0.0f, 1.0f,
-                new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null, DECIMAL_FORMAT)
-                {
-                    @Override
-                    public String labelValue(double val)
-                    {
-                        double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
-                    }
-                }));
+                ourTopScalePropertyKey, true, false, 0.0f, 1.0f, VisualizationStyleLabelConverters.BASIC_PERCENT_DECIMAL));
 
         param = style.getStyleParameter(ourHeightScalePropertyKey);
         paramList.add(new FloatSliderStyleParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(param.getName()), style,
-                ourHeightScalePropertyKey, true, false, 0.0f, 1.0f,
-                new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null, DECIMAL_FORMAT)
-                {
-                    @Override
-                    public String labelValue(double val)
-                    {
-                        double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
-                    }
-                }));
+                ourHeightScalePropertyKey, true, false, 0.0f, 1.0f, VisualizationStyleLabelConverters.BASIC_PERCENT_DECIMAL));
 
         param = style.getStyleParameter(ourHeightPowerPropertyKey);
         paramList.add(new FloatSliderStyleParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(param.getName()), style,
-                ourHeightPowerPropertyKey, true, false, 0.0f, MAX_HEIGHT_POWER,
-                new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null)
-                {
-                    @Override
-                    public String labelValue(double val)
-                    {
-                        double aVal = Math.exp(val);
-                        return String.format(getStringFormat(), aVal);
-                    }
-                }));
+                ourHeightPowerPropertyKey, true, false, 0.0f, MAX_HEIGHT_POWER, VisualizationStyleLabelConverters.BASIC_POWER));
 
         param = style.getStyleParameter(ourTransparentBasePropertyKey);
         paramList.add(new CheckBoxStyleParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder(param.getName()), style,
@@ -356,28 +315,11 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
 
         VisualizationStyleParameter param = style.getStyleParameter(ourWidthScalePropertyKey);
         paramList.add(new FloatSliderStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style, ourWidthScalePropertyKey,
-                true, false, 0.0f, MAX_WIDTH_SCALE,
-                new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null, DECIMAL_FORMAT)
-                {
-                    @Override
-                    public String labelValue(double val)
-                    {
-                        double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
-                    }
-                }));
+                true, false, 0.0f, MAX_WIDTH_SCALE, VisualizationStyleLabelConverters.BASIC_PERCENT_DECIMAL));
 
         param = style.getStyleParameter(ourTopScalePropertyKey);
         paramList.add(new FloatSliderStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style, ourTopScalePropertyKey,
-                true, false, 0.0f, 1.0f, new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null, DECIMAL_FORMAT)
-                {
-                    @Override
-                    public String labelValue(double val)
-                    {
-                        double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
-                    }
-                }));
+                true, false, 0.0f, 1.0f, VisualizationStyleLabelConverters.BASIC_PERCENT_DECIMAL));
 
         param = style.getStyleParameter(ourInvertPropertyKey);
         paramList
@@ -385,29 +327,11 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
 
         param = style.getStyleParameter(ourHeightScalePropertyKey);
         paramList.add(new FloatSliderStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style,
-                ourHeightScalePropertyKey, true, false, 0.0f, 1.0f,
-                new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null, DECIMAL_FORMAT)
-                {
-                    @Override
-                    public String labelValue(double val)
-                    {
-                        double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
-                    }
-                }));
+                ourHeightScalePropertyKey, true, false, 0.0f, 1.0f, VisualizationStyleLabelConverters.BASIC_PERCENT_DECIMAL));
 
         param = style.getStyleParameter(ourHeightPowerPropertyKey);
         paramList.add(new FloatSliderStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style,
-                ourHeightPowerPropertyKey, true, false, 0.0f, MAX_HEIGHT_POWER,
-                new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null)
-                {
-                    @Override
-                    public String labelValue(double val)
-                    {
-                        double aVal = Math.exp(val);
-                        return String.format(getStringFormat(), aVal);
-                    }
-                }));
+                ourHeightPowerPropertyKey, true, false, 0.0f, MAX_HEIGHT_POWER, VisualizationStyleLabelConverters.BASIC_POWER));
 
         param = style.getStyleParameter(ourTransparentBasePropertyKey);
         paramList.add(new CheckBoxStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style,

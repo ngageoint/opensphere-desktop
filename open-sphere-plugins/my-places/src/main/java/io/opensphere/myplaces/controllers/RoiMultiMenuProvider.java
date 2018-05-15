@@ -13,12 +13,13 @@ import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.DataGroupInfo;
-import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.DataGroupInfo.MultiDataGroupContextKey;
+import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.myplaces.models.MyPlacesDataTypeInfo;
 import io.opensphere.myplaces.specific.regions.utils.RegionUtils;
 
+/** Provider for ROI MyPlaces context menus. */
 public class RoiMultiMenuProvider implements ContextMenuProvider<MultiDataGroupContextKey>
 {
 

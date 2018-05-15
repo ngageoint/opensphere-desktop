@@ -25,11 +25,11 @@ public class EsriColor extends ArrayList<Integer>
         Color returnColor = null;
         if (size() == 3)
         {
-            returnColor = new Color(get(0), get(1), get(2));
+            returnColor = new Color(get(0).intValue(), get(1).intValue(), get(2).intValue());
         }
         if (size() == 4)
         {
-            returnColor = new Color(get(0), get(1), get(2), get(3));
+            returnColor = new Color(get(0).intValue(), get(1).intValue(), get(2).intValue(), get(3).intValue());
         }
         return returnColor;
     }
@@ -42,9 +42,9 @@ public class EsriColor extends ArrayList<Integer>
     public void setColor(Color color)
     {
         clear();
-        add(color.getRed());
-        add(color.getGreen());
-        add(color.getBlue());
-        add(color.getAlpha());
+        add(Integer.valueOf(color.getRed()));
+        add(Integer.valueOf(color.getGreen()));
+        add(Integer.valueOf(color.getBlue()));
+        add(Integer.valueOf(color.getAlpha()));
     }
 }

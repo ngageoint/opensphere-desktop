@@ -114,7 +114,7 @@ public class RangeBinner<T> extends AbstractBinner<T>
                 endBin = (RangeBin<T>)bin.getBin();
             }
 
-            if (startBin != null)
+            if (startBin != null && endBin != null)
             {
                 emptyBins = New.list();
                 double increment = round(startBin.getMax() - startBin.getMin());

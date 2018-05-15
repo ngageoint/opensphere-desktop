@@ -27,10 +27,8 @@ import io.opensphere.mantle.data.tile.TileVisualizationSupport;
  */
 public class FilterSquareToothFaderTileVisualizationStyle extends AbstractTileVisualizationStyle
 {
-    /** The Constant TO_PERCENT_MULTIPLIER. */
-    private static final double TO_PERCENT_MULTIPLIER = 100.0;
-
     /** The Constant ourPropertyKeyPrefix. */
+    @SuppressWarnings("hiding")
     public static final String ourPropertyKeyPrefix = "FilterSquareToothFaderTileVisualizationStyle";
 
     /** The Constant ourReduceFactoryPropertyKey. */
@@ -98,42 +96,15 @@ public class FilterSquareToothFaderTileVisualizationStyle extends AbstractTileVi
 
         VisualizationStyleParameter param = style.getStyleParameter(ourRangeBeginPropertyKey);
         paramList.add(new FloatSliderStyleParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(param.getName()), style,
-                ourRangeBeginPropertyKey, true, false, 0.0f, 1.0f,
-                new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null)
-                {
-                    @Override
-                    public String labelValue(double val)
-                    {
-                        double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
-                    }
-                }));
+                ourRangeBeginPropertyKey, true, false, 0.0f, 1.0f, VisualizationStyleLabelConverters.BASIC_PERCENT));
 
         param = style.getStyleParameter(ourRangeNoiseChannelWidthPropertyKey);
         paramList.add(new FloatSliderStyleParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(param.getName()), style,
-                ourRangeNoiseChannelWidthPropertyKey, true, false, 0.0f, 0.5f,
-                new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null)
-                {
-                    @Override
-                    public String labelValue(double val)
-                    {
-                        double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
-                    }
-                }));
+                ourRangeNoiseChannelWidthPropertyKey, true, false, 0.0f, 0.5f, VisualizationStyleLabelConverters.BASIC_PERCENT));
 
         param = style.getStyleParameter(ourReduceFactoryPropertyKey);
         paramList.add(new FloatSliderStyleParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(param.getName()), style,
-                ourReduceFactoryPropertyKey, true, false, 0.0f, 1.0f,
-                new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null)
-                {
-                    @Override
-                    public String labelValue(double val)
-                    {
-                        double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
-                    }
-                }));
+                ourReduceFactoryPropertyKey, true, false, 0.0f, 1.0f, VisualizationStyleLabelConverters.BASIC_PERCENT));
 
         StyleParameterEditorGroupPanel styleParamGroup = new StyleParameterEditorGroupPanel(null, paramList, false, 1);
         panel.addGroupAtTop(styleParamGroup);
@@ -207,43 +178,16 @@ public class FilterSquareToothFaderTileVisualizationStyle extends AbstractTileVi
         MutableVisualizationStyle style = faderPanel.getChangedStyle();
 
         VisualizationStyleParameter param = style.getStyleParameter(ourRangeBeginPropertyKey);
-        fParamList
-                .add(new FloatSliderStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style, ourRangeBeginPropertyKey,
-                        true, false, 0.0f, 1.0f, new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null)
-                        {
-                            @Override
-                            public String labelValue(double val)
-                            {
-                                double aVal = val * TO_PERCENT_MULTIPLIER;
-                                return String.format(getStringFormat(), aVal) + "%";
-                            }
-                        }));
+        fParamList.add(new FloatSliderStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style,
+                ourRangeBeginPropertyKey, true, false, 0.0f, 1.0f, VisualizationStyleLabelConverters.BASIC_PERCENT));
 
         param = style.getStyleParameter(ourRangeNoiseChannelWidthPropertyKey);
         fParamList.add(new FloatSliderStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style,
-                ourRangeNoiseChannelWidthPropertyKey, true, false, 0.0f, 0.5f,
-                new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null)
-                {
-                    @Override
-                    public String labelValue(double val)
-                    {
-                        double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
-                    }
-                }));
+                ourRangeNoiseChannelWidthPropertyKey, true, false, 0.0f, 0.5f, VisualizationStyleLabelConverters.BASIC_PERCENT));
 
         param = style.getStyleParameter(ourReduceFactoryPropertyKey);
-        fParamList.add(
-                new FloatSliderStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style, ourReduceFactoryPropertyKey,
-                        true, false, 0.0f, 1.0f, new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null)
-                        {
-                            @Override
-                            public String labelValue(double val)
-                            {
-                                double aVal = val * TO_PERCENT_MULTIPLIER;
-                                return String.format(getStringFormat(), aVal) + "%";
-                            }
-                        }));
+        fParamList.add(new FloatSliderStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style,
+                ourReduceFactoryPropertyKey, true, false, 0.0f, 1.0f, VisualizationStyleLabelConverters.BASIC_PERCENT));
 
         StyleParameterEditorGroupPanel paramGrp = new StyleParameterEditorGroupPanel("Square Tooth Fader Tile Style", fParamList);
         faderPanel.addGroup(paramGrp);

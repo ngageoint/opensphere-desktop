@@ -212,7 +212,7 @@ public class DynamicEnumerationMDIColumnDataImpl implements DynamicEnumerationMD
                 Object value = myValueIdToValueMap.get(key);
                 String classStr = value == null ? "?" : value.getClass().getSimpleName();
                 String valueStr = value == null ? "NULL" : value.toString();
-                sb.append(String.format("          %-15s %-30s ", key, classStr)).append(valueStr).append('\n');
+                sb.append(String.format("          %-15s %-30s ", Short.valueOf(key), classStr)).append(valueStr).append('\n');
             }
         }
         finally

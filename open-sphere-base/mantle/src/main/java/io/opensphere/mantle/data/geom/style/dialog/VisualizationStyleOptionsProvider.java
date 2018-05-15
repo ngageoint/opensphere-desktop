@@ -83,6 +83,10 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
         initializePanel();
     }
 
+    /**
+     * Initializes the style provider panel. Extracted to not pollute the
+     * constructor.
+     */
     private void initializePanel()
     {
         myPanel = new JPanel();

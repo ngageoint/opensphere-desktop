@@ -169,7 +169,7 @@ public class DynamicEnumerationRegistryImpl implements DynamicEnumerationRegistr
             while (iter.hasNext())
             {
                 iter.advance();
-                typeToIdMap.put(iter.key(), iter.value());
+                typeToIdMap.put(iter.key(), Short.valueOf(iter.value()));
             }
         }
         finally

@@ -40,10 +40,10 @@ import io.opensphere.mantle.data.impl.DefaultMapFeatureVisualizationInfo;
 public class GenericDataSet
 {
     /** Layer name. */
-    private String name;
+    private final String name;
 
     /** Key for accessing the DataRegistry. */
-    private DataModelCategory myDataModelCategory;
+    private final DataModelCategory myDataModelCategory;
 
     /** Containing data group (one per DataTypeInfo). */
     private DefaultDataGroupInfo group;
@@ -234,8 +234,8 @@ public class GenericDataSet
             previousData = record;
         }
 
-        List<Long> idList = myDataTypeController.addDataElements(new SimpleDataElementProvider(myType, elements.iterator()),
-                null, null, this);
+        List<Long> idList = myDataTypeController.addDataElements(new SimpleDataElementProvider(myType, elements.iterator()), null,
+                null, this);
         if (idList == null)
         {
             return;
@@ -244,7 +244,7 @@ public class GenericDataSet
         int i = 0;
         for (Long id : idList)
         {
-            mantleIds[i++] = id;
+            mantleIds[i++] = id.longValue();
         }
     }
 
@@ -270,13 +270,13 @@ public class GenericDataSet
             return DataUtil.createDataElement(data, cols);
         }
 
-        LatLonAlt firstPoint = LatLonAlt.createFromDegreesMeters((Double)latObj, (Double)lonObj,
+        LatLonAlt firstPoint = LatLonAlt.createFromDegreesMeters(((Double)latObj).doubleValue(), ((Double)lonObj).doubleValue(),
                 Constants.METERS_PER_FEET * ((Double)data.get("Altitude")).doubleValue(), ReferenceLevel.ELLIPSOID);
         LatLonAlt secondPoint = null;
         if (previousData != null)
         {
-            secondPoint = LatLonAlt.createFromDegreesMeters((Double)previousData.get(myLatitudeFieldName),
-                    (Double)previousData.get(myLongitudeFieldName),
+            secondPoint = LatLonAlt.createFromDegreesMeters(((Double)previousData.get(myLatitudeFieldName)).doubleValue(),
+                    ((Double)previousData.get(myLongitudeFieldName)).doubleValue(),
                     Constants.METERS_PER_FEET * ((Double)data.get("Altitude")).doubleValue(), ReferenceLevel.ELLIPSOID);
         }
         return DataUtil.createMapDataElement(new SimpleMetaDataProvider(data, cols), myType, firstPoint, secondPoint);

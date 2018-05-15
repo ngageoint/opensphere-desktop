@@ -96,7 +96,9 @@ public class TimeBinner<T> extends AbstractBinner<T>
                 endBin = (TimeBin<T>)bin.getBin();
             }
 
-            if (startBin != null)
+            // startBin and endBin are null or non-null both but Eclipse is
+            // complaining
+            if (startBin != null && endBin != null)
             {
                 emptyBins = New.list();
                 TimeInstant start = TimeInstant.get(startBin.getBinType().getMax(startBin.getDate()));

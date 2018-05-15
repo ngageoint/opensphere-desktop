@@ -12,14 +12,13 @@ import io.opensphere.csvcommon.config.v2.CSVFixedWidthColumnFormat;
 import io.opensphere.csvcommon.detect.columnformat.ColumnFormatParameters;
 import io.opensphere.csvcommon.detect.columnformat.DelimitedColumnFormatParameters;
 import io.opensphere.csvcommon.detect.columnformat.FixedWidthColumnFormatParameters;
-import io.opensphere.csvcommon.detect.controller.TokenizerFactoryImpl;
 
 /** Test for {@link TokenizerFactoryImpl}. */
 public class TokenizerFactoryTest
 {
     /**
      * Test for
-     * {@link TokenizerFactoryImpl#getTokenizer(io.opensphere.csv.config.v2.CSVColumnFormat, io.opensphere.csvcommon.detect.columnformat.ColumnFormatParameters)}
+     * {@link TokenizerFactoryImpl#getTokenizer(CSVColumnFormat, io.opensphere.csvcommon.detect.columnformat.ColumnFormatParameters)}
      * with a delimited column format.
      */
     @Test
@@ -52,7 +51,7 @@ public class TokenizerFactoryTest
 
     /**
      * Test for
-     * {@link TokenizerFactoryImpl#getTokenizer(io.opensphere.csv.config.v2.CSVColumnFormat, io.opensphere.csvcommon.detect.columnformat.ColumnFormatParameters)}
+     * {@link TokenizerFactoryImpl#getTokenizer(CSVColumnFormat, io.opensphere.csvcommon.detect.columnformat.ColumnFormatParameters)}
      * with a fixed column format.
      */
     @Test

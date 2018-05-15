@@ -28,6 +28,7 @@ import io.opensphere.mantle.data.tile.TileVisualizationSupport;
 public class FilterGuiModTileVisualizationStyle extends AbstractTileVisualizationStyle
 {
     /** The Constant ourPropertyKeyPrefix. */
+    @SuppressWarnings("hiding")
     public static final String ourPropertyKeyPrefix = "FilterGuiModTileVisualizationStyle";
 
     /** The Constant ourScaleFactoryPropertyKey. */
@@ -90,17 +91,7 @@ public class FilterGuiModTileVisualizationStyle extends AbstractTileVisualizatio
 
         VisualizationStyleParameter param = style.getStyleParameter(ourDriftFactoryPropertyKey);
         paramList.add(new FloatSliderStyleParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(param.getName()), style,
-                ourDriftFactoryPropertyKey, true, false, 0.0f, 1.0f,
-                new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null)
-                {
-                    @Override
-                    public String labelValue(double val)
-                    {
-                        final double hundred = 100.;
-                        double aVal = val * hundred;
-                        return String.format(getStringFormat(), aVal) + "%";
-                    }
-                }));
+                ourDriftFactoryPropertyKey, true, false, 0.0f, 1.0f, VisualizationStyleLabelConverters.BASIC_PERCENT));
 
         StyleParameterEditorGroupPanel paramGrp = new StyleParameterEditorGroupPanel(null, paramList, false, 1);
         panel.addGroupAtTop(paramGrp);
@@ -141,18 +132,8 @@ public class FilterGuiModTileVisualizationStyle extends AbstractTileVisualizatio
         MutableVisualizationStyle style = panel.getChangedStyle();
 
         VisualizationStyleParameter param = style.getStyleParameter(ourDriftFactoryPropertyKey);
-        paramList.add(
-                new FloatSliderStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style, ourDriftFactoryPropertyKey,
-                        true, false, 0.0f, 1.0f, new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null)
-                        {
-                            @Override
-                            public String labelValue(double val)
-                            {
-                                final double hundred = 100.;
-                                double aVal = val * hundred;
-                                return String.format(getStringFormat(), aVal) + "%";
-                            }
-                        }));
+        paramList.add(new FloatSliderStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style,
+                ourDriftFactoryPropertyKey, true, false, 0.0f, 1.0f, VisualizationStyleLabelConverters.BASIC_PERCENT));
 
         StyleParameterEditorGroupPanel paramGrp = new StyleParameterEditorGroupPanel("GuiMod Tile Style", paramList);
         panel.addGroup(paramGrp);

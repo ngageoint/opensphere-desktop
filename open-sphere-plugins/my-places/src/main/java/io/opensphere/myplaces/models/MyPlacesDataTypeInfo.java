@@ -29,7 +29,6 @@ public class MyPlacesDataTypeInfo extends DefaultDataTypeInfo
      * Responsible for launching an editor.
      */
     private final MyPlacesEditListener myTypeController;
-    
 
     /**
      * Constructs a new MyPlacesDataTypeInfo.
@@ -43,10 +42,14 @@ public class MyPlacesDataTypeInfo extends DefaultDataTypeInfo
         super(toolbox, Constants.MY_PLACES_LABEL, placemark.getId(), placemark.getName(), placemark.getName(), false);
         myKmlPlacemark = placemark;
         myTypeController = placeTypeController;
-        
+
         initialize();
     }
 
+    /**
+     * Initializes the MyPlacesDataTypeInfo. Extracted to not pollute
+     * constructor.
+     */
     private void initialize()
     {
         OrderParticipantKey orderKey = new DefaultOrderParticipantKey(DefaultOrderCategory.DEFAULT_MY_PLACES_LAYER_FAMILY,

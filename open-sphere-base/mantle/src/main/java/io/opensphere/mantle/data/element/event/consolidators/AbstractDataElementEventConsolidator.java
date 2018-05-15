@@ -40,7 +40,7 @@ public abstract class AbstractDataElementEventConsolidator<E extends AbstractDat
     {
         if (event != null)
         {
-            myIdSet.add(event.getRegistryId());
+            myIdSet.add(Long.valueOf(event.getRegistryId()));
             if (event.getDataTypeKey() != null)
             {
                 myDataTypeSet.add(event.getDataTypeKey());

@@ -115,7 +115,7 @@ public class ThreeElementPreviewPane extends Region
      */
     protected void loadingViewChange(Boolean loadingState, ProgressIndicator indicator)
     {
-        if (loadingState != null && loadingState && !getChildren().contains(indicator))
+        if (loadingState != null && loadingState.booleanValue() && !getChildren().contains(indicator))
         {
             getChildren().add(indicator);
         }
@@ -261,7 +261,7 @@ public class ThreeElementPreviewPane extends Region
             returnValue = view.getBoundsInParent().getHeight();
         }
 
-        if (pLoadingProperty.get())
+        if (pLoadingProperty.get().booleanValue())
         {
             ProgressIndicator indicator = pProgressIndicator.get();
             indicator.setPrefHeight(pPreferredHeight);

@@ -17,6 +17,7 @@ import io.opensphere.mantle.data.element.MetaDataProvider;
 /**
  * Unit test for {@link ExtraColumnsMetaDataProvider}.
  */
+@SuppressWarnings("boxing")
 public class ExtraColumnsMetaDataProviderTest
 {
     /**

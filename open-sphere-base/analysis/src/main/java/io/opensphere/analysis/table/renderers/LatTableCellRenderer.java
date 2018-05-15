@@ -34,14 +34,15 @@ public class LatTableCellRenderer extends DefaultTableCellRenderer
     }
 
     @Override
-    public Component getTableCellRendererComponent(
-            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row,
+            int column)
     {
         return super.getTableCellRendererComponent(table, formatValue(value), isSelected, hasFocus, row, column);
     }
 
     /**
      * Calculate the formatted value based on the current format.
+     * 
      * @param val the value to be formatted
      * @return the formatted value
      */
@@ -51,14 +52,14 @@ public class LatTableCellRenderer extends DefaultTableCellRenderer
         {
             return val;
         }
-        Double dbl = (Double) val;
+        Double dbl = (Double)val;
         if (myFormat == GeographicPositionFormat.DMSDEG)
         {
-            return DegreesMinutesSeconds.getShortLabelString(dbl, 12, 0, 'N', 'S');
+            return DegreesMinutesSeconds.getShortLabelString(dbl.doubleValue(), 12, 0, 'N', 'S');
         }
         if (myFormat == GeographicPositionFormat.DEG_DMIN)
         {
-            return LatLonAlt.latToDdmString(dbl, 3);
+            return LatLonAlt.latToDdmString(dbl.doubleValue(), 3);
         }
         return val;
     }

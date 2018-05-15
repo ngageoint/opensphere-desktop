@@ -683,8 +683,8 @@ public class ColumnAnalyzerData
      */
     private void uniqueValuesToString(StringBuilder sb)
     {
-        sb.append("   Unique Values: Count: ")
-                .append(getUniqueValueCount() == 1000 ? "COUNT EXCEEDS TRACKING THRESHOLD" : getUniqueValueCount());
+        sb.append("   Unique Values: Count: ").append(
+                getUniqueValueCount() == 1000 ? "COUNT EXCEEDS TRACKING THRESHOLD" : Integer.valueOf(getUniqueValueCount()));
         if (getUniqueValueCount() > 0 && getUniqueValueCount() != 1000)
         {
             sb.append('\n');

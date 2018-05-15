@@ -112,7 +112,8 @@ public class RegistryCacheAssistant implements CacheAssistant
      * @throws DataElementLookupException the data element lookup exception
      */
     private static RegistryCacheRetrieveResult retrieve(Toolbox tb, long registryId, DataTypeInfo dti, boolean getOriginId,
-            boolean getMetaData, boolean getMapGeometrySupport) throws DataElementLookupException
+            boolean getMetaData, boolean getMapGeometrySupport)
+        throws DataElementLookupException
     {
         List<RegistryCacheRetrieveResult> deList = new ArrayList<>(1);
         Retriever r = new Retriever(deList, tb, new long[] { registryId }, dti, getOriginId, getMetaData, getMapGeometrySupport);
@@ -444,7 +445,8 @@ public class RegistryCacheAssistant implements CacheAssistant
          * @param cacheRefMap the cache ref map
          * @param dcm the dcm
          */
-        public RegistryDirectAccessRetriever(DataTypeInfo dti, LongFunction<CacheEntry> cacheRefMap, DynamicMetadataManagerImpl dcm)
+        public RegistryDirectAccessRetriever(DataTypeInfo dti, LongFunction<CacheEntry> cacheRefMap,
+                DynamicMetadataManagerImpl dcm)
         {
             super(dti, cacheRefMap, dcm);
         }
@@ -684,7 +686,7 @@ public class RegistryCacheAssistant implements CacheAssistant
                             {
                                 ece.setLastUsedTime(currTime);
                             }
-                            myQuery.processInternal(regIdToCacheIdMap.get(rr.getRegId()), proxy);
+                            myQuery.processInternal(Long.valueOf(regIdToCacheIdMap.get(rr.getRegId())), proxy);
 
                             if (myQuery.isComplete())
                             {
@@ -730,7 +732,7 @@ public class RegistryCacheAssistant implements CacheAssistant
                 {
                     RegistryCacheReference rcr = (RegistryCacheReference)ce.getCacheReference();
                     regIdToCacheEntryMap.put(rcr.getRegistryId(), ce);
-                    regIdToCacheIdMap.put(rcr.getRegistryId(), curId);
+                    regIdToCacheIdMap.put(rcr.getRegistryId(), curId.longValue());
                     List<CacheEntry> eceList = dtToEntryListMap.get(ce.getDataTypeKey());
                     if (eceList == null)
                     {
@@ -743,7 +745,7 @@ public class RegistryCacheAssistant implements CacheAssistant
                         idList = new LinkedList<>();
                         dtToRegIdListListMap.put(ce.getDataTypeKey(), idList);
                     }
-                    idList.add(rcr.getRegistryId());
+                    idList.add(Long.valueOf(rcr.getRegistryId()));
                     eceList.add(ce);
                 }
             }
@@ -845,8 +847,9 @@ public class RegistryCacheAssistant implements CacheAssistant
         {
             try
             {
-                RegistryCacheRetrieveResult rr = RegistryCacheAssistant.retrieve(myToolbox, myRegId, myDTI, myFetchType == RegistryCacheFetchType.ORIGIN_ID,
-                        myFetchType == RegistryCacheFetchType.META_DATA, myFetchType == RegistryCacheFetchType.MAP_GEOMETRY_SUPPORT);
+                RegistryCacheRetrieveResult rr = RegistryCacheAssistant.retrieve(myToolbox, myRegId, myDTI,
+                        myFetchType == RegistryCacheFetchType.ORIGIN_ID, myFetchType == RegistryCacheFetchType.META_DATA,
+                        myFetchType == RegistryCacheFetchType.MAP_GEOMETRY_SUPPORT);
                 if (rr != null)
                 {
                     LoadedElementData led = myEntry.getLoadedElementData();
@@ -948,8 +951,9 @@ public class RegistryCacheAssistant implements CacheAssistant
          * @param getMapGeometrySupport the get map geometry support
          * @throws DataElementLookupException the data element lookup exception
          */
-        public Retriever(List<RegistryCacheRetrieveResult> deList, Toolbox tb, long[] dataElementIds, DataTypeInfo dti, boolean getOriginId,
-                boolean getMetaData, boolean getMapGeometrySupport) throws DataElementLookupException
+        public Retriever(List<RegistryCacheRetrieveResult> deList, Toolbox tb, long[] dataElementIds, DataTypeInfo dti,
+                boolean getOriginId, boolean getMetaData, boolean getMapGeometrySupport)
+            throws DataElementLookupException
         {
             Utilities.checkNull(deList, "deList");
             Utilities.checkNull(tb, "tb");
@@ -1009,8 +1013,8 @@ public class RegistryCacheAssistant implements CacheAssistant
                     mgs = myMgsRx.getValues().get(i);
                 }
 
-                myDeList.add(new RegistryCacheRetrieveResult(myDataElementIds[i], originId, myIsUsingDynamicMetaData ? dynMetaData : metaData,
-                        mgs));
+                myDeList.add(new RegistryCacheRetrieveResult(myDataElementIds[i], originId,
+                        myIsUsingDynamicMetaData ? dynMetaData : metaData, mgs));
             }
             return num;
         }

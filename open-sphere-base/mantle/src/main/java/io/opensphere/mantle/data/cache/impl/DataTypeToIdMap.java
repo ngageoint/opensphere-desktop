@@ -268,7 +268,7 @@ public class DataTypeToIdMap
         {
             String dtiKey = entry.getKey();
             DataTypeInfo dti = myDTIKeyToDTIMap.get(dtiKey);
-            sb.append("  ").append(String.format("%-12d", entry.getValue().size()))
+            sb.append("  ").append(String.format("%-12d", Integer.valueOf(entry.getValue().size())))
                     .append(String.format("%-40s", dti.getDisplayName())).append(" [").append(dtiKey).append("]\n");
         }
         return sb.toString();

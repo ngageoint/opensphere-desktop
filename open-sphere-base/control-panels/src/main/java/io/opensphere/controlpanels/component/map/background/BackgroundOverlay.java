@@ -77,8 +77,8 @@ public class BackgroundOverlay implements Observer, Overlay
 
             java.awt.Image image = myImages.get(index);
 
-            graphics.drawImage(image, (int)(upperLeft.getX() * myModel.getGeometryScaleFactors().get(index)),
-                    (int)(upperLeft.getY() * myModel.getGeometryScaleFactors().get(index)), null);
+            graphics.drawImage(image, (int)(upperLeft.getX() * myModel.getGeometryScaleFactors().get(index).doubleValue()),
+                    (int)(upperLeft.getY() * myModel.getGeometryScaleFactors().get(index).doubleValue()), null);
 
             index++;
         }
@@ -114,8 +114,9 @@ public class BackgroundOverlay implements Observer, Overlay
             Raster raster = Raster.createRaster(sampleModel, dataBuffer, null);
             buff.setData(raster);
 
-            myImages.add(buff.getScaledInstance((int)(myModel.getGeometryScaleFactors().get(index) * myMapModel.getWidth()),
-                    (int)(myModel.getGeometryScaleFactors().get(index) * myMapModel.getHeight()), java.awt.Image.SCALE_SMOOTH));
+            myImages.add(buff.getScaledInstance((myModel.getGeometryScaleFactors().get(index).intValue() * myMapModel.getWidth()),
+                    (myModel.getGeometryScaleFactors().get(index).intValue() * myMapModel.getHeight()),
+                    java.awt.Image.SCALE_SMOOTH));
             index++;
         }
     }

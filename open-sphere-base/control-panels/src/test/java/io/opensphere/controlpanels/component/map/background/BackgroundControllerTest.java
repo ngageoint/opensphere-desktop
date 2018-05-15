@@ -16,6 +16,7 @@ import io.opensphere.core.model.ScreenPosition;
  * Tests the background controller class.
  *
  */
+@SuppressWarnings("boxing")
 public class BackgroundControllerTest
 {
     /**

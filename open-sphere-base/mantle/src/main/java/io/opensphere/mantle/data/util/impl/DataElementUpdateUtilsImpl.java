@@ -109,7 +109,7 @@ public class DataElementUpdateUtilsImpl implements DataElementUpdateUtils
 
                 if (vs != null)
                 {
-                    adjustor.adjustState(vs, id, dataTypeKeyHint == null ? dtKeyItr.next() : dataTypeKeyHint, source);
+                    adjustor.adjustState(vs, id.longValue(), dataTypeKeyHint == null ? dtKeyItr.next() : dataTypeKeyHint, source);
                 }
             }
 
@@ -499,7 +499,7 @@ public class DataElementUpdateUtilsImpl implements DataElementUpdateUtils
         @Override
         public void adjustState(VisualizationState stateToAdjust, long dataElementId, String dtKey, Object source)
         {
-            if (stateToAdjust != null && stateToAdjust.setSelected(mySelectSet.contains(dataElementId)))
+            if (stateToAdjust != null && stateToAdjust.setSelected(mySelectSet.contains(Long.valueOf(dataElementId))))
             {
                 myConsolidator
                         .addEvent(new DataElementSelectionChangeEvent(dataElementId, dtKey, stateToAdjust.isSelected(), source));

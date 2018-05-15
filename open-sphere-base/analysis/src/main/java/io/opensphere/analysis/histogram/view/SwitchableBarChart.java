@@ -4,6 +4,21 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import io.opensphere.analysis.base.model.BinType;
+import io.opensphere.analysis.base.model.DataType;
+import io.opensphere.analysis.base.model.LabelModel;
+import io.opensphere.analysis.base.model.LabelType;
+import io.opensphere.analysis.base.model.Orientation;
+import io.opensphere.analysis.base.model.SettingsModel;
+import io.opensphere.analysis.base.model.ToolModels;
+import io.opensphere.analysis.base.model.UIBin;
+import io.opensphere.analysis.binning.criteria.TimeBinType;
+import io.opensphere.core.dialog.alertviewer.event.Message;
+import io.opensphere.core.dialog.alertviewer.event.Type;
+import io.opensphere.core.units.duration.Days;
+import io.opensphere.core.util.ColorUtilities;
+import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.fx.FXUtilities;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -20,22 +35,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.StringConverter;
-
-import io.opensphere.analysis.base.model.BinType;
-import io.opensphere.analysis.base.model.DataType;
-import io.opensphere.analysis.base.model.LabelModel;
-import io.opensphere.analysis.base.model.LabelType;
-import io.opensphere.analysis.base.model.Orientation;
-import io.opensphere.analysis.base.model.SettingsModel;
-import io.opensphere.analysis.base.model.ToolModels;
-import io.opensphere.analysis.base.model.UIBin;
-import io.opensphere.analysis.binning.criteria.TimeBinType;
-import io.opensphere.core.dialog.alertviewer.event.Message;
-import io.opensphere.core.dialog.alertviewer.event.Type;
-import io.opensphere.core.units.duration.Days;
-import io.opensphere.core.util.ColorUtilities;
-import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.fx.FXUtilities;
 
 /**
  * BarChart that can have the orientation changed. Currently this is not
@@ -98,7 +97,7 @@ public class SwitchableBarChart extends BorderPane
         myModel.getSettingsModel().selectedColumnProperty().addListener((obs, old, newValue) -> getCharts().stream()
                 .forEach(chart -> updateCategoryLabel((CategoryAxis)chart.lookup("#category"))));
         myModel.getSettingsModel().categoryAxisTextProperty().addListener(
-            (obs, old, newValue) -> getCharts().stream().forEach(chart -> updateCategoryAxisText(chart, newValue)));
+                (obs, old, newValue) -> getCharts().stream().forEach(chart -> updateCategoryAxisText(chart, newValue)));
         myModel.getSettingsModel().countAxisTextProperty()
                 .addListener((obs, old, newValue) -> getCharts().stream().forEach(chart -> updateCountAxisText(chart, newValue)));
 
@@ -723,10 +722,10 @@ public class SwitchableBarChart extends BorderPane
     private static String toStyleString(Color c)
     {
         final double maxColor = 255.0;
-        int r = (int)Math.round(c.getRed() * maxColor);
-        int g = (int)Math.round(c.getGreen() * maxColor);
-        int b = (int)Math.round(c.getBlue() * maxColor);
-        int a = (int)Math.round(c.getOpacity() * maxColor);
+        Integer r = Integer.valueOf((int)Math.round(c.getRed() * maxColor));
+        Integer g = Integer.valueOf((int)Math.round(c.getGreen() * maxColor));
+        Integer b = Integer.valueOf((int)Math.round(c.getBlue() * maxColor));
+        Integer a = Integer.valueOf((int)Math.round(c.getOpacity() * maxColor));
         return String.format("rgba(%d,%d,%d,%d)", r, g, b, a).toString();
     }
 }

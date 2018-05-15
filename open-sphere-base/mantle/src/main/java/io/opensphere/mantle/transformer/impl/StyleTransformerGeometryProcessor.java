@@ -278,7 +278,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
      */
     public boolean hasGeometryDataModelId(long id)
     {
-        return myIdSet.contains(Long.valueOf(id));
+        return myIdSet.contains(id);
     }
 
     @Override
@@ -696,20 +696,17 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
 
                                 executeIfNotShutdown(updator);
                                 MantleToolboxUtils.getDataElementUpdateUtils(getToolbox()).setDataElementsOpacity(
-                                        colorEvent.getColor().getAlpha(), ids, getDataType().getTypeKey(),
-                                        myMasterTransformer);
+                                        colorEvent.getColor().getAlpha(), ids, getDataType().getTypeKey(), myMasterTransformer);
                             }
                             else
                             {
                                 // Update all render properties colors to match
                                 // the new color.
                                 StyleBasedDeriveColorUpdateGeometriesWorker aWorker = new StyleBasedDeriveColorUpdateGeometriesWorker(
-                                        StyleTransformerGeometryProcessor.this, ids, colorEvent.getColor(),
-                                        false);
+                                        StyleTransformerGeometryProcessor.this, ids, colorEvent.getColor(), false);
                                 executeIfNotShutdown(aWorker);
                                 MantleToolboxUtils.getDataElementUpdateUtils(getToolbox()).setDataElementsColor(
-                                        colorEvent.getColor(), ids, getDataType().getTypeKey(),
-                                        myMasterTransformer);
+                                        colorEvent.getColor(), ids, getDataType().getTypeKey(), myMasterTransformer);
                             }
                         }
                     }

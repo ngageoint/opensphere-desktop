@@ -26,10 +26,8 @@ import io.opensphere.mantle.data.tile.TileVisualizationSupport;
  */
 public class FilterSharpenTileVisualizationStyle extends AbstractTileVisualizationStyle
 {
-    /** The Constant TO_PERCENT_MULTIPLIER. */
-    private static final double TO_PERCENT_MULTIPLIER = 100.0;
-
     /** The Constant ourPropertyKeyPrefix. */
+    @SuppressWarnings("hiding")
     public static final String ourPropertyKeyPrefix = "FilterSharpenTileVisualizationStyle";
 
     /** The Constant ourScaleFactoryPropertyKey. */
@@ -115,17 +113,8 @@ public class FilterSharpenTileVisualizationStyle extends AbstractTileVisualizati
         MutableVisualizationStyle style = panel.getChangedStyle();
 
         VisualizationStyleParameter param = style.getStyleParameter(ourScaleFactoryPropertyKey);
-        paramList.add(
-                new FloatSliderStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style, ourScaleFactoryPropertyKey,
-                        true, false, 0.0f, 1.0f, new FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor(2, null)
-                        {
-                            @Override
-                            public String labelValue(double val)
-                            {
-                                double aVal = val * TO_PERCENT_MULTIPLIER;
-                                return String.format(getStringFormat(), aVal) + "%";
-                            }
-                        }));
+        paramList.add(new FloatSliderStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style,
+                ourScaleFactoryPropertyKey, true, false, 0.0f, 1.0f, VisualizationStyleLabelConverters.BASIC_PERCENT));
 
         StyleParameterEditorGroupPanel paramGrp = new StyleParameterEditorGroupPanel("Sharpen Tile Style", paramList);
         panel.addGroup(paramGrp);

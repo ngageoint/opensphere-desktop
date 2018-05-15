@@ -38,11 +38,11 @@ public class DataElementLOBVisibilityChangeConsolidator
         {
             if (event.isLOBVisible())
             {
-                myLobVisible.add(event.getRegistryId());
+                myLobVisible.add(Long.valueOf(event.getRegistryId()));
             }
             else
             {
-                myLobInvisible.add(event.getRegistryId());
+                myLobInvisible.add(Long.valueOf(event.getRegistryId()));
             }
         }
     }

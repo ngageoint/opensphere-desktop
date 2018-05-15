@@ -35,7 +35,7 @@ public class DefaultMapPolylineGeometrySupport extends AbstractMapPathGeometrySu
     }
 
     @Override
-    public boolean equals(Object obj)
+    public synchronized boolean equals(Object obj)
     {
         return this == obj || super.equals(obj);
     }
@@ -47,7 +47,7 @@ public class DefaultMapPolylineGeometrySupport extends AbstractMapPathGeometrySu
     }
 
     @Override
-    public int hashCode()
+    public synchronized int hashCode()
     {
         final int prime = 13;
         int result = prime * super.hashCode();

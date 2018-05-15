@@ -46,6 +46,7 @@ import io.opensphere.mantle.data.impl.specialkey.RadiusKey;
 public class CircleGeometryFeatureVisualizationStyle extends AbstractEllipseFeatureVisualizationStyle
 {
     /** The Constant ourPropertyKeyPrefix. */
+    @SuppressWarnings("hiding")
     public static final String ourPropertyKeyPrefix = "CircleGeometryFeatureVisualizationStyle";
 
     /**
@@ -78,14 +79,16 @@ public class CircleGeometryFeatureVisualizationStyle extends AbstractEllipseFeat
 
     @Override
     public void createCombinedGeometry(Set<Geometry> setToAddTo, FeatureCombinedGeometryBuilderData builderData,
-            RenderPropertyPool renderPropertyPool) throws IllegalArgumentException
+            RenderPropertyPool renderPropertyPool)
+        throws IllegalArgumentException
     {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public void createIndividualGeometry(Set<Geometry> setToAddTo, FeatureIndividualGeometryBuilderData bd,
-            RenderPropertyPool renderPropertyPool) throws IllegalArgumentException
+            RenderPropertyPool renderPropertyPool)
+        throws IllegalArgumentException
     {
         MapVisualizationInfo mapVisInfo = bd.getDataType() == null ? null : bd.getDataType().getMapVisualizationInfo();
         BasicVisualizationInfo basicVisInfo = bd.getDataType() == null ? null : bd.getDataType().getBasicVisualizationInfo();

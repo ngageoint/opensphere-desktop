@@ -15,6 +15,7 @@ import io.opensphere.core.util.lang.ThreeTuple;
 /**
  * Tests for {@link RangeBinner}.
  */
+@SuppressWarnings("boxing")
 public class RangeBinnerTest
 {
     /** Tests automatic binning. */
@@ -24,7 +25,7 @@ public class RangeBinnerTest
         RangeCriteria criteria = new RangeCriteria();
         criteria.setBinWidth(10);
         RangeBinner<Point2D.Double> binner = new RangeBinner<>(criteria, p -> Double.valueOf(p.x), o -> ((Double)o).doubleValue(),
-            (v, c) -> Double.valueOf(v));
+                (v, c) -> Double.valueOf(v));
         binner.add(new Point2D.Double(0, 0));
         binner.add(new Point2D.Double(3.5, 0));
         binner.add(new Point2D.Double(10, 0));
@@ -79,8 +80,8 @@ public class RangeBinnerTest
     {
         RangeCriteria criteria = new RangeCriteria();
         criteria.setBinWidth(10);
-        RangeBinner<Point2D.Double> binner = new RangeBinner<>(criteria, p -> Double.valueOf(p.x),
-            o -> ((Double)o).doubleValue(), (v, c) -> Double.valueOf(v));
+        RangeBinner<Point2D.Double> binner = new RangeBinner<>(criteria, p -> Double.valueOf(p.x), o -> ((Double)o).doubleValue(),
+                (v, c) -> Double.valueOf(v));
         binner.setCreateEmptyBins(true);
 
         binner.add(new Point2D.Double(35, 0));
@@ -109,8 +110,8 @@ public class RangeBinnerTest
     {
         RangeCriteria criteria = new RangeCriteria();
         criteria.setBinWidth(10);
-        RangeBinner<Point2D.Double> binner = new RangeBinner<>(criteria,
-            p -> p == null ? null : Double.valueOf(p.x), o -> ((Double)o).doubleValue(), (v, c) -> Double.valueOf(v));
+        RangeBinner<Point2D.Double> binner = new RangeBinner<>(criteria, p -> p == null ? null : Double.valueOf(p.x),
+                o -> ((Double)o).doubleValue(), (v, c) -> Double.valueOf(v));
         binner.setCreateEmptyBins(true);
 
         binner.add(null);
@@ -143,7 +144,7 @@ public class RangeBinnerTest
         RangeCriteria criteria = new RangeCriteria();
         criteria.setBinWidth(0.1);
         RangeBinner<Point2D.Double> binner = new RangeBinner<>(criteria, p -> Double.valueOf(p.x), o -> ((Double)o).doubleValue(),
-            (v, c) -> Double.valueOf(v));
+                (v, c) -> Double.valueOf(v));
         ThreeTuple<Double, Double, Object> t;
 
         t = binner.getMinMaxBinValueValue(new Point2D.Double(0, 0));

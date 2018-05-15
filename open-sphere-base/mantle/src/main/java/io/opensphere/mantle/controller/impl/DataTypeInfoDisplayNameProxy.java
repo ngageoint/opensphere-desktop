@@ -18,7 +18,7 @@ public class DataTypeInfoDisplayNameProxy extends ToStringProxy<DataTypeInfo>
 
     /**
      * Converts a list of items to a list of proxy. Sorts the proxy list using
-     * the provided comparator or uses the {@link ToStringComparator} if null.
+     * the provided comparator or uses {@link String#compareTo(String)} if null.
      *
      * @param itemList the item list to be wrapped in proxy objects.
      * @param comp the {@link Comparator} to use to sort the list (sort by to

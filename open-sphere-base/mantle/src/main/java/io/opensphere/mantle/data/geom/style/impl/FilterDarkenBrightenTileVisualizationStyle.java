@@ -34,6 +34,7 @@ public class FilterDarkenBrightenTileVisualizationStyle extends AbstractTileVisu
     private static final float MAX_BRIGHTNESS = 8.0f;
 
     /** The Constant ourPropertyKeyPrefix. */
+    @SuppressWarnings("hiding")
     public static final String ourPropertyKeyPrefix = "FilterDarkenBrightenTileVisualizationStyle";
 
     /** The Constant ourScaleFactoryPropertyKey. */
@@ -196,7 +197,7 @@ public class FilterDarkenBrightenTileVisualizationStyle extends AbstractTileVisu
                     public String labelValue(double val)
                     {
                         double aVal = val * 10;
-                        return String.format(getStringFormat(), aVal);
+                        return String.format(getStringFormat(), Double.valueOf(aVal));
                     }
                 }));
     }

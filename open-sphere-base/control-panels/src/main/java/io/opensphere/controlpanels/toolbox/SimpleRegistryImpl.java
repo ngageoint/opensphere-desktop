@@ -8,9 +8,9 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.collections.New;
 
 /**
- * A default implementation of the {@link DetailPanelProviderRegistry}, in which
- * providers are cached.
- * 
+ * A default implementation of the {@link SimpleRegistry}, in which providers
+ * are cached.
+ *
  * @param <T> the type of the provider.
  */
 public class SimpleRegistryImpl<T> implements SimpleRegistry<T>
