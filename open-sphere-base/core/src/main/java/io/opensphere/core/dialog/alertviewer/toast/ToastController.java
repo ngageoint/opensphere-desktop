@@ -16,7 +16,6 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 
 /**
  * The controller for the toast message view.
- *
  */
 public class ToastController implements Runnable
 {

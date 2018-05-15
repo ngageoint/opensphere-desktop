@@ -15,10 +15,26 @@
 
     <build>
         <plugins>
+        	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>10</source>
+					<target>10</target>
+					<fork>true</fork>
+				</configuration>
+				<dependencies>
+					<dependency>
+			            <groupId>org.ow2.asm</groupId>
+			            <artifactId>asm</artifactId>
+			            <version>6.1.1</version> <!-- Use newer version of ASM -->
+			        </dependency>
+				</dependencies>
+			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>3.6-SNAPSHOT</version>
                 <configuration>
                     <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
                 </configuration>
