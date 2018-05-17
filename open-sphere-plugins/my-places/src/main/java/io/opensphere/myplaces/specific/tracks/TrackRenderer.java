@@ -16,6 +16,7 @@ import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.kml.common.util.KMLSpatialTemporalUtils;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.LoadsTo;
 import io.opensphere.mantle.data.MapVisualizationType;
@@ -171,7 +172,9 @@ public class TrackRenderer implements Renderer, Transformer
             for (Coordinate coord : gxTrack.getCoordinates())
             {
                 Date when = gxTrack.getWhen().get(index);
-                TimeSpan time = TimeSpan.TIMELESS;
+                // Instead of always being timeless, the default timespan for
+                // the node should be whatever the track has as its full span
+                TimeSpan time = KMLSpatialTemporalUtils.timeSpanFromTimePrimitive(placemark.getTimePrimitive());
                 if (when != null)
                 {
                     time = TimeSpan.get(when);
