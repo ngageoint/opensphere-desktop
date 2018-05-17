@@ -174,6 +174,7 @@ public class TrackRenderer implements Renderer, Transformer
                 Date when = gxTrack.getWhen().get(index);
                 // Instead of always being timeless, the default timespan for
                 // the node should be whatever the track has as its full span
+                // (which can be timeless)
                 TimeSpan time = KMLSpatialTemporalUtils.timeSpanFromTimePrimitive(placemark.getTimePrimitive());
                 if (when != null)
                 {
