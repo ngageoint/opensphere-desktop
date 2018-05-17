@@ -189,7 +189,7 @@ public class TypeMapper
         {
             columnNames = getColumnNames(base, (PropertyArrayDescriptor)desc);
         }
-        else if (desc.getType().equals(TimeSpan.class))
+        else if (TimeSpan.class.equals(desc.getType()))
         {
             columnNames = Arrays.asList(base + "_START", base + "_END");
         }
@@ -225,7 +225,16 @@ public class TypeMapper
             }
             final String arrayColumnPrefix = getColumnNamePrefix(colType);
             sb.append(columnPrefix).append('_').append(arrayColumnPrefix).append(arrayColumnIndex);
-            result.add(sb.toString());
+
+            if (TimeSpan.class.equals(colType))
+            {
+                result.add(sb.toString() + "_START");
+                result.add(sb.toString() + "_END");
+            }
+            else
+            {
+                result.add(sb.toString());
+            }
             sb.setLength(0);
         }
         return result;
@@ -250,7 +259,7 @@ public class TypeMapper
             {
                 columnNamesToTypes.putAll(getColumnsForPropertyArrayDescriptor(base, (PropertyArrayDescriptor)desc));
             }
-            else if (TimeSpan.class.isAssignableFrom(desc.getType()))
+            else if (TimeSpan.class.equals(desc.getType()))
             {
                 final String type = getSqlType(Long.class);
                 columnNamesToTypes.put(base + "_START", type);
@@ -288,7 +297,7 @@ public class TypeMapper
             }
 
             final String columnNamePrefix = getColumnNamePrefix(colType);
-            if (TimeSpan.class.isAssignableFrom(colType))
+            if (TimeSpan.class.equals(colType))
             {
                 final String type = getSqlType(Long.class);
                 final StringBuilder sb = new StringBuilder().append(columnPrefix).append('_').append(columnNamePrefix)

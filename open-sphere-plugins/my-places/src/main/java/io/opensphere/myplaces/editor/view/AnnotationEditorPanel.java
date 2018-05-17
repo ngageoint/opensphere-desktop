@@ -193,7 +193,7 @@ public class AnnotationEditorPanel extends JDialog
     private GridBagPanel myTimePanel;
 
     /** The title field. */
-    private JTextField titleField = new JTextField();
+    private final JTextField titleField = new JTextField();
     {
         titleField.addKeyListener(new KeyAdapter()
         {
@@ -544,7 +544,7 @@ public class AnnotationEditorPanel extends JDialog
 
             if (myHasTimeCheckBox.isSelected())
             {
-                TimeSpan span = null;
+                TimeSpan span = TimeSpan.TIMELESS;
 
                 if (myHasEndDate.isSelected())
                 {
@@ -555,12 +555,11 @@ public class AnnotationEditorPanel extends JDialog
                 {
                     span = TimeSpan.get(myDateTimePicker.getBeginDateTimePicker().getCurrentPickerDate());
                 }
-
                 pt.setTimePrimitive(KMLSpatialTemporalUtils.timeSpanToTimePrimitive(span));
             }
             else
             {
-                pt.setTimePrimitive(null);
+                pt.setTimePrimitive(KMLSpatialTemporalUtils.timeSpanToTimePrimitive(TimeSpan.TIMELESS));
             }
 
             ExtendedDataUtils.putBoolean(extendedData, Constants.IS_ANIMATE, myShouldAnimate.isSelected());
