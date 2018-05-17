@@ -803,7 +803,7 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
     {
         final PropertyDescriptor<S> desc = acc.getPropertyDescriptor();
         String[] columnNames;
-        if (TimeSpan.class.equals(desc.getType()))
+        if (TimeSpan.class.isAssignableFrom(desc.getType()))
         {
             columnNames = new String[] { ColumnNames.GROUP_ID, ColumnNames.PROPERTY, ColumnNames.VALUE_START,
                 ColumnNames.VALUE_END, };

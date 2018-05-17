@@ -210,8 +210,10 @@ public class TrackDataElementsController implements TrackRegistryListener
                     NewSegmentData newSegmentData = new NewSegmentData();
                     newSegmentData.setDti(dti);
                     newSegmentData.setSegmentCounter(legCounter);
+
                     newSegmentData.setStartTime(startNode.getTime());
                     newSegmentData.setEndTime(endNode.getTime());
+
                     newSegmentData.setStartPosition(startNode.getLocation());
                     newSegmentData.setEndPosition(endNode.getLocation());
                     newSegmentData.setSegmentLengthKM(segmentDistanceKM);
@@ -246,22 +248,22 @@ public class TrackDataElementsController implements TrackRegistryListener
             mdi.addKey("Start Time", TimeSpan.class, this);
             mdi.addKey("End Time", TimeSpan.class, this);
             mdi.addKey("Duration", String.class, this);
-            mdi.addKey("Start Lat", String.class, this);
+            mdi.addKey("Start Lat", Double.class, this);
             mdi.addKey("Start Lat (DMS)", String.class, this);
-            mdi.addKey("Start Lon", String.class, this);
+            mdi.addKey("Start Lon", Double.class, this);
             mdi.addKey("Start Lon (DMS)", String.class, this);
             mdi.addKey("Start MGRS", String.class, this);
             mdi.addKey("Start Alt", Double.class, this);
-            mdi.addKey("End Lat", String.class, this);
+            mdi.addKey("End Lat", Double.class, this);
             mdi.addKey("End Lat (DMS)", String.class, this);
-            mdi.addKey("End Lon", String.class, this);
+            mdi.addKey("End Lon", Double.class, this);
             mdi.addKey("End Lon (DMS)", String.class, this);
             mdi.addKey("End MGRS", String.class, this);
             mdi.addKey("End Alt", Double.class, this);
-            mdi.addKey("Heading (deg)", String.class, this);
-            mdi.addKey("Distance (km)", String.class, this);
-            mdi.addKey("Speed (km/hr)", String.class, this);
-            mdi.addKey("Total Distance (km)", String.class, this);
+            mdi.addKey("Heading (deg)", Double.class, this);
+            mdi.addKey("Distance (km)", Double.class, this);
+            mdi.addKey("Speed (km/hr)", Double.class, this);
+            mdi.addKey("Total Distance (km)", Double.class, this);
 
             MapVisualizationInfo mvi = dti.getMapVisualizationInfo();
             mvi.setZOrder(ZOrderRenderProperties.TOP_Z - 2000, this);
@@ -341,6 +343,9 @@ public class TrackDataElementsController implements TrackRegistryListener
         provider.setValue("Distance (km)", Double.valueOf(Math.round(segmentLengthKM * precision) / precision));
 
         TimeSpan overAllSpan = TimeSpan.TIMELESS;
+        provider.setValue("Start Time", startTime);
+        provider.setValue("End Time", endTime);
+
         if (startTime.isBounded() && endTime.isBounded())
         {
             ExtentAccumulator accum = new ExtentAccumulator();
@@ -348,11 +353,9 @@ public class TrackDataElementsController implements TrackRegistryListener
             accum.add(endTime);
             overAllSpan = accum.getExtent();
 
-            provider.setValue("Start Time", startTime);
-            provider.setValue("End Time", endTime);
-
             provider.setValue("Duration", accum.getExtent().getDuration().toPrettyString());
         }
+
         if (overAllSpan.isBounded())
         {
             double hours = Hours.get(overAllSpan.getDuration()).doubleValue();
