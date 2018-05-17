@@ -501,7 +501,6 @@ public class DefaultTrack implements Track
             accumulator.add(node.getTime());
         }
         TimeSpan extent = accumulator.getExtent();
-        // Calling code expects null in these cases
         return extent;
     }
 }
