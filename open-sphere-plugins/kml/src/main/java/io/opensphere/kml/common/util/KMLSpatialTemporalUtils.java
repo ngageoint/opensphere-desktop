@@ -441,7 +441,7 @@ public final class KMLSpatialTemporalUtils
     public static TimePrimitive timeSpanToTimePrimitive(io.opensphere.core.model.time.TimeSpan time)
     {
         TimePrimitive primitive = null;
-        if (time != null)
+        if (time != null && !time.isTimeless())
         {
             if (time.isInstantaneous())
             {
