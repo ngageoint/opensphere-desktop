@@ -75,14 +75,15 @@ public class JRELocatorPanel extends IzPanel implements ActionListener, Hyperlin
 
     /**
      * Creates a new panel, accepting the supplied parameters for configuration.
+     * *
      *
-     * @param panel
-     * @param parent
-     * @param installData
-     * @param resources
-     * @param log
-     * @param handler
-     * @param replacer
+     * @param panel the panel meta-data
+     * @param parent the parent IzPack installer frame
+     * @param installData the installation data
+     * @param resources the resources
+     * @param log the logger to which to write output.
+     * @param handler the handler used to access registry data.
+     * @param replacer the variable substitutor.
      */
     public JRELocatorPanel(Panel panel, InstallerFrame parent, GUIInstallData installData, Resources resources, Log log,
             RegistryDefaultHandler handler, VariableSubstitutor replacer)
@@ -289,8 +290,7 @@ public class JRELocatorPanel extends IzPanel implements ActionListener, Hyperlin
     {
         boolean result = true;
         // if 'ShowCreateDirectoryMessage' configuration option set 'false' then
-        // don't show
-        // then don't show "directory will be created" dialog:
+        // don't show then don't show "directory will be created" dialog:
         String show = getMetadata().getConfigurationOptionValue(PathInputBase.SHOWCREATEDIRECTORYMESSAGE, installData.getRules());
         if (show == null || Boolean.getBoolean(show))
         {
@@ -310,9 +310,8 @@ public class JRELocatorPanel extends IzPanel implements ActionListener, Hyperlin
     {
         boolean result = true;
         // if 'ShowExistingDirectoryWarning' configuration option set 'false'
-        // then don't show
-        // "The directory already exists! Are you sure you want to install here
-        // and possibly overwrite existing files?"
+        // then don't show "The directory already exists! Are you sure you want
+        // to install here and possibly overwrite existing files?"
         // warning dialog:
         String show = getMetadata().getConfigurationOptionValue(PathInputBase.SHOWEXISTINGDIRECTORYWARNING,
                 installData.getRules());
