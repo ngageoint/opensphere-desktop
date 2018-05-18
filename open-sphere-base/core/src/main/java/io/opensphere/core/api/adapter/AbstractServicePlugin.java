@@ -31,6 +31,7 @@ public class AbstractServicePlugin extends PluginAdapter
     @Override
     public void close()
     {
+        System.out.println(this.getClass().getName());
         myServiceManager.close();
     }
 
