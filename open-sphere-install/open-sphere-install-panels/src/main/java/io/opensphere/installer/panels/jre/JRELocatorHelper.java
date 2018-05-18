@@ -20,12 +20,16 @@ import com.izforge.izpack.util.Platform;
  */
 public class JRELocatorHelper
 {
+    /** An array of files for which to search. */
     public static final String[] testFiles = new String[] { "lib" + File.separator + "rt.jar" };
 
+    /** The name of the java home variable. */
     public static final String JRE_VALUE_NAME = "JavaHome";
 
+    /** The name of the registry key in which the JRE root is located. */
     public static final String JRE_ROOT_KEY = "Software\\JavaSoft\\Java Development Kit";
 
+    /** The name of the OSX path for the JRE. */
     public static final String OSX_JRE_HOME = "/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home/";
 
     /**
@@ -52,7 +56,7 @@ public class JRELocatorHelper
      * MUST always be called in constructor of JRELocatorConsolePanel and
      * JRELocatorPanel
      *
-     * @param installData
+     * @param installData the installer configuration.
      */
     public static void initialize(InstallData installData)
     {
@@ -64,9 +68,9 @@ public class JRELocatorHelper
     /**
      * Obtain the default java path
      *
-     * @param installData
-     * @param handler
-     * @return
+     * @param installData the installer configuration.
+     * @param handler the registry handler used to read remote data.
+     * @return a String with the Java path.
      */
     public static String getDefaultJavaPath(InstallData installData, RegistryDefaultHandler handler)
     {
@@ -111,6 +115,7 @@ public class JRELocatorHelper
      * more than one JDKs registered, that one with the highest allowed version
      * will be returned. Works only on windows. On Unix an empty string returns.
      *
+     * @param handler the registry handler used to read remote data.
      * @return the path to the needed JDK if found in the windows registry
      */
     public static String getJavaHomeFromRegistry(RegistryDefaultHandler handler)
@@ -199,6 +204,7 @@ public class JRELocatorHelper
      * can be also implemented in derived classes to handle special verification
      * of the path.
      *
+     * @param strPath the path to test.
      * @return true if existFiles are exist or not defined, else false
      */
     private static boolean pathIsValid(String strPath)
@@ -218,8 +224,8 @@ public class JRELocatorHelper
      * Validate that the given javaVersion meets meets the minimum and maximum
      * java version requirements.
      *
-     * @param javaVersion
-     * @return
+     * @param javaVersion the version to test.
+     * @return true if the version is valid, false otherwise.
      */
     private static boolean verifyVersion(String javaVersion)
     {
@@ -282,8 +288,9 @@ public class JRELocatorHelper
      * Given a 'dirty' string representing the javaVersion. Extract the actual
      * java version and strip away any extra information.
      *
-     * @param javaVersion
-     * @return
+     * @param javaVersion the version string from which the number will be
+     *            extracted.
+     * @return the version number extracted from the supplied string.
      */
     public static String extractJavaVersion(String javaVersion)
     {
@@ -338,10 +345,10 @@ public class JRELocatorHelper
      * Validate that the given javaVersion meets meets the minimum and maximum
      * java version requirements.
      *
-     * @param currentVersion
-     * @param template
-     * @param isMin
-     * @return
+     * @param currentVersion the version of the JRE to compare.
+     * @param template the template to use in the comparison.
+     * @param isMin the minimum version.
+     * @return true if the version matches, false otherwise.
      */
     private static boolean compareVersions(String currentVersion, String template, boolean isMin)
     {
@@ -367,7 +374,7 @@ public class JRELocatorHelper
                 currentValue = Integer.parseInt(current);
                 neededValue = Integer.parseInt(needed);
             }
-            catch (NumberFormatException nfe)
+            catch (@SuppressWarnings("unused") NumberFormatException nfe)
             {
                 /* A number format exception will be raised if there is a non
                  * numeric part in the version, e.g. 1.5.0_beta. The
