@@ -113,7 +113,8 @@ public class VisualizationStyleDataTypePanel extends JPanel implements StyleData
      * @param styleManagerController the style manager controller
      * @param groupType the type of data this panel is configured to contain.
      */
-    public VisualizationStyleDataTypePanel(Toolbox tb, StyleManagerController styleManagerController, VisualizationStyleGroup groupType)
+    public VisualizationStyleDataTypePanel(Toolbox tb, StyleManagerController styleManagerController,
+            VisualizationStyleGroup groupType)
     {
         super(new BorderLayout());
         myCenterPanel = new JPanel(new BorderLayout());
@@ -211,23 +212,19 @@ public class VisualizationStyleDataTypePanel extends JPanel implements StyleData
      */
     private JPanel createTextArea(String text)
     {
-        JPanel p = new JPanel(new BorderLayout());
         JTextArea jta = new JTextArea();
         jta.setEditable(false);
         jta.setBackground(myCenterPanel.getBackground());
         jta.setBorder(BorderFactory.createEmptyBorder());
         jta.setText(text);
-//        jta.setMaximumSize(new Dimension(300, 50));
-//        jta.setMinimumSize(new Dimension(100, 50));
-//        jta.setPreferredSize(new Dimension(300, 50));
-
-        p.add(jta, BorderLayout.CENTER);
-        p.setMaximumSize(new Dimension(400, 50));
-        p.setMinimumSize(new Dimension(100, 50));
-        p.setPreferredSize(new Dimension(100, 50));
-//        p.setBorder(BorderFactory.createLineBorder(Color.white));
         jta.setWrapStyleWord(true);
         jta.setLineWrap(true);
+
+        JPanel p = new JPanel(new BorderLayout());
+        p.add(jta, BorderLayout.CENTER);
+        p.setMaximumSize(new Dimension(400, 100));
+        p.setMinimumSize(new Dimension(100, 25));
+
         return p;
     }
 
@@ -264,14 +261,14 @@ public class VisualizationStyleDataTypePanel extends JPanel implements StyleData
                 p.add(createImagePanel(ourDefaultSelectedIcon));
                 p.add(Box.createVerticalStrut(5));
 
-                jta = createTextArea("To enable a custom visualization style for a type, select its check box.\n"
+                jta = createTextArea("To enable a custom visualization style for a type, select its check box.  "
                         + "The type name will become selected automatically and you can then edit the custom style.");
                 p.add(jta);
                 p.add(createImagePanel(ourTypeCheckedAndSelectedIcon));
                 p.add(Box.createVerticalStrut(5));
 
-                jta = createTextArea("To edit a custom style without changing the check box, select the name\n"
-                        + " and the type's custom editor will then appear.");
+                jta = createTextArea("To edit a custom style without changing the check box, select the name and the type's "
+                        + "custom editor will then appear.");
                 p.add(jta);
 
                 p.add(createImagePanel(ourTypeSelectedNotCheckedIcon));

@@ -279,6 +279,10 @@ public abstract class LayerControlPanel extends AbstractHUDPanel
                     {
                         for (TileLevelController c : tlcControllers)
                         {
+                            if (c.getMaxGeneration() == -1)
+                            {
+                                continue;
+                            }
                             c.setDivisionOverride(myTileLevelHoldCheckBox.isSelected());
                             try
                             {

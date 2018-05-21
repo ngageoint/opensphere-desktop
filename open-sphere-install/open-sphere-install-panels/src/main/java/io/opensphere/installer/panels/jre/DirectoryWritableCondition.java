@@ -64,20 +64,11 @@ public class DirectoryWritableCondition
 
                 canWrite = true;
             }
-            catch (IOException e)
+            catch (@SuppressWarnings("unused") IOException e)
             {
                 isDirectory = true;
                 canWrite = false;
             }
-        }
-
-        if (isDirectory && canWrite)
-        {
-            System.out.println("'" + path + "' is a writable directory.");
-        }
-        else
-        {
-            System.out.println("'" + path + "' is not a directory, or is not writable.");
         }
 
         return isDirectory && canWrite;

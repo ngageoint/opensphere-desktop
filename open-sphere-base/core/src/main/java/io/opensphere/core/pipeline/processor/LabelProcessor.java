@@ -467,7 +467,7 @@ public class LabelProcessor extends AbstractProcessor<LabelGeometry>
         /**
          * Get the distance between baselines of consecutive lines. It is used
          * to lay out multi-line labels.
-         * 
+         *
          * @return the baseline delta
          */
         public double getBaselineDelta()
@@ -477,7 +477,7 @@ public class LabelProcessor extends AbstractProcessor<LabelGeometry>
 
         /**
          * Set the baseline delta (cf. getBaselineDelta).
-         * 
+         *
          * @param d the baseline delta
          */
         public void setBaselineDelta(double d)
