@@ -178,7 +178,7 @@ public abstract class XYZTileEnvoy extends AbstractEnvoy implements DataRegistry
     }
 
     /**
-     * Tests the envoy connection by sending a ping (i.e., a single get request)
+     * Tests the envoy connection by sending a ping (i.e., a single sendHead call)
      * to the category's server.
      *
      * @param category Contains the server url information.
@@ -195,8 +195,9 @@ public abstract class XYZTileEnvoy extends AbstractEnvoy implements DataRegistry
 
         HttpServer server = getToolbox().getServerProviderRegistry().getProvider(HttpServer.class).getServer(url);
         ResponseValues response = new ResponseValues();
-        try (CancellableInputStream stream = server.sendGet(url, response))
+        try
         {
+            server.sendHead(url, response);
             if (response.getResponseCode() == HttpURLConnection.HTTP_OK)
             {
                 pingSuccess = true;
