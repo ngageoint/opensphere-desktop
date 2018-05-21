@@ -13,8 +13,6 @@ import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.izforge.izpack.api.data.Panel;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.gui.log.Log;
@@ -133,7 +131,7 @@ public class OpenSphereTargetPanel extends TargetPanel
                 preview += installData.getVariable("InstallVersion");
 
                 if (installData.getPlatform().getName() == Name.WINDOWS
-                        && StringUtils.isBlank(installData.getVariable("INSTALL_DRIVE")))
+                        && isBlank(installData.getVariable("INSTALL_DRIVE")))
                 {
                     parent.getNavigator().setNextEnabled(false);
                     preview = "Warning: The application may only be installed to a letter drive. Installing to a network or "
@@ -149,5 +147,36 @@ public class OpenSphereTargetPanel extends TargetPanel
         });
 
         add(new JScrollPane(myBottomInfoArea), NEXT_LINE);
+    }
+
+    /**
+     * <p>Checks if a CharSequence is empty (""), null or whitespace only.</p>
+     *
+     * <p>Whitespace is defined by {@link Character#isWhitespace(char)}.</p>
+     *
+     * <pre>
+     * StringUtils.isBlank(null)      = true
+     * StringUtils.isBlank("")        = true
+     * StringUtils.isBlank(" ")       = true
+     * StringUtils.isBlank("bob")     = false
+     * StringUtils.isBlank("  bob  ") = false
+     * </pre>
+     *
+     * @param cs  the CharSequence to check, may be null
+     * @return {@code true} if the CharSequence is null, empty or whitespace only
+     * @since 2.0
+     * @since 3.0 Changed signature from isBlank(String) to isBlank(CharSequence)
+     */
+    private boolean isBlank(final CharSequence cs) {
+        int strLen;
+        if (cs == null || (strLen = cs.length()) == 0) {
+            return true;
+        }
+        for (int i = 0; i < strLen; i++) {
+            if (!Character.isWhitespace(cs.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 }

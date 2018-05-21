@@ -432,7 +432,7 @@ public class DataGroupControllerImpl implements DataGroupController, EventListen
         boolean active = false;
         if (dti != null)
         {
-            active = dti.isInUseBy(this);
+            active = dti.isInUseBy(this) || myActivationController.getUserActivatedGroupIds().contains(dti.getParent().getId());
         }
         return active;
     }

@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -562,6 +563,29 @@ public final class StringUtilities
         }
 
         return !valueList.isEmpty() ? valueList.toArray(new String[valueList.size()]) : null;
+    }
+
+    /**
+     * Formats the Object as a String.
+     *
+     * @param o the object
+     * @return the formatted String
+     */
+    public static String format(Object o)
+    {
+        String s;
+        if (o instanceof Number)
+        {
+            NumberFormat format = NumberFormat.getInstance();
+            format.setGroupingUsed(false);
+            format.setMaximumFractionDigits(9);
+            s = format.format(o);
+        }
+        else
+        {
+            s = o.toString();
+        }
+        return s;
     }
 
     /**

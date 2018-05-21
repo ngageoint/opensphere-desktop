@@ -1,5 +1,6 @@
 package io.opensphere.search.view;
 
+import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -17,15 +18,6 @@ import io.opensphere.search.model.SearchModel;
  */
 public class MetadataPane extends AbstractSearchPane
 {
-    /** The label in which the search term is placed. */
-    private final Label mySearchTermLabel;
-
-    /** The combo-box in which the sort operation is configured. */
-    private final ComboBox<String> mySortDropdown;
-
-    /** The button to clear search results without affecting the search box. */
-    private final Button myClearButton;
-
     /**
      * Creates a new metadata pane bound to the supplied model.
      *
@@ -50,28 +42,41 @@ public class MetadataPane extends AbstractSearchPane
         getColumnConstraints().add(noGrow);
         getColumnConstraints().add(grow);
 
-        mySearchTermLabel = new Label();
+        Label searchTermLabel = new Label();
         Label resultCountLabel = new Label();
 
-        getModel().getKeyword().bindBidirectional(mySearchTermLabel.textProperty());
+        getModel().getKeyword().bindBidirectional(searchTermLabel.textProperty());
         getModel().getShownResults().addListener((ListChangeListener<SearchResult>)c -> resultsChanged(c, resultCountLabel));
 
-        mySortDropdown = new ComboBox<>(getModel().getSortTypes());
-        mySortDropdown.valueProperty().bindBidirectional(getModel().getSortType());
+        ComboBox<String> sortDropdown = new ComboBox<>(getModel().getSortTypes());
+        sortDropdown.valueProperty().bindBidirectional(getModel().getSortType());
 
-        myClearButton = new Button("Clear");
-        myClearButton.setOnAction((evt) -> getModel().getKeyword().setValue(null));
+        Button clearButton = new Button("Clear");
+        clearButton.setOnAction((evt) -> getModel().getKeyword().setValue(null));
+
+        Button refreshButton = new Button("Refresh");
+        refreshButton.setOnAction(evt -> refresh());
 
         Label resultsFor = new Label("Showing Results for : ");
         Label sortLabel = new Label("Sort By:");
         int col = 0;
         add(resultsFor, col++, 0);
-        add(mySearchTermLabel, col++, 0);
+        add(searchTermLabel, col++, 0);
         add(resultCountLabel, col++, 0);
         add(FXUtilities.newHSpacer(), col++, 0);
         add(sortLabel, col++, 0);
-        add(mySortDropdown, col++, 0);
-        add(myClearButton, col++, 0);
+        add(sortDropdown, col++, 0);
+        add(clearButton, col++, 0);
+        add(refreshButton, col++, 0);
+    }
+
+    /** Refreshes the search results. */
+    private void refresh()
+    {
+        StringProperty keyword = getModel().getKeyword();
+        String searchTerm = keyword.get();
+        keyword.setValue(null);
+        keyword.setValue(searchTerm);
     }
 
     /**
