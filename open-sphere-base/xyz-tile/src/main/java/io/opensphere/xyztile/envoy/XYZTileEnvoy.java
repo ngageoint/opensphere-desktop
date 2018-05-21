@@ -15,6 +15,8 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import io.opensphere.core.Notify;
+import io.opensphere.core.Notify.Method;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.api.adapter.AbstractEnvoy;
 import io.opensphere.core.cache.CacheException;
@@ -37,6 +39,8 @@ import io.opensphere.core.image.DDSImage;
 import io.opensphere.core.image.Image;
 import io.opensphere.core.image.ImageFormatUnknownException;
 import io.opensphere.core.image.ImageIOImage;
+import io.opensphere.core.model.GeographicBoundingBox;
+import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.ZYXImageKey;
 import io.opensphere.core.model.time.TimeInstant;
 import io.opensphere.core.server.HttpServer;
@@ -171,6 +175,40 @@ public abstract class XYZTileEnvoy extends AbstractEnvoy implements DataRegistry
         {
             throw new QueryException(e);
         }
+    }
+
+    /**
+     * Tests the envoy connection by sending a ping (i.e., a single get request)
+     * to the category's server.
+     *
+     * @param category Contains the server url information.
+     * @return The result of the envoy ping
+     */
+    public boolean ping(DataModelCategory category)
+    {
+        boolean pingSuccess = false;
+
+        ZYXImageKey key = new ZYXImageKey(0, 0, 0,
+                new GeographicBoundingBox(LatLonAlt.createFromDegrees(0., 45.), LatLonAlt.createFromDegrees(45., 90.)));
+        String urlString = buildImageUrlString(category, key);
+        URL url = UrlUtilities.toURL(urlString);
+
+        HttpServer server = getToolbox().getServerProviderRegistry().getProvider(HttpServer.class).getServer(url);
+        ResponseValues response = new ResponseValues();
+        try (CancellableInputStream stream = server.sendGet(url, response))
+        {
+            if (response.getResponseCode() == HttpURLConnection.HTTP_OK)
+            {
+                pingSuccess = true;
+            }
+        }
+        catch (IOException | URISyntaxException e)
+        {
+            Notify.error("Failed to query " + category.getCategory() + " server: Could not establish connection during ping",
+                    Method.TOAST);
+        }
+
+        return pingSuccess;
     }
 
     /**
