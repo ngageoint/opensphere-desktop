@@ -20,6 +20,7 @@ import com.izforge.izpack.gui.log.Log;
 import com.izforge.izpack.installer.data.GUIInstallData;
 import com.izforge.izpack.installer.gui.InstallerFrame;
 import com.izforge.izpack.panels.target.TargetPanel;
+import com.izforge.izpack.util.Platform.Name;
 
 /**
  * An extension to the target panel on which additional information is
