@@ -1,6 +1,5 @@
 package io.opensphere.osm.server;
 
-import io.opensphere.core.Toolbox;
 import io.opensphere.core.cache.SimpleSessionOnlyCacheDeposit;
 import io.opensphere.core.data.util.DataModelCategory;
 import io.opensphere.core.server.ServerProviderRegistry;
@@ -23,12 +22,6 @@ import io.opensphere.xyztile.util.XYZTileUtils;
 /** Open Street Map's {@link ServerSourceController}. */
 public class OSMServerSourceController extends UrlServerSourceController
 {
-    @Override
-    public void open(Toolbox toolbox, Class<?> prefsTopic)
-    {
-        super.open(toolbox, prefsTopic);
-    }
-
     @Override
     public IDataSource createNewSource(String typeName)
     {
