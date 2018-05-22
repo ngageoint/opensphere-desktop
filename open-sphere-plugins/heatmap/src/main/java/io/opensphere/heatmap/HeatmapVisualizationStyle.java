@@ -255,13 +255,9 @@ public class HeatmapVisualizationStyle extends AbstractVisualizationStyle implem
         paramList.add(new IntegerSliderStyleParameterEditorPanel(PanelBuilder.get(intensityParameter.getName()), style,
                 INTENSITY_PROPERTY_KEY, true, false, 5, 50, null));
 
-//        paramList.add(intensityTooltip);
-
         VisualizationStyleParameter sizeParameter = style.getStyleParameter(SIZE_PROPERTY_KEY);
         paramList.add(new IntegerSliderStyleParameterEditorPanel(PanelBuilder.get(sizeParameter.getName()), style,
                 SIZE_PROPERTY_KEY, true, false, 1, 150, null));
-
-//        paramList.add(sizeTooltip);
 
         StyleParameterEditorGroupPanel parameterGroup = new StyleParameterEditorGroupPanel("Heatmap", paramList, false, 1);
         panel.addGroup(parameterGroup);
