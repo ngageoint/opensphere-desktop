@@ -4,8 +4,10 @@ import io.opensphere.core.cache.SimpleSessionOnlyCacheDeposit;
 import io.opensphere.core.data.util.DataModelCategory;
 import io.opensphere.core.server.ServerProviderRegistry;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.taskactivity.TaskActivity;
 import io.opensphere.mantle.datasources.IDataSource;
 import io.opensphere.mantle.datasources.impl.UrlDataSource;
+import io.opensphere.osm.envoy.OSMTileEnvoy;
 import io.opensphere.osm.util.OSMUtil;
 import io.opensphere.server.control.UrlServerSourceController;
 import io.opensphere.server.customization.DefaultCustomization;
@@ -47,21 +49,35 @@ public class OSMServerSourceController extends UrlServerSourceController
     @Override
     protected boolean handleActivateSource(IDataSource source)
     {
-        DataModelCategory category = XYZTileUtils.newLayersCategory(((UrlDataSource)source).getURL(), OSMUtil.PROVIDER);
-        XYZServerInfo serverInfo = new XYZServerInfo(source.getName(), ((UrlDataSource)source).getURL());
-        XYZTileLayerInfo layerInfo = null;
-        if (serverInfo.getServerUrl().contains("osm_tiles_pc"))
-        {
-            layerInfo = new XYZTileLayerInfo(OSMUtil.PROVIDER, source.getName(), Projection.EPSG_4326, 2, false, 2, serverInfo);
-        }
-        else
-        {
-            layerInfo = new XYZTileLayerInfo(OSMUtil.PROVIDER, source.getName(), Projection.EPSG_3857, 1, false, 5, serverInfo);
-        }
+        boolean pingSuccess = false;
 
-        getToolbox().getDataRegistry()
-                .addModels(new SimpleSessionOnlyCacheDeposit<>(category, XYZTileUtils.LAYERS_DESCRIPTOR, New.list(layerInfo)));
-        return true;
+        try (TaskActivity activity = TaskActivity.createActive(source.getName() + " is loading..."))
+        {
+            getToolbox().getUIRegistry().getMenuBarRegistry().addTaskActivity(activity);
+
+            DataModelCategory category = XYZTileUtils.newLayersCategory(((UrlDataSource)source).getURL(), OSMUtil.PROVIDER);
+            XYZServerInfo serverInfo = new XYZServerInfo(source.getName(), ((UrlDataSource)source).getURL());
+            XYZTileLayerInfo layerInfo = null;
+            if (serverInfo.getServerUrl().contains("osm_tiles_pc"))
+            {
+                layerInfo = new XYZTileLayerInfo(OSMUtil.PROVIDER, source.getName(), Projection.EPSG_4326, 2, false, 2,
+                        serverInfo);
+            }
+            else
+            {
+                layerInfo = new XYZTileLayerInfo(OSMUtil.PROVIDER, source.getName(), Projection.EPSG_3857, 1, false, 5,
+                        serverInfo);
+            }
+
+            /* Ping server to verify connection */
+            pingSuccess = new OSMTileEnvoy(getToolbox()).ping(category);
+            if (pingSuccess)
+            {
+                getToolbox().getDataRegistry().addModels(
+                        new SimpleSessionOnlyCacheDeposit<>(category, XYZTileUtils.LAYERS_DESCRIPTOR, New.list(layerInfo)));
+            }
+        }
+        return pingSuccess;
     }
 
     @Override
