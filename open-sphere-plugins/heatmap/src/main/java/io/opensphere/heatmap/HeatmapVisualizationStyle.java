@@ -57,6 +57,13 @@ public class HeatmapVisualizationStyle extends AbstractVisualizationStyle implem
             "Size", Integer.valueOf(50), Integer.class, new VisualizationStyleParameterFlags(false, false),
             ParameterHint.hint(false, false));
 
+    /** The tooltip for the Intensity slider. */
+    private static final String intensityTooltip = "Controls the number of points required for maximum intensity. "
+            + "A higher number maps to a higher concentration of points.";
+
+    /** The tooltip for the Size slider. */
+    private static final String sizeTooltip = "Controls the size of the heat zone tiles.";
+
     /**
      * Creates a new instance of the {@link HeatmapVisualizationStyle} class.
      *
@@ -163,7 +170,7 @@ public class HeatmapVisualizationStyle extends AbstractVisualizationStyle implem
     @Override
     public String getStyleDescription()
     {
-        return "Heatmap tile styles";
+        return "Heatmap tile styles.\n\nIntensity: " + intensityTooltip + "\nSize: " + sizeTooltip;
     }
 
     /**
@@ -209,14 +216,18 @@ public class HeatmapVisualizationStyle extends AbstractVisualizationStyle implem
                 new ComboBoxStyleParameterEditorPanel(StyleUtils.createComboBoxMiniPanelBuilder(colorPaletteParameter.getName()),
                         style, COLOR_PALETTE_PROPERTY_KEY, false, false, false, Arrays.asList(HeatmapGradients.values())));
 
-        VisualizationStyleParameter intensityParameter = style.getStyleParameter(INTENSITY_PROPERTY_KEY);
-        paramList.add(
-                new IntegerSliderStyleParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(intensityParameter.getName()),
-                        style, INTENSITY_PROPERTY_KEY, true, false, 5, 50, null));
+        IntegerSliderStyleParameterEditorPanel intensityPanel = new IntegerSliderStyleParameterEditorPanel(
+                StyleUtils.createSliderMiniPanelBuilder(style.getStyleParameter(INTENSITY_PROPERTY_KEY).getName()), style,
+                INTENSITY_PROPERTY_KEY, true, false, 5, 50, null);
+        intensityPanel.setToolTipText(intensityTooltip);
+        paramList.add(intensityPanel);
 
         VisualizationStyleParameter sizeParameter = style.getStyleParameter(SIZE_PROPERTY_KEY);
-        paramList.add(new IntegerSliderStyleParameterEditorPanel(StyleUtils.createSliderMiniPanelBuilder(sizeParameter.getName()),
-                style, SIZE_PROPERTY_KEY, true, false, 1, 150, null));
+        IntegerSliderStyleParameterEditorPanel sizePanel = new IntegerSliderStyleParameterEditorPanel(
+                StyleUtils.createSliderMiniPanelBuilder(sizeParameter.getName()), style, SIZE_PROPERTY_KEY, true, false, 1, 150,
+                null);
+        sizePanel.setToolTipText(sizeTooltip);
+        paramList.add(sizePanel);
 
         StyleParameterEditorGroupPanel parameterGroup = new StyleParameterEditorGroupPanel("Heatmap", paramList, false, 1);
         panel.addGroupAtTop(parameterGroup);
