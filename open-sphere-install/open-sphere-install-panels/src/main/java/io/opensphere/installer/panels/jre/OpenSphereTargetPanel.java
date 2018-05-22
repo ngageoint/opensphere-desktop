@@ -14,6 +14,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import com.izforge.izpack.api.data.Panel;
+import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.gui.log.Log;
 import com.izforge.izpack.installer.data.GUIInstallData;
@@ -130,12 +131,20 @@ public class OpenSphereTargetPanel extends TargetPanel
                 }
                 preview += installData.getVariable("InstallVersion");
 
-                if (installData.getPlatform().getName() == Name.WINDOWS
-                        && isBlank(installData.getVariable("INSTALL_DRIVE")))
+                if (installData.getPlatform().getName() == Name.WINDOWS)
                 {
-                    parent.getNavigator().setNextEnabled(false);
-                    preview = "Warning: The application may only be installed to a letter drive. Installing to a network or "
-                            + "OneDrive location is not possible.";
+                    Variables variables = installData.getVariables();
+                    String installDrive = variables.get("INSTALL_DRIVE");
+                    String installPath = variables.get("INSTALL_PATH");
+                    String defaultInstallDrive = variables.get("DEFAULT_INSTALL_DRIVE");
+
+                    if (!isBlank(installPath) && isBlank(installDrive)
+                            || isBlank(installPath) && isBlank(defaultInstallDrive))
+                    {
+                        parent.getNavigator().setNextEnabled(false);
+                        preview = "Warning: The application may only be installed to a letter drive. Installing to a network or "
+                                + "OneDrive location is not possible.";
+                    }
                 }
                 else
                 {
@@ -150,9 +159,13 @@ public class OpenSphereTargetPanel extends TargetPanel
     }
 
     /**
-     * <p>Checks if a CharSequence is empty (""), null or whitespace only.</p>
+     * <p>
+     * Checks if a CharSequence is empty (""), null or whitespace only.
+     * </p>
      *
-     * <p>Whitespace is defined by {@link Character#isWhitespace(char)}.</p>
+     * <p>
+     * Whitespace is defined by {@link Character#isWhitespace(char)}.
+     * </p>
      *
      * <pre>
      * StringUtils.isBlank(null)      = true
@@ -162,18 +175,24 @@ public class OpenSphereTargetPanel extends TargetPanel
      * StringUtils.isBlank("  bob  ") = false
      * </pre>
      *
-     * @param cs  the CharSequence to check, may be null
-     * @return {@code true} if the CharSequence is null, empty or whitespace only
+     * @param cs the CharSequence to check, may be null
+     * @return {@code true} if the CharSequence is null, empty or whitespace
+     *         only
      * @since 2.0
-     * @since 3.0 Changed signature from isBlank(String) to isBlank(CharSequence)
+     * @since 3.0 Changed signature from isBlank(String) to
+     *        isBlank(CharSequence)
      */
-    private boolean isBlank(final CharSequence cs) {
+    private boolean isBlank(final CharSequence cs)
+    {
         int strLen;
-        if (cs == null || (strLen = cs.length()) == 0) {
+        if (cs == null || (strLen = cs.length()) == 0)
+        {
             return true;
         }
-        for (int i = 0; i < strLen; i++) {
-            if (!Character.isWhitespace(cs.charAt(i))) {
+        for (int i = 0; i < strLen; i++)
+        {
+            if (!Character.isWhitespace(cs.charAt(i)))
+            {
                 return false;
             }
         }
