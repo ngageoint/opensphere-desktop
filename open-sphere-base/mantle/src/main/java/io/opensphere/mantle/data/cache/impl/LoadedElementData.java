@@ -436,6 +436,13 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
                     }
                     else if (oldValue != null)
                     {
+                        if (keyClass == String.class)
+                        {
+                            // Some instances may have improper conversion. JSON
+                            // data in the form of String may auto-convert to a
+                            // Number
+                            resultList.set(i, String.valueOf(oldValue));
+                        }
                         if (keyClass == Long.class && oldValue.getClass() != Long.class)
                         {
                             resultList.set(i, convertValueToLongIfPossible(oldValue));
