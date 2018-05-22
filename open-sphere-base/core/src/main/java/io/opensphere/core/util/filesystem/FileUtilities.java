@@ -283,7 +283,7 @@ public final class FileUtilities
      */
     public static File ensureSuffix(File file, String suffix)
     {
-        if (suffix.equals(getSuffix(file)))
+        if (suffix.equalsIgnoreCase(getSuffix(file)))
         {
             return file;
         }

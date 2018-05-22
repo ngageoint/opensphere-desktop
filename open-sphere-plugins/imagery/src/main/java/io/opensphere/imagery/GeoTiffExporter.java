@@ -3,22 +3,18 @@ package io.opensphere.imagery;
 import java.awt.Component;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
-import java.awt.event.ActionListener;
+import java.awt.EventQueue;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javafx.application.Platform;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JMenuItem;
-import javax.swing.SwingUtilities;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.context.GeometryContextKey;
@@ -31,9 +27,12 @@ import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.util.MimeType;
+import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.filesystem.FileUtilities;
 import io.opensphere.core.util.gdal.GdalIOUtilities;
 import io.opensphere.core.util.javafx.WebPanel;
 import io.opensphere.core.util.swing.AutohideMessageDialog;
+import io.opensphere.core.util.swing.SwingUtilities;
 import io.opensphere.core.util.taskactivity.TaskActivity;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.DataGroupController;
@@ -58,12 +57,6 @@ import io.opensphere.mantle.data.MapVisualizationType;
  */
 public class GeoTiffExporter extends AbstractExporter
 {
-    /** Check for correct file name extension. */
-    private static final Pattern TIFF_FILE = Pattern.compile(".*\\.[Tt][Ii][Ff][Ff]");
-
-    /** Default extension, in case one must be supplied. */
-    private static final String TIFF_EXT = ".tiff";
-
     /** Bla. */
     private MenuBarRegistry menuBarReg;
 
@@ -83,24 +76,24 @@ public class GeoTiffExporter extends AbstractExporter
     private GeographicBoundingBox bounds;
 
     /** Main dialog component. */
-    private ExportOptionsPanel opts;
+    private ExportOptionsPanel myOptionsPanel;
 
     @Override
     public File export(File file) throws ExportException
     {
-        if (opts == null)
+        if (myOptionsPanel == null)
         {
             return null;
         }
-        int zoom = opts.getMaxZoomLevel();
-        setObjects(opts.getSelections());
-        opts = null;
+        int zoom = myOptionsPanel.getMaxZoomLevel();
+        setObjects(myOptionsPanel.getSelections());
+        myOptionsPanel = null;
         if (!valid)
         {
             return null;
         }
 
-        File outFile = tiffExt(file);
+        File outFile = FileUtilities.ensureSuffix(file, "tiff");
         doExport(outFile, zoom);
         return outFile;
     }
@@ -136,7 +129,7 @@ public class GeoTiffExporter extends AbstractExporter
         // remove activity indicator
         menuBarReg.removeTaskActivity(act);
         // inform the user
-        SwingUtilities.invokeLater(() -> showCompletionDialog(outFile));
+        EventQueue.invokeLater(() -> showCompletionDialog(outFile));
     }
 
     /**
@@ -177,7 +170,7 @@ public class GeoTiffExporter extends AbstractExporter
             return null;
         }
         bounds = findBounds((PolygonGeometry)geom);
-        return Collections.singleton(jmi(getMimeTypeString(), e -> export()));
+        return Collections.singleton(SwingUtilities.newMenuItem(getMimeTypeString(), e -> export()));
     }
 
     @Override
@@ -196,8 +189,8 @@ public class GeoTiffExporter extends AbstractExporter
         {
             return null;
         }
-        opts = new ExportOptionsPanel(dataCtrl.findActiveMembers(GeoTiffExporter::isImageData));
-        return opts;
+        myOptionsPanel = new ExportOptionsPanel(dataCtrl.findActiveMembers(GeoTiffExporter::isImageData));
+        return myOptionsPanel;
     }
 
     /**
@@ -207,23 +200,6 @@ public class GeoTiffExporter extends AbstractExporter
     private void export()
     {
         ExportUtilities.export(myToolbox.getUIRegistry().getMainFrameProvider().get(), myToolbox.getPreferencesRegistry(), this);
-    }
-
-    /**
-     * Create a JMenuItem with the specified text and event handler.
-     *
-     * @param text bla
-     * @param ear bla
-     * @return the menu item
-     */
-    private static JMenuItem jmi(String text, ActionListener ear)
-    {
-        JMenuItem jmi = new JMenuItem(text);
-        if (ear != null)
-        {
-            jmi.addActionListener(ear);
-        }
-        return jmi;
     }
 
     /**
@@ -242,7 +218,9 @@ public class GeoTiffExporter extends AbstractExporter
     @Override
     public boolean canExport(Class<?> target)
     {
-        return valid && target != null && File.class.isAssignableFrom(target);
+        /* False to prevent showing it in the layers menu. This is OK because it doesn't even get called when exporting from a
+         * query area. */
+        return false;
     }
 
     @Override
@@ -255,7 +233,7 @@ public class GeoTiffExporter extends AbstractExporter
     public AbstractExporter setObjects(Collection<?> objects)
     {
         valid = false;
-        typeList = new LinkedList<>();
+        typeList = New.list();
         for (Object obj : objects)
         {
             if (!(obj instanceof DataTypeInfo))
@@ -294,24 +272,5 @@ public class GeoTiffExporter extends AbstractExporter
         MapVisualizationType visType = mapVisInfo.getVisualizationType();
         return visType == MapVisualizationType.IMAGE_TILE && mapVisInfo.getTileLevelController() != null;
         // GeoPackage export also allows: MapVisualizationType.TERRAIN_TILE
-    }
-
-    /**
-     * Modify the specified file, if necessary, so that it has the right file
-     * extension.
-     *
-     * @param f the given file
-     * @return a file with the desired extension
-     */
-    private static File tiffExt(File f)
-    {
-        File par = f.getParentFile();
-        String name = f.getName();
-        if (TIFF_FILE.matcher(name).matches())
-        {
-            return f;
-        }
-        name = name + TIFF_EXT;
-        return new File(par, name);
     }
 }
