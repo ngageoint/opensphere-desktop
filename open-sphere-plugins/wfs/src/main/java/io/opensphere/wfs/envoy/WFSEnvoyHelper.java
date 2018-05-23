@@ -564,10 +564,6 @@ public class WFSEnvoyHelper
             {
                 provider.setValue(name, (Serializable)value);
             }
-            else
-            {
-                LOGGER.warn("Ignoring value: " + value + " for " + name);
-            }
         }
         return provider;
     }
