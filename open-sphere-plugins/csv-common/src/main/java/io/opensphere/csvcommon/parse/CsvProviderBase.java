@@ -694,7 +694,7 @@ public abstract class CsvProviderBase implements DataElementProvider
                     ptData.setRadius(Double.valueOf(len.getMagnitude()));
                     metaDataProvider.setValue(colName, cellValue);
                 }
-                else if (columnType == ColumnType.LOB)
+                else if (columnType == ColumnType.LOB || (columnType == ColumnType.HEADING && ptData.getLob() == null))
                 {
                     ptData.setLob(Double.valueOf(cellValue));
                     metaDataProvider.setValue(colName, cellValue);

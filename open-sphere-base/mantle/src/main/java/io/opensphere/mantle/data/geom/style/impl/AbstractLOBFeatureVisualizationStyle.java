@@ -530,6 +530,12 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
         return panel;
     }
 
+    @Override
+    public boolean requiresMetaData()
+    {
+        return true;
+    }
+
     /**
      * Helper method for getMiniUIPanel and getUIPanel. Prevents code
      * duplication.
