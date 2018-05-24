@@ -22,6 +22,16 @@
             "linux": {
                 "vmArgs": "-Dopensphere.productionMode=false -Djava.security.policy=\"${workspaceFolder}/open-sphere-base/core/java.policy\" -Djava.library.path=\"${workspaceFolder}/open-sphere-base/core/lib/linux/x86_64\" -Xmx3000m -ea -XX:+AggressiveOpts -XX:+UseG1GC -XX:G1ReservePercent=40 -Dopensphere.version=5.2.4-SNAPSHOT -Dopensphere.useragent=\"OpenSphere Desktop\" -Dmionline.login.disabled=true"
             }
+        },
+        {
+            "type": "java",
+            "name": "Launcher Creator",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "io.opensphere.develop.util.launch.OpenSphereLauncherCreator",
+            "args": "opensphere-desktop"
         }
     ]
 }
