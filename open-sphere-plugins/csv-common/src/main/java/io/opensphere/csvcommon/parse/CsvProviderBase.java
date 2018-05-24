@@ -55,7 +55,7 @@ public abstract class CsvProviderBase implements DataElementProvider
     private static final Logger LOGGER = Logger.getLogger(CsvProviderBase.class);
 
     /** The Constant OUR_DISCARDED_DATAELEMENT. */
-    private static DataElement OUR_DISCARDED_DATAELEMENT = new DefaultDataElement(0);
+    private static final DataElement DISCARDED_DATAELEMENT = new DefaultDataElement(0);
 
     /** A Counter that helps generate ID's for the geometries. */
     private static AtomicLong ourIDCounter = new AtomicLong(1000000);
@@ -327,6 +327,14 @@ public abstract class CsvProviderBase implements DataElementProvider
         return new QuotingBufferedReader(streamReader, quotes, null);
     }
 
+    /**
+     * Sets myTaskActivity to complete when called.
+     */
+    public void setAsDone()
+    {
+        myTaskActivity.setComplete(true);
+    }
+
     @Override
     public DataElement next()
     {
@@ -402,7 +410,7 @@ public abstract class CsvProviderBase implements DataElementProvider
             myNextElementToReturn = null;
             myTaskActivity.setComplete(true);
         }
-        return Utilities.sameInstance(temp, OUR_DISCARDED_DATAELEMENT) ? null : temp;
+        return Utilities.sameInstance(temp, DISCARDED_DATAELEMENT) ? null : temp;
     }
 
     /**
@@ -423,7 +431,7 @@ public abstract class CsvProviderBase implements DataElementProvider
                 myParts = generateParts();
                 if (myParts == null || myParts.length == 0)
                 {
-                    return OUR_DISCARDED_DATAELEMENT;
+                    return DISCARDED_DATAELEMENT;
                 }
 
                 if (myParts.length != myNumColumns)
@@ -439,7 +447,7 @@ public abstract class CsvProviderBase implements DataElementProvider
                         }
                         LOGGER.info(logEntry);
                     }
-                    return OUR_DISCARDED_DATAELEMENT;
+                    return DISCARDED_DATAELEMENT;
                 }
 
                 if (myColumnAnalyzer != null)
@@ -451,7 +459,7 @@ public abstract class CsvProviderBase implements DataElementProvider
                         myParts, metaDataProvider);
                 if (ptData == null)
                 {
-                    de = OUR_DISCARDED_DATAELEMENT;
+                    de = DISCARDED_DATAELEMENT;
                     myDiscardedLineCount++;
                 }
                 else
