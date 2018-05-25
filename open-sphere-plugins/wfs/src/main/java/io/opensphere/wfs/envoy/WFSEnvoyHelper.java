@@ -3,6 +3,7 @@ package io.opensphere.wfs.envoy;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -13,15 +14,13 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
 
+import org.apache.avro.Schema.Field;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.util.Utf8;
 import org.apache.commons.lang3.StringUtils;
@@ -41,7 +40,6 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.xml.NodeIterator;
-import io.opensphere.mantle.crust.SimpleMetaDataProvider;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.LoadsTo;
 import io.opensphere.mantle.data.MapVisualizationType;
@@ -52,6 +50,7 @@ import io.opensphere.mantle.data.element.MetaDataProvider;
 import io.opensphere.mantle.data.element.factory.AvroTimeHelper;
 import io.opensphere.mantle.data.element.factory.DataElementFactory;
 import io.opensphere.mantle.data.element.impl.DefaultMapDataElement;
+import io.opensphere.mantle.data.element.impl.MDILinkedMetaDataProvider;
 import io.opensphere.mantle.data.element.mdfilter.OGCFilterGenerator;
 import io.opensphere.mantle.data.element.mdfilter.OGCFilterParameters;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
@@ -537,8 +536,8 @@ public class WFSEnvoyHelper
         }
         MapGeometrySupport mgs = DataElementFactory.avroObjectToGeom(rec, help);
         DataTypeInfo dti = help.getType();
-        MapDataElement elt = new DefaultMapDataElement(ID_COUNTER.getAndIncrement(), mgs.getTimeSpan(), dti, getAvroMeta(rec),
-                mgs);
+        MetaDataProvider metaData = getAvroMeta(rec, dti.getMetaDataInfo());
+        MapDataElement elt = new DefaultMapDataElement(ID_COUNTER.getAndIncrement(), mgs.getTimeSpan(), dti, metaData, mgs);
         elt.getVisualizationState().setColor(DataElementFactory.avroElementColor(rec, dti));
         return elt;
     }
@@ -547,26 +546,26 @@ public class WFSEnvoyHelper
      * Get the metadata for an Avro record.
      *
      * @param rec GenericRecord
+     * @param metaDataInfo the meta data info
      * @return MetaDataProvider
      */
-    protected MetaDataProvider getAvroMeta(GenericRecord rec)
+    protected MetaDataProvider getAvroMeta(GenericRecord rec, MetaDataInfo metaDataInfo)
     {
-        Map<String, Object> vals = new TreeMap<>();
-        Set<String> cols = new TreeSet<>();
-        rec.getSchema().getFields().stream().map(f -> f.name()).forEach(n ->
+        MetaDataProvider provider = new MDILinkedMetaDataProvider(metaDataInfo);
+        for (Field field : rec.getSchema().getFields())
         {
-            cols.add(n);
-            Object v = rec.get(n);
-            if (v instanceof Utf8)
+            String name = field.name();
+            Object value = rec.get(name);
+            if (value instanceof Utf8)
             {
-                vals.put(n, v.toString());
+                provider.setValue(name, value.toString());
             }
-            else if (v != null)
+            else if (value instanceof Serializable)
             {
-                vals.put(n, v);
+                provider.setValue(name, (Serializable)value);
             }
-        });
-        return new SimpleMetaDataProvider(vals, cols);
+        }
+        return provider;
     }
 
     /**

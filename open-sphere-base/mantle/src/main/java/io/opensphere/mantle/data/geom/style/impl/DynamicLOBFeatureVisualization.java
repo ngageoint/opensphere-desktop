@@ -223,12 +223,6 @@ public class DynamicLOBFeatureVisualization extends AbstractLOBFeatureVisualizat
         return vs;
     }
 
-    @Override
-    public boolean requiresMetaData()
-    {
-        return true;
-    }
-
     /**
      * Sets the lob orientation column key.
      *

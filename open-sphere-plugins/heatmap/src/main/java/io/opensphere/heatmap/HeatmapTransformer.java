@@ -144,8 +144,17 @@ public class HeatmapTransformer extends DefaultTransformer
         OrderParticipantKey orderKey = imageInfo.getDataType().getOrderKey();
         int zOrder = myToolbox.getOrderManagerRegistry().getOrderManager(orderKey).getOrder(orderKey);
         TileRenderProperties renderProperties = new DefaultTileRenderProperties(zOrder, true, false);
-        Constraints constraints = new MutableConstraints(
-                TimeConstraint.getTimeConstraint(imageInfo.getDataType().getTimeExtents().getExtent()), null);
+        Constraints constraints;
+        if (imageInfo.getDataType().getTimeExtents().getTimespans().stream().allMatch(t -> t.isTimeless()))
+        {
+            constraints = null;
+        }
+        else
+        {
+            constraints = new MutableConstraints(
+                    TimeConstraint.getTimeConstraint(imageInfo.getDataType().getTimeExtents().getExtent()), null);
+        }
+
         TileGeometry geom = new TileGeometry(builder, renderProperties, constraints, imageInfo.getDataType().getTypeKey());
         return geom;
     }
