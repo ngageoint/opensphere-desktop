@@ -54,6 +54,9 @@ public class OSMServerSourceControllerTest
      */
     private static final String ourServer = "http://osm.geointservices.io/osm_tiles_pc/{z}/{x}/{y}.png";
 
+    /**
+     * The url used in the server ping.
+     */
     private static final String pingUrlString = "http://osm.geointservices.io/osm_tiles_pc/0/0/0.png";
 
     /**
@@ -107,6 +110,7 @@ public class OSMServerSourceControllerTest
      * Tests handling server activating.
      */
     @Test
+    @SuppressWarnings("unchecked")
     public void testHandleActivateSource()
     {
         EasyMockSupport support = new EasyMockSupport();
@@ -116,7 +120,42 @@ public class OSMServerSourceControllerTest
         createTaskActivity(support, toolbox);
         try
         {
-            createServerPing(support, toolbox);
+            createServerPing(support, toolbox, true);
+        }
+        catch (IOException | URISyntaxException e)
+        {
+            fail("Unexpected exception during simulated server ping mock setup");
+        }
+
+        EasyMock.expect(toolbox.getDataRegistry()).andReturn(registry);
+        EasyMock.expect(registry.addModels(EasyMock.isA(SimpleSessionOnlyCacheDeposit.class))).andAnswer(this::addModelAnswer);
+
+        support.replayAll();
+
+        OSMServerSourceController controller = new OSMServerSourceController();
+        controller.open(toolbox, OSMPlugin.class);
+        UrlDataSource source = new UrlDataSource("Open Street Map", ourServer);
+        controller.handleActivateSource(source);
+
+        support.verifyAll();
+    }
+
+    /**
+     * Tests handling server activating with no server connection.
+     *
+     * Note: The absence of the addModels method call is the verification.
+     */
+    @Test
+    public void testActivationWhileDisconnected()
+    {
+        EasyMockSupport support = new EasyMockSupport();
+
+        DataRegistry registry = createDataRegistry(support);
+        Toolbox toolbox = createToolbox(support, registry);
+        createTaskActivity(support, toolbox);
+        try
+        {
+            createServerPing(support, toolbox, false);
         }
         catch (IOException | URISyntaxException e)
         {
@@ -142,9 +181,11 @@ public class OSMServerSourceControllerTest
         EasyMockSupport support = new EasyMockSupport();
 
         DataRegistry registry = support.createMock(DataRegistry.class);
+        Toolbox toolbox = createToolbox(support, registry);
+
+        EasyMock.expect(toolbox.getDataRegistry()).andReturn(registry);
         EasyMock.expect(registry.removeModels(EasyMock.eq(XYZTileUtils.newLayersCategory(ourServer, OSMUtil.PROVIDER)),
                 EasyMock.eq(false))).andReturn(new long[] {});
-        Toolbox toolbox = createToolbox(support, registry);
 
         support.replayAll();
 
@@ -209,12 +250,9 @@ public class OSMServerSourceControllerTest
      * @param support Used to create the mock.
      * @return The mocked {@link DataRegistry}.
      */
-    @SuppressWarnings("unchecked")
     private DataRegistry createDataRegistry(EasyMockSupport support)
     {
         DataRegistry registry = support.createMock(DataRegistry.class);
-
-        EasyMock.expect(registry.addModels(EasyMock.isA(SimpleSessionOnlyCacheDeposit.class))).andAnswer(this::addModelAnswer);
 
         return registry;
     }
@@ -242,7 +280,6 @@ public class OSMServerSourceControllerTest
         SystemToolbox systemToolbox = support.createMock(SystemToolbox.class);
         EasyMock.expect(toolbox.getSystemToolbox()).andReturn(systemToolbox);
         EasyMock.expect(systemToolbox.getNetworkConfigurationManager()).andReturn(networkConfigManager);
-        EasyMock.expect(toolbox.getDataRegistry()).andReturn(registry);
         EasyMock.expect(toolbox.getPreferencesRegistry()).andReturn(prefsRegistry);
 
         return toolbox;
@@ -251,8 +288,8 @@ public class OSMServerSourceControllerTest
     /**
      * Creates an easy mocked {@link TaskActivity}.
      *
-     * @param support used to create the mock.
-     * @param toolbox mocked system toolbox
+     * @param support Used to create the mock.
+     * @param toolbox Mocked system toolbox
      */
     private void createTaskActivity(EasyMockSupport support, Toolbox toolbox)
     {
@@ -269,7 +306,7 @@ public class OSMServerSourceControllerTest
     /**
      * Answer for the addTaskActivity call on the mocked {@link MenuBarRegistry}.
      *
-     * @param activities The list to add the added {@link TaskActivity} to.
+     * @param activities The list for which to add the {@link TaskActivity}.
      * @return Null
      */
     private Void addTaskActivityAnswer(List<TaskActivity> activities)
@@ -284,12 +321,13 @@ public class OSMServerSourceControllerTest
     /**
      * Creates an easy mock of the {@link XYZTileEnvoy} ping method.
      *
-     * @param support used to create the mock
-     * @param toolbox mocked system toolbox
+     * @param support Used to create the mock
+     * @param toolbox Mocked system toolbox
+     * @param success Controls whether to simulate a successful or failed server ping
      * @throws IOException exception during server communication
      * @throws URISyntaxException exception while converting URL to URI
      */
-    private void createServerPing(EasyMockSupport support, Toolbox toolbox) throws IOException, URISyntaxException
+    private void createServerPing(EasyMockSupport support, Toolbox toolbox, boolean success) throws IOException, URISyntaxException
     {
         ServerProviderRegistry serverRegistry = support.createMock(ServerProviderRegistry.class);
         HttpServer server = support.createMock(HttpServer.class);
@@ -301,18 +339,28 @@ public class OSMServerSourceControllerTest
         EasyMock.expect(serverRegistry.getProvider(HttpServer.class)).andReturn(serverProvider);
         EasyMock.expect(serverProvider.getServer(EasyMockHelper.eq(url))).andReturn(server);
         server.sendHead(EasyMock.isA(URL.class), EasyMock.isA(ResponseValues.class));
-        EasyMock.expectLastCall().andAnswer(() -> sendHeadAnswer());
+        EasyMock.expectLastCall().andAnswer(() -> sendHeadAnswer(success));
     }
 
     /**
      * Creates a mocked server response during the ping.
      *
-     * @return null
+     * @param success Controls whether to simulate a successful or failed server ping
+     * @return Null
+     * @throws IOException exception during server communication
      */
-    private Void sendHeadAnswer()
+    private Void sendHeadAnswer(boolean success) throws IOException
     {
         ResponseValues respVal = (ResponseValues)EasyMock.getCurrentArguments()[1];
-        respVal.setResponseCode(HttpURLConnection.HTTP_OK);
+
+        if (success)
+        {
+            respVal.setResponseCode(HttpURLConnection.HTTP_OK);
+        }
+        else
+        {
+            throw new IOException();
+        }
 
         return null;
     }
