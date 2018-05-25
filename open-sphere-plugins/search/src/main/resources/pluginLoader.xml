@@ -12,7 +12,7 @@
         </pluginProperty>
         <pluginProperty>
             <key>menuButtonLabel</key>
-            <value>SearchGoto</value>
+            <value>Search</value>
         </pluginProperty>
     </pluginLoaderData>
 </pluginLoaderCollection>

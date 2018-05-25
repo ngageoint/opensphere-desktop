@@ -467,7 +467,7 @@ public class ToolbarManager
         JPanel panel = centerPanel;
         for (ToolbarComponent tbc : myNorthToolbarComponents)
         {
-            if (tbc.getName().equals("SearchGoto"))
+            if (tbc.getName().equals("Search"))
             {
                 panel = eastPanel;
             }
