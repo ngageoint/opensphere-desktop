@@ -55,7 +55,7 @@ public class ActiveDataMouseListener implements MouseListener
                 boolean wentToView = gotoBookmarkView(dataType);
                 if (!wentToView)
                 {
-                    DataTypeActionUtils.gotoDataType(dataType, myToolbox.getMapManager().getStandardViewer());
+                    DataTypeActionUtils.gotoDataType(dataType, myToolbox);
                 }
             }
         }
