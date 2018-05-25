@@ -80,6 +80,6 @@ public class OSHDataGroupInfoAssistant extends DefaultDataGroupInfoAssistant
     public void gotoLocation(DataGroupInfo dataGroup)
     {
         DataTypeInfo dataType = dataGroup.getMembers(false).iterator().next();
-        DataTypeActionUtils.gotoDataType(dataType, myToolbox.getMapManager().getStandardViewer());
+        DataTypeActionUtils.gotoDataType(dataType, myToolbox);
     }
 }
