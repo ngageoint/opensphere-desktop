@@ -53,6 +53,20 @@ public class SearchResultHudDialog extends AbstractInternalFrame
         setResizable(true);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
 
+        // set up default height and width:
+        int width = 550;
+        int height = 850;
+        int xposition = 0;
+        int yposition = 0;
+        if (getParent() != null)
+        {
+            height = getParent().getHeight() - 187;
+            xposition = getParent().getWidth() - getWidth();
+        }
+        setSize(width, height);
+        setLocation(xposition, yposition);
+
+
         myResultPanel = new SearchDialogPanel(toolbox, searchModel);
         myResultPanelContainer = new JFXPanel();
         Scene scene = new Scene(myResultPanel, 600, 800);
