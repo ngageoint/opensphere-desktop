@@ -94,11 +94,11 @@ public class Criteria extends FilterItem implements DataFilterCriteria
     {
         if (myOperator == Conditional.EMPTY)
         {
-            return myField + " = ''";
+            return myField + " IS NULL";
         }
         if (myOperator == Conditional.NOT_EMPTY)
         {
-            return myField + " <> ''";
+            return myField + " IS NOT NULL";
         }
         if (myOperator == Conditional.NEQ)
         {
@@ -117,8 +117,9 @@ public class Criteria extends FilterItem implements DataFilterCriteria
     }
 
     /**
-     * Construct an SQL literal from a String that may be a number.  Numerical
+     * Construct an SQL literal from a String that may be a number. Numerical
      * literals are left unquoted, while all others are quoted.
+     *
      * @param s an input String
      * @return an SQL literal
      */
@@ -136,9 +137,10 @@ public class Criteria extends FilterItem implements DataFilterCriteria
     }
 
     /**
-     * Convert an arbitrary String for into an SQL literal.  The value is
+     * Convert an arbitrary String for into an SQL literal. The value is
      * enclosed in single quotes and any embedded single quotes are escaped as
      * required within SQL.
+     *
      * @param s the unquoted value
      * @return the quoted SQL literal
      */
@@ -154,6 +156,7 @@ public class Criteria extends FilterItem implements DataFilterCriteria
     /**
      * Test whether the provided String contains a number (integer or
      * floating-point) by attempting to parse it as a Double.
+     *
      * @param s an input String
      * @return true if and only if <i>s</i> is a number
      */
