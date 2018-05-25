@@ -3,28 +3,43 @@ package io.opensphere.osm.server;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.List;
 import java.util.ServiceLoader;
 
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import io.opensphere.core.NetworkConfigurationManager;
 import io.opensphere.core.SystemToolbox;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.cache.SimpleSessionOnlyCacheDeposit;
+import io.opensphere.core.control.ui.MenuBarRegistry;
+import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.data.DataRegistry;
 import io.opensphere.core.data.util.DataModelCategory;
+import io.opensphere.core.matchers.EasyMockHelper;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.server.HttpServer;
+import io.opensphere.core.server.ResponseValues;
+import io.opensphere.core.server.ServerProvider;
+import io.opensphere.core.server.ServerProviderRegistry;
+import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.taskactivity.TaskActivity;
 import io.opensphere.mantle.datasources.impl.UrlDataSource;
 import io.opensphere.mantle.datasources.impl.UrlSourceConfig;
 import io.opensphere.osm.OSMPlugin;
 import io.opensphere.osm.util.OSMUtil;
 import io.opensphere.server.customization.ServerCustomization;
 import io.opensphere.server.toolbox.ServerSourceController;
+import io.opensphere.xyztile.envoy.XYZTileEnvoy;
 import io.opensphere.xyztile.model.Projection;
 import io.opensphere.xyztile.model.XYZTileLayerInfo;
 import io.opensphere.xyztile.util.XYZTileUtils;
@@ -38,6 +53,8 @@ public class OSMServerSourceControllerTest
      * The test server url.
      */
     private static final String ourServer = "http://osm.geointservices.io/osm_tiles_pc/{z}/{x}/{y}.png";
+
+    private static final String pingUrlString = "http://osm.geointservices.io/osm_tiles_pc/0/0/0.png";
 
     /**
      * Tests creating a new source.
@@ -89,7 +106,6 @@ public class OSMServerSourceControllerTest
     /**
      * Tests handling server activating.
      */
-    @Ignore("Ignore while new developer learns JUnit and EasyMock")
     @Test
     public void testHandleActivateSource()
     {
@@ -97,6 +113,15 @@ public class OSMServerSourceControllerTest
 
         DataRegistry registry = createDataRegistry(support);
         Toolbox toolbox = createToolbox(support, registry);
+        createTaskActivity(support, toolbox);
+        try
+        {
+            createServerPing(support, toolbox);
+        }
+        catch (IOException | URISyntaxException e)
+        {
+            fail("Unexpected exception during simulated server ping mock setup");
+        }
 
         support.replayAll();
 
@@ -221,5 +246,74 @@ public class OSMServerSourceControllerTest
         EasyMock.expect(toolbox.getPreferencesRegistry()).andReturn(prefsRegistry);
 
         return toolbox;
+    }
+
+    /**
+     * Creates an easy mocked {@link TaskActivity}.
+     *
+     * @param support used to create the mock.
+     * @param toolbox mocked system toolbox
+     */
+    private void createTaskActivity(EasyMockSupport support, Toolbox toolbox)
+    {
+        UIRegistry uiReg = support.createMock(UIRegistry.class);
+        MenuBarRegistry menuBarReg = support.createMock(MenuBarRegistry.class);
+        List<TaskActivity> activities = New.list();
+
+        EasyMock.expect(toolbox.getUIRegistry()).andReturn(uiReg);
+        EasyMock.expect(uiReg.getMenuBarRegistry()).andReturn(menuBarReg);
+        menuBarReg.addTaskActivity(EasyMock.isA(TaskActivity.class));
+        EasyMock.expectLastCall().andAnswer(() -> addTaskActivityAnswer(activities));
+    }
+
+    /**
+     * Answer for the addTaskActivity call on the mocked {@link MenuBarRegistry}.
+     *
+     * @param activities The list to add the added {@link TaskActivity} to.
+     * @return Null
+     */
+    private Void addTaskActivityAnswer(List<TaskActivity> activities)
+    {
+        TaskActivity activity = (TaskActivity)EasyMock.getCurrentArguments()[0];
+        assertTrue(activity.isActive());
+        activities.add(activity);
+
+        return null;
+    }
+
+    /**
+     * Creates an easy mock of the {@link XYZTileEnvoy} ping method.
+     *
+     * @param support used to create the mock
+     * @param toolbox mocked system toolbox
+     * @throws IOException exception during server communication
+     * @throws URISyntaxException exception while converting URL to URI
+     */
+    private void createServerPing(EasyMockSupport support, Toolbox toolbox) throws IOException, URISyntaxException
+    {
+        ServerProviderRegistry serverRegistry = support.createMock(ServerProviderRegistry.class);
+        HttpServer server = support.createMock(HttpServer.class);
+        @SuppressWarnings("unchecked")
+        ServerProvider<HttpServer> serverProvider = support.createMock(ServerProvider.class);
+        URL url = new URL(pingUrlString);
+
+        EasyMock.expect(toolbox.getServerProviderRegistry()).andReturn(serverRegistry);
+        EasyMock.expect(serverRegistry.getProvider(HttpServer.class)).andReturn(serverProvider);
+        EasyMock.expect(serverProvider.getServer(EasyMockHelper.eq(url))).andReturn(server);
+        server.sendHead(EasyMock.isA(URL.class), EasyMock.isA(ResponseValues.class));
+        EasyMock.expectLastCall().andAnswer(() -> sendHeadAnswer());
+    }
+
+    /**
+     * Creates a mocked server response during the ping.
+     *
+     * @return null
+     */
+    private Void sendHeadAnswer()
+    {
+        ResponseValues respVal = (ResponseValues)EasyMock.getCurrentArguments()[1];
+        respVal.setResponseCode(HttpURLConnection.HTTP_OK);
+
+        return null;
     }
 }
