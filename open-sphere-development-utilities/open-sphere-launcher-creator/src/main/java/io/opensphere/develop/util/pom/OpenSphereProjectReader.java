@@ -23,12 +23,14 @@ public class OpenSphereProjectReader extends AbstractCompositeProjectReader
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.develop.util.pom.AbstractCompositeProjectReader#readProject()
+     * @param projectNames the name of the project folder. This should be an
+     *            array of >=1.
+     * @see io.opensphere.develop.util.pom.AbstractCompositeProjectReader#readProject(String...)
      */
     @Override
-    public Project readProject()
+    public Project readProject(String... projectNames)
     {
-        return readProjectImpl("OpenSphereDesktop", " -Dmionline.login.disabled=true",
-                "open-sphere-config/default-config/override-jar", null);
+        return readProjectImpl(projectNames[0], " -Dmionline.login.disabled=true", null,
+                "open-sphere-config/default-config/override-jar");
     }
 }

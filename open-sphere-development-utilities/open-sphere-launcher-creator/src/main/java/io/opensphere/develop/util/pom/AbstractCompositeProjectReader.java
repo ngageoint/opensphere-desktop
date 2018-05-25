@@ -34,9 +34,10 @@ public abstract class AbstractCompositeProjectReader
     /**
      * Reads the project specified by the concrete reader implementation.
      *
+     * @param projectNames the name(s) of the project folder
      * @return the project read from the POM.
      */
-    public abstract Project readProject();
+    public abstract Project readProject(String... projectNames);
 
     /**
      * Gets the value of the {@link #myActiveProfiles} field.
@@ -57,13 +58,13 @@ public abstract class AbstractCompositeProjectReader
      *            {@link CompositeProjectModel#getRootPath()}.
      * @param additionalVmArgs the additional VM Arguments to supply to the
      *            generated launcher (these will be used in the output).
+     * @param suffix the launcher suffix to apply to the generated output.
      * @param additionalClasspath the additional classpath items to supply to
      *            the generated launcher (these will be used in the output).
-     * @param suffix the launcher suffix to apply to the generated output.
      * @return a {@link Project} object generated using the supplied
      *         information.
      */
-    protected Project readProjectImpl(String relativePath, String additionalVmArgs, String additionalClasspath, String suffix)
+    protected Project readProjectImpl(String relativePath, String additionalVmArgs, String suffix, String... additionalClasspath)
     {
         Project project = new Project(Paths.get(myCompositeProjectModel.getRootPath().toString(), relativePath),
                 myCompositeProjectModel.getModuleRegistry(), getExcludedArtifactIds());

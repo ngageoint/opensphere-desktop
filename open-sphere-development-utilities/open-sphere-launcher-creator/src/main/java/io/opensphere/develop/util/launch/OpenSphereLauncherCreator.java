@@ -27,12 +27,12 @@ public final class OpenSphereLauncherCreator
     /**
      * The writer used to create the eclipse launcher file.
      */
-    private ProjectLauncherWriter myWriter;
+    private final ProjectLauncherWriter myWriter;
 
     /**
      * The project reader used to parse the project file(s).
      */
-    private AbstractCompositeProjectReader myProjectReader;
+    private final AbstractCompositeProjectReader myProjectReader;
 
     /**
      * Creates a new launcher creator.
@@ -53,29 +53,38 @@ public final class OpenSphereLauncherCreator
      */
     public static void main(String[] args)
     {
+        if (args.length < 1)
+        {
+            LOG.error("arguments: <opensphere directory name> [<profile>]");
+            return;
+        }
+
+        String projName = args[0];
         String root = System.getProperty("user.dir");
-        root = root.substring(0, root.indexOf("OpenSphereDesktop"));
+        root = root.substring(0, root.indexOf(projName));
 
         String profile = "unclass";
-        if (args.length == 1)
+        if (args.length == 2)
         {
-            profile = args[0];
+            profile = args[1];
         }
 
         CompositeProjectModel compositeProjectModel = new CompositeProjectModel(Paths.get(root));
 
         OpenSphereLauncherCreator creator = new OpenSphereLauncherCreator(
                 new OpenSphereProjectReader(compositeProjectModel, new HashSet<>(Arrays.asList(profile.split(",")))));
-        creator.processProjects();
+        creator.processProjects(projName);
 
     }
 
     /**
      * Reads projects using the project reader, and writes the
+     *
+     * @param projectName the name of the project folder
      */
-    public void processProjects()
+    public void processProjects(String projectName)
     {
-        Project project = myProjectReader.readProject();
+        Project project = myProjectReader.readProject(projectName);
 
         CompositeProjectModel compositeProjectModel = myProjectReader.getCompositeProjectModel();
 
