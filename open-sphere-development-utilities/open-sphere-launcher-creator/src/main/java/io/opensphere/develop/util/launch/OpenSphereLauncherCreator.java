@@ -55,7 +55,7 @@ public final class OpenSphereLauncherCreator
     {
         if (args.length < 1)
         {
-            LOG.error("arguments: <opensphere root directory name> [<profile>]");
+            LOG.error("arguments: <opensphere directory name> [<profile>]");
             return;
         }
 
