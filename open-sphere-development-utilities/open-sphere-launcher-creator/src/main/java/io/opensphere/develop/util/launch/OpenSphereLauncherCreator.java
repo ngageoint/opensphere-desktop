@@ -61,8 +61,6 @@ public final class OpenSphereLauncherCreator
 
         String projName = args[0];
         String root = System.getProperty("user.dir");
-        System.out.println(root);
-
         root = root.substring(0, root.indexOf(projName));
 
         String profile = "unclass";
