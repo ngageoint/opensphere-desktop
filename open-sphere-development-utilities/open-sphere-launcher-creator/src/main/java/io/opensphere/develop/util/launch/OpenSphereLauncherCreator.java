@@ -27,12 +27,12 @@ public final class OpenSphereLauncherCreator
     /**
      * The writer used to create the eclipse launcher file.
      */
-    private ProjectLauncherWriter myWriter;
+    private final ProjectLauncherWriter myWriter;
 
     /**
      * The project reader used to parse the project file(s).
      */
-    private AbstractCompositeProjectReader myProjectReader;
+    private final AbstractCompositeProjectReader myProjectReader;
 
     /**
      * Creates a new launcher creator.
@@ -55,7 +55,7 @@ public final class OpenSphereLauncherCreator
     {
         if (args.length < 1)
         {
-            LOG.error("arguments: <project root directory name> [profile]");
+            LOG.error("arguments: <opensphere root directory name> [<profile>]");
             return;
         }
 
@@ -81,7 +81,7 @@ public final class OpenSphereLauncherCreator
 
     /**
      * Reads projects using the project reader, and writes the
-     * 
+     *
      * @param projectName the name of the project folder
      */
     public void processProjects(String projectName)

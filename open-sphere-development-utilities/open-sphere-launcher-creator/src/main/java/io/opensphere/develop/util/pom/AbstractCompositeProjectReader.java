@@ -34,10 +34,10 @@ public abstract class AbstractCompositeProjectReader
     /**
      * Reads the project specified by the concrete reader implementation.
      *
-     * @param projectName the name of the project folder
+     * @param projectNames the name(s) of the project folder
      * @return the project read from the POM.
      */
-    public abstract Project readProject(String projectName);
+    public abstract Project readProject(String... projectNames);
 
     /**
      * Gets the value of the {@link #myActiveProfiles} field.
