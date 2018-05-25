@@ -53,12 +53,12 @@ public class OSMServerSourceControllerTest
     /**
      * The test server url.
      */
-    private static final String ourServer = "http://osm.geointservices.io/osm_tiles_pc/{z}/{x}/{y}.png";
+    private static final String OUR_SERVER = "http://osm.geointservices.io/osm_tiles_pc/{z}/{x}/{y}.png";
 
     /**
      * The url used in the server ping.
      */
-    private static final String pingUrlString = "http://osm.geointservices.io/osm_tiles_pc/0/0/0.png";
+    private static final String PING_URL_STRING = "http://osm.geointservices.io/osm_tiles_pc/0/0/0.png";
 
     /**
      * Tests creating a new source.
@@ -70,7 +70,7 @@ public class OSMServerSourceControllerTest
         UrlDataSource source = (UrlDataSource)controller.createNewSource("New Server");
 
         assertEquals("Open Street Map", source.getName());
-        assertEquals(ourServer, source.getURL());
+        assertEquals(OUR_SERVER, source.getURL());
     }
 
     /**
@@ -81,7 +81,7 @@ public class OSMServerSourceControllerTest
     {
         OSMServerSourceController controller = new OSMServerSourceController();
 
-        assertEquals(ourServer, controller.getExampleUrl());
+        assertEquals(OUR_SERVER, controller.getExampleUrl());
     }
 
     /**
@@ -136,7 +136,7 @@ public class OSMServerSourceControllerTest
 
         OSMServerSourceController controller = new OSMServerSourceController();
         controller.open(toolbox, OSMPlugin.class);
-        UrlDataSource source = new UrlDataSource("Open Street Map", ourServer);
+        UrlDataSource source = new UrlDataSource("Open Street Map", OUR_SERVER);
         controller.handleActivateSource(source);
 
         support.verifyAll();
@@ -168,7 +168,7 @@ public class OSMServerSourceControllerTest
 
         OSMServerSourceController controller = new OSMServerSourceController();
         controller.open(toolbox, OSMPlugin.class);
-        UrlDataSource source = new UrlDataSource("Open Street Map", ourServer);
+        UrlDataSource source = new UrlDataSource("Open Street Map", OUR_SERVER);
         controller.handleActivateSource(source);
 
         support.verifyAll();
@@ -186,14 +186,14 @@ public class OSMServerSourceControllerTest
         Toolbox toolbox = createToolbox(support, registry);
 
         EasyMock.expect(toolbox.getDataRegistry()).andReturn(registry);
-        EasyMock.expect(registry.removeModels(EasyMock.eq(XYZTileUtils.newLayersCategory(ourServer, OSMUtil.PROVIDER)),
+        EasyMock.expect(registry.removeModels(EasyMock.eq(XYZTileUtils.newLayersCategory(OUR_SERVER, OSMUtil.PROVIDER)),
                 EasyMock.eq(false))).andReturn(new long[] {});
 
         support.replayAll();
 
         OSMServerSourceController controller = new OSMServerSourceController();
         controller.open(toolbox, OSMPlugin.class);
-        UrlDataSource source = new UrlDataSource("Open Street Map", ourServer);
+        UrlDataSource source = new UrlDataSource("Open Street Map", OUR_SERVER);
         controller.handleDeactivateSource(source);
 
         support.verifyAll();
@@ -229,7 +229,7 @@ public class OSMServerSourceControllerTest
         @SuppressWarnings("unchecked")
         SimpleSessionOnlyCacheDeposit<XYZTileLayerInfo> deposit = (SimpleSessionOnlyCacheDeposit<XYZTileLayerInfo>)EasyMock
                 .getCurrentArguments()[0];
-        DataModelCategory expectedCat = XYZTileUtils.newLayersCategory(ourServer, OSMUtil.PROVIDER);
+        DataModelCategory expectedCat = XYZTileUtils.newLayersCategory(OUR_SERVER, OSMUtil.PROVIDER);
         assertEquals(expectedCat, deposit.getCategory());
         assertEquals(XYZTileUtils.LAYERS_DESCRIPTOR, deposit.getAccessors().iterator().next().getPropertyDescriptor());
         XYZTileLayerInfo layer = deposit.getInput().iterator().next();
@@ -240,7 +240,7 @@ public class OSMServerSourceControllerTest
         assertEquals(2, layer.getNumberOfTopLevels());
         assertFalse(layer.isTms());
         assertEquals(2, layer.getMinZoomLevel());
-        assertEquals(ourServer, layer.getServerUrl());
+        assertEquals(OUR_SERVER, layer.getServerUrl());
         assertEquals("Open Street Map", layer.getServerInfo().getServerName());
 
         return new long[] { 0 };
@@ -335,7 +335,7 @@ public class OSMServerSourceControllerTest
         HttpServer server = support.createMock(HttpServer.class);
         @SuppressWarnings("unchecked")
         ServerProvider<HttpServer> serverProvider = support.createMock(ServerProvider.class);
-        URL url = new URL(pingUrlString);
+        URL url = new URL(PING_URL_STRING);
 
         EasyMock.expect(toolbox.getServerProviderRegistry()).andReturn(serverRegistry);
         EasyMock.expect(serverRegistry.getProvider(HttpServer.class)).andReturn(serverProvider);
