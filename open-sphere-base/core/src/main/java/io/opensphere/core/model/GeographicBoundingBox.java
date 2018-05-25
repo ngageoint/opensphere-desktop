@@ -172,6 +172,14 @@ public class GeographicBoundingBox implements BoundingBox<GeographicPosition>, C
         return merge(box1, box2, box1.getAltitudeReference());
     }
 
+    /**
+     * Create a new geographic bounding box that merges the supplied boxes. The
+     * result will have an altitude of 0 using the reference level of the input
+     * boxes. If the reference levels do not match, an exception is thrown.
+     *
+     * @param boxes the collection of bounding boxes to merge.
+     * @return The union of the supplied bounding boxes.
+     */
     public static GeographicBoundingBox merge(Collection<GeographicBoundingBox> boxes)
     {
         GeographicBoundingBox mergedBox = null;
@@ -542,10 +550,7 @@ public class GeographicBoundingBox implements BoundingBox<GeographicPosition>, C
         {
             return average;
         }
-        else
-        {
-            return average - Constants.HALF_CIRCLE_DEGREES;
-        }
+        return average - Constants.HALF_CIRCLE_DEGREES;
     }
 
     /**
