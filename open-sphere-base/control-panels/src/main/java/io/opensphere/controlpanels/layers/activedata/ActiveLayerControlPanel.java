@@ -2,6 +2,7 @@ package io.opensphere.controlpanels.layers.activedata;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -842,10 +843,12 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         getProviderPanel().removeAll();
         GridBagPanel providerPanel = new GridBagPanel();
         JLabel textField = new JLabel("Unique ID Column: ");
-        uniqueProvider.setSize(35, 24);
         providerPanel.add(textField);
         providerPanel.fillHorizontal();
+
+        uniqueProvider.setMinimumSize(new Dimension(100, 24));
         providerPanel.add(uniqueProvider);
+
         getProviderPanel().setVisible(true);
         getProviderPanel().add(providerPanel);
         getProviderPanel().revalidate();
