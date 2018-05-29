@@ -85,10 +85,10 @@
 			<groupId>io.open-sphere.plugins</groupId>
 			<artifactId>csv</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>io.open-sphere.plugins</groupId>
-            <artifactId>feature-actions</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>io.open-sphere.plugins</groupId>
+			<artifactId>feature-actions</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>io.open-sphere.plugins</groupId>
 			<artifactId>filter-builder</artifactId>
@@ -115,6 +115,10 @@
 		</dependency>
 		<dependency>
 			<groupId>io.open-sphere.plugins</groupId>
+			<artifactId>infinity</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.open-sphere.plugins</groupId>
 			<artifactId>kml</artifactId>
 		</dependency>
 		<dependency>
@@ -122,8 +126,8 @@
 			<artifactId>mapbox</artifactId>
 		</dependency>
 		<dependency>
-				<groupId>io.open-sphere.plugins</groupId>
-				<artifactId>merge</artifactId>
+			<groupId>io.open-sphere.plugins</groupId>
+			<artifactId>merge</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.open-sphere.plugins</groupId>
@@ -173,9 +177,9 @@
 			<groupId>io.open-sphere.plugins</groupId>
 			<artifactId>wps</artifactId>
 		</dependency>
-        <dependency>
-		    <groupId>com.sun.xml.bind</groupId>
-		    <artifactId>jaxb-impl</artifactId>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
 		</dependency>
 	</dependencies>
 </project>
