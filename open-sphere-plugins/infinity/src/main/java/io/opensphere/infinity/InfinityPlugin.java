@@ -10,7 +10,7 @@ import io.opensphere.core.PluginLoaderData;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.api.adapter.AbstractServicePlugin;
 import io.opensphere.core.event.EventManagerListenerHandle;
-import io.opensphere.core.util.AwesomeIcon;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.Service;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.GenericFontIcon;
@@ -51,7 +51,7 @@ public class InfinityPlugin extends AbstractServicePlugin
                     }
                     if (assistant instanceof DefaultDataTypeInfoAssistant)
                     {
-                        Icon icon = new GenericFontIcon(AwesomeIcon.ICON_INFINITY, Color.WHITE);
+                        Icon icon = new GenericFontIcon(AwesomeIconSolid.INFINITY, Color.WHITE);
                         ((DefaultDataTypeInfoAssistant)assistant).setLayerIcons(Collections.singletonList(icon));
                     }
                 }
