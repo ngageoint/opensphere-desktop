@@ -79,8 +79,8 @@ public class SearchResultHudDialog extends AbstractInternalFrame
         myResultPanel = new SearchDialogPanel(toolbox, searchModel);
         myResultPanelContainer = new JFXPanel();
 
-        Scene scene = new Scene(myResultPanel, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        myResultPanelContainer.setScene(FXUtilities.addDesktopStyle(scene));
+        Scene scene = FXUtilities.addDesktopStyle(new Scene(myResultPanel, DEFAULT_WIDTH, DEFAULT_HEIGHT));
+        FXUtilities.runOnFXThreadAndWait(() -> myResultPanelContainer.setScene(scene));
 
         setDefaultCloseOperation(HIDE_ON_CLOSE);
 
