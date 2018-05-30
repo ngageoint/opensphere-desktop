@@ -597,17 +597,30 @@ public final class FXUtilities
      */
     private static void addDesktopStyle(ObservableList<String> stylesheets)
     {
-        final URL fontUrl = FXUtilities.class.getResource("/fonts/fontawesome-webfont.ttf");
+        loadFont("FontAwesome Solid", "/fonts/fa-solid-900.ttf");
+        loadFont("FontAwesome Regular", "/fonts/fa-regular-400.ttf");
+        loadFont("FontAwesome Brands", "/fonts/fa-brands-400.ttf");
+
+        stylesheets.add(FXUtilities.class.getResource("/styles/opensphere.css").toExternalForm());
+    }
+
+    /**
+     * Loads the supplied font package for use in glyphs.
+     *
+     * @param packageName the human readable name of the font package.
+     * @param fontPath the relative path of the font TTF file.
+     */
+    private static void loadFont(String packageName, String fontPath)
+    {
+        final URL fontUrl = FXUtilities.class.getResource(fontPath);
         if (fontUrl != null)
         {
             Font.loadFont(fontUrl.toExternalForm(), 12);
         }
         else
         {
-            LOG.warn("Unable to load font-awesome package.");
+            LOG.warn("Unable to load " + packageName + " package.");
         }
-
-        stylesheets.add(FXUtilities.class.getResource("/styles/opensphere.css").toExternalForm());
     }
 
     /**

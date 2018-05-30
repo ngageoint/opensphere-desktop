@@ -28,7 +28,7 @@ import io.opensphere.core.appl.versions.AutoUpdateToolboxUtils;
 import io.opensphere.core.appl.versions.controller.AutoUpdateController;
 import io.opensphere.core.appl.versions.model.AutoUpdatePreferenceKeys;
 import io.opensphere.core.appl.versions.model.AutoUpdatePreferences;
-import io.opensphere.core.util.AwesomeIcon;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.util.swing.GridBagPanel;
@@ -137,7 +137,7 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         if (!isPreferred)
         {
             box.add(Box.createHorizontalGlue());
-            JButton deleteButton = new JButton(new GenericFontIcon(AwesomeIcon.ICON_TRASH_O, Color.WHITE));
+            JButton deleteButton = new JButton(new GenericFontIcon(AwesomeIconSolid.TRASH_ALT, Color.WHITE));
             deleteButton.setBackground(Color.RED);
             box.add(deleteButton);
             deleteButton.addActionListener(e -> deleteVersion(version, box, deleteButton));

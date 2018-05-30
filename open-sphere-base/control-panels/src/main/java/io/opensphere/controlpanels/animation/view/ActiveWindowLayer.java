@@ -41,7 +41,7 @@ import io.opensphere.core.units.duration.Milliseconds;
 import io.opensphere.core.units.duration.Months;
 import io.opensphere.core.units.duration.Weeks;
 import io.opensphere.core.units.duration.Years;
-import io.opensphere.core.util.AwesomeIcon;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.CalendarUtilities;
 import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.ObservableValue;
@@ -195,18 +195,18 @@ class ActiveWindowLayer extends CompositeLayer
             {
                 JMenuItem skipMenuItem = new JMenuItem(
                         new IntervalAction("Skip active span", myAnimationModel.getSkippedIntervals(), myTimeModel));
-                skipMenuItem.setIcon(new GenericFontIcon(AwesomeIcon.ICON_BAN, Color.RED));
+                skipMenuItem.setIcon(new GenericFontIcon(AwesomeIconSolid.BAN, Color.RED));
                 menuItems.add(skipMenuItem);
 
                 JMenuItem holdMenuItem = new JMenuItem(
                         new IntervalAction("Hold active span", myAnimationModel.getHeldIntervals(), myTimeModel));
-                holdMenuItem.setIcon(new GenericFontIcon(AwesomeIcon.ICON_HAND_GRAB_O, Color.WHITE));
+                holdMenuItem.setIcon(new GenericFontIcon(AwesomeIconSolid.HAND_ROCK, Color.WHITE));
                 menuItems.add(holdMenuItem);
             }
         }
 
         JMenu zoomMenu = new JMenu("Zoom to");
-        zoomMenu.setIcon(new GenericFontIcon(AwesomeIcon.ICON_CROP, Color.WHITE));
+        zoomMenu.setIcon(new GenericFontIcon(AwesomeIconSolid.CROP, Color.WHITE));
         zoomMenu.add(new JSeparator());
 
         Calendar cal = Calendar.getInstance();
