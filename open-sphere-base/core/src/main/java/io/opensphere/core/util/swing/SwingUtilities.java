@@ -28,7 +28,17 @@ public final class SwingUtilities
     /**
      * The {@link Font} object in which the font-awesome package is contained.
      */
-    public static final Font FONT_AWESOME_FONT = getFontAwesomeFont();
+    public static final Font FONT_AWESOME_SOLID_FONT = getFontAwesomeSolidFont();
+
+    /**
+     * The {@link Font} object in which the font-awesome package is contained.
+     */
+    public static final Font FONT_AWESOME_REGULAR_FONT = getFontAwesomeRegularFont();
+
+    /**
+     * The {@link Font} object in which the font-awesome package is contained.
+     */
+    public static final Font FONT_AWESOME_BRANDS_FONT = getFontAwesomeBrandsFont();
 
     /**
      * The {@link Font} object in which the govicons package is contained.
@@ -117,9 +127,31 @@ public final class SwingUtilities
      *
      * @return the {@link Font} object containing the font-awesome icons.
      */
-    public static Font getFontAwesomeFont()
+    public static Font getFontAwesomeSolidFont()
     {
-        return getFont("/fonts/fontawesome-webfont.ttf");
+        return getFont("/fonts/fa-solid-900.ttf");
+    }
+
+    /**
+     * Creates the font-awesome {@link Font} object, loading all icons contained
+     * within the package.
+     *
+     * @return the {@link Font} object containing the font-awesome icons.
+     */
+    public static Font getFontAwesomeRegularFont()
+    {
+        return getFont("/fonts/fa-regular-400.ttf");
+    }
+
+    /**
+     * Creates the font-awesome {@link Font} object, loading all icons contained
+     * within the package.
+     *
+     * @return the {@link Font} object containing the font-awesome icons.
+     */
+    public static Font getFontAwesomeBrandsFont()
+    {
+        return getFont("/fonts/fa-brands-400.ttf");
     }
 
     /**

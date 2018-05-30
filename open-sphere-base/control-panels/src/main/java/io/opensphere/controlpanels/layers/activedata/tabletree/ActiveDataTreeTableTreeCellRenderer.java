@@ -16,7 +16,7 @@ import javax.swing.tree.TreePath;
 import io.opensphere.controlpanels.layers.prefs.DataDiscoveryPreferences;
 import io.opensphere.controlpanels.layers.util.ClockAndOrColorLabel;
 import io.opensphere.controlpanels.layers.util.FeatureTypeLabel;
-import io.opensphere.core.util.AwesomeIcon;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.util.swing.tree.ButtonModelPayload;
@@ -261,7 +261,7 @@ public class ActiveDataTreeTableTreeCellRenderer extends TreeTableTreeCellRender
         if (pDataTypeInfo.getMapVisualizationInfo() != null
                 && pDataTypeInfo.getMapVisualizationInfo().getVisualizationType() == MapVisualizationType.PROCESS_RESULT_ELEMENTS)
         {
-            Icon icon = new GenericFontIcon(AwesomeIcon.ICON_FLASK, Color.WHITE, 14);
+            Icon icon = new GenericFontIcon(AwesomeIconSolid.FLASK, Color.WHITE, 14);
             myProcessLabel.setIcon(icon);
             pPanel.add(myProcessLabel);
             addComponentWidth(myProcessLabel);

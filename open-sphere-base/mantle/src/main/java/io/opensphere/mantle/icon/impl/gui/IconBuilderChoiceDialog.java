@@ -14,7 +14,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.ListCellRenderer;
 
-import io.opensphere.core.util.AwesomeIcon;
+import io.opensphere.core.util.AwesomeIconRegular;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.FontIconEnum;
 import io.opensphere.core.util.GovIcon;
 import io.opensphere.core.util.MilitaryRankIcon;
@@ -67,8 +68,11 @@ public class IconBuilderChoiceDialog extends JPanel
 
             switch (selected)
             {
-                case "FontAwesome Icons":
-                    addElementsToList(8, AwesomeIcon.values());
+                case "FontAwesome Solid Icons":
+                    addElementsToList(8, AwesomeIconSolid.values());
+                    break;
+                case "FontAwesome Regular Icons":
+                    addElementsToList(8, AwesomeIconRegular.values());
                     break;
                 case "Government Icons":
                     addElementsToList(8, GovIcon.values());

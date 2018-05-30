@@ -2,7 +2,7 @@ package io.opensphere.core.util.javafx.input.view;
 
 import java.time.LocalTime;
 
-import io.opensphere.core.util.AwesomeIcon;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.fx.FxIcons;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -79,13 +79,13 @@ public class TimePickerContent extends VBox
 
         HBox bar = new HBox();
         bar.setAlignment(Pos.CENTER);
-        myOkayButton = FxIcons.createIconButton(AwesomeIcon.ICON_CHECK, "", 12, "ok-button");
+        myOkayButton = FxIcons.createIconButton(AwesomeIconSolid.CHECK, "", 12, "ok-button");
         myOkayButton.setTooltip(new Tooltip("Okay"));
 
-        myNowButton = FxIcons.createIconButton(AwesomeIcon.ICON_FLASH, "", 12, "now-button");
+        myNowButton = FxIcons.createIconButton(AwesomeIconSolid.BOLT, "", 12, "now-button");
         myNowButton.setTooltip(new Tooltip("Set to current time"));
 
-        myCancelButton = FxIcons.createIconButton(AwesomeIcon.ICON_TIMES, "", 12, "cancel-button");
+        myCancelButton = FxIcons.createIconButton(AwesomeIconSolid.TIMES, "", 12, "cancel-button");
         myCancelButton.setTooltip(new Tooltip("Cancel"));
 
         Label spacer1 = new Label();
