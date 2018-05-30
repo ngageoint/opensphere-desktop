@@ -51,7 +51,7 @@ public class InfinityPlugin extends AbstractServicePlugin
                     }
                     if (assistant instanceof DefaultDataTypeInfoAssistant)
                     {
-                        Icon icon = new GenericFontIcon(AwesomeIconSolid.INFINITY, Color.WHITE);
+                        Icon icon = new GenericFontIcon(AwesomeIconSolid.INFINITY, Color.WHITE, 12);
                         ((DefaultDataTypeInfoAssistant)assistant).setLayerIcons(Collections.singletonList(icon));
                     }
                 }

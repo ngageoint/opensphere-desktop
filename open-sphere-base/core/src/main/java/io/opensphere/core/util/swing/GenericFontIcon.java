@@ -309,4 +309,15 @@ public class GenericFontIcon implements Icon, FontIcon
     {
         return myXPos == null ? 0 : myXPos.intValue();
     }
+
+    /**
+     * Returns a copy of the icon with the given color.
+     *
+     * @param color the color
+     * @return the icon
+     */
+    public GenericFontIcon withColor(Color color)
+    {
+        return new GenericFontIcon(myIcon, color, mySize);
+    }
 }

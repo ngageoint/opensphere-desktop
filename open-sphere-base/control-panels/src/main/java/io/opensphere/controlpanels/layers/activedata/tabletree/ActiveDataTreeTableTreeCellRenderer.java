@@ -16,6 +16,7 @@ import javax.swing.tree.TreePath;
 import io.opensphere.controlpanels.layers.prefs.DataDiscoveryPreferences;
 import io.opensphere.controlpanels.layers.util.ClockAndOrColorLabel;
 import io.opensphere.controlpanels.layers.util.FeatureTypeLabel;
+import io.opensphere.controlpanels.layers.util.IconUtilities;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.swing.GenericFontIcon;
@@ -161,7 +162,8 @@ public class ActiveDataTreeTableTreeCellRenderer extends TreeTableTreeCellRender
                 {
                     for (Icon icon : assistant.getLayerIcons())
                     {
-                        JLabel label = new JLabel(icon);
+                        Icon coloredIcon = IconUtilities.getColorizedIcon(icon, dti.getBasicVisualizationInfo().getTypeColor());
+                        JLabel label = new JLabel(coloredIcon);
                         panel.add(label);
                         addComponentWidth(label);
                     }
