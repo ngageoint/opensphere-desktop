@@ -2,6 +2,9 @@ package io.opensphere.search;
 
 import java.awt.BorderLayout;
 
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
@@ -11,12 +14,19 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.swing.AbstractHUDPanel;
 import io.opensphere.search.model.SearchModel;
 import io.opensphere.search.view.SearchDialogPanel;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
 
 /** A HUD-dialog in which search results are rendered. */
 public class SearchResultHudDialog extends AbstractInternalFrame
 {
+    /** The height offset used to avoid the timeline. */
+    private static final int HEIGHT_OFFSET = 187;
+
+    /** The default height of the HUD window. */
+    private static final int DEFAULT_HEIGHT = 850;
+
+    /** The default width of the HUD window. */
+    private static final int DEFAULT_WIDTH = 550;
+
     /** The title of the frame in which the search results are presented. */
     public static final String TITLE = "Search Results";
 
@@ -53,11 +63,24 @@ public class SearchResultHudDialog extends AbstractInternalFrame
         setResizable(true);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
 
+        // set up default height and width:
+        int width = DEFAULT_WIDTH;
+        int height = DEFAULT_HEIGHT;
+        int xposition = 0;
+        int yposition = 0;
+        if (getParent() != null)
+        {
+            height = getParent().getHeight() - HEIGHT_OFFSET;
+            xposition = getParent().getWidth() - getWidth();
+        }
+        setSize(width, height);
+        setLocation(xposition, yposition);
+
         myResultPanel = new SearchDialogPanel(toolbox, searchModel);
         myResultPanelContainer = new JFXPanel();
 
-        Scene scene = FXUtilities.addDesktopStyle(new Scene(myResultPanel, 600, 800));
-        FXUtilities.runOnFXThreadAndWait(() -> myResultPanelContainer.setScene(scene));
+        Scene scene = new Scene(myResultPanel, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        myResultPanelContainer.setScene(FXUtilities.addDesktopStyle(scene));
 
         setDefaultCloseOperation(HIDE_ON_CLOSE);
 
@@ -110,8 +133,8 @@ public class SearchResultHudDialog extends AbstractInternalFrame
         {
             myResultPanel.performSearch();
         }
-        int width = 150;
-        int height = 850;
+        int width = DEFAULT_WIDTH;
+        int height = DEFAULT_HEIGHT;
         int xposition = 0;
         int yposition = 0;
         if (myResultPanelContainer.getPreferredSize() != null)
@@ -120,7 +143,7 @@ public class SearchResultHudDialog extends AbstractInternalFrame
         }
         if (getParent() != null)
         {
-            height = getParent().getHeight() - 187;
+            height = getParent().getHeight() - HEIGHT_OFFSET;
             xposition = getParent().getWidth() - getWidth();
         }
         setSize(width, height);

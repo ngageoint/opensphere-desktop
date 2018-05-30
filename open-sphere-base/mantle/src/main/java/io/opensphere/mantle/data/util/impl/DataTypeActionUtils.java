@@ -3,7 +3,9 @@ package io.opensphere.mantle.data.util.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.GeographicPosition;
@@ -11,6 +13,9 @@ import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.viewer.impl.DynamicViewer;
 import io.opensphere.core.viewer.impl.ViewerAnimator;
 import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.data.element.DataElement;
+import io.opensphere.mantle.data.element.MapDataElement;
+import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /**
  * Utilities for actions that can be taken with a DataTypeInfo.
@@ -21,11 +26,31 @@ public final class DataTypeActionUtils
      * Goes to the data type's locations if they exist.
      *
      * @param dataType the data type
-     * @param viewer the viewer
+     * @param toolbox the toolbox through which application state is accessed.
      */
-    public static void gotoDataType(DataTypeInfo dataType, DynamicViewer viewer)
+    public static void gotoDataType(DataTypeInfo dataType, Toolbox toolbox)
+    {
+        DataTypeActionUtils.gotoDataType(dataType, toolbox.getMapManager().getStandardViewer(), toolbox);
+    }
+
+    /**
+     * Goes to the data type's locations if they exist.
+     *
+     * @param dataType the data type
+     * @param viewer the viewer
+     * @param toolbox the toolbox through which application state is accessed.
+     */
+    public static void gotoDataType(DataTypeInfo dataType, DynamicViewer viewer, Toolbox toolbox)
     {
         GeographicBoundingBox bbox = dataType.getBoundingBox();
+        if (bbox == null)
+        {
+            List<DataElement> dataElements = MantleToolboxUtils.getDataElementLookupUtils(toolbox).getDataElements(dataType);
+
+            bbox = GeographicBoundingBox.merge(dataElements.stream().filter(de -> de instanceof MapDataElement).map(
+                    mde -> ((MapDataElement)mde).getMapGeometrySupport().getBoundingBox(toolbox.getMapManager().getProjection()))
+                    .collect(Collectors.toList()));
+        }
         if (bbox != null)
         {
             gotoBoundingBox(bbox, viewer, true);

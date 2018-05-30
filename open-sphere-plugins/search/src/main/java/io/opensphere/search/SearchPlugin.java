@@ -5,10 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.function.Supplier;
 import java.util.Set;
-
-import javafx.application.Platform;
+import java.util.function.Supplier;
 
 import javax.swing.SwingUtilities;
 
@@ -27,6 +25,7 @@ import io.opensphere.core.search.SearchProvider;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.search.model.SearchModel;
+import javafx.application.Platform;
 
 /** Class for the "Goto" hud frame. */
 public class SearchPlugin extends AbstractHUDFrameMenuItemPlugin
@@ -96,7 +95,7 @@ public class SearchPlugin extends AbstractHUDFrameMenuItemPlugin
                 SearchPanel mainPanel = new SearchPanel(controller, myResultsDialog, instance.getHUDFrameSupplier(), myModel);
 
                 myToolbox.getUIRegistry().getToolbarComponentRegistry().registerToolbarComponent(ToolbarLocation.NORTH,
-                        "SearchGoto", mainPanel, 10000, SeparatorLocation.RIGHT);
+                        "Search", mainPanel, 10000, SeparatorLocation.RIGHT);
             }
         });
     }

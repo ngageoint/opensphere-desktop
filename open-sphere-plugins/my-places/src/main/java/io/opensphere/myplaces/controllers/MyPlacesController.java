@@ -19,10 +19,10 @@ import io.opensphere.core.viewbookmark.ViewBookmark;
 import io.opensphere.core.viewbookmark.util.ViewBookmarkUtil;
 import io.opensphere.mantle.data.CategoryContextKey;
 import io.opensphere.mantle.data.DataGroupInfo;
+import io.opensphere.mantle.data.DataGroupInfo.MultiDataGroupContextKey;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MapVisualizationInfo;
 import io.opensphere.mantle.data.MapVisualizationType;
-import io.opensphere.mantle.data.DataGroupInfo.MultiDataGroupContextKey;
 import io.opensphere.mantle.data.util.impl.DataTypeActionUtils;
 import io.opensphere.myplaces.constants.Constants;
 import io.opensphere.myplaces.dataaccess.MyPlacesDataAccessor;
@@ -184,7 +184,7 @@ public class MyPlacesController implements Observer, Runnable, PointGoer, Servic
 
             if (!wentToView)
             {
-                DataTypeActionUtils.gotoDataType(dataType, myToolbox.getMapManager().getStandardViewer());
+                DataTypeActionUtils.gotoDataType(dataType, myToolbox);
             }
         }
     }
