@@ -29,6 +29,7 @@ import io.opensphere.core.util.swing.tree.TreeTableTreeNode;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.data.DataTypeInfoAssistant;
 import io.opensphere.mantle.data.LoadsTo;
 import io.opensphere.mantle.data.MapVisualizationType;
 import io.opensphere.mantle.data.PlayState;
@@ -153,6 +154,18 @@ public class ActiveDataTreeTableTreeCellRenderer extends TreeTableTreeCellRender
 
                 addStreamingIcon(tree, panel, node, dti);
                 addProcessIcon(tree, panel, node, dti);
+
+                // Add any custom icons for the layer
+                DataTypeInfoAssistant assistant = dti.getAssistant();
+                if (assistant != null)
+                {
+                    for (Icon icon : assistant.getLayerIcons())
+                    {
+                        JLabel label = new JLabel(icon);
+                        panel.add(label);
+                        addComponentWidth(label);
+                    }
+                }
             }
             else if (dgi != null && !tree.isExpanded(new TreePath(node.getPath())))
             {

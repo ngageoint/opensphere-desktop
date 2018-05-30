@@ -1153,6 +1153,9 @@ public enum AwesomeIcon implements FontIconEnum
     /** A constant used to reference the 'industry' icon. */
     ICON_INDUSTRY("\uf275"),
 
+    /** A constant used to reference the 'infinity' icon. */
+    ICON_INFINITY("\uf534"),
+
     /** A constant used to reference the 'info' icon. */
     ICON_INFO("\uf129"),
 
