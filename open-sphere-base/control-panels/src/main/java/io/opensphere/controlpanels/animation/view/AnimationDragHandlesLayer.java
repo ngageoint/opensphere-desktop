@@ -25,7 +25,7 @@ import io.opensphere.controlpanels.timeline.TimelineLayer;
 import io.opensphere.core.control.action.context.TimespanContextKey;
 import io.opensphere.core.model.time.TimeInstant;
 import io.opensphere.core.model.time.TimeSpan;
-import io.opensphere.core.util.AwesomeIcon;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.ChangeListener;
 import io.opensphere.core.util.NoEffectPredicate;
 import io.opensphere.core.util.ObservableValue;
@@ -120,7 +120,7 @@ class AnimationDragHandlesLayer extends DragHandlesLayer
                 }
             });
             JMenu zoomMenu = new JMenu("Zoom to");
-            zoomMenu.setIcon(new GenericFontIcon(AwesomeIcon.ICON_CROP, Color.WHITE));
+            zoomMenu.setIcon(new GenericFontIcon(AwesomeIconSolid.CROP, Color.WHITE));
             zoomMenu.add(zoomItem);
             deconflictMenus(menuItems, zoomMenu);
         }

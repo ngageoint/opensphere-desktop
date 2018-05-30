@@ -19,7 +19,7 @@ import io.opensphere.core.control.action.context.TimespanContextKey;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.units.duration.Duration;
 import io.opensphere.core.units.duration.Milliseconds;
-import io.opensphere.core.util.AwesomeIcon;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.ChangeListener;
 import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.MathUtil;
@@ -124,7 +124,7 @@ class BaseTimelineLayer extends AbstractTimelineLayer
     @Override
     public List<? extends Component> getMenuItems(String contextId, TimespanContextKey key)
     {
-        JMenuItem item = new JMenuItem("Zoom", new GenericFontIcon(AwesomeIcon.ICON_CROP, Color.WHITE));
+        JMenuItem item = new JMenuItem("Zoom", new GenericFontIcon(AwesomeIconSolid.CROP, Color.WHITE));
         item.addActionListener(new ActionListener()
         {
             @Override

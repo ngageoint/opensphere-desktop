@@ -5,14 +5,11 @@ import java.awt.Dimension;
 import java.awt.Window;
 import java.util.function.BiConsumer;
 
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.Label;
-
 import javax.swing.SwingUtilities;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.preferences.Preferences;
-import io.opensphere.core.util.AwesomeIcon;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.fx.FxIcons;
 import io.opensphere.core.util.fx.LabeledObservableButtonBar;
 import io.opensphere.mantle.data.DataGroupEvent;
@@ -24,6 +21,8 @@ import io.opensphere.wps.layer.WpsDataTypeInfoBuilder;
 import io.opensphere.wps.request.WpsProcessConfiguration;
 import io.opensphere.wps.ui.detail.WpsInputDialog;
 import io.opensphere.wps.ui.detail.WpsProcessEditorFactory;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.Label;
 import net.opengis.wps._100.ProcessBriefType;
 
 /**
@@ -112,13 +111,13 @@ public class WpsProcessInstanceCreationHelper
     {
         LabeledObservableButtonBar returnValue = new LabeledObservableButtonBar("AOC");
 
-        Label runOnceIcon = FxIcons.createIconLabel(AwesomeIcon.ICON_PLAY, 16);
+        Label runOnceIcon = FxIcons.createIconLabel(AwesomeIconSolid.PLAY, 16);
         runOnceIcon.setStyle(String.format(BUTTON_STYLE_TEMPLATE, "#00D800", "-55%"));
 
-        Label saveAndRunIcon = FxIcons.createIconLabel(AwesomeIcon.ICON_SAVE, 16);
+        Label saveAndRunIcon = FxIcons.createIconLabel(AwesomeIconSolid.SAVE, 16);
         saveAndRunIcon.setStyle(String.format(BUTTON_STYLE_TEMPLATE, "#E2E31A", "-25%"));
 
-        Label cancelIcon = FxIcons.createIconLabel(AwesomeIcon.ICON_BAN, 16);
+        Label cancelIcon = FxIcons.createIconLabel(AwesomeIconSolid.BAN, 16);
         cancelIcon.setStyle(String.format(BUTTON_STYLE_TEMPLATE, "#FF0000", "-55%"));
 
         returnValue.addButton("Run Once", runOnceIcon, ButtonData.APPLY)
