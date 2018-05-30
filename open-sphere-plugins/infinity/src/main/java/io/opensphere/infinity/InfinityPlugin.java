@@ -1,5 +1,6 @@
 package io.opensphere.infinity;
 
+import java.awt.Color;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -50,8 +51,7 @@ public class InfinityPlugin extends AbstractServicePlugin
                     }
                     if (assistant instanceof DefaultDataTypeInfoAssistant)
                     {
-                        Icon icon = new GenericFontIcon(AwesomeIcon.ICON_INFINITY, dataType.getBasicVisualizationInfo().getTypeColor());
-//                        Icon icon = IconUtil.getColorizedIcon(IconType.BINOCULARS, IconStyle.NORMAL, dataType.getBasicVisualizationInfo().getTypeColor(), 18);
+                        Icon icon = new GenericFontIcon(AwesomeIcon.ICON_INFINITY, Color.WHITE);
                         ((DefaultDataTypeInfoAssistant)assistant).setLayerIcons(Collections.singletonList(icon));
                     }
                 }
