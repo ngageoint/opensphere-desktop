@@ -16,6 +16,7 @@ import javax.swing.tree.TreePath;
 import io.opensphere.controlpanels.layers.prefs.DataDiscoveryPreferences;
 import io.opensphere.controlpanels.layers.util.ClockAndOrColorLabel;
 import io.opensphere.controlpanels.layers.util.FeatureTypeLabel;
+import io.opensphere.controlpanels.layers.util.IconUtilities;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.swing.GenericFontIcon;
@@ -29,6 +30,7 @@ import io.opensphere.core.util.swing.tree.TreeTableTreeNode;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.data.DataTypeInfoAssistant;
 import io.opensphere.mantle.data.LoadsTo;
 import io.opensphere.mantle.data.MapVisualizationType;
 import io.opensphere.mantle.data.PlayState;
@@ -153,6 +155,19 @@ public class ActiveDataTreeTableTreeCellRenderer extends TreeTableTreeCellRender
 
                 addStreamingIcon(tree, panel, node, dti);
                 addProcessIcon(tree, panel, node, dti);
+
+                // Add any custom icons for the layer
+                DataTypeInfoAssistant assistant = dti.getAssistant();
+                if (assistant != null)
+                {
+                    for (Icon icon : assistant.getLayerIcons())
+                    {
+                        Icon coloredIcon = IconUtilities.getColorizedIcon(icon, dti.getBasicVisualizationInfo().getTypeColor());
+                        JLabel label = new JLabel(coloredIcon);
+                        panel.add(label);
+                        addComponentWidth(label);
+                    }
+                }
             }
             else if (dgi != null && !tree.isExpanded(new TreePath(node.getPath())))
             {

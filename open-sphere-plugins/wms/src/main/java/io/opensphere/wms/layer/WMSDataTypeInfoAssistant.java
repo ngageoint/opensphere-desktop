@@ -1,7 +1,10 @@
 package io.opensphere.wms.layer;
 
 import java.awt.Component;
+import java.util.Collections;
+import java.util.List;
 
+import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
@@ -49,6 +52,12 @@ public class WMSDataTypeInfoAssistant implements DataTypeInfoAssistant
         panel.add(new JLabel("Server Style "));
         panel.fillHorizontal().add(getStyleCombo());
         return panel;
+    }
+
+    @Override
+    public List<Icon> getLayerIcons()
+    {
+        return Collections.emptyList();
     }
 
     /**
