@@ -177,8 +177,7 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         }
         else
         {
-            myPreferredVersionDictionary.get(myPreferredVersion).setSelected(true);
-            myPreferredVersionDictionary.get(version).setSelected(false);
+            myPreferredVersionButtonGroup.setSelected(myPreferredVersionDictionary.get(myPreferredVersion), true);
         }
     }
 
