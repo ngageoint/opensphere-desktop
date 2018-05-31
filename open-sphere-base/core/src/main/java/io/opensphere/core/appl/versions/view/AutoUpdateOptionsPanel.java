@@ -65,6 +65,8 @@ public class AutoUpdateOptionsPanel extends ViewPanel
     /** The toolbox through which application state is accessed. */
     private final Toolbox myToolbox;
 
+    private String myPreferredVersion;
+
     /**
      * Creates a new options panel for configuring auto update.
      *
@@ -102,13 +104,12 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         List<String> versions = myController.getVersionOptions();
 
         myPreferredVersionDictionary = New.map();
-        String preferredVersion = myController.loadLaunchConfiguration()
-                .getProperty(AutoUpdatePreferenceKeys.PREFERRED_VERSION_KEY);
+        myPreferredVersion = myController.loadLaunchConfiguration().getProperty(AutoUpdatePreferenceKeys.PREFERRED_VERSION_KEY);
         myPreferredVersionButtonGroup = new ButtonGroup();
         for (String version : versions)
         {
             myVersionContainer.addRow(createVersionComponent(version, myPreferredVersionButtonGroup,
-                    StringUtils.equals(preferredVersion, version)));
+                    StringUtils.equals(myPreferredVersion, version)));
         }
 
         JScrollPane versionsPane = new JScrollPane(myVersionContainer);
@@ -171,6 +172,13 @@ public class AutoUpdateOptionsPanel extends ViewPanel
             Properties launchConfig = myController.loadLaunchConfiguration();
             launchConfig.setProperty(AutoUpdatePreferenceKeys.PREFERRED_VERSION_KEY, version);
             myController.storeLaunchConfiguration(launchConfig);
+
+            myPreferredVersion = version;
+        }
+        else
+        {
+            myPreferredVersionDictionary.get(myPreferredVersion).setSelected(true);
+            myPreferredVersionDictionary.get(version).setSelected(false);
         }
     }
 
