@@ -411,11 +411,6 @@ public class WFSEnvoyHelper
                     type.addTag(key, null);
                 }
             }
-            // TODO remove - temporary code
-            if ("Twitter".equals(type.getDisplayName()))
-            {
-                type.addTag(".es-url", null);
-            }
 
             if (featureType.getOutputFormats() != null)
             {

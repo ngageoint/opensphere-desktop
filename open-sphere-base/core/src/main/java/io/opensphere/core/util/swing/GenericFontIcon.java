@@ -318,6 +318,9 @@ public class GenericFontIcon implements Icon, FontIcon
      */
     public GenericFontIcon withColor(Color color)
     {
-        return new GenericFontIcon(myIcon, color, mySize);
+        GenericFontIcon icon = new GenericFontIcon(myIcon, color, mySize);
+        icon.myXPos = myXPos;
+        icon.myYPos = myYPos;
+        return icon;
     }
 }
