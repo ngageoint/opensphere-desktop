@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.swing.AbstractButton;
 import javax.swing.Box;
@@ -127,9 +128,12 @@ public class AutoUpdateOptionsPanel extends ViewPanel
     protected Component createVersionComponent(String version, ButtonGroup preferredVersionButtonGroup, boolean isPreferred)
     {
         Box box = Box.createHorizontalBox();
+
         JRadioButton toggleButton = new JRadioButton(version, isPreferred);
         toggleButton.setToolTipText("Click to select " + version + "as your preferred version.");
+        toggleButton.addActionListener(e -> updatePreferredVersion(version));
         preferredVersionButtonGroup.add(toggleButton);
+
         box.add(toggleButton);
 
         myPreferredVersionDictionary.put(version, toggleButton.getModel());
@@ -137,13 +141,37 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         if (!isPreferred)
         {
             box.add(Box.createHorizontalGlue());
+
             JButton deleteButton = new JButton(new GenericFontIcon(AwesomeIconSolid.TRASH_ALT, Color.WHITE));
             deleteButton.setBackground(Color.RED);
-            box.add(deleteButton);
             deleteButton.addActionListener(e -> deleteVersion(version, box, deleteButton));
+
+            box.add(deleteButton);
         }
 
         return box;
+    }
+
+    /**
+     * Updates the launch configuration to utilize the selected version as the
+     * preferred.
+     *
+     * @param version the version to use
+     */
+    private void updatePreferredVersion(String version)
+    {
+        String chooseVersionMessage = "Are you sure you want to use version " + version + " as your default?"
+                + System.lineSeparator() + "You will have to restart the application for this to take effect.";
+
+        int yn = JOptionPane.showConfirmDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(), chooseVersionMessage,
+                "Confirm Change", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (yn == JOptionPane.YES_OPTION)
+        {
+            Properties launchConfig = myController.loadLaunchConfiguration();
+            launchConfig.setProperty(AutoUpdatePreferenceKeys.PREFERRED_VERSION_KEY, version);
+            myController.storeLaunchConfiguration(launchConfig);
+        }
     }
 
     /**
