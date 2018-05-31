@@ -3,6 +3,8 @@ package io.opensphere.wfs.envoy;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import io.opensphere.core.common.geospatial.model.DataObject;
 import io.opensphere.mantle.data.element.MetaDataProvider;
@@ -92,5 +94,11 @@ public class DataObjectMetaDataProvider implements MetaDataProvider
     public boolean valuesMutable()
     {
         return false;
+    }
+
+    @Override
+    public Stream<String> matchKey(Pattern key)
+    {
+        return myKeys.stream().filter(k -> key.matcher(k).matches());
     }
 }

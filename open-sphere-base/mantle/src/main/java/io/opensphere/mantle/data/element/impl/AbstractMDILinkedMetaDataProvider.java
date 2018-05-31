@@ -2,6 +2,8 @@ package io.opensphere.mantle.data.element.impl;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.element.MetaDataProvider;
@@ -45,6 +47,12 @@ public abstract class AbstractMDILinkedMetaDataProvider implements MetaDataProvi
     public final boolean hasKey(String key)
     {
         return myMetaDataInfo.hasKey(key);
+    }
+
+    @Override
+    public Stream<String> matchKey(Pattern key)
+    {
+        return myMetaDataInfo.getKeyNames().stream().filter(k -> key.matcher(k).matches());
     }
 
     @Override

@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import io.opensphere.mantle.data.element.MetaDataProvider;
 
@@ -81,6 +83,12 @@ public class SimpleMetaDataProvider implements MetaDataProvider, Serializable
     public boolean hasKey(String key)
     {
         return myKeyToValueMap.containsKey(key);
+    }
+
+    @Override
+    public Stream<String> matchKey(Pattern key)
+    {
+        return myKeyToValueMap.keySet().stream().filter(k -> key.matcher(k).matches());
     }
 
     @Override

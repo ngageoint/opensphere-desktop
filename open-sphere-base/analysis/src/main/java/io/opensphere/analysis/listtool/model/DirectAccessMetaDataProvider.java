@@ -66,6 +66,12 @@ class DirectAccessMetaDataProvider implements MetaDataProvider
     }
 
     @Override
+    public java.util.stream.Stream<String> matchKey(java.util.regex.Pattern key)
+    {
+        throw new UnsupportedOperationException("matchKey() is not supported for DirectAccessMetaDataProvider");
+    }
+
+    @Override
     public boolean keysMutable()
     {
         throw new UnsupportedOperationException("keysMutable() is not supported for DirectAccessMetaDataProvider");
