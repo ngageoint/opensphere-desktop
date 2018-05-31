@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
@@ -194,6 +195,15 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
                     false))
             {
                 addLabel(panel, myProcessLabel);
+            }
+
+            // Add any custom icons for the layer
+            Collection<Icon> layerIcons = dgi.getMembers(false).stream()
+                    .filter(t -> t.getAssistant() != null && !t.getAssistant().getLayerIcons().isEmpty())
+                    .flatMap(t -> t.getAssistant().getLayerIcons().stream()).collect(Collectors.toSet());
+            for (Icon icon : layerIcons)
+            {
+                addLabel(panel, new JLabel(icon));
             }
         }
     }

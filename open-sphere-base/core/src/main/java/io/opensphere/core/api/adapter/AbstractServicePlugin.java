@@ -5,7 +5,7 @@ import java.util.Collections;
 
 import io.opensphere.core.PluginLoaderData;
 import io.opensphere.core.Toolbox;
-import io.opensphere.core.event.EventListenerService;
+import io.opensphere.core.util.CompositeService;
 import io.opensphere.core.util.Service;
 
 /**
@@ -15,12 +15,12 @@ import io.opensphere.core.util.Service;
 public class AbstractServicePlugin extends PluginAdapter
 {
     /** The service manager. */
-    private volatile EventListenerService myServiceManager;
+    private volatile CompositeService myServiceManager;
 
     @Override
     public void initialize(PluginLoaderData plugindata, Toolbox toolbox)
     {
-        myServiceManager = new EventListenerService(toolbox.getEventManager());
+        myServiceManager = new CompositeService();
         for (Service service : getServices(plugindata, toolbox))
         {
             myServiceManager.addService(service);

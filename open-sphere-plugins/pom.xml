@@ -28,9 +28,11 @@
         <module>geopackage</module>
         <module>feature-actions</module>
         <module>google-places</module>
+        <module>heatmap</module>
         <module>hud</module>
         <module>imagery</module>
         <module>import</module>
+        <module>infinity</module>
         <module>kml</module>
         <module>mapbox</module>
         <module>merge</module>
@@ -46,6 +48,5 @@
         <module>wfs</module>
         <module>wms</module>
         <module>wps</module>
-        <module>heatmap</module>
     </modules>
 </project>
