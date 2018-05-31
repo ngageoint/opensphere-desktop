@@ -57,7 +57,8 @@ public class IconBuilderChoiceDialog extends JPanel
     {
         Vector<String> treeValues = new Vector<>();
         // Temporarily hard-code icon values.
-        treeValues.add("FontAwesome Icons");
+        treeValues.add("FontAwesome Solid Icons");
+        treeValues.add("FontAwesome Regular Icons");
         treeValues.add("Government Icons");
         treeValues.add("Military Rank Icons");
 
