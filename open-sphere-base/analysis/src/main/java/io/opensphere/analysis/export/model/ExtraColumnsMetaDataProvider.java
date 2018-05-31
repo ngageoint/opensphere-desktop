@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.LongAdder;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.element.MetaDataProvider;
@@ -90,6 +93,20 @@ public class ExtraColumnsMetaDataProvider implements MetaDataProvider
     public boolean hasKey(String key)
     {
         return myExtraColumns.containsKey(key) || myOriginal.hasKey(key);
+    }
+
+    @Override
+    public Stream<String> matchKey(Pattern key)
+    {
+        LongAdder adder = new LongAdder();
+        Stream<String> value = myExtraColumns.keySet().stream().filter(k -> key.matcher(k).matches())
+                .peek(v -> adder.increment());
+        if (adder.intValue() == 0)
+        {
+            value.close();
+            value = myOriginal.matchKey(key);
+        }
+        return value;
     }
 
     @Override

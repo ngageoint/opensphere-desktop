@@ -2,6 +2,8 @@ package io.opensphere.mantle.data.element;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 /**
  * Interface for DataElements that provide Meta Data for tooling.
@@ -84,4 +86,14 @@ public interface MetaDataProvider
      * @return true if keys are mutable on the fly, false if not.
      */
     boolean valuesMutable();
+
+    /**
+     * Returns a stream containing similar keys to the provided parameter.
+     * <p>
+     * When using this function, ensure that the resulting stream is terminated.
+     *
+     * @param key - the key to check
+     * @return the matching keystream
+     */
+    Stream<String> matchKey(Pattern key);
 }

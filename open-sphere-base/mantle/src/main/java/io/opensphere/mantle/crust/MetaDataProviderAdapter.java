@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import io.opensphere.mantle.data.element.MetaDataProvider;
 
@@ -47,6 +49,12 @@ public abstract class MetaDataProviderAdapter implements MetaDataProvider
     public boolean hasKey(String key)
     {
         return myFieldNames.contains(key);
+    }
+
+    @Override
+    public Stream<String> matchKey(Pattern key)
+    {
+        return myFieldNames.stream().filter(k -> key.matcher(k).matches());
     }
 
     @Override
