@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
@@ -23,7 +24,7 @@ import com.jidesoft.swing.TristateCheckBox;
 
 import io.opensphere.controlpanels.layers.util.FeatureTypeLabel;
 import io.opensphere.core.Toolbox;
-import io.opensphere.core.util.AwesomeIcon;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.util.swing.tree.ButtonModelPayload;
@@ -121,8 +122,8 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
                     ImageIO.read(AvailableDataTreeTableTreeCellRenderer.class.getResource("/images/streaming.png")));
             ourAlertIcon = new ImageIcon(
                     ImageIO.read(AvailableDataTreeTableTreeCellRenderer.class.getResource("/images/bang_12x12.png")));
-            ourProcessIcon = new GenericFontIcon(AwesomeIcon.ICON_FLASK, Color.WHITE, 14);
-            ourCreateInstanceIcon = new GenericFontIcon(AwesomeIcon.ICON_PLUS_SQUARE, Color.GREEN, 14);
+            ourProcessIcon = new GenericFontIcon(AwesomeIconSolid.FLASK, Color.WHITE, 14);
+            ourCreateInstanceIcon = new GenericFontIcon(AwesomeIconSolid.PLUS_SQUARE, Color.GREEN, 14);
         }
         catch (IOException e)
         {
@@ -194,6 +195,15 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
                     false))
             {
                 addLabel(panel, myProcessLabel);
+            }
+
+            // Add any custom icons for the layer
+            Collection<Icon> layerIcons = dgi.getMembers(false).stream()
+                    .filter(t -> t.getAssistant() != null && !t.getAssistant().getLayerIcons().isEmpty())
+                    .flatMap(t -> t.getAssistant().getLayerIcons().stream()).collect(Collectors.toSet());
+            for (Icon icon : layerIcons)
+            {
+                addLabel(panel, new JLabel(icon));
             }
         }
     }

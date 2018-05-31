@@ -26,7 +26,7 @@ import io.opensphere.controlpanels.timeline.TimelineUIModel;
 import io.opensphere.core.control.action.context.TimespanContextKey;
 import io.opensphere.core.model.time.TimeInstant;
 import io.opensphere.core.model.time.TimeSpan;
-import io.opensphere.core.util.AwesomeIcon;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.ChangeListener;
 import io.opensphere.core.util.ListDataEvent;
 import io.opensphere.core.util.ListDataListener;
@@ -105,9 +105,9 @@ public class LoadIntervalsLayer extends CompositeLayer
     public List<? extends Component> getMenuItems(String contextId, TimespanContextKey key)
     {
         List<JMenuItem> menuItems = New.list(2);
-        menuItems.add(SwingUtilities.newMenuItem("Load", new GenericFontIcon(AwesomeIcon.ICON_CLOUD_DOWNLOAD, Color.YELLOW),
+        menuItems.add(SwingUtilities.newMenuItem("Load", new GenericFontIcon(AwesomeIconSolid.CLOUD_DOWNLOAD_ALT, Color.YELLOW),
                 e -> loadIntervalExternal(key.getTimeSpan())));
-        menuItems.add(SwingUtilities.newMenuItem("Add", new GenericFontIcon(AwesomeIcon.ICON_PLUS, Color.YELLOW),
+        menuItems.add(SwingUtilities.newMenuItem("Add", new GenericFontIcon(AwesomeIconSolid.PLUS, Color.YELLOW),
                 e -> addIntervalExternal(key.getTimeSpan())));
         return menuItems;
     }
