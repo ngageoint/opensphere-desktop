@@ -10,10 +10,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.event.EventHandler;
-
 import javax.swing.tree.MutableTreeNode;
 
 import io.opensphere.core.model.GeographicPosition;
@@ -28,6 +24,9 @@ import io.opensphere.mantle.data.DataGroupInfoAssistant;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MapVisualizationType;
 import io.opensphere.mantle.data.RefreshableDataGroupInfo;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.event.EventHandler;
 
 /**
  * A mock class used to test the RefreshTreeCellRenderer.
@@ -122,6 +121,12 @@ public class RefreshableGroupMock implements DataGroupInfo, RefreshableDataGroup
 
     @Override
     public List<DataGroupInfo> getChildren()
+    {
+        return null;
+    }
+
+    @Override
+    public Set<String> getDataCategories()
     {
         return null;
     }

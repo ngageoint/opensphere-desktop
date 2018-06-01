@@ -52,10 +52,22 @@ public class PredicatedGroupByTreeBuilder implements GroupByTreeBuilder
         return myTreeBuilder.getGroupComparator();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.impl.GroupByTreeBuilder#getDataCategoryFilter()
+     */
+    @Override
+    public Predicate<DataGroupInfo> getDataCategoryFilter()
+    {
+        // by default, only match things that haven't been categorized:
+        return g -> g.getDataCategories().isEmpty();
+    }
+
     @Override
     public Predicate<DataGroupInfo> getGroupFilter()
     {
-        return new AndPredicate<DataGroupInfo>(myTreeBuilder.getGroupFilter(), myPredicate);
+        return new AndPredicate<>(myTreeBuilder.getGroupFilter(), myPredicate);
     }
 
     @Override

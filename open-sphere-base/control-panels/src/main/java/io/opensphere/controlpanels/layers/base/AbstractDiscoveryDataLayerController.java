@@ -438,6 +438,26 @@ public abstract class AbstractDiscoveryDataLayerController implements EventListe
     }
 
     /**
+     * Gets the value of the treeNeedsRebuild ({@link #myTreeNeedsRebuild}) field.
+     *
+     * @return the value stored in the {@link #myTreeNeedsRebuild} field.
+     */
+    protected boolean isTreeNeedsRebuild()
+    {
+        return myTreeNeedsRebuild;
+    }
+
+    /**
+     * Gets the value of the viewFilter ({@link #myViewFilter}) field.
+     *
+     * @return the value stored in the {@link #myViewFilter} field.
+     */
+    protected String getViewFilter()
+    {
+        return myViewFilter;
+    }
+
+    /**
      * Sets the view by type from string.
      *
      * @param vbt the new view by type from string
@@ -453,6 +473,48 @@ public abstract class AbstractDiscoveryDataLayerController implements EventListe
         {
             updateGroupNodeUserObjectLabels((DefaultMutableTreeNode)myUnfilteredTree);
         }
+    }
+
+    /**
+     * Sets the value of the unfilteredTree ({@link #myUnfilteredTree}) field.
+     *
+     * @param unfilteredTree
+     *            the value to store in the {@link #myUnfilteredTree} field.
+     */
+    protected void setUnfilteredTree(TreeNode unfilteredTree)
+    {
+        myUnfilteredTree = unfilteredTree;
+    }
+
+    /**
+     * Gets the value of the unfilteredTree ({@link #myUnfilteredTree}) field.
+     *
+     * @return the value stored in the {@link #myUnfilteredTree} field.
+     */
+    protected TreeNode getUnfilteredTree()
+    {
+        return myUnfilteredTree;
+    }
+
+    /**
+     * Sets the value of the filteredTree ({@link #myFilteredTree}) field.
+     *
+     * @param filteredTree
+     *            the value to store in the {@link #myFilteredTree} field.
+     */
+    protected void setFilteredTree(TreeNode filteredTree)
+    {
+        myFilteredTree = filteredTree;
+    }
+
+    /**
+     * Gets the value of the filteredTree ({@link #myFilteredTree}) field.
+     *
+     * @return the value stored in the {@link #myFilteredTree} field.
+     */
+    protected TreeNode getFilteredTree()
+    {
+        return myFilteredTree;
     }
 
     /**

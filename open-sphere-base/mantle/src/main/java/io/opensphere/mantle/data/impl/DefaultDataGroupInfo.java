@@ -14,10 +14,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.event.EventHandler;
-
 import javax.annotation.concurrent.GuardedBy;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
@@ -52,6 +48,9 @@ import io.opensphere.mantle.data.event.DataGroupInfoIdChangedEvent;
 import io.opensphere.mantle.data.event.DataGroupInfoMemberAddedEvent;
 import io.opensphere.mantle.data.event.DataGroupInfoMemberRemovedEvent;
 import io.opensphere.mantle.data.event.DataGroupInfoMembersClearedEvent;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.event.EventHandler;
 
 /**
  * Default implementation of the {@link DataGroupInfo}.
@@ -79,6 +78,9 @@ public class DefaultDataGroupInfo implements DataGroupInfo
 
     /** The children node set. */
     private final List<DataGroupInfo> myChildren = New.list();
+
+    /** The categories to which the group belongs. */
+    private final Set<String> myDataCategories = New.set();
 
     /** The data group info assistant. */
     private DataGroupInfoAssistant myDataGroupInfoAssistant = new DefaultDataGroupInfoAssistant();
@@ -551,6 +553,17 @@ public class DefaultDataGroupInfo implements DataGroupInfo
             myModificationLock.readLock().unlock();
         }
         return returnSet;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.DataGroupInfo#getDataCategories()
+     */
+    @Override
+    public Set<String> getDataCategories()
+    {
+        return myDataCategories;
     }
 
     @Override
