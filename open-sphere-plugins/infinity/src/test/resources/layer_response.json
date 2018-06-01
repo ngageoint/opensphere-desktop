@@ -1,0 +1,31 @@
+{
+	"hits": {
+		"total": 4000
+	},
+	"aggregations": {
+		"bins": {
+			"buckets": [
+				{
+					"key": "Ardbeg",
+					"doc_count": 1000
+				},
+				{
+					"key": "Bowmore",
+					"doc_count": 900
+				},
+				{
+					"key": "Bruichladdich",
+					"doc_count": 800
+				},
+				{
+					"key": "Bunnahabhain",
+					"doc_count": 700
+				},
+				{
+					"key": "Caol Ila",
+					"doc_count": 600
+				}
+			]
+		}
+	}
+}

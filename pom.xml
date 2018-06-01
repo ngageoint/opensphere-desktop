@@ -1189,6 +1189,11 @@
 			</dependency>
 			<dependency>
 				<groupId>io.open-sphere.plugins</groupId>
+				<artifactId>infinity</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.open-sphere.plugins</groupId>
 				<artifactId>kml</artifactId>
 				<version>${project.version}</version>
 			</dependency>
