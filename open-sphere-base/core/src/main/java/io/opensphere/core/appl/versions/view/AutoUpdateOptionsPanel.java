@@ -280,17 +280,18 @@ public class AutoUpdateOptionsPanel extends ViewPanel
     {
         try
         {
+            final String installPath = myPreferences.getInstallDirectory().getAbsolutePath();
             // The cmd to execute is just a path to the launch script. The
             // filesystem can handle it.
             String cmd;
             if (System.getProperty("os.name").equals("Windows"))
             {
-                cmd = Paths.get(myPreferences.getInstallDirectory().getAbsolutePath(), "launch.bat").normalize().toString();
+                cmd = Paths.get(installPath, "launch.bat").normalize().toString();
             }
             // Linux
             else
             {
-                cmd = Paths.get(myPreferences.getInstallDirectory().getAbsolutePath(), "launch.sh").normalize().toString();
+                cmd = Paths.get(installPath, "launch.sh").normalize().toString();
             }
 
             Runtime.getRuntime().addShutdownHook(new Thread()
