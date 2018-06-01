@@ -59,12 +59,6 @@ public class AutoUpdateOptionsPanel extends ViewPanel
     /** The button group used to enforce unique version selection. */
     private final ButtonGroup myPreferredVersionButtonGroup;
 
-    /**
-     * Maps delete buttons to versions. If a version is marked as preferred, we
-     * can easily hide the button.
-     */
-    private final Map<String, JButton> myVersionToDeleteMap = New.map();
-
     /** The container in which version rows are displayed. */
     private final GridBagPanel myVersionContainer;
 
@@ -153,12 +147,8 @@ public class AutoUpdateOptionsPanel extends ViewPanel
             JButton deleteButton = new JButton(new GenericFontIcon(AwesomeIconSolid.TRASH_ALT, Color.WHITE));
             deleteButton.setBackground(Color.RED);
             deleteButton.addActionListener(e -> deleteVersion(version, box, deleteButton));
-            deleteButton.setVisible(false);
-            deleteButton.setEnabled(false);
 
             box.add(deleteButton);
-
-            myVersionToDeleteMap.put(version, deleteButton);
         }
 
         return box;
@@ -184,24 +174,7 @@ public class AutoUpdateOptionsPanel extends ViewPanel
             launchConfig.setProperty(AutoUpdatePreferenceKeys.PREFERRED_VERSION_KEY, version);
             myController.storeLaunchConfiguration(launchConfig);
 
-            // Enable/Disable deletion buttons
-            JButton deleteButton;
-            if (myVersionToDeleteMap.containsKey(version))
-            {
-                deleteButton = myVersionToDeleteMap.get(version);
-                deleteButton.setVisible(false);
-                deleteButton.setEnabled(false);
-            }
-            if (myVersionToDeleteMap.containsKey(myPreferredVersion))
-            {
-                deleteButton = myVersionToDeleteMap.get(myPreferredVersion);
-                deleteButton.setVisible(true);
-                deleteButton.setEnabled(true);
-            }
-
-            // Swap preferred versions finally
             myPreferredVersion = version;
-
             restartApplication();
         }
         else
@@ -270,9 +243,10 @@ public class AutoUpdateOptionsPanel extends ViewPanel
     {
         final String installPath = myPreferences.getInstallDirectory().getAbsolutePath();
         // The cmd to execute is just a path to the launch script. The
-        // filesystem can handle it.
+        // filesystem can handle it. If someone decides they want to change
+        // their OS property they can just deal without a restart.
         String cmd;
-        if (System.getProperty("os.name").equals("Windows"))
+        if (System.getProperty("os.name").contains("Windows"))
         {
             cmd = Paths.get(installPath, "launch.bat").normalize().toString();
         }
@@ -289,7 +263,6 @@ public class AutoUpdateOptionsPanel extends ViewPanel
             {
                 try
                 {
-                    LOG.info(cmd);
                     Runtime.getRuntime().exec("\"" + cmd + "\"");
                 }
                 catch (IOException e)
