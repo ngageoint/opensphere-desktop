@@ -1,15 +1,27 @@
 package io.opensphere.infinity.json;
 
+/** Elasticsearch bucket JSON bean. */
 public class Bucket
 {
+    /** The key. */
     private String myKey;
 
+    /** The doc count. */
     private long myDocCount;
 
+    /**
+     * Constructor.
+     */
     public Bucket()
     {
     }
 
+    /**
+     * Constructor.
+     *
+     * @param key the key
+     * @param docCount the doc count
+     */
     public Bucket(String key, long docCount)
     {
         myKey = key;

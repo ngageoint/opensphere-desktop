@@ -1,7 +1,9 @@
 package io.opensphere.infinity.json;
 
+/** Elasticsearch bool JSON bean. */
 public class Bool
 {
+    /** The must. */
     private Object[] myMust;
 
     /**

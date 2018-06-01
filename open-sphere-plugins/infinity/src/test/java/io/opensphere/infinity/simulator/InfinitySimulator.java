@@ -12,6 +12,7 @@ import com.sun.net.httpserver.HttpExchange;
 import io.opensphere.core.server.AbstractServer;
 import io.opensphere.infinity.json.Aggregations;
 import io.opensphere.infinity.json.Bucket;
+import io.opensphere.infinity.json.Hits;
 import io.opensphere.infinity.json.SearchRequest;
 import io.opensphere.infinity.json.SearchResponse;
 import io.opensphere.server.util.JsonUtils;
@@ -68,23 +69,31 @@ public class InfinitySimulator extends AbstractServer
      */
     private SearchResponse getResponse(String aggsField)
     {
-        String[] bins = new String[] { "Ardbeg", "Bowmore", "Bruichladdich", "Bunnahabhain", "Caol Ila", "Kilchoman", "Lagavulin",
-            "Laphroaig" };
-        int numberOfBins = (int)(Math.random() * bins.length) + 1;
-        Bucket[] buckets = new Bucket[numberOfBins];
-        int binCount = 1000;
+        SearchResponse response = new SearchResponse();
         int totalCount = 0;
-        for (int i = 0; i < numberOfBins; i++)
+        if (aggsField != null)
         {
-            buckets[i] = new Bucket(bins[i], binCount);
-            totalCount += binCount;
-            binCount -= 100;
-        }
+            String[] bins = new String[] { "Ardbeg", "Bowmore", "Bruichladdich", "Bunnahabhain", "Caol Ila", "Kilchoman",
+                "Lagavulin", "Laphroaig" };
+            int numberOfBins = (int)(Math.random() * bins.length) + 1;
+            Bucket[] buckets = new Bucket[numberOfBins];
+            int binCount = 1000;
+            for (int i = 0; i < numberOfBins; i++)
+            {
+                buckets[i] = new Bucket(bins[i], binCount);
+                totalCount += binCount;
+                binCount -= 100;
+            }
 
-        SearchResponse response = new SearchResponse(totalCount);
-        Aggregations aggregations = new Aggregations();
-        aggregations.getBins().setBuckets(buckets);
-        response.setAggregations(aggregations);
+            Aggregations aggregations = new Aggregations();
+            aggregations.getBins().setBuckets(buckets);
+            response.setAggregations(aggregations);
+        }
+        else
+        {
+            totalCount = (int)(Math.random() * 1000) + 1;
+        }
+        response.setHits(new Hits(totalCount));
         return response;
     }
 }

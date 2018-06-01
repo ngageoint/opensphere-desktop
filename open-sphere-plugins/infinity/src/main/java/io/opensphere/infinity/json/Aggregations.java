@@ -1,7 +1,9 @@
 package io.opensphere.infinity.json;
 
+/** Elasticsearch aggregations JSON bean. */
 public class Aggregations
 {
+    /** The bins. */
     private Bins myBins = new Bins();
 
     /**

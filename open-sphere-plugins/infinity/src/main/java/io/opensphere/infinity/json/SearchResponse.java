@@ -2,21 +2,15 @@ package io.opensphere.infinity.json;
 
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
+/** Elasticsearch search response JSON bean. */
 @JsonPropertyOrder({ "hits", "aggregations"})
 public class SearchResponse
 {
+    /** The hits. */
     private Hits myHits;
 
+    /** The aggregations. */
     private Aggregations myAggregations;
-
-    public SearchResponse()
-    {
-    }
-
-    public SearchResponse(long total)
-    {
-        myHits = new Hits(total);
-    }
 
     /**
      * Gets the hits.
