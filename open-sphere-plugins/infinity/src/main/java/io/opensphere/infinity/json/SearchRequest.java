@@ -1,23 +1,21 @@
 package io.opensphere.infinity.json;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
-import org.codehaus.jackson.map.ObjectMapper;
 
-import io.opensphere.server.util.JsonUtils;
-
-/** Elasticsearch request JSON bean. */
+/** Elasticsearch search request JSON bean. */
 @JsonPropertyOrder({ "size", "timeout", "query", "aggs"})
 public class SearchRequest
 {
+    /** The size. */
     private int mySize;
 
+    /** The timeout. */
     private String myTimeout;
 
+    /** The query. */
     private Query myQuery = new Query();
 
+    /** The aggs. */
     private Aggs myAggs;
 
     /**
@@ -98,30 +96,5 @@ public class SearchRequest
     public void setAggs(Aggs aggs)
     {
         myAggs = aggs;
-    }
-
-    public static void main(String[] args)
-    {
-        ObjectMapper mapper = JsonUtils.createMapper();
-        SearchRequest request = new SearchRequest();
-        request.setSize(0);
-        request.setTimeout("30s");
-        Object[] must = new Object[1];
-        must[0] = new RangeHolder(123, 456);
-        request.getQuery().getBool().setMust(must);
-        request.setAggs(new Aggs("blah.keyword", 10000, 1000000000000000000L));
-
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        try
-        {
-            mapper.writeValue(System.out, request);
-//            mapper.writeValue(os, request);
-//            SearchRequest readValue = mapper.readValue(os.toByteArray(), SearchRequest.class);
-//            System.out.println(((RangeHolder)readValue.getQuery().getBool().getMust()[0]).getRange().getTimefield().getGte());
-        }
-        catch (IOException e)
-        {
-            System.err.println(e);
-        }
     }
 }

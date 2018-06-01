@@ -1,17 +1,31 @@
 package io.opensphere.infinity.json;
 
+/** Elasticsearch terms JSON bean. */
 public class Terms
 {
+    /** The field. */
     private String myField;
 
+    /** The size. */
     private int mySize;
 
+    /** The missing. */
     private long myMissing;
 
+    /**
+     * Constructor.
+     */
     public Terms()
     {
     }
 
+    /**
+     * Constructor.
+     *
+     * @param field the field
+     * @param size the size
+     * @param missing the missing
+     */
     public Terms(String field, int size, long missing)
     {
         myField = field;

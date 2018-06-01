@@ -1,7 +1,9 @@
 package io.opensphere.infinity.json;
 
+/** Elasticsearch query JSON bean. */
 public class Query
 {
+    /** The bool. */
     private Bool myBool = new Bool();
 
     /**

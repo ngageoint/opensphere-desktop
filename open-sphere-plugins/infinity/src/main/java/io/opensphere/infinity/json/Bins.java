@@ -1,15 +1,28 @@
 package io.opensphere.infinity.json;
 
+/** Elasticsearch bins JSON bean. */
 public class Bins
 {
+    /** The terms. */
     private Terms myTerms;
 
+    /** The buckets. */
     private Bucket[] myBuckets;
 
+    /**
+     * Constructor.
+     */
     public Bins()
     {
     }
 
+    /**
+     * Constructor.
+     *
+     * @param field the field
+     * @param size the size
+     * @param missing the missing
+     */
     public Bins(String field, int size, long missing)
     {
         myTerms = new Terms(field, size, missing);
