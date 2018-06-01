@@ -146,20 +146,20 @@ public class AutoUpdateOptionsPanel extends ViewPanel
 
         myPreferredVersionDictionary.put(version, toggleButton.getModel());
 
-        box.add(Box.createHorizontalGlue());
-
-        JButton deleteButton = new JButton(new GenericFontIcon(AwesomeIconSolid.TRASH_ALT, Color.WHITE));
-        deleteButton.setBackground(Color.RED);
-        deleteButton.addActionListener(e -> deleteVersion(version, box, deleteButton));
-        if (isPreferred)
+        if (!isPreferred)
         {
+            box.add(Box.createHorizontalGlue());
+
+            JButton deleteButton = new JButton(new GenericFontIcon(AwesomeIconSolid.TRASH_ALT, Color.WHITE));
+            deleteButton.setBackground(Color.RED);
+            deleteButton.addActionListener(e -> deleteVersion(version, box, deleteButton));
             deleteButton.setVisible(false);
             deleteButton.setEnabled(false);
+
+            box.add(deleteButton);
+
+            myVersionToDeleteMap.put(version, deleteButton);
         }
-
-        box.add(deleteButton);
-
-        myVersionToDeleteMap.put(version, deleteButton);
 
         return box;
     }
@@ -173,7 +173,7 @@ public class AutoUpdateOptionsPanel extends ViewPanel
     private void updatePreferredVersion(String version)
     {
         String chooseVersionMessage = "Are you sure you want to use version " + version + " as your default?"
-                + System.lineSeparator() + "You will have to restart the application for this to take effect.";
+                + System.lineSeparator() + "The application will restart when this takes effect.";
 
         int yn = JOptionPane.showConfirmDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(), chooseVersionMessage,
                 "Confirm Change", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -185,16 +185,32 @@ public class AutoUpdateOptionsPanel extends ViewPanel
             myController.storeLaunchConfiguration(launchConfig);
 
             // Enable/Disable deletion buttons
-            JButton deleteButton = myVersionToDeleteMap.get(version);
-            deleteButton.setVisible(false);
-            deleteButton.setEnabled(false);
-
-            deleteButton = myVersionToDeleteMap.get(myPreferredVersion);
-            deleteButton.setVisible(true);
-            deleteButton.setEnabled(true);
+            JButton deleteButton;
+            if (myVersionToDeleteMap.containsKey(version))
+            {
+                deleteButton = myVersionToDeleteMap.get(version);
+                deleteButton.setVisible(false);
+                deleteButton.setEnabled(false);
+            }
+            if (myVersionToDeleteMap.containsKey(myPreferredVersion))
+            {
+                deleteButton = myVersionToDeleteMap.get(myPreferredVersion);
+                deleteButton.setVisible(true);
+                deleteButton.setEnabled(true);
+            }
 
             // Swap preferred versions finally
             myPreferredVersion = version;
+
+            try
+            {
+                restartApplication();
+            }
+            catch (IOException e)
+            {
+                JOptionPane.showMessageDialog(this,
+                        "The application failed to restart automatically. Please close and restart manually.");
+            }
         }
         else
         {
@@ -252,6 +268,52 @@ public class AutoUpdateOptionsPanel extends ViewPanel
             {
                 LOG.error("Unable to cleanup '" + versionDirectory.toString() + "' after requested cancel", e);
             }
+        }
+    }
+
+    /**
+     * Restart the current Java application.
+     *
+     * @throws IOException
+     */
+    private void restartApplication() throws IOException
+    {
+        try
+        {
+            // The cmd to execute is just a path to the launch script. The
+            // filesystem can handle it.
+            String cmd;
+            if (System.getProperty("os.name").equals("Windows"))
+            {
+                cmd = Paths.get(myPreferences.getInstallDirectory().getAbsolutePath(), "launch.bat").normalize().toString();
+            }
+            // Linux
+            else
+            {
+                cmd = Paths.get(myPreferences.getInstallDirectory().getAbsolutePath(), "launch.sh").normalize().toString();
+            }
+
+            Runtime.getRuntime().addShutdownHook(new Thread()
+            {
+                @Override
+                public void run()
+                {
+                    try
+                    {
+                        Runtime.getRuntime().exec(cmd);
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            System.exit(0);
+        }
+        catch (Exception e)
+        {
+            throw new IOException("Error while trying to restart the application", e);
         }
     }
 }
