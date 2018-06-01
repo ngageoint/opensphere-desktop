@@ -47,6 +47,9 @@ public class ObjectPreferenceBinding<T> implements Service
     /** The string converter. */
     private final StringConverter<T> myConverter;
 
+    /** If the property should only be set once, at initialization. */
+    private final boolean mySetPropertyOnce;
+
     /**
      * Constructor.
      *
@@ -59,6 +62,24 @@ public class ObjectPreferenceBinding<T> implements Service
      */
     public ObjectPreferenceBinding(ObjectProperty<T> property, Preferences prefs, String key, T def, Executor executor,
             StringConverter<T> converter)
+    {
+        this(property, prefs, key, def, executor, converter, false);
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param property The property.
+     * @param prefs The preferences.
+     * @param key The key.
+     * @param def The default value to return if the key does not exist.
+     * @param executor The executor to use for updating the property
+     * @param converter The string converter
+     * @param setPropertyOnce If the property should only be set at
+     *            initialization
+     */
+    public ObjectPreferenceBinding(ObjectProperty<T> property, Preferences prefs, String key, T def, Executor executor,
+            StringConverter<T> converter, boolean setPropertyOnce)
     {
         myProperty = property;
         myPrefs = prefs;
@@ -75,12 +96,16 @@ public class ObjectPreferenceBinding<T> implements Service
             }
         };
         myPropertyListener = (v, o, value) -> myPrefs.putString(myKey, myConverter.toString(value), this);
+        mySetPropertyOnce = setPropertyOnce;
     }
 
     @Override
     public void open()
     {
-        myPrefs.addPreferenceChangeListener(myKey, myPrefsListener);
+        if (!mySetPropertyOnce)
+        {
+            myPrefs.addPreferenceChangeListener(myKey, myPrefsListener);
+        }
         myExecutor.execute(() ->
         {
             String stringValue = myPrefs.getString(myKey, null);
@@ -92,8 +117,14 @@ public class ObjectPreferenceBinding<T> implements Service
     @Override
     public void close()
     {
-        myPrefs.removePreferenceChangeListener(myKey, myPrefsListener);
-        myExecutor.execute(() -> myProperty.removeListener(myPropertyListener));
+        if (!mySetPropertyOnce)
+        {
+            myPrefs.removePreferenceChangeListener(myKey, myPrefsListener);
+        }
+        myExecutor.execute(() ->
+        {
+            myProperty.removeListener(myPropertyListener);
+        });
     }
 
     /**
