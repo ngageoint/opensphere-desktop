@@ -41,6 +41,13 @@ public interface GroupByTreeBuilder
     void setGroupComparator(Comparator<? super DataGroupInfo> comparator);
 
     /**
+     * Gets the predicate used to match data groups for the tree.
+     *
+     * @return the predicate used to match data groups for the tree.
+     */
+    Predicate<DataGroupInfo> getDataCategoryFilter();
+
+    /**
      * Gets the group filter.
      *
      * @return the group filter

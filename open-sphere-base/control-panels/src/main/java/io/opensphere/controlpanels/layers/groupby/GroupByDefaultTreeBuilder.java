@@ -102,6 +102,16 @@ public class GroupByDefaultTreeBuilder implements ActiveGroupByTreeBuilder, Avai
     }
 
     @Override
+    public Predicate<DataGroupInfo> getDataCategoryFilter()
+    {
+        // by default, only match things that haven't been categorized:
+        return g ->
+        {
+            return g.getDataCategories().isEmpty();
+        };
+    }
+
+    @Override
     public Predicate<DataGroupInfo> getGroupFilter()
     {
         if (myActiveGroupsOnly)
@@ -140,13 +150,23 @@ public class GroupByDefaultTreeBuilder implements ActiveGroupByTreeBuilder, Avai
     @Override
     public void initializeForActive(Toolbox toolbox)
     {
-        myToolbox = toolbox;
+        setToolbox(toolbox);
         myActiveGroupsOnly = true;
         mySubNodesForMultiMemberGroups = true;
     }
 
     @Override
     public void initializeForAvailable(Toolbox toolbox)
+    {
+        setToolbox(toolbox);
+    }
+
+    /**
+     * Sets the value of the toolbox ({@link #myToolbox}) field.
+     *
+     * @param toolbox the value to store in the {@link #myToolbox} field.
+     */
+    protected void setToolbox(Toolbox toolbox)
     {
         myToolbox = toolbox;
     }
