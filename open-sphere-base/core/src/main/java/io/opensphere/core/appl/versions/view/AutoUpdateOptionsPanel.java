@@ -202,15 +202,7 @@ public class AutoUpdateOptionsPanel extends ViewPanel
             // Swap preferred versions finally
             myPreferredVersion = version;
 
-            try
-            {
-                restartApplication();
-            }
-            catch (IOException e)
-            {
-                JOptionPane.showMessageDialog(this,
-                        "The application failed to restart automatically. Please close and restart manually.");
-            }
+            restartApplication();
         }
         else
         {
@@ -273,48 +265,40 @@ public class AutoUpdateOptionsPanel extends ViewPanel
 
     /**
      * Restart the current Java application.
-     *
-     * @throws IOException
      */
-    private void restartApplication() throws IOException
+    private void restartApplication()
     {
-        try
+        final String installPath = myPreferences.getInstallDirectory().getAbsolutePath();
+        // The cmd to execute is just a path to the launch script. The
+        // filesystem can handle it.
+        String cmd;
+        if (System.getProperty("os.name").equals("Windows"))
         {
-            final String installPath = myPreferences.getInstallDirectory().getAbsolutePath();
-            // The cmd to execute is just a path to the launch script. The
-            // filesystem can handle it.
-            String cmd;
-            if (System.getProperty("os.name").equals("Windows"))
-            {
-                cmd = Paths.get(installPath, "launch.bat").normalize().toString();
-            }
-            // Linux
-            else
-            {
-                cmd = Paths.get(installPath, "launch.sh").normalize().toString();
-            }
+            cmd = Paths.get(installPath, "launch.bat").normalize().toString();
+        }
+        // Linux
+        else
+        {
+            cmd = Paths.get(installPath, "launch.sh").normalize().toString();
+        }
 
-            Runtime.getRuntime().addShutdownHook(new Thread()
+        Runtime.getRuntime().addShutdownHook(new Thread()
+        {
+            @Override
+            public void run()
             {
-                @Override
-                public void run()
+                try
                 {
-                    try
-                    {
-                        Runtime.getRuntime().exec(cmd);
-                    }
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
+                    LOG.info(cmd);
+                    Runtime.getRuntime().exec("\"" + cmd + "\"");
                 }
-            });
+                catch (IOException e)
+                {
+                    LOG.error(e);
+                }
+            }
+        });
 
-            System.exit(0);
-        }
-        catch (Exception e)
-        {
-            throw new IOException("Error while trying to restart the application", e);
-        }
+        System.exit(0);
     }
 }
