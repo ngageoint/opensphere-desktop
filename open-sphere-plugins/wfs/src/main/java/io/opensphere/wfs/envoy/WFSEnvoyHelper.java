@@ -399,7 +399,8 @@ public class WFSEnvoyHelper
                 type.setDescription(description);
             }
 
-            List<String> tagsToRemove = type.getTags().stream().filter(t -> t.indexOf(':') != -1).collect(Collectors.toList());
+            List<String> tagsToRemove = type.getTags().stream().filter(t -> t.indexOf(':') != -1 && !t.contains("://"))
+                    .collect(Collectors.toList());
             for (String tag : tagsToRemove)
             {
                 type.removeTag(tag, this);
