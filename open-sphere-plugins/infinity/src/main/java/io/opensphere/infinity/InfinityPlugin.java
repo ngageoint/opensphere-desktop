@@ -1,10 +1,14 @@
 package io.opensphere.infinity;
 
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+
+import com.vividsolutions.jts.geom.Polygon;
 
 import io.opensphere.core.PluginLoaderData;
 import io.opensphere.core.Toolbox;
@@ -12,8 +16,13 @@ import io.opensphere.core.api.Envoy;
 import io.opensphere.core.api.adapter.AbstractServicePlugin;
 import io.opensphere.core.data.QueryException;
 import io.opensphere.core.event.EventManagerListenerHandle;
+import io.opensphere.core.model.LatLonAlt;
+import io.opensphere.core.model.time.TimeSpan;
+import io.opensphere.core.units.duration.Days;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.Service;
+import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.jts.JTSUtilities;
 import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.infinity.envoy.InfinityEnvoy;
 import io.opensphere.infinity.json.SearchResponse;
@@ -64,11 +73,22 @@ public class InfinityPlugin extends AbstractServicePlugin
 
                     // TODO temporary code
                     String url = InfinityUtilities.getUrl(dataType);
+                    List<LatLonAlt> points = New.list();
+                    points.add(LatLonAlt.createFromDegrees(0, 0));
+                    points.add(LatLonAlt.createFromDegrees(1, 0));
+                    points.add(LatLonAlt.createFromDegrees(1, 1));
+                    points.add(LatLonAlt.createFromDegrees(0, 1));
+                    points.add(LatLonAlt.createFromDegrees(0, 0));
+                    Polygon polygon = JTSUtilities.createJTSPolygonFromLatLonAlt(points, null);
+                    TimeSpan timeSpan = TimeSpan.get(new Date(), Days.ONE);
                     try
                     {
-                        LOGGER.info("URL: " + url);
-                        SearchResponse response = InfinityEnvoy.query(myToolbox.getDataRegistry(), url);
+                        SearchResponse response = InfinityEnvoy.query(myToolbox.getDataRegistry(), url, polygon, timeSpan);
                         LOGGER.info("Total hits: " + response.getHits().getTotal());
+                        if (response.getAggregations() != null)
+                        {
+                            LOGGER.info("Aggs: " + Arrays.toString(response.getAggregations().getBins().getBuckets()));
+                        }
                     }
                     catch (QueryException e)
                     {

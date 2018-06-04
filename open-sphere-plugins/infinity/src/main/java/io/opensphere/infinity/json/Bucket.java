@@ -67,4 +67,10 @@ public class Bucket
     {
         myDocCount = docCount;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Bucket [key=" + myKey + ", docCount=" + myDocCount + "]";
+    }
 }
