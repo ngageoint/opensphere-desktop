@@ -248,7 +248,7 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         String cmd;
         if (System.getProperty("os.name").contains("Windows"))
         {
-            cmd = Paths.get(installPath, "launch.bat").normalize().toString();
+            cmd = "\"" + Paths.get(installPath, "launch.bat").normalize().toString() + "\"";
         }
         // Linux
         else
@@ -263,7 +263,7 @@ public class AutoUpdateOptionsPanel extends ViewPanel
             {
                 try
                 {
-                    Runtime.getRuntime().exec("\"" + cmd + "\"");
+                    Runtime.getRuntime().exec(cmd);
                 }
                 catch (IOException e)
                 {
