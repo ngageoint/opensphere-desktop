@@ -68,7 +68,7 @@ public final class DataGroupInfoGroupByUtility
         }
         else
         {
-            createFullTree(builder.getGroupFilter(), uoGen, dataGroups, result);
+            createFullTree(builder.getDataCategoryFilter(), builder.getGroupFilter(), uoGen, dataGroups, result);
         }
 
         return result;
@@ -128,10 +128,10 @@ public final class DataGroupInfoGroupByUtility
      * @param addToList the add to list
      * @param dgi the dgi
      */
-    private static void addToGroupIfPassesFilter(Predicate<DataGroupInfo> groupFilter, List<DataGroupInfo> addToList,
-            DataGroupInfo dgi)
+    private static void addToGroupIfPassesFilter(Predicate<DataGroupInfo> dataCategoryFilter,
+            Predicate<DataGroupInfo> groupFilter, List<DataGroupInfo> addToList, DataGroupInfo dgi)
     {
-        if (groupFilter == null || groupFilter.test(dgi))
+        if ((dataCategoryFilter == null || dataCategoryFilter.test(dgi)) && (groupFilter == null || groupFilter.test(dgi)))
         {
             addToList.add(dgi);
         }
@@ -139,7 +139,7 @@ public final class DataGroupInfoGroupByUtility
         {
             for (DataGroupInfo child : dgi.getChildren())
             {
-                addToGroupIfPassesFilter(groupFilter, addToList, child);
+                addToGroupIfPassesFilter(dataCategoryFilter, groupFilter, addToList, child);
             }
         }
     }
@@ -187,8 +187,8 @@ public final class DataGroupInfoGroupByUtility
         TreeOptions treeOptions = builder.getTreeOptions();
         if (treeOptions == null || !treeOptions.isBuildWithTypesInsteadOfGroups())
         {
-            Map<String, List<DataGroupInfo>> catToGroupsMap = createGroupBy(builder.getGroupFilter(),
-                    builder.getGroupComparator(), builder.getGroupCategorizer(), dataGroups);
+            Map<String, List<DataGroupInfo>> catToGroupsMap = createGroupBy(builder.getDataCategoryFilter(),
+                    builder.getGroupFilter(), builder.getGroupComparator(), builder.getGroupCategorizer(), dataGroups);
 
             List<String> categories = builder.getGroupCategorizer().getAllCategories();
 
@@ -233,8 +233,9 @@ public final class DataGroupInfoGroupByUtility
         }
         else
         {
-            Map<String, List<Pair<DataGroupInfo, DataTypeInfo>>> catToTypeMap = createGroupByDataType(builder.getGroupFilter(),
-                    builder.getTypeComparator(), builder.getGroupCategorizer(), dataGroups);
+            Map<String, List<Pair<DataGroupInfo, DataTypeInfo>>> catToTypeMap = createGroupByDataType(
+                    builder.getDataCategoryFilter(), builder.getGroupFilter(), builder.getTypeComparator(),
+                    builder.getGroupCategorizer(), dataGroups);
 
             List<String> categories = builder.getGroupCategorizer().getAllCategories();
 
@@ -275,8 +276,9 @@ public final class DataGroupInfoGroupByUtility
      *            considered for inclusion.
      * @param parentNode the parent node
      */
-    private static void createFullTree(final Predicate<DataGroupInfo> groupFilter, NodeUserObjectGenerator userObjGen,
-            Collection<DataGroupInfo> dataGroups, DefaultMutableTreeNode parentNode)
+    private static void createFullTree(final Predicate<DataGroupInfo> dataCategoryFilter,
+            final Predicate<DataGroupInfo> groupFilter, NodeUserObjectGenerator userObjGen, Collection<DataGroupInfo> dataGroups,
+            DefaultMutableTreeNode parentNode)
     {
         if (CollectionUtilities.hasContent(dataGroups))
         {
@@ -293,7 +295,7 @@ public final class DataGroupInfoGroupByUtility
                 {
                     DefaultMutableTreeNode node = new DefaultMutableTreeNode(userObjGen.createNodeUserObject(group));
                     parentNode.add(node);
-                    createFullTree(groupFilter, userObjGen, group.getChildren(), node);
+                    createFullTree(dataCategoryFilter, groupFilter, userObjGen, group.getChildren(), node);
                 }
             }
             else
@@ -308,12 +310,14 @@ public final class DataGroupInfoGroupByUtility
                 {
                     DefaultMutableTreeNode node = new DefaultMutableTreeNode(userObjGen.createNodeUserObject(group));
                     parentNode.add(node);
-                    createFullTree(groupFilter, userObjGen, group.getChildren(), node);
+                    createFullTree(dataCategoryFilter, groupFilter, userObjGen, group.getChildren(), node);
                 }
 
-                // Add the groups with members that pass the group filter
+                // Add the groups with members that pass the data category and
+                // group filters
                 List<DataGroupInfo> memberGroups = StreamUtilities.filter(dataGroups,
-                        group -> group.hasMembers(false) && (groupFilter == null || groupFilter.test(group)));
+                        group -> group.hasMembers(false) && (dataCategoryFilter == null || dataCategoryFilter.test(group))
+                                && (groupFilter == null || groupFilter.test(group)));
                 Collections.sort(memberGroups, DefaultDataGroupInfo.CASE_INSENSITIVE_DISPLAY_NAME_COMPARATOR);
 
                 for (DataGroupInfo group : memberGroups)
@@ -342,8 +346,9 @@ public final class DataGroupInfoGroupByUtility
      * @return the result {@link Map} of category to {@link List} of
      *         {@link DataGroupInfo}
      */
-    private static Map<String, List<DataGroupInfo>> createGroupBy(Predicate<DataGroupInfo> groupFilter,
-            Comparator<? super DataGroupInfo> groupComparator, GroupCategorizer categorizer, Collection<DataGroupInfo> collection)
+    private static Map<String, List<DataGroupInfo>> createGroupBy(Predicate<DataGroupInfo> dataCategoryFilter,
+            Predicate<DataGroupInfo> groupFilter, Comparator<? super DataGroupInfo> groupComparator, GroupCategorizer categorizer,
+            Collection<DataGroupInfo> collection)
     {
         Utilities.checkNull(collection, "collection");
         Utilities.checkNull(categorizer, "categorizer");
@@ -353,7 +358,7 @@ public final class DataGroupInfoGroupByUtility
 
         for (DataGroupInfo dgi : collection)
         {
-            addToGroupIfPassesFilter(groupFilter, dgiList, dgi);
+            addToGroupIfPassesFilter(dataCategoryFilter, groupFilter, dgiList, dgi);
         }
 
         Set<String> categories = null;
@@ -399,6 +404,8 @@ public final class DataGroupInfoGroupByUtility
      * controller by the provided filter and categorized ( multiple categories
      * are allowed per group) by the GroupCatagorizer.
      *
+     * @param dataCategoryFilter the filter used to narrow the set of data
+     *            categories.
      * @param groupFilter the group filter ( if null "all" are selected).
      * @param typeComparator the group comparator a {@link Comparator} that
      *            helps sort the resultant lists. (if null sorted in natural
@@ -411,10 +418,9 @@ public final class DataGroupInfoGroupByUtility
      *         {@link DataGroupInfo}
      */
     private static Map<String, List<Pair<DataGroupInfo, DataTypeInfo>>> createGroupByDataType(
-            Predicate<DataGroupInfo> groupFilter, Comparator<? super DataTypeInfo> typeComparator, GroupCategorizer categorizer,
-            Collection<DataGroupInfo> collection)
+            Predicate<DataGroupInfo> dataCategoryFilter, Predicate<DataGroupInfo> groupFilter,
+            Comparator<? super DataTypeInfo> typeComparator, GroupCategorizer categorizer, Collection<DataGroupInfo> collection)
     {
-
         Utilities.checkNull(collection, "collection");
         Utilities.checkNull(categorizer, "categorizer");
         Map<String, List<Pair<DataGroupInfo, DataTypeInfo>>> result = New.map();
@@ -423,7 +429,7 @@ public final class DataGroupInfoGroupByUtility
 
         for (DataGroupInfo dgi : getSortedDGIList(collection))
         {
-            addToGroupIfPassesFilter(groupFilter, dgiList, dgi);
+            addToGroupIfPassesFilter(dataCategoryFilter, groupFilter, dgiList, dgi);
         }
 
         Set<String> categories = null;
@@ -442,7 +448,7 @@ public final class DataGroupInfoGroupByUtility
                             list = New.list();
                             result.put(category, list);
                         }
-                        list.add(new Pair<DataGroupInfo, DataTypeInfo>(dgi, dti));
+                        list.add(new Pair<>(dgi, dti));
                     }
                 }
             }

@@ -1,2 +1,43 @@
 {
+	"size": 0,
+	"timeout": "30s",
+	"query": {
+		"bool": {
+			"must": [
+				{
+					"range": {
+						"timefield": {
+							"format": "epoch_millis",
+							"gte": 123,
+							"lt": 456
+						}
+					}
+				},
+				{
+					"geo_bounding_box": {
+						"ignore_unmapped": true,
+						"geom_point": {
+							"bottom_right": {
+								"lat": -90,
+								"lon": 180
+							},
+							"top_left": {
+								"lat": 90,
+								"lon": -180
+							}
+						}
+					}
+				}
+			]
+		}
+	},
+	"aggs": {
+		"bins": {
+			"terms": {
+				"field": "blah.keyword",
+				"size": 10000,
+				"missing": 1000000000000000000
+			}
+		}
+	}
 }

@@ -31,6 +31,24 @@ public class EnumPreferenceBinding<E extends Enum<E>> implements Service
     public EnumPreferenceBinding(Class<E> type, ObjectProperty<E> property, Preferences prefs, String key, E def,
             Executor executor)
     {
+        this(type, property, prefs, key, def, executor, false);
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param type The type.
+     * @param property The property.
+     * @param prefs The preferences.
+     * @param key The preferences key.
+     * @param def The default value.
+     * @param executor The executor to use for updating the property
+     * @param setPropertyOnce If the property should only be set at
+     *            initialization
+     */
+    public EnumPreferenceBinding(Class<E> type, ObjectProperty<E> property, Preferences prefs, String key, E def,
+            Executor executor, boolean setPropertyOnce)
+    {
         StringConverter<E> converter = new StringConverter<E>()
         {
             @Override
@@ -45,7 +63,7 @@ public class EnumPreferenceBinding<E extends Enum<E>> implements Service
                 return Enum.valueOf(type, string);
             }
         };
-        myBinding = new ObjectPreferenceBinding<>(property, prefs, key, def, executor, converter);
+        myBinding = new ObjectPreferenceBinding<>(property, prefs, key, def, executor, converter, setPropertyOnce);
     }
 
     @Override

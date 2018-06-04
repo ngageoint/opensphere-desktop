@@ -34,6 +34,9 @@ public class BooleanPreferenceBinding implements Service
     /** The executor to use for updating the property. */
     private final Executor myExecutor;
 
+    /** If the property should only be set once, at initialization. */
+    private final boolean mySetPropertyOnce;
+
     /**
      * Constructor.
      *
@@ -57,6 +60,23 @@ public class BooleanPreferenceBinding implements Service
      */
     public BooleanPreferenceBinding(BooleanProperty property, String key, boolean def, Preferences prefs, Executor executor)
     {
+        this(property, key, def, prefs, executor, false);
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param property The property.
+     * @param key The key.
+     * @param def The default value to return if the key does not exist.
+     * @param prefs The preferences.
+     * @param executor The executor to use for updating the property
+     * @param setPropertyOnce If the property should only be set at
+     *            initialization
+     */
+    public BooleanPreferenceBinding(BooleanProperty property, String key, boolean def, Preferences prefs, Executor executor,
+            boolean setPropertyOnce)
+    {
         myProperty = property;
         myPrefs = prefs;
         myKey = key;
@@ -64,12 +84,16 @@ public class BooleanPreferenceBinding implements Service
         myExecutor = executor;
         myPrefsListener = evt -> myExecutor.execute(() -> myProperty.set(evt.getValueAsBoolean(myDefault)));
         myPropertyListener = (v, o, n) -> myPrefs.putBoolean(myKey, n.booleanValue(), null);
+        mySetPropertyOnce = setPropertyOnce;
     }
 
     @Override
     public void open()
     {
-        myPrefs.addPreferenceChangeListener(myKey, myPrefsListener);
+        if (!mySetPropertyOnce)
+        {
+            myPrefs.addPreferenceChangeListener(myKey, myPrefsListener);
+        }
         myExecutor.execute(() ->
         {
             myProperty.set(myPrefs.getBoolean(myKey, myDefault));
@@ -80,8 +104,14 @@ public class BooleanPreferenceBinding implements Service
     @Override
     public void close()
     {
-        myPrefs.removePreferenceChangeListener(myKey, myPrefsListener);
-        myExecutor.execute(() -> myProperty.removeListener(myPropertyListener));
+        if (!mySetPropertyOnce)
+        {
+            myPrefs.removePreferenceChangeListener(myKey, myPrefsListener);
+        }
+        myExecutor.execute(() ->
+        {
+            myProperty.removeListener(myPropertyListener);
+        });
     }
 
     /**

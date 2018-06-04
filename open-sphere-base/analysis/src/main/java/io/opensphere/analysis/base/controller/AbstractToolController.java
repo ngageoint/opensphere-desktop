@@ -138,7 +138,7 @@ public abstract class AbstractToolController extends EventListenerService
                         reloadData();
                     }
                 })));
-        addService(new SettingsModelPersister(model.getSettingsModel(), toolbox.getPreferencesRegistry(), toolName));
+        addService(new SettingsModelPersister(model.getSettingsModel(), toolbox.getPreferencesRegistry()));
         model.getActionModel().setBinSelectionListener(this::handleBinSelected);
     }
 

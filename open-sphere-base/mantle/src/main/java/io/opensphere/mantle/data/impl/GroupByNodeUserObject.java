@@ -464,7 +464,7 @@ public class GroupByNodeUserObject
      *
      * @param label the new label
      */
-    protected void setLabel(String label)
+    public void setLabel(String label)
     {
         myLabel = label;
     }

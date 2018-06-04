@@ -11,10 +11,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.event.EventHandler;
-
 import javax.naming.OperationNotSupportedException;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
@@ -25,6 +21,9 @@ import io.opensphere.core.model.Quadrilateral;
 import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.event.EventHandler;
 
 /**
  * A grouping of associated DataTypeInfo, that can possibly form a node in a tree of associated groups of data.
@@ -670,6 +669,14 @@ public interface DataGroupInfo
      * @param preserveChildOrder whether to preserve child order
      */
     void setPreserveChildOrder(boolean preserveChildOrder);
+
+    /**
+     * Gets the categories to which the data group belongs. Note that the
+     * returned value is a live list, and can be modified by the caller.
+     *
+     * @return a set of data categories, which may be empty, but never null.
+     */
+    Set<String> getDataCategories();
 
     /**
      * Determines whether the group has a member that matches the filter.

@@ -373,7 +373,7 @@ public class DbasePortion implements Collection<Object[]>
         }
         catch (IOException e)
         {
-            LOGGER.equals(ERR_COULD_NOT_SET_POSITION);
+            LOGGER.error(ERR_COULD_NOT_SET_POSITION);
         }
     }
 
