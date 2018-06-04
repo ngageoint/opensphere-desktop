@@ -75,8 +75,8 @@ public class HeadingKey extends AbstractSpecialKey implements SpecialColumnDetec
      */
     public static boolean isHeading(String columnName)
     {
-        return StringUtils.containsIgnoreCase(columnName, "course") || StringUtils.containsIgnoreCase(columnName, "heading")
-                || StringUtils.containsIgnoreCase(columnName, "bearing");
+        return (StringUtils.containsIgnoreCase(columnName, "course") || StringUtils.containsIgnoreCase(columnName, "heading")
+                || StringUtils.containsIgnoreCase(columnName, "bearing")) && !StringUtils.startsWith(columnName, "is");
     }
 
     /** An enumeration of heading units. */
