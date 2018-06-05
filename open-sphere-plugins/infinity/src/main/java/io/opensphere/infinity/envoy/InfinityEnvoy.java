@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
@@ -36,8 +35,6 @@ import io.opensphere.core.data.util.DataModelCategory;
 import io.opensphere.core.data.util.OrderSpecifier;
 import io.opensphere.core.data.util.Satisfaction;
 import io.opensphere.core.data.util.SimpleQuery;
-import io.opensphere.core.model.Altitude;
-import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.time.TimeInstant;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.server.ContentType;
@@ -47,24 +44,19 @@ import io.opensphere.core.server.ServerProvider;
 import io.opensphere.core.units.duration.Minutes;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.io.CancellableInputStream;
-import io.opensphere.core.util.jts.JTSUtilities;
 import io.opensphere.core.util.net.HttpUtilities;
 import io.opensphere.infinity.json.Aggs;
+import io.opensphere.infinity.json.Any;
 import io.opensphere.infinity.json.BoundingBox;
-import io.opensphere.infinity.json.Coordinate;
 import io.opensphere.infinity.json.GeoBoundingBox;
-import io.opensphere.infinity.json.Holder;
-import io.opensphere.infinity.json.Range;
 import io.opensphere.infinity.json.SearchRequest;
 import io.opensphere.infinity.json.SearchResponse;
+import io.opensphere.infinity.json.TimeRange;
 import io.opensphere.server.util.JsonUtils;
 
 /** Infinity envoy. */
 public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
 {
-    /** Logger reference. */
-    private static final Logger LOGGER = Logger.getLogger(InfinityEnvoy.class);
-
     /** The data model category family. */
     private static final String FAMILY = "Infinity.Search";
 
@@ -119,76 +111,23 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
     {
         try
         {
-            URL url = getUrl(category);
-            String binField = "field1";
-            if (url != null)
+            for (Satisfaction sat : satisfactions)
             {
-                for (Satisfaction sat : satisfactions)
+                IntervalPropertyValueSet valueSet = sat.getIntervalPropertyValueSet();
+                Collection<? extends Geometry> geometries = valueSet.getValues(GeometryAccessor.PROPERTY_DESCRIPTOR);
+                Collection<? extends TimeSpan> timeSpans = valueSet.getValues(TimeSpanAccessor.PROPERTY_DESCRIPTOR);
+                for (Geometry geometry : geometries)
                 {
-                    IntervalPropertyValueSet valueSet = sat.getIntervalPropertyValueSet();
-                    Collection<? extends Geometry> geometries = valueSet.getValues(GeometryAccessor.PROPERTY_DESCRIPTOR);
-                    Collection<? extends TimeSpan> timeSpans = valueSet.getValues(TimeSpanAccessor.PROPERTY_DESCRIPTOR);
-                    for (Geometry geometry : geometries)
+                    for (TimeSpan timeSpan : timeSpans)
                     {
-                        for (TimeSpan timeSpan : timeSpans)
-                        {
-                            query(category, queryReceiver, url, geometry, timeSpan, binField);
-                        }
+                        query(category, queryReceiver, geometry, timeSpan, "geom_point", "timefield", "field1");
                     }
                 }
-            }
-            else
-            {
-                LOGGER.info(getClass().getName() + " envoy's getUrl method returned a null value, skipping query.");
             }
         }
         catch (IOException | CacheException e)
         {
             throw new QueryException(e);
-        }
-    }
-
-    private void query(DataModelCategory category, CacheDepositReceiver queryReceiver, URL url, Geometry geometry,
-            TimeSpan timeSpan, String binField)
-        throws IOException, CacheException
-    {
-        SearchRequest request = new SearchRequest();
-        request.setSize(0);
-        request.setTimeout("30s");
-        Object[] must = new Object[2];
-        must[0] = new Holder("range", new Range(timeSpan.getStart(), timeSpan.getEnd()));
-        GeoBoundingBox geoBbox = new GeoBoundingBox();
-        geoBbox.setGeometryName("geom_point");
-        BoundingBox bbox = new BoundingBox();
-        GeographicBoundingBox queryBbox = GeographicBoundingBox.getMinimumBoundingBoxLLA(
-                JTSUtilities.convertToLatLonAlt(geometry.getCoordinates(), Altitude.ReferenceLevel.ELLIPSOID));
-        bbox.setBottom_right(new Coordinate(queryBbox.getLowerRight()));
-        bbox.setTop_left(new Coordinate(queryBbox.getUpperLeft()));
-        geoBbox.setGeometry(bbox);
-        must[1] = new Holder("geo_bounding_box", geoBbox);
-        request.getQuery().getBool().setMust(must);
-        if (binField != null)
-        {
-            request.setAggs(new Aggs(binField + ".keyword", 10000, 1000000000000000000L));
-        }
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ObjectMapper mapper = JsonUtils.createMapper();
-        mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-        mapper.writeValue(out, request);
-
-        InputStream postData = new ByteArrayInputStream(out.toByteArray());
-        System.out.println(new String(out.toByteArray()));
-        ResponseValues response = new ResponseValues();
-        ServerProvider<HttpServer> provider = getServerProviderRegistry().getProvider(HttpServer.class);
-        try (CancellableInputStream inputStream = HttpUtilities.sendPost(url, postData, response, ContentType.JSON, provider))
-        {
-            Collection<SearchResponse> items = parseDepositItems(inputStream);
-            if (!items.isEmpty())
-            {
-                CacheDeposit<SearchResponse> deposit = createDeposit(category, items);
-                queryReceiver.receive(deposit);
-            }
         }
     }
 
@@ -207,8 +146,96 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
     @Override
     protected CacheDeposit<SearchResponse> createDeposit(DataModelCategory category, Collection<? extends SearchResponse> items)
     {
+        // TODO geom/time accessors in deposit?
         return new DefaultCacheDeposit<>(category.withSource(getClass().getName()),
                 List.of(UnserializableAccessor.getHomogeneousAccessor(PROPERTY_DESCRIPTOR)), items, true,
                 TimeInstant.get().plus(Minutes.ONE).toDate(), false);
+    }
+
+    /**
+     * Performs a query and deposits the results in the query receiver.
+     *
+     * @param category the data model category
+     * @param queryReceiver the query receiver
+     * @param geometry the geometry
+     * @param timeSpan the time span
+     * @param geomField the geometry field
+     * @param timeField the time field
+     * @param binField the bin field
+     * @throws IOException
+     * @throws CacheException
+     */
+    private void query(DataModelCategory category, CacheDepositReceiver queryReceiver, Geometry geometry, TimeSpan timeSpan,
+            String geomField, String timeField, String binField)
+        throws IOException, CacheException
+    {
+        URL url = getUrl(category);
+        InputStream postData = createRequestStream(geometry, timeSpan, geomField, timeField, binField);
+        ResponseValues response = new ResponseValues();
+        ServerProvider<HttpServer> provider = getServerProviderRegistry().getProvider(HttpServer.class);
+
+        try (CancellableInputStream inputStream = HttpUtilities.sendPost(url, postData, response, ContentType.JSON, provider))
+        {
+            Collection<SearchResponse> items = parseDepositItems(inputStream);
+            if (!items.isEmpty())
+            {
+                CacheDeposit<SearchResponse> deposit = createDeposit(category, items);
+                queryReceiver.receive(deposit);
+            }
+        }
+    }
+
+    /**
+     * Creates a JSON request stream (the post body).
+     *
+     * @param geometry the geometry
+     * @param timeSpan the time span
+     * @param geomField the geometry field
+     * @param timeField the time field
+     * @param binField the bin field
+     * @return the request stream
+     * @throws IOException
+     */
+    private InputStream createRequestStream(Geometry geometry, TimeSpan timeSpan, String geomField, String timeField,
+            String binField)
+        throws IOException
+    {
+        SearchRequest request = createSearchRequest(geometry, timeSpan, geomField, timeField, binField);
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ObjectMapper mapper = JsonUtils.createMapper();
+        mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+        mapper.writeValue(out, request);
+
+        InputStream postData = new ByteArrayInputStream(out.toByteArray());
+        System.out.println(new String(out.toByteArray()));
+        return postData;
+    }
+
+    /**
+     * Creates the search request bean.
+     *
+     * @param geometry the geometry
+     * @param timeSpan the time span
+     * @param geomField the geometry field
+     * @param timeField the time field
+     * @param binField the bin field
+     * @return the search request bean
+     */
+    private SearchRequest createSearchRequest(Geometry geometry, TimeSpan timeSpan, String geomField, String timeField,
+            String binField)
+    {
+        SearchRequest request = new SearchRequest();
+        request.setSize(0);
+        request.setTimeout("30s");
+        Object[] must = new Object[2];
+        must[0] = new Any("range", new Any(timeField, new TimeRange(timeSpan)));
+        must[1] = new Any("geo_bounding_box", new GeoBoundingBox(geomField, new BoundingBox(geometry)));
+        request.getQuery().getBool().setMust(must);
+        if (binField != null)
+        {
+            request.setAggs(new Aggs(binField + ".keyword", 10000, 1000000000000000000L));
+        }
+        return request;
     }
 }

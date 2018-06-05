@@ -1,7 +1,9 @@
 package io.opensphere.infinity.json;
 
-/** Elasticsearch timefield JSON bean. */
-public class Timefield
+import io.opensphere.core.model.time.TimeSpan;
+
+/** Elasticsearch time range JSON bean. */
+public class TimeRange
 {
     /** The gte. */
     private long myGte;
@@ -15,13 +17,12 @@ public class Timefield
     /**
      * Constructor.
      *
-     * @param gte the gte
-     * @param lt the lt
+     * @param timeSpan the time span
      */
-    public Timefield(long gte, long lt)
+    public TimeRange(TimeSpan timeSpan)
     {
-        myGte = gte;
-        myLt = lt;
+        myGte = timeSpan.getStart();
+        myLt = timeSpan.getEnd();
     }
 
     /**

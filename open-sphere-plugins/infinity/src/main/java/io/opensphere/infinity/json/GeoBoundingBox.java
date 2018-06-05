@@ -1,20 +1,17 @@
 package io.opensphere.infinity.json;
 
-import java.util.Collections;
-import java.util.Map;
-
-import org.codehaus.jackson.annotate.JsonAnyGetter;
-import org.codehaus.jackson.annotate.JsonIgnore;
-
-public class GeoBoundingBox
+public class GeoBoundingBox extends Any
 {
     private final boolean myIgnoreUnmapped = true;
 
-    @JsonIgnore
-    private String myGeometryName;
+    public GeoBoundingBox()
+    {
+    }
 
-    @JsonIgnore
-    private Object myGeometry;
+    public GeoBoundingBox(String propertyName, Object propertyValue)
+    {
+        super(propertyName, propertyValue);
+    }
 
     /**
      * Gets the ignoreUnmapped.
@@ -24,31 +21,5 @@ public class GeoBoundingBox
     public boolean isIgnore_unmapped()
     {
         return myIgnoreUnmapped;
-    }
-
-    /**
-     * Sets the geometryName.
-     *
-     * @param geometryName the geometryName
-     */
-    public void setGeometryName(String geometryName)
-    {
-        myGeometryName = geometryName;
-    }
-
-    /**
-     * Sets the geometry.
-     *
-     * @param geometry the geometry
-     */
-    public void setGeometry(Object geometry)
-    {
-        myGeometry = geometry;
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAny()
-    {
-        return Collections.singletonMap(myGeometryName, myGeometry);
     }
 }

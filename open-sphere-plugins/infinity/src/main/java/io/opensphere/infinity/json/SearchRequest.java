@@ -3,7 +3,7 @@ package io.opensphere.infinity.json;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
 /** Elasticsearch search request JSON bean. */
-@JsonPropertyOrder({ "size", "timeout", "query", "aggs"})
+@JsonPropertyOrder({ "size", "timeout", "query", "aggs" })
 public class SearchRequest
 {
     /** The size. */

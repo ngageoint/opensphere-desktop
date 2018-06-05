@@ -6,8 +6,8 @@ import java.util.Map;
 import org.codehaus.jackson.annotate.JsonAnyGetter;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
-/** Elasticsearch range holder JSON bean. */
-public class Holder
+/** JSON bean for an arbitrary property/value. */
+public class Any
 {
     @JsonIgnore
     private String myPropertyName;
@@ -15,11 +15,11 @@ public class Holder
     @JsonIgnore
     private Object myPropertyValue;
 
-    public Holder()
+    public Any()
     {
     }
 
-    public Holder(String propertyName, Object propertyValue)
+    public Any(String propertyName, Object propertyValue)
     {
         myPropertyName = propertyName;
         myPropertyValue = propertyValue;

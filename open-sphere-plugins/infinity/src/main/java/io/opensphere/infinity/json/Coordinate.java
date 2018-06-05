@@ -1,8 +1,11 @@
 package io.opensphere.infinity.json;
 
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
+
 import io.opensphere.core.model.GeographicPosition;
 
 /** Elasticsearch coordinate JSON bean. */
+@JsonPropertyOrder({ "lat", "lon" })
 public class Coordinate
 {
     /** The lat. */
