@@ -21,8 +21,10 @@ import io.opensphere.core.cache.CacheDeposit;
 import io.opensphere.core.cache.CacheException;
 import io.opensphere.core.cache.DefaultCacheDeposit;
 import io.opensphere.core.cache.accessor.GeometryAccessor;
+import io.opensphere.core.cache.accessor.PropertyAccessor;
 import io.opensphere.core.cache.accessor.TimeSpanAccessor;
 import io.opensphere.core.cache.accessor.UnserializableAccessor;
+import io.opensphere.core.cache.matcher.GeneralPropertyMatcher;
 import io.opensphere.core.cache.matcher.GeometryMatcher;
 import io.opensphere.core.cache.matcher.PropertyMatcher;
 import io.opensphere.core.cache.matcher.TimeSpanMatcher;
@@ -35,6 +37,7 @@ import io.opensphere.core.data.util.DataModelCategory;
 import io.opensphere.core.data.util.OrderSpecifier;
 import io.opensphere.core.data.util.Satisfaction;
 import io.opensphere.core.data.util.SimpleQuery;
+import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.time.TimeInstant;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.server.ContentType;
@@ -44,6 +47,7 @@ import io.opensphere.core.server.ServerProvider;
 import io.opensphere.core.units.duration.Minutes;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.io.CancellableInputStream;
+import io.opensphere.core.util.jts.JTSUtilities;
 import io.opensphere.core.util.net.HttpUtilities;
 import io.opensphere.infinity.json.Aggs;
 import io.opensphere.infinity.json.Any;
@@ -52,6 +56,8 @@ import io.opensphere.infinity.json.GeoBoundingBox;
 import io.opensphere.infinity.json.SearchRequest;
 import io.opensphere.infinity.json.SearchResponse;
 import io.opensphere.infinity.json.TimeRange;
+import io.opensphere.infinity.util.InfinityUtilities;
+import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.server.util.JsonUtils;
 
 /** Infinity envoy. */
@@ -61,28 +67,49 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
     private static final String FAMILY = "Infinity.Search";
 
     /** The {@link PropertyDescriptor} for the results. */
-    private static final PropertyDescriptor<SearchResponse> PROPERTY_DESCRIPTOR = new PropertyDescriptor<>("SearchResponse",
+    private static final PropertyDescriptor<SearchResponse> RESULTS_DESCRIPTOR = new PropertyDescriptor<>("SearchResponse",
             SearchResponse.class);
+
+    /** The {@link PropertyDescriptor} for the geometry field. */
+    private static final PropertyDescriptor<String> GEOM_FIELD_DESCRIPTOR = new PropertyDescriptor<>("GeometryField",
+            String.class);
+
+    /** The {@link PropertyDescriptor} for the time field. */
+    private static final PropertyDescriptor<String> TIME_FIELD_DESCRIPTOR = new PropertyDescriptor<>("TimeField", String.class);
+
+    /** The {@link PropertyDescriptor} for the bin field. */
+    private static final PropertyDescriptor<String> BIN_FIELD_DESCRIPTOR = new PropertyDescriptor<>("BinField", String.class);
 
     /**
      * Helper method for a client to query this envoy.
      *
      * @param dataRegistry the data registry
-     * @param layerUrl the layer URL to query
+     * @param dataType the data t`ype to query
      * @param polygon the polygon to query
      * @param timeSpan the time span to query
+     * @param geomField the geometry field
+     * @param timeField the time field
+     * @param binField the bin field
      * @return the search response
      * @throws QueryException if something goes wrong with the query
      */
-    public static SearchResponse query(DataRegistry dataRegistry, String layerUrl, Polygon polygon, TimeSpan timeSpan)
+    public static SearchResponse query(DataRegistry dataRegistry, DataTypeInfo dataType, Polygon polygon, TimeSpan timeSpan,
+            String geomField, String timeField, String binField)
         throws QueryException
     {
-        DataModelCategory category = new DataModelCategory(null, FAMILY, layerUrl);
-        List<PropertyMatcher<?>> parameters = New.list(2);
+        String url = InfinityUtilities.getUrl(dataType);
+        DataModelCategory category = new DataModelCategory(null, FAMILY, url);
+        List<PropertyMatcher<?>> parameters = New.list(5);
         parameters.add(
                 new GeometryMatcher(GeometryAccessor.GEOMETRY_PROPERTY_NAME, GeometryMatcher.OperatorType.INTERSECTS, polygon));
         parameters.add(new TimeSpanMatcher(TimeSpanAccessor.TIME_PROPERTY_NAME, timeSpan));
-        SimpleQuery<SearchResponse> query = new SimpleQuery<>(category, PROPERTY_DESCRIPTOR, parameters);
+        parameters.add(new GeneralPropertyMatcher<>(GEOM_FIELD_DESCRIPTOR, geomField));
+        parameters.add(new GeneralPropertyMatcher<>(TIME_FIELD_DESCRIPTOR, timeField));
+        if (binField != null)
+        {
+            parameters.add(new GeneralPropertyMatcher<>(BIN_FIELD_DESCRIPTOR, binField));
+        }
+        SimpleQuery<SearchResponse> query = new SimpleQuery<>(category, RESULTS_DESCRIPTOR, parameters);
         List<SearchResponse> results = performQuery(dataRegistry, query);
         return results.iterator().next();
     }
@@ -116,11 +143,17 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
                 IntervalPropertyValueSet valueSet = sat.getIntervalPropertyValueSet();
                 Collection<? extends Geometry> geometries = valueSet.getValues(GeometryAccessor.PROPERTY_DESCRIPTOR);
                 Collection<? extends TimeSpan> timeSpans = valueSet.getValues(TimeSpanAccessor.PROPERTY_DESCRIPTOR);
+                String geomField = (String)parameters.stream().filter(p -> p.getPropertyDescriptor() == GEOM_FIELD_DESCRIPTOR)
+                        .map(p -> p.getOperand()).findAny().orElse(null);
+                String timeField = (String)parameters.stream().filter(p -> p.getPropertyDescriptor() == TIME_FIELD_DESCRIPTOR)
+                        .map(p -> p.getOperand()).findAny().orElse(null);
+                String binField = (String)parameters.stream().filter(p -> p.getPropertyDescriptor() == BIN_FIELD_DESCRIPTOR)
+                        .map(p -> p.getOperand()).findAny().orElse(null);
                 for (Geometry geometry : geometries)
                 {
                     for (TimeSpan timeSpan : timeSpans)
                     {
-                        query(category, queryReceiver, geometry, timeSpan, "geom_point", "timefield", "field1");
+                        query(category, queryReceiver, geometry, timeSpan, geomField, timeField, binField);
                     }
                 }
             }
@@ -146,10 +179,8 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
     @Override
     protected CacheDeposit<SearchResponse> createDeposit(DataModelCategory category, Collection<? extends SearchResponse> items)
     {
-        // TODO geom/time accessors in deposit?
-        return new DefaultCacheDeposit<>(category.withSource(getClass().getName()),
-                List.of(UnserializableAccessor.getHomogeneousAccessor(PROPERTY_DESCRIPTOR)), items, true,
-                TimeInstant.get().plus(Minutes.ONE).toDate(), false);
+        // Overridden so as to be unused
+        return null;
     }
 
     /**
@@ -179,7 +210,7 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
             Collection<SearchResponse> items = parseDepositItems(inputStream);
             if (!items.isEmpty())
             {
-                CacheDeposit<SearchResponse> deposit = createDeposit(category, items);
+                CacheDeposit<SearchResponse> deposit = createDeposit(category, items, geometry, timeSpan);
                 queryReceiver.receive(deposit);
             }
         }
@@ -202,13 +233,12 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
     {
         SearchRequest request = createSearchRequest(geometry, timeSpan, geomField, timeField, binField);
 
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ByteArrayOutputStream out = new ByteArrayOutputStream(384);
         ObjectMapper mapper = JsonUtils.createMapper();
         mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
         mapper.writeValue(out, request);
 
         InputStream postData = new ByteArrayInputStream(out.toByteArray());
-        System.out.println(new String(out.toByteArray()));
         return postData;
     }
 
@@ -237,5 +267,74 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
             request.setAggs(new Aggs(binField + ".keyword", 10000, 1000000000000000000L));
         }
         return request;
+    }
+
+    /**
+     * Creates a deposit for the data.
+     *
+     * @param category
+     * @param items
+     * @param geometry the geometry
+     * @param timeSpan the time span
+     * @return the deposit
+     */
+    private CacheDeposit<SearchResponse> createDeposit(DataModelCategory category, Collection<? extends SearchResponse> items,
+            Geometry geometry, TimeSpan timeSpan)
+    {
+        List<PropertyAccessor<SearchResponse, ?>> accessors = New.list();
+        accessors.add(UnserializableAccessor.getHomogeneousAccessor(RESULTS_DESCRIPTOR));
+        accessors.add(new ResultGeometryAccessor(geometry));
+        accessors.add(new ResultTimeSpanAccessor(TimeSpan.TIMELESS, timeSpan));
+        return new DefaultCacheDeposit<>(category.withSource(getClass().getName()), accessors, items, true,
+                TimeInstant.get().plus(Minutes.ONE).toDate(), false);
+    }
+
+    /** GeometryAccessor. */
+    private static class ResultGeometryAccessor extends GeometryAccessor<SearchResponse>
+    {
+        /** The individual geometry. */
+        private final Geometry myGeometry;
+
+        /**
+         * Constructor.
+         *
+         * @param geometry The individual geometry
+         */
+        public ResultGeometryAccessor(Geometry geometry)
+        {
+            super(JTSUtilities.createJTSPolygon(GeographicBoundingBox.WHOLE_GLOBE.getVertices(), null));
+            myGeometry = geometry;
+        }
+
+        @Override
+        public Geometry access(SearchResponse input)
+        {
+            return myGeometry;
+        }
+    }
+
+    /** TimeSpanAccessor. */
+    private static class ResultTimeSpanAccessor extends TimeSpanAccessor<SearchResponse>
+    {
+        /** The individual time span. */
+        private final TimeSpan myTimeSpan;
+
+        /**
+         * Constructor.
+         *
+         * @param extent The total time span extent
+         * @param timeSpan The individual time span
+         */
+        public ResultTimeSpanAccessor(TimeSpan extent, TimeSpan timeSpan)
+        {
+            super(extent);
+            myTimeSpan = timeSpan;
+        }
+
+        @Override
+        public TimeSpan access(SearchResponse input)
+        {
+            return myTimeSpan;
+        }
     }
 }

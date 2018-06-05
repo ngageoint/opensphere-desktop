@@ -72,7 +72,6 @@ public class InfinityPlugin extends AbstractServicePlugin
                     setInfinityIcon(dataType);
 
                     // TODO temporary code
-                    String url = InfinityUtilities.getUrl(dataType);
                     List<LatLonAlt> points = New.list();
                     points.add(LatLonAlt.createFromDegrees(0, 0));
                     points.add(LatLonAlt.createFromDegrees(1, 0));
@@ -83,7 +82,8 @@ public class InfinityPlugin extends AbstractServicePlugin
                     TimeSpan timeSpan = TimeSpan.get(new Date(), Days.ONE);
                     try
                     {
-                        SearchResponse response = InfinityEnvoy.query(myToolbox.getDataRegistry(), url, polygon, timeSpan);
+                        SearchResponse response = InfinityEnvoy.query(myToolbox.getDataRegistry(), dataType, polygon, timeSpan,
+                                "geom", "time", "bin");
                         LOGGER.info("Total hits: " + response.getHits().getTotal());
                         if (response.getAggregations() != null)
                         {
