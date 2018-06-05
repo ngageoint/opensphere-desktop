@@ -83,6 +83,9 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
     /** The Layer details button. */
     private IconButton myLayerDetailsButton;
 
+    /** A button for closing the selection panel. */
+    private IconButton myCloseSelectionButton;
+
     /** The Layer details coordinator. */
     private final transient LayerDetailsCoordinator myLayerDetailsCoordinator;
 
@@ -165,14 +168,17 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         myLayerDetailsCoordinator = ldc;
         myCpToolbox = tb.getPluginToolboxRegistry().getPluginToolbox(ControlPanelToolbox.class);
         myProviderPanel = new GridBagPanel();
+
         setBorder(null);
         setLayout(new BorderLayout());
         setMinimumSize(null);
         setPreferredSize(null);
         add(buildMainPanel(), BorderLayout.CENTER);
+
         getFeatureColorPanel().setVisible(false);
         getOpacityPanel().setVisible(false);
-        getMiniStyleBox().setVisible(false);
+        myMiniStyleBox.setVisible(false);
+
         tb.getEventManager().subscribe(DataTypeInfoLoadsToChangeEvent.class, myLoadsToSubscriber);
     }
 
@@ -205,7 +211,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
             determineStyleShortCutButtonVisibility();
             determineEditButtonVisibility();
             determineLayerDetailsButtonVisibility();
-            getFeatureColorPanel().setVisible(getFeatureVisStyleButton().isVisible());
+            getFeatureColorPanel().setVisible(myFeatureVisStyleButton.isVisible());
             DataTypeInfo selectedLayer = getSelectedLayer();
             myAnalyzeButton.setVisible(LoadsToUtilities.allowAnalyzeSelection(selectedLayer));
             myAnalyzeButton.setSelected(LoadsToUtilities.isAnalyzeEnabled(selectedLayer));
@@ -216,17 +222,17 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
             List<Exporter> exporters = Exporters.getExporters(objects, getToolbox(), java.io.File.class);
             if (exporters.isEmpty())
             {
-                getExportButton().setVisible(false);
+                myExportButton.setVisible(false);
             }
             else
             {
-                getExportButton().removeAll();
+                myExportButton.removeAll();
                 ExportMenuProvider menuProvider = new ExportMenuProvider();
                 for (JMenuItem menuItem : menuProvider.getMenuItems(getToolbox(), "Export to ", exporters))
                 {
                     myExportButton.add(menuItem);
                 }
-                getExportButton().setVisible(true);
+                myExportButton.setVisible(true);
             }
             if (selectedType != null && selectedType.getMetaDataInfo() != null && selectedType.getMapVisualizationInfo() != null
                     && selectedType.getMapVisualizationInfo().usesMapDataElements())
@@ -234,12 +240,12 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
                 myCpToolbox.getLayerControlProviderRegistry().getProviders()
                         .forEach(provider -> rebuildProviderLayerControl(provider.apply(selectedType)));
             }
-            if (Arrays.stream(getUpperButtonPanel().getComponents()).anyMatch(c -> c instanceof AbstractButton && c.isVisible()))
+            if (Arrays.stream(myUpperButtonPanel.getComponents()).anyMatch(c -> c instanceof AbstractButton && c.isVisible()))
             {
-                getUpperButtonPanel().setVisible(true);
+                myUpperButtonPanel.setVisible(true);
             }
             rebuildMiniStyleBox(selectedGroup, selectedType);
-            getMiniStyleBox().setVisible(true);
+            myMiniStyleBox.setVisible(true);
             Component layerControlComponent = selectedGroup.getAssistant().getLayerControlUIComponent(null, selectedGroup,
                     selectedType);
             if (layerControlComponent != null)
@@ -258,19 +264,19 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         else
         {
             setSelectedItems(Collections.<DataGroupInfo>emptyList(), Collections.<DataTypeInfo>emptyList());
-            getUpperButtonPanel().setVisible(false);
+            myUpperButtonPanel.setVisible(false);
             getFeatureColorPanel().setVisible(false);
             getOpacityPanel().setVisible(false);
-            getMiniStyleBox().removeAll();
-            getMiniStyleBox().setVisible(false);
+            myMiniStyleBox.removeAll();
+            myMiniStyleBox.setVisible(false);
             myLayerTimeSpanButton.setVisible(false);
-            getFeatureVisStyleButton().setVisible(false);
-            getTileVisStyleButton().setVisible(false);
-            getHeatmapVisStyleButton().setVisible(false);
+            myFeatureVisStyleButton.setVisible(false);
+            myTileVisStyleButton.setVisible(false);
+            myHeatmapVisStyleButton.setVisible(false);
             myCustomControlsPanel.setVisible(false);
             setVisible(false);
         }
-        if (getTileVisStyleButton().isVisible() && getSelectedDataType() != null)
+        if (myTileVisStyleButton.isVisible() && getSelectedDataType() != null)
         {
             updateTileLevelControlPanel();
         }
@@ -307,7 +313,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         mainPanel.init0();
         mainPanel.fillHorizontal();
         mainPanel.setInsets(SPACE, SPACE, 0, SPACE);
-        mainPanel.addRow(getUpperButtonPanel());
+        mainPanel.addRow(buildUpperButtonPanel());
         mainPanel.add(myProviderPanel);
         mainPanel.addRow(myProviderPanel);
         mainPanel.addRow(buildColorOpacityPanel());
@@ -315,7 +321,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         myCustomControlsPanel = Box.createHorizontalBox();
         mainPanel.addRow(myCustomControlsPanel);
         mainPanel.setInsets(SPACE, SPACE, SPACE, SPACE);
-        mainPanel.addRow(getMiniStyleBox());
+        mainPanel.addRow(buildMiniStyleBox());
         return mainPanel;
     }
 
@@ -325,12 +331,12 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
      *
      * @return the time span button.
      */
-    private IconButton createLayerTimeSpanButton()
+    private IconButton buildLayerTimeSpanButton()
     {
-        IconButton button = new IconButton();
-        IconUtil.setIcons(button, "/images/arrows-collapse.png");
-        button.setToolTipText("Set Animation Time Span To Match Layer Span");
-        button.addActionListener(new ActionListener()
+        myLayerTimeSpanButton = new IconButton();
+        IconUtil.setIcons(myLayerTimeSpanButton, "/images/arrows-collapse.png");
+        myLayerTimeSpanButton.setToolTipText("Set Animation Time Span To Match Layer Span");
+        myLayerTimeSpanButton.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent evt)
@@ -353,7 +359,8 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
                 }
             }
         });
-        return button;
+
+        return myLayerTimeSpanButton;
     }
 
     /**
@@ -361,21 +368,22 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
      *
      * @return the button.
      */
-    private IconToggleButton createAnalyzeButton()
+    private IconToggleButton buildAnalyzeButton()
     {
-        IconToggleButton button = new IconToggleButton();
-        IconUtil.setIcons(button, IconType.STATS);
-        button.setToolTipText("Whether to include the layer in the analysis tools.");
-        button.addActionListener(new ActionListener()
+        myAnalyzeButton = new IconToggleButton();
+        IconUtil.setIcons(myAnalyzeButton, IconType.STATS);
+        myAnalyzeButton.setToolTipText("Whether to include the layer in the analysis tools.");
+        myAnalyzeButton.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent evt)
             {
-                LoadsToUtilities.setIncludeInAnalyze(getSelectedLayer(), button.isSelected());
+                LoadsToUtilities.setIncludeInAnalyze(getSelectedLayer(), myAnalyzeButton.isSelected());
             }
         });
-        button.setMargin(new Insets(1, 1, 1, 1));
-        return button;
+        myAnalyzeButton.setMargin(new Insets(1, 1, 1, 1));
+
+        return myAnalyzeButton;
     }
 
     /**
@@ -383,21 +391,22 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
      *
      * @return the button.
      */
-    private IconToggleButton createTimelineButton()
+    private IconToggleButton buildTimelineButton()
     {
-        IconToggleButton button = new IconToggleButton();
-        IconUtil.setIcons(button, IconType.CLOCK);
-        button.setToolTipText("Whether to include the layer in the timeline.");
-        button.addActionListener(new ActionListener()
+        myTimelineButton = new IconToggleButton();
+        IconUtil.setIcons(myTimelineButton, IconType.CLOCK);
+        myTimelineButton.setToolTipText("Whether to include the layer in the timeline.");
+        myTimelineButton.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent evt)
             {
-                LoadsToUtilities.setIncludeInTimeline(getSelectedLayer(), button.isSelected());
+                LoadsToUtilities.setIncludeInTimeline(getSelectedLayer(), myTimelineButton.isSelected());
             }
         });
-        button.setMargin(new Insets(1, 1, 1, 1));
-        return button;
+        myTimelineButton.setMargin(new Insets(1, 1, 1, 1));
+
+        return myTimelineButton;
     }
 
     /**
@@ -418,7 +427,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         {
             isVisible = false;
         }
-        getFeatureEditButton().setVisible(isVisible);
+        myFeatureEditButton.setVisible(isVisible);
     }
 
     /**
@@ -451,7 +460,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
                 }
             }
         }
-        getLayerDetailsButton().setVisible(visible);
+        myLayerDetailsButton.setVisible(visible);
     }
 
     /**
@@ -492,9 +501,9 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
             extent = DataGroupInfoUtilities.findTimeExtentFromDGICollection(Collections.singleton(selectedGroup));
             hasTimeExtents = extent != null && isValidTimeRange(extent);
         }
-        getFeatureVisStyleButton().setVisible(featureVisStyleVisible);
-        getTileVisStyleButton().setVisible(tileVisStyleVisible);
-        getHeatmapVisStyleButton().setVisible(heatmapVisStyleVisible);
+        myFeatureVisStyleButton.setVisible(featureVisStyleVisible);
+        myTileVisStyleButton.setVisible(tileVisStyleVisible);
+        myHeatmapVisStyleButton.setVisible(heatmapVisStyleVisible);
         myLayerTimeSpanButton.setVisible(hasTimeExtents);
         if (extent != null)
         {
@@ -511,15 +520,13 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
      *
      * @return the export button
      */
-    private JButton getExportButton()
+    private JButton buildExportButton()
     {
-        if (myExportButton == null)
-        {
-            myExportButton = new SplitButton(null, null);
-            IconUtil.setIcons(myExportButton, IconType.EXPORT);
-            myExportButton.setToolTipText("Export the selected layers");
-            myExportButton.setAlwaysPopup(true);
-        }
+        myExportButton = new SplitButton(null, null);
+        IconUtil.setIcons(myExportButton, IconType.EXPORT);
+        myExportButton.setToolTipText("Export the selected layers");
+        myExportButton.setAlwaysPopup(true);
+
         return myExportButton;
     }
 
@@ -528,26 +535,24 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
      *
      * @return the vis style button
      */
-    private JButton getFeatureEditButton()
+    private JButton buildFeatureEditButton()
     {
-        if (myFeatureEditButton == null)
+        myFeatureEditButton = new IconButton(IconType.EDIT);
+        myFeatureEditButton.setToolTipText("Edit Features");
+        myFeatureEditButton.addActionListener(new ActionListener()
         {
-            myFeatureEditButton = new IconButton(IconType.EDIT);
-            myFeatureEditButton.setToolTipText("Edit Features");
-            myFeatureEditButton.addActionListener(new ActionListener()
+            @Override
+            public void actionPerformed(ActionEvent evt)
             {
-                @Override
-                public void actionPerformed(ActionEvent evt)
+                Collection<DataTypeInfo> selectedTypes = getSelectedDataTypes();
+                if (CollectionUtilities.hasContent(selectedTypes))
                 {
-                    Collection<DataTypeInfo> selectedTypes = getSelectedDataTypes();
-                    if (CollectionUtilities.hasContent(selectedTypes))
-                    {
-                        DataGroupInfo selectedGroup = selectedTypes.iterator().next().getParent();
-                        selectedTypes.iterator().next().launchEditor(selectedGroup, selectedTypes);
-                    }
+                    DataGroupInfo selectedGroup = selectedTypes.iterator().next().getParent();
+                    selectedTypes.iterator().next().launchEditor(selectedGroup, selectedTypes);
                 }
-            });
-        }
+            }
+        });
+
         return myFeatureEditButton;
     }
 
@@ -556,46 +561,44 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
      *
      * @return the vis style button
      */
-    private JButton getFeatureVisStyleButton()
+    private JButton buildFeatureVisStyleButton()
     {
-        if (myFeatureVisStyleButton == null)
+        myFeatureVisStyleButton = new IconButton();
+        IconUtil.setIcons(myFeatureVisStyleButton, "/images/cog-feature.png");
+        myFeatureVisStyleButton.setToolTipText(VisualizationStyleControlDialog.TITLE + " For Features");
+        myFeatureVisStyleButton.addActionListener(new ActionListener()
         {
-            myFeatureVisStyleButton = new IconButton();
-            IconUtil.setIcons(myFeatureVisStyleButton, "/images/cog-feature.png");
-            myFeatureVisStyleButton.setToolTipText(VisualizationStyleControlDialog.TITLE + " For Features");
-            myFeatureVisStyleButton.addActionListener(new ActionListener()
+            @Override
+            public void actionPerformed(ActionEvent evt)
             {
-                @Override
-                public void actionPerformed(ActionEvent evt)
+                Set<DataTypeInfo> found = null;
+                DataTypeInfo selectedType = getSelectedDataType();
+                DataGroupInfo selectedGroup = getSelectedDataGroup();
+                if (selectedType != null)
                 {
-                    Set<DataTypeInfo> found = null;
-                    DataTypeInfo selectedType = getSelectedDataType();
-                    DataGroupInfo selectedGroup = getSelectedDataGroup();
-                    if (selectedType != null)
-                    {
-                        found = Collections.singleton(selectedType);
-                    }
-                    else if (selectedGroup != null)
-                    {
-                        found = selectedGroup.findMembers(new Predicate<DataTypeInfo>()
-                        {
-                            @Override
-                            public boolean test(DataTypeInfo value)
-                            {
-                                return value != null && value.getMapVisualizationInfo() != null
-                                        && value.getMapVisualizationInfo().usesMapDataElements();
-                            }
-                        }, false, true);
-                    }
-                    if (found != null && !found.isEmpty())
-                    {
-                        ShowTypeVisualizationStyleEvent event = new ShowTypeVisualizationStyleEvent(found.iterator().next(),
-                                ActiveLayerControlPanel.this);
-                        getToolbox().getEventManager().publishEvent(event);
-                    }
+                    found = Collections.singleton(selectedType);
                 }
-            });
-        }
+                else if (selectedGroup != null)
+                {
+                    found = selectedGroup.findMembers(new Predicate<DataTypeInfo>()
+                    {
+                        @Override
+                        public boolean test(DataTypeInfo value)
+                        {
+                            return value != null && value.getMapVisualizationInfo() != null
+                                    && value.getMapVisualizationInfo().usesMapDataElements();
+                        }
+                    }, false, true);
+                }
+                if (found != null && !found.isEmpty())
+                {
+                    ShowTypeVisualizationStyleEvent event = new ShowTypeVisualizationStyleEvent(found.iterator().next(),
+                            ActiveLayerControlPanel.this);
+                    getToolbox().getEventManager().publishEvent(event);
+                }
+            }
+        });
+
         return myFeatureVisStyleButton;
     }
 
@@ -604,26 +607,38 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
      *
      * @return the layer details button
      */
-    private JButton getLayerDetailsButton()
+    private JButton buildLayerDetailsButton()
     {
-        if (myLayerDetailsButton == null)
+        myLayerDetailsButton = new IconButton(IconType.COG);
+        myLayerDetailsButton.setToolTipText("Show layer details panel for layer");
+        myLayerDetailsButton.addActionListener(new ActionListener()
         {
-            myLayerDetailsButton = new IconButton(IconType.COG);
-            myLayerDetailsButton.setToolTipText("Show layer details panel for layer");
-            myLayerDetailsButton.addActionListener(new ActionListener()
+            @Override
+            public void actionPerformed(ActionEvent evt)
             {
-                @Override
-                public void actionPerformed(ActionEvent evt)
+                DataGroupInfo dgi = getSelectedDataGroup();
+                if (dgi != null)
                 {
-                    DataGroupInfo dgi = getSelectedDataGroup();
-                    if (dgi != null)
-                    {
-                        myLayerDetailsCoordinator.showLayerDetailsForGroup(dgi, null);
-                    }
+                    myLayerDetailsCoordinator.showLayerDetailsForGroup(dgi, null);
                 }
-            });
-        }
+            }
+        });
+
         return myLayerDetailsButton;
+    }
+
+    /**
+     * Gets the close selection button.
+     *
+     * @return te close selection button
+     */
+    private JButton buildCloseSelectionButton()
+    {
+        myCloseSelectionButton = new IconButton(IconType.CLOSE);
+        myCloseSelectionButton.setToolTipText("Closes these style options");
+        myCloseSelectionButton.addActionListener(evt -> setSelected(new LayerSelectedEvent(false, null, null)));
+
+        return myCloseSelectionButton;
     }
 
     /**
@@ -631,23 +646,9 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
      *
      * @return the mini style box
      */
-    private JComponent getMiniStyleBox()
+    private JComponent buildMiniStyleBox()
     {
-        if (myMiniStyleBox == null)
-        {
-            myMiniStyleBox = new VerticalList();
-        }
-        return myMiniStyleBox;
-    }
-
-    /**
-     * Gets the provider grid panel.
-     *
-     * @return the provider grid panel.
-     */
-    private JComponent getProviderPanel()
-    {
-        return myProviderPanel;
+        return myMiniStyleBox = new VerticalList();
     }
 
     /**
@@ -655,46 +656,44 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
      *
      * @return the vis style button
      */
-    private JButton getTileVisStyleButton()
+    private JButton buildTileVisStyleButton()
     {
-        if (myTileVisStyleButton == null)
+        myTileVisStyleButton = new IconButton();
+        IconUtil.setIcons(myTileVisStyleButton, "/images/cog-tile.png");
+        myTileVisStyleButton.setToolTipText(VisualizationStyleControlDialog.TITLE + " For Tiles");
+        myTileVisStyleButton.addActionListener(new ActionListener()
         {
-            myTileVisStyleButton = new IconButton();
-            IconUtil.setIcons(myTileVisStyleButton, "/images/cog-tile.png");
-            myTileVisStyleButton.setToolTipText(VisualizationStyleControlDialog.TITLE + " For Tiles");
-            myTileVisStyleButton.addActionListener(new ActionListener()
+            @Override
+            public void actionPerformed(ActionEvent evt)
             {
-                @Override
-                public void actionPerformed(ActionEvent evt)
+                Set<DataTypeInfo> found = null;
+                DataTypeInfo selectedType = getSelectedDataType();
+                DataGroupInfo selectedGroup = getSelectedDataGroup();
+                if (selectedType != null)
                 {
-                    Set<DataTypeInfo> found = null;
-                    DataTypeInfo selectedType = getSelectedDataType();
-                    DataGroupInfo selectedGroup = getSelectedDataGroup();
-                    if (selectedType != null)
-                    {
-                        found = Collections.singleton(selectedType);
-                    }
-                    else if (selectedGroup != null)
-                    {
-                        found = selectedGroup.findMembers(new Predicate<DataTypeInfo>()
-                        {
-                            @Override
-                            public boolean test(DataTypeInfo value)
-                            {
-                                return value != null && value.getMapVisualizationInfo() != null
-                                        && value.getMapVisualizationInfo().isImageTileType();
-                            }
-                        }, false, true);
-                    }
-                    if (found != null && !found.isEmpty())
-                    {
-                        ShowTypeVisualizationStyleEvent event = new ShowTypeVisualizationStyleEvent(found.iterator().next(),
-                                ActiveLayerControlPanel.this);
-                        getToolbox().getEventManager().publishEvent(event);
-                    }
+                    found = Collections.singleton(selectedType);
                 }
-            });
-        }
+                else if (selectedGroup != null)
+                {
+                    found = selectedGroup.findMembers(new Predicate<DataTypeInfo>()
+                    {
+                        @Override
+                        public boolean test(DataTypeInfo value)
+                        {
+                            return value != null && value.getMapVisualizationInfo() != null
+                                    && value.getMapVisualizationInfo().isImageTileType();
+                        }
+                    }, false, true);
+                }
+                if (found != null && !found.isEmpty())
+                {
+                    ShowTypeVisualizationStyleEvent event = new ShowTypeVisualizationStyleEvent(found.iterator().next(),
+                            ActiveLayerControlPanel.this);
+                    getToolbox().getEventManager().publishEvent(event);
+                }
+            }
+        });
+
         return myTileVisStyleButton;
     }
 
@@ -703,46 +702,44 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
      *
      * @return the vis style button
      */
-    private JButton getHeatmapVisStyleButton()
+    private JButton buildHeatmapVisStyleButton()
     {
-        if (myHeatmapVisStyleButton == null)
+        myHeatmapVisStyleButton = new IconButton();
+        IconUtil.setIcons(myHeatmapVisStyleButton, "/images/cog-heatmap.png");
+        myHeatmapVisStyleButton.setToolTipText(VisualizationStyleControlDialog.TITLE + " For Heatmaps");
+        myHeatmapVisStyleButton.addActionListener(new ActionListener()
         {
-            myHeatmapVisStyleButton = new IconButton();
-            IconUtil.setIcons(myHeatmapVisStyleButton, "/images/cog-heatmap.png");
-            myHeatmapVisStyleButton.setToolTipText(VisualizationStyleControlDialog.TITLE + " For Heatmaps");
-            myHeatmapVisStyleButton.addActionListener(new ActionListener()
+            @Override
+            public void actionPerformed(ActionEvent evt)
             {
-                @Override
-                public void actionPerformed(ActionEvent evt)
+                Set<DataTypeInfo> found = null;
+                DataTypeInfo selectedType = getSelectedDataType();
+                DataGroupInfo selectedGroup = getSelectedDataGroup();
+                if (selectedType != null)
                 {
-                    Set<DataTypeInfo> found = null;
-                    DataTypeInfo selectedType = getSelectedDataType();
-                    DataGroupInfo selectedGroup = getSelectedDataGroup();
-                    if (selectedType != null)
-                    {
-                        found = Collections.singleton(selectedType);
-                    }
-                    else if (selectedGroup != null)
-                    {
-                        found = selectedGroup.findMembers(new Predicate<DataTypeInfo>()
-                        {
-                            @Override
-                            public boolean test(DataTypeInfo value)
-                            {
-                                return value != null && value.getMapVisualizationInfo() != null
-                                        && value.getMapVisualizationInfo().getVisualizationType().isHeatmapType();
-                            }
-                        }, false, true);
-                    }
-                    if (found != null && !found.isEmpty())
-                    {
-                        ShowTypeVisualizationStyleEvent event = new ShowTypeVisualizationStyleEvent(found.iterator().next(),
-                                ActiveLayerControlPanel.this);
-                        getToolbox().getEventManager().publishEvent(event);
-                    }
+                    found = Collections.singleton(selectedType);
                 }
-            });
-        }
+                else if (selectedGroup != null)
+                {
+                    found = selectedGroup.findMembers(new Predicate<DataTypeInfo>()
+                    {
+                        @Override
+                        public boolean test(DataTypeInfo value)
+                        {
+                            return value != null && value.getMapVisualizationInfo() != null
+                                    && value.getMapVisualizationInfo().getVisualizationType().isHeatmapType();
+                        }
+                    }, false, true);
+                }
+                if (found != null && !found.isEmpty())
+                {
+                    ShowTypeVisualizationStyleEvent event = new ShowTypeVisualizationStyleEvent(found.iterator().next(),
+                            ActiveLayerControlPanel.this);
+                    getToolbox().getEventManager().publishEvent(event);
+                }
+            }
+        });
+
         return myHeatmapVisStyleButton;
     }
 
@@ -751,27 +748,28 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
      *
      * @return the upper button panel
      */
-    private GridBagPanel getUpperButtonPanel()
+    private GridBagPanel buildUpperButtonPanel()
     {
-        if (myUpperButtonPanel == null)
-        {
-            myUpperButtonPanel = new GridBagPanel();
-            myUpperButtonPanel.setInsets(0, 0, 0, SPACE);
-            myUpperButtonPanel.add(getFeatureVisStyleButton());
-            myUpperButtonPanel.add(getTileVisStyleButton());
-            myUpperButtonPanel.add(getHeatmapVisStyleButton());
-            myLayerTimeSpanButton = createLayerTimeSpanButton();
-            myUpperButtonPanel.add(myLayerTimeSpanButton);
-            myUpperButtonPanel.add(getFeatureEditButton());
-            myUpperButtonPanel.fillHorizontalSpace().fillNone();
-            myAnalyzeButton = createAnalyzeButton();
-            myUpperButtonPanel.add(myAnalyzeButton);
-            myTimelineButton = createTimelineButton();
-            myUpperButtonPanel.add(myTimelineButton);
-            myUpperButtonPanel.add(getExportButton());
-            myUpperButtonPanel.setInsets(0, 0, 0, 0);
-            myUpperButtonPanel.add(getLayerDetailsButton());
-        }
+        myUpperButtonPanel = new GridBagPanel();
+        myUpperButtonPanel.setInsets(0, 0, 0, SPACE);
+
+        myUpperButtonPanel.add(buildFeatureVisStyleButton());
+        myUpperButtonPanel.add(buildTileVisStyleButton());
+        myUpperButtonPanel.add(buildHeatmapVisStyleButton());
+        myUpperButtonPanel.add(buildLayerTimeSpanButton());
+        myUpperButtonPanel.add(buildFeatureEditButton());
+
+        myUpperButtonPanel.fillHorizontalSpace().fillNone();
+
+        myUpperButtonPanel.add(buildAnalyzeButton());
+        myUpperButtonPanel.add(buildTimelineButton());
+        myUpperButtonPanel.add(buildExportButton());
+
+        myUpperButtonPanel.setInsets(0, 0, 0, 0);
+
+        myUpperButtonPanel.add(buildLayerDetailsButton());
+        myUpperButtonPanel.add(buildCloseSelectionButton());
+
         return myUpperButtonPanel;
     }
 
@@ -811,14 +809,14 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
      */
     private void rebuildMiniStyleBox(DataGroupInfo dgi, DataTypeInfo dti)
     {
-        getMiniStyleBox().removeAll();
+        myMiniStyleBox.removeAll();
         if (dgi != null && dti != null)
         {
             if (dti.getMapVisualizationInfo() != null && dti.getMapVisualizationInfo().usesVisualizationStyles()
                     && !MapVisualizationType.TERRAIN_TILE.equals(dti.getMapVisualizationInfo().getVisualizationType()))
             {
                 MiniStylePanel miniStylePanel = new MiniStylePanel(getToolbox(), dgi, dti);
-                getMiniStyleBox().add(miniStylePanel);
+                myMiniStyleBox.add(miniStylePanel);
             }
             else
             {
@@ -826,11 +824,11 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
                 hBox.add(Box.createHorizontalGlue());
                 hBox.add(new JLabel("No Style Control For Layer"));
                 hBox.add(Box.createHorizontalGlue());
-                getMiniStyleBox().add(hBox);
+                myMiniStyleBox.add(hBox);
             }
         }
-        getMiniStyleBox().revalidate();
-        getMiniStyleBox().repaint();
+        myMiniStyleBox.revalidate();
+        myMiniStyleBox.repaint();
     }
 
     /**
@@ -840,7 +838,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
      */
     private void rebuildProviderLayerControl(Component uniqueProvider)
     {
-        getProviderPanel().removeAll();
+        myProviderPanel.removeAll();
         GridBagPanel providerPanel = new GridBagPanel();
         JLabel textField = new JLabel("Unique ID Column: ");
         providerPanel.add(textField);
@@ -849,10 +847,10 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         uniqueProvider.setMinimumSize(new Dimension(100, 24));
         providerPanel.add(uniqueProvider);
 
-        getProviderPanel().setVisible(true);
-        getProviderPanel().add(providerPanel);
-        getProviderPanel().revalidate();
-        getProviderPanel().repaint();
+        myProviderPanel.setVisible(true);
+        myProviderPanel.add(providerPanel);
+        myProviderPanel.revalidate();
+        myProviderPanel.repaint();
     }
 
     /**
