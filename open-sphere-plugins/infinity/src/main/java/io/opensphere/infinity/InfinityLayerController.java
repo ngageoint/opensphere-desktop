@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
@@ -16,7 +15,6 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.data.QueryException;
 import io.opensphere.core.event.EventListenerService;
 import io.opensphere.core.model.GeographicBoundingBox;
-import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.model.time.TimeSpanList;
 import io.opensphere.core.util.AwesomeIconSolid;
@@ -30,24 +28,24 @@ import io.opensphere.core.viewer.Viewer;
 import io.opensphere.infinity.envoy.InfinityEnvoy;
 import io.opensphere.infinity.json.SearchResponse;
 import io.opensphere.infinity.util.InfinityUtilities;
+import io.opensphere.mantle.controller.event.impl.DataTypeAddedEvent;
+import io.opensphere.mantle.controller.event.impl.DataTypeRemovedEvent;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.DataTypeInfoAssistant;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfoAssistant;
-import io.opensphere.server.services.OGCServiceStateEvent;
-import io.opensphere.server.source.OGCServerSource;
 
-/** Infinity layer count controller. */
-public class InfinityLayerCountController extends EventListenerService
+/** Manages infinity layer count and icon. */
+public class InfinityLayerController extends EventListenerService
 {
     /** Logger reference. */
-    private static final Logger LOGGER = Logger.getLogger(InfinityLayerCountController.class);
+    private static final Logger LOGGER = Logger.getLogger(InfinityLayerController.class);
 
     /** The toolbox. */
     private final Toolbox myToolbox;
 
     /** Procrastinating executor. */
     private final ProcrastinatingExecutor myProcrastinatingExecutor = new ProcrastinatingExecutor(getClass().getSimpleName(),
-            500);
+            1000);
 
     /** The infinity-enabled data types. */
     private final Collection<DataTypeInfo> myInfinityDataTypes = Collections.synchronizedSet(New.set());
@@ -65,11 +63,13 @@ public class InfinityLayerCountController extends EventListenerService
      *
      * @param toolbox the toolbox
      */
-    public InfinityLayerCountController(Toolbox toolbox)
+    public InfinityLayerController(Toolbox toolbox)
     {
         super(toolbox.getEventManager());
         myToolbox = toolbox;
-        bindEvent(OGCServiceStateEvent.class, this::handleOgcEvent);
+        bindEvent(DataTypeAddedEvent.class, this::handleDataTypeAdded);
+        bindEvent(DataTypeRemovedEvent.class, this::handleDataTypeRemoved);
+        addService(toolbox.getMapManager().getViewChangeSupport().getViewChangeListenerService(this::handleViewChanged));
         addService(toolbox.getTimeManager().getPrimaryTimeSpanListenerService(new PrimaryTimeSpanChangeListener()
         {
             @Override
@@ -83,29 +83,35 @@ public class InfinityLayerCountController extends EventListenerService
             {
             }
         }));
-        addService(toolbox.getMapManager().getViewChangeSupport().getViewChangeListenerService(this::handleViewChanged));
     }
 
     /**
-     * Handles a OGCServiceStateEvent.
+     * Handles a DataTypeAddedEvent.
      *
      * @param event the event
      */
-    private void handleOgcEvent(OGCServiceStateEvent event)
+    private void handleDataTypeAdded(DataTypeAddedEvent event)
     {
-        if (OGCServerSource.WFS_SERVICE.equals(event.getService()))
+        DataTypeInfo dataType = event.getDataType();
+        if (InfinityUtilities.isInfinityEnabled(dataType))
         {
-            List<DataTypeInfo> infinityLayers = event.getLayerList().stream().filter(InfinityUtilities::isInfinityEnabled)
-                    .collect(Collectors.toList());
-            if (!infinityLayers.isEmpty())
-            {
-                for (DataTypeInfo dataType : infinityLayers)
-                {
-                    setInfinityIcon(dataType);
-                }
-                myInfinityDataTypes.addAll(infinityLayers);
-                myProcrastinatingExecutor.execute(() -> updateLayerCount(null));
-            }
+            setInfinityIcon(dataType);
+            myInfinityDataTypes.add(dataType);
+            myProcrastinatingExecutor.execute(() -> updateLayerCount(null));
+        }
+    }
+
+    /**
+     * Handles a DataTypeRemovedEvent.
+     *
+     * @param event the event
+     */
+    private void handleDataTypeRemoved(DataTypeRemovedEvent event)
+    {
+        DataTypeInfo dataType = event.getDataType();
+        if (InfinityUtilities.isInfinityEnabled(dataType))
+        {
+            myInfinityDataTypes.remove(dataType);
         }
     }
 
@@ -114,7 +120,7 @@ public class InfinityLayerCountController extends EventListenerService
      *
      * @param spans the spans
      */
-    private void handleTimeChanged(TimeSpanList spans)
+    void handleTimeChanged(TimeSpanList spans)
     {
         myProcrastinatingExecutor.execute(() ->
         {
@@ -141,7 +147,7 @@ public class InfinityLayerCountController extends EventListenerService
     /**
      * Sets the infinity icon in the data type.
      *
-     * @param dataType
+     * @param dataType the data type
      */
     private void setInfinityIcon(DataTypeInfo dataType)
     {
@@ -176,31 +182,31 @@ public class InfinityLayerCountController extends EventListenerService
             myLastBoundingBox = myToolbox.getMapManager().getVisibleBoundingBox();
         }
 
-        for (DataTypeInfo dataType : myInfinityDataTypes)
+        Collection<DataTypeInfo> infinityDataTypes;
+        synchronized (myInfinityDataTypes)
         {
-            System.out.println("Update stuff " + dataType.getDisplayName() + " " + myLastActiveTime + " " + myLastBoundingBox);
+            infinityDataTypes = New.list(myInfinityDataTypes);
+        }
 
-            // TODO polygon, fields
-            List<LatLonAlt> points = New.list();
-            points.add(LatLonAlt.createFromDegrees(0, 0));
-            points.add(LatLonAlt.createFromDegrees(1, 0));
-            points.add(LatLonAlt.createFromDegrees(1, 1));
-            points.add(LatLonAlt.createFromDegrees(0, 1));
-            points.add(LatLonAlt.createFromDegrees(0, 0));
-            Polygon polygon = JTSUtilities.createJTSPolygonFromLatLonAlt(points, null);
-            try
+        if (!infinityDataTypes.isEmpty())
+        {
+            Polygon polygon = JTSUtilities.createJTSPolygon(myLastBoundingBox.getVertices(), null);
+            for (DataTypeInfo dataType : infinityDataTypes)
             {
-                SearchResponse response = InfinityEnvoy.query(myToolbox.getDataRegistry(), dataType, polygon, myLastActiveTime,
-                        "geom", "time", null);
-                LOGGER.info(dataType.getDisplayName() + " hits: " + response.getHits().getTotal());
-                if (response.getAggregations() != null)
+                try
                 {
-                    LOGGER.info("Aggs: " + Arrays.toString(response.getAggregations().getBins().getBuckets()));
+                    SearchResponse response = InfinityEnvoy.query(myToolbox.getDataRegistry(), dataType, polygon,
+                            myLastActiveTime, null);
+                    LOGGER.info(dataType.getDisplayName() + " hits: " + response.getHits().getTotal());
+                    if (response.getAggregations() != null)
+                    {
+                        LOGGER.info("Aggs: " + Arrays.toString(response.getAggregations().getBins().getBuckets()));
+                    }
                 }
-            }
-            catch (QueryException e)
-            {
-                LOGGER.error(e, e);
+                catch (QueryException e)
+                {
+                    LOGGER.error(e, e);
+                }
             }
         }
     }

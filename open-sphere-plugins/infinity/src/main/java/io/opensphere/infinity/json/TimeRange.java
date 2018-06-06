@@ -12,7 +12,7 @@ public class TimeRange
     private long myLt;
 
     /** The format. */
-    private final String myFormat = "epoch_millis";
+    private static final String myFormat = "epoch_millis";
 
     /**
      * Constructor.

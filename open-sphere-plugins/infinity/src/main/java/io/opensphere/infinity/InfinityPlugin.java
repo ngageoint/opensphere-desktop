@@ -26,6 +26,6 @@ public class InfinityPlugin extends AbstractServicePlugin
     protected Collection<Service> getServices(PluginLoaderData plugindata, Toolbox toolbox)
     {
         myToolbox = toolbox;
-        return List.of(new InfinityLayerCountController(toolbox));
+        return List.of(new InfinityLayerController(toolbox));
     }
 }

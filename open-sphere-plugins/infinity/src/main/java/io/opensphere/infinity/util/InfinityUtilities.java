@@ -1,6 +1,7 @@
 package io.opensphere.infinity.util;
 
 import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.server.services.AbstractServerDataTypeInfo;
 
 /** Infinity utilities. */
 public final class InfinityUtilities
@@ -13,7 +14,8 @@ public final class InfinityUtilities
      */
     public static boolean isInfinityEnabled(DataTypeInfo dataType)
     {
-        return dataType.getTags().stream().anyMatch(t -> t.startsWith(".es-url="));
+        return dataType instanceof AbstractServerDataTypeInfo
+                && dataType.getTags().stream().anyMatch(t -> t.startsWith(".es-url="));
     }
 
     /**
@@ -40,7 +42,7 @@ public final class InfinityUtilities
      * @param dataType the data type
      * @return the value, or null
      */
-    static String getTagValue(String tagKey, DataTypeInfo dataType)
+    public static String getTagValue(String tagKey, DataTypeInfo dataType)
     {
         String completeKey = tagKey + "=";
         return dataType.getTags().stream().filter(t -> t.startsWith(completeKey)).map(t -> t.replace(completeKey, "")).findAny()
