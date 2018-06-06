@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
  * Enables a javafx {@link ComboBox} to be auto completed as user types.
  *
  * @param <T> The type in the combo box.
+ * @deprecated Use {@link NewAutoCompleteComboBoxListener} instead.
  */
 @Deprecated
 public class AutoCompleteComboBoxListener<T> implements EventHandler<KeyEvent>
