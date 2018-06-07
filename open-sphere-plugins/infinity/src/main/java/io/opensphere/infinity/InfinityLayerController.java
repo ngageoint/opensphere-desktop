@@ -1,10 +1,10 @@
 package io.opensphere.infinity;
 
 import java.awt.Color;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -158,12 +158,9 @@ public class InfinityLayerController extends EventListenerService
             dataType.setAssistant(assistant);
         }
 
-        if (assistant instanceof DefaultDataTypeInfoAssistant)
-        {
-            GenericFontIcon icon = new GenericFontIcon(AwesomeIconSolid.INFINITY, Color.WHITE, 12);
-            icon.setYPos(12);
-            ((DefaultDataTypeInfoAssistant)assistant).setLayerIcons(List.of(icon));
-        }
+        GenericFontIcon icon = new GenericFontIcon(AwesomeIconSolid.INFINITY, Color.WHITE, 12);
+        icon.setYPos(12);
+        assistant.getLayerIcons().add(icon);
     }
 
     /**
@@ -197,16 +194,34 @@ public class InfinityLayerController extends EventListenerService
                 {
                     SearchResponse response = InfinityEnvoy.query(myToolbox.getDataRegistry(), dataType, polygon,
                             myLastActiveTime, null);
-                    LOGGER.info(dataType.getDisplayName() + " hits: " + response.getHits().getTotal());
-                    if (response.getAggregations() != null)
-                    {
-                        LOGGER.info("Aggs: " + Arrays.toString(response.getAggregations().getBins().getBuckets()));
-                    }
+                    setLayerCount(dataType, response.getHits().getTotal());
                 }
                 catch (QueryException e)
                 {
                     LOGGER.error(e, e);
                 }
+            }
+        }
+    }
+
+    /**
+     * Sets the layer count.
+     *
+     * @param dataType the data type
+     * @param count the layer count
+     */
+    private void setLayerCount(DataTypeInfo dataType, long count)
+    {
+        Set<DataTypeInfo> tileTypes = dataType.getParent().findMembers(t -> t.getMapVisualizationInfo().isImageTileType(), false,
+                true);
+        for (DataTypeInfo tileType : tileTypes)
+        {
+            DataTypeInfoAssistant assistant = tileType.getAssistant();
+            if (assistant != null)
+            {
+                List<String> labels = assistant.getLayerLabels();
+                labels.clear();
+                labels.add(" (" + count + " in view)");
             }
         }
     }
