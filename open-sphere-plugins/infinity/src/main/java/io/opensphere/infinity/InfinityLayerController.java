@@ -1,6 +1,7 @@
 package io.opensphere.infinity;
 
 import java.awt.Color;
+import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -32,6 +33,7 @@ import io.opensphere.mantle.controller.event.impl.DataTypeAddedEvent;
 import io.opensphere.mantle.controller.event.impl.DataTypeRemovedEvent;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.DataTypeInfoAssistant;
+import io.opensphere.mantle.data.event.DataTypePropertyChangeEvent;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfoAssistant;
 
 /** Manages infinity layer count and icon. */
@@ -39,6 +41,12 @@ public class InfinityLayerController extends EventListenerService
 {
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(InfinityLayerController.class);
+
+    /** The number format. */
+    private static final NumberFormat NUMBER_FORMAT = NumberFormat.getIntegerInstance();
+    {
+        NUMBER_FORMAT.setGroupingUsed(true);
+    }
 
     /** The toolbox. */
     private final Toolbox myToolbox;
@@ -214,6 +222,7 @@ public class InfinityLayerController extends EventListenerService
     {
         Set<DataTypeInfo> tileTypes = dataType.getParent().findMembers(t -> t.getMapVisualizationInfo().isImageTileType(), false,
                 true);
+        boolean changed = false;
         for (DataTypeInfo tileType : tileTypes)
         {
             DataTypeInfoAssistant assistant = tileType.getAssistant();
@@ -221,8 +230,27 @@ public class InfinityLayerController extends EventListenerService
             {
                 List<String> labels = assistant.getLayerLabels();
                 labels.clear();
-                labels.add(" (" + count + " in view)");
+                labels.add(" (" + formatNumber(count) + " in view)");
+                changed = true;
             }
         }
+
+        // Let layer tree know that the tree needs to be refreshed
+        if (changed)
+        {
+            DataTypePropertyChangeEvent event = new DataTypePropertyChangeEvent(null, "labels", null, this);
+            myToolbox.getEventManager().publishEvent(event);
+        }
+    }
+
+    /**
+     * Formats the number.
+     *
+     * @param number the number
+     * @return the formatted text
+     */
+    private static String formatNumber(long number)
+    {
+        return number > 9999 ? NUMBER_FORMAT.format(number) : String.valueOf(number);
     }
 }

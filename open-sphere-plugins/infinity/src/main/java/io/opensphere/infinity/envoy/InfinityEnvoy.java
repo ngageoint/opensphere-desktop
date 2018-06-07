@@ -203,7 +203,6 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
         throws IOException, CacheException
     {
         URL url = getUrl(category);
-        System.out.println(url);
         InputStream postData = createRequestStream(geometry, timeSpan, geomField, timeField, binField);
         ResponseValues response = new ResponseValues();
         ServerProvider<HttpServer> provider = getServerProviderRegistry().getProvider(HttpServer.class);
@@ -242,7 +241,6 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
         mapper.writeValue(out, request);
 
         InputStream postData = new ByteArrayInputStream(out.toByteArray());
-        System.out.println(new String(out.toByteArray()));
         return postData;
     }
 

@@ -14,10 +14,16 @@ public class Coordinate
     /** The lon. */
     private double myLon;
 
+    /** Constructor. */
     public Coordinate()
     {
     }
 
+    /**
+     * Constructor.
+     *
+     * @param position the position
+     */
     public Coordinate(GeographicPosition position)
     {
         myLat = position.getLatLonAlt().getLatD();
