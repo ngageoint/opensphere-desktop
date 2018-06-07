@@ -23,7 +23,8 @@ import javafx.scene.input.KeyEvent;
 public class AutoSelectComboBox<T> extends ComboBox<T>
 {
     /**
-     * Creates a new combobox. All auto-selectable combo boxes must be editable.
+     * Creates a new combobox. All auto-selectable combo boxes are editable by
+     * default.
      */
     public AutoSelectComboBox()
     {
@@ -32,7 +33,7 @@ public class AutoSelectComboBox<T> extends ComboBox<T>
 
     /**
      * Creates a new combobox bound to the supplied observable list. All
-     * auto-selectable combo boxes must be editable.
+     * auto-selectable combo boxes are editable by default
      * 
      * @param items the items to show in the list.
      */
@@ -46,6 +47,7 @@ public class AutoSelectComboBox<T> extends ComboBox<T>
     private void initialize()
     {
         setEditable(true);
+        setOnKeyTyped(evt -> handleKeyRelease(evt));
         setOnKeyReleased(evt -> handleKeyRelease(evt));
     }
 
@@ -57,58 +59,85 @@ public class AutoSelectComboBox<T> extends ComboBox<T>
     public void handleKeyRelease(KeyEvent event)
     {
         Object eventSource = event.getSource();
-        if (!(eventSource != this))
+        if (eventSource != this)
         {
             return;
         }
 
         ObservableList<T> items = getItems();
-        TextField editor = getEditor();
-        String editorContents = editor.getText();
 
-        int caretPosition = -1;
-        switch (event.getCode())
+        if (isEditable())
         {
-            case BACK_SPACE:
-            case DELETE:
-                caretPosition = editorContents.length();
-                break;
-            case DOWN:
-                show();
-                return;
-            case UP:
-                moveCaret(editor, editorContents.length(), caretPosition);
-                return;
-            case ENTER:
-                Set<? extends Object> matchingEntries = items.stream()
-                        .filter(item -> StringUtils.startsWithIgnoreCase(item.toString(), editorContents))
-                        .collect(Collectors.toSet());
-                if (matchingEntries.size() == 1)
-                {
-                    String fullEntry = (String)matchingEntries.iterator().next();
-                    editor.setText(fullEntry);
-                    moveCaret(editor, fullEntry.length(), -1);
-                    hide();
+            TextField editor = getEditor();
+            String editorContents = editor.getText();
+
+            int caretPosition = -1;
+            switch (event.getCode())
+            {
+                case BACK_SPACE:
+                case DELETE:
+                    caretPosition = editorContents.length();
+                    break;
+                case DOWN:
+                    show();
                     return;
-                }
-            default:
-                // ignore all other cases:
-                break;
-        }
+                case UP:
+                    moveCaret(editor, editorContents.length(), caretPosition);
+                    return;
+                case ENTER:
+                    Set<? extends Object> matchingEntries = items.stream()
+                            .filter(item -> StringUtils.startsWithIgnoreCase(item.toString(), editorContents))
+                            .collect(Collectors.toSet());
+                    if (matchingEntries.size() == 1)
+                    {
+                        String fullEntry = (String)matchingEntries.iterator().next();
+                        editor.setText(fullEntry);
+                        moveCaret(editor, fullEntry.length(), -1);
+                        hide();
+                        return;
+                    }
+                default:
+                    // ignore all other cases:
+                    break;
+            }
 
-        // ensure that when the user starts typing, the pulldown is visible:
-        show();
-        Object matchingEntry = items.stream().filter(item -> StringUtils.startsWithIgnoreCase(item.toString(), editorContents))
-                .findFirst().orElse(null);
-        if (matchingEntry != null)
-        {
-            ComboBoxListViewSkin<?> skin = (ComboBoxListViewSkin<?>)getSkin();
-            int index = items.indexOf(matchingEntry);
-            getSelectionModel().clearAndSelect(index);
-            ((ListView<?>)skin.getPopupContent()).scrollTo(index);
+            // ensure that when the user starts typing, the pulldown is visible:
+            show();
+            Object matchingEntry = items.stream()
+                    .filter(item -> StringUtils.startsWithIgnoreCase(item.toString(), editorContents)).findFirst().orElse(null);
+            if (matchingEntry != null)
+            {
+                ComboBoxListViewSkin<?> skin = (ComboBoxListViewSkin<?>)getSkin();
+                int index = items.indexOf(matchingEntry);
+                getSelectionModel().clearAndSelect(index);
+                ((ListView<?>)skin.getPopupContent()).scrollTo(index);
+            }
+            editor.setText(editorContents);
+            moveCaret(editor, editorContents.length(), caretPosition);
         }
-        editor.setText(editorContents);
-        moveCaret(editor, editorContents.length(), caretPosition);
+        else
+        {
+            String character = event.getCharacter();
+            switch (event.getCode())
+            {
+                case DOWN:
+                    show();
+                    return;
+                default:
+                    // ignore all other cases:
+                    break;
+            }
+            // ensure that when the user starts typing, the pulldown is visible:
+            show();
+            Object matchingEntry = items.stream().filter(item -> StringUtils.startsWithIgnoreCase(item.toString(), character))
+                    .findFirst().orElse(null);
+            if (matchingEntry != null)
+            {
+                ComboBoxListViewSkin<?> skin = (ComboBoxListViewSkin<?>)getSkin();
+                int index = items.indexOf(matchingEntry);
+                ((ListView<?>)skin.getPopupContent()).scrollTo(index);
+            }
+        }
     }
 
     /**
