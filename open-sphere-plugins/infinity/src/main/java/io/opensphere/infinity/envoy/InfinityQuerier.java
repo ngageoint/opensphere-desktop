@@ -81,7 +81,7 @@ public class InfinityQuerier
         if (geomField != null)
         {
             DataModelCategory category = new DataModelCategory(null, InfinityEnvoy.FAMILY, url);
-            List<PropertyMatcher<?>> parameters = New.list(5);
+            List<PropertyMatcher<?>> parameters = New.list(3);
             parameters.add(new GeometryMatcher(GeometryAccessor.GEOMETRY_PROPERTY_NAME, GeometryMatcher.OperatorType.INTERSECTS,
                     polygon));
             parameters.add(new TimeSpanMatcher(TimeSpanAccessor.TIME_PROPERTY_NAME, timeSpan));

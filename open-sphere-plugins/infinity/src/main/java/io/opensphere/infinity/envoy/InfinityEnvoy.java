@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
@@ -58,6 +59,9 @@ import io.opensphere.server.util.JsonUtils;
 /** Infinity envoy. */
 public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
 {
+    /** Logger reference. */
+    private static final Logger LOGGER = Logger.getLogger(InfinityEnvoy.class);
+
     /** The data model category family. */
     public static final String FAMILY = "Infinity.Search";
 
@@ -149,6 +153,8 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
         throws IOException, CacheException
     {
         URL url = getUrl(category);
+        LOGGER.info("Request: " + url + " " + parameters.getTimeSpan() + " " + parameters.getGeometry());
+
         InputStream postData = createRequestStream(parameters);
         ResponseValues response = new ResponseValues();
         ServerProvider<HttpServer> provider = getServerProviderRegistry().getProvider(HttpServer.class);
@@ -179,6 +185,11 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
         ObjectMapper mapper = JsonUtils.createMapper();
         mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
         mapper.writeValue(out, request);
+
+        if (LOGGER.isDebugEnabled())
+        {
+            LOGGER.debug(new String(out.toByteArray()));
+        }
 
         InputStream postData = new ByteArrayInputStream(out.toByteArray());
         return postData;
