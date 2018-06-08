@@ -26,7 +26,7 @@ import io.opensphere.core.util.jts.JTSUtilities;
 import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.viewer.ViewChangeSupport;
 import io.opensphere.core.viewer.Viewer;
-import io.opensphere.infinity.envoy.InfinityEnvoy;
+import io.opensphere.infinity.envoy.InfinityQuerier;
 import io.opensphere.infinity.json.SearchResponse;
 import io.opensphere.infinity.util.InfinityUtilities;
 import io.opensphere.mantle.controller.event.impl.DataTypeAddedEvent;
@@ -195,13 +195,13 @@ public class InfinityLayerController extends EventListenerService
 
         if (!infinityDataTypes.isEmpty())
         {
+            InfinityQuerier querier = new InfinityQuerier(myToolbox.getDataRegistry());
             Polygon polygon = JTSUtilities.createJTSPolygon(myLastBoundingBox.getVertices(), null);
             for (DataTypeInfo dataType : infinityDataTypes)
             {
                 try
                 {
-                    SearchResponse response = InfinityEnvoy.query(myToolbox.getDataRegistry(), dataType, polygon,
-                            myLastActiveTime, null);
+                    SearchResponse response = querier.query(dataType, polygon, myLastActiveTime, null);
                     setLayerCount(dataType, response.getHits().getTotal());
                 }
                 catch (QueryException e)

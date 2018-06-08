@@ -13,7 +13,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.Polygon;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.api.adapter.SimpleEnvoy;
@@ -24,19 +23,14 @@ import io.opensphere.core.cache.accessor.GeometryAccessor;
 import io.opensphere.core.cache.accessor.PropertyAccessor;
 import io.opensphere.core.cache.accessor.TimeSpanAccessor;
 import io.opensphere.core.cache.accessor.UnserializableAccessor;
-import io.opensphere.core.cache.matcher.GeneralPropertyMatcher;
-import io.opensphere.core.cache.matcher.GeometryMatcher;
 import io.opensphere.core.cache.matcher.PropertyMatcher;
-import io.opensphere.core.cache.matcher.TimeSpanMatcher;
 import io.opensphere.core.cache.util.IntervalPropertyValueSet;
 import io.opensphere.core.cache.util.PropertyDescriptor;
 import io.opensphere.core.data.CacheDepositReceiver;
-import io.opensphere.core.data.DataRegistry;
 import io.opensphere.core.data.QueryException;
 import io.opensphere.core.data.util.DataModelCategory;
 import io.opensphere.core.data.util.OrderSpecifier;
 import io.opensphere.core.data.util.Satisfaction;
-import io.opensphere.core.data.util.SimpleQuery;
 import io.opensphere.core.model.time.TimeInstant;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.server.ContentType;
@@ -49,72 +43,33 @@ import io.opensphere.core.util.io.CancellableInputStream;
 import io.opensphere.core.util.net.HttpUtilities;
 import io.opensphere.infinity.json.Aggs;
 import io.opensphere.infinity.json.Any;
+import io.opensphere.infinity.json.Bool;
 import io.opensphere.infinity.json.BoundingBox;
 import io.opensphere.infinity.json.GeoBoundingBox;
 import io.opensphere.infinity.json.SearchRequest;
 import io.opensphere.infinity.json.SearchResponse;
 import io.opensphere.infinity.json.TimeRange;
-import io.opensphere.infinity.util.InfinityUtilities;
-import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.server.util.JsonUtils;
 
 /** Infinity envoy. */
 public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
 {
     /** The data model category family. */
-    private static final String FAMILY = "Infinity.Search";
+    public static final String FAMILY = "Infinity.Search";
 
     /** The {@link PropertyDescriptor} for the results. */
-    private static final PropertyDescriptor<SearchResponse> RESULTS_DESCRIPTOR = new PropertyDescriptor<>("SearchResponse",
+    public static final PropertyDescriptor<SearchResponse> RESULTS_DESCRIPTOR = new PropertyDescriptor<>("SearchResponse",
             SearchResponse.class);
 
     /** The {@link PropertyDescriptor} for the geometry field. */
-    private static final PropertyDescriptor<String> GEOM_FIELD_DESCRIPTOR = new PropertyDescriptor<>("GeometryField",
+    public static final PropertyDescriptor<String> GEOM_FIELD_DESCRIPTOR = new PropertyDescriptor<>("GeometryField",
             String.class);
 
     /** The {@link PropertyDescriptor} for the time field. */
-    private static final PropertyDescriptor<String> TIME_FIELD_DESCRIPTOR = new PropertyDescriptor<>("TimeField", String.class);
+    public static final PropertyDescriptor<String> TIME_FIELD_DESCRIPTOR = new PropertyDescriptor<>("TimeField", String.class);
 
     /** The {@link PropertyDescriptor} for the bin field. */
-    private static final PropertyDescriptor<String> BIN_FIELD_DESCRIPTOR = new PropertyDescriptor<>("BinField", String.class);
-
-    /**
-     * Helper method for a client to query this envoy.
-     *
-     * @param dataRegistry the data registry
-     * @param dataType the data type to query
-     * @param polygon the polygon to query
-     * @param timeSpan the time span to query
-     * @param binField the bin field
-     * @return the search response
-     * @throws QueryException if something goes wrong with the query
-     */
-    public static SearchResponse query(DataRegistry dataRegistry, DataTypeInfo dataType, Polygon polygon, TimeSpan timeSpan,
-            String binField)
-        throws QueryException
-    {
-        String url = InfinityUtilities.getUrl(dataType);
-        String geomField = InfinityUtilities.getTagValue(".es-geopoint", dataType);
-        String timeField = InfinityUtilities.getTagValue(".es-starttime", dataType);
-        if (timeField == null)
-        {
-            timeField = InfinityUtilities.getTagValue(".es-datetime", dataType);
-        }
-        DataModelCategory category = new DataModelCategory(null, FAMILY, url);
-        List<PropertyMatcher<?>> parameters = New.list(5);
-        parameters.add(
-                new GeometryMatcher(GeometryAccessor.GEOMETRY_PROPERTY_NAME, GeometryMatcher.OperatorType.INTERSECTS, polygon));
-        parameters.add(new TimeSpanMatcher(TimeSpanAccessor.TIME_PROPERTY_NAME, timeSpan));
-        parameters.add(new GeneralPropertyMatcher<>(GEOM_FIELD_DESCRIPTOR, geomField));
-        parameters.add(new GeneralPropertyMatcher<>(TIME_FIELD_DESCRIPTOR, timeField));
-        if (binField != null)
-        {
-            parameters.add(new GeneralPropertyMatcher<>(BIN_FIELD_DESCRIPTOR, binField));
-        }
-        SimpleQuery<SearchResponse> query = new SimpleQuery<>(category, RESULTS_DESCRIPTOR, parameters);
-        List<SearchResponse> results = performQuery(dataRegistry, query);
-        return results.iterator().next();
-    }
+    public static final PropertyDescriptor<String> BIN_FIELD_DESCRIPTOR = new PropertyDescriptor<>("BinField", String.class);
 
     /**
      * Constructor.
@@ -241,6 +196,7 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
         mapper.writeValue(out, request);
 
         InputStream postData = new ByteArrayInputStream(out.toByteArray());
+        System.out.println(new String(out.toByteArray()));
         return postData;
     }
 
@@ -261,7 +217,20 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
         request.setSize(0);
         request.setTimeout("30s");
         Object[] must = new Object[2];
-        must[0] = new Any("range", new Any(timeField, new TimeRange(timeSpan)));
+        if (timeField.indexOf(',') != -1)
+        {
+            String[] fields = timeField.split(",");
+            Bool bool = new Bool();
+            Object[] innerMust = new Object[2];
+            innerMust[0] = new Any("range", new Any(fields[0], new TimeRange(null, timeSpan.getEnd())));
+            innerMust[1] = new Any("range", new Any(fields[1], new TimeRange(timeSpan.getStart(), null)));
+            bool.setMust(innerMust);
+            must[0] = new Any("bool", bool);
+        }
+        else
+        {
+            must[0] = new Any("range", new Any(timeField, new TimeRange(timeSpan)));
+        }
         must[1] = new Any("geo_bounding_box", new GeoBoundingBox(geomField, new BoundingBox(geometry)));
         request.getQuery().getBool().setMust(must);
         if (binField != null)
