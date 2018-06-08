@@ -6,7 +6,6 @@ import java.awt.FontMetrics;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumnModel;
 
 /**
  * String table cell renderer.
@@ -35,7 +34,10 @@ public class StringTableCellRenderer extends DefaultTableCellRenderer
         super();
         myTextArea = new JTextArea();
         myTextArea.setLineWrap(true);
+        myTextArea.setWrapStyleWord(true);
         myListener = hyperlinkListener;
+
+        setVerticalAlignment(DefaultTableCellRenderer.TOP);
     }
 
     @Override
@@ -47,7 +49,14 @@ public class StringTableCellRenderer extends DefaultTableCellRenderer
         if (value != null)
         {
             String sVal = value.toString();
-            if (myAutoFitRowHeight && sVal.length() > 50)
+            if (myListener.hasURLFor(row, column, sVal))
+            {
+                setValue(HyperlinkMouseListener.formatUrl(sVal));
+            }
+
+            // We're going to arbitrarily decide that 50 characters is the width
+            // cutoff for using a text area instead of a label.
+            if (sVal.length() > 50)
             {
                 myTextArea.setForeground(getForeground());
                 myTextArea.setBackground(getBackground());
@@ -59,21 +68,12 @@ public class StringTableCellRenderer extends DefaultTableCellRenderer
                 int lineHeight = fm.getHeight();
                 int h = myTextArea.getLineCount() * lineHeight + 6;
 
-                TableColumnModel columnModel = table.getColumnModel();
-                myTextArea.setSize(columnModel.getColumn(column).getWidth(), 0);
-                if (h != table.getRowHeight(row))
+                if (myAutoFitRowHeight && h > table.getRowHeight(row))
                 {
-                    // TODO setting the row height while rendering is not ideal
-                    table.setRowHeight(row, table.getRowHeight() > h ? table.getRowHeight() : h);
+                    table.setRowHeight(row, h);
                 }
+
                 return myTextArea;
-            }
-            else if (sVal.length() > 0)
-            {
-                if (myListener.hasURLFor(row, column, sVal))
-                {
-                    setValue(HyperlinkMouseListener.formatUrl(sVal));
-                }
             }
         }
 
