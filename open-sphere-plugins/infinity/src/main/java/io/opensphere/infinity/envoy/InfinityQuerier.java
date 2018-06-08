@@ -53,22 +53,22 @@ public class InfinityQuerier
         SearchResponse response = null;
 
         String url = InfinityUtilities.getUrl(dataType);
-        String geomField = InfinityUtilities.getTagValue(".es-geopoint", dataType);
+        String geomField = InfinityUtilities.getTagValue(InfinityUtilities.POINT, dataType);
         GeometryType geometryType = GeometryType.POINT;
         if (geomField == null)
         {
-            geomField = InfinityUtilities.getTagValue(".es-geoshape", dataType);
+            geomField = InfinityUtilities.getTagValue(InfinityUtilities.SHAPE, dataType);
             geometryType = GeometryType.SHAPE;
         }
-        String timeField = InfinityUtilities.getTagValue(".es-starttime", dataType);
+        String timeField = InfinityUtilities.getTagValue(InfinityUtilities.START, dataType);
         String endTimeField = null;
         if (timeField == null)
         {
-            timeField = InfinityUtilities.getTagValue(".es-datetime", dataType);
+            timeField = InfinityUtilities.getTagValue(InfinityUtilities.TIME, dataType);
         }
         else
         {
-            endTimeField = InfinityUtilities.getTagValue(".es-endtime", dataType);
+            endTimeField = InfinityUtilities.getTagValue(InfinityUtilities.END, dataType);
         }
 
         QueryParameters queryParameters = new QueryParameters();
