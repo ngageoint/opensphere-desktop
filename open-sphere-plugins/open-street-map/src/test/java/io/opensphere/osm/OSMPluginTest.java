@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.Toolbox;
-import io.opensphere.core.event.EventManager;
 import io.opensphere.osm.envoy.OSMTileEnvoy;
 import io.opensphere.osm.server.OSMServerSourceController;
 import io.opensphere.server.toolbox.ServerSourceControllerManager;
@@ -47,8 +46,6 @@ public class OSMPluginTest
      */
     private Toolbox createToolbox(EasyMockSupport support)
     {
-        EventManager eventManager = support.createMock(EventManager.class);
-
         ServerSourceControllerManager controllerManager = support.createMock(ServerSourceControllerManager.class);
         controllerManager.setPreferencesTopic(EasyMock.eq(OSMServerSourceController.class), EasyMock.eq(OSMPlugin.class));
 
@@ -60,7 +57,6 @@ public class OSMPluginTest
 
         Toolbox toolbox = support.createMock(Toolbox.class);
         EasyMock.expect(toolbox.getPluginToolboxRegistry()).andReturn(toolboxRegistry).anyTimes();
-        EasyMock.expect(toolbox.getEventManager()).andReturn(eventManager);
 
         return toolbox;
     }

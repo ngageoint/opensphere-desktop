@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.swing.AbstractButton;
 import javax.swing.Box;
@@ -64,6 +65,9 @@ public class AutoUpdateOptionsPanel extends ViewPanel
     /** The toolbox through which application state is accessed. */
     private final Toolbox myToolbox;
 
+    /** The preferred version of the application. */
+    private String myPreferredVersion;
+
     /**
      * Creates a new options panel for configuring auto update.
      *
@@ -101,13 +105,12 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         List<String> versions = myController.getVersionOptions();
 
         myPreferredVersionDictionary = New.map();
-        String preferredVersion = myController.loadLaunchConfiguration()
-                .getProperty(AutoUpdatePreferenceKeys.PREFERRED_VERSION_KEY);
+        myPreferredVersion = myController.loadLaunchConfiguration().getProperty(AutoUpdatePreferenceKeys.PREFERRED_VERSION_KEY);
         myPreferredVersionButtonGroup = new ButtonGroup();
         for (String version : versions)
         {
             myVersionContainer.addRow(createVersionComponent(version, myPreferredVersionButtonGroup,
-                    StringUtils.equals(preferredVersion, version)));
+                    StringUtils.equals(myPreferredVersion, version)));
         }
 
         JScrollPane versionsPane = new JScrollPane(myVersionContainer);
@@ -127,9 +130,12 @@ public class AutoUpdateOptionsPanel extends ViewPanel
     protected Component createVersionComponent(String version, ButtonGroup preferredVersionButtonGroup, boolean isPreferred)
     {
         Box box = Box.createHorizontalBox();
+
         JRadioButton toggleButton = new JRadioButton(version, isPreferred);
         toggleButton.setToolTipText("Click to select " + version + "as your preferred version.");
+        toggleButton.addActionListener(e -> updatePreferredVersion(version));
         preferredVersionButtonGroup.add(toggleButton);
+
         box.add(toggleButton);
 
         myPreferredVersionDictionary.put(version, toggleButton.getModel());
@@ -137,13 +143,44 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         if (!isPreferred)
         {
             box.add(Box.createHorizontalGlue());
+
             JButton deleteButton = new JButton(new GenericFontIcon(AwesomeIconSolid.TRASH_ALT, Color.WHITE));
             deleteButton.setBackground(Color.RED);
-            box.add(deleteButton);
             deleteButton.addActionListener(e -> deleteVersion(version, box, deleteButton));
+
+            box.add(deleteButton);
         }
 
         return box;
+    }
+
+    /**
+     * Updates the launch configuration to utilize the selected version as the
+     * preferred.
+     *
+     * @param version the version to use
+     */
+    private void updatePreferredVersion(String version)
+    {
+        String chooseVersionMessage = "Are you sure you want to use version " + version + " as your default?"
+                + System.lineSeparator() + "The application will restart when this takes effect.";
+
+        int yn = JOptionPane.showConfirmDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(), chooseVersionMessage,
+                "Confirm Change", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (yn == JOptionPane.YES_OPTION)
+        {
+            Properties launchConfig = myController.loadLaunchConfiguration();
+            launchConfig.setProperty(AutoUpdatePreferenceKeys.PREFERRED_VERSION_KEY, version);
+            myController.storeLaunchConfiguration(launchConfig);
+
+            myPreferredVersion = version;
+            restartApplication();
+        }
+        else
+        {
+            myPreferredVersionButtonGroup.setSelected(myPreferredVersionDictionary.get(myPreferredVersion), true);
+        }
     }
 
     /**
@@ -197,5 +234,44 @@ public class AutoUpdateOptionsPanel extends ViewPanel
                 LOG.error("Unable to cleanup '" + versionDirectory.toString() + "' after requested cancel", e);
             }
         }
+    }
+
+    /**
+     * Restart the current Java application.
+     */
+    private void restartApplication()
+    {
+        final String installPath = myPreferences.getInstallDirectory().getAbsolutePath();
+        // The cmd to execute is just a path to the launch script. The
+        // filesystem can handle it. If someone decides they want to change
+        // their OS property they can just deal without a restart.
+        String cmd;
+        if (System.getProperty("os.name").contains("Windows"))
+        {
+            cmd = "\"" + Paths.get(installPath, "launch.bat").normalize().toString() + "\"";
+        }
+        // Linux
+        else
+        {
+            cmd = Paths.get(installPath, "launch.sh").normalize().toString();
+        }
+
+        Runtime.getRuntime().addShutdownHook(new Thread()
+        {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    Runtime.getRuntime().exec(cmd);
+                }
+                catch (IOException e)
+                {
+                    LOG.error(e);
+                }
+            }
+        });
+
+        System.exit(0);
     }
 }

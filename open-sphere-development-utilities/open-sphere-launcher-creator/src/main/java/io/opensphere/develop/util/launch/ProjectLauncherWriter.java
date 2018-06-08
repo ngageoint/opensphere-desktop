@@ -81,7 +81,7 @@ public final class ProjectLauncherWriter
         // Classpath
         lines.add("<listAttribute key=\"org.eclipse.jdt.launching.CLASSPATH\">");
         lines.add(listEntryXml("containerPath",
-                "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8",
+                "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-9",
                 "path", "1", "type", "4"));
         lines.add(listEntryXml("containerPath", "org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER", "path", "3", "type", "4"));
         for (String additional : rootProject.getAdditionalClasspathItems())
