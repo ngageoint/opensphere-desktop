@@ -17,6 +17,8 @@ import io.opensphere.core.data.util.SimpleQuery;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.infinity.json.SearchResponse;
+import io.opensphere.infinity.model.QueryParameters;
+import io.opensphere.infinity.model.QueryParameters.GeometryType;
 import io.opensphere.infinity.util.InfinityUtilities;
 import io.opensphere.mantle.data.DataTypeInfo;
 
@@ -52,23 +54,29 @@ public class InfinityQuerier
 
         String url = InfinityUtilities.getUrl(dataType);
         String geomField = InfinityUtilities.getTagValue(".es-geopoint", dataType);
+        GeometryType geometryType = GeometryType.POINT;
         if (geomField == null)
         {
             geomField = InfinityUtilities.getTagValue(".es-geoshape", dataType);
+            geometryType = GeometryType.SHAPE;
         }
         String timeField = InfinityUtilities.getTagValue(".es-starttime", dataType);
+        String endTimeField = null;
         if (timeField == null)
         {
             timeField = InfinityUtilities.getTagValue(".es-datetime", dataType);
         }
         else
         {
-            String endTimeField = InfinityUtilities.getTagValue(".es-endtime", dataType);
-            if (endTimeField != null)
-            {
-                timeField += "," + endTimeField;
-            }
+            endTimeField = InfinityUtilities.getTagValue(".es-endtime", dataType);
         }
+
+        QueryParameters queryParameters = new QueryParameters();
+        queryParameters.setBinField(binField);
+        queryParameters.setGeomField(geomField);
+        queryParameters.setTimeField(timeField);
+        queryParameters.setEndTimeField(endTimeField);
+        queryParameters.setGeometryType(geometryType);
 
         if (geomField != null)
         {
@@ -77,12 +85,7 @@ public class InfinityQuerier
             parameters.add(new GeometryMatcher(GeometryAccessor.GEOMETRY_PROPERTY_NAME, GeometryMatcher.OperatorType.INTERSECTS,
                     polygon));
             parameters.add(new TimeSpanMatcher(TimeSpanAccessor.TIME_PROPERTY_NAME, timeSpan));
-            parameters.add(new GeneralPropertyMatcher<>(InfinityEnvoy.GEOM_FIELD_DESCRIPTOR, geomField));
-            parameters.add(new GeneralPropertyMatcher<>(InfinityEnvoy.TIME_FIELD_DESCRIPTOR, timeField));
-            if (binField != null)
-            {
-                parameters.add(new GeneralPropertyMatcher<>(InfinityEnvoy.BIN_FIELD_DESCRIPTOR, binField));
-            }
+            parameters.add(new GeneralPropertyMatcher<>(InfinityEnvoy.PARAMETERS_DESCRIPTOR, queryParameters));
             SimpleQuery<SearchResponse> query = new SimpleQuery<>(category, InfinityEnvoy.RESULTS_DESCRIPTOR, parameters);
             List<SearchResponse> results = InfinityEnvoy.performQuery(myDataRegistry, query);
             response = results.iterator().next();

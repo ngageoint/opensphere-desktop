@@ -1,13 +1,13 @@
 package io.opensphere.infinity.json;
 
-/** Elasticsearch geo bounding box JSON bean. */
-public class GeoBoundingBox extends Any
+/** Elasticsearch geometry JSON bean. */
+public class ElasticGeometry extends Any
 {
     /** Ignore unmapped. */
     private final boolean myIgnoreUnmapped = true;
 
     /** Constructor. */
-    public GeoBoundingBox()
+    public ElasticGeometry()
     {
     }
 
@@ -17,7 +17,7 @@ public class GeoBoundingBox extends Any
      * @param propertyName The property name
      * @param propertyValue The property value
      */
-    public GeoBoundingBox(String propertyName, Object propertyValue)
+    public ElasticGeometry(String propertyName, Object propertyValue)
     {
         super(propertyName, propertyValue);
     }

@@ -45,10 +45,14 @@ import io.opensphere.infinity.json.Aggs;
 import io.opensphere.infinity.json.Any;
 import io.opensphere.infinity.json.Bool;
 import io.opensphere.infinity.json.BoundingBox;
-import io.opensphere.infinity.json.GeoBoundingBox;
+import io.opensphere.infinity.json.ElasticGeometry;
+import io.opensphere.infinity.json.GeometryFilter;
 import io.opensphere.infinity.json.SearchRequest;
 import io.opensphere.infinity.json.SearchResponse;
+import io.opensphere.infinity.json.Shape;
 import io.opensphere.infinity.json.TimeRange;
+import io.opensphere.infinity.model.QueryParameters;
+import io.opensphere.infinity.model.QueryParameters.GeometryType;
 import io.opensphere.server.util.JsonUtils;
 
 /** Infinity envoy. */
@@ -61,15 +65,9 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
     public static final PropertyDescriptor<SearchResponse> RESULTS_DESCRIPTOR = new PropertyDescriptor<>("SearchResponse",
             SearchResponse.class);
 
-    /** The {@link PropertyDescriptor} for the geometry field. */
-    public static final PropertyDescriptor<String> GEOM_FIELD_DESCRIPTOR = new PropertyDescriptor<>("GeometryField",
-            String.class);
-
-    /** The {@link PropertyDescriptor} for the time field. */
-    public static final PropertyDescriptor<String> TIME_FIELD_DESCRIPTOR = new PropertyDescriptor<>("TimeField", String.class);
-
-    /** The {@link PropertyDescriptor} for the bin field. */
-    public static final PropertyDescriptor<String> BIN_FIELD_DESCRIPTOR = new PropertyDescriptor<>("BinField", String.class);
+    /** The {@link PropertyDescriptor} for the query parameters. */
+    public static final PropertyDescriptor<QueryParameters> PARAMETERS_DESCRIPTOR = new PropertyDescriptor<>("QueryParameters",
+            QueryParameters.class);
 
     /**
      * Constructor.
@@ -93,6 +91,8 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
             Collection<? extends PropertyDescriptor<?>> propertyDescriptors, CacheDepositReceiver queryReceiver)
         throws InterruptedException, QueryException
     {
+        QueryParameters queryParameters = (QueryParameters)parameters.stream()
+                .filter(p -> p.getPropertyDescriptor() == PARAMETERS_DESCRIPTOR).map(p -> p.getOperand()).findAny().orElse(null);
         try
         {
             for (Satisfaction sat : satisfactions)
@@ -100,17 +100,13 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
                 IntervalPropertyValueSet valueSet = sat.getIntervalPropertyValueSet();
                 Collection<? extends Geometry> geometries = valueSet.getValues(GeometryAccessor.PROPERTY_DESCRIPTOR);
                 Collection<? extends TimeSpan> timeSpans = valueSet.getValues(TimeSpanAccessor.PROPERTY_DESCRIPTOR);
-                String geomField = (String)parameters.stream().filter(p -> p.getPropertyDescriptor() == GEOM_FIELD_DESCRIPTOR)
-                        .map(p -> p.getOperand()).findAny().orElse(null);
-                String timeField = (String)parameters.stream().filter(p -> p.getPropertyDescriptor() == TIME_FIELD_DESCRIPTOR)
-                        .map(p -> p.getOperand()).findAny().orElse(null);
-                String binField = (String)parameters.stream().filter(p -> p.getPropertyDescriptor() == BIN_FIELD_DESCRIPTOR)
-                        .map(p -> p.getOperand()).findAny().orElse(null);
                 for (Geometry geometry : geometries)
                 {
                     for (TimeSpan timeSpan : timeSpans)
                     {
-                        query(category, queryReceiver, geometry, timeSpan, geomField, timeField, binField);
+                        queryParameters.setGeometry(geometry);
+                        queryParameters.setTimeSpan(timeSpan);
+                        query(category, queryReceiver, queryParameters);
                     }
                 }
             }
@@ -145,20 +141,15 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
      *
      * @param category the data model category
      * @param queryReceiver the query receiver
-     * @param geometry the geometry
-     * @param timeSpan the time span
-     * @param geomField the geometry field
-     * @param timeField the time field
-     * @param binField the bin field
+     * @param parameters the query parameters
      * @throws IOException if something went wrong with the query or parsing result
      * @throws CacheException if something went wrong with the deposit
      */
-    private void query(DataModelCategory category, CacheDepositReceiver queryReceiver, Geometry geometry, TimeSpan timeSpan,
-            String geomField, String timeField, String binField)
+    private void query(DataModelCategory category, CacheDepositReceiver queryReceiver, QueryParameters parameters)
         throws IOException, CacheException
     {
         URL url = getUrl(category);
-        InputStream postData = createRequestStream(geometry, timeSpan, geomField, timeField, binField);
+        InputStream postData = createRequestStream(parameters);
         ResponseValues response = new ResponseValues();
         ServerProvider<HttpServer> provider = getServerProviderRegistry().getProvider(HttpServer.class);
 
@@ -167,7 +158,7 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
             Collection<SearchResponse> items = parseDepositItems(inputStream);
             if (!items.isEmpty())
             {
-                CacheDeposit<SearchResponse> deposit = createDeposit(category, items, geometry, timeSpan);
+                CacheDeposit<SearchResponse> deposit = createDeposit(category, items, parameters);
                 queryReceiver.receive(deposit);
             }
         }
@@ -176,19 +167,13 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
     /**
      * Creates a JSON request stream (the post body).
      *
-     * @param geometry the geometry
-     * @param timeSpan the time span
-     * @param geomField the geometry field
-     * @param timeField the time field
-     * @param binField the bin field
+     * @param parameters the query parameters
      * @return the request stream
      * @throws IOException if something goes wrong
      */
-    private InputStream createRequestStream(Geometry geometry, TimeSpan timeSpan, String geomField, String timeField,
-            String binField)
-        throws IOException
+    private InputStream createRequestStream(QueryParameters parameters) throws IOException
     {
-        SearchRequest request = createSearchRequest(geometry, timeSpan, geomField, timeField, binField);
+        SearchRequest request = createSearchRequest(parameters);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream(384);
         ObjectMapper mapper = JsonUtils.createMapper();
@@ -196,47 +181,51 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
         mapper.writeValue(out, request);
 
         InputStream postData = new ByteArrayInputStream(out.toByteArray());
-        System.out.println(new String(out.toByteArray()));
         return postData;
     }
 
     /**
      * Creates the search request bean.
      *
-     * @param geometry the geometry
-     * @param timeSpan the time span
-     * @param geomField the geometry field
-     * @param timeField the time field
-     * @param binField the bin field
+     * @param parameters the query parameters
      * @return the search request bean
      */
-    private SearchRequest createSearchRequest(Geometry geometry, TimeSpan timeSpan, String geomField, String timeField,
-            String binField)
+    private SearchRequest createSearchRequest(QueryParameters parameters)
     {
         SearchRequest request = new SearchRequest();
         request.setSize(0);
         request.setTimeout("30s");
         Object[] must = new Object[2];
-        if (timeField.indexOf(',') != -1)
+        if (parameters.getEndTimeField() != null)
         {
-            String[] fields = timeField.split(",");
             Bool bool = new Bool();
             Object[] innerMust = new Object[2];
-            innerMust[0] = new Any("range", new Any(fields[0], new TimeRange(null, timeSpan.getEnd())));
-            innerMust[1] = new Any("range", new Any(fields[1], new TimeRange(timeSpan.getStart(), null)));
+            innerMust[0] = new Any("range",
+                    new Any(parameters.getTimeField(), new TimeRange(null, Long.valueOf(parameters.getTimeSpan().getEnd()))));
+            innerMust[1] = new Any("range", new Any(parameters.getEndTimeField(),
+                    new TimeRange(Long.valueOf(parameters.getTimeSpan().getStart()), null)));
             bool.setMust(innerMust);
             must[0] = new Any("bool", bool);
         }
         else
         {
-            must[0] = new Any("range", new Any(timeField, new TimeRange(timeSpan)));
+            must[0] = new Any("range", new Any(parameters.getTimeField(), new TimeRange(parameters.getTimeSpan())));
         }
-        must[1] = new Any("geo_bounding_box", new GeoBoundingBox(geomField, new BoundingBox(geometry)));
+        if (parameters.getGeometryType() == GeometryType.POINT)
+        {
+            must[1] = new Any("geo_bounding_box",
+                    new ElasticGeometry(parameters.getGeomField(), new BoundingBox(parameters.getGeometry())));
+        }
+        else
+        {
+            must[1] = new Any("geo_shape", new ElasticGeometry(parameters.getGeomField(),
+                    new GeometryFilter(new Shape("envelope", parameters.getGeometry()), "intersects")));
+        }
         request.getQuery().getBool().setMust(must);
-        if (binField != null)
+        if (parameters.getBinField() != null)
         {
             final long largeValue = 1000000000000000000L;
-            request.setAggs(new Aggs(binField + ".keyword", 10000, largeValue));
+            request.setAggs(new Aggs(parameters.getBinField() + ".keyword", 10000, largeValue));
         }
         return request;
     }
@@ -246,16 +235,15 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
      *
      * @param category the data model category
      * @param items the items to deposit
-     * @param geometry the geometry
-     * @param timeSpan the time span
+     * @param parameters the query parameters
      * @return the deposit
      */
     private CacheDeposit<SearchResponse> createDeposit(DataModelCategory category, Collection<? extends SearchResponse> items,
-            Geometry geometry, TimeSpan timeSpan)
+            QueryParameters parameters)
     {
         List<PropertyAccessor<SearchResponse, ?>> accessors = New.list();
         accessors.add(UnserializableAccessor.getHomogeneousAccessor(RESULTS_DESCRIPTOR));
-        accessors.add(new ResultTimeSpanAccessor(TimeSpan.TIMELESS, timeSpan));
+        accessors.add(new ResultTimeSpanAccessor(TimeSpan.TIMELESS, parameters.getTimeSpan()));
         return new DefaultCacheDeposit<>(category.withSource(getClass().getName()), accessors, items, true,
                 TimeInstant.get().plus(Minutes.ONE).toDate(), false);
     }
