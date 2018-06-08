@@ -49,7 +49,7 @@ public class StringTableCellRenderer extends DefaultTableCellRenderer
         if (value != null)
         {
             String sVal = value.toString();
-            if (myListener.hasURLFor(row, column, sVal))
+            if (sVal.length() > 0 && myListener.hasURLFor(row, column, sVal))
             {
                 setValue(HyperlinkMouseListener.formatUrl(sVal));
             }
