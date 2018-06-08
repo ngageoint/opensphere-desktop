@@ -30,6 +30,7 @@ public class TimeSpanTableCellRenderer extends DefaultTableCellRenderer
     {
         super();
         myFormat = ListToolPreferences.getSimpleDateFormatForPrecision(precision);
+        setVerticalAlignment(DefaultTableCellRenderer.TOP);
     }
 
     @Override
