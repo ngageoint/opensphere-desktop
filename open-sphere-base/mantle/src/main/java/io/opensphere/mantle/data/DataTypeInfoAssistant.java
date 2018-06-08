@@ -25,4 +25,11 @@ public interface DataTypeInfoAssistant
      * @return the layer icons
      */
     List<Icon> getLayerIcons();
+
+    /**
+     * Gets any additional labels to show to the right of the layer in the Layers UI.
+     *
+     * @return the layer labels
+     */
+    List<String> getLayerLabels();
 }

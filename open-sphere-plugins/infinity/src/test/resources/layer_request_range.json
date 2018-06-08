@@ -5,12 +5,25 @@
 		"bool": {
 			"must": [
 				{
-					"range": {
-						"timefield": {
-							"format": "epoch_millis",
-							"gte": 123,
-							"lt": 456
-						}
+					"bool": {
+						"must": [
+							{
+								"range": {
+									"start_date": {
+										"lt": 456,
+										"format": "epoch_millis"
+									}
+								}
+							},
+							{
+								"range": {
+									"end_date": {
+										"gte": 123,
+										"format": "epoch_millis"
+									}
+								}
+							}
+						]
 					}
 				},
 				{

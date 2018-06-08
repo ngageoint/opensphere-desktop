@@ -135,6 +135,16 @@ public abstract class SimpleEnvoy<T> extends AbstractEnvoy implements DataRegist
     }
 
     /**
+     * Gets the server provider registry.
+     *
+     * @return the server provider registry
+     */
+    protected ServerProviderRegistry getServerProviderRegistry()
+    {
+        return myServerProviderRegistry;
+    }
+
+    /**
      * Queries the URL, parses results, and deposits them in the data registry.
      *
      * @param url the URL
