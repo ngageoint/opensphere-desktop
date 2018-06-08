@@ -1,8 +1,8 @@
 package io.opensphere.wms.layer;
 
 import java.awt.Component;
-import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.Icon;
 import javax.swing.JComboBox;
@@ -27,6 +27,9 @@ public class WMSDataTypeInfoAssistant implements DataTypeInfoAssistant
     /** The WMS Layer config. */
     @ThreadConfined("EDT")
     private WMSLayerConfigurationSet myWmsConfig;
+
+    /** The layer labels. */
+    private List<String> myLayerLabels;
 
     /**
      * Constructor.
@@ -57,7 +60,17 @@ public class WMSDataTypeInfoAssistant implements DataTypeInfoAssistant
     @Override
     public List<Icon> getLayerIcons()
     {
-        return Collections.emptyList();
+        return List.of();
+    }
+
+    @Override
+    public synchronized List<String> getLayerLabels()
+    {
+        if (myLayerLabels == null)
+        {
+            myLayerLabels = new CopyOnWriteArrayList<>();
+        }
+        return myLayerLabels;
     }
 
     /**

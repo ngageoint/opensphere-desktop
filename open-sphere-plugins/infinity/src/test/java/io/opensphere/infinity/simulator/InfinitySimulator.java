@@ -91,7 +91,7 @@ public class InfinitySimulator extends AbstractServer
         }
         else
         {
-            totalCount = (int)(Math.random() * 1000) + 1;
+            totalCount = (int)(Math.random() * 20000) + 1;
         }
         response.setHits(new Hits(totalCount));
         return response;

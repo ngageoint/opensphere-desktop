@@ -10,8 +10,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import io.opensphere.analysis.table.renderers.DateTableCellRenderer;
 import io.opensphere.analysis.table.renderers.HyperlinkMouseListener;
 import io.opensphere.analysis.table.renderers.KeyProvider;
-import io.opensphere.analysis.table.renderers.LatTableCellRenderer;
-import io.opensphere.analysis.table.renderers.LonTableCellRenderer;
+import io.opensphere.analysis.table.renderers.LatLonTableCellRenderer;
+import io.opensphere.analysis.table.renderers.LatLonTableCellRenderer.CoordType;
 import io.opensphere.analysis.table.renderers.NumberTableCellRenderer;
 import io.opensphere.analysis.table.renderers.StringTableCellRenderer;
 import io.opensphere.analysis.table.renderers.TimeSpanTableCellRenderer;
@@ -38,10 +38,12 @@ class BaseballRenderer extends DefaultTableCellRenderer implements AutoCloseable
     private final JTable myTable;
 
     /** The latitude renderer. */
-    private final LatTableCellRenderer myLatRenderer = new LatTableCellRenderer(GeographicPositionFormat.DECDEG);
+    private final LatLonTableCellRenderer myLatRenderer = new LatLonTableCellRenderer(GeographicPositionFormat.DECDEG,
+            CoordType.LAT);
 
     /** The longitude renderer. */
-    private final LonTableCellRenderer myLonRenderer = new LonTableCellRenderer(GeographicPositionFormat.DECDEG);
+    private final LatLonTableCellRenderer myLonRenderer = new LatLonTableCellRenderer(GeographicPositionFormat.DECDEG,
+            CoordType.LON);
 
     /** The string renderer. */
     private final StringTableCellRenderer myStringRenderer;

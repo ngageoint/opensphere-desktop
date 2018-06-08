@@ -3,7 +3,7 @@ package io.opensphere.infinity.json;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
 /** Elasticsearch search response JSON bean. */
-@JsonPropertyOrder({ "hits", "aggregations"})
+@JsonPropertyOrder({ "hits", "aggregations" })
 public class SearchResponse
 {
     /** The hits. */
