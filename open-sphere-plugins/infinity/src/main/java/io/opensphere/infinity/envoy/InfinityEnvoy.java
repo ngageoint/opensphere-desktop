@@ -52,8 +52,8 @@ import io.opensphere.infinity.json.SearchRequest;
 import io.opensphere.infinity.json.SearchResponse;
 import io.opensphere.infinity.json.Shape;
 import io.opensphere.infinity.json.TimeRange;
-import io.opensphere.infinity.model.QueryParameters;
-import io.opensphere.infinity.model.QueryParameters.GeometryType;
+import io.opensphere.mantle.infinity.QueryParameters;
+import io.opensphere.mantle.infinity.QueryParameters.GeometryType;
 import io.opensphere.server.util.JsonUtils;
 
 /** Infinity envoy. */
@@ -68,10 +68,6 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
     /** The {@link PropertyDescriptor} for the results. */
     public static final PropertyDescriptor<SearchResponse> RESULTS_DESCRIPTOR = new PropertyDescriptor<>("SearchResponse",
             SearchResponse.class);
-
-    /** The {@link PropertyDescriptor} for the query parameters. */
-    public static final PropertyDescriptor<QueryParameters> PARAMETERS_DESCRIPTOR = new PropertyDescriptor<>("QueryParameters",
-            QueryParameters.class);
 
     /**
      * Constructor.
@@ -96,7 +92,8 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
         throws InterruptedException, QueryException
     {
         QueryParameters queryParameters = (QueryParameters)parameters.stream()
-                .filter(p -> p.getPropertyDescriptor() == PARAMETERS_DESCRIPTOR).map(p -> p.getOperand()).findAny().orElse(null);
+                .filter(p -> p.getPropertyDescriptor() == QueryParameters.PROPERTY_DESCRIPTOR).map(p -> p.getOperand()).findAny()
+                .orElse(null);
         try
         {
             for (Satisfaction sat : satisfactions)
@@ -162,6 +159,7 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
         try (CancellableInputStream inputStream = HttpUtilities.sendPost(url, postData, response, ContentType.JSON, provider))
         {
             Collection<SearchResponse> items = parseDepositItems(inputStream);
+            // TODO convert to QueryResults
             if (!items.isEmpty())
             {
                 CacheDeposit<SearchResponse> deposit = createDeposit(category, items, parameters);

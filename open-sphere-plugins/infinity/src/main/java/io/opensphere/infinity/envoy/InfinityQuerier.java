@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.vividsolutions.jts.geom.Polygon;
 
+import io.opensphere.core.api.adapter.SimpleEnvoy;
 import io.opensphere.core.cache.accessor.GeometryAccessor;
 import io.opensphere.core.cache.accessor.TimeSpanAccessor;
 import io.opensphere.core.cache.matcher.GeneralPropertyMatcher;
@@ -17,10 +18,10 @@ import io.opensphere.core.data.util.SimpleQuery;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.infinity.json.SearchResponse;
-import io.opensphere.infinity.model.QueryParameters;
-import io.opensphere.infinity.model.QueryParameters.GeometryType;
 import io.opensphere.infinity.util.InfinityUtilities;
 import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.infinity.QueryParameters;
+import io.opensphere.mantle.infinity.QueryParameters.GeometryType;
 
 /** Performs queries. */
 public class InfinityQuerier
@@ -85,9 +86,9 @@ public class InfinityQuerier
             parameters.add(new GeometryMatcher(GeometryAccessor.GEOMETRY_PROPERTY_NAME, GeometryMatcher.OperatorType.INTERSECTS,
                     polygon));
             parameters.add(new TimeSpanMatcher(TimeSpanAccessor.TIME_PROPERTY_NAME, timeSpan));
-            parameters.add(new GeneralPropertyMatcher<>(InfinityEnvoy.PARAMETERS_DESCRIPTOR, queryParameters));
+            parameters.add(new GeneralPropertyMatcher<>(QueryParameters.PROPERTY_DESCRIPTOR, queryParameters));
             SimpleQuery<SearchResponse> query = new SimpleQuery<>(category, InfinityEnvoy.RESULTS_DESCRIPTOR, parameters);
-            List<SearchResponse> results = InfinityEnvoy.performQuery(myDataRegistry, query);
+            List<SearchResponse> results = SimpleEnvoy.performQuery(myDataRegistry, query);
             response = results.iterator().next();
         }
 

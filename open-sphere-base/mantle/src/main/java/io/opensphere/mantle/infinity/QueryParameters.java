@@ -1,14 +1,19 @@
-package io.opensphere.infinity.model;
+package io.opensphere.mantle.infinity;
 
 import java.io.Serializable;
 
 import com.vividsolutions.jts.geom.Geometry;
 
+import io.opensphere.core.cache.util.PropertyDescriptor;
 import io.opensphere.core.model.time.TimeSpan;
 
 /** Infinity query parameters. */
 public class QueryParameters implements Serializable
 {
+    /** The {@link PropertyDescriptor} for query parameters. */
+    public static final PropertyDescriptor<QueryParameters> PROPERTY_DESCRIPTOR = new PropertyDescriptor<>("QueryParameters",
+            QueryParameters.class);
+
     /** Serial version UID. */
     private static final long serialVersionUID = 1L;
 
