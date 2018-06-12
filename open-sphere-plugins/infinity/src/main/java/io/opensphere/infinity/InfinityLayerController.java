@@ -27,14 +27,15 @@ import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.viewer.ViewChangeSupport;
 import io.opensphere.core.viewer.Viewer;
 import io.opensphere.infinity.envoy.InfinityQuerier;
-import io.opensphere.infinity.json.SearchResponse;
-import io.opensphere.infinity.util.InfinityUtilities;
 import io.opensphere.mantle.controller.event.impl.DataTypeAddedEvent;
 import io.opensphere.mantle.controller.event.impl.DataTypeRemovedEvent;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.DataTypeInfoAssistant;
 import io.opensphere.mantle.data.event.DataTypePropertyChangeEvent;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfoAssistant;
+import io.opensphere.mantle.infinity.InfinityUtilities;
+import io.opensphere.mantle.infinity.QueryResults;
+import io.opensphere.server.services.AbstractServerDataTypeInfo;
 
 /** Manages infinity layer count and icon. */
 public class InfinityLayerController extends EventListenerService
@@ -101,7 +102,7 @@ public class InfinityLayerController extends EventListenerService
     private void handleDataTypeAdded(DataTypeAddedEvent event)
     {
         DataTypeInfo dataType = event.getDataType();
-        if (InfinityUtilities.isInfinityEnabled(dataType))
+        if (isInfinityEnabled(dataType))
         {
             setInfinityIcon(dataType);
             myInfinityDataTypes.add(dataType);
@@ -117,7 +118,7 @@ public class InfinityLayerController extends EventListenerService
     private void handleDataTypeRemoved(DataTypeRemovedEvent event)
     {
         DataTypeInfo dataType = event.getDataType();
-        if (InfinityUtilities.isInfinityEnabled(dataType))
+        if (isInfinityEnabled(dataType))
         {
             myInfinityDataTypes.remove(dataType);
         }
@@ -201,8 +202,8 @@ public class InfinityLayerController extends EventListenerService
             {
                 try
                 {
-                    SearchResponse response = querier.query(dataType, polygon, myLastActiveTime, null);
-                    setLayerCount(dataType, response.getHits().getTotal());
+                    QueryResults result = querier.query(dataType, polygon, myLastActiveTime, "blah");
+                    setLayerCount(dataType, result.getCount());
                 }
                 catch (QueryException e)
                 {
@@ -241,6 +242,17 @@ public class InfinityLayerController extends EventListenerService
             DataTypePropertyChangeEvent event = new DataTypePropertyChangeEvent(null, "labels", null, this);
             myToolbox.getEventManager().publishEvent(event);
         }
+    }
+
+    /**
+     * Determines if the data type is infinity-enabled.
+     *
+     * @param dataType the data type
+     * @return whether it's infinity-enabled
+     */
+    private static boolean isInfinityEnabled(DataTypeInfo dataType)
+    {
+        return dataType instanceof AbstractServerDataTypeInfo && InfinityUtilities.isInfinityEnabled(dataType);
     }
 
     /**

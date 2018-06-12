@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -39,6 +41,7 @@ import io.opensphere.core.server.HttpServer;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.server.ServerProvider;
 import io.opensphere.core.units.duration.Minutes;
+import io.opensphere.core.util.ValueWithCount;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.io.CancellableInputStream;
 import io.opensphere.core.util.net.HttpUtilities;
@@ -54,20 +57,14 @@ import io.opensphere.infinity.json.Shape;
 import io.opensphere.infinity.json.TimeRange;
 import io.opensphere.mantle.infinity.QueryParameters;
 import io.opensphere.mantle.infinity.QueryParameters.GeometryType;
+import io.opensphere.mantle.infinity.QueryResults;
 import io.opensphere.server.util.JsonUtils;
 
 /** Infinity envoy. */
-public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
+public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
 {
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(InfinityEnvoy.class);
-
-    /** The data model category family. */
-    public static final String FAMILY = "Infinity.Search";
-
-    /** The {@link PropertyDescriptor} for the results. */
-    public static final PropertyDescriptor<SearchResponse> RESULTS_DESCRIPTOR = new PropertyDescriptor<>("SearchResponse",
-            SearchResponse.class);
 
     /**
      * Constructor.
@@ -82,7 +79,7 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
     @Override
     public boolean providesDataFor(DataModelCategory category)
     {
-        return FAMILY.equals(category.getFamily());
+        return QueryResults.FAMILY.equals(category.getFamily());
     }
 
     @Override
@@ -125,13 +122,14 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
     }
 
     @Override
-    protected Collection<SearchResponse> parseDepositItems(CancellableInputStream inputStream) throws IOException
+    protected Collection<QueryResults> parseDepositItems(CancellableInputStream inputStream) throws IOException
     {
-        return List.of(JsonUtils.createMapper().readValue(inputStream, SearchResponse.class));
+        SearchResponse response = JsonUtils.createMapper().readValue(inputStream, SearchResponse.class);
+        return List.of(toQueryResults(response));
     }
 
     @Override
-    protected CacheDeposit<SearchResponse> createDeposit(DataModelCategory category, Collection<? extends SearchResponse> items)
+    protected CacheDeposit<QueryResults> createDeposit(DataModelCategory category, Collection<? extends QueryResults> items)
     {
         // Overridden so as to be unused
         return null;
@@ -158,11 +156,10 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
 
         try (CancellableInputStream inputStream = HttpUtilities.sendPost(url, postData, response, ContentType.JSON, provider))
         {
-            Collection<SearchResponse> items = parseDepositItems(inputStream);
-            // TODO convert to QueryResults
-            if (!items.isEmpty())
+            Collection<QueryResults> results = parseDepositItems(inputStream);
+            if (!results.isEmpty())
             {
-                CacheDeposit<SearchResponse> deposit = createDeposit(category, items, parameters);
+                CacheDeposit<QueryResults> deposit = createDeposit(category, results, parameters);
                 queryReceiver.receive(deposit);
             }
         }
@@ -247,18 +244,36 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
      * @param parameters the query parameters
      * @return the deposit
      */
-    private CacheDeposit<SearchResponse> createDeposit(DataModelCategory category, Collection<? extends SearchResponse> items,
+    private CacheDeposit<QueryResults> createDeposit(DataModelCategory category, Collection<? extends QueryResults> items,
             QueryParameters parameters)
     {
-        List<PropertyAccessor<SearchResponse, ?>> accessors = New.list();
-        accessors.add(UnserializableAccessor.getHomogeneousAccessor(RESULTS_DESCRIPTOR));
+        List<PropertyAccessor<QueryResults, ?>> accessors = New.list();
+        accessors.add(UnserializableAccessor.getHomogeneousAccessor(QueryResults.PROPERTY_DESCRIPTOR));
         accessors.add(new ResultTimeSpanAccessor(TimeSpan.TIMELESS, parameters.getTimeSpan()));
         return new DefaultCacheDeposit<>(category.withSource(getClass().getName()), accessors, items, true,
                 TimeInstant.get().plus(Minutes.ONE).toDate(), false);
     }
 
+    /**
+     * Converts the SearchResponse to a QueryResults.
+     *
+     * @param response the SearchResponse
+     * @return the QueryResults
+     */
+    private QueryResults toQueryResults(SearchResponse response)
+    {
+        QueryResults results = new QueryResults(response.getHits().getTotal());
+        if (response.getAggregations() != null)
+        {
+            List<ValueWithCount<String>> bins = Arrays.stream(response.getAggregations().getBins().getBuckets())
+                    .map(b -> new ValueWithCount<>(b.getKey(), (int)b.getDoc_count())).collect(Collectors.toList());
+            results.setBins(bins);
+        }
+        return results;
+    }
+
     /** TimeSpanAccessor. */
-    private static class ResultTimeSpanAccessor extends TimeSpanAccessor<SearchResponse>
+    private static class ResultTimeSpanAccessor extends TimeSpanAccessor<QueryResults>
     {
         /** The individual time span. */
         private final TimeSpan myTimeSpan;
@@ -276,7 +291,7 @@ public class InfinityEnvoy extends SimpleEnvoy<SearchResponse>
         }
 
         @Override
-        public TimeSpan access(SearchResponse input)
+        public TimeSpan access(QueryResults input)
         {
             return myTimeSpan;
         }

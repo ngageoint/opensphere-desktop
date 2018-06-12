@@ -12,22 +12,23 @@ public class QueryResults
     public static final PropertyDescriptor<QueryResults> PROPERTY_DESCRIPTOR = new PropertyDescriptor<>("QueryResults",
             QueryResults.class);
 
+    /** The data model category family. */
+    public static final String FAMILY = "Infinity.Search";
+
     /** The total result count. */
     private final long myCount;
 
     /** The bins. */
-    private final List<ValueWithCount<String>> myBins;
+    private List<ValueWithCount<String>> myBins;
 
     /**
      * Constructor.
      *
      * @param count the count
-     * @param bins the bins
      */
-    public QueryResults(long count, List<ValueWithCount<String>> bins)
+    public QueryResults(long count)
     {
         myCount = count;
-        myBins = bins;
     }
 
     /**
@@ -38,6 +39,16 @@ public class QueryResults
     public long getCount()
     {
         return myCount;
+    }
+
+    /**
+     * Sets the bins.
+     *
+     * @param bins the bins
+     */
+    public void setBins(List<ValueWithCount<String>> bins)
+    {
+        myBins = bins;
     }
 
     /**
