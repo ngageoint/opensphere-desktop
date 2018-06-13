@@ -100,7 +100,7 @@
     <variables>
         <variable name="InstallerFrame.logfilePath" value="default" />
         <variable name="WELCOME_VERSION" value="${project.version}" />
-        <variable name="JRELocatorPanel.minVersion" value="1.8.0" />
+        <variable name="JRELocatorPanel.minVersion" value="9.0.0" />
     </variables>
 
     <jar src="custom/open-sphere-install-panels.jar" stage="both" />

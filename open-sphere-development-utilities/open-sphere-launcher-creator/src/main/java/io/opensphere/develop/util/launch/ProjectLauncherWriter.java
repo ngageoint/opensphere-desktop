@@ -37,8 +37,20 @@ public final class ProjectLauncherWriter
     public void write(Collection<String> projects, Collection<Dependency> dependencies, Project rootProject, OsInfo osInfo)
     {
         List<String> lines = generateLauncherLines(projects, dependencies, rootProject, osInfo);
-        Path path = Paths.get(rootProject.getRootDir(), "eclipse", "launches",
-                rootProject.getLauncherPrefix() + osInfo.getExtension() + ".launch");
+        Path path;
+
+        if (rootProject.getLauncherSuffix() != null)
+        {
+            String suffix = "_" + rootProject.getLauncherSuffix();
+            path = Paths.get(rootProject.getRootDir(), "eclipse", "launches",
+                    rootProject.getLauncherPrefix() + osInfo.getExtension() + suffix + ".launch");
+        }
+        else
+        {
+            path = Paths.get(rootProject.getRootDir(), "eclipse", "launches",
+                    rootProject.getLauncherPrefix() + osInfo.getExtension() + ".launch");
+        }
+
         try
         {
             Files.write(path, lines);
