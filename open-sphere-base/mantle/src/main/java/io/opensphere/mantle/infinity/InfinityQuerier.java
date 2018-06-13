@@ -1,4 +1,4 @@
-package io.opensphere.infinity.envoy;
+package io.opensphere.mantle.infinity;
 
 import java.util.List;
 
@@ -18,10 +18,7 @@ import io.opensphere.core.data.util.SimpleQuery;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.DataTypeInfo;
-import io.opensphere.mantle.infinity.InfinityUtilities;
-import io.opensphere.mantle.infinity.QueryParameters;
 import io.opensphere.mantle.infinity.QueryParameters.GeometryType;
-import io.opensphere.mantle.infinity.QueryResults;
 
 /** Performs queries. */
 public class InfinityQuerier
