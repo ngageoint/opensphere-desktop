@@ -341,7 +341,7 @@ public class FeatureTypeLabel extends JLabel
         else
         {
             myOutlineIcon = null;
-            setIcon(ourFeaturesIcon);
+            setIcon(ourUnknownTypeIcon);
             myType = "Unknown";
         }
     }
