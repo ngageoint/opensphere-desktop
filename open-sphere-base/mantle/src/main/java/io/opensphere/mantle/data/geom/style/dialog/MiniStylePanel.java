@@ -3,6 +3,7 @@ package io.opensphere.mantle.data.geom.style.dialog;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -19,6 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.Scrollable;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.Colors;
@@ -51,7 +53,7 @@ import io.opensphere.mantle.util.MantleToolboxUtils;
  * The Class MiniStylePanel.
  */
 @SuppressWarnings("PMD.GodClass")
-public class MiniStylePanel extends JPanel
+public class MiniStylePanel extends JPanel implements Scrollable
 {
     /** The Constant FEATURE_TYPE_COLLAPSED_PREFIX. */
     private static final String FEATURE_TYPE_COLLAPSED_PREFIX = "FeatureTypeCollapsed.";
@@ -111,16 +113,11 @@ public class MiniStylePanel extends JPanel
 
         myEnableCustomTypeCheckBox = new JCheckBox("Enable Custom Style", false);
         myEnableCustomTypeCheckBox.setBorder(null);
-        myEnableCustomTypeCheckBox.addActionListener(new ActionListener()
+        myEnableCustomTypeCheckBox.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox)
-                        .getVisualizationStyleController();
-                vsc.setUseCustomStyleForDataType(myDGI, myDTI, myEnableCustomTypeCheckBox.isSelected(), MiniStylePanel.this);
-                rebuildUI();
-            }
+            VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox).getVisualizationStyleController();
+            vsc.setUseCustomStyleForDataType(myDGI, myDTI, myEnableCustomTypeCheckBox.isSelected(), MiniStylePanel.this);
+            rebuildUI();
         });
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -754,5 +751,35 @@ public class MiniStylePanel extends JPanel
         public void styleChangesCancelled()
         {
         }
+    }
+
+    @Override
+    public Dimension getPreferredScrollableViewportSize()
+    {
+        return new Dimension(getPreferredSize().width, 300);
+    }
+
+    @Override
+    public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction)
+    {
+        return visibleRect.height / 2;
+    }
+
+    @Override
+    public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction)
+    {
+        return visibleRect.height;
+    }
+
+    @Override
+    public boolean getScrollableTracksViewportWidth()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean getScrollableTracksViewportHeight()
+    {
+        return false;
     }
 }

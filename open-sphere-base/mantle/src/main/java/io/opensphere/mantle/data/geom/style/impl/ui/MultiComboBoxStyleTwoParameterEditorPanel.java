@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.JComboBox;
-import javax.swing.JPanel;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.EqualsHelper;
@@ -73,18 +72,11 @@ public class MultiComboBoxStyleTwoParameterEditorPanel extends ComboBoxStylePara
         {
             mySecondComboBox.setBackground(cbBackground);
         }
-//        Dimension d = mySecondComboBox.getPreferredSize();
-//        mySecondComboBox.setPreferredSize(new Dimension(d.width - 50, d.height));
-//        mySecondComboBox.setMaximumSize(new Dimension(d.width - 50, 30));
-//        getComboBoxPanel().add(Box.createHorizontalStrut(5));
-//        getComboBoxPanel().add(mySecondComboBox);
-//        if (labelOpt2 != null)
-//        {
-//            getComboBoxPanel().add(Box.createHorizontalStrut(5));
-//            getComboBoxPanel().add(new JLabel(labelOpt2));
-//        }
 
         mySecondComboBox.addActionListener(this);
+
+        myComboBoxPanel.add(Box.createHorizontalStrut(5), 1);
+        myComboBoxPanel.add(mySecondComboBox, 2);
     }
 
     @Override
@@ -102,9 +94,6 @@ public class MultiComboBoxStyleTwoParameterEditorPanel extends ComboBoxStylePara
         }
     }
 
-    /**
-     * Update.
-     */
     @Override
     public final void update()
     {
@@ -116,18 +105,6 @@ public class MultiComboBoxStyleTwoParameterEditorPanel extends ComboBoxStylePara
             final Object fVal = val;
             EventQueueUtilities.runOnEDT(() -> mySecondComboBox.setSelectedItem(fVal));
         }
-    }
-
-    /**
-     * Adds the other components.
-     *
-     * @param cbPanel the cb panel
-     */
-    @Override
-    protected void addOtherComponents(JPanel cbPanel)
-    {
-        cbPanel.add(Box.createHorizontalStrut(5));
-        cbPanel.add(mySecondComboBox);
     }
 
     /**
