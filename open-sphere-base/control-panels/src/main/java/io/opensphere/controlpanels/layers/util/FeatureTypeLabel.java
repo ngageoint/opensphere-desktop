@@ -338,16 +338,10 @@ public class FeatureTypeLabel extends JLabel
             MapVisualizationType type = dti.getMapVisualizationInfo().getVisualizationType();
             setIconByType(dti.getBasicVisualizationInfo().getTypeColor(), type);
         }
-        else if (dti != null && dti.getClass().getSimpleName().equals("CSVDataTypeInfo"))
-        {
-            myOutlineIcon = null;
-            setIcon(ourFeaturesIcon);
-            myType = "Feature";
-        }
         else
         {
             myOutlineIcon = null;
-            setIcon(ourUnknownTypeIcon);
+            setIcon(ourFeaturesIcon);
             myType = "Unknown";
         }
     }
