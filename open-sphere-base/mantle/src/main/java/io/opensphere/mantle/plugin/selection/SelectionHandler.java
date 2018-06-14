@@ -7,12 +7,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -72,7 +71,7 @@ public class SelectionHandler
     private static final Logger LOGGER = Logger.getLogger(SelectionHandler.class);
 
     /** The my command to processor map. */
-    private final Map<SelectionCommand, List<WeakReference<SelectionCommandProcessor>>> myCommandToProcessorMap;
+    private final EnumMap<SelectionCommand, List<WeakReference<SelectionCommandProcessor>>> myCommandToProcessorMap;
 
     /** The data group controller. */
     private final DataGroupController myDataGroupController;
@@ -214,11 +213,9 @@ public class SelectionHandler
     {
         myDataTypeController = pTypeController;
         myExecutor = Executors.newFixedThreadPool(1, new NamedThreadFactory("SelectionHandler:Dispatch", 3, 4));
-        myCommandToProcessorMap = new HashMap<>();
-
+        myCommandToProcessorMap = new EnumMap<>(SelectionCommand.class);
         myToolbox = tb;
         myDataGroupController = dataGroupController;
-
         myQueryRegionManager = queryRegionManager;
         myDataElementCache = dataElementCache;
         myDataElementUpdateUtils = dataElementUpdateUtils;
@@ -249,6 +246,16 @@ public class SelectionHandler
     }
 
     /**
+     * Set the last geometry.
+     *
+     * @param lastGeometry
+     */
+    public void setLastGeometry(Geometry lastGeometry)
+    {
+        myLastGeometry = lastGeometry;
+    }
+
+    /**
      * Install the selection handler.
      *
      * @param tb the {@link Toolbox}
@@ -264,7 +271,6 @@ public class SelectionHandler
                 myGeometryContextMenuProvider);
         actionManager.registerContextMenuItemProvider(ContextIdentifiers.ROI_CONTEXT, MultiGeometryContextKey.class,
                 myMultiGeometryContextMenuProvider);
-
     }
 
     /**
@@ -283,7 +289,6 @@ public class SelectionHandler
                 scpList = new LinkedList<>();
                 myCommandToProcessorMap.put(command, scpList);
             }
-
             // Make sure we don't already have this processor in our set, remove
             // any garbage collected listeners from the set.
             Iterator<WeakReference<SelectionCommandProcessor>> wrItr = scpList.iterator();
@@ -303,7 +308,6 @@ public class SelectionHandler
                     found = true;
                 }
             }
-
             // If we didn't find it in the set already add it.
             if (!found)
             {
@@ -409,14 +413,12 @@ public class SelectionHandler
     private void handleCommand(String act)
     {
         assert EventQueue.isDispatchThread();
-
         destroyPreview();
         SelectionCommand cmd = selectionCommand(act);
         if (cmd == null)
         {
             return;
         }
-
         if (myLastGeometry == null)
         {
             if (cmd == SelectionCommand.CREATE_BUFFER_REGION)
@@ -428,7 +430,6 @@ public class SelectionHandler
                 doPurgeCheck(cmd, null);
             }
         }
-
         if (cmd == SelectionCommand.CREATE_BUFFER_REGION)
         {
             if (myLastGeometry instanceof PolylineGeometry && !(myLastGeometry instanceof PolygonGeometry))
@@ -477,7 +478,7 @@ public class SelectionHandler
     /**
      * Creates the buffer region for last selection geometry.
      */
-    protected void createBuffer()
+    public void createBuffer()
     {
         UnitsProvider<Length> uProv = myToolbox.getUnitsRegistry().getUnitsProvider(Length.class);
         Length defaultBuffer = defaultBuffer(uProv);
@@ -559,11 +560,9 @@ public class SelectionHandler
     protected Geometry getCompleteGeometryGroup(Geometry pGeometry)
     {
         DataTypeInfo dataType = myDataTypeController.getDataTypeInfoForGeometryId(pGeometry.getDataModelId());
-
         if (dataType != null)
         {
             MapDataElementTransformer transformer = myDataTypeController.getTransformerForType(dataType.getTypeKey());
-
             GeometryGroupGeometry.Builder builder = new GeometryGroupGeometry.Builder(GeographicPosition.class);
             builder.setInitialGeometries(myToolbox.getGeometryRegistry()
                     .getGeometriesForSource(transformer, PolylineGeometry.class).stream().collect(Collectors.toList()));
@@ -695,12 +694,10 @@ public class SelectionHandler
             errorPopup("Buffer Region Failure", "Failed to create buffer region for this item.");
             return;
         }
-
         myPreviewGeometry = myLastGeometry;
         registerGeometry(myPreviewGeometry);
         ActionContext<GeometryContextKey> context = myToolbox.getUIRegistry().getContextActionManager()
                 .getActionContext(ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT, GeometryContextKey.class);
-
         Frame mainFrame = myToolbox.getUIRegistry().getMainFrameProvider().get();
         SwingUtilities.convertPointFromScreen(pt, mainFrame);
         context.doAction(new GeometryContextKey(myPreviewGeometry), mainFrame, pt.x, pt.y, new PreviewKiller());
@@ -848,7 +845,7 @@ public class SelectionHandler
 
     /**
      * Gets menu items for geometry.
-     * 
+     *
      * @param geom the geometry
      * @return menu items
      */
@@ -881,11 +878,12 @@ public class SelectionHandler
         }
         return menuItems;
     }
-    
+
     /**
      * Gets menu when you have multiple geometries.
+     *
      * @param geometries the geometries
-     * @return menuItems the menu 
+     * @return menuItems the menu
      */
     public List<JMenuItem> getMultiGeometryMenu(Collection<? extends Geometry> geometries)
     {
