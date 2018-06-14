@@ -39,9 +39,11 @@
 	},
 	"aggs": {
 		"bins": {
-			"terms": {
-				"field": "blah.keyword",
-				"size": 10000,
+			"histogram": {
+				"field": "blah",
+				"min_doc_count": 1,
+				"interval": 10,
+				"offset": 0,
 				"missing": 1000000000000000000
 			}
 		}
