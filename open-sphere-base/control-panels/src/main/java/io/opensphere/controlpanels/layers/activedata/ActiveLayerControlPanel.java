@@ -20,7 +20,6 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JScrollPane;
 
 import io.opensphere.controlpanels.ControlPanelToolbox;
 import io.opensphere.controlpanels.event.AnimationChangeExtentRequestEvent;
@@ -817,9 +816,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
                     && !MapVisualizationType.TERRAIN_TILE.equals(dti.getMapVisualizationInfo().getVisualizationType()))
             {
                 MiniStylePanel miniStylePanel = new MiniStylePanel(getToolbox(), dgi, dti);
-                JScrollPane scroller = new JScrollPane(miniStylePanel);
-
-                myMiniStyleBox.add(scroller);
+                myMiniStyleBox.add(miniStylePanel);
             }
             else
             {
