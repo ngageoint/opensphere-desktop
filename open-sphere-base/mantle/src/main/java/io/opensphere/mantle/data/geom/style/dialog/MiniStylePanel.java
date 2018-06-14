@@ -97,8 +97,12 @@ public class MiniStylePanel extends JPanel
     /** The Type panels. */
     private final List<MiniStyleTypePanel> myTypePanels;
 
+    /** Internal JPanel that holds MiniStyleTypePanels. */
     private final JPanel myInternalPanel;
 
+    /**
+     * Scroll pane allowing scroll on {@link #myInternalPanel} (can be null).
+     */
     private JScrollPane myScrollPane;
 
     /**
