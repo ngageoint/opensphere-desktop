@@ -9,6 +9,7 @@ import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.renderproperties.BaseRenderProperties;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.data.MapVisualizationType;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 import io.opensphere.mantle.data.element.VisualizationState;
 import io.opensphere.mantle.data.geom.factory.RenderPropertyPool;
@@ -114,6 +115,68 @@ public abstract class AbstractChainedFeatureVisualizationStyle extends AbstractF
                 ? getPrevious().getAlteredRenderProperty(changedParameterKeyToParameterMap, dti, vs, defaultVS, mdp, orig)
                 : super.getAlteredRenderProperty(changedParameterKeyToParameterMap, dti, vs, defaultVS, mdp, orig);
     }
+
+    @Override
+    public Set<VisualizationStyleParameter> getAlwaysSaveParameters()
+    {
+        // TODO
+        return hasPrevious() ? getPrevious().getAlwaysSaveParameters() : super.getAlwaysSaveParameters();
+    }
+
+    @Override
+    public Set<MapVisualizationType> getRequiredMapVisTypes()
+    {
+        Set<MapVisualizationType> myVisTypes = super.getRequiredMapVisTypes();
+        if (hasPrevious())
+        {
+            myVisTypes.addAll(getPrevious().getRequiredMapVisTypes());
+        }
+        return myVisTypes;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This style is sensitive if any chained styles are sensitive.
+     */
+    @Override
+    public boolean isSelectionSensitiveStyle()
+    {
+        return hasPrevious() && getPrevious().isSelectionSensitiveStyle();
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This style requires meta data if any chained styles do.
+     */
+    @Override
+    public boolean requiresMetaData()
+    {
+        return hasPrevious() && getPrevious().requiresMetaData();
+    }
+
+    @Override
+    public Object getStyleParameterValue(String paramKey)
+    {
+        VisualizationStyleParameter parameter = getStyleParameter(paramKey);
+
+        if (parameter == null)
+        {
+            return hasPrevious() ? getPrevious().getStyleParameterValue(paramKey) : null;
+        }
+
+        return parameter.getValue();
+    }
+
+    @Override
+    public boolean supportsLabels()
+    {
+        return hasPrevious() && getPrevious().supportsLabels();
+    }
+
+    @Override
+    public abstract VisualizationStyleParameter getStyleParameter(String paramKey);
 
     /**
      * Modifies the geometry created by the previous VisualizationStyle in the
