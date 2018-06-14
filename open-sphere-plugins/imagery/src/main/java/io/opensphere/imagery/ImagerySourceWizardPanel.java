@@ -563,7 +563,7 @@ public class ImagerySourceWizardPanel
 
         JLabel warningLabel1 = new JLabel("Warning: Very slow performance may result from files larger than 1 GB   ");
         warningLabel1.setForeground(Color.yellow);
-        warningPanel.add(warningLabel1, BorderLayout.WEST);
+        warningPanel.add(warningLabel1, BorderLayout.NORTH);
 
         JPanel compositePanel = new JPanel(new BorderLayout());
 
@@ -572,12 +572,6 @@ public class ImagerySourceWizardPanel
         warnBtPanel.add(warningPanel, BorderLayout.CENTER);
         warnBtPanel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
         compositePanel.add(warnBtPanel, BorderLayout.CENTER);
-
-        JButton warnDetailsBt = new JButton("Details");
-        warnDetailsBt.setForeground(Color.yellow);
-        warnDetailsBt.setMargin(new Insets(5, 3, 5, 3));
-        warnDetailsBt.setFocusable(false);
-        warningPanel.add(warnDetailsBt, BorderLayout.CENTER);
 
         myFileInfoPanel.setLayout(new BorderLayout());
         myFileInfoPanel.add(topLabel, BorderLayout.NORTH);
