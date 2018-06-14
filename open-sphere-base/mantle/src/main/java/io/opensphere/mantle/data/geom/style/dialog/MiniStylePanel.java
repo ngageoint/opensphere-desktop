@@ -234,22 +234,31 @@ public class MiniStylePanel extends JPanel
         /** you know what this is for */
         private static final long serialVersionUID = 1L;
 
+        /** Height of JScrollPane viewport. */
+        private static final int MAX_HEIGHT = 300;
+
+        /** Number of pixels per scrollable unit; scrollbar arrows. */
+        private static final int SCROLL_INCREMENT_PX = 25;
+
+        /** Number of pixels per block unit; scrollbar anchor & mouse wheel. */
+        private static final int BLOCK_INCREMENT_PX = 50;
+
         @Override
         public Dimension getPreferredScrollableViewportSize()
         {
-            return new Dimension(getPreferredSize().width, 300);
+            return new Dimension(getPreferredSize().width, MAX_HEIGHT);
         }
 
         @Override
         public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction)
         {
-            return 25;
+            return SCROLL_INCREMENT_PX;
         }
 
         @Override
         public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction)
         {
-            return 50;
+            return BLOCK_INCREMENT_PX;
         }
 
         @Override
