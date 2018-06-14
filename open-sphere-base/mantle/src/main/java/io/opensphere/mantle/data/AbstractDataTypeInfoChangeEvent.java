@@ -65,7 +65,7 @@ public abstract class AbstractDataTypeInfoChangeEvent extends AbstractSingleStat
      */
     public String getDataTypeKey()
     {
-        return myDataTypeInfo.getTypeKey();
+        return myDataTypeInfo != null ? myDataTypeInfo.getTypeKey() : null;
     }
 
     @Override
