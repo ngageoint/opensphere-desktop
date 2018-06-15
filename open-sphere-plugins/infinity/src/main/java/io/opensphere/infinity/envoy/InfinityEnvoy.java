@@ -231,7 +231,7 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
         if (parameters.getBinField() != null)
         {
             final long largeValue = 1000000000000000000L;
-            request.setAggs(new Aggs(parameters.getBinField() + ".keyword", 10000, largeValue));
+            request.setAggs(new Aggs(parameters.getBinField().toLowerCase() + ".keyword", 10000, largeValue));
         }
         return request;
     }

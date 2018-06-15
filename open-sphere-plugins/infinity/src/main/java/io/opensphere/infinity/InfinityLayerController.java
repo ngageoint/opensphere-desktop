@@ -179,7 +179,7 @@ public class InfinityLayerController extends EventListenerService
      */
     private void updateLayerCount(TimeSpan activeSpan)
     {
-        if (myLastActiveTime == null)
+        if (myLastActiveTime == null || myLastActiveTime.isZero())
         {
             myLastActiveTime = activeSpan != null ? activeSpan : myToolbox.getTimeManager().getPrimaryActiveTimeSpans().get(0);
         }

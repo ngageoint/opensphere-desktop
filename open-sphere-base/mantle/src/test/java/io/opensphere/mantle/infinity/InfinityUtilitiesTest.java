@@ -1,11 +1,10 @@
-package io.opensphere.infinity.util;
+package io.opensphere.mantle.infinity;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
-import io.opensphere.mantle.infinity.InfinityUtilities;
 
 /** Tests for {@link InfinityUtilities}. */
 public class InfinityUtilitiesTest

@@ -4,9 +4,8 @@ import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
 import com.vividsolutions.jts.geom.Geometry;
 
-import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.GeographicBoundingBox;
-import io.opensphere.core.util.jts.JTSUtilities;
+import io.opensphere.core.model.LatLonAlt;
 
 /** Elasticsearch bounding box JSON bean. */
 @JsonPropertyOrder({ "bottom_right", "top_left" })
@@ -32,8 +31,7 @@ public class BoundingBox
      */
     public BoundingBox(Geometry geometry)
     {
-        GeographicBoundingBox queryBbox = GeographicBoundingBox.getMinimumBoundingBoxLLA(
-                JTSUtilities.convertToLatLonAlt(geometry.getCoordinates(), Altitude.ReferenceLevel.ELLIPSOID));
+        GeographicBoundingBox queryBbox = getMinimumBoundingBoxLLA(geometry.getCoordinates());
         myBottomRight = new Coordinate(queryBbox.getLowerRight());
         myTopLeft = new Coordinate(queryBbox.getUpperLeft());
     }
@@ -76,5 +74,35 @@ public class BoundingBox
     public void setTop_left(Coordinate topLeft)
     {
         myTopLeft = topLeft;
+    }
+
+    /**
+     * Get the smallest bounding box which contains all of the coordinates.
+     *
+     * @param coordinates The coordinates which must be contained in the box.
+     * @return The smallest bounding box which contains all of the coordinates.
+     */
+    static GeographicBoundingBox getMinimumBoundingBoxLLA(com.vividsolutions.jts.geom.Coordinate[] coordinates)
+    {
+        double minLat = Double.MAX_VALUE;
+        double maxLat = -Double.MAX_VALUE;
+
+        double minLon = Double.MAX_VALUE;
+        double maxLon = -Double.MAX_VALUE;
+
+        for (com.vividsolutions.jts.geom.Coordinate coord : coordinates)
+        {
+            double latD = coord.y;
+            minLat = Math.min(minLat, latD);
+            maxLat = Math.max(maxLat, latD);
+
+            double lonD = coord.x;
+            minLon = Math.min(minLon, lonD);
+            maxLon = Math.max(maxLon, lonD);
+        }
+
+        GeographicBoundingBox bbox = new GeographicBoundingBox(LatLonAlt.createFromDegrees(minLat, minLon),
+                LatLonAlt.createFromDegrees(maxLat, maxLon));
+        return bbox;
     }
 }
