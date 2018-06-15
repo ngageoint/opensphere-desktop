@@ -18,8 +18,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import org.apache.log4j.Logger;
 
@@ -202,8 +202,12 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         // maximum
         if (rowList.size() < maxBoxes)
         {
-            JLabel label = new JLabel("Click the plus button to add labels.");
+            JTextArea label = new JTextArea();
+            label.setEditable(false);
+            label.setLineWrap(true);
+            label.setWrapStyleWord(true);
             label.setFont(label.getFont().deriveFont(Font.ITALIC));
+            label.setText(String.format("Click the plus button to add labels to a maximum of %d.", Integer.valueOf(maxBoxes)));
 
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));

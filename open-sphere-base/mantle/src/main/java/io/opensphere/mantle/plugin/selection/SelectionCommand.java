@@ -19,43 +19,30 @@ public enum SelectionCommand
 {
     /** ADD_FEATURES. */
     ADD_FEATURES("Add Features", "Add features in region for active data types"),
-
     /** ADD_FEATURES_CURRENT_FRAME. */
     ADD_FEATURES_CURRENT_FRAME("Add Features Current Frame",
             "Add features in region for active data types current time frame only"),
-
     /** The CANCEL_QUERY. */
     CANCEL_QUERY("Cancel Query", "Cancel query from retrieving any more feature data"),
-
     /** Buffer Line. */
     CREATE_BUFFER_REGION("Create Buffer Region",
             "Create a polygon that buffers an item which can then be used for queries, selections, etc."),
-
     /** Buffer Line. */
     CREATE_BUFFER_REGION_FOR_SELECTED_SEGMENT("Create Buffer Region For Selected Segment",
             "Create a polygon that buffers the selected line segment, which can be used for queries, selections, etc."),
-
     /** DESELECT. */
     DESELECT("Deselect All Features", "Deselect all features in region"),
-
     /** The LOAD_FEATURES. */
     LOAD_FEATURES("Load Features", "Clear all loaded features and load new features in region for active data types"),
-
     /** The LOAD_FEATURES_CURRENT_FRAMEe. */
     LOAD_FEATURES_CURRENT_FRAME("Load Features Current Frame",
             "Clear all loaded features and load new features in region for active data types current time frame only"),
-
     /** PURGE. */
     PURGE("Purge area", "Purge all features in region"),
-
     /** SELECT. */
     SELECT("Select", "Select features in region"),
-
     /** SELECT_EXCLUSIVE. */
-    SELECT_EXCLUSIVE("Select Exclusive", "Select features in region, deselect all other features"),
-
-    ;
-
+    SELECT_EXCLUSIVE("Select Exclusive", "Select features in region, deselect all other features");
     /** The Constant FILTERS_ACTIVE. */
     private static final String FILTERS_ACTIVE = " (Filters Active)";
 
@@ -106,9 +93,7 @@ public enum SelectionCommand
     {
         List<JMenuItem> menuItems = new ArrayList<>();
         menuItems.add(ADD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
-//        menuItems.add(ADD_FEATURES_CURRENT_FRAME.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
         menuItems.add(LOAD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
-//        menuItems.add(LOAD_FEATURES_CURRENT_FRAME.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
         JMenu selectionMU = new JMenu("Selection");
         selectionMU.add(SELECT.createMenuItem(listener));
         selectionMU.add(SELECT_EXCLUSIVE.createMenuItem(listener));
@@ -149,9 +134,7 @@ public enum SelectionCommand
     {
         List<JMenuItem> menuItems = new ArrayList<>();
         menuItems.add(ADD_FEATURES.createMenuItem(al, hasFilters ? FILTERS_ACTIVE : null));
-//        menuItems.add(ADD_FEATURES_CURRENT_FRAME.createMenuItem(al, hasFilters ? FILTERS_ACTIVE : null));
         menuItems.add(LOAD_FEATURES.createMenuItem(al, hasFilters ? FILTERS_ACTIVE : null));
-//        menuItems.add(LOAD_FEATURES_CURRENT_FRAME.createMenuItem(al, hasFilters ? FILTERS_ACTIVE : null));
         JMenu selectionMU = new JMenu("Selection");
         selectionMU.add(SELECT.createMenuItem(al));
         selectionMU.add(SELECT_EXCLUSIVE.createMenuItem(al));
@@ -173,15 +156,11 @@ public enum SelectionCommand
     public static List<JMenuItem> getRoiMenuItems(ActionListener listener, boolean hasFilters)
     {
         List<JMenuItem> menuOpts = New.list();
-
         menuOpts.add(LOAD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
-//        menuOpts.add(LOAD_FEATURES_CURRENT_FRAME.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
         menuOpts.add(ADD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
-//        menuOpts.add(ADD_FEATURES_CURRENT_FRAME.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
         menuOpts.add(PURGE.createMenuItem(listener));
         menuOpts.add(SELECT.createMenuItem(listener));
         menuOpts.add(DESELECT.createMenuItem(listener));
-
         return menuOpts;
     }
 
@@ -195,12 +174,8 @@ public enum SelectionCommand
     public static List<JMenuItem> getSelectionRegionMenuItems(ActionListener listener, boolean hasFilters)
     {
         List<JMenuItem> menuOpts = New.list();
-
         menuOpts.add(ADD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
-//        menuOpts.add(ADD_FEATURES_CURRENT_FRAME.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
         menuOpts.add(LOAD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
-//        menuOpts.add(LOAD_FEATURES_CURRENT_FRAME.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
-
         JMenu selectionMU = new JMenu("Selection");
         selectionMU.add(SELECT.createMenuItem(listener));
         selectionMU.add(SELECT_EXCLUSIVE.createMenuItem(listener));

@@ -236,6 +236,10 @@ public class CSVFileHandler extends AbstractDataSourceHandler
         }
         if (dep.hadError())
         {
+            //Imported File is not usable.  Remove source from CSVFileDataSourceController so
+            //source name can be used again.
+            controller.removeSource(csvFileSource, false, null);
+
             StringBuilder sb = new StringBuilder();
             sb.append("Errors encountered loading CSV File ").append(csvFileSource.getSourceUri());
             if (dep.getErrorMessages() != null && !dep.getErrorMessages().isEmpty())

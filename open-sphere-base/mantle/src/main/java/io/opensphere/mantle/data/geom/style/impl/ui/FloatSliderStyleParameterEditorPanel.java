@@ -10,7 +10,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -46,8 +46,8 @@ public class FloatSliderStyleParameterEditorPanel extends AbstractStyleParameter
     /** The Slider. */
     private final JSlider mySlider;
 
-    /** The Slider panel. */
-    private final JPanel mySliderPanel;
+    /** The Slider container. */
+    private final JComponent mySliderContainer;
 
     /** The Text entry. */
     private final boolean myTextEntry;
@@ -116,40 +116,40 @@ public class FloatSliderStyleParameterEditorPanel extends AbstractStyleParameter
         myTextField.addActionListener(this);
         myTextField.setMinimumSize(new Dimension(80, 20));
 
-        Box aBox = Box.createHorizontalBox();
+        // Construct the container for the slider & siblings.
+        mySliderContainer = Box.createHorizontalBox();
         Component c = getPrefixComponent(myPanelBuilder);
         if (c != null)
         {
-            aBox.add(c);
+            mySliderContainer.add(c);
         }
-        mySliderPanel = new JPanel();
-        mySliderPanel.setLayout(new BoxLayout(mySliderPanel, BoxLayout.X_AXIS));
-        mySliderPanel.add(Box.createHorizontalStrut(5));
 
+        mySliderContainer.add(Box.createHorizontalStrut(5));
+
+        Component subPanel;
         if (myTextEntry)
         {
-            JPanel subPanel = new JPanel(new GridLayout(1, 2, 5, 0));
-            subPanel.add(mySlider);
-            subPanel.add(myTextField);
-            mySliderPanel.add(subPanel);
-            mySliderPanel.add(Box.createHorizontalStrut(5));
-
-            if (myConvertor.getUnit() != null)
-            {
-                mySliderPanel.add(myValueLabel);
-            }
+            subPanel = new JPanel(new GridLayout(1, 2, 5, 0));
+            ((JPanel)subPanel).add(mySlider);
+            ((JPanel)subPanel).add(myTextField);
         }
         else
         {
-            mySliderPanel.add(mySlider);
-            mySliderPanel.add(Box.createHorizontalStrut(5));
-            mySliderPanel.add(myValueLabel);
+            subPanel = mySlider;
         }
-        mySliderPanel.add(Box.createHorizontalGlue());
-        aBox.add(mySliderPanel);
+
+        mySliderContainer.add(subPanel);
+        mySliderContainer.add(Box.createHorizontalStrut(5));
+
+        if (!myTextEntry || myConvertor.getUnit() != null)
+        {
+            mySliderContainer.add(myValueLabel);
+        }
+
+        mySliderContainer.add(Box.createHorizontalGlue());
 
         myControlPanel.setLayout(new BorderLayout());
-        myControlPanel.add(aBox, BorderLayout.CENTER);
+        myControlPanel.add(mySliderContainer, BorderLayout.CENTER);
         mySlider.addChangeListener(this);
         myTimer = new Timer(300, this);
         myTimer.setRepeats(false);
@@ -249,9 +249,9 @@ public class FloatSliderStyleParameterEditorPanel extends AbstractStyleParameter
      *
      * @return the slider panel
      */
-    protected JPanel getSliderPanel()
+    protected JComponent getSliderPanel()
     {
-        return mySliderPanel;
+        return mySliderContainer;
     }
 
     /**

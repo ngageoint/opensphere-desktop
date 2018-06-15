@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.Icon;
@@ -185,8 +186,26 @@ public class GenericFontIcon implements Icon, FontIcon
     @Override
     public void paintIcon(Component pC, Graphics pG, int pX, int pY)
     {
-        createBufferIfNull();
-        pG.drawImage(myBuffer, pX, pY, null);
+        if (pG instanceof Graphics2D)
+        {
+            ((Graphics2D)pG).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        }
+        Font originalFont = pG.getFont();
+        double centerY = pC.getHeight() / 2;
+
+        pG.setFont(myFont.deriveFont(Font.PLAIN, getSize()));
+
+        Rectangle2D stringBounds = pG.getFontMetrics().getStringBounds(myIcon.getFontCode(), pG);
+        int characterWidth = (int)stringBounds.getWidth();
+        int characterHeight = (int)stringBounds.getHeight();
+
+        // make sure that things are centered:
+        double xpos = pX + centerY - characterWidth / 2 - 3;
+        double ypos = centerY + characterHeight / 2 - 1;
+
+        pG.setColor(getColor());
+        pG.drawString(myIcon.getFontCode(), (int)xpos, (int)ypos);
+        pG.setFont(originalFont);
     }
 
     /**
@@ -297,7 +316,7 @@ public class GenericFontIcon implements Icon, FontIcon
      */
     public int getYPos()
     {
-        return myYPos == null ? mySize - (mySize / 4) + (mySize / 16) : myYPos.intValue();
+        return myYPos == null ? mySize - mySize / 4 + mySize / 16 : myYPos.intValue();
     }
 
     /**

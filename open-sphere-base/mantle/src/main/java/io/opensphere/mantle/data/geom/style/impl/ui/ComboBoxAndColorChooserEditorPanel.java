@@ -7,7 +7,6 @@ import java.util.Collection;
 
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import com.bric.swing.ColorPicker;
@@ -24,14 +23,14 @@ public class ComboBoxAndColorChooserEditorPanel extends ComboBoxStyleParameterEd
     /** serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /** The Color. */
-    private Color myColor;
-
-    /** The Slider. */
-    private final JButton myColorChooserBT;
-
     /** The Second parameter. */
     private final String mySecondParameterKey;
+
+    /** The color chooser button. */
+    private final JButton myColorChooserButton;
+
+    /** The Color. */
+    private Color myColor;
 
     /**
      * Instantiates a new abstract style parameter editor panel.
@@ -55,23 +54,26 @@ public class ComboBoxAndColorChooserEditorPanel extends ComboBoxStyleParameterEd
         mySecondParameterKey = colorChooserParamKey;
 
         myColor = getColorParameterValue();
-        myColorChooserBT = new JButton(new ColorCircleIcon(myColor));
-        myColorChooserBT.setMaximumSize(new Dimension(25, 20));
-        myColorChooserBT.addActionListener(this);
+        myColorChooserButton = new JButton(new ColorCircleIcon(myColor));
+        myColorChooserButton.setMaximumSize(new Dimension(25, 20));
+        myColorChooserButton.addActionListener(this);
+
+        myComboBoxPanel.add(Box.createHorizontalStrut(5), 1);
+        myComboBoxPanel.add(myColorChooserButton, 2);
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
         super.actionPerformed(e);
-        if (e.getSource() == myColorChooserBT)
+        if (e.getSource() == myColorChooserButton)
         {
             Color c = ColorPicker.showDialog(SwingUtilities.getWindowAncestor(this), "Select Color",
-                    ((ColorCircleIcon)myColorChooserBT.getIcon()).getColor(), true);
+                    ((ColorCircleIcon)myColorChooserButton.getIcon()).getColor(), true);
             if (c != null)
             {
                 myColor = c;
-                myColorChooserBT.setIcon(new ColorCircleIcon(myColor));
+                myColorChooserButton.setIcon(new ColorCircleIcon(myColor));
                 myStyle.setParameter(mySecondParameterKey, myColor, this);
             }
         }
@@ -86,15 +88,8 @@ public class ComboBoxAndColorChooserEditorPanel extends ComboBoxStyleParameterEd
         if (!cValue.equals(myColor))
         {
             myColor = cValue;
-            EventQueueUtilities.runOnEDT(() -> myColorChooserBT.setIcon(new ColorCircleIcon(myColor)));
+            EventQueueUtilities.runOnEDT(() -> myColorChooserButton.setIcon(new ColorCircleIcon(myColor)));
         }
-    }
-
-    @Override
-    protected void addOtherComponents(JPanel cbPanel)
-    {
-        cbPanel.add(Box.createHorizontalStrut(5));
-        cbPanel.add(myColorChooserBT);
     }
 
     /**

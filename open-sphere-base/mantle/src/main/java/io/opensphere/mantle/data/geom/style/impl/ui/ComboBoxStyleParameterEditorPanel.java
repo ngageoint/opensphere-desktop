@@ -2,7 +2,6 @@ package io.opensphere.mantle.data.geom.style.impl.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
@@ -13,9 +12,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.EventQueueUtilities;
@@ -40,7 +38,7 @@ public class ComboBoxStyleParameterEditorPanel extends AbstractStyleParameterEdi
     private final JComboBox<OptionProxy<Object>> myComboBox;
 
     /** The Combo box panel. */
-    private JPanel myComboBoxPanel;
+    protected final JComponent myComboBoxPanel;
 
     /** The Options. */
     @SuppressWarnings("PMD.SingularField")
@@ -64,6 +62,7 @@ public class ComboBoxStyleParameterEditorPanel extends AbstractStyleParameterEdi
 
         myChoiceToProxyMap = New.map();
         myOptions = convertAndSortList(myChoiceToProxyMap, options, numericChoices, noneOption);
+
         myComboBox = new JComboBox<>(new ListComboBoxModel<>(myOptions));
         myComboBox.setSelectedItem(myChoiceToProxyMap.get(getParamValue()));
         Color cbBackground = getComboboxBackgroundFromBuilder(label);
@@ -71,6 +70,17 @@ public class ComboBoxStyleParameterEditorPanel extends AbstractStyleParameterEdi
         {
             myComboBox.setBackground(cbBackground);
         }
+
+        myComboBoxPanel = Box.createHorizontalBox();
+        myComboBoxPanel.add(myComboBox);
+        myComboBoxPanel.add(Box.createHorizontalGlue());
+
+        myControlPanel.setLayout(new BorderLayout());
+        myControlPanel.add(myComboBoxPanel, BorderLayout.CENTER);
+
+        myComboBox.addActionListener(this);
+
+        showMessage(getParamValue());
     }
 
     @SuppressWarnings("unchecked")
@@ -83,30 +93,6 @@ public class ComboBoxStyleParameterEditorPanel extends AbstractStyleParameterEdi
             setParamValue(option);
             showMessage(option);
         }
-    }
-
-    @Override
-    public void addNotify()
-    {
-        super.addNotify();
-
-        myComboBoxPanel = new JPanel();
-        myComboBoxPanel.setLayout(new BoxLayout(myComboBoxPanel, BoxLayout.X_AXIS));
-        myComboBoxPanel.add(myComboBox);
-        addOtherComponents(myComboBoxPanel);
-        myComboBoxPanel.add(Box.createHorizontalGlue());
-
-        myControlPanel.setLayout(new BorderLayout());
-        myControlPanel.add(myComboBoxPanel, BorderLayout.CENTER);
-
-        myComboBox.addActionListener(this);
-
-        int panelHeight = getPanelHeightFromBuilder();
-        setSize(new Dimension(80, panelHeight));
-        setMinimumSize(new Dimension(80, panelHeight));
-        setPreferredSize(new Dimension(80, panelHeight));
-        setMaximumSize(new Dimension(1200, panelHeight));
-        showMessage(getParamValue());
     }
 
     /**
@@ -134,15 +120,6 @@ public class ComboBoxStyleParameterEditorPanel extends AbstractStyleParameterEdi
                 showMessage(pVal);
             });
         }
-    }
-
-    /**
-     * Adds the other components.
-     *
-     * @param cbPanel the cb panel
-     */
-    protected void addOtherComponents(JPanel cbPanel)
-    {
     }
 
     /**
