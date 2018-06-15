@@ -19,7 +19,7 @@ public class ColumnFunction
     private final Function<Object[], Object> myFunction;
 
     /** String representation of {@link #getValue(Object...)}. */
-    private String myValueAsString;
+    protected String myValueAsString;
 
     /**
      * Constructs a ColumnFunction against any number of columns

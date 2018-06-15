@@ -1,15 +1,17 @@
 package io.opensphere.featureactions.style;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.AbstractRenderableGeometry;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.featureactions.model.StyleAction;
+import io.opensphere.featureactions.model.Action;
 import io.opensphere.mantle.data.MapVisualizationStyleCategory;
 import io.opensphere.mantle.data.VisualizationSupport;
+import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.geom.factory.RenderPropertyPool;
 import io.opensphere.mantle.data.geom.style.FeatureIndividualGeometryBuilderData;
 import io.opensphere.mantle.data.geom.style.VisualizationStyle;
@@ -20,7 +22,7 @@ import io.opensphere.mantle.data.geom.style.impl.AbstractChainedFeatureVisualiza
 public class FeatureActionVisualizationStyle extends AbstractChainedFeatureVisualizationStyle
 {
     /** List of feature actions. */
-    private final List<StyleAction> myFeatureActions = New.list();
+    private final Map<Action, List<? extends MapDataElement>> myFeatureActions = New.map();
 
     /**
      *
@@ -102,11 +104,11 @@ public class FeatureActionVisualizationStyle extends AbstractChainedFeatureVisua
 
     /**
      *
-     * @param featureActions
+     * @param featureAction
+     * @param elements
      */
-    public void setFeatureActions(List<StyleAction> featureActions)
+    public void setFeatureActions(Action featureAction, List<MapDataElement> elements)
     {
-        myFeatureActions.clear();
-        myFeatureActions.addAll(featureActions);
+        myFeatureActions.put(featureAction, elements);
     }
 }

@@ -210,8 +210,7 @@ public class StyleApplier implements ActionApplier
                 .getTransformerForType(dataType.getTypeKey());
         if (transformer instanceof StyleMapDataElementTransformer)
         {
-            StyleMapDataElementTransformer styleTransformer = (StyleMapDataElementTransformer)transformer;
-            processor = styleTransformer.getGeometryProcessor();
+            processor = ((StyleMapDataElementTransformer)transformer).getGeometryProcessor();
         }
         return processor;
     }

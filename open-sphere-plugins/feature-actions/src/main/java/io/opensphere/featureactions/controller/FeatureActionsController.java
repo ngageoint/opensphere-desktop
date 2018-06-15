@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -26,7 +25,6 @@ import io.opensphere.core.util.ThreadConfined;
 import io.opensphere.core.util.XMLUtilities;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.concurrent.CommonTimer;
 import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.featureactions.model.Action;
 import io.opensphere.featureactions.model.FeatureAction;
@@ -36,13 +34,9 @@ import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.event.impl.DataElementsAddedEvent;
 import io.opensphere.mantle.controller.event.impl.DataElementsRemovedEvent;
 import io.opensphere.mantle.data.DataTypeInfo;
-import io.opensphere.mantle.data.VisualizationSupport;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.element.mdfilter.impl.DataFilterEvaluator;
-import io.opensphere.mantle.data.geom.style.VisualizationStyle;
-import io.opensphere.mantle.data.geom.style.VisualizationStyleDatatypeChangeEvent;
-import io.opensphere.mantle.data.geom.style.VisualizationStyleRegistry.VisualizationStyleRegistryChangeListener;
 import io.opensphere.mantle.data.geom.style.config.v1.DataTypeStyleConfig;
 import io.opensphere.mantle.data.geom.style.config.v1.StyleManagerConfig;
 import io.opensphere.mantle.data.geom.style.dialog.StyleManagerController;
@@ -61,7 +55,7 @@ public class FeatureActionsController extends EventListenerService
     private final ExecutorService myExecutor = ThreadUtilities.newTerminatingFixedThreadPool("FeatureActionsController", 1);
 
     /** Executor used to handle style registry changes. */
-    private final transient Executor myProcrastinatingExecutor = CommonTimer.createProcrastinatingExecutor(200);
+//    private final transient Executor myProcrastinatingExecutor = CommonTimer.createProcrastinatingExecutor(200);
 
     /** The mantle toolbox. */
     private final MantleToolbox myMantleToolbox;
@@ -79,7 +73,7 @@ public class FeatureActionsController extends EventListenerService
     private final Map<String, DataTypeStyleConfig> myTypeKeysAndStyles = New.map();
 
     /** The style registry listener. */
-    private final VisualizationStyleRegistryChangeListener myStyleRegistryListener;
+//    private final VisualizationStyleRegistryChangeListener myStyleRegistryListener;
 
     /**
      * Constructor.
@@ -101,36 +95,37 @@ public class FeatureActionsController extends EventListenerService
         addService(myPrefs.getPreferences(StyleManagerController.class).getListenerService(Preferences.ALL_KEY,
                 this::handleStyleChange));
 
-        /* This is needed because handleStyleChange() doesn't handle when 'Enable Custom Style' is checked. */
-        myStyleRegistryListener = new VisualizationStyleRegistryChangeListener()
-        {
-            @Override
-            public void visualizationStyleInstalled(Class<? extends VisualizationStyle> styleClass, Object source)
-            {
-            }
-
-            @Override
-            public void visualizationStyleDatatypeChanged(VisualizationStyleDatatypeChangeEvent evt)
-            {
-                if (!evt.isNewIsDefaultStyle())
-                {
-                    myProcrastinatingExecutor.execute(() -> handleModelChange(evt.getDTIKey()));
-                }
-            }
-
-            @Override
-            public void defaultStyleChanged(Class<? extends VisualizationSupport> mgsClass,
-                    Class<? extends VisualizationStyle> styleClass, Object source)
-            {
-            }
-        };
+        /* This is needed because handleStyleChange() doesn't handle when
+         * 'Enable Custom Style' is checked. */
+//        myStyleRegistryListener = new VisualizationStyleRegistryChangeListener()
+//        {
+//            @Override
+//            public void visualizationStyleInstalled(Class<? extends VisualizationStyle> styleClass, Object source)
+//            {
+//            }
+//
+//            @Override
+//            public void visualizationStyleDatatypeChanged(VisualizationStyleDatatypeChangeEvent evt)
+//            {
+//                if (!evt.isNewIsDefaultStyle())
+//                {
+//                    myProcrastinatingExecutor.execute(() -> handleModelChange(evt.getDTIKey()));
+//                }
+//            }
+//
+//            @Override
+//            public void defaultStyleChanged(Class<? extends VisualizationSupport> mgsClass,
+//                    Class<? extends VisualizationStyle> styleClass, Object source)
+//            {
+//            }
+//        };
     }
 
     @Override
     public void open()
     {
         super.open();
-        myMantleToolbox.getVisualizationStyleRegistry().addVisualizationStyleRegistryChangeListener(myStyleRegistryListener);
+//        myMantleToolbox.getVisualizationStyleRegistry().addVisualizationStyleRegistryChangeListener(myStyleRegistryListener);
     }
 
     /**
@@ -151,7 +146,8 @@ public class FeatureActionsController extends EventListenerService
     }
 
     /**
-     * Ensures that a filter evaluator exists or is created for the feature action.
+     * Ensures that a filter evaluator exists or is created for the feature
+     * action.
      *
      * @param featureAction the feature action
      */
@@ -166,7 +162,8 @@ public class FeatureActionsController extends EventListenerService
     }
 
     /**
-     * Does everything. Figures out what actions need to be applied if any, and applies them to the features.
+     * Does everything. Figures out what actions need to be applied if any, and
+     * applies them to the features.
      *
      * @param ids the data element IDs
      * @param dataType the data type
@@ -275,8 +272,9 @@ public class FeatureActionsController extends EventListenerService
     }
 
     /**
-     * Checks if there were any feature action groups that the data element didn't satisfy, and creates a feature action that
-     * satisfies the data element for any such groups.
+     * Checks if there were any feature action groups that the data element
+     * didn't satisfy, and creates a feature action that satisfies the data
+     * element for any such groups.
      *
      * @param element the data element
      * @param passingFeatureActions the passing feature actions

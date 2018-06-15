@@ -34,6 +34,7 @@ import io.opensphere.mantle.data.geom.style.impl.StyleUtils;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /** Creates mantle styles from feature actions. */
+@Deprecated
 public class StyleFactory
 {
     /** Logger reference. */
