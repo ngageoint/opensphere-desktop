@@ -207,6 +207,7 @@ public abstract class XYZTileEnvoy extends AbstractEnvoy implements DataRegistry
         {
             Notify.error("Failed to query " + category.getCategory() + " server: Could not establish connection during ping",
                     Method.TOAST);
+            LOGGER.error("Failed to query " + category.getCategory(), e);
         }
 
         return pingSuccess;
