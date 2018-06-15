@@ -80,7 +80,7 @@ public class InfinityLayerController extends AbstractViewTimeController
                 }
                 catch (QueryException e)
                 {
-                    LOGGER.error(e, e);
+                    LOGGER.error(e);
                 }
             }
         }
