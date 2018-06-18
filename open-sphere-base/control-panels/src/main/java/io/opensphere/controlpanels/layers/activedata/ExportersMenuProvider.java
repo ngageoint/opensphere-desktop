@@ -1,5 +1,6 @@
 package io.opensphere.controlpanels.layers.activedata;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
 import java.util.Collection;
@@ -12,7 +13,9 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.export.Exporter;
 import io.opensphere.core.export.Exporters;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfo.MultiDataGroupContextKey;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -50,6 +53,7 @@ public class ExportersMenuProvider implements ContextMenuProvider<MultiDataGroup
             if (!exporters.isEmpty())
             {
                 JMenu exportMenu = new JMenu("Export");
+                exportMenu.setIcon(new GenericFontIcon(AwesomeIconSolid.DOWNLOAD, Color.WHITE, 12));
                 for (JMenuItem menuItem : new ExportMenuProvider().getMenuItems(myToolbox, "To ", exporters))
                 {
                     exportMenu.add(menuItem);
