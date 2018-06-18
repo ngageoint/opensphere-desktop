@@ -101,8 +101,7 @@ public class BoundingBox
             maxLon = Math.max(maxLon, lonD);
         }
 
-        GeographicBoundingBox bbox = new GeographicBoundingBox(LatLonAlt.createFromDegrees(minLat, minLon),
+        return new GeographicBoundingBox(LatLonAlt.createFromDegrees(minLat, minLon),
                 LatLonAlt.createFromDegrees(maxLat, maxLon));
-        return bbox;
     }
 }
