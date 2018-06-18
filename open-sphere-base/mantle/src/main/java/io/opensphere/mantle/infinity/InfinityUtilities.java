@@ -26,6 +26,9 @@ public final class InfinityUtilities
     /** Date time tag. */
     public static final String TIME = ".es-datetime";
 
+    /** The "missing" data value. */
+    public static final long MISSING_VALUE = 1000000000000000000L;
+
     /**
      * Determines if the data type is infinity-enabled.
      *
