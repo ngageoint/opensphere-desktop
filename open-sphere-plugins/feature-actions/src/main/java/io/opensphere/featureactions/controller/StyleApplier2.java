@@ -5,7 +5,6 @@ import java.util.List;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.featureactions.model.Action;
-import io.opensphere.featureactions.style.FeatureActionVisualizationStyle;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.element.MapDataElement;
@@ -42,11 +41,7 @@ public class StyleApplier2 implements ActionApplier
         VisualizationStyleRegistry registry = myMantleToolbox.getVisualizationStyleRegistry();
         for (VisualizationStyle style : registry.getStyles(dataType.getTypeKey()))
         {
-            if (style instanceof FeatureActionVisualizationStyle)
-            {
-                registry.setStyle(style.getConvertedClassType(), dataType.getTypeKey(),
-                        ((FeatureActionVisualizationStyle)style).getPrevious(), this);
-            }
+
         }
     }
 

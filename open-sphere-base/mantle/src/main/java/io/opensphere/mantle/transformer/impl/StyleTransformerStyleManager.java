@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.concurrent.GuardedBy;
 
@@ -64,6 +65,8 @@ public class StyleTransformerStyleManager
     @GuardedBy("myOverrideStyleMap")
     private final TLongObjectMap<FeatureVisualizationStyle> myOverrideStyleMap = new TLongObjectHashMap<>();
 
+    private final ReentrantReadWriteLock myOverrideLock;
+
     /** The MGS to sub transformer map lock. */
     private final ReentrantLock myStyleLock;
 
@@ -94,6 +97,7 @@ public class StyleTransformerStyleManager
         myDataTypeInfo = dti;
         myToolbox = tb;
         myStyleLock = new ReentrantLock();
+        myOverrideLock = new ReentrantReadWriteLock();
         myStyleSet = New.set();
         myMGSToStyleMap = New.map();
         MantleToolboxUtils.getMantleToolbox(myToolbox).getVisualizationStyleRegistry()
@@ -187,13 +191,17 @@ public class StyleTransformerStyleManager
      */
     public void setOverrideStyle(Collection<Long> elementIds, FeatureVisualizationStyle style)
     {
-        synchronized (myOverrideStyleMap)
+        if (!myOverrideLock.writeLock().tryLock())
         {
-            for (Long id : elementIds)
-            {
-                myOverrideStyleMap.put(id.longValue(), style);
-            }
+            myOverrideLock.writeLock().lock();
         }
+
+        for (Long id : elementIds)
+        {
+            myOverrideStyleMap.put(id.longValue(), style);
+        }
+
+        myOverrideLock.writeLock().unlock();
     }
 
     /**
@@ -203,13 +211,17 @@ public class StyleTransformerStyleManager
      */
     public void removeOverrideStyle(Collection<Long> elementIds)
     {
-        synchronized (myOverrideStyleMap)
+        if (!myOverrideLock.writeLock().tryLock())
         {
-            for (Long id : elementIds)
-            {
-                myOverrideStyleMap.remove(id.longValue());
-            }
+            myOverrideLock.writeLock().lock();
         }
+
+        for (Long id : elementIds)
+        {
+            myOverrideStyleMap.remove(id.longValue());
+        }
+
+        myOverrideLock.writeLock().unlock();
     }
 
     /**
@@ -219,10 +231,13 @@ public class StyleTransformerStyleManager
      */
     public List<Long> getOverriddenIds()
     {
-        synchronized (myOverrideStyleMap)
-        {
-            return CollectionUtilities.listView(myOverrideStyleMap.keys());
-        }
+        myOverrideLock.readLock().lock();
+
+        List<Long> ids = CollectionUtilities.listView(myOverrideStyleMap.keys());
+
+        myOverrideLock.readLock().unlock();
+
+        return ids;
     }
 
     /**
@@ -232,7 +247,8 @@ public class StyleTransformerStyleManager
      * First checks internal maps, then retrieves from the style registry and
      * caches the style in the manager.
      *
-     * @param geometry the {@link VisualizationSupport} for which to find the style.
+     * @param geometry the {@link VisualizationSupport} for which to find the
+     *            style.
      * @param elementId the data element ID
      * @return the {@link FeatureVisualizationStyle} for the
      *         {@link VisualizationSupport}.
@@ -410,10 +426,11 @@ public class StyleTransformerStyleManager
 
         if (elementId != -1)
         {
-            synchronized (myOverrideStyleMap)
-            {
-                style = myOverrideStyleMap.get(elementId);
-            }
+            myOverrideLock.readLock().lock();
+
+            style = myOverrideStyleMap.get(elementId);
+
+            myOverrideLock.readLock().unlock();
         }
 
         if (style == null && mgsIfClass != null)

@@ -102,7 +102,7 @@ public class DefaultBuildAndPublishGeometriesWorker extends AbstractDataElementT
                 getProvider().getIdSet().addAll(CollectionUtilities.listView(myIds));
                 // Remove this to ensure we don't have filtered ids in the id
                 // set.
-                getProvider().getIdSet().remove(DataElement.FILTERED_AS_LONG);
+                getProvider().getIdSet().remove(DataElement.FILTERED);
                 getProvider().getGeometrySet().addAll(visGeometrySet);
                 getProvider().getHiddenGeometrySet().addAll(hiddenGeometrySet);
 

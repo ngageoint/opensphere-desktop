@@ -216,6 +216,9 @@ public class StyleBasedUpdateGeometriesWorker extends AbstractDataElementTransfo
         gsLock.lock();
         try
         {
+            newVisibleGeomSet.removeAll(oldVisibleGeomSet);
+            newHiddenGeomSet.removeAll(oldHiddenGeomSet);
+
             getProvider().getGeometrySet().removeAll(oldVisibleGeomSet);
             getProvider().getGeometrySet().addAll(newVisibleGeomSet);
 
@@ -258,10 +261,19 @@ public class StyleBasedUpdateGeometriesWorker extends AbstractDataElementTransfo
      */
     private void publishToProvider(Set<Geometry> oldVisibleGeomSet, Set<Geometry> newVisibleGeomSet)
     {
+        ReentrantLock gsLock = getProvider().getGeometrySetLock();
+        gsLock.lock();
+
         long start = System.nanoTime();
         getProvider().getUpdateTaskActivity().registerUpdateInProgress(getProvider().getUpdateSource());
-        getProvider().getToolbox().getGeometryRegistry().receiveObjects(getProvider().getUpdateSource(), newVisibleGeomSet,
-                oldVisibleGeomSet);
+
+        // TODO -- Geometries are being republished correctly, and then old
+        // geometries get added back on
+//        getProvider().getToolbox().getGeometryRegistry().receiveObjects(getProvider().getUpdateSource(), newVisibleGeomSet,
+//                oldVisibleGeomSet);
+        unpublishGeometries(oldVisibleGeomSet);
+        publishGeometries(newVisibleGeomSet);
+
         getProvider().getUpdateTaskActivity().unregisterUpdateInProgress(getProvider().getUpdateSource());
         if (LOGGER.isTraceEnabled())
         {
@@ -270,5 +282,7 @@ public class StyleBasedUpdateGeometriesWorker extends AbstractDataElementTransfo
                     "Added/Remove Geometries to registry[" + newVisibleGeomSet.size() + "/" + oldVisibleGeomSet.size() + "] in ",
                     end - start));
         }
+
+        gsLock.unlock();
     }
 }

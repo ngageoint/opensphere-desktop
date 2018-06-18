@@ -72,7 +72,7 @@ public class StyleFactory
     {
         FeatureVisualizationStyle style = null;
         FeatureVisualizationStyle defaultStyleCopy = clone(defaultStyle, dataType);
-        boolean containsLabelAction = false;
+//        boolean containsLabelAction = false;
         if (actions.size() == 1)
         {
             Action action = actions.iterator().next();
@@ -80,11 +80,11 @@ public class StyleFactory
             {
                 style = newStyleStyle((StyleAction)action, dataType, defaultStyleCopy);
             }
-            else if (action instanceof LabelAction)
-            {
-                containsLabelAction = true;
-                style = addLabelStyle((LabelAction)action, dataType, defaultStyleCopy);
-            }
+//            else if (action instanceof LabelAction)
+//            {
+//                containsLabelAction = true;
+//                style = addLabelStyle((LabelAction)action, dataType, defaultStyleCopy);
+//            }
         }
         else
         {
@@ -102,7 +102,7 @@ public class StyleFactory
                 }
             }
             StyleAction styleAction = (StyleAction)classToAction.get(StyleAction.class);
-            LabelAction labelAction = (LabelAction)classToAction.get(LabelAction.class);
+//            LabelAction labelAction = (LabelAction)classToAction.get(LabelAction.class);
 
             // The idea here is to create the style one first and then attach
             // the label settings to it, if possible
@@ -110,18 +110,18 @@ public class StyleFactory
             {
                 style = newStyleStyle(styleAction, dataType, defaultStyleCopy);
             }
-            if (labelAction != null)
-            {
-                containsLabelAction = true;
-                if (style == null)
-                {
-                    style = defaultStyleCopy;
-                }
-                style = addLabelStyle(labelAction, dataType, style);
-            }
+//            if (labelAction != null)
+//            {
+//                containsLabelAction = true;
+//                if (style == null)
+//                {
+//                    style = defaultStyleCopy;
+//                }
+//                style = addLabelStyle(labelAction, dataType, style);
+//            }
         }
 
-        myLabelApplier.applyLabel(style, containsLabelAction, defaultStyleCopy);
+//        myLabelApplier.applyLabel(style, containsLabelAction, defaultStyleCopy);
 
         return style;
     }
