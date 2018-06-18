@@ -71,6 +71,10 @@ public class InfinityQuerier
 
         QueryParameters queryParameters = new QueryParameters();
         queryParameters.setBinField(binField);
+        if (binField != null)
+        {
+            queryParameters.setBinFieldType(dataType.getMetaDataInfo().getKeyClassType(binField));
+        }
         queryParameters.setGeomField(geomField);
         queryParameters.setTimeField(timeField);
         queryParameters.setEndTimeField(endTimeField);

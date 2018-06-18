@@ -26,6 +26,9 @@ public class QueryParameters implements Serializable
     /** The field on which to bin, or null. */
     private String myBinField;
 
+    /** The class type of the bin field. */
+    private Class<?> myBinFieldType;
+
     /** The geometry field in the layer. */
     private String myGeomField;
 
@@ -96,6 +99,26 @@ public class QueryParameters implements Serializable
     public void setBinField(String binField)
     {
         myBinField = binField;
+    }
+
+    /**
+     * Gets the bin field type.
+     *
+     * @return the bin field type
+     */
+    public Class<?> getBinFieldType()
+    {
+        return myBinFieldType;
+    }
+
+    /**
+     * Sets the bin field type.
+     *
+     * @param binFieldType the new bin field type
+     */
+    public void setBinFieldType(Class<?> binFieldType)
+    {
+        myBinFieldType = binFieldType;
     }
 
     /**

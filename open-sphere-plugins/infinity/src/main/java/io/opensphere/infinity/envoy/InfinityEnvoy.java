@@ -58,6 +58,7 @@ import io.opensphere.infinity.json.TimeRange;
 import io.opensphere.mantle.infinity.QueryParameters;
 import io.opensphere.mantle.infinity.QueryParameters.GeometryType;
 import io.opensphere.mantle.infinity.QueryResults;
+import io.opensphere.mantle.util.dynenum.DynamicEnumerationKey;
 import io.opensphere.server.util.JsonUtils;
 
 /** Infinity envoy. */
@@ -231,7 +232,13 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
         if (parameters.getBinField() != null)
         {
             final long largeValue = 1000000000000000000L;
-            request.setAggs(new Aggs(parameters.getBinField().toLowerCase() + ".keyword", 10000, largeValue));
+            String field = parameters.getBinField().toLowerCase();
+            if (parameters.getBinFieldType() == String.class
+                    || DynamicEnumerationKey.class.isAssignableFrom(parameters.getBinFieldType()))
+            {
+                field += ".keyword";
+            }
+            request.setAggs(new Aggs(field, 10000, largeValue));
         }
         return request;
     }
