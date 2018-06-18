@@ -1,6 +1,7 @@
 package io.opensphere.merge.algorithm;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap; // added import
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -138,7 +139,7 @@ public class MergeData extends DatasetOperation
         for (DataElement elt : getSupp().getRecords(t))
         {
             MetaDataProvider meta = elt.getMetaData();
-            Map<String, Serializable> valMap = new TreeMap<>();
+            Map<String, Serializable> valMap = new LinkedHashMap<>(); //orig TreeMap
             for (int i = 0; i < newKeys.size(); i++)
             {
                 Object value = getMetaVal(meta, oldKeys[i]);
