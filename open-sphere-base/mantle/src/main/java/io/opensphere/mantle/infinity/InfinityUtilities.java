@@ -1,7 +1,6 @@
-package io.opensphere.infinity.util;
+package io.opensphere.mantle.infinity;
 
 import io.opensphere.mantle.data.DataTypeInfo;
-import io.opensphere.server.services.AbstractServerDataTypeInfo;
 
 /** Infinity utilities. */
 public final class InfinityUtilities
@@ -27,6 +26,9 @@ public final class InfinityUtilities
     /** Date time tag. */
     public static final String TIME = ".es-datetime";
 
+    /** The "missing" data value. */
+    public static final long MISSING_VALUE = 1000000000000000000L;
+
     /**
      * Determines if the data type is infinity-enabled.
      *
@@ -36,8 +38,7 @@ public final class InfinityUtilities
     public static boolean isInfinityEnabled(DataTypeInfo dataType)
     {
         String completeKey = URL + "=";
-        return dataType instanceof AbstractServerDataTypeInfo
-                && dataType.getTags().stream().anyMatch(t -> t.startsWith(completeKey));
+        return dataType.getTags().stream().anyMatch(t -> t.startsWith(completeKey));
     }
 
     /**

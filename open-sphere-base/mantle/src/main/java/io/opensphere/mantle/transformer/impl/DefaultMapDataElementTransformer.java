@@ -351,7 +351,7 @@ public class DefaultMapDataElementTransformer extends AbstractMapDataElementTran
     @Override
     public boolean hasGeometryForDataModelId(long id)
     {
-        return getIdSet().contains(Long.valueOf(id));
+        return getIdSet().contains(id);
     }
 
     /**

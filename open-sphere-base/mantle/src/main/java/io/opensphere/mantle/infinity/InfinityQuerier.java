@@ -1,9 +1,10 @@
-package io.opensphere.infinity.envoy;
+package io.opensphere.mantle.infinity;
 
 import java.util.List;
 
 import com.vividsolutions.jts.geom.Polygon;
 
+import io.opensphere.core.api.adapter.SimpleEnvoy;
 import io.opensphere.core.cache.accessor.GeometryAccessor;
 import io.opensphere.core.cache.accessor.TimeSpanAccessor;
 import io.opensphere.core.cache.matcher.GeneralPropertyMatcher;
@@ -16,11 +17,8 @@ import io.opensphere.core.data.util.DataModelCategory;
 import io.opensphere.core.data.util.SimpleQuery;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.infinity.json.SearchResponse;
-import io.opensphere.infinity.model.QueryParameters;
-import io.opensphere.infinity.model.QueryParameters.GeometryType;
-import io.opensphere.infinity.util.InfinityUtilities;
 import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.infinity.QueryParameters.GeometryType;
 
 /** Performs queries. */
 public class InfinityQuerier
@@ -48,9 +46,9 @@ public class InfinityQuerier
      * @return the search response
      * @throws QueryException if something goes wrong with the query
      */
-    public SearchResponse query(DataTypeInfo dataType, Polygon polygon, TimeSpan timeSpan, String binField) throws QueryException
+    public QueryResults query(DataTypeInfo dataType, Polygon polygon, TimeSpan timeSpan, String binField) throws QueryException
     {
-        SearchResponse response = null;
+        QueryResults result = null;
 
         String url = InfinityUtilities.getUrl(dataType);
         String geomField = InfinityUtilities.getTagValue(InfinityUtilities.POINT, dataType);
@@ -73,6 +71,10 @@ public class InfinityQuerier
 
         QueryParameters queryParameters = new QueryParameters();
         queryParameters.setBinField(binField);
+        if (binField != null)
+        {
+            queryParameters.setBinFieldType(dataType.getMetaDataInfo().getKeyClassType(binField));
+        }
         queryParameters.setGeomField(geomField);
         queryParameters.setTimeField(timeField);
         queryParameters.setEndTimeField(endTimeField);
@@ -80,17 +82,17 @@ public class InfinityQuerier
 
         if (geomField != null)
         {
-            DataModelCategory category = new DataModelCategory(null, InfinityEnvoy.FAMILY, url);
+            DataModelCategory category = new DataModelCategory(null, QueryResults.FAMILY, url);
             List<PropertyMatcher<?>> parameters = New.list(3);
             parameters.add(new GeometryMatcher(GeometryAccessor.GEOMETRY_PROPERTY_NAME, GeometryMatcher.OperatorType.INTERSECTS,
                     polygon));
             parameters.add(new TimeSpanMatcher(TimeSpanAccessor.TIME_PROPERTY_NAME, timeSpan));
-            parameters.add(new GeneralPropertyMatcher<>(InfinityEnvoy.PARAMETERS_DESCRIPTOR, queryParameters));
-            SimpleQuery<SearchResponse> query = new SimpleQuery<>(category, InfinityEnvoy.RESULTS_DESCRIPTOR, parameters);
-            List<SearchResponse> results = InfinityEnvoy.performQuery(myDataRegistry, query);
-            response = results.iterator().next();
+            parameters.add(new GeneralPropertyMatcher<>(QueryParameters.PROPERTY_DESCRIPTOR, queryParameters));
+            SimpleQuery<QueryResults> query = new SimpleQuery<>(category, QueryResults.PROPERTY_DESCRIPTOR, parameters);
+            List<QueryResults> results = SimpleEnvoy.performQuery(myDataRegistry, query);
+            result = results.iterator().next();
         }
 
-        return response;
+        return result;
     }
 }

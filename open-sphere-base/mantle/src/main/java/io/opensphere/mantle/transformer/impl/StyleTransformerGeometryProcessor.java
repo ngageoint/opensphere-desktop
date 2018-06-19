@@ -278,7 +278,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
      */
     public boolean hasGeometryDataModelId(long id)
     {
-        return myIdSet.contains(Long.valueOf(id));
+        return myIdSet.contains(id);
     }
 
     @Override
@@ -563,6 +563,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
             TLongHashSet toBeVisibleIdSet = new TLongHashSet(vEvent.getVisibleIdSet().size());
             toBeVisibleIdSet.addAll(vEvent.getVisibleIdSet().toArray());
             toBeVisibleIdSet.retainAll(idsOfInterestArray);
+
             if (!toBeVisibleIdSet.isEmpty())
             {
                 Set<Geometry> found = GeometrySetUtil.findGeometrySetWithIds(myHiddenGeometrySet, myGeometrySetLock,
@@ -592,6 +593,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
             TLongHashSet toBeHiddenIdSet = new TLongHashSet(vEvent.getInvisibleIdSet().size());
             toBeHiddenIdSet.addAll(vEvent.getInvisibleIdSet().toArray());
             toBeHiddenIdSet.retainAll(idsOfInterestArray);
+
             if (!toBeHiddenIdSet.isEmpty())
             {
                 Set<Geometry> found = GeometrySetUtil.findGeometrySetWithIds(myGeometrySet, myGeometrySetLock,
@@ -644,6 +646,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
             boolean hasMultiElementStyleType = myStyleManager.anyStyleAppliesToAllElements();
             boolean anyStyleAlwaysRequiresGeometryRebuild = myStyleManager.anyStyleAlwaysRequiresFullGeometryRebuild();
             boolean rebuildAll = false;
+
             switch (myEvt.getType())
             {
                 case LIFT_CHANGED:
@@ -696,20 +699,17 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
 
                                 executeIfNotShutdown(updator);
                                 MantleToolboxUtils.getDataElementUpdateUtils(getToolbox()).setDataElementsOpacity(
-                                        colorEvent.getColor().getAlpha(), ids, getDataType().getTypeKey(),
-                                        myMasterTransformer);
+                                        colorEvent.getColor().getAlpha(), ids, getDataType().getTypeKey(), myMasterTransformer);
                             }
                             else
                             {
                                 // Update all render properties colors to match
                                 // the new color.
                                 StyleBasedDeriveColorUpdateGeometriesWorker aWorker = new StyleBasedDeriveColorUpdateGeometriesWorker(
-                                        StyleTransformerGeometryProcessor.this, ids, colorEvent.getColor(),
-                                        false);
+                                        StyleTransformerGeometryProcessor.this, ids, colorEvent.getColor(), false);
                                 executeIfNotShutdown(aWorker);
                                 MantleToolboxUtils.getDataElementUpdateUtils(getToolbox()).setDataElementsColor(
-                                        colorEvent.getColor(), ids, getDataType().getTypeKey(),
-                                        myMasterTransformer);
+                                        colorEvent.getColor(), ids, getDataType().getTypeKey(), myMasterTransformer);
                             }
                         }
                     }
