@@ -62,9 +62,10 @@ public class StyleTransformerStyleManager
     private final Map<Class<? extends VisualizationSupport>, FeatureVisualizationStyle> myMGSToStyleMap;
 
     /** Map of data element IDs to their overridden style, if any. */
-    @GuardedBy("myOverrideStyleMap")
+    @GuardedBy("myOverrideLock")
     private final TLongObjectMap<FeatureVisualizationStyle> myOverrideStyleMap = new TLongObjectHashMap<>();
 
+    /** Read/Write lock for myOverrideStyleMap. */
     private final ReentrantReadWriteLock myOverrideLock;
 
     /** The MGS to sub transformer map lock. */
