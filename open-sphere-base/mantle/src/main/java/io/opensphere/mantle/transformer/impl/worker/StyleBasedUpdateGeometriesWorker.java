@@ -216,6 +216,10 @@ public class StyleBasedUpdateGeometriesWorker extends AbstractDataElementTransfo
         gsLock.lock();
         try
         {
+            // There shouldn't be old geoms in the new set but let's make sure
+            newVisibleGeomSet.removeAll(oldVisibleGeomSet);
+            newHiddenGeomSet.removeAll(oldHiddenGeomSet);
+
             getProvider().getGeometrySet().removeAll(oldVisibleGeomSet);
             getProvider().getGeometrySet().addAll(newVisibleGeomSet);
 
@@ -258,17 +262,28 @@ public class StyleBasedUpdateGeometriesWorker extends AbstractDataElementTransfo
      */
     private void publishToProvider(Set<Geometry> oldVisibleGeomSet, Set<Geometry> newVisibleGeomSet)
     {
-        long start = System.nanoTime();
-        getProvider().getUpdateTaskActivity().registerUpdateInProgress(getProvider().getUpdateSource());
-        getProvider().getToolbox().getGeometryRegistry().receiveObjects(getProvider().getUpdateSource(), newVisibleGeomSet,
-                oldVisibleGeomSet);
-        getProvider().getUpdateTaskActivity().unregisterUpdateInProgress(getProvider().getUpdateSource());
-        if (LOGGER.isTraceEnabled())
+        // If we don't lock here, old geometries will be republished somehow
+        ReentrantLock gsLock = getProvider().getGeometrySetLock();
+        gsLock.lock();
+        try
         {
-            long end = System.nanoTime();
-            LOGGER.trace(StringUtilities.formatTimingMessage(
-                    "Added/Remove Geometries to registry[" + newVisibleGeomSet.size() + "/" + oldVisibleGeomSet.size() + "] in ",
-                    end - start));
+            long start = System.nanoTime();
+            getProvider().getUpdateTaskActivity().registerUpdateInProgress(getProvider().getUpdateSource());
+
+            getProvider().getToolbox().getGeometryRegistry().receiveObjects(getProvider().getUpdateSource(), newVisibleGeomSet,
+                    oldVisibleGeomSet);
+
+            getProvider().getUpdateTaskActivity().unregisterUpdateInProgress(getProvider().getUpdateSource());
+            if (LOGGER.isTraceEnabled())
+            {
+                long end = System.nanoTime();
+                LOGGER.trace(StringUtilities.formatTimingMessage("Added/Remove Geometries to registry[" + newVisibleGeomSet.size()
+                        + "/" + oldVisibleGeomSet.size() + "] in ", end - start));
+            }
+        }
+        finally
+        {
+            gsLock.unlock();
         }
     }
 }

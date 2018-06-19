@@ -109,7 +109,7 @@ public class DataElementUpdateUtilsImpl implements DataElementUpdateUtils
 
                 if (vs != null)
                 {
-                    adjustor.adjustState(vs, id, dataTypeKeyHint == null ? dtKeyItr.next() : dataTypeKeyHint, source);
+                    adjustor.adjustState(vs, id.longValue(), dataTypeKeyHint == null ? dtKeyItr.next() : dataTypeKeyHint, source);
                 }
             }
 
