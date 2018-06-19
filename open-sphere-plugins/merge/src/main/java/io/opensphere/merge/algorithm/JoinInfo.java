@@ -247,10 +247,7 @@ public class JoinInfo
         for (String keepKey : keepKeys)
         {
             Object value = meta.getValue(keepKey);
-            if (value instanceof Serializable)
-            {
-                Util.putNonNull(valueMap, keepKey, (Serializable)value);
-            }
+            valueMap.put(keepKey, (Serializable)value);
         }
     }
 }
