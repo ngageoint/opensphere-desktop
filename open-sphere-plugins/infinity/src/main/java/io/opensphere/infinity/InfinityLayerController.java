@@ -161,9 +161,14 @@ public class InfinityLayerController extends AbstractViewTimeController
             dataType.setAssistant(assistant);
         }
 
-        GenericFontIcon icon = new GenericFontIcon(AwesomeIconSolid.INFINITY, Color.WHITE, 12);
-        icon.setYPos(12);
-        assistant.getLayerIcons().add(icon);
+        boolean contains = assistant.getLayerIcons().stream()
+                .anyMatch(i -> i instanceof GenericFontIcon && ((GenericFontIcon)i).getIcon() == AwesomeIconSolid.INFINITY);
+        if (!contains)
+        {
+            GenericFontIcon icon = new GenericFontIcon(AwesomeIconSolid.INFINITY, Color.WHITE, 12);
+            icon.setYPos(12);
+            assistant.getLayerIcons().add(icon);
+        }
     }
 
     /**
