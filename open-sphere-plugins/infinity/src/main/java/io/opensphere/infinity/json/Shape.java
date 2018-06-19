@@ -2,9 +2,7 @@ package io.opensphere.infinity.json;
 
 import com.vividsolutions.jts.geom.Geometry;
 
-import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.GeographicBoundingBox;
-import io.opensphere.core.util.jts.JTSUtilities;
 
 /** Elasticsearch shape JSON bean. */
 public class Shape
@@ -31,8 +29,7 @@ public class Shape
     public Shape(String type, Geometry geometry)
     {
         myType = type;
-        GeographicBoundingBox queryBbox = GeographicBoundingBox.getMinimumBoundingBoxLLA(
-                JTSUtilities.convertToLatLonAlt(geometry.getCoordinates(), Altitude.ReferenceLevel.ELLIPSOID));
+        GeographicBoundingBox queryBbox = BoundingBox.getMinimumBoundingBoxLLA(geometry.getCoordinates());
         myCoordinates = new double[][] { { queryBbox.getMinLonD(), queryBbox.getMaxLatD() },
             { queryBbox.getMaxLonD(), queryBbox.getMinLatD() } };
     }

@@ -1,4 +1,4 @@
-package io.opensphere.infinity.util;
+package io.opensphere.mantle.infinity;
 
 import org.junit.Assert;
 import org.junit.Test;
