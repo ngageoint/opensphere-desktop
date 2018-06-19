@@ -8,7 +8,6 @@ import io.opensphere.mantle.data.geom.style.impl.PointFeatureVisualizationStyle;
 /**
  * Applies a label style to a created feature action style.
  */
-@Deprecated
 public class LabelApplier
 {
     /**

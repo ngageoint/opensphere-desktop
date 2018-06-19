@@ -265,22 +265,25 @@ public class StyleBasedUpdateGeometriesWorker extends AbstractDataElementTransfo
         // If we don't lock here, old geometries will be republished somehow
         ReentrantLock gsLock = getProvider().getGeometrySetLock();
         gsLock.lock();
-
-        long start = System.nanoTime();
-        getProvider().getUpdateTaskActivity().registerUpdateInProgress(getProvider().getUpdateSource());
-
-        getProvider().getToolbox().getGeometryRegistry().receiveObjects(getProvider().getUpdateSource(), newVisibleGeomSet,
-                oldVisibleGeomSet);
-
-        getProvider().getUpdateTaskActivity().unregisterUpdateInProgress(getProvider().getUpdateSource());
-        if (LOGGER.isTraceEnabled())
+        try
         {
-            long end = System.nanoTime();
-            LOGGER.trace(StringUtilities.formatTimingMessage(
-                    "Added/Remove Geometries to registry[" + newVisibleGeomSet.size() + "/" + oldVisibleGeomSet.size() + "] in ",
-                    end - start));
-        }
+            long start = System.nanoTime();
+            getProvider().getUpdateTaskActivity().registerUpdateInProgress(getProvider().getUpdateSource());
 
-        gsLock.unlock();
+            getProvider().getToolbox().getGeometryRegistry().receiveObjects(getProvider().getUpdateSource(), newVisibleGeomSet,
+                    oldVisibleGeomSet);
+
+            getProvider().getUpdateTaskActivity().unregisterUpdateInProgress(getProvider().getUpdateSource());
+            if (LOGGER.isTraceEnabled())
+            {
+                long end = System.nanoTime();
+                LOGGER.trace(StringUtilities.formatTimingMessage("Added/Remove Geometries to registry[" + newVisibleGeomSet.size()
+                        + "/" + oldVisibleGeomSet.size() + "] in ", end - start));
+            }
+        }
+        finally
+        {
+            gsLock.unlock();
+        }
     }
 }

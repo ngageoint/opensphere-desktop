@@ -197,12 +197,17 @@ public class StyleTransformerStyleManager
             myOverrideLock.writeLock().lock();
         }
 
-        for (Long id : elementIds)
+        try
         {
-            myOverrideStyleMap.put(id.longValue(), style);
+            for (Long id : elementIds)
+            {
+                myOverrideStyleMap.put(id.longValue(), style);
+            }
         }
-
-        myOverrideLock.writeLock().unlock();
+        finally
+        {
+            myOverrideLock.writeLock().unlock();
+        }
     }
 
     /**
@@ -217,12 +222,17 @@ public class StyleTransformerStyleManager
             myOverrideLock.writeLock().lock();
         }
 
-        for (Long id : elementIds)
+        try
         {
-            myOverrideStyleMap.remove(id.longValue());
+            for (Long id : elementIds)
+            {
+                myOverrideStyleMap.remove(id.longValue());
+            }
         }
-
-        myOverrideLock.writeLock().unlock();
+        finally
+        {
+            myOverrideLock.writeLock().unlock();
+        }
     }
 
     /**
@@ -233,12 +243,14 @@ public class StyleTransformerStyleManager
     public List<Long> getOverriddenIds()
     {
         myOverrideLock.readLock().lock();
-
-        List<Long> ids = CollectionUtilities.listView(myOverrideStyleMap.keys());
-
-        myOverrideLock.readLock().unlock();
-
-        return ids;
+        try
+        {
+            return CollectionUtilities.listView(myOverrideStyleMap.keys());
+        }
+        finally
+        {
+            myOverrideLock.readLock().unlock();
+        }
     }
 
     /**
@@ -428,10 +440,14 @@ public class StyleTransformerStyleManager
         if (elementId != -1)
         {
             myOverrideLock.readLock().lock();
-
-            style = myOverrideStyleMap.get(elementId);
-
-            myOverrideLock.readLock().unlock();
+            try
+            {
+                style = myOverrideStyleMap.get(elementId);
+            }
+            finally
+            {
+                myOverrideLock.readLock().unlock();
+            }
         }
 
         if (style == null && mgsIfClass != null)

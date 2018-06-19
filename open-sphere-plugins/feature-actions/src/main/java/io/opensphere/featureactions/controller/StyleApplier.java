@@ -77,8 +77,7 @@ public class StyleApplier implements ActionApplier
                     waitForGeometries(provider, elements);
 
                     // Run it on the right executor because the mantle style
-                    // code is
-                    // not thread-safe
+                    // code is not thread-safe
                     provider.getExecutor().execute(() -> applyStyle(style, elements, provider, actions));
                 }
             }
