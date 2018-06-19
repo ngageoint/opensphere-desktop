@@ -1,21 +1,15 @@
 package io.opensphere.featureactions.controller;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import io.opensphere.controlpanels.columnlabels.model.ColumnLabel;
-import io.opensphere.controlpanels.columnlabels.model.ColumnLabels;
-import io.opensphere.controlpanels.styles.model.LabelOptions;
 import io.opensphere.controlpanels.styles.model.StyleOptions;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.featureactions.model.Action;
-import io.opensphere.featureactions.model.LabelAction;
 import io.opensphere.featureactions.model.StyleAction;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -30,20 +24,16 @@ import io.opensphere.mantle.data.geom.style.impl.IconFeatureVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.PointFeatureVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.PolygonFeatureVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.PolylineFeatureVisualizationStyle;
-import io.opensphere.mantle.data.geom.style.impl.StyleUtils;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /** Creates mantle styles from feature actions. */
-@Deprecated
 public class StyleFactory
 {
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(StyleFactory.class);
 
-    /**
-     * Applies the appropriate label styles on the created style.
-     */
-    private final LabelApplier myLabelApplier;
+    /* Applies the appropriate label styles on the created style. */
+//    private final LabelApplier myLabelApplier;
 
     /** The toolbox. */
     private final Toolbox myToolbox;
@@ -56,7 +46,7 @@ public class StyleFactory
     public StyleFactory(Toolbox toolbox)
     {
         myToolbox = toolbox;
-        myLabelApplier = new LabelApplier();
+//        myLabelApplier = new LabelApplier();
     }
 
     /**
@@ -356,37 +346,38 @@ public class StyleFactory
         return style;
     }
 
-    /**
-     * Adds label style info to a copy of the given style.
+    /* Adds label style info to a copy of the given style.
      *
      * @param labelAction the LabelAction
+     * 
      * @param dataType the data type
+     * 
      * @param style the style to add to
-     * @return the style
-     */
-    private FeatureVisualizationStyle addLabelStyle(LabelAction labelAction, DataTypeInfo dataType,
-            FeatureVisualizationStyle style)
-    {
-        LabelOptions labelOptions = labelAction.getLabelOptions();
-
-        List<String> labels = New.list();
-        ColumnLabels columnLabels = labelOptions.getColumnLabels();
-        if (columnLabels.isAlwaysShowLabels())
-        {
-            for (ColumnLabel columnLabel : columnLabels.getColumnsInLabel())
-            {
-                List<String> args = Arrays.asList(Boolean.toString(columnLabel.isShowColumnName()), columnLabel.getColumn());
-                labels.add(StyleUtils.listSupp.writeList(args));
-            }
-        }
-        style.setParameter(AbstractFeatureVisualizationStyle.LABEL_COLUMN_KEY_PROPERTY_KEY, labels, this);
-        style.setParameter(AbstractFeatureVisualizationStyle.LABEL_ENABLED_PROPERTY_KEY, Boolean.TRUE, this);
-        style.setParameter(AbstractFeatureVisualizationStyle.LABEL_COLOR_PROPERTY_KEY, labelOptions.getColor(), this);
-        style.setParameter(AbstractFeatureVisualizationStyle.LABEL_SIZE_PROPERTY_KEY, Integer.valueOf(labelOptions.getSize()),
-                this);
-
-        return style;
-    }
+     * 
+     * @return the style */
+//    private FeatureVisualizationStyle addLabelStyle(LabelAction labelAction, DataTypeInfo dataType,
+//            FeatureVisualizationStyle style)
+//    {
+//        LabelOptions labelOptions = labelAction.getLabelOptions();
+//
+//        List<String> labels = New.list();
+//        ColumnLabels columnLabels = labelOptions.getColumnLabels();
+//        if (columnLabels.isAlwaysShowLabels())
+//        {
+//            for (ColumnLabel columnLabel : columnLabels.getColumnsInLabel())
+//            {
+//                List<String> args = Arrays.asList(Boolean.toString(columnLabel.isShowColumnName()), columnLabel.getColumn());
+//                labels.add(StyleUtils.listSupp.writeList(args));
+//            }
+//        }
+//        style.setParameter(AbstractFeatureVisualizationStyle.LABEL_COLUMN_KEY_PROPERTY_KEY, labels, this);
+//        style.setParameter(AbstractFeatureVisualizationStyle.LABEL_ENABLED_PROPERTY_KEY, Boolean.TRUE, this);
+//        style.setParameter(AbstractFeatureVisualizationStyle.LABEL_COLOR_PROPERTY_KEY, labelOptions.getColor(), this);
+//        style.setParameter(AbstractFeatureVisualizationStyle.LABEL_SIZE_PROPERTY_KEY, Integer.valueOf(labelOptions.getSize()),
+//                this);
+//
+//        return style;
+//    }
 
     /**
      * Clones the style, and updates the type key.

@@ -216,6 +216,7 @@ public class StyleBasedUpdateGeometriesWorker extends AbstractDataElementTransfo
         gsLock.lock();
         try
         {
+            // There shouldn't be old geoms in the new set but let's make sure
             newVisibleGeomSet.removeAll(oldVisibleGeomSet);
             newHiddenGeomSet.removeAll(oldHiddenGeomSet);
 
@@ -261,18 +262,15 @@ public class StyleBasedUpdateGeometriesWorker extends AbstractDataElementTransfo
      */
     private void publishToProvider(Set<Geometry> oldVisibleGeomSet, Set<Geometry> newVisibleGeomSet)
     {
+        // If we don't lock here, old geometries will be republished somehow
         ReentrantLock gsLock = getProvider().getGeometrySetLock();
         gsLock.lock();
 
         long start = System.nanoTime();
         getProvider().getUpdateTaskActivity().registerUpdateInProgress(getProvider().getUpdateSource());
 
-        // TODO -- Geometries are being republished correctly, and then old
-        // geometries get added back on
-//        getProvider().getToolbox().getGeometryRegistry().receiveObjects(getProvider().getUpdateSource(), newVisibleGeomSet,
-//                oldVisibleGeomSet);
-        unpublishGeometries(oldVisibleGeomSet);
-        publishGeometries(newVisibleGeomSet);
+        getProvider().getToolbox().getGeometryRegistry().receiveObjects(getProvider().getUpdateSource(), newVisibleGeomSet,
+                oldVisibleGeomSet);
 
         getProvider().getUpdateTaskActivity().unregisterUpdateInProgress(getProvider().getUpdateSource());
         if (LOGGER.isTraceEnabled())

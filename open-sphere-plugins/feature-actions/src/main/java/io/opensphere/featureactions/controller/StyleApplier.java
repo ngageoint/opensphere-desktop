@@ -33,7 +33,6 @@ import io.opensphere.mantle.transformer.util.GeometrySetUtil;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /** Applies style actions. */
-@Deprecated
 public class StyleApplier implements ActionApplier
 {
     /** Logger. */
