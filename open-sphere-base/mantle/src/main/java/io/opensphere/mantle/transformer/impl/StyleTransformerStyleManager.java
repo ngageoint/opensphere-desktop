@@ -1,5 +1,6 @@
 package io.opensphere.mantle.transformer.impl;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -245,7 +246,8 @@ public class StyleTransformerStyleManager
         myOverrideLock.readLock().lock();
         try
         {
-            return CollectionUtilities.listView(myOverrideStyleMap.keys());
+            long[] keys = myOverrideStyleMap.keys();
+            return CollectionUtilities.listView(Arrays.copyOf(keys, keys.length));
         }
         finally
         {
