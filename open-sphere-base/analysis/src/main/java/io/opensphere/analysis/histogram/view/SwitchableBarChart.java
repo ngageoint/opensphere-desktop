@@ -98,7 +98,7 @@ public class SwitchableBarChart extends BorderPane
         myModel.getSettingsModel().selectedColumnProperty().addListener((obs, old, newValue) -> getCharts().stream()
                 .forEach(chart -> updateCategoryLabel((CategoryAxis)chart.lookup("#category"))));
         myModel.getSettingsModel().categoryAxisTextProperty().addListener(
-            (obs, old, newValue) -> getCharts().stream().forEach(chart -> updateCategoryAxisText(chart, newValue)));
+                (obs, old, newValue) -> getCharts().stream().forEach(chart -> updateCategoryAxisText(chart, newValue)));
         myModel.getSettingsModel().countAxisTextProperty()
                 .addListener((obs, old, newValue) -> getCharts().stream().forEach(chart -> updateCountAxisText(chart, newValue)));
 
@@ -723,10 +723,10 @@ public class SwitchableBarChart extends BorderPane
     private static String toStyleString(Color c)
     {
         final double maxColor = 255.0;
-        int r = (int)Math.round(c.getRed() * maxColor);
-        int g = (int)Math.round(c.getGreen() * maxColor);
-        int b = (int)Math.round(c.getBlue() * maxColor);
-        int a = (int)Math.round(c.getOpacity() * maxColor);
+        Integer r = Integer.valueOf((int)Math.round(c.getRed() * maxColor));
+        Integer g = Integer.valueOf((int)Math.round(c.getGreen() * maxColor));
+        Integer b = Integer.valueOf((int)Math.round(c.getBlue() * maxColor));
+        Integer a = Integer.valueOf((int)Math.round(c.getOpacity() * maxColor));
         return String.format("rgba(%d,%d,%d,%d)", r, g, b, a).toString();
     }
 }

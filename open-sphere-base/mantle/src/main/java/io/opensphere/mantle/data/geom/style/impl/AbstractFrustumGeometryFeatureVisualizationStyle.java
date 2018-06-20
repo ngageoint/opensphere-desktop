@@ -258,7 +258,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
                     public String labelValue(double val)
                     {
                         double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
+                        return String.format(getStringFormat(), Double.valueOf(aVal)) + "%";
                     }
                 }));
 
@@ -271,7 +271,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
                     public String labelValue(double val)
                     {
                         double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
+                        return String.format(getStringFormat(), Double.valueOf(aVal)) + "%";
                     }
                 }));
 
@@ -284,7 +284,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
                     public String labelValue(double val)
                     {
                         double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
+                        return String.format(getStringFormat(), Double.valueOf(aVal)) + "%";
                     }
                 }));
 
@@ -297,7 +297,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
                     public String labelValue(double val)
                     {
                         double aVal = Math.exp(val);
-                        return String.format(getStringFormat(), aVal);
+                        return String.format(getStringFormat(), Double.valueOf(aVal));
                     }
                 }));
 
@@ -363,7 +363,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
                     public String labelValue(double val)
                     {
                         double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
+                        return String.format(getStringFormat(), Double.valueOf(aVal)) + "%";
                     }
                 }));
 
@@ -375,7 +375,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
                     public String labelValue(double val)
                     {
                         double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
+                        return String.format(getStringFormat(), Double.valueOf(aVal)) + "%";
                     }
                 }));
 
@@ -392,7 +392,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
                     public String labelValue(double val)
                     {
                         double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
+                        return String.format(getStringFormat(), Double.valueOf(aVal)) + "%";
                     }
                 }));
 
@@ -405,7 +405,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
                     public String labelValue(double val)
                     {
                         double aVal = Math.exp(val);
-                        return String.format(getStringFormat(), aVal);
+                        return String.format(getStringFormat(), Double.valueOf(aVal));
                     }
                 }));
 

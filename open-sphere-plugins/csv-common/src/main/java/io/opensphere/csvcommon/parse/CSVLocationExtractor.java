@@ -14,8 +14,6 @@ import io.opensphere.core.model.LatLonAltParser;
 import io.opensphere.core.util.lang.enums.EnumUtilities;
 import io.opensphere.csvcommon.common.Constants;
 import io.opensphere.csvcommon.config.v2.CSVParseParameters;
-import io.opensphere.csvcommon.parse.CSVParseException;
-import io.opensphere.csvcommon.parse.PointExtract;
 import io.opensphere.importer.config.ColumnType;
 import io.opensphere.importer.config.SpecialColumn;
 import io.opensphere.mantle.data.element.impl.MDILinkedMetaDataProvider;
@@ -35,7 +33,7 @@ public class CSVLocationExtractor
     /**
      * Constructor.
      *
-     * @param params Supplier of parse parameters
+     * @param cpp Supplier of parse parameters
      */
     public CSVLocationExtractor(CSVParseParameters cpp)
     {
@@ -53,7 +51,8 @@ public class CSVLocationExtractor
      * @throws CSVParseException the parse exception
      */
     public void extractLocation(SpecialColumn specialColumn, String cellValue, String colName, PointExtract ptData,
-            MDILinkedMetaDataProvider metaDataProvider) throws CSVParseException
+            MDILinkedMetaDataProvider metaDataProvider)
+        throws CSVParseException
     {
         final ColumnType columnType = specialColumn.getColumnType();
         if (columnType == ColumnType.LAT)

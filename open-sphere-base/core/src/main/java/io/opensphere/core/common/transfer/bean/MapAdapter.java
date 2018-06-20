@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
+/** XML adapter for maps. */
 public class MapAdapter extends XmlAdapter<MapType, Map<String, String>>
 {
     /**

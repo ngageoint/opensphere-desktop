@@ -18,6 +18,7 @@ import java.io.OutputStream;
  * (decvax!decwrl!turtlevax!ken) James A. Woods (decvax!ihnp4!ames!jaw) Joe
  * Orost (decvax!vax135!petsd!joe)
  */
+@SuppressWarnings("javadoc")
 public class LZWEncoder
 {
     private static final int EOF = -1;

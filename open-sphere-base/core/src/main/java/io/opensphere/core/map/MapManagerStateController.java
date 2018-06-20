@@ -288,12 +288,12 @@ public class MapManagerStateController extends AbstractModuleStateController
         map.setProjection(projectionType);
 
         map.setCamera(new CameraType());
-        map.getCamera().setLatitude(camera.getLocation().getLatD());
-        map.getCamera().setLongitude(camera.getLocation().getLonD());
-        map.getCamera().setAltitude(camera.getLocation().getAltM());
-        map.getCamera().setHeading(camera.getHeading());
-        map.getCamera().setTilt(camera.getTilt());
-        map.getCamera().setRoll(camera.getRoll());
+        map.getCamera().setLatitude(Double.valueOf(camera.getLocation().getLatD()));
+        map.getCamera().setLongitude(Double.valueOf(camera.getLocation().getLonD()));
+        map.getCamera().setAltitude(Double.valueOf(camera.getLocation().getAltM()));
+        map.getCamera().setHeading(Double.valueOf(camera.getHeading()));
+        map.getCamera().setTilt(Double.valueOf(camera.getTilt()));
+        map.getCamera().setRoll(Double.valueOf(camera.getRoll()));
         // We always use clamp to ground when restoring state, but include
         // it here in case an external reader looks for the value.
         map.getCamera().setAltitudeModeGroup(new ObjectFactory().createAltitudeMode(AltitudeModeEnumType.CLAMP_TO_GROUND));

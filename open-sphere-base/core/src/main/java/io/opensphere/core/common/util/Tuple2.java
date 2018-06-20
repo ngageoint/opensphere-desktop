@@ -9,9 +9,11 @@ package io.opensphere.core.common.util;
  */
 public class Tuple2<T1, T2>
 {
-    private T1 t1;
+    /** First tuple element. */
+    private final T1 t1;
 
-    private T2 t2;
+    /** Second tuple element. */
+    private final T2 t2;
 
     /**
      * Construct a new Tuple2 instance.
@@ -41,9 +43,6 @@ public class Tuple2<T1, T2>
         return t2;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see java.lang.Object#equals(java.lang.Object) */
     @Override
     public boolean equals(Object obj)
     {
@@ -90,9 +89,6 @@ public class Tuple2<T1, T2>
         return true;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see java.lang.Object#hashCode() */
     @Override
     public int hashCode()
     {

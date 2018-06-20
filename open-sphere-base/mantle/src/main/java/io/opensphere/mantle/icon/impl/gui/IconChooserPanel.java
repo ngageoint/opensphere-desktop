@@ -143,6 +143,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     /** The Popup menu. */
     private final JPopupMenu myTreePopupMenu;
 
+    /** Button to open the Icon Builder. */
     private final JButton myIconBuilderButton;
 
     /** The optional selected icon URL. */

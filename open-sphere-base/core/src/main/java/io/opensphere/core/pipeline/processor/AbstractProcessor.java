@@ -1242,9 +1242,9 @@ public abstract class AbstractProcessor<E extends Geometry> implements Renderabl
     protected boolean isObscured(Vector3d model)
     {
         Vector3d eye = getViewer().getPosition().getLocation();
-
         Vector3d terrainIntersect = getProjectionSnapshot().getTerrainIntersection(new Ray3d(eye, model.subtract(eye)),
                 getViewer());
+
         if (terrainIntersect == null)
         {
             return false;

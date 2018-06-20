@@ -29,99 +29,165 @@ import javax.swing.border.Border;
 
 public class CollapsiblePanel extends JPanel implements ActionListener
 {
-    /**
-    *
-    */
+    /** Version ID. */
     private static final long serialVersionUID = -536039897699807671L;
 
+    /** Default icon size. */
     public static final int DEFAULT_ICON_SIZE = 11;
 
+    /** Default left indent. */
     public static final int DEFAULT_INDENT = 0;
 
+    /** Default button spacing. */
     public static final int DEFAULT_BUTTON_SPACING = 4;
 
+    /** Minimum button size: 9px. */
     public static final int MINIMUM_BUTTON_SIZE = 9;
 
+    /** Default header border. */
     public static final Border DEFAULT_HEADER_BORDER = BorderFactory
             .createLineBorder(UIManager.getColor("Panel.background").darker().darker(), 1);
 
+    /** Default component border. */
     public static final Border DEF_COMPONENT_BORDER = BorderFactory
             .createLineBorder(UIManager.getColor("Panel.background").darker().darker(), 1);
 
+    /** Default title. */
     public static final String DEF_TITLE = "Collapsable Panel";
 
+    /** Left alignment. */
     public static final int BUTTON_ALIGNMENT_LEFT = 1;
 
+    /** Right alignment. */
     public static final int BUTTON_ALIGNMENT_RIGHT = 2;
 
+    /** Default insets. */
     private static final Insets DEFAULT_INSETS = new Insets(0, 0, 0, 0);
 
+    /** Component constraints. */
     private GridBagConstraints componentPanelGbc;
 
+    /** Header constraints. */
     private GridBagConstraints headerPanelGbc;
 
+    /** Panel title. */
     private String title;
 
+    /** Inner component. */
     private JComponent myComponent;
 
+    /** Expanded or Collapsed. */
     private boolean expanded;
 
+    /** Header border visible. */
     private boolean showHeaderBorder;
 
+    /** Component border visible. */
     private boolean showComponentBorder;
 
+    /** Component left indent. */
     private int componentIndent = DEFAULT_INDENT;
 
+    /** Button alignment. */
     private int buttonAlignment;
 
+    /** Expanded icon. */
     private ImageIcon expandedIcon;
 
+    /** Collapsed icon. */
     private ImageIcon collapsedIcon;
 
+    /** Expand/collapse button. */
     private JButton button;
 
+    /** Button size. */
     private int buttonSize = DEFAULT_ICON_SIZE;
 
+    /** Button spacing. */
     private int buttonSpacing = DEFAULT_BUTTON_SPACING;
 
+    /** Header panel. */
     private JPanel headerPanel;
 
+    /** Component panel. */
     private JPanel componentPanel;
 
+    /** Title label. */
     private JLabel label;
 
+    /** Header border. */
     private Border headerBorder;
 
+    /** Component border. */
     private Border componentBorder;
 
+    /** Using default icon or not. */
     private boolean usingDefaultExpandIcon;
 
+    /** Using default icon or not. */
     private boolean usingDefaultCollapseIcon;
 
+    /**
+     * Default constructor.
+     * <p>
+     * Uses default values for everything.
+     */
     public CollapsiblePanel()
     {
         this(null, null);
     }
 
     /**
-    *
-    *
-    */
+     * Constructor.
+     * <p>
+     * Uses default values for indentation, expansion status, & button
+     * alignment.
+     *
+     * @param pLabel the panel label
+     * @param pComponent the component
+     */
     public CollapsiblePanel(String pLabel, JComponent pComponent)
     {
         this(pLabel, pComponent, DEFAULT_INDENT, true, BUTTON_ALIGNMENT_LEFT);
     }
 
+    /**
+     * Constructor.
+     * <p>
+     * Uses default values for expansion status & button alignment.
+     *
+     * @param pLabel the panel label
+     * @param pComponent the component
+     * @param pComponentIndent the component indentation
+     */
     public CollapsiblePanel(String pLabel, JComponent pComponent, int pComponentIndent)
     {
         this(pLabel, pComponent, pComponentIndent, true, BUTTON_ALIGNMENT_LEFT);
     }
 
+    /**
+     * Constructor.
+     * <p>
+     * Uses default values for indentation & button alignment.
+     *
+     * @param pLabel the panel label
+     * @param pComponent the component
+     * @param pExpanded whether or not the panel is expanded
+     */
     public CollapsiblePanel(String pLabel, JComponent pComponent, boolean pExpanded)
     {
         this(pLabel, pComponent, DEFAULT_INDENT, pExpanded, BUTTON_ALIGNMENT_LEFT);
     }
 
+    /**
+     * Constructor.
+     *
+     * @param pLabel
+     * @param pComponent
+     * @param pComponentIndent
+     * @param isExpanded
+     * @param pButtonAlignment
+     */
     public CollapsiblePanel(String pLabel, JComponent pComponent, int pComponentIndent, boolean isExpanded, int pButtonAlignment)
     {
         super(new GridBagLayout());
@@ -142,7 +208,6 @@ public class CollapsiblePanel extends JPanel implements ActionListener
     {
         headerBorder = BorderFactory.createLineBorder(getBackground().darker().darker(), 1);
         componentBorder = BorderFactory.createLineBorder(getBackground().darker().darker(), 1);
-//       setBorder(BorderFactory.createLineBorder(Color.green));
         setBorder(BorderFactory.createEmptyBorder());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -160,9 +225,8 @@ public class CollapsiblePanel extends JPanel implements ActionListener
     }
 
     /**
-    *
-    *
-    */
+     * Sets button icon to expanded or collapsed, depending on state.
+     */
     private void setButtonIcon()
     {
         if (expanded)
@@ -177,9 +241,9 @@ public class CollapsiblePanel extends JPanel implements ActionListener
     }
 
     /**
+     * Creates or returns button.
      *
-     *
-     * @return
+     * @return the button
      */
     private JButton getButton()
     {
@@ -197,6 +261,11 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         return button;
     }
 
+    /**
+     * Creates or returns header panel.
+     *
+     * @return the panel
+     */
     private JPanel getHeaderPanel()
     {
         if (headerPanel == null)
@@ -209,6 +278,9 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         return headerPanel;
     }
 
+    /**
+     * Updates the header panel.
+     */
     private void updateHeaderPanel()
     {
         int buttonPos;
@@ -246,6 +318,11 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         getHeaderPanel().revalidate();
     }
 
+    /**
+     * Gets or creates the header GridBagConstraints.
+     *
+     * @return headerPanelGbc
+     */
     private GridBagConstraints getHeaderPanelGbc()
     {
         if (headerPanelGbc == null)
@@ -263,9 +340,9 @@ public class CollapsiblePanel extends JPanel implements ActionListener
     }
 
     /**
+     * Gets or creates the label/
      *
-     *
-     * @return
+     * @return label
      */
     private JLabel getLabel()
     {
@@ -277,11 +354,15 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         return label;
     }
 
+    /**
+     * Gets or creates the component panel.
+     *
+     * @return the panel
+     */
     private JPanel getComponentPanel()
     {
         if (componentPanel == null)
         {
-
             componentPanel = new JPanel(new GridBagLayout());
             componentPanel.setBorder(BorderFactory.createEmptyBorder());
         }
@@ -290,9 +371,10 @@ public class CollapsiblePanel extends JPanel implements ActionListener
     }
 
     /**
-    *
-    *
-    */
+     * Gets or creates the component GridBagConstraints.
+     *
+     * @return componentPanelGbc
+     */
     private GridBagConstraints getCompPanelGbc()
     {
         if (componentPanelGbc == null)
@@ -309,6 +391,9 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         return componentPanelGbc;
     }
 
+    /**
+     * Updates the component panel.
+     */
     private void updateComponentPanel()
     {
         getComponentPanel().removeAll();
@@ -320,9 +405,9 @@ public class CollapsiblePanel extends JPanel implements ActionListener
     }
 
     /**
+     * Gets or creates my component.
      *
-     *
-     * @return
+     * @return myComponent
      */
     private JComponent getMyComponent()
     {
@@ -334,11 +419,19 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         return myComponent;
     }
 
+    /**
+     * @return myComponent
+     */
     public JComponent getComponent()
     {
         return getMyComponent();
     }
 
+    /**
+     * Sets myComponent.
+     *
+     * @param pComponent the component
+     */
     public void setComponent(JComponent pComponent)
     {
         myComponent = pComponent;
@@ -346,9 +439,9 @@ public class CollapsiblePanel extends JPanel implements ActionListener
     }
 
     /**
+     * Gets or creates the title string.
      *
-     *
-     * @return
+     * @return the title
      */
     public String getTitle()
     {
@@ -360,13 +453,22 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         return title;
     }
 
+    /**
+     * Sets the title.
+     *
+     * @param pTitle the new title
+     */
     public void setTitle(String pTitle)
     {
         title = pTitle;
         getLabel().setText(title);
-
     }
 
+    /**
+     * Gets or creates the expanded icon.
+     *
+     * @return the icon
+     */
     public ImageIcon getExpandedIcon()
     {
         if (expandedIcon == null)
@@ -378,16 +480,33 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         return expandedIcon;
     }
 
+    /**
+     * Gets the default expanded icon.
+     *
+     * @param pSize the size of the icon
+     * @return the icon
+     */
     public ImageIcon getDefaultExpandedIcon(int pSize)
     {
         return Icons.createBoxedMinusIcon(pSize);
     }
 
+    /**
+     * Gets the default collapsed icon.
+     *
+     * @param pSize the size of the icon
+     * @return the icon
+     */
     public ImageIcon getDefaultCollapsedIcon(int pSize)
     {
         return Icons.createBoxedPlusIcon(pSize);
     }
 
+    /**
+     * Gets or creates the collapsed icon.
+     *
+     * @return the icon
+     */
     public ImageIcon getCollapsedIcon()
     {
         if (collapsedIcon == null)
@@ -399,18 +518,33 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         return collapsedIcon;
     }
 
+    /**
+     * Sets the expanded icon.
+     *
+     * @param pIcon the new icon
+     */
     public void setExpandedIcon(ImageIcon pIcon)
     {
         expandedIcon = pIcon;
         setButtonIcon();
     }
 
+    /**
+     * Sets the collapsed icon.
+     *
+     * @param pIcon the new icon
+     */
     public void setCollapsedIcon(ImageIcon pIcon)
     {
         collapsedIcon = pIcon;
         setButtonIcon();
     }
 
+    /**
+     * Show or hide the header border.
+     *
+     * @param b true to show the border, false to hide it
+     */
     public void setShowHeaderBorder(boolean b)
     {
         showHeaderBorder = b;
@@ -424,16 +558,31 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         }
     }
 
+    /**
+     * isShowHeaderBorder
+     *
+     * @return showHeaderBorder
+     */
     public boolean getShowHeaderBorder()
     {
         return showHeaderBorder;
     }
 
+    /**
+     * isShowComponentBorder
+     *
+     * @return showComponentBorder
+     */
     public boolean getShowComponentBorder()
     {
         return showComponentBorder;
     }
 
+    /**
+     * Show or hide the component border.
+     *
+     * @param b true to show the border, false to hide it
+     */
     public void setShowComponentBorder(boolean b)
     {
         showComponentBorder = b;
@@ -447,6 +596,11 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         }
     }
 
+    /**
+     * Expand or collapse the panel.
+     *
+     * @param b true to expand, false to collapse
+     */
     public void setExpanded(boolean b)
     {
         expanded = b;
@@ -454,6 +608,11 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         getComponentPanel().setVisible(b);
     }
 
+    /**
+     * Sets the button alignment.
+     *
+     * @param pAlignment BUTTON_ALIGNMENT_LEFT or BUTTON_ALIGNMENT_RIGHT
+     */
     public void setButtonAlignment(int pAlignment)
     {
         if (pAlignment != BUTTON_ALIGNMENT_LEFT && pAlignment != BUTTON_ALIGNMENT_RIGHT)
@@ -464,6 +623,11 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         updateHeaderPanel();
     }
 
+    /**
+     * Sets the button size, floored to MINIMUM_BUTTON_SIZE.
+     *
+     * @param pSize the size
+     */
     public void setButtonSize(int pSize)
     {
         buttonSize = pSize < MINIMUM_BUTTON_SIZE ? MINIMUM_BUTTON_SIZE : pSize;
@@ -485,11 +649,21 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         updateHeaderPanel();
     }
 
+    /**
+     * Gets the button size.
+     *
+     * @return the size
+     */
     public int getButtonSize()
     {
         return buttonSize;
     }
 
+    /**
+     * Sets the component indent.
+     *
+     * @param pIndent the indent
+     */
     public void setComponentIndent(int pIndent)
     {
         componentIndent = pIndent;
@@ -498,6 +672,11 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         updateComponentPanel();
     }
 
+    /**
+     * Sets the header border.
+     *
+     * @param pBorder the border
+     */
     public void setHeaderBorder(Border pBorder)
     {
         headerBorder = pBorder == null ? DEFAULT_HEADER_BORDER : pBorder;
@@ -508,9 +687,9 @@ public class CollapsiblePanel extends JPanel implements ActionListener
     }
 
     /**
+     * Gets the button spacing.
      *
-     *
-     * @return the buttonSpacing
+     * @return buttonSpacing
      */
     public int getButtonSpacing()
     {
@@ -518,9 +697,9 @@ public class CollapsiblePanel extends JPanel implements ActionListener
     }
 
     /**
+     * Sets the button spacing.
      *
-     *
-     * @param buttonSpacing the buttonSpacing to set
+     * @param pButtonSpacing the buttonSpacing to set
      */
     public void setButtonSpacing(int pButtonSpacing)
     {
@@ -528,11 +707,21 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         updateHeaderPanel();
     }
 
+    /**
+     * Gets the header border.
+     *
+     * @return the border
+     */
     public Border getHeaderBorder()
     {
         return headerBorder;
     }
 
+    /**
+     * Sets the component border.
+     *
+     * @param pBorder the border
+     */
     public void setComponentBorder(Border pBorder)
     {
         componentBorder = pBorder == null ? DEFAULT_HEADER_BORDER : pBorder;
@@ -542,15 +731,16 @@ public class CollapsiblePanel extends JPanel implements ActionListener
         }
     }
 
+    /**
+     * Gets the component border.
+     *
+     * @return the border
+     */
     public Border getComponentBorder()
     {
         return componentBorder;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see
-     * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent) */
     @Override
     public void actionPerformed(ActionEvent pE)
     {
@@ -561,9 +751,6 @@ public class CollapsiblePanel extends JPanel implements ActionListener
 
     }
 
-    /* (non-Javadoc)
-     *
-     * @see javax.swing.JComponent#addNotify() */
     @Override
     public void addNotify()
     {
@@ -574,7 +761,3 @@ public class CollapsiblePanel extends JPanel implements ActionListener
     }
 
 }
-
-/**
- *
- */

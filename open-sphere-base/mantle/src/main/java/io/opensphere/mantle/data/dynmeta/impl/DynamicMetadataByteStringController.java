@@ -34,14 +34,14 @@ public class DynamicMetadataByteStringController extends AbstractDynamicMetadata
         {
             for (Long id : cacheIds)
             {
-                ByteString oldValue = getIdToValueMap().get(id);
+                ByteString oldValue = getIdToValueMap().get(id.longValue());
                 if (oldValue == null)
                 {
-                    getIdToValueMap().put(id, tValueToAppend);
+                    getIdToValueMap().put(id.longValue(), tValueToAppend);
                 }
                 else
                 {
-                    getIdToValueMap().put(id, new ByteString(oldValue.toString() + tValueToAppend.toString()));
+                    getIdToValueMap().put(id.longValue(), new ByteString(oldValue.toString() + tValueToAppend.toString()));
                 }
             }
             fireChangeEvent(cacheIds, source);

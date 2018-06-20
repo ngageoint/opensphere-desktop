@@ -141,6 +141,7 @@ public class PointTypeController extends PlaceTypeController
         return MapVisualizationType.ANNOTATION_POINTS;
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void initialize(Toolbox toolbox, MyPlacesModel model)
     {
@@ -155,7 +156,11 @@ public class PointTypeController extends PlaceTypeController
         ControlContext context = myToolbox.getControlRegistry().getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT);
         context.addListener(myMouseMovedListener, new DefaultMouseBinding(MouseEvent.MOUSE_MOVED),
                 new DefaultMouseBinding(MouseEvent.MOUSE_CLICKED));
+
+        // TODO figure out another way to initialize this so we keep the
+        // reference around
         new PlaceMarkToolbarButton(getEditController());
+
         myContextMenuProvider = new PointGeometryContextMenuProvider(this, getEditController(), model);
 
         myToolbox.getEventManager().subscribe(CreateMapAnnotationPointEvent.class, myCreatePointListener);

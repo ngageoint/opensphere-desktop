@@ -31,6 +31,7 @@ public class FilterSquareToothFaderTileVisualizationStyle extends AbstractTileVi
     private static final double TO_PERCENT_MULTIPLIER = 100.0;
 
     /** The Constant ourPropertyKeyPrefix. */
+    @SuppressWarnings("hiding")
     public static final String ourPropertyKeyPrefix = "FilterSquareToothFaderTileVisualizationStyle";
 
     /** The Constant ourReduceFactoryPropertyKey. */
@@ -105,7 +106,7 @@ public class FilterSquareToothFaderTileVisualizationStyle extends AbstractTileVi
                     public String labelValue(double val)
                     {
                         double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
+                        return String.format(getStringFormat(), Double.valueOf(aVal)) + "%";
                     }
                 }));
 
@@ -118,7 +119,7 @@ public class FilterSquareToothFaderTileVisualizationStyle extends AbstractTileVi
                     public String labelValue(double val)
                     {
                         double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
+                        return String.format(getStringFormat(), Double.valueOf(aVal)) + "%";
                     }
                 }));
 
@@ -131,7 +132,7 @@ public class FilterSquareToothFaderTileVisualizationStyle extends AbstractTileVi
                     public String labelValue(double val)
                     {
                         double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
+                        return String.format(getStringFormat(), Double.valueOf(aVal)) + "%";
                     }
                 }));
 
@@ -215,7 +216,7 @@ public class FilterSquareToothFaderTileVisualizationStyle extends AbstractTileVi
                             public String labelValue(double val)
                             {
                                 double aVal = val * TO_PERCENT_MULTIPLIER;
-                                return String.format(getStringFormat(), aVal) + "%";
+                                return String.format(getStringFormat(), Double.valueOf(aVal)) + "%";
                             }
                         }));
 
@@ -228,7 +229,7 @@ public class FilterSquareToothFaderTileVisualizationStyle extends AbstractTileVi
                     public String labelValue(double val)
                     {
                         double aVal = val * TO_PERCENT_MULTIPLIER;
-                        return String.format(getStringFormat(), aVal) + "%";
+                        return String.format(getStringFormat(), Double.valueOf(aVal)) + "%";
                     }
                 }));
 
@@ -241,7 +242,7 @@ public class FilterSquareToothFaderTileVisualizationStyle extends AbstractTileVi
                             public String labelValue(double val)
                             {
                                 double aVal = val * TO_PERCENT_MULTIPLIER;
-                                return String.format(getStringFormat(), aVal) + "%";
+                                return String.format(getStringFormat(), Double.valueOf(aVal)) + "%";
                             }
                         }));
 

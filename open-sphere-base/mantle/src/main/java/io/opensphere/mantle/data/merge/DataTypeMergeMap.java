@@ -319,7 +319,7 @@ public class DataTypeMergeMap
     {
         StringBuilder sb = new StringBuilder(64);
         sb.append(getClass().getSimpleName()).append("\n" + "MergeKeyName List[")
-                .append(myMergedKeyNames == null ? "NULL" : myMergedKeyNames.size()).append("] \n");
+                .append(myMergedKeyNames == null ? "NULL" : Integer.valueOf(myMergedKeyNames.size())).append("] \n");
         if (myMergedKeyNames != null)
         {
             for (MergeKeySpecification mks : myMergedKeyNames)
@@ -327,8 +327,8 @@ public class DataTypeMergeMap
                 sb.append("   ").append(mks.toString()).append('\n');
             }
         }
-        sb.append("DataTypeMergeComponent List[").append(myMergeComponents == null ? "NULL" : myMergeComponents.size())
-                .append("] \n");
+        sb.append("DataTypeMergeComponent List[")
+                .append(myMergeComponents == null ? "NULL" : Integer.valueOf(myMergeComponents.size())).append("] \n");
         if (myMergeComponents != null)
         {
             for (DataTypeMergeComponent mks : myMergeComponents)

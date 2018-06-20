@@ -137,7 +137,7 @@ public final class DiskDecodeHelper
             DefaultMapIconGeometrySupport icon = new DefaultMapIconGeometrySupport();
             decodeMapLocationGeometrySupport(oos, icon);
             icon.setIconURL(decodeString(oos));
-            icon.setIconSize(decodeFloat(oos));
+            icon.setIconSize(decodeFloat(oos).floatValue());
             decodeMapGeometrySupportPortion(oos, icon);
             return icon;
         }

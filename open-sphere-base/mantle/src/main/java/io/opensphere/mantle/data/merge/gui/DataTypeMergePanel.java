@@ -236,8 +236,8 @@ public class DataTypeMergePanel extends JPanel implements KeyMoveListener
                     pnl.addTypeKeyEntry(data);
                     final String specKeyType = pnl.getSpecialKey().getKeyName();
                     EventQueueUtilities.invokeLater(
-                        () -> JOptionPane.showMessageDialog(null, "There is already a key for the special type \""
-                                + specKeyType + "\". The entry was added to the existing type."));
+                            () -> JOptionPane.showMessageDialog(null, "There is already a key for the special type \""
+                                    + specKeyType + "\". The entry was added to the existing type."));
                 }
             }
             if (!found)
@@ -700,7 +700,7 @@ public class DataTypeMergePanel extends JPanel implements KeyMoveListener
             Integer val = keyNameToKeyCount.get(key);
             if (val == null)
             {
-                keyNameToKeyCount.put(key, 1);
+                keyNameToKeyCount.put(key, Integer.valueOf(1));
             }
         }
         for (TypeKeyEntry entry : unassignedEntryList)
@@ -709,11 +709,11 @@ public class DataTypeMergePanel extends JPanel implements KeyMoveListener
             Integer val = keyNameToKeyCount.get(key);
             if (val == null)
             {
-                keyNameToKeyCount.put(key, 1);
+                keyNameToKeyCount.put(key, Integer.valueOf(1));
             }
             else
             {
-                keyNameToKeyCount.put(key, val.intValue() + 1);
+                keyNameToKeyCount.put(key, Integer.valueOf(val.intValue() + 1));
             }
         }
         return keyNameToKeyCount;
@@ -872,7 +872,7 @@ public class DataTypeMergePanel extends JPanel implements KeyMoveListener
         {
             tke = tkeItr.next();
             String key = tke.getKeyName().toLowerCase();
-            int count = keyNameToKeyCount.get(key);
+            int count = keyNameToKeyCount.get(key).intValue();
 
             boolean addToPanel = allUnassignedKeys || count > 1;
             if (addToPanel)

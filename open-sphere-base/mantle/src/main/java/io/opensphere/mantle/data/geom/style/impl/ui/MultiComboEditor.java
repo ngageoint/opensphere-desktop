@@ -39,7 +39,7 @@ import io.opensphere.mantle.data.geom.util.ListSupport;
 @SuppressWarnings("unchecked")
 public class MultiComboEditor extends AbstractStyleParameterEditorPanel
 {
-    // worthless
+    /** Version. */
     private static final long serialVersionUID = 1L;
 
     /**
@@ -47,21 +47,28 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
      */
     private static final Logger LOG = Logger.getLogger(MultiComboEditor.class);
 
+    /** Combo box background. */
     private static final String COMBOBOX_BACKGROUND = "COMBOBOX_BACKGROUND";
 
-    // for separating checkbox and dropdown values
+    /** Helps with separating checkbox and dropdown values */
     private ListSupport listSupp = new ListSupport('\\', ',');
 
+    /** Max number of boxes. */
     private int maxBoxes = 5;
 
+    /** List of rows. */
     private final List<ComboRow> rowList = new LinkedList<>();
 
+    /** Ignore edits. */
     private boolean ignoreChange;
 
+    /** List of options. */
     private List<OptionProxy<String>> optList;
 
+    /** Map of option values to themselves. */
     private final Map<String, OptionProxy<String>> optMap = new HashMap<>();
 
+    /** Background color for combo box. */
     private Color boxBgColor;
 
     /** The root panel in which the components are rendered. */
@@ -194,6 +201,7 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         layoutGui();
     }
 
+    /** Lays out the UI. */
     private void layoutGui()
     {
         mainPanel.removeAll();
@@ -223,7 +231,14 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         repaint();
     }
 
-    // only call on AWT thread when visible
+    /**
+     * Selects values in the editor.
+     * <p>
+     * Only call on AWT thread when visible
+     *
+     * @param vals the values to select
+     * @param internal if it's user-activated or not
+     */
     @SuppressWarnings("null")
     private void selectValues(List<String> vals, boolean internal)
     {
@@ -257,6 +272,9 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         showMessage(vals);
     }
 
+    /**
+     * Executes action when value changes.
+     */
     private void valueChanged()
     {
         if (ignoreChange)
@@ -273,7 +291,13 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         showMessage(vals);
     }
 
-    // produce a new list of mapped values, with nulls removed
+    /**
+     * Produce a new list of mapped values, with nulls removed.
+     *
+     * @param orig the original list
+     * @param f a mapping function
+     * @return the new list
+     */
     private static <S, T> List<T> map(List<S> orig, Function<S, T> f)
     {
         List<T> vals = new LinkedList<>();
@@ -287,6 +311,13 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         EventQueueUtilities.runOnEDT(() -> selectValues((List<String>)getParamValue(), false));
     }
 
+    /**
+     * Sorts options.
+     *
+     * @param opts the options to sort
+     * @param numeric numeric sort if true, lexical if false
+     * @return a sorted list of option proxies
+     */
     private List<OptionProxy<String>> sortOptions(Collection<String> opts, boolean numeric)
     {
         List<OptionProxy<String>> ret = new LinkedList<>();
@@ -302,6 +333,11 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         return ret;
     }
 
+    /**
+     * Creates the add label panel.
+     *
+     * @return the panel
+     */
     private JPanel createAddPanel()
     {
         JButton button = new IconButton(IconType.PLUS, Color.GREEN);
@@ -315,6 +351,9 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         return p;
     }
 
+    /**
+     * Adds a row to the editor.
+     */
     private void addRow()
     {
         ComboRow row = new ComboRow();
@@ -332,6 +371,9 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         valueChanged();
     }
 
+    /**
+     * Checks if a row can be moved.
+     */
     private void checkMovability()
     {
         int k = 0;
@@ -343,6 +385,11 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         }
     }
 
+    /**
+     * Moves a row up one space.
+     * 
+     * @param row the row to move
+     */
     private void moveUp(ComboRow row)
     {
         int k = rowList.indexOf(row);
@@ -357,6 +404,11 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         valueChanged();
     }
 
+    /**
+     * Moves a row down one space.
+     * 
+     * @param row the row to move
+     */
     private void moveDown(ComboRow row)
     {
         int k = rowList.indexOf(row);
@@ -371,6 +423,11 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         valueChanged();
     }
 
+    /**
+     * Deletes a row.
+     * 
+     * @param row the row to delete
+     */
     private void deleteRow(ComboRow row)
     {
         rowList.remove(row);
@@ -379,6 +436,12 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         valueChanged();
     }
 
+    /**
+     * Gets the selected item in a combo box.
+     * 
+     * @param box the box
+     * @return the selected item
+     */
     private static String getVal(JComboBox<OptionProxy<String>> box)
     {
         Object selectedItem = box.getSelectedItem();

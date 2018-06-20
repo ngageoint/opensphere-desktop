@@ -67,7 +67,8 @@ public class InputStreamMonitorTaskActivity extends TaskActivity implements Inpu
      * Calculates the percent complete, and updates the label.
      *
      * @param totalRead the total number of items read to this point.
-     * @param totalToRead the total number of items that need to be read in the batch.
+     * @param totalToRead the total number of items that need to be read in the
+     *            batch.
      */
     private void monitorImpl(final int totalRead, final int totalToRead)
     {
@@ -93,7 +94,7 @@ public class InputStreamMonitorTaskActivity extends TaskActivity implements Inpu
         }
         else
         {
-            String perComplete = String.format("%-10.1f", myPercentComplete).trim();
+            String perComplete = String.format("%-10.1f", Double.valueOf(myPercentComplete)).trim();
             setLabelValue(myDeterminateLabelPrefix + " " + perComplete + "%");
         }
     }

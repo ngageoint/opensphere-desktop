@@ -117,9 +117,9 @@ public final class BufferUtilities
         final ByteBuffer buf = newByteBuffer(numberOfRepeats * sequence.capacity());
         for (int i = 0; i < numberOfRepeats; i++)
         {
-            buf.put((ByteBuffer)sequence.rewind());
+            buf.put(sequence.rewind());
         }
-        return (ByteBuffer)buf.flip();
+        return buf.flip();
     }
 
     /**
@@ -133,7 +133,7 @@ public final class BufferUtilities
     {
         final IntBuffer buf = newIntBuffer(count);
         addSequenceToBuffer(begin, count, buf);
-        return (IntBuffer)buf.flip();
+        return buf.flip();
     }
 
     /**
@@ -165,7 +165,7 @@ public final class BufferUtilities
         {
             retIndices.put(index);
         }
-        return (IntBuffer)retIndices.flip();
+        return retIndices.flip();
     }
 
     /**
@@ -178,7 +178,7 @@ public final class BufferUtilities
     {
         final IntBuffer retIndices = newIntBuffer(list.size());
         retIndices.put(list.toArray());
-        return (IntBuffer)retIndices.flip();
+        return retIndices.flip();
     }
 
     /** Disallow class instantiation. */

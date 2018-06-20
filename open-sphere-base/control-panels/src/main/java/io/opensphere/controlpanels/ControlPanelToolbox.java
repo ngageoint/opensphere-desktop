@@ -14,10 +14,10 @@ import io.opensphere.mantle.data.DataTypeInfo;
 public interface ControlPanelToolbox extends PluginToolbox
 {
     /**
-     * Gets the registry for {@link LayerControlProvider} implementations. This
-     * allows for plugins to register additional providers without injecting
+     * Gets the registry for LayerControlProvider implementations. This allows
+     * for plugins to register additional providers without injecting
      * dependencies into the core project.
-     * 
+     *
      *
      * @return the registry in which detail panel providers are registered.
      */
@@ -27,7 +27,7 @@ public interface ControlPanelToolbox extends PluginToolbox
      * Gets the registry for {@link DetailPanelProvider} implementations. This
      * allows for plugins to register additional providers without injecting
      * dependencies into the core project.
-     * 
+     *
      *
      * @return the registry in which detail panel providers are registered.
      */
@@ -35,7 +35,7 @@ public interface ControlPanelToolbox extends PluginToolbox
 
     /**
      * Gets the default {@link DetailPanelProvider} implementation.
-     * 
+     *
      *
      * @return the provider to use when the none of the entries in the registry
      *         can handle the target data.

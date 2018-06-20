@@ -37,11 +37,11 @@ public class DataElementSelectionChangeConsolidator extends AbstractDataElementE
         {
             if (event.isSelected())
             {
-                mySelects.add(event.getRegistryId());
+                mySelects.add(Long.valueOf(event.getRegistryId()));
             }
             else
             {
-                myDeselects.add(event.getRegistryId());
+                myDeselects.add(Long.valueOf(event.getRegistryId()));
             }
         }
     }

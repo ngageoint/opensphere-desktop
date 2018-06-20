@@ -37,11 +37,13 @@ public class MapManagerMenuProvider
     /** The control action manager. */
     private final ContextActionManager myControlActionManager;
 
-    /**The Event Manager. **/
+    /** The Event Manager. **/
+    @SuppressWarnings("unused")
     private final EventManager myEventManager;
 
     /** Whether to show the toast message. */
-    private boolean myShowToast = true;
+    @SuppressWarnings("unused")
+    private final boolean myShowToast = true;
 
     /**
      * The menu provider for events which occur with no associated geometries.

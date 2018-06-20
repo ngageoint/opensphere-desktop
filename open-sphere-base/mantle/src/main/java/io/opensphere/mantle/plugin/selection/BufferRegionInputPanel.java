@@ -34,10 +34,10 @@ public class BufferRegionInputPanel extends JPanel
     private final UnitsProvider<Length> myUnitsProvider;
 
     /** The number model used in the spinner input. */
-    private SpinnerNumberModel mySpinnerModel;
+    private final SpinnerNumberModel mySpinnerModel;
 
     /** Consumer invoked upon change to the input field or unit provider. */
-    private Consumer<Length> myEditConsumer;
+    private final Consumer<Length> myEditConsumer;
 
     /**
      * Instantiates a new buffer region input panel.
@@ -139,7 +139,7 @@ public class BufferRegionInputPanel extends JPanel
             // negate the movement to get the value to go the right direction
             // (pushing the mouse wheel forward should increment the value,
             // pulling it backwards should decrement it).
-            mySpinnerModel.setValue(currentValue + -1 * stepSize * pEvent.getWheelRotation());
+            mySpinnerModel.setValue(Integer.valueOf(currentValue + -1 * stepSize * pEvent.getWheelRotation()));
         }
     }
 

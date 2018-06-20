@@ -30,6 +30,7 @@ public class FilterSharpenTileVisualizationStyle extends AbstractTileVisualizati
     private static final double TO_PERCENT_MULTIPLIER = 100.0;
 
     /** The Constant ourPropertyKeyPrefix. */
+    @SuppressWarnings("hiding")
     public static final String ourPropertyKeyPrefix = "FilterSharpenTileVisualizationStyle";
 
     /** The Constant ourScaleFactoryPropertyKey. */
@@ -123,7 +124,7 @@ public class FilterSharpenTileVisualizationStyle extends AbstractTileVisualizati
                             public String labelValue(double val)
                             {
                                 double aVal = val * TO_PERCENT_MULTIPLIER;
-                                return String.format(getStringFormat(), aVal) + "%";
+                                return String.format(getStringFormat(), Double.valueOf(aVal)) + "%";
                             }
                         }));
 

@@ -33,14 +33,15 @@ public class DynamicMetadataFloatController extends AbstractDynamicMetadataContr
         {
             for (Long id : cacheIds)
             {
-                Float oldFloatValue = getIdToValueMap().get(id);
+                Float oldFloatValue = getIdToValueMap().get(id.longValue());
                 if (oldFloatValue == null)
                 {
-                    getIdToValueMap().put(id, fValueToAppend);
+                    getIdToValueMap().put(id.longValue(), fValueToAppend);
                 }
                 else
                 {
-                    getIdToValueMap().put(id, oldFloatValue + fValueToAppend);
+                    getIdToValueMap().put(id.longValue(),
+                            Float.valueOf(oldFloatValue.floatValue() + fValueToAppend.floatValue()));
                 }
             }
             fireChangeEvent(cacheIds, source);
@@ -54,7 +55,7 @@ public class DynamicMetadataFloatController extends AbstractDynamicMetadataContr
         Float oldFloatValue = getIdToValueMap().get(elementId);
         if (oldFloatValue != null)
         {
-            getIdToValueMap().put(elementId, oldFloatValue + fValueToAppend);
+            getIdToValueMap().put(elementId, Float.valueOf(oldFloatValue.floatValue() + fValueToAppend.floatValue()));
             fireChangeEvent(source, elementId);
         }
         else

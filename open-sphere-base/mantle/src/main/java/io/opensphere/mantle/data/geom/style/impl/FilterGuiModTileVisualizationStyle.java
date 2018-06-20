@@ -28,6 +28,7 @@ import io.opensphere.mantle.data.tile.TileVisualizationSupport;
 public class FilterGuiModTileVisualizationStyle extends AbstractTileVisualizationStyle
 {
     /** The Constant ourPropertyKeyPrefix. */
+    @SuppressWarnings("hiding")
     public static final String ourPropertyKeyPrefix = "FilterGuiModTileVisualizationStyle";
 
     /** The Constant ourScaleFactoryPropertyKey. */
@@ -98,7 +99,7 @@ public class FilterGuiModTileVisualizationStyle extends AbstractTileVisualizatio
                     {
                         final double hundred = 100.;
                         double aVal = val * hundred;
-                        return String.format(getStringFormat(), aVal) + "%";
+                        return String.format(getStringFormat(), Double.valueOf(aVal)) + "%";
                     }
                 }));
 
@@ -150,7 +151,7 @@ public class FilterGuiModTileVisualizationStyle extends AbstractTileVisualizatio
                             {
                                 final double hundred = 100.;
                                 double aVal = val * hundred;
-                                return String.format(getStringFormat(), aVal) + "%";
+                                return String.format(getStringFormat(), Double.valueOf(aVal)) + "%";
                             }
                         }));
 

@@ -367,7 +367,8 @@ public class DataTypeMergeComponent
         sb.append(getClass().getName());
         sb.append(" DataTypeDisplayName[").append(myDataTypeDisplayName);
         sb.append("] DataTypeKey[").append(myDTKey);
-        sb.append("]\n SourceKey List[").append(mySourceKeyList == null ? null : mySourceKeyList.size()).append("]\n");
+        sb.append("]\n SourceKey List[").append(mySourceKeyList == null ? null : Integer.valueOf(mySourceKeyList.size()))
+                .append("]\n");
         if (mySourceKeyList != null)
         {
             for (KeySpecification ks : mySourceKeyList)
@@ -376,7 +377,8 @@ public class DataTypeMergeComponent
             }
         }
         sb.append(" KeyMapEntry List[")
-                .append(myMetaDataMergeKeyMapEntryList == null ? null : myMetaDataMergeKeyMapEntryList.size()).append("]\n");
+                .append(myMetaDataMergeKeyMapEntryList == null ? null : Integer.valueOf(myMetaDataMergeKeyMapEntryList.size()))
+                .append("]\n");
         if (myMetaDataMergeKeyMapEntryList != null)
         {
             for (MetaDataMergeKeyMapEntry entry : myMetaDataMergeKeyMapEntryList)

@@ -21,6 +21,7 @@ import io.opensphere.mantle.util.dynenum.DynamicEnumerationRegistry;
  * A test designed to exercise the functionality of the
  * {@link CacheEntryLUWrapper} class.
  */
+@SuppressWarnings("boxing")
 public class CacheEntryLUWrapperTest
 {
     /**

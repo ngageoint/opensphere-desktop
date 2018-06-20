@@ -22,6 +22,7 @@ package io.opensphere.core.common.util;
  * receive copies from any such party to do so, with the only requirement being
  * that this copyright notice remain intact.
  */
+@SuppressWarnings("javadoc")
 public class NeuQuant
 {
     /** number of colours used */

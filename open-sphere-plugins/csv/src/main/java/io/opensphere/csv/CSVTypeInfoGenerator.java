@@ -14,7 +14,6 @@ import io.opensphere.csvcommon.ColumnInfo;
 import io.opensphere.csvcommon.common.Constants;
 import io.opensphere.csvcommon.common.Utilities;
 import io.opensphere.csvcommon.config.v1.CSVColumnInfo;
-import io.opensphere.csvcommon.config.v2.CSVParseParameters;
 import io.opensphere.importer.config.ColumnType;
 import io.opensphere.importer.config.SpecialColumn;
 import io.opensphere.mantle.data.LoadsTo;
@@ -78,8 +77,7 @@ public final class CSVTypeInfoGenerator
         typeInfo.applyColorPreferences();
 
         // Set map visualization info
-        DefaultMapFeatureVisualizationInfo mapVisInfo = new DefaultMapFeatureVisualizationInfo(
-                getVisualizationType(fileSource));
+        DefaultMapFeatureVisualizationInfo mapVisInfo = new DefaultMapFeatureVisualizationInfo(getVisualizationType(fileSource));
         typeInfo.setMapVisualizationInfo(mapVisInfo);
 
         // Set the URL string

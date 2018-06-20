@@ -35,7 +35,7 @@ public final class VectorBufferUtilities
             retVerts.put((float)vec.getX());
             retVerts.put((float)vec.getY());
         }
-        return (FloatBuffer)retVerts.flip();
+        return retVerts.flip();
     }
 
     /**
@@ -54,7 +54,7 @@ public final class VectorBufferUtilities
             retVerts.put((float)vec.getX());
             retVerts.put((float)vec.getY());
         }
-        return (FloatBuffer)retVerts.flip();
+        return retVerts.flip();
     }
 
     /**
@@ -70,7 +70,7 @@ public final class VectorBufferUtilities
 
         vec3dToFloatBuffer(vectors, retVerts);
 
-        return (FloatBuffer)retVerts.flip();
+        return retVerts.flip();
     }
 
     /**
@@ -107,7 +107,7 @@ public final class VectorBufferUtilities
             retVerts.put((float)vec.getY());
             retVerts.put((float)vec.getZ());
         }
-        return (FloatBuffer)retVerts.flip();
+        return retVerts.flip();
     }
 
     /**
@@ -127,7 +127,7 @@ public final class VectorBufferUtilities
             retVerts.put(vec.getY());
             retVerts.put(vec.getZ());
         }
-        return (FloatBuffer)retVerts.flip();
+        return retVerts.flip();
     }
 
     /**
@@ -147,7 +147,7 @@ public final class VectorBufferUtilities
             retVerts.put(vec.getY());
             retVerts.put(vec.getZ());
         }
-        return (FloatBuffer)retVerts.flip();
+        return retVerts.flip();
     }
 
     /** Disallow class instantiation. */

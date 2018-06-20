@@ -68,7 +68,6 @@ public class BackgroundOverlay implements Observer, Overlay
     public void draw(Graphics graphics)
     {
         int index = 0;
-
         for (TileGeometry geometry : myModel.getGeometries())
         {
             BoundingBox<? extends Position> bounds = (BoundingBox<? extends Position>)geometry.getBounds();
@@ -77,8 +76,8 @@ public class BackgroundOverlay implements Observer, Overlay
 
             java.awt.Image image = myImages.get(index);
 
-            graphics.drawImage(image, (int)(upperLeft.getX() * myModel.getGeometryScaleFactors().get(index)),
-                    (int)(upperLeft.getY() * myModel.getGeometryScaleFactors().get(index)), null);
+            double scaleFactor = myModel.getGeometryScaleFactors().get(index).doubleValue();
+            graphics.drawImage(image, (int)(upperLeft.getX() * scaleFactor), (int)(upperLeft.getY() * scaleFactor), null);
 
             index++;
         }
@@ -114,8 +113,9 @@ public class BackgroundOverlay implements Observer, Overlay
             Raster raster = Raster.createRaster(sampleModel, dataBuffer, null);
             buff.setData(raster);
 
-            myImages.add(buff.getScaledInstance((int)(myModel.getGeometryScaleFactors().get(index) * myMapModel.getWidth()),
-                    (int)(myModel.getGeometryScaleFactors().get(index) * myMapModel.getHeight()), java.awt.Image.SCALE_SMOOTH));
+            double scaleFactor = myModel.getGeometryScaleFactors().get(index).doubleValue();
+            myImages.add(buff.getScaledInstance((int)(scaleFactor * myMapModel.getWidth()),
+                    (int)(scaleFactor * myMapModel.getHeight()), java.awt.Image.SCALE_SMOOTH));
             index++;
         }
     }

@@ -105,13 +105,13 @@ public class MultiDrawPolylineDataBuffered extends BufferObjectList<BufferObject
         {
             PolylineGeometry geom = entry.getKey();
 
-            ColorBufferUtilities.getColors(geom, geom.getRenderProperties(), highlight, (ByteBuffer)drawColor.rewind());
-            pickManager.getPickColor(geom, (ByteBuffer)pickColor.rewind());
+            ColorBufferUtilities.getColors(geom, geom.getRenderProperties(), highlight, drawColor.rewind());
+            pickManager.getPickColor(geom, pickColor.rewind());
             int geomVectorSum = entry.getValue().stream().mapToInt(d -> d.getVectorCount()).sum();
             Utilities.times(geomVectorSum, () ->
             {
-                colors.put((ByteBuffer)drawColor.rewind());
-                pickColors.put((ByteBuffer)pickColor.rewind());
+                colors.put(drawColor.rewind());
+                pickColors.put(pickColor.rewind());
             });
         }
 

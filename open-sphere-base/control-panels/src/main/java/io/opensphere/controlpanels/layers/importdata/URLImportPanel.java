@@ -151,6 +151,7 @@ public class URLImportPanel extends JPanel
      * @param url the url
      * @return true, if successful
      */
+    @SuppressWarnings("unused")
     public boolean validateURL(String url)
     {
         boolean valid = !StringUtils.isBlank(url);

@@ -1,6 +1,5 @@
 package io.opensphere.core.util.swing.tags;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -8,18 +7,14 @@ import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.MouseInputAdapter;
 
@@ -282,31 +277,5 @@ public class JTagField extends JPanel
 
         paintChildren(g);
         paintBorder(g);
-    }
-
-    public static void main(String[] args)
-    {
-        JFrame frame = new JFrame("demo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JTagField tagField = new JTagField(Arrays.asList("One", "Two", "Item Three", "4"));
-        tagField.setBackground(Color.BLUE);
-        tagField.addChangeListener(JTagField::changed);
-
-        frame.getContentPane().add(tagField, BorderLayout.CENTER);
-        JTextField comp = new JTextField(100);
-        frame.getContentPane().add(comp, BorderLayout.SOUTH);
-
-        JButton button = new JButton("Get Results");
-        button.addActionListener(e -> comp.setText(tagField.getSelectedItems().toString()));
-        frame.getContentPane().add(button, BorderLayout.EAST);
-
-        frame.pack();
-        frame.setVisible(true);
-    }
-
-    public static void changed(ChangeEvent event)
-    {
-        System.out.println("List changed: " + ((JTagField)event.getSource()).getSelectedItems());
     }
 }

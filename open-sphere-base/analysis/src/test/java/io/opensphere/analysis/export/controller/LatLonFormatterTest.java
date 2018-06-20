@@ -13,6 +13,7 @@ import io.opensphere.mantle.data.impl.specialkey.LongitudeKey;
 /**
  * Unit test for {@link LatLonFormatter}.
  */
+@SuppressWarnings("boxing")
 public class LatLonFormatterTest
 {
     /**

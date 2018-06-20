@@ -83,6 +83,9 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
         initializePanel();
     }
 
+    /**
+     * Initialized {@link #myPanel}.
+     */
     private void initializePanel()
     {
         myPanel = new JPanel();

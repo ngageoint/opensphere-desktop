@@ -211,7 +211,8 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.core.util.swing.tree.TreeTableTreeCellRenderer#setState(io.opensphere.core.util.swing.tree.TreeTableTreeNode,
+     * @see io.opensphere.core.util.swing.tree.TreeTableTreeCellRenderer#setState(JTree,
+     *      io.opensphere.core.util.swing.tree.TreeTableTreeNode,
      *      com.jidesoft.swing.TristateCheckBox)
      */
     @Override
