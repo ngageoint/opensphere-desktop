@@ -29,6 +29,12 @@ public class QueryParameters implements Serializable
     /** The class type of the bin field. */
     private Class<?> myBinFieldType;
 
+    /** The width of the bins.  */
+    private double myBinWidth;
+
+    /** The offset of the bin. */
+    private double myBinOffset;
+
     /** The geometry field in the layer. */
     private String myGeomField;
 
@@ -119,6 +125,47 @@ public class QueryParameters implements Serializable
     public void setBinFieldType(Class<?> binFieldType)
     {
         myBinFieldType = binFieldType;
+    }
+
+
+    /**
+     * Gets the bin's width
+     *
+     * @return the binWidth
+     */
+    public double getBinWidth()
+    {
+        return myBinWidth;
+    }
+
+    /**
+     * Sets the bin's width
+     *
+     * @param binWidth the binWidth to set
+     */
+    public void setBinWidth(double binWidth)
+    {
+        myBinWidth = binWidth;
+    }
+
+    /**
+     * Get the bin's offset
+     *
+     * @return the binOffset
+     */
+    public double getBinOffset()
+    {
+        return myBinOffset;
+    }
+
+    /**
+     * Set the bin's offset
+     *
+     * @param binOffset the binOffset to set
+     */
+    public void setBinOffset(double binOffset)
+    {
+        myBinOffset = binOffset;
     }
 
     /**

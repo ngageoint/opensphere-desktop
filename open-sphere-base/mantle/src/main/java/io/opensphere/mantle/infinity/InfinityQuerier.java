@@ -43,10 +43,14 @@ public class InfinityQuerier
      * @param polygon the polygon to query
      * @param timeSpan the time span to query
      * @param binField the bin field
+     * @param binWidth the bin width
+     * @param binOffset the bin offset
      * @return the search response
      * @throws QueryException if something goes wrong with the query
      */
-    public QueryResults query(DataTypeInfo dataType, Polygon polygon, TimeSpan timeSpan, String binField) throws QueryException
+    public QueryResults query(DataTypeInfo dataType, Polygon polygon, TimeSpan timeSpan, String binField, double binWidth,
+            double binOffset)
+        throws QueryException
     {
         QueryResults result = null;
 
@@ -75,6 +79,8 @@ public class InfinityQuerier
         {
             queryParameters.setBinFieldType(dataType.getMetaDataInfo().getKeyClassType(binField));
         }
+        queryParameters.setBinWidth(binWidth);
+        queryParameters.setBinOffset(binOffset);
         queryParameters.setGeomField(geomField);
         queryParameters.setTimeField(timeField);
         queryParameters.setEndTimeField(endTimeField);

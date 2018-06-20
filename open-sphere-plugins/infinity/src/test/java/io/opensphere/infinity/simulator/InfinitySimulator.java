@@ -37,7 +37,19 @@ public class InfinitySimulator extends AbstractServer
 
         // Get the aggs field (bin field) if present
         SearchRequest request = JsonUtils.createMapper().readValue(exchange.getRequestBody(), SearchRequest.class);
-        String aggsField = request.getAggs() != null ? request.getAggs().getBins().getTerms().getField() : null;
+
+        String aggsField = null;
+        if (request.getAggs() != null && request.getAggs().getBins() != null)
+        {
+            if (request.getAggs().getBins().getTerms() != null)
+            {
+                aggsField = request.getAggs().getBins().getTerms().getField();
+            }
+            else if (request.getAggs().getBins().getHistogram() != null)
+            {
+                aggsField = request.getAggs().getBins().getHistogram().getField();
+            }
+        }
 
         exchange.getResponseHeaders().add("Content-Type", "application/json");
         writeResponse(exchange, HttpURLConnection.HTTP_OK, getResponseBody(aggsField));

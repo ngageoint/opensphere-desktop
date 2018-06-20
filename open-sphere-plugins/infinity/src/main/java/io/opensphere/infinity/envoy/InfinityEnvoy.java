@@ -237,8 +237,17 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
                     || DynamicEnumerationKey.class.isAssignableFrom(parameters.getBinFieldType()))
             {
                 field += ".keyword";
+                request.setAggs(new Aggs(field, 10000, InfinityUtilities.MISSING_VALUE));
             }
-            request.setAggs(new Aggs(field, 10000, InfinityUtilities.MISSING_VALUE));
+            else if(Number.class.isAssignableFrom(parameters.getBinFieldType()))
+            {
+                request.setAggs(new Aggs(field, parameters.getBinWidth(), InfinityUtilities.MISSING_VALUE, parameters.getBinOffset()));
+            }
+            else
+            {
+                LOGGER.warn("Unhandled bin field type during infinity search request: " + parameters.getBinFieldType());
+                request.setAggs(new Aggs(field, 10000, InfinityUtilities.MISSING_VALUE));
+            }
         }
         return request;
     }

@@ -6,6 +6,9 @@ public class Bins
     /** The terms. */
     private Terms myTerms;
 
+    /** The histogram. */
+    private Histogram myHistogram;
+
     /** The buckets. */
     private Bucket[] myBuckets;
 
@@ -29,6 +32,19 @@ public class Bins
     }
 
     /**
+     * Constructor.
+     *
+     * @param field
+     * @param interval
+     * @param missing
+     * @param offset
+     */
+    public Bins(String field, double interval, long missing, double offset)
+    {
+        myHistogram = new Histogram(field, interval, missing, offset);
+    }
+
+    /**
      * Gets the terms.
      *
      * @return the terms
@@ -46,6 +62,26 @@ public class Bins
     public void setTerms(Terms terms)
     {
         myTerms = terms;
+    }
+
+    /**
+     * Get the histogram
+     *
+     * @return the histogram
+     */
+    public Histogram getHistogram()
+    {
+        return myHistogram;
+    }
+
+    /**
+     * Set the histogram
+     *
+     * @param histogram the histogram to set
+     */
+    public void setHistogram(Histogram histogram)
+    {
+        myHistogram = histogram;
     }
 
     /**

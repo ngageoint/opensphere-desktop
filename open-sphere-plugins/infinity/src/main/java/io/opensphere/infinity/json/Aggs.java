@@ -26,6 +26,19 @@ public class Aggs
     }
 
     /**
+     * Constructor.
+     *
+     * @param field
+     * @param interval
+     * @param missing
+     * @param offset
+     */
+    public Aggs(String field, double interval, long missing, double offset)
+    {
+        myBins = new Bins(field, interval, missing, offset);
+    }
+
+    /**
      * Gets the bins.
      *
      * @return the bins

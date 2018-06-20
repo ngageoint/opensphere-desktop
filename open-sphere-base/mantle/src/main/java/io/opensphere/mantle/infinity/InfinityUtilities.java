@@ -29,6 +29,12 @@ public final class InfinityUtilities
     /** The "missing" data value. */
     public static final long MISSING_VALUE = 1000000000000000000L;
 
+    /** The default bin width */
+    public static final double DEFAULT_BIN_WIDTH = 10.0;
+
+    /** The default bin offset */
+    public static final double DEFAULT_BIN_OFFSET = 0.0;
+
     /**
      * Determines if the data type is infinity-enabled.
      *
