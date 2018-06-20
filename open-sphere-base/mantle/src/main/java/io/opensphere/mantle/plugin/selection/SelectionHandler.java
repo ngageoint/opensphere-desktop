@@ -184,7 +184,7 @@ public class SelectionHandler
     private final DataElementUpdateUtils myDataElementUpdateUtils;
 
     /** The buffer region creator **/
-    private final BufferRegionImpl myCreateBufferRegion;
+    private final BufferRegionCreator myBufferRegionCreator;
 
     /**
      * Instantiates a new selection handler.
@@ -209,7 +209,7 @@ public class SelectionHandler
         myQueryRegionManager = queryRegionManager;
         myDataElementCache = dataElementCache;
         myDataElementUpdateUtils = dataElementUpdateUtils;
-        myCreateBufferRegion = new BufferRegionImpl(toolbox);
+        myBufferRegionCreator = new BufferRegionCreator(toolbox);
     }
 
     /**
@@ -425,12 +425,12 @@ public class SelectionHandler
             }
             else
             {
-                myCreateBufferRegion.createBuffer(myLastGeometry);
+                myBufferRegionCreator.createBuffer(myLastGeometry);
             }
         }
         else if (cmd == SelectionCommand.CREATE_BUFFER_REGION_FOR_SELECTED_SEGMENT)
         {
-            myCreateBufferRegion.createBuffer(myLastGeometry);
+            myBufferRegionCreator.createBuffer(myLastGeometry);
         }
         else if (myLastGeometry instanceof PolygonGeometry)
         {
@@ -440,7 +440,7 @@ public class SelectionHandler
         }
         else if (myLastGeometry instanceof PolylineGeometry || myLastGeometry instanceof PointGeometry)
         {
-            myCreateBufferRegion.createBuffer(myLastGeometry);
+            myBufferRegionCreator.createBuffer(myLastGeometry);
         }
     }
 
@@ -451,7 +451,7 @@ public class SelectionHandler
     protected void createLineBuffer()
     {
         myLastGeometry = getCompleteGeometryGroup(myLastGeometry);
-        myCreateBufferRegion.createBuffer(myLastGeometry);
+        myBufferRegionCreator.createBuffer(myLastGeometry);
     }
 
     /**

@@ -25,7 +25,8 @@ import io.opensphere.core.util.jts.core.JTSCoreGeometryUtilities;
  * Creates a buffer region.
  *
  */
-public class BufferRegionImpl
+javax.annotation.concurrent.NotThreadSafe
+public class BufferRegionCreator
 {
     /**
      * The Constant DEFAULT_BUFFER_DISTANCE.
@@ -50,7 +51,7 @@ public class BufferRegionImpl
      *
      * @param toolbox the toolbox.
      */
-    public BufferRegionImpl(Toolbox toolbox)
+    public BufferRegionCreator(Toolbox toolbox)
     {
         myToolbox = toolbox;
     }
