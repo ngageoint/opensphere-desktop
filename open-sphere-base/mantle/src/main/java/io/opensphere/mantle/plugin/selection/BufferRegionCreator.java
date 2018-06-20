@@ -5,6 +5,7 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.util.Collections;
 
+import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.PopupMenuEvent;
@@ -25,7 +26,7 @@ import io.opensphere.core.util.jts.core.JTSCoreGeometryUtilities;
  * Creates a buffer region.
  *
  */
-javax.annotation.concurrent.NotThreadSafe
+@NotThreadSafe
 public class BufferRegionCreator
 {
     /**
