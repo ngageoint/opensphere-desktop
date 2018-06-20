@@ -101,7 +101,8 @@ public class FeatureActionsController extends EventListenerService
         addService(myPrefs.getPreferences(StyleManagerController.class).getListenerService(Preferences.ALL_KEY,
                 this::handleStyleChange));
 
-        /* This is needed because handleStyleChange() doesn't handle when 'Enable Custom Style' is checked. */
+        /* This is needed because handleStyleChange() doesn't handle when
+         * 'Enable Custom Style' is checked. */
         myStyleRegistryListener = new VisualizationStyleRegistryChangeListener()
         {
             @Override
@@ -151,7 +152,8 @@ public class FeatureActionsController extends EventListenerService
     }
 
     /**
-     * Ensures that a filter evaluator exists or is created for the feature action.
+     * Ensures that a filter evaluator exists or is created for the feature
+     * action.
      *
      * @param featureAction the feature action
      */
@@ -166,7 +168,8 @@ public class FeatureActionsController extends EventListenerService
     }
 
     /**
-     * Does everything. Figures out what actions need to be applied if any, and applies them to the features.
+     * Does everything. Figures out what actions need to be applied if any, and
+     * applies them to the features.
      *
      * @param ids the data element IDs
      * @param dataType the data type
@@ -275,8 +278,9 @@ public class FeatureActionsController extends EventListenerService
     }
 
     /**
-     * Checks if there were any feature action groups that the data element didn't satisfy, and creates a feature action that
-     * satisfies the data element for any such groups.
+     * Checks if there were any feature action groups that the data element
+     * didn't satisfy, and creates a feature action that satisfies the data
+     * element for any such groups.
      *
      * @param element the data element
      * @param passingFeatureActions the passing feature actions

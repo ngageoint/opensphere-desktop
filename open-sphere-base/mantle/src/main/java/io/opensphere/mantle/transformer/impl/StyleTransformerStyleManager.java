@@ -1,11 +1,13 @@
 package io.opensphere.mantle.transformer.impl;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.concurrent.GuardedBy;
 
@@ -61,8 +63,11 @@ public class StyleTransformerStyleManager
     private final Map<Class<? extends VisualizationSupport>, FeatureVisualizationStyle> myMGSToStyleMap;
 
     /** Map of data element IDs to their overridden style, if any. */
-    @GuardedBy("myOverrideStyleMap")
+    @GuardedBy("myOverrideLock")
     private final TLongObjectMap<FeatureVisualizationStyle> myOverrideStyleMap = new TLongObjectHashMap<>();
+
+    /** Read/Write lock for myOverrideStyleMap. */
+    private final ReentrantReadWriteLock myOverrideLock;
 
     /** The MGS to sub transformer map lock. */
     private final ReentrantLock myStyleLock;
@@ -94,6 +99,7 @@ public class StyleTransformerStyleManager
         myDataTypeInfo = dti;
         myToolbox = tb;
         myStyleLock = new ReentrantLock();
+        myOverrideLock = new ReentrantReadWriteLock();
         myStyleSet = New.set();
         myMGSToStyleMap = New.map();
         MantleToolboxUtils.getMantleToolbox(myToolbox).getVisualizationStyleRegistry()
@@ -187,12 +193,21 @@ public class StyleTransformerStyleManager
      */
     public void setOverrideStyle(Collection<Long> elementIds, FeatureVisualizationStyle style)
     {
-        synchronized (myOverrideStyleMap)
+        if (!myOverrideLock.writeLock().tryLock())
+        {
+            myOverrideLock.writeLock().lock();
+        }
+
+        try
         {
             for (Long id : elementIds)
             {
                 myOverrideStyleMap.put(id.longValue(), style);
             }
+        }
+        finally
+        {
+            myOverrideLock.writeLock().unlock();
         }
     }
 
@@ -203,12 +218,21 @@ public class StyleTransformerStyleManager
      */
     public void removeOverrideStyle(Collection<Long> elementIds)
     {
-        synchronized (myOverrideStyleMap)
+        if (!myOverrideLock.writeLock().tryLock())
+        {
+            myOverrideLock.writeLock().lock();
+        }
+
+        try
         {
             for (Long id : elementIds)
             {
                 myOverrideStyleMap.remove(id.longValue());
             }
+        }
+        finally
+        {
+            myOverrideLock.writeLock().unlock();
         }
     }
 
@@ -219,9 +243,15 @@ public class StyleTransformerStyleManager
      */
     public List<Long> getOverriddenIds()
     {
-        synchronized (myOverrideStyleMap)
+        myOverrideLock.readLock().lock();
+        try
         {
-            return CollectionUtilities.listView(myOverrideStyleMap.keys());
+            long[] keys = myOverrideStyleMap.keys();
+            return CollectionUtilities.listView(Arrays.copyOf(keys, keys.length));
+        }
+        finally
+        {
+            myOverrideLock.readLock().unlock();
         }
     }
 
@@ -232,7 +262,8 @@ public class StyleTransformerStyleManager
      * First checks internal maps, then retrieves from the style registry and
      * caches the style in the manager.
      *
-     * @param geometry the {@link VisualizationSupport} for which to find the style.
+     * @param geometry the {@link VisualizationSupport} for which to find the
+     *            style.
      * @param elementId the data element ID
      * @return the {@link FeatureVisualizationStyle} for the
      *         {@link VisualizationSupport}.
@@ -410,9 +441,14 @@ public class StyleTransformerStyleManager
 
         if (elementId != -1)
         {
-            synchronized (myOverrideStyleMap)
+            myOverrideLock.readLock().lock();
+            try
             {
                 style = myOverrideStyleMap.get(elementId);
+            }
+            finally
+            {
+                myOverrideLock.readLock().unlock();
             }
         }
 

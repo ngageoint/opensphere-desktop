@@ -1,6 +1,7 @@
 package io.opensphere.merge.controller;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -46,7 +47,7 @@ public class MetaDataInfoProvider
     {
         DefaultMetaDataInfo metadataInfo = new DefaultMetaDataInfo();
 
-        Map<String, Class<?>> columnsToTypes = New.map();
+        Map<String, Class<?>> columnsToTypes = new LinkedHashMap<>();
         for (MergedDataRow row : data)
         {
             for (Entry<String, Serializable> entry : row.getData().entrySet())

@@ -39,9 +39,7 @@ public class StyleFactory
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(StyleFactory.class);
 
-    /**
-     * Applies the appropriate label styles on the created style.
-     */
+    /** Applies the appropriate label styles on the created style. */
     private final LabelApplier myLabelApplier;
 
     /** The toolbox. */
@@ -359,8 +357,11 @@ public class StyleFactory
      * Adds label style info to a copy of the given style.
      *
      * @param labelAction the LabelAction
+     *
      * @param dataType the data type
+     *
      * @param style the style to add to
+     *
      * @return the style
      */
     private FeatureVisualizationStyle addLabelStyle(LabelAction labelAction, DataTypeInfo dataType,
