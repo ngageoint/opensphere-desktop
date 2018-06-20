@@ -17,6 +17,7 @@ import io.opensphere.mantle.data.geom.style.VisualizationStyle;
 public class LOBGeometryFeatureVisualizationStyle extends AbstractLOBFeatureVisualizationStyle
 {
     /** The Constant ourPropertyKeyPrefix. */
+    @SuppressWarnings("hiding")
     public static final String ourPropertyKeyPrefix = "LOBGeometryFeatureVisualizationStyle";
 
     /**

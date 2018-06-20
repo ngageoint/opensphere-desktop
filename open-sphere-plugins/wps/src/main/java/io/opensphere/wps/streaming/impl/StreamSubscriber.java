@@ -129,6 +129,16 @@ public class StreamSubscriber implements Subscriber
         return null;
     }
 
+    /**
+     * Normalize a geometry.
+     * <p>
+     * If a geometry is composed of multiple polygons, union all polygons into a
+     * single instance. Otherwise, return it without performing any action.
+     *
+     * @param g the geometry to normalize
+     * @return a normalized geometry
+     * @see #unionOf(Geometry, Geometry)
+     */
     private static Geometry normalize(Geometry g)
     {
         if (!(g instanceof MultiPolygon))
@@ -144,6 +154,12 @@ public class StreamSubscriber implements Subscriber
         return ret;
     }
 
+    /**
+     * @param g0 geometry 1
+     * @param g1 geometry 2
+     * @return the union of two geometries
+     * @see Geometry#union(Geometry)
+     */
     private static Geometry unionOf(Geometry g0, Geometry g1)
     {
         if (g0 == null)

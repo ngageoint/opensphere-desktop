@@ -28,6 +28,7 @@ import io.opensphere.mantle.data.tile.TileVisualizationSupport;
 public class BlendColorTileVisualizationStyle extends AbstractTileVisualizationStyle
 {
     /** The Constant ourPropertyKeyPrefix. */
+    @SuppressWarnings("hiding")
     public static final String ourPropertyKeyPrefix = "BlendColorTileVisualizationStyle";
 
     /** The Constant ourColorPropertyKey. */

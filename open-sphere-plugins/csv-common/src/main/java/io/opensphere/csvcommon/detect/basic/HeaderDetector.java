@@ -16,9 +16,7 @@ import io.opensphere.csvcommon.detect.location.model.LocationResults;
  */
 public class HeaderDetector implements CellDetector<Integer>
 {
-    /**
-     *
-     */
+    /** Regex pattern for CSV headers. */
     private static final Pattern HEADER_PATTERN = Pattern.compile("[\"'\\w\\s\\(\\)]+");
 
     /** The expected number of columns. */
@@ -49,6 +47,12 @@ public class HeaderDetector implements CellDetector<Integer>
         return returnValue;
     }
 
+    /**
+     * Detect the parameter.
+     * 
+     * @param pSampler the line sampler
+     * @return the parameter
+     */
     protected ValuesWithConfidence<Integer> detectFromSingleColumn(CellSampler pSampler)
     {
         List<? extends List<? extends String>> sampleCells = pSampler.getBeginningSampleCells();
@@ -61,12 +65,15 @@ public class HeaderDetector implements CellDetector<Integer>
         // As there is only one column, extract it and examine it:
         String cell = cells.get(0);
 
-        // check that the value contains only characters permitted in headers. If not, it can't be a header row, so skip the
+        // check that the value contains only characters permitted in headers.
+        // If not, it can't be a header row, so skip the
         // more expensive checks:
         if (HEADER_PATTERN.matcher(cell).matches())
         {
-            // the value could be a header. Now start with more expensive tests, to determine if the format actually matches a
-            // data format. If it matches with 100% confidence, then assess that the value is not a header:
+            // the value could be a header. Now start with more expensive tests,
+            // to determine if the format actually matches a
+            // data format. If it matches with 100% confidence, then assess that
+            // the value is not a header:
             List<CellDetector<LocationResults>> detectors = getCellDetectors();
             for (CellDetector<LocationResults> cellDetector : detectors)
             {
@@ -82,7 +89,7 @@ public class HeaderDetector implements CellDetector<Integer>
     }
 
     /**
-     * @return
+     * @return list of cell detectors
      */
     protected List<CellDetector<LocationResults>> getCellDetectors()
     {
@@ -93,6 +100,12 @@ public class HeaderDetector implements CellDetector<Integer>
         return returnValue;
     }
 
+    /**
+     * Detects parameters from multiple columns.
+     *
+     * @param sampler the sampler
+     * @return the parameters
+     */
     protected ValuesWithConfidence<Integer> detectFromMultipleColumns(CellSampler sampler)
     {
         Integer headerLineIndexGuess = null;

@@ -23,7 +23,9 @@ public class WFSValidator implements OGCServiceValidator
      * The registry of server providers.
      */
     private final ServerProviderRegistry myServerRegistry;
-    private WFSEnvoyHelper myEnvoyHelper;
+
+    /** The envoy helper. */
+    private final WFSEnvoyHelper myEnvoyHelper;
 
     /**
      * Get a connector for the URL.
@@ -46,13 +48,15 @@ public class WFSValidator implements OGCServiceValidator
      * @param serverCfg the server configuration
      * @param serverId the ID that uniquely identifies this server
      * @param serverProvider The registry of server providers.
-     * @param envoyHelper the helper instance with which to build the GetCapabilties URL.
+     * @param envoyHelper the helper instance with which to build the
+     *            GetCapabilties URL.
      * @return the server title from the capabilities doc
      * @throws OGCServerException If there is a problem communicating with the
      *             server.
      */
     private static OGCServiceValidationResponse getTitleFromOGCCapabilities(ServerConnectionParams serverCfg, String serverId,
-            ServerProviderRegistry serverProvider, WFSEnvoyHelper envoyHelper) throws OGCServerException
+            ServerProviderRegistry serverProvider, WFSEnvoyHelper envoyHelper)
+        throws OGCServerException
     {
         try
         {
@@ -80,13 +84,15 @@ public class WFSValidator implements OGCServiceValidator
      * @param servConf the server config
      * @param serverId the ID that uniquely identifies this server
      * @param serverProvider The registry of server providers.
-     * @param envoyHelper the helper class used to build the GetCapabilities URL, if needed.
+     * @param envoyHelper the helper class used to build the GetCapabilities
+     *            URL, if needed.
      * @return the WFS server validation information
      * @throws OGCServerException If there is a problem communicating with the
      *             server.
      */
     private static OGCServiceValidationResponse testForValidUrl(ServerConnectionParams servConf, String serverId,
-            ServerProviderRegistry serverProvider, WFSEnvoyHelper envoyHelper) throws OGCServerException
+            ServerProviderRegistry serverProvider, WFSEnvoyHelper envoyHelper)
+        throws OGCServerException
     {
         OGCServiceValidationResponse response = null;
         OGCServerException exception = null;

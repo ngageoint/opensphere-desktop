@@ -37,6 +37,7 @@ public class STKPlugin extends PluginAdapter
         return New.list(myTransformer, myAttributionTransformer);
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void initialize(PluginLoaderData plugindata, Toolbox toolbox)
     {
@@ -45,6 +46,8 @@ public class STKPlugin extends PluginAdapter
         myAttributionTransformer = new AttributionTransformer(toolbox.getDataRegistry(), toolbox.getMapManager());
         ServerToolboxUtils.getServerToolbox(toolbox).getServerSourceControllerManager()
                 .setPreferencesTopic(STKServerSourceController.class, STKPlugin.class);
+
+        // TODO
         new EnvoyDebuggins(toolbox);
     }
 }

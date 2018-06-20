@@ -190,6 +190,7 @@ public class MiniMantle extends EventListenerService
          *
          * @return the color
          */
+        @SuppressWarnings("unused")
         public Color getColor()
         {
             return myColor;

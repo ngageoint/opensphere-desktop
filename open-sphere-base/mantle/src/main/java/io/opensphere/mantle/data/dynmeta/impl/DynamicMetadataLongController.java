@@ -33,14 +33,14 @@ public class DynamicMetadataLongController extends AbstractDynamicMetadataContro
         {
             for (Long id : cacheIds)
             {
-                Long oldLongValue = getIdToValueMap().get(id);
+                Long oldLongValue = getIdToValueMap().get(id.longValue());
                 if (oldLongValue == null)
                 {
-                    getIdToValueMap().put(id, longValToAppend);
+                    getIdToValueMap().put(id.longValue(), longValToAppend);
                 }
                 else
                 {
-                    getIdToValueMap().put(id, oldLongValue + longValToAppend);
+                    getIdToValueMap().put(id.longValue(), Long.valueOf(oldLongValue.longValue() + longValToAppend.longValue()));
                 }
             }
             fireChangeEvent(cacheIds, source);
@@ -54,7 +54,7 @@ public class DynamicMetadataLongController extends AbstractDynamicMetadataContro
         Long oldLongValue = getIdToValueMap().get(elementId);
         if (oldLongValue != null)
         {
-            getIdToValueMap().put(elementId, oldLongValue + longValToAppend);
+            getIdToValueMap().put(elementId, Long.valueOf(oldLongValue.longValue() + longValToAppend.longValue()));
             fireChangeEvent(source, elementId);
         }
         else

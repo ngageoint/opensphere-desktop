@@ -39,6 +39,7 @@ import javax.imageio.ImageTypeSpecifier;
  *
  * Via OpenJDK
  */
+@SuppressWarnings({ "javadoc", "unused" })
 public class PaletteBuilder
 {
 

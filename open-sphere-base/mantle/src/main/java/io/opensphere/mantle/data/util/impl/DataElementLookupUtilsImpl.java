@@ -380,7 +380,7 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
             @Override
             public void process(Long id, CacheEntryView entry)
             {
-                getIdToResultMap().put(id,
+                getIdToResultMap().put(id.longValue(),
                         entry.getLoadedElementData() == null ? null : entry.getLoadedElementData().getMapGeometrySupport());
             }
         };
@@ -514,7 +514,7 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
             return Collections.<Object>emptyList();
         }
 
-        DataTypeInfo dti = dtiHint == null ? getDataTypeInfo(dataElementIds.get(0), dataTypeInfoKeyHint) : dtiHint;
+        DataTypeInfo dti = dtiHint == null ? getDataTypeInfo(dataElementIds.get(0).longValue(), dataTypeInfoKeyHint) : dtiHint;
 
         screenDataTypeInfoBeforeMetaDataRetrieve(dti, keyName);
 
@@ -651,7 +651,7 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
                     setResult(new TLongObjectHashMap<Long>());
                 }
                 Long originId = entry.getLoadedElementData() != null ? entry.getLoadedElementData().getOriginId() : null;
-                getResult().put(id, originId);
+                getResult().put(id.longValue(), originId);
             }
         };
         MantleToolboxUtils.getMantleToolbox(myToolbox).getDataElementCache().query(ciq);
@@ -734,7 +734,8 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
             return Collections.emptyList();
         }
 
-        final DataTypeInfo dti = dtiHint == null ? getDataTypeInfo(dataElementIds.get(0), dataTypeInfoKeyHint) : dtiHint;
+        final DataTypeInfo dti = dtiHint == null ? getDataTypeInfo(dataElementIds.get(0).longValue(), dataTypeInfoKeyHint)
+                : dtiHint;
 
         if (dti == null)
         {
@@ -750,7 +751,7 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
             @Override
             public void notFound(Long id)
             {
-                getIdToResultMap().put(id, null);
+                getIdToResultMap().put(id.longValue(), null);
             }
 
             @Override
@@ -777,14 +778,14 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
                 {
                     ResultMapDataElement r = new ResultMapDataElement(originId == null ? 0L : originId.longValue(),
                             entry.getTime(), dti, mdp, entry.getVisState(), mgs);
-                    r.setIdInCache(id);
-                    getIdToResultMap().put(id, r);
+                    r.setIdInCache(id.longValue());
+                    getIdToResultMap().put(id.longValue(), r);
                 }
                 else
                 {
                     ResultDataElement r = new ResultDataElement(originId == null ? 0L : originId.longValue(), entry.getTime(),
                             dti, mdp, entry.getVisState());
-                    getIdToResultMap().put(id, r);
+                    getIdToResultMap().put(id.longValue(), r);
                 }
             }
         };

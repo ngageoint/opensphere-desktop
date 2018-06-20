@@ -12,7 +12,12 @@ public class CertificateVerificationIssue
      */
     public enum SeverityType
     {
-        INFORMATION, WARNING, ERROR
+        /** Severity: Information */
+        INFORMATION,
+        /** Severity: Warning */
+        WARNING,
+        /** Severity: Error */
+        ERROR
     }
 
     /**

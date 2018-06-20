@@ -190,11 +190,11 @@ public abstract class PolygonRegionCommandWorker implements Runnable
 
             if (intersecting)
             {
-                myIntersectingSet.add(g.getDataModelId() & myProvider.getDataModelIdFromGeometryIdBitMask());
+                myIntersectingSet.add(Long.valueOf(g.getDataModelId() & myProvider.getDataModelIdFromGeometryIdBitMask()));
             }
             else
             {
-                myNonIntersectingSet.add(g.getDataModelId() & myProvider.getDataModelIdFromGeometryIdBitMask());
+                myNonIntersectingSet.add(Long.valueOf(g.getDataModelId() & myProvider.getDataModelIdFromGeometryIdBitMask()));
             }
         }
     }

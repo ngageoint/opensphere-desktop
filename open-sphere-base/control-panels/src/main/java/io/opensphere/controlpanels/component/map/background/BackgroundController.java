@@ -91,7 +91,7 @@ public class BackgroundController implements Observer
         TileGeometry worldMapTile = new TileGeometry(myTileBuilder, props, null);
 
         myModel.getGeometryScaleFactors().clear();
-        myModel.getGeometryScaleFactors().add(myMapModel.getWidth() / viewport.getWidth());
+        myModel.getGeometryScaleFactors().add(Double.valueOf(myMapModel.getWidth() / viewport.getWidth()));
 
         myModel.add(New.list(worldMapTile));
     }

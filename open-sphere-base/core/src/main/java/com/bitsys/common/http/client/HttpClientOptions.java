@@ -401,7 +401,9 @@ public class HttpClientOptions
     }
 
     /**
-     * Gets parameter indicating if circular redirects are allowed.
+     * Sets parameter indicating if circular redirects are allowed.
+     *
+     * @param allowCircularRedirects
      */
     public void setAllowCircularRedirects(boolean allowCircularRedirects)
     {

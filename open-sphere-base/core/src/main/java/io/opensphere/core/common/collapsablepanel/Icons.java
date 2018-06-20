@@ -4,16 +4,10 @@
 package io.opensphere.core.common.collapsablepanel;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -25,39 +19,59 @@ import javax.swing.SwingUtilities;
 
 public class Icons
 {
+    /** Default background color. */
     private static final Color BACKGROUND = new Color(0, 0, 0, 0);
 
+    /** Default border color. */
     private static final Color BORDER_COLOR = Color.GRAY;
 
+    /** Default foreground color. */
     private static final Color FORGROUND = Color.black;
 
+    /** Ratio to determine icon offset compared to size. */
     private static final double OFFSET_RATIO = 0.125;
 
+    /** Ratio to determine line width. */
     private static final double LINEWIDTH_RATIO = 0.125;
 
-    /**
-     * Default size
-     */
+    /** Default size */
     private static final int SIZE = 16;
 
+    /** Default border width. */
     private static final int BORDER_WIDTH = 1;
 
     /**
      * This will create a square "+" {@link ImageIcon} of dimension
      * {@link #SIZE}.
      *
-     * @return
+     * @return the icon
      */
     public static ImageIcon createBoxedPlusIcon()
     {
         return createBoxedPlusIcon(SIZE, BORDER_COLOR, BORDER_WIDTH, BACKGROUND, FORGROUND);
     }
 
+    /**
+     * This will create a square "+" {@link ImageIcon}.
+     *
+     * @param pSize the icon size
+     * @return the icon
+     */
     public static ImageIcon createBoxedPlusIcon(int pSize)
     {
         return createBoxedPlusIcon(pSize, BORDER_COLOR, BORDER_WIDTH, BACKGROUND, FORGROUND);
     }
 
+    /**
+     * This will create a square "+" {@link ImageIcon}.
+     *
+     * @param pSize the icon size
+     * @param pBorderColor the border color
+     * @param pBorderWidth the border width
+     * @param pBackground the background color
+     * @param pForeground the foreground color
+     * @return the icon
+     */
     public static final ImageIcon createBoxedPlusIcon(int pSize, Color pBorderColor, int pBorderWidth, Color pBackground,
             Color pForeground)
     {
@@ -133,16 +147,38 @@ public class Icons
         return icon;
     }
 
+    /**
+     * This will create a square "-" {@link ImageIcon} of dimension
+     * {@link #SIZE}.
+     *
+     * @return the icon
+     */
     public static ImageIcon createBoxedMinusIcon()
     {
         return createBoxedMinusIcon(SIZE, BORDER_COLOR, BORDER_WIDTH, BACKGROUND, FORGROUND);
     }
 
+    /**
+     * This will create a square "-" {@link ImageIcon}.
+     *
+     * @param pSize the icon size
+     * @return the icon
+     */
     public static ImageIcon createBoxedMinusIcon(int pSize)
     {
         return createBoxedMinusIcon(pSize, BORDER_COLOR, BORDER_WIDTH, BACKGROUND, FORGROUND);
     }
 
+    /**
+     * This will create a square "-" {@link ImageIcon}.
+     *
+     * @param pSize the icon size
+     * @param pBorderColor the border color
+     * @param pBorderWidth the border width
+     * @param pBackground the background color
+     * @param pForeground the foreground color
+     * @return the icon
+     */
     public static final ImageIcon createBoxedMinusIcon(int pSize, Color pBorderColor, int pBorderWidth, Color pBackground,
             Color pForeground)
     {
@@ -208,50 +244,4 @@ public class Icons
         icon = new ImageIcon(image);
         return icon;
     }
-
-    public static void main(String[] args)
-    {
-        final JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setMinimumSize(new Dimension(300, 300));
-        frame.setLocationRelativeTo(null);
-        frame.setLayout(new FlowLayout());
-        
-        frame.add(new JLabel("31", createBoxedPlusIcon(31), SwingConstants.LEADING));
-        frame.add(new JLabel("30", createBoxedPlusIcon(30), SwingConstants.LEADING));
-
-        frame.add(new JLabel("15", createBoxedPlusIcon(15), SwingConstants.LEADING));
-        frame.add(new JLabel("16", createBoxedPlusIcon(16), SwingConstants.LEADING));
-
-        frame.add(new JLabel("10", createBoxedPlusIcon(10), SwingConstants.LEADING));
-        frame.add(new JLabel("11", createBoxedPlusIcon(11), SwingConstants.LEADING));
-
-        frame.add(new JLabel("132", createBoxedPlusIcon(132), SwingConstants.LEADING));
-        frame.add(new JLabel("131", createBoxedPlusIcon(131), SwingConstants.LEADING));
-
-        frame.add(new JLabel("31", createBoxedMinusIcon(31), SwingConstants.LEADING));
-        frame.add(new JLabel("30", createBoxedMinusIcon(30), SwingConstants.LEADING));
-
-        frame.add(new JLabel("15", createBoxedMinusIcon(15), SwingConstants.LEADING));
-        frame.add(new JLabel("16", createBoxedMinusIcon(16), SwingConstants.LEADING));
-
-        frame.add(new JLabel("10", createBoxedMinusIcon(10), SwingConstants.LEADING));
-        frame.add(new JLabel("11", createBoxedMinusIcon(11), SwingConstants.LEADING));
-
-        frame.add(new JLabel("132", createBoxedMinusIcon(132), SwingConstants.LEADING));
-        frame.add(new JLabel("131", createBoxedMinusIcon(131), SwingConstants.LEADING));
-
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                frame.setVisible(true);
-            }
-        });
-    }
 }
-
-/**
- *
- */

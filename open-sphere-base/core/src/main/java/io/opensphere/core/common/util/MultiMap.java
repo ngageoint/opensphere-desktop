@@ -140,6 +140,8 @@ public interface MultiMap<KEY_TYPE, VALUE_TYPE> extends Map<KEY_TYPE, Collection
      * Returns the first value from the Collection that would be returned by
      * calling get
      *
+     * @param pKey the key
+     * @return the value
      * @see io.opensphere.core.common.util.MultiMap#get(java.lang.Object)
      */
     VALUE_TYPE getFirst(Object pKey);

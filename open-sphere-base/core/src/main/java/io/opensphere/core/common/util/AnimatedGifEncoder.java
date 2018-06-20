@@ -31,6 +31,7 @@ import javax.swing.JPanel;
  * @author Kevin Weiner, FM Software
  * @version 1.03 November 2003
  */
+@SuppressWarnings({ "javadoc", "unused" })
 public class AnimatedGifEncoder
 {
     // Start BITS added code.

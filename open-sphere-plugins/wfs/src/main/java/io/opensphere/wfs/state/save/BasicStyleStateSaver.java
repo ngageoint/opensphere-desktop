@@ -75,12 +75,17 @@ public class BasicStyleStateSaver extends StyleStateSaver
         {
             addNonNull(vspSet, genParam(visStyle.getStyleParameter(key)));
         }
-        addNonNull(vspSet, genLabelCol(visStyle.getStyleParameter(
-                AbstractFeatureVisualizationStyle.LABEL_COLUMN_KEY_PROPERTY_KEY)));
+        addNonNull(vspSet,
+                genLabelCol(visStyle.getStyleParameter(AbstractFeatureVisualizationStyle.LABEL_COLUMN_KEY_PROPERTY_KEY)));
         return vspSet;
     }
 
-    // handles the case of label column(s)
+    /**
+     * Regenerates a {@link VisualizationStyleParameter} with WFS label style.
+     *
+     * @param p
+     * @return a reconfigured VisualizationStyleParameter
+     */
     private VisualizationStyleParameter genLabelCol(VisualizationStyleParameter p)
     {
         if (p == null)
@@ -96,10 +101,7 @@ public class BasicStyleStateSaver extends StyleStateSaver
             {
                 return null;
             }
-            List<String> fields = new LinkedList<>();
-            fields.add(Boolean.toString(false));
-            fields.add(col);
-            return p.deriveWithNewValue(singleton(combineLblFields(false, col)));
+            return p.deriveWithNewValue(List.of(combineLblFields(false, col)));
         }
         // process the list
         List<String> val = new LinkedList<>();
@@ -107,6 +109,13 @@ public class BasicStyleStateSaver extends StyleStateSaver
         return p.deriveWithNewValue(val);
     }
 
+    /**
+     * Generates a t/f string for a column
+     *
+     * @param show if it's shown
+     * @param col the column
+     * @return "[TRUE/FALSE] col"
+     */
     private static String combineLblFields(boolean show, String col)
     {
         List<String> fields = new LinkedList<>();
@@ -115,7 +124,12 @@ public class BasicStyleStateSaver extends StyleStateSaver
         return StyleUtils.listSupp.writeList(fields);
     }
 
-    // handles all of the normal cases
+    /**
+     * Regenerates a {@link VisualizationStyleParameter} with WFS styles.
+     *
+     * @param p the parameter
+     * @return regenerated parameter
+     */
     private VisualizationStyleParameter genParam(VisualizationStyleParameter p)
     {
         if (p == null)
@@ -168,13 +182,14 @@ public class BasicStyleStateSaver extends StyleStateSaver
         return null;
     }
 
-    private static <E> List<E> singleton(E e)
-    {
-        List<E> ret = new LinkedList<>();
-        addNonNull(ret, e);
-        return ret;
-    }
-
+    /**
+     * Adds an element to a collection if the element is not null.
+     * <p>
+     * Why is this not a utility somewhere?
+     *
+     * @param c the collection
+     * @param e the element to add
+     */
     private static <E> void addNonNull(Collection<E> c, E e)
     {
         if (e != null)
@@ -195,7 +210,11 @@ public class BasicStyleStateSaver extends StyleStateSaver
         storeLabelCol(visStyle.getStyleParameterValue(AbstractFeatureVisualizationStyle.LABEL_COLUMN_KEY_PROPERTY_KEY));
     }
 
-    // handles the case of label column(s)
+    /**
+     * Adds label columns to {@link #myBasicFeatureStyle}
+     *
+     * @param obj hopefully a list of label strings
+     */
     @SuppressWarnings("unchecked")
     private void storeLabelCol(Object obj)
     {
@@ -213,7 +232,7 @@ public class BasicStyleStateSaver extends StyleStateSaver
 
         myBasicFeatureStyle.clearLabelRecs();
         boolean first = true;
-        for (String col :  val)
+        for (String col : val)
         {
             List<String> fields = StyleUtils.listSupp.parseList(col);
             if (first)
@@ -225,7 +244,12 @@ public class BasicStyleStateSaver extends StyleStateSaver
         }
     }
 
-    // handles all of the normal cases
+    /**
+     * Stores parameters in {@link #myBasicFeatureStyle}
+     *
+     * @param key the parameter key
+     * @param val the parameter value
+     */
     private void storeParam(String key, Object val)
     {
         if (val == null)

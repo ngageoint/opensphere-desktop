@@ -15,6 +15,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
 @JsonAutoDetect(JsonMethod.NONE)
 public class EsriClassBreaksRenderer extends EsriRenderer
 {
+    /** Version ID. */
+    private static final long serialVersionUID = 1L;
+
     /** My field. */
     @JsonProperty("field")
     private String myField;

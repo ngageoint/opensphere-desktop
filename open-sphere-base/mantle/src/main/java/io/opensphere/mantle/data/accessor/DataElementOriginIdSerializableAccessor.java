@@ -21,6 +21,6 @@ public class DataElementOriginIdSerializableAccessor extends SerializableAccesso
     @Override
     public Long access(DataElement input)
     {
-        return input.getId();
+        return Long.valueOf(input.getId());
     }
 }

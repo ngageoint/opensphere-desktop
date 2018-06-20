@@ -50,8 +50,8 @@ public class MultiDrawVertexBufferObject extends VertexBufferObject
     public MultiDrawVertexBufferObject(FloatBuffer vertexBuffer, IntBuffer indexBuffer, IntBuffer sizeBuffer)
     {
         super(vertexBuffer, false);
-        myIndexBuffer = (IntBuffer)indexBuffer.duplicate().rewind();
-        mySizeBuffer = (IntBuffer)sizeBuffer.duplicate().rewind();
+        myIndexBuffer = indexBuffer.duplicate().rewind();
+        mySizeBuffer = sizeBuffer.duplicate().rewind();
     }
 
     @Override

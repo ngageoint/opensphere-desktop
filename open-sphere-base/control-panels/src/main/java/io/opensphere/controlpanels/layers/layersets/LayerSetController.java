@@ -82,7 +82,7 @@ public class LayerSetController
      */
     public void activateLayerSet(String layerSetName, boolean exclusive)
     {
-        ThreadUtilities.runBackground(() -> myDGC.loadActiveSet(layerSetName, exclusive));
+        ThreadUtilities.runBackground(() -> Boolean.valueOf(myDGC.loadActiveSet(layerSetName, exclusive)));
     }
 
     /**

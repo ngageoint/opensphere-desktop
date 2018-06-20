@@ -177,7 +177,7 @@ public final class DynamicMetaDataClassRegistry implements ClassProvider
      */
     public Class<DynamicMetaDataList> getDynamicClassForHashCode(int code)
     {
-        return myDTIHashToClassMap.get(code);
+        return myDTIHashToClassMap.get(Integer.valueOf(code));
     }
 
     /**
@@ -258,9 +258,9 @@ public final class DynamicMetaDataClassRegistry implements ClassProvider
 
                 final int nextVersion = typeClassList.size();
                 final int dtiHashCode = generateDataTypeInfoHashCode(dti);
-                if (myDTIHashToClassMap.containsKey(dtiHashCode))
+                if (myDTIHashToClassMap.containsKey(Integer.valueOf(dtiHashCode)))
                 {
-                    final Class<DynamicMetaDataList> cl = myDTIHashToClassMap.get(dtiHashCode);
+                    final Class<DynamicMetaDataList> cl = myDTIHashToClassMap.get(Integer.valueOf(dtiHashCode));
                     if (Utilities.sameInstance(typeClassList.get(typeClassList.size() - 1), cl))
                     {
                         if (LOGGER.isTraceEnabled())

@@ -57,7 +57,7 @@ public class DefaultMapLineOfBearingGeometrySupport extends DefaultMapPointGeome
     }
 
     @Override
-    public boolean equals(Object obj)
+    public synchronized boolean equals(Object obj)
     {
         if (this == obj)
         {
@@ -103,7 +103,7 @@ public class DefaultMapLineOfBearingGeometrySupport extends DefaultMapPointGeome
     }
 
     @Override
-    public int hashCode()
+    public synchronized int hashCode()
     {
         final int prime = 31;
         int result = super.hashCode();

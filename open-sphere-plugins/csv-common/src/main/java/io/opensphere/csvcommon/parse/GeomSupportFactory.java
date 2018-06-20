@@ -5,6 +5,9 @@ import java.awt.Color;
 import io.opensphere.mantle.data.MapVisualizationInfo;
 import io.opensphere.mantle.data.geom.MapLocationGeometrySupport;
 
+/**
+ * Functional interface for creating MapLocationGeometrySupport instances.
+ */
 @FunctionalInterface
 public interface GeomSupportFactory
 {

@@ -2,7 +2,6 @@ package io.opensphere.mantle.util.dynenum.impl;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -161,7 +160,7 @@ public class DynamicEnumerationRegistryImpl implements DynamicEnumerationRegistr
     {
         final StringBuilder sb = new StringBuilder(128);
         sb.append(getClass().getSimpleName()).append("\n" + "Type to Type Id Assignments:\n");
-        Map<String, Short> typeToIdMap = New.map();
+        TObjectShortMap<String> myTypeToTypeIdMapCopy = new TObjectShortHashMap<>();
         myTypeToTypeIdMapLock.lock();
         try
         {
@@ -169,7 +168,7 @@ public class DynamicEnumerationRegistryImpl implements DynamicEnumerationRegistr
             while (iter.hasNext())
             {
                 iter.advance();
-                typeToIdMap.put(iter.key(), iter.value());
+                myTypeToTypeIdMapCopy.put(iter.key(), iter.value());
             }
         }
         finally
@@ -177,7 +176,7 @@ public class DynamicEnumerationRegistryImpl implements DynamicEnumerationRegistr
             myTypeToTypeIdMapLock.unlock();
         }
 
-        List<String> dtList = New.list(typeToIdMap.keySet());
+        List<String> dtList = New.list(myTypeToTypeIdMapCopy.keySet());
         Collections.sort(dtList);
 
         myReadWriteLock.readLock().lock();
@@ -186,17 +185,17 @@ public class DynamicEnumerationRegistryImpl implements DynamicEnumerationRegistr
             sb.append(String.format("  %-8s %-15s %s%n", "ACTIVE", "TYPE_ID", "DTI_KEY"));
             for (String dtKey : dtList)
             {
-                Short typeId = typeToIdMap.get(dtKey);
-                boolean active = myTypeIdToDataMap.containsKey(typeId.shortValue());
-                sb.append(String.format("  %-8s %-15d %s%n", active ? "YES" : "", typeId, dtKey));
+                short typeId = myTypeToTypeIdMapCopy.get(dtKey);
+                boolean active = myTypeIdToDataMap.containsKey(typeId);
+                sb.append(String.format("  %-8s %-15d %s%n", active ? "YES" : "", Short.valueOf(typeId), dtKey));
             }
 
             sb.append("\n ------------- DYNAMIC ENUMERATION TYPE CONTENTS -------------\n");
             DynamicEnumerationDataTypeManager typeManager = null;
             for (String dtKey : dtList)
             {
-                Short typeId = typeToIdMap.get(dtKey);
-                typeManager = myTypeIdToDataMap.get(typeId.shortValue());
+                short typeId = myTypeToTypeIdMapCopy.get(dtKey);
+                typeManager = myTypeIdToDataMap.get(typeId);
                 if (typeManager != null)
                 {
                     sb.append(typeManager.toString());

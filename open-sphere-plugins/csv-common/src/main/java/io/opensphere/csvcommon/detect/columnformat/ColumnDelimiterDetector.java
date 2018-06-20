@@ -278,7 +278,7 @@ public class ColumnDelimiterDetector implements LineDetector<DelimitedColumnForm
         }
         else
         {
-            token = ',';
+            token = Character.valueOf(',');
             columnCount = getColumnCount(processedRows, token, text);
         }
 
@@ -401,6 +401,7 @@ public class ColumnDelimiterDetector implements LineDetector<DelimitedColumnForm
      *            text delimiters for each row.
      * @return The total number of token delimiters in this row.
      */
+    @SuppressWarnings("null")
     private int lookForTextDelimiterInRow(TIntObjectMap<Boolean> rowHasNewlineWithinTextDelim, int rowIndex, String line,
             char tokenDelimiter, TCharIntHashMap delimCounts, List<TCharIntHashMap> delimTokenCounts)
     {

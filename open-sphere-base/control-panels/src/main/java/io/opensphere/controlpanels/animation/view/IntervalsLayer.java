@@ -63,6 +63,7 @@ abstract class IntervalsLayer extends CompositeLayer
     /** The present tense verb for generating labels. */
     private final String myPresentVerb;
 
+    /** The menu icon for this layer. */
     private final Icon myMenuIcon;
 
     /**
@@ -321,13 +322,13 @@ abstract class IntervalsLayer extends CompositeLayer
         TimeSpan snappedSpan = span;
         Duration snapDuration = myAnimationModel.getSnapToDataBoundaries().get().booleanValue()
                 ? myAnimationModel.getSelectedDataLoadDuration().get() : null;
-                if (snapDuration != null)
-                {
-                    DurationBasedSnapFunction snapFunction = new DurationBasedSnapFunction(TimeInstant.get(0), snapDuration);
-                    TimeInstant start = snapFunction.getSnapDestination(span.getStartInstant(), RoundingMode.FLOOR);
-                    TimeInstant end = snapFunction.getSnapDestination(span.getEndInstant(), RoundingMode.CEILING);
-                    snappedSpan = TimeSpan.get(start, end);
-                }
-                return snappedSpan;
+        if (snapDuration != null)
+        {
+            DurationBasedSnapFunction snapFunction = new DurationBasedSnapFunction(TimeInstant.get(0), snapDuration);
+            TimeInstant start = snapFunction.getSnapDestination(span.getStartInstant(), RoundingMode.FLOOR);
+            TimeInstant end = snapFunction.getSnapDestination(span.getEndInstant(), RoundingMode.CEILING);
+            snappedSpan = TimeSpan.get(start, end);
+        }
+        return snappedSpan;
     }
 }

@@ -33,14 +33,14 @@ public class DynamicMetadataIntegerController extends AbstractDynamicMetadataCon
         {
             for (Long id : cacheIds)
             {
-                Integer oldIntValue = getIdToValueMap().get(id);
+                Integer oldIntValue = getIdToValueMap().get(id.longValue());
                 if (oldIntValue == null)
                 {
-                    getIdToValueMap().put(id, intValueToAppend);
+                    getIdToValueMap().put(id.longValue(), intValueToAppend);
                 }
                 else
                 {
-                    getIdToValueMap().put(id, oldIntValue + intValueToAppend);
+                    getIdToValueMap().put(id.longValue(), Integer.valueOf(oldIntValue.intValue() + intValueToAppend.intValue()));
                 }
             }
             fireChangeEvent(cacheIds, source);
@@ -54,7 +54,7 @@ public class DynamicMetadataIntegerController extends AbstractDynamicMetadataCon
         Integer oldIntValue = getIdToValueMap().get(elementId);
         if (oldIntValue != null)
         {
-            getIdToValueMap().put(elementId, oldIntValue + intValueToAppend);
+            getIdToValueMap().put(elementId, Integer.valueOf(oldIntValue.intValue() + intValueToAppend.intValue()));
             fireChangeEvent(source, elementId);
         }
         else

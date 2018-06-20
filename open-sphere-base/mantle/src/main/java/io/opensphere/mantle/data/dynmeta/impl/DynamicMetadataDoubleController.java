@@ -33,14 +33,15 @@ public class DynamicMetadataDoubleController extends AbstractDynamicMetadataCont
         {
             for (Long id : cacheIds)
             {
-                Double oldDoubleValue = getIdToValueMap().get(id);
+                Double oldDoubleValue = getIdToValueMap().get(id.longValue());
                 if (oldDoubleValue == null)
                 {
-                    getIdToValueMap().put(id, doubleValToAppend);
+                    getIdToValueMap().put(id.longValue(), doubleValToAppend);
                 }
                 else
                 {
-                    getIdToValueMap().put(id, oldDoubleValue + doubleValToAppend);
+                    getIdToValueMap().put(id.longValue(),
+                            Double.valueOf(oldDoubleValue.doubleValue() + doubleValToAppend.doubleValue()));
                 }
             }
             fireChangeEvent(cacheIds, source);
@@ -54,7 +55,7 @@ public class DynamicMetadataDoubleController extends AbstractDynamicMetadataCont
         Double oldDoubleValue = getIdToValueMap().get(elementId);
         if (oldDoubleValue != null)
         {
-            getIdToValueMap().put(elementId, oldDoubleValue + doubleValToAppend);
+            getIdToValueMap().put(elementId, Double.valueOf(oldDoubleValue.doubleValue() + doubleValToAppend.doubleValue()));
             fireChangeEvent(source, elementId);
         }
         else

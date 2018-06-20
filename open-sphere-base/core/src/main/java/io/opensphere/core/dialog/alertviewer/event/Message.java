@@ -1,6 +1,6 @@
 package io.opensphere.core.dialog.alertviewer.event;
 
-/** A message/severity. */
+/** A message with severity. */
 public class Message
 {
     /** The message. */

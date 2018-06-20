@@ -273,9 +273,8 @@ public class DiskCacheAssistant implements CacheAssistant
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.data.cache.impl.CacheAssistant#getDirectAccessRetriever(io.opensphere.mantle.data.DataTypeInfo,
-     *      java.util.Map,
-     *      io.opensphere.mantle.data.dynmeta.impl.DynamicMetadataManagerImpl)
+     * @see io.opensphere.mantle.data.cache.impl.CacheAssistant#getDirectAccessRetriever(DataTypeInfo,
+     *      LongFunction, DynamicMetadataManagerImpl)
      */
     @Override
     public DirectAccessRetriever getDirectAccessRetriever(DataTypeInfo dti, LongFunction<CacheEntry> cacheRefMap,

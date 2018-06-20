@@ -62,6 +62,7 @@ public class CachingCertificateVerifier implements CertificateVerifier
          *
          * @return the exception thrown by the default trust manager.
          */
+        @SuppressWarnings("unused")
         public CertificateException getCertificateException()
         {
             return certificateException;
@@ -72,6 +73,7 @@ public class CachingCertificateVerifier implements CertificateVerifier
          *
          * @return the collection of verification issues.
          */
+        @SuppressWarnings("unused")
         public Collection<CertificateVerificationIssue> getIssues()
         {
             return issues;

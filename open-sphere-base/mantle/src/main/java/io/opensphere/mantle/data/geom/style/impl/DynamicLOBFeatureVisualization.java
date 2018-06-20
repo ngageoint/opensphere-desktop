@@ -35,6 +35,7 @@ public class DynamicLOBFeatureVisualization extends AbstractLOBFeatureVisualizat
     private static final Logger LOGGER = Logger.getLogger(DynamicLOBFeatureVisualization.class);
 
     /** The Constant ourPropertyKeyPrefix. */
+    @SuppressWarnings("hiding")
     public static final String ourPropertyKeyPrefix = "DynamicLOBFeatureVisualization";
 
     /** The Constant ourLOBOrientationColumnKey. */

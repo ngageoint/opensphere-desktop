@@ -24,6 +24,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
+
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -63,8 +66,6 @@ import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.search.model.SearchModel;
-import javafx.application.Platform;
-import javafx.collections.ListChangeListener;
 
 /**
  * Panel which contains the "Goto" functionality.
@@ -142,10 +143,9 @@ public final class SearchPanel extends JPanel implements ActionListener
     /** The Search field. */
     private GhostTextField mySearchField;
 
-    /* The button used to search in the current view.
-     * Removed because its construction was also removed, but do not delete.
-     * private JButton myWhatsHereButton;
-     */
+    /* The button used to search in the current view. Removed because its
+     * construction was also removed, but do not delete. private JButton
+     * myWhatsHereButton; */
 
     /** The Search goto controller. */
     private final transient KeywordController mySearchGotoController;
@@ -480,7 +480,9 @@ public final class SearchPanel extends JPanel implements ActionListener
      * before enabling the search tool.
      *
      * @return the life cycle event listener
+     * @todo use this anywhere
      */
+    @SuppressWarnings("unused")
     private EventListener<ApplicationLifecycleEvent> getLifeCycleEventListener()
     {
         if (myLifeCycleEventListener == null)

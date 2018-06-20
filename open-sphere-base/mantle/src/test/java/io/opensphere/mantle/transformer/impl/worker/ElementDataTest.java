@@ -18,6 +18,7 @@ import io.opensphere.mantle.data.geom.MapGeometrySupport;
 /**
  * Test class for the {@link ElementData} class.
  */
+@SuppressWarnings("boxing")
 public class ElementDataTest
 {
     /**

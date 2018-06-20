@@ -69,6 +69,7 @@ public class CompositeDateTimeDecider implements Decider
         return bestColumns;
     }
 
+    @SuppressWarnings("null")
     @Override
     public List<Pair<DateColumn, Integer>> compileResults(List<Pair<PotentialColumn, Integer>> potentials)
     {

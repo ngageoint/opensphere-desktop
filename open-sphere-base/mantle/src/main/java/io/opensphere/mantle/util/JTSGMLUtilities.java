@@ -174,8 +174,8 @@ public final class JTSGMLUtilities
         Coordinate[] coordinates = pLine.getCoordinates();
         for (int i = 0; i < coordinates.length; i++)
         {
-            positionListType.getValue().add(coordinates[i].x);
-            positionListType.getValue().add(coordinates[i].y);
+            positionListType.getValue().add(Double.valueOf(coordinates[i].x));
+            positionListType.getValue().add(Double.valueOf(coordinates[i].y));
         }
         returnLineStringType.setPosList(positionListType);
 
@@ -194,8 +194,8 @@ public final class JTSGMLUtilities
 
         DirectPositionType positionType = new DirectPositionType();
         positionType.setSrsDimension(new BigInteger("2"));
-        positionType.getValue().add(pPoint.getX());
-        positionType.getValue().add(pPoint.getY());
+        positionType.getValue().add(Double.valueOf(pPoint.getX()));
+        positionType.getValue().add(Double.valueOf(pPoint.getY()));
 
         returnPointType.setPos(positionType);
 

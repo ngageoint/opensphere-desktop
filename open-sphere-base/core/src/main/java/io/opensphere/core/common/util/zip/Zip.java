@@ -297,6 +297,7 @@ public class Zip
      *
      * @param zipFile - the output zip file
      * @param zipInputs - the list of {@link ZipInputAdapter} inputs
+     * @param pm the progress monitor to hook into
      * @param progressByFiles TODO
      * @throws FileNotFoundException
      * @throws IOException
@@ -471,10 +472,9 @@ public class Zip
      * Creates a recursive listing of adapters from a directory
      *
      * @param location
-     * @param basePath
      * @param directory
      * @param appendList
-     * @return
+     * @return list of input adapters
      */
     public static List<ZipInputAdapter> createAdaptersForDirectory(String location, File directory,
             List<ZipInputAdapter> appendList)
@@ -507,44 +507,93 @@ public class Zip
         return appendList;
     }
 
+    /** A ZipInputAdapter. */
     public static abstract class ZipInputAdapter
     {
+        /** Zip method. Defaults to DEFLATED. */
         int myMethod = ZipEntry.DEFLATED;
 
+        /**
+         * Constructor.
+         *
+         * @param method {@link ZipEntry} method
+         */
         public ZipInputAdapter(int method)
         {
             myMethod = method;
         }
 
+        /**
+         * Gets the method.
+         *
+         * @return the method
+         */
         public int getMethod()
         {
             return myMethod;
         }
 
+        /**
+         * Gets the location.
+         *
+         * @return the location
+         */
         public abstract String getLocation();
 
+        /**
+         * Gets the name.
+         *
+         * @return the name
+         */
         public abstract String getName();
 
+        /**
+         * Gets the size.
+         *
+         * @return the size
+         */
         public long getSize()
         {
             return 0;
         }
 
+        /**
+         * Gets the input stream.
+         *
+         * @return the stream
+         * @throws IOException
+         */
         public abstract InputStream getInputStream() throws IOException;
 
+        /**
+         * Closes the input stream.
+         *
+         * @throws IOException
+         */
         public void closeInputStream() throws IOException
         {
         };
     }
 
+    /** Instance of ZipInputAdapter that reads a file. */
     public static class ZipFileInputAdapter extends ZipInputAdapter
     {
+        /** The file. */
         File myFile;
 
+        /** The location of the file. */
         String myLocation;
 
+        /** The FileInputStream. */
         FileInputStream myFIS;
 
+        /**
+         * Constructor.
+         *
+         * @param location the location
+         * @param aFile the file object
+         * @param method the Zip method
+         */
         public ZipFileInputAdapter(String location, File aFile, int method)
         {
             super(method);
@@ -591,16 +640,29 @@ public class Zip
         }
     }
 
+    /** Instance of ZipInputAdapter that reads a byte array. */
     public static class ZipByteArrayInputAdapter extends ZipInputAdapter
     {
+        /** The location. */
         String myLocation;
 
+        /** The name. */
         String myName;
 
+        /** The ByteArrayInputStream. */
         ByteArrayInputStream myBAIS;
 
+        /** The byte array. */
         byte[] myByteArray;
 
+        /**
+         * Constructor.
+         *
+         * @param name the name
+         * @param location the location
+         * @param byteArray the byte array
+         * @param method the zip method
+         */
         public ZipByteArrayInputAdapter(String name, String location, byte[] byteArray, int method)
         {
             super(method);
@@ -643,6 +705,15 @@ public class Zip
 
     }
 
+    /**
+     * Zips files in a directory into a buffered byte array.
+     *
+     * @param dir the directory to read
+     * @param fileStrs the filenames to zip
+     * @return an output stream for the byte array
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public static ByteArrayOutputStream zipToBufferedOutput(File dir, String[] fileStrs) throws FileNotFoundException, IOException
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

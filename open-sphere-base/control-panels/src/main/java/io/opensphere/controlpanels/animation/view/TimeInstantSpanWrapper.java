@@ -41,7 +41,7 @@ public class TimeInstantSpanWrapper extends TimeInstantModel
     }
 
     @Override
-    public TimeInstant get()
+    public synchronized TimeInstant get()
     {
         return getInstant(mySpan.get());
     }
