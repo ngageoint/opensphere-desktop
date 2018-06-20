@@ -30,6 +30,8 @@ import io.opensphere.mantle.infinity.InfinityQuerier;
 import io.opensphere.mantle.infinity.InfinityUtilities;
 import io.opensphere.mantle.infinity.QueryResults;
 import io.opensphere.server.services.AbstractServerDataTypeInfo;
+import io.opensphere.server.services.OGCServiceStateEvent;
+import io.opensphere.server.source.OGCServerSource;
 
 /** Manages infinity layer count and icon. */
 public class InfinityLayerController extends AbstractViewTimeController
@@ -54,6 +56,7 @@ public class InfinityLayerController extends AbstractViewTimeController
     public InfinityLayerController(Toolbox toolbox)
     {
         super(toolbox);
+        bindEvent(OGCServiceStateEvent.class, this::handleOGCServiceStateEvent);
         bindEvent(DataTypeAddedEvent.class, this::handleDataTypeAdded);
         bindEvent(DataTypeRemovedEvent.class, this::handleDataTypeRemoved);
     }
@@ -118,6 +121,19 @@ public class InfinityLayerController extends AbstractViewTimeController
     }
 
     /**
+     * Handles a OGCServiceStateEvent.
+     *
+     * @param event the event
+     */
+    private void handleOGCServiceStateEvent(OGCServiceStateEvent event)
+    {
+        if (OGCServerSource.WFS_SERVICE.equals(event.getService()))
+        {
+            event.getLayerList().stream().filter(InfinityLayerController::isInfinityEnabled).forEach(this::setInfinityIcon);
+        }
+    }
+
+    /**
      * Handles a DataTypeAddedEvent.
      *
      * @param event the event
@@ -127,7 +143,6 @@ public class InfinityLayerController extends AbstractViewTimeController
         DataTypeInfo dataType = event.getDataType();
         if (isInfinityEnabled(dataType))
         {
-            setInfinityIcon(dataType);
             myInfinityDataTypes.add(dataType);
             triggerChange();
         }
@@ -166,7 +181,7 @@ public class InfinityLayerController extends AbstractViewTimeController
         if (!contains)
         {
             GenericFontIcon icon = new GenericFontIcon(AwesomeIconSolid.INFINITY, Color.WHITE, 12);
-            icon.setYPos(12);
+            icon.setXPos(3);
             assistant.getLayerIcons().add(icon);
         }
     }
