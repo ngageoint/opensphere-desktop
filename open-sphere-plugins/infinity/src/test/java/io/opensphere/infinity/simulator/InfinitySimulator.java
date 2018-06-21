@@ -30,6 +30,9 @@ public class InfinitySimulator extends AbstractServer
     /** Bin offset contained in numeric binning request*/
     private double myBinOffset = InfinityUtilities.DEFAULT_BIN_OFFSET;
 
+    /** Bin min_doc_count in numeric binning request*/
+    private double myMinDocCount = 1;
+
     /**
      * The main.
      *
@@ -62,6 +65,7 @@ public class InfinitySimulator extends AbstractServer
                 isNumericBin = true;
                 myBinWidth = request.getAggs().getBins().getHistogram().getInterval();
                 myBinOffset = request.getAggs().getBins().getHistogram().getOffset();
+                myMinDocCount = request.getAggs().getBins().getHistogram().getMinDocCount();
                 aggsField = request.getAggs().getBins().getHistogram().getField();
                 writeResponse(exchange, HttpURLConnection.HTTP_OK, getResponseBody(aggsField));
             }
@@ -147,16 +151,34 @@ public class InfinitySimulator extends AbstractServer
         {
             int maxBins = 10;
             int numberOfBins = (int)(Math.random() * maxBins) + 1;
+
+            if(myMinDocCount == 0)
+            {
+                //Make room for empty bin
+                numberOfBins++;
+            }
+
             @SuppressWarnings("unchecked")
             Bucket<Double>[] buckets = new Bucket[numberOfBins];
             int binCount = 1000;
             double binIndex = myBinOffset;
-            for (int i = 0; i < numberOfBins; i++)
+            boolean addEmptyBin = (myMinDocCount == 0);
+            int i = 0;
+            while (i < numberOfBins)
             {
                 buckets[i] = new Bucket<Double>(Double.valueOf(binIndex), binCount);
                 binIndex += myBinWidth;
                 totalCount += binCount;
                 binCount -= 100;
+                i++;
+
+                if(addEmptyBin)
+                {
+                    buckets[i] = new Bucket<Double>(Double.valueOf(binIndex), 0);
+                    binIndex += myBinWidth;
+                    addEmptyBin = false;
+                    i++;
+                }
             }
 
             Aggregations aggregations = new Aggregations();

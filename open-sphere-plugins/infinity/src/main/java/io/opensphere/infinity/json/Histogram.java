@@ -33,13 +33,13 @@ public class Histogram
      * @param missing the missing
      * @param offset the offset
      */
-    public Histogram(String field, double interval, long missing, double offset)
+    public Histogram(String field, double interval, long missing, double offset, int minDocCount)
     {
         myField = field;
         myInterval = interval;
         myMissing = missing;
         myOffset = offset;
-        myMinDocCount = 1;
+        myMinDocCount = minDocCount;
     }
 
     /**

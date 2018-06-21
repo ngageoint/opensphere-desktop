@@ -39,9 +39,9 @@ public class Bins
      * @param missing
      * @param offset
      */
-    public Bins(String field, double interval, long missing, double offset)
+    public Bins(String field, double interval, long missing, double offset, int minDocCount)
     {
-        myHistogram = new Histogram(field, interval, missing, offset);
+        myHistogram = new Histogram(field, interval, missing, offset, minDocCount);
     }
 
     /**

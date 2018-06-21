@@ -30,10 +30,13 @@ public class QueryParameters implements Serializable
     private Class<?> myBinFieldType;
 
     /** The width of the bins.  */
-    private double myBinWidth;
+    private Double myBinWidth;
 
     /** The offset of the bin. */
-    private double myBinOffset;
+    private Double myBinOffset;
+
+    /** The min doc count of the bin. This represents the minimum count needed to return a bin. */
+    private int myMinDocCount;
 
     /** The geometry field in the layer. */
     private String myGeomField;
@@ -133,7 +136,7 @@ public class QueryParameters implements Serializable
      *
      * @return the binWidth
      */
-    public double getBinWidth()
+    public Double getBinWidth()
     {
         return myBinWidth;
     }
@@ -143,7 +146,7 @@ public class QueryParameters implements Serializable
      *
      * @param binWidth the binWidth to set
      */
-    public void setBinWidth(double binWidth)
+    public void setBinWidth(Double binWidth)
     {
         myBinWidth = binWidth;
     }
@@ -153,7 +156,7 @@ public class QueryParameters implements Serializable
      *
      * @return the binOffset
      */
-    public double getBinOffset()
+    public Double getBinOffset()
     {
         return myBinOffset;
     }
@@ -163,7 +166,7 @@ public class QueryParameters implements Serializable
      *
      * @param binOffset the binOffset to set
      */
-    public void setBinOffset(double binOffset)
+    public void setBinOffset(Double binOffset)
     {
         myBinOffset = binOffset;
     }
@@ -246,6 +249,26 @@ public class QueryParameters implements Serializable
     public void setGeometryType(GeometryType geometryType)
     {
         myGeometryType = geometryType;
+    }
+
+    /**
+     * Get the minDocCount.
+     *
+     * @return the minDocCount
+     */
+    public int getMinDocCount()
+    {
+        return myMinDocCount;
+    }
+
+    /**
+     * Set the minDocCount
+     *
+     * @param minDocCount the minDocCount to set
+     */
+    public void setMinDocCount(int minDocCount)
+    {
+        myMinDocCount = minDocCount;
     }
 
     /** Geometry type. */

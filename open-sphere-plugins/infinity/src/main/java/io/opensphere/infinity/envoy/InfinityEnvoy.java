@@ -239,13 +239,14 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
                 field += ".keyword";
                 request.setAggs(new Aggs(field, 10000, InfinityUtilities.MISSING_VALUE));
             }
-            else if(Number.class.isAssignableFrom(parameters.getBinFieldType()))
+            else if (Number.class.isAssignableFrom(parameters.getBinFieldType()) && parameters.getBinWidth() != null
+                    && parameters.getBinOffset() != null)
             {
-                request.setAggs(new Aggs(field, parameters.getBinWidth(), InfinityUtilities.MISSING_VALUE, parameters.getBinOffset()));
+                request.setAggs(new Aggs(field, parameters.getBinWidth().doubleValue(), InfinityUtilities.MISSING_VALUE,
+                        parameters.getBinOffset().doubleValue(), parameters.getMinDocCount()));
             }
             else
             {
-                LOGGER.warn("Unhandled bin field type during infinity search request: " + parameters.getBinFieldType());
                 request.setAggs(new Aggs(field, 10000, InfinityUtilities.MISSING_VALUE));
             }
         }

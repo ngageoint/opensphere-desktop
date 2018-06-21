@@ -33,9 +33,9 @@ public class Aggs
      * @param missing
      * @param offset
      */
-    public Aggs(String field, double interval, long missing, double offset)
+    public Aggs(String field, double interval, long missing, double offset, int minDocCount)
     {
-        myBins = new Bins(field, interval, missing, offset);
+        myBins = new Bins(field, interval, missing, offset, minDocCount);
     }
 
     /**
