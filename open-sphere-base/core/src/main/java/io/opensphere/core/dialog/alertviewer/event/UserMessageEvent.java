@@ -1,11 +1,10 @@
 package io.opensphere.core.dialog.alertviewer.event;
 
-import javax.annotation.concurrent.Immutable;
-
 import io.opensphere.core.event.AbstractSingleStateEvent;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.event.SourceableEvent;
 import io.opensphere.core.util.Utilities;
+import net.jcip.annotations.Immutable;
 
 /**
  * The Class UserMessageEvent.

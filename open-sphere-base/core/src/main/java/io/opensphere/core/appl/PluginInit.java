@@ -19,8 +19,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.concurrent.GuardedBy;
-
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -38,6 +36,7 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.predicate.InPredicate;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Initializer for plug-ins.

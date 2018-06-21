@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.renderproperties.BaseRenderProperties;
 import io.opensphere.core.geometry.renderproperties.DefaultPolygonRenderProperties;
@@ -240,8 +239,9 @@ public abstract class AbstractEllipseFeatureVisualizationStyle extends AbstractL
         List<AbstractStyleParameterEditorPanel> paramList = New.list();
         MutableVisualizationStyle style = panel.getChangedStyle();
 
-        paramList.add(new CheckBoxStyleParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder("Show Ellipse Only When Selected"), style,
-                ourEllipseShowOnSelectPropertyKey, true));
+        paramList.add(
+                new CheckBoxStyleParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder("Show Ellipse Only When Selected"),
+                        style, ourEllipseShowOnSelectPropertyKey, true));
         paramList.add(new CheckBoxStyleParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder("Ellipsoid"), style,
                 ourEllipsoidPropertyKey, false));
 
@@ -279,7 +279,7 @@ public abstract class AbstractEllipseFeatureVisualizationStyle extends AbstractL
     }
 
     @Override
-    @Nonnull
+    @NonNull
     public GroupedStyleParameterEditorPanel getUIPanel()
     {
         GroupedStyleParameterEditorPanel panel = super.getUIPanel();
@@ -292,8 +292,8 @@ public abstract class AbstractEllipseFeatureVisualizationStyle extends AbstractL
                 ourEllipseShowOnSelectPropertyKey, true));
 
         param = style.getStyleParameter(ourEllipsoidPropertyKey);
-        paramList.add(new CheckBoxStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style,
-                ourEllipsoidPropertyKey, true));
+        paramList.add(
+                new CheckBoxStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style, ourEllipsoidPropertyKey, true));
 
         PanelBuilder pb = PanelBuilder.get("Edge Line");
         pb.setOtherParameter(CheckBoxFloatSliderStyleParameterEditorPanel.POST_CHECKBOX_LABEL, "Width");

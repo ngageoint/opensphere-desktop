@@ -5,11 +5,10 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.renderproperties.BlendingConfigGL;
 import io.opensphere.core.geometry.renderproperties.FragmentShaderProperties;
@@ -232,7 +231,7 @@ public abstract class AbstractTileVisualizationStyle extends AbstractVisualizati
 //    }
 
     @Override
-    @Nonnull
+    @NonNull
     public GroupedMiniStyleEditorPanel getMiniUIPanel()
     {
         GroupedMiniStyleEditorPanel panel = new GroupedMiniStyleEditorPanel(this);
@@ -240,7 +239,7 @@ public abstract class AbstractTileVisualizationStyle extends AbstractVisualizati
     }
 
     @Override
-    @Nonnull
+    @NonNull
     public GroupedStyleParameterEditorPanel getUIPanel()
     {
         GroupedStyleParameterEditorPanel aPanel = new GroupedStyleParameterEditorPanel(this, true);

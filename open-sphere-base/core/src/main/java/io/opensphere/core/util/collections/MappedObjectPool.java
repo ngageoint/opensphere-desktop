@@ -10,13 +10,12 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.apache.log4j.Logger;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.util.collections.LimitedFertilityBlockingQueue.Factory;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * A pool that can create objects according to a key as necessary up to a limit
@@ -344,7 +343,7 @@ public class MappedObjectPool<K, V>
      * @param key The key.
      * @return The queue.
      */
-    @Nonnull
+    @NonNull
     protected LimitedFertilityBlockingQueue<V> getQueue(K key)
     {
         return myMap.get(key);

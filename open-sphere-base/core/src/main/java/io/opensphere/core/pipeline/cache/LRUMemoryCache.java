@@ -13,8 +13,8 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import net.jcip.annotations.GuardedBy;
 
 import io.opensphere.core.metrics.MetricsRegistry;
 import io.opensphere.core.pipeline.cache.CacheContentListener.CacheContentEvent;

@@ -5,9 +5,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.model.time.TimeSpanList;
 import io.opensphere.core.units.duration.Duration;
@@ -308,7 +307,7 @@ public interface TimeManager
          *
          * @return The primary active time spans.
          */
-        @Nonnull
+        @NonNull
         TimeSpanList getPrimary();
 
         /**
@@ -317,7 +316,7 @@ public interface TimeManager
          *
          * @return The secondary active time spans.
          */
-        @Nonnull
+        @NonNull
         Map<Object, Collection<? extends TimeSpan>> getSecondary();
     }
 

@@ -2,7 +2,7 @@ package io.opensphere.stkterrain.model.mesh;
 
 import java.nio.ByteBuffer;
 
-import javax.annotation.concurrent.Immutable;
+import net.jcip.annotations.Immutable;
 
 /** 32 bit Edge Indices. */
 @Immutable

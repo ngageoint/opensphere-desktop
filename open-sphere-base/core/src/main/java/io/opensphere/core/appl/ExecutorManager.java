@@ -15,10 +15,9 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-import javax.annotation.Nullable;
-
 import org.apache.log4j.Logger;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.MemoryManager;
 import io.opensphere.core.MemoryManager.MemoryListener;
 import io.opensphere.core.MemoryManager.Status;

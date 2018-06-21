@@ -17,7 +17,6 @@ import java.util.ServiceLoader;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
-import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -26,6 +25,7 @@ import javax.imageio.stream.ImageInputStream;
 
 import org.apache.log4j.Logger;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.opensphere.core.image.DDSEncoder.EncodingException;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.LazyMap;
@@ -785,7 +785,7 @@ public class ImageIOImage extends Image implements DDSEncodableImage
         private final int myHeight;
 
         /** The image type. */
-        @Nonnull
+        @NonNull
         private final ImageTypeSpecifier myImageType;
 
         /** The image height. */

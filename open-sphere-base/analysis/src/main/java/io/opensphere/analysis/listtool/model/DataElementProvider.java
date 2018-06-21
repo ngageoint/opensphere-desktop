@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.IntFunction;
 
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.NotThreadSafe;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.NotThreadSafe;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableModel;
 

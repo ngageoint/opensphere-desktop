@@ -1,6 +1,6 @@
 package io.opensphere.core.timeline;
 
-import javax.annotation.concurrent.Immutable;
+import net.jcip.annotations.Immutable;
 
 import io.opensphere.core.model.time.TimeSpan;
 

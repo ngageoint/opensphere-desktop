@@ -1,6 +1,6 @@
 package io.opensphere.core.geometry.constraint;
 
-import javax.annotation.concurrent.Immutable;
+import net.jcip.annotations.Immutable;
 
 import io.opensphere.core.model.time.TimeSpan;
 

@@ -74,7 +74,7 @@
 		<sonar.jacoco.itReportPath>${project.build.directory}/jacoco-it.exec</sonar.jacoco.itReportPath>
 		<output.directory>../target/child_modules</output.directory>
 		<application.display.name>OpenSphere Desktop</application.display.name>
-		<deployment.repository.name>local</deployment.repository.name>
+		<deployment.repository.name>localRepo</deployment.repository.name>
 		<deployment.repository.url>file:///${project.build.directory}/.m2/repository</deployment.repository.url>
 		<project.checkstyle.suppressions.file>project-checkstyle-suppressions.xml</project.checkstyle.suppressions.file>
 		<checkstyle.config.location>${session.executionRootDirectory}/src/main/resources/checkstyle-config.xml</checkstyle.config.location>

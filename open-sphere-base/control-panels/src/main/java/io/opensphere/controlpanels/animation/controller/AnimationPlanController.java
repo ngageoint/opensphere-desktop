@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Objects;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.swing.Timer;
 
 import io.opensphere.controlpanels.animation.model.AnimationModel;

@@ -1,6 +1,6 @@
 package io.opensphere.core.geometry.renderproperties;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 import io.opensphere.core.math.Matrix4d;
 

@@ -3,11 +3,10 @@ package io.opensphere.core.geometry;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
 
+import edu.umd.cs.findbugs.annotations.OverrideMustInvoke;
 import io.opensphere.core.geometry.renderproperties.ZOrderRenderProperties;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
@@ -160,7 +159,7 @@ public abstract class AbstractGeometry implements Geometry
      *
      * @return The builder.
      */
-    @OverridingMethodsMustInvokeSuper
+    @OverrideMustInvoke
     protected Builder doCreateBuilder()
     {
         Builder builder = createRawBuilder();

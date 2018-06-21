@@ -3,7 +3,7 @@ package io.opensphere.auxiliary.video;
 import java.io.Closeable;
 import java.io.InputStream;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import net.jcip.annotations.NotThreadSafe;
 
 import com.xuggle.xuggler.IContainer;
 import com.xuggle.xuggler.IError;

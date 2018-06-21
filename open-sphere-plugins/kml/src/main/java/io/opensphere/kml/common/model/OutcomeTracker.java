@@ -1,6 +1,6 @@
 package io.opensphere.kml.common.model;
 
-import javax.annotation.concurrent.ThreadSafe;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * Tracks outcomes. This uses synchronization instead of atomic classes in order

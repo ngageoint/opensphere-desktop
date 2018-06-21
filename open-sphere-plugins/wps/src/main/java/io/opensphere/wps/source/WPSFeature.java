@@ -7,8 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.opensphere.core.model.LatLonAlt;
 
 /** A WPS feature over a particular region. */
@@ -127,7 +126,7 @@ public class WPSFeature
      *
      * @return timeInstant The time instant.
      */
-    @Nonnull
+    @NonNull
     public Date getTimeInstant()
     {
         return new Date(myTimeInstant.getTime());

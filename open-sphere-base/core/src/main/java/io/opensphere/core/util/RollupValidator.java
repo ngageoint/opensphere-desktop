@@ -3,7 +3,7 @@ package io.opensphere.core.util;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.annotation.concurrent.ThreadSafe;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * A validator that rolls up the status of other validators.
