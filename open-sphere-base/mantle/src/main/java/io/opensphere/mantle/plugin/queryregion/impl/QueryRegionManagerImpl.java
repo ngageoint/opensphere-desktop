@@ -159,7 +159,7 @@ public class QueryRegionManagerImpl extends EventListenerService implements Quer
             if (event.getFocusType() == FocusType.HOVER_GAINED && types.stream().anyMatch(t -> t.isQueryable()))
             {
                 myQueryRegions.forEach(r -> r.getGeometries().forEach(
-                    g -> g.getRenderProperties().setHidden(!types.stream().anyMatch(t -> r.appliesToType(t.getTypeKey())))));
+                        g -> g.getRenderProperties().setHidden(!types.stream().anyMatch(t -> r.appliesToType(t.getTypeKey())))));
             }
             else
             {
@@ -302,6 +302,12 @@ public class QueryRegionManagerImpl extends EventListenerService implements Quer
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.plugin.selection.SelectionCommandProcessor#selectionOccurred(java.util.Collection,
+     *      io.opensphere.mantle.plugin.selection.SelectionCommand)
+     */
     @Override
     public void selectionOccurred(Collection<? extends PolygonGeometry> bounds, SelectionCommand cmd)
     {
@@ -370,13 +376,13 @@ public class QueryRegionManagerImpl extends EventListenerService implements Quer
     }
 
     /**
-     * Derive some orange query polygons from the input polygons.
+     * {@inheritDoc}
      *
-     * @param input The input polyons.
-     * @param dotted If the polygons' lines should be dotted.
-     * @return The output polygons.
+     * @see io.opensphere.mantle.plugin.queryregion.QueryRegionManager#deriveQueryPolygons(java.util.Collection,
+     *      boolean)
      */
-    private Collection<? extends PolygonGeometry> deriveQueryPolygons(Collection<? extends PolygonGeometry> input, boolean dotted)
+    @Override
+    public Collection<? extends PolygonGeometry> deriveQueryPolygons(Collection<? extends PolygonGeometry> input, boolean dotted)
     {
         // Do not derive new polygons if the input polygons are already known.
         // This used to check against getQueryRegions().containsAll(input) but
