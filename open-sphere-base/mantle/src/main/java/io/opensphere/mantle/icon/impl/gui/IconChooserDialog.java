@@ -89,13 +89,13 @@ public class IconChooserDialog extends JDialog
         myToolbox = tb;
         setTitle("Icon Chooser");
         setSize(new Dimension(800, 600));
-
+        setMinimumSize(new Dimension(600,400));
         JPopupMenu puMenu = new JPopupMenu();
         puMenu.add(newMenuItem("Add To Favorites", e -> addToFavorites()));
-        puMenu.add(newMenuItem("Rotate Icon...", e -> showRotateDialog()));
-        puMenu.add(newMenuItem("Delete Icon...", e -> deleteSelected()));
+        puMenu.add(newMenuItem("Rotate Icon", e -> showRotateDialog()));
+        puMenu.add(newMenuItem("Delete Icon", e -> deleteSelected()));
 
-        JButton buildIcon = new JButton("Build New Icon...");
+        JButton buildIcon = new JButton("Build New Icon");
         buildIcon.addActionListener(e -> showBuilderDialog());
 
         myChooserPanel = new IconChooserPanel(tb, false, true, puMenu, null, buildIcon);
@@ -109,7 +109,7 @@ public class IconChooserDialog extends JDialog
         closeButton.addActionListener(e -> close(CANCELLED));
         closePanel.add(Box.createHorizontalGlue());
         closePanel.add(closeButton);
-        closePanel.add(Box.createHorizontalStrut(50));
+        closePanel.add(Box.createHorizontalStrut(-5));
         closePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         mySelectionListener = e -> close(ICON_SELECTED);
@@ -165,7 +165,11 @@ public class IconChooserDialog extends JDialog
      */
     private void close(String actionCommand)
     {
-        setVisible(false);
+        if (actionCommand == CANCELLED)
+        {
+            setVisible(false);
+        }
+
         fireActionPerformed(new ActionEvent(this, 0, actionCommand));
     }
 
@@ -217,9 +221,9 @@ public class IconChooserDialog extends JDialog
         if (record != null)
         {
             int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the selected icon?\n"
-                    + "The icon file on your computer will not be deleted \n" + "but the application will no longer remember it.",
-                    "Delete Icon Confirmation", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (result == JOptionPane.OK_OPTION)
+                    + "\nThe icon file on your computer will not be deleted \n" + "but the application will no longer remember it.",
+                    "Delete Icon Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (result == JOptionPane.YES_OPTION)
             {
                 MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().removeIcon(record, this);
                 myChooserPanel.refreshFromRegistry(record.getCollectionName());

@@ -5,11 +5,6 @@ import static io.opensphere.core.util.fx.FXUtilities.toAwtColor;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JOptionPane;
-
-import io.opensphere.core.image.processor.RotateImageProcessor;
-import io.opensphere.core.util.FontIconEnum;
-import io.opensphere.core.util.swing.GenericFontIcon;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.embed.swing.SwingFXUtils;
@@ -31,6 +26,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+
+import javax.swing.JOptionPane;
+
+import io.opensphere.core.image.processor.RotateImageProcessor;
+import io.opensphere.core.util.FontIconEnum;
+import io.opensphere.core.util.swing.GenericFontIcon;
 
 /** Panel for building custom icons. */
 public class IconBuilderPane extends BorderPane
@@ -59,6 +60,8 @@ public class IconBuilderPane extends BorderPane
     /** The AWT Window that owns this pane. */
     private final Window myOwner;
 
+    /** The spinner width. */
+    private final double spinwidth = 40.0;
     /**
      * Constructs a new IconBuilderPane.
      *
@@ -96,7 +99,17 @@ public class IconBuilderPane extends BorderPane
     {
         HBox box = new HBox();
 
-        Button button = new Button("Select an Icon...");
+        Spinner<Number> sizeSpinner = new Spinner<>(12, 200, 200);
+        sizeSpinner.setPrefWidth(spinwidth);
+        sizeSpinner.getValueFactory().valueProperty().bindBidirectional(mySize);
+        sizeSpinner.setEditable(true);
+        sizeSpinner.getStyleClass().clear();
+
+        Label sizeLabel = new Label("Size: ", sizeSpinner);
+        sizeLabel.setContentDisplay(ContentDisplay.RIGHT);
+        //AnchorPane.setRightAnchor(sizeLabel, 50.);
+
+        Button button = new Button("Select an Icon");
         button.setOnAction((evt) ->
         {
             IconBuilderChoiceDialog iconChoice = new IconBuilderChoiceDialog();
@@ -107,10 +120,11 @@ public class IconBuilderPane extends BorderPane
                 updateImageView(iconChoice.getValue());
             }
         });
+        //AnchorPane.setLeftAnchor(button, 10.);
 
         myColorPicker = new ColorPicker();
 
-        box.getChildren().addAll(button, myColorPicker);
+        box.getChildren().addAll(button, myColorPicker, sizeLabel, sizeSpinner);
 
         return box;
     }
@@ -133,12 +147,17 @@ public class IconBuilderPane extends BorderPane
         slider.valueProperty().bindBidirectional(myRotation);
 
         Spinner<Number> spinner = new Spinner<>(-180, 180, 0);
-        spinner.setPrefWidth(80);
+        spinner.setPrefWidth(spinwidth);
         spinner.getValueFactory().valueProperty().bindBidirectional(myRotation);
+        spinner.setEditable(true);
+        spinner.getStyleClass().clear();
+
+        Label rotLabel = new Label("Rotation: ", spinner);
+        rotLabel.setContentDisplay(ContentDisplay.BOTTOM);
 
         VBox.setVgrow(slider, Priority.ALWAYS);
         VBox.setVgrow(spinner, Priority.NEVER);
-        box.getChildren().addAll(slider, spinner);
+        box.getChildren().addAll(slider, rotLabel, spinner);
 
         return box;
     }
@@ -151,36 +170,34 @@ public class IconBuilderPane extends BorderPane
     private VBox createBottom()
     {
         VBox box = new VBox();
-        box.setAlignment(Pos.TOP_CENTER);
+        box.setAlignment(Pos.TOP_LEFT);
 
         HBox controlBox = new HBox(10);
-        controlBox.setAlignment(Pos.BASELINE_CENTER);
-
-        Spinner<Number> sizeSpinner = new Spinner<>(12, 200, 200);
-        sizeSpinner.setPrefWidth(70);
-        sizeSpinner.getValueFactory().valueProperty().bindBidirectional(mySize);
+        controlBox.setAlignment(Pos.BASELINE_LEFT);
 
         Spinner<Number> xSpinner = new Spinner<>(-100, 100, 0);
-        xSpinner.setPrefWidth(70);
+        xSpinner.setPrefWidth(spinwidth);
         xSpinner.getValueFactory().valueProperty().bindBidirectional(myXPos);
+        xSpinner.setEditable(true);
+        xSpinner.getStyleClass().clear();
 
         Spinner<Number> ySpinner = new Spinner<>(0, 200, 0);
-        ySpinner.setPrefWidth(70);
+        ySpinner.setPrefWidth(spinwidth);
         ySpinner.getValueFactory().valueProperty().bindBidirectional(myYPos);
+        ySpinner.setEditable(true);
+        ySpinner.getStyleClass().clear();
 
-        Label sizeLabel = new Label("Size: ", sizeSpinner);
-        sizeLabel.setContentDisplay(ContentDisplay.RIGHT);
 
-        Label xLabel = new Label("X: ", xSpinner);
+        Label xLabel = new Label("Position:  X: ", xSpinner);
         xLabel.setContentDisplay(ContentDisplay.RIGHT);
 
         Label yLabel = new Label("Y: ", ySpinner);
         yLabel.setContentDisplay(ContentDisplay.RIGHT);
 
-        controlBox.getChildren().addAll(sizeLabel, sizeSpinner, xLabel, xSpinner, yLabel, ySpinner);
+        controlBox.getChildren().addAll(xLabel, xSpinner, yLabel, ySpinner);
 
         Label helpInfo = new Label("Saved icons will appear under the 'User Added' menu.");
-        helpInfo.setFont(Font.font(helpInfo.getFont().getFamily(), FontPosture.ITALIC, 10));
+        helpInfo.setFont(Font.font(helpInfo.getFont().getFamily(), FontPosture.ITALIC, 11));
 
         box.getChildren().addAll(controlBox, helpInfo);
 

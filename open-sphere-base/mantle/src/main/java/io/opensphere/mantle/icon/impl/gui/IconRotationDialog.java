@@ -1,5 +1,6 @@
 package io.opensphere.mantle.icon.impl.gui;
 
+import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -46,6 +47,7 @@ public class IconRotationDialog extends JFXDialog
         super(owner, "Rotate Icon");
         myIconRegistry = iconRegistry;
         myChooserPanel = chooserPanel;
+        setMinimumSize(new Dimension(310, 200));
         IconRotationPane pane = new IconRotationPane(record);
         setFxNode(pane);
         setAcceptEar(() -> saveRotatedIcon(record, pane.getRotation()));
