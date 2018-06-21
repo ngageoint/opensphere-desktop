@@ -85,7 +85,6 @@ public class RangeBinner<T> extends AbstractBinner<T>
         return bin;
     }
 
-    @SuppressWarnings("null")
     @Override
     protected List<Bin<T>> createEmptyBins(int index, Bin<T> bin)
     {

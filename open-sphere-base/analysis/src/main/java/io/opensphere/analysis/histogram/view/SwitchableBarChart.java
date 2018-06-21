@@ -4,21 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.opensphere.analysis.base.model.BinType;
-import io.opensphere.analysis.base.model.DataType;
-import io.opensphere.analysis.base.model.LabelModel;
-import io.opensphere.analysis.base.model.LabelType;
-import io.opensphere.analysis.base.model.Orientation;
-import io.opensphere.analysis.base.model.SettingsModel;
-import io.opensphere.analysis.base.model.ToolModels;
-import io.opensphere.analysis.base.model.UIBin;
-import io.opensphere.analysis.binning.criteria.TimeBinType;
-import io.opensphere.core.dialog.alertviewer.event.Message;
-import io.opensphere.core.dialog.alertviewer.event.Type;
-import io.opensphere.core.units.duration.Days;
-import io.opensphere.core.util.ColorUtilities;
-import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.fx.FXUtilities;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -35,6 +20,22 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.StringConverter;
+
+import io.opensphere.analysis.base.model.BinType;
+import io.opensphere.analysis.base.model.DataType;
+import io.opensphere.analysis.base.model.LabelModel;
+import io.opensphere.analysis.base.model.LabelType;
+import io.opensphere.analysis.base.model.Orientation;
+import io.opensphere.analysis.base.model.SettingsModel;
+import io.opensphere.analysis.base.model.ToolModels;
+import io.opensphere.analysis.base.model.UIBin;
+import io.opensphere.analysis.binning.criteria.TimeBinType;
+import io.opensphere.core.dialog.alertviewer.event.Message;
+import io.opensphere.core.dialog.alertviewer.event.Type;
+import io.opensphere.core.units.duration.Days;
+import io.opensphere.core.util.ColorUtilities;
+import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.fx.FXUtilities;
 
 /**
  * BarChart that can have the orientation changed. Currently this is not

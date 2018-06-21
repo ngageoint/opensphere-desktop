@@ -2,7 +2,12 @@ package io.opensphere.mantle.data.geom.style.impl;
 
 import io.opensphere.mantle.data.geom.style.impl.ui.FloatSliderStyleParameterEditorPanel.BasicIntFloatConvertor;
 
-/** Accessor class for label converters. */
+/**
+ * Accessor class for label converters.
+ *
+ * @todo This class should be used in place of duplicated convertor instances in
+ *       other VisualizationStyles.
+ */
 public final class VisualizationStyleLabelConverters
 {
     /** A convertor with basic percentage labeling. */
