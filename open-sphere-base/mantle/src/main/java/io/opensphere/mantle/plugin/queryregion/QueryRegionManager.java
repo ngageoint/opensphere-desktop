@@ -83,6 +83,15 @@ public interface QueryRegionManager
     void addQueryRegionListener(QueryRegionListener listener);
 
     /**
+     * Derive some orange query polygons from the input polygons.
+     *
+     * @param input The input polygons.
+     * @param dotted If the polygons' lines should be dotted.
+     * @return The output polygons.
+     */
+    Collection<? extends PolygonGeometry> deriveQueryPolygons(Collection<? extends PolygonGeometry> input, boolean dotted);
+
+    /**
      * Get a query region that has been added with the given geometry.
      *
      * @param geom The geometry.
