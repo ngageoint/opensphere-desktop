@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.renderproperties.BaseRenderProperties;
@@ -215,7 +214,7 @@ public abstract class AbstractPathVisualizationStyle extends AbstractFeatureVisu
     }
 
     @Override
-    @Nonnull
+    @NonNull
     public GroupedStyleParameterEditorPanel getUIPanel()
     {
         GroupedStyleParameterEditorPanel panel = super.getUIPanel();

@@ -9,10 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
 import org.apache.log4j.Logger;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.AbstractRenderableGeometry;
 import io.opensphere.core.geometry.Geometry;
@@ -580,7 +579,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      * @see io.opensphere.mantle.data.geom.style.VisualizationStyle#getMiniUIPanel()
      */
     @Override
-    @Nonnull
+    @NonNull
     public GroupedMiniStyleEditorPanel getMiniUIPanel()
     {
         GroupedMiniStyleEditorPanel panel = new GroupedMiniStyleEditorPanel(this);
@@ -642,7 +641,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      * @see io.opensphere.mantle.data.geom.style.impl.AbstractVisualizationStyle#getUIPanel()
      */
     @Override
-    @Nonnull
+    @NonNull
     public GroupedStyleParameterEditorPanel getUIPanel()
     {
         GroupedStyleParameterEditorPanel panel = new GroupedStyleParameterEditorPanel(this, true);

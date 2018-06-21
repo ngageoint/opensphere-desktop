@@ -2,8 +2,7 @@ package io.opensphere.core.api.adapter;
 
 import java.awt.Point;
 
-import javax.annotation.Nullable;
-
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.preferences.Preferences;
 

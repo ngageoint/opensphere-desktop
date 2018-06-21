@@ -3,10 +3,9 @@ package io.opensphere.core.dialog.alertviewer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.annotation.concurrent.Immutable;
-
 import io.opensphere.core.dialog.alertviewer.event.Type;
 import io.opensphere.core.util.DateTimeFormats;
+import net.jcip.annotations.Immutable;
 
 /** Alert bean. */
 @Immutable

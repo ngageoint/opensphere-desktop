@@ -4,8 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import javax.annotation.Nullable;
-
+import edu.umd.cs.findbugs.annotations.Nullable;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.opensphere.core.animation.AnimationState;
 import io.opensphere.core.animation.AnimationState.Direction;
@@ -351,8 +350,9 @@ public class DefaultContinuousAnimationPlan extends DefaultAnimationPlan impleme
      */
     public AnimationState getFinalState(DefaultContinuousAnimationState state)
     {
-        /* If step size is months/years, give up. Ideally we would calculate the final state in this case, but the math would be
-         * hard and is probably not worth it. */
+        /* If step size is months/years, give up. Ideally we would calculate the
+         * final state in this case, but the math would be hard and is probably
+         * not worth it. */
         if (!getAdvanceDuration().isConvertibleTo(Milliseconds.class))
         {
             return null;
@@ -466,7 +466,8 @@ public class DefaultContinuousAnimationPlan extends DefaultAnimationPlan impleme
 
             /* Because of different month lengths, we can end up with the case
              * that nextStart.plus(getActiveWindowDuration).equals(nextEnd) is
-             * not true, so this logic is here in an attempt to make that true. */
+             * not true, so this logic is here in an attempt to make that
+             * true. */
             nextStart = nextEnd.minus(getActiveWindowDuration());
             TimeInstant possibleEnd = nextStart.plus(myActiveWindowDuration);
             if (possibleEnd.isAfter(ts.getEndInstant()))

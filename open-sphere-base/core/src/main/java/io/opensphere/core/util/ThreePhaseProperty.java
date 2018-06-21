@@ -3,7 +3,7 @@ package io.opensphere.core.util;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
-import javax.annotation.concurrent.ThreadSafe;
+import net.jcip.annotations.ThreadSafe;
 
 import io.opensphere.core.util.ref.Reference;
 

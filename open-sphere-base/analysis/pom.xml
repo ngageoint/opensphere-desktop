@@ -34,6 +34,12 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+		</dependency>
+		
+		<!-- Unused but required for reflection -->
+		<dependency>
 		    <groupId>com.sun.xml.bind</groupId>
 		    <artifactId>jaxb-impl</artifactId>
 		</dependency>
@@ -41,7 +47,32 @@
 		    <groupId>com.sun.xml.bind</groupId>
 		    <artifactId>jaxb-core</artifactId>
 		</dependency>
+		<!-- /unused -->
 		
+		<dependency>
+			<groupId>com.vividsolutions</groupId>
+			<artifactId>jts-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.jcip</groupId>
+			<artifactId>jcip-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.trove4j</groupId>
+			<artifactId>trove4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.swinglabs</groupId>
+			<artifactId>swingx</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>io.open-sphere</groupId>
 			<artifactId>core</artifactId>
@@ -49,10 +80,6 @@
 		<dependency>
 			<groupId>io.open-sphere</groupId>
 			<artifactId>mantle</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
 		</dependency>
 	</dependencies>
 </project>

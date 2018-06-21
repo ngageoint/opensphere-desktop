@@ -4,7 +4,7 @@ import java.awt.Window;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.annotation.concurrent.ThreadSafe;
+import net.jcip.annotations.ThreadSafe;
 import javax.swing.JDialog;
 
 import io.opensphere.core.util.ThreadConfined;

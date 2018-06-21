@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
+import edu.umd.cs.findbugs.annotations.OverrideMustInvoke;
 import io.opensphere.core.geometry.renderproperties.ZOrderRenderProperties;
 import io.opensphere.core.model.BoundingBox;
 import io.opensphere.core.model.GeoScreenBoundingBox;
@@ -588,7 +587,7 @@ public abstract class AbstractTileGeometry<E extends AbstractTileGeometry<? supe
 
     @Override
     @SuppressWarnings("unchecked")
-    @OverridingMethodsMustInvokeSuper
+    @OverrideMustInvoke
     protected Builder<Position> doCreateBuilder()
     {
         Builder<Position> builder = (Builder<Position>)super.doCreateBuilder();

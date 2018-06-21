@@ -3,7 +3,7 @@ package io.opensphere.wps.envoy;
 import java.io.InputStream;
 import java.util.Map;
 
-import javax.annotation.concurrent.GuardedBy;
+import net.jcip.annotations.GuardedBy;
 
 import org.apache.log4j.Logger;
 

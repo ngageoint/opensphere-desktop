@@ -29,8 +29,28 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.github.spotbugs</groupId>
+			<artifactId>spotbugs-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vividsolutions</groupId>
+			<artifactId>jts-core</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.jcip</groupId>
+			<artifactId>jcip-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.trove4j</groupId>
+			<artifactId>trove4j</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.open-sphere</groupId>
@@ -41,16 +61,15 @@
 			<artifactId>xuggler</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.open-sphere.xuggle</groupId>
-			<artifactId>native</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>io.open-sphere.hatbox</groupId>
 			<artifactId>hatbox</artifactId>
 		</dependency>
+		
+		<!-- Unused but required -->
+		<dependency>
+			<groupId>io.open-sphere.xuggle</groupId>
+			<artifactId>native</artifactId>
+		</dependency>
+		<!-- /unused -->
 	</dependencies>
 </project>

@@ -4,8 +4,7 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.FrustumGeometry;
 import io.opensphere.core.geometry.Geometry;
@@ -242,7 +241,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
     public abstract float getMaxHeight();
 
     @Override
-    @Nonnull
+    @NonNull
     public GroupedMiniStyleEditorPanel getMiniUIPanel()
     {
         GroupedMiniStyleEditorPanel panel = super.getMiniUIPanel();
@@ -346,7 +345,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
     }
 
     @Override
-    @Nonnull
+    @NonNull
     public GroupedStyleParameterEditorPanel getUIPanel()
     {
         GroupedStyleParameterEditorPanel panel = super.getUIPanel();

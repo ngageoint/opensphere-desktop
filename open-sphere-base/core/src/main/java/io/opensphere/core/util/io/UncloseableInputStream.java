@@ -3,8 +3,7 @@ package io.opensphere.core.util.io;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.annotation.Nonnull;
-
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.opensphere.core.util.Utilities;
 
 /**
@@ -21,7 +20,7 @@ public class UncloseableInputStream extends InputStream
      *
      * @param wrappedStream The wrapped stream.
      */
-    public UncloseableInputStream(@Nonnull InputStream wrappedStream)
+    public UncloseableInputStream(@NonNull InputStream wrappedStream)
     {
         Utilities.checkNull(wrappedStream, "wrappedStream");
 

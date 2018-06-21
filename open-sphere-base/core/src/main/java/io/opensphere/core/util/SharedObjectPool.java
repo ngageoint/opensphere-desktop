@@ -16,7 +16,7 @@ import io.opensphere.core.util.ref.WeakReference;
  *
  * @param <T> The type of object in the pool.
  */
-@javax.annotation.concurrent.ThreadSafe
+@net.jcip.annotations.ThreadSafe
 public class SharedObjectPool<T>
 {
     /** Map of objects. */

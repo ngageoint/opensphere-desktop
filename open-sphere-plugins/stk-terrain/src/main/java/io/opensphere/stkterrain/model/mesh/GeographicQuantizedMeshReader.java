@@ -3,7 +3,7 @@ package io.opensphere.stkterrain.model.mesh;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.concurrent.Immutable;
+import net.jcip.annotations.Immutable;
 
 import io.opensphere.core.math.Plane;
 import io.opensphere.core.math.Vector3d;

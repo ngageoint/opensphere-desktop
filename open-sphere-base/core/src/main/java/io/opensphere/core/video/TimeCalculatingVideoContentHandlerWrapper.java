@@ -2,7 +2,7 @@ package io.opensphere.core.video;
 
 import java.util.function.Consumer;
 
-import javax.annotation.concurrent.GuardedBy;
+import net.jcip.annotations.GuardedBy;
 
 import org.apache.log4j.Logger;
 

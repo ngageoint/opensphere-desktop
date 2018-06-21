@@ -7,13 +7,13 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 
-import javax.annotation.Nullable;
 import javax.swing.JComponent;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.MenuOption;
 import io.opensphere.core.util.XMLUtilities;

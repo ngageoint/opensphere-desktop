@@ -3,10 +3,9 @@ package io.opensphere.core.datafilter.columns;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.annotation.concurrent.Immutable;
-
 import io.opensphere.core.util.lang.HashCodeHelper;
 import io.opensphere.core.util.lang.ToStringHelper;
+import net.jcip.annotations.Immutable;
 
 /** ColumnMapping bean. */
 @Immutable
@@ -91,8 +90,7 @@ public class ColumnMapping implements Serializable
             return false;
         }
         ColumnMapping other = (ColumnMapping)obj;
-        return Objects.equals(myDefinedColumn, other.myDefinedColumn)
-                && Objects.equals(myLayerKey, other.myLayerKey)
+        return Objects.equals(myDefinedColumn, other.myDefinedColumn) && Objects.equals(myLayerKey, other.myLayerKey)
                 && Objects.equals(myLayerColumn, other.myLayerColumn);
     }
 

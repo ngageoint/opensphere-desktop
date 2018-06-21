@@ -29,16 +29,31 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.vividsolutions</groupId>
+			<artifactId>jts-core</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.open-sphere</groupId>
 			<artifactId>core</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>io.open-sphere.dev</groupId>
+			<artifactId>colorchooser</artifactId>
+		</dependency>
+		
+		<!-- Unused but required -->
+		<dependency>
 			<groupId>io.open-sphere</groupId>
 			<artifactId>mantle</artifactId>
 		</dependency>
+		<!-- /unused -->
 	</dependencies>
 </project>

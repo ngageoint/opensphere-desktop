@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import net.jcip.annotations.GuardedBy;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 

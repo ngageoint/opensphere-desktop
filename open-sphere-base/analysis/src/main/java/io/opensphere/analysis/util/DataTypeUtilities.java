@@ -3,7 +3,7 @@ package io.opensphere.analysis.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.annotation.concurrent.GuardedBy;
+import net.jcip.annotations.GuardedBy;
 
 import com.vividsolutions.jts.geom.Geometry;
 

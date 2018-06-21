@@ -5,8 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.cache.matcher.PropertyMatcher;
 import io.opensphere.core.util.Utilities;
 
@@ -104,9 +103,10 @@ public class DefaultQuery implements Query
 
     /**
      * Null-tolerant method for creating an unmodifiable List from a given,
-     * possibly modifiable, Collection.  The new List is made from a copy of
-     * the original so that new List is not affected if the original is
-     * modified.  If the argument is null, then the result is also null.
+     * possibly modifiable, Collection. The new List is made from a copy of the
+     * original so that new List is not affected if the original is modified. If
+     * the argument is null, then the result is also null.
+     *
      * @param c bla
      * @param <E> bla
      * @return bla
@@ -114,7 +114,9 @@ public class DefaultQuery implements Query
     private static <E> List<E> unmodCopy(Collection<E> c)
     {
         if (c == null)
+        {
             return null;
+        }
         return Collections.unmodifiableList(new ArrayList<>(c));
     }
 

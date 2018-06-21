@@ -9,11 +9,12 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
 import javax.swing.TransferHandler.DropLocation;
 import javax.swing.TransferHandler.TransferSupport;
 
 import org.apache.log4j.Logger;
+
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 /**
  * Event for importing data via drag-n-drop to the main frame.

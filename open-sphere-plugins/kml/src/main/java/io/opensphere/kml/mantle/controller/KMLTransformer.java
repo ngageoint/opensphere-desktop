@@ -3,7 +3,7 @@ package io.opensphere.kml.mantle.controller;
 import java.util.Collection;
 import java.util.List;
 
-import javax.annotation.concurrent.ThreadSafe;
+import net.jcip.annotations.ThreadSafe;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.Geometry;

@@ -18,31 +18,34 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>io.open-sphere</groupId>
+			<artifactId>test-support</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>io.open-sphere</groupId>
+			<artifactId>mantle</artifactId>
+		</dependency>
+		
+		<!-- Unused but probably required -->
+		<dependency>
 			<groupId>org.easymock</groupId>
 			<artifactId>easymock</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>io.open-sphere</groupId>
-			<artifactId>test-support</artifactId>
-			<scope>test</scope>
+		    <groupId>com.sun.xml.bind</groupId>
+		    <artifactId>jaxb-core</artifactId>
 		</dependency>
 		<dependency>
 		    <groupId>com.sun.xml.bind</groupId>
 		    <artifactId>jaxb-impl</artifactId>
 		</dependency>
-		<dependency>
-		    <groupId>com.sun.xml.bind</groupId>
-		    <artifactId>jaxb-core</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>io.open-sphere</groupId>
-			<artifactId>mantle</artifactId>
-		</dependency>
-		<dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-        </dependency>
+		<!-- /unused -->
 	</dependencies>
 </project>

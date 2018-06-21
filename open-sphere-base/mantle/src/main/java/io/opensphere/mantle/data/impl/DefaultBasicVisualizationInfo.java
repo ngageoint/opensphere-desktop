@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
 
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.ObservableValue;

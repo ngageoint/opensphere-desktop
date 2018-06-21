@@ -10,7 +10,7 @@ import io.opensphere.core.util.ref.WeakReference;
  *
  * @param <T> The supported listener type.
  */
-@javax.annotation.concurrent.ThreadSafe
+@net.jcip.annotations.ThreadSafe
 public class WeakChangeSupport<T> extends AbstractChangeSupport<T>
 {
     /**
