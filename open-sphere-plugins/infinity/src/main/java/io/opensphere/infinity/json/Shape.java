@@ -31,7 +31,7 @@ public class Shape
         myType = type;
         GeographicBoundingBox queryBbox = BoundingBox.getMinimumBoundingBoxLLA(geometry.getCoordinates());
         myCoordinates = new double[][] { { queryBbox.getMinLonD(), queryBbox.getMaxLatD() },
-            { queryBbox.getMaxLonD(), queryBbox.getMinLatD() } };
+            { BoundingBox.adjustLon(queryBbox.getMaxLonD()), queryBbox.getMinLatD() } };
     }
 
     /**

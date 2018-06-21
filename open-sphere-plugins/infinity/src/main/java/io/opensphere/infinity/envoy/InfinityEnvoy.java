@@ -150,7 +150,10 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
         throws IOException, CacheException
     {
         URL url = getUrl(category);
-        LOGGER.info("Request: " + url + " " + parameters.getTimeSpan() + " " + parameters.getGeometry());
+        if (LOGGER.isDebugEnabled())
+        {
+            LOGGER.debug("Request: " + url + " " + parameters.getTimeSpan() + " " + parameters.getGeometry());
+        }
 
         InputStream postData = createRequestStream(parameters);
         ResponseValues response = new ResponseValues();

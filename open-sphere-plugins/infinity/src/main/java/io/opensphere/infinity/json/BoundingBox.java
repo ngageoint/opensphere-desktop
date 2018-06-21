@@ -33,6 +33,7 @@ public class BoundingBox
     {
         GeographicBoundingBox queryBbox = getMinimumBoundingBoxLLA(geometry.getCoordinates());
         myBottomRight = new Coordinate(queryBbox.getLowerRight());
+        myBottomRight.setLon(adjustLon(myBottomRight.getLon()));
         myTopLeft = new Coordinate(queryBbox.getUpperLeft());
     }
 
@@ -103,5 +104,16 @@ public class BoundingBox
 
         return new GeographicBoundingBox(LatLonAlt.createFromDegrees(minLat, minLon),
                 LatLonAlt.createFromDegrees(maxLat, maxLon));
+    }
+
+    /**
+     * Adjusts the longitude if it's greater than 180.
+     *
+     * @param lon the longitude
+     * @return the adjusted longitude
+     */
+    static double adjustLon(double lon)
+    {
+        return lon > 180 ? -(360 - lon) : lon;
     }
 }
