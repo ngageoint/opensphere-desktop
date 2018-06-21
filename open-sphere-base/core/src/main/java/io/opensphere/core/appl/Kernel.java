@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.logging.LogManager;
 
+import javafx.application.Platform;
+
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -50,7 +52,6 @@ import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.lang.ToStringHelper;
 import io.opensphere.core.util.net.OpenSphereContentHandlerFactory;
 import io.opensphere.core.util.swing.EventQueueUtilities;
-import javafx.application.Platform;
 
 /**
  * This is the nucleus for the application, from whence all else springs. It
