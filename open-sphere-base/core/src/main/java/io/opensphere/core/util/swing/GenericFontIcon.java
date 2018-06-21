@@ -200,7 +200,7 @@ public class GenericFontIcon implements Icon, FontIcon
         int characterHeight = (int)stringBounds.getHeight();
 
         // make sure that things are centered:
-        double xpos = pX + centerY - characterWidth / 2 - 3;
+        double xpos = pX + centerY - characterWidth / 2 - 3 + getXPos();
         double ypos = centerY + characterHeight / 2 - 1;
 
         pG.setColor(getColor());
