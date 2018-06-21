@@ -356,13 +356,13 @@ public final class ImageUtil
             {
                 String fName = f.getName().toLowerCase();
                 return f.isDirectory() || fName.endsWith(".jpeg") || fName.endsWith(".jpg") || fName.endsWith(".gif")
-                        || fName.endsWith(".png");
+                        || fName.endsWith(".png") || fName.endsWith(".svg") || fName.endsWith(".bmp");
             }
 
             @Override
             public String getDescription()
             {
-                return "Image Files[*.jpeg,*.jpg,*.gif,*.png]";
+                return "Image Files[*.jpeg,*.jpg,*.gif,*.png,*.svg,*.bmp]";
             }
         });
 

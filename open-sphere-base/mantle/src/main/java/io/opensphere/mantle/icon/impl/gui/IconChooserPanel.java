@@ -238,7 +238,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
 
         if (myShowAddIconButton)
         {
-            JButton addFromFile = new JButton("Add Icon From File...");
+            JButton addFromFile = new JButton("Add Icon From File");
             addFromFile.addActionListener(e -> loadFromFile(IconRecord.USER_ADDED_COLLECTION, null));
 
             JPanel buttonPanel = new JPanel(new BorderLayout());
@@ -573,7 +573,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         subPanel2.add(subPanel);
         JPanel labelPanel = new JPanel(new BorderLayout());
         labelPanel.setMaximumSize(new Dimension(10000, 30));
-        JLabel loadLabel = new JLabel("Loading Images...");
+        JLabel loadLabel = new JLabel("Loading Images");
         loadLabel.setHorizontalAlignment(SwingConstants.CENTER);
         loadLabel.setFont(loadLabel.getFont().deriveFont(Font.BOLD, loadLabel.getFont().getSize() + 8));
         labelPanel.add(loadLabel, BorderLayout.CENTER);

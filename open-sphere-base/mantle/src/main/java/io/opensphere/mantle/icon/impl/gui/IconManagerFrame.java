@@ -88,7 +88,11 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
 
         JPopupMenu iconPopupMenu = new JPopupMenu();
         JPopupMenu treePopupMenu = new JPopupMenu();
-        myChooserPanel = new IconChooserPanel(tb, true, false, iconPopupMenu, treePopupMenu, null);
+
+        JButton buildIcon = new JButton("Build New Icon");
+        buildIcon.addActionListener(e -> showBuilderDialog());
+
+        myChooserPanel = new IconChooserPanel(tb, true, true, iconPopupMenu, treePopupMenu, buildIcon);
 
         myMenuBar = new JMenuBar();
         myFileMenu = new JMenu("File");
@@ -104,7 +108,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
         closeButton.addActionListener(e -> setVisible(false));
         closePanel.add(Box.createHorizontalGlue());
         closePanel.add(closeButton);
-        closePanel.add(Box.createHorizontalStrut(50));
+        closePanel.add(Box.createHorizontalStrut(-5));
         closePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         mainPanel.add(myMenuBar, BorderLayout.NORTH);
@@ -118,6 +122,13 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
         createIconPopupMenuItems(iconPopupMenu);
         createTreePopupMenuItems(treePopupMenu);
         myIconRegistry.addListener(this);
+    }
+
+    private void showBuilderDialog()
+    {
+        IconRegistry iconRegistry = MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry();
+        IconBuilderDialog dialog = new IconBuilderDialog(this, iconRegistry, myChooserPanel);
+        dialog.setVisible(true);
     }
 
     /**
@@ -260,11 +271,11 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
         addToFavoritesMI.addActionListener(e -> addSelectedToFavorites());
         puMenu.add(addToFavoritesMI);
 
-        JMenuItem rotateSelectedMI = new JMenuItem("Rotate Selected...");
+        JMenuItem rotateSelectedMI = new JMenuItem("Rotate Selected");
         rotateSelectedMI.addActionListener(e -> rotateSelected());
         puMenu.add(rotateSelectedMI);
 
-        JMenuItem deleteSelectedMI = new JMenuItem("Delete Selected...");
+        JMenuItem deleteSelectedMI = new JMenuItem("Delete Selected");
         deleteSelectedMI.addActionListener(e -> deleteSelected());
         puMenu.add(deleteSelectedMI);
 
@@ -283,15 +294,15 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
         addToFavoritesMI.addActionListener(e -> addSelectedToFavorites());
         myEditMenu.add(addToFavoritesMI);
 
-        JMenuItem rotateSelectedMI = new JMenuItem("Rotate Selected...");
+        JMenuItem rotateSelectedMI = new JMenuItem("Rotate Selected");
         rotateSelectedMI.addActionListener(e -> rotateSelected());
         myEditMenu.add(rotateSelectedMI);
 
-        JMenuItem deleteSelectedMI = new JMenuItem("Delete Selected...");
+        JMenuItem deleteSelectedMI = new JMenuItem("Delete Selected");
         deleteSelectedMI.addActionListener(e -> deleteSelected());
         myEditMenu.add(deleteSelectedMI);
 
-        JMenuItem deleteSelectedTreeNodeMI = new JMenuItem("Delete Selected Icon Set...");
+        JMenuItem deleteSelectedTreeNodeMI = new JMenuItem("Delete Selected Icon Set");
         deleteSelectedTreeNodeMI.addActionListener(e -> deleteSelectedTreeNode());
         myEditMenu.add(deleteSelectedTreeNodeMI);
 
@@ -306,11 +317,11 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
      */
     private void createMenuBarFileMenuItems()
     {
-        JMenuItem addIconFromFile = new JMenuItem("Add Icon From File...");
+        JMenuItem addIconFromFile = new JMenuItem("Add Icon From File");
         addIconFromFile.addActionListener(e -> addIconFromFile());
         myFileMenu.add(addIconFromFile);
 
-        JMenuItem addIconsFromFolder = new JMenuItem("Add Icons From Folder...");
+        JMenuItem addIconsFromFolder = new JMenuItem("Add Icons From Folder");
         addIconsFromFolder.addActionListener(e -> addIconsFromFolder());
         myFileMenu.add(addIconsFromFolder);
     }
@@ -322,7 +333,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
      */
     private void createTreePopupMenuItems(JPopupMenu puMenu)
     {
-        JMenuItem deleteSelectedTreeNodeMI = new JMenuItem("Delete Selected...");
+        JMenuItem deleteSelectedTreeNodeMI = new JMenuItem("Delete Selected");
         deleteSelectedTreeNodeMI.addActionListener(e -> deleteSelectedTreeNode());
         puMenu.add(deleteSelectedTreeNodeMI);
     }
@@ -342,10 +353,10 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
         {
             int result = JOptionPane.showConfirmDialog(this,
                     "Are you sure you want to delete all the selected icons?\n"
-                            + "The icon files on your computer will not be deleted \n"
+                            + "\nThe icon files on your computer will not be deleted \n"
                             + "but the application will no longer remember them.",
-                    "Delete Icon Confirmation", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (result == JOptionPane.OK_OPTION)
+                    "Delete Icon Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (result == JOptionPane.YES_OPTION)
             {
                 TIntList idList = new TIntArrayList(recordSet.size());
                 for (IconRecord rec : recordSet)
@@ -391,7 +402,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
         {
             JOptionPane.showMessageDialog(this,
                     "There is currently no tree node selected.\nSelect at least one node and try again.",
-                    "No Tree Node Selected Warning", JOptionPane.WARNING_MESSAGE);
+                    "No Tree Node Selected Warning", JOptionPane.PLAIN_MESSAGE);
         }
         else
         {
@@ -399,8 +410,8 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
                     "Are you sure you want to delete the selected icon set \"" + obj.getLabel()
                             + "\"?\n\nThe icon files on your computer will not be deleted but the application \n"
                             + "will no longer remember them.",
-                    "Delete Icon Set Confirmation", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (result == JOptionPane.OK_OPTION)
+                    "Delete Icon Set Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (result == JOptionPane.YES_OPTION)
             {
                 TIntList iconIdList = null;
                 if (obj.getNameType() == NameType.COLLECTION)
@@ -443,14 +454,14 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
         while (!done)
         {
             int result = JOptionPane.showConfirmDialog(this, pnl, "Collection Name Selection", JOptionPane.OK_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE);
+                    JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.OK_OPTION)
             {
                 String colName = pnl.getCollectionName();
                 if (StringUtils.isBlank(colName))
                 {
                     JOptionPane.showMessageDialog(this, "The collection name can not be blank.", "Collection Name Error",
-                            JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.PLAIN_MESSAGE);
                 }
                 else
                 {
@@ -483,14 +494,14 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
         while (!done)
         {
             int result = JOptionPane.showConfirmDialog(this, pnl, "Sub-Category Selection", JOptionPane.OK_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE);
+                    JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.OK_OPTION)
             {
                 String colName = pnl.getCategory();
                 if (!pnl.isSubCatsFromDirNames() && !pnl.isNoCategory() && StringUtils.isBlank(colName))
                 {
                     JOptionPane.showMessageDialog(this, "The sub-category name can not be blank.", "Sub-category Name Error",
-                            JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.PLAIN_MESSAGE);
                 }
                 else
                 {
