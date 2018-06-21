@@ -85,7 +85,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
         setTitle("Icon Manager");
         setIconImage(myToolbox.getUIRegistry().getMainFrameProvider().get().getIconImage());
         setSize(new Dimension(800, 600));
-        setMinimumSize(new Dimension(600,400));
+        setMinimumSize(new Dimension(600, 400));
         JPopupMenu iconPopupMenu = new JPopupMenu();
         JPopupMenu treePopupMenu = new JPopupMenu();
 
@@ -270,7 +270,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
      */
     private void createIconPopupMenuItems(JPopupMenu puMenu)
     {
-        getCustomMenuItems().forEach(button -> puMenu.add(button));
+        getMenuItems().forEach(button -> puMenu.add(button));
 
         JMenuItem deleteSelectedMI = new JMenuItem("Delete Selected");
         deleteSelectedMI.addActionListener(e -> deleteSelected());
@@ -283,7 +283,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
      */
     private void createMenuBarEditMenuItems()
     {
-        getCustomMenuItems().forEach(button -> myEditMenu.add(button));
+        getMenuItems().forEach(button -> myEditMenu.add(button));
 
         JMenuItem deleteSelectedTreeNodeMI = new JMenuItem("Delete Selected Icon Set");
         deleteSelectedTreeNodeMI.addActionListener(e -> deleteSelectedTreeNode());
@@ -295,7 +295,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
      * {@link #createMenuBarFileMenuItems()} {@link #createIconPopupMenuItems(JPopupMenu)}.
      * @return buttonList
      */
-    private List<JMenuItem> getCustomMenuItems()
+    private List<JMenuItem> getMenuItems()
     {
         JMenuItem addToFavoritesMI = new JMenuItem("Add Selected To Favorites");
         addToFavoritesMI.addActionListener(e -> addSelectedToFavorites());
@@ -305,8 +305,6 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
 
         JMenuItem deSelectAllMI = new JMenuItem("De-Select All");
         deSelectAllMI.addActionListener(e -> deselectAll());
-
-        //List<JMenuItem> buttonList = new ArrayList<JMenuItem>(Arrays.asList(addToFavoritesMI, rotateSelectedMI, deSelectAllMI));
 
         return New.list(addToFavoritesMI, rotateSelectedMI, deSelectAllMI);
     }
