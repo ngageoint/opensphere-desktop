@@ -19,10 +19,9 @@ import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.myplaces.models.MyPlacesDataTypeInfo;
 import io.opensphere.myplaces.specific.regions.utils.RegionUtils;
 
-/** Provider for ROI MyPlaces context menus. */
+/** ROI MyPlaces menu provider. */
 public class RoiMultiMenuProvider implements ContextMenuProvider<MultiDataGroupContextKey>
 {
-
     /**
      * The system toolbox.
      */

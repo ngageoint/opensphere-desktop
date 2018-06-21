@@ -13,7 +13,7 @@ public class ListSupport
     /** The escape character. */
     private char escapeChar = '\\';
 
-    /** The list item delimiter. */
+    /** The delimiter. */
     private char delimiter = ';';
 
     /**

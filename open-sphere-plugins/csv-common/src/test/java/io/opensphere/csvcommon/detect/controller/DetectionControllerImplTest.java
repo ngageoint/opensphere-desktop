@@ -37,6 +37,7 @@ public class DetectionControllerImplTest extends EasyMockSupport
     /**
      * Test
      * {@link DetectionControllerImpl#detectParameters(CSVParseParameters, io.opensphere.csvcommon.common.LineSampler, LineSamplerFactory, String)}
+     * .
      *
      * @throws FileNotFoundException bad file.
      */

@@ -563,6 +563,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
             TLongHashSet toBeVisibleIdSet = new TLongHashSet(vEvent.getVisibleIdSet().size());
             toBeVisibleIdSet.addAll(vEvent.getVisibleIdSet().toArray());
             toBeVisibleIdSet.retainAll(idsOfInterestArray);
+
             if (!toBeVisibleIdSet.isEmpty())
             {
                 Set<Geometry> found = GeometrySetUtil.findGeometrySetWithIds(myHiddenGeometrySet, myGeometrySetLock,
@@ -592,6 +593,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
             TLongHashSet toBeHiddenIdSet = new TLongHashSet(vEvent.getInvisibleIdSet().size());
             toBeHiddenIdSet.addAll(vEvent.getInvisibleIdSet().toArray());
             toBeHiddenIdSet.retainAll(idsOfInterestArray);
+
             if (!toBeHiddenIdSet.isEmpty())
             {
                 Set<Geometry> found = GeometrySetUtil.findGeometrySetWithIds(myGeometrySet, myGeometrySetLock,
@@ -644,6 +646,7 @@ public class StyleTransformerGeometryProcessor implements StyleDataElementTransf
             boolean hasMultiElementStyleType = myStyleManager.anyStyleAppliesToAllElements();
             boolean anyStyleAlwaysRequiresGeometryRebuild = myStyleManager.anyStyleAlwaysRequiresFullGeometryRebuild();
             boolean rebuildAll = false;
+
             switch (myEvt.getType())
             {
                 case LIFT_CHANGED:

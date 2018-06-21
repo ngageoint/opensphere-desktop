@@ -1,33 +1,25 @@
 package io.opensphere.mantle.plugin.selection;
 
 import java.awt.EventQueue;
-import java.awt.Frame;
-import java.awt.MouseInfo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import javax.swing.event.PopupMenuEvent;
 
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.Toolbox;
-import io.opensphere.core.control.ContextMenuSelectionAdapter;
-import io.opensphere.core.control.action.ActionContext;
 import io.opensphere.core.control.action.ContextActionManager;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
@@ -43,11 +35,8 @@ import io.opensphere.core.geometry.renderproperties.DefaultPointRenderProperties
 import io.opensphere.core.math.Vector2i;
 import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.model.GeographicPosition;
-import io.opensphere.core.units.UnitsProvider;
-import io.opensphere.core.units.length.Kilometers;
-import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.Utilities;
-import io.opensphere.core.util.jts.core.JTSCoreGeometryUtilities;
+import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.ref.WeakReference;
 import io.opensphere.mantle.controller.DataGroupController;
@@ -65,14 +54,11 @@ import io.opensphere.mantle.transformer.MapDataElementTransformer;
 @SuppressWarnings("PMD.GodClass")
 public class SelectionHandler
 {
-    /** The Constant DEFAULT_BUFFER_DISTANCE. */
-    private static final Length DEFAULT_BUFFER_DISTANCE = Length.create(Kilometers.class, 5.0);
-
     /** The logger. */
     private static final Logger LOGGER = Logger.getLogger(SelectionHandler.class);
 
     /** The my command to processor map. */
-    private final Map<SelectionCommand, List<WeakReference<SelectionCommandProcessor>>> myCommandToProcessorMap;
+    private final EnumMap<SelectionCommand, List<WeakReference<SelectionCommandProcessor>>> myCommandToProcessorMap;
 
     /** The data group controller. */
     private final DataGroupController myDataGroupController;
@@ -101,7 +87,7 @@ public class SelectionHandler
             }
             else
             {
-                return null;
+                return Collections.emptyList();
             }
         }
 
@@ -124,7 +110,7 @@ public class SelectionHandler
         @Override
         public List<JMenuItem> getMenuItems(String contextId, GeometryContextKey key)
         {
-            List<JMenuItem> menuItems = null;
+            List<JMenuItem> menuItems = New.list();
             if (contextId.equals(ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT))
             {
                 Geometry geom = key.getGeometry();
@@ -197,10 +183,13 @@ public class SelectionHandler
     /** The data element update utilities. */
     private final DataElementUpdateUtils myDataElementUpdateUtils;
 
+    /** The buffer region creator **/
+    private final BufferRegionCreator myBufferRegionCreator;
+
     /**
      * Instantiates a new selection handler.
      *
-     * @param tb The toolbox.
+     * @param toolbox The toolbox.
      * @param dataGroupController The data group controller.
      * @param pTypeController The controller through which data type lookups are
      *            performed.
@@ -208,20 +197,19 @@ public class SelectionHandler
      * @param dataElementCache The data element cache
      * @param dataElementUpdateUtils The data element update utilities
      */
-    public SelectionHandler(Toolbox tb, DataGroupController dataGroupController, DataTypeController pTypeController,
+    public SelectionHandler(Toolbox toolbox, DataGroupController dataGroupController, DataTypeController pTypeController,
             QueryRegionManager queryRegionManager, DataElementCache dataElementCache,
             DataElementUpdateUtils dataElementUpdateUtils)
     {
         myDataTypeController = pTypeController;
         myExecutor = Executors.newFixedThreadPool(1, new NamedThreadFactory("SelectionHandler:Dispatch", 3, 4));
-        myCommandToProcessorMap = new HashMap<>();
-
-        myToolbox = tb;
+        myCommandToProcessorMap = new EnumMap<>(SelectionCommand.class);
+        myToolbox = toolbox;
         myDataGroupController = dataGroupController;
-
         myQueryRegionManager = queryRegionManager;
         myDataElementCache = dataElementCache;
         myDataElementUpdateUtils = dataElementUpdateUtils;
+        myBufferRegionCreator = new BufferRegionCreator(toolbox);
     }
 
     /**
@@ -251,11 +239,11 @@ public class SelectionHandler
     /**
      * Install the selection handler.
      *
-     * @param tb the {@link Toolbox}
+     * @param toolbox the {@link Toolbox}
      */
-    public void install(Toolbox tb)
+    public void install(Toolbox toolbox)
     {
-        ContextActionManager actionManager = tb.getUIRegistry().getContextActionManager();
+        ContextActionManager actionManager = toolbox.getUIRegistry().getContextActionManager();
         actionManager.registerContextMenuItemProvider(ContextIdentifiers.SCREEN_POSITION_CONTEXT, ScreenPositionContextKey.class,
                 myDefaultContextMenuProvider);
         actionManager.registerContextMenuItemProvider(ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT, GeometryContextKey.class,
@@ -264,7 +252,6 @@ public class SelectionHandler
                 myGeometryContextMenuProvider);
         actionManager.registerContextMenuItemProvider(ContextIdentifiers.ROI_CONTEXT, MultiGeometryContextKey.class,
                 myMultiGeometryContextMenuProvider);
-
     }
 
     /**
@@ -277,13 +264,8 @@ public class SelectionHandler
     {
         synchronized (myCommandToProcessorMap)
         {
-            List<WeakReference<SelectionCommandProcessor>> scpList = myCommandToProcessorMap.get(command);
-            if (scpList == null)
-            {
-                scpList = new LinkedList<>();
-                myCommandToProcessorMap.put(command, scpList);
-            }
-
+            List<WeakReference<SelectionCommandProcessor>> scpList = myCommandToProcessorMap.computeIfAbsent(command,
+                    k -> new LinkedList<>());
             // Make sure we don't already have this processor in our set, remove
             // any garbage collected listeners from the set.
             Iterator<WeakReference<SelectionCommandProcessor>> wrItr = scpList.iterator();
@@ -303,7 +285,6 @@ public class SelectionHandler
                     found = true;
                 }
             }
-
             // If we didn't find it in the set already add it.
             if (!found)
             {
@@ -326,11 +307,11 @@ public class SelectionHandler
     /**
      * Uninstall the selection handler.
      *
-     * @param tb the {@link Toolbox}
+     * @param toolbox the {@link Toolbox}
      */
-    public void uninstall(Toolbox tb)
+    public void uninstall(Toolbox toolbox)
     {
-        ContextActionManager actionManager = tb.getUIRegistry().getContextActionManager();
+        ContextActionManager actionManager = toolbox.getUIRegistry().getContextActionManager();
         actionManager.deregisterContextMenuItemProvider(ContextIdentifiers.SCREEN_POSITION_CONTEXT,
                 ScreenPositionContextKey.class, myDefaultContextMenuProvider);
         actionManager.deregisterContextMenuItemProvider(ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT, GeometryContextKey.class,
@@ -402,6 +383,16 @@ public class SelectionHandler
     }
 
     /**
+     * Removes the supplied geometry from display.
+     *
+     * @param geometry the geometry to remove from display.
+     */
+    private void unregisterGeometry(Geometry geometry)
+    {
+        myToolbox.getGeometryRegistry().removeGeometriesForSource(this, Collections.singletonList(geometry));
+    }
+
+    /**
      * Method called when a menu button is selected.
      *
      * @param act The action command.
@@ -409,14 +400,12 @@ public class SelectionHandler
     private void handleCommand(String act)
     {
         assert EventQueue.isDispatchThread();
-
         destroyPreview();
         SelectionCommand cmd = selectionCommand(act);
         if (cmd == null)
         {
             return;
         }
-
         if (myLastGeometry == null)
         {
             if (cmd == SelectionCommand.CREATE_BUFFER_REGION)
@@ -428,7 +417,6 @@ public class SelectionHandler
                 doPurgeCheck(cmd, null);
             }
         }
-
         if (cmd == SelectionCommand.CREATE_BUFFER_REGION)
         {
             if (myLastGeometry instanceof PolylineGeometry && !(myLastGeometry instanceof PolygonGeometry))
@@ -437,12 +425,12 @@ public class SelectionHandler
             }
             else
             {
-                createBuffer();
+                myBufferRegionCreator.createBuffer(myLastGeometry);
             }
         }
         else if (cmd == SelectionCommand.CREATE_BUFFER_REGION_FOR_SELECTED_SEGMENT)
         {
-            createBuffer();
+            myBufferRegionCreator.createBuffer(myLastGeometry);
         }
         else if (myLastGeometry instanceof PolygonGeometry)
         {
@@ -452,43 +440,7 @@ public class SelectionHandler
         }
         else if (myLastGeometry instanceof PolylineGeometry || myLastGeometry instanceof PointGeometry)
         {
-            createBuffer();
-        }
-    }
-
-    /**
-     * Respond to a change in the buffer distance editor. If the distance is
-     * well-formed and valid, show a preview; otherwise kill the preview.
-     *
-     * @param pLength the buffer distance supplied by the editor.
-     */
-    private void handleBufferEdit(Length pLength)
-    {
-        if (lengthOkay(pLength))
-        {
-            handlePreviewBuffer(pLength.inMeters());
-        }
-        else
-        {
-            destroyPreview();
-        }
-    }
-
-    /**
-     * Creates the buffer region for last selection geometry.
-     */
-    protected void createBuffer()
-    {
-        UnitsProvider<Length> uProv = myToolbox.getUnitsRegistry().getUnitsProvider(Length.class);
-        Length defaultBuffer = defaultBuffer(uProv);
-        // show the buffer when the dialog pops up:
-        handleBufferEdit(defaultBuffer);
-        BufferRegionInputPanel inputPanel = new BufferRegionInputPanel(defaultBuffer, uProv, getBufferRangeMessage(),
-                this::handleBufferEdit);
-        Length val = getBufferUserInput(inputPanel);
-        if (val != null)
-        {
-            handleCreateBuffer(MouseInfo.getPointerInfo().getLocation(), val.inMeters());
+            myBufferRegionCreator.createBuffer(myLastGeometry);
         }
     }
 
@@ -499,49 +451,7 @@ public class SelectionHandler
     protected void createLineBuffer()
     {
         myLastGeometry = getCompleteGeometryGroup(myLastGeometry);
-        createBuffer();
-    }
-
-    /**
-     * Gathers input from the user to construct the buffer. The user may cancel
-     * the dialog, indicating that no buffer should be drawn. As part of the
-     * dialog, the buffer is drawn on the screen as the user changes the input
-     * values, as a preview. The preview is a transient geometry, and should be
-     * destroyed when the dialog closes (regardless of the user's choice). If
-     * the user elects to accept the input, then a new, permanent buffer is
-     * drawn for later use. The {@link Length} return reflects the user's input,
-     * and is used to draw the permanent buffer. If the user cancels the dialog,
-     * a null value is returned.
-     *
-     * @param inputPanel the panel in which the user enters data.
-     * @return the {@link Length} from the user's input, or null if the dialog
-     *         has been canceled.
-     */
-    protected Length getBufferUserInput(BufferRegionInputPanel inputPanel)
-    {
-        while (true)
-        {
-            // if the user cancels, then forget it
-            if (!showPopup("Input Buffer Distance", inputPanel))
-            {
-                destroyPreview();
-                return null;
-            }
-            try
-            {
-                Length returnValue = inputPanel.getDistance();
-                if (lengthOkay(returnValue))
-                {
-                    destroyPreview();
-                    return returnValue;
-                }
-                errorPopup("Invalid Distance Error", "The distance must be greater than zero.");
-            }
-            catch (NumberFormatException e)
-            {
-                errorPopup("Invalid Distance Error", "The distance must be a valid number.");
-            }
-        }
+        myBufferRegionCreator.createBuffer(myLastGeometry);
     }
 
     /**
@@ -559,32 +469,15 @@ public class SelectionHandler
     protected Geometry getCompleteGeometryGroup(Geometry pGeometry)
     {
         DataTypeInfo dataType = myDataTypeController.getDataTypeInfoForGeometryId(pGeometry.getDataModelId());
-
         if (dataType != null)
         {
             MapDataElementTransformer transformer = myDataTypeController.getTransformerForType(dataType.getTypeKey());
-
             GeometryGroupGeometry.Builder builder = new GeometryGroupGeometry.Builder(GeographicPosition.class);
             builder.setInitialGeometries(myToolbox.getGeometryRegistry()
                     .getGeometriesForSource(transformer, PolylineGeometry.class).stream().collect(Collectors.toList()));
             return new GeometryGroupGeometry(builder, pGeometry.getRenderProperties());
         }
         return pGeometry;
-    }
-
-    /**
-     * Validate the buffer distance.
-     *
-     * @param pLength the buffer distance to validate.
-     * @return true if and only if the given distance is acceptable
-     */
-    private boolean lengthOkay(Length pLength)
-    {
-        if (myLastGeometry instanceof PolygonGeometry)
-        {
-            return pLength.getMagnitude() != 0.0;
-        }
-        return pLength.getMagnitude() > 0.0;
     }
 
     /**
@@ -638,108 +531,6 @@ public class SelectionHandler
             LOGGER.warn("Illegal Selection Command Recieved: " + actionCommand);
         }
         return null;
-    }
-
-    /**
-     * May not be necessary, but this is the way I found it. Create a "buffer"
-     * Geometry for the argument, if it is of a supported type. If it is not,
-     * then the argument is returned unchanged.
-     *
-     * @param g bla
-     * @param distM buffer distance in meters
-     * @return the buffer geometry if supported, or <i>g</i>
-     */
-    private static Geometry bufferOrSame(Geometry g, double distM)
-    {
-        Geometry newG = JTSCoreGeometryUtilities.getBufferGeom(g, distM);
-        if (newG != null)
-        {
-            return newG;
-        }
-        return g;
-    }
-
-    /**
-     * Creates a preview of the supplied distance, expressed in meters.
-     *
-     * @param pDistanceInMeters the distance from the origin, expressed in
-     *            meters.
-     */
-    private void handlePreviewBuffer(double pDistanceInMeters)
-    {
-        if (myLastGeometry != null)
-        {
-            if (myPreviewGeometry != null)
-            {
-                unregisterGeometry(myPreviewGeometry);
-            }
-            myPreviewGeometry = bufferOrSame(myLastGeometry, pDistanceInMeters);
-            if (myPreviewGeometry != null)
-            {
-                registerGeometry(myPreviewGeometry);
-            }
-        }
-    }
-
-    /**
-     * Handle create buffer.
-     *
-     * @param pt the pt
-     * @param distM the buffer distance
-     */
-    private void handleCreateBuffer(java.awt.Point pt, double distM)
-    {
-        myLastGeometry = bufferOrSame(myLastGeometry, distM);
-        if (myLastGeometry == null)
-        {
-            errorPopup("Buffer Region Failure", "Failed to create buffer region for this item.");
-            return;
-        }
-
-        myPreviewGeometry = myLastGeometry;
-        registerGeometry(myPreviewGeometry);
-        ActionContext<GeometryContextKey> context = myToolbox.getUIRegistry().getContextActionManager()
-                .getActionContext(ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT, GeometryContextKey.class);
-
-        Frame mainFrame = myToolbox.getUIRegistry().getMainFrameProvider().get();
-        SwingUtilities.convertPointFromScreen(pt, mainFrame);
-        context.doAction(new GeometryContextKey(myPreviewGeometry), mainFrame, pt.x, pt.y, new PreviewKiller());
-    }
-
-    /**
-     * Registers the supplied geometry for display.
-     *
-     * @param g the geometry to register.
-     */
-    private void registerGeometry(Geometry g)
-    {
-        myToolbox.getGeometryRegistry().addGeometriesForSource(this, Collections.singletonList(g));
-    }
-
-    /**
-     * Removes the supplied geometry from display.
-     *
-     * @param g the geometry to remove from display.
-     */
-    private void unregisterGeometry(Geometry g)
-    {
-        myToolbox.getGeometryRegistry().removeGeometriesForSource(this, Collections.singletonList(g));
-    }
-
-    /** Kills the preview, sometimes. */
-    private class PreviewKiller extends ContextMenuSelectionAdapter
-    {
-        @Override
-        public void popupMenuCanceled(PopupMenuEvent e)
-        {
-            destroyPreview();
-        }
-
-        @Override
-        public void popupMenuWillBecomeInvisible(PopupMenuEvent e)
-        {
-            destroyPreview();
-        }
     }
 
     /**
@@ -805,56 +596,14 @@ public class SelectionHandler
     }
 
     /**
-     * Show a modal dialog with the given "message". In the only current use,
-     * the so-called "message" is actually a GUI.
-     *
-     * @param title the popup title
-     * @param msg the "message"
-     * @return true if and only if the user dismissed by selecting "Okay"
-     */
-    private boolean showPopup(String title, Object msg)
-    {
-        return JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(), msg,
-                title, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-    }
-
-    /**
-     * Show an error popup. Who would have guessed?
-     *
-     * @param title title
-     * @param msg message
-     */
-    private void errorPopup(String title, String msg)
-    {
-        JOptionPane.showMessageDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(), msg, title,
-                JOptionPane.ERROR_MESSAGE);
-    }
-
-    /**
-     * Gets a message in which the user is informed of the constraints of buffer
-     * region creation.
-     *
-     * @return a message in which the user is informed of the constraints of
-     *         buffer region creation.
-     */
-    private String getBufferRangeMessage()
-    {
-        if (myLastGeometry instanceof PolygonGeometry)
-        {
-            return "Distance may be positive or negative, but not zero";
-        }
-        return "Distance must be greater than zero";
-    }
-
-    /**
      * Gets menu items for geometry.
-     * 
+     *
      * @param geom the geometry
      * @return menu items
      */
     public List<JMenuItem> getGeometryMenuItems(Geometry geom)
     {
-        List<JMenuItem> menuItems = null;
+        List<JMenuItem> menuItems = New.list();
         if (myQueryRegionManager.getQueryRegion(geom) != null)
         {
             myLastGeometry = geom;
@@ -881,28 +630,15 @@ public class SelectionHandler
         }
         return menuItems;
     }
-    
+
     /**
      * Gets menu when you have multiple geometries.
+     *
      * @param geometries the geometries
-     * @return menuItems the menu 
+     * @return menuItems the menu
      */
     public List<JMenuItem> getMultiGeometryMenu(Collection<? extends Geometry> geometries)
     {
-        List<JMenuItem> menuItems = SelectionCommand.getRoiMenuItems(new PolygonCommandActionListener(geometries),
-                hasLoadFilters());
-        return menuItems;
-    }
-
-    /**
-     * Gets the default buffer size from the supplied unit provider, using the
-     * default buffer distance.
-     *
-     * @param p the provider from which units are provided.
-     * @return the default length extracted from the supplied units provider.
-     */
-    private static Length defaultBuffer(UnitsProvider<Length> p)
-    {
-        return p.convert(p.getPreferredFixedScaleUnits(DEFAULT_BUFFER_DISTANCE), DEFAULT_BUFFER_DISTANCE);
+        return SelectionCommand.getRoiMenuItems(new PolygonCommandActionListener(geometries), hasLoadFilters());
     }
 }

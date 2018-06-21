@@ -1,0 +1,62 @@
+{
+	"size": 0,
+	"timeout": "30s",
+	"query": {
+		"bool": {
+			"must": [
+				{
+					"bool": {
+						"must": [
+							{
+								"range": {
+									"start_date": {
+										"lt": 456,
+										"format": "epoch_millis"
+									}
+								}
+							},
+							{
+								"range": {
+									"end_date": {
+										"gte": 123,
+										"format": "epoch_millis"
+									}
+								}
+							}
+						]
+					}
+				},
+				{
+					"geo_shape": {
+						"ignore_unmapped": true,
+						"geom": {
+							"shape": {
+								"type": "envelope",
+								"coordinates": [
+									[
+										-180,
+										90
+									],
+									[
+										180,
+										-90
+									]
+								]
+							},
+							"relation": "intersects"
+						}
+					}
+				}
+			]
+		}
+	},
+	"aggs": {
+		"bins": {
+			"terms": {
+				"field": "blah.keyword",
+				"size": 10000,
+				"missing": 1000000000000000000
+			}
+		}
+	}
+}

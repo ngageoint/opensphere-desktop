@@ -81,10 +81,10 @@ public class BasicStyleStateSaver extends StyleStateSaver
     }
 
     /**
-     * Handles the case of label column(s).
+     * Regenerates a {@link VisualizationStyleParameter} with WFS label style.
      *
-     * @param p the visualization style
-     * @return a derived visualization style
+     * @param p
+     * @return a reconfigured VisualizationStyleParameter
      */
     private VisualizationStyleParameter genLabelCol(VisualizationStyleParameter p)
     {
@@ -101,10 +101,7 @@ public class BasicStyleStateSaver extends StyleStateSaver
             {
                 return null;
             }
-            List<String> fields = new LinkedList<>();
-            fields.add(Boolean.toString(false));
-            fields.add(col);
-            return p.deriveWithNewValue(singleton(combineLblFields(false, col)));
+            return p.deriveWithNewValue(List.of(combineLblFields(false, col)));
         }
         // process the list
         List<String> val = new LinkedList<>();
@@ -113,11 +110,11 @@ public class BasicStyleStateSaver extends StyleStateSaver
     }
 
     /**
-     * Combines all labels into a single string.
+     * Generates a t/f string for a column
      *
-     * @param show ???
+     * @param show if it's shown
      * @param col the column
-     * @return the combined label
+     * @return "[TRUE/FALSE] col"
      */
     private static String combineLblFields(boolean show, String col)
     {
@@ -128,10 +125,10 @@ public class BasicStyleStateSaver extends StyleStateSaver
     }
 
     /**
-     * Handles all of the normal cases.
+     * Regenerates a {@link VisualizationStyleParameter} with WFS styles.
      *
-     * @param p the visualization style
-     * @return the derived visualization style
+     * @param p the parameter
+     * @return regenerated parameter
      */
     private VisualizationStyleParameter genParam(VisualizationStyleParameter p)
     {
@@ -186,26 +183,12 @@ public class BasicStyleStateSaver extends StyleStateSaver
     }
 
     /**
-     * Creates a singleton list.
+     * Adds an element to a collection if the element is not null.
      * <p>
-     * Could stand to be replaced with
-     * {@link java.util.Collections#singletonList(Object)}
-     *
-     * @param e the value to build a list around
-     * @return a list consisting of a single value
-     */
-    private static <E> List<E> singleton(E e)
-    {
-        List<E> ret = new LinkedList<>();
-        addNonNull(ret, e);
-        return ret;
-    }
-
-    /**
-     * Adds an item to a collection, as long as that item is not null.
+     * Why is this not a utility somewhere?
      *
      * @param c the collection
-     * @param e the item to add
+     * @param e the element to add
      */
     private static <E> void addNonNull(Collection<E> c, E e)
     {
@@ -228,9 +211,9 @@ public class BasicStyleStateSaver extends StyleStateSaver
     }
 
     /**
-     * handles the case of label column(s)
+     * Adds label columns to {@link #myBasicFeatureStyle}
      *
-     * @param obj the list of labels to store
+     * @param obj hopefully a list of label strings
      */
     @SuppressWarnings("unchecked")
     private void storeLabelCol(Object obj)
@@ -262,10 +245,10 @@ public class BasicStyleStateSaver extends StyleStateSaver
     }
 
     /**
-     * handles all of the normal cases
+     * Stores parameters in {@link #myBasicFeatureStyle}
      *
-     * @param key the column to store the object in
-     * @param val the object to store
+     * @param key the parameter key
+     * @param val the parameter value
      */
     private void storeParam(String key, Object val)
     {

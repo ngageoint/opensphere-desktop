@@ -18,7 +18,7 @@ public class TokenizerFactoryTest
 {
     /**
      * Test for
-     * {@link TokenizerFactoryImpl#getTokenizer(CSVColumnFormat, io.opensphere.csvcommon.detect.columnformat.ColumnFormatParameters)}
+     * {@link TokenizerFactoryImpl#getTokenizer(CSVColumnFormat, ColumnFormatParameters)}
      * with a delimited column format.
      */
     @Test
@@ -51,7 +51,7 @@ public class TokenizerFactoryTest
 
     /**
      * Test for
-     * {@link TokenizerFactoryImpl#getTokenizer(CSVColumnFormat, io.opensphere.csvcommon.detect.columnformat.ColumnFormatParameters)}
+     * {@link TokenizerFactoryImpl#getTokenizer(CSVColumnFormat, ColumnFormatParameters)}
      * with a fixed column format.
      */
     @Test

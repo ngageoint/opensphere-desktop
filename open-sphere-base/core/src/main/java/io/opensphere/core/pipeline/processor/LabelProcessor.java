@@ -361,6 +361,14 @@ public class LabelProcessor extends AbstractProcessor<LabelGeometry>
         private Rectangle2D rect;
     }
 
+    /**
+     * Determines the bounds for a label with specified font and render context.
+     *
+     * @param drawFont the font the label will be drawn in
+     * @param frc the font render context
+     * @param txt the label
+     * @return the label layout
+     */
     private LabelLayout labelBounds(Font drawFont, FontRenderContext frc, String txt)
     {
         String[] lines = txt.split("\\n");
@@ -438,6 +446,7 @@ public class LabelProcessor extends AbstractProcessor<LabelGeometry>
         /** The model coordinates. */
         private final Vector3d myScreenModelCoords;
 
+        /** The baseline coordinate delta. */
         private double baselineDelta;
 
         /** The font size. */

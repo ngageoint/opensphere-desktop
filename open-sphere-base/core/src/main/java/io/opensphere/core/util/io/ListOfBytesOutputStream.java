@@ -49,8 +49,6 @@ public class ListOfBytesOutputStream extends OutputStream
      * zero, so that all currently accumulated output in the output stream is
      * discarded. The output stream can be used again, reusing the already
      * allocated buffer space.
-     *
-     * @see java.io.ByteArrayInputStream#count
      */
     public synchronized void reset()
     {
@@ -62,7 +60,6 @@ public class ListOfBytesOutputStream extends OutputStream
      *
      * @return the value of the <code>count</code> field, which is the number of
      *         valid bytes in this output stream.
-     * @see java.io.ByteArrayOutputStream#count
      */
     public synchronized int size()
     {

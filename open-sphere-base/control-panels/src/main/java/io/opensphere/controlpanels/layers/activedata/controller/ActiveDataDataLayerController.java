@@ -28,6 +28,7 @@ import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.event.DataGroupInfoDisplayNameChangedEvent;
 import io.opensphere.mantle.data.event.DataTypeInfoColorChangeEvent;
 import io.opensphere.mantle.data.event.DataTypeInfoTagsChangeEvent;
+import io.opensphere.mantle.data.event.DataTypePropertyChangeEvent;
 import io.opensphere.mantle.data.event.DataTypeVisibilityChangeEvent;
 import io.opensphere.mantle.data.impl.ActiveGroupByTreeBuilder;
 import io.opensphere.mantle.data.impl.GroupByNodeUserObject;
@@ -53,7 +54,7 @@ public class ActiveDataDataLayerController extends AbstractDiscoveryDataLayerCon
     private EventListener<AbstractDataTypeControllerEvent> myDataTypeControllerEventListener;
 
     /** The data type visibility change event listener. */
-    private final EventListener<DataTypeVisibilityChangeEvent> myDataTypeVisibilityChangeEventListener;
+    private final EventListener<DataTypeVisibilityChangeEvent> myDataTypeVisibilityChangeEventListener = this::handleDataTypeVisibilityChanged;
 
     /**
      * The drag and drop handler.
@@ -62,6 +63,9 @@ public class ActiveDataDataLayerController extends AbstractDiscoveryDataLayerCon
 
     /** The data type color change event listener. */
     private final EventListener<DataTypeInfoColorChangeEvent> myDTIColorChangeListener;
+
+    /** The data type property change event listener. */
+    private final EventListener<DataTypePropertyChangeEvent> myDataTypePropertyChangeListener = this::handleDataTypePropertyChange;
 
     /**
      * The mouse listener.
@@ -103,7 +107,7 @@ public class ActiveDataDataLayerController extends AbstractDiscoveryDataLayerCon
     };
 
     /** The z order change listener. */
-    private final EventListener<DataGroupInfoDisplayNameChangedEvent> myRenameListener;
+    private final EventListener<DataGroupInfoDisplayNameChangedEvent> myRenameListener = this::handleRename;
 
     /**
      * The currently selected data type.
@@ -140,12 +144,11 @@ public class ActiveDataDataLayerController extends AbstractDiscoveryDataLayerCon
     {
         super(pBox, confirmer);
         myMouseListener = new ActiveDataMouseListener(pBox);
-        myDataTypeVisibilityChangeEventListener = createDataTypeVisibilityChangeEventListener();
-        myRenameListener = createRenameChangeListener();
-        myDTIColorChangeListener = createDataTypeColorChangeListener();
+        myDTIColorChangeListener = event -> notifyUpdateTreeLabelsRequest();
         getToolbox().getEventManager().subscribe(DataTypeVisibilityChangeEvent.class, myDataTypeVisibilityChangeEventListener);
         getToolbox().getEventManager().subscribe(DataTypeInfoColorChangeEvent.class, myDTIColorChangeListener);
         getToolbox().getEventManager().subscribe(DataGroupInfoDisplayNameChangedEvent.class, myRenameListener);
+        getToolbox().getEventManager().subscribe(DataTypePropertyChangeEvent.class, myDataTypePropertyChangeListener);
 
         myViewByType = pBox.getPreferencesRegistry().getPreferences(ActiveDataDataLayerController.class)
                 .getString(VIEW_TYPE_PREFERENCE, DEFAULT_VIEW_TYPE);
@@ -319,24 +322,6 @@ public class ActiveDataDataLayerController extends AbstractDiscoveryDataLayerCon
     }
 
     /**
-     * Creates the data type color change listener.
-     *
-     * @return the event listener
-     */
-    private EventListener<DataTypeInfoColorChangeEvent> createDataTypeColorChangeListener()
-    {
-        EventListener<DataTypeInfoColorChangeEvent> listener = new EventListener<DataTypeInfoColorChangeEvent>()
-        {
-            @Override
-            public void notify(DataTypeInfoColorChangeEvent event)
-            {
-                notifyUpdateTreeLabelsRequest();
-            }
-        };
-        return listener;
-    }
-
-    /**
      * Creates the data elements added event listener.
      */
     private void createDataTypeControllerEventListener()
@@ -361,24 +346,6 @@ public class ActiveDataDataLayerController extends AbstractDiscoveryDataLayerCon
             }
         };
         getToolbox().getEventManager().subscribe(AbstractDataTypeControllerEvent.class, myDataTypeControllerEventListener);
-    }
-
-    /**
-     * Creates the data type visibility change event listener.
-     *
-     * @return the event listener
-     */
-    private EventListener<DataTypeVisibilityChangeEvent> createDataTypeVisibilityChangeEventListener()
-    {
-        EventListener<DataTypeVisibilityChangeEvent> listener = new EventListener<DataTypeVisibilityChangeEvent>()
-        {
-            @Override
-            public void notify(DataTypeVisibilityChangeEvent event)
-            {
-                handleDataTypeVisibilityChanged(event);
-            }
-        };
-        return listener;
     }
 
     /**
@@ -430,23 +397,6 @@ public class ActiveDataDataLayerController extends AbstractDiscoveryDataLayerCon
     }
 
     /**
-     * Creates the z order change listener.
-     *
-     * @return the event listener
-     */
-    private EventListener<DataGroupInfoDisplayNameChangedEvent> createRenameChangeListener()
-    {
-        return new EventListener<DataGroupInfoDisplayNameChangedEvent>()
-        {
-            @Override
-            public void notify(DataGroupInfoDisplayNameChangedEvent event)
-            {
-                handleRename(event);
-            }
-        };
-    }
-
-    /**
      * Handle data type visibility changed.
      *
      * @param event the event
@@ -458,6 +408,17 @@ public class ActiveDataDataLayerController extends AbstractDiscoveryDataLayerCon
             setTreeNeedsRebuild(true);
             notifyGroupsVisibilityChanged(event);
         }
+    }
+
+    /**
+     * Handle DataTypePropertyChangeEvent.
+     *
+     * @param event the event
+     */
+    private void handleDataTypePropertyChange(DataTypePropertyChangeEvent event)
+    {
+        // Refresh the tree when custom labels change
+        notifyRepaintTreeRequest();
     }
 
     /**

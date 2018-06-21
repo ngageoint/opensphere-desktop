@@ -84,8 +84,7 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
     }
 
     /**
-     * Initializes the style provider panel. Extracted to not pollute the
-     * constructor.
+     * Initialized {@link #myPanel}.
      */
     private void initializePanel()
     {

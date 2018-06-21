@@ -46,10 +46,7 @@ public class MyPlacesDataTypeInfo extends DefaultDataTypeInfo
         initialize();
     }
 
-    /**
-     * Initializes the MyPlacesDataTypeInfo. Extracted to not pollute
-     * constructor.
-     */
+    /** Initializes the data type info. */
     private void initialize()
     {
         OrderParticipantKey orderKey = new DefaultOrderParticipantKey(DefaultOrderCategory.DEFAULT_MY_PLACES_LAYER_FAMILY,

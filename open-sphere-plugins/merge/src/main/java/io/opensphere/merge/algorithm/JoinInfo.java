@@ -246,11 +246,7 @@ public class JoinInfo
         MetaDataProvider meta = record.getMetaData();
         for (String keepKey : keepKeys)
         {
-            Object value = meta.getValue(keepKey);
-            if (value instanceof Serializable)
-            {
-                Util.putNonNull(valueMap, keepKey, (Serializable)value);
-            }
+            valueMap.put(keepKey, (Serializable)meta.getValue(keepKey));
         }
     }
 }

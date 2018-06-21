@@ -77,12 +77,8 @@ public final class CSVTypeInfoGenerator
         typeInfo.applyColorPreferences();
 
         // Set map visualization info
-        if (fileSource.getParseParameters().hasCategory(ColumnType.Category.SPATIAL))
-        {
-            DefaultMapFeatureVisualizationInfo mapVisInfo = new DefaultMapFeatureVisualizationInfo(
-                    getVisualizationType(fileSource));
-            typeInfo.setMapVisualizationInfo(mapVisInfo);
-        }
+        DefaultMapFeatureVisualizationInfo mapVisInfo = new DefaultMapFeatureVisualizationInfo(getVisualizationType(fileSource));
+        typeInfo.setMapVisualizationInfo(mapVisInfo);
 
         // Set the URL string
         typeInfo.setUrl(CSVDataSource.toString(fileSource.getSourceUri()));

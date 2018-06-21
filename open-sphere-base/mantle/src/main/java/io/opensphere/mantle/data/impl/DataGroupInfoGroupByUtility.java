@@ -124,6 +124,7 @@ public final class DataGroupInfoGroupByUtility
     /**
      * Adds the to group if passes filter.
      *
+     * @param dataCategoryFilter the data category filter
      * @param groupFilter the group filter
      * @param addToList the add to list
      * @param dgi the dgi
@@ -270,6 +271,7 @@ public final class DataGroupInfoGroupByUtility
     /**
      * Creates the fully structured tree.
      *
+     * @param dataCategoryFilter the data category filter
      * @param groupFilter the group filter ( if null "all" are selected).
      * @param userObjGen the {@link NodeUserObjectGenerator}
      * @param dataGroups the {@link Collection} of {@link DataGroupInfo} to be
@@ -335,6 +337,7 @@ public final class DataGroupInfoGroupByUtility
      * controller by the provided filter and categorized ( multiple categories
      * are allowed per group) by the GroupCatagorizer.
      *
+     * @param dataCategoryFilter the data category filter
      * @param groupFilter the group filter ( if null "all" are selected).
      * @param groupComparator the group comparator a {@link Comparator} that
      *            helps sort the resultant lists. (if null sorted in natural

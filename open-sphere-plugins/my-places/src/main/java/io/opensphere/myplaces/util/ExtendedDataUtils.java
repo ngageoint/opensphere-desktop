@@ -37,16 +37,15 @@ public final class ExtendedDataUtils
     }
 
     /**
-     * Gets the Boolean property value from extendedData.
+     * Gets the boolean property value from extendedData as an object.
      *
-     * @see #getBoolean(ExtendedData, String, boolean)
      * @param extendedData Contains the property.
      * @param propertyName The name of the property.
      * @param defaultValue The default value to return if the property was not
      *            found.
      * @return The property value.
      */
-    public static Boolean getObjBoolean(ExtendedData extendedData, String propertyName, boolean defaultValue)
+    public static Boolean getBooleanObj(ExtendedData extendedData, String propertyName, boolean defaultValue)
     {
         return Boolean.valueOf(getBoolean(extendedData, propertyName, defaultValue));
     }

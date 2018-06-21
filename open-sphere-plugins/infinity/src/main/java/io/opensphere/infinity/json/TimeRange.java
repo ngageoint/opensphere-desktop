@@ -1,16 +1,32 @@
 package io.opensphere.infinity.json;
 
-/** Elasticsearch timefield JSON bean. */
-public class Timefield
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
+
+import io.opensphere.core.model.time.TimeSpan;
+
+/** Elasticsearch time range JSON bean. */
+@JsonPropertyOrder({ "gte", "lt", "format" })
+public class TimeRange
 {
     /** The gte. */
-    private long myGte;
+    private Long myGte;
 
     /** The lt. */
-    private long myLt;
+    private Long myLt;
 
     /** The format. */
-    private final String myFormat = "epoch_millis";
+    private static final String myFormat = "epoch_millis";
+
+    /**
+     * Constructor.
+     *
+     * @param timeSpan the time span
+     */
+    public TimeRange(TimeSpan timeSpan)
+    {
+        myGte = Long.valueOf(timeSpan.getStart());
+        myLt = Long.valueOf(timeSpan.getEnd());
+    }
 
     /**
      * Constructor.
@@ -18,7 +34,7 @@ public class Timefield
      * @param gte the gte
      * @param lt the lt
      */
-    public Timefield(long gte, long lt)
+    public TimeRange(Long gte, Long lt)
     {
         myGte = gte;
         myLt = lt;
@@ -29,7 +45,7 @@ public class Timefield
      *
      * @return the gte
      */
-    public long getGte()
+    public Long getGte()
     {
         return myGte;
     }
@@ -39,7 +55,7 @@ public class Timefield
      *
      * @param gte the gte
      */
-    public void setGte(long gte)
+    public void setGte(Long gte)
     {
         myGte = gte;
     }
@@ -49,7 +65,7 @@ public class Timefield
      *
      * @return the lt
      */
-    public long getLt()
+    public Long getLt()
     {
         return myLt;
     }
@@ -59,7 +75,7 @@ public class Timefield
      *
      * @param lt the lt
      */
-    public void setLt(long lt)
+    public void setLt(Long lt)
     {
         myLt = lt;
     }

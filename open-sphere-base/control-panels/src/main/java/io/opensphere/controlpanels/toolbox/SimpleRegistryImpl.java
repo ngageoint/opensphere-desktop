@@ -8,8 +8,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.collections.New;
 
 /**
- * A default implementation of the {@link SimpleRegistry}, in which providers
- * are cached.
+ * A default implementation of the {@link SimpleRegistry}.
  *
  * @param <T> the type of the provider.
  */

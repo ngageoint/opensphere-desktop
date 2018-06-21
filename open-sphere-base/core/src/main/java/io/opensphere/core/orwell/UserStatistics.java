@@ -5,5 +5,7 @@ package io.opensphere.core.orwell;
  */
 public class UserStatistics
 {
+    /** Username. */
+    @SuppressWarnings("unused")
     private String myUsername;
 }

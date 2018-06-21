@@ -14,9 +14,7 @@ import org.apache.log4j.Logger;
 import io.opensphere.core.dialog.alertviewer.event.Type;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 
-/**
- * The controller for the toast message view.
- */
+/** The controller for the toast message view. */
 public class ToastController implements Runnable
 {
     /**

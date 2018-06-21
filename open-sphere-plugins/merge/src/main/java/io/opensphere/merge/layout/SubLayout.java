@@ -8,7 +8,7 @@ public interface SubLayout
     /**
      * Attach to the root pane (i.e., add children).
      *
-     * @param r the root pane
+     * @param r root pane
      */
     public void setRoot(Pane r);
 
@@ -28,11 +28,11 @@ public interface SubLayout
 
     /**
      * Layout the subcomponents within the resident root Pane.
-     * 
-     * @param x0
-     * @param y0
-     * @param dx
-     * @param dy
+     *
+     * @param x0 origin x
+     * @param y0 origin y
+     * @param dx distance x
+     * @param dy distance y
      */
     public void doLayout(double x0, double y0, double dx, double dy);
 }

@@ -11,7 +11,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 @JsonAutoDetect(JsonMethod.NONE)
 public class EsriTextSymbol extends EsriSymbolWithOffset
 {
-    /** Serial version UID. */
+    /** Version ID. */
     private static final long serialVersionUID = 1L;
 
     /** My background color. */

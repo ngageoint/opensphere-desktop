@@ -1,8 +1,8 @@
 package io.opensphere.mantle.data.impl;
 
 import java.awt.Component;
-import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.Icon;
 
@@ -16,7 +16,10 @@ public class DefaultDataTypeInfoAssistant implements DataTypeInfoAssistant
     private Component myLayerControlUIComponent;
 
     /** The layer icons. */
-    private List<Icon> myLayerIcons = Collections.emptyList();
+    private List<Icon> myLayerIcons;
+
+    /** The layer labels. */
+    private List<String> myLayerLabels;
 
     @Override
     public Component getLayerControlUIComponent(DataTypeInfo dataType)
@@ -25,9 +28,23 @@ public class DefaultDataTypeInfoAssistant implements DataTypeInfoAssistant
     }
 
     @Override
-    public List<Icon> getLayerIcons()
+    public synchronized List<Icon> getLayerIcons()
     {
+        if (myLayerIcons == null)
+        {
+            myLayerIcons = new CopyOnWriteArrayList<>();
+        }
         return myLayerIcons;
+    }
+
+    @Override
+    public synchronized List<String> getLayerLabels()
+    {
+        if (myLayerLabels == null)
+        {
+            myLayerLabels = new CopyOnWriteArrayList<>();
+        }
+        return myLayerLabels;
     }
 
     /**
@@ -38,15 +55,5 @@ public class DefaultDataTypeInfoAssistant implements DataTypeInfoAssistant
     public void setLayerControlUIComponent(Component layerControlUIComponent)
     {
         myLayerControlUIComponent = layerControlUIComponent;
-    }
-
-    /**
-     * Sets the layer icons.
-     *
-     * @param layerIcons the layer icons
-     */
-    public void setLayerIcons(List<Icon> layerIcons)
-    {
-        myLayerIcons = layerIcons;
     }
 }

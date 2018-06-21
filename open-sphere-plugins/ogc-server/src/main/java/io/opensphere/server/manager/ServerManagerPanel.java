@@ -368,6 +368,7 @@ public class ServerManagerPanel extends JPanel implements DialogPanel, AbstractS
             public void actionPerformed(ActionEvent e)
             {
                 JCheckBox eventBox = (JCheckBox)e.getSource();
+                LOGGER.info((eventBox.isSelected() ? "Activating " : "Deactivating ") + source.getName());
                 if (eventBox.isSelected())
                 {
                     controller.activateSource(source);
@@ -377,7 +378,6 @@ public class ServerManagerPanel extends JPanel implements DialogPanel, AbstractS
                     controller.deactivateSource(source);
                 }
                 rebuildTable();
-                LOGGER.info((eventBox.isSelected() ? "Activating " : "Deactivating ") + source.getName());
             }
         });
         return box;

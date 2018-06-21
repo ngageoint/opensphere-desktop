@@ -22,6 +22,7 @@ import javax.swing.JComponent;
  */
 public class VerticalList extends JComponent
 {
+    /** Version ID. */
     private static final long serialVersionUID = 1L;
 
     @Override

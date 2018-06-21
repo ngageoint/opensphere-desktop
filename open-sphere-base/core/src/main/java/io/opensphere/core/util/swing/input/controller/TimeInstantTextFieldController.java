@@ -55,7 +55,6 @@ public class TimeInstantTextFieldController extends AbstractController<TimeInsta
      * Constructor.
      *
      * @param model the model
-     * @param converter the converter from picker date to model time instant
      */
     public TimeInstantTextFieldController(TimeInstantModel model)
     {

@@ -154,7 +154,6 @@ public class ShapeFileImporter implements FileOrURLImporter
 
         importSource.setName(defaultName);
         importSource.setPath(file.getAbsolutePath());
-
         @SuppressWarnings("null")
         CallbackCaller cbc = ifn(cb != null, (suc, src) -> cb.fileImportComplete(suc, file, getDgicr(src)));
         SwingUtilities.invokeLater(() -> importSource(importSource, importedNames, cbc, startState.val));
@@ -229,7 +228,6 @@ public class ShapeFileImporter implements FileOrURLImporter
 
         importSource.setName(defaultName);
         importSource.setPath(url.toString());
-
         @SuppressWarnings("null")
         CallbackCaller cbc = ifn(cb != null, (suc, src) -> cb.urlImportComplete(suc, url, getDgicr(src)));
         SwingUtilities.invokeLater(() -> importSource(importSource, importedNames, cbc, startState.val));

@@ -29,6 +29,7 @@ public class DateTableCellRenderer extends DefaultTableCellRenderer
     {
         super();
         myFormat = ListToolPreferences.getSimpleDateFormatForPrecision(precision);
+        setVerticalAlignment(DefaultTableCellRenderer.TOP);
     }
 
     @Override

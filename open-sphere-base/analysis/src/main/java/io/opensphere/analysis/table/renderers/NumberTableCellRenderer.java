@@ -45,6 +45,8 @@ public class NumberTableCellRenderer extends DefaultTableCellRenderer
     public NumberTableCellRenderer(int pHorizontalAlignment, HyperlinkMouseListener hyperlinkListener)
     {
         setHorizontalAlignment(pHorizontalAlignment);
+        setVerticalAlignment(DefaultTableCellRenderer.TOP);
+
         myFormat = NumberFormat.getInstance();
         myFormat.setGroupingUsed(false);
         myFormat.setMaximumFractionDigits(9);

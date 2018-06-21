@@ -7,11 +7,13 @@ import java.util.concurrent.locks.ReentrantLock;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
+/** Helper for JAXBContexts. */
 public class JAXBContextHelper
 {
-
+    /** Lock for creating contexts. */
     private static ReentrantLock createContextLock = new ReentrantLock();
 
+    /** Map of class names to contexts. */
     private static HashMap<String, JAXBContext> contextMap = new HashMap<>();
 
     /**

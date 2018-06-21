@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Collection;
+import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -199,6 +200,19 @@ public class ActiveDataTreeTableTreeCellRenderer extends TreeTableTreeCellRender
             if (dti != null)
             {
                 hasActiveFilter = DataLayerFilter.hasActiveLoadFilter(myDGC.getToolbox(), dti);
+
+                // Add any custom labels for the layer
+                DataTypeInfoAssistant assistant = dti.getAssistant();
+                if (assistant != null)
+                {
+                    List<String> layerLabels = assistant.getLayerLabels();
+                    if (!layerLabels.isEmpty())
+                    {
+                        StringBuilder sb = new StringBuilder(payload.getButton().getText());
+                        layerLabels.forEach(sb::append);
+                        label.setText(sb.toString());
+                    }
+                }
             }
             else if (dgi != null && dgi.numMembers(false) == 1)
             {

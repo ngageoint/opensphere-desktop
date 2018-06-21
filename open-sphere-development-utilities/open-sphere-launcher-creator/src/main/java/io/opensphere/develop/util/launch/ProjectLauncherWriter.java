@@ -37,8 +37,20 @@ public final class ProjectLauncherWriter
     public void write(Collection<String> projects, Collection<Dependency> dependencies, Project rootProject, OsInfo osInfo)
     {
         List<String> lines = generateLauncherLines(projects, dependencies, rootProject, osInfo);
-        Path path = Paths.get(rootProject.getRootDir(), "eclipse", "launches",
-                rootProject.getLauncherPrefix() + osInfo.getExtension() + ".launch");
+        Path path;
+
+        if (rootProject.getLauncherSuffix() != null)
+        {
+            String suffix = "_" + rootProject.getLauncherSuffix();
+            path = Paths.get(rootProject.getRootDir(), "eclipse", "launches",
+                    rootProject.getLauncherPrefix() + osInfo.getExtension() + suffix + ".launch");
+        }
+        else
+        {
+            path = Paths.get(rootProject.getRootDir(), "eclipse", "launches",
+                    rootProject.getLauncherPrefix() + osInfo.getExtension() + ".launch");
+        }
+
         try
         {
             Files.write(path, lines);
@@ -81,7 +93,7 @@ public final class ProjectLauncherWriter
         // Classpath
         lines.add("<listAttribute key=\"org.eclipse.jdt.launching.CLASSPATH\">");
         lines.add(listEntryXml("containerPath",
-                "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8",
+                "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-9",
                 "path", "1", "type", "4"));
         lines.add(listEntryXml("containerPath", "org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER", "path", "3", "type", "4"));
         for (String additional : rootProject.getAdditionalClasspathItems())

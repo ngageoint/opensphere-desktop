@@ -17,6 +17,7 @@ import java.util.ArrayList;
  */
 public class DirectoryListRecursion
 {
+    /** The files. */
     private static ArrayList<String> allFiles;
 
     /**

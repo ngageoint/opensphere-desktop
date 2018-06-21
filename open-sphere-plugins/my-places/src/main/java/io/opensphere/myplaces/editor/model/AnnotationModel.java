@@ -459,23 +459,23 @@ public class AnnotationModel extends WrappedModel<Placemark>
         if (placemark != null && placemark.getExtendedData() != null)
         {
             ExtendedData extendedData = placemark.getExtendedData();
-            myShowTitle.set(ExtendedDataUtils.getObjBoolean(extendedData, Constants.IS_TITLE, false));
-            myShowFieldTitles.set(ExtendedDataUtils.getObjBoolean(extendedData, Constants.IS_FIELD_TITLE, false));
-            myShowDecimalLatLon.set(ExtendedDataUtils.getObjBoolean(extendedData, Constants.IS_LAT_LON_ID, false));
-            myShowDMSLatLon.set(ExtendedDataUtils.getObjBoolean(extendedData, Constants.IS_DMS_ID, false));
-            myShowMGRSLatLon.set(ExtendedDataUtils.getObjBoolean(extendedData, Constants.IS_MGRS, false));
-            myShowAltitude.set(ExtendedDataUtils.getObjBoolean(extendedData, Constants.IS_SHOW_ALTITUDE, false));
-            myShowDescription.set(ExtendedDataUtils.getObjBoolean(extendedData, Constants.IS_DESC_ID, false));
-            myShowDistance.set(ExtendedDataUtils.getObjBoolean(extendedData, Constants.IS_DISTANCE_ID, true));
-            myShowHeading.set(ExtendedDataUtils.getObjBoolean(extendedData, Constants.IS_HEADING_ID, true));
-            myShowVelocity.set(ExtendedDataUtils.getObjBoolean(extendedData, Constants.IS_VELOCITY_ID, true));
-            myShowDuration.set(ExtendedDataUtils.getObjBoolean(extendedData, Constants.IS_DURATION_ID, true));
+            myShowTitle.set(ExtendedDataUtils.getBooleanObj(extendedData, Constants.IS_TITLE, false));
+            myShowFieldTitles.set(ExtendedDataUtils.getBooleanObj(extendedData, Constants.IS_FIELD_TITLE, false));
+            myShowDecimalLatLon.set(ExtendedDataUtils.getBooleanObj(extendedData, Constants.IS_LAT_LON_ID, false));
+            myShowDMSLatLon.set(ExtendedDataUtils.getBooleanObj(extendedData, Constants.IS_DMS_ID, false));
+            myShowMGRSLatLon.set(ExtendedDataUtils.getBooleanObj(extendedData, Constants.IS_MGRS, false));
+            myShowAltitude.set(ExtendedDataUtils.getBooleanObj(extendedData, Constants.IS_SHOW_ALTITUDE, false));
+            myShowDescription.set(ExtendedDataUtils.getBooleanObj(extendedData, Constants.IS_DESC_ID, false));
+            myShowDistance.set(ExtendedDataUtils.getBooleanObj(extendedData, Constants.IS_DISTANCE_ID, true));
+            myShowHeading.set(ExtendedDataUtils.getBooleanObj(extendedData, Constants.IS_HEADING_ID, true));
+            myShowVelocity.set(ExtendedDataUtils.getBooleanObj(extendedData, Constants.IS_VELOCITY_ID, true));
+            myShowDuration.set(ExtendedDataUtils.getBooleanObj(extendedData, Constants.IS_DURATION_ID, true));
             myIsDistanceHeadingCapable = ExtendedDataUtils.getBoolean(extendedData, Constants.IS_HEADING_DISTANCE_CAPABLE, false);
             myIsLocationCapable = ExtendedDataUtils.getBoolean(extendedData, Constants.IS_LOCATION_CAPABLE, true);
             myVelocityCapable = ExtendedDataUtils.getBoolean(extendedData, Constants.IS_VELOCITY_CAPABLE, false);
             myDurationCapable = ExtendedDataUtils.getBoolean(extendedData, Constants.IS_DURATION_CAPABLE, false);
-            myShowInTimeline.set(ExtendedDataUtils.getObjBoolean(extendedData, Constants.IS_SHOW_IN_TIMELINE, true));
-            myAnimate.set(ExtendedDataUtils.getObjBoolean(extendedData, Constants.IS_ANIMATE, true));
+            myShowInTimeline.set(ExtendedDataUtils.getBooleanObj(extendedData, Constants.IS_SHOW_IN_TIMELINE, true));
+            myAnimate.set(ExtendedDataUtils.getBooleanObj(extendedData, Constants.IS_ANIMATE, true));
         }
         else
         {
@@ -511,8 +511,8 @@ public class AnnotationModel extends WrappedModel<Placemark>
             myTextStyleModel.getFontColor().set(PlacemarkUtils.getPlacemarkTextColor(placemark));
             myBorderColor.set(PlacemarkUtils.getPlacemarkColor(placemark));
             myPolygonFillColor.set(PlacemarkUtils.getPolygonFillColor(placemark));
-            myIsBubbleFilled.set(ExtendedDataUtils.getObjBoolean(extendedData, Constants.IS_BUBBLE_FILLED_ID, true));
-            myIsPolygonFilled.set(ExtendedDataUtils.getObjBoolean(extendedData, Constants.IS_POLYGON_FILLED_ID, false));
+            myIsBubbleFilled.set(ExtendedDataUtils.getBooleanObj(extendedData, Constants.IS_BUBBLE_FILLED_ID, true));
+            myIsPolygonFilled.set(ExtendedDataUtils.getBooleanObj(extendedData, Constants.IS_POLYGON_FILLED_ID, false));
         }
         else
         {

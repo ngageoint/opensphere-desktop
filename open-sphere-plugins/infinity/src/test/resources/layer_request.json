@@ -14,17 +14,23 @@
 					}
 				},
 				{
-					"geo_bounding_box": {
+					"geo_shape": {
 						"ignore_unmapped": true,
-						"geom_point": {
-							"bottom_right": {
-								"lat": -90,
-								"lon": 180
+						"geom": {
+							"shape": {
+								"type": "envelope",
+								"coordinates": [
+									[
+										-180,
+										90
+									],
+									[
+										180,
+										-90
+									]
+								]
 							},
-							"top_left": {
-								"lat": 90,
-								"lon": -180
-							}
+							"relation": "intersects"
 						}
 					}
 				}
@@ -33,9 +39,11 @@
 	},
 	"aggs": {
 		"bins": {
-			"terms": {
-				"field": "blah.keyword",
-				"size": 10000,
+			"histogram": {
+				"field": "blah",
+				"min_doc_count": 1,
+				"interval": 10,
+				"offset": 0,
 				"missing": 1000000000000000000
 			}
 		}

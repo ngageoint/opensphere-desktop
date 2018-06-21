@@ -16,9 +16,7 @@ import io.opensphere.csvcommon.detect.location.model.LocationResults;
  */
 public class HeaderDetector implements CellDetector<Integer>
 {
-    /**
-     *
-     */
+    /** Regex pattern for CSV headers. */
     private static final Pattern HEADER_PATTERN = Pattern.compile("[\"'\\w\\s\\(\\)]+");
 
     /** The expected number of columns. */
@@ -50,8 +48,10 @@ public class HeaderDetector implements CellDetector<Integer>
     }
 
     /**
-     * @param pSampler
-     * @return best guess for the header line
+     * Detect the parameter.
+     * 
+     * @param pSampler the line sampler
+     * @return the parameter
      */
     protected ValuesWithConfidence<Integer> detectFromSingleColumn(CellSampler pSampler)
     {
@@ -101,8 +101,10 @@ public class HeaderDetector implements CellDetector<Integer>
     }
 
     /**
-     * @param sampler the sample cells
-     * @return best guess for the headers line
+     * Detects parameters from multiple columns.
+     *
+     * @param sampler the sampler
+     * @return the parameters
      */
     protected ValuesWithConfidence<Integer> detectFromMultipleColumns(CellSampler sampler)
     {

@@ -20,8 +20,10 @@ import java.util.TimeZone;
  */
 public class SimpleDateFormatHelper
 {
+    /** Default GMT timezone. */
     private final static TimeZone DEFAULT_TIME_ZONE_GMT00 = TimeZone.getTimeZone("GMT+00:00");
 
+    /** Pattern to SimpleDateFormat map. */
     private static ThreadLocal<Map<String, SimpleDateFormat>> threadLocalPatternToSDF = new ThreadLocal<Map<String, SimpleDateFormat>>()
     {
         @Override
@@ -49,7 +51,7 @@ public class SimpleDateFormatHelper
      * This is a thread safe call.
      *
      * @param sdf - the simple date format string.
-     * @return
+     * @return the format
      */
     public static SimpleDateFormat getSimpleDateFormat(String sdf)
     {
