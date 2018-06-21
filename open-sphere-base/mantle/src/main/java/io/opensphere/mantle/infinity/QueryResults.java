@@ -19,7 +19,7 @@ public class QueryResults
     private final long myCount;
 
     /** The bins. */
-    private List<ValueWithCount<String>> myBins;
+    private List<ValueWithCount<Object>> myBins;
 
     /**
      * Constructor.
@@ -46,7 +46,7 @@ public class QueryResults
      *
      * @param bins the bins
      */
-    public void setBins(List<ValueWithCount<String>> bins)
+    public void setBins(List<ValueWithCount<Object>> bins)
     {
         myBins = bins;
     }
@@ -56,7 +56,7 @@ public class QueryResults
      *
      * @return the bins
      */
-    public List<ValueWithCount<String>> getBins()
+    public List<ValueWithCount<Object>> getBins()
     {
         return myBins;
     }

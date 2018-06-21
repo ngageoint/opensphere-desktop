@@ -281,7 +281,7 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
         QueryResults results = new QueryResults(response.getHits().getTotal());
         if (response.getAggregations() != null)
         {
-            List<ValueWithCount<String>> bins = Arrays.stream(response.getAggregations().getBins().getBuckets())
+            List<ValueWithCount<Object>> bins = Arrays.stream(response.getAggregations().getBins().getBuckets())
                     .map(b -> new ValueWithCount<>(b.getKey(), (int)b.getDoc_count())).collect(Collectors.toList());
             results.setBins(bins);
         }

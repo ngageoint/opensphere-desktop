@@ -32,6 +32,9 @@ public final class InfinityUtilities
     /** The default bin width */
     public static final double DEFAULT_BIN_WIDTH = 10.0;
 
+    /** The default bin width fractional digits*/
+    public static final int DEFAULT_BIN_WIDTH_FRAC_DIGITS = 1;
+
     /** The default bin offset */
     public static final double DEFAULT_BIN_OFFSET = 0.0;
 
