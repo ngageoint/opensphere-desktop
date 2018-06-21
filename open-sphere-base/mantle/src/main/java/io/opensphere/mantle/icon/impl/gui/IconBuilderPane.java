@@ -60,6 +60,7 @@ public class IconBuilderPane extends BorderPane
     /** The AWT Window that owns this pane. */
     private final Window myOwner;
 
+    /** The spinner width. */
     private final double spinwidth = 40.0;
     /**
      * Constructs a new IconBuilderPane.

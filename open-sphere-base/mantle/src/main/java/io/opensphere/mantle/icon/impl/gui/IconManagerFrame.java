@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -124,6 +126,9 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
         myIconRegistry.addListener(this);
     }
 
+    /**
+     * Shows the icon builder dialog.
+     */
     private void showBuilderDialog()
     {
         IconRegistry iconRegistry = MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry();
@@ -267,21 +272,12 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
      */
     private void createIconPopupMenuItems(JPopupMenu puMenu)
     {
-        JMenuItem addToFavoritesMI = new JMenuItem("Add Selected To Favorites");
-        addToFavoritesMI.addActionListener(e -> addSelectedToFavorites());
-        puMenu.add(addToFavoritesMI);
-
-        JMenuItem rotateSelectedMI = new JMenuItem("Rotate Selected");
-        rotateSelectedMI.addActionListener(e -> rotateSelected());
-        puMenu.add(rotateSelectedMI);
+        ArrayList<JMenuItem> menuBarList = getSharedButtons();
+        menuBarList.forEach(button -> puMenu.add(button));
 
         JMenuItem deleteSelectedMI = new JMenuItem("Delete Selected");
         deleteSelectedMI.addActionListener(e -> deleteSelected());
         puMenu.add(deleteSelectedMI);
-
-        JMenuItem deSelectAllMI = new JMenuItem("De-Select All");
-        deSelectAllMI.addActionListener(e -> deselectAll());
-        puMenu.add(deSelectAllMI);
     }
 
     /**
@@ -290,25 +286,33 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
      */
     private void createMenuBarEditMenuItems()
     {
-        JMenuItem addToFavoritesMI = new JMenuItem("Add Selected To Favorites");
-        addToFavoritesMI.addActionListener(e -> addSelectedToFavorites());
-        myEditMenu.add(addToFavoritesMI);
-
-        JMenuItem rotateSelectedMI = new JMenuItem("Rotate Selected");
-        rotateSelectedMI.addActionListener(e -> rotateSelected());
-        myEditMenu.add(rotateSelectedMI);
-
-        JMenuItem deleteSelectedMI = new JMenuItem("Delete Selected");
-        deleteSelectedMI.addActionListener(e -> deleteSelected());
-        myEditMenu.add(deleteSelectedMI);
+        ArrayList<JMenuItem> menuBarList = getSharedButtons();
+        menuBarList.forEach(button -> myEditMenu.add(button));
 
         JMenuItem deleteSelectedTreeNodeMI = new JMenuItem("Delete Selected Icon Set");
         deleteSelectedTreeNodeMI.addActionListener(e -> deleteSelectedTreeNode());
         myEditMenu.add(deleteSelectedTreeNodeMI);
+    }
+
+    /**
+     * Creates the menu bar and popup buttons for
+     * {@link #createMenuBarFileMenuItems()} {@link #createIconPopupMenuItems(JPopupMenu)}.
+     * @return buttonList
+     */
+    private ArrayList<JMenuItem> getSharedButtons()
+    {
+        JMenuItem addToFavoritesMI = new JMenuItem("Add Selected To Favorites");
+        addToFavoritesMI.addActionListener(e -> addSelectedToFavorites());
+
+        JMenuItem rotateSelectedMI = new JMenuItem("Rotate Selected");
+        rotateSelectedMI.addActionListener(e -> rotateSelected());
 
         JMenuItem deSelectAllMI = new JMenuItem("De-Select All");
         deSelectAllMI.addActionListener(e -> deselectAll());
-        myEditMenu.add(deSelectAllMI);
+
+        ArrayList<JMenuItem> buttonList = new ArrayList<JMenuItem>(Arrays.asList(addToFavoritesMI, rotateSelectedMI, deSelectAllMI));
+
+        return buttonList;
     }
 
     /**
