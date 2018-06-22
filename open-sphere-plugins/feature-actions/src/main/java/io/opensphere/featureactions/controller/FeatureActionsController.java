@@ -76,7 +76,7 @@ public class FeatureActionsController extends EventListenerService
 
     /** The type keys for which actions have been applied. */
     @ThreadConfined("FeatureActionsController")
-    private final Map<String, DataTypeStyleConfig> myTypeKeysAndStyles = New.map();
+    private final Map<String, DataTypeStyleConfig> myTypeKeysAndStyles = Collections.synchronizedMap(New.map());
 
     /** The style registry listener. */
     private final VisualizationStyleRegistryChangeListener myStyleRegistryListener;
@@ -184,7 +184,11 @@ public class FeatureActionsController extends EventListenerService
             DataTypeStyleConfig style = myPrefs.getPreferences(StyleManagerController.class)
                     .getJAXBObject(StyleManagerConfig.class, "styleManagerConfig", new StyleManagerConfig())
                     .getDataTypeStyleByTypeKey(dataType.getTypeKey());
-            myTypeKeysAndStyles.put(dataType.getTypeKey(), XMLUtilities.jaxbClone(style, DataTypeStyleConfig.class));
+
+            synchronized (myTypeKeysAndStyles)
+            {
+                myTypeKeysAndStyles.put(dataType.getTypeKey(), XMLUtilities.jaxbClone(style, DataTypeStyleConfig.class));
+            }
 
             Aggregator.process(ids, 100_000, idSubset -> applyActions(featureActions, idSubset, dataType));
 
@@ -347,7 +351,12 @@ public class FeatureActionsController extends EventListenerService
             if (!ids.isEmpty())
             {
                 Aggregator.process(ids, 100_000, idSubset -> clearActions(idSubset, dataType));
-                myTypeKeysAndStyles.remove(dataType.getTypeKey());
+
+                synchronized (myTypeKeysAndStyles)
+                {
+                    myTypeKeysAndStyles.remove(dataType.getTypeKey());
+                }
+
                 doActions(ids, dataType);
             }
         }
@@ -366,7 +375,14 @@ public class FeatureActionsController extends EventListenerService
             if (value instanceof StyleManagerConfig)
             {
                 StyleManagerConfig config = (StyleManagerConfig)value;
-                for (Map.Entry<String, DataTypeStyleConfig> entry : myTypeKeysAndStyles.entrySet())
+
+                Set<Map.Entry<String, DataTypeStyleConfig>> entrySet;
+                synchronized (myTypeKeysAndStyles)
+                {
+                    entrySet = New.set(myTypeKeysAndStyles.entrySet());
+                }
+
+                for (Map.Entry<String, DataTypeStyleConfig> entry : entrySet)
                 {
                     String dataTypeKey = entry.getKey();
                     DataTypeStyleConfig oldConfig = entry.getValue();
