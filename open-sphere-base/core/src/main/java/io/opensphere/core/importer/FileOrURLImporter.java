@@ -6,7 +6,7 @@ import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.swing.JComponent;
 import javax.swing.TransferHandler.DropLocation;
 

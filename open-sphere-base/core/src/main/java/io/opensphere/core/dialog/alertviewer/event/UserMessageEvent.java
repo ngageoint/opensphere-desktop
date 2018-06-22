@@ -1,6 +1,6 @@
 package io.opensphere.core.dialog.alertviewer.event;
 
-import javax.annotation.concurrent.Immutable;
+import net.jcip.annotations.Immutable;
 
 import io.opensphere.core.event.AbstractSingleStateEvent;
 import io.opensphere.core.event.EventManager;

@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * @param <E> The type of objects in the queue.
  */
-@javax.annotation.concurrent.ThreadSafe
+@net.jcip.annotations.ThreadSafe
 public class BatchingBlockingQueue<E> extends AbstractQueue<E> implements BlockingQueue<E>
 {
     /**

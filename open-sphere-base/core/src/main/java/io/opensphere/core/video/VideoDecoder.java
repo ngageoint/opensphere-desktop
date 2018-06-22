@@ -3,7 +3,7 @@ package io.opensphere.core.video;
 import java.io.Closeable;
 import java.nio.ByteBuffer;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 import io.opensphere.core.image.ImageIOImage;
 import io.opensphere.core.math.Vector2i;

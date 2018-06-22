@@ -3,7 +3,7 @@ package io.opensphere.core.pipeline.renderer.buffered;
 import java.nio.Buffer;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.media.opengl.GL;
 
 import io.opensphere.core.geometry.AbstractGeometry;

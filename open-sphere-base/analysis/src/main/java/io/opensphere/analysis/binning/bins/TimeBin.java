@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.function.Function;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import net.jcip.annotations.NotThreadSafe;
 
 import io.opensphere.analysis.binning.criteria.TimeBinType;
 import io.opensphere.core.util.Utilities;

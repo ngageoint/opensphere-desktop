@@ -2,7 +2,7 @@ package io.opensphere.core.geometry.renderproperties;
 
 import java.util.Objects;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 import io.opensphere.core.math.Matrix4d;
 

@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -232,7 +232,7 @@ public abstract class AbstractTileVisualizationStyle extends AbstractVisualizati
 //    }
 
     @Override
-    @Nonnull
+    @NonNull
     public GroupedMiniStyleEditorPanel getMiniUIPanel()
     {
         GroupedMiniStyleEditorPanel panel = new GroupedMiniStyleEditorPanel(this);
@@ -240,7 +240,7 @@ public abstract class AbstractTileVisualizationStyle extends AbstractVisualizati
     }
 
     @Override
-    @Nonnull
+    @NonNull
     public GroupedStyleParameterEditorPanel getUIPanel()
     {
         GroupedStyleParameterEditorPanel aPanel = new GroupedStyleParameterEditorPanel(this, true);

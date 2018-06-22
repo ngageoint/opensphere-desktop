@@ -2,7 +2,7 @@ package io.opensphere.core.pipeline.renderer.buffered;
 
 import java.nio.IntBuffer;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.media.opengl.GL;
 
 import io.opensphere.core.geometry.AbstractGeometry;

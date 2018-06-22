@@ -10,9 +10,9 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import net.jcip.annotations.ThreadSafe;
 
 import org.apache.log4j.Logger;
 
@@ -344,7 +344,7 @@ public class MappedObjectPool<K, V>
      * @param key The key.
      * @return The queue.
      */
-    @Nonnull
+    @NonNull
     protected LimitedFertilityBlockingQueue<V> getQueue(K key)
     {
         return myMap.get(key);

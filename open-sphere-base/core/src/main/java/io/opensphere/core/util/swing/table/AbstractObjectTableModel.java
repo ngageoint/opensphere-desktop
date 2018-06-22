@@ -2,7 +2,7 @@ package io.opensphere.core.util.swing.table;
 
 import java.util.List;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import net.jcip.annotations.NotThreadSafe;
 import javax.swing.SwingUtilities;
 
 import io.opensphere.core.util.cache.SimpleCache;

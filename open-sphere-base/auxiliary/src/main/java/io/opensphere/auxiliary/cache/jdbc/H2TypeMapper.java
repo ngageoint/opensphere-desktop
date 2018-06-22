@@ -9,8 +9,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Collection;
 
-import javax.annotation.Nullable;
-
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.cache.CacheException;
 import io.opensphere.core.cache.ClassProvider;
 import io.opensphere.core.cache.jdbc.TypeMapper;
@@ -43,7 +42,8 @@ public class H2TypeMapper extends TypeMapper
 
         @Override
         public int getValue(Class<? extends Serializable> type, long sizeBytes, int column, ResultSet rs,
-                PropertyMatcher<? extends Serializable> filter, Collection<? super Serializable> results) throws CacheException
+                PropertyMatcher<? extends Serializable> filter, Collection<? super Serializable> results)
+            throws CacheException
         {
             try
             {

@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @param <E> the type which is to be put in the queue.
  */
-@javax.annotation.concurrent.ThreadSafe
+@net.jcip.annotations.ThreadSafe
 public class CollapsingQueue<E> extends LinkedBlockingQueue<E>
 {
     /** serialVersionUID. */

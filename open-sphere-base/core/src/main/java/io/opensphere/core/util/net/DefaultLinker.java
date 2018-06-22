@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import net.jcip.annotations.NotThreadSafe;
 
 import org.apache.log4j.Logger;
 

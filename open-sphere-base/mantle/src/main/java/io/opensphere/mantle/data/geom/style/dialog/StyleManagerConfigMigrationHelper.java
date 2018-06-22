@@ -3,7 +3,7 @@ package io.opensphere.mantle.data.geom.style.dialog;
 import java.util.Collection;
 import java.util.Iterator;
 
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
@@ -33,7 +33,7 @@ final class StyleManagerConfigMigrationHelper
      * @return The migrated config, or a default config if an old one was not
      *         found.
      */
-    @Nonnull
+    @NonNull
     public StyleManagerConfig loadFromDeprecatedTopic(PreferencesRegistry preferencesRegistry, String prefKey)
     {
         StyleManagerConfig config;

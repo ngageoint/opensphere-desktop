@@ -2,7 +2,7 @@ package io.opensphere.stkterrain.model.mesh;
 
 import java.util.Arrays;
 
-import javax.annotation.concurrent.Immutable;
+import net.jcip.annotations.Immutable;
 
 import io.opensphere.core.util.lang.ToStringHelper;
 

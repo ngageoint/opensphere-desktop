@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 
 import org.codehaus.jackson.annotate.JsonAnyGetter;
 import org.codehaus.jackson.annotate.JsonAnySetter;
@@ -14,7 +14,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
-/** Class that bind predictions to objects.*/
+/** Class that bind predictions to objects. */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({ "description", "id", "matched_substrings", "place_id", "reference", "terms", "types" })
@@ -223,6 +223,7 @@ public class Prediction
 
     /**
      * Additional objects in JSON response not assigned are stored in a map.
+     * 
      * @return addtionalProperties.
      */
     @JsonAnyGetter

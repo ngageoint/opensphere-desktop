@@ -9,7 +9,7 @@ import io.opensphere.core.util.ref.StrongReference;
  *
  * @param <T> The supported listener type.
  */
-@javax.annotation.concurrent.ThreadSafe
+@net.jcip.annotations.ThreadSafe
 public class StrongChangeSupport<T> extends AbstractChangeSupport<T>
 {
     /**

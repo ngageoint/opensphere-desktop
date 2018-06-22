@@ -2,7 +2,7 @@ package io.opensphere.server.serverprovider.http.header;
 
 import static org.junit.Assert.assertEquals;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import net.jcip.annotations.NotThreadSafe;
 
 import org.junit.BeforeClass;
 import org.junit.Test;

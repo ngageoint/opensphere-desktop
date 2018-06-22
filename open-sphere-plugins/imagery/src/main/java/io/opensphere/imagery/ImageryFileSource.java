@@ -2,7 +2,7 @@ package io.opensphere.imagery;
 
 import java.io.File;
 
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -275,7 +275,7 @@ public class ImageryFileSource extends AbstractDataSource implements SingleFileD
      *
      * @return the bounding box
      */
-    @Nonnull
+    @NonNull
     public GeographicBoundingBox getBoundingBox()
     {
         return new GeographicBoundingBox(LatLonAlt.createFromDegrees(myLowerRightLat, myUpperLeftLon),

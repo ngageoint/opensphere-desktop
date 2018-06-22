@@ -5,7 +5,7 @@ import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 import java.util.Collection;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.media.opengl.GL;
 
 import com.jogamp.common.nio.PointerBuffer;
