@@ -38,6 +38,9 @@ public final class InfinityUtilities
     /** The default bin offset */
     public static final double DEFAULT_BIN_OFFSET = 0.0;
 
+    /** The default user number format */
+    public static final String DEFAULT_USER_NUM_FORMAT = "%.1f";
+
     /**
      * Determines if the data type is infinity-enabled.
      *
