@@ -59,7 +59,6 @@ import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
-import io.opensphere.mantle.icon.impl.gui.IconChooserPanel.BuildIconGridWorker;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /**
@@ -519,7 +518,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
                 }
             }
         }
-        recList = recList == null ? Collections.<IconRecord>emptyList() : recList;;
+        recList = recList == null ? Collections.<IconRecord>emptyList() : recList;
         displayIconRecords(recList, true);
         ResizeRec = recList;
     }
@@ -588,7 +587,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         labelPanel.add(loadLabel, BorderLayout.CENTER);
         subPanel2.add(labelPanel);
         subPanel2.add(Box.createVerticalGlue());
-        myLoadingPanel.add(subPanel2, BorderLayout.CENTER);   
+        myLoadingPanel.add(subPanel2, BorderLayout.CENTER);
     }
 
     /**
@@ -597,7 +596,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
      * @param recList the rec list
      * @param canCancel the can cancel
      */
-    public void displayIconRecords(final List<IconRecord> recList, boolean canCancel)
+    private void displayIconRecords(final List<IconRecord> recList, boolean canCancel)
     {
         EventQueueUtilities.runOnEDT(() ->
         {
@@ -664,7 +663,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     /**
      * The Class BuildIconGridWorker.
      */
-    public class BuildIconGridWorker implements Runnable
+    private class BuildIconGridWorker implements Runnable
     {
         /** The Can interrupt. */
         private final boolean myCanInterrupt;
