@@ -72,10 +72,9 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     /** The Toolbox. */
     private final Toolbox myToolbox;
     
-    /** The Initial Width of Display Icons. */
+    /** The initial width of display icon tiles. */
 	public int tileWidth = 100;
 	
-    
     /**
      * Instantiates a new icon chooser dialog.
      *
@@ -111,7 +110,6 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
         reduceButton.setFont(font);       
         reduceButton.setToolTipText("Reduce Icon Size");
        
-        
         myChooserPanel = new IconChooserPanel(tb, true, true, iconPopupMenu, treePopupMenu, buildIcon);
 
 		myMenuBar = new JMenuBar();
@@ -124,8 +122,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
 		myMenuBar.add(reduceButton);
 		myMenuBar.add(enlargeButton);
 		myMenuBar.add(Box.createHorizontalGlue());
-
-        
+     
         JPanel mainPanel = new JPanel(new BorderLayout());
         JPanel closePanel = new JPanel();
         closePanel.setLayout(new BoxLayout(closePanel, BoxLayout.X_AXIS));
@@ -156,8 +153,8 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
 	 * @param choice
 	 *            the {@link #JButton reduceButton/increaseButton}
 	 */
-	private void iconSizeChanger(boolean choice) {
-
+	private void iconSizeChanger(boolean choice) 
+	{
 		if (choice)
 		{
 			tileWidth += 20;

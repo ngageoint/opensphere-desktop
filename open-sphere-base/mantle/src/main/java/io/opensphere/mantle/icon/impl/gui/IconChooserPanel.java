@@ -156,7 +156,6 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
 	 /** The list of icons being resized */
 	public List<IconRecord> ResizeRec = New.list();
 
-    
     /**
      * Instantiates a new icon chooser panel.
      *
@@ -185,7 +184,6 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         myResizeTimer = new Timer(200, e -> valueChanged(null));
         myResizeTimer.setRepeats(false);
     }
-   
 
 	/**
      * Sets the selected icon URL.
@@ -618,11 +616,11 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         myLoader.start();
     }
     
-	/**
+    /**
      * Shows resizes icons and displays loading screen until done.
      */
-	public void IconResizer(List<IconRecord> recList,int tileWidth,boolean canCancel) {
-	
+	public void IconResizer(List<IconRecord> recList,int tileWidth,boolean canCancel) 
+	{
 		myTileWidth = tileWidth; 
         myLoader = new Thread(new BuildIconGridWorker(recList, canCancel));
         myLoader.start();
@@ -634,7 +632,6 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
             myGridPanel.revalidate();
             myGridPanel.repaint();
         });
- 
 	}
 
     /**
