@@ -240,8 +240,18 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
                     || DynamicEnumerationKey.class.isAssignableFrom(parameters.getBinFieldType()))
             {
                 field += ".keyword";
+                request.setAggs(new Aggs(field, InfinityUtilities.DEFAULT_SIZE, InfinityUtilities.MISSING_VALUE));
             }
-            request.setAggs(new Aggs(field, 10000, InfinityUtilities.MISSING_VALUE));
+            else if (Number.class.isAssignableFrom(parameters.getBinFieldType()) && parameters.getBinWidth() != null
+                    && parameters.getBinOffset() != null)
+            {
+                request.setAggs(new Aggs(field, parameters.getBinWidth().doubleValue(), InfinityUtilities.MISSING_VALUE,
+                        parameters.getBinOffset().doubleValue(), parameters.getMinDocCount()));
+            }
+            else
+            {
+                request.setAggs(new Aggs(field, InfinityUtilities.DEFAULT_SIZE, InfinityUtilities.MISSING_VALUE));
+            }
         }
         return request;
     }
@@ -275,7 +285,7 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
         QueryResults results = new QueryResults(response.getHits().getTotal());
         if (response.getAggregations() != null)
         {
-            List<ValueWithCount<String>> bins = Arrays.stream(response.getAggregations().getBins().getBuckets())
+            List<ValueWithCount<Object>> bins = Arrays.stream(response.getAggregations().getBins().getBuckets())
                     .map(b -> new ValueWithCount<>(b.getKey(), (int)b.getDoc_count())).collect(Collectors.toList());
             results.setBins(bins);
         }

@@ -29,6 +29,15 @@ public class QueryParameters implements Serializable
     /** The class type of the bin field. */
     private Class<?> myBinFieldType;
 
+    /** The width of the bins.  */
+    private Double myBinWidth;
+
+    /** The offset of the bin. */
+    private Double myBinOffset;
+
+    /** The min doc count of the bin. This represents the minimum count needed to return a bin. */
+    private int myMinDocCount;
+
     /** The geometry field in the layer. */
     private String myGeomField;
 
@@ -121,6 +130,47 @@ public class QueryParameters implements Serializable
         myBinFieldType = binFieldType;
     }
 
+
+    /**
+     * Gets the bin's width.
+     *
+     * @return the binWidth
+     */
+    public Double getBinWidth()
+    {
+        return myBinWidth;
+    }
+
+    /**
+     * Sets the bin's width.
+     *
+     * @param binWidth the binWidth to set
+     */
+    public void setBinWidth(Double binWidth)
+    {
+        myBinWidth = binWidth;
+    }
+
+    /**
+     * Get the bin's offset.
+     *
+     * @return the binOffset
+     */
+    public Double getBinOffset()
+    {
+        return myBinOffset;
+    }
+
+    /**
+     * Set the bin's offset.
+     *
+     * @param binOffset the binOffset to set
+     */
+    public void setBinOffset(Double binOffset)
+    {
+        myBinOffset = binOffset;
+    }
+
     /**
      * Gets the geom field.
      *
@@ -199,6 +249,26 @@ public class QueryParameters implements Serializable
     public void setGeometryType(GeometryType geometryType)
     {
         myGeometryType = geometryType;
+    }
+
+    /**
+     * Get the minDocCount.
+     *
+     * @return the minDocCount
+     */
+    public int getMinDocCount()
+    {
+        return myMinDocCount;
+    }
+
+    /**
+     * Set the minDocCount.
+     *
+     * @param minDocCount the minDocCount to set
+     */
+    public void setMinDocCount(int minDocCount)
+    {
+        myMinDocCount = minDocCount;
     }
 
     /** Geometry type. */
