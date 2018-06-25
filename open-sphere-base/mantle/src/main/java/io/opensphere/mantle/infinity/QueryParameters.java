@@ -132,7 +132,7 @@ public class QueryParameters implements Serializable
 
 
     /**
-     * Gets the bin's width
+     * Gets the bin's width.
      *
      * @return the binWidth
      */
@@ -142,7 +142,7 @@ public class QueryParameters implements Serializable
     }
 
     /**
-     * Sets the bin's width
+     * Sets the bin's width.
      *
      * @param binWidth the binWidth to set
      */
@@ -152,7 +152,7 @@ public class QueryParameters implements Serializable
     }
 
     /**
-     * Get the bin's offset
+     * Get the bin's offset.
      *
      * @return the binOffset
      */
@@ -162,7 +162,7 @@ public class QueryParameters implements Serializable
     }
 
     /**
-     * Set the bin's offset
+     * Set the bin's offset.
      *
      * @param binOffset the binOffset to set
      */
@@ -262,7 +262,7 @@ public class QueryParameters implements Serializable
     }
 
     /**
-     * Set the minDocCount
+     * Set the minDocCount.
      *
      * @param minDocCount the minDocCount to set
      */

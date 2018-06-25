@@ -28,10 +28,11 @@ public class Aggs
     /**
      * Constructor.
      *
-     * @param field
-     * @param interval
-     * @param missing
-     * @param offset
+     * @param field the field
+     * @param interval the bin width
+     * @param missing value to use if field is missing
+     * @param offset the offset from zero
+     * @param minDocCount the min_doc_count (minimum number of hits for which to return a result)
      */
     public Aggs(String field, double interval, long missing, double offset, int minDocCount)
     {

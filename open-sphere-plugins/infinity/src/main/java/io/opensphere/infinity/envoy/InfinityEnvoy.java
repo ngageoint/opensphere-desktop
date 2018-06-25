@@ -237,7 +237,7 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
                     || DynamicEnumerationKey.class.isAssignableFrom(parameters.getBinFieldType()))
             {
                 field += ".keyword";
-                request.setAggs(new Aggs(field, 10000, InfinityUtilities.MISSING_VALUE));
+                request.setAggs(new Aggs(field, InfinityUtilities.DEFAULT_SIZE, InfinityUtilities.MISSING_VALUE));
             }
             else if (Number.class.isAssignableFrom(parameters.getBinFieldType()) && parameters.getBinWidth() != null
                     && parameters.getBinOffset() != null)
@@ -247,7 +247,7 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
             }
             else
             {
-                request.setAggs(new Aggs(field, 10000, InfinityUtilities.MISSING_VALUE));
+                request.setAggs(new Aggs(field, InfinityUtilities.DEFAULT_SIZE, InfinityUtilities.MISSING_VALUE));
             }
         }
         return request;

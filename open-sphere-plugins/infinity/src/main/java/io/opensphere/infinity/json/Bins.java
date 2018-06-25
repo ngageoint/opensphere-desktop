@@ -34,10 +34,11 @@ public class Bins
     /**
      * Constructor.
      *
-     * @param field
-     * @param interval
-     * @param missing
-     * @param offset
+     * @param field the field
+     * @param interval the bin width
+     * @param missing the value to use if field is missing in results
+     * @param offset the offset from zero
+     * @param minDocCount the min_doc_count (minimum number of hits for which to return a result)
      */
     public Bins(String field, double interval, long missing, double offset, int minDocCount)
     {
@@ -65,7 +66,7 @@ public class Bins
     }
 
     /**
-     * Get the histogram
+     * Get the histogram.
      *
      * @return the histogram
      */
@@ -75,7 +76,7 @@ public class Bins
     }
 
     /**
-     * Set the histogram
+     * Set the histogram.
      *
      * @param histogram the histogram to set
      */
@@ -89,6 +90,7 @@ public class Bins
      *
      * @return the buckets
      */
+    @SuppressWarnings("rawtypes")
     public Bucket[] getBuckets()
     {
         return myBuckets;
@@ -99,6 +101,7 @@ public class Bins
      *
      * @param buckets the buckets
      */
+    @SuppressWarnings("rawtypes")
     public void setBuckets(Bucket[] buckets)
     {
         myBuckets = buckets;

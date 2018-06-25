@@ -23,6 +23,7 @@ public class Histogram
      */
     public Histogram()
     {
+        //Intentionally left blank
     }
 
     /**
@@ -32,6 +33,7 @@ public class Histogram
      * @param interval the interval
      * @param missing the missing
      * @param offset the offset
+     * @param minDocCount the min_doc_count
      */
     public Histogram(String field, double interval, long missing, double offset, int minDocCount)
     {
