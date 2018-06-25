@@ -1,6 +1,9 @@
 package io.opensphere.infinity.json;
 
-/** Elasticsearch bucket JSON bean. */
+/** Elasticsearch bucket JSON bean.
+ *
+ * @param <T> Type contained in buckets
+ */
 public class Bucket<T>
 {
     /** The key. */
@@ -14,6 +17,7 @@ public class Bucket<T>
      */
     public Bucket()
     {
+        //Intentionally left blank
     }
 
     /**

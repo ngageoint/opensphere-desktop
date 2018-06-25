@@ -72,8 +72,6 @@ public class InfinitySimulator extends AbstractServer
         }
 
         exchange.getResponseHeaders().add("Content-Type", "application/json");
-
-
         System.out.println("Response: " + exchange.getResponseCode());
     }
 
