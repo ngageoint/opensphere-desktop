@@ -59,6 +59,7 @@ import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
+import io.opensphere.mantle.icon.impl.gui.IconChooserPanel.BuildIconGridWorker;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /**
@@ -104,7 +105,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
 
     /** The Loading panel. */
     private JPanel myLoadingPanel;
-
+    
     /** The Multi select. */
     private final boolean myMultiSelect;
 
@@ -149,6 +150,13 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     /** The optional selected icon URL. */
     private String mySelectedUrl;
 
+    /** The icon display width */
+	public int myTileWidth;
+	
+	 /** The list of icons being resized */
+	public List<IconRecord> ResizeRec = New.list();
+
+    
     /**
      * Instantiates a new icon chooser panel.
      *
@@ -159,6 +167,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
      * @param treePopupMenu the tree popup menu ( optional, null means none)
      * @param iconBuilderButton button
      */
+    
     public IconChooserPanel(Toolbox tb, boolean isMultiSelect, boolean showAddIconButton, JPopupMenu iconPopupMenu,
             JPopupMenu treePopupMenu, JButton iconBuilderButton)
     {
@@ -176,8 +185,9 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         myResizeTimer = new Timer(200, e -> valueChanged(null));
         myResizeTimer.setRepeats(false);
     }
+   
 
-    /**
+	/**
      * Sets the selected icon URL.
      *
      * @param selectedUrl the icon URL
@@ -511,8 +521,9 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
                 }
             }
         }
-        recList = recList == null ? Collections.<IconRecord>emptyList() : recList;
+        recList = recList == null ? Collections.<IconRecord>emptyList() : recList;;
         displayIconRecords(recList, true);
+        ResizeRec = recList;
     }
 
     /**
@@ -579,7 +590,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         labelPanel.add(loadLabel, BorderLayout.CENTER);
         subPanel2.add(labelPanel);
         subPanel2.add(Box.createVerticalGlue());
-        myLoadingPanel.add(subPanel2, BorderLayout.CENTER);
+        myLoadingPanel.add(subPanel2, BorderLayout.CENTER);   
     }
 
     /**
@@ -588,7 +599,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
      * @param recList the rec list
      * @param canCancel the can cancel
      */
-    private void displayIconRecords(final List<IconRecord> recList, boolean canCancel)
+    public void displayIconRecords(final List<IconRecord> recList, boolean canCancel)
     {
         EventQueueUtilities.runOnEDT(() ->
         {
@@ -606,6 +617,25 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         myLoader = new Thread(new BuildIconGridWorker(recList, canCancel));
         myLoader.start();
     }
+    
+	/**
+     * Shows resizes icons and displays loading screen until done.
+     */
+	public void IconResizer(List<IconRecord> recList,int tileWidth,boolean canCancel) {
+	
+		myTileWidth = tileWidth; 
+        myLoader = new Thread(new BuildIconGridWorker(recList, canCancel));
+        myLoader.start();
+        EventQueueUtilities.runOnEDT(() ->
+        {
+            myGridPanel.removeAll();
+            myBusyLabel.setBusy(true);
+            myGridPanel.add(myLoadingPanel, BorderLayout.CENTER);
+            myGridPanel.revalidate();
+            myGridPanel.repaint();
+        });
+ 
+	}
 
     /**
      * Removes the from selection.
@@ -637,7 +667,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     /**
      * The Class BuildIconGridWorker.
      */
-    private class BuildIconGridWorker implements Runnable
+    public class BuildIconGridWorker implements Runnable
     {
         /** The Can interrupt. */
         private final boolean myCanInterrupt;
@@ -646,7 +676,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         private boolean myInterrupted;
 
         /** The Rec list. */
-        private final List<IconRecord> myRecList;
+        public final List<IconRecord> myRecList;
 
         /**
          * Instantiates a new builds the icon grid worker.
@@ -658,14 +688,17 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         {
             myRecList = recList;
             myCanInterrupt = canCancel;
+            ResizeRec = recList;
         }
 
-        @Override
+		@Override
         public void run()
         {
-            int tileWidth = 100;
             int borderSize = 6;
-            int iconWidth = tileWidth - borderSize;
+            if (myTileWidth == 0) {
+            		myTileWidth +=100;
+            }
+            int iconWidth =  (int) (myTileWidth - borderSize);
             int width = myGridPanel.getWidth();
             if (width < 0 || width > 5000)
             {
@@ -677,7 +710,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
             {
                 height = 400;
             }
-            int numIconRowsInView = (int)Math.ceil((double)height / (double)tileWidth);
+            int numIconRowsInView = (int)Math.ceil((double)height / (double)myTileWidth);
             JPanel grid = new JPanel();
             if (!isInterrupted() && !myRecList.isEmpty())
             {
@@ -685,7 +718,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
 
                 if (!isInterrupted())
                 {
-                    int numIconsPerRow = tileWidth > width ? 1 : (int)Math.floor((double)width / (double)tileWidth);
+                    int numIconsPerRow = myTileWidth > width ? 1 : (int)Math.floor((double)width / (double)myTileWidth);
                     int numRows = (int)Math.ceil((double)imIcList.size() / (double)numIconsPerRow);
                     grid = new JPanel(new GridLayout(numRows < numIconRowsInView ? numIconRowsInView : numRows, numIconsPerRow,
                             borderSize, borderSize));
@@ -954,4 +987,6 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
             return myRecord;
         }
     }
+
+
 }
