@@ -104,7 +104,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
 
     /** The Loading panel. */
     private JPanel myLoadingPanel;
-    
+
     /** The Multi select. */
     private final boolean myMultiSelect;
 
@@ -150,10 +150,10 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     private String mySelectedUrl;
 
     /** The icon display width */
-	public int myTileWidth;
-	
-	 /** The list of icons being resized */
-	public List<IconRecord> ResizeRec = New.list();
+    private int myTileWidth;
+
+    /** The list of icons being resized */
+    private List<IconRecord> myResizeRecord = New.list();
 
     /**
      * Instantiates a new icon chooser panel.
@@ -165,7 +165,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
      * @param treePopupMenu the tree popup menu ( optional, null means none)
      * @param iconBuilderButton button
      */
-    
+
     public IconChooserPanel(Toolbox tb, boolean isMultiSelect, boolean showAddIconButton, JPopupMenu iconPopupMenu,
             JPopupMenu treePopupMenu, JButton iconBuilderButton)
     {
@@ -184,7 +184,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         myResizeTimer.setRepeats(false);
     }
 
-	/**
+    /**
      * Sets the selected icon URL.
      *
      * @param selectedUrl the icon URL
@@ -519,8 +519,8 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
             }
         }
         recList = recList == null ? Collections.<IconRecord>emptyList() : recList;
-        displayIconRecords(recList, true);
-        ResizeRec = recList;
+        displayIconRecords(recList, true, myTileWidth);
+        setResizeRecord(recList);
     }
 
     /**
@@ -593,10 +593,40 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     /**
      * Display icon records.
      *
-     * @param recList the rec list
+     * @param iconRecordList the record list
      * @param canCancel the can cancel
      */
-    private void displayIconRecords(final List<IconRecord> recList, boolean canCancel)
+
+    private void displayIconRecords(final List<IconRecord> iconRecordList, boolean canCancel, int tileWidth)
+    {
+        showLoadingScreen();
+
+        if (myLoader != null)
+        {
+            myLoader.interrupt();
+        }
+        myLoader = new Thread(new BuildIconGridWorker(iconRecordList, canCancel, tileWidth));
+        myLoader.start();
+    }
+
+    /**
+     * Shows resizes icons and displays loading screen until done.
+     * 
+     * @param recList the icons being resized
+     * @param tileWidth the new tile width
+     * @param canCancel the can cancel option
+     */
+    public void setIconSize(List<IconRecord> recList, boolean canCancel, int tileWidth)
+    {
+        myLoader = new Thread(new BuildIconGridWorker(recList, canCancel, tileWidth));
+        myLoader.start();
+        showLoadingScreen();
+    }
+
+    /**
+     * Shows the icon loading screen for repaint
+     */
+    public void showLoadingScreen()
     {
         EventQueueUtilities.runOnEDT(() ->
         {
@@ -606,32 +636,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
             myGridPanel.revalidate();
             myGridPanel.repaint();
         });
-
-        if (myLoader != null)
-        {
-            myLoader.interrupt();
-        }
-        myLoader = new Thread(new BuildIconGridWorker(recList, canCancel));
-        myLoader.start();
     }
-    
-    /**
-     * Shows resizes icons and displays loading screen until done.
-     */
-	public void IconResizer(List<IconRecord> recList,int tileWidth,boolean canCancel) 
-	{
-		myTileWidth = tileWidth; 
-        myLoader = new Thread(new BuildIconGridWorker(recList, canCancel));
-        myLoader.start();
-        EventQueueUtilities.runOnEDT(() ->
-        {
-            myGridPanel.removeAll();
-            myBusyLabel.setBusy(true);
-            myGridPanel.add(myLoadingPanel, BorderLayout.CENTER);
-            myGridPanel.revalidate();
-            myGridPanel.repaint();
-        });
-	}
 
     /**
      * Removes the from selection.
@@ -661,6 +666,26 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     }
 
     /**
+     * Gets the resized icon record.
+     *
+     * @param myResizeRecord the resized icons record
+     */
+    public List<IconRecord> getResizeRecord()
+    {
+        return myResizeRecord;
+    }
+
+    /**
+     * Sets the resized icon record.
+     *
+     * @param resizeRec the resized icons record
+     */
+    public void setResizeRecord(List<IconRecord> resizeRec)
+    {
+        myResizeRecord = resizeRec;
+    }
+
+    /**
      * The Class BuildIconGridWorker.
      */
     private class BuildIconGridWorker implements Runnable
@@ -672,29 +697,32 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         private boolean myInterrupted;
 
         /** The Rec list. */
-        public final List<IconRecord> myRecList;
+        private final List<IconRecord> myRecList;
 
         /**
          * Instantiates a new builds the icon grid worker.
          *
-         * @param recList the rec list
+         * @param recList the record list
          * @param canCancel the can cancel
          */
-        public BuildIconGridWorker(List<IconRecord> recList, boolean canCancel)
+        public BuildIconGridWorker(List<IconRecord> recList, boolean canCancel, int tileWidth)
         {
             myRecList = recList;
             myCanInterrupt = canCancel;
-            ResizeRec = recList;
+            setResizeRecord(recList);
+            myTileWidth = tileWidth;
         }
 
-		@Override
+        @Override
         public void run()
         {
+
             int borderSize = 6;
-            if (myTileWidth == 0) {
-            		myTileWidth +=100;
+            if (myTileWidth == 0)
+            {
+                myTileWidth += 100;
             }
-            int iconWidth =  (int) (myTileWidth - borderSize);
+            int iconWidth = (int)(myTileWidth - borderSize);
             int width = myGridPanel.getWidth();
             if (width < 0 || width > 5000)
             {
@@ -983,6 +1011,5 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
             return myRecord;
         }
     }
-
 
 }

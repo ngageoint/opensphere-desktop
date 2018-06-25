@@ -32,6 +32,7 @@ import io.opensphere.core.util.filesystem.MnemonicFileChooser;
 import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
+import io.opensphere.mantle.icon.impl.gui.IconChooserPanel;
 import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject;
 import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject.NameType;
 import io.opensphere.mantle.icon.IconRegistry;
@@ -50,7 +51,8 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     private static final Logger LOGGER = Logger.getLogger(IconManagerFrame.class);
 
     /**
-     * serialVersionUID.    */
+     * serialVersionUID.
+     */
     private static final long serialVersionUID = 1L;
 
     /** The Chooser panel. */
@@ -71,16 +73,16 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
 
     /** The Toolbox. */
     private final Toolbox myToolbox;
-    
+
     /** The initial width of display icon tiles. */
-	public int tileWidth = 100;
-	
+    private int tileWidth = 100;
+
     /**
      * Instantiates a new icon chooser dialog.
      *
      * @param tb the {@link Toolbox}
      * @param enlargeButton.
-     * @param reduceButton. 
+     * @param reduceButton.
      */
     public IconManagerFrame(Toolbox tb)
     {
@@ -96,33 +98,32 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
 
         JButton buildIcon = new JButton("Build New Icon");
         buildIcon.addActionListener(e -> showBuilderDialog());
-        
-        Font font = new Font("arial",Font.BOLD,22);
+
+        Font font = new Font("arial", Font.BOLD, 22);
         JButton enlargeButton = new JButton("+");
-        enlargeButton.addActionListener(e -> iconSizeChanger(true)); 
+        enlargeButton.addActionListener(e -> iconSizeChanger("enlarge"));
         enlargeButton.setFocusPainted(false);
         enlargeButton.setFont(font);
         enlargeButton.setToolTipText("Increase Icon Size");
-        
+
         JButton reduceButton = new JButton("-");
-        reduceButton.addActionListener(e -> iconSizeChanger(false));
+        reduceButton.addActionListener(e -> iconSizeChanger("shrink"));
         reduceButton.setFocusPainted(false);
-        reduceButton.setFont(font);       
+        reduceButton.setFont(font);
         reduceButton.setToolTipText("Reduce Icon Size");
-       
+
         myChooserPanel = new IconChooserPanel(tb, true, true, iconPopupMenu, treePopupMenu, buildIcon);
 
-		myMenuBar = new JMenuBar();
-		myFileMenu = new JMenu("File");
-		myMenuBar.add(myFileMenu);
-		myEditMenu = new JMenu("Edit");
-		myMenuBar.add(myFileMenu);
-		myMenuBar.add(myEditMenu);
-		myMenuBar.add(Box.createHorizontalGlue());
-		myMenuBar.add(reduceButton);
-		myMenuBar.add(enlargeButton);
-		myMenuBar.add(Box.createHorizontalGlue());
-     
+        myMenuBar = new JMenuBar();
+        myFileMenu = new JMenu("File");
+        myMenuBar.add(myFileMenu);
+        myEditMenu = new JMenu("Edit");
+        myMenuBar.add(myEditMenu);
+        myMenuBar.add(Box.createHorizontalGlue());
+        myMenuBar.add(reduceButton);
+        myMenuBar.add(enlargeButton);
+        myMenuBar.add(Box.createHorizontalGlue());
+
         JPanel mainPanel = new JPanel(new BorderLayout());
         JPanel closePanel = new JPanel();
         closePanel.setLayout(new BoxLayout(closePanel, BoxLayout.X_AXIS));
@@ -146,29 +147,28 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
         createTreePopupMenuItems(treePopupMenu);
         myIconRegistry.addListener(this);
     }
-	
-	/**
-	 * Initiates icon resizing.
-	 * 
-	 * @param choice
-	 *            the {@link #JButton reduceButton/increaseButton}
-	 */
-	private void iconSizeChanger(boolean choice) 
-	{
-		if (choice)
-		{
-			tileWidth += 20;
-		} 
-		else 
-		{
-			tileWidth -= 20;
-		}
-		myChooserPanel.IconResizer(myChooserPanel.ResizeRec, tileWidth, false);
-	}
 
-	/**
-	 * Shows the icon builder dialog.
-	 */
+    /**
+     * Initiates icon resizing.
+     * 
+     * @param choice the {@link #JButton reduceButton/increaseButton}
+     */
+    private void iconSizeChanger(String choice)
+    {
+        if (choice == "enlarge")
+        {
+            tileWidth += 20;
+        }
+        else if (choice == "shrink") 
+        {
+            tileWidth -= 20;
+        }
+        myChooserPanel.setIconSize(myChooserPanel.getResizeRecord(), false,tileWidth);
+    }
+
+    /**
+     * Shows the icon builder dialog.
+     */
     private void showBuilderDialog()
     {
         IconRegistry iconRegistry = MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry();
@@ -334,7 +334,9 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
 
     /**
      * Creates the menu bar and popup buttons for
-     * {@link #createMenuBarFileMenuItems()} {@link #createIconPopupMenuItems(JPopupMenu)}.
+     * {@link #createMenuBarFileMenuItems()}
+     * {@link #createIconPopupMenuItems(JPopupMenu)}.
+     * 
      * @return buttonList
      */
     private List<JMenuItem> getMenuItems()
