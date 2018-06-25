@@ -65,7 +65,7 @@ public class InfinitySimulator extends AbstractServer
                 isNumericBin = true;
                 myBinWidth = request.getAggs().getBins().getHistogram().getInterval();
                 myBinOffset = request.getAggs().getBins().getHistogram().getOffset();
-                myMinDocCount = request.getAggs().getBins().getHistogram().getMinDocCount();
+                myMinDocCount = request.getAggs().getBins().getHistogram().getMin_doc_count();
                 aggsField = request.getAggs().getBins().getHistogram().getField();
                 writeResponse(exchange, HttpURLConnection.HTTP_OK, getResponseBody(aggsField));
             }
