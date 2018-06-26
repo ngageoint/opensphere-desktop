@@ -5,6 +5,6 @@
     <artifactId>open-sphere-plugins</artifactId>
     <version>5.2.5-SNAPSHOT</version>
   </parent>
-  <artifactId>icon-manager-plugin</artifactId>
-  <name>Icon Manager Plugin</name>
+  <artifactId>icon-manager</artifactId>
+  <name>Icon Manager</name>
 </project>
