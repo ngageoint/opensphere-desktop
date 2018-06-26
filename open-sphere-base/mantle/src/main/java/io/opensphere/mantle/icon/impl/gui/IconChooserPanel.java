@@ -501,7 +501,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
             fireActionPerformed(new ActionEvent(this, 0, SELECTION_CHANGED));
         }
         TreePath path = myTree.getSelectionPath();
-        List<IconRecord> recList = null;
+        List<IconRecord> iconRecordList = null;
         myLastSelectedTreeNodeUserObject = null;
         if (path != null)
         {
@@ -514,13 +514,13 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
                 {
                     IconRecordTreeNodeUserObject irNode = (IconRecordTreeNodeUserObject)userObj;
                     myLastSelectedTreeNodeUserObject = irNode;
-                    recList = irNode.getRecords(true);
+                    iconRecordList = irNode.getRecords(true);
                 }
             }
         }
-        recList = recList == null ? Collections.<IconRecord>emptyList() : recList;
-        displayIconRecords(recList, true, myTileWidth);
-        setResizeRecord(recList);
+        iconRecordList = iconRecordList == null ? Collections.<IconRecord>emptyList() : iconRecordList;
+        displayIconRecords(iconRecordList, true, myTileWidth);
+        setResizeRecord(iconRecordList);
     }
 
     /**
@@ -612,13 +612,13 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     /**
      * Shows resizes icons and displays loading screen until done.
      * 
-     * @param recList the icons being resized
+     * @param iconRecord the icons being resized
      * @param tileWidth the new tile width
      * @param canCancel the can cancel option
      */
-    public void setIconSize(List<IconRecord> recList, boolean canCancel, int tileWidth)
+    public void setIconSize(List<IconRecord> iconRecord, boolean canCancel, int tileWidth)
     {
-        myLoader = new Thread(new BuildIconGridWorker(recList, canCancel, tileWidth));
+        myLoader = new Thread(new BuildIconGridWorker(iconRecord, canCancel, tileWidth));
         myLoader.start();
         showLoadingScreen();
     }
@@ -697,19 +697,19 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         private boolean myInterrupted;
 
         /** The Rec list. */
-        private final List<IconRecord> myRecList;
+        private final List<IconRecord> myIconRecordList;
 
         /**
          * Instantiates a new builds the icon grid worker.
          *
-         * @param recList the record list
+         * @param iconRecord the record list
          * @param canCancel the can cancel
          */
-        public BuildIconGridWorker(List<IconRecord> recList, boolean canCancel, int tileWidth)
+        public BuildIconGridWorker(List<IconRecord> iconRecord, boolean canCancel, int tileWidth)
         {
-            myRecList = recList;
+            myIconRecordList = iconRecord;
             myCanInterrupt = canCancel;
-            setResizeRecord(recList);
+            setResizeRecord(iconRecord);
             myTileWidth = tileWidth;
         }
 
@@ -736,7 +736,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
             }
             int numIconRowsInView = (int)Math.ceil((double)height / (double)myTileWidth);
             JPanel grid = new JPanel();
-            if (!isInterrupted() && !myRecList.isEmpty())
+            if (!isInterrupted() && !myIconRecordList.isEmpty())
             {
                 List<RecordImageIcon> imIcList = buildImageList(iconWidth);
 
@@ -797,9 +797,9 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
          */
         private List<RecordImageIcon> buildImageList(int iconWidth)
         {
-            List<RecordImageIcon> icons = New.list(myRecList.size());
+            List<RecordImageIcon> icons = New.list(myIconRecordList.size());
             TIntList brokenIconIds = new TIntArrayList();
-            for (IconRecord record : myRecList)
+            for (IconRecord record : myIconRecordList)
             {
                 RecordImageIcon icon = loadImage(record, iconWidth);
                 if (icon != null)
