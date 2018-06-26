@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity"
+	prefHeight="488.0" prefWidth="1021.0"
+	xmlns="http://javafx.com/javafx/10.0.1"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="application.IconManagerFrameTest">
+	<children>
+		<AnchorPane fx:id="myTopMenuBar"
+			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0"
+			AnchorPane.topAnchor="0.0">
+			<children>
+				<ButtonBar fx:id="mySizeMenu" layoutX="36.0" layoutY="8.0"
+					prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="10.0">
+					<buttons>
+						<Text fx:id="mySizeLabel" strokeType="OUTSIDE"
+							strokeWidth="0.0" text="Icon Size:" />
+
+						<Button fx:id="myShrinkButton" minWidth="0.0"
+							mnemonicParsing="false" onMouseClicked="#SHRINK"
+							prefHeight="25.0" text="-" />
+						<Button fx:id="myEnlargeButton" minWidth="0.0"
+							mnemonicParsing="false" onMouseClicked="#ENLARGE"
+							prefHeight="25.0" text="+" />
+					</buttons>
+				</ButtonBar>
+				<HBox fx:id="myViewToggle" alignment="TOP_CENTER" cache="true"
+					cacheHint="SPEED" layoutX="397.0" layoutY="14.0" prefHeight="40.0"
+					prefWidth="240.0" spacing="20.0" AnchorPane.bottomAnchor="-6.0"
+					AnchorPane.leftAnchor="397.0" AnchorPane.rightAnchor="383.0"
+					AnchorPane.topAnchor="14.0">
+					<children>
+						<Text fx:id="myViewLabel" strokeType="OUTSIDE"
+							strokeWidth="0.0" text="View Style:" textOrigin="TOP">
+							<font>
+								<Font size="14.0" />
+							</font>
+						</Text>
+						<RadioButton fx:id="myListView"
+							mnemonicParsing="false" onMouseClicked="#LISTV" text="List"
+							textOverrun="CLIP">
+							<font>
+								<Font size="14.0" />
+							</font>
+							<toggleGroup>
+								<ToggleGroup fx:id="ViewStyle" />
+							</toggleGroup>
+						</RadioButton>
+						<RadioButton fx:id="myGridView"
+							mnemonicParsing="false" onMouseClicked="#GRIDV" selected="true"
+							text="Grid" toggleGroup="$ViewStyle">
+							<font>
+								<Font size="14.0" />
+							</font>
+						</RadioButton>
+					</children>
+				</HBox>
+
+				<ButtonBar fx:id="mySearchBar" layoutX="773.0"
+					layoutY="8.0" prefHeight="40.0" prefWidth="247.0"
+					AnchorPane.rightAnchor="10.0">
+					<buttons>
+						<Text fx:id="mySearchLabel" strokeType="OUTSIDE"
+							strokeWidth="0.0" text="Filter:">
+							<font>
+								<Font size="14.0" />
+							</font>
+						</Text>
+						<TextField prefHeight="25.0" prefWidth="141.0" />
+					</buttons>
+				</ButtonBar>
+			</children>
+		</AnchorPane>
+		<SplitPane blendMode="MULTIPLY"
+			dividerPositions="0.2406679764243615, 0.9833005893909627"
+			layoutY="48.0" minHeight="-Infinity" minWidth="-Infinity"
+			prefHeight="397.0" prefWidth="1020.0" AnchorPane.bottomAnchor="43.0"
+			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0"
+			AnchorPane.topAnchor="48.0">
+			<items>
+				<AnchorPane fx:id="myTreeView" minHeight="0.0"
+					minWidth="0.0" prefHeight="395.0" prefWidth="391.0">
+					<children>
+						<TreeView fx:id="myTreeList" layoutY="8.0"
+							minHeight="0.0" minWidth="50.0" prefHeight="317.0"
+							prefWidth="730.0" AnchorPane.bottomAnchor="78.0"
+							AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+							AnchorPane.topAnchor="0.0">
+							<padding>
+								<Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+							</padding>
+						</TreeView>
+						<Button fx:id="myAddIconButton" alignment="CENTER"
+							layoutX="-2.0" layoutY="394.0" mnemonicParsing="false"
+							onMouseClicked="#ADD"
+							onMouseReleased="#handleFavoriteButtonAction" prefHeight="25.0"
+							prefWidth="249.0" stylesheets="@application.css"
+							text="Add Icon from File" AnchorPane.bottomAnchor="52.0"
+							AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="0.0" />
+						<Button fx:id="myCustIconButton" layoutY="419.0"
+							mnemonicParsing="false" onMouseClicked="#CUSTOMIZE"
+							prefHeight="25.0" prefWidth="249.0" text="Customize Icon"
+							AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="-2.0"
+							AnchorPane.rightAnchor="0.0" />
+						<Button fx:id="myGenIconButton" layoutX="-2.0"
+							layoutY="444.0" mnemonicParsing="false"
+							onMouseClicked="#GENERATE" prefHeight="25.0" prefWidth="249.0"
+							text="Generate New Icon" AnchorPane.bottomAnchor="0.0"
+							AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="0.0" />
+					</children>
+				</AnchorPane>
+				<GridPane prefHeight="395.0" prefWidth="0.0">
+					<columnConstraints>
+						<ColumnConstraints hgrow="SOMETIMES"
+							minWidth="10.0" prefWidth="100.0" />
+						<ColumnConstraints hgrow="SOMETIMES"
+							minWidth="10.0" prefWidth="100.0" />
+					</columnConstraints>
+					<rowConstraints>
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							vgrow="SOMETIMES" />
+					</rowConstraints>
+				</GridPane>
+				<ScrollBar orientation="VERTICAL" />
+			</items>
+		</SplitPane>
+		<AnchorPane fx:id="myBottomMenuBar" layoutY="445.0"
+			prefHeight="25.0" prefWidth="807.0" AnchorPane.bottomAnchor="0.0"
+			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0">
+			<children>
+				<AnchorPane layoutY="152.0" prefHeight="48.0"
+					prefWidth="900.0" AnchorPane.bottomAnchor="0.0"
+					AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="126.0">
+					<children>
+						<AnchorPane layoutX="239.0" layoutY="12.0"
+							prefHeight="25.0" prefWidth="760.0"
+							AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="239.0"
+							AnchorPane.rightAnchor="-99.0">
+							<children>
+								<Button fx:id="myCloseButton" mnemonicParsing="false"
+									onMouseClicked="#Close" text="Close"
+									AnchorPane.rightAnchor="0.0" />
+								<TextField fx:id="myDataBar" prefHeight="25.0"
+									prefWidth="673.0" AnchorPane.bottomAnchor="0.0"
+									AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="80.0" />
+							</children>
+						</AnchorPane>
+						<Text fx:id="myNotifyText" layoutX="106.0" layoutY="29.0"
+							strokeType="OUTSIDE" strokeWidth="0.0"
+							AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0"
+							AnchorPane.rightAnchor="661.390625" />
+					</children>
+				</AnchorPane>
+			</children>
+		</AnchorPane>
+	</children>
+</AnchorPane>
