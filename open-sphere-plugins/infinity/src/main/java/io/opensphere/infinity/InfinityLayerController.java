@@ -80,7 +80,10 @@ public class InfinityLayerController extends AbstractViewTimeController
                 {
                     QueryResults result = querier.query(dataType, polygon, activeSpan, null, InfinityUtilities.DEFAULT_BIN_WIDTH,
                             InfinityUtilities.DEFAULT_BIN_OFFSET, 1);
-                    setLayerCount(dataType, result.getCount());
+                    if (result != null)
+                    {
+                        setLayerCount(dataType, result.getCount());
+                    }
                 }
                 catch (QueryException e)
                 {
