@@ -229,6 +229,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
 
         myGridPanel = new JPanel(new BorderLayout());
         JScrollPane gridSP = new JScrollPane(myGridPanel);
+        gridSP.getVerticalScrollBar().setUnitIncrement(30);
         jsp.setRightComponent(gridSP);
 
         add(jsp, BorderLayout.CENTER);
