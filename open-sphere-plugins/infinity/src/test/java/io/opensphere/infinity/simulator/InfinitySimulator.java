@@ -2,6 +2,8 @@ package io.opensphere.infinity.simulator;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -13,6 +15,7 @@ import io.opensphere.core.server.AbstractServer;
 import io.opensphere.infinity.json.Aggregations;
 import io.opensphere.infinity.json.Bucket;
 import io.opensphere.infinity.json.Hits;
+import io.opensphere.infinity.json.Script;
 import io.opensphere.infinity.json.SearchRequest;
 import io.opensphere.infinity.json.SearchResponse;
 import io.opensphere.mantle.infinity.InfinityUtilities;
@@ -21,17 +24,17 @@ import io.opensphere.server.util.JsonUtils;
 /** Infinity servlet simulator. */
 public class InfinitySimulator extends AbstractServer
 {
-    /** Flag indicating if response is numeric binning */
-    private boolean isNumericBin = false;
-
-    /** Bin width contained in numeric binning request*/
+    /** Bin width contained in numeric binning request. */
     private double myBinWidth = InfinityUtilities.DEFAULT_BIN_WIDTH;
 
-    /** Bin offset contained in numeric binning request*/
+    /** Bin offset contained in numeric binning request. */
     private double myBinOffset = InfinityUtilities.DEFAULT_BIN_OFFSET;
 
-    /** Bin min_doc_count in numeric binning request*/
-    private double myMinDocCount = 1;
+    /** The date format received during date binning. */
+    private String myDateFormat = InfinityUtilities.DEFAULT_DATE_BIN_FORMAT;
+
+    /** The dayOfWeek flag is using script binning. */
+    private Script myScript;
 
     /**
      * The main.
@@ -56,18 +59,22 @@ public class InfinitySimulator extends AbstractServer
         {
             if (request.getAggs().getBins().getTerms() != null)
             {
-                isNumericBin = false;
                 aggsField = request.getAggs().getBins().getTerms().getField();
-                writeResponse(exchange, HttpURLConnection.HTTP_OK, getResponseBody(aggsField));
+                myScript = request.getAggs().getBins().getTerms().getScript();
+                writeResponse(exchange, HttpURLConnection.HTTP_OK, getResponseBody(aggsField, false, false));
             }
             else if (request.getAggs().getBins().getHistogram() != null)
             {
-                isNumericBin = true;
                 myBinWidth = request.getAggs().getBins().getHistogram().getInterval();
                 myBinOffset = request.getAggs().getBins().getHistogram().getOffset();
-                myMinDocCount = request.getAggs().getBins().getHistogram().getMin_doc_count();
                 aggsField = request.getAggs().getBins().getHistogram().getField();
-                writeResponse(exchange, HttpURLConnection.HTTP_OK, getResponseBody(aggsField));
+                writeResponse(exchange, HttpURLConnection.HTTP_OK, getResponseBody(aggsField, true, false));
+            }
+            else if (request.getAggs().getBins().getDate_histogram() != null)
+            {
+                myDateFormat = request.getAggs().getBins().getDate_histogram().getFormat();
+                aggsField = request.getAggs().getBins().getDate_histogram().getField();
+                writeResponse(exchange, HttpURLConnection.HTTP_OK, getResponseBody(aggsField, false, true));
             }
         }
 
@@ -79,10 +86,12 @@ public class InfinitySimulator extends AbstractServer
      * Gets the response body.
      *
      * @param aggsField the aggs field (bin field)
+     * @param isNumericBin whether is a numeric bin
+     * @param isDateBin whether is a date bin
      * @return the response body
      * @throws IOException if something bad happens
      */
-    private byte[] getResponseBody(String aggsField) throws IOException
+    private byte[] getResponseBody(String aggsField, boolean isNumericBin, boolean isDateBin) throws IOException
     {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         ObjectMapper mapper = JsonUtils.createMapper();
@@ -90,6 +99,10 @@ public class InfinitySimulator extends AbstractServer
         if(isNumericBin)
         {
             mapper.writeValue(output, getNumericBinResponse(aggsField));
+        }
+        else if(isDateBin)
+        {
+            mapper.writeValue(output,  getDateBinResponse(aggsField));
         }
         else
         {
@@ -108,10 +121,20 @@ public class InfinitySimulator extends AbstractServer
     {
         SearchResponse response = new SearchResponse();
         int totalCount = 0;
-        if (aggsField != null)
+        if (aggsField != null || myScript != null)
         {
-            String[] bins = new String[] { "Ardbeg", "Bowmore", "Bruichladdich", "Bunnahabhain", "Caol Ila", "Kilchoman",
-                "Lagavulin", "Laphroaig" };
+            String[] bins;
+
+            if(myScript != null)
+            {
+                // Represents dayOfWeek or hourOfDay
+                bins = new String[] {"1","2","3","4","5","6","7"};
+            }
+            else {
+                bins = new String[] { "Ardbeg", "Bowmore", "Bruichladdich", "Bunnahabhain", "Caol Ila", "Kilchoman",
+                    "Lagavulin", "Laphroaig" };
+            }
+
             int numberOfBins = (int)(Math.random() * bins.length) + 1;
             @SuppressWarnings("unchecked")
             Bucket<String>[] buckets = new Bucket[numberOfBins];
@@ -150,33 +173,63 @@ public class InfinitySimulator extends AbstractServer
             int maxBins = 10;
             int numberOfBins = (int)(Math.random() * maxBins) + 1;
 
-            if(myMinDocCount == 0)
-            {
-                //Make room for empty bin
-                numberOfBins++;
-            }
-
             @SuppressWarnings("unchecked")
             Bucket<Double>[] buckets = new Bucket[numberOfBins];
             int binCount = 1000;
             double binIndex = myBinOffset;
-            boolean addEmptyBin = (myMinDocCount == 0);
-            int i = 0;
-            while (i < numberOfBins)
+            for (int i = 0; i < numberOfBins; i++)
             {
                 buckets[i] = new Bucket<Double>(Double.valueOf(binIndex), binCount);
                 binIndex += myBinWidth;
                 totalCount += binCount;
                 binCount -= 100;
-                i++;
+            }
 
-                if(addEmptyBin)
-                {
-                    buckets[i] = new Bucket<Double>(Double.valueOf(binIndex), 0);
-                    binIndex += myBinWidth;
-                    addEmptyBin = false;
-                    i++;
-                }
+            Aggregations aggregations = new Aggregations();
+            aggregations.getBins().setBuckets(buckets);
+            response.setAggregations(aggregations);
+        }
+        else
+        {
+            totalCount = (int)(Math.random() * 20000) + 1;
+        }
+        response.setHits(new Hits(totalCount));
+        return response;
+    }
+
+    /**
+     * Gets the response for date binning.
+     *
+     * @param aggsField the aggs field (bin field)
+     * @return the response
+     */
+    private SearchResponse getDateBinResponse(String aggsField)
+    {
+        SearchResponse response = new SearchResponse();
+        int totalCount = 0;
+        if (aggsField != null)
+        {
+            @SuppressWarnings("deprecation")
+            //TODO: Replace with calendar
+            Date[] bins = new Date[] {
+                new Date(98, 0, 25),
+                new Date(99, 0, 99),
+                new Date(116, 1, 7),
+                new Date(14, 10, 11),
+                new Date(45, 8, 2)
+            };
+
+            int numberOfBins = (int)(Math.random() * bins.length) + 1;
+
+            @SuppressWarnings("unchecked")
+            Bucket<Long>[] buckets = new Bucket[numberOfBins];
+            int binCount = 1000;
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myDateFormat);
+            for (int i = 0; i < numberOfBins; i++)
+            {
+                buckets[i] = new Bucket<Long>(Long.valueOf(bins[i].getTime()), binCount, simpleDateFormat.format(bins[i]));
+                totalCount += binCount;
+                binCount -= 100;
             }
 
             Aggregations aggregations = new Aggregations();

@@ -1,5 +1,8 @@
 package io.opensphere.mantle.infinity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.opensphere.mantle.data.DataTypeInfo;
 
 /** Infinity utilities. */
@@ -41,6 +44,9 @@ public final class InfinityUtilities
     /** The default bin offset. */
     public static final double DEFAULT_BIN_OFFSET = 0.0;
 
+    /** The default min_doc_count. */
+    public static final int DEFAULT_MIN_DOC_COUNT = 1;
+
     /** The default size. */
     public static final int DEFAULT_SIZE = 10000;
 
@@ -49,6 +55,49 @@ public final class InfinityUtilities
 
     /** The default initial size of the infinity output stream. */
     public static final int DEFAULT_INITIAL_BYTE_STREAM_SIZE = 500;
+
+    /** The interval for the date minute range. */
+    public static final String BIN_MINUTE_INTERVAL = "minute";
+
+    /** The interval for the date hour range. */
+    public static final String BIN_HOUR_INTERVAL = "hour";
+
+    /** The interval for the date hour range. */
+    public static final String BIN_DAY_INTERVAL = "day";
+
+    /** The interval for the date week range. */
+    public static final String BIN_WEEK_INTERVAL = "week";
+
+    /** The interval for the date month range. */
+    public static final String BIN_MONTH_INTERVAL = "month";
+
+    /** The interval for the date year range. */
+    public static final String BIN_YEAR_INTERVAL = "year";
+
+    /** The default interval for the date rage. */
+    public static final String DEFAULT_DATE_BIN_INTERVAL = BIN_HOUR_INTERVAL;
+
+    /** The default date format. **/
+    public static final String DEFAULT_DATE_BIN_FORMAT = "yyyy-MM-dd HH";
+
+    /** The default scripting language. */
+    public static final String DEFAULT_SCRIPT_LANGUAGE = "painless";
+
+    /** The mapping of intervals to date formats. */
+    private static final Map<String, String> DATE_FORMAT_MAP = new HashMap<String, String>()
+    {
+        /** Default serial version ID  */
+        private static final long serialVersionUID = 1L;
+
+        {
+            put(BIN_MINUTE_INTERVAL, "yyyy-MM-dd HH:mm");
+            put(BIN_HOUR_INTERVAL, "yyyy-MM-dd HH");
+            put(BIN_DAY_INTERVAL, "yyyy-MM-dd");
+            put(BIN_WEEK_INTERVAL, "yyyy-MM-dd");
+            put(BIN_MONTH_INTERVAL, "yyyy-MM");
+            put(BIN_YEAR_INTERVAL, "yyyy");
+        }
+    };
 
     /**
      * Determines if the data type is infinity-enabled.
@@ -91,6 +140,17 @@ public final class InfinityUtilities
         String completeKey = tagKey + "=";
         return dataType.getTags().stream().filter(t -> t.startsWith(completeKey)).map(t -> t.replace(completeKey, "")).findAny()
                 .orElse(null);
+    }
+
+    /**
+     * Get the date format based on interval key.
+     *
+     * @param interval the date range interval
+     * @return the date format
+     */
+    public static String getDateFormat(String interval)
+    {
+        return DATE_FORMAT_MAP.getOrDefault(interval, DEFAULT_DATE_BIN_FORMAT);
     }
 
     /** Disallow instantiation. */

@@ -12,6 +12,9 @@ public class Bucket<T>
     /** The doc count. */
     private long myDocCount;
 
+    /** The key as a string.  Used for Dates. */
+    private String myKeyAsString;
+
     /**
      * Constructor.
      */
@@ -30,6 +33,20 @@ public class Bucket<T>
     {
         myKey = key;
         myDocCount = docCount;
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param key the key
+     * @param docCount the doc count
+     * @param keyAsString the key as a String
+     */
+    public Bucket(T key, long docCount, String keyAsString)
+    {
+        myKey = key;
+        myDocCount = docCount;
+        myKeyAsString = keyAsString;
     }
 
     /**
@@ -72,9 +89,29 @@ public class Bucket<T>
         myDocCount = docCount;
     }
 
+    /**
+     * Get the key as a string.
+     *
+     * @return the keyAsString
+     */
+    public String getKeyAsString()
+    {
+        return myKeyAsString;
+    }
+
+    /**
+     * Set the key as a string;
+     *
+     * @param keyAsString the keyAsString to set
+     */
+    public void setKeyAsString(String keyAsString)
+    {
+        myKeyAsString = keyAsString;
+    }
+
     @Override
     public String toString()
     {
-        return "Bucket [key=" + myKey + ", docCount=" + myDocCount + "]";
+        return "Bucket [key=" + myKey.toString() + ", docCount=" + myDocCount + ", keyAsString=" + myKeyAsString + "]";
     }
 }

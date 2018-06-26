@@ -2,7 +2,9 @@ package io.opensphere.infinity.json;
 
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
-/** Elasticsearch histogram JSON bean. Used with numeric and date binning. */
+import io.opensphere.mantle.infinity.InfinityUtilities;
+
+/** Elasticsearch histogram JSON bean. Used with numericbinning. */
 @JsonPropertyOrder({ "field", "interval", "min_doc_count", "missing", "offset" })
 public class Histogram
 {
@@ -36,15 +38,14 @@ public class Histogram
      * @param interval the interval
      * @param missing the missing
      * @param offset the offset
-     * @param minDocCount the min_doc_count
      */
-    public Histogram(String field, double interval, long missing, double offset, int minDocCount)
+    public Histogram(String field, double interval, long missing, double offset)
     {
         myField = field;
         myInterval = interval;
         myMissing = missing;
         myOffset = offset;
-        myMinDocCount = minDocCount;
+        myMinDocCount = InfinityUtilities.DEFAULT_MIN_DOC_COUNT;
     }
 
     /**

@@ -246,7 +246,18 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
                     && parameters.getBinOffset() != null)
             {
                 request.setAggs(new Aggs(field, parameters.getBinWidth().doubleValue(), InfinityUtilities.MISSING_VALUE,
-                        parameters.getBinOffset().doubleValue(), parameters.getMinDocCount()));
+                        parameters.getBinOffset().doubleValue()));
+            }
+            else if (TimeSpan.class.isAssignableFrom(parameters.getBinFieldType()))
+            {
+                if (parameters.getDayOfWeek() != null)
+                {
+                    request.setAggs(new Aggs(field, InfinityUtilities.DEFAULT_SIZE, parameters.getDayOfWeek().booleanValue()));
+                }
+                else if (parameters.getDateFormat() != null && parameters.getDateInterval() != null)
+                {
+                    request.setAggs(new Aggs(field, parameters.getDateFormat(), parameters.getDateInterval()));
+                }
             }
             else
             {
@@ -286,7 +297,9 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
         if (response.getAggregations() != null)
         {
             List<ValueWithCount<Object>> bins = Arrays.stream(response.getAggregations().getBins().getBuckets())
-                    .map(b -> new ValueWithCount<>(b.getKey(), (int)b.getDoc_count())).collect(Collectors.toList());
+                    .map(b -> new ValueWithCount<>(b.getKeyAsString() != null ? b.getKeyAsString() : b.getKey(),
+                            (int)b.getDoc_count()))
+                    .collect(Collectors.toList());
             results.setBins(bins);
         }
         return results;

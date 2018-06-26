@@ -45,12 +45,14 @@ public class InfinityQuerier
      * @param binField the bin field
      * @param binWidth the bin width
      * @param binOffset the bin offset
-     * @param minDocCount the bin min_doc_count
+     * @param dateFormat the date format
+     * @param dateInterval the date interval
+     * @param dayOfWeek the dayOfWeek Boolean
      * @return the search response
      * @throws QueryException if something goes wrong with the query
      */
     public QueryResults query(DataTypeInfo dataType, Polygon polygon, TimeSpan timeSpan, String binField, Double binWidth,
-            Double binOffset, int minDocCount)
+            Double binOffset, String dateFormat, String dateInterval, Boolean dayOfWeek)
         throws QueryException
     {
         QueryResults result = null;
@@ -82,7 +84,9 @@ public class InfinityQuerier
         }
         queryParameters.setBinWidth(binWidth);
         queryParameters.setBinOffset(binOffset);
-        queryParameters.setMinDocCount(minDocCount);
+        queryParameters.setDateFormat(dateFormat);
+        queryParameters.setDateInterval(dateInterval);
+        queryParameters.setDayOfWeek(dayOfWeek);
         queryParameters.setGeomField(geomField);
         queryParameters.setTimeField(timeField);
         queryParameters.setEndTimeField(endTimeField);
