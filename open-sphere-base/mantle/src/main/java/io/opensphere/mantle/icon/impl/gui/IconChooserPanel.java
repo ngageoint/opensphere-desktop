@@ -703,14 +703,14 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         /**
          * Instantiates a new builds the icon grid worker.
          *
-         * @param iconRecord the record list
+         * @param iconRecords the record list
          * @param canCancel the can cancel
          */
-        public BuildIconGridWorker(List<IconRecord> iconRecord, boolean canCancel, int tileWidth)
+        public BuildIconGridWorker(List<IconRecord> iconRecords, boolean canCancel, int tileWidth)
         {
-            myIconRecordList = iconRecord;
+            myIconRecordList = iconRecords;
             myCanInterrupt = canCancel;
-            setResizeRecord(iconRecord);
+            setResizeRecord(iconRecords);
             myTileWidth = tileWidth;
         }
 

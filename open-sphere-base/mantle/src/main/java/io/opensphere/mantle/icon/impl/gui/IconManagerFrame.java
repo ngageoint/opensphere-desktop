@@ -101,13 +101,13 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
 
         Font font = new Font("arial", Font.BOLD, 22);
         JButton enlargeButton = new JButton("+");
-        enlargeButton.addActionListener(e -> iconSizeChanger("enlarge"));
+        enlargeButton.addActionListener(e -> iconSizeChanger(true));
         enlargeButton.setFocusPainted(false);
         enlargeButton.setFont(font);
         enlargeButton.setToolTipText("Increase Icon Size");
 
         JButton reduceButton = new JButton("-");
-        reduceButton.addActionListener(e -> iconSizeChanger("shrink"));
+        reduceButton.addActionListener(e -> iconSizeChanger(false));
         reduceButton.setFocusPainted(false);
         reduceButton.setFont(font);
         reduceButton.setToolTipText("Reduce Icon Size");
@@ -151,19 +151,19 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     /**
      * Initiates icon resizing.
      * 
-     * @param choice the {@link #JButton reduceButton/increaseButton}
+     * @param enlarge the {@link #JButton reduceButton/increaseButton}
      */
-    private void iconSizeChanger(String choice)
+    private void iconSizeChanger(boolean enlarge)
     {
-        if (choice == "enlarge")
+        if (enlarge)
         {
             tileWidth += 20;
         }
-        else if (choice == "shrink") 
+        else
         {
             tileWidth -= 20;
         }
-        myChooserPanel.setIconSize(myChooserPanel.getResizeRecord(), false,tileWidth);
+        myChooserPanel.setIconSize(myChooserPanel.getResizeRecord(), false, tileWidth);
     }
 
     /**
