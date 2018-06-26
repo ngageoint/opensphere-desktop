@@ -1,6 +1,6 @@
 package io.opensphere.core.util.fx;
 
-import java.util.ResourceBundle;
+import com.sun.javafx.scene.control.skin.resources.ControlResources;
 
 import javafx.scene.control.ButtonType;
 
@@ -135,7 +135,6 @@ public enum JFXAlertType
      */
     private static String getString(String key)
     {
-        final String BASE_NAME = "com/sun/javafx/scene/control/skin/resources/controls";
-        return ResourceBundle.getBundle(BASE_NAME).getString(key);
+        return ControlResources.getString(key);
     }
 }
