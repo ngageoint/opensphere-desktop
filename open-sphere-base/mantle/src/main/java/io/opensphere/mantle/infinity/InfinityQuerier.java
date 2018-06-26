@@ -46,7 +46,7 @@ public class InfinityQuerier
      * @param binWidth the bin width
      * @param binOffset the bin offset
      * @param minDocCount the bin min_doc_count
-     * @return the search response
+     * @return the search response, or null
      * @throws QueryException if something goes wrong with the query
      */
     public QueryResults query(DataTypeInfo dataType, Polygon polygon, TimeSpan timeSpan, String binField, Double binWidth,
