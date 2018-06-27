@@ -6,4 +6,12 @@
     <version>5.2.5-SNAPSHOT</version>
   </parent>
   <artifactId>icon-manager</artifactId>
+  
+  	<dependencies>
+		<dependency>
+			<groupId>io.open-sphere</groupId>
+			<artifactId>mantle</artifactId>
+		</dependency>
+	</dependencies>
+	
 </project>
