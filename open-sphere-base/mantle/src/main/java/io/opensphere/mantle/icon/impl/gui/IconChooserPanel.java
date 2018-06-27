@@ -153,7 +153,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     private int myTileWidth;
 
     /** The list of icons being resized */
-    private List<IconRecord> myResizeRecord = New.list();
+    private List<IconRecord> myResizeRecords = New.list();
 
     /**
      * Instantiates a new icon chooser panel.
@@ -521,7 +521,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         }
         iconRecordList = iconRecordList == null ? Collections.<IconRecord>emptyList() : iconRecordList;
         displayIconRecords(iconRecordList, true, myTileWidth);
-        setResizeRecord(iconRecordList);
+        setResizeRecords(iconRecordList);
     }
 
     /**
@@ -613,13 +613,13 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     /**
      * Shows resizes icons and displays loading screen until done.
      * 
-     * @param iconRecord the icons being resized
+     * @param iconSizeRecords the icons being resized
      * @param tileWidth the new tile width
      * @param canCancel the can cancel option
      */
-    public void setIconSize(List<IconRecord> iconRecord, boolean canCancel, int tileWidth)
+    public void setIconSize(List<IconRecord> iconSizeRecords, boolean canCancel, int tileWidth)
     {
-        myLoader = new Thread(new BuildIconGridWorker(iconRecord, canCancel, tileWidth));
+        myLoader = new Thread(new BuildIconGridWorker(iconSizeRecords, canCancel, tileWidth));
         myLoader.start();
         showLoadingScreen();
     }
@@ -669,11 +669,11 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     /**
      * Gets the resized icon record.
      *
-     * @param myResizeRecord the resized icons record
+     * @param myResizeRecords the resized icons record
      */
-    public List<IconRecord> getResizeRecord()
+    public List<IconRecord> getResizeRecods()
     {
-        return myResizeRecord;
+        return myResizeRecords;
     }
 
     /**
@@ -681,9 +681,9 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
      *
      * @param resizedRecords the resized icons record
      */
-    public void setResizeRecord(List<IconRecord> resizedRecords)
+    public void setResizeRecords(List<IconRecord> resizedRecords)
     {
-        myResizeRecord = resizedRecords;
+        myResizeRecords = resizedRecords;
     }
 
     /**
@@ -710,7 +710,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         {
             myIconRecordList = iconRecords;
             myCanInterrupt = canCancel;
-            setResizeRecord(iconRecords);
+            setResizeRecords(iconRecords);
             myTileWidth = tileWidth;
         }
 
