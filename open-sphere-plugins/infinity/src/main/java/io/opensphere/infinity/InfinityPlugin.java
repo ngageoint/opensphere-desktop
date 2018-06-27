@@ -26,6 +26,7 @@ public class InfinityPlugin extends AbstractServicePlugin
     protected Collection<Service> getServices(PluginLoaderData plugindata, Toolbox toolbox)
     {
         myToolbox = toolbox;
+//        , toolbox.getUIRegistry().getOptionsRegistry().getOptionsProviderService()
         return List.of(new InfinityLayerController(toolbox));
     }
 }
