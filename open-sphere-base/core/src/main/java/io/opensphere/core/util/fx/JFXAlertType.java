@@ -1,12 +1,13 @@
 package io.opensphere.core.util.fx;
 
-import com.sun.javafx.scene.control.skin.resources.ControlResources;
-
 import javafx.scene.control.ButtonType;
 
 /**
  * An enumeration containing the available, pre-built alert types that the
  * {@link JFXAlert} class can use to pre-populate various properties.
+ * <p>
+ * This enum previously used locale-specific title strings, but now just uses
+ * the English ones.
  */
 public enum JFXAlertType
 {
@@ -23,7 +24,7 @@ public enum JFXAlertType
      * title and header, and just an OK button for the user to click on to
      * dismiss the dialog.
      */
-    INFORMATION(getString("Dialog.info.title"), getString("Dialog.info.header"), "information", ButtonType.OK),
+    INFORMATION("Message", "Message", "information", ButtonType.OK),
 
     /**
      * The WARNING alert type configures the Alert dialog to appear in a way
@@ -32,7 +33,7 @@ public enum JFXAlertType
      * header, and just an OK button for the user to click on to dismiss the
      * dialog.
      */
-    WARNING(getString("Dialog.warning.title"), getString("Dialog.warning.header"), "warning", ButtonType.OK),
+    WARNING("Warning", "Warning", "warning", ButtonType.OK),
 
     /**
      * The CONFIRMATION alert type configures the Alert dialog to appear in a
@@ -41,8 +42,7 @@ public enum JFXAlertType
      * header, and both OK and Cancel buttons for the user to click on to
      * dismiss the dialog.
      */
-    CONFIRMATION(getString("Dialog.confirm.title"), getString("Dialog.confirm.header"), "confirmation", ButtonType.OK,
-            ButtonType.CANCEL),
+    CONFIRMATION("Confirmation", "Confirmation", "confirmation", ButtonType.OK, ButtonType.CANCEL),
 
     /**
      * The ERROR alert type configures the Alert dialog to appear in a way that
@@ -50,7 +50,7 @@ public enum JFXAlertType
      * an appropriate title and header, and just an OK button for the user to
      * click on to dismiss the dialog.
      */
-    ERROR(getString("Dialog.error.title"), getString("Dialog.error.header"), "error", ButtonType.OK);
+    ERROR("Error", "Error", "error", ButtonType.OK);
 
     /** The default buttons shown for the {@link JFXAlertType}. */
     private final ButtonType[] myDefaultButtons;
@@ -120,21 +120,5 @@ public enum JFXAlertType
     public ButtonType[] getDefaultButtons()
     {
         return myDefaultButtons;
-    }
-
-    /**
-     * Look up a string in the properties file corresponding to the default
-     * locale (i.e. the application's locale). If not found, the search then
-     * falls back to the base controls.properties file, containing the default
-     * string (usually English).
-     *
-     * Via com.sun.javafx.scene.control.skin.resources
-     *
-     * @param key the key to look up
-     * @return the string
-     */
-    private static String getString(String key)
-    {
-        return ControlResources.getString(key);
     }
 }
