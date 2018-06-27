@@ -74,6 +74,9 @@ public final class InfinityUtilities
     /** The interval for the date year range. */
     public static final String BIN_YEAR_INTERVAL = "year";
 
+    /** The interval for the date year range. */
+    public static final String BIN_UNIQUE_INTERVAL = "unique";
+
     /** The default interval for the date rage. */
     public static final String DEFAULT_DATE_BIN_INTERVAL = BIN_HOUR_INTERVAL;
 

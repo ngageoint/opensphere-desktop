@@ -256,7 +256,14 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
                 }
                 else if (parameters.getDateFormat() != null && parameters.getDateInterval() != null)
                 {
-                    request.setAggs(new Aggs(field, parameters.getDateFormat(), parameters.getDateInterval()));
+                    if(parameters.getDateInterval() == InfinityUtilities.BIN_UNIQUE_INTERVAL)
+                    {
+                        request.setAggs(new Aggs(field, InfinityUtilities.DEFAULT_SIZE, InfinityUtilities.MISSING_VALUE));
+                    }
+                    else
+                    {
+                        request.setAggs(new Aggs(field, parameters.getDateFormat(), parameters.getDateInterval()));
+                    }
                 }
             }
             else

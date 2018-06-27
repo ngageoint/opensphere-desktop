@@ -2,8 +2,10 @@ package io.opensphere.infinity.simulator;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -209,14 +211,12 @@ public class InfinitySimulator extends AbstractServer
         int totalCount = 0;
         if (aggsField != null)
         {
-            @SuppressWarnings("deprecation")
-            //TODO: Replace with calendar
-            Date[] bins = new Date[] {
-                new Date(98, 0, 25),
-                new Date(99, 0, 99),
-                new Date(116, 1, 7),
-                new Date(14, 10, 11),
-                new Date(45, 8, 2)
+            LocalDateTime[] bins = new LocalDateTime[] {
+              LocalDateTime.of(1998, Month.JANUARY, 25, 21, 15),
+              LocalDateTime.of(1999, Month.JANUARY, 31, 20, 45),
+              LocalDateTime.of(2016, Month.FEBRUARY, 7, 19, 18),
+              LocalDateTime.of(1865, Month.NOVEMBER, 11, 11, 00),
+              LocalDateTime.of(1945, Month.SEPTEMBER, 11, 8, 12),
             };
 
             int numberOfBins = (int)(Math.random() * bins.length) + 1;
@@ -224,10 +224,10 @@ public class InfinitySimulator extends AbstractServer
             @SuppressWarnings("unchecked")
             Bucket<Long>[] buckets = new Bucket[numberOfBins];
             int binCount = 1000;
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myDateFormat);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(myDateFormat);
             for (int i = 0; i < numberOfBins; i++)
             {
-                buckets[i] = new Bucket<Long>(Long.valueOf(bins[i].getTime()), binCount, simpleDateFormat.format(bins[i]));
+                buckets[i] = new Bucket<Long>(Long.valueOf(bins[i].toEpochSecond(ZoneOffset.UTC)), binCount, bins[i].format(formatter));
                 totalCount += binCount;
                 binCount -= 100;
             }

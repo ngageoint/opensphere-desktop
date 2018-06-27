@@ -16,6 +16,7 @@ public class Bins
     private DateHistogram myDateHistogram;
 
     /** The buckets. */
+    @SuppressWarnings("rawtypes")
     private Bucket[] myBuckets;
 
     /**

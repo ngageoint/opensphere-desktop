@@ -4,7 +4,7 @@ import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
 import io.opensphere.mantle.infinity.InfinityUtilities;
 
-/** Elasticsearch histogram JSON bean. Used with numericbinning. */
+/** Elasticsearch histogram JSON bean. Used with numeric binning. */
 @JsonPropertyOrder({ "field", "interval", "min_doc_count", "missing", "offset" })
 public class Histogram
 {
