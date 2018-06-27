@@ -34,10 +34,10 @@
 							strokeWidth="0.0" text="Icon Size:" />
 
 						<Button fx:id="myShrinkButton" minWidth="0.0"
-							mnemonicParsing="false" onMouseClicked="#SHRINK"
+							mnemonicParsing="false" onMouseClicked="#shrink"
 							prefHeight="25.0" text="-" />
 						<Button fx:id="myEnlargeButton" minWidth="0.0"
-							mnemonicParsing="false" onMouseClicked="#ENLARGE"
+							mnemonicParsing="false" onMouseClicked="#enlarge"
 							prefHeight="25.0" text="+" />
 					</buttons>
 				</ButtonBar>
