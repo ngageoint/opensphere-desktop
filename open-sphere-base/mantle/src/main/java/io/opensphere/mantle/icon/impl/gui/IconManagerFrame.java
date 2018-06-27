@@ -81,8 +81,8 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
      * Instantiates a new icon chooser dialog.
      *
      * @param tb the {@link Toolbox}
-     * @param enlargeButton.
-     * @param reduceButton.
+     * @param enlargeButton. {@link iconSizeChanger}
+     * @param reduceButton. {@link iconSizeChanger}
      */
     public IconManagerFrame(Toolbox tb)
     {

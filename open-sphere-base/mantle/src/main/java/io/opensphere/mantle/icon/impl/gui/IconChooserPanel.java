@@ -679,11 +679,11 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     /**
      * Sets the resized icon record.
      *
-     * @param resizeRec the resized icons record
+     * @param resizedRecords the resized icons record
      */
-    public void setResizeRecord(List<IconRecord> resizeRec)
+    public void setResizeRecord(List<IconRecord> resizedRecords)
     {
-        myResizeRecord = resizeRec;
+        myResizeRecord = resizedRecords;
     }
 
     /**
