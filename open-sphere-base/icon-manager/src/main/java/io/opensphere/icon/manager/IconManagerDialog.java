@@ -1,4 +1,4 @@
-package application;
+package io.opensphere.icon.manager;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,7 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class IconManagerFrameTest
+public class IconManagerDialog
 {
 
     @FXML

@@ -1,19 +1,15 @@
-package application;
+package io.opensphere.icon.manager;
 
 import java.io.FileInputStream;
 
 import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.TreeItem;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
-public class Main extends Application
+public class IconManagerFrame extends Application
 {
     @Override
     public void start(Stage primaryStage)
@@ -22,10 +18,10 @@ public class Main extends Application
         {
             AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("IconManagerFrameTest.fxml"));
             Scene scene = new Scene(root, 720, 400);
-            scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("IconManagerFrameStyle.css").toExternalForm());
             primaryStage.setScene(scene);
-            Image image1 = new Image(new FileInputStream("source/Images/windows.png"));
-            primaryStage.getIcons().add(image1);
+            Image myWindowIcon = new Image(new FileInputStream("src/main/resources/Images/caci.jpg"));
+            primaryStage.getIcons().add(myWindowIcon);
             primaryStage.setTitle("Icon Manager");
             primaryStage.setMinHeight(400);
             primaryStage.setMinWidth(720);

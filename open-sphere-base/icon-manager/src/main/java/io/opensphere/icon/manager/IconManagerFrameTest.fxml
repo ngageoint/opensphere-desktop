@@ -21,7 +21,7 @@
 	prefHeight="488.0" prefWidth="1021.0"
 	xmlns="http://javafx.com/javafx/10.0.1"
 	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="application.IconManagerFrameTest">
+	fx:controller="io.opensphere.icon.manager.IconManagerDialog">
 	<children>
 		<AnchorPane fx:id="myTopMenuBar"
 			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0"
@@ -111,7 +111,7 @@
 							layoutX="-2.0" layoutY="394.0" mnemonicParsing="false"
 							onMouseClicked="#ADD"
 							onMouseReleased="#handleFavoriteButtonAction" prefHeight="25.0"
-							prefWidth="249.0" stylesheets="@application.css"
+							prefWidth="249.0" stylesheets="@IconManagerFrameStyle.css"
 							text="Add Icon from File" AnchorPane.bottomAnchor="52.0"
 							AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="0.0" />
 						<Button fx:id="myCustIconButton" layoutY="419.0"
@@ -160,7 +160,7 @@
 							<children>
 								<Button fx:id="myCloseButton" mnemonicParsing="false"
 									onMouseClicked="#Close" text="Close"
-									AnchorPane.rightAnchor="0.0" />
+									AnchorPane.rightAnchor="10.0" />
 								<TextField fx:id="myDataBar" prefHeight="25.0"
 									prefWidth="673.0" AnchorPane.bottomAnchor="0.0"
 									AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="80.0" />
