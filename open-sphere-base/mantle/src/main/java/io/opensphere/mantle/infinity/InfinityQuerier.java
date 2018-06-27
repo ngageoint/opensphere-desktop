@@ -43,16 +43,11 @@ public class InfinityQuerier
      * @param polygon the polygon to query
      * @param timeSpan the time span to query
      * @param binField the bin field
-     * @param binWidth the bin width
-     * @param binOffset the bin offset
-     * @param dateFormat the date format
-     * @param dateInterval the date interval
-     * @param dayOfWeek the dayOfWeek Boolean
+     * @param binParams the query binning parameters
      * @return the search response
      * @throws QueryException if something goes wrong with the query
      */
-    public QueryResults query(DataTypeInfo dataType, Polygon polygon, TimeSpan timeSpan, String binField, Double binWidth,
-            Double binOffset, String dateFormat, String dateInterval, Boolean dayOfWeek)
+    public QueryResults query(DataTypeInfo dataType, Polygon polygon, TimeSpan timeSpan, String binField, QueryBinParameters binParams)
         throws QueryException
     {
         QueryResults result = null;
@@ -82,11 +77,11 @@ public class InfinityQuerier
         {
             queryParameters.setBinFieldType(dataType.getMetaDataInfo().getKeyClassType(binField));
         }
-        queryParameters.setBinWidth(binWidth);
-        queryParameters.setBinOffset(binOffset);
-        queryParameters.setDateFormat(dateFormat);
-        queryParameters.setDateInterval(dateInterval);
-        queryParameters.setDayOfWeek(dayOfWeek);
+        queryParameters.setBinWidth(binParams.getBinWidth());
+        queryParameters.setBinOffset(binParams.getBinOffset());
+        queryParameters.setDateFormat(binParams.getDateFormat());
+        queryParameters.setDateInterval(binParams.getDateInterval());
+        queryParameters.setDayOfWeek(binParams.getDayOfWeek());
         queryParameters.setGeomField(geomField);
         queryParameters.setTimeField(timeField);
         queryParameters.setEndTimeField(endTimeField);
