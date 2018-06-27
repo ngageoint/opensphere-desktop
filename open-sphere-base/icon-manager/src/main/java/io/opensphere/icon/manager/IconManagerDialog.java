@@ -77,24 +77,31 @@ public class IconManagerDialog
     @FXML
     private TreeView<?> myTreeList;
 
+    /** The add icons from file button. */
     @FXML
     private Button myAddIconButton;
 
+    /** The customize icon button. */
     @FXML
     private Button myCustIconButton;
 
+    /** The generate new icon button. */
     @FXML
     private Button myGenIconButton;
 
+    /** The bottom bar interface. */
     @FXML
     private AnchorPane myBottomMenuBar;
 
+    /** The close window button in the bottom right. */
     @FXML
     private Button myCloseButton;
 
+    /** The bottom center notification bar. */
     @FXML
     private TextField myDataBar;
 
+    /** The bottom left notification text. */
     @FXML
     private Text myNotifyText;
 
@@ -165,6 +172,10 @@ public class IconManagerDialog
 
     }
 
+    /**
+     * Handles the "Add Icon from File" button event
+     * @param event
+     */
     @FXML
     void GENERATE(MouseEvent event)
     {
