@@ -110,7 +110,7 @@
 						<Button fx:id="myAddIconButton" alignment="CENTER"
 							layoutX="-2.0" layoutY="394.0" mnemonicParsing="false"
 							onMouseClicked="#ADD"
-							onMouseReleased="#handleFavoriteButtonAction" prefHeight="25.0"
+							onMouseReleased="#handleAddIconButtonAction" prefHeight="25.0"
 							prefWidth="249.0" stylesheets="@IconManagerFrameStyle.css"
 							text="Add Icon from File" AnchorPane.bottomAnchor="52.0"
 							AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="0.0" />

@@ -139,9 +139,10 @@ public class IconManagerDialog
     }
 
     @FXML
-    void handleFavoriteButtonAction(MouseEvent event)
+    void handleAddIconButtonAction(MouseEvent event)
     {
-        myNotifyText.setText("Icon Added to Favorites");
+        //myNotifyText.setText("Icon Added to Favorites");
+        //loadFromFile(IconRecord.USER_ADDED_COLLECTION, null);
     }
 
 }
