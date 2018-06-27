@@ -211,6 +211,7 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         if (rowList.size() < maxBoxes)
         {
             JTextArea label = new JTextArea();
+            label.setBorder(null);
             label.setEditable(false);
             label.setLineWrap(true);
             label.setWrapStyleWord(true);
@@ -387,7 +388,7 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
 
     /**
      * Moves a row up one space.
-     * 
+     *
      * @param row the row to move
      */
     private void moveUp(ComboRow row)
@@ -406,7 +407,7 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
 
     /**
      * Moves a row down one space.
-     * 
+     *
      * @param row the row to move
      */
     private void moveDown(ComboRow row)
@@ -425,7 +426,7 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
 
     /**
      * Deletes a row.
-     * 
+     *
      * @param row the row to delete
      */
     private void deleteRow(ComboRow row)
@@ -438,7 +439,7 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
 
     /**
      * Gets the selected item in a combo box.
-     * 
+     *
      * @param box the box
      * @return the selected item
      */
