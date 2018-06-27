@@ -150,7 +150,10 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
         throws IOException, CacheException
     {
         URL url = getUrl(category);
-        LOGGER.info("Request: " + url + " " + parameters.getTimeSpan() + " " + parameters.getGeometry());
+        if (LOGGER.isDebugEnabled())
+        {
+            LOGGER.debug("Request: " + url + " " + parameters.getTimeSpan() + " " + parameters.getGeometry());
+        }
 
         InputStream postData = createRequestStream(parameters);
         ResponseValues response = new ResponseValues();
@@ -178,7 +181,7 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
     {
         SearchRequest request = createSearchRequest(parameters);
 
-        ByteArrayOutputStream out = new ByteArrayOutputStream(384);
+        ByteArrayOutputStream out = new ByteArrayOutputStream(InfinityUtilities.DEFAULT_INITIAL_BYTE_STREAM_SIZE);
         ObjectMapper mapper = JsonUtils.createMapper();
         mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
         mapper.writeValue(out, request);
@@ -237,8 +240,18 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
                     || DynamicEnumerationKey.class.isAssignableFrom(parameters.getBinFieldType()))
             {
                 field += ".keyword";
+                request.setAggs(new Aggs(field, InfinityUtilities.DEFAULT_SIZE, InfinityUtilities.MISSING_VALUE));
             }
-            request.setAggs(new Aggs(field, 10000, InfinityUtilities.MISSING_VALUE));
+            else if (Number.class.isAssignableFrom(parameters.getBinFieldType()) && parameters.getBinWidth() != null
+                    && parameters.getBinOffset() != null)
+            {
+                request.setAggs(new Aggs(field, parameters.getBinWidth().doubleValue(), InfinityUtilities.MISSING_VALUE,
+                        parameters.getBinOffset().doubleValue(), parameters.getMinDocCount()));
+            }
+            else
+            {
+                request.setAggs(new Aggs(field, InfinityUtilities.DEFAULT_SIZE, InfinityUtilities.MISSING_VALUE));
+            }
         }
         return request;
     }
@@ -272,7 +285,7 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
         QueryResults results = new QueryResults(response.getHits().getTotal());
         if (response.getAggregations() != null)
         {
-            List<ValueWithCount<String>> bins = Arrays.stream(response.getAggregations().getBins().getBuckets())
+            List<ValueWithCount<Object>> bins = Arrays.stream(response.getAggregations().getBins().getBuckets())
                     .map(b -> new ValueWithCount<>(b.getKey(), (int)b.getDoc_count())).collect(Collectors.toList());
             results.setBins(bins);
         }

@@ -77,7 +77,7 @@ public abstract class AbstractViewTimeController extends EventListenerService
      *
      * @param spans the spans
      */
-    void handleTimeChanged(TimeSpanList spans)
+    protected void handleTimeChanged(TimeSpanList spans)
     {
         myProcrastinatingExecutor.execute(() ->
         {
@@ -92,7 +92,7 @@ public abstract class AbstractViewTimeController extends EventListenerService
      * @param viewer the viewer
      * @param type the change type
      */
-    private void handleViewChanged(Viewer viewer, ViewChangeSupport.ViewChangeType type)
+    protected void handleViewChanged(Viewer viewer, ViewChangeSupport.ViewChangeType type)
     {
         myProcrastinatingExecutor.execute(() ->
         {
@@ -100,6 +100,14 @@ public abstract class AbstractViewTimeController extends EventListenerService
             handleChange(null);
         });
     }
+
+    /**
+     * Handles a view or time change.
+     *
+     * @param activeSpan the active span
+     * @param boundingBox the bounding box
+     */
+    protected abstract void handleChange(TimeSpan activeSpan, GeographicBoundingBox boundingBox);
 
     /**
      * Handles a view or time change.
@@ -119,12 +127,4 @@ public abstract class AbstractViewTimeController extends EventListenerService
 
         handleChange(myLastActiveTime, myLastBoundingBox);
     }
-
-    /**
-     * Handles a view or time change.
-     *
-     * @param activeSpan the active span
-     * @param boundingBox the bounding box
-     */
-    protected abstract void handleChange(TimeSpan activeSpan, GeographicBoundingBox boundingBox);
 }

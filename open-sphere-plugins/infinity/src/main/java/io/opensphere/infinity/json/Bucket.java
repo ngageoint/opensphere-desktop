@@ -1,10 +1,13 @@
 package io.opensphere.infinity.json;
 
-/** Elasticsearch bucket JSON bean. */
-public class Bucket
+/** Elasticsearch bucket JSON bean.
+ *
+ * @param <T> Type contained in buckets
+ */
+public class Bucket<T>
 {
     /** The key. */
-    private String myKey;
+    private T myKey;
 
     /** The doc count. */
     private long myDocCount;
@@ -14,6 +17,7 @@ public class Bucket
      */
     public Bucket()
     {
+        //Intentionally left blank
     }
 
     /**
@@ -22,7 +26,7 @@ public class Bucket
      * @param key the key
      * @param docCount the doc count
      */
-    public Bucket(String key, long docCount)
+    public Bucket(T key, long docCount)
     {
         myKey = key;
         myDocCount = docCount;
@@ -33,7 +37,7 @@ public class Bucket
      *
      * @return the key
      */
-    public String getKey()
+    public T getKey()
     {
         return myKey;
     }
@@ -43,7 +47,7 @@ public class Bucket
      *
      * @param key the key
      */
-    public void setKey(String key)
+    public void setKey(T key)
     {
         myKey = key;
     }

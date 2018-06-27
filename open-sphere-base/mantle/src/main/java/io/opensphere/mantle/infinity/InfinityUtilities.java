@@ -29,6 +29,27 @@ public final class InfinityUtilities
     /** The "missing" data value. */
     public static final long MISSING_VALUE = 1000000000000000000L;
 
+    /** The "missing" data value in scientific notation. */
+    public static final String MISSING_VALUE_SCI_NOTATION = "1.0E18";
+
+    /** The default bin width. */
+    public static final double DEFAULT_BIN_WIDTH = 10.0;
+
+    /** The default bin width fractional digits. */
+    public static final int DEFAULT_BIN_WIDTH_FRAC_DIGITS = 1;
+
+    /** The default bin offset. */
+    public static final double DEFAULT_BIN_OFFSET = 0.0;
+
+    /** The default size. */
+    public static final int DEFAULT_SIZE = 10000;
+
+    /** The default user number format. */
+    public static final String DEFAULT_USER_NUM_FORMAT = "%.1f";
+
+    /** The default initial size of the infinity output stream. */
+    public static final int DEFAULT_INITIAL_BYTE_STREAM_SIZE = 500;
+
     /**
      * Determines if the data type is infinity-enabled.
      *

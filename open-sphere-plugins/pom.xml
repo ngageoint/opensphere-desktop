@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.open-sphere</groupId>
         <artifactId>open-sphere</artifactId>
-        <version>5.2.4-SNAPSHOT</version>
+        <version>5.2.5-SNAPSHOT</version>
     </parent>
 
     <groupId>io.open-sphere.plugins</groupId>
@@ -30,6 +30,7 @@
         <module>google-places</module>
         <module>heatmap</module>
         <module>hud</module>
+        <module>icon-manager</module>
         <module>imagery</module>
         <module>import</module>
         <module>infinity</module>
