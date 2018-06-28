@@ -289,6 +289,8 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
      *
      * @param name name
      * @param geom geometry (a JTS LineString)
+     * @param fMap a Map of column headers to numerical indices
+     * @param row a row of input values
      * @return a Placemark
      */
     private Placemark trackMark(String name, LineString geom, Map<String, Integer> fMap, String[] row)
@@ -299,7 +301,6 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         {
             nodes.add(new DefaultTrackNode(point));
         }
-//        return TrackUtils.toKml(TrackUtils.createDefaultTrack(getToolbox(), null, name, nodes));
         return TrackUtils.toKml(TrackUtils.createCsvTrack(getToolbox(), null, name, nodes, defMapPoint(row, fMap)));
     }
 

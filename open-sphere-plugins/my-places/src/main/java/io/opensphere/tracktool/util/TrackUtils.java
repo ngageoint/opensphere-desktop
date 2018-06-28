@@ -56,7 +56,7 @@ public final class TrackUtils
     }
 
     /**
-     * Creates a track from the arguments, with the default settings.
+     * Creates a track from the arguments, with the settings defined from a MapAnnotationPoint.
      *
      * @param toolbox the toolbox
      * @param id The id of the track.
