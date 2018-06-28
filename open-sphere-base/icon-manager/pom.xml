@@ -12,6 +12,12 @@
 			<groupId>io.open-sphere</groupId>
 			<artifactId>mantle</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>io.open-sphere</groupId>
+			<artifactId>core</artifactId>
+		</dependency>
+		
 	</dependencies>
 	
 </project>
