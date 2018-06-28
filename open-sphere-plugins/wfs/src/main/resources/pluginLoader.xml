@@ -4,6 +4,7 @@
         <id>DefaultWFSPlugin</id>
         <class>io.opensphere.wfs.WFSPlugin</class>
         <appVersion>1.0</appVersion>
+        <requiredPluginDependency>QuantifyPlugin</requiredPluginDependency>
         <requiredPluginDependency>MantlePlugin</requiredPluginDependency>
         <requiredPluginDependency>OGCServers</requiredPluginDependency>
         <pluginProperty>
