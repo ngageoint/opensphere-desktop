@@ -4,8 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.Closeable;
 import java.util.function.Consumer;
 
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 import com.xuggle.xuggler.IPacket;
 import com.xuggle.xuggler.IStreamCoder;

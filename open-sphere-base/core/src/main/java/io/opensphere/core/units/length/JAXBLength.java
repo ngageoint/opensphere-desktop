@@ -15,7 +15,7 @@ import io.opensphere.core.util.Utilities;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@javax.annotation.concurrent.ThreadSafe
+@net.jcip.annotations.ThreadSafe
 public class JAXBLength implements JAXBWrapper<Length>
 {
     /** The magnitude. */

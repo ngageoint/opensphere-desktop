@@ -3,7 +3,7 @@ package io.opensphere.search.googleplaces.json;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 
 import org.codehaus.jackson.annotate.JsonAnyGetter;
 import org.codehaus.jackson.annotate.JsonAnySetter;

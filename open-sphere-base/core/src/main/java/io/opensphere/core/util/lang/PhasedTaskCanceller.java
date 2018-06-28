@@ -3,7 +3,7 @@ package io.opensphere.core.util.lang;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Phaser;
 
-import javax.annotation.concurrent.ThreadSafe;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * Extension to {@link TaskCanceller} that will also register wrapped tasks with

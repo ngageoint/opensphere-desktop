@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Collections;
 
-import javax.annotation.concurrent.ThreadSafe;
+import net.jcip.annotations.ThreadSafe;
 
 import io.opensphere.core.util.collections.New;
 

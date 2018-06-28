@@ -3,7 +3,7 @@ package io.opensphere.core.dialog.alertviewer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.annotation.concurrent.Immutable;
+import net.jcip.annotations.Immutable;
 
 import io.opensphere.core.dialog.alertviewer.event.Type;
 import io.opensphere.core.util.DateTimeFormats;

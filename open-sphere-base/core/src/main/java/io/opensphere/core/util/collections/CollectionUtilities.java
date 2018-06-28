@@ -16,7 +16,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 import gnu.trove.TIntCollection;
 import gnu.trove.list.array.TIntArrayList;

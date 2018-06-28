@@ -1,6 +1,6 @@
 package io.opensphere.core.terrain;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import net.jcip.annotations.NotThreadSafe;
 
 import io.opensphere.core.math.Vector2d;
 import io.opensphere.core.math.Vector3d;

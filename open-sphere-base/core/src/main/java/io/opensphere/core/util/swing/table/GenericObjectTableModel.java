@@ -2,7 +2,7 @@ package io.opensphere.core.util.swing.table;
 
 import java.util.List;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import net.jcip.annotations.NotThreadSafe;
 
 /**
  * A flexible table model that uses pluggable providers for conversion between

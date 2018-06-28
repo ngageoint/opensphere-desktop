@@ -5,12 +5,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import avro.shaded.com.google.common.base.Objects;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.EqualsHelper;
@@ -421,7 +421,7 @@ public final class StyleManagerUtils
         {
             result = "Tiles";
         }
-        else if (Objects.equal(featureClass, InterpolatedTileVisualizationSupport.class))
+        else if (Objects.equals(featureClass, InterpolatedTileVisualizationSupport.class))
         {
             result = "Data Tiles";
         }

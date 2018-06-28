@@ -6,7 +6,7 @@ import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 
-import javax.annotation.concurrent.ThreadSafe;
+import net.jcip.annotations.ThreadSafe;
 
 import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
 import io.opensphere.core.util.javafx.ConcurrentStringProperty;

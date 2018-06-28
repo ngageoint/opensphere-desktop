@@ -3,8 +3,8 @@ package io.opensphere.controlpanels.animation.controller;
 import java.util.Collection;
 import java.util.function.Predicate;
 
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 import io.opensphere.core.TimeManager;
 import io.opensphere.core.Toolbox;

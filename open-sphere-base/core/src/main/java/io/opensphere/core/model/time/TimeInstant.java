@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
 
-import javax.annotation.concurrent.Immutable;
+import net.jcip.annotations.Immutable;
 
 import io.opensphere.core.units.duration.Duration;
 import io.opensphere.core.units.duration.Milliseconds;

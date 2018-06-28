@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.swing.JComponent;
 
 import io.opensphere.core.Toolbox;

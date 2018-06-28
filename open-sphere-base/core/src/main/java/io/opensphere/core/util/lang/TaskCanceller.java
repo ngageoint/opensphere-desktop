@@ -5,8 +5,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.Callable;
 
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * An object that may be used to wrap tasks that will be run on other threads.

@@ -2,8 +2,8 @@ package io.opensphere.core.util;
 
 import java.util.function.Supplier;
 
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * Memoizing supplier.

@@ -3,7 +3,7 @@ package io.opensphere.osh.model;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import net.jcip.annotations.NotThreadSafe;
 
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.Utilities;

@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.swing.JComponent;
 
 import io.opensphere.core.Toolbox;

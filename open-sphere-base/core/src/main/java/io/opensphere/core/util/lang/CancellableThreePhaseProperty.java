@@ -4,7 +4,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Phaser;
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.annotation.concurrent.ThreadSafe;
+import net.jcip.annotations.ThreadSafe;
 
 import io.opensphere.core.util.PropertyChangeException;
 import io.opensphere.core.util.ReferenceService;

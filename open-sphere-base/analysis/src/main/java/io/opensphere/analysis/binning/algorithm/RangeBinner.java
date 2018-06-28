@@ -85,7 +85,6 @@ public class RangeBinner<T> extends AbstractBinner<T>
         return bin;
     }
 
-    @SuppressWarnings("null")
     @Override
     protected List<Bin<T>> createEmptyBins(int index, Bin<T> bin)
     {
@@ -115,7 +114,7 @@ public class RangeBinner<T> extends AbstractBinner<T>
                 endBin = (RangeBin<T>)bin.getBin();
             }
 
-            if (startBin != null)
+            if (startBin != null && endBin != null)
             {
                 emptyBins = New.list();
                 double increment = round(startBin.getMax() - startBin.getMin());

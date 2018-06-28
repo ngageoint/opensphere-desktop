@@ -1,6 +1,6 @@
 package io.opensphere.core.util.lang;
 
-import javax.annotation.concurrent.ThreadSafe;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * A proxy for a {@link Cancellable} that manages the cancelled state until the

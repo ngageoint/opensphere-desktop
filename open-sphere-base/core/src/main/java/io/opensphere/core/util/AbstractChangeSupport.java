@@ -2,7 +2,7 @@ package io.opensphere.core.util;
 
 import java.util.concurrent.Executor;
 
-import javax.annotation.concurrent.GuardedBy;
+import net.jcip.annotations.GuardedBy;
 
 import io.opensphere.core.util.ref.Reference;
 
@@ -11,7 +11,7 @@ import io.opensphere.core.util.ref.Reference;
  *
  * @param <T> The supported listener type.
  */
-@javax.annotation.concurrent.ThreadSafe
+@net.jcip.annotations.ThreadSafe
 public abstract class AbstractChangeSupport<T> implements ChangeSupport<T>
 {
     /** The listeners. */

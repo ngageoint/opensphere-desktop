@@ -187,7 +187,7 @@ public final class ProjectLauncherWriter
     {
         return "-Dopensphere.productionMode=false -Djava.security.policy=&quot;${workspace_loc:/core/java.policy}&quot;"
                 + " -Djava.library.path=&quot;${workspace_loc:/core/lib/" + osInfo.getDirectory() + "/x86_64}&quot;"
-                + " -Xmx3000m -ea -XX:+AggressiveOpts -XX:+UseMembar -XX:+UseG1GC -XX:G1ReservePercent=40"
+                + " -Xmx3000m -ea -XX:+AggressiveOpts -XX:+UseG1GC -XX:G1ReservePercent=40"
                 + " -Dopensphere.version=" + rootProject.getVersion() + " -Dopensphere.useragent=&quot;" + rootProject.getTitle()
                 + "&quot;" + rootProject.getAdditionalVmArgs();
     }

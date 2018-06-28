@@ -4,7 +4,7 @@ package io.opensphere.core.util;
  * Utility for managing an execution time budget. For example, a method may be
  * allowed to run for 100 milliseconds before it should be aborted.
  */
-@javax.annotation.concurrent.ThreadSafe
+@net.jcip.annotations.ThreadSafe
 public class TimeBudget
 {
     /** An indefinite time budget. */

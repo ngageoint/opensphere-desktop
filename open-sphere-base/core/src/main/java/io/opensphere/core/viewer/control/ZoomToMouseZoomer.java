@@ -65,6 +65,12 @@ public class ZoomToMouseZoomer
      */
     private void zoom(ViewControlTranslator viewer, MapContext<DynamicViewer> mapManager, InputEvent event, boolean isZoomIn)
     {
+        if (viewer == null)
+        {
+            // we're doing this before the viewer is initialized. weird.
+            return;
+        }
+
         Vector2i mouseScreenPos = null;
         GeographicPosition position = null;
         MapManager theMapManager = null;

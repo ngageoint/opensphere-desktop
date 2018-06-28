@@ -14,7 +14,7 @@ import io.opensphere.core.util.Utilities;
  * @param <E> The type of object in the List.
  */
 @io.opensphere.core.util.Immutable
-@javax.annotation.concurrent.Immutable
+@net.jcip.annotations.Immutable
 public class PrimitiveArrayListWrapper<E> extends AbstractList<E> implements Serializable, RandomAccess
 {
     /**

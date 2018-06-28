@@ -1,6 +1,6 @@
 package io.opensphere.core.util.lang;
 
-import javax.annotation.concurrent.ThreadSafe;
+import net.jcip.annotations.ThreadSafe;
 
 /** Default implementation that simply provides the cancelled state. */
 @ThreadSafe
