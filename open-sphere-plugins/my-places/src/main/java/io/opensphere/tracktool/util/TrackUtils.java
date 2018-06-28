@@ -3,6 +3,7 @@ package io.opensphere.tracktool.util;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
@@ -22,6 +23,7 @@ import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.kml.common.util.KMLSpatialTemporalUtils;
 import io.opensphere.mantle.data.MapVisualizationType;
+import io.opensphere.mantle.mp.impl.DefaultMapAnnotationPoint;
 import io.opensphere.myplaces.constants.Constants;
 import io.opensphere.myplaces.util.ExtendedDataUtils;
 import io.opensphere.myplaces.util.OptionsAccessor;
@@ -50,6 +52,55 @@ public final class TrackUtils
         OptionsAccessor options = new OptionsAccessor(toolbox);
         Placemark defaultPlacemark = options.getDefaultPlacemark();
         fromKml(track, defaultPlacemark, toolbox);
+        return track;
+    }
+
+    /**
+     * Creates a track from the arguments, with the default settings.
+     *
+     * @param toolbox the toolbox
+     * @param id The id of the track.
+     * @param name The name which uniquely identifies the track.
+     * @param nodes The nodes which make up the track.
+     * @param point The point which contains the data.
+     * @return the track
+     */
+    public static DefaultTrack createCsvTrack(Toolbox toolbox, String id, String name, Collection<TrackNode> nodes,
+            DefaultMapAnnotationPoint point)
+    {
+        DefaultTrack track = new DefaultTrack(id, name, nodes, true);
+        track.setDescription(point.getDescription());
+        track.setColor(point.getColor());
+        track.setTextColor(point.getFontColor());
+        track.setIsFillBubble(point.isFilled());
+        track.setFont(point.getFont());
+        track.setShowDescription(point.getAnnoSettings().isDesc());
+        track.setShowName(point.getAnnoSettings().isTitle());
+        track.setShowFieldTitles(point.getAnnoSettings().isFieldTitle());
+        track.setIsShowBubble(!point.getAnnoSettings().isAnnohide());
+        track.setIsShowDistance(point.getAnnoSettings().isDistance());
+        track.setIsShowHeading(point.getAnnoSettings().isHeading());
+        track.setShowVelocity(point.getAnnoSettings().isVelocity());
+        track.setShowDuration(point.getAnnoSettings().isDuration());
+
+        OptionsAccessor options = new OptionsAccessor(toolbox);
+        Placemark defaultPlacemark = options.getDefaultPlacemark();
+        String unit = ExtendedDataUtils.getString(defaultPlacemark.getExtendedData(), Constants.UNITS_ID);
+
+        if (StringUtils.isNotEmpty(unit))
+        {
+            Collection<Class<? extends Length>> units = toolbox.getUnitsRegistry().getAvailableUnits(Length.class, true);
+            for (Class<? extends Length> aUnit : units)
+            {
+                if (aUnit.getName().equals(unit))
+                {
+                    track.setDistanceUnit(aUnit);
+                    break;
+                }
+            }
+        }
+
+        track.setOffset(new Vector2i(point.getxOffset(), point.getyOffset()));
         return track;
     }
 
