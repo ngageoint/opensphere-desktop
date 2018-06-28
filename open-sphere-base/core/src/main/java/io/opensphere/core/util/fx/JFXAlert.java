@@ -11,8 +11,6 @@ import java.util.Optional;
 import java.util.WeakHashMap;
 import java.util.function.Supplier;
 
-import javax.swing.JDialog;
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -28,6 +26,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+
+import javax.swing.JDialog;
 
 /**
  * An alert dialog that renders a JavaFX component and buttons within a Swing
@@ -180,7 +180,10 @@ public class JFXAlert extends JDialog
         });
         for (ButtonType buttonType : buttons)
         {
-            getButtonTypes().add(buttonType);
+            if (buttonType != null)
+            {
+                getButtonTypes().add(buttonType);
+            }
         }
     }
 
