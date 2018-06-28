@@ -46,4 +46,9 @@
         <appVersion>1.0</appVersion>
         <requiredPluginDependency>OGCServers</requiredPluginDependency>
     </pluginLoaderData>
+    <pluginLoaderData>
+        <id>QuantifyPlugin</id>
+        <class>io.opensphere.core.quantify.QuantifyPlugin</class>
+        <appVersion>1.0</appVersion>
+    </pluginLoaderData>
 </pluginLoaderCollection>
