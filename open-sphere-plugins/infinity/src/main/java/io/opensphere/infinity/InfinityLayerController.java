@@ -15,10 +15,14 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.data.QueryException;
 import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.time.TimeSpan;
+import io.opensphere.core.model.time.TimeSpanList;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.jts.JTSUtilities;
 import io.opensphere.core.util.swing.GenericFontIcon;
+import io.opensphere.core.viewer.ViewChangeSupport;
+import io.opensphere.core.viewer.Viewer;
+import io.opensphere.infinity.model.InfinitySettingsModel;
 import io.opensphere.mantle.controller.event.impl.DataTypeAddedEvent;
 import io.opensphere.mantle.controller.event.impl.DataTypeRemovedEvent;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -45,6 +49,9 @@ public class InfinityLayerController extends AbstractViewTimeController
         NUMBER_FORMAT.setGroupingUsed(true);
     }
 
+    /** The settings model. */
+    private final InfinitySettingsModel mySettingsModel;
+
     /** The infinity-enabled data types. */
     private final Collection<DataTypeInfo> myInfinityDataTypes = Collections.synchronizedSet(New.set());
 
@@ -52,13 +59,40 @@ public class InfinityLayerController extends AbstractViewTimeController
      * Constructor.
      *
      * @param toolbox the toolbox
+     * @param settingsModel the settings model
      */
-    public InfinityLayerController(Toolbox toolbox)
+    public InfinityLayerController(Toolbox toolbox, InfinitySettingsModel settingsModel)
     {
         super(toolbox);
+        mySettingsModel = settingsModel;
         bindEvent(OGCServiceStateEvent.class, this::handleOGCServiceStateEvent);
         bindEvent(DataTypeAddedEvent.class, this::handleDataTypeAdded);
         bindEvent(DataTypeRemovedEvent.class, this::handleDataTypeRemoved);
+        bindModelFX(mySettingsModel.enabledProperty(), (observable, oldValue, newValue) ->
+        {
+            if (newValue.booleanValue())
+            {
+                triggerChange();
+            }
+        });
+    }
+
+    @Override
+    protected void handleTimeChanged(TimeSpanList spans)
+    {
+        if (mySettingsModel.enabledProperty().get())
+        {
+            super.handleTimeChanged(spans);
+        }
+    }
+
+    @Override
+    protected void handleViewChanged(Viewer viewer, ViewChangeSupport.ViewChangeType type)
+    {
+        if (mySettingsModel.enabledProperty().get())
+        {
+            super.handleViewChanged(viewer, type);
+        }
     }
 
     @Override
@@ -148,7 +182,11 @@ public class InfinityLayerController extends AbstractViewTimeController
         if (isInfinityEnabled(dataType))
         {
             myInfinityDataTypes.add(dataType);
-            triggerChange();
+
+            if (mySettingsModel.enabledProperty().get())
+            {
+                triggerChange();
+            }
         }
     }
 

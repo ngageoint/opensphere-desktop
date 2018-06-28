@@ -2,16 +2,17 @@ package io.opensphere.infinity.model;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 
 import io.opensphere.core.preferences.BooleanPreferenceBinding;
 import io.opensphere.core.preferences.Preferences;
+import io.opensphere.core.util.CompositeService;
+import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
 
 /** Infinity settings model. */
-public class InfinitySettingsModel
+public class InfinitySettingsModel extends CompositeService
 {
     /** The enabled setting. */
-    private final BooleanProperty myEnabled = new SimpleBooleanProperty(this, "enabled");
+    private final BooleanProperty myEnabled = new ConcurrentBooleanProperty(this, "enabled", true);
 
     /**
      * Constructor.
@@ -20,7 +21,7 @@ public class InfinitySettingsModel
      */
     public InfinitySettingsModel(Preferences preferences)
     {
-        new BooleanPreferenceBinding(myEnabled, preferences, Platform::runLater).open();
+        addService(new BooleanPreferenceBinding(myEnabled, preferences, Platform::runLater));
     }
 
     /**
