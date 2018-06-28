@@ -50,6 +50,9 @@ public final class InfinityUtilities
     /** The default initial size of the infinity output stream. */
     public static final int DEFAULT_INITIAL_BYTE_STREAM_SIZE = 500;
 
+    /** The user-facing term used for "infinity", in title case. */
+    public static final String INFINITY = "Infinity";
+
     /**
      * Determines if the data type is infinity-enabled.
      *
@@ -91,6 +94,18 @@ public final class InfinityUtilities
         String completeKey = tagKey + "=";
         return dataType.getTags().stream().filter(t -> t.startsWith(completeKey)).map(t -> t.replace(completeKey, "")).findAny()
                 .orElse(null);
+    }
+
+    /**
+     * Infinity-fies the text.
+     *
+     * @param text the text
+     * @param isInfinity whether to include the "infinity" text
+     * @return the modified text
+     */
+    public static String infinify(String text, boolean isInfinity)
+    {
+        return isInfinity ? INFINITY + " " + text : text;
     }
 
     /** Disallow instantiation. */

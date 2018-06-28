@@ -21,16 +21,16 @@ import io.opensphere.server.util.JsonUtils;
 /** Infinity servlet simulator. */
 public class InfinitySimulator extends AbstractServer
 {
-    /** Flag indicating if response is numeric binning */
-    private boolean isNumericBin = false;
+    /** Flag indicating if response is numeric binning. */
+    private boolean isNumericBin;
 
-    /** Bin width contained in numeric binning request*/
+    /** Bin width contained in numeric binning request. */
     private double myBinWidth = InfinityUtilities.DEFAULT_BIN_WIDTH;
 
-    /** Bin offset contained in numeric binning request*/
+    /** Bin offset contained in numeric binning request. */
     private double myBinOffset = InfinityUtilities.DEFAULT_BIN_OFFSET;
 
-    /** Bin min_doc_count in numeric binning request*/
+    /** Bin min_doc_count in numeric binning request. */
     private double myMinDocCount = 1;
 
     /**
@@ -58,7 +58,6 @@ public class InfinitySimulator extends AbstractServer
             {
                 isNumericBin = false;
                 aggsField = request.getAggs().getBins().getTerms().getField();
-                writeResponse(exchange, HttpURLConnection.HTTP_OK, getResponseBody(aggsField));
             }
             else if (request.getAggs().getBins().getHistogram() != null)
             {
@@ -67,11 +66,12 @@ public class InfinitySimulator extends AbstractServer
                 myBinOffset = request.getAggs().getBins().getHistogram().getOffset();
                 myMinDocCount = request.getAggs().getBins().getHistogram().getMin_doc_count();
                 aggsField = request.getAggs().getBins().getHistogram().getField();
-                writeResponse(exchange, HttpURLConnection.HTTP_OK, getResponseBody(aggsField));
             }
         }
 
         exchange.getResponseHeaders().add("Content-Type", "application/json");
+        writeResponse(exchange, HttpURLConnection.HTTP_OK, getResponseBody(aggsField));
+
         System.out.println("Response: " + exchange.getResponseCode());
     }
 
@@ -87,7 +87,7 @@ public class InfinitySimulator extends AbstractServer
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         ObjectMapper mapper = JsonUtils.createMapper();
         mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-        if(isNumericBin)
+        if (isNumericBin)
         {
             mapper.writeValue(output, getNumericBinResponse(aggsField));
         }
@@ -150,9 +150,9 @@ public class InfinitySimulator extends AbstractServer
             int maxBins = 10;
             int numberOfBins = (int)(Math.random() * maxBins) + 1;
 
-            if(myMinDocCount == 0)
+            if (myMinDocCount == 0)
             {
-                //Make room for empty bin
+                // Make room for empty bin
                 numberOfBins++;
             }
 
@@ -170,7 +170,7 @@ public class InfinitySimulator extends AbstractServer
                 binCount -= 100;
                 i++;
 
-                if(addEmptyBin)
+                if (addEmptyBin)
                 {
                     buckets[i] = new Bucket<Double>(Double.valueOf(binIndex), 0);
                     binIndex += myBinWidth;
