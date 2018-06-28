@@ -268,7 +268,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
             String desc = metaVal(ImportExportHeader.DESCRIPTION, row, fMap);
             if (geom instanceof LineString)
             {
-                return trackMark(name, (LineString)geom);
+                return trackMark(name, (LineString)geom, fMap, row);
             }
             else if (geom instanceof Polygon)
             {
@@ -289,9 +289,11 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
      *
      * @param name name
      * @param geom geometry (a JTS LineString)
+     * @param fMap a Map of column headers to numerical indices
+     * @param row a row of input values
      * @return a Placemark
      */
-    private Placemark trackMark(String name, LineString geom)
+    private Placemark trackMark(String name, LineString geom, Map<String, Integer> fMap, String[] row)
     {
         Collection<LatLonAlt> points = JTSUtilities.convertToLatLonAlt(geom.getCoordinates(), ReferenceLevel.TERRAIN);
         List<TrackNode> nodes = new LinkedList<>();
@@ -299,7 +301,7 @@ public class MyPlacesCsvImporter extends AbstractMyPlacesImporter
         {
             nodes.add(new DefaultTrackNode(point));
         }
-        return TrackUtils.toKml(TrackUtils.createDefaultTrack(getToolbox(), null, name, nodes));
+        return TrackUtils.toKml(TrackUtils.createCsvTrack(getToolbox(), null, name, nodes, defMapPoint(row, fMap)));
     }
 
     /**
