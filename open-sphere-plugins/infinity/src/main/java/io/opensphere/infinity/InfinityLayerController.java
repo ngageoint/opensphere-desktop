@@ -68,13 +68,7 @@ public class InfinityLayerController extends AbstractViewTimeController
         bindEvent(OGCServiceStateEvent.class, this::handleOGCServiceStateEvent);
         bindEvent(DataTypeAddedEvent.class, this::handleDataTypeAdded);
         bindEvent(DataTypeRemovedEvent.class, this::handleDataTypeRemoved);
-        bindModelFX(mySettingsModel.enabledProperty(), (observable, oldValue, newValue) ->
-        {
-            if (newValue.booleanValue())
-            {
-                triggerChange();
-            }
-        });
+        bindModelFX(mySettingsModel.enabledProperty(), (obs, o, n) -> handleEnabledChange(n.booleanValue()));
     }
 
     @Override
@@ -98,12 +92,7 @@ public class InfinityLayerController extends AbstractViewTimeController
     @Override
     protected void handleChange(TimeSpan activeSpan, GeographicBoundingBox boundingBox)
     {
-        Collection<DataTypeInfo> infinityDataTypes;
-        synchronized (myInfinityDataTypes)
-        {
-            infinityDataTypes = New.list(myInfinityDataTypes);
-        }
-
+        Collection<DataTypeInfo> infinityDataTypes = getInfinityTypes();
         if (!infinityDataTypes.isEmpty())
         {
             InfinityQuerier querier = new InfinityQuerier(getToolbox().getDataRegistry());
@@ -124,37 +113,6 @@ public class InfinityLayerController extends AbstractViewTimeController
                     LOGGER.error(e);
                 }
             }
-        }
-    }
-
-    /**
-     * Sets the layer count.
-     *
-     * @param dataType the data type
-     * @param count the layer count
-     */
-    private void setLayerCount(DataTypeInfo dataType, long count)
-    {
-        Set<DataTypeInfo> tileTypes = dataType.getParent().findMembers(t -> t.getMapVisualizationInfo().isImageTileType(), false,
-                true);
-        boolean changed = false;
-        for (DataTypeInfo tileType : tileTypes)
-        {
-            DataTypeInfoAssistant assistant = tileType.getAssistant();
-            if (assistant != null)
-            {
-                List<String> labels = assistant.getLayerLabels();
-                labels.clear();
-                labels.add(" (" + formatNumber(count) + " in view)");
-                changed = true;
-            }
-        }
-
-        // Let layer tree know that the tree needs to be refreshed
-        if (changed)
-        {
-            DataTypePropertyChangeEvent event = new DataTypePropertyChangeEvent(null, "labels", null, this);
-            getToolbox().getEventManager().publishEvent(event);
         }
     }
 
@@ -201,6 +159,75 @@ public class InfinityLayerController extends AbstractViewTimeController
         if (isInfinityEnabled(dataType))
         {
             myInfinityDataTypes.remove(dataType);
+        }
+    }
+
+    /**
+     * Handles a change to the enabled state.
+     *
+     * @param enabled the enabled state
+     */
+    private void handleEnabledChange(boolean enabled)
+    {
+        if (enabled)
+        {
+            triggerChange();
+        }
+        else
+        {
+            for (DataTypeInfo dataType : getInfinityTypes())
+            {
+                setLayerCount(dataType, -1);
+            }
+        }
+    }
+
+    /**
+     * Gets the infinity data types.
+     *
+     * @return the infinity data types
+     */
+    private Collection<DataTypeInfo> getInfinityTypes()
+    {
+        Collection<DataTypeInfo> infinityDataTypes;
+        synchronized (myInfinityDataTypes)
+        {
+            infinityDataTypes = New.list(myInfinityDataTypes);
+        }
+        return infinityDataTypes;
+    }
+
+    /**
+     * Sets the layer count.
+     *
+     * @param dataType the data type
+     * @param count the layer count, or -1 to clear the count
+     */
+    private void setLayerCount(DataTypeInfo dataType, long count)
+    {
+        Set<DataTypeInfo> tileTypes = dataType.getParent().findMembers(t -> t.getMapVisualizationInfo().isImageTileType(), false,
+                true);
+        boolean changed = false;
+        for (DataTypeInfo tileType : tileTypes)
+        {
+            DataTypeInfoAssistant assistant = tileType.getAssistant();
+            if (assistant != null)
+            {
+                List<String> labels = assistant.getLayerLabels();
+                labels.clear();
+                if (count != -1)
+                {
+                    labels.add(" (" + formatNumber(count) + " in view)");
+                }
+                changed = true;
+            }
+        }
+
+        // Let layer tree know that the tree needs to be refreshed
+        if (changed)
+        {
+            DataTypePropertyChangeEvent event = new DataTypePropertyChangeEvent(null, "labels", null, this);
+            getToolbox().getEventManager().publishEvent(event);
         }
     }
 
