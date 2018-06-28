@@ -1,5 +1,8 @@
 package io.opensphere.wfs.gml311;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -17,7 +20,7 @@ public class GmlExceptionReport
     /**
      * The text describing the failure.
      */
-    private String myText;
+    private final List<String> myText = new ArrayList<>();
 
     /**
      * Gets the value of the {@link #myCode} field.
@@ -44,7 +47,7 @@ public class GmlExceptionReport
      *
      * @return the value stored in the {@link #myText} field.
      */
-    public String getText()
+    public List<String> getText()
     {
         return myText;
     }
@@ -54,9 +57,9 @@ public class GmlExceptionReport
      *
      * @param pText the value to store in the {@link #myText} field.
      */
-    public void setText(String pText)
+    public void addText(String pText)
     {
-        myText = pText;
+        myText.add(pText);
     }
 
     /**
@@ -71,6 +74,6 @@ public class GmlExceptionReport
         {
             return getCode() + ':' + getText();
         }
-        return getText();
+        return getText().toString();
     }
 }

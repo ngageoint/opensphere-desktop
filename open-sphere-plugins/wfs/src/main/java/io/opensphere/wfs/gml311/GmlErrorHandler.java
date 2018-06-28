@@ -114,19 +114,23 @@ public class GmlErrorHandler
      */
     public void handleClosingTag(String pTag, String pValue)
     {
+        if (LOG.isTraceEnabled())
+        {
+            LOG.trace("Ending element " + pTag);
+            LOG.trace(myCollectState);
+        }
         switch (myCollectState)
         {
             case COLLECT_EXCEPTION_TEXT:
                 if (StringUtils.equals(pTag, EXCEPTION_TEXT_TAG))
                 {
-                    myCurrentExceptionReport.setText(pValue);
+                    myCurrentExceptionReport.addText(pValue);
                     myCollectState = State.COLLECT_EXCEPTION;
                 }
                 else if (StringUtils.equals(pTag, SERVICE_EXCEPTION_TAG))
                 {
-                    myCurrentExceptionReport.setText(pValue);
+                    myCurrentExceptionReport.addText(pValue);
                     myExceptionReports.add(myCurrentExceptionReport);
-                    myCurrentExceptionReport = null;
                     myCollectState = State.SEEK_EXCEPTION;
                 }
                 break;
@@ -134,7 +138,6 @@ public class GmlErrorHandler
                 if (RECOGNIZED_EXCEPTION_TAGS.contains(pTag))
                 {
                     myExceptionReports.add(myCurrentExceptionReport);
-                    myCurrentExceptionReport = null;
                     myCollectState = State.SEEK_EXCEPTION;
                 }
                 break;
@@ -172,7 +175,11 @@ public class GmlErrorHandler
      */
     public void handleOpeningTag(String pTag)
     {
-        LOG.info(pTag);
+        if (LOG.isTraceEnabled())
+        {
+            LOG.trace("Starting element " + pTag);
+            LOG.trace(myCollectState);
+        }
         switch (myCollectState)
         {
             case WAITING:
