@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 import io.opensphere.core.cache.matcher.PropertyMatcher;
 import io.opensphere.core.util.Utilities;

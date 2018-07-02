@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.AbstractRenderableGeometry;
@@ -489,7 +489,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     }
 
     @Override
-    @Nonnull
+    @NonNull
     public GroupedMiniStyleEditorPanel getMiniUIPanel()
     {
         GroupedMiniStyleEditorPanel panel = super.getMiniUIPanel();
@@ -518,7 +518,7 @@ public abstract class AbstractLOBFeatureVisualizationStyle extends AbstractLocat
     }
 
     @Override
-    @Nonnull
+    @NonNull
     public GroupedStyleParameterEditorPanel getUIPanel()
     {
         GroupedStyleParameterEditorPanel panel = super.getUIPanel();

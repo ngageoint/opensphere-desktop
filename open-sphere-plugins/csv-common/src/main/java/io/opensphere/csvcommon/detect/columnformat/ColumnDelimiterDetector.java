@@ -202,6 +202,18 @@ public class ColumnDelimiterDetector implements LineDetector<DelimitedColumnForm
     }
 
     /**
+     * Determines if the given character is a potential text delimiter.
+     *
+     * @see #isTextDelimiter(char)
+     * @param ch the character
+     * @return Whether it is a potential text delimiter and is not null
+     */
+    private static boolean isTextDelimiter(Character ch)
+    {
+        return ch != null && isTextDelimiter(ch.charValue());
+    }
+
+    /**
      * Determines if the given character is a potential token delimiter.
      *
      * @param ch the character
@@ -401,7 +413,6 @@ public class ColumnDelimiterDetector implements LineDetector<DelimitedColumnForm
      *            text delimiters for each row.
      * @return The total number of token delimiters in this row.
      */
-    @SuppressWarnings("null")
     private int lookForTextDelimiterInRow(TIntObjectMap<Boolean> rowHasNewlineWithinTextDelim, int rowIndex, String line,
             char tokenDelimiter, TCharIntHashMap delimCounts, List<TCharIntHashMap> delimTokenCounts)
     {
@@ -430,7 +441,7 @@ public class ColumnDelimiterDetector implements LineDetector<DelimitedColumnForm
             }
             // End of a text delimiter
             else if (currentDelimiter.contains(currentChar) && (nextChar == null || nextChar.charValue() == tokenDelimiter
-                    && (!isTextDelimiter(previousChar.charValue()) || previousChar.charValue() == '.')))
+                    && (!isTextDelimiter(previousChar) || Character.valueOf('.').compareTo(previousChar) == 0)))
             {
                 if (delimiterWithinDelimiterCount == 0)
                 {

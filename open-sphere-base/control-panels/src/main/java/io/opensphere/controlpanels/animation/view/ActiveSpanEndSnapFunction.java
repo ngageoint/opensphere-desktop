@@ -3,7 +3,7 @@ package io.opensphere.controlpanels.animation.view;
 import java.math.RoundingMode;
 import java.util.function.Supplier;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 import io.opensphere.controlpanels.animation.model.AnimationModel;
 import io.opensphere.controlpanels.timeline.ResolutionBasedSnapFunction;

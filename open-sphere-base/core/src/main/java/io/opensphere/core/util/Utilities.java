@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 import org.apache.log4j.Logger;
 

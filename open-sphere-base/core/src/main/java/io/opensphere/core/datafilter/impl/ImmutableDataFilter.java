@@ -17,7 +17,7 @@ import io.opensphere.core.util.ref.WeakReference;
  * Creates an immutable deep copy of the provided DataFilter.
  */
 @io.opensphere.core.util.Immutable
-@javax.annotation.concurrent.Immutable
+@net.jcip.annotations.Immutable
 public class ImmutableDataFilter implements DataFilter
 {
     /** Serial version UID. */

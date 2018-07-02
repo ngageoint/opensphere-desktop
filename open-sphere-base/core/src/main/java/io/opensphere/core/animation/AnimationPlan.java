@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 import io.opensphere.core.animation.AnimationState.Direction;
 import io.opensphere.core.model.time.TimeSpan;

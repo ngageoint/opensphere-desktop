@@ -1,6 +1,6 @@
 package io.opensphere.core.model;
 
-import javax.annotation.concurrent.Immutable;
+import net.jcip.annotations.Immutable;
 
 /**
  * Integer Range.

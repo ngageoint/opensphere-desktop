@@ -15,7 +15,7 @@ import io.opensphere.core.util.collections.petrifyable.PetrifyableTByteArrayList
  * A storage space optimized list of colors. This collection is unmodifiable.
  */
 @io.opensphere.core.util.Immutable
-@javax.annotation.concurrent.Immutable
+@net.jcip.annotations.Immutable
 public final class ColorArrayList extends AbstractList<Color> implements Serializable, SizeProvider
 {
     /** Object pool for colors. */

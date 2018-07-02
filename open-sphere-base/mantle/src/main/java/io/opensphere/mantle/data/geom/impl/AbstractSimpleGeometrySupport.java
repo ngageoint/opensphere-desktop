@@ -3,7 +3,7 @@ package io.opensphere.mantle.data.geom.impl;
 import java.awt.Color;
 import java.util.List;
 
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.lang.BitArrays;
@@ -88,7 +88,7 @@ public abstract class AbstractSimpleGeometrySupport implements MapGeometrySuppor
     }
 
     @Override
-    @Nonnull
+    @NonNull
     public Color getColor()
     {
         return new Color(myColor, true);

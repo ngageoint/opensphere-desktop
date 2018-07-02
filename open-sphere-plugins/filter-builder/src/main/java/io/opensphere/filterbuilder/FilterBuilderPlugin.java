@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;

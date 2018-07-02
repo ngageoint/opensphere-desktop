@@ -63,12 +63,6 @@
 			value="Use io.opensphere.core.util.ref instead of java.lang.ref." />
 	</module>
 	<module name="RegexpSingleline">
-		<property name="format" value="net.jcip.annotations" />
-		<property name="message"
-			value="Use javax.annotation.concurrent instead of net.jcip.annotations." />
-		<property name="severity" value="warning" />
-	</module>
-	<module name="RegexpSingleline">
 		<property name="format" value="com.bitsys.common.annotations" />
 		<property name="message"
 			value="Use javax.annotation.concurrent instead of com.bitsys.common.annotations." />

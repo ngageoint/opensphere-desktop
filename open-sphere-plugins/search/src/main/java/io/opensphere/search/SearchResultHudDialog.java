@@ -2,6 +2,9 @@ package io.opensphere.search;
 
 import java.awt.BorderLayout;
 
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
@@ -11,8 +14,6 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.swing.AbstractHUDPanel;
 import io.opensphere.search.model.SearchModel;
 import io.opensphere.search.view.SearchDialogPanel;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
 
 /** A HUD-dialog in which search results are rendered. */
 public class SearchResultHudDialog extends AbstractInternalFrame
@@ -75,11 +76,12 @@ public class SearchResultHudDialog extends AbstractInternalFrame
         setSize(width, height);
         setLocation(xposition, yposition);
 
-
         myResultPanel = new SearchDialogPanel(toolbox, searchModel);
         myResultPanelContainer = new JFXPanel();
-        Scene scene = new Scene(myResultPanel, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        myResultPanelContainer.setScene(FXUtilities.addDesktopStyle(scene));
+
+        Scene scene = FXUtilities.addDesktopStyle(new Scene(myResultPanel, DEFAULT_WIDTH, DEFAULT_HEIGHT));
+        FXUtilities.runOnFXThreadAndWait(() -> myResultPanelContainer.setScene(scene));
+
         setDefaultCloseOperation(HIDE_ON_CLOSE);
 
         AbstractHUDPanel mainPanel = new AbstractHUDPanel(myToolbox.getPreferencesRegistry());

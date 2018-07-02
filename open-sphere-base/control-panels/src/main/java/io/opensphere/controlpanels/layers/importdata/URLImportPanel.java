@@ -146,10 +146,10 @@ public class URLImportPanel extends JPanel
     }
 
     /**
-     * Validate url.
+     * Validate url by creating a new {@link URL} object.
      *
      * @param url the url
-     * @return true, if successful
+     * @return true, if it isn't blank and doesn't throw
      */
     @SuppressWarnings("unused")
     public boolean validateURL(String url)

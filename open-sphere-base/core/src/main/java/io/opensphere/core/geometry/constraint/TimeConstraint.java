@@ -2,8 +2,8 @@ package io.opensphere.core.geometry.constraint;
 
 import java.util.Collection;
 
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import net.jcip.annotations.Immutable;
 
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.SharedObjectPool;

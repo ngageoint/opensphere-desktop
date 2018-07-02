@@ -6,7 +6,7 @@ import java.security.PrivateKey;
 import java.security.cert.CertificateEncodingException;
 import java.util.Arrays;
 
-import javax.annotation.concurrent.Immutable;
+import net.jcip.annotations.Immutable;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;

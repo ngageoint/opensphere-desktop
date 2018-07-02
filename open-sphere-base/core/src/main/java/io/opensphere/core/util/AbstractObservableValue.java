@@ -3,8 +3,8 @@ package io.opensphere.core.util;
 import java.util.Collection;
 import java.util.Objects;
 
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import net.jcip.annotations.GuardedBy;
 
 import io.opensphere.core.util.ref.Reference;
 

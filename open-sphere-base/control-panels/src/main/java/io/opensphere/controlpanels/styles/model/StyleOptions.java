@@ -3,10 +3,8 @@ package io.opensphere.controlpanels.styles.model;
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import java.util.Observable;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -14,7 +12,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import avro.shaded.com.google.common.base.Objects;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * The bulls eye's style options model.
@@ -109,7 +108,7 @@ public class StyleOptions extends Observable implements Serializable
             return false;
         }
         StyleOptions other = (StyleOptions)obj;
-        return Objects.equal(myColor, other.myColor) && myIconId == other.myIconId && mySize == other.mySize
+        return Objects.equals(myColor, other.myColor) && myIconId == other.myIconId && mySize == other.mySize
                 && myStyle == other.myStyle;
     }
 
@@ -172,7 +171,7 @@ public class StyleOptions extends Observable implements Serializable
     @Override
     public int hashCode()
     {
-        return Objects.hashCode(myColor, Integer.valueOf(myIconId), Integer.valueOf(mySize), myStyle);
+        return Objects.hash(myColor, Integer.valueOf(myIconId), Integer.valueOf(mySize), myStyle);
     }
 
     /**

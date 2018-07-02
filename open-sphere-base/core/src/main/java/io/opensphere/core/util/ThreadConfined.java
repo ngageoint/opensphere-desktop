@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 /**
  * Marker annotation that indicates that access to a field is confined to a
  * single thread. This is an alternative to the
- * {@link javax.annotation.concurrent.GuardedBy} annotation, since a field that
+ * {@link net.jcip.annotations.GuardedBy} annotation, since a field that
  * is thread confined does not need synchronization.
  */
 @Documented

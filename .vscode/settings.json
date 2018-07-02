@@ -1,7 +1,7 @@
 {
     "editor.detectIndentation": false,
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
+    //"editor.formatOnPaste": true,
+    //"editor.formatOnSave": true,
     "editor.insertSpaces": true,
     "editor.tabSize": 4,
     "editor.wordWrap": "wordWrapColumn",
@@ -16,5 +16,11 @@
         "com",
         "org"
     ],
+    "java.debug.logLevel": "verbose",
     "java.saveActions.organizeImports": true,
+    "maven.projects.excludedFolders": [
+        "**/.*",                // exclude hidden folders
+        "**/node_modules",      // exclude node modules to speed up
+        "**/target"             // exclude duplicated pom file in target folder
+    ]
 }

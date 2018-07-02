@@ -4,8 +4,8 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import net.jcip.annotations.ThreadSafe;
 
 import org.apache.log4j.Logger;
 

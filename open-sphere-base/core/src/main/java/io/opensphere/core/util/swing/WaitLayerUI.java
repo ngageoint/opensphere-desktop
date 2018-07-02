@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.function.Function;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.swing.JComponent;
 import javax.swing.JLayer;
 import javax.swing.Timer;

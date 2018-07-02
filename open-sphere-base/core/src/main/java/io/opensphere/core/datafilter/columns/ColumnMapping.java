@@ -3,7 +3,7 @@ package io.opensphere.core.datafilter.columns;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.annotation.concurrent.Immutable;
+import net.jcip.annotations.Immutable;
 
 import io.opensphere.core.util.lang.HashCodeHelper;
 import io.opensphere.core.util.lang.ToStringHelper;

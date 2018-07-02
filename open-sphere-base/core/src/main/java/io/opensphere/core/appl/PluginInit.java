@@ -19,7 +19,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.concurrent.GuardedBy;
+import net.jcip.annotations.GuardedBy;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;

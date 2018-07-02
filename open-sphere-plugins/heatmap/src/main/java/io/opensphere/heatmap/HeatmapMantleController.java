@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.annotation.concurrent.GuardedBy;
+import net.jcip.annotations.GuardedBy;
 
 import io.opensphere.analysis.util.MutableInteger;
 import io.opensphere.core.Toolbox;

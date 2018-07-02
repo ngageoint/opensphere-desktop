@@ -15,7 +15,7 @@ import io.opensphere.core.util.Utilities;
 /**
  * A map of {@link RenderMode}s to {@link Image}s.
  */
-@javax.annotation.concurrent.Immutable
+@net.jcip.annotations.Immutable
 public class ImageGroup implements SizeProvider
 {
     /** A map of render mode to the associated image for that mode. */

@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
-import javax.annotation.concurrent.Immutable;
+import net.jcip.annotations.Immutable;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.ToStringHelper;

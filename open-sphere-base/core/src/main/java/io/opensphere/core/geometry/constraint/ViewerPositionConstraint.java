@@ -1,6 +1,6 @@
 package io.opensphere.core.geometry.constraint;
 
-import javax.annotation.concurrent.Immutable;
+import net.jcip.annotations.Immutable;
 
 import io.opensphere.core.math.Vector3d;
 import io.opensphere.core.model.Altitude;

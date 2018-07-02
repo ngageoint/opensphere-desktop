@@ -33,7 +33,7 @@ import io.opensphere.core.util.lang.ThreadControl;
  * {@link ImageProvider}, caching the image, and tracking dirty regions in the
  * image.
  */
-@javax.annotation.concurrent.Immutable
+@net.jcip.annotations.Immutable
 @SuppressWarnings("PMD.GodClass")
 public class ImageManager
 {

@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.CollectionUtilities;

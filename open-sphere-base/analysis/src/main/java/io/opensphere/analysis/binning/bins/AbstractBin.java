@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import net.jcip.annotations.NotThreadSafe;
 
 import io.opensphere.core.util.collections.New;
 

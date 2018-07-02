@@ -19,9 +19,7 @@ import net.opengis.wfs._110.WFSCapabilitiesType;
  */
 public class WFSValidator implements OGCServiceValidator
 {
-    /**
-     * The registry of server providers.
-     */
+    /** The registry of server providers. */
     private final ServerProviderRegistry myServerRegistry;
 
     /** The envoy helper. */

@@ -4,9 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import io.opensphere.core.common.geojson.GeoJSON;
-import io.opensphere.core.common.geojson.GeoJSON.Type;
-
 /** A JSON object used in MapZen search results. */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Feature
@@ -16,7 +13,7 @@ public class Feature
     private String myTypeString;
 
     /** An enum-mapping of the {@link #getTypeString()} field. */
-    private GeoJSON.Type myType;
+    private GeoJSONType myType;
 
     /** The properties describing the feature. */
     @JsonProperty("properties")
@@ -48,7 +45,7 @@ public class Feature
     public void setTypeString(String pTypeString)
     {
         myTypeString = pTypeString;
-        for (Type type : GeoJSON.Type.values())
+        for (GeoJSONType type : GeoJSONType.values())
         {
             if (StringUtils.equals(pTypeString, type.getType()))
             {
@@ -63,7 +60,7 @@ public class Feature
      *
      * @return the type
      */
-    public GeoJSON.Type getType()
+    public GeoJSONType getType()
     {
         return myType;
     }

@@ -17,7 +17,7 @@ import java.util.ServiceLoader;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -785,7 +785,7 @@ public class ImageIOImage extends Image implements DDSEncodableImage
         private final int myHeight;
 
         /** The image type. */
-        @Nonnull
+        @NonNull
         private final ImageTypeSpecifier myImageType;
 
         /** The image height. */

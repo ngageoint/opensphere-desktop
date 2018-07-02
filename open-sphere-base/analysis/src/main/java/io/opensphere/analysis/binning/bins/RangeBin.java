@@ -3,7 +3,7 @@ package io.opensphere.analysis.binning.bins;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import net.jcip.annotations.NotThreadSafe;
 
 import org.apache.log4j.Logger;
 

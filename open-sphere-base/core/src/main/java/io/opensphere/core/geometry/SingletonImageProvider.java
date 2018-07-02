@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 
-import javax.annotation.concurrent.GuardedBy;
+import net.jcip.annotations.GuardedBy;
 import javax.imageio.ImageIO;
 
 import io.opensphere.core.image.Image;

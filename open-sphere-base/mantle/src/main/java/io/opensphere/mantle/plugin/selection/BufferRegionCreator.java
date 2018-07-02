@@ -5,7 +5,7 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.util.Collections;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import net.jcip.annotations.NotThreadSafe;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.PopupMenuEvent;

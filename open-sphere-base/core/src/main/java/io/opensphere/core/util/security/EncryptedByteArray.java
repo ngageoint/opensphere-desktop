@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-import javax.annotation.concurrent.Immutable;
+import net.jcip.annotations.Immutable;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;

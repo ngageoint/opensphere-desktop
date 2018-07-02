@@ -147,7 +147,7 @@ public class DataElementExporter implements ExportCompleteListener
         Platform.runLater(() ->
         {
             String content = StringUtilities.concat("<html><body bgcolor='#535366' style='color: white;'>", "Successfully saved ",
-                    Integer.valueOf(exportedCount), " rows to <a style='color: white;' href='", file.toURI(), "'>", file,
+                    Integer.toString(exportedCount), " rows to <a style='color: white;' href='", file.toURI(), "'>", file,
                     "</a>.<p><a style='color: white;' href='", file.getParentFile().toURI(), "'>Parent directory</a>",
                     "</body></html>");
 

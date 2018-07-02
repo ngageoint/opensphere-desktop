@@ -3,7 +3,7 @@ package io.opensphere.core.datafilter;
 import java.util.Collection;
 import java.util.Set;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 import com.vividsolutions.jts.geom.Geometry;
 

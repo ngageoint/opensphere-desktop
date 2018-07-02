@@ -3,7 +3,7 @@ package io.opensphere.core.dialog.alertviewer;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
-import javax.annotation.concurrent.ThreadSafe;
+import net.jcip.annotations.ThreadSafe;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
