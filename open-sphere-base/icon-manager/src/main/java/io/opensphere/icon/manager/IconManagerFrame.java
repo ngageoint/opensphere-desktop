@@ -3,13 +3,17 @@ package io.opensphere.icon.manager;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import de.micromata.opengis.kml.v_2_2_0.Data;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
+import javafx.stage.StageStyle;
 import io.opensphere.icon.manager.IconManagerBuilder;
 
 /**
@@ -35,6 +39,10 @@ public class IconManagerFrame extends IconManagerBuilder
 
     private Scene myScene;
 
+    private double initialY;
+
+    private double initialX;
+
     public static void main(String[] args)
     {
         launch(args);
@@ -54,9 +62,9 @@ public class IconManagerFrame extends IconManagerBuilder
         Image myWindowIcon = new Image(new FileInputStream("src/main/resources/Images/caci.jpg"));
         myIconManagerInterFace.getIcons().add(myWindowIcon);
         myIconManagerInterFace.setTitle("Icon Manager");
-
+     //   myIconManagerInterFace.initStyle(StageStyle.UNDECORATED);
         myIconManagerInterFace.show();
-
+        ResizeHelper.addResizeListener(myIconManagerInterFace);
     }
 
     public TreeItem<String> createBranch(String branchName, TreeItem<String> rootName)
