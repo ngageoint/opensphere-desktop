@@ -124,6 +124,10 @@ public class GmlErrorHandler
             case COLLECT_EXCEPTION_TEXT:
                 if (StringUtils.equals(pTag, EXCEPTION_TEXT_TAG))
                 {
+                    if (myCurrentExceptionReport == null)
+                    {
+                        myCurrentExceptionReport = new GmlExceptionReport();
+                    }
                     myCurrentExceptionReport.addText(pValue);
                     myCollectState = State.COLLECT_EXCEPTION;
                 }
