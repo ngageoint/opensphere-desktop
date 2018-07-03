@@ -1,19 +1,16 @@
 package io.opensphere.icon.manager;
 
+import java.awt.Component;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import de.micromata.opengis.kml.v_2_2_0.Data;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import io.opensphere.core.Toolbox;
 import io.opensphere.icon.manager.IconManagerBuilder;
 
 /**
@@ -23,32 +20,33 @@ import io.opensphere.icon.manager.IconManagerBuilder;
 public class IconManagerFrame extends IconManagerBuilder
 {
 
-    /* private TreeItem<String> myTreeRoot;
-     * 
-     * private TreeItem<String> myFavorites;
-     * 
-     * private TreeItem<String> myUserAdded;
-     * 
-     * private TreeItem<String> myGoogleEarth;
-     * 
-     * private TreeItem<String> myMilStd;
-     * 
-     * private TreeView<String> myTreeListTemp;
-     * 
-     * TreeView<String> myTree; */
-
     private Scene myScene;
-
-    private double initialY;
-
-    private double initialX;
+    private Stage myIconManagerInterFace;
 
     public static void main(String[] args)
     {
         launch(args);
 
     }
+    public IconManagerFrame(Component owner, boolean modal, String message, Toolbox tb) throws FileNotFoundException
+    {
+        super();
+        AnchorPane myMainAnchorPane = createIconManagerPane();
 
+        myScene = new Scene(myMainAnchorPane, 720, 400);
+        myScene.getStylesheets().add(getClass().getResource("iconmanager.css").toExternalForm());
+        myIconManagerInterFace.setScene(myScene);
+        myIconManagerInterFace.setMinHeight(400);
+        myIconManagerInterFace.setMinWidth(720);
+        Image myWindowIcon = new Image(new FileInputStream("src/main/resources/Images/caci.jpg"));
+        myIconManagerInterFace.getIcons().add(myWindowIcon);
+        myIconManagerInterFace.setTitle("Icon Manager");
+        // myIconManagerInterFace.initStyle(StageStyle.UNDECORATED);
+        myIconManagerInterFace.show();
+        ResizeHelper.addResizeListener(myIconManagerInterFace);
+    }
+    
+    /*
     public void start(Stage myIconManagerInterFace) throws FileNotFoundException
     {
 
@@ -62,11 +60,11 @@ public class IconManagerFrame extends IconManagerBuilder
         Image myWindowIcon = new Image(new FileInputStream("src/main/resources/Images/caci.jpg"));
         myIconManagerInterFace.getIcons().add(myWindowIcon);
         myIconManagerInterFace.setTitle("Icon Manager");
-     //   myIconManagerInterFace.initStyle(StageStyle.UNDECORATED);
+        // myIconManagerInterFace.initStyle(StageStyle.UNDECORATED);
         myIconManagerInterFace.show();
         ResizeHelper.addResizeListener(myIconManagerInterFace);
     }
-
+*/
     public TreeItem<String> createBranch(String branchName, TreeItem<String> rootName)
     {
         TreeItem<String> localBranch = new TreeItem<>(branchName);
@@ -130,5 +128,11 @@ public class IconManagerFrame extends IconManagerBuilder
         Stage myCurrentStage = (Stage)myCloseButton.getScene().getWindow();
         myCurrentStage.close();
 
+    }
+    @Override
+    public void start(Stage arg0) throws Exception
+    {
+        // TODO Auto-generated method stub
+        
     }
 }

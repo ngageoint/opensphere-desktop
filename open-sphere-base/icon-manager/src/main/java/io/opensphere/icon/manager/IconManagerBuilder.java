@@ -1,8 +1,11 @@
 package io.opensphere.icon.manager;
 
+import java.awt.Frame;
+import java.awt.Window;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import io.opensphere.core.Toolbox;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -27,7 +30,20 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 
-/**
+/**0
+
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
  *This class creates the Icon Manager GUI generically 
  *so functionality can be edited in the main screen.
  */
@@ -119,6 +135,12 @@ public abstract class IconManagerBuilder extends Application
     private GridPane gridPane;
     
     private MenuBar titlebar =  new MenuBar();
+
+    public AnchorPane IconManagerBuilder() throws FileNotFoundException
+    {
+        AnchorPane Test = createIconManagerPane();
+        return Test;
+    }
 
     public static void main(String[] args)
     {
