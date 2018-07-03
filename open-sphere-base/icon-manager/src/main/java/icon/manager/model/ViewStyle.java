@@ -7,9 +7,7 @@ public enum ViewStyle
     /** List Style. */
     LIST,
 
-    /** Grid Style.  */
+    /** Grid Style. */
     GRID,
 
 }
-
-
