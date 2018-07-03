@@ -26,11 +26,11 @@ public class IconChooserDisplayerImpl implements IconChooserDisplayer
     /**
      * Constructs a new displayer.
      *
-     * @param parent The parent UI.
+     * @param supplier The parent UI.
      */
-    public IconChooserDisplayerImpl(Supplier<? extends JFrame> parent)
+    public IconChooserDisplayerImpl(Supplier<? extends JFrame> supplier)
     {
-        myParent = parent;
+        myParent = supplier;
     }
 
     @Override
