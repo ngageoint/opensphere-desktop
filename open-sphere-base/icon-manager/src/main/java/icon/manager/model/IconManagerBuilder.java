@@ -1,4 +1,4 @@
-package io.opensphere.icon.manager;
+package icon.manager.model;
 
 import java.awt.Frame;
 import java.awt.Window;
@@ -30,19 +30,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 
-/**0
-
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
+/**
  *
  *This class creates the Icon Manager GUI generically 
  *so functionality can be edited in the main screen.
@@ -448,22 +436,22 @@ public abstract class IconManagerBuilder extends Application
         return myMainAnchorPane;
     }
 
-    public abstract void shrink(javafx.scene.input.MouseEvent mouseEvent);
+    protected abstract void shrink(javafx.scene.input.MouseEvent mouseEvent);
 
-    public abstract void enlarge(javafx.scene.input.MouseEvent mouseEvent);
+    protected abstract void enlarge(javafx.scene.input.MouseEvent mouseEvent);
 
-    public abstract void LISTV(javafx.scene.input.MouseEvent mouseEvent);
+    protected abstract void LISTV(javafx.scene.input.MouseEvent mouseEvent);
 
-    public abstract void GRIDV(javafx.scene.input.MouseEvent mouseEvent);
+    protected abstract void GRIDV(javafx.scene.input.MouseEvent mouseEvent);
 
-    public abstract void ADD(javafx.scene.input.MouseEvent mouseEvent);
+    protected abstract void ADD(javafx.scene.input.MouseEvent mouseEvent);
 
-    public abstract void handleAddIconButtonAction(javafx.scene.input.MouseEvent mouseEvent);
+    protected abstract void handleAddIconButtonAction(javafx.scene.input.MouseEvent mouseEvent);
 
-    public abstract void CUSTOMIZE(javafx.scene.input.MouseEvent mouseEvent);
+    protected abstract void CUSTOMIZE(javafx.scene.input.MouseEvent mouseEvent);
 
-    public abstract void GENERATE(javafx.scene.input.MouseEvent mouseEvent);
+    protected abstract void GENERATE(javafx.scene.input.MouseEvent mouseEvent);
 
-    public abstract void Close(javafx.scene.input.MouseEvent mouseEvent);
+    protected abstract void Close(javafx.scene.input.MouseEvent mouseEvent);
     
 }

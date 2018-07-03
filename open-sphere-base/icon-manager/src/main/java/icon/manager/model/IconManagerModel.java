@@ -19,40 +19,40 @@ import javafx.scene.text.Text;
 
 public abstract class IconManagerModel extends AnchorPane {
 
-    private  AnchorPane myTopMenuBar;
-    private ButtonBar mySizeMenu;
-    private  Text mySizeLabel;
-    private  Button myShrinkButton;
-    private  Button myEnlargeButton;
-    private  HBox myViewToggle;
-    private  Text myViewLabel;
-    private  RadioButton myListView;
-    private  ToggleGroup ViewStyle;
-    private  RadioButton myGridView;
-    private  ButtonBar mySearchBar;
-    private  Text mySearchLabel;
-    private  TextField textField;
-    private  SplitPane splitPane;
-    private  AnchorPane myTreeView;
-    private  TreeView myTreeList;
-    private  Button myAddIconButton;
-    private  Button myCustIconButton;
-    private  Button myGenIconButton;
-    private  GridPane gridPane;
-    private  ColumnConstraints columnConstraints;
-    private  ColumnConstraints columnConstraints0;
-    private  RowConstraints rowConstraints;
-    private  RowConstraints rowConstraints0;
-    private  RowConstraints rowConstraints1;
-    private  ScrollBar scrollBar;
-    private  AnchorPane myBottomMenuBar;
-    private  AnchorPane anchorPane;
-    private  AnchorPane anchorPane0;
-    private  Button myCloseButton;
-    private  TextField myDataBar;
-    private  Text myNotifyText;
+    private final AnchorPane myTopMenuBar;
+    private final ButtonBar mySizeMenu;
+    private final Text mySizeLabel;
+    private final Button myShrinkButton;
+    private final Button myEnlargeButton;
+    private final HBox myViewToggle;
+    private final Text myViewLabel;
+    private final RadioButton myListView;
+    private final ToggleGroup ViewStyle;
+    private final RadioButton myGridView;
+    private final ButtonBar mySearchBar;
+    private final Text mySearchLabel;
+    private final TextField textField;
+    private final SplitPane splitPane;
+    private final AnchorPane myTreeView;
+    private final TreeView myTreeList;
+    private final Button myAddIconButton;
+    private final Button myCustIconButton;
+    private final Button myGenIconButton;
+    private final GridPane gridPane;
+    private final ColumnConstraints columnConstraints;
+    private final ColumnConstraints columnConstraints0;
+    private final RowConstraints rowConstraints;
+    private final RowConstraints rowConstraints0;
+    private final RowConstraints rowConstraints1;
+    private final ScrollBar scrollBar;
+    private final AnchorPane myBottomMenuBar;
+    private final AnchorPane anchorPane;
+    private final AnchorPane anchorPane0;
+    private final Button myCloseButton;
+    private final TextField myDataBar;
+    private final Text myNotifyText;
 
-    public AnchorPane createIconManagerModel() {
+    public IconManagerModel() {
 
         myTopMenuBar = new AnchorPane();
         mySizeMenu = new ButtonBar();
@@ -326,7 +326,7 @@ public abstract class IconManagerModel extends AnchorPane {
         anchorPane.getChildren().add(myNotifyText);
         myBottomMenuBar.getChildren().add(anchorPane);
         getChildren().add(myBottomMenuBar);
-        return anchorPane;
+
     }
 
     protected abstract void shrink(javafx.scene.input.MouseEvent mouseEvent);

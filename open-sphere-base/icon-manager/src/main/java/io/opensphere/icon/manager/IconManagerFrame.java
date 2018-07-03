@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import icon.manager.model.IconManagerBuilder;
 import javafx.scene.Scene;
 import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
@@ -11,7 +12,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import io.opensphere.core.Toolbox;
-import io.opensphere.icon.manager.IconManagerBuilder;
 
 /**
  * This is the main control for the Icon Manager GUI. All button actions and
