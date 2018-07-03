@@ -250,21 +250,31 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
             }
             else if (TimeSpan.class.isAssignableFrom(parameters.getBinFieldType()))
             {
-                if (parameters.getDayOfWeek() != null)
-                {
-                    request.setAggs(new Aggs(field, InfinityUtilities.DEFAULT_SIZE, parameters.getDayOfWeek().booleanValue()));
-                }
-                else if (parameters.getDateFormat() != null && parameters.getDateInterval() != null)
-                {
-                    if(parameters.getDateInterval() == InfinityUtilities.BIN_UNIQUE_INTERVAL)
+            	//VORTEX-5875 has been created to address hardcoding of "time" check
+            	if(field.equalsIgnoreCase("time")) {
+            		field = field + "field";
+            		if (parameters.getDayOfWeek() != null)
                     {
-                        request.setAggs(new Aggs(field, InfinityUtilities.DEFAULT_SIZE, InfinityUtilities.MISSING_VALUE));
+                        request.setAggs(new Aggs(field, InfinityUtilities.DEFAULT_SIZE, parameters.getDayOfWeek().booleanValue()));
                     }
-                    else
+                    else if (parameters.getDateFormat() != null && parameters.getDateInterval() != null)
                     {
-                        request.setAggs(new Aggs(field, parameters.getDateFormat(), parameters.getDateInterval()));
+                        if(parameters.getDateInterval() == InfinityUtilities.BIN_UNIQUE_INTERVAL)
+                        {
+                            request.setAggs(new Aggs(field, InfinityUtilities.DEFAULT_SIZE, InfinityUtilities.MISSING_VALUE));
+                        }
+                        else
+                        {
+                            request.setAggs(new Aggs(field, parameters.getDateFormat(), parameters.getDateInterval()));
+                        }
                     }
-                }
+            	}
+            	else
+            	{
+            		//Treat other dates as strings.
+            		request.setAggs(new Aggs(field, InfinityUtilities.DEFAULT_SIZE, InfinityUtilities.MISSING_VALUE));
+            	}
+                
             }
             else
             {
@@ -304,7 +314,7 @@ public class InfinityEnvoy extends SimpleEnvoy<QueryResults>
         if (response.getAggregations() != null)
         {
             List<ValueWithCount<Object>> bins = Arrays.stream(response.getAggregations().getBins().getBuckets())
-                    .map(b -> new ValueWithCount<>(b.getKeyAsString() != null ? b.getKeyAsString() : b.getKey(),
+                    .map(b -> new ValueWithCount<>(b.getKey_As_String() != null ? b.getKey_As_String() : b.getKey(),
                             (int)b.getDoc_count()))
                     .collect(Collectors.toList());
             results.setBins(bins);

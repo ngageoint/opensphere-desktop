@@ -1,5 +1,7 @@
 package io.opensphere.infinity.json;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 /** Elasticsearch bucket JSON bean.
  *
  * @param <T> Type contained in buckets
@@ -13,6 +15,7 @@ public class Bucket<T>
     private long myDocCount;
 
     /** The key as a string.  Used for Dates. */
+    @JsonProperty("key_as_string")
     private String myKeyAsString;
 
     /**
@@ -94,7 +97,7 @@ public class Bucket<T>
      *
      * @return the keyAsString
      */
-    public String getKeyAsString()
+    public String getKey_As_String()
     {
         return myKeyAsString;
     }
@@ -104,7 +107,7 @@ public class Bucket<T>
      *
      * @param keyAsString the keyAsString to set
      */
-    public void setKeyAsString(String keyAsString)
+    public void setKey_As_String(String keyAsString)
     {
         myKeyAsString = keyAsString;
     }
