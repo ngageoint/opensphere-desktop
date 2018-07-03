@@ -1,18 +1,13 @@
 package icon.manager.model;
 
-import java.awt.Frame;
-import java.awt.Window;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import io.opensphere.core.Toolbox;
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
@@ -32,17 +27,17 @@ import javafx.scene.text.Text;
 
 /**
  *
- *This class creates the Icon Manager GUI generically 
+ *This class creates the Icon Manager GUI generically
  *so functionality can be edited in the main screen.
  */
 public abstract class IconManagerBuilder extends Application
 {
 
     /** The AnchorPane myTopMenuBar; Top window of GUI */
-    private AnchorPane myTopMenuBar = new AnchorPane();
+    private final AnchorPane myTopMenuBar = new AnchorPane();
 
     /** The ButtonBar mySizeMenu; Top Right Buttons of GUI */
-    private ButtonBar mySizeMenu = new ButtonBar();;
+    private ButtonBar mySizeMenu = new ButtonBar();
 
     /** The Text mySizeLabel; The centered text label */
     private Text mySizeLabel = new Text();
@@ -121,8 +116,8 @@ public abstract class IconManagerBuilder extends Application
     private SplitPane splitPane;
 
     private GridPane gridPane;
-    
-    private MenuBar titlebar =  new MenuBar();
+
+    private final MenuBar titlebar =  new MenuBar();
 
     public AnchorPane IconManagerBuilder() throws FileNotFoundException
     {
@@ -173,7 +168,7 @@ public abstract class IconManagerBuilder extends Application
 
         myMainAnchorPane.setPrefSize(1024., 488.);
         myMainAnchorPane.setMinSize(1024., 488.);
-        
+
         titlebar.setLayoutX(0.0);
         titlebar.setLayoutY(0.0);
         titlebar.setPrefHeight(20.0);
@@ -243,7 +238,7 @@ public abstract class IconManagerBuilder extends Application
         myGridView.setToggleGroup(ViewStyle);
         myGridView.setFont(new Font(14.0));
         myGridView.getStyleClass().remove("radio-button");
-        
+
         Image myGridIcon;
         Image myListIcon;
 
@@ -305,8 +300,8 @@ public abstract class IconManagerBuilder extends Application
         myAddIconButton.setPrefWidth(249.0);
         myAddIconButton.setText("Add Icon from File");
         myAddIconButton.getStyleClass().add("customcolor");
-      
-        
+
+
         AnchorPane.setBottomAnchor(myCustIconButton, 26.0);
         AnchorPane.setLeftAnchor(myCustIconButton, -2.0);
         AnchorPane.setRightAnchor(myCustIconButton, 0.0);
@@ -318,7 +313,7 @@ public abstract class IconManagerBuilder extends Application
         myCustIconButton.setPrefWidth(249.0);
         myCustIconButton.setText("Customize Icon");
         myCustIconButton.getStyleClass().add("customcolor");
-            
+
         AnchorPane.setBottomAnchor(myGenIconButton, 0.0);
         AnchorPane.setLeftAnchor(myGenIconButton, -2.0);
         AnchorPane.setRightAnchor(myGenIconButton, 0.0);
@@ -331,7 +326,7 @@ public abstract class IconManagerBuilder extends Application
         myGenIconButton.setPrefWidth(249.0);
         myGenIconButton.setText("Generate New Icon");
         myGenIconButton.getStyleClass().add("customcolor");
-      
+
 
         gridPane.setPrefHeight(395.0);
         gridPane.setPrefWidth(0.0);
@@ -453,5 +448,5 @@ public abstract class IconManagerBuilder extends Application
     protected abstract void GENERATE(javafx.scene.input.MouseEvent mouseEvent);
 
     protected abstract void Close(javafx.scene.input.MouseEvent mouseEvent);
-    
+
 }

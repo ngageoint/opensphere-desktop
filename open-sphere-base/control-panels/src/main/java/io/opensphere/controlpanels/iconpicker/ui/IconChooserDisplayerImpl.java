@@ -3,7 +3,6 @@ package io.opensphere.controlpanels.iconpicker.ui;
 import java.util.function.Supplier;
 
 import javafx.beans.property.ObjectProperty;
-import javafx.stage.Stage;
 
 import javax.swing.JFrame;
 
@@ -22,16 +21,16 @@ public class IconChooserDisplayerImpl implements IconChooserDisplayer
     /**
      * The parent UI.
      */
-    private final Supplier<? extends Stage> myParent;
+    private final Supplier<? extends JFrame> myParent;
 
     /**
      * Constructs a new displayer.
      *
-     * @param parent The parent UI.
+     * @param supplier The parent UI.
      */
-    public IconChooserDisplayerImpl(Supplier<? extends Stage> parent)
+    public IconChooserDisplayerImpl(Supplier<? extends JFrame> supplier)
     {
-        myParent = parent;
+        myParent = supplier;
     }
 
     @Override
