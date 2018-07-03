@@ -1,4 +1,4 @@
-package icon.manager.model;
+package io.opensphere.icon.manager.model;
 
 /** View selections enumeration. */
 public enum ViewStyle

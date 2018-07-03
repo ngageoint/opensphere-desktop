@@ -36,6 +36,7 @@ public class IconChooserDisplayerImpl implements IconChooserDisplayer
     @Override
     public void displayIconChooser(Toolbox toolbox, ObjectProperty<IconRecord> selectedIcon)
     {
+
         EventQueueUtilities.runOnEDT(() ->
         {
             IconChooserDialog fileDialog = new IconChooserDialog(myParent.get(), true, toolbox);

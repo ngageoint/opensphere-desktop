@@ -89,7 +89,7 @@ public class IconChooserDialog extends JDialog
         myToolbox = tb;
         setTitle("Icon Chooser");
         setSize(new Dimension(800, 600));
-        setMinimumSize(new Dimension(600,400));
+        setMinimumSize(new Dimension(600, 400));
         JPopupMenu puMenu = new JPopupMenu();
         puMenu.add(newMenuItem("Add To Favorites", e -> addToFavorites()));
         puMenu.add(newMenuItem("Rotate Icon", e -> showRotateDialog()));
