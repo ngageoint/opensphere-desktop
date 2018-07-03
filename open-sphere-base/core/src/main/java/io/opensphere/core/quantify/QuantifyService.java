@@ -1,5 +1,7 @@
 package io.opensphere.core.quantify;
 
+import javafx.beans.property.BooleanProperty;
+
 /**
  * An interface defining a service that collects and periodically sends metrics
  * to a remote location.
@@ -12,6 +14,13 @@ public interface QuantifyService
      * @param key the metric key for which to collect the metric.
      */
     void collectMetric(String key);
+
+    /**
+     * The property used to maintain the enabled state of the plugin.
+     *
+     * @return the property in which the enabled state is tracked.
+     */
+    BooleanProperty enabledProperty();
 
     /**
      * Flushes, sends all collected metrics through the sender to the remote

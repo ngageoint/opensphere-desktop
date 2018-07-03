@@ -13,6 +13,8 @@ import io.opensphere.core.quantify.impl.DefaultQuantifyService;
 import io.opensphere.core.quantify.impl.HttpQuantifySender;
 import io.opensphere.core.quantify.impl.LoggingQuantifySender;
 import io.opensphere.core.quantify.impl.QuantifyToolboxImpl;
+import io.opensphere.core.quantify.settings.QuantifyOptionsProvider;
+import io.opensphere.core.quantify.settings.QuantifySettingsModel;
 
 /** A plugin used to collect metrics and send them to a remote endpoint. */
 public class QuantifyPlugin extends PluginAdapter
@@ -23,6 +25,15 @@ public class QuantifyPlugin extends PluginAdapter
     /** The service used to collect metrics. */
     private QuantifyService myService;
 
+    /** The object with which preferences are read. */
+    private Preferences myPreferences;
+
+    /** The options provider used to configure the quantify plugin. */
+    private QuantifyOptionsProvider myOptionsProvider;
+
+    /** The toolbox through which application state is accessed. */
+    private Toolbox myToolbox;
+
     /**
      * {@inheritDoc}
      *
@@ -32,8 +43,15 @@ public class QuantifyPlugin extends PluginAdapter
     @Override
     public void initialize(PluginLoaderData plugindata, Toolbox toolbox)
     {
-        Preferences preferences = toolbox.getPreferencesRegistry().getPreferences(QuantifyPlugin.class);
-        String url = preferences.getString("quantify.url", null);
+        myToolbox = toolbox;
+        myPreferences = toolbox.getPreferencesRegistry().getPreferences(QuantifyPlugin.class);
+
+        QuantifySettingsModel settingsModel = new QuantifySettingsModel(myPreferences);
+        myOptionsProvider = new QuantifyOptionsProvider(settingsModel);
+
+        myToolbox.getUIRegistry().getOptionsRegistry().addOptionsProvider(myOptionsProvider);
+
+        String url = myPreferences.getString("quantify.url", null);
 
         QuantifySender sender;
         if (StringUtils.isNotBlank(url))
@@ -45,7 +63,8 @@ public class QuantifyPlugin extends PluginAdapter
             LOG.info("Unable to find preference 'quantify.url'. Writing metrics to log.");
             sender = new LoggingQuantifySender();
         }
-        myService = new DefaultQuantifyService(sender);
+        myService = new DefaultQuantifyService(sender, settingsModel.enabledProperty());
+
         QuantifyToolbox quantifyToolbox = new QuantifyToolboxImpl(myService);
         toolbox.getPluginToolboxRegistry().registerPluginToolbox(quantifyToolbox);
     }
@@ -59,6 +78,8 @@ public class QuantifyPlugin extends PluginAdapter
     public void close()
     {
         myService.close();
+        myToolbox.getUIRegistry().getOptionsRegistry().removeOptionsProvider(myOptionsProvider);
+
         super.close();
     }
 }
