@@ -44,7 +44,7 @@ public class InfinityQuerier
      * @param timeSpan the time span to query
      * @param binField the bin field
      * @param binParams the query binning parameters
-     * @return the search response
+     * @return the search response, or null
      * @throws QueryException if something goes wrong with the query
      */
     public QueryResults query(DataTypeInfo dataType, Polygon polygon, TimeSpan timeSpan, String binField, QueryBinParameters binParams)

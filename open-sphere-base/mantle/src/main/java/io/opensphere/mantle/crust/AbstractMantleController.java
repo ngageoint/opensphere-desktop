@@ -326,6 +326,18 @@ public abstract class AbstractMantleController extends DynamicService<String, Se
             dataType.setOrderKey(new DefaultOrderParticipantKey(DefaultOrderCategory.DEFAULT_IMAGE_LAYER_FAMILY, orderCategory,
                     dataType.getTypeKey()));
         }
+        if (orderCategory == DefaultOrderCategory.AREAS_CATEGORY)
+        {
+            dataType.setBasicVisualizationInfo(new DefaultBasicVisualizationInfo(LoadsTo.STATIC,
+                    DefaultBasicVisualizationInfo.LOADS_TO_STATIC_ONLY, Color.DARK_GRAY, true));
+            dataType.applyColorPreferences();
+
+            dataType.setMapVisualizationInfo(new DefaultMapFeatureVisualizationInfo(MapVisualizationType.POLYGON_ELEMENTS));
+
+            dataType.setOrderKey(new DefaultOrderParticipantKey(DefaultOrderCategory.DEFAULT_AREAS_LAYER_FAMILY, orderCategory,
+                    dataType.getTypeKey()));
+            dataType.setMetaDataInfo(metaDataInfo);
+        }
         return dataType;
     }
 

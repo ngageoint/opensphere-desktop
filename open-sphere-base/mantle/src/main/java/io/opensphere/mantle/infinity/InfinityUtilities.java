@@ -1,6 +1,5 @@
 package io.opensphere.mantle.infinity;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -8,6 +7,9 @@ import io.opensphere.mantle.data.DataTypeInfo;
 /** Infinity utilities. */
 public final class InfinityUtilities
 {
+    /** The user-facing term used for "infinity", in title case. */
+    public static final String INFINITY = "Infinity";
+
     /** URL tag. */
     public static final String URL = ".es-url";
 
@@ -87,20 +89,9 @@ public final class InfinityUtilities
     public static final String DEFAULT_SCRIPT_LANGUAGE = "painless";
 
     /** The mapping of intervals to date formats. */
-    private static final Map<String, String> DATE_FORMAT_MAP = new HashMap<String, String>()
-    {
-        /** Default serial version ID  */
-        private static final long serialVersionUID = 1L;
-
-        {
-            put(BIN_MINUTE_INTERVAL, "yyyy-MM-dd HH:mm");
-            put(BIN_HOUR_INTERVAL, "yyyy-MM-dd HH");
-            put(BIN_DAY_INTERVAL, "yyyy-MM-dd");
-            put(BIN_WEEK_INTERVAL, "yyyy-MM-dd");
-            put(BIN_MONTH_INTERVAL, "yyyy-MM");
-            put(BIN_YEAR_INTERVAL, "yyyy");
-        }
-    };
+    private static final Map<String, String> DATE_FORMAT_MAP = Map.of(BIN_MINUTE_INTERVAL, "yyyy-MM-dd HH:mm", BIN_HOUR_INTERVAL,
+            "yyyy-MM-dd HH", BIN_DAY_INTERVAL, "yyyy-MM-dd", BIN_WEEK_INTERVAL, "yyyy-MM-dd", BIN_MONTH_INTERVAL, "yyyy-MM",
+            BIN_YEAR_INTERVAL, "yyyy");
 
     /**
      * Determines if the data type is infinity-enabled.
@@ -154,6 +145,18 @@ public final class InfinityUtilities
     public static String getDateFormat(String interval)
     {
         return DATE_FORMAT_MAP.getOrDefault(interval, DEFAULT_DATE_BIN_FORMAT);
+    }
+
+    /**
+     * Infinity-fies the text.
+     *
+     * @param text the text
+     * @param isInfinity whether to include the "infinity" text
+     * @return the modified text
+     */
+    public static String infinify(String text, boolean isInfinity)
+    {
+        return isInfinity ? INFINITY + " " + text : text;
     }
 
     /** Disallow instantiation. */

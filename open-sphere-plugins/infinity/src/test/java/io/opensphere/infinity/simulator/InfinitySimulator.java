@@ -81,6 +81,9 @@ public class InfinitySimulator extends AbstractServer
         }
 
         exchange.getResponseHeaders().add("Content-Type", "application/json");
+        // TODO need to always call writeResponse here instead of above
+//        writeResponse(exchange, HttpURLConnection.HTTP_OK, getResponseBody(aggsField));
+
         System.out.println("Response: " + exchange.getResponseCode());
     }
 
@@ -228,6 +231,7 @@ public class InfinitySimulator extends AbstractServer
                         bins[i].format(formatter));
                 totalCount += binCount;
                 binCount -= 100;
+                i++;
             }
 
             Aggregations aggregations = new Aggregations();
