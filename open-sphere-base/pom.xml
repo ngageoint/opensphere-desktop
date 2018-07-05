@@ -24,7 +24,6 @@
 		<module>auxiliary</module>
 		<module>control-panels</module>
 		<module>core</module>
-		<module>icon-manager</module>
 		<module>mantle</module>
 		<module>overlay</module>
 		<module>test-support</module>

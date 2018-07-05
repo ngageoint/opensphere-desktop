@@ -1124,11 +1124,7 @@
 				<artifactId>core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>io.open-sphere</groupId>
-				<artifactId>icon-manager</artifactId>
-				<version>${project.version}</version>
-			</dependency>
+
 			<dependency>
 				<groupId>io.open-sphere</groupId>
 				<artifactId>mantle</artifactId>
