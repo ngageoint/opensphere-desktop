@@ -98,8 +98,6 @@ public class IconProjPanel extends AnchorPane
         AnchorPane.setLeftAnchor(mySizeMenu, 10.0);
         mySizeMenu.setLayoutX(36.0);
         mySizeMenu.setLayoutY(8.0);
-        mySizeMenu.setPrefHeight(40.0);
-        mySizeMenu.setPrefWidth(200.0);
 
         mySizeLabel.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         mySizeLabel.setStrokeWidth(0.0);
