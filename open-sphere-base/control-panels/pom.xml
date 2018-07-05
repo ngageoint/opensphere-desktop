@@ -27,10 +27,6 @@
 	<artifactId>test-support</artifactId>
 	<scope>test</scope>
 		</dependency>
-				<dependency>
-			<groupId>io.open-sphere</groupId>
-			<artifactId>icon-manager</artifactId>
-		</dependency>
 		<dependency>
 		    <groupId>com.sun.xml.bind</groupId>
 		    <artifactId>jaxb-impl</artifactId>
