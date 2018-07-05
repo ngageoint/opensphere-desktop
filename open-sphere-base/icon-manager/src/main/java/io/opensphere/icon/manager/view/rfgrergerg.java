@@ -10,8 +10,12 @@ public class rfgrergerg extends Application
 
     @Override
     public void start(Stage defaultStageIgnored) {
-        myStage.FinalStage stage = new myStage.FinalStage();
+        FinalStage stage = new FinalStage();
         stage.show();
+        
+        FinalStage stage2= new FinalStage("Hello my friend Eli");
+        
+        stage2.show();
     }
 
 
