@@ -10,10 +10,10 @@ public class IconProjDialog extends JFXDialog
     public IconProjDialog(Window owner)
     {
         super(owner, "the title");
-        setSize(400, 400);
+        setSize(1021, 520);
         setFxNode(new IconProjPanel());
-
     }
+    
     /* public FinalStage(owner,"Test Case") { StackPane test = new StackPane();
      * test.getChildren().add(new Label("Hello World"));
      * 
