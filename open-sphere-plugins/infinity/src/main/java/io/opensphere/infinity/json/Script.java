@@ -22,7 +22,7 @@ public class Script
     }
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param field the field binning binned
      * @param dayOfWeek whether dayOfWeek or hourOfDay
@@ -71,7 +71,7 @@ public class Script
      */
     public void setSource(String field, boolean dayOfWeek)
     {
-        if(dayOfWeek)
+        if (dayOfWeek)
         {
             mySource = new String("doc['" + field + "'].value.dayOfWeek");
         }

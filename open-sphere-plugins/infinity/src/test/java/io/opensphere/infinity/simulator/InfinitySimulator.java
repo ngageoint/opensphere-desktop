@@ -98,13 +98,13 @@ public class InfinitySimulator extends AbstractServer
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         ObjectMapper mapper = JsonUtils.createMapper();
         mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-        if(isNumericBin)
+        if (isNumericBin)
         {
             mapper.writeValue(output, getNumericBinResponse(aggsField));
         }
-        else if(isDateBin)
+        else if (isDateBin)
         {
-            mapper.writeValue(output,  getDateBinResponse(aggsField));
+            mapper.writeValue(output, getDateBinResponse(aggsField));
         }
         else
         {
@@ -127,14 +127,15 @@ public class InfinitySimulator extends AbstractServer
         {
             String[] bins;
 
-            if(myScript != null)
+            if (myScript != null)
             {
                 // Represents dayOfWeek or hourOfDay
-                bins = new String[] {"1","2","3","4","5","6","7"};
+                bins = new String[] { "1", "2", "3", "4", "5", "6", "7" };
             }
-            else {
-                bins = new String[] { "Ardbeg", "Bowmore", "Bruichladdich", "Bunnahabhain", "Caol Ila", "Kilchoman",
-                    "Lagavulin", "Laphroaig" };
+            else
+            {
+                bins = new String[] { "Ardbeg", "Bowmore", "Bruichladdich", "Bunnahabhain", "Caol Ila", "Kilchoman", "Lagavulin",
+                    "Laphroaig" };
             }
 
             int numberOfBins = (int)(Math.random() * bins.length) + 1;
@@ -211,13 +212,9 @@ public class InfinitySimulator extends AbstractServer
         int totalCount = 0;
         if (aggsField != null)
         {
-            LocalDateTime[] bins = new LocalDateTime[] {
-              LocalDateTime.of(1998, Month.JANUARY, 25, 21, 15),
-              LocalDateTime.of(1999, Month.JANUARY, 31, 20, 45),
-              LocalDateTime.of(2016, Month.FEBRUARY, 7, 19, 18),
-              LocalDateTime.of(1865, Month.NOVEMBER, 11, 11, 00),
-              LocalDateTime.of(1945, Month.SEPTEMBER, 11, 8, 12),
-            };
+            LocalDateTime[] bins = new LocalDateTime[] { LocalDateTime.of(1998, Month.JANUARY, 25, 21, 15),
+                LocalDateTime.of(1999, Month.JANUARY, 31, 20, 45), LocalDateTime.of(2016, Month.FEBRUARY, 7, 19, 18),
+                LocalDateTime.of(1865, Month.NOVEMBER, 11, 11, 00), LocalDateTime.of(1945, Month.SEPTEMBER, 11, 8, 12), };
 
             int numberOfBins = (int)(Math.random() * bins.length) + 1;
 
@@ -227,7 +224,8 @@ public class InfinitySimulator extends AbstractServer
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(myDateFormat);
             for (int i = 0; i < numberOfBins; i++)
             {
-                buckets[i] = new Bucket<Long>(Long.valueOf(bins[i].toEpochSecond(ZoneOffset.UTC)), binCount, bins[i].format(formatter));
+                buckets[i] = new Bucket<Long>(Long.valueOf(bins[i].toEpochSecond(ZoneOffset.UTC)), binCount,
+                        bins[i].format(formatter));
                 totalCount += binCount;
                 binCount -= 100;
             }

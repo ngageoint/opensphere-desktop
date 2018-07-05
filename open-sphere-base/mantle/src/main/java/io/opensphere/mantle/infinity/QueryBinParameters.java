@@ -1,146 +1,153 @@
 package io.opensphere.mantle.infinity;
 
-/*
- * QueryBinParameters class.
- * 
- * Contains the variables that will be used for infinity county-by
- * numeric and data binning
- * 
+/**
+ * Contains the variables that will be used for infinity county-by numeric and data binning.
  */
-public class QueryBinParameters 
+public class QueryBinParameters
 {
-	/** The numeric bin width */
-	Double myBinWidth;
+    /** The numeric bin width. */
+    private Double myBinWidth;
 
-	/** The numeric bin offset */
-	Double myBinOffset;
+    /** The numeric bin offset. */
+    private Double myBinOffset;
 
-	/** The user number format */
-	String myUserNumberFormat;
+    /** The user number format. */
+    private String myUserNumberFormat;
 
-	/** The date format */
-	String myDateFormat;
+    /** The date format. */
+    private String myDateFormat;
 
-	/** The date interval */
-	String myDateInterval;
+    /** The date interval. */
+    private String myDateInterval;
 
-	/** The dayOfWeek.  True if dayOfWeek, false if hourOfDay */
-	Boolean myDayOfWeek;
-	
-	/**
-	 * Constructor.
-	 */
-	public QueryBinParameters() 
-	{
-		// Intentionally left blank
-	}
+    /** The dayOfWeek. True if dayOfWeek, false if hourOfDay */
+    private Boolean myDayOfWeek;
 
-	/**
-	 * Get the bin width.
-	 * 
-	 * @return the binWidth
-	 */
-	public Double getBinWidth() {
-		return myBinWidth;
-	}
+    /**
+     * Constructor.
+     */
+    public QueryBinParameters()
+    {
+        // Intentionally left blank
+    }
 
-	/**
-	 * Set the bin width
-	 * 
-	 * @param BinWidth the binWidth to set
-	 */
-	public void setBinWidth(Double binWidth) {
-		myBinWidth = binWidth;
-	}
+    /**
+     * Get the bin width.
+     *
+     * @return the binWidth
+     */
+    public Double getBinWidth()
+    {
+        return myBinWidth;
+    }
 
-	/**
-	 * Get the bin offset.
-	 * 
-	 * @return the BinOffset
-	 */
-	public Double getBinOffset() {
-		return myBinOffset;
-	}
+    /**
+     * Set the bin width.
+     *
+     * @param binWidth the binWidth to set
+     */
+    public void setBinWidth(Double binWidth)
+    {
+        myBinWidth = binWidth;
+    }
 
-	/**
-	 * Set the bin offset.
-	 * 
-	 * @param binOffset the binOffset to set
-	 */
-	public void setBinOffset(Double binOffset) {
-		myBinOffset = binOffset;
-	}
+    /**
+     * Get the bin offset.
+     *
+     * @return the BinOffset
+     */
+    public Double getBinOffset()
+    {
+        return myBinOffset;
+    }
 
-	/**
-	 * Get the user number format.
-	 * 
-	 * @return the userNumberFormat
-	 */
-	public String getUserNumberFormat() {
-		return myUserNumberFormat;
-	}
+    /**
+     * Set the bin offset.
+     *
+     * @param binOffset the binOffset to set
+     */
+    public void setBinOffset(Double binOffset)
+    {
+        myBinOffset = binOffset;
+    }
 
-	/**
-	 * Set the user number format.
-	 * 
-	 * @param userNumberFormat the userNumberFormat to set
-	 */
-	public void setUserNumberFormat(String userNumberFormat) {
-		myUserNumberFormat = userNumberFormat;
-	}
+    /**
+     * Get the user number format.
+     *
+     * @return the userNumberFormat
+     */
+    public String getUserNumberFormat()
+    {
+        return myUserNumberFormat;
+    }
 
-	/**
-	 * Get the date format.
-	 * 
-	 * @return the dateFormat
-	 */
-	public String getDateFormat() {
-		return myDateFormat;
-	}
+    /**
+     * Set the user number format.
+     *
+     * @param userNumberFormat the userNumberFormat to set
+     */
+    public void setUserNumberFormat(String userNumberFormat)
+    {
+        myUserNumberFormat = userNumberFormat;
+    }
 
-	/**
-	 * Set the date format.
-	 * 
-	 * @param dateFormat the dateFormat to set
-	 */
-	public void setDateFormat(String dateFormat) {
-		myDateFormat = dateFormat;
-	}
+    /**
+     * Get the date format.
+     *
+     * @return the dateFormat
+     */
+    public String getDateFormat()
+    {
+        return myDateFormat;
+    }
 
-	/**
-	 * Get the date interval.
-	 * 
-	 * @return the dateInterval
-	 */
-	public String getDateInterval() {
-		return myDateInterval;
-	}
+    /**
+     * Set the date format.
+     *
+     * @param dateFormat the dateFormat to set
+     */
+    public void setDateFormat(String dateFormat)
+    {
+        myDateFormat = dateFormat;
+    }
 
-	/**
-	 * Set the date interval.
-	 * 
-	 * @param dateInterval the dateInterval to set
-	 */
-	public void setDateInterval(String dateInterval) {
-		myDateInterval = dateInterval;
-	}
+    /**
+     * Get the date interval.
+     *
+     * @return the dateInterval
+     */
+    public String getDateInterval()
+    {
+        return myDateInterval;
+    }
 
-	/**
-	 * Get the dayOfWeek.
-	 * 
-	 * @return the dayOfWeek
-	 */
-	public Boolean getDayOfWeek() {
-		return myDayOfWeek;
-	}
+    /**
+     * Set the date interval.
+     *
+     * @param dateInterval the dateInterval to set
+     */
+    public void setDateInterval(String dateInterval)
+    {
+        myDateInterval = dateInterval;
+    }
 
-	/**
-	 * Set the dayOfWeek
-	 * 
-	 * @param dayOfWeek the dayOfWeek to set
-	 */
-	public void setDayOfWeek(Boolean dayOfWeek) {
-		myDayOfWeek = dayOfWeek;
-	}
+    /**
+     * Get the dayOfWeek.
+     *
+     * @return the dayOfWeek
+     */
+    public Boolean getDayOfWeek()
+    {
+        return myDayOfWeek;
+    }
 
+    /**
+     * Set the dayOfWeek.
+     *
+     * @param dayOfWeek the dayOfWeek to set
+     */
+    public void setDayOfWeek(Boolean dayOfWeek)
+    {
+        myDayOfWeek = dayOfWeek;
+    }
 }

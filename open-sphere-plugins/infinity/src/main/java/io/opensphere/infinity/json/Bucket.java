@@ -2,7 +2,8 @@ package io.opensphere.infinity.json;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-/** Elasticsearch bucket JSON bean.
+/**
+ * Elasticsearch bucket JSON bean.
  *
  * @param <T> Type contained in buckets
  */
@@ -14,7 +15,7 @@ public class Bucket<T>
     /** The doc count. */
     private long myDocCount;
 
-    /** The key as a string.  Used for Dates. */
+    /** The key as a string. Used for Dates. */
     @JsonProperty("key_as_string")
     private String myKeyAsString;
 
@@ -23,7 +24,7 @@ public class Bucket<T>
      */
     public Bucket()
     {
-        //Intentionally left blank
+        // Intentionally left blank
     }
 
     /**

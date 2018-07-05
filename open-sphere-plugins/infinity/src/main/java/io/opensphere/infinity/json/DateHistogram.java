@@ -4,13 +4,13 @@ package io.opensphere.infinity.json;
 public class DateHistogram
 {
     /** The date field being binned. */
-    private String field;
+    private String myField;
 
-    /** The format of the date that should be returned. (e.g., yyyy-mm-dd hh:ss)*/
-    private String format;
+    /** The format of the date that should be returned. (e.g., yyyy-mm-dd hh:ss) */
+    private String myFormat;
 
-    /** The interval of the bin.  (e.g., "minutes") */
-    private String interval;
+    /** The interval of the bin. (e.g., "minutes") */
+    private String myInterval;
 
     /**
      * Constructor.
@@ -29,9 +29,9 @@ public class DateHistogram
      */
     public DateHistogram(String field, String format, String interval)
     {
-        this.field = field;
-        this.format = format;
-        this.interval = interval;
+        myField = field;
+        myFormat = format;
+        myInterval = interval;
     }
 
     /**
@@ -41,7 +41,7 @@ public class DateHistogram
      */
     public String getField()
     {
-        return field;
+        return myField;
     }
 
     /**
@@ -51,7 +51,7 @@ public class DateHistogram
      */
     public void setField(String field)
     {
-        this.field = field;
+        myField = field;
     }
 
     /**
@@ -61,7 +61,7 @@ public class DateHistogram
      */
     public String getFormat()
     {
-        return format;
+        return myFormat;
     }
 
     /**
@@ -71,7 +71,7 @@ public class DateHistogram
      */
     public void setFormat(String format)
     {
-        this.format = format;
+        myFormat = format;
     }
 
     /**
@@ -81,7 +81,7 @@ public class DateHistogram
      */
     public String getInterval()
     {
-        return interval;
+        return myInterval;
     }
 
     /**
@@ -91,12 +91,12 @@ public class DateHistogram
      */
     public void setInterval(String interval)
     {
-        this.interval = interval;
+        myInterval = interval;
     }
 
     @Override
     public String toString()
     {
-        return "DateHistogram [field=" + field + ", format=" + format + ", interval=" + interval + "]";
+        return "DateHistogram [field=" + myField + ", format=" + myFormat + ", interval=" + myInterval + "]";
     }
 }
