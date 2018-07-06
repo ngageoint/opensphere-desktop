@@ -1,5 +1,7 @@
 package io.opensphere.mantle.iconproject.view;
 
+import java.awt.Window;
+
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -17,13 +19,18 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import io.opensphere.core.Toolbox;
+
+
 public class IconProjPanel extends AnchorPane
 {
-
-    public IconProjPanel()
+    public IconProjPanel (Toolbox tb)
     {
         /* Button test = new Button("click me"); setBottomAnchor(test, 10.);
          * getChildren().add(test); */
+
+        /** The Toolbox. */
+        //final Toolbox myToolbox = IconProjDialog.getMyToolbox();
 
         final AnchorPane myTopMenuBar;
         final ButtonBar mySizeMenu;
@@ -89,7 +96,6 @@ public class IconProjPanel extends AnchorPane
         anchorPane0 = new AnchorPane();
         myDataBar = new TextField();
         myNotifyText = new Text();
-
 
         AnchorPane.setLeftAnchor(myTopMenuBar, 0.0);
         AnchorPane.setRightAnchor(myTopMenuBar, 1.0);
@@ -195,8 +201,26 @@ public class IconProjPanel extends AnchorPane
         myCustIconButton.setLayoutY(419.0);
         myCustIconButton.setMnemonicParsing(false);
 
-
         myCustIconButton.setText("Customize Icon");
+        myCustIconButton.setOnAction(event ->
+        {
+            //direct to icon builder
+            //Window owner = this.getParent();
+            Window owner = tb.getUIRegistry().getMainFrameProvider().get();
+            IconProjBuilderDialog builderPane = new IconProjBuilderDialog(owner);
+            builderPane.setVisible(true);
+
+            //Toolbox tb = new IconProjFrame.getMyToolbox();
+        });
+
+        /* myCustIconButton.setOnAction(new EventHandler<ActionEvent>()
+         * {
+         * @Override public void handle(ActionEvent e)
+         * {
+         * //direct to icon builder dialog
+         * }
+         * });
+         * */
 
         AnchorPane.setBottomAnchor(myGenIconButton, 0.0);
         AnchorPane.setLeftAnchor(myGenIconButton, -2.0);
@@ -205,7 +229,6 @@ public class IconProjPanel extends AnchorPane
         myGenIconButton.setLayoutY(444.0);
         myGenIconButton.setMnemonicParsing(false);
 
-   
         myGenIconButton.setText("Generate New Icon");
 
         columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
