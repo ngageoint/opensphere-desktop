@@ -8,6 +8,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 
 public class MainPanel extends SplitPane
@@ -17,19 +18,19 @@ public class MainPanel extends SplitPane
 
     ColumnConstraints columnConstraints = new ColumnConstraints();
 
-    private final GridPane gridPane;
+    private GridPane gridPane;
 
-    private final Button myGenIconButton;
+    private Button myGenIconButton;
 
-    private final Button myCustIconButton;
+    private Button myCustIconButton;
 
-    private final Button myAddIconButton;
+    private Button myAddIconButton;
 
-    private final TreeView myTreeList;
+    private TreeView myTreeList;
 
-    private final AnchorPane myTreeView;
+    private AnchorPane myTreeView;
 
-    private final ScrollBar myScrollBar;
+    private ScrollBar myScrollBar;
 
     public MainPanel()
     {

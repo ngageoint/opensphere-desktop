@@ -1,8 +1,5 @@
 package io.opensphere.mantle.iconproject.view;
 
-import java.awt.EventQueue;
-import java.awt.Window;
-
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -20,18 +17,13 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import io.opensphere.core.Toolbox;
-
 public class IconProjPanel extends AnchorPane
 {
-    public IconProjPanel(Toolbox tb)
+
+    public IconProjPanel()
     {
         /* Button test = new Button("click me"); setBottomAnchor(test, 10.);
          * getChildren().add(test); */
-
-        /** The Toolbox. */
-        // final Toolbox myToolbox = IconProjDialog.getMyToolbox();
-        Window owner = tb.getUIRegistry().getMainFrameProvider().get();
 
         final AnchorPane myTopMenuBar;
         final ButtonBar mySizeMenu;
@@ -95,8 +87,9 @@ public class IconProjPanel extends AnchorPane
         myBottomMenuBar = new AnchorPane();
         anchorPane = new AnchorPane();
         anchorPane0 = new AnchorPane();
-        // myDataBar = new TextField();
-        // myNotifyText = new Text();
+        myDataBar = new TextField();
+        myNotifyText = new Text();
+
 
         AnchorPane.setLeftAnchor(myTopMenuBar, 0.0);
         AnchorPane.setRightAnchor(myTopMenuBar, 1.0);
@@ -188,17 +181,13 @@ public class IconProjPanel extends AnchorPane
         AnchorPane.setBottomAnchor(myAddIconButton, 52.0);
         AnchorPane.setLeftAnchor(myAddIconButton, -2.0);
         AnchorPane.setRightAnchor(myAddIconButton, 0.0);
-        // myAddIconButton.setAlignment(javafx.geometry.Pos.CENTER);
+        myAddIconButton.setAlignment(javafx.geometry.Pos.CENTER);
         myAddIconButton.setLayoutX(-2.0);
         myAddIconButton.setLayoutY(394.0);
         myAddIconButton.setMnemonicParsing(false);
 
-        // myAddIconButton.getStylesheets().add("/icon/manager/model/IconManagerFrameStyle.css");
-
-
+        myAddIconButton.getStylesheets().add("/icon/manager/model/IconManagerFrameStyle.css");
         myAddIconButton.setText("Add Icon from File");
-        //myAddIconButton.setOnAction(event -> loadFromFile(IconRecord.USER_ADDED_COLLECTION, null));
-
 
         AnchorPane.setBottomAnchor(myCustIconButton, 26.0);
         AnchorPane.setLeftAnchor(myCustIconButton, -2.0);
@@ -206,15 +195,8 @@ public class IconProjPanel extends AnchorPane
         myCustIconButton.setLayoutY(419.0);
         myCustIconButton.setMnemonicParsing(false);
 
+
         myCustIconButton.setText("Customize Icon");
-        myCustIconButton.setOnAction(event ->
-        {
-            EventQueue.invokeLater(() ->
-            {
-                @SuppressWarnings("unused")
-                IconProjBuilderDialog builderPane = new IconProjBuilderDialog(owner, tb);
-            });
-        });
 
         AnchorPane.setBottomAnchor(myGenIconButton, 0.0);
         AnchorPane.setLeftAnchor(myGenIconButton, -2.0);
@@ -223,6 +205,7 @@ public class IconProjPanel extends AnchorPane
         myGenIconButton.setLayoutY(444.0);
         myGenIconButton.setMnemonicParsing(false);
 
+   
         myGenIconButton.setText("Generate New Icon");
 
         columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
@@ -290,5 +273,7 @@ public class IconProjPanel extends AnchorPane
         splitPane.getItems().add(gridPane);
         splitPane.getItems().add(scrollBar);
         getChildren().add(splitPane);
+
     }
+
 }
