@@ -31,7 +31,7 @@ public class IconBuilderDialog extends JFXDialog
     private final IconRegistry myIconRegistry;
 
     /** The panel this dialog spawned from. */
-    private final IconChooserPanel myChooserPanel;
+    private IconChooserPanel myChooserPanel;
 
     /**
      * Constructor.
@@ -45,6 +45,26 @@ public class IconBuilderDialog extends JFXDialog
         super(owner, "Build an Icon");
         myIconRegistry = iconRegistry;
         myChooserPanel = chooserPanel;
+
+        IconBuilderPane pane = new IconBuilderPane(owner);
+        setFxNode(pane);
+
+        setMinimumSize(new Dimension(450, 600));
+
+        setLocationRelativeTo(owner);
+        setAcceptEar(() -> saveImage(pane.getFinalImage(), pane.getImageName()));
+    }
+
+    /**
+     * Other constructor.
+     *
+     * @param owner the owner
+     * @param iconRegistry the icon registry
+     */
+    public IconBuilderDialog(Window owner, IconRegistry iconRegistry)
+    {
+        super(owner, "Customize an Icon");
+        myIconRegistry = iconRegistry;
 
         IconBuilderPane pane = new IconBuilderPane(owner);
         setFxNode(pane);

@@ -11,13 +11,13 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -26,8 +26,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
-
-import javax.swing.JOptionPane;
 
 import io.opensphere.core.image.processor.RotateImageProcessor;
 import io.opensphere.core.util.FontIconEnum;
@@ -95,9 +93,9 @@ public class IconBuilderPane extends BorderPane
      *
      * @return the icon selection & color controls
      */
-    private HBox createTop()
+    private AnchorPane createTop()
     {
-        HBox box = new HBox();
+        AnchorPane box = new AnchorPane();
 
         Spinner<Number> sizeSpinner = new Spinner<>(12, 200, 200);
         sizeSpinner.setPrefWidth(spinwidth);
@@ -107,9 +105,9 @@ public class IconBuilderPane extends BorderPane
 
         Label sizeLabel = new Label("Size: ", sizeSpinner);
         sizeLabel.setContentDisplay(ContentDisplay.RIGHT);
-        //AnchorPane.setRightAnchor(sizeLabel, 50.);
+        AnchorPane.setRightAnchor(sizeLabel, 50.);
 
-        Button button = new Button("Select an Icon");
+        /*Button button = new Button("Select an Icon");
         button.setOnAction((evt) ->
         {
             IconBuilderChoiceDialog iconChoice = new IconBuilderChoiceDialog();
@@ -119,12 +117,13 @@ public class IconBuilderPane extends BorderPane
             {
                 updateImageView(iconChoice.getValue());
             }
-        });
-        //AnchorPane.setLeftAnchor(button, 10.);
+        });*/
+
+        AnchorPane.setLeftAnchor(sizeSpinner, 10.);
 
         myColorPicker = new ColorPicker();
 
-        box.getChildren().addAll(button, myColorPicker, sizeLabel, sizeSpinner);
+        box.getChildren().addAll(myColorPicker, sizeLabel, sizeSpinner);
 
         return box;
     }
