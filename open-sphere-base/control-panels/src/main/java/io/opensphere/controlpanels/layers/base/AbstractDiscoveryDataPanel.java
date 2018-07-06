@@ -46,6 +46,7 @@ import io.opensphere.controlpanels.layers.activedata.tree.TreeTransferHandler;
 import io.opensphere.controlpanels.layers.tagmanager.TagUtility;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ActionContext;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.concurrent.ProcrastinatingExecutor;
@@ -173,9 +174,10 @@ public abstract class AbstractDiscoveryDataPanel extends AbstractHUDPanel
     @Override
     public boolean askUser(String question, String title)
     {
-        return JOptionPane.YES_OPTION
-                == EventQueueUtilities.happyOnEdt(() -> Integer.valueOf(
-                        JOptionPane.showConfirmDialog(this, question, title, JOptionPane.YES_NO_OPTION))).intValue();
+        return JOptionPane.YES_OPTION == EventQueueUtilities
+                .happyOnEdt(
+                        () -> Integer.valueOf(JOptionPane.showConfirmDialog(this, question, title, JOptionPane.YES_NO_OPTION)))
+                .intValue();
     }
 
     /**
@@ -287,6 +289,7 @@ public abstract class AbstractDiscoveryDataPanel extends AbstractHUDPanel
      */
     private void adjustSearchFilter()
     {
+        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.layer-manager.search");
         getController().setTreeFilter(mySearchTextField.getText());
     }
 
@@ -469,7 +472,7 @@ public abstract class AbstractDiscoveryDataPanel extends AbstractHUDPanel
             private void resizeParent(int dWidth)
             {
                 Component comp = ComponentUtilities.getFirstParent(myTreeScrollPane,
-                    value -> value instanceof JInternalFrame || value instanceof JSplitPane);
+                        value -> value instanceof JInternalFrame || value instanceof JSplitPane);
 
                 if (comp instanceof JInternalFrame)
                 {
@@ -634,7 +637,7 @@ public abstract class AbstractDiscoveryDataPanel extends AbstractHUDPanel
         boolean isExpanded = myTree.isExpanded(mouseOverPath);
         JMenuItem menuItem = new JMenuItem(isExpanded ? "Collapse All" : "Expand All");
         menuItem.addActionListener(
-            e -> JTreeUtilities.expandOrCollapsePath(myTree, mouseOverPath, !myTree.isExpanded(mouseOverPath)));
+                e -> JTreeUtilities.expandOrCollapsePath(myTree, mouseOverPath, !myTree.isExpanded(mouseOverPath)));
         return menuItem;
     }
 
@@ -1074,8 +1077,11 @@ public abstract class AbstractDiscoveryDataPanel extends AbstractHUDPanel
         myExpandContractTreeButton.setIcon(IconUtil.getColorizedIcon(IconType.EXPAND, IconStyle.NORMAL, Color.LIGHT_GRAY, 16));
         myExpandContractTreeButton.setContentAreaFilled(false);
         myExpandContractTreeButton.setToolTipText("Expand/Contract Layer List");
-        myExpandContractTreeButton
-                .addActionListener(e -> JTreeUtilities.expandOrCollapseAll(myTree, myExpandContractTreeButton.isSelected()));
+        myExpandContractTreeButton.addActionListener(e ->
+        {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.layer-manager.expand-contract");
+            JTreeUtilities.expandOrCollapseAll(myTree, myExpandContractTreeButton.isSelected());
+        });
     }
 
     /**
