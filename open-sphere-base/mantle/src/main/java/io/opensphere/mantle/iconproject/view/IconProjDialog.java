@@ -19,6 +19,7 @@ public class IconProjDialog extends JFXDialog
         setSize(1021, 520);
         setFxNode(new IconProjPanel(tb));
         setMinimumSize(new Dimension(800, 400));
+        //System.out.println("good one:    " + owner + "^^^^^%%%%%%%");
     }
 
 }

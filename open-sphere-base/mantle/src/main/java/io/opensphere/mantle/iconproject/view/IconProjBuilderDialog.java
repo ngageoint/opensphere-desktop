@@ -1,24 +1,18 @@
 package io.opensphere.mantle.iconproject.view;
 
-import java.awt.Dimension;
 import java.awt.Window;
 
-import io.opensphere.core.util.fx.JFXDialog;
+import io.opensphere.core.Toolbox;
+import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.icon.impl.gui.IconBuilderDialog;
+import io.opensphere.mantle.util.MantleToolboxUtils;
 
-public class IconProjBuilderDialog extends JFXDialog
+public class IconProjBuilderDialog
 {
-    //private static Window owner = new IconProjFrame().getMyToolbox().getUIRegistry().getMainFrameProvider().get();
-    public IconProjBuilderDialog(Window owner) //(Window owner, IconRegistry iconRegistry, IconChooserPanel chooserPanel  later
+    public IconProjBuilderDialog(Window owner, Toolbox tb)
     {
-        super(owner, "Build an Icon");
-        setSize(550, 700);
-        setFxNode(new IconProjPanel());
-        setMinimumSize(new Dimension(450, 600));
-
-        //myIconRegistry = MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry();
-        //myChooserPanel = new IconChooserPanel(tb, true, true, iconPopupMenu, treePopupMenu, buildIcon);
-
+        IconRegistry iconRegistry = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry();
+        IconBuilderDialog dialog = new IconBuilderDialog(owner, iconRegistry);
+        dialog.setVisible(true);
     }
-
-
 }
