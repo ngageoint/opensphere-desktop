@@ -11,12 +11,13 @@ public class IconProjNewView extends AnchorPane
 
     public IconProjNewView()
     {
-        setTopAnchor(myMainPanel, 45.);
-        setBottomAnchor(myMainPanel, 30.0);
-        setLeftAnchor(myMainPanel, 10.);
-        setRightAnchor(myMainPanel, 10.);
+        setTopAnchor(myMainPanel, 30.);
+        setBottomAnchor(myMainPanel, 0.0);
+        setLeftAnchor(myMainPanel, -8.);
+        setRightAnchor(myMainPanel, 0.);
+        setLeftAnchor(myTopMenuBar, 0.);
+        setRightAnchor(myTopMenuBar, 0.);
         getChildren().addAll(myMainPanel, myTopMenuBar);
-        setLeftAnchor(myTopMenuBar,5.);
-        setRightAnchor(myTopMenuBar,5.);    }
+    }
 
 }

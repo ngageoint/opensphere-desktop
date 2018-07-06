@@ -11,6 +11,7 @@ import io.opensphere.core.util.swing.IconButton;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 
 public class ButtonBuilder extends Button
@@ -38,34 +39,31 @@ public class ButtonBuilder extends Button
      * @param icon the (optional) icon to display with the menu item.
      * @param handler the consumer called when the menu item is activated.
      */
-    public ButtonBuilder(String label)
+    public ButtonBuilder(String label, boolean iconchoice)
     {
         super();
         myLabel = label;
-        Button myButton = new Button();       
+        // setFont(new Font(14.));
+        setText(myLabel);
+        setTextOverrun(javafx.scene.control.OverrunStyle.CLIP);
+
+        if (iconchoice)
+        {
+            getStyleClass().remove("button");
+            setGraphic(new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("alert.png"))));
+        }
+
     }
 
+    public void lockButton(Button inputButton)
+    {
+
+        Button theButton = inputButton;
+        AnchorPane.setLeftAnchor(theButton, 0.);
+        AnchorPane.setRightAnchor(theButton, 0.);
+
+    }
     // IconButton exportButton = new IconButton("Export", new
     // GenericFontIcon(AwesomeIconSolid.DOWNLOAD, Color.YELLOW));
 
-    public void setIcon(AwesomeIconSolid Icon ,Color color) {
-        
-        getStyleClass().remove("button");
-
-    }
-
-    public Button createButton()
-    {
-
-        Button myButton = new Button();
-
-        myButton.setTextOverrun(javafx.scene.control.OverrunStyle.CLIP);
-        myButton.setFont(new Font(14.0));
-        myButton.setText(myLabel);
-
-        return myButton;
-    }
-
-   
-    
 }
