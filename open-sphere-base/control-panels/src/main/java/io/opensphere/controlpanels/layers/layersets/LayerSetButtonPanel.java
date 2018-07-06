@@ -8,9 +8,11 @@ import java.util.Set;
 
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 import io.opensphere.controlpanels.layers.layersets.LayerSetController.LayerSetControllerListener;
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.image.IconUtil.IconType;
@@ -39,15 +41,19 @@ public class LayerSetButtonPanel extends AbstractHUDPanel implements LayerSetCon
     /** The split button. */
     private transient SplitButton mySplitButton;
 
+    /** The toolbox through which application state is accessed. */
+    private final Toolbox myToolbox;
+
     /**
      * Instantiates a new layer set button panel.
      *
-     * @param tb the {@link Toolbox}
+     * @param toolbox the {@link Toolbox}
      */
-    public LayerSetButtonPanel(Toolbox tb)
+    public LayerSetButtonPanel(Toolbox toolbox)
     {
         super();
-        myController = new LayerSetController(tb);
+        myToolbox = toolbox;
+        myController = new LayerSetController(toolbox);
         setBackground(getBackgroundColor());
         setLayout(new BorderLayout());
         add(getSplitButtonInternal(), BorderLayout.CENTER);
@@ -60,18 +66,22 @@ public class LayerSetButtonPanel extends AbstractHUDPanel implements LayerSetCon
     {
         if (Utilities.sameInstance(e.getSource(), getManageLayerSetsMenuItem()))
         {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.layer-manager.button-row.manage-layer-set");
             myController.showLayerSetManager();
         }
         else if (Utilities.sameInstance(e.getSource(), getAddLayerSetMenuItem()))
         {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.layer-manager.button-row.add-layer-set");
             myController.saveCurrentSet();
         }
         else if (Utilities.sameInstance(e.getSource(), getDefaultSetMenuItem()))
         {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.layer-manager.button-row.select-default-layer-set");
             myController.restoreDefaultActiveSet();
         }
         else if (e.getSource() instanceof LayerSetMenuItem)
         {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.layer-manager.button-row.select-layer-set");
             myController.activateLayerSet(e.getActionCommand(), true);
         }
     }
@@ -101,7 +111,7 @@ public class LayerSetButtonPanel extends AbstractHUDPanel implements LayerSetCon
         getSplitButton().add(getAddLayerSetMenuItem());
         getSplitButton().add(getManageLayerSetsMenuItem());
 
-        getSplitButton().add(new JSeparator(JSeparator.HORIZONTAL));
+        getSplitButton().add(new JSeparator(SwingConstants.HORIZONTAL));
         getSplitButton().add(getDefaultSetMenuItem());
 
         List<String> setNames = myController.getSavedSetNames();
@@ -190,6 +200,7 @@ public class LayerSetButtonPanel extends AbstractHUDPanel implements LayerSetCon
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
+                    QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.layer-manager.button-row.add-layer-set");
                     myController.saveCurrentSet();
                 }
             });

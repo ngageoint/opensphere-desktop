@@ -275,7 +275,7 @@ public class GmlSaxFeatureResponseHandler extends DefaultHandler
             catch (NumberFormatException e)
             {
                 myFeatureId = 0;
-                LOGGER.error("Received non numeric feature ID: " + idString);
+                LOGGER.debug("Received non numeric feature ID: " + idString);
             }
             myLayerNameTag = localName;
             resetFeatureState();
