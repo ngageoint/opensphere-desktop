@@ -1,5 +1,9 @@
 package io.opensphere.mantle.iconproject.view;
 
+import java.awt.EventQueue;
+import java.awt.Window;
+
+import io.opensphere.core.Toolbox;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeView;
@@ -29,8 +33,10 @@ public class MainPanel extends SplitPane
 
     private ScrollBar myScrollBar;
 
-    public MainPanel()
+    public MainPanel(Toolbox tb)
     {
+
+        Window owner = tb.getUIRegistry().getMainFrameProvider().get();
 
         myTreeView = new AnchorPane();
         myTreeList = new TreeView();
@@ -52,13 +58,21 @@ public class MainPanel extends SplitPane
 
         AnchorPane.setBottomAnchor(myCustIconButton, 26.0);
         myCustIconButton.lockButton(myCustIconButton);
+        myCustIconButton.setOnAction(event ->
+        {
+            EventQueue.invokeLater(() ->
+            {
+                @SuppressWarnings("unused")
+                IconProjBuilderDialog builderPane = new IconProjBuilderDialog(owner, tb);
+            });
+        });
 
         AnchorPane.setBottomAnchor(myGenIconButton, 0.0);
         myGenIconButton.lockButton(myGenIconButton);
 
         myScrollBar.setOrientation(javafx.geometry.Orientation.VERTICAL);
 
-        myTreeView.getChildren().addAll(myTreeList,myAddIconButton,myCustIconButton,myGenIconButton);
+        myTreeView.getChildren().addAll(myTreeList, myAddIconButton, myCustIconButton, myGenIconButton);
 
         columnConstraints.setMinWidth(10.0);
         columnConstraints.setPrefWidth(100.0);

@@ -195,10 +195,9 @@ public class IconProjPanel extends AnchorPane
 
         // myAddIconButton.getStylesheets().add("/icon/manager/model/IconManagerFrameStyle.css");
 
-
         myAddIconButton.setText("Add Icon from File");
-        //myAddIconButton.setOnAction(event -> loadFromFile(IconRecord.USER_ADDED_COLLECTION, null));
-
+        // myAddIconButton.setOnAction(event ->
+        // loadFromFile(IconRecord.USER_ADDED_COLLECTION, null));
 
         AnchorPane.setBottomAnchor(myCustIconButton, 26.0);
         AnchorPane.setLeftAnchor(myCustIconButton, -2.0);
@@ -207,14 +206,6 @@ public class IconProjPanel extends AnchorPane
         myCustIconButton.setMnemonicParsing(false);
 
         myCustIconButton.setText("Customize Icon");
-        myCustIconButton.setOnAction(event ->
-        {
-            EventQueue.invokeLater(() ->
-            {
-                @SuppressWarnings("unused")
-                IconProjBuilderDialog builderPane = new IconProjBuilderDialog(owner, tb);
-            });
-        });
 
         AnchorPane.setBottomAnchor(myGenIconButton, 0.0);
         AnchorPane.setLeftAnchor(myGenIconButton, -2.0);

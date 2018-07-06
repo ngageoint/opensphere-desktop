@@ -13,6 +13,7 @@ import io.opensphere.core.control.ui.MenuBarRegistry;
 import io.opensphere.mantle.data.geom.style.dialog.VisualizationStyleControlDialog;
 import io.opensphere.mantle.icon.impl.gui.IconManagerFrame;
 import io.opensphere.mantle.iconproject.view.IconProjDialog;
+import io.opensphere.mantle.iconproject.view.IconProjFrame;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.mantle.util.TextViewDialog;
 
@@ -97,14 +98,12 @@ class MantleMenuInit
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //iconManager.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
-                //iconManager.setVisible(true);
-                IconProjDialog testStage = new IconProjDialog(myToolbox.getUIRegistry().getMainFrameProvider().get());
-                testStage.setVisible(true);
+                // iconManager.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
+                // iconManager.setVisible(true);
+                IconProjFrame testStage = new IconProjFrame(myToolbox);
+
             }
         });
-
-
 
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.TOOLS_MENU)
                 .add(iconManagerMI);

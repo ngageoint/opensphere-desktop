@@ -29,6 +29,7 @@ public class ButtonBuilder extends Button
     /** AwesomeFont Icons */
     private AwesomeIconSolid myIcon;
 
+    /** The togglegroup myToggle*/
     private boolean myToggle;
 
     /**
@@ -37,7 +38,6 @@ public class ButtonBuilder extends Button
      * @param label the text to display inside the button.
      * @param group the group to which the menu item belongs.
      * @param icon the (optional) icon to display with the menu item.
-     * @param handler the consumer called when the menu item is activated.
      */
     public ButtonBuilder(String label, boolean iconchoice)
     {

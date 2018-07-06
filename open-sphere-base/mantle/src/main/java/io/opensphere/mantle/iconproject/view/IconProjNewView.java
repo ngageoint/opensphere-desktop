@@ -1,5 +1,8 @@
 package io.opensphere.mantle.iconproject.view;
 
+import java.awt.Window;
+
+import io.opensphere.core.Toolbox;
 import javafx.scene.layout.AnchorPane;
 
 public class IconProjNewView extends AnchorPane
@@ -7,10 +10,12 @@ public class IconProjNewView extends AnchorPane
 
     final TopMenuBar myTopMenuBar = new TopMenuBar();
 
-    final MainPanel myMainPanel = new MainPanel();
+    final MainPanel myMainPanel;
 
-    public IconProjNewView()
+    public IconProjNewView(Toolbox tb)
     {
+
+        myMainPanel = new MainPanel(tb);
         setTopAnchor(myMainPanel, 30.);
         setBottomAnchor(myMainPanel, 0.0);
         setLeftAnchor(myMainPanel, -8.);
