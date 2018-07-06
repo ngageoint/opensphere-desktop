@@ -1,6 +1,7 @@
 package io.opensphere.mantle.iconproject.view;
 
-import javafx.scene.control.Button;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -8,8 +9,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class TopMenuBar extends HBox

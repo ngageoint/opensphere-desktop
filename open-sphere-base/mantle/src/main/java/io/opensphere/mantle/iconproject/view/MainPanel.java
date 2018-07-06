@@ -4,6 +4,12 @@ import java.awt.EventQueue;
 import java.awt.Window;
 
 import io.opensphere.core.Toolbox;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeView;
@@ -11,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.StackPane;
 
 public class MainPanel extends SplitPane
 {
@@ -32,6 +39,8 @@ public class MainPanel extends SplitPane
     private AnchorPane myTreeView;
 
     private ScrollBar myScrollBar;
+
+    private StackPane stackPane;
 
     public MainPanel(Toolbox tb)
     {
@@ -69,10 +78,12 @@ public class MainPanel extends SplitPane
 
         AnchorPane.setBottomAnchor(myGenIconButton, 0.0);
         myGenIconButton.lockButton(myGenIconButton);
+        myGenIconButton.setOnMouseClicked(event ->
+        {
+            changeTop();
+        });
 
         myScrollBar.setOrientation(javafx.geometry.Orientation.VERTICAL);
-
-        myTreeView.getChildren().addAll(myTreeList, myAddIconButton, myCustIconButton, myGenIconButton);
 
         columnConstraints.setMinWidth(10.0);
         columnConstraints.setPrefWidth(100.0);
@@ -82,9 +93,48 @@ public class MainPanel extends SplitPane
         rowConstraints.setPrefHeight(30.0);
         rowConstraints.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
+        // StackPane
+        stackPane = new StackPane();
+
+        // Add Label to StackPane
+        Label label = new Label("I'm a Label");
+        label.setStyle("-fx-background-color:red");
+        label.setPadding(new Insets(5, 5, 5, 5));
+        stackPane.getChildren().add(label);
+
+        // Add Button to StackPane
+        Button button = new Button("I'm a Button");
+        button.setStyle("-fx-background-color: blue");
+        button.setPadding(new Insets(5, 5, 5, 5));
+        stackPane.getChildren().add(button);
+
+        //
+
+        stackPane.setStyle("-fx-background-color: Gainsboro;-fx-border-color: blue;");
+
         gridPane.getColumnConstraints().addAll(columnConstraints);
         gridPane.getRowConstraints().addAll(rowConstraints);
 
+        myTreeView.getChildren().addAll(myTreeList, stackPane, myAddIconButton, myCustIconButton, myGenIconButton);
         getItems().addAll(myTreeView, gridPane, myScrollBar);
+    }
+
+    private void changeTop()
+    {
+        ObservableList<Node> childs = this.stackPane.getChildren();
+
+        if (childs.size() > 1)
+        {
+            //
+            Node topNode = childs.get(childs.size() - 1);
+
+            // This node will be brought to the front
+            Node newTopNode = childs.get(childs.size() - 2);
+
+            topNode.setVisible(false);
+            topNode.toBack();
+
+            newTopNode.setVisible(true);
+        }
     }
 }
