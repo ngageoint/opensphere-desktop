@@ -1,9 +1,13 @@
 package io.opensphere.mantle.iconproject.view;
 
+import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import io.opensphere.core.util.AwesomeIconSolid;
+import io.opensphere.core.util.image.IconUtil;
+import io.opensphere.core.util.swing.GenericFontIcon;
+import io.opensphere.core.util.swing.IconButton;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,36 +38,34 @@ public class ButtonBuilder extends Button
      * @param icon the (optional) icon to display with the menu item.
      * @param handler the consumer called when the menu item is activated.
      */
-    public ButtonBuilder(String label, boolean iconChoice, AwesomeIconSolid icon)
+    public ButtonBuilder(String label)
     {
         super();
         myLabel = label;
-        myIconChosen = iconChoice;
-        myIcon = icon;
+        Button myButton = new Button();       
     }
 
-    public Button createButton() throws FileNotFoundException
+    // IconButton exportButton = new IconButton("Export", new
+    // GenericFontIcon(AwesomeIconSolid.DOWNLOAD, Color.YELLOW));
+
+    public void setIcon(AwesomeIconSolid Icon ,Color color) {
+        
+        getStyleClass().remove("button");
+
+    }
+
+    public Button createButton()
     {
 
         Button myButton = new Button();
 
-        if (myIconChosen)
-        {
-            myButton.getStyleClass().remove("button");
-            Image myGridIcon = new Image(new FileInputStream("src/main/resources/images/file.png"));
-            myButton.setGraphic(new ImageView(myGridIcon));
-        }
-
-        else
-        {
-            myButton.setText(myLabel);
-        }
-
-        myButton.setOnAction(null);
         myButton.setTextOverrun(javafx.scene.control.OverrunStyle.CLIP);
         myButton.setFont(new Font(14.0));
+        myButton.setText(myLabel);
 
         return myButton;
     }
 
+   
+    
 }
