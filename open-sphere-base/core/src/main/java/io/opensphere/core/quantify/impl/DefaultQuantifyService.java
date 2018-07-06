@@ -2,6 +2,7 @@ package io.opensphere.core.quantify.impl;
 
 import java.time.Duration;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -30,7 +31,7 @@ public class DefaultQuantifyService implements QuantifyService
     private final Map<String, Metric> myMetrics;
 
     /** The sender to which to send metrics. */
-    private final QuantifySender mySender;
+    private final Set<QuantifySender> mySenders;
 
     /** The frequency at which metrics are sent. */
     private final Duration mySendFrequency;
@@ -47,13 +48,13 @@ public class DefaultQuantifyService implements QuantifyService
     /**
      * Creates a new service instance bound to the supplied sender.
      *
-     * @param sender the sender to which to send the metrics.
+     * @param senders the senders to which to send the metrics.
      * @param enabledProperty the property to which the enabled property is
      *            bound.
      */
-    public DefaultQuantifyService(QuantifySender sender, BooleanProperty enabledProperty)
+    public DefaultQuantifyService(Set<QuantifySender> senders, BooleanProperty enabledProperty)
     {
-        mySender = sender;
+        mySenders = senders;
         myEnabledProperty.bind(enabledProperty);
         myMetrics = New.map();
         mySendFrequency = Duration.ofMinutes(5);
@@ -107,10 +108,20 @@ public class DefaultQuantifyService implements QuantifyService
             synchronized (myMetrics)
             {
                 LOG.info("Sending metrics.");
-                mySender.send(New.collection(myMetrics.values()));
+                mySenders.forEach(s -> s.send(New.collection(myMetrics.values())));
                 myMetrics.clear();
             }
         }
+    }
+
+    /**
+     * Gets the value of the senders ({@link #mySenders}) field.
+     *
+     * @return the value stored in the {@link #mySenders} field.
+     */
+    public Set<QuantifySender> getSenders()
+    {
+        return mySenders;
     }
 
     /**

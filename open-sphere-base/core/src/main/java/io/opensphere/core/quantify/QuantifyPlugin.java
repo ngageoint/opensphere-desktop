@@ -1,5 +1,8 @@
 package io.opensphere.core.quantify;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -15,6 +18,7 @@ import io.opensphere.core.quantify.impl.LoggingQuantifySender;
 import io.opensphere.core.quantify.impl.QuantifyToolboxImpl;
 import io.opensphere.core.quantify.settings.QuantifyOptionsProvider;
 import io.opensphere.core.quantify.settings.QuantifySettingsModel;
+import io.opensphere.core.util.collections.New;
 
 /** A plugin used to collect metrics and send them to a remote endpoint. */
 public class QuantifyPlugin extends PluginAdapter
@@ -51,22 +55,53 @@ public class QuantifyPlugin extends PluginAdapter
 
         myToolbox.getUIRegistry().getOptionsRegistry().addOptionsProvider(myOptionsProvider);
 
-        String url = myPreferences.getString("quantify.url", null);
+        String url = settingsModel.urlProperty().get();
 
-        QuantifySender sender;
+        Set<QuantifySender> senders = New.set();
         if (StringUtils.isNotBlank(url))
         {
-            sender = new HttpQuantifySender(toolbox, UrlUtils.toUrl(url));
+            senders.add(new HttpQuantifySender(toolbox, UrlUtils.toUrl(url)));
         }
         else
         {
             LOG.info("Unable to find preference 'quantify.url'. Writing metrics to log.");
-            sender = new LoggingQuantifySender();
+            settingsModel.captureToLogProperty().set(true);
         }
-        myService = new DefaultQuantifyService(sender, settingsModel.enabledProperty());
 
-        QuantifyToolbox quantifyToolbox = new QuantifyToolboxImpl(myService);
+        if (settingsModel.captureToLogProperty().get())
+        {
+            senders.add(new LoggingQuantifySender());
+        }
+        myService = new DefaultQuantifyService(senders, settingsModel.enabledProperty());
+
+        settingsModel.captureToLogProperty()
+                .addListener((obs, ov, nv) -> updateCaptureToLog(ov.booleanValue(), nv.booleanValue()));
+
+        QuantifyToolbox quantifyToolbox = new QuantifyToolboxImpl(settingsModel, myService);
         toolbox.getPluginToolboxRegistry().registerPluginToolbox(quantifyToolbox);
+    }
+
+    /**
+     * @param originalValue the previous value of the capture-to-log setting.
+     * @param newValue the new value of the capture-to-log setting.
+     */
+    private void updateCaptureToLog(boolean originalValue, boolean newValue)
+    {
+        if (originalValue != newValue)
+        {
+            synchronized (myService)
+            {
+                if (!newValue)
+                {
+                    myService.getSenders().removeAll(myService.getSenders().stream()
+                            .filter(s -> s instanceof LoggingQuantifySender).collect(Collectors.toSet()));
+                }
+                else
+                {
+                    myService.getSenders().add(new LoggingQuantifySender());
+                }
+            }
+        }
     }
 
     /**

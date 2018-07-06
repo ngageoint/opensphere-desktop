@@ -1,5 +1,7 @@
 package io.opensphere.core.quantify;
 
+import java.util.Set;
+
 import javafx.beans.property.BooleanProperty;
 
 /**
@@ -28,6 +30,13 @@ public interface QuantifyService
      * will not be counted twice.
      */
     void flush();
+
+    /**
+     * Gets the set of senders to which metrics will be sent.
+     *
+     * @return the set of senders to which metrics will be sent.
+     */
+    Set<QuantifySender> getSenders();
 
     /** Terminates the service. */
     void close();
