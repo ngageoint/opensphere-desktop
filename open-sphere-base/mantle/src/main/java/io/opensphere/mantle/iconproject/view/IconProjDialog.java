@@ -12,9 +12,10 @@ public class IconProjDialog extends JFXDialog
     public IconProjDialog(Window owner, Toolbox tb)
     {
         super(owner, "Intern Icon Manager");
+        setLocationRelativeTo(owner);
         setSize(800, 400);
         setFxNode(new IconProjNewView(tb));
-        setMinimumSize(new Dimension(800, 400));
+        setMinimumSize(new Dimension(800, 400));       
     }
 
 }

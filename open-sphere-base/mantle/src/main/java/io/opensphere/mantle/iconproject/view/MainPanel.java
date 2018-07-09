@@ -3,6 +3,17 @@ package io.opensphere.mantle.iconproject.view;
 import java.awt.EventQueue;
 import java.awt.Window;
 import io.opensphere.core.Toolbox;
+
+import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
+import io.opensphere.mantle.iconproject.model.PanelModel;
+import javafx.beans.property.Property;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+
 import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.util.MantleToolboxUtils;
@@ -14,6 +25,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.StackPane;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
@@ -57,7 +69,13 @@ public class MainPanel extends SplitPane
 
     private final ScrollBar myScrollBar;
 
+    private static StackPane stackPane;
+
+    private PanelModel myPanel = new PanelModel();
+
+
     @SuppressWarnings("unused")
+    
     public MainPanel(Toolbox tb)
     {
         myTree = new JTree();
@@ -71,7 +89,8 @@ public class MainPanel extends SplitPane
 
 
         myTreeView = new AnchorPane();
-        myTreeList = new TreeView();
+        TreeBuilder myTreeBuilder = new TreeBuilder();
+        myTreeList = new TreeView(myTreeBuilder);
 
         gridPane = new GridPane();
         myScrollBar = new ScrollBar();
@@ -109,8 +128,6 @@ public class MainPanel extends SplitPane
 
         myScrollBar.setOrientation(javafx.geometry.Orientation.VERTICAL);
 
-        myTreeView.getChildren().addAll(myTreeList, myAddIconButton, myCustIconButton, myGenIconButton);
-
         columnConstraints.setMinWidth(10.0);
         columnConstraints.setPrefWidth(100.0);
         columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
@@ -119,10 +136,49 @@ public class MainPanel extends SplitPane
         rowConstraints.setPrefHeight(30.0);
         rowConstraints.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
+        // StackPane
+        stackPane = new StackPane();
+
+        // Add Label to StackPane
+        Label label = new Label("I'm a Label");
+        label.setStyle("-fx-background-color:red");
+        label.setPadding(new Insets(5, 5, 5, 5));
+        stackPane.getChildren().add(label);
+
+        // Add Button to StackPane
+        Button button = new Button("I'm a Button");
+        button.setStyle("-fx-background-color: blue");
+        button.setPadding(new Insets(5, 5, 5, 5));
+        stackPane.getChildren().add(button);
+        // stackPane.rotateProperty().bind(mysizerrrrrr);
+ 
+        //
+
         gridPane.getColumnConstraints().addAll(columnConstraints);
         gridPane.getRowConstraints().addAll(rowConstraints);
+        myTreeView.getChildren().addAll(myTreeList, myAddIconButton, myCustIconButton, myGenIconButton);
+        getItems().addAll(myTreeView, stackPane, myScrollBar);
+    }
 
-        getItems().addAll(myTreeView, gridPane, myScrollBar);
+    static void changeTop(boolean choice)
+    {
+        ObservableList<Node> childs = stackPane.getChildren();
+
+        Node grid = childs.get(1);
+        Node list = childs.get(0);
+        if (choice)
+        {
+            grid.setVisible(false);
+            // grid.toBack();
+            list.setVisible(true);
+        }
+        else
+        {
+            list.setVisible(false);
+            // list.toBack();
+            grid.setVisible(true);
+        }
+
     }
 
     /**

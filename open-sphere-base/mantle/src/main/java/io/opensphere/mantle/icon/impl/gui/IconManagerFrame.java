@@ -37,6 +37,7 @@ import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.IconRegistryListener;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.icon.impl.IconProviderFactory;
+import io.opensphere.mantle.iconproject.view.IconProjBuilderNewDialog;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /**
@@ -122,6 +123,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
         createIconPopupMenuItems(iconPopupMenu);
         createTreePopupMenuItems(treePopupMenu);
         myIconRegistry.addListener(this);
+   
     }
 
     /**
@@ -130,7 +132,8 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     private void showBuilderDialog()
     {
         IconRegistry iconRegistry = MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry();
-        IconBuilderDialog dialog = new IconBuilderDialog(this, iconRegistry, myChooserPanel);
+        IconRecord record = myChooserPanel.getLastPopupTriggerIconRecord();
+        IconProjBuilderNewDialog dialog = new IconProjBuilderNewDialog(this, iconRegistry, record);
         dialog.setVisible(true);
     }
 

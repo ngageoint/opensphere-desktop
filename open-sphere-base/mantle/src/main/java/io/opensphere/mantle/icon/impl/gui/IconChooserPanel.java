@@ -186,6 +186,11 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     {
         mySelectedUrl = selectedUrl;
     }
+    
+    public String getSelectedURL()
+    {   
+        return mySelectedUrl;
+    }
 
     /**
      * Adds the action listener.
