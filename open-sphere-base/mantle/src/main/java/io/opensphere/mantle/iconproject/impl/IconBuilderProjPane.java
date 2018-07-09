@@ -2,7 +2,6 @@ package io.opensphere.mantle.iconproject.impl;
 
 import static io.opensphere.core.util.fx.FXUtilities.toAwtColor;
 
-import java.awt.Image;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
 
@@ -12,12 +11,13 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -25,19 +25,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
-
 import io.opensphere.core.image.processor.RotateImageProcessor;
-import io.opensphere.core.util.FontIconEnum;
-import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.IconRegistry;
-import io.opensphere.mantle.icon.impl.gui.IconBuilderChoiceDialog;
 
 /** Panel for building custom icons. */
 public class IconBuilderProjPane extends BorderPane
@@ -75,14 +67,14 @@ public class IconBuilderProjPane extends BorderPane
      * Constructs a new IconBuilderPane.
      *
      * @param owner the AWT Window
-     * @return 
+     * @return
      */
-    public IconBuilderProjPane(Window owner,IconRecord record)
+    public IconBuilderProjPane(Window owner, IconRecord record)
     {
         myOwner = owner;
         myRecord = record;
         setTop(createTop());
-        
+
         setCenter(createImageView());
         BorderPane.setAlignment(myImageRenderView, Pos.CENTER);
         myImageRenderView.autosize();
@@ -118,7 +110,7 @@ public class IconBuilderProjPane extends BorderPane
         Label sizeLabel = new Label("Size: ", sizeSpinner);
         sizeLabel.setContentDisplay(ContentDisplay.RIGHT);
         AnchorPane.setRightAnchor(sizeLabel, 50.);
- 
+
         AnchorPane.setLeftAnchor(sizeSpinner, 10.);
         myColorPicker = new ColorPicker();
 
@@ -173,13 +165,13 @@ public class IconBuilderProjPane extends BorderPane
         HBox controlBox = new HBox(10);
         controlBox.setAlignment(Pos.BASELINE_LEFT);
 
-        Spinner<Number> xSpinner = new Spinner<>(-100, 100, 0);
+        Spinner<Number> xSpinner = new Spinner<>(0,100, 0);
         xSpinner.setPrefWidth(spinwidth);
         xSpinner.getValueFactory().valueProperty().bindBidirectional(myXPos);
         xSpinner.setEditable(true);
         xSpinner.getStyleClass().clear();
 
-        Spinner<Number> ySpinner = new Spinner<>(0, 200, 0);
+        Spinner<Number> ySpinner = new Spinner<>(-100, 100, 0);
         ySpinner.setPrefWidth(spinwidth);
         ySpinner.getValueFactory().valueProperty().bindBidirectional(myYPos);
         ySpinner.setEditable(true);
@@ -208,17 +200,26 @@ public class IconBuilderProjPane extends BorderPane
      */
     private HBox createImageView()
     {
-        
+
         myImageRenderView = new ImageView(myRecord.getImageURL().toString());
         myImageRenderView.rotateProperty().bind(myRotation);
-
+        Image IconImage = myImageRenderView.getImage();
+        myImageRenderView.translateXProperty().bind(myXPos);
+        myImageRenderView.translateYProperty().bind(myYPos);
+        myImageRenderView.boundsInLocalProperty();
+        myImageRenderView.setFitWidth(100.);
+       myImageRenderView.setFitHeight(100);
+        DropShadow ds = new DropShadow(20, Color.AQUA);
+        myImageRenderView.setEffect(ds);
+        System.out.println(IconImage.getPixelReader().getPixelFormat());
         HBox box = new HBox();
-        box.setAlignment(Pos.CENTER);
-        AnchorPane.setLeftAnchor(myImageRenderView, 0.);
-        AnchorPane.setRightAnchor(myImageRenderView, 0.);
+        box.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+                + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
 
+
+        box.setAlignment(Pos.BOTTOM_LEFT);
         box.getChildren().addAll(myImageRenderView);
-
+       
         return box;
     }
 
@@ -231,11 +232,12 @@ public class IconBuilderProjPane extends BorderPane
     {
         if (myCurrentIcon != null)
         {
-       //     myCurrentIcon.withColor(myColorPicker.getValue());
+            // myCurrentIcon.withColor(myColorPicker.getValue());
             myYPos.set(myCurrentIcon.getYPos());
             myXPos.set(myCurrentIcon.getXPos());
-       //   Image image = new Image();
-       //     myImageRenderView.setImage(SwingFXUtils.toFXImage(myCurrentIcon, null));
+            // Image image = new Image();
+            // myImageRenderView.setImage(SwingFXUtils.toFXImage(myCurrentIcon,
+            // null));
         }
     }
 
@@ -303,6 +305,7 @@ public class IconBuilderProjPane extends BorderPane
 
     /**
      * Generates and retrieves a name for the image, if it is not null.
+     * 
      * @return the image name
      */
     public String getImageName()
