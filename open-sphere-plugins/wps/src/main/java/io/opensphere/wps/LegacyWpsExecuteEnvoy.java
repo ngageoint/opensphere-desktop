@@ -55,7 +55,8 @@ public class LegacyWpsExecuteEnvoy extends AbstractEnvoy
     private final ServerConnectionParams myServerConfig;
 
     /**
-     * Handles setting up necessary NRT streaming component if the WPS server is streaming capable.
+     * Handles setting up necessary NRT streaming component if the WPS server is
+     * streaming capable.
      */
     @GuardedBy("this")
     private WPSStreamingServerHandler myStreamServerHandler;
@@ -71,7 +72,8 @@ public class LegacyWpsExecuteEnvoy extends AbstractEnvoy
      * @param toolbox The toolbox.
      * @param server The server.
      * @param masterGroup the master group
-     * @param pCapabilities The capabilities describing the server to which the connection is made.
+     * @param pCapabilities The capabilities describing the server to which the
+     *            connection is made.
      */
     public LegacyWpsExecuteEnvoy(Toolbox toolbox, ServerConnectionParams server, DataGroupInfo masterGroup,
             WPSCapabilitiesType pCapabilities)
@@ -79,10 +81,13 @@ public class LegacyWpsExecuteEnvoy extends AbstractEnvoy
         super(toolbox);
         myServerConfig = server;
         myCapabilities = pCapabilities;
-        if(server != null) {
-        server.getServerTitle();
-        server.getServerId(OGCServerSource.WPS_SERVICE);
-        } else {
+        if (server != null)
+        {
+            server.getServerTitle();
+            server.getServerId(OGCServerSource.WPS_SERVICE);
+        }
+        else
+        {
             LOGGER.warn("Attempted to activate a server with null params argument.");
         }
         myActiveFeatures = New.map();
@@ -144,7 +149,8 @@ public class LegacyWpsExecuteEnvoy extends AbstractEnvoy
     }
 
     /**
-     * Make an Execute request to the server using the existing connection parameters.
+     * Make an Execute request to the server using the existing connection
+     * parameters.
      *
      * @param url The execute url.
      * @param httpResponse The optional http server response.
