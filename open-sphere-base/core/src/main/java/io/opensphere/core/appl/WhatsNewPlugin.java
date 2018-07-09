@@ -1,12 +1,15 @@
 package io.opensphere.core.appl;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
@@ -15,9 +18,11 @@ import java.util.Properties;
 import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -34,11 +39,14 @@ import io.opensphere.core.control.ui.MenuBarRegistry;
 import io.opensphere.core.event.ApplicationLifecycleEvent;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.preferences.Preferences;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.javafx.WebPanel;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import io.opensphere.core.util.swing.GenericFontIcon;
 
 /**
  * Plugin for the "What's New" dialog shown at initialization.
@@ -57,14 +65,20 @@ public class WhatsNewPlugin extends PluginAdapter
     /** The don't show again checkbox. */
     private JCheckBox myDontShowAgainCheckbox;
 
+    /**
+     * The checkbox used to inform the user of anonymous metrics collection, and
+     * allow them to disable it.
+     */
+    private JCheckBox myMetricsCheckbox;
+
     /** The web panel. */
     private WebPanel myWebPanel;
-    
+
     /** The toolbox. */
     private Toolbox myToolbox;
 
     /** Listener for lifecycle events. */
-    private final EventListener<ApplicationLifecycleEvent> myLifeCycleEventListener = new EventListener<ApplicationLifecycleEvent>()
+    private final EventListener<ApplicationLifecycleEvent> myLifeCycleEventListener = new EventListener<>()
     {
         @Override
         public void notify(ApplicationLifecycleEvent event)
@@ -198,6 +212,9 @@ public class WhatsNewPlugin extends PluginAdapter
         {
             myPrefs.putBoolean(pair.getFirstObject(), selected, this);
         }
+
+        QuantifyToolboxUtils.getQuantifyToolbox(myToolbox).getSettingsModel().enabledProperty()
+                .set(myMetricsCheckbox.isSelected());
     }
 
     /**
@@ -209,7 +226,7 @@ public class WhatsNewPlugin extends PluginAdapter
 
         myPrevButton = new JButton("Previous");
         myPrevButton.addActionListener(e -> updateDialog(--myCurrentIndex));
-        
+
         final JButton autoProxyWizardButton = new JButton("Run Auto-Proxy Wizard");
         autoProxyWizardButton.addActionListener(e ->
         {
@@ -224,21 +241,46 @@ public class WhatsNewPlugin extends PluginAdapter
         myNextButton.addActionListener(e -> updateDialog(++myCurrentIndex));
 
         myDontShowAgainCheckbox = new JCheckBox("Don't show this again (access from Help menu)", true);
+        myMetricsCheckbox = new JCheckBox("Enable anonymous usage metrics collection",
+                QuantifyToolboxUtils.getQuantifyToolbox(myToolbox).getSettingsModel().enabledProperty().get());
+
+        JLabel tooltipLabel = new JLabel(new GenericFontIcon(AwesomeIconSolid.QUESTION_CIRCLE, Color.WHITE, 10));
+        tooltipLabel.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                myToolbox.getUIRegistry().getOptionsRegistry().requestShowTopic("Usage Statistics");
+                myDialog.setVisible(false);
+            }
+        });
 
         JPanel buttonPanel = new JPanel(new GridBagLayout());
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        Box box = Box.createHorizontalBox();
+        box.add(myMetricsCheckbox);
+        box.add(tooltipLabel);
+
         GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = 3;
+        gbc.gridy++;
+        gbc.anchor = GridBagConstraints.WEST;
+        buttonPanel.add(box, gbc);
+
+        gbc.gridy++;
         gbc.gridwidth = 3;
         gbc.insets.bottom = 10;
         gbc.anchor = GridBagConstraints.WEST;
         buttonPanel.add(myDontShowAgainCheckbox, gbc);
+
         gbc.insets.bottom = 0;
-        gbc.gridy = 1;
+        gbc.gridy++;
         gbc.gridwidth = 1;
         gbc.weightx = 1.;
         gbc.anchor = GridBagConstraints.WEST;
         buttonPanel.add(myPrevButton, gbc);
-        buttonPanel.add(autoProxyWizardButton,gbc);
+        buttonPanel.add(autoProxyWizardButton, gbc);
         gbc.anchor = GridBagConstraints.CENTER;
         buttonPanel.add(closeButton, gbc);
         gbc.anchor = GridBagConstraints.EAST;
@@ -308,7 +350,7 @@ public class WhatsNewPlugin extends PluginAdapter
             // whatsnew.properties.
             if (!containsKey(key) && !StringUtils.isBlank((String)value))
             {
-                myProperties.add(new Pair<String, String>((String)key, (String)value));
+                myProperties.add(new Pair<>((String)key, (String)value));
             }
             return super.put(key, value);
         }
