@@ -32,8 +32,9 @@ public class IconTreeBuilder
     }
 
     /**
-     * Creates a tree structure with the icon records from the registry that match the filter criteria. The tree is structured by
-     * collection name, sub-category, and icon record. The user object for each leaf-node is the
+     * Creates a tree structure with the icon records from the registry that
+     * match the filter criteria. The tree is structured by collection name,
+     * sub-category, and icon record. The user object for each leaf-node is the
      * {@link IconRecordTreeNodeUserObject}
      *
      * @param filter the filter for selecting records to be included.
@@ -44,7 +45,7 @@ public class IconTreeBuilder
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode();
         List<IconRecord> records = myIconRegistry.getIconRecords(filter);
         Collections.sort(records,
-            (r1, r2) -> AlphanumComparator.compareNatural(r1.getImageURL().toString(), r2.getImageURL().toString()));
+                (r1, r2) -> AlphanumComparator.compareNatural(r1.getImageURL().toString(), r2.getImageURL().toString()));
         Set<String> collectionSet = New.set();
         Map<String, Map<String, List<IconRecord>>> collectionToSubCatIconRecMap = New.map();
         String defaultSubCat = "DEFAULT";
@@ -85,7 +86,8 @@ public class IconTreeBuilder
      *
      * @param rootNode the root node
      * @param collectionSet the collection set
-     * @param collectionToSubCatIconRecMap the collection to sub cat icon rec map
+     * @param collectionToSubCatIconRecMap the collection to sub cat icon rec
+     *            map
      * @param defaultSubCat the default sub cat
      */
     private void buildTreeFromMaps(DefaultMutableTreeNode rootNode, Set<String> collectionSet,

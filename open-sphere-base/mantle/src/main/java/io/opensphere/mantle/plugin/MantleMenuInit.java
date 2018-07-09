@@ -98,8 +98,8 @@ class MantleMenuInit
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                // iconManager.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
-                // iconManager.setVisible(true);
+                 iconManager.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
+                 iconManager.setVisible(true);
                 IconProjFrame testStage = new IconProjFrame(myToolbox);
 
             }

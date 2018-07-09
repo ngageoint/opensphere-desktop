@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 import java.awt.Window;
 
 import io.opensphere.core.Toolbox;
+import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
+import io.opensphere.mantle.iconproject.model.PanelModel;
+import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -40,7 +43,9 @@ public class MainPanel extends SplitPane
 
     private ScrollBar myScrollBar;
 
-    private StackPane stackPane;
+    private static StackPane stackPane;
+
+    private PanelModel myPanel = new PanelModel();
 
     public MainPanel(Toolbox tb)
     {
@@ -48,7 +53,8 @@ public class MainPanel extends SplitPane
         Window owner = tb.getUIRegistry().getMainFrameProvider().get();
 
         myTreeView = new AnchorPane();
-        myTreeList = new TreeView();
+        TreeBuilder myTreeBuilder = new TreeBuilder();
+        myTreeList = new TreeView(myTreeBuilder);
 
         gridPane = new GridPane();
         myScrollBar = new ScrollBar();
@@ -78,10 +84,6 @@ public class MainPanel extends SplitPane
 
         AnchorPane.setBottomAnchor(myGenIconButton, 0.0);
         myGenIconButton.lockButton(myGenIconButton);
-        myGenIconButton.setOnMouseClicked(event ->
-        {
-            changeTop();
-        });
 
         myScrollBar.setOrientation(javafx.geometry.Orientation.VERTICAL);
 
@@ -107,34 +109,34 @@ public class MainPanel extends SplitPane
         button.setStyle("-fx-background-color: blue");
         button.setPadding(new Insets(5, 5, 5, 5));
         stackPane.getChildren().add(button);
-
+        // stackPane.rotateProperty().bind(mysizerrrrrr);
+ 
         //
-
-        stackPane.setStyle("-fx-background-color: Gainsboro;-fx-border-color: blue;");
 
         gridPane.getColumnConstraints().addAll(columnConstraints);
         gridPane.getRowConstraints().addAll(rowConstraints);
-
-        myTreeView.getChildren().addAll(myTreeList, stackPane, myAddIconButton, myCustIconButton, myGenIconButton);
-        getItems().addAll(myTreeView, gridPane, myScrollBar);
+        myTreeView.getChildren().addAll(myTreeList, myAddIconButton, myCustIconButton, myGenIconButton);
+        getItems().addAll(myTreeView, stackPane, myScrollBar);
     }
 
-    private void changeTop()
+    static void changeTop(boolean choice)
     {
-        ObservableList<Node> childs = this.stackPane.getChildren();
+        ObservableList<Node> childs = stackPane.getChildren();
 
-        if (childs.size() > 1)
+        Node grid = childs.get(1);
+        Node list = childs.get(0);
+        if (choice)
         {
-            //
-            Node topNode = childs.get(childs.size() - 1);
-
-            // This node will be brought to the front
-            Node newTopNode = childs.get(childs.size() - 2);
-
-            topNode.setVisible(false);
-            topNode.toBack();
-
-            newTopNode.setVisible(true);
+            grid.setVisible(false);
+            // grid.toBack();
+            list.setVisible(true);
         }
+        else
+        {
+            list.setVisible(false);
+            // list.toBack();
+            grid.setVisible(true);
+        }
+
     }
 }
