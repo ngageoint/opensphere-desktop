@@ -214,7 +214,7 @@ public class IconBuilderPane extends BorderPane
         box.setAlignment(Pos.CENTER);
 
         Rectangle border = new Rectangle(0, 0, Color.TRANSPARENT);
-        border.setStroke(Color.WHITE);
+      //  border.setStroke(Color.WHITE);
         border.setManaged(false);
 
         myImageRenderView.boundsInParentProperty().addListener((v, o, n) ->

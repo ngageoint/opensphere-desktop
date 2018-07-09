@@ -1,4 +1,4 @@
-package io.opensphere.mantle.iconproject.view;
+package io.opensphere.mantle.iconproject.impl;
 
 import java.awt.Color;
 import java.io.FileInputStream;

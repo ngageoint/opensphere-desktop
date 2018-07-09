@@ -1,4 +1,4 @@
-package io.opensphere.mantle.iconproject.view;
+package io.opensphere.mantle.iconproject.impl;
 
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
