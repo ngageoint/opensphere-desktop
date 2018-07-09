@@ -269,7 +269,7 @@ public class StyleFactory
         {
             style.setPointSize(styleOptions.getSize(), this);
         }
-        else if (style.getPointSize() != ((PointFeatureVisualizationStyle)defaultStyle).getPointSize())
+        else
         {
             style.setPointSize(((PointFeatureVisualizationStyle)defaultStyle).getPointSize(), this);
         }
