@@ -79,8 +79,12 @@ public class LegacyWpsExecuteEnvoy extends AbstractEnvoy
         super(toolbox);
         myServerConfig = server;
         myCapabilities = pCapabilities;
+        if(server != null) {
         server.getServerTitle();
         server.getServerId(OGCServerSource.WPS_SERVICE);
+        } else {
+            LOGGER.warn("Attempted to activate a server with null params argument.");
+        }
         myActiveFeatures = New.map();
         myDataTypes = New.map();
         myMasterGroup = masterGroup;
