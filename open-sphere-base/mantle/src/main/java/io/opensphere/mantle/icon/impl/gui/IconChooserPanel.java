@@ -829,7 +829,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     /**
      * The Class RecButton.
      */
-    public class RecButton extends JButton
+    private class RecButton extends JButton
     {
         /**
          * serialVersionUID.
@@ -929,7 +929,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     }
 
     /** An ImageIcon with associated IconRecord. */
-    public static class RecordImageIcon extends ImageIcon
+    private static class RecordImageIcon extends ImageIcon
     {
         /** Serial version UID. */
         private static final long serialVersionUID = 1L;
