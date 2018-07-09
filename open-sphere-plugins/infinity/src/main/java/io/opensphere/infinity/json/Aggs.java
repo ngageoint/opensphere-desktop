@@ -29,14 +29,37 @@ public class Aggs
      * Constructor.
      *
      * @param field the field
+     * @param size the size
+     * @param dayOfWeek whether dayOfWeek or hourOfDay
+     */
+    public Aggs(String field, int size, boolean dayOfWeek)
+    {
+        myBins = new Bins(field, size, dayOfWeek);
+    }
+
+    /**
+     * Constructor for numeric binning.
+     *
+     * @param field the field
      * @param interval the bin width
      * @param missing value to use if field is missing
      * @param offset the offset from zero
-     * @param minDocCount the min_doc_count (minimum number of hits for which to return a result)
      */
-    public Aggs(String field, double interval, long missing, double offset, int minDocCount)
+    public Aggs(String field, double interval, long missing, double offset)
     {
-        myBins = new Bins(field, interval, missing, offset, minDocCount);
+        myBins = new Bins(field, interval, missing, offset);
+    }
+
+    /**
+     * Constructor for date binning.
+     *
+     * @param field the field
+     * @param format the date format
+     * @param interval the bin interval
+     */
+    public Aggs(String field, String format, String interval)
+    {
+        myBins = new Bins(field, format, interval);
     }
 
     /**
