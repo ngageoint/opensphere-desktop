@@ -181,7 +181,7 @@ public class StyleFactory
                 switch (styleOptions.getStyle())
                 {
                     case POINT:
-                        style = newPointStyle(dataType, styleOptions);
+                        style = newPointStyle(dataType, styleOptions, defaultStyle);
                         break;
                     case ICON:
                         style = newIconStyle(dataType, styleOptions, defaultStyle);
@@ -258,14 +258,20 @@ public class StyleFactory
      *
      * @param dataType the data type
      * @param styleOptions style options
+     * @param defaultStyle the default style
      * @return the style
      */
-    private PointFeatureVisualizationStyle newPointStyle(DataTypeInfo dataType, StyleOptions styleOptions)
+    private PointFeatureVisualizationStyle newPointStyle(DataTypeInfo dataType, StyleOptions styleOptions,
+            FeatureVisualizationStyle defaultStyle)
     {
         PointFeatureVisualizationStyle style = getStyleFromConfig(PointFeatureVisualizationStyle.class, dataType);
         if (styleOptions.hasSizeBeenSet())
         {
             style.setPointSize(styleOptions.getSize(), this);
+        }
+        else
+        {
+            style.setPointSize(((PointFeatureVisualizationStyle)defaultStyle).getPointSize(), this);
         }
         return style;
     }
