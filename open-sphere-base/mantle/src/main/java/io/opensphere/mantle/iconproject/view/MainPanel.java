@@ -1,20 +1,10 @@
 package io.opensphere.mantle.iconproject.view;
 
-import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Window;
-import java.io.File;
-import java.net.MalformedURLException;
-
 import io.opensphere.core.Toolbox;
-import io.opensphere.core.util.image.ImageUtil;
-import io.opensphere.core.util.swing.EventQueueUtilities;
-import io.opensphere.core.util.swing.JTreeUtilities;
-import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject;
 import io.opensphere.mantle.icon.IconRegistry;
-import io.opensphere.mantle.icon.impl.DefaultIconProvider;
-import io.opensphere.mantle.icon.impl.gui.IconTreeBuilder;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
 import javafx.scene.control.ScrollBar;
@@ -28,7 +18,6 @@ import javafx.scene.layout.RowConstraints;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
 
 public class MainPanel extends SplitPane
 {
@@ -102,7 +91,7 @@ public class MainPanel extends SplitPane
         myAddIconButton.setOnAction(event ->
         {
             // IconChooserPanel chooseIcon = new IconChooserPanel(tb);
-            loadFromFile(IconRecord.USER_ADDED_COLLECTION, null, tb);
+            //loadFromFile(IconRecord.USER_ADDED_COLLECTION, null, tb);
         });
 
         AnchorPane.setBottomAnchor(myCustIconButton, 26.0);
@@ -142,7 +131,7 @@ public class MainPanel extends SplitPane
      * @param collectionName the collection name
      * @param subCatName the sub cat name
      */
-    public void loadFromFile(String collectionName, String subCatName, Toolbox myToolbox)
+    /*public void loadFromFile(String collectionName, String subCatName, Toolbox myToolbox)
     {
         Component parent = myToolbox.getUIRegistry().getMainFrameProvider().get();
         File result = ImageUtil.showImageFileChooser("Choose Icon File", parent, myToolbox.getPreferencesRegistry());
@@ -161,14 +150,14 @@ public class MainPanel extends SplitPane
                 System.out.println("Failed to load image");
             }
         }
-    }
+    }*/
 
     /**
      * Refresh from registry.
      *
      * @param collectionToShow the name of the collection to show, or null
      */
-    public final void refreshFromRegistry(String collectionToShow)
+    /*public final void refreshFromRegistry(String collectionToShow)
     {
         EventQueueUtilities.runOnEDT(new Runnable()
         {
@@ -201,14 +190,14 @@ public class MainPanel extends SplitPane
                 }
             }
         });
-    }
+    }*/
     /**
      * Gets the node to select.
      *
      * @param collectionToShow the requested collection to show
      * @return the node to select, or null
      */
-    private TreeNode getNodeToSelect(String collectionToShow)
+    /*private TreeNode getNodeToSelect(String collectionToShow)
     {
         TreeNode nodeToSelect = null;
 
@@ -229,7 +218,7 @@ public class MainPanel extends SplitPane
         {
             // If there is a selected icon, find its node
             //vvvvvvvvvv mySelectedUrl is set in IconChooserDialog and needs to be ported over somewhere
-            /*if (mySelectedUrl != null)
+            if (mySelectedUrl != null)
             {
                 for (int i = 0; i < myRootTreeNode.getChildCount(); i++)
                 {
@@ -256,19 +245,19 @@ public class MainPanel extends SplitPane
             else
             {
                 nodeToSelect = myRootTreeNode.getChildAt(0);
-            }*/
+            }
         }
         return nodeToSelect;
 
-    }
+    }*/
 
     /**
      * Sets the selected icon URL.
      *
      * @param selectedUrl the icon URL
      */
-    public void setSelectedUrl(String selectedUrl) //currently not in use?
+    /*public void setSelectedUrl(String selectedUrl) //currently not in use?
     {
         mySelectedUrl = selectedUrl;
-    }
+    }*/
 }
