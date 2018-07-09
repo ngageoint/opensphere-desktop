@@ -2,8 +2,9 @@ package io.opensphere.mantle.iconproject.view;
 
 import java.awt.EventQueue;
 import java.awt.Window;
-
 import io.opensphere.core.Toolbox;
+import io.opensphere.mantle.icon.impl.gui.IconChooserPanel;
+
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeView;
@@ -19,20 +20,21 @@ public class MainPanel extends SplitPane
 
     ColumnConstraints columnConstraints = new ColumnConstraints();
 
-    private GridPane gridPane;
+    private final GridPane gridPane;
 
-    private ButtonBuilder myCustIconButton = new ButtonBuilder("Customize Icon", false);
+    private final ButtonBuilder myCustIconButton = new ButtonBuilder("Customize Icon", false);
 
-    private ButtonBuilder myAddIconButton = new ButtonBuilder("Add Icon from File", false);
+    private final ButtonBuilder myAddIconButton = new ButtonBuilder("Add Icon from File", false);
 
-    private ButtonBuilder myGenIconButton = new ButtonBuilder("Generate New Icon", false);
+    private final ButtonBuilder myGenIconButton = new ButtonBuilder("Generate New Icon", false);
 
-    private TreeView myTreeList;
+    private final TreeView myTreeList;
 
-    private AnchorPane myTreeView;
+    private final AnchorPane myTreeView;
 
-    private ScrollBar myScrollBar;
+    private final ScrollBar myScrollBar;
 
+    @SuppressWarnings("unused")
     public MainPanel(Toolbox tb)
     {
 
@@ -56,13 +58,18 @@ public class MainPanel extends SplitPane
         myAddIconButton.lockButton(myAddIconButton);
         AnchorPane.setBottomAnchor(myAddIconButton, 52.0);
 
+        myAddIconButton.setOnAction(event ->
+        {
+            IconChooserPanel chooseIcon = new IconChooserPanel(tb);
+            // loadFromFile(IconRecord.USER_ADDED_COLLECTION, null);
+        });
+
         AnchorPane.setBottomAnchor(myCustIconButton, 26.0);
         myCustIconButton.lockButton(myCustIconButton);
         myCustIconButton.setOnAction(event ->
         {
             EventQueue.invokeLater(() ->
             {
-                @SuppressWarnings("unused")
                 IconProjBuilderDialog builderPane = new IconProjBuilderDialog(owner, tb);
             });
         });

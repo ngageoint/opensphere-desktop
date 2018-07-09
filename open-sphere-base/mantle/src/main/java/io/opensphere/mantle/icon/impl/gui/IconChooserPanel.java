@@ -178,6 +178,29 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     }
 
     /**
+     * Instantiates a new icon chooser panel. (to add from file)
+     *
+     * @param tb the {@link Toolbox}
+     */
+    public IconChooserPanel(Toolbox tb)
+    {
+        myTreePopupMenu = null;
+        myShowAddIconButton = false;
+        mySelectedRecords = null;
+        mySelectedButtons = null;
+        myResizeTimer = null;
+        myMultiSelect = false;
+        myIconPopupMenu = null;
+        myIconBuilderButton = null;
+        myChangeSupport = null;
+
+        myToolbox = tb;
+        myIconRegistry = MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry();
+
+        loadFromFile(IconRecord.USER_ADDED_COLLECTION, null);
+    }
+
+    /**
      * Sets the selected icon URL.
      *
      * @param selectedUrl the icon URL
