@@ -22,11 +22,12 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.Preferences;
-import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.Constants;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.swing.DocumentListenerAdapter;
@@ -64,16 +65,19 @@ public class CacheOptionsProvider extends AbstractOptionsProvider
     /** The label for the size limit field. */
     private JLabel mySizeLimitLabel;
 
+    private final Toolbox myToolbox;
+
     /**
      * Constructor.
      *
      * @param prefsRegistry The preferences registry.
      * @param cache The cache instance.
      */
-    public CacheOptionsProvider(PreferencesRegistry prefsRegistry, Cache cache)
+    public CacheOptionsProvider(Toolbox toolbox, Cache cache)
     {
         super("Cache");
-        myPrefs = prefsRegistry.getPreferences(Cache.class);
+        myToolbox = toolbox;
+        myPrefs = toolbox.getPreferencesRegistry().getPreferences(Cache.class);
         myCache = cache;
 
         myPreferenceChangeListener = new PreferenceChangeListener()
@@ -126,6 +130,7 @@ public class CacheOptionsProvider extends AbstractOptionsProvider
             @Override
             public void stateChanged(ChangeEvent e)
             {
+                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.cache.size-limit-enabled-checkbox");
                 mySizeLimitLabel.setEnabled(mySizeLimitEnabledCheckbox.isSelected());
                 mySizeLimitField.setEnabled(mySizeLimitEnabledCheckbox.isSelected());
             }

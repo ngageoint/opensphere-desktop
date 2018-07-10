@@ -324,7 +324,7 @@ public class Kernel
 
         myToolbox.getEventManager().subscribe(ApplicationLifecycleEvent.class, myLifecycleSubscriber);
 
-        myCacheInit.initializeCacheOptions(myToolbox.getUIRegistry().getOptionsRegistry(), myToolbox.getPreferencesRegistry());
+        myCacheInit.initializeCacheOptions(myToolbox);
 
         Notify.setToolbox(myToolbox);
 
