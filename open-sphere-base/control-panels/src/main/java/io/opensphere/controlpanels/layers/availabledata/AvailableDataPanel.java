@@ -35,6 +35,7 @@ import io.opensphere.core.control.action.ContextActionManager;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.preferences.PreferenceChangeEvent;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.image.IconUtil;
@@ -302,18 +303,22 @@ public final class AvailableDataPanel extends AbstractDiscoveryDataPanel impleme
         {
             if (DataTreeButtonProvisioner.GEAR_BUTTON.equals(e.getActionCommand()))
             {
+                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-manager.details");
                 myLayerDetailsCoordinator.showLayerDetailsForGroup(dataGroupInfo, LayerDetailPanel.SETTINGS_TAB);
             }
             else if (DataTreeButtonProvisioner.FILTER_BUTTON.equals(e.getActionCommand()))
             {
+                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-manager.filters");
                 myToolbox.getEventManager().publishEvent(new ShowFilterDialogEvent(dataGroupInfo.getId()));
             }
             else if (DataTreeButtonProvisioner.REFRESH_BUTTON.equals(e.getActionCommand()))
             {
+                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-manager.refresh");
                 myTreeRefresher.refresh(dataGroupInfo);
             }
             else if (DataTreeButtonProvisioner.REMOVE_BUTTON.equals(e.getActionCommand()))
             {
+                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-manager.remove");
                 myDataLayerController.removeDataGroup(dataGroupInfo);
             }
         }
