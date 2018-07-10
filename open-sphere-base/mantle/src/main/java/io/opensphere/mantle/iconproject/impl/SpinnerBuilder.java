@@ -15,9 +15,7 @@ public class SpinnerBuilder
         Spinner.getValueFactory().valueProperty().bindBidirectional(binder);
 
         if (editable)
-        {
             Spinner.getStyleClass().clear();
-        }
         Spinner.setEditable(true);
         return Spinner;
 

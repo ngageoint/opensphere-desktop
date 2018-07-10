@@ -26,7 +26,7 @@ import javafx.scene.layout.HBox;
 
 public class GridBuilder
 {
-    private final AnchorPane myGridPanel = new AnchorPane();
+    private AnchorPane myGridPanel = new AnchorPane();
 
     private class BuildIconGridWorker implements Runnable
     {
@@ -70,7 +70,7 @@ public class GridBuilder
             {
                 height = 400;
             }
-            int numIconRowsInView = (int)Math.ceil(height / tileWidth);
+            int numIconRowsInView = (int)Math.ceil((double)height / (double)tileWidth);
             GridPane grid = new GridPane();
             if (!isInterrupted() && !myRecList.isEmpty())
             {
@@ -78,11 +78,11 @@ public class GridBuilder
 
                 if (!isInterrupted())
                 {
-                    double numIconsPerRow = tileWidth > width ? 1 : (int)Math.floor(width / tileWidth);
-                    double numRows = (int)Math.ceil(imIcList.size() / numIconsPerRow);
+                    double numIconsPerRow = tileWidth > width ? 1 : (int)Math.floor((double)width / (double)tileWidth);
+                    double numRows = (int)Math.ceil((double)imIcList.size() / (double)numIconsPerRow);
 
                     grid = new GridPane();
-                    grid.setLayoutY(numRows < numIconRowsInView ? numIconRowsInView : numRows);
+                    grid.setLayoutY((double)numRows < numIconRowsInView ? numIconRowsInView : numRows);
                     grid.setLayoutX(numIconsPerRow);
                     Dimension size = new Dimension(iconWidth, iconWidth);
 
