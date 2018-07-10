@@ -19,7 +19,7 @@ import io.opensphere.mantle.icon.IconRecord;
  * This class is abstract and cannot be instantiated. Extensions need to
  * statically register their specific font with the GraphicsEnvironment.
  */
-public class IconProjProps implements Icon
+public class IconProjProps
 {
     /** The default color of the icon. */
     private static final Color DEFAULT_COLOR = Color.BLACK;
@@ -165,7 +165,7 @@ public class IconProjProps implements Icon
      */
     public BufferedImage getImage()
     {
-        createBufferIfNull();
+     
         return myBuffer;
     }
 
@@ -175,24 +175,9 @@ public class IconProjProps implements Icon
      * @see javax.swing.Icon#paintIcon(java.awt.Component, java.awt.Graphics,
      *      int, int)
      */
-    @Override
-    public void paintIcon(Component pC, Graphics pG, int pX, int pY)
+    public void paintIcon()
     {
-        if (pG instanceof Graphics2D)
-        {
-            ((Graphics2D)pG).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-        double centerY = pC.getHeight() / 2;
-
-        int characterWidth = 75;
-        int characterHeight = 75;;
-
-        // make sure that things are centered:
-        double xpos = pX + centerY - characterWidth / 2 - 3 + getXPos();
-        double ypos = centerY + characterHeight / 2 - 1;
-
-        pG.setColor(getColor());
-
+       
     }
 
     /**
@@ -200,22 +185,7 @@ public class IconProjProps implements Icon
      */
     private void createBufferIfNull()
     {
-        synchronized (PAINT_LOCK)
-        {
-            if (myBuffer == null)
-            {
-                int width = mySize > myWidth ? mySize : myWidth;
-                int height = mySize > myHeight ? mySize : myHeight;
-                myBuffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
-                Graphics2D graphics = myBuffer.createGraphics();
-                graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                graphics.setColor(getColor());
-
-                graphics.drawImage(myBuffer, null, width, height);
-                graphics.dispose();
-            }
-        }
+       
     }
 
     /**
@@ -225,22 +195,7 @@ public class IconProjProps implements Icon
      */
     public void setSize(int pSize)
     {
-        if (mySize != pSize)
-        {
-            synchronized (PAINT_LOCK)
-            {
-                myXPos = null;
-                myYPos = null;
-
-                mySize = pSize;
-         //       Font font = myFont.deriveFont(Font.PLAIN, getSize());
-
-                BufferedImage temp = new BufferedImage(mySize, mySize, BufferedImage.TYPE_INT_ARGB);
-                Graphics2D graphics = temp.createGraphics();
-                graphics.dispose();
-            }
-            invalidate();
-        }
+        
     }
 
     /**
@@ -248,7 +203,6 @@ public class IconProjProps implements Icon
      *
      * @see javax.swing.Icon#getIconWidth()
      */
-    @Override
     public int getIconWidth()
     {
         return myHeight;
@@ -259,7 +213,6 @@ public class IconProjProps implements Icon
      *
      * @see javax.swing.Icon#getIconHeight()
      */
-    @Override
     public int getIconHeight()
     {
         return myWidth;
@@ -272,7 +225,7 @@ public class IconProjProps implements Icon
      */
     public void setYPos(int yPos)
     {
-        myYPos = Integer.valueOf(yPos);
+       
         invalidate();
     }
 
@@ -308,18 +261,6 @@ public class IconProjProps implements Icon
         return myXPos == null ? 0 : myXPos.intValue();
     }
 
-    /**
-     * Returns a copy of the icon with the given color.
-     *
-     * @param color the color
-     * @return the icon
-     */
-    public IconProjProps withColor(Color color)
-    {
-        IconProjProps icon = new IconProjProps(myIcon, color, mySize);
-        icon.myXPos = myXPos;
-        icon.myYPos = myYPos;
-        icon.myColor = color;
-        return icon;
-    }
+   
+   
 }
