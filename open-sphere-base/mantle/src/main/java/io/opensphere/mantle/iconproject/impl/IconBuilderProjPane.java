@@ -58,12 +58,12 @@ public class IconBuilderProjPane extends BorderPane
     private ImageView myImageRenderView;
 
     /** The AWT Window that owns this pane. */
-    private Window myOwner;
+    private final Window myOwner;
 
     /** The spinner width. */
     private final double spinwidth = 59.0;
 
-    private IconRecord myRecord;
+    private final IconRecord myRecord;
 
     private HBox myHbox;
 
@@ -191,7 +191,7 @@ public class IconBuilderProjPane extends BorderPane
 
     /**
      * Creates the ImageView which renders the selected icon.
-     * 
+     *
      * @return the image view
      */
     private HBox createImageView()
@@ -257,7 +257,7 @@ public class IconBuilderProjPane extends BorderPane
 
     /**
      * Generates and retrieves a name for the image, if it is not null.
-     * 
+     *
      * @return the image name
      */
     public String getImageName()

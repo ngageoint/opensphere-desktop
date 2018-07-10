@@ -3,13 +3,10 @@ package io.opensphere.mantle.iconproject.view;
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
 import io.opensphere.mantle.iconproject.impl.LabelMaker;
 import javafx.beans.property.Property;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
@@ -19,29 +16,29 @@ import javafx.scene.text.Text;
 
 public class TopMenuBar extends HBox
 {
-    private Text mySizeLabel = new LabelMaker("Icon Size");
+    private final Text mySizeLabel = new LabelMaker("Icon Size");
 
-    private ButtonBuilder myShrinkButton = new ButtonBuilder("-", false);
+    private final ButtonBuilder myShrinkButton = new ButtonBuilder("-", false);
 
-    private ButtonBuilder myEnlargeButton = new ButtonBuilder("+", false);
+    private final ButtonBuilder myEnlargeButton = new ButtonBuilder("+", false);
 
-    private ButtonBar myViewToggle;
+    private final ButtonBar myViewToggle;
 
-    private Text myViewLabel = new LabelMaker("View Style");
+    private final Text myViewLabel = new LabelMaker("View Style");
 
-    private RadioButton myListView;
+    private final RadioButton myListView;
 
-    private RadioButton myGridView;
+    private final RadioButton myGridView;
 
-    private ButtonBar mySearchBar;
+    private final ButtonBar mySearchBar;
 
-    private Text mySearchLabel = new LabelMaker("Filter");
+    private final Text mySearchLabel = new LabelMaker("Filter");
 
-    private ToggleGroup mytoggleGroup;
+    private final ToggleGroup mytoggleGroup;
 
-    private TextField myTextField;
+    private final TextField myTextField;
 
-    private ButtonBar mySizeMenu;
+    private final ButtonBar mySizeMenu;
 
     private Property<Number> mySize;
 

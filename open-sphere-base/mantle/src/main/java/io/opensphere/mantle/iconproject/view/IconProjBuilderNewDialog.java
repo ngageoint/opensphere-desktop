@@ -1,7 +1,6 @@
 package io.opensphere.mantle.iconproject.view;
 
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -18,7 +17,6 @@ import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
-import io.opensphere.mantle.icon.impl.gui.IconBuilderPane;
 import io.opensphere.mantle.iconproject.impl.IconBuilderProjPane;
 import javafx.scene.image.WritableImage;
 
