@@ -29,6 +29,7 @@ import io.opensphere.core.appl.versions.AutoUpdateToolboxUtils;
 import io.opensphere.core.appl.versions.controller.AutoUpdateController;
 import io.opensphere.core.appl.versions.model.AutoUpdatePreferenceKeys;
 import io.opensphere.core.appl.versions.model.AutoUpdatePreferences;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.GenericFontIcon;
@@ -82,11 +83,24 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         addHeading("Auto-Update Options");
 
         JButton checkForUpdates = new JButton("Check for Updates");
-        checkForUpdates.addActionListener(e -> myController.checkForUpdates(true));
-        addRow(new CheckBox(myPreferences.autoUpdateProperty(), myPreferences.autoUpdateProperty().getName()), checkForUpdates);
+        checkForUpdates.addActionListener(e ->
+        {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.application-updates.check-for-updates-button");
+            myController.checkForUpdates(true);
+        });
 
-        addComponent(
-                new CheckBox(myPreferences.updateWithoutPromptProperty(), myPreferences.updateWithoutPromptProperty().getName()));
+        CheckBox autoUpdateCheckbox = new CheckBox(myPreferences.autoUpdateProperty(),
+                myPreferences.autoUpdateProperty().getName());
+        autoUpdateCheckbox.addActionListener(e -> QuantifyToolboxUtils.collectMetric(myToolbox,
+                "mist3d.settings.application-updates.enable-auto-update-checkbox"));
+        addRow(autoUpdateCheckbox, checkForUpdates);
+
+        CheckBox updateWithoutPromptCheckbox = new CheckBox(myPreferences.updateWithoutPromptProperty(),
+                myPreferences.updateWithoutPromptProperty().getName());
+        updateWithoutPromptCheckbox.addActionListener(e -> QuantifyToolboxUtils.collectMetric(myToolbox,
+                "mist3d.settings.application-updates.update-without-prompt-checkbox"));
+        addComponent(updateWithoutPromptCheckbox);
+
         addLabelComponent(myPreferences.autoUpdateHostnameProperty().getName(),
                 new TextField(myPreferences.autoUpdateHostnameProperty(), myPreferences.autoUpdateHostnameProperty().getName()));
         addLabelComponent(myPreferences.latestVersionUrlProperty().getName(),
@@ -133,7 +147,11 @@ public class AutoUpdateOptionsPanel extends ViewPanel
 
         JRadioButton toggleButton = new JRadioButton(version, isPreferred);
         toggleButton.setToolTipText("Click to select " + version + "as your preferred version.");
-        toggleButton.addActionListener(e -> updatePreferredVersion(version));
+        toggleButton.addActionListener(e ->
+        {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.application-updates.preferred-version-toggle");
+            updatePreferredVersion(version);
+        });
         preferredVersionButtonGroup.add(toggleButton);
 
         box.add(toggleButton);
@@ -146,7 +164,11 @@ public class AutoUpdateOptionsPanel extends ViewPanel
 
             JButton deleteButton = new JButton(new GenericFontIcon(AwesomeIconSolid.TRASH_ALT, Color.WHITE));
             deleteButton.setBackground(Color.RED);
-            deleteButton.addActionListener(e -> deleteVersion(version, box, deleteButton));
+            deleteButton.addActionListener(e ->
+            {
+                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.application-updates.delete-version-button");
+                deleteVersion(version, box, deleteButton);
+            });
 
             box.add(deleteButton);
         }
