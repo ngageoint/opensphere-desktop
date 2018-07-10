@@ -15,6 +15,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.context.TimespanContextKey;
 import io.opensphere.core.model.time.TimeInstant;
 import io.opensphere.core.model.time.TimeSpan;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.collections.New;
@@ -91,6 +92,7 @@ class HeldIntervalsLayer extends IntervalsLayer
     @Override
     protected void handleRemoveAction(TimeSpan span)
     {
+        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.remove-held-interval");
         myAnimationModel.getHeldIntervalToLayersMap().remove(span);
         super.handleRemoveAction(span);
     }
@@ -107,6 +109,7 @@ class HeldIntervalsLayer extends IntervalsLayer
         dialog.buildAndShow();
         if (dialog.getSelection() == JOptionPane.OK_OPTION)
         {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.add-held-interval");
             myAnimationModel.getHeldIntervalToLayersMap().put(span, dialog.getSelectedGroupIDs());
             int index = myAnimationModel.getHeldIntervals().indexOf(span);
             if (index == -1)
