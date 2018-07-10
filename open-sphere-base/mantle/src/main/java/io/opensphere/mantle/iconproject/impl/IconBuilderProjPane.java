@@ -164,8 +164,7 @@ public class IconBuilderProjPane extends BorderPane
         HBox controlBox = new HBox(10);
         controlBox.setAlignment(Pos.BASELINE_LEFT);
 
-
-        Spinner<Number> xSpinner = new Spinner<>(0, 100, 0);
+        Spinner<Number> xSpinner = new Spinner<>(-100., 100., 0., 5.);
         xSpinner.setPrefWidth(spinwidth);
         xSpinner.getValueFactory().valueProperty().bindBidirectional(myXPos);
         xSpinner.setEditable(true);
@@ -192,7 +191,7 @@ public class IconBuilderProjPane extends BorderPane
 
     /**
      * Creates the ImageView which renders the selected icon.
-     * 
+     *
      * @return the image view
      */
     private HBox createImageView()
@@ -206,9 +205,7 @@ public class IconBuilderProjPane extends BorderPane
         myImageRenderView.rotateProperty().bind(myRotation);
         myImageRenderView.translateXProperty().bind(myXPos);
         myImageRenderView.translateYProperty().bind(myYPos);
-        
-        
-        /*myImageRenderView.setFitWidth(150);
+        myImageRenderView.setFitWidth(150);
         myImageRenderView.setFitHeight(150);
         myImageRenderView.scaleXProperty().bind(mySize);
         myImageRenderView.scaleYProperty().bind(mySize);
@@ -222,22 +219,7 @@ public class IconBuilderProjPane extends BorderPane
         myImageRenderView.effectProperty()
                 .bind(Bindings.when(myImageRenderView.hoverProperty()).then((Effect)blush).otherwise((Effect)null));
 
-        box.getChildren().addAll(myImageRenderView);*/
-        
-        
-        myImageRenderView.boundsInLocalProperty();
-        myImageRenderView.setFitWidth(100.);
-        myImageRenderView.setFitHeight(100);
-        DropShadow ds = new DropShadow(20, Color.AQUA);
-        myImageRenderView.setEffect(ds);
-        System.out.println(IconImage.getPixelReader().getPixelFormat());
-        HBox box = new HBox();
-        box.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-                + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
-
-        box.setAlignment(Pos.BOTTOM_LEFT);
         box.getChildren().addAll(myImageRenderView);
-
         return box;
     }
 
