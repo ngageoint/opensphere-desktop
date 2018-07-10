@@ -239,7 +239,6 @@ public class OGCServerPlugin extends AbstractWindowMenuItemPlugin
             @Override
             public void run()
             {
-                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.server-manager.opened");
                 Window serverManagerDialog = getWindow();
                 serverManagerDialog.setVisible(false);
                 serverManagerDialog.setVisible(true);
