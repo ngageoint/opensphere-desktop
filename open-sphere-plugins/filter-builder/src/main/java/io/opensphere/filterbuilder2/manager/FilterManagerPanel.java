@@ -272,7 +272,7 @@ public class FilterManagerPanel extends GridBagPanel
      */
     private void editNewFilter()
     {
-        QuantifyToolboxUtils.collectMetric(myFbToolbox.getMainToolBox(), "mist3d.filter-manager.new");
+        QuantifyToolboxUtils.collectMetric(myFbToolbox.getMainToolBox(), "mist3d.filter-panel.new-filter");
         DataTypeInfo editDataType = myDataType;
 
         // If no data type, ask the user for it
@@ -324,7 +324,7 @@ public class FilterManagerPanel extends GridBagPanel
      */
     private void exportFilter()
     {
-        QuantifyToolboxUtils.collectMetric(myFbToolbox.getMainToolBox(), "mist3d.filter-manager.export");
+        QuantifyToolboxUtils.collectMetric(myFbToolbox.getMainToolBox(), "mist3d.filter-panel.export");
         // Show the export dialog
         ExportFilterPanel exportPanel = new ExportFilterPanel(myFbToolbox);
         String title = StringUtilities.concat("Export ", myDataType != null ? myDataType.getDisplayName() : "All", " Filters");
@@ -351,7 +351,7 @@ public class FilterManagerPanel extends GridBagPanel
      */
     private void importFilter()
     {
-        QuantifyToolboxUtils.collectMetric(myFbToolbox.getMainToolBox(), "mist3d.filter-manager.import");
+        QuantifyToolboxUtils.collectMetric(myFbToolbox.getMainToolBox(), "mist3d.filter-panel.import");
         // Show the import dialog
         MnemonicFileChooser chooser = new MnemonicFileChooser(myFbToolbox.getMainToolBox().getPreferencesRegistry(),
                 ExportFilterPanel.class.getName());

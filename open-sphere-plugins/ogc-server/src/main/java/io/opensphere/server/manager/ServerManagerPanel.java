@@ -196,7 +196,7 @@ public class ServerManagerPanel extends JPanel implements DialogPanel, AbstractS
             @Override
             public void actionPerformed(ActionEvent evt)
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.server-manager.add");
+                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.server-panel.add-server");
                 getEditServerPanel().setServerSource(null, null);
                 getEditServerDialog().setTitle("Add Server");
                 getEditServerDialog().showDialog();
@@ -241,7 +241,7 @@ public class ServerManagerPanel extends JPanel implements DialogPanel, AbstractS
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.server-manager." + (source.isActive() ? "view" : "edit"));
+                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.server-panel." + (source.isActive() ? "view" : "edit"));
                 getEditServerPanel().setServerSource(source, controller.getTypeName(source));
                 getEditServerDialog().setTitle("Edit Server");
                 getEditServerDialog().showDialog();
@@ -317,7 +317,7 @@ public class ServerManagerPanel extends JPanel implements DialogPanel, AbstractS
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.server-manager.delete");
+                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.server-panel.delete");
                 String warningMessage = "Are you sure you want to remove\n\n\"" + source.getName() + "\"?";
                 int opt = JOptionPane.showConfirmDialog(myParentComponent, warningMessage, "Confirm Remove Server",
                         JOptionPane.OK_CANCEL_OPTION);
@@ -373,7 +373,7 @@ public class ServerManagerPanel extends JPanel implements DialogPanel, AbstractS
             {
                 JCheckBox eventBox = (JCheckBox)e.getSource();
                 LOGGER.info((eventBox.isSelected() ? "Activating " : "Deactivating ") + source.getName());
-                QuantifyToolboxUtils.collectEnableDisableMetric(myToolbox, "mist3d.server-manager.status", eventBox.isSelected());
+                QuantifyToolboxUtils.collectEnableDisableMetric(myToolbox, "mist3d.server-panel.status", eventBox.isSelected());
                 if (eventBox.isSelected())
                 {
                     controller.activateSource(source);
@@ -410,7 +410,7 @@ public class ServerManagerPanel extends JPanel implements DialogPanel, AbstractS
             public void actionPerformed(ActionEvent e)
             {
                 LOGGER.info("Canceling loading " + source.getName());
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.server-manager.cancel");
+                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.server-panel.cancel");
                 controller.deactivateSource(source);
                 rebuildTable();
             }
