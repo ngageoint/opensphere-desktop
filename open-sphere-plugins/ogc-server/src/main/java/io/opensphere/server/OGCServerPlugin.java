@@ -24,6 +24,7 @@ import io.opensphere.core.event.ApplicationLifecycleEvent;
 import io.opensphere.core.event.ApplicationLifecycleEvent.Stage;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.options.OptionsProvider;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.server.HttpServer;
 import io.opensphere.core.server.StreamingServer;
 import io.opensphere.core.util.image.IconUtil;
@@ -238,6 +239,7 @@ public class OGCServerPlugin extends AbstractWindowMenuItemPlugin
             @Override
             public void run()
             {
+                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.server-manager.opened");
                 Window serverManagerDialog = getWindow();
                 serverManagerDialog.setVisible(false);
                 serverManagerDialog.setVisible(true);
