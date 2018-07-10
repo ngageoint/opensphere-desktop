@@ -204,7 +204,7 @@ public class AnimationPanel extends AbstractHUDPanel
 
         // Load span
         timelineController.addLayer(
-                new LoadIntervalsLayer(animationModel.loadIntervalsProperty(), uiModel.getMillisPerPixel(), animationModel));
+                new LoadIntervalsLayer(toolbox, animationModel.loadIntervalsProperty(), uiModel.getMillisPerPixel(), animationModel));
 
         // Held and skipped intervals layers
         timelineController.addLayer(new SkippedIntervalsLayer(animationModel));
@@ -213,7 +213,7 @@ public class AnimationPanel extends AbstractHUDPanel
 
         // Loop span handles
         LoopSpanEndSnapFunction snapFunc = new LoopSpanEndSnapFunction(animationModel, uiModel.getMillisPerPixel());
-        AnimationDragHandlesLayer handles = new AnimationDragHandlesLayer(new ObservableTimeSpan(animationModel.getLoopSpan()),
+        AnimationDragHandlesLayer handles = new AnimationDragHandlesLayer(toolbox, new ObservableTimeSpan(animationModel.getLoopSpan()),
                 new ShortCircuitFunction<TimeInstant>(), snapFunc, snapFunc, animationModel.playStateProperty(), "loop",
                 AnimationConstants.ANIMATION_SPAN_HANDLE_COLOR, AnimationConstants.ANIMATION_SPAN_HANDLE_HOVER_COLOR)
         {
@@ -241,7 +241,7 @@ public class AnimationPanel extends AbstractHUDPanel
         timelineController.addLayer(new AdvanceDurationLayer(timeModel, animationModel));
 
         // Active time window
-        timelineController.addLayer(new ActiveWindowLayer(timeModel, animationModel, uiModel.getMillisPerPixel(), timeManager));
+        timelineController.addLayer(new ActiveWindowLayer(toolbox, timeModel, animationModel, uiModel.getMillisPerPixel(), timeManager));
 
         // Time probe
         timelineController.addLayer(new TimeProbe(uiModel.getCursorTime(), AnimationConstants.TIME_PROBE_COLOR));
