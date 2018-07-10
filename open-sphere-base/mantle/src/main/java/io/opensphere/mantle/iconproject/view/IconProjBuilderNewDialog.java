@@ -1,6 +1,7 @@
 package io.opensphere.mantle.iconproject.view;
 
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -19,6 +20,7 @@ import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.icon.impl.gui.IconBuilderPane;
 import io.opensphere.mantle.iconproject.impl.IconBuilderProjPane;
+import javafx.scene.image.WritableImage;
 
 /** The component class for building icons. */
 public class IconProjBuilderNewDialog extends JFXDialog
@@ -40,18 +42,17 @@ public class IconProjBuilderNewDialog extends JFXDialog
      * @param mainPanel the main panel of the icon manager frame.
      */
 
-    public IconProjBuilderNewDialog(Window owner, IconRegistry iconRegistry,IconRecord record2)
+    public IconProjBuilderNewDialog(Window owner, IconRegistry iconRegistry, IconRecord record2)
     {
         super(owner, "Build an Icon");
         myIconRegistry = iconRegistry;
 
         IconBuilderProjPane pane = new IconBuilderProjPane(owner, record2);
         setFxNode(pane);
-        setMinimumSize(new Dimension(450, 600));
+        setMinimumSize(new Dimension(450, 550));
 
         setLocationRelativeTo(owner);
         setAcceptEar(() -> saveImage(pane.getFinalImage(), pane.getImageName()));
-     //   setAcceptEar(() -> saveRotatedIcon(record);
     }
 
     /**
@@ -60,12 +61,14 @@ public class IconProjBuilderNewDialog extends JFXDialog
      * @param image the image to save
      * @param name the image name
      */
-    private void saveImage(BufferedImage image,String name)
+    private void saveImage(WritableImage snapshot, String name)
     {
-      
+
+        BufferedImage image = null;
+        image = javafx.embed.swing.SwingFXUtils.fromFXImage(snapshot, image);
+
         try
         {
-          //  BufferedImage image = ImageIO.read(record.getImageURL());
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ImageIO.write(image, "png", outputStream);
 
@@ -74,8 +77,6 @@ public class IconProjBuilderNewDialog extends JFXDialog
 
             myIconRegistry.addIcon(provider, this);
 
-            // myChooserPanel.refreshFromRegistry(IconRecord.USER_ADDED_COLLECTION);
-
         }
         catch (IOException e)
         {
@@ -83,7 +84,5 @@ public class IconProjBuilderNewDialog extends JFXDialog
             LOGGER.error(e, e);
         }
     }
-    
-    
-    
+
 }

@@ -176,7 +176,6 @@ public class GridBuilder
             AnchorPane recBTPanel = new AnchorPane();
             Button imageBT = new Button(rec, myIconPopupMenu);
 
-
             JLabel nameLB = new JLabel(rec.getRecord().getName());
             recBTPanel.add(nameLB, BorderLayout.SOUTH);
 

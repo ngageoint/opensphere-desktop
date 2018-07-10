@@ -69,7 +69,7 @@ public class TopMenuBar extends HBox
         {
             MainPanel.changeTop(false);
         });
-        
+
         mySizeMenu.getButtons().addAll(mySizeLabel, myShrinkButton, myEnlargeButton);
         myViewToggle.getButtons().addAll(myViewLabel, myListView, myGridView);
         mySearchBar.getButtons().addAll(mySearchLabel, myTextField);
@@ -79,19 +79,18 @@ public class TopMenuBar extends HBox
 
         Region region2 = new Region();
         HBox.setHgrow(region2, Priority.ALWAYS);
-        
+
         HBox myHbox = createControlPanel();
 
         getChildren().addAll(mySizeMenu, myHbox, myViewToggle, region2, mySearchBar);
         setAlignment(javafx.geometry.Pos.TOP_CENTER);
     }
-    
-    
+
     public HBox createControlPanel()
     {
         HBox box = new HBox(8);
         box.setAlignment(Pos.CENTER_LEFT);
-        Slider slider = createSlider(); 
+        Slider slider = createSlider();
         HBox.setHgrow(slider, Priority.ALWAYS);
         box.getChildren().addAll(slider);
         return box;
@@ -108,6 +107,6 @@ public class TopMenuBar extends HBox
         slider.setShowTickMarks(false);
         slider.setShowTickLabels(false);
         return slider;
-      
+
     }
 }
