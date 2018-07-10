@@ -56,12 +56,12 @@ public class IconBuilderProjPane extends BorderPane
     private ImageView myImageRenderView;
 
     /** The AWT Window that owns this pane. */
-    private Window myOwner;
+    private final Window myOwner;
 
     /** The spinner width. */
     private final double spinwidth = 40.0;
 
-    private IconRecord myRecord;
+    private final IconRecord myRecord;
 
     /**
      * Constructs a new IconBuilderPane.
@@ -165,7 +165,7 @@ public class IconBuilderProjPane extends BorderPane
         HBox controlBox = new HBox(10);
         controlBox.setAlignment(Pos.BASELINE_LEFT);
 
-        Spinner<Number> xSpinner = new Spinner<>(0,100, 0);
+        Spinner<Number> xSpinner = new Spinner<>(0, 100, 0);
         xSpinner.setPrefWidth(spinwidth);
         xSpinner.getValueFactory().valueProperty().bindBidirectional(myXPos);
         xSpinner.setEditable(true);
@@ -208,7 +208,7 @@ public class IconBuilderProjPane extends BorderPane
         myImageRenderView.translateYProperty().bind(myYPos);
         myImageRenderView.boundsInLocalProperty();
         myImageRenderView.setFitWidth(100.);
-       myImageRenderView.setFitHeight(100);
+        myImageRenderView.setFitHeight(100);
         DropShadow ds = new DropShadow(20, Color.AQUA);
         myImageRenderView.setEffect(ds);
         System.out.println(IconImage.getPixelReader().getPixelFormat());
@@ -216,10 +216,9 @@ public class IconBuilderProjPane extends BorderPane
         box.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
 
-
         box.setAlignment(Pos.BOTTOM_LEFT);
         box.getChildren().addAll(myImageRenderView);
-       
+
         return box;
     }
 
@@ -305,7 +304,7 @@ public class IconBuilderProjPane extends BorderPane
 
     /**
      * Generates and retrieves a name for the image, if it is not null.
-     * 
+     *
      * @return the image name
      */
     public String getImageName()
