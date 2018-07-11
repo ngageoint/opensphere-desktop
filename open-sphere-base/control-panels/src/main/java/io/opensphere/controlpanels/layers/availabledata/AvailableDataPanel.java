@@ -303,22 +303,22 @@ public final class AvailableDataPanel extends AbstractDiscoveryDataPanel impleme
         {
             if (DataTreeButtonProvisioner.GEAR_BUTTON.equals(e.getActionCommand()))
             {
-                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-panel.details-and-settings");
+                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.add-data-panel.button.details-and-settings");
                 myLayerDetailsCoordinator.showLayerDetailsForGroup(dataGroupInfo, LayerDetailPanel.SETTINGS_TAB);
             }
             else if (DataTreeButtonProvisioner.FILTER_BUTTON.equals(e.getActionCommand()))
             {
-                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-panel.manage-filters");
+                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.add-data-panel.button.manage-filters");
                 myToolbox.getEventManager().publishEvent(new ShowFilterDialogEvent(dataGroupInfo.getId()));
             }
             else if (DataTreeButtonProvisioner.REFRESH_BUTTON.equals(e.getActionCommand()))
             {
-                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-panel.refresh");
+                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.add-data-panel.button.refresh");
                 myTreeRefresher.refresh(dataGroupInfo);
             }
             else if (DataTreeButtonProvisioner.REMOVE_BUTTON.equals(e.getActionCommand()))
             {
-                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-panel.remove");
+                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.add-data-panel.button.remove");
                 myDataLayerController.removeDataGroup(dataGroupInfo);
             }
         }
