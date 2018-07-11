@@ -237,7 +237,7 @@ public class IconBuilderProjPane extends BorderPane
     {
         Lighting lighting = new Lighting();
         lighting.setDiffuseConstant(1.0);
-        lighting.setSpecularConstant(1.0);
+        lighting.setSpecularConstant(0.75);
         lighting.setSpecularExponent(0.0);
         lighting.setSurfaceScale(0.0);
         lighting.setLight(new Light.Distant(45, 45, theColor));
