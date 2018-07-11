@@ -163,7 +163,7 @@ public class FilterManagerFilterPanel extends ScrollableGridBagPanel
             @Override
             public void mouseClicked(MouseEvent pE)
             {
-                QuantifyToolboxUtils.collectEnableDisableMetric(myToolbox, "mist3d.filter-manager.status", myCheckBox.isSelected());
+                QuantifyToolboxUtils.collectEnableDisableMetric(myToolbox, "mist3d.filter-panel.checkbox.status", myCheckBox.isSelected());
                 myCheckBox.setSelected(!myCheckBox.isSelected());
             }
         });
@@ -198,7 +198,7 @@ public class FilterManagerFilterPanel extends ScrollableGridBagPanel
      */
     private void toggleActivation(ItemEvent e)
     {
-        QuantifyToolboxUtils.collectEnableDisableMetric(myToolbox, "mist3d.filter-manager.status", myCheckBox.isSelected());
+        QuantifyToolboxUtils.collectEnableDisableMetric(myToolbox, "mist3d.filter-panel.checkbox.status", myCheckBox.isSelected());
         myFilter.setActive(e.getStateChange() == ItemEvent.SELECTED, this);
         if (myPersistMode)
         {
@@ -213,7 +213,7 @@ public class FilterManagerFilterPanel extends ScrollableGridBagPanel
         {
             return;
         }
-        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.filter-manager.choose-layers");
+        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.filter-panel.button.choose-layers");
 
         LayerAssociationPane lap = new LayerAssociationPane(myColumnMappingController, myFbToolbox.getMantleToolBox(), myFilter);
         JFrame parent = myToolbox.getUIRegistry().getMainFrameProvider().get();
@@ -264,7 +264,7 @@ public class FilterManagerFilterPanel extends ScrollableGridBagPanel
      */
     private void deleteFilter(Component parent)
     {
-        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.filter-manager.delete");
+        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.filter-panel.button.delete");
         if (myPersistMode && (myFilter.getOtherSources().size() > 1 || userConf(parent, DEL_TITLE, getDeleteMsg())))
         {
             myFbController.removeFilter(myFilter);
@@ -279,7 +279,7 @@ public class FilterManagerFilterPanel extends ScrollableGridBagPanel
     /** Edits a filter using the new filter builder. */
     private void editFilter()
     {
-        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.filter-manager.edit");
+        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.filter-panel.button.edit");
         Component parent = SwingUtilities.getWindowAncestor(this);
         FilterEditorDialog editorDialog = new FilterEditorDialog(parent, myFbToolbox, myFilter, false);
         editorDialog.buildAndShow();
