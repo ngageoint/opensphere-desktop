@@ -19,8 +19,9 @@ import javax.swing.SwingUtilities;
 
 import com.bric.swing.ColorPicker;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.impl.AbstractPreferencesOptionsProvider;
-import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.swing.AbstractHUDPanel;
 import io.opensphere.core.util.swing.ColorCircleIcon;
 import io.opensphere.core.util.swing.LinkedSliderTextField;
@@ -71,14 +72,17 @@ public class FrameOptionsProvider extends AbstractPreferencesOptionsProvider
     /** The default color (no existing preferences). */
     private final Color myDefaultColor = AbstractHUDPanel.ourDefaultHUDBackgroundColor;
 
+    private final Toolbox myToolbox;
+
     /**
      * Constructor.
      *
      * @param prefsRegistry The system preferences registry.
      */
-    public FrameOptionsProvider(PreferencesRegistry prefsRegistry)
+    public FrameOptionsProvider(Toolbox toolbox)
     {
-        super(prefsRegistry, HUD_TOPIC);
+        super(toolbox.getPreferencesRegistry(), HUD_TOPIC);
+        myToolbox = toolbox;
         myMainPanel = new JPanel();
         myMainPanel.setLayout(new BoxLayout(myMainPanel, BoxLayout.Y_AXIS));
         myMainPanel.add(getHudPositionPanel());
@@ -134,6 +138,7 @@ public class FrameOptionsProvider extends AbstractPreferencesOptionsProvider
     {
         return e ->
         {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.hud-options.color-button");
             Color c = ColorPicker.showDialog(SwingUtilities.getWindowAncestor(myMainPanel), myBackgroundColor, true);
             if (c != null)
             {
@@ -189,8 +194,7 @@ public class FrameOptionsProvider extends AbstractPreferencesOptionsProvider
     }
 
     /**
-     * Accessor for the panel that holds the controls to change the background
-     * color of HUD windows.
+     * Accessor for the panel that holds the controls to change the background color of HUD windows.
      *
      * @return The HUD background color panel.
      */
@@ -234,14 +238,22 @@ public class FrameOptionsProvider extends AbstractPreferencesOptionsProvider
 
         boolean stickToEdge = getPreferencesRegistry().getPreferences(FrameOptionsProvider.class)
                 .getBoolean(STICKY_PREFERENCE_KEY, DEFAULT_STICKY);
-        int inset = getPreferencesRegistry().getPreferences(FrameOptionsProvider.class).getInt(INSET_PREFERENCE_KEY,
-                DEFAULT_INSET);
+        int inset =
+                getPreferencesRegistry().getPreferences(FrameOptionsProvider.class).getInt(INSET_PREFERENCE_KEY, DEFAULT_INSET);
 
         myStickyCheckbox = new JCheckBox("Stick to Edges");
         myStickyCheckbox.setSelected(stickToEdge);
-        myStickyCheckbox.addActionListener(e -> updateStickyPreference());
+        myStickyCheckbox.addActionListener(e ->
+        {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.hud-options.stick-to-edge-checkbox");
+            updateStickyPreference();
+        });
         myInsetSpinner = new JSpinner(new SpinnerNumberModel(inset, 0, 25, 1));
-        myInsetSpinner.addChangeListener(e -> updateStickyPreference());
+        myInsetSpinner.addChangeListener(e ->
+        {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.hud-options.inset-spinner");
+            updateStickyPreference();
+        });
 
         panel.add(myStickyCheckbox);
         panel.add(myInsetSpinner);
@@ -261,8 +273,8 @@ public class FrameOptionsProvider extends AbstractPreferencesOptionsProvider
         {
             int opacityPct = (int)(myBackgroundColor.getAlpha() / ALPHA_FACTOR);
             Dimension sliderSize = new Dimension(350, 30);
-            myBackgroundOpacitySlider = new LinkedSliderTextField("Opacity ", 0, 100, opacityPct,
-                    new PanelSizeParameters(35, 28, 0));
+            myBackgroundOpacitySlider =
+                    new LinkedSliderTextField("Opacity ", 0, 100, opacityPct, new PanelSizeParameters(35, 28, 0));
             myBackgroundOpacitySlider.setMaximumSize(sliderSize);
             myBackgroundOpacitySlider.setPreferredSize(sliderSize);
             myBackgroundOpacitySlider.setSize(sliderSize);
@@ -284,9 +296,10 @@ public class FrameOptionsProvider extends AbstractPreferencesOptionsProvider
         {
             myOpacitySliderListener = e ->
             {
+                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.hud-options.opacity-slider");
                 int alpha = (int)(getOpacitySlider().getSliderValue() * ALPHA_FACTOR);
-                Color color = new Color(myBackgroundColor.getRed(), myBackgroundColor.getGreen(), myBackgroundColor.getBlue(),
-                        alpha);
+                Color color =
+                        new Color(myBackgroundColor.getRed(), myBackgroundColor.getGreen(), myBackgroundColor.getBlue(), alpha);
                 setBackgroundColor(color);
                 getPreferencesRegistry().getPreferences(AbstractHUDPanel.class).putInt(AbstractHUDPanel.ourHUDBackgroundColorKey,
                         myBackgroundColor.getRGB(), this);
