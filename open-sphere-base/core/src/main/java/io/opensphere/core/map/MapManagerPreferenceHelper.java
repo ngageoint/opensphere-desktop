@@ -1,5 +1,6 @@
 package io.opensphere.core.map;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.OptionsRegistry;
 import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
@@ -44,7 +45,7 @@ public abstract class MapManagerPreferenceHelper
      * @param prefsRegistry The system preferences registry.
      * @param optionsRegistry The options registry.
      */
-    public MapManagerPreferenceHelper(PreferencesRegistry prefsRegistry, OptionsRegistry optionsRegistry)
+    public MapManagerPreferenceHelper(Toolbox toolbox, PreferencesRegistry prefsRegistry, OptionsRegistry optionsRegistry)
     {
         myPrefsRegistry = prefsRegistry;
         int initialDensity = prefsRegistry.getPreferences(AdvancedMapOptionsProvider.class)
@@ -54,7 +55,7 @@ public abstract class MapManagerPreferenceHelper
         // Add the mouse options provider, currently (5/6/13) this only controls
         // mouse
         // wheel view zoom rate.
-        myMapOptionsProvider = new MapOptionsProvider(prefsRegistry);
+        myMapOptionsProvider = new MapOptionsProvider(toolbox);
         optionsRegistry.addOptionsProvider(myMapOptionsProvider);
         prefsRegistry.getPreferences(MapOptionsProvider.class).addPreferenceChangeListener(MapOptionsProvider.VIEW_ZOOM_RATE_KEY,
                 myZoomListener);
@@ -62,7 +63,7 @@ public abstract class MapManagerPreferenceHelper
         prefsRegistry.getPreferences(AdvancedMapOptionsProvider.class)
                 .addPreferenceChangeListener(AdvancedMapOptionsProvider.MODEL_DENSITY_KEY, myModelDensityListener);
 
-        myAdvancedOptionsProvider = new AdvancedMapOptionsProvider(prefsRegistry);
+        myAdvancedOptionsProvider = new AdvancedMapOptionsProvider(toolbox);
         myMapOptionsProvider.addSubTopic(myAdvancedOptionsProvider);
     }
 

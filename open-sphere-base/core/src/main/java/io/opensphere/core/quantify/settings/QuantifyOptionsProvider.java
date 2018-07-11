@@ -1,11 +1,14 @@
 package io.opensphere.core.quantify.settings;
 
-import io.opensphere.core.options.impl.AbstractJFXOptionsProvider;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+
+import io.opensphere.core.Toolbox;
+import io.opensphere.core.options.impl.AbstractJFXOptionsProvider;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 
 /**
  * An options provider used to configure the state of the quantify plugin.
@@ -33,15 +36,19 @@ public class QuantifyOptionsProvider extends AbstractJFXOptionsProvider
      * @param model The model in which the state of the user's preferences is
      *            persisted.
      */
-    public QuantifyOptionsProvider(QuantifySettingsModel model)
+    public QuantifyOptionsProvider(Toolbox toolbox, QuantifySettingsModel model)
     {
         super("Usage Statistics");
         myModel = model;
 
         myEnableCheckbox = new CheckBox("Send anonymous usage statistics?");
+        myEnableCheckbox.selectedProperty().addListener(e -> QuantifyToolboxUtils.collectMetric(toolbox,
+                "mist3d.settings.usage-statistics.send-anonymous-usage-stats-checkbox"));
         myEnableCheckbox.selectedProperty().bindBidirectional(myModel.enabledProperty());
 
         myCaptureToLogCheckbox = new CheckBox("Capture statistics to log?");
+        myCaptureToLogCheckbox.selectedProperty().addListener(e -> QuantifyToolboxUtils.collectMetric(toolbox,
+                "mist3d.settings.usage-statistics.capture-stats-to-log-checkbox"));
         myCaptureToLogCheckbox.selectedProperty().bindBidirectional(myModel.captureToLogProperty());
 
         Label disclaimer = new Label("MIST Desktop collects technical data about usage of the application "

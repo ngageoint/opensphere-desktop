@@ -40,6 +40,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.impl.TopicOrSubTopicMatchesRegexOptionsProviderFilter;
 import io.opensphere.core.options.OptionsProvider;
 import io.opensphere.core.options.OptionsProviderUserObject;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.NonSuckingObservable;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.swing.AbstractHUDPanel;
@@ -542,6 +543,20 @@ class OptionsPanel extends AbstractHUDPanel
                             if (userObj instanceof OptionsProviderUserObject)
                             {
                                 OptionsProviderUserObject o = (OptionsProviderUserObject)userObj;
+                                if (node.getParent() != null)
+                                {
+                                    Object parent = ((DefaultMutableTreeNode)node.getParent()).getUserObject();
+                                    if (parent instanceof OptionsProviderUserObject)
+                                        QuantifyToolboxUtils.collectMetric(myToolbox,
+                                            "mist3d.settings.left-menu-options."
+                                            + ((OptionsProviderUserObject)parent).getNodeName().toLowerCase().replaceAll(" ", "-")
+                                            + "." + o.getNodeName().toLowerCase().replaceAll(" ", "-"));
+                                }
+                                else
+                                {
+                                    QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.left-menu-options."
+                                        + o.getNodeName().toLowerCase().replaceAll(" ", "-"));
+                                }
                                 setCurrentOptionsProvider(o.getOptionsProvider());
                             }
                         }

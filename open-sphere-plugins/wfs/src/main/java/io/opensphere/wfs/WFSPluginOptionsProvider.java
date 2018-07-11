@@ -11,10 +11,11 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.options.impl.OptionsPanel;
 import io.opensphere.core.preferences.Preferences;
-import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.lang.NumberUtilities;
 import io.opensphere.core.util.swing.ComponentUtilities;
 import io.opensphere.core.util.swing.DocumentListenerAdapter;
@@ -38,15 +39,18 @@ public class WFSPluginOptionsProvider extends AbstractOptionsProvider
     /** The WFS preferences. */
     private final Preferences myPreferences;
 
+    private final Toolbox myToolbox;
+
     /**
      * Instantiates a new WFS plugin options provider.
      *
      * @param preferencesRegistry The preferences registry.
      */
-    public WFSPluginOptionsProvider(PreferencesRegistry preferencesRegistry)
+    public WFSPluginOptionsProvider(Toolbox toolbox)
     {
         super("WFS");
-        myPreferences = preferencesRegistry.getPreferences(WFSPlugin.class);
+        myToolbox = toolbox;
+        myPreferences = toolbox.getPreferencesRegistry().getPreferences(WFSPlugin.class);
     }
 
     @Override
@@ -114,6 +118,7 @@ public class WFSPluginOptionsProvider extends AbstractOptionsProvider
                 @Override
                 protected void updateAction(DocumentEvent e)
                 {
+                    QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.servers.wfs.max-features-for-requests-field");
                     validateMaxFeaturesInput();
                 }
             });

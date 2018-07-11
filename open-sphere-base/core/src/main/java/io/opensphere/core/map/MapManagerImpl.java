@@ -10,6 +10,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.MapManager;
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.UnitsRegistry;
 import io.opensphere.core.config.ViewerConfigurations;
 import io.opensphere.core.config.ViewerConfigurations.ViewControlTranslatorConfiguration;
@@ -57,6 +58,8 @@ public class MapManagerImpl implements MapManager
 {
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(MapManagerImpl.class);
+
+    private final Toolbox myToolbox;
 
     /** Map of projections to viewer types. */
     private static final Map<Projection, Class<? extends AbstractDynamicViewer>> ourProjectionMap = New.insertionOrderMap();
@@ -202,11 +205,12 @@ public class MapManagerImpl implements MapManager
      * @param orderManager The order manager.
      * @param stateManager The module state manager.
      */
-    public MapManagerImpl(UIRegistry uiRegistry, EventManager eventManager, PreferencesRegistry prefsRegistry,
+    public MapManagerImpl(Toolbox toolbox, UIRegistry uiRegistry, EventManager eventManager, PreferencesRegistry prefsRegistry,
             UnitsRegistry unitsRegistry, Executor executor, OrderManager orderManager, ModuleStateManager stateManager)
     {
         initializeMappings(orderManager);
 
+        myToolbox = toolbox;
         myUpdateExecutor = executor;
         myDrawEnableSupport = new DrawEnableSupportExtension(myUpdateExecutor);
         myViewerControlManager = new ViewerControlManager(myCurrentViewer.getReadOnly(), this)
@@ -673,7 +677,7 @@ public class MapManagerImpl implements MapManager
          */
         public MapManagerPreferenceHelperImpl(PreferencesRegistry prefsRegistry, OptionsRegistry optionsRegistry)
         {
-            super(prefsRegistry, optionsRegistry);
+            super(myToolbox, prefsRegistry, optionsRegistry);
         }
 
         @Override

@@ -160,7 +160,7 @@ abstract class ToolboxImpl implements Toolbox
 
         mySecurityManager = new SecurityManagerImpl(myRegistryManager.getPreferencesRegistry(), mainFrame);
         installSSLSocketFactory(myRegistryManager.getUIRegistry().getMainFrameProvider());
-        myMapManager = new MapManagerImpl(myRegistryManager.getUIRegistry(), myEventManager,
+        myMapManager = new MapManagerImpl(this, myRegistryManager.getUIRegistry(), myEventManager,
                 myRegistryManager.getPreferencesRegistry(), myRegistryManager.getUnitsRegistry(),
                 executorManager.getMapExecutor(),
                 myRegistryManager.getOrderManagerRegistry().getOrderManager(DefaultOrderCategory.DEFAULT_ELEVATION_FAMILY,
@@ -171,11 +171,11 @@ abstract class ToolboxImpl implements Toolbox
         final ControlContext globeControls = getControlRegistry().getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT);
         myMapManager.addControlListeners(globeControls);
 
-        final SecurityOptionsProvider securityOptionsProvider = new SecurityOptionsProvider(mySecurityManager,
+        final SecurityOptionsProvider securityOptionsProvider = new SecurityOptionsProvider(this, mySecurityManager,
                 myRegistryManager.getPreferencesRegistry());
         myRegistryManager.getUIRegistry().getOptionsRegistry().addOptionsProvider(securityOptionsProvider);
 
-        final NetworkConfigurationOptionsProvider networkOptionsProvider = new NetworkConfigurationOptionsProvider(
+        final NetworkConfigurationOptionsProvider networkOptionsProvider = new NetworkConfigurationOptionsProvider(this,
                 getSystemToolbox().getNetworkConfigurationManager(), myRegistryManager.getPreferencesRegistry());
         myRegistryManager.getUIRegistry().getOptionsRegistry().addOptionsProvider(networkOptionsProvider);
 

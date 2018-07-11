@@ -7,14 +7,17 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.options.impl.OptionsPanel;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.swing.input.DontShowDialog;
 
 /**
- * A basic options provider used to group settings for search providers into a single location.
+ * A basic options provider used to group settings for search providers into a
+ * single location.
  */
 public class SearchOptionsProvider extends AbstractOptionsProvider
 {
@@ -33,15 +36,18 @@ public class SearchOptionsProvider extends AbstractOptionsProvider
     /** The requery option combo box. */
     private JComboBox<RequeryOption> myComboBox;
 
+    private final Toolbox myToolbox;
+
     /**
      * Creates a new options provider.
      *
      * @param preferencesRegistry The preferences registry
      */
-    public SearchOptionsProvider(PreferencesRegistry preferencesRegistry)
+    public SearchOptionsProvider(Toolbox toolbox)
     {
         super(PROVIDER_NAME);
-        myPreferencesRegistry = preferencesRegistry;
+        myToolbox = toolbox;
+        myPreferencesRegistry = myToolbox.getPreferencesRegistry();
     }
 
     /**
@@ -68,7 +74,11 @@ public class SearchOptionsProvider extends AbstractOptionsProvider
             JPanel panel = new JPanel();
             panel.add(new JLabel("Action to take when search results may have changed:"));
             myComboBox = new JComboBox<>(RequeryOption.values());
-            myComboBox.addActionListener(l -> saveSelection());
+            myComboBox.addActionListener(e ->
+            {
+                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.search.action-if-search-results-changed-combobox");
+                saveSelection();
+            });
             panel.add(myComboBox);
             myPanel = new OptionsPanel(panel);
         }

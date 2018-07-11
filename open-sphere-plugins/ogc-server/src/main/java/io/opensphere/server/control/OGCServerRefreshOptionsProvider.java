@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -20,9 +18,12 @@ import javax.swing.JTextField;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.swing.HorizontalSpacerForGridbag;
 import io.opensphere.server.toolbox.ServerRefreshController;
+import io.opensphere.server.toolbox.ServerToolboxUtils;
 
 /**
  * The Class OGCServerMainOptionsProvider.
@@ -44,16 +45,19 @@ public class OGCServerRefreshOptionsProvider extends AbstractOptionsProvider
     /** Text box used to enter the server refresh interval. */
     private JTextField myRefreshRateTB;
 
+    private final Toolbox myToolbox;
+
     /**
      * Instantiates an options provider that allows users to set configurable
      * parameters for OGC Servers.
      *
      * @param serverRefreshController The server refresh controller.
      */
-    public OGCServerRefreshOptionsProvider(ServerRefreshController serverRefreshController)
+    public OGCServerRefreshOptionsProvider(Toolbox toolbox)
     {
         super("Server Refresh");
-        myRefreshController = serverRefreshController;
+        myRefreshController = ServerToolboxUtils.getServerRefreshController(toolbox);
+        myToolbox = toolbox;
         myOptionsPanel = new JPanel();
         myOptionsPanel.setBackground(DEFAULT_BACKGROUND_COLOR);
         myOptionsPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 0));
@@ -72,6 +76,7 @@ public class OGCServerRefreshOptionsProvider extends AbstractOptionsProvider
     @Override
     public void applyChanges()
     {
+        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.servers.server-refresh.apply-button");
         LOGGER.warn("Saving main server options.");
         int interval = 0;
         String error = null;
@@ -144,13 +149,10 @@ public class OGCServerRefreshOptionsProvider extends AbstractOptionsProvider
         gbc.gridx = 0;
         gbc.gridy = 1;
         myRefreshEnabledCheckBox = new JCheckBox("Auto-refresh Server layers");
-        myRefreshEnabledCheckBox.addActionListener(new ActionListener()
+        myRefreshEnabledCheckBox.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                myRefreshRateTB.setEditable(myRefreshEnabledCheckBox.isSelected());
-            }
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.servers.server-refresh.auto-refresh-layers-checkbox");
+            myRefreshRateTB.setEditable(myRefreshEnabledCheckBox.isSelected());
         });
         myRefreshEnabledCheckBox.setFocusPainted(false);
         gridPanel.add(myRefreshEnabledCheckBox, gbc);

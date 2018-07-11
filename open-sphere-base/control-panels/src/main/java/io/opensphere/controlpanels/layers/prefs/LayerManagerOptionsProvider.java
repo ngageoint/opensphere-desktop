@@ -1,8 +1,6 @@
 package io.opensphere.controlpanels.layers.prefs;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -10,10 +8,11 @@ import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.impl.AbstractPreferencesOptionsProvider;
 import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
-import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.mantle.transformer.MapDataElementTransformer;
 
@@ -66,14 +65,17 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
     /** The Show layer type labels check box. */
     private JCheckBox myShowLayerTypeLabelsCheckBox;
 
+    private final Toolbox myToolbox;
+
     /**
      * Instantiates a new wFS plugin options provider.
      *
      * @param prefsRegistry The preferences registry.
      */
-    public LayerManagerOptionsProvider(PreferencesRegistry prefsRegistry)
+    public LayerManagerOptionsProvider(Toolbox toolbox)
     {
-        super(prefsRegistry, "Layers");
+        super(toolbox.getPreferencesRegistry(), "Layers");
+        myToolbox = toolbox;
     }
 
     @Override
@@ -147,14 +149,12 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
             myShowActiveLayerSourceLabelsCheckBox = new JCheckBox("Layer Source Labels",
                     isShowActiveLayerSourceLabelsPreference());
             myShowActiveLayerSourceLabelsCheckBox.setFocusable(false);
-            myShowActiveLayerSourceLabelsCheckBox.addActionListener(new ActionListener()
+            myShowActiveLayerSourceLabelsCheckBox.addActionListener(e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    DataDiscoveryPreferences.setShowActiveSourceTypeLabels(getPreferencesRegistry(),
-                            getActiveLayerShowSourceLabelsCheckBox().isSelected(), this);
-                }
+                QuantifyToolboxUtils.collectMetric(myToolbox,
+                        "mist3d.settings.layers.active-layer-tab-options.layer-source-labels-checkbox");
+                DataDiscoveryPreferences.setShowActiveSourceTypeLabels(getPreferencesRegistry(),
+                        getActiveLayerShowSourceLabelsCheckBox().isSelected(), this);
             });
 
             myActiveTabLayerSourceLabelListener = new PreferenceChangeListener()
@@ -186,14 +186,12 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
         {
             myShowLayerTypeIconsCheckBox = new JCheckBox("Layer Type Icons", isActiveLayerShowTypeIconPreferenceValue());
             myShowLayerTypeIconsCheckBox.setFocusable(false);
-            myShowLayerTypeIconsCheckBox.addActionListener(new ActionListener()
+            myShowLayerTypeIconsCheckBox.addActionListener(e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    DataDiscoveryPreferences.setShowActiveLayerTypeIcons(getPreferencesRegistry(),
-                            getActiveLayerShowTypeIconCheckBox().isSelected(), this);
-                }
+                QuantifyToolboxUtils.collectMetric(myToolbox,
+                        "mist3d.settings.layers.active-layer-tab-options.layer-type-icons-checkbox");
+                DataDiscoveryPreferences.setShowActiveLayerTypeIcons(getPreferencesRegistry(),
+                        getActiveLayerShowTypeIconCheckBox().isSelected(), this);
             });
 
             myActiveTabLayerTypeIconsListener = new PreferenceChangeListener()
@@ -225,14 +223,12 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
         {
             myShowLayerTypeLabelsCheckBox = new JCheckBox("Layer Type Labels", isShowActiveLayerTypeLabelsPreference());
             myShowLayerTypeLabelsCheckBox.setFocusable(false);
-            myShowLayerTypeLabelsCheckBox.addActionListener(new ActionListener()
+            myShowLayerTypeLabelsCheckBox.addActionListener(e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    DataDiscoveryPreferences.setShowActiveLayerTypeLabels(getPreferencesRegistry(),
-                            getActiveLayerShowTypeLabelsCheckBox().isSelected(), this);
-                }
+                QuantifyToolboxUtils.collectMetric(myToolbox,
+                        "mist3d.settings.layers.active-layer-tab-options.layer-type-labels-checkbox");
+                DataDiscoveryPreferences.setShowActiveLayerTypeLabels(getPreferencesRegistry(),
+                        getActiveLayerShowTypeLabelsCheckBox().isSelected(), this);
             });
 
             myActiveTabLayerTypeLabelListener = new PreferenceChangeListener()
@@ -290,14 +286,12 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
             myShowAvailableLayerSourceLabelsCheckBox = new JCheckBox("Layer Source Labels",
                     isShowAvailableLayerSourceLabelsPreference());
             myShowAvailableLayerSourceLabelsCheckBox.setFocusable(false);
-            myShowAvailableLayerSourceLabelsCheckBox.addActionListener(new ActionListener()
+            myShowAvailableLayerSourceLabelsCheckBox.addActionListener(e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    DataDiscoveryPreferences.setShowAvailableSourceTypeLabels(getPreferencesRegistry(),
-                            getAvailableLayerShowSourceLabelsCheckBox().isSelected(), this);
-                }
+                QuantifyToolboxUtils.collectMetric(myToolbox,
+                        "mist3d.settings.layers.add-data-panel-options.layer-source-labels-checkbox");
+                DataDiscoveryPreferences.setShowAvailableSourceTypeLabels(getPreferencesRegistry(),
+                        getAvailableLayerShowSourceLabelsCheckBox().isSelected(), this);
             });
 
             myAvailableTabLayerSourceLabelListener = new PreferenceChangeListener()
@@ -351,14 +345,11 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
         {
             myShowFeatureCountCheckBox = new JCheckBox("Show Feature Count", isShowFeatureCountPreferenceValue());
             myShowFeatureCountCheckBox.setFocusable(false);
-            myShowFeatureCountCheckBox.addActionListener(new ActionListener()
+            myShowFeatureCountCheckBox.addActionListener(e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    DataDiscoveryPreferences.setShowActiveLayerFeatureCounts(getPreferencesRegistry(),
-                            getShowFeatureCountCheckBox().isSelected(), this);
-                }
+                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.layers.active-layer-tab-options.show-feature-count-checkbox");
+                DataDiscoveryPreferences.setShowActiveLayerFeatureCounts(getPreferencesRegistry(),
+                        getShowFeatureCountCheckBox().isSelected(), this);
             });
 
             myActiveTabShowFeatureCountListener = new PreferenceChangeListener()

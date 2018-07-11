@@ -1,12 +1,17 @@
 package io.opensphere.controlpanels.animation.view;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.ToolTipManager;
 
 import io.opensphere.controlpanels.animation.model.AnimationModel;
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.options.impl.OptionsPanel;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.swing.input.ViewPanel;
 import io.opensphere.core.util.swing.input.controller.ControllerFactory;
 
@@ -27,15 +32,18 @@ public class AnimationOptionsProvider extends AbstractOptionsProvider
     /** The panel. */
     private JPanel myPanel;
 
+    private final Toolbox myToolbox;
+
     /**
      * Constructor.
      *
      * @param animationModel the animation model
      * @param timelineFrame the timeline frame
      */
-    public AnimationOptionsProvider(AnimationModel animationModel, AnimationInternalFrame timelineFrame)
+    public AnimationOptionsProvider(Toolbox toolbox, AnimationModel animationModel, AnimationInternalFrame timelineFrame)
     {
         super(TOPIC);
+        myToolbox = toolbox;
         myAnimationModel = animationModel;
         myTimelineFrame = timelineFrame;
     }
@@ -59,17 +67,45 @@ public class AnimationOptionsProvider extends AbstractOptionsProvider
                     "Do not allow the loop span to be changed by the active span");
             ToolTipManager.sharedInstance().setDismissDelay(10000);
 
+            ViewPanel panel = new ViewPanel();
+
+            JComponent rememberLoopSpan = ControllerFactory.createComponent(myAnimationModel.getRememberTimes());
+            JComponent[] timelineViewPreference = ControllerFactory.createLabelAndComponent(myAnimationModel.getViewPreference());
+            JComponent lockLoopSpan = ControllerFactory.createComponent(myAnimationModel.getLoopSpanLocked());
             JButton resetFrameButton = new JButton("Reset timeline size & location");
             resetFrameButton.addActionListener(e -> myTimelineFrame.resizeAndPositionToDefault());
 
-            ViewPanel panel = new ViewPanel();
-            panel.addComponent(ControllerFactory.createComponent(myAnimationModel.getRememberTimes()));
-            panel.addLabelComponent(ControllerFactory.createLabelAndComponent(myAnimationModel.getViewPreference()));
-            panel.addComponent(ControllerFactory.createComponent(myAnimationModel.getLoopSpanLocked()));
+            panel.addComponent(rememberLoopSpan);
+            panel.addLabelComponent(timelineViewPreference);
+            panel.addComponent(lockLoopSpan);
             panel.addComponent(resetFrameButton);
+
             myPanel = new OptionsPanel(panel);
+            setUpMetricCollection((JCheckBox)rememberLoopSpan, (JComboBox<?>)timelineViewPreference[1], (JCheckBox)lockLoopSpan,
+                    resetFrameButton);
         }
         return myPanel;
+    }
+
+    /**
+     *
+     *
+     * @param rememberLoopSpanCheckBox
+     * @param timelineViewComboBox
+     * @param lockLoopSpanCheckBox
+     * @param resetTimelineButton
+     */
+    private void setUpMetricCollection(JCheckBox rememberLoopSpanCheckBox, JComboBox<?> timelineViewComboBox,
+            JCheckBox lockLoopSpanCheckBox, JButton resetTimelineButton)
+    {
+        rememberLoopSpanCheckBox.addActionListener(e -> QuantifyToolboxUtils.collectMetric(myToolbox,
+                "mist3d.settings.timeline-and-animation.remember-loop-span-checkbox"));
+        timelineViewComboBox.addActionListener(e -> QuantifyToolboxUtils.collectMetric(myToolbox,
+                "mist3d.settings.timeline-and-animation.timeline-to-show-on-startup-combobox"));
+        lockLoopSpanCheckBox.addActionListener(e -> QuantifyToolboxUtils.collectMetric(myToolbox,
+                "mist3d.settings.timeline-and-animation.lock-loop-span-checkbox"));
+        resetTimelineButton.addActionListener(e -> QuantifyToolboxUtils.collectMetric(myToolbox,
+                "mist3d.settings.timeline-and-animation.reset-timeline-size-and-location-button"));
     }
 
     @Override

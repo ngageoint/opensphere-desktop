@@ -14,8 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -125,15 +123,11 @@ public class CacheOptionsProvider extends AbstractOptionsProvider
 
         mySizeLimitEnabledCheckbox = new JCheckBox();
         mySizeLimitEnabledCheckbox.setSelected(sizeLimitBytes > 0L);
-        mySizeLimitEnabledCheckbox.addChangeListener(new ChangeListener()
+        mySizeLimitEnabledCheckbox.addChangeListener(e ->
         {
-            @Override
-            public void stateChanged(ChangeEvent e)
-            {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.cache.size-limit-enabled-checkbox");
-                mySizeLimitLabel.setEnabled(mySizeLimitEnabledCheckbox.isSelected());
-                mySizeLimitField.setEnabled(mySizeLimitEnabledCheckbox.isSelected());
-            }
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.cache.size-limit-enabled-checkbox");
+            mySizeLimitLabel.setEnabled(mySizeLimitEnabledCheckbox.isSelected());
+            mySizeLimitField.setEnabled(mySizeLimitEnabledCheckbox.isSelected());
         });
         sizeLimitPanel.add(mySizeLimitEnabledCheckbox);
 

@@ -18,12 +18,14 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 import io.opensphere.core.NetworkConfigurationManager;
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.net.config.ConfigurationType;
 import io.opensphere.core.net.config.ManualProxyConfiguration;
 import io.opensphere.core.net.config.SystemProxyConfiguration;
 import io.opensphere.core.net.config.UrlProxyConfiguration;
 import io.opensphere.core.options.impl.AbstractPreferencesOptionsProvider;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.swing.GhostTextField;
 import io.opensphere.core.util.swing.GridBagPanel;
 
@@ -62,16 +64,19 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
     /** Button indicating if system proxies should be used. */
     private JRadioButton myUseSystemProxiesButton;
 
+    private final Toolbox myToolbox;
+
     /**
      * Constructor.
      *
      * @param networkConfigurationManager The network configuration manager.
      * @param prefsRegistry the preferences registry
      */
-    public NetworkConfigurationOptionsProvider(NetworkConfigurationManager networkConfigurationManager,
+    public NetworkConfigurationOptionsProvider(Toolbox toolbox, NetworkConfigurationManager networkConfigurationManager,
             PreferencesRegistry prefsRegistry)
     {
         super(prefsRegistry, "Network");
+        myToolbox = toolbox;
         myNetworkConfigurationManager = networkConfigurationManager;
     }
 
@@ -80,18 +85,22 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
     {
         if (myUseSystemProxiesButton.isSelected())
         {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.network.use-system-proxy-settings");
             myNetworkConfigurationManager.setSelectedProxyType(ConfigurationType.SYSTEM);
         }
         else if (myUseAutoProxyButton.isSelected())
         {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.network.automatic-proxy-configuration");
             myNetworkConfigurationManager.setSelectedProxyType(ConfigurationType.URL);
         }
         else if (myUseManualProxyButton.isSelected())
         {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.network.manual-proxy-configuration");
             myNetworkConfigurationManager.setSelectedProxyType(ConfigurationType.MANUAL);
         }
         else
         {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.network.no-proxy");
             myNetworkConfigurationManager.setSelectedProxyType(ConfigurationType.NONE);
         }
 

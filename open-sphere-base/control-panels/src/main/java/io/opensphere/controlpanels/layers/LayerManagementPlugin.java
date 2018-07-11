@@ -66,7 +66,7 @@ public class LayerManagementPlugin extends AbstractHUDFrameMenuItemPlugin
     {
         super.initialize(data, toolbox);
         myImportButtonMenuProvider = new ImportButtonMenuProvider(toolbox);
-        myOptionsProvider = new LayerManagerOptionsProvider(toolbox.getPreferencesRegistry());
+        myOptionsProvider = new LayerManagerOptionsProvider(toolbox);
         toolbox.getUIRegistry().getOptionsRegistry().addOptionsProvider(myOptionsProvider);
 
         Properties pluginProperties = PluginPropertyUtils.convertToProperties(data.getPluginProperty());
