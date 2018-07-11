@@ -27,6 +27,7 @@ import io.opensphere.core.appl.DefaultFade;
 import io.opensphere.core.event.EventListenerService;
 import io.opensphere.core.model.time.TimeInstant;
 import io.opensphere.core.model.time.TimeSpan;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.units.duration.Duration;
 import io.opensphere.core.units.duration.Milliseconds;
 import io.opensphere.core.units.duration.Seconds;
@@ -78,7 +79,7 @@ public class AnimationController extends EventListenerService
         super(toolbox.getEventManager());
         myToolbox = toolbox;
 
-        AnimationConfigManager animationConfigManager = addService(new AnimationConfigManager(toolbox.getPreferencesRegistry()));
+        AnimationConfigManager animationConfigManager = addService(new AnimationConfigManager(toolbox, toolbox.getPreferencesRegistry()));
         myAnimationModel = animationConfigManager.getAnimationModel();
 
         myUIModel = addService(new TimelineUIModel());
@@ -586,6 +587,7 @@ public class AnimationController extends EventListenerService
     /** Update the name and description of the snap-to button. */
     private void updateSnapToNameAndDescription()
     {
+        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.snap-to-data-boundaries");
         myAnimationModel.getSnapToDataBoundaries().setNameAndDescription("snap",
                 myAnimationModel.getSnapToDataBoundaries().isEnabled()
                         ? myAnimationModel.getSnapToDataBoundaries().get().booleanValue() ? "Stop snapping to data boundaries"

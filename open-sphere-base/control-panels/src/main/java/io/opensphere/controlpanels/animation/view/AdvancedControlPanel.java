@@ -1,8 +1,6 @@
 package io.opensphere.controlpanels.animation.view;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.temporal.ChronoUnit;
@@ -15,7 +13,9 @@ import javax.swing.JSpinner;
 
 import io.opensphere.controlpanels.animation.model.AnimationModel;
 import io.opensphere.controlpanels.animation.model.PlayState;
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.OptionsRegistry;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.units.duration.Duration;
 import io.opensphere.core.units.duration.DurationUnitsProvider;
 import io.opensphere.core.util.ChangeListener;
@@ -83,15 +83,20 @@ class AdvancedControlPanel extends GridBagPanel implements DialogPanel
     /** The duration units provider. */
     private final transient DurationUnitsProvider myDurationUnitsProvider = new DurationUnitsProvider();
 
+    /** The toolbox through which animation state is accessed. */
+    private final Toolbox myToolbox;
+
     /**
      * Constructor.
-     *
+     * 
+     * @param toolbox The toolbox through which animation state is accessed.
      * @param optionsRegistry the options registry
      * @param animationModel the animation model
      */
-    public AdvancedControlPanel(OptionsRegistry optionsRegistry, AnimationModel animationModel)
+    public AdvancedControlPanel(Toolbox toolbox, OptionsRegistry optionsRegistry, AnimationModel animationModel)
     {
         super();
+        myToolbox = toolbox;
         myOptionsRegistry = optionsRegistry;
         myAnimationModel = animationModel;
 
@@ -121,6 +126,8 @@ class AdvancedControlPanel extends GridBagPanel implements DialogPanel
         addRow(ControllerFactory.createLabel(myAdvanceDurationMagnitude, advanceDurationMagnitudeSpinner),
                 advanceDurationMagnitudeSpinner, advanceDurationMagnitudeCombo);
         JSlider fadeSlider = ControllerFactory.createComponent(myAnimationModel.getFadeUser(), JSlider.class);
+        myAnimationModel.getFadeUser().addListener((obs, ov, nv) -> QuantifyToolboxUtils.collectMetric(myToolbox,
+                "mist3d.timeline.buttons.advanced-animation-controls.change-fade"));
         fadeSlider.setMajorTickSpacing(100);
         fadeSlider.setPaintLabels(true);
         style(null, "doublewide").addRow(ControllerFactory.createLabel(myAnimationModel.getFade(), fadeSlider), fadeSlider);
@@ -180,13 +187,10 @@ class AdvancedControlPanel extends GridBagPanel implements DialogPanel
      */
     private void addGUIListeners()
     {
-        mySettingsButton.addActionListener(new ActionListener()
+        mySettingsButton.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                myOptionsRegistry.requestShowTopic(AnimationOptionsProvider.TOPIC);
-            }
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.advanced-animation-controls.launch-settings");
+            myOptionsRegistry.requestShowTopic(AnimationOptionsProvider.TOPIC);
         });
 
         myAdvanceDurationMagnitudeListener = new ChangeListener<Integer>()
@@ -194,6 +198,9 @@ class AdvancedControlPanel extends GridBagPanel implements DialogPanel
             @Override
             public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue)
             {
+                QuantifyToolboxUtils.collectMetric(myToolbox,
+                        "mist3d.timeline.buttons.advanced-animation-controls.update-advance-duration");
+
                 if (!myUpdating)
                 {
                     myUpdating = true;
@@ -209,6 +216,8 @@ class AdvancedControlPanel extends GridBagPanel implements DialogPanel
             @Override
             public void changed(ObservableValue<? extends ChronoUnit> observable, ChronoUnit oldValue, ChronoUnit newValue)
             {
+                QuantifyToolboxUtils.collectMetric(myToolbox,
+                        "mist3d.timeline.buttons.advanced-animation-controls.change-advance-duration-units");
                 if (!myUpdating)
                 {
                     myUpdating = true;
