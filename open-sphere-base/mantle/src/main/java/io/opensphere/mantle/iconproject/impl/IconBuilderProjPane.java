@@ -1,10 +1,7 @@
 package io.opensphere.mantle.iconproject.impl;
 
-import static io.opensphere.core.util.fx.FXUtilities.toAwtColor;
-
 import java.awt.Window;
 
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Insets;
@@ -16,10 +13,8 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.Effect;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
@@ -67,6 +62,8 @@ public class IconBuilderProjPane extends BorderPane
 
     private HBox myHbox;
 
+    private Color theColor;
+
     /**
      * Constructs a new IconBuilderPane.
      *
@@ -86,7 +83,14 @@ public class IconBuilderProjPane extends BorderPane
         BorderPane.setMargin(bottom, new Insets(10., 0., 0., 0.));
         setBottom(bottom);
 
-        myColorPicker.setOnAction((event) -> updateImageColor());
+
+
+
+        myColorPicker.setOnAction((event) -> {
+            theColor = myColorPicker.getValue();
+            updateImageColor(theColor);
+        });
+
     }
 
     /**
@@ -109,10 +113,10 @@ public class IconBuilderProjPane extends BorderPane
         myColorPicker.setOnMouseEntered(event ->
         {
             myColorPicker.show();
-            System.out.println(myColorPicker.accessibleRoleProperty());
-            System.out.println(myColorPicker.getChildrenUnmodifiable());
+            System.out.println("Accesible role prop:   " + myColorPicker.accessibleRoleProperty());
+            System.out.println("Get children unmodifiable:  " + myColorPicker.getChildrenUnmodifiable());
         });
-        myColorPicker.setOnMouseExited(event -> System.out.println(myColorPicker.accessibleRoleProperty()));
+        myColorPicker.setOnMouseExited(event -> System.out.println("Accesible role prop time2:   " + myColorPicker.accessibleRoleProperty()));
 
         TopBar.getChildren().addAll(myColorPicker, sizeLabel, sizeSpinner);
         return TopBar;
@@ -210,7 +214,7 @@ public class IconBuilderProjPane extends BorderPane
         myImageRenderView.scaleXProperty().bind(mySize);
         myImageRenderView.scaleYProperty().bind(mySize);
 
-        ColorAdjust monochrome = new ColorAdjust();
+        /*ColorAdjust monochrome = new ColorAdjust();
         monochrome.setSaturation(-1.0);
         ColorAdjust color2 = new ColorAdjust();
         color2.setBrightness(5.0);
@@ -218,8 +222,10 @@ public class IconBuilderProjPane extends BorderPane
 
         myImageRenderView.effectProperty()
                 .bind(Bindings.when(myImageRenderView.hoverProperty()).then((Effect)blush).otherwise((Effect)null));
+        */
 
         box.getChildren().addAll(myImageRenderView);
+
         return box;
     }
 
@@ -227,12 +233,18 @@ public class IconBuilderProjPane extends BorderPane
      * Updates the color of the selected icon when the ColorPicker selection
      * changes.
      */
-    private void updateImageColor()
+    private void updateImageColor(Color color)
     {
-        if (myCurrentIcon != null)
+        Lighting lighting = new Lighting();
+        lighting.setDiffuseConstant(1.0);
+        lighting.setSpecularConstant(1.0);
+        lighting.setSpecularExponent(0.0);
+        lighting.setSurfaceScale(0.0);
+        lighting.setLight(new Light.Distant(45, 45, theColor));
+
+        if (myImageRenderView != null)
         {
-            myCurrentIcon.setColor(toAwtColor(myColorPicker.getValue()));
-            myImageRenderView.setImage(null);
+           myImageRenderView.setEffect(lighting);
         }
     }
 
