@@ -23,9 +23,11 @@ import io.opensphere.controlpanels.timeline.SnapFunction;
 import io.opensphere.controlpanels.timeline.TimeWindowLayer;
 import io.opensphere.controlpanels.timeline.TimelineLayer;
 import io.opensphere.controlpanels.timeline.TimelineUIModel;
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.context.TimespanContextKey;
 import io.opensphere.core.model.time.TimeInstant;
 import io.opensphere.core.model.time.TimeSpan;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.ChangeListener;
 import io.opensphere.core.util.ListDataEvent;
@@ -69,17 +71,22 @@ public class LoadIntervalsLayer extends CompositeLayer
     /** The loop span listener to synchronize it's load span. */
     private final ChangeListener<? super TimeSpan> myLoopSpanListener = (obs, o, n) -> handleLoopChange(o, n);
 
+    /** The toolbox through which application state is accessed. */
+    private final Toolbox myToolbox;
+
     /**
      * Constructor.
-     *
+     * 
+     * @param toolbox The toolbox through which application state is accessed.
      * @param intervals The observable list of intervals
      * @param millisPerPixel The milliseconds per pixel
      * @param animationModel The animation model
      */
-    public LoadIntervalsLayer(ObservableList<TimeSpan> intervals, ObservableValue<Double> millisPerPixel,
+    public LoadIntervalsLayer(Toolbox toolbox, ObservableList<TimeSpan> intervals, ObservableValue<Double> millisPerPixel,
             AnimationModel animationModel)
     {
         super();
+        myToolbox = toolbox;
         myExternalModel = intervals;
         myMillisPerPixel = millisPerPixel;
         myAnimationModel = animationModel;
@@ -301,6 +308,7 @@ public class LoadIntervalsLayer extends CompositeLayer
      */
     private void addIntervalExternal(TimeSpan span)
     {
+        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.drag.add-load-span");
         myAnimationModel.lastActionProperty().set(Action.ADD);
 
         // Add a load span for the loop span
@@ -342,6 +350,7 @@ public class LoadIntervalsLayer extends CompositeLayer
      */
     private void loadIntervalExternal(TimeSpan span)
     {
+        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.drag.set-load-span");
         myAnimationModel.lastActionProperty().set(Action.LOAD);
         myExternalModel.clear();
         myExternalModel.add(span);
@@ -374,6 +383,7 @@ public class LoadIntervalsLayer extends CompositeLayer
      */
     private void handleRemoveAction(TimeSpan span)
     {
+        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.drag.remove-load-span");
         // Do this later to prevent co-modification of the list of composite
         // layers
         EventQueue.invokeLater(() ->
@@ -395,6 +405,7 @@ public class LoadIntervalsLayer extends CompositeLayer
      */
     private void mergeSpans(List<TimeSpan> spans)
     {
+        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.drag.merge-load-span");
         boolean hadOverlap;
         do
         {

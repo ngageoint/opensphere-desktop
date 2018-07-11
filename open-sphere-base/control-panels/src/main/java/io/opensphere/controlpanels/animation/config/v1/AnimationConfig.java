@@ -17,6 +17,7 @@ import io.opensphere.controlpanels.animation.model.AnimationModel;
 import io.opensphere.controlpanels.animation.model.PlayState;
 import io.opensphere.controlpanels.animation.model.ViewPreference;
 import io.opensphere.controlpanels.timeline.chart.ChartType;
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.time.ISO8601TimeSpanAdapter;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.units.duration.Days;
@@ -109,6 +110,9 @@ public class AnimationConfig
     @XmlElement(name = "viewPreference")
     private ViewPreference myViewPreference;
 
+    /** the toolbox through which application state is accessed. */
+    private Toolbox myToolbox;
+
     /**
      * Gets the time span from the end of today going back the given duration.
      *
@@ -133,11 +137,13 @@ public class AnimationConfig
 
     /**
      * Constructor.
-     *
+     * 
+     * @param toolbox the toolbox through which application state is accessed.
      * @param animationModel the animation model
      */
-    public AnimationConfig(AnimationModel animationModel)
+    public AnimationConfig(Toolbox toolbox, AnimationModel animationModel)
     {
+        myToolbox = toolbox;
         myTimeDuration = new JAXBDuration(animationModel.getActiveSpanDuration().get());
         myLoopSpan = animationModel.getLoopSpan().get();
         myLoopSpanLocked = animationModel.getLoopSpanLocked().get().booleanValue();
@@ -155,6 +161,17 @@ public class AnimationConfig
         myLastShownView = animationModel.getLastShownView().get();
         myLoadIntervals = animationModel.loadIntervalsProperty();
     }
+    
+    /**
+     * Sets the value of the {@link #myToolbox} field.
+     *
+     * @param toolbox 
+     *            the value to store in the {@link #myToolbox} field.
+     */
+    public void setToolbox(Toolbox toolbox)
+    {
+        myToolbox = toolbox;
+    }
 
     /**
      * Gets the animation model.
@@ -163,7 +180,7 @@ public class AnimationConfig
      */
     public AnimationModel getAnimationModel()
     {
-        AnimationModel model = new AnimationModel();
+        AnimationModel model = new AnimationModel(myToolbox);
         model.getActiveSpanDuration().set(myTimeDuration == null || myTimeDuration.getWrappedObject().signum() == 0 ? Days.ONE
                 : myTimeDuration.getWrappedObject());
 
