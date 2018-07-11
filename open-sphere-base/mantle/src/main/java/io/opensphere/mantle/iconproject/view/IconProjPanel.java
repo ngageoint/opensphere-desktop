@@ -1,6 +1,5 @@
 package io.opensphere.mantle.iconproject.view;
 
-import java.awt.EventQueue;
 import java.awt.Window;
 
 import javafx.geometry.Insets;
@@ -206,6 +205,13 @@ public class IconProjPanel extends AnchorPane
         myCustIconButton.setMnemonicParsing(false);
 
         myCustIconButton.setText("Customize Icon");
+        /*myCustIconButton.setOnAction(event ->
+        {
+            EventQueue.invokeLater(() -> {
+              IconProjBuilderDialog builderPane = new IconProjBuilderDialog(owner);
+              builderPane.setVisible(true);
+            });
+        });*/
 
         AnchorPane.setBottomAnchor(myGenIconButton, 0.0);
         AnchorPane.setLeftAnchor(myGenIconButton, -2.0);

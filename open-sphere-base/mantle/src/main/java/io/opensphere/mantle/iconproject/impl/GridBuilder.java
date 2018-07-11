@@ -1,4 +1,4 @@
-package io.opensphere.mantle.iconproject.impl;
+/*package io.opensphere.mantle.iconproject.impl;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -26,27 +26,27 @@ import javafx.scene.layout.HBox;
 
 public class GridBuilder
 {
-    private AnchorPane myGridPanel = new AnchorPane();
+    private final AnchorPane myGridPanel = new AnchorPane();
 
     private class BuildIconGridWorker implements Runnable
     {
-        /** The Can interrupt. */
+        *//** The Can interrupt. *//*
         private final boolean myCanInterrupt;
 
-        /** The Interrupted. */
+        *//** The Interrupted. *//*
         private boolean myInterrupted;
 
-        /** The Rec list. */
+        *//** The Rec list. *//*
         private final List<IconRecord> myRecList;
 
         private Object myIconRegistry;
 
-        /**
+        *//**
          * Instantiates a new builds the icon grid worker.
          *
          * @param recList the rec list
          * @param canCancel the can cancel
-         */
+         *//*
         public BuildIconGridWorker(List<IconRecord> recList, boolean canCancel)
         {
             myRecList = recList;
@@ -70,7 +70,7 @@ public class GridBuilder
             {
                 height = 400;
             }
-            int numIconRowsInView = (int)Math.ceil((double)height / (double)tileWidth);
+            int numIconRowsInView = (int)Math.ceil(height / tileWidth);
             GridPane grid = new GridPane();
             if (!isInterrupted() && !myRecList.isEmpty())
             {
@@ -78,11 +78,11 @@ public class GridBuilder
 
                 if (!isInterrupted())
                 {
-                    double numIconsPerRow = tileWidth > width ? 1 : (int)Math.floor((double)width / (double)tileWidth);
-                    double numRows = (int)Math.ceil((double)imIcList.size() / (double)numIconsPerRow);
+                    double numIconsPerRow = tileWidth > width ? 1 : (int)Math.floor(width / tileWidth);
+                    double numRows = (int)Math.ceil(imIcList.size() / numIconsPerRow);
 
                     grid = new GridPane();
-                    grid.setLayoutY((double)numRows < numIconRowsInView ? numIconRowsInView : numRows);
+                    grid.setLayoutY(numRows < numIconRowsInView ? numIconRowsInView : numRows);
                     grid.setLayoutX(numIconsPerRow);
                     Dimension size = new Dimension(iconWidth, iconWidth);
 
@@ -114,11 +114,11 @@ public class GridBuilder
             }
         }
 
-        /**
+        *//**
          * Checks if is interrupted.
          *
          * @return true, if is interrupted
-         */
+         *//*
         boolean isInterrupted()
         {
             if (!myInterrupted && myCanInterrupt)
@@ -128,12 +128,12 @@ public class GridBuilder
             return myInterrupted;
         }
 
-        /**
+        *//**
          * Builds the image list.
          *
          * @param iconWidth the icon width
          * @return the list
-         */
+         *//*
         private List<RecordImageIcon> buildImageList(int iconWidth)
         {
             List<RecordImageIcon> icons = New.list(myRecList.size());
@@ -164,13 +164,13 @@ public class GridBuilder
             return icons;
         }
 
-        /**
+        *//**
          * Builds the rec button.
          *
          * @param size the size
          * @param rec the rec
          * @return the rec button
-         */
+         *//*
         private AnchorPane buildRecButton(Dimension size, RecordImageIcon rec)
         {
             AnchorPane recBTPanel = new AnchorPane();
@@ -185,13 +185,13 @@ public class GridBuilder
             return recBTPanel;
         }
 
-        /**
+        *//**
          * Loads an image.
          *
          * @param record the icon record
          * @param iconWidth the icon width
          * @return the record image icon, or null if it couldn't be loaded
-         */
+         *//*
         private RecordImageIcon loadImage(IconRecord record, int iconWidth)
         {
             BufferedImage image;
@@ -215,3 +215,4 @@ public class GridBuilder
     }
 
 }
+*/
