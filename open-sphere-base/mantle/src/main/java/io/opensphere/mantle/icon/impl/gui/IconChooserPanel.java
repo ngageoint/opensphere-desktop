@@ -186,9 +186,9 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     {
         mySelectedUrl = selectedUrl;
     }
-    
+
     public String getSelectedURL()
-    {   
+    {
         return mySelectedUrl;
     }
 
@@ -829,7 +829,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     /**
      * The Class RecButton.
      */
-    private class RecButton extends JButton
+    public class RecButton extends JButton
     {
         /**
          * serialVersionUID.
@@ -929,7 +929,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     }
 
     /** An ImageIcon with associated IconRecord. */
-    private static class RecordImageIcon extends ImageIcon
+    public static class RecordImageIcon extends ImageIcon
     {
         /** Serial version UID. */
         private static final long serialVersionUID = 1L;

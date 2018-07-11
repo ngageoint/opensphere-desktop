@@ -83,10 +83,8 @@ public class IconBuilderProjPane extends BorderPane
         BorderPane.setMargin(bottom, new Insets(10., 0., 0., 0.));
         setBottom(bottom);
 
-
-
-
-        myColorPicker.setOnAction((event) -> {
+        myColorPicker.setOnAction((event) ->
+        {
             theColor = myColorPicker.getValue();
             updateImageColor(theColor);
         });
@@ -110,13 +108,26 @@ public class IconBuilderProjPane extends BorderPane
         AnchorPane.setRightAnchor(sizeLabel, 0.);
 
         myColorPicker = new ColorPicker();
+        //myColorPicker.getStyleClass().add("button");
         myColorPicker.setOnMouseEntered(event ->
         {
             myColorPicker.show();
-            System.out.println("Accesible role prop:   " + myColorPicker.accessibleRoleProperty());
-            System.out.println("Get children unmodifiable:  " + myColorPicker.getChildrenUnmodifiable());
+            // System.out.println("****Accesible role prop: " +
+            // myColorPicker.accessibleRoleProperty());
+            // System.out.println("&&&&&Get children unmodifiable: " +
+            // myColorPicker.getChildrenUnmodifiable());
         });
-        myColorPicker.setOnMouseExited(event -> System.out.println("Accesible role prop time2:   " + myColorPicker.accessibleRoleProperty()));
+
+        //ColorPalette pal = new ColorPalette(myColorPicker);
+        /*myColorPicker.showingProperty().setOnMouseExited(event ->
+        {
+
+        });*/
+
+        /*myColorPicker.setOnMouseExited(event ->
+        {
+            System.out.println("^^^^^^^^Accesible role prop time2:   " + myColorPicker.accessibleRoleProperty());
+        });*/
 
         TopBar.getChildren().addAll(myColorPicker, sizeLabel, sizeSpinner);
         return TopBar;
@@ -214,15 +225,14 @@ public class IconBuilderProjPane extends BorderPane
         myImageRenderView.scaleXProperty().bind(mySize);
         myImageRenderView.scaleYProperty().bind(mySize);
 
-        /*ColorAdjust monochrome = new ColorAdjust();
-        monochrome.setSaturation(-1.0);
-        ColorAdjust color2 = new ColorAdjust();
-        color2.setBrightness(5.0);
-        Blend blush = new Blend(BlendMode.MULTIPLY, monochrome, color2);
-
-        myImageRenderView.effectProperty()
-                .bind(Bindings.when(myImageRenderView.hoverProperty()).then((Effect)blush).otherwise((Effect)null));
-        */
+        /* ColorAdjust monochrome = new ColorAdjust();
+         * monochrome.setSaturation(-1.0); ColorAdjust color2 = new
+         * ColorAdjust(); color2.setBrightness(5.0); Blend blush = new
+         * Blend(BlendMode.MULTIPLY, monochrome, color2);
+         *
+         * myImageRenderView.effectProperty()
+         * .bind(Bindings.when(myImageRenderView.hoverProperty()).then((Effect)
+         * blush).otherwise((Effect)null)); */
 
         box.getChildren().addAll(myImageRenderView);
 
@@ -244,7 +254,7 @@ public class IconBuilderProjPane extends BorderPane
 
         if (myImageRenderView != null)
         {
-           myImageRenderView.setEffect(lighting);
+            myImageRenderView.setEffect(lighting);
         }
     }
 
