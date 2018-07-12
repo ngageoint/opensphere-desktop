@@ -82,7 +82,7 @@ public class IconBuilderProjPane extends BorderPane
 
         myColorPicker.setOnAction((event) ->
         {
-            myColor = myColorPicker.getValue();
+            theColor = myColorPicker.getValue();
             updateImageColor();
         });
 
@@ -105,14 +105,19 @@ public class IconBuilderProjPane extends BorderPane
         AnchorPane.setRightAnchor(sizeLabel, 0.);
 
         myColorPicker = new ColorPicker();
+        //myColorPicker.getStyleClass().add("button");
         myColorPicker.setOnMouseEntered(event ->
         {
             myColorPicker.show();
-            System.out.println("Accesible role prop:   " + myColorPicker.accessibleRoleProperty());
-            System.out.println("Get children unmodifiable:  " + myColorPicker.getChildrenUnmodifiable());
+            // System.out.println("****Accesible role prop: " +
+            // myColorPicker.accessibleRoleProperty());
+            // System.out.println("&&&&&Get children unmodifiable: " +
+            // myColorPicker.getChildrenUnmodifiable());
         });
-        myColorPicker.setOnMouseExited(
-                event -> System.out.println("Accesible role prop time2:   " + myColorPicker.accessibleRoleProperty()));
+        /*myColorPicker.setOnMouseExited(event ->
+        {
+            System.out.println("^^^^^^^^Accesible role prop time2:   " + myColorPicker.accessibleRoleProperty());
+        });*/
 
         TopBar.getChildren().addAll(myColorPicker, sizeLabel, sizeSpin);
         return TopBar;
@@ -213,6 +218,15 @@ public class IconBuilderProjPane extends BorderPane
         iconDisplayer.getChildren().addAll(myIconView);
 
         return iconDisplayer;
+        /* ColorAdjust monochrome = new ColorAdjust();
+         * monochrome.setSaturation(-1.0); ColorAdjust color2 = new
+         * ColorAdjust(); color2.setBrightness(5.0); Blend blush = new
+         * Blend(BlendMode.MULTIPLY, monochrome, color2);
+         *
+         * myImageRenderView.effectProperty()
+         * .bind(Bindings.when(myImageRenderView.hoverProperty()).then((Effect)
+         * blush).otherwise((Effect)null)); */
+
     }
 
     /**
@@ -230,7 +244,7 @@ public class IconBuilderProjPane extends BorderPane
 
         if (myIconView != null)
         {
-            myIconView.setEffect(lighting);
+            myImageRenderView.setEffect(lighting);
         }
     }
 
