@@ -118,12 +118,6 @@ public class IconBuilderProjPane extends BorderPane
             // myColorPicker.getChildrenUnmodifiable());
         });
 
-        //ColorPalette pal = new ColorPalette(myColorPicker);
-        /*myColorPicker.showingProperty().setOnMouseExited(event ->
-        {
-
-        });*/
-
         /*myColorPicker.setOnMouseExited(event ->
         {
             System.out.println("^^^^^^^^Accesible role prop time2:   " + myColorPicker.accessibleRoleProperty());
