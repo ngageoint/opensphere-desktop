@@ -86,7 +86,7 @@ public class IconBuilderProjPane extends BorderPane
         myColorPicker.setOnAction((event) ->
         {
             theColor = myColorPicker.getValue();
-            updateImageColor(theColor);
+            updateImageColor();
         });
 
     }
@@ -237,7 +237,7 @@ public class IconBuilderProjPane extends BorderPane
      * Updates the color of the selected icon when the ColorPicker selection
      * changes.
      */
-    private void updateImageColor(Color color)
+    private void updateImageColor()
     {
         Lighting lighting = new Lighting();
         lighting.setDiffuseConstant(1.0);
