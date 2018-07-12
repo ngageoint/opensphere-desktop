@@ -26,7 +26,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.context.TimespanContextKey;
 import io.opensphere.core.model.time.TimeInstant;
 import io.opensphere.core.model.time.TimeSpan;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.ChangeListener;
 import io.opensphere.core.util.NoEffectPredicate;
@@ -146,8 +146,7 @@ class AnimationDragHandlesLayer extends DragHandlesLayer
         JMenuItem item = new JMenuItem(StringUtilities.concat("Set ", myName, " span here"));
         item.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.advanced-animation-controls.set-"
-                    + myName.toLowerCase().replaceAll(" ", "-") + "-span-here");
+            Quantify.collectMetric("mist3d.timeline.buttons.advanced-animation-controls.set-" + myName + "-span-here");
             if (timeSpanAllowed(dragSelectionSpan))
             {
                 getObservableTimeSpan().getSpan().set(dragSelectionSpan);
@@ -174,8 +173,7 @@ class AnimationDragHandlesLayer extends DragHandlesLayer
         JMenuItem startItem = new JMenuItem(myName + " span start here");
         startItem.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.advanced-animation-controls.set-"
-                    + myName.toLowerCase().replaceAll(" ", "-") + "-span-start-here");
+            Quantify.collectMetric("mist3d.timeline.buttons.advanced-animation-controls.set-" + myName + "-span-start-here");
             TimeInstant time = myLeftSnapFunction.getSnapDestination(getUIModel().xToTime(p.x), RoundingMode.HALF_UP);
             if (startAllowed(time))
             {
@@ -193,8 +191,7 @@ class AnimationDragHandlesLayer extends DragHandlesLayer
         JMenuItem endItem = new JMenuItem(myName + " span end here");
         endItem.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.advanced-animation-controls.set-"
-                    + myName.toLowerCase().replaceAll(" ", "-") + "-span-end-here");
+            Quantify.collectMetric("mist3d.timeline.buttons.advanced-animation-controls.set-" + myName + "-span-end-here");
             TimeInstant time = myRightSnapFunction.getSnapDestination(getUIModel().xToTime(p.x), RoundingMode.HALF_UP);
             if (endAllowed(time))
             {

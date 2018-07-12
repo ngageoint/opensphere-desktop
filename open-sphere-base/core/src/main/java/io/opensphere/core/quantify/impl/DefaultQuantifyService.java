@@ -11,14 +11,13 @@ import org.apache.log4j.Logger;
 
 import io.opensphere.core.quantify.QuantifySender;
 import io.opensphere.core.quantify.QuantifyService;
+import io.opensphere.core.quantify.QuantifyUtils;
 import io.opensphere.core.quantify.model.Metric;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
 import javafx.beans.property.BooleanProperty;
 
-/**
- *
- */
+/** The default implementation of the quantify service. */
 public class DefaultQuantifyService implements QuantifyService
 {
     /** Logger reference. */
@@ -82,15 +81,16 @@ public class DefaultQuantifyService implements QuantifyService
     @Override
     public void collectMetric(String key)
     {
+        String normalizedKey = QuantifyUtils.normalize(key);
         if (myEnabledProperty.get())
         {
             synchronized (myMetrics)
             {
-                if (!myMetrics.containsKey(key))
+                if (!myMetrics.containsKey(normalizedKey))
                 {
-                    myMetrics.put(key, new Metric(key));
+                    myMetrics.put(key, new Metric(normalizedKey));
                 }
-                myMetrics.get(key).increment();
+                myMetrics.get(normalizedKey).increment();
             }
         }
     }
@@ -119,6 +119,7 @@ public class DefaultQuantifyService implements QuantifyService
      *
      * @return the value stored in the {@link #mySenders} field.
      */
+    @Override
     public Set<QuantifySender> getSenders()
     {
         return mySenders;

@@ -45,6 +45,7 @@ import io.opensphere.core.event.ApplicationLifecycleEvent;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.pipeline.Pipeline;
 import io.opensphere.core.pipeline.PipelineImpl;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.MemoryUtilities;
 import io.opensphere.core.util.SystemPropertyLoader;
 import io.opensphere.core.util.concurrent.SuppressableRejectedExecutionHandler;
@@ -327,6 +328,7 @@ public class Kernel
         myCacheInit.initializeCacheOptions(myToolbox.getUIRegistry().getOptionsRegistry(), myToolbox.getPreferencesRegistry());
 
         Notify.setToolbox(myToolbox);
+        Quantify.setToolbox(myToolbox);
 
         new PreConfigurationUpdateManager().checkForConfigChanges(myToolbox.getPreferencesRegistry());
         myPostPluginInit = new PostPluginInit(myToolbox);

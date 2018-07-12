@@ -17,6 +17,8 @@ import javax.swing.WindowConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import io.opensphere.core.Toolbox;
+
 /**
  * This class holds and displays information pertaining to the "About" dialog
  * window.
@@ -47,13 +49,19 @@ public class AboutDialog extends JDialog
     /** The software version. */
     private String myVersion;
 
+    /** The toolbox through which application state is accessed. */
+    private final Toolbox myToolbox;
+
     /**
      * Default Constructor.
+     *
+     * @param toolbox The toolbox through which application state is accessed.
      */
-    public AboutDialog()
+    public AboutDialog(Toolbox toolbox)
     {
         super();
-        setTitle("About");
+        myToolbox = toolbox;
+        setTitle("About z");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setContentPane(getAboutContentPane());
         setAlwaysOnTop(true);

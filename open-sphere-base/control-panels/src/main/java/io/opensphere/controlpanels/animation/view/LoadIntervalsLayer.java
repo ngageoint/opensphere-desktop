@@ -27,7 +27,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.context.TimespanContextKey;
 import io.opensphere.core.model.time.TimeInstant;
 import io.opensphere.core.model.time.TimeSpan;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.ChangeListener;
 import io.opensphere.core.util.ListDataEvent;
@@ -308,7 +308,7 @@ public class LoadIntervalsLayer extends CompositeLayer
      */
     private void addIntervalExternal(TimeSpan span)
     {
-        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.drag.add-load-span");
+        Quantify.collectMetric("mist3d.timeline.drag.add-load-span");
         myAnimationModel.lastActionProperty().set(Action.ADD);
 
         // Add a load span for the loop span
@@ -350,7 +350,7 @@ public class LoadIntervalsLayer extends CompositeLayer
      */
     private void loadIntervalExternal(TimeSpan span)
     {
-        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.drag.set-load-span");
+        Quantify.collectMetric("mist3d.timeline.drag.set-load-span");
         myAnimationModel.lastActionProperty().set(Action.LOAD);
         myExternalModel.clear();
         myExternalModel.add(span);
@@ -383,7 +383,7 @@ public class LoadIntervalsLayer extends CompositeLayer
      */
     private void handleRemoveAction(TimeSpan span)
     {
-        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.drag.remove-load-span");
+        Quantify.collectMetric("mist3d.timeline.drag.remove-load-span");
         // Do this later to prevent co-modification of the list of composite
         // layers
         EventQueue.invokeLater(() ->
@@ -405,7 +405,7 @@ public class LoadIntervalsLayer extends CompositeLayer
      */
     private void mergeSpans(List<TimeSpan> spans)
     {
-        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.drag.merge-load-span");
+        Quantify.collectMetric("mist3d.timeline.drag.merge-load-span");
         boolean hadOverlap;
         do
         {
