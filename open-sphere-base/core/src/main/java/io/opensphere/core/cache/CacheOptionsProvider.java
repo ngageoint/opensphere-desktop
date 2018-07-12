@@ -20,11 +20,11 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 
-import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.Preferences;
+import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.Constants;
 import io.opensphere.core.util.Utilities;
@@ -63,19 +63,16 @@ public class CacheOptionsProvider extends AbstractOptionsProvider
     /** The label for the size limit field. */
     private JLabel mySizeLimitLabel;
 
-    private final Toolbox myToolbox;
-
     /**
      * Constructor.
      *
      * @param prefsRegistry The preferences registry.
      * @param cache The cache instance.
      */
-    public CacheOptionsProvider(Toolbox toolbox, Cache cache)
+    public CacheOptionsProvider(PreferencesRegistry prefsRegistry, Cache cache)
     {
         super("Cache");
-        myToolbox = toolbox;
-        myPrefs = toolbox.getPreferencesRegistry().getPreferences(Cache.class);
+        myPrefs = prefsRegistry.getPreferences(Cache.class);
         myCache = cache;
 
         myPreferenceChangeListener = new PreferenceChangeListener()
@@ -94,6 +91,7 @@ public class CacheOptionsProvider extends AbstractOptionsProvider
     @Override
     public void applyChanges()
     {
+        QuantifyToolboxUtils.collectMetric("mist3d.settings.cache.apply-button");
         if (mySizeLimitEnabledCheckbox.isSelected())
         {
             final int size = getSizeLimitFromField();
@@ -123,9 +121,9 @@ public class CacheOptionsProvider extends AbstractOptionsProvider
 
         mySizeLimitEnabledCheckbox = new JCheckBox();
         mySizeLimitEnabledCheckbox.setSelected(sizeLimitBytes > 0L);
-        mySizeLimitEnabledCheckbox.addChangeListener(e ->
+        mySizeLimitEnabledCheckbox.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.cache.size-limit-enabled-checkbox");
+            QuantifyToolboxUtils.collectMetric("mist3d.settings.cache.size-limit-enabled-checkbox");
             mySizeLimitLabel.setEnabled(mySizeLimitEnabledCheckbox.isSelected());
             mySizeLimitField.setEnabled(mySizeLimitEnabledCheckbox.isSelected());
         });

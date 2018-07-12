@@ -57,11 +57,11 @@ class OptionsPanel extends AbstractHUDPanel
 {
     /** The Constant TREE_RIGHT_ICON. */
     private static final ImageIcon TREE_COLLAPSED_ICON = new ImageIcon(
-            OptionsPanel.class.getClassLoader().getResource("images/right.png"));
+        OptionsPanel.class.getClassLoader().getResource("images/right.png"));
 
     /** The Constant TREE_DOWN_ICON. */
     private static final ImageIcon TREE_EXPANDED_ICON = new ImageIcon(
-            OptionsPanel.class.getClassLoader().getResource("images/down.png"));
+        OptionsPanel.class.getClassLoader().getResource("images/down.png"));
 
     /** Serial. */
     private static final long serialVersionUID = 1L;
@@ -187,9 +187,8 @@ class OptionsPanel extends AbstractHUDPanel
             }
         }
         String filterText = getTopicFilterTF().getText();
-        MutableTreeNode node = myToolbox.getUIRegistry().getOptionsRegistry()
-                .getOptionProviderTree(StringUtils.isEmpty(filterText) ? null
-                        : new TopicOrSubTopicMatchesRegexOptionsProviderFilter(genRegex(filterText)));
+        MutableTreeNode node = myToolbox.getUIRegistry().getOptionsRegistry().getOptionProviderTree(
+            StringUtils.isEmpty(filterText) ? null : new TopicOrSubTopicMatchesRegexOptionsProviderFilter(genRegex(filterText)));
         DefaultTreeModel model = new DefaultTreeModel(node, false);
         getTopicTree().setModel(model);
         JTreeUtilities.expandOrCollapseAll(getTopicTree(), true);
@@ -328,7 +327,7 @@ class OptionsPanel extends AbstractHUDPanel
         if (myCurrentOptionEditorJSP == null)
         {
             myCurrentOptionEditorJSP = new JScrollPane(getCurrentOptionEditorPanel(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                    JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             myCurrentOptionEditorJSP.setBackground(new Color(0, 0, 0, 0));
         }
         return myCurrentOptionEditorJSP;
@@ -360,7 +359,7 @@ class OptionsPanel extends AbstractHUDPanel
         {
             myEditorTitleLabel = new JLabel("Settings");
             myEditorTitleLabel
-                    .setFont(myEditorTitleLabel.getFont().deriveFont(Font.BOLD, myEditorTitleLabel.getFont().getSize() + 4));
+                .setFont(myEditorTitleLabel.getFont().deriveFont(Font.BOLD, myEditorTitleLabel.getFont().getSize() + 4));
         }
         return myEditorTitleLabel;
     }
@@ -547,14 +546,13 @@ class OptionsPanel extends AbstractHUDPanel
                                 {
                                     Object parent = ((DefaultMutableTreeNode)node.getParent()).getUserObject();
                                     if (parent instanceof OptionsProviderUserObject)
-                                        QuantifyToolboxUtils.collectMetric(myToolbox,
-                                            "mist3d.settings.left-menu-options."
+                                        QuantifyToolboxUtils.collectMetric("mist3d.settings.left-menu-options."
                                             + ((OptionsProviderUserObject)parent).getNodeName().toLowerCase().replaceAll(" ", "-")
                                             + "." + o.getNodeName().toLowerCase().replaceAll(" ", "-"));
                                 }
                                 else
                                 {
-                                    QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.left-menu-options."
+                                    QuantifyToolboxUtils.collectMetric("mist3d.settings.left-menu-options."
                                         + o.getNodeName().toLowerCase().replaceAll(" ", "-"));
                                 }
                                 setCurrentOptionsProvider(o.getOptionsProvider());
@@ -589,7 +587,7 @@ class OptionsPanel extends AbstractHUDPanel
 
             myTopicTreePanel.add(searchPanel, BorderLayout.NORTH);
             JScrollPane jsp = new JScrollPane(getTopicTree(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                    JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             jsp.setBackground(getBackgroundColor());
             myTopicTreePanel.add(jsp, BorderLayout.CENTER);
         }

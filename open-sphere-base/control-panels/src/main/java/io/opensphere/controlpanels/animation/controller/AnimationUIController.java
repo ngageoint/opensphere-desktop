@@ -127,7 +127,7 @@ public class AnimationUIController extends EventListenerService
         }
 
         myToolbox.getUIRegistry().getOptionsRegistry()
-                .addOptionsProvider(new AnimationOptionsProvider(myToolbox, myAnimationModel, myTimelineFrame));
+                .addOptionsProvider(new AnimationOptionsProvider(myAnimationModel, myTimelineFrame));
 
         super.open();
     }

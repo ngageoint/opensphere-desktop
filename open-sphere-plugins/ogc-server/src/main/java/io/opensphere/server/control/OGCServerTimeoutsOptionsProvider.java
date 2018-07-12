@@ -25,7 +25,6 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 
-import io.opensphere.core.Toolbox;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.options.impl.AbstractPreferencesOptionsProvider;
 import io.opensphere.core.preferences.PreferencesRegistry;
@@ -41,7 +40,6 @@ import io.opensphere.server.source.OGCServerSource;
 import io.opensphere.server.toolbox.ServerSourceController;
 import io.opensphere.server.toolbox.ServerSourceController.ConfigChangeListener;
 import io.opensphere.server.toolbox.ServerSourceControllerManager;
-import io.opensphere.server.toolbox.ServerToolboxUtils;
 import io.opensphere.server.util.ServerConstants;
 
 /**
@@ -87,8 +85,6 @@ public class OGCServerTimeoutsOptionsProvider extends AbstractPreferencesOptions
     /** The event manager. */
     private final EventManager myEventManager;
 
-    private final Toolbox myToolbox;
-
     /**
      * Instantiates a new wFS plugin options provider.
      *
@@ -96,12 +92,12 @@ public class OGCServerTimeoutsOptionsProvider extends AbstractPreferencesOptions
      * @param eventManager The event manager.
      * @param serverCtrlMgr the server controller manager
      */
-    public OGCServerTimeoutsOptionsProvider(Toolbox toolbox)
+    public OGCServerTimeoutsOptionsProvider(PreferencesRegistry prefsRegistry, EventManager eventManager,
+            ServerSourceControllerManager serverCtrlMgr)
     {
-        super(toolbox.getPreferencesRegistry(), ServerConstants.OGC_SERVER_OPTIONS_PROVIDER_MAIN_TOPIC);
-        myEventManager = toolbox.getEventManager();
-        myCtrlMgr = ServerToolboxUtils.getServerSourceControllerManager(toolbox);
-        myToolbox = toolbox;
+        super(prefsRegistry, ServerConstants.OGC_SERVER_OPTIONS_PROVIDER_MAIN_TOPIC);
+        myEventManager = eventManager;
+        myCtrlMgr = serverCtrlMgr;
         myPanel = new JPanel();
         myPanel.setBackground(DEFAULT_BACKGROUND_COLOR);
         myPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 0));
@@ -117,7 +113,7 @@ public class OGCServerTimeoutsOptionsProvider extends AbstractPreferencesOptions
         myPanel.add(new ServerTimeoutHeaderPanel("", "Activate", "Connect", "Read", "", ""));
 //        myPanel.add(new ServerTimeoutHeaderPanel("", TIMEOUT_HEADER, TIMEOUT_HEADER, TIMEOUT_HEADER, ""));
         myErrorReporter = new ErrorReporter();
-        myDefaultTimeoutPanel = new ServerTimeoutPanel(toolbox.getPreferencesRegistry(), myEventManager, null, null, myErrorReporter, true);
+        myDefaultTimeoutPanel = new ServerTimeoutPanel(prefsRegistry, eventManager, null, null, myErrorReporter, true);
         myPanel.add(myDefaultTimeoutPanel);
         myPanel.add(Box.createVerticalStrut(2));
         myPanel.add(myErrorReporter);
@@ -134,7 +130,7 @@ public class OGCServerTimeoutsOptionsProvider extends AbstractPreferencesOptions
     @Override
     public void applyChanges()
     {
-        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.servers.apply-button");
+        QuantifyToolboxUtils.collectMetric("mist3d.settings.servers.apply-button");
         myErrorReporter.clearErrors();
         boolean isValid = myDefaultTimeoutPanel.arePanelInputsValid();
         if (isValid)

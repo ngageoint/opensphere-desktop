@@ -45,8 +45,8 @@ import io.opensphere.server.serverprovider.http.factory.HttpServerFactory;
 import io.opensphere.server.serverprovider.streaming.StreamingServerProvider;
 import io.opensphere.server.services.ServerConfigEvent;
 import io.opensphere.server.services.ServerConfigEvent.ServerEventAction;
-import io.opensphere.server.state.DefaultWFSLayerConfiguration;
 import io.opensphere.server.state.StateConstants;
+import io.opensphere.server.state.DefaultWFSLayerConfiguration;
 import io.opensphere.server.toolbox.ServerSourceController;
 import io.opensphere.server.toolbox.ServerSourceControllerManager;
 import io.opensphere.server.toolbox.ServerToolboxUtils;
@@ -125,9 +125,10 @@ public class OGCServerPlugin extends AbstractWindowMenuItemPlugin
 
         myValidationEnvoy = new OGCServerValidationEnvoy(toolbox);
 
-        myOptionsProvider = new OGCServerTimeoutsOptionsProvider(toolbox);
+        myOptionsProvider = new OGCServerTimeoutsOptionsProvider(toolbox.getPreferencesRegistry(), toolbox.getEventManager(),
+                ServerToolboxUtils.getServerSourceControllerManager(toolbox));
         myOptionsProvider
-                .addSubTopic(new OGCServerRefreshOptionsProvider(toolbox));
+                .addSubTopic(new OGCServerRefreshOptionsProvider(ServerToolboxUtils.getServerRefreshController(toolbox)));
         toolbox.getUIRegistry().getOptionsRegistry().addOptionsProvider(myOptionsProvider);
 
         toolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(IconUtil.getNormalIcon(IconType.STORAGE), "Servers",

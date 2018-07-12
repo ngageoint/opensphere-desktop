@@ -85,28 +85,28 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         JButton checkForUpdates = new JButton("Check for Updates");
         checkForUpdates.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.application-updates.check-for-updates-button");
+            QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.check-for-updates-button");
             myController.checkForUpdates(true);
         });
 
         CheckBox autoUpdateCheckbox = new CheckBox(myPreferences.autoUpdateProperty(),
-                myPreferences.autoUpdateProperty().getName());
-        autoUpdateCheckbox.addActionListener(e -> QuantifyToolboxUtils.collectMetric(myToolbox,
-                "mist3d.settings.application-updates.enable-auto-update-checkbox"));
+            myPreferences.autoUpdateProperty().getName());
+        autoUpdateCheckbox.addActionListener(
+            e -> QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.enable-auto-update-checkbox"));
         addRow(autoUpdateCheckbox, checkForUpdates);
 
         CheckBox updateWithoutPromptCheckbox = new CheckBox(myPreferences.updateWithoutPromptProperty(),
-                myPreferences.updateWithoutPromptProperty().getName());
-        updateWithoutPromptCheckbox.addActionListener(e -> QuantifyToolboxUtils.collectMetric(myToolbox,
-                "mist3d.settings.application-updates.update-without-prompt-checkbox"));
+            myPreferences.updateWithoutPromptProperty().getName());
+        updateWithoutPromptCheckbox.addActionListener(
+            e -> QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.update-without-prompt-checkbox"));
         addComponent(updateWithoutPromptCheckbox);
 
         addLabelComponent(myPreferences.autoUpdateHostnameProperty().getName(),
-                new TextField(myPreferences.autoUpdateHostnameProperty(), myPreferences.autoUpdateHostnameProperty().getName()));
+            new TextField(myPreferences.autoUpdateHostnameProperty(), myPreferences.autoUpdateHostnameProperty().getName()));
         addLabelComponent(myPreferences.latestVersionUrlProperty().getName(),
-                new TextField(myPreferences.latestVersionUrlProperty(), myPreferences.latestVersionUrlProperty().getName()));
+            new TextField(myPreferences.latestVersionUrlProperty(), myPreferences.latestVersionUrlProperty().getName()));
         addLabelComponent(myPreferences.updateUrlProperty().getName(),
-                new TextField(myPreferences.updateUrlProperty(), myPreferences.updateUrlProperty().getName()));
+            new TextField(myPreferences.updateUrlProperty(), myPreferences.updateUrlProperty().getName()));
 
         addHeading("Installed Versions");
 
@@ -123,8 +123,8 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         myPreferredVersionButtonGroup = new ButtonGroup();
         for (String version : versions)
         {
-            myVersionContainer.addRow(createVersionComponent(version, myPreferredVersionButtonGroup,
-                    StringUtils.equals(myPreferredVersion, version)));
+            myVersionContainer.addRow(
+                createVersionComponent(version, myPreferredVersionButtonGroup, StringUtils.equals(myPreferredVersion, version)));
         }
 
         JScrollPane versionsPane = new JScrollPane(myVersionContainer);
@@ -149,7 +149,7 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         toggleButton.setToolTipText("Click to select " + version + "as your preferred version.");
         toggleButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.application-updates.preferred-version-toggle");
+            QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.preferred-version-selection");
             updatePreferredVersion(version);
         });
         preferredVersionButtonGroup.add(toggleButton);
@@ -166,7 +166,7 @@ public class AutoUpdateOptionsPanel extends ViewPanel
             deleteButton.setBackground(Color.RED);
             deleteButton.addActionListener(e ->
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.application-updates.delete-version-button");
+                QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.delete-version-button");
                 deleteVersion(version, box, deleteButton);
             });
 
@@ -185,10 +185,10 @@ public class AutoUpdateOptionsPanel extends ViewPanel
     private void updatePreferredVersion(String version)
     {
         String chooseVersionMessage = "Are you sure you want to use version " + version + " as your default?"
-                + System.lineSeparator() + "The application will restart when this takes effect.";
+            + System.lineSeparator() + "The application will restart when this takes effect.";
 
         int yn = JOptionPane.showConfirmDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(), chooseVersionMessage,
-                "Confirm Change", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+            "Confirm Change", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         if (yn == JOptionPane.YES_OPTION)
         {
@@ -217,10 +217,10 @@ public class AutoUpdateOptionsPanel extends ViewPanel
     private void deleteVersion(String version, Component row, JButton deleteButton)
     {
         String chooseVersionMessage = "Are you sure you want to delete version " + version + "?" + System.lineSeparator()
-                + "This action cannot be undone.";
+            + "This action cannot be undone.";
 
         int response = JOptionPane.showConfirmDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(), chooseVersionMessage,
-                "Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            "Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (response == JOptionPane.YES_OPTION)
         {
             LOG.info("Deleting version '" + version + "' from filesystem.");

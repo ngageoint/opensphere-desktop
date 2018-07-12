@@ -51,7 +51,7 @@ public class QuantifyPlugin extends PluginAdapter
         myPreferences = toolbox.getPreferencesRegistry().getPreferences(QuantifyPlugin.class);
 
         QuantifySettingsModel settingsModel = new QuantifySettingsModel(myPreferences);
-        myOptionsProvider = new QuantifyOptionsProvider(myToolbox, settingsModel);
+        myOptionsProvider = new QuantifyOptionsProvider(settingsModel);
 
         myToolbox.getUIRegistry().getOptionsRegistry().addOptionsProvider(myOptionsProvider);
 

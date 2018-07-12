@@ -18,12 +18,10 @@ import javax.swing.JTextField;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.swing.HorizontalSpacerForGridbag;
 import io.opensphere.server.toolbox.ServerRefreshController;
-import io.opensphere.server.toolbox.ServerToolboxUtils;
 
 /**
  * The Class OGCServerMainOptionsProvider.
@@ -45,19 +43,16 @@ public class OGCServerRefreshOptionsProvider extends AbstractOptionsProvider
     /** Text box used to enter the server refresh interval. */
     private JTextField myRefreshRateTB;
 
-    private final Toolbox myToolbox;
-
     /**
      * Instantiates an options provider that allows users to set configurable
      * parameters for OGC Servers.
      *
      * @param serverRefreshController The server refresh controller.
      */
-    public OGCServerRefreshOptionsProvider(Toolbox toolbox)
+    public OGCServerRefreshOptionsProvider(ServerRefreshController serverRefreshController)
     {
         super("Server Refresh");
-        myRefreshController = ServerToolboxUtils.getServerRefreshController(toolbox);
-        myToolbox = toolbox;
+        myRefreshController = serverRefreshController;
         myOptionsPanel = new JPanel();
         myOptionsPanel.setBackground(DEFAULT_BACKGROUND_COLOR);
         myOptionsPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 0));
@@ -76,7 +71,7 @@ public class OGCServerRefreshOptionsProvider extends AbstractOptionsProvider
     @Override
     public void applyChanges()
     {
-        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.servers.server-refresh.apply-button");
+        QuantifyToolboxUtils.collectMetric("mist3d.settings.servers.server-refresh.apply-button");
         LOGGER.warn("Saving main server options.");
         int interval = 0;
         String error = null;
@@ -151,7 +146,7 @@ public class OGCServerRefreshOptionsProvider extends AbstractOptionsProvider
         myRefreshEnabledCheckBox = new JCheckBox("Auto-refresh Server layers");
         myRefreshEnabledCheckBox.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.servers.server-refresh.auto-refresh-layers-checkbox");
+            QuantifyToolboxUtils.collectMetric("mist3d.settings.servers.server-refresh.auto-refresh-layers-checkbox");
             myRefreshRateTB.setEditable(myRefreshEnabledCheckBox.isSelected());
         });
         myRefreshEnabledCheckBox.setFocusPainted(false);

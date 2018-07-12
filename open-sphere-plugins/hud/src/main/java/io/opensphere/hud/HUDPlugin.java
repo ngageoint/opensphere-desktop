@@ -41,7 +41,7 @@ public class HUDPlugin extends PluginAdapter
     {
         myTransformer = new HUDTransformer(toolbox);
 
-        myOptionsProvider = new FrameOptionsProvider(toolbox);
+        myOptionsProvider = new FrameOptionsProvider(toolbox.getPreferencesRegistry());
         toolbox.getUIRegistry().getOptionsRegistry().addOptionsProvider(myOptionsProvider);
     }
 }

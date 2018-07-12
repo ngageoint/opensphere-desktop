@@ -4,9 +4,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.preferences.Preferences;
+import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.core.util.swing.LinkedSliderTextField;
@@ -33,18 +33,15 @@ public class MapOptionsProvider extends AbstractOptionsProvider
     /** The preferences for map options. */
     private final Preferences myPreferences;
 
-    private final Toolbox myToolbox;
-
     /**
      * Constructor.
      *
      * @param prefsRegistry The system preferences registry.
      */
-    public MapOptionsProvider(Toolbox toolbox)
+    public MapOptionsProvider(PreferencesRegistry prefsRegistry)
     {
         super(MAP_TOPIC);
-        myToolbox = toolbox;
-        myPreferences = myToolbox.getPreferencesRegistry().getPreferences(MapOptionsProvider.class);
+        myPreferences = prefsRegistry.getPreferences(MapOptionsProvider.class);
     }
 
     @Override
@@ -67,7 +64,7 @@ public class MapOptionsProvider extends AbstractOptionsProvider
 
             slider.addSliderFieldChangeListener(e ->
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "");
+                QuantifyToolboxUtils.collectMetric("mist3d.settings.map.zoom-rate-slider");
                 LinkedSliderTextField sfp = (LinkedSliderTextField)e.getSource();
                 myPreferences.putInt(VIEW_ZOOM_RATE_KEY, sfp.getValue(), MapOptionsProvider.this);
             });

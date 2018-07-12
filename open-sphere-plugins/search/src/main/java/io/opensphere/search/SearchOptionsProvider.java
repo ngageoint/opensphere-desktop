@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.options.impl.OptionsPanel;
 import io.opensphere.core.preferences.Preferences;
@@ -36,18 +35,15 @@ public class SearchOptionsProvider extends AbstractOptionsProvider
     /** The requery option combo box. */
     private JComboBox<RequeryOption> myComboBox;
 
-    private final Toolbox myToolbox;
-
     /**
      * Creates a new options provider.
      *
      * @param preferencesRegistry The preferences registry
      */
-    public SearchOptionsProvider(Toolbox toolbox)
+    public SearchOptionsProvider(PreferencesRegistry preferencesRegistry)
     {
         super(PROVIDER_NAME);
-        myToolbox = toolbox;
-        myPreferencesRegistry = myToolbox.getPreferencesRegistry();
+        myPreferencesRegistry = preferencesRegistry;
     }
 
     /**
@@ -76,7 +72,7 @@ public class SearchOptionsProvider extends AbstractOptionsProvider
             myComboBox = new JComboBox<>(RequeryOption.values());
             myComboBox.addActionListener(e ->
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.search.action-if-search-results-changed-combobox");
+                QuantifyToolboxUtils.collectMetric("mist3d.settings.search.action-if-search-results-changed-combobox");
                 saveSelection();
             });
             panel.add(myComboBox);

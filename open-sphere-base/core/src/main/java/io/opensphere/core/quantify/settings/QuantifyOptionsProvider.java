@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
-import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.impl.AbstractJFXOptionsProvider;
 import io.opensphere.core.quantify.QuantifyToolboxUtils;
 
@@ -36,30 +35,30 @@ public class QuantifyOptionsProvider extends AbstractJFXOptionsProvider
      * @param model The model in which the state of the user's preferences is
      *            persisted.
      */
-    public QuantifyOptionsProvider(Toolbox toolbox, QuantifySettingsModel model)
+    public QuantifyOptionsProvider(QuantifySettingsModel model)
     {
         super("Usage Statistics");
         myModel = model;
 
         myEnableCheckbox = new CheckBox("Send anonymous usage statistics?");
-        myEnableCheckbox.selectedProperty().addListener(e -> QuantifyToolboxUtils.collectMetric(toolbox,
-                "mist3d.settings.usage-statistics.send-anonymous-usage-stats-checkbox"));
+        myEnableCheckbox.selectedProperty().addListener(
+            e -> QuantifyToolboxUtils.collectMetric("mist3d.settings.usage-statistics.send-anonymous-usage-stats-checkbox"));
         myEnableCheckbox.selectedProperty().bindBidirectional(myModel.enabledProperty());
 
         myCaptureToLogCheckbox = new CheckBox("Capture statistics to log?");
-        myCaptureToLogCheckbox.selectedProperty().addListener(e -> QuantifyToolboxUtils.collectMetric(toolbox,
-                "mist3d.settings.usage-statistics.capture-stats-to-log-checkbox"));
+        myCaptureToLogCheckbox.selectedProperty().addListener(
+            e -> QuantifyToolboxUtils.collectMetric("mist3d.settings.usage-statistics.capture-stats-to-log-checkbox"));
         myCaptureToLogCheckbox.selectedProperty().bindBidirectional(myModel.captureToLogProperty());
 
         Label disclaimer = new Label("MIST Desktop collects technical data about usage of the application "
-                + "to gain better insight into which parts of the application are most frequently used. "
-                + "All information collected for this purpose is anonymous, and intentionally omits all references "
-                + "to data loaded into the application, areas-of-interest, filters, connected data servers, and "
-                + "any other session-specific information. Information collected includes such things as buttons "
-                + "clicked, functionality accessed, and other similar interactions. Specifics about collected data "
-                + "from your session may be enabled through the settings window (Settings > Usage Statistics), by "
-                + "enabling the \"Capture Metrics in Log\", which writes exact copies of all transmitted "
-                + "information to the local log file.");
+            + "to gain better insight into which parts of the application are most frequently used. "
+            + "All information collected for this purpose is anonymous, and intentionally omits all references "
+            + "to data loaded into the application, areas-of-interest, filters, connected data servers, and "
+            + "any other session-specific information. Information collected includes such things as buttons "
+            + "clicked, functionality accessed, and other similar interactions. Specifics about collected data "
+            + "from your session may be enabled through the settings window (Settings > Usage Statistics), by "
+            + "enabling the \"Capture Metrics in Log\", which writes exact copies of all transmitted "
+            + "information to the local log file.");
         disclaimer.setMaxWidth(Region.USE_COMPUTED_SIZE);
         disclaimer.setPrefWidth(600);
         disclaimer.setWrapText(true);

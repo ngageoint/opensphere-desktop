@@ -135,7 +135,7 @@ public class WFSPlugin extends PluginAdapter
         myWfsToolbox.setEnvoyHelper(new WFSEnvoyHelper());
         myToolbox.getPluginToolboxRegistry().registerPluginToolbox(myWfsToolbox);
 
-        myOptionsProvider = new WFSPluginOptionsProvider(toolbox);
+        myOptionsProvider = new WFSPluginOptionsProvider(toolbox.getPreferencesRegistry());
 
         OptionsProvider serverOptionsProvider = myToolbox.getUIRegistry().getOptionsRegistry()
                 .getRootProviderByTopic(ServerConstants.OGC_SERVER_OPTIONS_PROVIDER_MAIN_TOPIC);

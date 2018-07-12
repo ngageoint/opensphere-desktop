@@ -4,9 +4,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.preferences.Preferences;
+import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.core.util.swing.LinkedSliderTextField;
@@ -40,18 +40,15 @@ public class AdvancedMapOptionsProvider extends AbstractOptionsProvider
      */
     private GridBagPanel myTerrainPanel;
 
-    private final Toolbox myToolbox;
-
     /**
      * Constructor.
      *
      * @param prefsRegistry The system preferences registry.
      */
-    public AdvancedMapOptionsProvider(Toolbox toolbox)
+    public AdvancedMapOptionsProvider(PreferencesRegistry prefsRegistry)
     {
         super(MAP_ADVANCED_TOPIC);
-        myToolbox = toolbox;
-        myPreferences = myToolbox.getPreferencesRegistry().getPreferences(AdvancedMapOptionsProvider.class);
+        myPreferences = prefsRegistry.getPreferences(AdvancedMapOptionsProvider.class);
     }
 
     @Override
@@ -76,7 +73,7 @@ public class AdvancedMapOptionsProvider extends AbstractOptionsProvider
 
             slider.addSliderFieldChangeListener(e ->
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.map.advanced.terrain-density-slider");
+                QuantifyToolboxUtils.collectMetric("mist3d.settings.map.advanced.terrain-density-slider");
                 LinkedSliderTextField sfp = (LinkedSliderTextField)e.getSource();
                 int reverse = 101 - sfp.getValue();
                 // scale to a number between 40 and 120

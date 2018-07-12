@@ -5,8 +5,8 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import org.apache.log4j.Logger;
 
-import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.OptionsRegistry;
+import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.Constants;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.lang.StringUtilities;
@@ -111,9 +111,8 @@ public class CacheInit
      * @param optsRegistry The options registry.
      * @param prefsRegistry The preferences registry.
      */
-    public void initializeCacheOptions(Toolbox toolbox)
+    public void initializeCacheOptions(OptionsRegistry optsRegistry, PreferencesRegistry prefsRegistry)
     {
-        OptionsRegistry optsRegistry = toolbox.getUIRegistry().getOptionsRegistry();
         if (myCache == null)
         {
             throw new IllegalStateException("Cache not initialized.");
@@ -121,7 +120,7 @@ public class CacheInit
         else
         {
             Utilities.checkNull(optsRegistry, "optsRegistry");
-            optsRegistry.addOptionsProvider(new CacheOptionsProvider(toolbox, myCache));
+            optsRegistry.addOptionsProvider(new CacheOptionsProvider(prefsRegistry, myCache));
         }
     }
 }

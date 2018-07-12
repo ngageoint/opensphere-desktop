@@ -30,8 +30,6 @@ public class SpatialTemporalDetailsProvider extends AbstractPreferencesOptionsPr
     /** The Viewer position transformer. */
     private final ViewerPositionTransformer myViewerPositionTransformer;
 
-    private final Toolbox myToolbox;
-
     /**
      * Instantiates a new spatial temporal details provider.
      *
@@ -46,7 +44,6 @@ public class SpatialTemporalDetailsProvider extends AbstractPreferencesOptionsPr
             TimeDisplayTransformer timeDisplayTransformer)
     {
         super(toolbox.getPreferencesRegistry(), DEFAULTS_TOPIC);
-        myToolbox = toolbox;
         myCursorPositionTransformer = cursorPositionTransformer;
         myViewerPositionTransformer = viewerPositionTransformer;
         myTimeDisplayTransformer = timeDisplayTransformer;
@@ -114,7 +111,7 @@ public class SpatialTemporalDetailsProvider extends AbstractPreferencesOptionsPr
         checkbox.setSelected(showable.isVisible());
         checkbox.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.settings.info-overlays." + text.toLowerCase().replaceAll(" ", "-"));
+            QuantifyToolboxUtils.collectMetric("mist3d.settings.info-overlays." + text.toLowerCase().replaceAll(" ", "-"));
             showable.setVisible(((JCheckBox)e.getSource()).isSelected());
         });
         return checkbox;

@@ -542,7 +542,7 @@ public class PipelineImpl implements GLEventListener, Pipeline, GenericSubscribe
         myInitHelper = new PipelineGLInit(myCanvasHelper.getCanvas(), pipelinePrefs, displayListPrefsKey, safeModePrefsKey,
                 myToolbox.getPreferencesRegistry());
 
-        GraphicsOptionsProvider optionsProvider = new GraphicsOptionsProvider(myToolbox, pipelinePrefs, displayListPrefsKey,
+        GraphicsOptionsProvider optionsProvider = new GraphicsOptionsProvider(pipelinePrefs, displayListPrefsKey,
                 safeModePrefsKey);
 
         myToolbox.getUIRegistry().getOptionsRegistry().addOptionsProvider(optionsProvider);

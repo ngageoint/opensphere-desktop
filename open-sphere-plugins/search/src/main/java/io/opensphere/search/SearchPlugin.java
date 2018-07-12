@@ -8,8 +8,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import javafx.application.Platform;
-
 import javax.swing.SwingUtilities;
 
 import io.opensphere.core.PluginLoaderData;
@@ -27,6 +25,7 @@ import io.opensphere.core.search.SearchProvider;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.search.model.SearchModel;
+import javafx.application.Platform;
 
 /** Class for the "Goto" hud frame. */
 public class SearchPlugin extends AbstractHUDFrameMenuItemPlugin
@@ -76,7 +75,7 @@ public class SearchPlugin extends AbstractHUDFrameMenuItemPlugin
         super.initialize(plugindata, toolbox);
         myToolbox = toolbox;
 
-        mySearchOptionsProvider = new SearchOptionsProvider(toolbox);
+        mySearchOptionsProvider = new SearchOptionsProvider(toolbox.getPreferencesRegistry());
         toolbox.getUIRegistry().getOptionsRegistry().addOptionsProvider(mySearchOptionsProvider);
 
         myTransformer = new SearchTransformer(myToolbox);

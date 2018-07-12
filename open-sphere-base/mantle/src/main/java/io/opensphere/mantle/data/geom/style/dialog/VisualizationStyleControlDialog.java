@@ -91,7 +91,7 @@ public class VisualizationStyleControlDialog extends JDialog
 
         myShowStyleEventListener = event -> handleShowTypeVisualizationStyleEvent(event);
         tb.getEventManager().subscribe(ShowTypeVisualizationStyleEvent.class, myShowStyleEventListener);
-        myVisualizationStyleOptionsProvider = new VisualizationStyleOptionsProvider(controller, tb);
+        myVisualizationStyleOptionsProvider = new VisualizationStyleOptionsProvider(controller, tb.getPreferencesRegistry());
         tb.getUIRegistry().getOptionsRegistry().addOptionsProvider(myVisualizationStyleOptionsProvider);
     }
 

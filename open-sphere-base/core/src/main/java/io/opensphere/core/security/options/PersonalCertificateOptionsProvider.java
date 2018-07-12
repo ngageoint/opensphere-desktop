@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 import io.opensphere.core.SecurityManager;
 import io.opensphere.core.options.OptionsProvider;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.security.config.v1.SecurityConfiguration;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.lang.StringUtilities;
@@ -110,6 +111,7 @@ public class PersonalCertificateOptionsProvider extends AbstractTableOptionsProv
     @Override
     protected void deleteRow(int row)
     {
+        QuantifyToolboxUtils.collectMetric("mist3d.settings.security.personal-certificates.delete-button");
         assert EventQueue.isDispatchThread();
 
         Collection<? extends PrivateKeyProvider> privateKeyProviders = getSecurityManager().getPrivateKeyProviders();
@@ -175,6 +177,7 @@ public class PersonalCertificateOptionsProvider extends AbstractTableOptionsProv
     @Override
     protected void showDetails(int row)
     {
+        QuantifyToolboxUtils.collectMetric("mist3d.settings.security.personal-certificates.details-button");
         assert EventQueue.isDispatchThread();
 
         Collection<? extends PrivateKeyProvider> privateKeyProviders = getSecurityManager().getPrivateKeyProviders();
