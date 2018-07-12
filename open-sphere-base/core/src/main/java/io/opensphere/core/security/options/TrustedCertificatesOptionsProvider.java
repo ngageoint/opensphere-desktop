@@ -241,6 +241,7 @@ public class TrustedCertificatesOptionsProvider extends AbstractTableOptionsProv
     protected void showDetails(int row)
     {
         QuantifyToolboxUtils.collectMetric("mist3d.settings.security.trusted-certificates.details-button");
+        
         assert EventQueue.isDispatchThread();
 
         X509Certificate item = CollectionUtilities.getItem(getSecurityManager().getTrustedServerCerts(), row);

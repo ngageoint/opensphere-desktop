@@ -64,6 +64,7 @@ public class UsernamePasswordOptionsProvider extends AbstractTableOptionsProvide
     protected void deleteRow(int row)
     {
         QuantifyToolboxUtils.collectMetric("mist3d.settings.security.passwords.delete-button");
+
         SecurityConfiguration config = getConfig().clone();
         Collection<? extends EncryptedUsernamePassword> usernamePasswords = config.getUsernamePasswords();
         EncryptedUsernamePassword item = CollectionUtilities.getItem(usernamePasswords, row);
@@ -92,6 +93,7 @@ public class UsernamePasswordOptionsProvider extends AbstractTableOptionsProvide
     protected void showDetails(int row)
     {
         QuantifyToolboxUtils.collectMetric("mist3d.settings.security.passwords.details-button");
+
         assert EventQueue.isDispatchThread();
 
         EncryptedUsernamePassword item = CollectionUtilities.getItem(getConfig().getUsernamePasswords(), row);

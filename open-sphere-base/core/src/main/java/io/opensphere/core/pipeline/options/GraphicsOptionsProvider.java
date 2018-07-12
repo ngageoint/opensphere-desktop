@@ -58,11 +58,11 @@ public class GraphicsOptionsProvider extends AbstractOptionsProvider
     public JPanel getOptionsPanel()
     {
         final JCheckBox safeModeCb = new JCheckBox("Use safe mode for next launch",
-            myPreferences.getBoolean(mySafeModePrefsKey, false));
+                myPreferences.getBoolean(mySafeModePrefsKey, false));
         safeModeCb.setToolTipText("Using safe mode will result in reduced graphics performance, but may improve stability.");
 
         final JCheckBox displayListsCb = new JCheckBox("Fast text rendering for next launch (NVIDIA recommended)",
-            myPreferences.getBoolean(myDisplayListsPrefsKey, false));
+                myPreferences.getBoolean(myDisplayListsPrefsKey, false));
 
         if (safeModeCb.isSelected())
         {

@@ -1,5 +1,6 @@
 package io.opensphere.kml.settings;
 
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.swing.binding.ComboBox;
 import io.opensphere.core.util.swing.input.ViewPanel;
 import io.opensphere.kml.common.model.ScalingMethod;
@@ -20,6 +21,7 @@ class KMLSettingsPanel extends ViewPanel
         super();
         ComboBox<ScalingMethod> comboBox = new ComboBox<>(model.scalingMethodProperty(), model.getScalingMethodOptions());
         comboBox.setToolTipText("How to scale icons and labels");
+        comboBox.addActionListener(e -> QuantifyToolboxUtils.collectMetric("mist3d.settings.kml.scaling-method-combobox"));
         addLabelComponent("Scaling Method:", comboBox);
     }
 }

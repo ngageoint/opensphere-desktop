@@ -72,6 +72,7 @@ public class OGCServerRefreshOptionsProvider extends AbstractOptionsProvider
     public void applyChanges()
     {
         QuantifyToolboxUtils.collectMetric("mist3d.settings.servers.server-refresh.apply-button");
+
         LOGGER.warn("Saving main server options.");
         int interval = 0;
         String error = null;

@@ -56,6 +56,7 @@ public class AnnotationOptionsProvider extends AbstractOptionsProvider
     public void applyChanges()
     {
         QuantifyToolboxUtils.collectMetric("mist3d.settings.my-places-defaults.apply-button");
+
         getOptionsPanel().getModel().applyChanges();
 
         int index = 0;

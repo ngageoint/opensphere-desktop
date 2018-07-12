@@ -51,14 +51,14 @@ public class QuantifyOptionsProvider extends AbstractJFXOptionsProvider
         myCaptureToLogCheckbox.selectedProperty().bindBidirectional(myModel.captureToLogProperty());
 
         Label disclaimer = new Label("MIST Desktop collects technical data about usage of the application "
-            + "to gain better insight into which parts of the application are most frequently used. "
-            + "All information collected for this purpose is anonymous, and intentionally omits all references "
-            + "to data loaded into the application, areas-of-interest, filters, connected data servers, and "
-            + "any other session-specific information. Information collected includes such things as buttons "
-            + "clicked, functionality accessed, and other similar interactions. Specifics about collected data "
-            + "from your session may be enabled through the settings window (Settings > Usage Statistics), by "
-            + "enabling the \"Capture Metrics in Log\", which writes exact copies of all transmitted "
-            + "information to the local log file.");
+                + "to gain better insight into which parts of the application are most frequently used. "
+                + "All information collected for this purpose is anonymous, and intentionally omits all references "
+                + "to data loaded into the application, areas-of-interest, filters, connected data servers, and "
+                + "any other session-specific information. Information collected includes such things as buttons "
+                + "clicked, functionality accessed, and other similar interactions. Specifics about collected data "
+                + "from your session may be enabled through the settings window (Settings > Usage Statistics), by "
+                + "enabling the \"Capture Metrics in Log\", which writes exact copies of all transmitted "
+                + "information to the local log file.");
         disclaimer.setMaxWidth(Region.USE_COMPUTED_SIZE);
         disclaimer.setPrefWidth(600);
         disclaimer.setWrapText(true);

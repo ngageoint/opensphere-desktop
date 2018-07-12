@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import io.opensphere.core.options.impl.AbstractPreferencesOptionsProvider;
 import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
+import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.mantle.transformer.MapDataElementTransformer;
@@ -78,15 +79,15 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
     public void applyChanges()
     {
         DataDiscoveryPreferences.setShowActiveLayerTypeIcons(getPreferencesRegistry(),
-            getActiveLayerShowTypeIconCheckBox().isSelected(), this);
+                getActiveLayerShowTypeIconCheckBox().isSelected(), this);
         DataDiscoveryPreferences.setShowActiveLayerTypeLabels(getPreferencesRegistry(),
-            getActiveLayerShowTypeLabelsCheckBox().isSelected(), this);
+                getActiveLayerShowTypeLabelsCheckBox().isSelected(), this);
         DataDiscoveryPreferences.setShowActiveLayerFeatureCounts(getPreferencesRegistry(),
-            getShowFeatureCountCheckBox().isSelected(), this);
+                getShowFeatureCountCheckBox().isSelected(), this);
         DataDiscoveryPreferences.setShowActiveSourceTypeLabels(getPreferencesRegistry(),
-            getActiveLayerShowSourceLabelsCheckBox().isSelected(), this);
+                getActiveLayerShowSourceLabelsCheckBox().isSelected(), this);
         DataDiscoveryPreferences.setShowAvailableSourceTypeLabels(getPreferencesRegistry(),
-            getAvailableLayerShowSourceLabelsCheckBox().isSelected(), this);
+                getAvailableLayerShowSourceLabelsCheckBox().isSelected(), this);
     }
 
     @Override
@@ -143,14 +144,14 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
         if (myShowActiveLayerSourceLabelsCheckBox == null)
         {
             myShowActiveLayerSourceLabelsCheckBox = new JCheckBox("Layer Source Labels",
-                isShowActiveLayerSourceLabelsPreference());
+                    isShowActiveLayerSourceLabelsPreference());
             myShowActiveLayerSourceLabelsCheckBox.setFocusable(false);
             myShowActiveLayerSourceLabelsCheckBox.addActionListener(e ->
             {
                 QuantifyToolboxUtils
-                    .collectMetric("mist3d.settings.layers.active-layer-tab-options.layer-source-labels-checkbox");
+                        .collectMetric("mist3d.settings.layers.active-layer-tab-options.layer-source-labels-checkbox");
                 DataDiscoveryPreferences.setShowActiveSourceTypeLabels(getPreferencesRegistry(),
-                    getActiveLayerShowSourceLabelsCheckBox().isSelected(), this);
+                        getActiveLayerShowSourceLabelsCheckBox().isSelected(), this);
             });
 
             myActiveTabLayerSourceLabelListener = new PreferenceChangeListener()
@@ -166,7 +167,7 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
             };
 
             getPreferencesRegistry().getPreferences(MapDataElementTransformer.class).addPreferenceChangeListener(
-                DataDiscoveryPreferences.SHOW_ACTIVE_SOURCE_LABELS, myActiveTabLayerSourceLabelListener);
+                    DataDiscoveryPreferences.SHOW_ACTIVE_SOURCE_LABELS, myActiveTabLayerSourceLabelListener);
         }
         return myShowActiveLayerSourceLabelsCheckBox;
     }
@@ -186,7 +187,7 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
             {
                 QuantifyToolboxUtils.collectMetric("mist3d.settings.layers.active-layer-tab-options.layer-type-icons-checkbox");
                 DataDiscoveryPreferences.setShowActiveLayerTypeIcons(getPreferencesRegistry(),
-                    getActiveLayerShowTypeIconCheckBox().isSelected(), this);
+                        getActiveLayerShowTypeIconCheckBox().isSelected(), this);
             });
 
             myActiveTabLayerTypeIconsListener = new PreferenceChangeListener()
@@ -202,7 +203,7 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
             };
 
             getPreferencesRegistry().getPreferences(DataDiscoveryPreferences.class).addPreferenceChangeListener(
-                DataDiscoveryPreferences.SHOW_ACTIVE_LAYER_TYPE_ICONS, myActiveTabLayerTypeIconsListener);
+                    DataDiscoveryPreferences.SHOW_ACTIVE_LAYER_TYPE_ICONS, myActiveTabLayerTypeIconsListener);
         }
         return myShowLayerTypeIconsCheckBox;
     }
@@ -222,7 +223,7 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
             {
                 QuantifyToolboxUtils.collectMetric("mist3d.settings.layers.active-layer-tab-options.layer-type-labels-checkbox");
                 DataDiscoveryPreferences.setShowActiveLayerTypeLabels(getPreferencesRegistry(),
-                    getActiveLayerShowTypeLabelsCheckBox().isSelected(), this);
+                        getActiveLayerShowTypeLabelsCheckBox().isSelected(), this);
             });
 
             myActiveTabLayerTypeLabelListener = new PreferenceChangeListener()
@@ -238,7 +239,7 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
             };
 
             getPreferencesRegistry().getPreferences(MapDataElementTransformer.class).addPreferenceChangeListener(
-                DataDiscoveryPreferences.SHOW_ACTIVE_LAYER_TYPE_LABELS, myActiveTabLayerTypeLabelListener);
+                    DataDiscoveryPreferences.SHOW_ACTIVE_LAYER_TYPE_LABELS, myActiveTabLayerTypeLabelListener);
         }
         return myShowLayerTypeLabelsCheckBox;
     }
@@ -278,13 +279,13 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
         if (myShowAvailableLayerSourceLabelsCheckBox == null)
         {
             myShowAvailableLayerSourceLabelsCheckBox = new JCheckBox("Layer Source Labels",
-                isShowAvailableLayerSourceLabelsPreference());
+                    isShowAvailableLayerSourceLabelsPreference());
             myShowAvailableLayerSourceLabelsCheckBox.setFocusable(false);
             myShowAvailableLayerSourceLabelsCheckBox.addActionListener(e ->
             {
                 QuantifyToolboxUtils.collectMetric("mist3d.settings.layers.add-data-panel-options.layer-source-labels-checkbox");
                 DataDiscoveryPreferences.setShowAvailableSourceTypeLabels(getPreferencesRegistry(),
-                    getAvailableLayerShowSourceLabelsCheckBox().isSelected(), this);
+                        getAvailableLayerShowSourceLabelsCheckBox().isSelected(), this);
             });
 
             myAvailableTabLayerSourceLabelListener = new PreferenceChangeListener()
@@ -300,7 +301,7 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
             };
 
             getPreferencesRegistry().getPreferences(MapDataElementTransformer.class).addPreferenceChangeListener(
-                DataDiscoveryPreferences.SHOW_AVAILABLE_SOURCE_TYPE_LABELS, myAvailableTabLayerSourceLabelListener);
+                    DataDiscoveryPreferences.SHOW_AVAILABLE_SOURCE_TYPE_LABELS, myAvailableTabLayerSourceLabelListener);
         }
         return myShowAvailableLayerSourceLabelsCheckBox;
     }
@@ -342,7 +343,7 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
             {
                 QuantifyToolboxUtils.collectMetric("mist3d.settings.layers.active-layer-tab-options.show-feature-count-checkbox");
                 DataDiscoveryPreferences.setShowActiveLayerFeatureCounts(getPreferencesRegistry(),
-                    getShowFeatureCountCheckBox().isSelected(), this);
+                        getShowFeatureCountCheckBox().isSelected(), this);
             });
 
             myActiveTabShowFeatureCountListener = new PreferenceChangeListener()
@@ -358,7 +359,7 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
             };
 
             getPreferencesRegistry().getPreferences(DataDiscoveryPreferences.class).addPreferenceChangeListener(
-                DataDiscoveryPreferences.SHOW_ACTIVE_LAYER_FEATURE_COUNTS, myActiveTabShowFeatureCountListener);
+                    DataDiscoveryPreferences.SHOW_ACTIVE_LAYER_FEATURE_COUNTS, myActiveTabShowFeatureCountListener);
         }
         return myShowFeatureCountCheckBox;
     }

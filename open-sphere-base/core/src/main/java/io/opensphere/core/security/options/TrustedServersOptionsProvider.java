@@ -99,6 +99,7 @@ public class TrustedServersOptionsProvider extends AbstractTableOptionsProvider
     protected void showDetails(int row)
     {
         QuantifyToolboxUtils.collectMetric("mist3d.settings.security.trusted-servers.details-button");
+
         assert EventQueue.isDispatchThread();
 
         Object selectedServer = getTable().getModel().getValueAt(row, 0);

@@ -82,31 +82,14 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         myPreferences = AutoUpdateToolboxUtils.getAutoUpdateToolboxToolbox(myToolbox).getPreferences();
         addHeading("Auto-Update Options");
 
-        JButton checkForUpdates = new JButton("Check for Updates");
-        checkForUpdates.addActionListener(e ->
-        {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.check-for-updates-button");
-            myController.checkForUpdates(true);
-        });
-
-        CheckBox autoUpdateCheckbox = new CheckBox(myPreferences.autoUpdateProperty(),
-            myPreferences.autoUpdateProperty().getName());
-        autoUpdateCheckbox.addActionListener(
-            e -> QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.enable-auto-update-checkbox"));
-        addRow(autoUpdateCheckbox, checkForUpdates);
-
-        CheckBox updateWithoutPromptCheckbox = new CheckBox(myPreferences.updateWithoutPromptProperty(),
-            myPreferences.updateWithoutPromptProperty().getName());
-        updateWithoutPromptCheckbox.addActionListener(
-            e -> QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.update-without-prompt-checkbox"));
-        addComponent(updateWithoutPromptCheckbox);
-
+        addRow(getAutoUpdateCheckbox(), getCheckForUpdatesButton());
+        addComponent(getUpdateWithoutPromptCheckbox());
         addLabelComponent(myPreferences.autoUpdateHostnameProperty().getName(),
-            new TextField(myPreferences.autoUpdateHostnameProperty(), myPreferences.autoUpdateHostnameProperty().getName()));
+                new TextField(myPreferences.autoUpdateHostnameProperty(), myPreferences.autoUpdateHostnameProperty().getName()));
         addLabelComponent(myPreferences.latestVersionUrlProperty().getName(),
-            new TextField(myPreferences.latestVersionUrlProperty(), myPreferences.latestVersionUrlProperty().getName()));
+                new TextField(myPreferences.latestVersionUrlProperty(), myPreferences.latestVersionUrlProperty().getName()));
         addLabelComponent(myPreferences.updateUrlProperty().getName(),
-            new TextField(myPreferences.updateUrlProperty(), myPreferences.updateUrlProperty().getName()));
+                new TextField(myPreferences.updateUrlProperty(), myPreferences.updateUrlProperty().getName()));
 
         addHeading("Installed Versions");
 
@@ -123,14 +106,58 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         myPreferredVersionButtonGroup = new ButtonGroup();
         for (String version : versions)
         {
-            myVersionContainer.addRow(
-                createVersionComponent(version, myPreferredVersionButtonGroup, StringUtils.equals(myPreferredVersion, version)));
+            myVersionContainer.addRow(createVersionComponent(version, myPreferredVersionButtonGroup,
+                    StringUtils.equals(myPreferredVersion, version)));
         }
 
         JScrollPane versionsPane = new JScrollPane(myVersionContainer);
         fillBoth();
         setGridwidth(2);
         addRow(versionsPane);
+    }
+
+    /**
+     * Gets the auto update checkbox.
+     *
+     * @return the auto update checkbox
+     */
+    private Component getAutoUpdateCheckbox()
+    {
+        CheckBox autoUpdateCheckbox = new CheckBox(myPreferences.autoUpdateProperty(),
+                myPreferences.autoUpdateProperty().getName());
+        autoUpdateCheckbox.addActionListener(
+            e -> QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.enable-auto-update-checkbox"));
+        return autoUpdateCheckbox;
+    }
+
+    /**
+     * Gets the check for updates button.
+     *
+     * @return the check for updates button
+     */
+    private Component getCheckForUpdatesButton()
+    {
+        JButton checkForUpdatesButton = new JButton("Check for Updates");
+        checkForUpdatesButton.addActionListener(e ->
+        {
+            QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.check-for-updates-button");
+            myController.checkForUpdates(true);
+        });
+        return checkForUpdatesButton;
+    }
+
+    /**
+     * Gets the update without prompt checkbox.
+     *
+     * @return the update without prompt checkbox
+     */
+    private Component getUpdateWithoutPromptCheckbox()
+    {
+        CheckBox updateWithoutPromptCheckbox = new CheckBox(myPreferences.updateWithoutPromptProperty(),
+                myPreferences.updateWithoutPromptProperty().getName());
+        updateWithoutPromptCheckbox.addActionListener(
+            e -> QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.update-without-prompt-checkbox"));
+        return updateWithoutPromptCheckbox;
     }
 
     /**
@@ -144,36 +171,56 @@ public class AutoUpdateOptionsPanel extends ViewPanel
     protected Component createVersionComponent(String version, ButtonGroup preferredVersionButtonGroup, boolean isPreferred)
     {
         Box box = Box.createHorizontalBox();
-
-        JRadioButton toggleButton = new JRadioButton(version, isPreferred);
-        toggleButton.setToolTipText("Click to select " + version + "as your preferred version.");
-        toggleButton.addActionListener(e ->
-        {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.preferred-version-selection");
-            updatePreferredVersion(version);
-        });
-        preferredVersionButtonGroup.add(toggleButton);
-
-        box.add(toggleButton);
-
-        myPreferredVersionDictionary.put(version, toggleButton.getModel());
+        AbstractButton toggleVersionButton = getToggleVersionButton(version, isPreferred);
+        preferredVersionButtonGroup.add(toggleVersionButton);
+        box.add(toggleVersionButton);
+        myPreferredVersionDictionary.put(version, toggleVersionButton.getModel());
 
         if (!isPreferred)
         {
             box.add(Box.createHorizontalGlue());
-
-            JButton deleteButton = new JButton(new GenericFontIcon(AwesomeIconSolid.TRASH_ALT, Color.WHITE));
-            deleteButton.setBackground(Color.RED);
-            deleteButton.addActionListener(e ->
-            {
-                QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.delete-version-button");
-                deleteVersion(version, box, deleteButton);
-            });
-
-            box.add(deleteButton);
+            box.add(getDeleteVersionButton(version, box));
         }
 
         return box;
+    }
+
+    /**
+     * Gets the toggle version button for a single row.
+     *
+     * @param version the version to display in the row
+     * @param isPreferred flag to force selection of the row
+     * @return the toggle version button for the row
+     */
+    private AbstractButton getToggleVersionButton(String version, boolean isPreferred)
+    {
+        JRadioButton toggleVersionButton = new JRadioButton(version, isPreferred);
+        toggleVersionButton.setToolTipText("Click to select " + version + "as your preferred version.");
+        toggleVersionButton.addActionListener(e ->
+        {
+            QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.preferred-version-selection");
+            updatePreferredVersion(version);
+        });
+        return toggleVersionButton;
+    }
+
+    /**
+     * Gets the delete version button for a single row.
+     *
+     * @param version the version to display in the row
+     * @param box the component in which the version UI is encapsulated
+     * @return the delete version button.
+     */
+    private Component getDeleteVersionButton(String version, Box box)
+    {
+        JButton deleteVersionButton = new JButton(new GenericFontIcon(AwesomeIconSolid.TRASH_ALT, Color.WHITE));
+        deleteVersionButton.setBackground(Color.RED);
+        deleteVersionButton.addActionListener(e ->
+        {
+            QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.delete-version-button");
+            deleteVersion(version, box, deleteVersionButton);
+        });
+        return deleteVersionButton;
     }
 
     /**
@@ -185,10 +232,10 @@ public class AutoUpdateOptionsPanel extends ViewPanel
     private void updatePreferredVersion(String version)
     {
         String chooseVersionMessage = "Are you sure you want to use version " + version + " as your default?"
-            + System.lineSeparator() + "The application will restart when this takes effect.";
+                + System.lineSeparator() + "The application will restart when this takes effect.";
 
         int yn = JOptionPane.showConfirmDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(), chooseVersionMessage,
-            "Confirm Change", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+                "Confirm Change", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         if (yn == JOptionPane.YES_OPTION)
         {
@@ -217,10 +264,10 @@ public class AutoUpdateOptionsPanel extends ViewPanel
     private void deleteVersion(String version, Component row, JButton deleteButton)
     {
         String chooseVersionMessage = "Are you sure you want to delete version " + version + "?" + System.lineSeparator()
-            + "This action cannot be undone.";
+                + "This action cannot be undone.";
 
         int response = JOptionPane.showConfirmDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(), chooseVersionMessage,
-            "Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                "Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (response == JOptionPane.YES_OPTION)
         {
             LOG.info("Deleting version '" + version + "' from filesystem.");

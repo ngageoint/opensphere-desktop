@@ -57,48 +57,61 @@ public class AnimationOptionsProvider extends AbstractOptionsProvider
         if (myPanel == null)
         {
             myAnimationModel.getRememberTimes().setNameAndDescription("Remember loop span between sessions?",
-                "<html>Selected means the loop span will be saved between sessions.<br>"
-                    + "Not selected means the loop span will start out including the current day.</html>");
+                    "<html>Selected means the loop span will be saved between sessions.<br>"
+                            + "Not selected means the loop span will start out including the current day.</html>");
             myAnimationModel.getViewPreference().setNameAndDescription("Timeline to show on startup",
-                "Which timeline display to show on startup.");
+                    "Which timeline display to show on startup.");
             myAnimationModel.getLoopSpanLocked().setNameAndDescription("Lock loop span",
-                "Do not allow the loop span to be changed by the active span");
+                    "Do not allow the loop span to be changed by the active span");
             ToolTipManager.sharedInstance().setDismissDelay(10000);
 
             ViewPanel panel = new ViewPanel();
-
             panel.addComponent(getRememberLoopSpanCheckBox());
             panel.addLabelComponent(getTimelineViewPreferenceComponents());
             panel.addComponent(getLockLoopSpanCheckBox());
             panel.addComponent(getResetFrameButton());
-
             myPanel = new OptionsPanel(panel);
         }
         return myPanel;
     }
 
+    /**
+     * Gets the remember loop span checkbox.
+     *
+     * @return the remember loop span checkbox
+     */
     private Component getRememberLoopSpanCheckBox()
     {
         JComponent rememberLoopSpan = ControllerFactory.createComponent(myAnimationModel.getRememberTimes());
         if (rememberLoopSpan instanceof JCheckBox)
         {
-            ((JCheckBox)rememberLoopSpan).addActionListener(
-                e -> QuantifyToolboxUtils.collectMetric("mist3d.settings.timeline-and-animation.remember-loop-span-checkbox"));
+            ((JCheckBox)rememberLoopSpan).addActionListener(e -> QuantifyToolboxUtils
+                    .collectMetric("mist3d.settings.timeline-and-animation.remember-loop-span-checkbox"));
         }
         return rememberLoopSpan;
     }
 
+    /**
+     * Gets the timeline view preference components - label and combobox.
+     *
+     * @return the timeline view preference components
+     */
     private JComponent[] getTimelineViewPreferenceComponents()
     {
         JComponent[] timelineViewPreference = ControllerFactory.createLabelAndComponent(myAnimationModel.getViewPreference());
         if (timelineViewPreference[1] instanceof JComboBox<?>)
         {
             ((JComboBox<?>)timelineViewPreference[1]).addActionListener(e -> QuantifyToolboxUtils
-                .collectMetric("mist3d.settings.timeline-and-animation.timeline-to-show-on-startup-combobox"));
+                    .collectMetric("mist3d.settings.timeline-and-animation.timeline-to-show-on-startup-combobox"));
         }
         return timelineViewPreference;
     }
 
+    /**
+     * Gets the lock loop span checkbox.
+     *
+     * @return the lock loop span checkbox
+     */
     private Component getLockLoopSpanCheckBox()
     {
         JComponent lockLoopSpan = ControllerFactory.createComponent(myAnimationModel.getLoopSpanLocked());
@@ -110,6 +123,11 @@ public class AnimationOptionsProvider extends AbstractOptionsProvider
         return lockLoopSpan;
     }
 
+    /**
+     * Gets the reset timeline frame button.
+     *
+     * @return the reset frame button
+     */
     private JButton getResetFrameButton()
     {
         JButton resetFrameButton = new JButton("Reset timeline size & location");
