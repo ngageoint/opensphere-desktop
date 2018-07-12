@@ -39,7 +39,6 @@ class AnimationConfigManager extends ObservableValueService
         myToolbox = toolbox;
         myPreferences = preferencesRegistry.getPreferences("io.opensphere.controlpanels.animation.AnimationConfigManager");
         AnimationConfig config = myPreferences.getJAXBObject(AnimationConfig.class, PREFERENCES_KEY, null);
-        config.setToolbox(toolbox);
         myAnimationModel = config == null ? new AnimationConfig().getAnimationModel() : config.getAnimationModel();
 
         ChangeListener<Object> listener = (observable, oldValue, newValue) -> saveConfig();
@@ -96,7 +95,7 @@ class AnimationConfigManager extends ObservableValueService
     {
         if (myAnimationModel.isValid())
         {
-            myPreferences.putJAXBObject(PREFERENCES_KEY, new AnimationConfig(myToolbox, myAnimationModel), false, this);
+            myPreferences.putJAXBObject(PREFERENCES_KEY, new AnimationConfig(myAnimationModel), false, this);
         }
     }
 }
