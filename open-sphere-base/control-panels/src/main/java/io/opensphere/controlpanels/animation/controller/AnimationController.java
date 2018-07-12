@@ -79,7 +79,7 @@ public class AnimationController extends EventListenerService
         super(toolbox.getEventManager());
         myToolbox = toolbox;
 
-        AnimationConfigManager animationConfigManager = addService(new AnimationConfigManager(toolbox, toolbox.getPreferencesRegistry()));
+        AnimationConfigManager animationConfigManager = addService(new AnimationConfigManager(toolbox.getPreferencesRegistry()));
         myAnimationModel = animationConfigManager.getAnimationModel();
 
         myUIModel = addService(new TimelineUIModel());

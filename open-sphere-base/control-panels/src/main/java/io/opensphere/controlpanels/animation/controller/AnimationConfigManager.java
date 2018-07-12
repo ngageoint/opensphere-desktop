@@ -2,7 +2,6 @@ package io.opensphere.controlpanels.animation.controller;
 
 import io.opensphere.controlpanels.animation.config.v1.AnimationConfig;
 import io.opensphere.controlpanels.animation.model.AnimationModel;
-import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
@@ -25,18 +24,14 @@ class AnimationConfigManager extends ObservableValueService
     /** The preferences. */
     private final Preferences myPreferences;
 
-    /** The toolbox through which application state is accessed. */
-    private Toolbox myToolbox;
-
     /**
      * Constructor.
      *
      * @param preferencesRegistry the preferences registry
      */
     @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
-    public AnimationConfigManager(Toolbox toolbox, PreferencesRegistry preferencesRegistry)
+    public AnimationConfigManager(PreferencesRegistry preferencesRegistry)
     {
-        myToolbox = toolbox;
         myPreferences = preferencesRegistry.getPreferences("io.opensphere.controlpanels.animation.AnimationConfigManager");
         AnimationConfig config = myPreferences.getJAXBObject(AnimationConfig.class, PREFERENCES_KEY, null);
         myAnimationModel = config == null ? new AnimationConfig().getAnimationModel() : config.getAnimationModel();
