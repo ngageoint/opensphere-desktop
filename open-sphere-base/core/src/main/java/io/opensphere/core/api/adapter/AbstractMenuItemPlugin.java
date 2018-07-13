@@ -17,6 +17,7 @@ import io.opensphere.core.PluginLoaderData;
 import io.opensphere.core.PluginProperty;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.preferences.Preferences;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 
 /**
@@ -263,11 +264,13 @@ public abstract class AbstractMenuItemPlugin extends PluginAdapter
                         if (myMenuItem.isSelected())
                         {
                             buttonSelected();
+                            QuantifyToolboxUtils.collectMetric(toolbox, "mist3d.menu-bar.help." + myMenuItem.getText() + ".enabled");
                             updateVisibilityPreference();
                         }
                         else
                         {
                             buttonDeselected();
+                            QuantifyToolboxUtils.collectMetric(toolbox, "mist3d.menu-bar.help." + myMenuItem.getText() + ".disabled");
                             updateVisibilityPreference();
                         }
                     }

@@ -15,11 +15,13 @@ import javax.swing.JPanel;
 
 import com.bric.swing.ColorPicker;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.ToolbarManager.SeparatorLocation;
 import io.opensphere.core.control.ui.ToolbarManager.ToolbarLocation;
 import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.swing.ColorIcon;
 import io.opensphere.core.util.swing.SmallColorPalette;
@@ -51,22 +53,26 @@ public final class GlobeBackgroundManager
     /** The preferences. */
     private final transient Preferences myPreferences;
 
+    /** The toolbox. */
+    private Toolbox myToolbox;
+
     /** The system UI registry. */
     private final UIRegistry myUIRegistry;
 
     /**
      * Constructor.
      *
-     * @param prefsRegistry The system preferences registry.
+     * @param toolbox The toolbox to access the state.
      * @param uiRegistry The system UI registry.
      * @param transformer The transformer used to change background color.
      */
-    public GlobeBackgroundManager(PreferencesRegistry prefsRegistry, UIRegistry uiRegistry,
+    public GlobeBackgroundManager(Toolbox toolbox, UIRegistry uiRegistry,
             SolidBackgroundTransformer transformer)
     {
+        myToolbox = toolbox;
         myUIRegistry = uiRegistry;
         myBackgroundTransformer = transformer;
-        myPreferences = prefsRegistry.getPreferences(getClass());
+        myPreferences = myToolbox.getPreferencesRegistry().getPreferences(getClass());
 
         setupToolbarComponent();
 
@@ -146,6 +152,8 @@ public final class GlobeBackgroundManager
             public void actionPerformed(ActionEvent e)
             {
                 myPreferences.putBoolean(ourBackgroundEnabledKey, myEnabledCheckbox.isSelected(), this);
+                QuantifyToolboxUtils.collectEnableDisableMetric(myToolbox, "mist3d.overlay.globe-color.checkbox.background",
+                        myEnabledCheckbox.isSelected());
                 if (myEnabledCheckbox.isSelected())
                 {
                     myBackgroundTransformer.publishBackground();
@@ -167,6 +175,7 @@ public final class GlobeBackgroundManager
                 final JButton button = (JButton)evt.getSource();
                 if (button.getIcon() instanceof ColorIcon)
                 {
+                    QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.overlay.globe-color.button.small-color-palette");
                     myColorSelectorSplitButton.toggleDropComponentVisibility();
                     final ColorIcon cci = (ColorIcon)button.getIcon();
                     setBackgroundColor(cci.getColor());
@@ -189,6 +198,7 @@ public final class GlobeBackgroundManager
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.overlay.globe-color.button.open-color-menu");
                 showPicker();
             }
         });

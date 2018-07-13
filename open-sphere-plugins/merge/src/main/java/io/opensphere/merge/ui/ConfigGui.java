@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import io.opensphere.core.Notify;
 import io.opensphere.core.Notify.Method;
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.core.util.lang.ThreadUtilities;
@@ -106,6 +107,7 @@ public class ConfigGui
             // every time.
             myDialog.setFxNode(myMainPane);
             myDialog.setVisible(true);
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.menu-bar.edit.joins-merges");
         }
     }
 

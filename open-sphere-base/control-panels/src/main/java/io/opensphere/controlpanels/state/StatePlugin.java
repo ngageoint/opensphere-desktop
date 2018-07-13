@@ -48,7 +48,7 @@ public class StatePlugin extends PluginAdapter
     {
         myToolbox = toolbox;
 
-        myClearStatesMenuProvider = new ClearStatesMenuProvider(toolbox.getModuleStateManager());
+        myClearStatesMenuProvider = new ClearStatesMenuProvider(toolbox);
         toolbox.getUIRegistry().getContextActionManager().registerContextMenuItemProvider(ContextIdentifiers.DELETE_CONTEXT,
                 Void.class, myClearStatesMenuProvider);
 

@@ -133,7 +133,11 @@ public class WhatsNewPlugin extends PluginAdapter
             EventQueueUtilities.invokeLater(() ->
             {
                 JMenuItem menuButton = new JMenuItem("What's New");
-                menuButton.addActionListener(e -> showWhatsNew(true));
+                menuButton.addActionListener(e ->
+                {
+                    QuantifyToolboxUtils.collectMetric(toolbox, "mist3d.menu-bar.help.whats-new");
+                    showWhatsNew(true);
+                });
 
                 JMenu menu = toolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR,
                         MenuBarRegistry.HELP_MENU);

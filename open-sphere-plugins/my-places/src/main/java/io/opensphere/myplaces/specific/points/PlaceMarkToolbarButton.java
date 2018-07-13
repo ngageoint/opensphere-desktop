@@ -10,6 +10,7 @@ import io.opensphere.core.control.action.ContextSingleActionProvider;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.ui.ToolbarManager.SeparatorLocation;
 import io.opensphere.core.control.ui.ToolbarManager.ToolbarLocation;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.swing.IconButton;
@@ -87,6 +88,7 @@ public class PlaceMarkToolbarButton
             {
                 if (e.getButton() == MouseEvent.BUTTON1)
                 {
+                    QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.my-places.button.create-map-point");
                     ContextActionManager manager = myToolbox.getUIRegistry().getContextActionManager();
                     myCreateMapPointButton.setSelected(!myCreateMapPointButton.isSelected());
                     if (myCreateMapPointButton.isSelected())

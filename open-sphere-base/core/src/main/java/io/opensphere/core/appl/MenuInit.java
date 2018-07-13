@@ -39,6 +39,7 @@ import io.opensphere.core.hud.awt.HUDJInternalFrame;
 import io.opensphere.core.pipeline.Pipeline;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.projection.AbstractProjection;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.units.UnitsProvider;
 import io.opensphere.core.units.UnitsProvider.UnitsChangeListener;
 import io.opensphere.core.util.collections.New;
@@ -246,8 +247,11 @@ public class MenuInit
             createMenuItems(unitsProvider, subMenu);
             unitsMenu.add(subMenu);
         }
-        unitsMenu.add(SwingUtilities.newMenuItem("Reset all to default",
-            e -> toolbox.getUnitsRegistry().resetAllPreferredUnits(e.getSource())));
+        unitsMenu.add(SwingUtilities.newMenuItem("Reset all to default", e ->
+        {
+            QuantifyToolboxUtils.collectMetric(toolbox, "mist3d.menu-bar.edit.units.reset-to-default");
+            toolbox.getUnitsRegistry().resetAllPreferredUnits(e.getSource());
+        }));
         editMenu.add(unitsMenu);
     }
 
@@ -359,8 +363,12 @@ public class MenuInit
             throw new IllegalStateException("View menu cannot be found.");
         }
 
-        viewMenu.add(SwingUtilities.newMenuItem("Reset View", e -> toolbox.getMapManager().getStandardViewer().resetView(),
-                KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK)));
+        viewMenu.add(SwingUtilities.newMenuItem("Reset View", e ->
+                {
+                QuantifyToolboxUtils.collectMetric(toolbox, "mist3d.menu-bar.view.reset-view");
+                toolbox.getMapManager().getStandardViewer().resetView();
+                }),
+                KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK));
 
 //        // Add toolbar item
 //        final JCheckBoxMenuItem toolbarItem = new JCheckBoxMenuItem("Toolbar");
@@ -391,7 +399,11 @@ public class MenuInit
         for (final Class<? extends T> units : unitsProvider.getAvailableUnits(true))
         {
             final JMenuItem unitsItem = new JRadioButtonMenuItem(unitsProvider.getSelectionLabel(units));
-            unitsItem.addActionListener(e -> unitsProvider.setPreferredUnits(units));
+            unitsItem.addActionListener(e ->
+            {
+//                QuantifyToolboxUtils.collectMetric(toolbox, "mist3d.menu-bar.edit.units.set-units-to-" + units.getSimpleName());
+                unitsProvider.setPreferredUnits(units);
+            });
             subMenu.add(unitsItem);
         }
         final UnitsChangeListener<T> listener = new UnitsChangeListener<T>()
@@ -426,7 +438,11 @@ public class MenuInit
      */
     private JMenuItem getCancelTileDownloadsMenuItem(final Toolbox toolbox)
     {
-        return SwingUtilities.newMenuItem("Cancel Tile Downloads", e -> toolbox.getGeometryRegistry().cancelAllImageRetrievals());
+        return SwingUtilities.newMenuItem("Cancel Tile Downloads", e ->
+        {
+            QuantifyToolboxUtils.collectMetric(toolbox, "mist3d.menu-bar.data-control.cancel-tile-downloads");
+            toolbox.getGeometryRegistry().cancelAllImageRetrievals();
+        });
     }
 
     /**
@@ -437,7 +453,12 @@ public class MenuInit
     private JCheckBoxMenuItem getLockTerrainMenuItem()
     {
         final JCheckBoxMenuItem terrainLock = new JCheckBoxMenuItem("Lock Terrain");
-        terrainLock.addActionListener(e -> AbstractProjection.setTerrainLocked(terrainLock.isSelected()));
+        terrainLock.addActionListener(e ->
+        {
+            QuantifyToolboxUtils.collectEnableDisableMetric(toolbox, "mist3d.menu-bar.tools.lock-terrain",
+                    terrainLock.isSelected());
+            AbstractProjection.setTerrainLocked(terrainLock.isSelected());
+        });
         return terrainLock;
     }
 
@@ -461,6 +482,7 @@ public class MenuInit
             {
                 if (myLoggerFrame == null)
                 {
+                    QuantifyToolboxUtils.collectMetric(toolbox, "mist3d.menu-bar.edit.set-logger-levels");
                     final JComponent source = (JComponent)event.getSource();
                     final LoggerDialog loggerDialog = new LoggerDialog(toolbox.getPreferencesRegistry(), "Set Logger Levels");
                     loggerDialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);

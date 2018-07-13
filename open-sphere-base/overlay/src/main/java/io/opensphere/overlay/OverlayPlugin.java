@@ -159,7 +159,7 @@ public class OverlayPlugin extends PluginAdapter
             {
                 // Create colorBackgroundTransformer
                 myColorBackgroundTransformer = new SolidBackgroundTransformer(myToolbox);
-                myBackgroundManager = new GlobeBackgroundManager(myToolbox.getPreferencesRegistry(), myToolbox.getUIRegistry(),
+                myBackgroundManager = new GlobeBackgroundManager(myToolbox, myToolbox.getUIRegistry(),
                         myColorBackgroundTransformer);
             }
         }

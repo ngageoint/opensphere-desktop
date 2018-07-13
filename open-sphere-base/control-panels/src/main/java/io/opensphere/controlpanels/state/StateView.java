@@ -44,6 +44,7 @@ import io.opensphere.core.export.Exporters;
 import io.opensphere.core.modulestate.SaveStateDialog;
 import io.opensphere.core.modulestate.StateData;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.filesystem.MnemonicFileChooser;
@@ -343,6 +344,7 @@ class StateView
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.control-panel.state.button.clear-state");
             myController.deactivateAllStates();
         }
     }
@@ -366,6 +368,7 @@ class StateView
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.control-panel.state.button.delete-state");
             Collection<? extends String> availableStates = myController.getAvailableStates();
             if (availableStates.isEmpty())
             {
@@ -420,6 +423,7 @@ class StateView
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.control-panels.state.button.save-state");
             saveState();
         }
     }
@@ -450,7 +454,7 @@ class StateView
             ta.setActive(true);
             myMenuBarRegistry.addTaskActivity(ta);
             SwingWorker<Void, Void> worker = EventQueueUtilities.waitCursorRun(myStateControlButton,
-                    () -> myController.toggleState(getName()), () -> ta.setComplete(true));
+                () -> myController.toggleState(getName()), () -> ta.setComplete(true));
             ta.cancelledProperty().addListener((v, o, n) -> worker.cancel(true));
         }
 

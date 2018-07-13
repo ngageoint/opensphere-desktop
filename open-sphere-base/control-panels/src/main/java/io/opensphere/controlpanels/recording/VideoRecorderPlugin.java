@@ -32,6 +32,7 @@ import io.opensphere.core.api.adapter.PluginAdapter;
 import io.opensphere.core.control.ui.ToolbarManager.SeparatorLocation;
 import io.opensphere.core.control.ui.ToolbarManager.ToolbarLocation;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.filesystem.MnemonicFileChooser;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.lang.StringUtilities;
@@ -135,6 +136,7 @@ public class VideoRecorderPlugin extends PluginAdapter
             {
                 if (e.getButton() == 1)
                 {
+                    QuantifyToolboxUtils.collectMetric(toolbox, "mist3d.recording.button.record-a-video");
                     if (myVideoActivationButton.isSelected())
                     {
                         myVideoRecorderController.stopRecording();

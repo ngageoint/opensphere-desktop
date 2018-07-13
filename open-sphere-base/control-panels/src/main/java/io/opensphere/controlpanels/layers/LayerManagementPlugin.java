@@ -18,6 +18,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.api.adapter.AbstractHUDFrameMenuItemPlugin;
 import io.opensphere.core.control.ui.ToolbarManager.SeparatorLocation;
 import io.opensphere.core.control.ui.ToolbarManager.ToolbarLocation;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.image.IconUtil.IconType;
 import io.opensphere.core.util.property.PluginPropertyUtils;
@@ -116,6 +117,8 @@ public class LayerManagementPlugin extends AbstractHUDFrameMenuItemPlugin
                 @Override
                 public void actionPerformed(ActionEvent evt)
                 {
+                    QuantifyToolboxUtils.collectEnableDisableMetric(getToolbox(), "mist3d.control-panel.layers.button.open-layers",
+                        !getHUDFrame().isVisible());
                     getHUDFrame().setVisible(!getHUDFrame().isVisible());
                 }
             });
