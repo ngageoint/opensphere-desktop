@@ -121,13 +121,13 @@ public class CacheOptionsProvider extends AbstractOptionsProvider
 
         mySizeLimitEnabledCheckbox = new JCheckBox();
         mySizeLimitEnabledCheckbox.setSelected(sizeLimitBytes > 0L);
-        mySizeLimitEnabledCheckbox.addActionListener(e ->
+        mySizeLimitEnabledCheckbox.addChangeListener(e ->
         {
-            Quantify.collectEnableDisableMetric("mist3d.settings.cache.size-limit-enabled",
-                    mySizeLimitEnabledCheckbox.isSelected());
             mySizeLimitLabel.setEnabled(mySizeLimitEnabledCheckbox.isSelected());
             mySizeLimitField.setEnabled(mySizeLimitEnabledCheckbox.isSelected());
         });
+        mySizeLimitEnabledCheckbox.addActionListener(e -> Quantify
+                .collectEnableDisableMetric("mist3d.settings.cache.size-limit-enabled", mySizeLimitEnabledCheckbox.isSelected()));
         sizeLimitPanel.add(mySizeLimitEnabledCheckbox);
 
         mySizeLimitLabel = new JLabel("Cache Size Threshold:");

@@ -1,6 +1,5 @@
 package io.opensphere.core.map;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
@@ -34,21 +33,17 @@ public class MapOptionsProvider extends AbstractOptionsProvider
     private GridBagPanel myZoomPanel;
 
     /** The preferences for map options. */
-    private final Preferences myPreferences;
+    private Preferences myPreferences;
 
     /**
      * This listener is used in combination with {@link WeakChangeSupport}, so
      * keep a reference to prevent the listener from becoming weakly reachable.
      */
-    private final ActionListener mySliderListener = new ActionListener()
+    private final ActionListener mySliderListener = e ->
     {
-        @Override
-        public void actionPerformed(ActionEvent evt)
-        {
-            Quantify.collectMetric("mist3d.settings.map.zoom-rate-slider");
-            LinkedSliderTextField sfp = (LinkedSliderTextField)evt.getSource();
-            myPreferences.putInt(VIEW_ZOOM_RATE_KEY, sfp.getValue(), MapOptionsProvider.this);
-        }
+        Quantify.collectMetric("mist3d.settings.map.zoom-rate-change");
+        LinkedSliderTextField sfp = (LinkedSliderTextField)e.getSource();
+        myPreferences.putInt(VIEW_ZOOM_RATE_KEY, sfp.getValue(), MapOptionsProvider.this);
     };
 
     /**

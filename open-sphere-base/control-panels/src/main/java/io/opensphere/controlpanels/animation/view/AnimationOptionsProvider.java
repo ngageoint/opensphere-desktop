@@ -1,7 +1,5 @@
 package io.opensphere.controlpanels.animation.view;
 
-import java.awt.Component;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -80,16 +78,12 @@ public class AnimationOptionsProvider extends AbstractOptionsProvider
      *
      * @return the remember loop span checkbox
      */
-    private Component getRememberLoopSpanCheckBox()
+    private JCheckBox getRememberLoopSpanCheckBox()
     {
-        JComponent rememberLoopSpan = ControllerFactory.createComponent(myAnimationModel.getRememberTimes());
-        if (rememberLoopSpan instanceof JCheckBox)
-        {
-            JCheckBox rememberLoopSpanCheckBox = (JCheckBox)rememberLoopSpan;
-            rememberLoopSpanCheckBox.addActionListener(e -> Quantify.collectEnableDisableMetric(
-                    "mist3d.settings.timeline-and-animation.remember-loop-span", rememberLoopSpanCheckBox.isSelected()));
-        }
-        return rememberLoopSpan;
+        JCheckBox rememberLoopSpanCheckBox = (JCheckBox)ControllerFactory.createComponent(myAnimationModel.getRememberTimes());
+        rememberLoopSpanCheckBox.addActionListener(e -> Quantify.collectEnableDisableMetric(
+                "mist3d.settings.timeline-and-animation.remember-loop-span", rememberLoopSpanCheckBox.isSelected()));
+        return rememberLoopSpanCheckBox;
     }
 
     /**
@@ -100,11 +94,8 @@ public class AnimationOptionsProvider extends AbstractOptionsProvider
     private JComponent[] getTimelineViewPreferenceComponents()
     {
         JComponent[] timelineViewPreference = ControllerFactory.createLabelAndComponent(myAnimationModel.getViewPreference());
-        if (timelineViewPreference[1] instanceof JComboBox<?>)
-        {
-            ((JComboBox<?>)timelineViewPreference[1]).addActionListener(
-                e -> Quantify.collectMetric("mist3d.settings.timeline-and-animation.timeline-to-show-on-startup-selection"));
-        }
+        ((JComboBox<?>)timelineViewPreference[1]).addActionListener(
+            e -> Quantify.collectMetric("mist3d.settings.timeline-and-animation.timeline-to-show-on-startup-selection"));
         return timelineViewPreference;
     }
 
@@ -113,16 +104,12 @@ public class AnimationOptionsProvider extends AbstractOptionsProvider
      *
      * @return the lock loop span checkbox
      */
-    private Component getLockLoopSpanCheckBox()
+    private JCheckBox getLockLoopSpanCheckBox()
     {
-        JComponent lockLoopSpan = ControllerFactory.createComponent(myAnimationModel.getLoopSpanLocked());
-        if (lockLoopSpan instanceof JCheckBox)
-        {
-            JCheckBox lockLoopSpanCheckBox = (JCheckBox)lockLoopSpan;
-            lockLoopSpanCheckBox.addActionListener(e -> Quantify.collectEnableDisableMetric(
-                    "mist3d.settings.timeline-and-animation.lock-loop-span", lockLoopSpanCheckBox.isSelected()));
-        }
-        return lockLoopSpan;
+        JCheckBox lockLoopSpanCheckBox = (JCheckBox)ControllerFactory.createComponent(myAnimationModel.getLoopSpanLocked());
+        lockLoopSpanCheckBox.addActionListener(e -> Quantify.collectEnableDisableMetric(
+                "mist3d.settings.timeline-and-animation.lock-loop-span", lockLoopSpanCheckBox.isSelected()));
+        return lockLoopSpanCheckBox;
     }
 
     /**
