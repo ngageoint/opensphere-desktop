@@ -35,7 +35,7 @@ import io.opensphere.core.TimeManager.PrimaryTimeSpanChangeListener;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.model.time.TimeSpanList;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.units.duration.Milliseconds;
 import io.opensphere.core.util.Constants;
 import io.opensphere.core.util.ObservableValue;
@@ -228,22 +228,22 @@ class ControlPanel extends FactoryViewPanel
         myPlayStopButton.addActionListener(e -> handlePlayStopPressed());
         myPreviousButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.step-backward");
+            Quantify.collectMetric("mist3d.timeline.buttons.step-backward");
             myAnimationModel.playStateProperty().set(PlayState.STEP_BACKWARD, true);
         });
         myNextButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.step-forward");
+            Quantify.collectMetric("mist3d.timeline.buttons.step-forward");
             myAnimationModel.playStateProperty().set(PlayState.STEP_FORWARD, true);
         });
         myFirstButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.step-first");
+            Quantify.collectMetric("mist3d.timeline.buttons.step-first");
             myAnimationModel.playStateProperty().set(PlayState.STEP_FIRST, true);
         });
         myLastButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.step-last");
+            Quantify.collectMetric("mist3d.timeline.buttons.step-last");
             myAnimationModel.playStateProperty().set(PlayState.STEP_LAST, true);
         });
     }
@@ -253,17 +253,17 @@ class ControlPanel extends FactoryViewPanel
     {
         myZoomInButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.zoom-in");
+            Quantify.collectMetric("mist3d.timeline.buttons.zoom-in");
             myUIModel.zoom(true, .5f);
         });
         myZoomOutButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.zoom-in");
+            Quantify.collectMetric("mist3d.timeline.buttons.zoom-in");
             myUIModel.zoom(false, .5f);
         });
         myChartTypeButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.change-chart-type");
+            Quantify.collectMetric("mist3d.timeline.buttons.change-chart-type");
             myAnimationModel.getChartType().set(myChartLayer.nextChart());
             updateChartTypeTooltip();
             if (myChartLayer.getChartType() == ChartType.NONE)
@@ -277,7 +277,7 @@ class ControlPanel extends FactoryViewPanel
         });
         myControlsButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.launch-animation-controls");
+            Quantify.collectMetric("mist3d.timeline.buttons.launch-animation-controls");
             if (myControlsDialog == null)
             {
                 myControlsDialog = new OptionDialog(getParent(),
@@ -290,7 +290,7 @@ class ControlPanel extends FactoryViewPanel
         });
         mySpeedSlider.getModel().addChangeListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.drag-speed-slider");
+            Quantify.collectMetric("mist3d.timeline.buttons.drag-speed-slider");
             float speed = updateSpeedLabel();
             myAnimationModel.getFPS().set(Float.valueOf(speed));
         });
@@ -317,7 +317,7 @@ class ControlPanel extends FactoryViewPanel
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.live-mode-change");
+                Quantify.collectMetric("mist3d.timeline.buttons.live-mode-change");
                 if (myAnimationModel.getLiveMode().get().booleanValue())
                 {
                     myAnimationModel.getLiveMode().setNameAndDescription("<html><b>LIVE</b></html>", "");
@@ -488,7 +488,7 @@ class ControlPanel extends FactoryViewPanel
     {
         if (myRecorder != null)
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.recording-play");
+            Quantify.collectMetric("mist3d.timeline.buttons.recording-play");
             record();
         }
         else
@@ -496,12 +496,12 @@ class ControlPanel extends FactoryViewPanel
             PlayState currentState = myAnimationModel.getPlayState();
             if (currentState.isPlaying())
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.animate-stop");
+                Quantify.collectMetric("mist3d.timeline.buttons.animate-stop");
                 setPlayState(PlayState.STOP);
             }
             else
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.animate-start");
+                Quantify.collectMetric("mist3d.timeline.buttons.animate-start");
                 setPlayState(PlayState.FORWARD);
             }
         }
@@ -513,7 +513,7 @@ class ControlPanel extends FactoryViewPanel
         myRecordButton.setSelected(!myRecordButton.isSelected());
         if (myRecordButton.isSelected())
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.record-start");
+            Quantify.collectMetric("mist3d.timeline.buttons.record-start");
             setPlayState(PlayState.STOP);
 
             ScreenViewer viewer = myToolbox.getMapManager().getScreenViewer();
@@ -537,13 +537,13 @@ class ControlPanel extends FactoryViewPanel
             }
             else
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.record-cancel");
+                Quantify.collectMetric("mist3d.timeline.buttons.record-cancel");
                 cancelRecord();
             }
         }
         else
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.record-cancel");
+            Quantify.collectMetric("mist3d.timeline.buttons.record-cancel");
             cancelRecord();
         }
     }

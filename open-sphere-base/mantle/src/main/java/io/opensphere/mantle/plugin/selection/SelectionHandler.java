@@ -35,6 +35,7 @@ import io.opensphere.core.geometry.renderproperties.DefaultPointRenderProperties
 import io.opensphere.core.math.Vector2i;
 import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.model.GeographicPosition;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.NamedThreadFactory;
@@ -419,6 +420,7 @@ public class SelectionHandler
         }
         if (cmd == SelectionCommand.CREATE_BUFFER_REGION)
         {
+            Quantify.collectMetric("mist3d.select.create-buffer-region");
             if (myLastGeometry instanceof PolylineGeometry && !(myLastGeometry instanceof PolygonGeometry))
             {
                 createLineBuffer();
@@ -430,6 +432,7 @@ public class SelectionHandler
         }
         else if (cmd == SelectionCommand.CREATE_BUFFER_REGION_FOR_SELECTED_SEGMENT)
         {
+            Quantify.collectMetric("mist3d.tracks.create-buffer-for-selected-segment");
             myBufferRegionCreator.createBuffer(myLastGeometry);
         }
         else if (myLastGeometry instanceof PolygonGeometry)

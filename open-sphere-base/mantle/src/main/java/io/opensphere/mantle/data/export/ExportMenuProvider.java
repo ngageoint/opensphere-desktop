@@ -12,7 +12,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.export.ExportUtilities;
 import io.opensphere.core.export.Exporter;
 import io.opensphere.core.preferences.PreferencesRegistry;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.collections.New;
 
 /**
@@ -44,8 +44,7 @@ public class ExportMenuProvider
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                    QuantifyToolboxUtils.collectMetric(toolbox,
-                            "mist3d.export-menu." + exporter.getMimeType().toString().toLowerCase().replaceAll(" ", "-"));
+                    Quantify.collectMetric("mist3d.export-menu." + exporter.getMimeType().toString());
                     Component parentComponent = toolbox.getUIRegistry().getMainFrameProvider().get();
                     PreferencesRegistry prefsRegistry = toolbox.getPreferencesRegistry();
                     ExportUtilities.export(parentComponent, prefsRegistry, exporter);

@@ -46,7 +46,7 @@ import io.opensphere.controlpanels.layers.activedata.tree.TreeTransferHandler;
 import io.opensphere.controlpanels.layers.tagmanager.TagUtility;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ActionContext;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.concurrent.ProcrastinatingExecutor;
@@ -289,7 +289,7 @@ public abstract class AbstractDiscoveryDataPanel extends AbstractHUDPanel
      */
     private void adjustSearchFilter()
     {
-        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.layer-manager.search");
+        Quantify.collectMetric("mist3d.layer-manager.search");
         getController().setTreeFilter(mySearchTextField.getText());
     }
 
@@ -1079,7 +1079,7 @@ public abstract class AbstractDiscoveryDataPanel extends AbstractHUDPanel
         myExpandContractTreeButton.setToolTipText("Expand/Contract Layer List");
         myExpandContractTreeButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.layer-manager.expand-contract");
+            Quantify.collectMetric("mist3d.layer-manager.expand-contract");
             JTreeUtilities.expandOrCollapseAll(myTree, myExpandContractTreeButton.isSelected());
         });
     }
