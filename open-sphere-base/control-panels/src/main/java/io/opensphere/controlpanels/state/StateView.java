@@ -455,7 +455,7 @@ class StateView
             ta.setActive(true);
             myMenuBarRegistry.addTaskActivity(ta);
             SwingWorker<Void, Void> worker = EventQueueUtilities.waitCursorRun(myStateControlButton,
-                () -> myController.toggleState(getName()), () -> ta.setComplete(true));
+                    () -> myController.toggleState(getName()), () -> ta.setComplete(true));
             ta.cancelledProperty().addListener((v, o, n) -> worker.cancel(true));
         }
 
