@@ -25,7 +25,7 @@ import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.Constants;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.swing.DocumentListenerAdapter;
@@ -91,7 +91,7 @@ public class CacheOptionsProvider extends AbstractOptionsProvider
     @Override
     public void applyChanges()
     {
-        QuantifyToolboxUtils.collectMetric("mist3d.settings.cache.apply-button");
+        Quantify.collectMetric("mist3d.settings.cache.apply-button");
         if (mySizeLimitEnabledCheckbox.isSelected())
         {
             final int size = getSizeLimitFromField();
@@ -123,7 +123,8 @@ public class CacheOptionsProvider extends AbstractOptionsProvider
         mySizeLimitEnabledCheckbox.setSelected(sizeLimitBytes > 0L);
         mySizeLimitEnabledCheckbox.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.cache.size-limit-enabled-checkbox");
+            Quantify.collectEnableDisableMetric("mist3d.settings.cache.size-limit-enabled",
+                    mySizeLimitEnabledCheckbox.isSelected());
             mySizeLimitLabel.setEnabled(mySizeLimitEnabledCheckbox.isSelected());
             mySizeLimitField.setEnabled(mySizeLimitEnabledCheckbox.isSelected());
         });

@@ -13,7 +13,7 @@ import javax.swing.table.TableModel;
 import io.opensphere.core.SecurityManager;
 import io.opensphere.core.options.OptionsProvider;
 import io.opensphere.core.preferences.PreferencesRegistry;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.security.config.v1.SecurityConfiguration;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.security.EncryptedUsernamePassword;
@@ -63,7 +63,7 @@ public class UsernamePasswordOptionsProvider extends AbstractTableOptionsProvide
     @Override
     protected void deleteRow(int row)
     {
-        QuantifyToolboxUtils.collectMetric("mist3d.settings.security.passwords.delete-button");
+        Quantify.collectMetric("mist3d.settings.security.passwords.delete-button");
 
         SecurityConfiguration config = getConfig().clone();
         Collection<? extends EncryptedUsernamePassword> usernamePasswords = config.getUsernamePasswords();
@@ -92,7 +92,7 @@ public class UsernamePasswordOptionsProvider extends AbstractTableOptionsProvide
     @Override
     protected void showDetails(int row)
     {
-        QuantifyToolboxUtils.collectMetric("mist3d.settings.security.passwords.details-button");
+        Quantify.collectMetric("mist3d.settings.security.passwords.details-button");
 
         assert EventQueue.isDispatchThread();
 

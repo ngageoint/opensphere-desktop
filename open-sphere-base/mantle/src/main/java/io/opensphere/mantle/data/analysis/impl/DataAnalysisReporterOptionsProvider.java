@@ -13,7 +13,7 @@ import javax.swing.JTextArea;
 
 import io.opensphere.core.options.impl.AbstractPreferencesOptionsProvider;
 import io.opensphere.core.preferences.PreferencesRegistry;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.mantle.data.analysis.DataAnalysisReporter;
 
 /**
@@ -40,7 +40,7 @@ public class DataAnalysisReporterOptionsProvider extends AbstractPreferencesOpti
     @Override
     public void applyChanges()
     {
-        QuantifyToolboxUtils.collectMetric("mist3d.settings.data-analyzer.apply-button");
+        Quantify.collectMetric("mist3d.settings.data-analyzer.apply-button");
         setDataAnalysisReporterEnabledPreference(getAnalyzerEnabledCheckBox().isSelected());
     }
 

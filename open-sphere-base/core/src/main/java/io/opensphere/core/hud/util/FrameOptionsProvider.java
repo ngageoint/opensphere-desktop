@@ -20,7 +20,7 @@ import com.bric.swing.ColorPicker;
 
 import io.opensphere.core.options.impl.AbstractPreferencesOptionsProvider;
 import io.opensphere.core.preferences.PreferencesRegistry;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.swing.AbstractHUDPanel;
 import io.opensphere.core.util.swing.ColorCircleIcon;
 import io.opensphere.core.util.swing.LinkedSliderTextField;
@@ -163,7 +163,7 @@ public class FrameOptionsProvider extends AbstractPreferencesOptionsProvider
             myBackgroundColorButton.setIcon(new ColorCircleIcon(Color.black));
             myBackgroundColorButton.addActionListener(e ->
             {
-                QuantifyToolboxUtils.collectMetric("mist3d.settings.hud-options.color-button");
+                Quantify.collectMetric("mist3d.settings.hud-options.color-button");
                 Color c = ColorPicker.showDialog(SwingUtilities.getWindowAncestor(myMainPanel), myBackgroundColor, true);
                 if (c != null)
                 {
@@ -229,13 +229,14 @@ public class FrameOptionsProvider extends AbstractPreferencesOptionsProvider
         myStickyCheckbox.setSelected(stickToEdge);
         myStickyCheckbox.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.hud-options.stick-to-edge-checkbox");
+            Quantify.collectEnableDisableMetric("mist3d.settings.hud-options.stick-to-edge", myStickyCheckbox.isSelected());
             updateStickyPreference();
         });
+
         myInsetSpinner = new JSpinner(new SpinnerNumberModel(inset, 0, 25, 1));
         myInsetSpinner.addChangeListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.hud-options.inset-spinner");
+            Quantify.collectMetric("mist3d.settings.hud-options.inset-change");
             updateStickyPreference();
         });
 
@@ -264,7 +265,7 @@ public class FrameOptionsProvider extends AbstractPreferencesOptionsProvider
             myBackgroundOpacitySlider.setSize(sliderSize);
             myBackgroundOpacitySlider.addSliderFieldChangeListener(e ->
             {
-                QuantifyToolboxUtils.collectMetric("mist3d.settings.hud-options.opacity-slider");
+                Quantify.collectMetric("mist3d.settings.hud-options.opacity-change");
                 int alpha = (int)(getOpacitySlider().getSliderValue() * ALPHA_FACTOR);
                 Color color = new Color(myBackgroundColor.getRed(), myBackgroundColor.getGreen(), myBackgroundColor.getBlue(),
                         alpha);

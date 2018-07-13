@@ -12,7 +12,7 @@ import io.opensphere.core.options.impl.AbstractPreferencesOptionsProvider;
 import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.PreferencesRegistry;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.mantle.transformer.MapDataElementTransformer;
 
@@ -148,8 +148,8 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
             myShowActiveLayerSourceLabelsCheckBox.setFocusable(false);
             myShowActiveLayerSourceLabelsCheckBox.addActionListener(e ->
             {
-                QuantifyToolboxUtils
-                        .collectMetric("mist3d.settings.layers.active-layer-tab-options.layer-source-labels-checkbox");
+                Quantify.collectEnableDisableMetric("mist3d.settings.layers.active-layer-tab-options.show-layer-source-labels",
+                        getActiveLayerShowSourceLabelsCheckBox().isSelected());
                 DataDiscoveryPreferences.setShowActiveSourceTypeLabels(getPreferencesRegistry(),
                         getActiveLayerShowSourceLabelsCheckBox().isSelected(), this);
             });
@@ -185,7 +185,8 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
             myShowLayerTypeIconsCheckBox.setFocusable(false);
             myShowLayerTypeIconsCheckBox.addActionListener(e ->
             {
-                QuantifyToolboxUtils.collectMetric("mist3d.settings.layers.active-layer-tab-options.layer-type-icons-checkbox");
+                Quantify.collectEnableDisableMetric("mist3d.settings.layers.active-layer-tab-options.show-layer-type-icons",
+                        getActiveLayerShowTypeIconCheckBox().isSelected());
                 DataDiscoveryPreferences.setShowActiveLayerTypeIcons(getPreferencesRegistry(),
                         getActiveLayerShowTypeIconCheckBox().isSelected(), this);
             });
@@ -221,7 +222,8 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
             myShowLayerTypeLabelsCheckBox.setFocusable(false);
             myShowLayerTypeLabelsCheckBox.addActionListener(e ->
             {
-                QuantifyToolboxUtils.collectMetric("mist3d.settings.layers.active-layer-tab-options.layer-type-labels-checkbox");
+                Quantify.collectEnableDisableMetric("mist3d.settings.layers.active-layer-tab-options.show-layer-type-labels",
+                        getActiveLayerShowTypeLabelsCheckBox().isSelected());
                 DataDiscoveryPreferences.setShowActiveLayerTypeLabels(getPreferencesRegistry(),
                         getActiveLayerShowTypeLabelsCheckBox().isSelected(), this);
             });
@@ -283,7 +285,8 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
             myShowAvailableLayerSourceLabelsCheckBox.setFocusable(false);
             myShowAvailableLayerSourceLabelsCheckBox.addActionListener(e ->
             {
-                QuantifyToolboxUtils.collectMetric("mist3d.settings.layers.add-data-panel-options.layer-source-labels-checkbox");
+                Quantify.collectEnableDisableMetric("mist3d.settings.layers.add-data-panel-options.show-layer-source-labels",
+                        getAvailableLayerShowSourceLabelsCheckBox().isSelected());
                 DataDiscoveryPreferences.setShowAvailableSourceTypeLabels(getPreferencesRegistry(),
                         getAvailableLayerShowSourceLabelsCheckBox().isSelected(), this);
             });
@@ -341,7 +344,8 @@ public class LayerManagerOptionsProvider extends AbstractPreferencesOptionsProvi
             myShowFeatureCountCheckBox.setFocusable(false);
             myShowFeatureCountCheckBox.addActionListener(e ->
             {
-                QuantifyToolboxUtils.collectMetric("mist3d.settings.layers.active-layer-tab-options.show-feature-count-checkbox");
+                Quantify.collectEnableDisableMetric("mist3d.settings.layers.active-layer-tab-options.show-feature-count",
+                        getShowFeatureCountCheckBox().isSelected());
                 DataDiscoveryPreferences.setShowActiveLayerFeatureCounts(getPreferencesRegistry(),
                         getShowFeatureCountCheckBox().isSelected(), this);
             });

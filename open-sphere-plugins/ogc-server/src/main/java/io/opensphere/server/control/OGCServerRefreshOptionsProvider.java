@@ -19,7 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.swing.HorizontalSpacerForGridbag;
 import io.opensphere.server.toolbox.ServerRefreshController;
 
@@ -71,7 +71,7 @@ public class OGCServerRefreshOptionsProvider extends AbstractOptionsProvider
     @Override
     public void applyChanges()
     {
-        QuantifyToolboxUtils.collectMetric("mist3d.settings.servers.server-refresh.apply-button");
+        Quantify.collectMetric("mist3d.settings.servers.server-refresh.apply-button");
 
         LOGGER.warn("Saving main server options.");
         int interval = 0;
@@ -147,7 +147,8 @@ public class OGCServerRefreshOptionsProvider extends AbstractOptionsProvider
         myRefreshEnabledCheckBox = new JCheckBox("Auto-refresh Server layers");
         myRefreshEnabledCheckBox.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.servers.server-refresh.auto-refresh-layers-checkbox");
+            Quantify.collectEnableDisableMetric("mist3d.settings.servers.server-refresh.auto-refresh-layers",
+                    myRefreshEnabledCheckBox.isSelected());
             myRefreshRateTB.setEditable(myRefreshEnabledCheckBox.isSelected());
         });
         myRefreshEnabledCheckBox.setFocusPainted(false);

@@ -28,7 +28,7 @@ import javax.swing.event.DocumentEvent;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.options.impl.AbstractPreferencesOptionsProvider;
 import io.opensphere.core.preferences.PreferencesRegistry;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.Constants;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
@@ -130,7 +130,7 @@ public class OGCServerTimeoutsOptionsProvider extends AbstractPreferencesOptions
     @Override
     public void applyChanges()
     {
-        QuantifyToolboxUtils.collectMetric("mist3d.settings.servers.apply-button");
+        Quantify.collectMetric("mist3d.settings.servers.apply-button");
 
         myErrorReporter.clearErrors();
         boolean isValid = myDefaultTimeoutPanel.arePanelInputsValid();
@@ -434,8 +434,9 @@ public class OGCServerTimeoutsOptionsProvider extends AbstractPreferencesOptions
             activateTimeoutPanel.setMaximumSize(new Dimension(70, 30));
             activateTimeoutPanel.setMinimumSize(new Dimension(70, 20));
             activateTimeoutPanel.setPreferredSize(new Dimension(70, 30));
-            activateTimeoutPanel.add(createLabel(c2Val,
-                    "Activate timeout (in seconds) is how long the application will wait to set up the initial server services."),
+            activateTimeoutPanel.add(
+                    createLabel(c2Val,
+                            "Activate timeout (in seconds) is how long the application will wait to set up the initial server services."),
                     BorderLayout.CENTER);
             add(activateTimeoutPanel);
 
@@ -444,8 +445,9 @@ public class OGCServerTimeoutsOptionsProvider extends AbstractPreferencesOptions
             connectTimeoutPanel.setMaximumSize(new Dimension(70, 30));
             connectTimeoutPanel.setMinimumSize(new Dimension(70, 20));
             connectTimeoutPanel.setPreferredSize(new Dimension(70, 30));
-            connectTimeoutPanel.add(createLabel(c3Val,
-                    "Connect timeout (in seconds) is how long the application will wait to establish a connection with the server for each request."),
+            connectTimeoutPanel.add(
+                    createLabel(c3Val,
+                            "Connect timeout (in seconds) is how long the application will wait to establish a connection with the server for each request."),
                     BorderLayout.CENTER);
             add(Box.createHorizontalStrut(5));
             add(connectTimeoutPanel);
@@ -455,8 +457,9 @@ public class OGCServerTimeoutsOptionsProvider extends AbstractPreferencesOptions
             readTimeoutPanel.setMaximumSize(new Dimension(70, 30));
             readTimeoutPanel.setMinimumSize(new Dimension(70, 20));
             readTimeoutPanel.setPreferredSize(new Dimension(70, 30));
-            readTimeoutPanel.add(createLabel(c4Val,
-                    "Read timeout (in seconds) is how long the application will wait to get a single item from the server"),
+            readTimeoutPanel.add(
+                    createLabel(c4Val,
+                            "Read timeout (in seconds) is how long the application will wait to get a single item from the server"),
                     BorderLayout.CENTER);
             add(Box.createHorizontalStrut(5));
             add(readTimeoutPanel);

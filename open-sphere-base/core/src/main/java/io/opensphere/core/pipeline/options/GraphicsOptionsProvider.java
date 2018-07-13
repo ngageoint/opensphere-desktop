@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.preferences.Preferences;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 
 /**
  * Options provider for the graphics pipeline.
@@ -57,56 +57,59 @@ public class GraphicsOptionsProvider extends AbstractOptionsProvider
     @Override
     public JPanel getOptionsPanel()
     {
-        final JCheckBox safeModeCb = new JCheckBox("Use safe mode for next launch",
-                myPreferences.getBoolean(mySafeModePrefsKey, false));
-        safeModeCb.setToolTipText("Using safe mode will result in reduced graphics performance, but may improve stability.");
+        final JCheckBox safeModeCheckBox =
+                new JCheckBox("Use safe mode for next launch", myPreferences.getBoolean(mySafeModePrefsKey, false));
+        safeModeCheckBox
+                .setToolTipText("Using safe mode will result in reduced graphics performance, but may improve stability.");
 
-        final JCheckBox displayListsCb = new JCheckBox("Fast text rendering for next launch (NVIDIA recommended)",
+        final JCheckBox displayListsCheckBox = new JCheckBox("Fast text rendering for next launch (NVIDIA recommended)",
                 myPreferences.getBoolean(myDisplayListsPrefsKey, false));
 
-        if (safeModeCb.isSelected())
+        if (safeModeCheckBox.isSelected())
         {
-            displayListsCb.setSelected(false);
-            displayListsCb.setEnabled(false);
-            displayListsCb.setToolTipText(DISPLAY_LISTS_DISABLED_TOOLTIP);
+            displayListsCheckBox.setSelected(false);
+            displayListsCheckBox.setEnabled(false);
+            displayListsCheckBox.setToolTipText(DISPLAY_LISTS_DISABLED_TOOLTIP);
         }
         else
         {
-            displayListsCb.setToolTipText(DISPLAY_LISTS_TOOLTIP);
+            displayListsCheckBox.setToolTipText(DISPLAY_LISTS_TOOLTIP);
         }
 
-        safeModeCb.addActionListener(e ->
+        safeModeCheckBox.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.graphics-performance.use-safe-mode-checkbox");
-            boolean safeMode = safeModeCb.isSelected();
+            Quantify.collectEnableDisableMetric("mist3d.settings.graphics-performance.use-safe-mode",
+                    safeModeCheckBox.isSelected());
+            boolean safeMode = safeModeCheckBox.isSelected();
             myPreferences.putBoolean(mySafeModePrefsKey, safeMode, GraphicsOptionsProvider.this);
             LOGGER.info("Safe mode is " + (safeMode ? "enabled" : "disabled") + " for next launch.");
             if (safeMode)
             {
-                displayListsCb.setSelected(false);
-                displayListsCb.setEnabled(false);
-                displayListsCb.setToolTipText(DISPLAY_LISTS_DISABLED_TOOLTIP);
+                displayListsCheckBox.setSelected(false);
+                displayListsCheckBox.setEnabled(false);
+                displayListsCheckBox.setToolTipText(DISPLAY_LISTS_DISABLED_TOOLTIP);
             }
             else
             {
-                displayListsCb.setEnabled(true);
-                displayListsCb.setSelected(myPreferences.getBoolean(myDisplayListsPrefsKey, true));
-                displayListsCb.setToolTipText(DISPLAY_LISTS_TOOLTIP);
+                displayListsCheckBox.setEnabled(true);
+                displayListsCheckBox.setSelected(myPreferences.getBoolean(myDisplayListsPrefsKey, true));
+                displayListsCheckBox.setToolTipText(DISPLAY_LISTS_TOOLTIP);
             }
         });
 
-        displayListsCb.addActionListener(e ->
+        displayListsCheckBox.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.graphics-performance.fast-text-rendering-checkbox");
-            boolean displayLists = displayListsCb.isSelected();
+            Quantify.collectEnableDisableMetric("mist3d.settings.graphics-performance.fast-text-rendering",
+                    displayListsCheckBox.isSelected());
+            boolean displayLists = displayListsCheckBox.isSelected();
             myPreferences.putBoolean(myDisplayListsPrefsKey, displayLists, GraphicsOptionsProvider.this);
             LOGGER.info("Display lists are " + (displayLists ? "enabled" : "disabled") + " for next launch.");
         });
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(safeModeCb);
-        panel.add(displayListsCb);
+        panel.add(safeModeCheckBox);
+        panel.add(displayListsCheckBox);
         return panel;
     }
 

@@ -1,5 +1,8 @@
 package io.opensphere.core.map;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -7,7 +10,8 @@ import javax.swing.JPanel;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
+import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.core.util.swing.LinkedSliderTextField;
 import io.opensphere.core.util.swing.LinkedSliderTextField.PanelSizeParameters;
@@ -33,6 +37,25 @@ public class AdvancedMapOptionsProvider extends AbstractOptionsProvider
 
     /** The preferences for map options. */
     private final Preferences myPreferences;
+
+    /**
+     * This listener is used in combination with {@link WeakChangeSupport}, so
+     * keep a reference to prevent the listener from becoming weakly reachable.
+     */
+    private final ActionListener mySliderListener = new ActionListener()
+    {
+        @Override
+        public void actionPerformed(ActionEvent evt)
+        {
+            Quantify.collectMetric("mist3d.settings.map.advanced.terrain-density-change");
+            LinkedSliderTextField sfp = (LinkedSliderTextField)evt.getSource();
+            int reverse = 101 - sfp.getValue();
+            // scale to a number between 40 and 120
+            int scaled = (int)(40 + reverse * SCALE_SPREAD);
+
+            myPreferences.putInt(MODEL_DENSITY_KEY, scaled, AdvancedMapOptionsProvider.this);
+        }
+    };
 
     /**
      * The main panel for holding any display elements used for setting the
@@ -70,16 +93,7 @@ public class AdvancedMapOptionsProvider extends AbstractOptionsProvider
             int setting = myPreferences.getInt(MODEL_DENSITY_KEY, 80);
             int adjusted = (int)(100 - (setting - 40) * (1. / SCALE_SPREAD));
             slider.setValues(adjusted);
-
-            slider.addSliderFieldChangeListener(e ->
-            {
-                QuantifyToolboxUtils.collectMetric("mist3d.settings.map.advanced.terrain-density-slider");
-                LinkedSliderTextField sfp = (LinkedSliderTextField)e.getSource();
-                int reverse = 101 - sfp.getValue();
-                // scale to a number between 40 and 120
-                int scaled = (int)(40 + reverse * SCALE_SPREAD);
-                myPreferences.putInt(MODEL_DENSITY_KEY, scaled, AdvancedMapOptionsProvider.this);
-            });
+            slider.addSliderFieldChangeListener(mySliderListener);
 
             myTerrainPanel.setInsets(0, 35, 0, 50).setGridx(0).setGridy(0).anchorCenter().fillHorizontal();
             String terrainText = "<html>Increasing terrain density will increase the amount of resources used.<br>"

@@ -1,5 +1,8 @@
 package io.opensphere.core.map;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -7,7 +10,7 @@ import javax.swing.JPanel;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.core.util.swing.LinkedSliderTextField;
 import io.opensphere.core.util.swing.LinkedSliderTextField.PanelSizeParameters;
@@ -32,6 +35,21 @@ public class MapOptionsProvider extends AbstractOptionsProvider
 
     /** The preferences for map options. */
     private final Preferences myPreferences;
+
+    /**
+     * This listener is used in combination with {@link WeakChangeSupport}, so
+     * keep a reference to prevent the listener from becoming weakly reachable.
+     */
+    private final ActionListener mySliderListener = new ActionListener()
+    {
+        @Override
+        public void actionPerformed(ActionEvent evt)
+        {
+            Quantify.collectMetric("mist3d.settings.map.zoom-rate-slider");
+            LinkedSliderTextField sfp = (LinkedSliderTextField)evt.getSource();
+            myPreferences.putInt(VIEW_ZOOM_RATE_KEY, sfp.getValue(), MapOptionsProvider.this);
+        }
+    };
 
     /**
      * Constructor.
@@ -61,13 +79,7 @@ public class MapOptionsProvider extends AbstractOptionsProvider
             LinkedSliderTextField slider = new LinkedSliderTextField("Zoom Rate:", 1, 100, 20,
                     new PanelSizeParameters(35, 24, 0));
             slider.setValues(myPreferences.getInt(VIEW_ZOOM_RATE_KEY, 20));
-
-            slider.addSliderFieldChangeListener(e ->
-            {
-                QuantifyToolboxUtils.collectMetric("mist3d.settings.map.zoom-rate-slider");
-                LinkedSliderTextField sfp = (LinkedSliderTextField)e.getSource();
-                myPreferences.putInt(VIEW_ZOOM_RATE_KEY, sfp.getValue(), MapOptionsProvider.this);
-            });
+            slider.addSliderFieldChangeListener(mySliderListener);
 
             myZoomPanel.setInsets(0, 35, 0, 50).setGridx(0).setGridy(0).anchorCenter().fillHorizontal();
             String zoomText = "<html>View zoom is based on a logarithmic scale which means<br>"

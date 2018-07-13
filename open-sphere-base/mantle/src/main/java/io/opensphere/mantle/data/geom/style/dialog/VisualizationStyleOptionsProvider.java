@@ -18,7 +18,8 @@ import io.opensphere.core.options.impl.AbstractPreferencesOptionsProvider;
 import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.Preferences;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleController;
 
 /**
@@ -73,6 +74,7 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
     {
         super(prefsRegistry, VisualizationStyleControlDialog.TITLE);
         myStyleController = controller;
+
         myToolbarPreferences = prefsRegistry.getPreferences(ToolbarManager.class);
         myShowToolbarLabels = myToolbarPreferences.getBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, true);
         myToolbarPreferences.addPreferenceChangeListener(SHOW_ICON_BUTTON_TEXT_PREF_KEY, myTextListener);
@@ -171,7 +173,7 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
         button.setFocusable(false);
         button.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.styles.reset-all-styles-button");
+            Quantify.collectMetric("mist3d.settings.styles.reset-all-styles-button");
             int option = JOptionPane.showConfirmDialog(SwingUtilities.getWindowAncestor(myResetAllStyleDataButton),
                     "Are you sure you want to reset all styles to default and clear all style data?",
                     "Reset All Style Confirmation", JOptionPane.OK_CANCEL_OPTION);
@@ -194,7 +196,8 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
         JCheckBox checkbox = new JCheckBox("Show Icon Labels on Toolbar", myShowToolbarLabels);
         checkbox.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.styles.show-icon-labels-on-toolbar-checkbox");
+            Quantify.collectEnableDisableMetric("mist3d.settings.styles.show-icon-labels-on-toolbar",
+                    myShowToolbarLabelsCheckBox.isSelected());
             myToolbarPreferences.putBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, !myShowToolbarLabels, this);
         });
 

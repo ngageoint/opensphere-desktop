@@ -40,7 +40,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.impl.TopicOrSubTopicMatchesRegexOptionsProviderFilter;
 import io.opensphere.core.options.OptionsProvider;
 import io.opensphere.core.options.OptionsProviderUserObject;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.NonSuckingObservable;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.swing.AbstractHUDPanel;
@@ -543,7 +543,7 @@ class OptionsPanel extends AbstractHUDPanel
                             if (userObj instanceof OptionsProviderUserObject)
                             {
                                 OptionsProviderUserObject o = (OptionsProviderUserObject)userObj;
-                                collectMetrics(node, o);
+                                collectSettingsMenuSelectionMetrics(node, o);
                                 setCurrentOptionsProvider(o.getOptionsProvider());
                             }
                         }
@@ -555,27 +555,25 @@ class OptionsPanel extends AbstractHUDPanel
     }
 
     /**
-     * Collects metrics on the selected menu option in the settings window.
+     * Collects metrics on the selected menu option on the left side of the settings menu.
      *
      * @param node the selected menu node
      * @param optionsProviderObject the selected menu options provider object
      */
-    private void collectMetrics(DefaultMutableTreeNode node, OptionsProviderUserObject optionsProviderObject)
+    private void collectSettingsMenuSelectionMetrics(DefaultMutableTreeNode node, OptionsProviderUserObject optionsProviderObject)
     {
         if (node.getParent() != null)
         {
             Object parent = ((DefaultMutableTreeNode)node.getParent()).getUserObject();
             if (parent instanceof OptionsProviderUserObject)
             {
-                QuantifyToolboxUtils.collectMetric("mist3d.settings.left-menu-options."
-                        + ((OptionsProviderUserObject)parent).getNodeName().toLowerCase().replaceAll(" ", "-") + "."
-                        + optionsProviderObject.getNodeName().toLowerCase().replaceAll(" ", "-"));
+                Quantify.collectMetric("mist3d.settings.left-menu-options." + ((OptionsProviderUserObject)parent).getNodeName()
+                        + "." + optionsProviderObject.getNodeName());
             }
         }
         else
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.left-menu-options."
-                    + optionsProviderObject.getNodeName().toLowerCase().replaceAll(" ", "-"));
+            Quantify.collectMetric("mist3d.settings.left-menu-options." + optionsProviderObject.getNodeName());
         }
     }
 

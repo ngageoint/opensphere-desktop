@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import io.opensphere.core.SecurityManager;
 import io.opensphere.core.options.OptionsProvider;
 import io.opensphere.core.preferences.PreferencesRegistry;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 
 /**
  * An {@link OptionsProvider} for security components.
@@ -63,7 +63,7 @@ public class SecurityOptionsProvider extends AbstractSecurityOptionsProvider
                 + " This will also allow you to set a new encryption secret.</html>");
         clearButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.security.clear-local-encrypted-data-button");
+            Quantify.collectMetric("mist3d.settings.security.clear-local-encrypted-data-button");
             int option = JOptionPane.showOptionDialog(parentComponent,
                     "This will delete all usernames/passwords, private keys, and other encrypted data from your configuration. Are you sure?",
                     "Confirm Delete", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
@@ -86,7 +86,7 @@ public class SecurityOptionsProvider extends AbstractSecurityOptionsProvider
         resetButton.setToolTipText("<html>Reset the secret (private key or master password) used to encrypt local data.</html>");
         resetButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.security.reset-encryption-secret-button");
+            Quantify.collectMetric("mist3d.settings.security.reset-encryption-secret-button");
             getSecurityManager().resetSecretKey();
         });
         return resetButton;
@@ -105,7 +105,7 @@ public class SecurityOptionsProvider extends AbstractSecurityOptionsProvider
                 .setToolTipText("Clears the associations that have been made between personal certificates and servers.");
         clearCertificateAssociationsButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.security.clear-cerificate-associations-button");
+            Quantify.collectMetric("mist3d.settings.security.clear-cerificate-associations-button");
             int option = JOptionPane.showOptionDialog(parentComponent,
                     "When new connections are made that require certificates, you will be prompted to select the certificates to use.",
                     "Confirm Clear", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
@@ -114,6 +114,7 @@ public class SecurityOptionsProvider extends AbstractSecurityOptionsProvider
                 getSecurityManager().clearPreselectedAndPreferredPrivateKeyProviders();
             }
         });
+        return clearCertificateAssociationsButton;
     }
 
     @Override

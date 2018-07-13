@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.swing.GridBagPanel;
 
 /**
@@ -79,7 +79,7 @@ public class AdvancedDataAnalysisReporterOptionsProvider extends AbstractOptions
         JButton clearRegistryDataButton = new JButton("Clear Data Analysis Registry Data");
         clearRegistryDataButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.data-analyzer.advanced.clear-registry-data-button");
+            Quantify.collectMetric("mist3d.settings.data-analyzer.advanced.clear-registry-data-button");
             int option = JOptionPane.showConfirmDialog(getOptionsPanel(),
                 "Are you sure you want to delete the registry contents?\nThis action cannot be undone.",
                 "Clear Data Analysis Registry", JOptionPane.OK_CANCEL_OPTION);
@@ -101,7 +101,7 @@ public class AdvancedDataAnalysisReporterOptionsProvider extends AbstractOptions
         JButton registryContentsReportTextButton = new JButton("Registry Contents Report (Text)");
         registryContentsReportTextButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.data-analyzer.advanced.contents-report-text-button");
+            Quantify.collectMetric("mist3d.settings.data-analyzer.advanced.contents-report-text-button");
             myDataAnalysisReporterImpl.showRegistryReportText();
         });
         return registryContentsReportTextButton;
@@ -117,7 +117,7 @@ public class AdvancedDataAnalysisReporterOptionsProvider extends AbstractOptions
         JButton registryContentsReportXMLButton = new JButton("Registry Contents Report (XML)");
         registryContentsReportXMLButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.data-analyzer.advanced.contents-report-xml-button");
+            Quantify.collectMetric("mist3d.settings.data-analyzer.advanced.contents-report-xml-button");
             myDataAnalysisReporterImpl.showXMLRegistryReport();
         });
         return registryContentsReportXMLButton;

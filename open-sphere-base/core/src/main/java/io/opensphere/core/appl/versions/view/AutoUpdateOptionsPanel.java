@@ -29,7 +29,7 @@ import io.opensphere.core.appl.versions.AutoUpdateToolboxUtils;
 import io.opensphere.core.appl.versions.controller.AutoUpdateController;
 import io.opensphere.core.appl.versions.model.AutoUpdatePreferenceKeys;
 import io.opensphere.core.appl.versions.model.AutoUpdatePreferences;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.GenericFontIcon;
@@ -123,10 +123,10 @@ public class AutoUpdateOptionsPanel extends ViewPanel
      */
     private Component getAutoUpdateCheckbox()
     {
-        CheckBox autoUpdateCheckbox = new CheckBox(myPreferences.autoUpdateProperty(),
-                myPreferences.autoUpdateProperty().getName());
-        autoUpdateCheckbox.addActionListener(
-            e -> QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.enable-auto-update-checkbox"));
+        CheckBox autoUpdateCheckbox =
+                new CheckBox(myPreferences.autoUpdateProperty(), myPreferences.autoUpdateProperty().getName());
+        autoUpdateCheckbox.addActionListener(e -> Quantify.collectEnableDisableMetric(
+                "mist3d.settings.application-updates.enable-auto-update", autoUpdateCheckbox.isSelected()));
         return autoUpdateCheckbox;
     }
 
@@ -140,7 +140,7 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         JButton checkForUpdatesButton = new JButton("Check for Updates");
         checkForUpdatesButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.check-for-updates-button");
+            Quantify.collectMetric("mist3d.settings.application-updates.check-for-updates-button");
             myController.checkForUpdates(true);
         });
         return checkForUpdatesButton;
@@ -153,10 +153,10 @@ public class AutoUpdateOptionsPanel extends ViewPanel
      */
     private Component getUpdateWithoutPromptCheckbox()
     {
-        CheckBox updateWithoutPromptCheckbox = new CheckBox(myPreferences.updateWithoutPromptProperty(),
-                myPreferences.updateWithoutPromptProperty().getName());
-        updateWithoutPromptCheckbox.addActionListener(
-            e -> QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.update-without-prompt-checkbox"));
+        CheckBox updateWithoutPromptCheckbox =
+                new CheckBox(myPreferences.updateWithoutPromptProperty(), myPreferences.updateWithoutPromptProperty().getName());
+        updateWithoutPromptCheckbox.addActionListener(e -> Quantify.collectEnableDisableMetric(
+                "mist3d.settings.application-updates.update-without-prompt-checkbox", updateWithoutPromptCheckbox.isSelected()));
         return updateWithoutPromptCheckbox;
     }
 
@@ -198,7 +198,7 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         toggleVersionButton.setToolTipText("Click to select " + version + "as your preferred version.");
         toggleVersionButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.preferred-version-selection");
+            Quantify.collectMetric("mist3d.settings.application-updates.preferred-version-selection");
             updatePreferredVersion(version);
         });
         return toggleVersionButton;
@@ -217,7 +217,7 @@ public class AutoUpdateOptionsPanel extends ViewPanel
         deleteVersionButton.setBackground(Color.RED);
         deleteVersionButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric("mist3d.settings.application-updates.delete-version-button");
+            Quantify.collectMetric("mist3d.settings.application-updates.delete-version-button");
             deleteVersion(version, box, deleteVersionButton);
         });
         return deleteVersionButton;
@@ -256,10 +256,8 @@ public class AutoUpdateOptionsPanel extends ViewPanel
      * Deletes the named version from the filesystem, after prompting the user.
      *
      * @param version the version to remove from the filesystem.
-     * @param row the row in which the version is displayed, will be removed
-     *            from the UI.
-     * @param deleteButton the button that triggered the delete, will be used
-     *            for listener deregistration.
+     * @param row the row in which the version is displayed, will be removed from the UI.
+     * @param deleteButton the button that triggered the delete, will be used for listener deregistration.
      */
     private void deleteVersion(String version, Component row, JButton deleteButton)
     {
