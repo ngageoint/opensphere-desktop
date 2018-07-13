@@ -5,10 +5,9 @@ import java.util.List;
 
 import javax.swing.JMenuItem;
 
-import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.modulestate.ModuleStateManager;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.Utilities;
 
 /**
@@ -19,18 +18,14 @@ public class ClearStatesMenuProvider implements ContextMenuProvider<Void>
     /** The module state manager. */
     private final ModuleStateManager myModuleStateManager;
 
-    /** The toolbox. */
-    private Toolbox myToolbox;
-
     /**
      * Constructor.
      *
-     * @param toolbox The toolbox.
+     * @param moduleStateManager The module state manager.
      */
-    public ClearStatesMenuProvider(Toolbox toolbox)
+    public ClearStatesMenuProvider(ModuleStateManager moduleStateManager)
     {
-        myToolbox = toolbox;
-        myModuleStateManager = Utilities.checkNull(myToolbox.getModuleStateManager(), "moduleStateManager");
+        myModuleStateManager = Utilities.checkNull(moduleStateManager, "moduleStateManager");
     }
 
     @Override
@@ -39,7 +34,7 @@ public class ClearStatesMenuProvider implements ContextMenuProvider<Void>
         JMenuItem clearStatesMenuItem = new JMenuItem("Clear States");
         clearStatesMenuItem.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.control-panels.selection.clear-states");
+            Quantify.collectMetric("mist3d.control-panels.selection.clear-states");
             myModuleStateManager.deactivateAllStates();
         });
         clearStatesMenuItem.setToolTipText("Deactivate all states");

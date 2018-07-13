@@ -10,7 +10,7 @@ import javax.swing.KeyStroke;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.MenuBarRegistry;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.mantle.data.geom.style.dialog.VisualizationStyleControlDialog;
 import io.opensphere.mantle.icon.impl.gui.IconManagerFrame;
 import io.opensphere.mantle.util.MantleToolboxUtils;
@@ -97,7 +97,7 @@ class MantleMenuInit
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.menu-bar.tools.icon-manager");
+                Quantify.collectMetric("mist3d.menu-bar.tools.icon-manager");
                 iconManager.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
                 iconManager.setVisible(true);
             }

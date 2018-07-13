@@ -14,7 +14,7 @@ import io.opensphere.core.control.ui.ToolbarManager.ToolbarLocation;
 import io.opensphere.core.dialog.alertviewer.event.UserMessageEvent;
 import io.opensphere.core.dialog.alertviewer.toast.ToastController;
 import io.opensphere.core.event.EventListenerService;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.ThreadConfined;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import javafx.application.Platform;
@@ -75,7 +75,7 @@ class AlertViewerController extends EventListenerService
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, InputEvent.CTRL_DOWN_MASK));
         menuItem.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.menu-bar.view.alerts");
+            Quantify.collectMetric("mist3d.menu-bar.view.alerts");
             button.getDialog().setVisible(true);
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.VIEW_MENU)

@@ -8,7 +8,7 @@ import javax.swing.JMenu;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.MenuBarRegistry;
 import io.opensphere.core.control.ui.UIRegistry;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.subterrain.xraygoggles.controller.XrayGogglesController;
 import io.opensphere.subterrain.xraygoggles.model.XrayGogglesModel;
@@ -72,7 +72,7 @@ public class XrayGogglesMenuProvider
      */
     private void actionPerformed(ActionEvent event)
     {
-        QuantifyToolboxUtils.collectEnableDisableMetric(myToolbox, "mist3d.menu-bar.view.underground", myMenuItem.isSelected());
+        Quantify.collectEnableDisableMetric("mist3d.menu-bar.view.underground", myMenuItem.isSelected());
         if (myMenuItem.isSelected())
         {
             myCurrentController = new XrayGogglesController(myToolbox.getMapManager(), myToolbox.getGeometryRegistry(),

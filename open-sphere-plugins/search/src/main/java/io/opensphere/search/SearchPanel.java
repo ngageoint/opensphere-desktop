@@ -53,7 +53,7 @@ import io.opensphere.core.event.DataRemovalEvent;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.hud.awt.HUDJInternalFrame;
 import io.opensphere.core.preferences.Preferences;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.image.IconUtil;
@@ -210,15 +210,13 @@ public final class SearchPanel extends JPanel implements ActionListener
             JCheckBoxMenuItem anItem = (JCheckBoxMenuItem)evt.getSource();
             if (anItem.getText().equals(FORCE_TEXT_SEARCH))
             {
-                QuantifyToolboxUtils.collectEnableDisableMetric(mySearchGotoController.getToolbox(),
-                        "mist3d.search.checkbox.force-text-search", anItem.isSelected());
+                Quantify.collectEnableDisableMetric("mist3d.search.checkbox.force-text-search", anItem.isSelected());
                 myPrefs.putBoolean(FORCE_TEXT_SEARCH, anItem.isSelected(), this);
                 myForceTextSearch = anItem.isSelected();
             }
             else if (anItem.getText().equals(ENABLE_SEARCH_HISTORY))
             {
-                QuantifyToolboxUtils.collectEnableDisableMetric(mySearchGotoController.getToolbox(),
-                        "mist3d.search.checkbox.enable-search-history", anItem.isSelected());
+                Quantify.collectEnableDisableMetric("mist3d.search.checkbox.enable-search-history", anItem.isSelected());
                 myIsSearchHistoryEnabled = anItem.isSelected();
             }
         }
@@ -227,8 +225,7 @@ public final class SearchPanel extends JPanel implements ActionListener
             JMenuItem anItem = (JMenuItem)evt.getSource();
             if (anItem.getText().equals(CLEAR_SEARCH_HISTORY))
             {
-                QuantifyToolboxUtils.collectMetric(mySearchGotoController.getToolbox(),
-                        "mist3d.search.selection.clear-search-history");
+                Quantify.collectMetric("mist3d.search.clear-search-history");
                 mySearchHistoryPopup.setVisible(false);
                 initHistoryMap();
             }
@@ -243,12 +240,12 @@ public final class SearchPanel extends JPanel implements ActionListener
             }
             else if (anItem.getText().equals(SEARCH_HELP))
             {
-                QuantifyToolboxUtils.collectMetric(mySearchGotoController.getToolbox(), "mist3d.search.selection.search-help");
+                Quantify.collectMetric("mist3d.search.search-help");
                 showHelpBrowser();
             }
             else if (anItem.getText().equals(SEARCH_OPTIONS_PANEL))
             {
-                QuantifyToolboxUtils.collectMetric(mySearchGotoController.getToolbox(), "mist3d.search.selection.search-options");
+                Quantify.collectMetric("mist3d.search.search-options");
                 mySearchGotoController.getToolbox().getUIRegistry().getOptionsRegistry()
                         .requestShowTopic(SearchOptionsProvider.PROVIDER_NAME);
             }
@@ -281,7 +278,7 @@ public final class SearchPanel extends JPanel implements ActionListener
      */
     private void clearGotoPoints()
     {
-        QuantifyToolboxUtils.collectMetric(mySearchGotoController.getToolbox(), "mist3d.search.selection.clear-goto-points");
+        Quantify.collectMetric("mist3d.search.clear-goto-points");
         mySearchGotoController.removeAllGotoGeometries();
     }
 

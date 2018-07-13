@@ -11,7 +11,7 @@ import javax.swing.WindowConstants;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.ToolbarManager.SeparatorLocation;
 import io.opensphere.core.control.ui.ToolbarManager.ToolbarLocation;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.swing.IconButton;
 
@@ -72,7 +72,7 @@ public final class CaptureMenuInit
      */
     private static void launchScreenCapture(Toolbox toolbox)
     {
-        QuantifyToolboxUtils.collectMetric(toolbox, "mist3d.capture.button.capture-screenshot");
+        Quantify.collectMetric("mist3d.capture.capture-screenshot");
         synchronized (ourLockPad)
         {
             if (ourScreenCapture != null)

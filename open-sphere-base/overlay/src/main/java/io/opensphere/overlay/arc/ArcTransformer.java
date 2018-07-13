@@ -19,7 +19,7 @@ import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.action.context.GeographicPositionsContextKey;
 import io.opensphere.core.control.ui.ToolbarManager.SeparatorLocation;
 import io.opensphere.core.control.ui.ToolbarManager.ToolbarLocation;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.swing.IconButton;
@@ -172,7 +172,7 @@ public final class ArcTransformer extends DefaultTransformer
             {
                 if (e.getButton() == MouseEvent.BUTTON1)
                 {
-                    QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.overlay.ruler.button.use-ruler");
+                    Quantify.collectMetric("mist3d.overlay.ruler.use-ruler");
                     toggleMyActivationButton();
                 }
             }

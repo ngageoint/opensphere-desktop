@@ -8,7 +8,7 @@ import javax.swing.JMenuItem;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.MenuBarRegistry;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.javafx.WebDialog;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.util.MantleConstants;
@@ -64,7 +64,7 @@ public class DateFormatHelp implements ActionListener
      */
     public void showHelp(Window parent)
     {
-        QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.menu-bar.help.date-format-help");
+        Quantify.collectMetric("mist3d.menu-bar.help.date-format-help");
         if (myWebDialog == null)
         {
             myWebDialog = new WebDialog(parent);

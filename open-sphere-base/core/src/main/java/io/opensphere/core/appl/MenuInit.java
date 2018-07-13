@@ -39,7 +39,7 @@ import io.opensphere.core.hud.awt.HUDJInternalFrame;
 import io.opensphere.core.pipeline.Pipeline;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.projection.AbstractProjection;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.units.UnitsProvider;
 import io.opensphere.core.units.UnitsProvider.UnitsChangeListener;
 import io.opensphere.core.util.collections.New;
@@ -249,7 +249,7 @@ public class MenuInit
         }
         unitsMenu.add(SwingUtilities.newMenuItem("Reset all to default", e ->
         {
-            QuantifyToolboxUtils.collectMetric(toolbox, "mist3d.menu-bar.edit.units.reset-to-default");
+            Quantify.collectMetric("mist3d.menu-bar.edit.units.reset-to-default");
             toolbox.getUnitsRegistry().resetAllPreferredUnits(e.getSource());
         }));
         editMenu.add(unitsMenu);
@@ -365,7 +365,7 @@ public class MenuInit
 
         viewMenu.add(SwingUtilities.newMenuItem("Reset View", e ->
                 {
-                QuantifyToolboxUtils.collectMetric(toolbox, "mist3d.menu-bar.view.reset-view");
+                Quantify.collectMetric("mist3d.menu-bar.view.reset-view");
                 toolbox.getMapManager().getStandardViewer().resetView();
                 }),
                 KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK));
@@ -401,7 +401,7 @@ public class MenuInit
             final JMenuItem unitsItem = new JRadioButtonMenuItem(unitsProvider.getSelectionLabel(units));
             unitsItem.addActionListener(e ->
             {
-//                QuantifyToolboxUtils.collectMetric(toolbox, "mist3d.menu-bar.edit.units.set-units-to-" + units.getSimpleName());
+                Quantify.collectMetric("mist3d.menu-bar.edit.units.set-units-to-" + units.getSimpleName());
                 unitsProvider.setPreferredUnits(units);
             });
             subMenu.add(unitsItem);
@@ -440,7 +440,7 @@ public class MenuInit
     {
         return SwingUtilities.newMenuItem("Cancel Tile Downloads", e ->
         {
-            QuantifyToolboxUtils.collectMetric(toolbox, "mist3d.menu-bar.data-control.cancel-tile-downloads");
+            Quantify.collectMetric("mist3d.menu-bar.data-control.cancel-tile-downloads");
             toolbox.getGeometryRegistry().cancelAllImageRetrievals();
         });
     }
@@ -455,7 +455,7 @@ public class MenuInit
         final JCheckBoxMenuItem terrainLock = new JCheckBoxMenuItem("Lock Terrain");
         terrainLock.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectEnableDisableMetric(toolbox, "mist3d.menu-bar.tools.lock-terrain",
+            Quantify.collectEnableDisableMetric("mist3d.menu-bar.tools.lock-terrain",
                     terrainLock.isSelected());
             AbstractProjection.setTerrainLocked(terrainLock.isSelected());
         });
@@ -482,7 +482,7 @@ public class MenuInit
             {
                 if (myLoggerFrame == null)
                 {
-                    QuantifyToolboxUtils.collectMetric(toolbox, "mist3d.menu-bar.edit.set-logger-levels");
+                    Quantify.collectMetric("mist3d.menu-bar.edit.set-logger-levels");
                     final JComponent source = (JComponent)event.getSource();
                     final LoggerDialog loggerDialog = new LoggerDialog(toolbox.getPreferencesRegistry(), "Set Logger Levels");
                     loggerDialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
