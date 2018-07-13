@@ -49,11 +49,13 @@ public class AboutDialog extends JDialog
 
     /**
      * Default Constructor.
+     *
+     * @param toolbox The toolbox through which application state is accessed.
      */
     public AboutDialog()
     {
         super();
-        setTitle("About");
+        setTitle("About z");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setContentPane(getAboutContentPane());
         setAlwaysOnTop(true);

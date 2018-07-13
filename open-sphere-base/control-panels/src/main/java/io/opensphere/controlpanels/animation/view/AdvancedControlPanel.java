@@ -15,7 +15,7 @@ import io.opensphere.controlpanels.animation.model.AnimationModel;
 import io.opensphere.controlpanels.animation.model.PlayState;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.OptionsRegistry;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.units.duration.Duration;
 import io.opensphere.core.units.duration.DurationUnitsProvider;
 import io.opensphere.core.util.ChangeListener;
@@ -126,7 +126,7 @@ class AdvancedControlPanel extends GridBagPanel implements DialogPanel
         addRow(ControllerFactory.createLabel(myAdvanceDurationMagnitude, advanceDurationMagnitudeSpinner),
                 advanceDurationMagnitudeSpinner, advanceDurationMagnitudeCombo);
         JSlider fadeSlider = ControllerFactory.createComponent(myAnimationModel.getFadeUser(), JSlider.class);
-        myAnimationModel.getFadeUser().addListener((obs, ov, nv) -> QuantifyToolboxUtils.collectMetric(myToolbox,
+        myAnimationModel.getFadeUser().addListener((obs, ov, nv) -> Quantify.collectMetric(
                 "mist3d.timeline.buttons.advanced-animation-controls.change-fade"));
         fadeSlider.setMajorTickSpacing(100);
         fadeSlider.setPaintLabels(true);
@@ -189,7 +189,7 @@ class AdvancedControlPanel extends GridBagPanel implements DialogPanel
     {
         mySettingsButton.addActionListener(e ->
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.buttons.advanced-animation-controls.launch-settings");
+            Quantify.collectMetric("mist3d.timeline.buttons.advanced-animation-controls.launch-settings");
             myOptionsRegistry.requestShowTopic(AnimationOptionsProvider.TOPIC);
         });
 
@@ -198,7 +198,7 @@ class AdvancedControlPanel extends GridBagPanel implements DialogPanel
             @Override
             public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue)
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox,
+                Quantify.collectMetric(
                         "mist3d.timeline.buttons.advanced-animation-controls.update-advance-duration");
 
                 if (!myUpdating)
@@ -216,7 +216,7 @@ class AdvancedControlPanel extends GridBagPanel implements DialogPanel
             @Override
             public void changed(ObservableValue<? extends ChronoUnit> observable, ChronoUnit oldValue, ChronoUnit newValue)
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox,
+                Quantify.collectMetric(
                         "mist3d.timeline.buttons.advanced-animation-controls.change-advance-duration-units");
                 if (!myUpdating)
                 {

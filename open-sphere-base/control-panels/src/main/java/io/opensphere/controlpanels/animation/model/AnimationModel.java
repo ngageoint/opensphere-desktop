@@ -8,9 +8,8 @@ import java.util.Map;
 import java.util.Set;
 
 import io.opensphere.controlpanels.timeline.chart.ChartType;
-import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.time.TimeSpan;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.units.duration.Duration;
 import io.opensphere.core.util.ListDataEvent;
 import io.opensphere.core.util.ListDataListener;
@@ -95,17 +94,13 @@ public class AnimationModel
     /** The last action the user performed. */
     private final ObservableValue<Action> myLastAction = new StrongObservableValue<>();
 
-    /** The toolbox through which application state is accessed. */
-    private final Toolbox myToolbox;
-
     /**
      * Constructor.
      * 
      * @param toolbox The toolbox through which application state is accessed.
      */
-    public AnimationModel(Toolbox toolbox)
+    public AnimationModel()
     {
-        myToolbox = toolbox;
         mySnapToDataBoundaries.set(Boolean.TRUE);
 
         myLiveMode.setNameAndDescription("LIVE", "Automatically keep time now within the active span.");
@@ -122,19 +117,19 @@ public class AnimationModel
             @Override
             public void elementsRemoved(ListDataEvent<TimeSpan> e)
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.remove-skip-interval");
+                Quantify.collectMetric("mist3d.timeline.remove-skip-interval");
             }
 
             @Override
             public void elementsChanged(ListDataEvent<TimeSpan> e)
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.change-skip-interval");
+                Quantify.collectMetric("mist3d.timeline.change-skip-interval");
             }
 
             @Override
             public void elementsAdded(ListDataEvent<TimeSpan> e)
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.timeline.add-skip-interval");
+                Quantify.collectMetric("mist3d.timeline.add-skip-interval");
             }
         });
     }

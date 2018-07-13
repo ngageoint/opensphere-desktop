@@ -11,7 +11,9 @@ public final class QuantifyToolboxUtils
      * @param toolbox the {@link Toolbox} through which application state is
      *            accessed.
      * @param key the metric key for which to collect the metric.
+     * @deprecated use {@link Quantify#collectMetric(String)} instead.
      */
+    @Deprecated
     public static void collectMetric(Toolbox toolbox, String key)
     {
         getQuantifyToolbox(toolbox).getQuantifyService().collectMetric(key);
@@ -25,7 +27,11 @@ public final class QuantifyToolboxUtils
      * @param key the metric key for which to collect the metric.
      * @param condition the condition which must be true for the metric to be
      *            sent.
+     * @deprecated use
+     *             {@link Quantify#collectConditionalMetric(String, boolean)}
+     *             instead.
      */
+    @Deprecated
     public static void collectConditionalMetric(Toolbox toolbox, String key, boolean condition)
     {
         if (condition)
@@ -42,7 +48,11 @@ public final class QuantifyToolboxUtils
      * @param keyPrefix the metric key for which to collect the metric.
      * @param condition the condition which must be true for the metric to be
      *            sent.
+     * @deprecated use
+     *             {@link Quantify#collectEnableDisableMetric(String, boolean)}
+     *             instead.
      */
+    @Deprecated
     public static void collectEnableDisableMetric(Toolbox toolbox, String keyPrefix, boolean condition)
     {
         if (condition)

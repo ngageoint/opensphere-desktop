@@ -44,7 +44,11 @@ import io.opensphere.core.export.Exporters;
 import io.opensphere.core.modulestate.SaveStateDialog;
 import io.opensphere.core.modulestate.StateData;
 import io.opensphere.core.preferences.PreferencesRegistry;
+<<<<<<< HEAD
 import io.opensphere.core.quantify.QuantifyToolboxUtils;
+=======
+import io.opensphere.core.quantify.Quantify;
+>>>>>>> snapshot_5.2.5
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.filesystem.MnemonicFileChooser;
@@ -344,7 +348,11 @@ class StateView
         @Override
         public void actionPerformed(ActionEvent e)
         {
+<<<<<<< HEAD
             QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.control-panel.state.button.clear-state");
+=======
+            Quantify.collectMetric("mist3d.state.clear-states");
+>>>>>>> snapshot_5.2.5
             myController.deactivateAllStates();
         }
     }
@@ -368,7 +376,11 @@ class StateView
         @Override
         public void actionPerformed(ActionEvent e)
         {
+<<<<<<< HEAD
             QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.control-panel.state.button.delete-state");
+=======
+            Quantify.collectMetric("mist3d.state.remove-states");
+>>>>>>> snapshot_5.2.5
             Collection<? extends String> availableStates = myController.getAvailableStates();
             if (availableStates.isEmpty())
             {
@@ -423,7 +435,11 @@ class StateView
         @Override
         public void actionPerformed(ActionEvent e)
         {
+<<<<<<< HEAD
             QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.control-panels.state.button.save-state");
+=======
+            Quantify.collectMetric("mist3d.state.create-state");
+>>>>>>> snapshot_5.2.5
             saveState();
         }
     }
@@ -449,6 +465,7 @@ class StateView
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            Quantify.collectMetric("mist3d.state.activate-state");
             CancellableTaskActivity ta = new CancellableTaskActivity();
             ta.setLabelValue((myController.isStateActive(getName()) ? "Deactivating state " : "Activating state ") + getName());
             ta.setActive(true);

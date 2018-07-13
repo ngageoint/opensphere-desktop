@@ -22,6 +22,7 @@ import io.opensphere.core.HelpManager;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.MenuBarRegistry;
 import io.opensphere.core.help.data.PluginHelpInfo;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.filesystem.FileUtilities;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
@@ -119,7 +120,8 @@ public class HelpManagerImpl implements HelpManager
                         // remove index XML file.
                         myIndexHelper.removeFile();
                         // remove master XML file.
-                        final File masterFile = new File(myHelpFileDirectory.getAbsolutePath() + File.separator + MASTER_FILE_NAME);
+                        final File masterFile = new File(
+                                myHelpFileDirectory.getAbsolutePath() + File.separator + MASTER_FILE_NAME);
                         if (!masterFile.delete())
                         {
                             LOGGER.warn("Unable to remove the help system master file.");
@@ -204,8 +206,7 @@ public class HelpManagerImpl implements HelpManager
         strBuf.append(File.separator);
         strBuf.append(SEARCH_DIR);
         @SuppressWarnings("PMD.PrematureDeclaration")
-        final
-        String dbAbsPath = strBuf.toString();
+        final String dbAbsPath = strBuf.toString();
         strBuf.append(File.separator);
         strBuf.append(SEARCH_CONFIG);
 
@@ -296,6 +297,7 @@ public class HelpManagerImpl implements HelpManager
      */
     private void displayAbout()
     {
+        Quantify.collectMetric("mist3d.help.about");
         // Bring up "about" dialog window
         if (myAboutDialog == null)
         {
@@ -320,6 +322,7 @@ public class HelpManagerImpl implements HelpManager
      */
     private void displayHelp()
     {
+        Quantify.collectMetric("mist3d.help.contents");
         // Bring up help contents window
         if (myHelpFrame == null)
         {

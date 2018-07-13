@@ -39,6 +39,7 @@ import io.opensphere.core.control.ui.MenuBarRegistry;
 import io.opensphere.core.event.ApplicationLifecycleEvent;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.preferences.Preferences;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.collections.New;
@@ -229,11 +230,16 @@ public class WhatsNewPlugin extends PluginAdapter
         myWebPanel = new WebPanel();
 
         myPrevButton = new JButton("Previous");
-        myPrevButton.addActionListener(e -> updateDialog(--myCurrentIndex));
+        myPrevButton.addActionListener(e ->
+        {
+            Quantify.collectMetric("mist3d.help.whats-new.previous");
+            updateDialog(--myCurrentIndex);
+        });
 
         final JButton autoProxyWizardButton = new JButton("Run Auto-Proxy Wizard");
         autoProxyWizardButton.addActionListener(e ->
         {
+            Quantify.collectMetric("mist3d.help.whats-new.launch-auto-proxy");
             myToolbox.getUIRegistry().getOptionsRegistry().requestShowTopic("Automatic Proxy");
             myDialog.setVisible(false);
         });
@@ -242,9 +248,14 @@ public class WhatsNewPlugin extends PluginAdapter
         closeButton.addActionListener(e -> myDialog.setVisible(false));
 
         myNextButton = new JButton("Next");
-        myNextButton.addActionListener(e -> updateDialog(++myCurrentIndex));
+        myNextButton.addActionListener(e ->
+        {
+            Quantify.collectMetric("mist3d.help.whats-new.next");
+            updateDialog(++myCurrentIndex);
+        });
 
         myDontShowAgainCheckbox = new JCheckBox("Don't show this again (access from Help menu)", true);
+        myDontShowAgainCheckbox.addChangeListener(e -> Quantify.collectMetric("mist3d.help.whats-new.dont-show-again"));
         myMetricsCheckbox = new JCheckBox("Enable anonymous usage metrics collection",
                 QuantifyToolboxUtils.getQuantifyToolbox(myToolbox).getSettingsModel().enabledProperty().get());
 

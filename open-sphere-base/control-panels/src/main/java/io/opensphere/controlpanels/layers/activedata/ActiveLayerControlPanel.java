@@ -30,7 +30,7 @@ import io.opensphere.core.event.EventListener;
 import io.opensphere.core.export.Exporter;
 import io.opensphere.core.export.Exporters;
 import io.opensphere.core.model.time.TimeSpan;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.concurrent.ProcrastinatingEventQueueExecutor;
@@ -342,7 +342,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
             @Override
             public void actionPerformed(ActionEvent evt)
             {
-                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-manager.lower-controls.extents-button");
+                Quantify.collectMetric("mist3d.layer-manager.lower-controls.extents-button");
                 DataTypeInfo dti = getSelectedDataType();
                 DataGroupInfo dgi = getSelectedDataGroup();
                 TimeSpan extent = null;
@@ -380,7 +380,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
             @Override
             public void actionPerformed(ActionEvent evt)
             {
-                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-manager.lower-controls.include-in-analysis-tools");
+                Quantify.collectMetric("mist3d.layer-manager.lower-controls.include-in-analysis-tools");
                 LoadsToUtilities.setIncludeInAnalyze(getSelectedLayer(), myAnalyzeButton.isSelected());
             }
         });
@@ -404,7 +404,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
             @Override
             public void actionPerformed(ActionEvent evt)
             {
-                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-manager.lower-controls.include-on-timeline");
+                Quantify.collectMetric("mist3d.layer-manager.lower-controls.include-on-timeline");
                 LoadsToUtilities.setIncludeInTimeline(getSelectedLayer(), myTimelineButton.isSelected());
             }
         });
@@ -548,7 +548,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
             @Override
             public void actionPerformed(ActionEvent evt)
             {
-                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-manager.lower-controls.edit-features");
+                Quantify.collectMetric("mist3d.layer-manager.lower-controls.edit-features");
                 Collection<DataTypeInfo> selectedTypes = getSelectedDataTypes();
                 if (CollectionUtilities.hasContent(selectedTypes))
                 {
@@ -576,7 +576,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
             @Override
             public void actionPerformed(ActionEvent evt)
             {
-                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-manager.lower-controls.show-feature-styles");
+                Quantify.collectMetric("mist3d.layer-manager.lower-controls.show-feature-styles");
                 Set<DataTypeInfo> found = null;
                 DataTypeInfo selectedType = getSelectedDataType();
                 DataGroupInfo selectedGroup = getSelectedDataGroup();
@@ -622,7 +622,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
             @Override
             public void actionPerformed(ActionEvent evt)
             {
-                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-manager.lower-controls.show-layer-details");
+                Quantify.collectMetric("mist3d.layer-manager.lower-controls.show-layer-details");
                 DataGroupInfo dgi = getSelectedDataGroup();
                 if (dgi != null)
                 {
@@ -645,7 +645,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         myCloseSelectionButton.setToolTipText("Closes these style options");
         myCloseSelectionButton.addActionListener(evt ->
         {
-            QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-manager.lower-controls.close-selected-styles");
+            Quantify.collectMetric("mist3d.layer-manager.lower-controls.close-selected-styles");
             setSelected(new LayerSelectedEvent(false, null, null));
         });
 
@@ -677,7 +677,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
             @Override
             public void actionPerformed(ActionEvent evt)
             {
-                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-manager.lower-controls.show-tile-styles");
+                Quantify.collectMetric("mist3d.layer-manager.lower-controls.show-tile-styles");
                 Set<DataTypeInfo> found = null;
                 DataTypeInfo selectedType = getSelectedDataType();
                 DataGroupInfo selectedGroup = getSelectedDataGroup();
@@ -724,7 +724,7 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
             @Override
             public void actionPerformed(ActionEvent evt)
             {
-                QuantifyToolboxUtils.collectMetric(getToolbox(), "mist3d.layer-manager.lower-controls.show-heatmap-styles");
+                Quantify.collectMetric("mist3d.layer-manager.lower-controls.show-heatmap-styles");
                 Set<DataTypeInfo> found = null;
                 DataTypeInfo selectedType = getSelectedDataType();
                 DataGroupInfo selectedGroup = getSelectedDataGroup();
