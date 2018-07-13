@@ -12,7 +12,7 @@ import javax.swing.SwingConstants;
 
 import io.opensphere.controlpanels.layers.layersets.LayerSetController.LayerSetControllerListener;
 import io.opensphere.core.Toolbox;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.image.IconUtil.IconType;
@@ -66,22 +66,22 @@ public class LayerSetButtonPanel extends AbstractHUDPanel implements LayerSetCon
     {
         if (Utilities.sameInstance(e.getSource(), getManageLayerSetsMenuItem()))
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.layer-manager.button-row.manage-layer-set");
+            Quantify.collectMetric("mist3d.layer-manager.button-row.manage-layer-set");
             myController.showLayerSetManager();
         }
         else if (Utilities.sameInstance(e.getSource(), getAddLayerSetMenuItem()))
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.layer-manager.button-row.add-layer-set");
+            Quantify.collectMetric("mist3d.layer-manager.button-row.add-layer-set");
             myController.saveCurrentSet();
         }
         else if (Utilities.sameInstance(e.getSource(), getDefaultSetMenuItem()))
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.layer-manager.button-row.select-default-layer-set");
+            Quantify.collectMetric("mist3d.layer-manager.button-row.select-default-layer-set");
             myController.restoreDefaultActiveSet();
         }
         else if (e.getSource() instanceof LayerSetMenuItem)
         {
-            QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.layer-manager.button-row.select-layer-set");
+            Quantify.collectMetric("mist3d.layer-manager.button-row.select-layer-set");
             myController.activateLayerSet(e.getActionCommand(), true);
         }
     }
@@ -200,7 +200,7 @@ public class LayerSetButtonPanel extends AbstractHUDPanel implements LayerSetCon
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                    QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.layer-manager.button-row.add-layer-set");
+                    Quantify.collectMetric("mist3d.layer-manager.button-row.add-layer-set");
                     myController.saveCurrentSet();
                 }
             });
