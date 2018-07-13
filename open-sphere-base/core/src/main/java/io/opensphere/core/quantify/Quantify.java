@@ -2,9 +2,13 @@ package io.opensphere.core.quantify;
 
 import io.opensphere.core.Toolbox;
 
+/**
+ * A utility class meant to simplify the transmission of metrics. The toolbox is
+ * initialized from the kernel, which allows for clients to avoid passing it.
+ */
 public class Quantify
 {
-    /** A singleton initalized toolbox used to access application state. */
+    /** A singleton initialized toolbox used to access application state. */
     private static volatile Toolbox ourToolbox;
 
     /**
@@ -27,9 +31,7 @@ public class Quantify
 
     /**
      * Collects the named metric in the quantify service defined in the toolbox.
-     *
-     * @param toolbox the {@link Toolbox} through which application state is
-     *            accessed.
+     * 
      * @param key the metric key for which to collect the metric.
      */
     public static void collectMetric(String key)
@@ -43,8 +45,6 @@ public class Quantify
     /**
      * Collects the named metric in the quantify service defined in the toolbox.
      *
-     * @param toolbox the {@link Toolbox} through which application state is
-     *            accessed.
      * @param key the metric key for which to collect the metric.
      * @param condition the condition which must be true for the metric to be
      *            sent.
@@ -60,8 +60,6 @@ public class Quantify
     /**
      * Collects the named metric in the quantify service defined in the toolbox.
      *
-     * @param toolbox the {@link Toolbox} through which application state is
-     *            accessed.
      * @param keyPrefix the metric key for which to collect the metric.
      * @param condition the condition which must be true for the metric to be
      *            sent.

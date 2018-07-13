@@ -301,7 +301,7 @@ public class HelpManagerImpl implements HelpManager
         // Bring up "about" dialog window
         if (myAboutDialog == null)
         {
-            myAboutDialog = new AboutDialog(myToolbox);
+            myAboutDialog = new AboutDialog();
             myAboutDialog.addWindowListener(new WindowAdapter()
             {
                 @Override
