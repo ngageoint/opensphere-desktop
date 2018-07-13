@@ -14,8 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -27,6 +25,7 @@ import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.Constants;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.swing.DocumentListenerAdapter;
@@ -92,6 +91,7 @@ public class CacheOptionsProvider extends AbstractOptionsProvider
     @Override
     public void applyChanges()
     {
+        Quantify.collectMetric("mist3d.settings.cache.apply-button");
         if (mySizeLimitEnabledCheckbox.isSelected())
         {
             final int size = getSizeLimitFromField();
@@ -121,15 +121,13 @@ public class CacheOptionsProvider extends AbstractOptionsProvider
 
         mySizeLimitEnabledCheckbox = new JCheckBox();
         mySizeLimitEnabledCheckbox.setSelected(sizeLimitBytes > 0L);
-        mySizeLimitEnabledCheckbox.addChangeListener(new ChangeListener()
+        mySizeLimitEnabledCheckbox.addChangeListener(e ->
         {
-            @Override
-            public void stateChanged(ChangeEvent e)
-            {
-                mySizeLimitLabel.setEnabled(mySizeLimitEnabledCheckbox.isSelected());
-                mySizeLimitField.setEnabled(mySizeLimitEnabledCheckbox.isSelected());
-            }
+            mySizeLimitLabel.setEnabled(mySizeLimitEnabledCheckbox.isSelected());
+            mySizeLimitField.setEnabled(mySizeLimitEnabledCheckbox.isSelected());
         });
+        mySizeLimitEnabledCheckbox.addActionListener(e -> Quantify
+                .collectEnableDisableMetric("mist3d.settings.cache.size-limit-enabled", mySizeLimitEnabledCheckbox.isSelected()));
         sizeLimitPanel.add(mySizeLimitEnabledCheckbox);
 
         mySizeLimitLabel = new JLabel("Cache Size Threshold:");

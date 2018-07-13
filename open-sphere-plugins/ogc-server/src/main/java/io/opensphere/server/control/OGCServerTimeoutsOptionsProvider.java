@@ -28,6 +28,7 @@ import javax.swing.event.DocumentEvent;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.options.impl.AbstractPreferencesOptionsProvider;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.Constants;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
@@ -129,6 +130,8 @@ public class OGCServerTimeoutsOptionsProvider extends AbstractPreferencesOptions
     @Override
     public void applyChanges()
     {
+        Quantify.collectMetric("mist3d.settings.servers.apply-button");
+
         myErrorReporter.clearErrors();
         boolean isValid = myDefaultTimeoutPanel.arePanelInputsValid();
         if (isValid)

@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.impl.AbstractPreferencesOptionsProvider;
 import io.opensphere.core.options.impl.OptionsPanel;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.Showable;
 
 /**
@@ -108,7 +109,11 @@ public class SpatialTemporalDetailsProvider extends AbstractPreferencesOptionsPr
         checkbox.setToolTipText("Show / hide the " + text + " overlay");
         checkbox.setFocusPainted(false);
         checkbox.setSelected(showable.isVisible());
-        checkbox.addActionListener(e -> showable.setVisible(((JCheckBox)e.getSource()).isSelected()));
+        checkbox.addActionListener(e ->
+        {
+            Quantify.collectEnableDisableMetric("mist3d.settings.info-overlays." + text, checkbox.isSelected());
+            showable.setVisible(((JCheckBox)e.getSource()).isSelected());
+        });
         return checkbox;
     }
 }
