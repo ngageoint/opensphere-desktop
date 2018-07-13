@@ -248,10 +248,10 @@ public class MenuInit
             unitsMenu.add(subMenu);
         }
         unitsMenu.add(SwingUtilities.newMenuItem("Reset all to default", e ->
-        {
-            Quantify.collectMetric("mist3d.menu-bar.edit.units.reset-to-default");
-            toolbox.getUnitsRegistry().resetAllPreferredUnits(e.getSource());
-        }));
+                {
+                Quantify.collectMetric("mist3d.menu-bar.edit.units.reset-to-default");
+                toolbox.getUnitsRegistry().resetAllPreferredUnits(e.getSource());
+                }));
         editMenu.add(unitsMenu);
     }
 
@@ -365,10 +365,10 @@ public class MenuInit
 
         viewMenu.add(SwingUtilities.newMenuItem("Reset View", e ->
                 {
-                Quantify.collectMetric("mist3d.menu-bar.view.reset-view");
-                toolbox.getMapManager().getStandardViewer().resetView();
-                }),
-                KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK));
+                    toolbox.getMapManager().getStandardViewer().resetView();
+                    Quantify.collectMetric("mist3d.menu-bar.edit.units.reset-to-default");
+                },
+                KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK)));
 
 //        // Add toolbar item
 //        final JCheckBoxMenuItem toolbarItem = new JCheckBoxMenuItem("Toolbar");
