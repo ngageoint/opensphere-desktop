@@ -6,12 +6,10 @@ import io.opensphere.core.Toolbox;
 
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
 import io.opensphere.mantle.iconproject.model.PanelModel;
-import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject;
@@ -80,6 +78,7 @@ public class MainPanel extends SplitPane
     private IconRecord mySelectedIcon;
 
     private TreeView myTreeList;
+    private final PanelModel myPanel = new PanelModel();
 
     private AnchorPane myTreeView;
 
@@ -117,6 +116,8 @@ public class MainPanel extends SplitPane
         {
             // IconChooserPanel chooseIcon = new IconChooserPanel(tb);
             // loadFromFile(IconRecord.USER_ADDED_COLLECTION, null, tb);
+            //loadFromFile(IconRecord.USER_ADDED_COLLECTION, null, tb);
+            //FileAddBuilder fileAdd = new FileAddBuilder(tb);
         });
 
         AnchorPane.setBottomAnchor(myCustIconButton, 26.0);
