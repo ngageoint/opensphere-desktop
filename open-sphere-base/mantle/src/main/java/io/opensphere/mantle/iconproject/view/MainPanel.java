@@ -94,6 +94,7 @@ public class MainPanel extends SplitPane
         Window owner = tb.getUIRegistry().getMainFrameProvider().get();
 
         myTreeView = new AnchorPane();
+        
         TreeBuilder myTreeBuilder = new TreeBuilder();
         myTreeList = new TreeView(myTreeBuilder);
 

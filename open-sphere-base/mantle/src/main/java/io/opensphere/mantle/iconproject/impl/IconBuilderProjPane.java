@@ -64,9 +64,8 @@ public class IconBuilderProjPane extends BorderPane
     /**
      * Constructs a new IconBuilderPane.
      *
-     * @param owner the AWT Window
-     * @return the customized icon in the form of a writable image named
-     *         "iconOut".
+     * @param owner the AWT Window.
+     * @param record the selected icon.
      */
     public IconBuilderProjPane(Window owner, IconRecord record)
     {
@@ -82,10 +81,9 @@ public class IconBuilderProjPane extends BorderPane
 
         myColorPicker.setOnAction((event) ->
         {
-            theColor = myColorPicker.getValue();
+            myColor = myColorPicker.getValue();
             updateImageColor();
         });
-
     }
 
     /**
@@ -105,7 +103,7 @@ public class IconBuilderProjPane extends BorderPane
         AnchorPane.setRightAnchor(sizeLabel, 0.);
 
         myColorPicker = new ColorPicker();
-        //myColorPicker.getStyleClass().add("button");
+        // myColorPicker.getStyleClass().add("button");
         myColorPicker.setOnMouseEntered(event ->
         {
             myColorPicker.show();
@@ -114,10 +112,9 @@ public class IconBuilderProjPane extends BorderPane
             // System.out.println("&&&&&Get children unmodifiable: " +
             // myColorPicker.getChildrenUnmodifiable());
         });
-        /*myColorPicker.setOnMouseExited(event ->
-        {
-            System.out.println("^^^^^^^^Accesible role prop time2:   " + myColorPicker.accessibleRoleProperty());
-        });*/
+        /* myColorPicker.setOnMouseExited(event -> {
+         * System.out.println("^^^^^^^^Accesible role prop time2:   " +
+         * myColorPicker.accessibleRoleProperty()); }); */
 
         TopBar.getChildren().addAll(myColorPicker, sizeLabel, sizeSpin);
         return TopBar;
@@ -244,7 +241,7 @@ public class IconBuilderProjPane extends BorderPane
 
         if (myIconView != null)
         {
-            myImageRenderView.setEffect(lighting);
+            myIconView.setEffect(lighting);
         }
     }
 
