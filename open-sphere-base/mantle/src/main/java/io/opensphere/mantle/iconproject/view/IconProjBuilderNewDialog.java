@@ -1,14 +1,11 @@
 package io.opensphere.mantle.iconproject.view;
 
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
-
-import javax.imageio.ImageIO;
 
 import org.apache.log4j.Logger;
 
@@ -18,15 +15,15 @@ import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
-import io.opensphere.mantle.icon.impl.gui.IconBuilderPane;
 import io.opensphere.mantle.iconproject.impl.IconBuilderProjPane;
 import javafx.scene.image.WritableImage;
+import javax.imageio.ImageIO;
 
 /** The component class for building icons. */
 public class IconProjBuilderNewDialog extends JFXDialog
 {
-    /** serialVersionUID. */
-    private static final long serialVersionUID = 1L;
+    /** serial ID.   */
+    private static final long serialVersionUID = -8284546944940700345L;
 
     /** The logger for this class. */
     private static final Logger LOGGER = Logger.getLogger(IconProjBuilderNewDialog.class);
@@ -37,17 +34,17 @@ public class IconProjBuilderNewDialog extends JFXDialog
     /**
      * Constructor.
      *
-     * @param owner the owner
-     * @param iconRegistry the icon registry
-     * @param mainPanel the main panel of the icon manager frame.
+     * @param owner the parent window.
+     * @param iconRegistry the icon registry.
+     * @param iconRecord the current selected icon.
      */
 
-    public IconProjBuilderNewDialog(Window owner, IconRegistry iconRegistry, IconRecord record2)
+    public IconProjBuilderNewDialog(Window owner, IconRegistry iconRegistry, IconRecord iconRecord)
     {
         super(owner, "Build an Icon");
         myIconRegistry = iconRegistry;
 
-        IconBuilderProjPane pane = new IconBuilderProjPane(owner, record2);
+        IconBuilderProjPane pane = new IconBuilderProjPane(owner, iconRecord);
         setFxNode(pane);
         setMinimumSize(new Dimension(450, 550));
 
@@ -58,12 +55,11 @@ public class IconProjBuilderNewDialog extends JFXDialog
     /**
      * Saves a built image to the Icon Registry.
      *
-     * @param image the image to save
+     * @param snapshot the image to save
      * @param name the image name
      */
     private void saveImage(WritableImage snapshot, String name)
     {
-
         BufferedImage image = null;
         image = javafx.embed.swing.SwingFXUtils.fromFXImage(snapshot, image);
 
@@ -76,7 +72,6 @@ public class IconProjBuilderNewDialog extends JFXDialog
             IconProvider provider = new DefaultIconProvider(imageURL, IconRecord.USER_ADDED_COLLECTION, null, "User");
 
             myIconRegistry.addIcon(provider, this);
-
         }
         catch (IOException e)
         {
@@ -84,5 +79,4 @@ public class IconProjBuilderNewDialog extends JFXDialog
             LOGGER.error(e, e);
         }
     }
-
 }
