@@ -72,9 +72,8 @@ public class IconBuilderProjPane extends BorderPane
     /**
      * Constructs a new IconBuilderPane.
      *
-     * @param owner the AWT Window
-     * @return the customized icon in the form of a writable image named
-     *         "iconOut".
+     * @param owner the AWT Window.
+     * @param record the selected icon.
      */
     public IconBuilderProjPane(Window owner, IconRecord record)
     {
@@ -94,7 +93,6 @@ public class IconBuilderProjPane extends BorderPane
             myColor = myColorPicker.getValue();
             updateImageColor();
         });
-
     }
 
     /**
@@ -114,6 +112,14 @@ public class IconBuilderProjPane extends BorderPane
         AnchorPane.setRightAnchor(sizeLabel, 0.);
 
         myColorPicker = new ColorPicker();
+        
+        // myColorPicker.getStyleClass().add("button");
+        myColorPicker.setOnMouseEntered(event ->
+        {
+            myColorPicker.show();
+        });
+        /* myColorPicker.setOnMouseExited(event -> {
+         * System.out.println("^^^^^^^^Accesible role prop time2:   " +
 
 //        Slider brightSlider = new Slider(-1., 1., 0.);
 //        brightSlider.setBlockIncrement(.1);
@@ -229,6 +235,15 @@ public class IconBuilderProjPane extends BorderPane
         iconDisplayer.getChildren().addAll(myIconView);
 
         return iconDisplayer;
+        /* ColorAdjust monochrome = new ColorAdjust();
+         * monochrome.setSaturation(-1.0); ColorAdjust color2 = new
+         * ColorAdjust(); color2.setBrightness(5.0); Blend blush = new
+         * Blend(BlendMode.MULTIPLY, monochrome, color2);
+         *
+         * myImageRenderView.effectProperty()
+         * .bind(Bindings.when(myImageRenderView.hoverProperty()).then((Effect)
+         * blush).otherwise((Effect)null)); */
+
     }
 
     /**

@@ -9,12 +9,10 @@ import io.opensphere.core.Toolbox;
 
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
 import io.opensphere.mantle.iconproject.model.PanelModel;
-import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject;
@@ -61,24 +59,31 @@ public class MainPanel extends SplitPane
 
     ColumnConstraints columnConstraints = new ColumnConstraints();
 
+    /** Portion containing the icons */
     private final GridPane gridPane;
 
+    /** The Customize Icon button. */
     private final ButtonBuilder myCustIconButton = new ButtonBuilder("Customize Icon", false);
 
+    /** The button to add the icon. */
     private final ButtonBuilder myAddIconButton = new ButtonBuilder("Add Icon from File", false);
 
+    /** The button to generate a new icon */
     private final ButtonBuilder myGenIconButton = new ButtonBuilder("Generate New Icon", false);
 
-    private final TreeView myTreeList;
-
-    private final AnchorPane myTreeView;
-
+    /** The scrollbar for the icons in view. */
     private final ScrollBar myScrollBar;
 
+    /** Temporary for experimentation. */
     private static StackPane stackPane;
 
-    private PanelModel myPanel = new PanelModel();
+    /** The record of the currently selected icon. */
+    private IconRecord mySelectedIcon;
 
+    private TreeView myTreeList;
+    private final PanelModel myPanel = new PanelModel();
+
+    private AnchorPane myTreeView;
 
     public MainPanel(Toolbox tb,Window owner)
     {
@@ -90,6 +95,7 @@ public class MainPanel extends SplitPane
   //      Window owner = tb.getUIRegistry().getMainFrameProvider().get();
 
         myTreeView = new AnchorPane();
+        
         TreeBuilder myTreeBuilder = new TreeBuilder();
         myTreeList = new TreeView(myTreeBuilder);
 
@@ -111,6 +117,8 @@ public class MainPanel extends SplitPane
         {
             // IconChooserPanel chooseIcon = new IconChooserPanel(tb);
             // loadFromFile(IconRecord.USER_ADDED_COLLECTION, null, tb);
+            //loadFromFile(IconRecord.USER_ADDED_COLLECTION, null, tb);
+            //FileAddBuilder fileAdd = new FileAddBuilder(tb);
         });
 
         AnchorPane.setBottomAnchor(myCustIconButton, 26.0);
@@ -137,8 +145,7 @@ public class MainPanel extends SplitPane
         {
             EventQueue.invokeLater(() ->
             {
-                IconProjBuilderNewDialog shit = new IconProjBuilderNewDialog(owner, myIconRegistry, iconrecord);
-                shit.setVisible(true);
+                IconProjBuilderNewDialog builderPane = new IconProjBuilderNewDialog(owner, myIconRegistry, mySelectedIcon);
             });
         });
 
@@ -176,6 +183,7 @@ public class MainPanel extends SplitPane
         button.setStyle("-fx-background-color: blue");
         button.setPadding(new Insets(5, 5, 5, 5));
         stackPane.getChildren().add(button);
+        // stackPane.rotateProperty().bind(mysizerrrrrr);
 
         gridPane.getColumnConstraints().addAll(columnConstraints);
         gridPane.getRowConstraints().addAll(rowConstraints);
@@ -199,7 +207,6 @@ public class MainPanel extends SplitPane
             list.setVisible(false);
             grid.setVisible(true);
         }
-
     }
 
     /**
