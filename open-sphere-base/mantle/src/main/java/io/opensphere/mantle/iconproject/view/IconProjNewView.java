@@ -12,10 +12,10 @@ public class IconProjNewView extends AnchorPane
 
     final MainPanel myMainPanel;
 
-    public IconProjNewView(Toolbox tb)
+    public IconProjNewView(Toolbox tb, Window owner)
     {
 
-        myMainPanel = new MainPanel(tb);
+        myMainPanel = new MainPanel(tb, owner);
         setTopAnchor(myMainPanel, 30.);
         setBottomAnchor(myMainPanel, 0.0);
         setLeftAnchor(myMainPanel, -8.);
