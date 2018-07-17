@@ -6,11 +6,6 @@ import io.opensphere.core.Toolbox;
 
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
 import io.opensphere.mantle.iconproject.model.PanelModel;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject;
 import io.opensphere.mantle.icon.IconRegistry;
@@ -82,7 +77,7 @@ public class MainPanel extends SplitPane
 
     private final AnchorPane myTreeView;
 
-    public MainPanel(Toolbox tb,Window owner)
+    public MainPanel(Toolbox tb, Window owner)
     {
         myTree = new JTree();
         myTree.setRootVisible(false);
@@ -133,7 +128,6 @@ public class MainPanel extends SplitPane
         }
         catch (MalformedURLException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         IconRecord iconrecord = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry().getIconRecord(test);*/
@@ -167,8 +161,8 @@ public class MainPanel extends SplitPane
         rowConstraints.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
         // StackPane
-        /*stackPane = new StackPane();
-
+        stackPane = new StackPane();
+        /*
         // Add Label to StackPane
         Label label = new Label("I'm a Label");
         label.setStyle("-fx-background-color:red");
@@ -182,16 +176,18 @@ public class MainPanel extends SplitPane
         stackPane.getChildren().add(button);
         // stackPane.rotateProperty().bind(mysizerrrrrr);*/
 
+        //GridBuilder grid = new GridBuilder(tb);
 
-        gridPane.getColumnConstraints().addAll(columnConstraints);
-        gridPane.getRowConstraints().addAll(rowConstraints);
+        //stackPane.getChildren().add(grid);
+        //gridPane.getColumnConstraints().addAll(columnConstraints);
+        //gridPane.getRowConstraints().addAll(rowConstraints);
         myTreeView.getChildren().addAll(myTreeList, myAddIconButton, myCustIconButton, myGenIconButton);
-        getItems().addAll(myTreeView, test, myScrollBar);
+        getItems().addAll(myTreeView,  myScrollBar);
     }
 
     static void changeTop(boolean choice)
     {
-        ObservableList<Node> childs = stackPane.getChildren();
+        /*ObservableList<Node> childs = stackPane.getChildren();
 
         Node grid = childs.get(1);
         Node list = childs.get(0);
@@ -204,7 +200,7 @@ public class MainPanel extends SplitPane
         {
             list.setVisible(false);
             grid.setVisible(true);
-        }
+        }*/
     }
 
     /**

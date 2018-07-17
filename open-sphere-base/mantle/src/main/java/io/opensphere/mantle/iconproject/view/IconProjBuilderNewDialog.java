@@ -43,7 +43,7 @@ public class IconProjBuilderNewDialog extends JFXDialog
     {
         super(owner, "Build an Icon");
         myIconRegistry = iconRegistry;
-        System.out.println(myIconRegistry.getAllAssignedElementIds().toString());
+        //System.out.println(myIconRegistry.getAllAssignedElementIds().toString());
         IconBuilderProjPane pane = new IconBuilderProjPane(owner, iconRecord);
         setFxNode(pane);
         setMinimumSize(new Dimension(450, 550));
