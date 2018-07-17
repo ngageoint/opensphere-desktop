@@ -2,9 +2,6 @@ package io.opensphere.mantle.iconproject.view;
 
 import java.awt.EventQueue;
 import java.awt.Window;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import io.opensphere.core.Toolbox;
 
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
@@ -80,10 +77,10 @@ public class MainPanel extends SplitPane
     /** The record of the currently selected icon. */
     private IconRecord mySelectedIcon;
 
-    private TreeView myTreeList;
+    private final TreeView myTreeList;
     private final PanelModel myPanel = new PanelModel();
 
-    private AnchorPane myTreeView;
+    private final AnchorPane myTreeView;
 
     public MainPanel(Toolbox tb,Window owner)
     {
@@ -95,7 +92,7 @@ public class MainPanel extends SplitPane
   //      Window owner = tb.getUIRegistry().getMainFrameProvider().get();
 
         myTreeView = new AnchorPane();
-        
+
         TreeBuilder myTreeBuilder = new TreeBuilder();
         myTreeList = new TreeView(myTreeBuilder);
 
@@ -124,9 +121,9 @@ public class MainPanel extends SplitPane
         AnchorPane.setBottomAnchor(myCustIconButton, 26.0);
         myCustIconButton.lockButton(myCustIconButton);
         AnchorPane.setBottomAnchor(myGenIconButton, 0.0);
-        
-        
-        URL test = null;
+
+
+/*        URL test = null;
         try
         {
             test = new URL("file:/C:/Users/kcrombie/mist/vortex/iconCache/"
@@ -139,8 +136,8 @@ public class MainPanel extends SplitPane
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        IconRecord iconrecord = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry().getIconRecord(test);
-        
+        IconRecord iconrecord = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry().getIconRecord(test);*/
+
         myCustIconButton.setOnAction(event ->
         {
             EventQueue.invokeLater(() ->
@@ -154,8 +151,8 @@ public class MainPanel extends SplitPane
         {
             EventQueue.invokeLater(() ->
             {
-                IconProjGenDialog generate = new IconProjGenDialog(owner, myIconRegistry);
-                generate.setVisible(true);
+                //IconProjGenDialog generate = new IconProjGenDialog(owner, myIconRegistry);
+                //generate.setVisible(true);
             });
         });
 
@@ -170,7 +167,7 @@ public class MainPanel extends SplitPane
         rowConstraints.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
         // StackPane
-        stackPane = new StackPane();
+        /*stackPane = new StackPane();
 
         // Add Label to StackPane
         Label label = new Label("I'm a Label");
@@ -183,12 +180,13 @@ public class MainPanel extends SplitPane
         button.setStyle("-fx-background-color: blue");
         button.setPadding(new Insets(5, 5, 5, 5));
         stackPane.getChildren().add(button);
-        // stackPane.rotateProperty().bind(mysizerrrrrr);
+        // stackPane.rotateProperty().bind(mysizerrrrrr);*/
+
 
         gridPane.getColumnConstraints().addAll(columnConstraints);
         gridPane.getRowConstraints().addAll(rowConstraints);
         myTreeView.getChildren().addAll(myTreeList, myAddIconButton, myCustIconButton, myGenIconButton);
-        getItems().addAll(myTreeView, stackPane, myScrollBar);
+        getItems().addAll(myTreeView, test, myScrollBar);
     }
 
     static void changeTop(boolean choice)
@@ -220,7 +218,7 @@ public class MainPanel extends SplitPane
      * myToolbox.getUIRegistry().getMainFrameProvider().get(); File result =
      * ImageUtil.showImageFileChooser("Choose Icon File", parent,
      * myToolbox.getPreferencesRegistry());
-     * 
+     *
      * if (result != null) { try { myIconRegistry.addIcon(new
      * DefaultIconProvider(result.toURI().toURL(), collectionName, subCatName,
      * "User"), this); refreshFromRegistry(collectionName); } catch
@@ -236,14 +234,14 @@ public class MainPanel extends SplitPane
      */
     /* public final void refreshFromRegistry(String collectionToShow) {
      * EventQueueUtilities.runOnEDT(new Runnable() {
-     * 
+     *
      * @Override public void run() { if (myTree != null) {
      * myLastSelectedTreeNodeUserObject = null; myRootTreeNode = new
      * IconTreeBuilder(myIconRegistry).getIconRecordTree(null); if (myTreeModel
      * == null) { myTreeModel = new DefaultTreeModel(myRootTreeNode); } else {
      * myTreeModel.setRoot(myRootTreeNode); } myTree.setModel(myTreeModel);
      * myTree.revalidate(); JTreeUtilities.expandOrCollapseAll(myTree, true);
-     * 
+     *
      * TreeNode nodeToSelect = getNodeToSelect(collectionToShow); if
      * (nodeToSelect != null) { TreeNode[] nodeArray =
      * myTreeModel.getPathToRoot(nodeToSelect); TreePath path = new
@@ -257,13 +255,13 @@ public class MainPanel extends SplitPane
      */
     /* private TreeNode getNodeToSelect(String collectionToShow) { TreeNode
      * nodeToSelect = null;
-     * 
+     *
      * // If there is a requested collection to show, find its node if
      * (collectionToShow != null) { for (int i = 0; i <
      * myRootTreeNode.getChildCount(); i++) { if
      * (collectionToShow.equals(myRootTreeNode.getChildAt(i).toString())) {
      * nodeToSelect = myRootTreeNode.getChildAt(i); break; } } }
-     * 
+     *
      * if (nodeToSelect == null && myRootTreeNode.getChildCount() > 0) { // If
      * there is a selected icon, find its node //vvvvvvvvvv mySelectedUrl is set
      * in IconChooserDialog and needs to be ported over somewhere if
@@ -279,7 +277,7 @@ public class MainPanel extends SplitPane
      * mySelectedUrl.equals(r.getImageURL().toString())); if (hasIcon) {
      * nodeToSelect = mtn; break; } } } } } // Default to the first one else {
      * nodeToSelect = myRootTreeNode.getChildAt(0); } } return nodeToSelect;
-     * 
+     *
      * } */
 
     /**
