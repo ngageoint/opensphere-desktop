@@ -151,7 +151,6 @@ public class IconBuilderProjPane extends BorderPane
      */
     private VBox createRight()
     {
-
         VBox box = new VBox(8);
         box.setAlignment(Pos.TOP_CENTER);
 
@@ -176,7 +175,6 @@ public class IconBuilderProjPane extends BorderPane
         box.getChildren().addAll(rotSlider, rotLabel, rotSpinner);
 
         return box;
-
     }
 
     /**
@@ -210,13 +208,19 @@ public class IconBuilderProjPane extends BorderPane
 
         controlBox.getChildren().addAll(xLabel, xSpin, yLabel, ySpin);
 
-        Label helpInfo = new Label("Saved icons will appear under the 'User Added' menu.");
+        HBox SaveInfo = new HBox();
+        
+        Label helpInfo = new Label("Replace Existing Icon?");
         helpInfo.setFont(Font.font(helpInfo.getFont().getFamily(), FontPosture.ITALIC, 11));
         
         CheckBox saveState = new CheckBox();
+        saveState.selectedProperty().set(false);
         saveState.selectedProperty().bindBidirectional(mySave);
+        saveState.selectedProperty().addListener(event -> System.out.println(saveState.selectedProperty().get()));
         
-        cnrlBox.getChildren().addAll(controlBox, helpInfo,saveState);
+        SaveInfo.getChildren().addAll(saveState,helpInfo);
+        SaveInfo.setSpacing(5.);
+        cnrlBox.getChildren().addAll(controlBox, SaveInfo);
         return cnrlBox;
     }
 
@@ -339,11 +343,15 @@ public class IconBuilderProjPane extends BorderPane
 
         return myIconRecord != null ? myIconRecord.getName() + "_" + myIconView.getRotate() : null;
     }
-  
+    
     public boolean getSaveState()
     {
-        
-        return false;
+        return mySave.get();
+    }
+
+    public IconRecord getIconRecord()
+    {
+        return myIconRecord;
     }
     
 }

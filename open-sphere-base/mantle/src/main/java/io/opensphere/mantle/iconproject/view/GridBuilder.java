@@ -2,6 +2,7 @@ package io.opensphere.mantle.iconproject.view;
 
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -34,23 +35,23 @@ public class GridBuilder extends GridPane
 
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
-        int counter = 1;
+        int counter = 700;
+        int numcols = 4;
         for (int row = 0; row <= 50; row++)
         {
-            RowConstraints rc = new RowConstraints();
-            rc.setFillHeight(true);
-            getRowConstraints().add(rc);
-            for (int col = 0; col <= 4; col++)
+            for (int col = 0; col <= numcols; col++)
             {
-                ColumnConstraints cc = new ColumnConstraints();
-                // cc.setFillWidth(true);
-                cc.setPercentWidth(100 / 5);
-                getColumnConstraints().add(cc);
-
                 Button sample = GridButtonBuilder(counter);
                 add(sample, col, row);
                 counter = counter + 1;
             }
+        }
+        for (int col = 0; col <= numcols; col++)
+        {
+            ColumnConstraints cc = new ColumnConstraints();
+            cc.setFillWidth(true);
+            cc.setPercentWidth(100 / numcols);
+            getColumnConstraints().add(cc);
         }
     }
 
@@ -59,15 +60,17 @@ public class GridBuilder extends GridPane
         Button generic = new Button();
         generic.setMinSize(myTileWidth, myTileWidth);
         generic.setMaxSize(myTileWidth, myTileWidth);
+        generic.setPadding(new Insets(5.,5.,5.,5.));
         generic.setText(myIconRegistry.getIconRecordByIconId(count).getName());
         generic.setContentDisplay(ContentDisplay.TOP);
         generic.setAlignment(Pos.BOTTOM_CENTER);
+     
         ImageView iconView = new ImageView(myIconRegistry.getIconRecordByIconId(count).getImageURL().toString());
 
         if (iconView.getImage().getWidth() > myTileWidth)
         {
-            iconView.setFitHeight(myTileWidth - 10);
-            iconView.setFitWidth(myTileWidth - 10);
+            iconView.setFitHeight(myTileWidth - 25);
+            iconView.setFitWidth(myTileWidth - 25);
         }
 
         generic.setGraphic(iconView);
