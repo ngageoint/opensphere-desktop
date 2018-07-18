@@ -155,7 +155,13 @@ public class MainPanel extends SplitPane
         myScrollBar.setOrientation(javafx.geometry.Orientation.VERTICAL);
         ScrollPane myScrollPane = new ScrollPane(CustomGrid);
         myScrollPane.setPannable(true);
+        AnchorPane.setLeftAnchor(myScrollPane, 0.);
+        AnchorPane.setRightAnchor(myScrollPane, 0.);
+        AnchorPane.setTopAnchor(myScrollPane, 0.);
+        AnchorPane.setBottomAnchor(myScrollPane, 0.);
         
+        myScrollPane.setFitToHeight(true);
+        myScrollPane.setFitToWidth(true);
         columnConstraints.setMinWidth(10.0);
         columnConstraints.setPrefWidth(100.0);
         columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
@@ -182,7 +188,7 @@ public class MainPanel extends SplitPane
 
         myTreeView.getChildren().addAll(myTreeList, myAddIconButton, myCustIconButton, myGenIconButton);
         getItems().addAll(myTreeView, myScrollPane);
-        
+        System.out.println(myScrollPane.getWidth());
     }
 
     static void changeTop(boolean choice)

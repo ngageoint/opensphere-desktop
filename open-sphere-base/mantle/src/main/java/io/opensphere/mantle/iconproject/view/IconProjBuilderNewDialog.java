@@ -48,7 +48,7 @@ public class IconProjBuilderNewDialog extends JFXDialog
         setMinimumSize(new Dimension(450, 550));
 
         setLocationRelativeTo(owner);
-        setAcceptEar(() -> saveImage(pane.getFinalImage(), pane.getImageName()));
+        setAcceptEar(() -> saveImage(pane.getFinalImage(), pane.getImageName(),pane.getSaveState()));
     }
 
     /**
@@ -57,8 +57,10 @@ public class IconProjBuilderNewDialog extends JFXDialog
      * @param snapshot the image to save
      * @param name the image name
      */
-    private void saveImage(WritableImage snapshot, String name)
+    private void saveImage(WritableImage snapshot, String name,boolean savestate)
     {
+        
+        if (savestate) {
         BufferedImage image = null;
         image = javafx.embed.swing.SwingFXUtils.fromFXImage(snapshot, image);
 
@@ -75,6 +77,7 @@ public class IconProjBuilderNewDialog extends JFXDialog
         {
             Notify.error(e.getMessage());
             LOGGER.error(e, e);
+        }
         }
     }
 }

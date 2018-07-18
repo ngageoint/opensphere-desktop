@@ -2,13 +2,16 @@ package io.opensphere.mantle.iconproject.impl;
 
 import java.awt.Window;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -45,6 +48,9 @@ public class IconBuilderProjPane extends BorderPane
 
     /** The Y value model. */
     private final DoubleProperty myYPos = new SimpleDoubleProperty(0.);
+    
+    /** The save state selection. */
+    private final BooleanProperty mySave = new SimpleBooleanProperty(false);
 
     /** The ColorPicker that determines the icon color. */
     private ColorPicker myColorPicker;
@@ -206,8 +212,11 @@ public class IconBuilderProjPane extends BorderPane
 
         Label helpInfo = new Label("Saved icons will appear under the 'User Added' menu.");
         helpInfo.setFont(Font.font(helpInfo.getFont().getFamily(), FontPosture.ITALIC, 11));
-
-        cnrlBox.getChildren().addAll(controlBox, helpInfo);
+        
+        CheckBox saveState = new CheckBox();
+        saveState.selectedProperty().bindBidirectional(mySave);
+        
+        cnrlBox.getChildren().addAll(controlBox, helpInfo,saveState);
         return cnrlBox;
     }
 
@@ -330,4 +339,11 @@ public class IconBuilderProjPane extends BorderPane
 
         return myIconRecord != null ? myIconRecord.getName() + "_" + myIconView.getRotate() : null;
     }
+  
+    public boolean getSaveState()
+    {
+        
+        return false;
+    }
+    
 }
