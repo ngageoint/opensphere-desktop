@@ -16,11 +16,10 @@ public class HUDWorldMap extends AbstractOverlayWindow
     /** Executor shared by HUD components. */
     private final ScheduledExecutorService myExecutor;
 
-    /** Responsible for drawing cross hairs on the map. */
-    private WorldMapCrosshair myMapCrosshair;
-
     /** Responsible for drawing foot print on the map. */
     private WorldMapFootPrint myMapFootPrint;
+
+    private WorldMapMinimizeButton myMinimizeButton;
 
     /**
      * Constructor.
@@ -50,11 +49,10 @@ public class HUDWorldMap extends AbstractOverlayWindow
         // add world map background
         addBackground();
 
-        // add world map crosshair
-        addCrosshair();
-
         // add footprint
         addFootprint();
+
+        addMinimizeButton();
 
         getLayout().complete();
     }
@@ -62,6 +60,7 @@ public class HUDWorldMap extends AbstractOverlayWindow
     @Override
     public void repositionForInsets()
     {
+        // intentionally blank
     }
 
     /** Add the world map background. */
@@ -73,15 +72,6 @@ public class HUDWorldMap extends AbstractOverlayWindow
         add(mapBackground, constr);
     }
 
-    /** Add the cross hair over current position. */
-    private void addCrosshair()
-    {
-        myMapCrosshair = new WorldMapCrosshair(this, myExecutor);
-        GridLayoutConstraints constr = new GridLayoutConstraints(
-                new ScreenBoundingBox(new ScreenPosition(0, 0), new ScreenPosition(300, 150)));
-        add(myMapCrosshair, constr);
-    }
-
     /** Add the visible footprint around the current position. */
     private void addFootprint()
     {
@@ -89,5 +79,13 @@ public class HUDWorldMap extends AbstractOverlayWindow
         GridLayoutConstraints constr = new GridLayoutConstraints(
                 new ScreenBoundingBox(new ScreenPosition(0, 0), new ScreenPosition(300, 150)));
         add(myMapFootPrint, constr);
+    }
+
+    private void addMinimizeButton()
+    {
+        myMinimizeButton = new WorldMapMinimizeButton(this);
+        GridLayoutConstraints constr = new GridLayoutConstraints(
+                new ScreenBoundingBox(new ScreenPosition(0, 0), new ScreenPosition(300, 150)));
+        add(myMinimizeButton, constr);
     }
 }
