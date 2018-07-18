@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.WeakHashMap;
 import java.util.function.Supplier;
 
+import javax.swing.JDialog;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -26,8 +28,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-
-import javax.swing.JDialog;
 
 /**
  * An alert dialog that renders a JavaFX component and buttons within a Swing
@@ -264,6 +264,18 @@ public class JFXAlert extends JDialog
     public final ObservableList<ButtonType> getButtonTypes()
     {
         return myButtons;
+    }
+
+    /**
+     * Gets the node corresponding to the supplied button type, if defined.
+     * 
+     * @param buttonType the button type for which to get the node.
+     * @return the node for the supplied button type, if present,
+     *         <code>null</code> otherwise.
+     */
+    public final Node getButton(ButtonType buttonType)
+    {
+        return myButtonNodes.get(buttonType);
     }
 
     /**
