@@ -2,16 +2,9 @@ package io.opensphere.mantle.iconproject.view;
 
 import java.awt.EventQueue;
 import java.awt.Window;
-import io.opensphere.core.Toolbox;
-
-import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
-import io.opensphere.mantle.iconproject.model.PanelModel;
-import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject;
-import io.opensphere.mantle.icon.IconRegistry;
-import io.opensphere.mantle.util.MantleToolboxUtils;
 
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
@@ -23,6 +16,14 @@ import javafx.scene.layout.StackPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
+
+import io.opensphere.core.Toolbox;
+import io.opensphere.mantle.icon.IconRecord;
+import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject;
+import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
+import io.opensphere.mantle.iconproject.model.PanelModel;
+import io.opensphere.mantle.util.MantleToolboxUtils;
 
 public class MainPanel extends SplitPane
 {
@@ -73,6 +74,7 @@ public class MainPanel extends SplitPane
     private IconRecord mySelectedIcon;
 
     private final TreeView myTreeList;
+
     private final PanelModel myPanel = new PanelModel();
 
     private final AnchorPane myTreeView;
@@ -84,7 +86,7 @@ public class MainPanel extends SplitPane
         myTree.setExpandsSelectedPaths(true);
 
         myIconRegistry = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry();
-  //      Window owner = tb.getUIRegistry().getMainFrameProvider().get();
+        // Window owner = tb.getUIRegistry().getMainFrameProvider().get();
 
         myTreeView = new AnchorPane();
 
@@ -109,48 +111,58 @@ public class MainPanel extends SplitPane
         {
             // IconChooserPanel chooseIcon = new IconChooserPanel(tb);
             // loadFromFile(IconRecord.USER_ADDED_COLLECTION, null, tb);
-            //loadFromFile(IconRecord.USER_ADDED_COLLECTION, null, tb);
-            //FileAddBuilder fileAdd = new FileAddBuilder(tb);
+            // loadFromFile(IconRecord.USER_ADDED_COLLECTION, null, tb);
+            // FileAddBuilder fileAdd = new FileAddBuilder(tb);
         });
 
         AnchorPane.setBottomAnchor(myCustIconButton, 26.0);
         myCustIconButton.lockButton(myCustIconButton);
         AnchorPane.setBottomAnchor(myGenIconButton, 0.0);
 
-
-/*        URL test = null;
+        /*URL test = null;
         try
         {
-            test = new URL("file:/C:/Users/kcrombie/mist/vortex/iconCache/"
-                    + "Randy%252520Marsh%252520Guitar%252520Hero%252520Icon%2525203.png_-142.5236593059937.png_"
-                    + "-97.26708074534162_0.9019607901573181-0.3019607961177826-0.3019607961177826.png"
-);
+            test = new URL(
+                    "file:/C:/Users/Kelly/mist/vortex/iconCache/" + "Location_Pin_32.png_0.0_0.6000000238418579-0.0-0.0.png");
         }
         catch (MalformedURLException e)
         {
             e.printStackTrace();
         }
-        IconRecord iconrecord = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry().getIconRecord(test);*/
-
+        IconRecord iconrecord = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry().getIconRecord(test);
         myCustIconButton.setOnAction(event ->
         {
             EventQueue.invokeLater(() ->
             {
-                IconProjBuilderNewDialog builderPane = new IconProjBuilderNewDialog(owner, myIconRegistry, mySelectedIcon);
+                // IconProjBuilderNewDialog builderPane = new
+                // IconProjBuilderNewDialog(owner, myIconRegistry,
+                // mySelectedIcon);
+                // builderPane.setVisible(true);
             });
-        });
+        });*/
 
         myGenIconButton.lockButton(myGenIconButton);
         myGenIconButton.setOnAction(event ->
         {
             EventQueue.invokeLater(() ->
             {
-                //IconProjGenDialog generate = new IconProjGenDialog(owner, myIconRegistry);
-                //generate.setVisible(true);
+                // IconProjGenDialog generate = new IconProjGenDialog(owner,
+                // myIconRegistry);
+                // generate.setVisible(true);
             });
         });
 
+        //System.out.println("width:   " + getWidth());
+
+        GridBuilder CustomGrid = new GridBuilder(110, myIconRegistry);
+        //GridBuilderImp grid = new GridBuilderImp(110);
+        //GridBuilderImp grid = new GridBuilderImp(tb);
+
         myScrollBar.setOrientation(javafx.geometry.Orientation.VERTICAL);
+        ScrollPane myScrollPane = new ScrollPane(CustomGrid);
+        //ScrollPane myScrollPane = new ScrollPane(grid);
+        myScrollPane.setPannable(true);
+        //myScrollPane.setFitToWidth(true);
 
         columnConstraints.setMinWidth(10.0);
         columnConstraints.setPrefWidth(100.0);
@@ -161,28 +173,22 @@ public class MainPanel extends SplitPane
         rowConstraints.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
         // StackPane
-        stackPane = new StackPane();
-        /*
-        // Add Label to StackPane
-        Label label = new Label("I'm a Label");
-        label.setStyle("-fx-background-color:red");
-        label.setPadding(new Insets(5, 5, 5, 5));
-        stackPane.getChildren().add(label);
+        //stackPane = new StackPane();
+        /* // Add Label to StackPane Label label = new Label("I'm a Label");
+         label.setStyle("-fx-background-color:red"); label.setPadding(new
+         Insets(5, 5, 5, 5)); stackPane.getChildren().add(label);
 
-        // Add Button to StackPane
-        Button button = new Button("I'm a Button");
-        button.setStyle("-fx-background-color: blue");
-        button.setPadding(new Insets(5, 5, 5, 5));
-        stackPane.getChildren().add(button);
-        // stackPane.rotateProperty().bind(mysizerrrrrr);*/
+         // Add Button to StackPane Button button = new
+         Button("I'm a Button");
+         button.setStyle("-fx-background-color: blue"); button.setPadding(new
+         Insets(5, 5, 5, 5)); stackPane.getChildren().add(button); */
 
-        //GridBuilder grid = new GridBuilder(tb);
-
-        //stackPane.getChildren().add(grid);
-        //gridPane.getColumnConstraints().addAll(columnConstraints);
-        //gridPane.getRowConstraints().addAll(rowConstraints);
+        // stackPane.getChildren().add(grid);
+        // gridPane.getColumnConstraints().addAll(columnConstraints);
+        // gridPane.getRowConstraints().addAll(rowConstraints);
         myTreeView.getChildren().addAll(myTreeList, myAddIconButton, myCustIconButton, myGenIconButton);
-        getItems().addAll(myTreeView,  myScrollBar);
+        //getItems().addAll(myTreeView, grid, myScrollBar);
+        getItems().addAll(myTreeView, myScrollPane);
     }
 
     static void changeTop(boolean choice)
@@ -203,84 +209,4 @@ public class MainPanel extends SplitPane
         }*/
     }
 
-    /**
-     * Load from file.
-     *
-     * @param collectionName the collection name
-     * @param subCatName the sub cat name
-     */
-    /* public void loadFromFile(String collectionName, String subCatName,
-     * Toolbox myToolbox) { Component parent =
-     * myToolbox.getUIRegistry().getMainFrameProvider().get(); File result =
-     * ImageUtil.showImageFileChooser("Choose Icon File", parent,
-     * myToolbox.getPreferencesRegistry());
-     *
-     * if (result != null) { try { myIconRegistry.addIcon(new
-     * DefaultIconProvider(result.toURI().toURL(), collectionName, subCatName,
-     * "User"), this); refreshFromRegistry(collectionName); } catch
-     * (MalformedURLException e) { //JOptionPane.showMessageDialog(this,
-     * "Failed to load image: " + result.getAbsolutePath(), "Image Load Error",
-     * //JOptionPane.ERROR_MESSAGE); System.out.println("Failed to load image");
-     * } } } */
-
-    /**
-     * Refresh from registry.
-     *
-     * @param collectionToShow the name of the collection to show, or null
-     */
-    /* public final void refreshFromRegistry(String collectionToShow) {
-     * EventQueueUtilities.runOnEDT(new Runnable() {
-     *
-     * @Override public void run() { if (myTree != null) {
-     * myLastSelectedTreeNodeUserObject = null; myRootTreeNode = new
-     * IconTreeBuilder(myIconRegistry).getIconRecordTree(null); if (myTreeModel
-     * == null) { myTreeModel = new DefaultTreeModel(myRootTreeNode); } else {
-     * myTreeModel.setRoot(myRootTreeNode); } myTree.setModel(myTreeModel);
-     * myTree.revalidate(); JTreeUtilities.expandOrCollapseAll(myTree, true);
-     *
-     * TreeNode nodeToSelect = getNodeToSelect(collectionToShow); if
-     * (nodeToSelect != null) { TreeNode[] nodeArray =
-     * myTreeModel.getPathToRoot(nodeToSelect); TreePath path = new
-     * TreePath(nodeArray); myTree.getSelectionModel().setSelectionPath(path); }
-     * } } }); } */
-    /**
-     * Gets the node to select.
-     *
-     * @param collectionToShow the requested collection to show
-     * @return the node to select, or null
-     */
-    /* private TreeNode getNodeToSelect(String collectionToShow) { TreeNode
-     * nodeToSelect = null;
-     *
-     * // If there is a requested collection to show, find its node if
-     * (collectionToShow != null) { for (int i = 0; i <
-     * myRootTreeNode.getChildCount(); i++) { if
-     * (collectionToShow.equals(myRootTreeNode.getChildAt(i).toString())) {
-     * nodeToSelect = myRootTreeNode.getChildAt(i); break; } } }
-     *
-     * if (nodeToSelect == null && myRootTreeNode.getChildCount() > 0) { // If
-     * there is a selected icon, find its node //vvvvvvvvvv mySelectedUrl is set
-     * in IconChooserDialog and needs to be ported over somewhere if
-     * (mySelectedUrl != null) { for (int i = 0; i <
-     * myRootTreeNode.getChildCount(); i++) { TreeNode child =
-     * myRootTreeNode.getChildAt(i); if (child instanceof
-     * DefaultMutableTreeNode) { DefaultMutableTreeNode mtn =
-     * (DefaultMutableTreeNode)child; Object userObj = mtn.getUserObject(); if
-     * (userObj instanceof IconRecordTreeNodeUserObject) {
-     * IconRecordTreeNodeUserObject irNode =
-     * (IconRecordTreeNodeUserObject)userObj; boolean hasIcon =
-     * irNode.getRecords(true).stream() .anyMatch(r ->
-     * mySelectedUrl.equals(r.getImageURL().toString())); if (hasIcon) {
-     * nodeToSelect = mtn; break; } } } } } // Default to the first one else {
-     * nodeToSelect = myRootTreeNode.getChildAt(0); } } return nodeToSelect;
-     *
-     * } */
-
-    /**
-     * Sets the selected icon URL.
-     *
-     * @param selectedUrl the icon URL
-     */
-    /* public void setSelectedUrl(String selectedUrl) //currently not in use? {
-     * mySelectedUrl = selectedUrl; } */
 }

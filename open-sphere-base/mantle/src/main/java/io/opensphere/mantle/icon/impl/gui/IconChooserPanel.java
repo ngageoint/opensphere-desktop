@@ -518,7 +518,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         }
         recList = recList == null ? Collections.<IconRecord>emptyList() : recList;
         displayIconRecords(recList, true);
-        System.out.println("the reclist:   " + recList);
+        //System.out.println("the reclist:   " + recList);
     }
 
     /**
@@ -702,7 +702,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
                         RecordImageIcon rec = imIcList.get(i);
                         JPanel imageBT = buildRecButton(size, rec);
                         grid.add(imageBT);
-                        System.out.println("The imIcList rec is:   " + imIcList.get(i));
+                        //System.out.println("The imIcList rec is:   " + imIcList.get(i));
                     }
                     int blankGridLements = numIconsPerRow * numIconRowsInView - imIcList.size();
                     for (int i = 0; i < blankGridLements; i++)

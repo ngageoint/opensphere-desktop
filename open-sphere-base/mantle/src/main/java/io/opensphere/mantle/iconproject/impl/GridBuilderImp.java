@@ -1,40 +1,22 @@
 package io.opensphere.mantle.iconproject.impl;
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.List;
-
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-
-import gnu.trove.list.TIntList;
-import gnu.trove.list.array.TIntArrayList;
-import io.opensphere.core.Toolbox;
-import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.image.ImageUtil;
-import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.impl.gui.IconChooserPanel.RecordImageIcon;
-
 /**
  * The Class GridBuilder Builds the main icon grid.
  *
  */
-public class GridBuilder extends GridPane// AnchorPane//implements Runnable
+public class GridBuilderImp extends GridPane// AnchorPane//implements Runnable
 {
 //    /** The Grid Panel anchor Pane. */
 //    private final AnchorPane myGridPanel = new AnchorPane();
     /** The Toolbox. */
-    private final Toolbox myToolbox;
+   // private final Toolbox myToolbox;
 
 //    /** The Icon registry. */
 //    private final IconRegistry myIconRegistry;
@@ -50,19 +32,126 @@ public class GridBuilder extends GridPane// AnchorPane//implements Runnable
 
 
     /** The list of icon records. */
-    List<IconRecord> myRecList;
+    //List<IconRecord> myRecList;
+
+
+    /** the width used for icon buttons. */
+    private final int myTileWidth;
 
     /**
      * The Class GridBuilder.
      *
      * @param tb the toolbox
      */
-    public GridBuilder(Toolbox tb, List<IconRecord> rl)//possibly pass allowable grid with in but idk how that'd work
+    public GridBuilderImp(int tw)
+    //public GridBuilderImp(Toolbox tb)//, List<IconRecord> rl)//possibly pass allowable grid with in but idk how that'd work
     {
-        myToolbox = tb;
-        myRecList = rl;
+        myTileWidth = tw;
 
-        int tileWidth = 100;
+//        Image adidas = new Image(getClass().getResourceAsStream("Adidas.png"));
+//        ImageView adidasV = new ImageView(adidas);
+//        adidasV.setPreserveRatio(true);
+
+//        System.out.println("Init Width:   " + adidasV.getImage().getWidth() + " Init Height:      " + adidasV.getImage().getHeight());
+//        if (adidasV.getImage().getWidth() > myTileWidth)
+//        {
+//            //adidasV.setFitHeight(myTileWidth - 10);
+//            adidasV.setFitWidth(myTileWidth - 10);
+//            System.out.println("Width:   " + adidasV.getImage().getWidth() + " Height:      " + adidasV.getImage().getHeight());
+//        }
+
+//
+//        setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
+//                + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
+        int counter = 1;
+        int numRows = 9;
+        int numCols = 4;
+        for (int row = 0; row < numRows; row++)
+        {
+            RowConstraints rc = new RowConstraints();
+            rc.setFillHeight(true);
+            rc.setVgrow(Priority.ALWAYS);
+            getRowConstraints().add(rc);
+        }
+        for (int col = 0; col < numCols; col++)
+        {
+            ColumnConstraints cc = new ColumnConstraints();
+            cc.setFillWidth(true);
+            cc.setHgrow(Priority.ALWAYS);
+            getColumnConstraints().add(cc);
+        }
+
+        int topIndex = numRows * numCols;
+        for (int i = 0; i < topIndex; i++)
+        {
+            Button button = createButton(Integer.toString(i + 1));
+            add(button, i % numCols, i / numCols);
+        }
+
+//        for (int row = 0; row < numRows; row++)
+//        {
+//            RowConstraints rc = new RowConstraints();
+//            rc.setFillHeight(true);
+//            rc.setVgrow(Priority.ALWAYS);
+//            getRowConstraints().add(rc);
+//            for (int col = 0; col < numCols; col++)
+//            {
+//                ColumnConstraints cc = new ColumnConstraints();
+//                cc.setPercentWidth(100/5);
+//                getColumnConstraints().add(cc);
+//              //cc.setHgrow(Priority.ALWAYS);
+//                cc.setFillWidth(true);
+//
+//                add(createButton("", adidasV), col, row);
+//                counter++;
+//            }
+//        }
+
+
+
+        /*//setMinSize(150, 150);
+        int numRows = 4; //need math for this based on # of images and size
+        int numCols = 3; //^^^^^^ same
+
+        //System.out.println("grid width: " + getWidth());
+
+        Image image = new Image(getClass().getResourceAsStream("Guitar.png"));
+        ImageView imageV = new ImageView(image);
+        imageV.setPreserveRatio(true);
+        imageV.setFitWidth(150);
+        Image adidas = new Image(getClass().getResourceAsStream("Adidas.png"));
+        ImageView adidasV = new ImageView(adidas);
+        adidasV.setPreserveRatio(true);
+        adidasV.setFitWidth(150);
+
+        for (int row = 0; row < numRows; row++)
+        {
+            RowConstraints rc = new RowConstraints();
+            rc.setFillHeight(true);
+            rc.setVgrow(Priority.ALWAYS);
+            getRowConstraints().add(rc);
+        }
+        for (int col = 0; col < numCols; col++)
+        {
+            ColumnConstraints cc = new ColumnConstraints();
+            cc.setFillWidth(true);
+            cc.setHgrow(Priority.ALWAYS);
+            getColumnConstraints().add(cc);
+        }
+        for (int i = 0; i < 9; i++)
+        {
+            Button button = createButton(Integer.toString(i + 1));
+            add(button, i % 3, i / 3);
+        }
+        add(createButton(adidasV), 0, 3);
+        add(createButton("0"), 1, 3);
+        add(createButton("*", imageV), 2, 3);*/
+
+
+        //myToolbox = tb;
+        //myRecList = rl;
+
+       /* int tileWidth = 100;
         int borderSize = 6;
         int iconWidth = tileWidth - borderSize;
         int width = 300;
@@ -115,51 +204,11 @@ public class GridBuilder extends GridPane// AnchorPane//implements Runnable
                     //possibly adding the blank space when needed?????
                 }
             }
-        }
+        }*/
 
 
-
-
-
-        /*setMinSize(150, 150);
-        int numRows = 4; //need math for this based on # of images and size
-        int numCols = 3; //^^^^^^ same
-
-        //System.out.println("grid width: " + getWidth());
-
-        Image image = new Image(getClass().getResourceAsStream("Guitar.png"));
-        ImageView imageV = new ImageView(image);
-        imageV.setPreserveRatio(true);
-        imageV.setFitWidth(150);
-        Image adidas = new Image(getClass().getResourceAsStream("Adidas.png"));
-        ImageView adidasV = new ImageView(adidas);
-        adidasV.setPreserveRatio(true);
-        adidasV.setFitWidth(150);
-
-        for (int row = 0; row < numRows; row++)
-        {
-            RowConstraints rc = new RowConstraints();
-            rc.setFillHeight(true);
-            rc.setVgrow(Priority.ALWAYS);
-            getRowConstraints().add(rc);
-        }
-        for (int col = 0; col < numCols; col++)
-        {
-            ColumnConstraints cc = new ColumnConstraints();
-            cc.setFillWidth(true);
-            cc.setHgrow(Priority.ALWAYS);
-            getColumnConstraints().add(cc);
-        }
-        for (int i = 0; i < 9; i++)
-        {
-            Button button = createButton(Integer.toString(i + 1));
-            add(button, i % 3, i / 3);
-        }
-        add(createButton(adidasV), 0, 3);
-        add(createButton("0"), 1, 3);
-        add(createButton("*", imageV), 2, 3);
         //add(createButton(adidasV), 5, 3);
-*/
+
 //        myIconRegistry = MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry();
 //        mySelectedRecords = New.set();
 
@@ -178,8 +227,8 @@ public class GridBuilder extends GridPane// AnchorPane//implements Runnable
 
         /*getColumnConstraints().add(new ColumnConstraints(150));
         getRowConstraints().add(new RowConstraints(100));
-
-        tester = new Button("", imageV);
+*/
+        /*tester = new Button("", imageV);
         tester.setMaxSize(150., 100.);
 
         add(tester, 0, 0);
@@ -206,7 +255,7 @@ public class GridBuilder extends GridPane// AnchorPane//implements Runnable
      * @param iconWidth the icon width
      * @return the list
      */
-    private List<ImageView> buildImageList(int iconWidth)
+   /* private List<ImageView> buildImageList(int iconWidth)
     {
         List<RecordImageIcon> icons = New.list(myRecList.size());
         TIntList brokenIconIds = new TIntArrayList();
@@ -234,13 +283,13 @@ public class GridBuilder extends GridPane// AnchorPane//implements Runnable
         }
 
         return icons;
-    }
+    }*/
 
     //TEMP
-    boolean isInterrupted()
+   /* boolean isInterrupted()
         {
             return false;
-        }
+        }*/
 
     /**
      * Loads an image.
@@ -249,7 +298,7 @@ public class GridBuilder extends GridPane// AnchorPane//implements Runnable
      * @param iconWidth the icon width
      * @return the record image icon, or null if it couldn't be loaded
      */
-    private Image loadImage(IconRecord record, int iconWidth)
+    /*private Image loadImage(IconRecord record, int iconWidth)
     {
         BufferedImage image;
         try
@@ -268,7 +317,7 @@ public class GridBuilder extends GridPane// AnchorPane//implements Runnable
 //            icon = new RecordImageIcon(scaledImage, record);
         }
         return icon;
-    }
+    }*/
 
     /** The create a button with just text method.
      *

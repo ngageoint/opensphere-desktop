@@ -7,6 +7,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
 
+import javafx.scene.image.WritableImage;
+
+import javax.imageio.ImageIO;
+
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.Notify;
@@ -16,8 +20,6 @@ import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.iconproject.impl.IconBuilderProjPane;
-import javafx.scene.image.WritableImage;
-import javax.imageio.ImageIO;
 
 /** The component class for building icons. */
 public class IconProjBuilderNewDialog extends JFXDialog
@@ -43,7 +45,6 @@ public class IconProjBuilderNewDialog extends JFXDialog
     {
         super(owner, "Build an Icon");
         myIconRegistry = iconRegistry;
-        //System.out.println(myIconRegistry.getAllAssignedElementIds().toString());
         IconBuilderProjPane pane = new IconBuilderProjPane(owner, iconRecord);
         setFxNode(pane);
         setMinimumSize(new Dimension(450, 550));
@@ -68,7 +69,6 @@ public class IconProjBuilderNewDialog extends JFXDialog
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ImageIO.write(image, "png", outputStream);
             URL imageURL = myIconRegistry.getIconCache().cacheIcon(outputStream.toByteArray(), name, true);
-            System.out.println(imageURL);
             IconProvider provider = new DefaultIconProvider(imageURL, IconRecord.USER_ADDED_COLLECTION, null, "User");
 
             myIconRegistry.addIcon(provider, this);
