@@ -1,6 +1,7 @@
 package io.opensphere.myplaces.importer;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -24,10 +25,12 @@ import io.opensphere.core.export.ExportException;
 import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.preferences.ListToolPreferences;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.MemoizingSupplier;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.util.swing.input.ViewPanel;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.element.DataElement;
@@ -46,6 +49,8 @@ import io.opensphere.mantle.util.TimeSpanUtility;
  */
 public class DataElementPointExporter extends AbstractDataElementExporter
 {
+    private static final String SAVE_TO_PLACES_COMMAND = "Save to Places";
+
     /** The none string. */
     private static final String NONE = "NONE";
 
@@ -55,7 +60,8 @@ public class DataElementPointExporter extends AbstractDataElementExporter
     @Override
     public MenuOption getMenuOption()
     {
-        return new MenuOption("Map Points", "Map Points", "Copy selected data elements to map points.");
+        return new MenuOption(SAVE_TO_PLACES_COMMAND, SAVE_TO_PLACES_COMMAND, "Creates new places from the selected features.",
+                new GenericFontIcon(AwesomeIconSolid.MAP_MARKER_ALT, Color.WHITE));
     }
 
     @Override

@@ -1042,6 +1042,8 @@ public enum AwesomeIconSolid implements FontIconEnum
     /** A constant used to reference the 'map_marker_alt' icon. */
     MAP_MARKER_ALT("\uf3c5"),
 
+    MAP_MARKED_ALT("\uf5a0"),
+
     /** A constant used to reference the 'map_pin' icon. */
     MAP_PIN("\uf276"),
 
