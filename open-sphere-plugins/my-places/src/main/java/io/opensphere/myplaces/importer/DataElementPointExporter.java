@@ -49,6 +49,7 @@ import io.opensphere.mantle.util.TimeSpanUtility;
  */
 public class DataElementPointExporter extends AbstractDataElementExporter
 {
+    /** The name of the command / menu option to save to places. */
     private static final String SAVE_TO_PLACES_COMMAND = "Save to Places...";
 
     /** The none string. */

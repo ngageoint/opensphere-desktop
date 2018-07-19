@@ -31,6 +31,7 @@ import io.opensphere.tracktool.registry.TrackRegistry;
  */
 public class DataElementTrackExporter extends AbstractDataElementExporter
 {
+    /** The name of the command / menu option to create track from selection. */
     private static final String CREATE_TRACK_COMMAND = "Create Track From Selection";
 
     @Override

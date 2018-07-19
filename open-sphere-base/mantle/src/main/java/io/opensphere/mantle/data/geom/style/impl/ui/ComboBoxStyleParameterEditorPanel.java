@@ -87,18 +87,6 @@ public class ComboBoxStyleParameterEditorPanel extends AbstractStyleParameterEdi
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (e == null)
-        {
-            System.out.println("Null Action Event!");
-        }
-        if (myComboBox == null)
-        {
-            System.out.println("Null Combo box!");
-        }
-        else if (myComboBox.getSelectedItem() == null)
-        {
-            System.out.println("Null Selected Item!");
-        }
         if (e.getSource() == myComboBox && !myComboBox.getSelectedItem().equals(getParamValue()))
         {
             Object option = ((OptionProxy<Object>)myComboBox.getSelectedItem()).getOption();
