@@ -36,7 +36,8 @@ public class DataElementTrackExporter extends AbstractDataElementExporter
     @Override
     public MenuOption getMenuOption()
     {
-        return new MenuOption(CREATE_TRACK_COMMAND, CREATE_TRACK_COMMAND, "Creates a new track by linking selected features.",
+        return new MenuOption(CREATE_TRACK_COMMAND, CREATE_TRACK_COMMAND,
+                "Creates a new track by linking selected features in time order",
                 new GenericFontIcon(AwesomeIconSolid.SHARE_ALT, Color.WHITE));
     }
 

@@ -60,7 +60,7 @@ public class DataElementPointExporter extends AbstractDataElementExporter
     @Override
     public MenuOption getMenuOption()
     {
-        return new MenuOption(SAVE_TO_PLACES_COMMAND, SAVE_TO_PLACES_COMMAND, "Creates new places from the selected features.",
+        return new MenuOption(SAVE_TO_PLACES_COMMAND, SAVE_TO_PLACES_COMMAND, "Creates new places from the selected features",
                 new GenericFontIcon(AwesomeIconSolid.MAP_MARKER_ALT, Color.WHITE));
     }
 
