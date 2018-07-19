@@ -50,7 +50,7 @@ public class IconProjBuilderNewDialog extends JFXDialog
         setMinimumSize(new Dimension(450, 550));
 
         setLocationRelativeTo(owner);
-        setAcceptEar(() -> saveImage(pane.getFinalImage(), pane.getImageName()));
+        setAcceptEar(() -> saveImage(pane.getFinalImage(), pane.getImageName(),pane.getSaveState(),pane.getIconRecord()));
     }
 
     /**
@@ -59,24 +59,39 @@ public class IconProjBuilderNewDialog extends JFXDialog
      * @param snapshot the image to save
      * @param name the image name
      */
-    private void saveImage(WritableImage snapshot, String name)
+    private void saveImage(WritableImage snapshot, String name, boolean savestate, IconRecord Icon)
     {
         BufferedImage image = null;
         image = javafx.embed.swing.SwingFXUtils.fromFXImage(snapshot, image);
-
         try
         {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ImageIO.write(image, "png", outputStream);
-            URL imageURL = myIconRegistry.getIconCache().cacheIcon(outputStream.toByteArray(), name, true);
-            IconProvider provider = new DefaultIconProvider(imageURL, IconRecord.USER_ADDED_COLLECTION, null, "User");
 
-            myIconRegistry.addIcon(provider, this);
+            if (savestate)
+            {
+
+             //   IconProvider shit = new DefaultIconProvider(Icon.getImageURL(), Icon.getCollectionName(), Icon.getSubCategory(),Icon.getSourceKey());
+                
+                URL imageURL = myIconRegistry.getIconCache().cacheIcon(outputStream.toByteArray(), Icon.getName(), false);
+                IconProvider provider = new DefaultIconProvider(imageURL, Icon.getCollectionName(), Icon.getSubCategory(),Icon.getSourceKey());
+                myIconRegistry.addIcon(provider, this);
+                System.out.println(myIconRegistry.removeIcon(Icon, this));
+        //        System.out.println(myIconRegistry.getIconCache().removeIcon(imageURL));
+            }
+            else
+            {
+                URL imageURL = myIconRegistry.getIconCache().cacheIcon(outputStream.toByteArray(), name, true);
+                IconProvider provider = new DefaultIconProvider(imageURL, IconRecord.USER_ADDED_COLLECTION, null, "User");
+                myIconRegistry.addIcon(provider, this);
+            }
+
         }
         catch (IOException e)
         {
             Notify.error(e.getMessage());
             LOGGER.error(e, e);
         }
+
     }
 }

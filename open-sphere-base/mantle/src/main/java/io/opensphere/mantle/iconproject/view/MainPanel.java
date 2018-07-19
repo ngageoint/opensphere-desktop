@@ -122,8 +122,9 @@ public class MainPanel extends SplitPane
         /*URL test = null;
         try
         {
-            test = new URL(
-                    "file:/C:/Users/Kelly/mist/vortex/iconCache/" + "Location_Pin_32.png_0.0_0.6000000238418579-0.0-0.0.png");
+            test = new URL("file:/C:/Users/Kelly/mist/vortex/iconCache/"
+                    + "Location_Pin_32.png_0.0_0.6000000238418579-0.0-0.0.png"
+);
         }
         catch (MalformedURLException e)
         {
@@ -134,10 +135,8 @@ public class MainPanel extends SplitPane
         {
             EventQueue.invokeLater(() ->
             {
-                // IconProjBuilderNewDialog builderPane = new
-                // IconProjBuilderNewDialog(owner, myIconRegistry,
-                // mySelectedIcon);
-                // builderPane.setVisible(true);
+                IconProjBuilderNewDialog builderPane = new IconProjBuilderNewDialog(owner, myIconRegistry, iconrecord);
+                builderPane.setVisible(true);
             });
         });*/
 
@@ -162,7 +161,12 @@ public class MainPanel extends SplitPane
         ScrollPane myScrollPane = new ScrollPane(CustomGrid);
         //ScrollPane myScrollPane = new ScrollPane(grid);
         myScrollPane.setPannable(true);
-        //myScrollPane.setFitToWidth(true);
+        AnchorPane.setLeftAnchor(myScrollPane, 0.);
+        AnchorPane.setRightAnchor(myScrollPane, 0.);
+        AnchorPane.setTopAnchor(myScrollPane, 0.);
+        AnchorPane.setBottomAnchor(myScrollPane, 0.);
+        myScrollPane.setFitToHeight(true);
+        myScrollPane.setFitToWidth(true);
 
         columnConstraints.setMinWidth(10.0);
         columnConstraints.setPrefWidth(100.0);
@@ -174,21 +178,23 @@ public class MainPanel extends SplitPane
 
         // StackPane
         //stackPane = new StackPane();
-        /* // Add Label to StackPane Label label = new Label("I'm a Label");
-         label.setStyle("-fx-background-color:red"); label.setPadding(new
-         Insets(5, 5, 5, 5)); stackPane.getChildren().add(label);
 
-         // Add Button to StackPane Button button = new
-         Button("I'm a Button");
-         button.setStyle("-fx-background-color: blue"); button.setPadding(new
-         Insets(5, 5, 5, 5)); stackPane.getChildren().add(button); */
+        // Add Label to StackPane
+        /*Label label = new Label("I'm a Label");
+        label.setStyle("-fx-background-color:red");
+        label.setPadding(new Insets(5, 5, 5, 5));
+        stackPane.getChildren().add(label);
+     
+        // Add Button to StackPane
+        Button button = new Button("I'm a Button");
+        button.setStyle("-fx-background-color: blue");
+        button.setPadding(new Insets(5, 5, 5, 5));
+        stackPane.getChildren().add(button);*/
 
-        // stackPane.getChildren().add(grid);
-        // gridPane.getColumnConstraints().addAll(columnConstraints);
-        // gridPane.getRowConstraints().addAll(rowConstraints);
         myTreeView.getChildren().addAll(myTreeList, myAddIconButton, myCustIconButton, myGenIconButton);
-        //getItems().addAll(myTreeView, grid, myScrollBar);
         getItems().addAll(myTreeView, myScrollPane);
+        //getItems().addAll(myTreeView, grid, myScrollBar);
+        System.out.println(myScrollPane.getWidth());
     }
 
     static void changeTop(boolean choice)

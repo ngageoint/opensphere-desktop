@@ -2,13 +2,16 @@ package io.opensphere.mantle.iconproject.impl;
 
 import java.awt.Window;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -45,6 +48,9 @@ public class IconBuilderProjPane extends BorderPane
 
     /** The Y value model. */
     private final DoubleProperty myYPos = new SimpleDoubleProperty(0.);
+    
+    /** The save state selection. */
+    private final BooleanProperty mySave = new SimpleBooleanProperty(false);
 
     /** The ColorPicker that determines the icon color. */
     private ColorPicker myColorPicker;
@@ -145,7 +151,6 @@ public class IconBuilderProjPane extends BorderPane
      */
     private VBox createRight()
     {
-
         VBox box = new VBox(8);
         box.setAlignment(Pos.TOP_CENTER);
 
@@ -170,7 +175,6 @@ public class IconBuilderProjPane extends BorderPane
         box.getChildren().addAll(rotSlider, rotLabel, rotSpinner);
 
         return box;
-
     }
 
     /**
@@ -204,10 +208,19 @@ public class IconBuilderProjPane extends BorderPane
 
         controlBox.getChildren().addAll(xLabel, xSpin, yLabel, ySpin);
 
-        Label helpInfo = new Label("Saved icons will appear under the 'User Added' menu.");
+        HBox SaveInfo = new HBox();
+        
+        Label helpInfo = new Label("Replace Existing Icon?");
         helpInfo.setFont(Font.font(helpInfo.getFont().getFamily(), FontPosture.ITALIC, 11));
-
-        cnrlBox.getChildren().addAll(controlBox, helpInfo);
+        
+        CheckBox saveState = new CheckBox();
+        saveState.selectedProperty().set(false);
+        saveState.selectedProperty().bindBidirectional(mySave);
+        saveState.selectedProperty().addListener(event -> System.out.println(saveState.selectedProperty().get()));
+        
+        SaveInfo.getChildren().addAll(saveState,helpInfo);
+        SaveInfo.setSpacing(5.);
+        cnrlBox.getChildren().addAll(controlBox, SaveInfo);
         return cnrlBox;
     }
 
@@ -330,4 +343,15 @@ public class IconBuilderProjPane extends BorderPane
 
         return myIconRecord != null ? myIconRecord.getName() + "_" + myIconView.getRotate() : null;
     }
+    
+    public boolean getSaveState()
+    {
+        return mySave.get();
+    }
+
+    public IconRecord getIconRecord()
+    {
+        return myIconRecord;
+    }
+    
 }
