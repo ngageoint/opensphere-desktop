@@ -25,6 +25,10 @@ import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
+/**
+ * The Class Main Panel.
+ *
+ */
 public class MainPanel extends SplitPane
 {
     /** The Icon registry. */
@@ -92,7 +96,7 @@ public class MainPanel extends SplitPane
 
         myTreeView = new AnchorPane();
 
-        TreeBuilder myTreeBuilder = new TreeBuilder();
+        TreeBuilder myTreeBuilder = new TreeBuilder(myIconRegistry);
         myTreeList = new TreeView(myTreeBuilder);
 
         gridPane = new GridPane();
@@ -183,11 +187,7 @@ public class MainPanel extends SplitPane
         {
             EventQueue.invokeLater(() ->
             {
-                System.out.println("selected");
-                //System.out.println("check url:   " + iconURL);
                 customGrid.openBuilder(tb, owner);
-                //IconProjBuilderNewDialog builderPane = new IconProjBuilderNewDialog(owner, myIconRegistry, iconrecord);
-                //builderPane.setVisible(true);
             });
         });
 
