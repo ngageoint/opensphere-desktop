@@ -1,5 +1,6 @@
 package io.opensphere.mantle.iconproject.view;
 
+import java.awt.Window;
 import java.net.URL;
 
 import javafx.geometry.Insets;
@@ -10,7 +11,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /** Crates the Icon Display Grid. */
 public class GridBuilder extends GridPane
@@ -24,6 +27,9 @@ public class GridBuilder extends GridPane
     /** the selected icon URL to be used for the builder. */
     private URL selectedIconURL;
 
+    /** the selected icon to be used for the builder. */
+    private ImageView selectedIconV;
+
     /** The GridBuilder constructor.
      * sets up the rows and columns for the icon grid
      *
@@ -34,7 +40,7 @@ public class GridBuilder extends GridPane
     {
         myTileWidth = tileWidth;
         myIconRegistry = iconRegistry;
-        //selectedIcon = null;
+        selectedIconV = null;
 
         //System.out.println(myIconRegistry.getSubCategoiresForCollection("User Added"));
 
@@ -42,7 +48,7 @@ public class GridBuilder extends GridPane
                 + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
         int counter = 2;
         int numcols = 4;
-        for (int row = 0; row <= 50; row++)
+        for (int row = 0; row <= 100; row++)
         {
             for (int col = 0; col <= numcols; col++)
             {
@@ -111,21 +117,19 @@ public class GridBuilder extends GridPane
         generic.setOnAction(e ->
         {
             selectedIconURL = myIconRegistry.getIconRecordByIconId(count).getImageURL();
-            //selectedIcon = iconView;
-            System.out.println("button label: " + text);
-            System.out.println("Button url:   " + selectedIconURL);
-            System.out.println("the reseult of the getter: " + getSelectedIconURL());
+            selectedIconV = iconView;
+            //System.out.println("button label: " + text);
+            //System.out.println("Button url:   " + selectedIconURL);
         });
 
         return generic;
     }
 
-    /** The getter for getSelectedIconURL.
-     *
-     * @return selectedIconURL the URL of the icon selected
-     */
-    public URL getSelectedIconURL()
+    public void openBuilder(Toolbox tb, Window owner)
     {
-        return selectedIconURL;
+        //System.out.println("the icon url is pre opening: " + selectedIconURL);
+        IconProjBuilderNewDialog builderPane = new IconProjBuilderNewDialog(owner, myIconRegistry, MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry().getIconRecord(selectedIconURL));
+        builderPane.setVisible(true);
     }
+
 }

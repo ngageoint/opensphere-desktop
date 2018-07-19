@@ -2,7 +2,6 @@ package io.opensphere.mantle.iconproject.view;
 
 import java.awt.EventQueue;
 import java.awt.Window;
-import java.net.URL;
 
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
@@ -175,20 +174,21 @@ public class MainPanel extends SplitPane
         //getItems().addAll(myTreeView, grid, myScrollBar);
 
 
-        URL iconURL = customGrid.getSelectedIconURL();
+        /*URL iconURL = customGrid.getSelectedIconURL();
 
         if(iconURL != null) {
             iconrecord = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry().getIconRecord(iconURL);
 
-        }
+        }*/
         myCustIconButton.setOnAction(event ->
         {
             EventQueue.invokeLater(() ->
             {
                 System.out.println("selected");
-                System.out.println("check url:   " + iconURL);
-                //                IconProjBuilderNewDialog builderPane = new IconProjBuilderNewDialog(owner, myIconRegistry, iconrecord);
-                //                builderPane.setVisible(true);
+                //System.out.println("check url:   " + iconURL);
+                customGrid.openBuilder(tb, owner);
+                //IconProjBuilderNewDialog builderPane = new IconProjBuilderNewDialog(owner, myIconRegistry, iconrecord);
+                //builderPane.setVisible(true);
             });
         });
 
