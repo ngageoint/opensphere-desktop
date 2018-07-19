@@ -54,7 +54,7 @@ class MantleMenuInit
             }
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.DEBUG_MENU)
-                .add(deCacheSummaryMI);
+        .add(deCacheSummaryMI);
     }
 
     /**
@@ -78,7 +78,7 @@ class MantleMenuInit
             }
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.DEBUG_MENU)
-                .add(iconManagerMI);
+        .add(iconManagerMI);
     }
 
     /**
@@ -97,14 +97,14 @@ class MantleMenuInit
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //iconManager.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
-                //iconManager.setVisible(true);
+                iconManager.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
+                iconManager.setVisible(true);
                 new IconProjFrame(myToolbox);
             }
         });
 
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.TOOLS_MENU)
-                .add(iconManagerMI);
+        .add(iconManagerMI);
     }
 
     /**
@@ -127,6 +127,6 @@ class MantleMenuInit
             }
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.TOOLS_MENU)
-                .add(visStyleControlMI);
+        .add(visStyleControlMI);
     }
 }

@@ -89,13 +89,6 @@ public class IconBuilderProjPane extends BorderPane
         VBox bottom = createBottom();
         BorderPane.setMargin(bottom, new Insets(5., 0., 0., 0.));
         setBottom(bottom);
-
-        myColorPicker.setOnAction((event) ->
-        {
-            myColorPicker.show();
-            myColor = myColorPicker.getValue();
-            updateImageColor();
-        });
     }
 
     /**
@@ -116,10 +109,11 @@ public class IconBuilderProjPane extends BorderPane
 
         myColorPicker = new ColorPicker();
 
-        // myColorPicker.getStyleClass().add("button");
-        myColorPicker.setOnMouseEntered(event ->
+        myColorPicker.setOnAction((event) ->
         {
             myColorPicker.show();
+            myColor = myColorPicker.getValue();
+            updateImageColor();
         });
 
         //        Slider brightSlider = new Slider(-1., 1., 0.);
