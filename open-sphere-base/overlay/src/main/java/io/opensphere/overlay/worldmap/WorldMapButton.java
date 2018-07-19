@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import io.opensphere.core.function.Procedure;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.renderproperties.ColorRenderProperties;
@@ -18,19 +19,24 @@ import io.opensphere.core.util.collections.New;
 /**
  * 
  */
-public class WorldMapMinimizeButton extends AbstractWorldMapRenderable
+public class WorldMapButton extends AbstractWorldMapRenderable
 {
     /** Support class for events from the control context. */
     private final ControlEventSupport myMouseSupport;
 
+    /** The geometry used to render the button. */
     private PolygonGeometry myButtonGeometry;
+
+    /** The procedure called when the button is clicked. */
+    private final Procedure myListener;
 
     /**
      * @param parent
      */
-    public WorldMapMinimizeButton(Component parent)
+    public WorldMapButton(Component parent, Procedure listener)
     {
         super(parent);
+        myListener = listener;
         myMouseSupport = new ControlEventSupport(this, getTransformer().getToolbox().getControlRegistry());
     }
 
@@ -84,7 +90,6 @@ public class WorldMapMinimizeButton extends AbstractWorldMapRenderable
     @Override
     public void mouseClicked(Geometry geom, MouseEvent event)
     {
-        // TODO Auto-generated method stub
-        super.mouseClicked(geom, event);
+        myListener.invoke();
     }
 }
