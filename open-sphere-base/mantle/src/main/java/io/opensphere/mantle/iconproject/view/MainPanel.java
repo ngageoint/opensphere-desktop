@@ -154,7 +154,7 @@ public class MainPanel extends SplitPane
 
         //System.out.println("width:   " + getWidth());
 
-        GridBuilder CustomGrid = new GridBuilder(110, myIconRegistry);
+        GridBuilder CustomGrid = new GridBuilder(130, myIconRegistry);
         //GridBuilderImp grid = new GridBuilderImp(110);
         //GridBuilderImp grid = new GridBuilderImp(tb);
 

@@ -30,7 +30,7 @@ public class GridBuilder extends GridPane
 
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
                 + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
-        int counter = 1;
+        int counter = 2;
         for (int row = 0; row <= 50; row++)
         {
             RowConstraints rc = new RowConstraints();
