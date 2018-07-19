@@ -124,9 +124,8 @@ public class MainPanel extends SplitPane
         /*URL test = null;
         try
         {
-            test = new URL("file:/C:/Users/Kelly/mist/vortex/iconCache/"
-                    + "Location_Pin_32.png_0.0_0.6000000238418579-0.0-0.0.png"
-);
+            test = new URL(
+                    "file:/C:/Users/Kelly/mist/vortex/iconCache/" + "Location_Pin_32.png_0.0_0.6000000238418579-0.0-0.0.png");
         }
         catch (MalformedURLException e)
         {
