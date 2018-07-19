@@ -49,7 +49,7 @@ import io.opensphere.mantle.util.TimeSpanUtility;
  */
 public class DataElementPointExporter extends AbstractDataElementExporter
 {
-    private static final String SAVE_TO_PLACES_COMMAND = "Save to Places";
+    private static final String SAVE_TO_PLACES_COMMAND = "Save to Places...";
 
     /** The none string. */
     private static final String NONE = "NONE";
