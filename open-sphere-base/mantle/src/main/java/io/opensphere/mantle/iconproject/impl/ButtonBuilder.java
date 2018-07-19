@@ -22,7 +22,6 @@ public class ButtonBuilder extends Button
     {
         super();
         myLabel = label;
-        // setFont(new Font(14.));
         setText(myLabel);
         setTextOverrun(javafx.scene.control.OverrunStyle.CLIP);
 

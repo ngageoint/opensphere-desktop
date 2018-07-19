@@ -1,16 +1,14 @@
 package io.opensphere.mantle.iconproject.view;
 
-import java.util.ArrayList;
-
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
 
 public class TreeBuilder extends TreeItem<String>
 {
+    @SuppressWarnings("unchecked")
     public TreeBuilder()
     {
-        TreeItem Test = new TreeItem("Planes");
-        TreeItem Test2 = new TreeItem("Cats");
+        TreeItem<String> Test = new TreeItem<String>("Planes");
+        TreeItem<String> Test2 = new TreeItem<String>("Cats");
 
         getChildren().addAll(Test, Test2);
         setExpanded(true);

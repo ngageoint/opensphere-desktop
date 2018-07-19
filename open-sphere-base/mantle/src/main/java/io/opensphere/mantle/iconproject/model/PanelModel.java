@@ -16,5 +16,3 @@ public class PanelModel
         return viewType;
     }
 }
-/* IconRotationDialog(Window owner, IconRecord record, IconRegistry
- * iconRegistry, IconChooserPanel chooserPanel) */

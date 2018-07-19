@@ -7,6 +7,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.fx.JFXDialog;
 
 /** Main UI Frame. */
+@SuppressWarnings("serial")
 public class IconProjDialog extends JFXDialog
 {
     /**

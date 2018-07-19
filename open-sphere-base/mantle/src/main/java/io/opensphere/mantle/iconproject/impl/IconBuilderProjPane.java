@@ -67,11 +67,6 @@ public class IconBuilderProjPane extends BorderPane
     /** The Color chosen for customized icon. */
     private Color myColor;
 
-    //    private DoubleProperty myBright = new SimpleDoubleProperty(0.);
-    //    private double oldcolor;
-    //    private double newcolor;
-    //    private double transcolor;
-
     /**
      * Constructs a new IconBuilderPane.
      *
@@ -115,19 +110,6 @@ public class IconBuilderProjPane extends BorderPane
             myColor = myColorPicker.getValue();
             updateImageColor();
         });
-
-        //        Slider brightSlider = new Slider(-1., 1., 0.);
-        //        brightSlider.setBlockIncrement(.1);
-        //        brightSlider.valueProperty().bindBidirectional(myBright);
-        //        brightSlider.onMousePressedProperty().set(event -> { oldcolor =
-        //        brightSlider.getValue(); });
-        //        brightSlider.onMouseReleasedProperty().set(event -> { newcolor =
-        //        brightSlider.getValue(); updateImageBrightness(); }); */
-        //        brightSlider.setOnMouseClicked(event_ -> updateImageBrightness());
-        //        brightSlider.setMaxWidth(80.);
-        //        Label brightLabel = new Label("Brightness: ", brightSlider);
-        //        brightLabel.setContentDisplay(ContentDisplay.RIGHT);
-        //        AnchorPane.setLeftAnchor(brightLabel, 175.);
 
         TopBar.getChildren().addAll(myColorPicker, sizeLabel, sizeSpin);
         return TopBar;
@@ -237,14 +219,6 @@ public class IconBuilderProjPane extends BorderPane
         iconDisplayer.getChildren().addAll(myIconView);
 
         return iconDisplayer;
-        /* ColorAdjust monochrome = new ColorAdjust();
-         * monochrome.setSaturation(-1.0); ColorAdjust color2 = new
-         * ColorAdjust(); color2.setBrightness(5.0); Blend blush = new
-         * Blend(BlendMode.MULTIPLY, monochrome, color2);
-         *
-         * myImageRenderView.effectProperty()
-         * .bind(Bindings.when(myImageRenderView.hoverProperty()).then((Effect)
-         * blush).otherwise((Effect)null)); */
 
     }
 
@@ -266,34 +240,6 @@ public class IconBuilderProjPane extends BorderPane
             myIconView.setEffect(lighting);
         }
     }
-
-    /**
-     * Updates the brightness of the selected icon when the brightness slider
-     * selection changes.
-     */
-    //    private void updateImageBrightness()
-    //    {
-    //        if (newcolor > oldcolor)
-    //        {
-    //            myColor = myColor.brighter();
-    //        }
-    //        else
-    //        {
-    //            myColor = myColor.darker();
-    //        }
-    //        if (newcolor == oldcolor)
-    //            if (newcolor > transcolor && transcolor != 1. || transcolor != -1.)
-    //            {
-    //                myColor = myColor.brighter();
-    //            }
-    //            else
-    //            {
-    //                myColor = myColor.darker();
-    //
-    //            }
-    //        transcolor = newcolor;
-    //        updateImageColor();
-    //    }
 
     /**
      * Retrieves the final processed image as a BufferedImage.

@@ -1,6 +1,5 @@
 package io.opensphere.mantle.iconproject.view;
 
-import io.opensphere.mantle.iconproject.impl.IconBuilderProjPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;

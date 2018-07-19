@@ -82,7 +82,7 @@ public class TopMenuBar extends HBox
 
         HBox myHbox = createControlPanel();
 
-        getChildren().addAll(mySizeMenu, myHbox, myViewToggle, region2, mySearchBar);
+        getChildren().addAll(mySizeMenu, region1, myViewToggle, region2, mySearchBar);
         setAlignment(javafx.geometry.Pos.TOP_CENTER);
     }
 
