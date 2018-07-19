@@ -1,48 +1,58 @@
 package io.opensphere.mantle.iconproject.view;
 
-import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.IconRegistry;
+import java.awt.Window;
+import java.net.URL;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.RowConstraints;
 
-/** Crates the Icon Display Grid */
+import io.opensphere.core.Toolbox;
+import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.util.MantleToolboxUtils;
+
+/** Crates the Icon Display Grid. */
 public class GridBuilder extends GridPane
 {
     /** the width used for icon buttons. */
     private final int myTileWidth;
 
-    
-    /** the icon registry used for the pane */
-    private IconRegistry myIconRegistry;
+    /** the icon registry used for the pane. */
+    private final IconRegistry myIconRegistry;
 
-    // /** the record of icons to be used */
-    // private IconRecord myIconRecord;
+    /** the selected icon URL to be used for the builder. */
+    private URL selectedIconURL;
 
-    public GridBuilder(int TileWidth, IconRegistry iconRegistry)
+    /** the selected icon to be used for the builder. */
+    private ImageView selectedIconV;
+
+    /** The GridBuilder constructor.
+     * sets up the rows and columns for the icon grid
+     *
+     * @param tileWidth the width of each tile(button)
+     * @param iconRegistry the icon registry
+     */
+    public GridBuilder(int tileWidth, IconRegistry iconRegistry)
     {
-        myTileWidth = TileWidth;
+        myTileWidth = tileWidth;
         myIconRegistry = iconRegistry;
-        System.out.println(myIconRegistry.getSubCategoiresForCollection("User Added"));
+        selectedIconV = null;
+
+        //System.out.println(myIconRegistry.getSubCategoiresForCollection("User Added"));
 
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
-        int counter = 700;
+        int counter = 626;
         int numcols = 4;
-        for (int row = 0; row <= 50; row++)
+        for (int row = 0; row <= 100; row++)
         {
             for (int col = 0; col <= numcols; col++)
             {
-                Button sample = GridButtonBuilder(counter);
+                Button sample = gridButtonBuilder(counter);
                 add(sample, col, row);
                 counter = counter + 1;
             }
@@ -79,16 +89,22 @@ public class GridBuilder extends GridPane
          */
     }
 
-    public Button GridButtonBuilder(int count)
+    /** Build buttons with Images for the grid.
+     *
+     * @param count the index of the icon
+     * @return the built button
+     */
+    public Button gridButtonBuilder(int count)
     {
         Button generic = new Button();
         generic.setMinSize(myTileWidth, myTileWidth);
         generic.setMaxSize(myTileWidth, myTileWidth);
-        generic.setPadding(new Insets(5.,5.,5.,5.));
-        generic.setText(myIconRegistry.getIconRecordByIconId(count).getName());
+        generic.setPadding(new Insets(5, 5, 5, 5));
+        String text = myIconRegistry.getIconRecordByIconId(count).getName();
+        generic.setText(text);
         generic.setContentDisplay(ContentDisplay.TOP);
         generic.setAlignment(Pos.BOTTOM_CENTER);
-     
+
         ImageView iconView = new ImageView(myIconRegistry.getIconRecordByIconId(count).getImageURL().toString());
 
         if (iconView.getImage().getWidth() > myTileWidth)
@@ -98,7 +114,22 @@ public class GridBuilder extends GridPane
         }
 
         generic.setGraphic(iconView);
+        generic.setOnAction(e ->
+        {
+            selectedIconURL = myIconRegistry.getIconRecordByIconId(count).getImageURL();
+            selectedIconV = iconView;
+            //System.out.println("button label: " + text);
+            //System.out.println("Button url:   " + selectedIconURL);
+        });
+
         return generic;
+    }
+
+    public void openBuilder(Toolbox tb, Window owner)
+    {
+        //System.out.println("the icon url is pre opening: " + selectedIconURL);
+        IconProjBuilderNewDialog builderPane = new IconProjBuilderNewDialog(owner, myIconRegistry, MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry().getIconRecord(selectedIconURL));
+        builderPane.setVisible(true);
     }
 
 }

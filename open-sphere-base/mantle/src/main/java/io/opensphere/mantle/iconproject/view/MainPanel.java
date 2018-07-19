@@ -79,6 +79,8 @@ public class MainPanel extends SplitPane
 
     private final AnchorPane myTreeView;
 
+    private IconRecord iconrecord;
+
     public MainPanel(Toolbox tb, Window owner)
     {
         myTree = new JTree();
@@ -122,23 +124,13 @@ public class MainPanel extends SplitPane
         /*URL test = null;
         try
         {
-            test = new URL("file:/C:/Users/Kelly/mist/vortex/iconCache/"
-                    + "Location_Pin_32.png_0.0_0.6000000238418579-0.0-0.0.png"
-);
+            test = new URL(
+                    "file:/C:/Users/Kelly/mist/vortex/iconCache/" + "Location_Pin_32.png_0.0_0.6000000238418579-0.0-0.0.png");
         }
         catch (MalformedURLException e)
         {
             e.printStackTrace();
-        }
-        IconRecord iconrecord = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry().getIconRecord(test);
-        myCustIconButton.setOnAction(event ->
-        {
-            EventQueue.invokeLater(() ->
-            {
-                IconProjBuilderNewDialog builderPane = new IconProjBuilderNewDialog(owner, myIconRegistry, iconrecord);
-                builderPane.setVisible(true);
-            });
-        });*/
+        }*/
 
         myGenIconButton.lockButton(myGenIconButton);
         myGenIconButton.setOnAction(event ->
@@ -153,12 +145,12 @@ public class MainPanel extends SplitPane
 
         //System.out.println("width:   " + getWidth());
 
-        GridBuilder CustomGrid = new GridBuilder(130, myIconRegistry);
+        GridBuilder customGrid = new GridBuilder(130, myIconRegistry);
         //GridBuilderImp grid = new GridBuilderImp(110);
         //GridBuilderImp grid = new GridBuilderImp(tb);
 
         myScrollBar.setOrientation(javafx.geometry.Orientation.VERTICAL);
-        ScrollPane myScrollPane = new ScrollPane(CustomGrid);
+        ScrollPane myScrollPane = new ScrollPane(customGrid);
         //ScrollPane myScrollPane = new ScrollPane(grid);
         myScrollPane.setPannable(true);
         AnchorPane.setLeftAnchor(myScrollPane, 0.);
@@ -176,25 +168,29 @@ public class MainPanel extends SplitPane
         rowConstraints.setPrefHeight(30.0);
         rowConstraints.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-        // StackPane
-        //stackPane = new StackPane();
-
-        // Add Label to StackPane
-        /*Label label = new Label("I'm a Label");
-        label.setStyle("-fx-background-color:red");
-        label.setPadding(new Insets(5, 5, 5, 5));
-        stackPane.getChildren().add(label);
-     
-        // Add Button to StackPane
-        Button button = new Button("I'm a Button");
-        button.setStyle("-fx-background-color: blue");
-        button.setPadding(new Insets(5, 5, 5, 5));
-        stackPane.getChildren().add(button);*/
-
         myTreeView.getChildren().addAll(myTreeList, myAddIconButton, myCustIconButton, myGenIconButton);
         getItems().addAll(myTreeView, myScrollPane);
         //getItems().addAll(myTreeView, grid, myScrollBar);
-        System.out.println(myScrollPane.getWidth());
+
+
+        /*URL iconURL = customGrid.getSelectedIconURL();
+
+        if(iconURL != null) {
+            iconrecord = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry().getIconRecord(iconURL);
+
+        }*/
+        myCustIconButton.setOnAction(event ->
+        {
+            EventQueue.invokeLater(() ->
+            {
+                System.out.println("selected");
+                //System.out.println("check url:   " + iconURL);
+                customGrid.openBuilder(tb, owner);
+                //IconProjBuilderNewDialog builderPane = new IconProjBuilderNewDialog(owner, myIconRegistry, iconrecord);
+                //builderPane.setVisible(true);
+            });
+        });
+
     }
 
     static void changeTop(boolean choice)

@@ -4,7 +4,6 @@ import java.awt.Window;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Insets;
@@ -17,7 +16,6 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.ImageView;
@@ -26,7 +24,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -48,7 +45,7 @@ public class IconBuilderProjPane extends BorderPane
 
     /** The Y value model. */
     private final DoubleProperty myYPos = new SimpleDoubleProperty(0.);
-    
+
     /** The save state selection. */
     private final BooleanProperty mySave = new SimpleBooleanProperty(false);
 
@@ -70,10 +67,10 @@ public class IconBuilderProjPane extends BorderPane
     /** The Color chosen for customized icon. */
     private Color myColor;
 
-//    private DoubleProperty myBright = new SimpleDoubleProperty(0.);
-//    private double oldcolor;
-//    private double newcolor;
-//    private double transcolor;
+    //    private DoubleProperty myBright = new SimpleDoubleProperty(0.);
+    //    private double oldcolor;
+    //    private double newcolor;
+    //    private double transcolor;
 
     /**
      * Constructs a new IconBuilderPane.
@@ -92,13 +89,6 @@ public class IconBuilderProjPane extends BorderPane
         VBox bottom = createBottom();
         BorderPane.setMargin(bottom, new Insets(5., 0., 0., 0.));
         setBottom(bottom);
-        
-        myColorPicker.setOnAction((event) ->
-        {
-            myColorPicker.show();
-            myColor = myColorPicker.getValue();
-            updateImageColor();
-        });
     }
 
     /**
@@ -118,28 +108,27 @@ public class IconBuilderProjPane extends BorderPane
         AnchorPane.setRightAnchor(sizeLabel, 0.);
 
         myColorPicker = new ColorPicker();
-        
-        // myColorPicker.getStyleClass().add("button");
-        myColorPicker.setOnMouseEntered(event ->
+
+        myColorPicker.setOnAction((event) ->
         {
             myColorPicker.show();
+            myColor = myColorPicker.getValue();
+            updateImageColor();
         });
-        /* myColorPicker.setOnMouseExited(event -> {
-         * System.out.println("^^^^^^^^Accesible role prop time2:   " +
 
-//        Slider brightSlider = new Slider(-1., 1., 0.);
-//        brightSlider.setBlockIncrement(.1);
-//        brightSlider.valueProperty().bindBidirectional(myBright);   
-//        brightSlider.onMousePressedProperty().set(event -> { oldcolor =
-//        brightSlider.getValue(); });
-//        brightSlider.onMouseReleasedProperty().set(event -> { newcolor =
-//        brightSlider.getValue(); updateImageBrightness(); }); */
-//        brightSlider.setOnMouseClicked(event_ -> updateImageBrightness());
-//        brightSlider.setMaxWidth(80.);
-//        Label brightLabel = new Label("Brightness: ", brightSlider);
-//        brightLabel.setContentDisplay(ContentDisplay.RIGHT);
-//        AnchorPane.setLeftAnchor(brightLabel, 175.);
-        
+        //        Slider brightSlider = new Slider(-1., 1., 0.);
+        //        brightSlider.setBlockIncrement(.1);
+        //        brightSlider.valueProperty().bindBidirectional(myBright);
+        //        brightSlider.onMousePressedProperty().set(event -> { oldcolor =
+        //        brightSlider.getValue(); });
+        //        brightSlider.onMouseReleasedProperty().set(event -> { newcolor =
+        //        brightSlider.getValue(); updateImageBrightness(); }); */
+        //        brightSlider.setOnMouseClicked(event_ -> updateImageBrightness());
+        //        brightSlider.setMaxWidth(80.);
+        //        Label brightLabel = new Label("Brightness: ", brightSlider);
+        //        brightLabel.setContentDisplay(ContentDisplay.RIGHT);
+        //        AnchorPane.setLeftAnchor(brightLabel, 175.);
+
         TopBar.getChildren().addAll(myColorPicker, sizeLabel, sizeSpin);
         return TopBar;
     }
@@ -209,15 +198,15 @@ public class IconBuilderProjPane extends BorderPane
         controlBox.getChildren().addAll(xLabel, xSpin, yLabel, ySpin);
 
         HBox SaveInfo = new HBox();
-        
+
         Label helpInfo = new Label("Replace Existing Icon?");
         helpInfo.setFont(Font.font(helpInfo.getFont().getFamily(), FontPosture.ITALIC, 11));
-        
+
         CheckBox saveState = new CheckBox();
         saveState.selectedProperty().set(false);
         saveState.selectedProperty().bindBidirectional(mySave);
         saveState.selectedProperty().addListener(event -> System.out.println(saveState.selectedProperty().get()));
-        
+
         SaveInfo.getChildren().addAll(saveState,helpInfo);
         SaveInfo.setSpacing(5.);
         cnrlBox.getChildren().addAll(controlBox, SaveInfo);
@@ -282,29 +271,29 @@ public class IconBuilderProjPane extends BorderPane
      * Updates the brightness of the selected icon when the brightness slider
      * selection changes.
      */
-//    private void updateImageBrightness()
-//    {
-//        if (newcolor > oldcolor)
-//        {
-//            myColor = myColor.brighter();
-//        }
-//        else
-//        {
-//            myColor = myColor.darker();
-//        }
-//        if (newcolor == oldcolor)
-//            if (newcolor > transcolor && transcolor != 1. || transcolor != -1.)
-//            {
-//                myColor = myColor.brighter();
-//            }
-//            else
-//            {
-//                myColor = myColor.darker();
-//
-//            }
-//        transcolor = newcolor;
-//        updateImageColor();
-//    }
+    //    private void updateImageBrightness()
+    //    {
+    //        if (newcolor > oldcolor)
+    //        {
+    //            myColor = myColor.brighter();
+    //        }
+    //        else
+    //        {
+    //            myColor = myColor.darker();
+    //        }
+    //        if (newcolor == oldcolor)
+    //            if (newcolor > transcolor && transcolor != 1. || transcolor != -1.)
+    //            {
+    //                myColor = myColor.brighter();
+    //            }
+    //            else
+    //            {
+    //                myColor = myColor.darker();
+    //
+    //            }
+    //        transcolor = newcolor;
+    //        updateImageColor();
+    //    }
 
     /**
      * Retrieves the final processed image as a BufferedImage.
@@ -343,7 +332,7 @@ public class IconBuilderProjPane extends BorderPane
 
         return myIconRecord != null ? myIconRecord.getName() + "_" + myIconView.getRotate() : null;
     }
-    
+
     public boolean getSaveState()
     {
         return mySave.get();
@@ -353,5 +342,5 @@ public class IconBuilderProjPane extends BorderPane
     {
         return myIconRecord;
     }
-    
+
 }

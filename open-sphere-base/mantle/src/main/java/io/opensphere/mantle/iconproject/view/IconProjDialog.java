@@ -11,7 +11,7 @@ public class IconProjDialog extends JFXDialog
 {
     /**
      * Constructor.
-     * 
+     *
      * packages anchorpane into swing dialog for MIST
      *
      * @param owner the calling window.
@@ -22,9 +22,9 @@ public class IconProjDialog extends JFXDialog
         super(owner, "Intern Icon Manager");
         setLocationRelativeTo(owner);
         setSize(800, 400);
-       
+
         setFxNode(new IconProjNewView(tb,owner));
-        setMinimumSize(new Dimension(800, 400));       
+        setMinimumSize(new Dimension(1000, 600));
     }
 
 }
