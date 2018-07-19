@@ -12,6 +12,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
 import io.opensphere.core.Toolbox;
+import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
@@ -24,11 +25,8 @@ public class GridBuilder extends GridPane
     /** the icon registry used for the pane. */
     private final IconRegistry myIconRegistry;
 
-    /** the selected icon URL to be used for the builder. */
-    private URL selectedIconURL;
-
     /** the selected icon to be used for the builder. */
-    private ImageView selectedIconV;
+    private IconRecord mySelectedIcon;
 
     /** The GridBuilder constructor.
      * sets up the rows and columns for the icon grid
@@ -40,7 +38,6 @@ public class GridBuilder extends GridPane
     {
         myTileWidth = tileWidth;
         myIconRegistry = iconRegistry;
-        selectedIconV = null;
 
         //System.out.println(myIconRegistry.getSubCategoiresForCollection("User Added"));
 
@@ -65,28 +62,6 @@ public class GridBuilder extends GridPane
             getColumnConstraints().add(cc);
         }
 
-        /*
-        int numR = 5;
-        int numC = 4;
-        for (int row = 0; row <= numR; row++)
-        {
-            RowConstraints rc = new RowConstraints();
-            rc.setFillHeight(true);
-            getRowConstraints().add(rc);
-        }
-        for (int col = 0; col <= numC; col++)
-        {
-            ColumnConstraints cc = new ColumnConstraints();
-         //   cc.setFillWidth(true);
-            cc.setPercentWidth(100/5);
-            getColumnConstraints().add(cc);
-        }
-        int topIndex = numR * numC;
-        for (int i = 0; i <= 9; i++) {
-            Button sample = GridButtonBuilder(i + 1);
-            add(sample, i % numC, i / numC);
-        }
-         */
     }
 
     /** Build buttons with Images for the grid.
@@ -116,10 +91,7 @@ public class GridBuilder extends GridPane
         generic.setGraphic(iconView);
         generic.setOnAction(e ->
         {
-            selectedIconURL = myIconRegistry.getIconRecordByIconId(count).getImageURL();
-            selectedIconV = iconView;
-            //System.out.println("button label: " + text);
-            //System.out.println("Button url:   " + selectedIconURL);
+            mySelectedIcon = myIconRegistry.getIconRecordByIconId(count);
         });
 
         return generic;
@@ -127,8 +99,7 @@ public class GridBuilder extends GridPane
 
     public void openBuilder(Toolbox tb, Window owner)
     {
-        //System.out.println("the icon url is pre opening: " + selectedIconURL);
-        IconProjBuilderNewDialog builderPane = new IconProjBuilderNewDialog(owner, myIconRegistry, MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry().getIconRecord(selectedIconURL));
+        IconProjBuilderNewDialog builderPane = new IconProjBuilderNewDialog(owner, myIconRegistry,mySelectedIcon);
         builderPane.setVisible(true);
     }
 
