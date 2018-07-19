@@ -46,7 +46,7 @@ public class GridBuilder extends GridPane
 
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
-        int counter = 55;
+        int counter = 626;
         int numcols = 4;
         for (int row = 0; row <= 100; row++)
         {
