@@ -7,6 +7,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
 
+import javafx.scene.image.WritableImage;
+
+import javax.imageio.ImageIO;
+
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.Notify;
@@ -16,8 +20,6 @@ import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.iconproject.impl.IconBuilderProjPane;
-import javafx.scene.image.WritableImage;
-import javax.imageio.ImageIO;
 
 /** The component class for building icons. */
 public class IconProjBuilderNewDialog extends JFXDialog

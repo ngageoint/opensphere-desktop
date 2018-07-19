@@ -19,8 +19,9 @@ import javafx.scene.layout.RowConstraints;
 public class GridBuilder extends GridPane
 {
     /** the width used for icon buttons. */
-    private int myTileWidth;
+    private final int myTileWidth;
 
+    
     /** the icon registry used for the pane */
     private IconRegistry myIconRegistry;
 
@@ -53,6 +54,29 @@ public class GridBuilder extends GridPane
             cc.setPercentWidth(100 / numcols);
             getColumnConstraints().add(cc);
         }
+
+        /*
+        int numR = 5;
+        int numC = 4;
+        for (int row = 0; row <= numR; row++)
+        {
+            RowConstraints rc = new RowConstraints();
+            rc.setFillHeight(true);
+            getRowConstraints().add(rc);
+        }
+        for (int col = 0; col <= numC; col++)
+        {
+            ColumnConstraints cc = new ColumnConstraints();
+         //   cc.setFillWidth(true);
+            cc.setPercentWidth(100/5);
+            getColumnConstraints().add(cc);
+        }
+        int topIndex = numR * numC;
+        for (int i = 0; i <= 9; i++) {
+            Button sample = GridButtonBuilder(i + 1);
+            add(sample, i % numC, i / numC);
+        }
+         */
     }
 
     public Button GridButtonBuilder(int count)
