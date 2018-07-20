@@ -157,7 +157,6 @@ public class DetailEditor
         actionRoot.add(actionPanes, 0, 1, 3, 1);
 
         actionEditor = new JFXPanel();
-
         Platform.runLater(() ->  actionEditor.setScene(FXUtilities.addDesktopStyle(new Scene(actionRoot))));
         actionEditor.setPreferredSize(new Dimension(500, 300));
     }
