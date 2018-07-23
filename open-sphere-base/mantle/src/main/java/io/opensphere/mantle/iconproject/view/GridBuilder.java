@@ -1,7 +1,6 @@
 package io.opensphere.mantle.iconproject.view;
 
 import java.awt.Window;
-import java.net.URL;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,34 +13,48 @@ import javafx.scene.layout.GridPane;
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
-import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /** Crates the Icon Display Grid. */
 public class GridBuilder extends GridPane
 {
-    /** the width used for icon buttons. */
+    /** The width used for icon buttons. */
     private final int myTileWidth;
 
-    /** the icon registry used for the pane. */
+    /** The icon registry used for the pane. */
     private final IconRegistry myIconRegistry;
 
     /** the selected icon to be used for the builder. */
     private IconRecord mySelectedIcon;
 
+<<<<<<< HEAD
     /**
      * The GridBuilder constructor. sets up the rows and columns for the icon
      * grid
+=======
+    /** The chosen icon collection. */
+    private final String theChosen;
+
+    /** The GridBuilder constructor.
+     * sets up the rows and columns for the icon grid
+>>>>>>> 3f8d801363cd121397e3e212fd06efdf05e9a74f
      *
      * @param tileWidth the width of each tile(button)
      * @param iconRegistry the icon registry
      */
-    public GridBuilder(int tileWidth, IconRegistry iconRegistry)
+    public GridBuilder(int tileWidth, IconRegistry iconRegistry, String category)
     {
         myTileWidth = tileWidth;
         myIconRegistry = iconRegistry;
+<<<<<<< HEAD
         getStyleClass().add("IconManagerStyle.css");
         setId("BoxStyle");
         
+=======
+        theChosen = category;
+
+        setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+                + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
+>>>>>>> 3f8d801363cd121397e3e212fd06efdf05e9a74f
         int counter = 626;
         int numcols = 4;
         for (int row = 0; row <= 100; row++)
@@ -60,7 +73,7 @@ public class GridBuilder extends GridPane
             cc.setPercentWidth(100 / numcols);
             getColumnConstraints().add(cc);
         }
-
+        System.out.println("the chosen is:   " + theChosen);
     }
 
     /**

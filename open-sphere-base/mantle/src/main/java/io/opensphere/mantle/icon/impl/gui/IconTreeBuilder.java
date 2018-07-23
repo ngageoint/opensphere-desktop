@@ -109,7 +109,6 @@ public class IconTreeBuilder
         for (String collection : collectionList)
         {
             DefaultMutableTreeNode colNode = new DefaultMutableTreeNode();
-
             Map<String, List<IconRecord>> subToRecListMap = collectionToSubCatIconRecMap.get(collection);
             if (subToRecListMap != null)
             {
