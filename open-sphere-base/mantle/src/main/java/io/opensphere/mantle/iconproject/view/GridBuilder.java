@@ -1,7 +1,6 @@
 package io.opensphere.mantle.iconproject.view;
 
 import java.awt.Window;
-import java.net.URL;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,15 +13,14 @@ import javafx.scene.layout.GridPane;
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
-import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /** Crates the Icon Display Grid. */
 public class GridBuilder extends GridPane
 {
-    /** the width used for icon buttons. */
+    /** The width used for icon buttons. */
     private final int myTileWidth;
 
-    /** the icon registry used for the pane. */
+    /** The icon registry used for the pane. */
     private final IconRegistry myIconRegistry;
 
     /** the selected icon to be used for the builder. */
@@ -34,7 +32,7 @@ public class GridBuilder extends GridPane
      * @param tileWidth the width of each tile(button)
      * @param iconRegistry the icon registry
      */
-    public GridBuilder(int tileWidth, IconRegistry iconRegistry)
+    public GridBuilder(int tileWidth, IconRegistry iconRegistry, String category)
     {
         myTileWidth = tileWidth;
         myIconRegistry = iconRegistry;

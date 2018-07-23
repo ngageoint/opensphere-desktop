@@ -6,23 +6,13 @@ import java.awt.Window;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.StackPane;
-
-import javax.swing.JTree;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
 
 import io.opensphere.core.Toolbox;
-import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
-import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /**
@@ -34,155 +24,94 @@ public class MainPanel extends SplitPane
     /** The Icon registry. */
     private final IconRegistry myIconRegistry;
 
-    /** The optional selected icon URL. */
-    private String mySelectedUrl;
-
-    /** The Last selected tree node user object. */
-    private IconRecordTreeNodeUserObject myLastSelectedTreeNodeUserObject;
-
-    // these are in swing vvvvv
-    /** The Tree. */
-    private final JTree myTree;
-
-    /** The Root tree node. */
-    @SuppressWarnings("PMD.SingularField")
-    private TreeNode myRootTreeNode;
-
-    /** The Tree model. */
-    private DefaultTreeModel myTreeModel;
-    // ^^^^^ need to convert swing to fx
-
-    RowConstraints rowConstraints = new RowConstraints();
-
-    ColumnConstraints columnConstraints = new ColumnConstraints();
-
-    /** Portion containing the icons */
-    private final GridPane gridPane;
-
     /** The Customize Icon button. */
     private final ButtonBuilder myCustIconButton = new ButtonBuilder("Customize Icon", false);
 
     /** The button to add the icon. */
     private final ButtonBuilder myAddIconButton = new ButtonBuilder("Add Icon from File", false);
 
-    /** The button to generate a new icon */
+    /** The button to generate a new icon. */
     private final ButtonBuilder myGenIconButton = new ButtonBuilder("Generate New Icon", false);
 
-    /** The scrollbar for the icons in view. */
+    /** The scroll-bar for the icons in view. */
     private final ScrollBar myScrollBar;
 
-    /** Temporary for experimentation. */
-    private static StackPane stackPane;
+    /** The tree view. */
+    private final TreeView<String> myTreeView;
 
-    /** The record of the currently selected icon. */
-    private IconRecord mySelectedIcon;
+    /** The left panel view. */
+    private final AnchorPane myLeftView;
 
-    private final TreeView myTreeList;
+    /** The treeView choice. */
+    private String theChoice = "";
 
-    private final PanelModel myPanel = new PanelModel();
-
-    private final AnchorPane myTreeView;
-
-    private IconRecord iconrecord;
-
+    /**
+     * The MainPanel constructor.
+     *
+     * @param tb the toolbox
+     * @param owner the window owner
+     */
     public MainPanel(Toolbox tb, Window owner)
     {
-        myTree = new JTree();
-        myTree.setRootVisible(false);
-        myTree.setExpandsSelectedPaths(true);
-
         myIconRegistry = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry();
-        // Window owner = tb.getUIRegistry().getMainFrameProvider().get();
 
-        myTreeView = new AnchorPane();
+        myLeftView = new AnchorPane();
 
-        TreeBuilder myTreeBuilder = new TreeBuilder(myIconRegistry);
-        myTreeList = new TreeView(myTreeBuilder);
+        TreeBuilder treeBuilder = new TreeBuilder(myIconRegistry, null);
+        myTreeView = new TreeView<>(treeBuilder);
 
-        gridPane = new GridPane();
         myScrollBar = new ScrollBar();
 
         setDividerPositions(0.25, 0.98);
         setLayoutY(48.0);
 
-        AnchorPane.setBottomAnchor(myTreeList, 78.0);
-        AnchorPane.setLeftAnchor(myTreeList, 0.0);
-        AnchorPane.setRightAnchor(myTreeList, 0.0);
-        AnchorPane.setTopAnchor(myTreeList, 0.0);
-        myTreeList.setLayoutY(8.0);
+        AnchorPane.setBottomAnchor(myTreeView, 78.0);
+        AnchorPane.setLeftAnchor(myTreeView, 0.0);
+        AnchorPane.setRightAnchor(myTreeView, 0.0);
+        AnchorPane.setTopAnchor(myTreeView, 0.0);
+        myTreeView.setLayoutY(8.0);
 
         myAddIconButton.lockButton(myAddIconButton);
         AnchorPane.setBottomAnchor(myAddIconButton, 52.0);
         myAddIconButton.setOnAction(event ->
         {
-            // IconChooserPanel chooseIcon = new IconChooserPanel(tb);
-            // loadFromFile(IconRecord.USER_ADDED_COLLECTION, null, tb);
-            // loadFromFile(IconRecord.USER_ADDED_COLLECTION, null, tb);
-            // FileAddBuilder fileAdd = new FileAddBuilder(tb);
+            EventQueue.invokeLater(() ->
+            {
+                // TODO: add generation stuff
+            });
         });
 
         AnchorPane.setBottomAnchor(myCustIconButton, 26.0);
         myCustIconButton.lockButton(myCustIconButton);
         AnchorPane.setBottomAnchor(myGenIconButton, 0.0);
 
-        /*URL test = null;
-        try
-        {
-            test = new URL(
-                    "file:/C:/Users/Kelly/mist/vortex/iconCache/" + "Location_Pin_32.png_0.0_0.6000000238418579-0.0-0.0.png");
-        }
-        catch (MalformedURLException e)
-        {
-            e.printStackTrace();
-        }*/
-
         myGenIconButton.lockButton(myGenIconButton);
         myGenIconButton.setOnAction(event ->
         {
             EventQueue.invokeLater(() ->
             {
-                // IconProjGenDialog generate = new IconProjGenDialog(owner,
-                // myIconRegistry);
-                // generate.setVisible(true);
+                // TODO: add generation stuff
             });
         });
 
-        //System.out.println("width:   " + getWidth());
+        myTreeView.getSelectionModel().selectedItemProperty()
+        .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
 
-        GridBuilder customGrid = new GridBuilder(130, myIconRegistry);
-        //GridBuilderImp grid = new GridBuilderImp(110);
-        //GridBuilderImp grid = new GridBuilderImp(tb);
+        GridBuilder customGrid = new GridBuilder(130, myIconRegistry, theChoice);
 
         myScrollBar.setOrientation(javafx.geometry.Orientation.VERTICAL);
-        ScrollPane myScrollPane = new ScrollPane(customGrid);
-        //ScrollPane myScrollPane = new ScrollPane(grid);
-        myScrollPane.setPannable(true);
-        AnchorPane.setLeftAnchor(myScrollPane, 0.);
-        AnchorPane.setRightAnchor(myScrollPane, 0.);
-        AnchorPane.setTopAnchor(myScrollPane, 0.);
-        AnchorPane.setBottomAnchor(myScrollPane, 0.);
-        myScrollPane.setFitToHeight(true);
-        myScrollPane.setFitToWidth(true);
+        ScrollPane theScrollPane = new ScrollPane(customGrid);
+        theScrollPane.setPannable(true);
+        AnchorPane.setLeftAnchor(theScrollPane, 0.);
+        AnchorPane.setRightAnchor(theScrollPane, 0.);
+        AnchorPane.setTopAnchor(theScrollPane, 0.);
+        AnchorPane.setBottomAnchor(theScrollPane, 0.);
+        theScrollPane.setFitToHeight(true);
+        theScrollPane.setFitToWidth(true);
 
-        columnConstraints.setMinWidth(10.0);
-        columnConstraints.setPrefWidth(100.0);
-        columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
+        myLeftView.getChildren().addAll(myTreeView, myAddIconButton, myCustIconButton, myGenIconButton);
+        getItems().addAll(myLeftView, theScrollPane);
 
-        rowConstraints.setMinHeight(10.0);
-        rowConstraints.setPrefHeight(30.0);
-        rowConstraints.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
-
-        myTreeView.getChildren().addAll(myTreeList, myAddIconButton, myCustIconButton, myGenIconButton);
-        getItems().addAll(myTreeView, myScrollPane);
-        //getItems().addAll(myTreeView, grid, myScrollBar);
-
-
-        /*URL iconURL = customGrid.getSelectedIconURL();
-
-        if(iconURL != null) {
-            iconrecord = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry().getIconRecord(iconURL);
-
-        }*/
         myCustIconButton.setOnAction(event ->
         {
             EventQueue.invokeLater(() ->
@@ -190,12 +119,27 @@ public class MainPanel extends SplitPane
                 customGrid.openBuilder(tb, owner);
             });
         });
-
     }
 
+    /**
+     * The tree event handler.
+     *
+     * @param newValue the new clicked-on Value
+     */
+    private void treeHandle(TreeItem<String> newValue)
+    {
+        System.out.println(newValue.getValue());
+        theChoice = newValue.getValue();
+    }
+
+    /**
+     * I'm not sure.
+     *
+     * @param choice the choice?
+     */
     static void changeTop(boolean choice)
     {
-        /*ObservableList<Node> childs = stackPane.getChildren();
+        /* ObservableList<Node> childs = stackPane.getChildren();
 
         Node grid = childs.get(1);
         Node list = childs.get(0);
@@ -210,5 +154,4 @@ public class MainPanel extends SplitPane
             grid.setVisible(true);
         }*/
     }
-
 }
