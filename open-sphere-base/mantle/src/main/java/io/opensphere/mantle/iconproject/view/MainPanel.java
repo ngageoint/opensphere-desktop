@@ -36,7 +36,6 @@ public class MainPanel extends SplitPane
     /** The Last selected tree node user object. */
     private IconRecordTreeNodeUserObject myLastSelectedTreeNodeUserObject;
 
-    // these are in swing vvvvv
     /** The Tree. */
     private final JTree myTree;
 
@@ -46,7 +45,6 @@ public class MainPanel extends SplitPane
 
     /** The Tree model. */
     private DefaultTreeModel myTreeModel;
-    // ^^^^^ need to convert swing to fx
 
     RowConstraints rowConstraints = new RowConstraints();
 
@@ -79,7 +77,8 @@ public class MainPanel extends SplitPane
 
     private final AnchorPane myTreeView;
 
-    private IconRecord iconrecord;
+    /** The Display Grid of Icons. */
+    private GridBuilder myIconGrid;
 
     public MainPanel(Toolbox tb, Window owner)
     {
@@ -111,26 +110,11 @@ public class MainPanel extends SplitPane
         AnchorPane.setBottomAnchor(myAddIconButton, 52.0);
         myAddIconButton.setOnAction(event ->
         {
-            // IconChooserPanel chooseIcon = new IconChooserPanel(tb);
-            // loadFromFile(IconRecord.USER_ADDED_COLLECTION, null, tb);
-            // loadFromFile(IconRecord.USER_ADDED_COLLECTION, null, tb);
-            // FileAddBuilder fileAdd = new FileAddBuilder(tb);
         });
 
         AnchorPane.setBottomAnchor(myCustIconButton, 26.0);
         myCustIconButton.lockButton(myCustIconButton);
         AnchorPane.setBottomAnchor(myGenIconButton, 0.0);
-
-        /*URL test = null;
-        try
-        {
-            test = new URL(
-                    "file:/C:/Users/Kelly/mist/vortex/iconCache/" + "Location_Pin_32.png_0.0_0.6000000238418579-0.0-0.0.png");
-        }
-        catch (MalformedURLException e)
-        {
-            e.printStackTrace();
-        }*/
 
         myGenIconButton.lockButton(myGenIconButton);
         myGenIconButton.setOnAction(event ->
@@ -143,15 +127,13 @@ public class MainPanel extends SplitPane
             });
         });
 
-        //System.out.println("width:   " + getWidth());
+        // System.out.println("width: " + getWidth());
 
-        GridBuilder customGrid = new GridBuilder(130, myIconRegistry);
-        //GridBuilderImp grid = new GridBuilderImp(110);
-        //GridBuilderImp grid = new GridBuilderImp(tb);
+        GridBuilder myIconGrid = new GridBuilder(130, myIconRegistry);
 
         myScrollBar.setOrientation(javafx.geometry.Orientation.VERTICAL);
-        ScrollPane myScrollPane = new ScrollPane(customGrid);
-        //ScrollPane myScrollPane = new ScrollPane(grid);
+        ScrollPane myScrollPane = new ScrollPane(myIconGrid);
+        // ScrollPane myScrollPane = new ScrollPane(grid);
         myScrollPane.setPannable(true);
         AnchorPane.setLeftAnchor(myScrollPane, 0.);
         AnchorPane.setRightAnchor(myScrollPane, 0.);
@@ -170,24 +152,12 @@ public class MainPanel extends SplitPane
 
         myTreeView.getChildren().addAll(myTreeList, myAddIconButton, myCustIconButton, myGenIconButton);
         getItems().addAll(myTreeView, myScrollPane);
-        //getItems().addAll(myTreeView, grid, myScrollBar);
 
-
-        /*URL iconURL = customGrid.getSelectedIconURL();
-
-        if(iconURL != null) {
-            iconrecord = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry().getIconRecord(iconURL);
-
-        }*/
         myCustIconButton.setOnAction(event ->
         {
             EventQueue.invokeLater(() ->
             {
-                System.out.println("selected");
-                //System.out.println("check url:   " + iconURL);
-                customGrid.openBuilder(tb, owner);
-                //IconProjBuilderNewDialog builderPane = new IconProjBuilderNewDialog(owner, myIconRegistry, iconrecord);
-                //builderPane.setVisible(true);
+                myIconGrid.openBuilder(tb, owner);
             });
         });
 
@@ -195,20 +165,11 @@ public class MainPanel extends SplitPane
 
     static void changeTop(boolean choice)
     {
-        /*ObservableList<Node> childs = stackPane.getChildren();
-
-        Node grid = childs.get(1);
-        Node list = childs.get(0);
-        if (choice)
-        {
-            grid.setVisible(false);
-            list.setVisible(true);
-        }
-        else
-        {
-            list.setVisible(false);
-            grid.setVisible(true);
-        }*/
+        /* ObservableList<Node> childs = stackPane.getChildren();
+         * 
+         * Node grid = childs.get(1); Node list = childs.get(0); if (choice) {
+         * grid.setVisible(false); list.setVisible(true); } else {
+         * list.setVisible(false); grid.setVisible(true); } */
     }
 
 }

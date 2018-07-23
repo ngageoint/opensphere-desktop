@@ -28,8 +28,9 @@ public class GridBuilder extends GridPane
     /** the selected icon to be used for the builder. */
     private IconRecord mySelectedIcon;
 
-    /** The GridBuilder constructor.
-     * sets up the rows and columns for the icon grid
+    /**
+     * The GridBuilder constructor. sets up the rows and columns for the icon
+     * grid
      *
      * @param tileWidth the width of each tile(button)
      * @param iconRegistry the icon registry
@@ -38,11 +39,9 @@ public class GridBuilder extends GridPane
     {
         myTileWidth = tileWidth;
         myIconRegistry = iconRegistry;
-
-        //System.out.println(myIconRegistry.getSubCategoiresForCollection("User Added"));
-
-        setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-                + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
+        getStyleClass().add("IconManagerStyle.css");
+        setId("BoxStyle");
+        
         int counter = 626;
         int numcols = 4;
         for (int row = 0; row <= 100; row++)
@@ -64,7 +63,8 @@ public class GridBuilder extends GridPane
 
     }
 
-    /** Build buttons with Images for the grid.
+    /**
+     * Build buttons with Images for the grid.
      *
      * @param count the index of the icon
      * @return the built button
@@ -99,7 +99,7 @@ public class GridBuilder extends GridPane
 
     public void openBuilder(Toolbox tb, Window owner)
     {
-        IconProjBuilderNewDialog builderPane = new IconProjBuilderNewDialog(owner, myIconRegistry,mySelectedIcon);
+        IconProjBuilderNewDialog builderPane = new IconProjBuilderNewDialog(owner, myIconRegistry, mySelectedIcon);
         builderPane.setVisible(true);
     }
 

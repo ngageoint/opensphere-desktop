@@ -224,7 +224,6 @@ public class IconBuilderProjPane extends BorderPane
         catch (IOException e)
         {
         }
-        System.out.println(iconActual.getWidth() + "-------------" + iconActual.getHeight());
         if (iconActual.getWidth() > 150)
         {
             myIconView.setFitWidth(150);
