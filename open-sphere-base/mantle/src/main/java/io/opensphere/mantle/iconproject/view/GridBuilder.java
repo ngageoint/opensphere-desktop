@@ -26,35 +26,29 @@ public class GridBuilder extends GridPane
     /** the selected icon to be used for the builder. */
     private IconRecord mySelectedIcon;
 
-<<<<<<< HEAD
     /**
      * The GridBuilder constructor. sets up the rows and columns for the icon
-     * grid
-=======
-    /** The chosen icon collection. */
-    private final String theChosen;
-
-    /** The GridBuilder constructor.
-     * sets up the rows and columns for the icon grid
->>>>>>> 3f8d801363cd121397e3e212fd06efdf05e9a74f
-     *
+     * grid.
+     * 
      * @param tileWidth the width of each tile(button)
      * @param iconRegistry the icon registry
      */
+
+    /** The chosen icon collection. */
+    private final String theChosen;
+
     public GridBuilder(int tileWidth, IconRegistry iconRegistry, String category)
     {
         myTileWidth = tileWidth;
         myIconRegistry = iconRegistry;
-<<<<<<< HEAD
-        getStyleClass().add("IconManagerStyle.css");
-        setId("BoxStyle");
-        
-=======
         theChosen = category;
+        // Temporary getting to replace the ugly setStyle and make all buttons
+        // use one file.
+        // getStyleClass().add("IconManagerStyle.css");
+        // setId("BoxStyle");
 
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
->>>>>>> 3f8d801363cd121397e3e212fd06efdf05e9a74f
         int counter = 626;
         int numcols = 4;
         for (int row = 0; row <= 100; row++)

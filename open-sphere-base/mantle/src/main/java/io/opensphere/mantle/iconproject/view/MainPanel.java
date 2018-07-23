@@ -3,16 +3,20 @@ package io.opensphere.mantle.iconproject.view;
 import java.awt.EventQueue;
 import java.awt.Window;
 
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
-
+import javafx.scene.layout.StackPane;
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
+import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /**
@@ -24,32 +28,9 @@ public class MainPanel extends SplitPane
     /** The Icon registry. */
     private final IconRegistry myIconRegistry;
 
-<<<<<<< HEAD
     /** The optional selected icon URL. */
     private String mySelectedUrl;
 
-    /** The Last selected tree node user object. */
-    private IconRecordTreeNodeUserObject myLastSelectedTreeNodeUserObject;
-
-    /** The Tree. */
-    private final JTree myTree;
-
-    /** The Root tree node. */
-    @SuppressWarnings("PMD.SingularField")
-    private TreeNode myRootTreeNode;
-
-    /** The Tree model. */
-    private DefaultTreeModel myTreeModel;
-
-    RowConstraints rowConstraints = new RowConstraints();
-
-    ColumnConstraints columnConstraints = new ColumnConstraints();
-
-    /** Portion containing the icons */
-    private final GridPane gridPane;
-
-=======
->>>>>>> 3f8d801363cd121397e3e212fd06efdf05e9a74f
     /** The Customize Icon button. */
     private final ButtonBuilder myCustIconButton = new ButtonBuilder("Customize Icon", false);
 
@@ -65,22 +46,11 @@ public class MainPanel extends SplitPane
     /** The tree view. */
     private final TreeView<String> myTreeView;
 
-    /** The left panel view. */
+    /** The left Panel. */
     private final AnchorPane myLeftView;
 
-<<<<<<< HEAD
-    private final TreeView myTreeList;
-
-    private final PanelModel myPanel = new PanelModel();
-
-    private final AnchorPane myTreeView;
-
-    /** The Display Grid of Icons. */
-    private GridBuilder myIconGrid;
-=======
     /** The treeView choice. */
     private String theChoice = "";
->>>>>>> 3f8d801363cd121397e3e212fd06efdf05e9a74f
 
     /**
      * The MainPanel constructor.
@@ -112,13 +82,9 @@ public class MainPanel extends SplitPane
         AnchorPane.setBottomAnchor(myAddIconButton, 52.0);
         myAddIconButton.setOnAction(event ->
         {
-<<<<<<< HEAD
-=======
             EventQueue.invokeLater(() ->
             {
-                // TODO: add generation stuff
             });
->>>>>>> 3f8d801363cd121397e3e212fd06efdf05e9a74f
         });
 
         AnchorPane.setBottomAnchor(myCustIconButton, 26.0);
@@ -130,18 +96,16 @@ public class MainPanel extends SplitPane
         {
             EventQueue.invokeLater(() ->
             {
-                // TODO: add generation stuff
             });
         });
 
-<<<<<<< HEAD
         // System.out.println("width: " + getWidth());
 
-        GridBuilder myIconGrid = new GridBuilder(130, myIconRegistry);
+        GridBuilder myIconGrid = new GridBuilder(130, myIconRegistry, theChoice);
+        System.out.println("choice is:   " + theChoice);
 
         myScrollBar.setOrientation(javafx.geometry.Orientation.VERTICAL);
         ScrollPane myScrollPane = new ScrollPane(myIconGrid);
-        // ScrollPane myScrollPane = new ScrollPane(grid);
         myScrollPane.setPannable(true);
         AnchorPane.setLeftAnchor(myScrollPane, 0.);
         AnchorPane.setRightAnchor(myScrollPane, 0.);
@@ -150,46 +114,17 @@ public class MainPanel extends SplitPane
         myScrollPane.setFitToHeight(true);
         myScrollPane.setFitToWidth(true);
 
-        columnConstraints.setMinWidth(10.0);
-        columnConstraints.setPrefWidth(100.0);
-        columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
-
-        rowConstraints.setMinHeight(10.0);
-        rowConstraints.setPrefHeight(30.0);
-        rowConstraints.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
-
-        myTreeView.getChildren().addAll(myTreeList, myAddIconButton, myCustIconButton, myGenIconButton);
-        getItems().addAll(myTreeView, myScrollPane);
-=======
         myTreeView.getSelectionModel().selectedItemProperty()
-        .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
-
-        GridBuilder customGrid = new GridBuilder(130, myIconRegistry, theChoice);
-        System.out.println("choice is:   " + theChoice);
-
-        myScrollBar.setOrientation(javafx.geometry.Orientation.VERTICAL);
-        ScrollPane theScrollPane = new ScrollPane(customGrid);
-        theScrollPane.setPannable(true);
-        AnchorPane.setLeftAnchor(theScrollPane, 0.);
-        AnchorPane.setRightAnchor(theScrollPane, 0.);
-        AnchorPane.setTopAnchor(theScrollPane, 0.);
-        AnchorPane.setBottomAnchor(theScrollPane, 0.);
-        theScrollPane.setFitToHeight(true);
-        theScrollPane.setFitToWidth(true);
+                .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
 
         myLeftView.getChildren().addAll(myTreeView, myAddIconButton, myCustIconButton, myGenIconButton);
-        getItems().addAll(myLeftView, theScrollPane);
->>>>>>> 3f8d801363cd121397e3e212fd06efdf05e9a74f
+        getItems().addAll(myLeftView, myScrollPane);
 
         myCustIconButton.setOnAction(event ->
         {
             EventQueue.invokeLater(() ->
             {
-<<<<<<< HEAD
                 myIconGrid.openBuilder(tb, owner);
-=======
-                customGrid.openBuilder(tb, owner);
->>>>>>> 3f8d801363cd121397e3e212fd06efdf05e9a74f
             });
         });
 
@@ -209,32 +144,27 @@ public class MainPanel extends SplitPane
     }
 
     /**
-     * I'm not sure.
+     * Changes the Icon Display Grid from Grid to List.
      *
-     * @param choice the choice?
+     * @param choice the selected toggle.
      */
     static void changeTop(boolean choice)
     {
-        /* ObservableList<Node> childs = stackPane.getChildren();
-<<<<<<< HEAD
-         * 
-         * Node grid = childs.get(1); Node list = childs.get(0); if (choice) {
-         * grid.setVisible(false); list.setVisible(true); } else {
-         * list.setVisible(false); grid.setVisible(true); } */
-=======
+//        StackPane stackPane = new StackPane();
+//        ObservableList<Node> childs = stackPane.getChildren();
+//
+//        Node grid = childs.get(1);
+//        Node list = childs.get(0);
+//        if (choice)
+//        {
+//            grid.setVisible(false);
+//            list.setVisible(true);
+//        }
+//        else
+//        {
+//            list.setVisible(false);
+//            grid.setVisible(true);
+//        }
 
-        Node grid = childs.get(1);
-        Node list = childs.get(0);
-        if (choice)
-        {
-            grid.setVisible(false);
-            list.setVisible(true);
-        }
-        else
-        {
-            list.setVisible(false);
-            grid.setVisible(true);
-        }*/
->>>>>>> 3f8d801363cd121397e3e212fd06efdf05e9a74f
     }
 }
