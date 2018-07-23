@@ -26,6 +26,9 @@ public class GridBuilder extends GridPane
     /** the selected icon to be used for the builder. */
     private IconRecord mySelectedIcon;
 
+    /** The chosen icon collection. */
+    private final String theChosen;
+
     /** The GridBuilder constructor.
      * sets up the rows and columns for the icon grid
      *
@@ -36,8 +39,7 @@ public class GridBuilder extends GridPane
     {
         myTileWidth = tileWidth;
         myIconRegistry = iconRegistry;
-
-        //System.out.println(myIconRegistry.getSubCategoiresForCollection("User Added"));
+        theChosen = category;
 
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
@@ -59,7 +61,7 @@ public class GridBuilder extends GridPane
             cc.setPercentWidth(100 / numcols);
             getColumnConstraints().add(cc);
         }
-
+        System.out.println("the chosen is:   " + theChosen);
     }
 
     /** Build buttons with Images for the grid.

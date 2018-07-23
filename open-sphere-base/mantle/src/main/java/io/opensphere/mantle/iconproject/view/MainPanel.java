@@ -98,6 +98,7 @@ public class MainPanel extends SplitPane
         .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
 
         GridBuilder customGrid = new GridBuilder(130, myIconRegistry, theChoice);
+        System.out.println("choice is:   " + theChoice);
 
         myScrollBar.setOrientation(javafx.geometry.Orientation.VERTICAL);
         ScrollPane theScrollPane = new ScrollPane(customGrid);
@@ -119,6 +120,9 @@ public class MainPanel extends SplitPane
                 customGrid.openBuilder(tb, owner);
             });
         });
+
+        System.out.println("choiceee is:   " + theChoice);
+
     }
 
     /**
