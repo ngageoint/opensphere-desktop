@@ -1,6 +1,10 @@
 package io.opensphere.mantle.iconproject.impl;
 
 import java.awt.Window;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -189,7 +193,7 @@ public class IconBuilderProjPane extends BorderPane
         saveState.selectedProperty().bindBidirectional(mySave);
         saveState.selectedProperty().addListener(event -> System.out.println(saveState.selectedProperty().get()));
 
-        SaveInfo.getChildren().addAll(saveState,helpInfo);
+        SaveInfo.getChildren().addAll(saveState, helpInfo);
         SaveInfo.setSpacing(5.);
         cnrlBox.getChildren().addAll(controlBox, SaveInfo);
         return cnrlBox;
@@ -211,8 +215,32 @@ public class IconBuilderProjPane extends BorderPane
         myIconView.rotateProperty().bind(myRotation);
         myIconView.translateXProperty().bind(myXPos);
         myIconView.translateYProperty().bind(myYPos);
-        myIconView.setFitWidth(150);
-        myIconView.setFitHeight(150);
+
+        BufferedImage iconActual = null;
+        try
+        {
+            iconActual = ImageIO.read(myIconRecord.getImageURL());
+        }
+        catch (IOException e)
+        {
+        }
+        System.out.println(iconActual.getWidth() + "-------------" + iconActual.getHeight());
+        if (iconActual.getWidth() > 150)
+        {
+            myIconView.setFitWidth(150);
+            myIconView.setFitHeight(150);
+        }
+        else if (iconActual.getWidth() < 40)
+        {
+            myIconView.setFitWidth(50);
+            myIconView.setFitHeight(50);
+        }
+        else
+        {
+            myIconView.setFitWidth(iconActual.getTileWidth());
+            myIconView.setFitHeight(iconActual.getHeight());
+        }
+
         myIconView.scaleXProperty().bind(myScale);
         myIconView.scaleYProperty().bind(myScale);
 
