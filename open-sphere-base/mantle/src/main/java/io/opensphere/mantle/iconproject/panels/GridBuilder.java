@@ -46,12 +46,12 @@ public class GridBuilder extends GridPane
         theChosen = category;
         // Temporary getting to replace the ugly setStyle and make all buttons
         // use one file.
-        // getStyleClass().add("IconManagerStyle.css");
-        // setId("BoxStyle");
+         getStyleClass().add("IconManagerStyle.css");
+         setId("BoxStyle");
 
-        setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-                + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
-        int counter = 15;
+        //setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+        //        + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
+        int counter = 3000    ;
         int numcols = 4;
         for (int row = 0; row <= 10; row++)
         {
