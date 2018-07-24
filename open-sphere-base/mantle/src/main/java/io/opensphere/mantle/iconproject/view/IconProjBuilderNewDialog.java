@@ -24,7 +24,7 @@ import io.opensphere.mantle.iconproject.impl.IconBuilderProjPane;
 /** The component class for building icons. */
 public class IconProjBuilderNewDialog extends JFXDialog
 {
-    /** serial ID.   */
+    /** serial ID. */
     private static final long serialVersionUID = -8284546944940700345L;
 
     /** The logger for this class. */
@@ -50,7 +50,7 @@ public class IconProjBuilderNewDialog extends JFXDialog
         setMinimumSize(new Dimension(450, 550));
 
         setLocationRelativeTo(owner);
-        setAcceptEar(() -> saveImage(pane.getFinalImage(), pane.getImageName(),pane.getSaveState(),pane.getIconRecord()));
+        setAcceptEar(() -> saveImage(pane.getFinalImage(), pane.getImageName(), pane.getSaveState(), pane.getIconRecord()));
     }
 
     /**
@@ -70,14 +70,11 @@ public class IconProjBuilderNewDialog extends JFXDialog
 
             if (savestate)
             {
-
-             //   IconProvider shit = new DefaultIconProvider(Icon.getImageURL(), Icon.getCollectionName(), Icon.getSubCategory(),Icon.getSourceKey());
-                
                 URL imageURL = myIconRegistry.getIconCache().cacheIcon(outputStream.toByteArray(), Icon.getName(), false);
-                IconProvider provider = new DefaultIconProvider(imageURL, Icon.getCollectionName(), Icon.getSubCategory(),Icon.getSourceKey());
+                IconProvider provider = new DefaultIconProvider(imageURL, Icon.getCollectionName(), Icon.getSubCategory(),
+                        Icon.getSourceKey());
                 myIconRegistry.addIcon(provider, this);
                 System.out.println(myIconRegistry.removeIcon(Icon, this));
-        //        System.out.println(myIconRegistry.getIconCache().removeIcon(imageURL));
             }
             else
             {
@@ -85,13 +82,11 @@ public class IconProjBuilderNewDialog extends JFXDialog
                 IconProvider provider = new DefaultIconProvider(imageURL, IconRecord.USER_ADDED_COLLECTION, null, "User");
                 myIconRegistry.addIcon(provider, this);
             }
-
         }
         catch (IOException e)
         {
             Notify.error(e.getMessage());
             LOGGER.error(e, e);
         }
-
     }
 }

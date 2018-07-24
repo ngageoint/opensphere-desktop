@@ -3,6 +3,8 @@ package io.opensphere.mantle.iconproject.view;
 import java.awt.Window;
 
 import io.opensphere.core.Toolbox;
+import io.opensphere.mantle.iconproject.panels.MainPanel;
+import io.opensphere.mantle.iconproject.panels.TopMenuBar;
 import javafx.scene.layout.AnchorPane;
 
 /** Packages UI elements into one pane. */

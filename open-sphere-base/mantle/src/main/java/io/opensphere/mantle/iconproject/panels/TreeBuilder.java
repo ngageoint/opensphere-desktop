@@ -1,4 +1,4 @@
-package io.opensphere.mantle.iconproject.view;
+package io.opensphere.mantle.iconproject.panels;
 
 import java.util.Collections;
 import java.util.List;

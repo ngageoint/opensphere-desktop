@@ -1,4 +1,4 @@
-package io.opensphere.mantle.iconproject.view;
+package io.opensphere.mantle.iconproject.panels;
 
 import java.awt.EventQueue;
 import java.awt.Window;
@@ -101,7 +101,7 @@ public class MainPanel extends SplitPane
 
         // System.out.println("width: " + getWidth());
 
-        GridBuilder myIconGrid = new GridBuilder(130, myIconRegistry, theChoice);
+        GridBuilder myIconGrid = new GridBuilder(90, myIconRegistry, theChoice);
         System.out.println("choice is:   " + theChoice);
 
         myScrollBar.setOrientation(javafx.geometry.Orientation.VERTICAL);
@@ -124,7 +124,7 @@ public class MainPanel extends SplitPane
         {
             EventQueue.invokeLater(() ->
             {
-                myIconGrid.openBuilder(tb, owner);
+                myIconGrid.showIconCustomizer(tb, owner);
             });
         });
 

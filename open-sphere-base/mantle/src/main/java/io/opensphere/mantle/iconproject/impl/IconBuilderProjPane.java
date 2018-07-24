@@ -97,7 +97,7 @@ public class IconBuilderProjPane extends BorderPane
      */
     private HBox createTop()
     {
-        HBox TopBar = new HBox();
+        HBox myTopBar = new HBox();
         Spinner<Number> sizeSpin = new Spinner<>(0.0, 3.0, 1, .1);
         sizeSpin.setPrefWidth(55.);
         sizeSpin.getValueFactory().valueProperty().bindBidirectional(myScale);
@@ -115,8 +115,8 @@ public class IconBuilderProjPane extends BorderPane
             updateImageColor();
         });
 
-        TopBar.getChildren().addAll(myColorPicker, sizeLabel, sizeSpin);
-        return TopBar;
+        myTopBar.getChildren().addAll(myColorPicker, sizeLabel, sizeSpin);
+        return myTopBar;
     }
 
     /**
@@ -137,7 +137,7 @@ public class IconBuilderProjPane extends BorderPane
         rotSlider.valueProperty().bindBidirectional(myRotation);
 
         Spinner<Number> rotSpinner = new Spinner<>(-180., 180., 0.);
-        rotSpinner.setPrefWidth(40.);
+        rotSpinner.setPrefWidth(40.0);
         rotSpinner.getValueFactory().valueProperty().bindBidirectional(myRotation);
         rotSpinner.setEditable(true);
         rotSpinner.getStyleClass().clear();

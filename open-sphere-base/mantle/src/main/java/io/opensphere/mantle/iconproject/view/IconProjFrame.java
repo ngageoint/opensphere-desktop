@@ -12,7 +12,7 @@ public class IconProjFrame
 
     /**
      * Constructor.
-     * 
+     *
      * Creates the Icon Manager UI.
      *
      * @param tb the imported toolbox from control pannels.
