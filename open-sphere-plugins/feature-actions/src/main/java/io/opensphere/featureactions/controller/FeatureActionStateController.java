@@ -124,7 +124,7 @@ public class FeatureActionStateController extends AbstractLayerStateController<P
     @Override
     public boolean canActivateState(Node node)
     {
-        return StateXML.anyMatch(node, "/:state/:featureActions/:featureAction");
+        return StateXML.anyMatch(node, FeatureActionStateConstants.FEATURE_ACTION_PATH);
     }
 
     @Override
