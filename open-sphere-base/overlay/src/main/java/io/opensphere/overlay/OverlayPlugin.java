@@ -119,7 +119,7 @@ public class OverlayPlugin extends PluginAdapter
         EventQueueUtilities.invokeLater(() -> PluginMenuBarHelper.initializeMenuBar(toolbox, myMGRSTransformer,
                 myArcLengthTransformer, myDotTransformer));
 
-        OverlayToolbox oToolbox = new OverlayToolboxImpl(ctrl);
+        OverlayToolbox oToolbox = new OverlayToolboxImpl(toolbox, ctrl);
         myToolbox.getPluginToolboxRegistry().registerPluginToolbox(oToolbox);
 
         SpatialTemporalDetailsProvider stdp = new SpatialTemporalDetailsProvider(toolbox,

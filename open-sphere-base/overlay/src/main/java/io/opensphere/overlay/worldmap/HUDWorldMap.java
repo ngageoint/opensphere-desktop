@@ -111,13 +111,14 @@ public class HUDWorldMap extends AbstractOverlayWindow
         ScreenPosition delta;
         if (minimize)
         {
-            delta = new ScreenPosition(-275, -125);
+            delta = new ScreenPosition(-271, -121);
         }
         else
         {
-            delta = new ScreenPosition(275, 125);
+            delta = new ScreenPosition(271, 121);
         }
         resizeWindow(delta);
+        handleWindowMoved();
     }
 
     /** Add the world map background. */
@@ -152,7 +153,7 @@ public class HUDWorldMap extends AbstractOverlayWindow
         }
 
         GridLayoutConstraints constraints = new GridLayoutConstraints(
-                new ScreenBoundingBox(new ScreenPosition(0, 0), new ScreenPosition(25, 25)));
+                new ScreenBoundingBox(new ScreenPosition(0, 0), new ScreenPosition(30, 30)));
 
         add(myRestoreButton, constraints);
     }

@@ -84,4 +84,32 @@
         <appVersion>1.0</appVersion>
         <requiredPluginDependency>OverlayPlugin</requiredPluginDependency>
     </pluginLoaderData>
+    <pluginLoaderData>
+        <id>ZoomControlsPlugin</id>
+        <class>io.opensphere.overlay.controls.ZoomControlsPlugin</class>
+        <appVersion>1.0</appVersion>
+        <requiredPluginDependency>OverlayPlugin</requiredPluginDependency>
+        <pluginProperty>
+            <key>parentMenuName</key>
+            <value>Main Menu Bar/View/Controls</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>menuButtonLabel</key>
+            <value>Zoom Controls</value>
+        </pluginProperty>
+    </pluginLoaderData>
+    <pluginLoaderData>
+        <id>PerspectivePlugin</id>
+        <class>io.opensphere.overlay.controls.PerspectivePlugin</class>
+        <appVersion>1.0</appVersion>
+        <requiredPluginDependency>OverlayPlugin</requiredPluginDependency>
+        <pluginProperty>
+            <key>parentMenuName</key>
+            <value>Main Menu Bar/View/Controls</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>menuButtonLabel</key>
+            <value>Perspective Controls</value>
+        </pluginProperty>
+    </pluginLoaderData>
 </pluginLoaderCollection>
