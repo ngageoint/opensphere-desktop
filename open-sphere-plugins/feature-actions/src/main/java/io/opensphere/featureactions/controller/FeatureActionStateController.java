@@ -6,14 +6,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.bitsys.fade.mist.state.v4.ActionArrayType;
 import com.bitsys.fade.mist.state.v4.FeatureActionArrayType;
@@ -25,6 +29,7 @@ import com.bitsys.fade.mist.state.v4.ShapeType;
 import com.bitsys.fade.mist.state.v4.StateType;
 
 import io.opensphere.controlpanels.styles.model.StyleOptions;
+import io.opensphere.core.common.util.JAXBContextHelper;
 import io.opensphere.core.export.ExportException;
 import io.opensphere.core.modulestate.AbstractLayerStateController;
 import io.opensphere.core.modulestate.ModuleStateController;
@@ -49,7 +54,6 @@ import io.opensphere.mantle.data.element.mdfilter.FilterException;
 import io.opensphere.mantle.data.element.mdfilter.FilterToWFS100Converter;
 import io.opensphere.mantle.data.element.mdfilter.FilterToWFS110Converter;
 import javafx.collections.ObservableList;
-import net.opengis.ogc._110.LogicOpsType;
 
 /**
  * A state controller for {@link FeatureAction}.
@@ -66,7 +70,7 @@ public class FeatureActionStateController extends AbstractLayerStateController<P
     private final DataGroupController myDataGroupController;
 
     /**
-     * Constructor for the FeatureActionsStateController.
+     * Constructor.
      *
      * @param actionRegistry The feature action registry.
      * @param dataGroupController The data group controller.
@@ -80,7 +84,31 @@ public class FeatureActionStateController extends AbstractLayerStateController<P
     @Override
     public void activateState(String id, String description, Collection<? extends String> tags, Node node)
     {
-        
+        try
+        {
+            NodeList featureActionNodes = StateXML.getChildNodes(node, "/:state/:featureActions/:featureAction");
+            for (int i = 0; i < featureActionNodes.getLength(); i++)
+            {
+                FeatureAction newFeatureAction = new FeatureAction();
+                Node featureActionNode = featureActionNodes.item(i);
+                try
+                {
+                    newFeatureAction = XMLUtilities.readXMLObject(featureActionNode, FeatureAction.class);
+                }
+                catch (JAXBException e)
+                {
+                    LOGGER.error(e.getMessage(), e);
+                }
+                String layerPath = StateXML.newXPath().evaluate("/" + ModuleStateController.STATE_QNAME
+                        + "/:featureActions/:featureAction[@type=\"type\"", featureActionNode);
+                myRegistry.add(layerPath, Collections.singleton(newFeatureAction), this);
+                addResource(id, new Pair<>(newFeatureAction, layerPath));
+            }
+        }
+        catch (XPathExpressionException e)
+        {
+            LOGGER.error(e.getMessage(), e);
+        }
     }
 
     @Override
@@ -115,13 +143,21 @@ public class FeatureActionStateController extends AbstractLayerStateController<P
     @Override
     public boolean canActivateState(StateType state)
     {
-        return state.getFeatureActions().isSetFeatureAction();
+        return true;
     }
 
     @Override
     public boolean canSaveState()
     {
-        return true;
+        Set<DataTypeInfo> dataTypeSet = getFeatureLayers();
+        for (DataTypeInfo dataType : dataTypeSet)
+        {
+            if (!myRegistry.get(dataType.getTypeKey()).isEmpty())
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -175,51 +211,52 @@ public class FeatureActionStateController extends AbstractLayerStateController<P
                             "featureActions");
                     Node featureActionNode = StateXML.createChildNode(baseNode, doc, baseNode,
                             "/" + ModuleStateController.STATE_QNAME + "/:featureActions/:featureAction", "featureAction");
-                    ((Element)featureActionNode).setAttribute("active", StringUtilities.toString(currentAction.isEnabled()));
-                    ((Element)featureActionNode).setAttribute("title", currentAction.getName());
-                    ((Element)featureActionNode).setAttribute("description", currentAction.getGroupName());
-                    ((Element)featureActionNode).setAttribute("type", dataType.getTypeKey());
-                    ((Element)featureActionNode).setAttribute("typeHint", FeatureActionTypeHint.FILTERABLE.toString());
-
-                    // Filter
-                    Filter featureFilter = currentAction.getFilter();
-                    net.opengis.ogc._100t.FilterType filterType = new net.opengis.ogc._100t.FilterType();
-                    filterType.setActive(featureFilter.isActive());
-                    filterType.setTitle(featureFilter.getName());
-                    filterType.setDescription(featureFilter.getFilterDescription());
-                    filterType.setId(Integer.toHexString(filterType.hashCode()));
-                    filterType.setFilterType("single");
-                    filterType.setMatch(featureFilter.getMatch());
-                    filterType.setType(featureFilter.getTypeKey());
-                    try
-                    {
-                        filterType.setLogicOps(FilterToWFS100Converter.convert(featureFilter));
-                    }
-                    catch (FilterException e)
-                    {
-                        LOGGER.error("Unable to create an OGCFilter", e);
-                    }
-                    XMLUtilities.marshalJAXBObjectToElement(filterType, featureActionNode);
-
-                    //Actions
-                    Node actionsNode = StateXML.createChildNode(featureActionNode, doc, featureActionNode,
-                            "/" + ModuleStateController.STATE_QNAME + "/:featureActions/:featureAction/:actions", "actions");
-                    Node featureStyleNode = StateXML.createChildNode(actionsNode, doc, actionsNode,
-                            "/" + ModuleStateController.STATE_QNAME + "/:featureActions/:featureAction/:actions/:featureStyleAction",
-                            "featureStyleAction");
-                    ObservableList<Action> actions = currentAction.getActions();
-                    if (actions.get(0) instanceof StyleAction)
-                    {
-                        StyleOptions styleOptions = ((StyleAction)actions.get(0)).getStyleOptions();
-                        Node colorNode = createElement(featureStyleNode, "color");
-                        colorNode.setTextContent((ColorUtilities.convertToHexString(styleOptions.getColor(), 1, 2, 3, 0)));
-                        Node sizeNode = createElement(featureStyleNode, "size");
-                        sizeNode.setTextContent(StringUtilities.toString(styleOptions.getSize()));
-                        Node shapeNode = createElement(featureStyleNode, "shape");
-                        shapeNode.setTextContent(ShapeType.DEFAULT.toString());
-                        Node centerNode = createElement(featureStyleNode, "centerShape");
-                        centerNode.setTextContent(ShapeType.POINT.toString());
-                    }
+                    XMLUtilities.marshalJAXBObjectToElement(currentAction, featureActionNode);
+//                    ((Element)featureActionNode).setAttribute("active", StringUtilities.toString(currentAction.isEnabled()));
+//                    ((Element)featureActionNode).setAttribute("title", currentAction.getName());
+//                    ((Element)featureActionNode).setAttribute("description", currentAction.getGroupName());
+//                    ((Element)featureActionNode).setAttribute("type", dataType.getTypeKey());
+//                    ((Element)featureActionNode).setAttribute("typeHint", FeatureActionTypeHint.FILTERABLE.toString());
+//
+//                    // Filter
+//                    Filter featureFilter = currentAction.getFilter();
+//                    net.opengis.ogc._100t.FilterType filterType = new net.opengis.ogc._100t.FilterType();
+//                    filterType.setActive(featureFilter.isActive());
+//                    filterType.setTitle(featureFilter.getName());
+//                    filterType.setDescription(featureFilter.getFilterDescription());
+//                    filterType.setId(Integer.toHexString(filterType.hashCode()));
+//                    filterType.setFilterType("single");
+//                    filterType.setMatch(featureFilter.getMatch());
+//                    filterType.setType(featureFilter.getTypeKey());
+//                    try
+//                    {
+//                        filterType.setLogicOps(FilterToWFS100Converter.convert(featureFilter));
+//                    }
+//                    catch (FilterException e)
+//                    {
+//                        LOGGER.error("Unable to create an OGCFilter", e);
+//                    }
+//                    XMLUtilities.marshalJAXBObjectToElement(filterType, featureActionNode);
+//
+//                    //Actions
+//                    Node actionsNode = StateXML.createChildNode(featureActionNode, doc, featureActionNode,
+//                            "/" + ModuleStateController.STATE_QNAME + "/:featureActions/:featureAction/:actions", "actions");
+//                    Node featureStyleNode = StateXML.createChildNode(actionsNode, doc, actionsNode,
+//                            "/" + ModuleStateController.STATE_QNAME + "/:featureActions/:featureAction/:actions/:featureStyleAction",
+//                            "featureStyleAction");
+//                    ObservableList<Action> actions = currentAction.getActions();
+//                    if (actions.get(0) instanceof StyleAction)
+//                    {
+//                        StyleOptions styleOptions = ((StyleAction)actions.get(0)).getStyleOptions();
+//                        Node colorNode = createElement(featureStyleNode, "color");
+//                        colorNode.setTextContent((ColorUtilities.convertToHexString(styleOptions.getColor(), 1, 2, 3, 0)));
+//                        Node sizeNode = createElement(featureStyleNode, "size");
+//                        sizeNode.setTextContent(StringUtilities.toString(styleOptions.getSize()));
+//                        Node shapeNode = createElement(featureStyleNode, "shape");
+//                        shapeNode.setTextContent(ShapeType.DEFAULT.toString());
+//                        Node centerNode = createElement(featureStyleNode, "centerShape");
+//                        centerNode.setTextContent(ShapeType.POINT.toString());
+//                    }
                 }
                 catch (XPathExpressionException | JAXBException e)
                 {
