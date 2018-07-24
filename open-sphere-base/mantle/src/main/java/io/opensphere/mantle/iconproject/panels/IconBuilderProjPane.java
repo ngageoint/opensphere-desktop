@@ -1,4 +1,4 @@
-package io.opensphere.mantle.iconproject.impl;
+package io.opensphere.mantle.iconproject.panels;
 
 import java.awt.Window;
 import java.awt.image.BufferedImage;
@@ -116,6 +116,7 @@ public class IconBuilderProjPane extends BorderPane
         });
 
         myTopBar.getChildren().addAll(myColorPicker, sizeLabel, sizeSpin);
+        // myTopBar.setStyle("BoxStyle");
         return myTopBar;
     }
 
@@ -208,9 +209,11 @@ public class IconBuilderProjPane extends BorderPane
     {
         HBox iconDisplayer = new HBox();
         iconDisplayer.setAlignment(Pos.CENTER);
-        iconDisplayer.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
-                + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
-
+        // iconDisplayer.setStyle("-fx-padding: 10;" + "-fx-border-style: solid
+        // inside;" + "-fx-border-width: 2;"
+        // + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" +
+        // "-fx-border-color: purple;");
+        iconDisplayer.setId("BoxStyle");
         myIconView = new ImageView(myIconRecord.getImageURL().toString());
         myIconView.rotateProperty().bind(myRotation);
         myIconView.translateXProperty().bind(myXPos);
@@ -276,13 +279,19 @@ public class IconBuilderProjPane extends BorderPane
     public WritableImage getFinalImage()
     {
         WritableImage iconOut = null;
-
+        SnapshotParameters parameters = new SnapshotParameters();
+        parameters.setFill(Color.TRANSPARENT);
+        myIconDisplay.setStyle(null);
         if (myIconView.getImage() != null)
         {
-            SnapshotParameters parameters = new SnapshotParameters();
-            parameters.setFill(Color.TRANSPARENT);
-            myIconDisplay.setStyle(null);
-            iconOut = myIconDisplay.snapshot(parameters, null);
+            if (myXPos.getValue() == 0 && myYPos.getValue() == 0)
+            {
+                iconOut = myIconView.snapshot(parameters, null);
+            }
+            else
+            {
+                iconOut = myIconDisplay.snapshot(parameters, null);
+            }
         }
         return iconOut;
     }
@@ -306,6 +315,12 @@ public class IconBuilderProjPane extends BorderPane
         return myIconRecord != null ? myIconRecord.getName() + "_" + myIconView.getRotate() : null;
     }
 
+    /**
+     * Sends the Icon Record to be used elsewhere.
+     *
+     * @return the currently modified icon.
+     */
+
     public boolean getSaveState()
     {
         return mySave.get();
@@ -314,6 +329,27 @@ public class IconBuilderProjPane extends BorderPane
     public IconRecord getIconRecord()
     {
         return myIconRecord;
+    }
+
+    /**
+     * Sends the X translation value to be used elsewhere.
+     *
+     * @return the current Icon's X Position.
+     */
+
+    public int getXPos()
+    {
+        return myXPos.getValue().intValue();
+    }
+
+    /**
+     * Sends the Y translation value to be used elsewhere.
+     *
+     * @return the current Icon's Y Position.
+     */
+    public int getYPos()
+    {
+        return myYPos.getValue().intValue();
     }
 
 }

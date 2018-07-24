@@ -20,12 +20,13 @@ public class IconProjNewView extends AnchorPane
      * Creates subpannels for UI.
      *
      * @param tb the toolbox used for registry.
+     * @param owner the parent window containing this pannel.a
      */
-    
+
     public IconProjNewView(Toolbox tb, Window owner)
     {
-        myMainPanel = new MainPanel(tb,owner);
-        setTopAnchor(myMainPanel, 30.);
+        myMainPanel = new MainPanel(tb, owner);
+        setTopAnchor(myMainPanel, 30.0);
         setBottomAnchor(myMainPanel, 0.0);
         setLeftAnchor(myMainPanel, -8.);
         setRightAnchor(myMainPanel, 0.);
