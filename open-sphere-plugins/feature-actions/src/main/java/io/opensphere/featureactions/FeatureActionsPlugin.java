@@ -9,7 +9,7 @@ import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.util.Service;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.featureactions.controller.FeatureActionsController;
-import io.opensphere.featureactions.controller.FeatureActionsStateController;
+import io.opensphere.featureactions.controller.FeatureActionStateController;
 import io.opensphere.featureactions.editor.ui.ActionEditorDisplayer;
 import io.opensphere.featureactions.editor.ui.ActionEditorDisplayerImpl;
 import io.opensphere.featureactions.editor.ui.FeatureActionsMenuProvider;
@@ -28,7 +28,7 @@ public class FeatureActionsPlugin extends AbstractServicePlugin
      */
     private FeatureActionsMenuProvider myEditorMenuProvider;
     
-    private FeatureActionsStateController myStateController;
+    private FeatureActionStateController myStateController;
 
     @Override
     protected Collection<Service> getServices(PluginLoaderData plugindata, Toolbox toolbox)
@@ -36,7 +36,7 @@ public class FeatureActionsPlugin extends AbstractServicePlugin
         FeatureActionsRegistry registry = new FeatureActionsRegistry(toolbox.getPreferencesRegistry());
         FeatureActionsToolbox pluginToolbox = new FeatureActionsToolbox(registry);
         FeatureActionsController controller = new FeatureActionsController(toolbox, registry);
-        myStateController = new FeatureActionsStateController(registry, MantleToolboxUtils.getMantleToolbox(toolbox).getDataGroupController());
+        myStateController = new FeatureActionStateController(registry, MantleToolboxUtils.getMantleToolbox(toolbox).getDataGroupController());
 
         ActionEditorDisplayer displayer = new ActionEditorDisplayerImpl(toolbox, registry);
         UIRegistry uiRegistry = toolbox.getUIRegistry();
