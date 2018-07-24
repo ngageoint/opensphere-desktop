@@ -1,4 +1,4 @@
-package io.opensphere.mantle.iconproject.view;
+package io.opensphere.mantle.iconproject.panels;
 
 import java.awt.Window;
 
@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.iconproject.view.IconProjBuilderNewDialog;
 
 /** Crates the Icon Display Grid. */
 public class GridBuilder extends GridPane
@@ -26,16 +27,17 @@ public class GridBuilder extends GridPane
     /** the selected icon to be used for the builder. */
     private IconRecord mySelectedIcon;
 
+    /** The chosen icon collection. */
+    private final String theChosen;
+
     /**
      * The GridBuilder constructor. sets up the rows and columns for the icon
      * grid.
-     * 
-     * @param tileWidth the width of each tile(button)
+     *
+     * @param tileWidth the width of each tile(button).
      * @param iconRegistry the icon registry
+     * @param category the category the icons belong to on the tree.
      */
-
-    /** The chosen icon collection. */
-    private final String theChosen;
 
     public GridBuilder(int tileWidth, IconRegistry iconRegistry, String category)
     {
@@ -49,9 +51,9 @@ public class GridBuilder extends GridPane
 
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
-        int counter = 626;
+        int counter = 15;
         int numcols = 4;
-        for (int row = 0; row <= 100; row++)
+        for (int row = 0; row <= 10; row++)
         {
             for (int col = 0; col <= numcols; col++)
             {
@@ -104,10 +106,15 @@ public class GridBuilder extends GridPane
         return generic;
     }
 
-    public void openBuilder(Toolbox tb, Window owner)
+    /**
+     * Shows the icon customizer.
+     *
+     * @param tb the toolbox.
+     * @param owner the current window pane.
+     */
+    public void showIconCustomizer(Toolbox tb, Window owner)
     {
         IconProjBuilderNewDialog builderPane = new IconProjBuilderNewDialog(owner, myIconRegistry, mySelectedIcon);
         builderPane.setVisible(true);
     }
-
 }
