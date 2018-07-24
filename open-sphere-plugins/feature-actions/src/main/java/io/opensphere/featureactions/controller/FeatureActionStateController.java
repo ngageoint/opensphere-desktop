@@ -335,7 +335,8 @@ public class FeatureActionStateController extends AbstractLayerStateController<P
         Set<DataTypeInfo> returnList  = New.set();
         for (DataTypeInfo typeInfo : layerList)
         {
-            if (typeInfo.getTypeKey().startsWith("CSV"))
+            if (typeInfo.getSourcePrefix().equals("CSV") || typeInfo.getSourcePrefix().equals("Merged")
+                    || typeInfo.getSourcePrefix().equals("Joined"))
             {
                 returnList.add(typeInfo);
             }
