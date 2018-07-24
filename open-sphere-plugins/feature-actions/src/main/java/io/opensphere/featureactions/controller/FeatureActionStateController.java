@@ -25,12 +25,10 @@ import com.bitsys.fade.mist.state.v4.StateType;
 
 import io.opensphere.controlpanels.styles.model.StyleOptions;
 import io.opensphere.core.modulestate.AbstractLayerStateController;
-import io.opensphere.core.modulestate.ModuleStateController;
 import io.opensphere.core.modulestate.StateUtilities;
 import io.opensphere.core.modulestate.StateXML;
 import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.XMLUtilities;
-import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.featureactions.model.Action;
 import io.opensphere.featureactions.model.FeatureAction;
@@ -43,6 +41,7 @@ import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.element.mdfilter.FilterException;
 import io.opensphere.mantle.data.element.mdfilter.FilterToWFS100Converter;
 import javafx.collections.ObservableList;
+import net.opengis.ogc._100t.FilterType;
 
 /**
  * A state controller for {@link FeatureAction}.
@@ -75,7 +74,7 @@ public class FeatureActionStateController extends AbstractLayerStateController<P
     {
         try
         {
-            NodeList featureActionNodes = StateXML.getChildNodes(node, "/:state/:featureActions/:featureAction");
+            NodeList featureActionNodes = StateXML.getChildNodes(node, FeatureActionStateConstants.FEATURE_ACTION_PATH);
             for (int i = 0; i < featureActionNodes.getLength(); i++)
             {
                 FeatureAction newFeatureAction = new FeatureAction();
@@ -88,8 +87,7 @@ public class FeatureActionStateController extends AbstractLayerStateController<P
                 {
                     LOGGER.error(e.getMessage(), e);
                 }
-                String layerPath = StateXML.newXPath().evaluate("/" + ModuleStateController.STATE_QNAME
-                        + "/:featureActions/:featureAction[@type=\"type\"]", featureActionNode);
+                String layerPath = StateXML.newXPath().evaluate(FeatureActionStateConstants.TYPE_PATH, featureActionNode);
                 myRegistry.add(layerPath, Collections.singleton(newFeatureAction), this);
                 addResource(id, new Pair<>(newFeatureAction, layerPath));
             }
@@ -173,10 +171,10 @@ public class FeatureActionStateController extends AbstractLayerStateController<P
             {
                 try
                 {
-                    Node baseNode = StateXML.createChildNode(node, doc, node, "/" + ModuleStateController.STATE_QNAME + "/:featureActions",
+                    Node baseNode = StateXML.createChildNode(node, doc, node, FeatureActionStateConstants.BASE_PATH,
                             "featureActions");
                     Node featureActionNode = StateXML.createChildNode(baseNode, doc, baseNode,
-                            "/" + ModuleStateController.STATE_QNAME + "/:featureActions/:featureAction", "featureAction");
+                            FeatureActionStateConstants.FEATURE_ACTION_PATH, "featureAction");
                     XMLUtilities.marshalJAXBObjectToElement(currentAction, featureActionNode);
                 }
                 catch (XPathExpressionException | JAXBException e)
@@ -207,7 +205,7 @@ public class FeatureActionStateController extends AbstractLayerStateController<P
 
                 // Filter
                 Filter featureFilter = currentAction.getFilter();
-                net.opengis.ogc._100t.FilterType filterType = new net.opengis.ogc._100t.FilterType();
+                FilterType filterType = new FilterType();
                 filterType.setActive(featureFilter.isActive());
                 filterType.setTitle(featureFilter.getName());
                 filterType.setDescription(featureFilter.getFilterDescription());

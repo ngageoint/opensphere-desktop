@@ -178,13 +178,13 @@ public final class StateUtilities
      */
     public static FeatureActionArrayType getFeatureActions(StateType state)
     {
-        FeatureActionArrayType prop = state.getFeatureActions();
-        if (prop == null)
+        FeatureActionArrayType featureActionArray = state.getFeatureActions();
+        if (featureActionArray == null)
         {
-            prop = new FeatureActionArrayType();
-            state.setFeatureActions(prop);
+            featureActionArray = new FeatureActionArrayType();
+            state.setFeatureActions(featureActionArray);
         }
-        return prop;
+        return featureActionArray;
     }
 
     /**

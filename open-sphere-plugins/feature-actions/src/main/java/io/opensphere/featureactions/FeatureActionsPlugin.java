@@ -27,7 +27,8 @@ public class FeatureActionsPlugin extends AbstractServicePlugin
      * feature actions.
      */
     private FeatureActionsMenuProvider myEditorMenuProvider;
-    
+
+    /** The state controller to manage feature actions. */
     private FeatureActionStateController myStateController;
 
     @Override
