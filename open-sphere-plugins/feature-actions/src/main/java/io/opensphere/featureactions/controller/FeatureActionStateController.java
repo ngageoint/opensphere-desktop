@@ -6,16 +6,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -29,8 +24,6 @@ import com.bitsys.fade.mist.state.v4.ShapeType;
 import com.bitsys.fade.mist.state.v4.StateType;
 
 import io.opensphere.controlpanels.styles.model.StyleOptions;
-import io.opensphere.core.common.util.JAXBContextHelper;
-import io.opensphere.core.export.ExportException;
 import io.opensphere.core.modulestate.AbstractLayerStateController;
 import io.opensphere.core.modulestate.ModuleStateController;
 import io.opensphere.core.modulestate.StateUtilities;
@@ -39,7 +32,6 @@ import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.XMLUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
-import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.featureactions.model.Action;
 import io.opensphere.featureactions.model.FeatureAction;
 import io.opensphere.featureactions.model.StyleAction;
@@ -48,11 +40,8 @@ import io.opensphere.filterbuilder.filter.v1.Filter;
 import io.opensphere.filterbuilder.impl.WFS100FilterToDataFilterConverter;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataTypeInfo;
-import io.opensphere.mantle.data.element.mdfilter.CustomBinaryLogicOpType;
-import io.opensphere.mantle.data.element.mdfilter.DataFilterExporter;
 import io.opensphere.mantle.data.element.mdfilter.FilterException;
 import io.opensphere.mantle.data.element.mdfilter.FilterToWFS100Converter;
-import io.opensphere.mantle.data.element.mdfilter.FilterToWFS110Converter;
 import javafx.collections.ObservableList;
 
 /**
@@ -100,7 +89,7 @@ public class FeatureActionStateController extends AbstractLayerStateController<P
                     LOGGER.error(e.getMessage(), e);
                 }
                 String layerPath = StateXML.newXPath().evaluate("/" + ModuleStateController.STATE_QNAME
-                        + "/:featureActions/:featureAction[@type=\"type\"", featureActionNode);
+                        + "/:featureActions/:featureAction[@type=\"type\"]", featureActionNode);
                 myRegistry.add(layerPath, Collections.singleton(newFeatureAction), this);
                 addResource(id, new Pair<>(newFeatureAction, layerPath));
             }
@@ -137,13 +126,13 @@ public class FeatureActionStateController extends AbstractLayerStateController<P
     @Override
     public boolean canActivateState(Node node)
     {
-        return true;
+        return StateXML.anyMatch(node, "/:state/:featureActions/:featureAction");
     }
 
     @Override
     public boolean canActivateState(StateType state)
     {
-        return true;
+        return !StateUtilities.getFeatureActions(state).getFeatureAction().isEmpty();
     }
 
     @Override
@@ -165,29 +154,6 @@ public class FeatureActionStateController extends AbstractLayerStateController<P
     {
         myRegistry.remove(resource.getSecondObject(), Collections.singleton(resource.getFirstObject()), this);
     }
-
-//    @Override
-//    public void deactivateState(String id, Node node) throws InterruptedException
-//    {
-//    }
-
-//    @Override
-//    public void deactivateState(String id, StateType state) throws InterruptedException
-//    {
-//        FeatureActionArrayType featureActionArray = StateUtilities.getFeatureActions(state);
-//        for (FeatureActionType featureActionType : featureActionArray.getFeatureAction())
-//        {
-//            List<FeatureAction> removeList = New.list();
-//            for (FeatureAction fa : myRegistry.get(featureActionType.getType()))
-//            {
-//                if (fa.getName().equals(featureActionType.getTitle() + " - " + id))
-//                {
-//                    removeList.add(fa);
-//                }
-//            }
-//            myRegistry.remove(featureActionType.getType(), removeList, this);
-//        }
-//    }
 
     @Override
     public boolean isSaveStateByDefault()
@@ -212,51 +178,6 @@ public class FeatureActionStateController extends AbstractLayerStateController<P
                     Node featureActionNode = StateXML.createChildNode(baseNode, doc, baseNode,
                             "/" + ModuleStateController.STATE_QNAME + "/:featureActions/:featureAction", "featureAction");
                     XMLUtilities.marshalJAXBObjectToElement(currentAction, featureActionNode);
-//                    ((Element)featureActionNode).setAttribute("active", StringUtilities.toString(currentAction.isEnabled()));
-//                    ((Element)featureActionNode).setAttribute("title", currentAction.getName());
-//                    ((Element)featureActionNode).setAttribute("description", currentAction.getGroupName());
-//                    ((Element)featureActionNode).setAttribute("type", dataType.getTypeKey());
-//                    ((Element)featureActionNode).setAttribute("typeHint", FeatureActionTypeHint.FILTERABLE.toString());
-//
-//                    // Filter
-//                    Filter featureFilter = currentAction.getFilter();
-//                    net.opengis.ogc._100t.FilterType filterType = new net.opengis.ogc._100t.FilterType();
-//                    filterType.setActive(featureFilter.isActive());
-//                    filterType.setTitle(featureFilter.getName());
-//                    filterType.setDescription(featureFilter.getFilterDescription());
-//                    filterType.setId(Integer.toHexString(filterType.hashCode()));
-//                    filterType.setFilterType("single");
-//                    filterType.setMatch(featureFilter.getMatch());
-//                    filterType.setType(featureFilter.getTypeKey());
-//                    try
-//                    {
-//                        filterType.setLogicOps(FilterToWFS100Converter.convert(featureFilter));
-//                    }
-//                    catch (FilterException e)
-//                    {
-//                        LOGGER.error("Unable to create an OGCFilter", e);
-//                    }
-//                    XMLUtilities.marshalJAXBObjectToElement(filterType, featureActionNode);
-//
-//                    //Actions
-//                    Node actionsNode = StateXML.createChildNode(featureActionNode, doc, featureActionNode,
-//                            "/" + ModuleStateController.STATE_QNAME + "/:featureActions/:featureAction/:actions", "actions");
-//                    Node featureStyleNode = StateXML.createChildNode(actionsNode, doc, actionsNode,
-//                            "/" + ModuleStateController.STATE_QNAME + "/:featureActions/:featureAction/:actions/:featureStyleAction",
-//                            "featureStyleAction");
-//                    ObservableList<Action> actions = currentAction.getActions();
-//                    if (actions.get(0) instanceof StyleAction)
-//                    {
-//                        StyleOptions styleOptions = ((StyleAction)actions.get(0)).getStyleOptions();
-//                        Node colorNode = createElement(featureStyleNode, "color");
-//                        colorNode.setTextContent((ColorUtilities.convertToHexString(styleOptions.getColor(), 1, 2, 3, 0)));
-//                        Node sizeNode = createElement(featureStyleNode, "size");
-//                        sizeNode.setTextContent(StringUtilities.toString(styleOptions.getSize()));
-//                        Node shapeNode = createElement(featureStyleNode, "shape");
-//                        shapeNode.setTextContent(ShapeType.DEFAULT.toString());
-//                        Node centerNode = createElement(featureStyleNode, "centerShape");
-//                        centerNode.setTextContent(ShapeType.POINT.toString());
-//                    }
                 }
                 catch (XPathExpressionException | JAXBException e)
                 {
@@ -342,17 +263,5 @@ public class FeatureActionStateController extends AbstractLayerStateController<P
             }
         }
         return returnList;
-    }
-
-    /**
-     * Creates a new element attached to the specified parent node.
-     *
-     * @param parent The parent node for the element.
-     * @param childName The name of the new element.
-     * @return The new element.
-     */
-    private Node createElement(Node parent, String childName)
-    {
-        return parent.appendChild(XMLUtilities.getDocument(parent).createElement(childName));
     }
 }
