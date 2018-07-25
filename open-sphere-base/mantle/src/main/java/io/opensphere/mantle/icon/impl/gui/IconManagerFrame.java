@@ -37,7 +37,7 @@ import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.IconRegistryListener;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.icon.impl.IconProviderFactory;
-import io.opensphere.mantle.iconproject.view.IconProjBuilderNewDialog;
+import io.opensphere.mantle.iconproject.view.IconCustomizerDialog;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /**
@@ -133,7 +133,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     {
         IconRegistry iconRegistry = MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry();
         IconRecord record = myChooserPanel.getLastPopupTriggerIconRecord();
-        IconProjBuilderNewDialog dialog = new IconProjBuilderNewDialog(this, iconRegistry, record);
+        IconCustomizerDialog dialog = new IconCustomizerDialog(this, iconRegistry, record);
         dialog.setVisible(true);
     }
 

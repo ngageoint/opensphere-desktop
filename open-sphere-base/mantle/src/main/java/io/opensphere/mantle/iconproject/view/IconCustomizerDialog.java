@@ -23,38 +23,39 @@ import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
-import io.opensphere.mantle.iconproject.panels.IconBuilderProjPane;
+import io.opensphere.mantle.iconproject.panels.IconCustomizerPane;
 
 /** The component class for building icons. */
-public class IconProjBuilderNewDialog extends JFXDialog
+public class IconCustomizerDialog extends JFXDialog
 {
     /** serial ID. */
     private static final long serialVersionUID = -8284546944940700345L;
 
     /** The logger for this class. */
-    private static final Logger LOGGER = Logger.getLogger(IconProjBuilderNewDialog.class);
+    private static final Logger LOGGER = Logger.getLogger(IconCustomizerDialog.class);
 
     /** The Icon Registry. */
     private final IconRegistry myIconRegistry;
 
     /**
-     * Constructor.
+     * Wraps the IconCustomizerPane into a java swing window.
      *
      * @param owner the parent window.
      * @param iconRegistry the icon registry.
      * @param iconRecord the current selected icon.
      */
 
-    public IconProjBuilderNewDialog(Window owner, IconRegistry iconRegistry, IconRecord iconRecord)
+    public IconCustomizerDialog(Window owner, IconRegistry iconRegistry, IconRecord iconRecord)
     {
-        super(owner, "Build an Icon");
+        super(owner, "Customize an Icon");
         myIconRegistry = iconRegistry;
-        IconBuilderProjPane pane = new IconBuilderProjPane(owner, iconRecord);
+        IconCustomizerPane pane = new IconCustomizerPane(owner, iconRecord);
         setFxNode(pane);
         setMinimumSize(new Dimension(450, 550));
         setLocationRelativeTo(owner);
         setAcceptEar(() -> saveImage(pane.getFinalImage(), pane.getImageName(), pane.getSaveState(), pane.getIconRecord(),
                 pane.getXPos(), pane.getYPos()));
+        setResizable(false);
     }
 
     /**
@@ -63,30 +64,25 @@ public class IconProjBuilderNewDialog extends JFXDialog
      * @param snapshot the edited icon to save.
      * @param name the image name.
      * @param savestate whether or not to overwrite the existing file.
-     * @param Icon the icon record.
-     * @param double XPos the X translation coordinate.
-     * @param double YPos the Y translation coordinate.
+     * @param icon the icon record.
+     * @param xPos the X translation coordinate.
+     * @param yPos the Y translation coordinate.
      */
-    private void saveImage(WritableImage snapshot, String name, boolean savestate, IconRecord Icon, int XPos, int YPos)
+    private void saveImage(WritableImage snapshot, String name, boolean savestate, IconRecord icon, int xPos, int yPos)
     {
-        BufferedImage image = null;
-        image = SwingFXUtils.fromFXImage(snapshot, image);
+        BufferedImage bufImageARGB = SwingFXUtils.fromFXImage(snapshot, null);
+        BufferedImage bufImageRGB = new BufferedImage(bufImageARGB.getWidth(), bufImageARGB.getHeight(),
+                BufferedImage.TRANSLUCENT);
 
+        Graphics2D graphics = bufImageRGB.createGraphics();
+        graphics.drawImage(bufImageARGB, xPos, yPos, null);
         try
         {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            ImageIO.write(image, "png", outputStream);
-
             if (savestate)
             {
-                BufferedImage bufImageARGB = SwingFXUtils.fromFXImage(snapshot, null);
-                BufferedImage bufImageRGB = new BufferedImage(bufImageARGB.getWidth(), bufImageARGB.getHeight(),BufferedImage.TRANSLUCENT);
-
-                Graphics2D graphics = bufImageRGB.createGraphics();
-                graphics.drawImage(bufImageARGB, XPos, YPos, null);
                 try
                 {
-                    String filename = Icon.getImageURL().toString();
+                    String filename = icon.getImageURL().toString();
                     filename = filename.replace("file:", "");
                     filename = filename.replace("%20", " ");
                     ImageIO.write(bufImageRGB, FilenameUtils.getExtension(filename), new File(filename));
@@ -98,6 +94,8 @@ public class IconProjBuilderNewDialog extends JFXDialog
             }
             else
             {
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                ImageIO.write(bufImageRGB, "png", outputStream);
                 URL imageURL = myIconRegistry.getIconCache().cacheIcon(outputStream.toByteArray(), name, true);
                 IconProvider provider = new DefaultIconProvider(imageURL, IconRecord.USER_ADDED_COLLECTION, null, "User");
                 myIconRegistry.addIcon(provider, this);
@@ -105,8 +103,6 @@ public class IconProjBuilderNewDialog extends JFXDialog
         }
         catch (IOException e)
         {
-            Notify.error(e.getMessage());
-            LOGGER.error(e, e);
         }
     }
 }

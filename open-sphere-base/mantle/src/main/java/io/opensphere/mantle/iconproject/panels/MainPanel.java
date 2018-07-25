@@ -13,6 +13,8 @@ import javafx.scene.layout.AnchorPane;
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
+import io.opensphere.mantle.iconproject.model.PanelModel;
+import io.opensphere.mantle.iconproject.view.AddIconDialog;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /**
@@ -24,8 +26,8 @@ public class MainPanel extends SplitPane
     /** The Icon registry. */
     private final IconRegistry myIconRegistry;
 
-    /** The optional selected icon URL. */
-    private String mySelectedUrl;
+    /** The Icon Display Grid */
+    private GridBuilder myIconGrid;
 
     /** The Customize Icon button. */
     private final ButtonBuilder myCustIconButton = new ButtonBuilder("Customize Icon", false);
@@ -35,9 +37,6 @@ public class MainPanel extends SplitPane
 
     /** The button to generate a new icon. */
     private final ButtonBuilder myGenIconButton = new ButtonBuilder("Generate New Icon", false);
-
-    /** The scroll-bar for the icons in view. */
-    private final ScrollBar myScrollBar;
 
     /** The tree view. */
     private final TreeView<String> myTreeView;
@@ -60,13 +59,13 @@ public class MainPanel extends SplitPane
     public MainPanel(Toolbox tb, Window owner)
     {
         myIconRegistry = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry();
-
         myLeftView = new AnchorPane();
 
         TreeBuilder treeBuilder = new TreeBuilder(myIconRegistry, null);
         myTreeView = new TreeView<>(treeBuilder);
 
-        myScrollBar = new ScrollBar();
+        myIconGrid = new GridBuilder(90, myIconRegistry);//, theChoice);
+        System.out.println("choice is:   " + theChoice);
 
         setDividerPositions(0.25, 0.98);
         setLayoutY(48.0);
@@ -83,26 +82,31 @@ public class MainPanel extends SplitPane
         {
             EventQueue.invokeLater(() ->
             {
+                AddIconDialog IconImporter = new AddIconDialog(owner,myIconRegistry);
+                IconImporter.setVisible(true);
             });
         });
 
         AnchorPane.setBottomAnchor(myCustIconButton, 26.0);
         myCustIconButton.lockButton(myCustIconButton);
-        AnchorPane.setBottomAnchor(myGenIconButton, 0.0);
+        myCustIconButton.setOnAction(event ->
+        {
+            EventQueue.invokeLater(() ->
+            {
+                myIconGrid.showIconCustomizer(tb, owner);
+            });
+        });
 
+        AnchorPane.setBottomAnchor(myGenIconButton, 0.0);
         myGenIconButton.lockButton(myGenIconButton);
         myGenIconButton.setOnAction(event ->
         {
             EventQueue.invokeLater(() ->
             {
+
             });
         });
 
-        // System.out.println("width: " + getWidth());
-
-        myIconGrid = new GridBuilder(90, myIconRegistry);//, theChoice);
-
-        myScrollBar.setOrientation(javafx.geometry.Orientation.VERTICAL);
         ScrollPane myScrollPane = new ScrollPane(myIconGrid);
         myScrollPane.setPannable(true);
         AnchorPane.setLeftAnchor(myScrollPane, 0.);
@@ -118,13 +122,7 @@ public class MainPanel extends SplitPane
         myLeftView.getChildren().addAll(myTreeView, myAddIconButton, myCustIconButton, myGenIconButton);
         getItems().addAll(myLeftView, myScrollPane);
 
-        myCustIconButton.setOnAction(event ->
-        {
-            EventQueue.invokeLater(() ->
-            {
-                myIconGrid.showIconCustomizer(tb, owner);
-            });
-        });
+
     }
 
     /**
