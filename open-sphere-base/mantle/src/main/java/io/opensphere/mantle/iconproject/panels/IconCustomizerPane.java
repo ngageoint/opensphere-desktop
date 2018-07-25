@@ -36,7 +36,7 @@ import javafx.scene.text.FontPosture;
 import io.opensphere.mantle.icon.IconRecord;
 
 /** Panel for building custom icons. */
-public class IconBuilderProjPane extends BorderPane
+public class IconCustomizerPane extends BorderPane
 {
     /** The rotation value model. */
     private final DoubleProperty myRotation = new SimpleDoubleProperty(0.);
@@ -72,12 +72,12 @@ public class IconBuilderProjPane extends BorderPane
     private Color myColor;
 
     /**
-     * Constructs a new IconBuilderPane.
+     * Constructs a new panel containing the icon customizer.
      *
      * @param owner the AWT Window.
      * @param record the selected icon.
      */
-    public IconBuilderProjPane(Window owner, IconRecord record)
+    public IconCustomizerPane(Window owner, IconRecord record)
     {
         myIconRecord = record;
         setTop(createTop());
@@ -93,7 +93,7 @@ public class IconBuilderProjPane extends BorderPane
     /**
      * Creates the top box, which contains the color and scale controls.
      *
-     * @return the icon selection & color controls
+     * @return an HBox containing icon scale & color controls.
      */
     private HBox createTop()
     {
@@ -114,16 +114,15 @@ public class IconBuilderProjPane extends BorderPane
             myColor = myColorPicker.getValue();
             updateImageColor();
         });
-
+        myTopBar.setSpacing(5.);
         myTopBar.getChildren().addAll(myColorPicker, sizeLabel, sizeSpin);
-        // myTopBar.setStyle("BoxStyle");
         return myTopBar;
     }
 
     /**
      * Creates the right box, which contains the rotation controls.
      *
-     * @return the rotation controls
+     * @return A VBox containing the rotation controls.
      */
     private VBox createRight()
     {
@@ -156,7 +155,7 @@ public class IconBuilderProjPane extends BorderPane
     /**
      * Creates the bottom box, which contains the icon size & position controls.
      *
-     * @return the size & position controls
+     * @return VBox containing the size & position controls.
      */
     private VBox createBottom()
     {
@@ -209,10 +208,9 @@ public class IconBuilderProjPane extends BorderPane
     {
         HBox iconDisplayer = new HBox();
         iconDisplayer.setAlignment(Pos.CENTER);
-        // iconDisplayer.setStyle("-fx-padding: 10;" + "-fx-border-style: solid
-        // inside;" + "-fx-border-width: 2;"
-        // + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" +
-        // "-fx-border-color: purple;");
+         iconDisplayer.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
+         + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" +
+         "-fx-border-color: purple;");
         iconDisplayer.setId("BoxStyle");
         myIconView = new ImageView(myIconRecord.getImageURL().toString());
         myIconView.rotateProperty().bind(myRotation);
@@ -249,7 +247,6 @@ public class IconBuilderProjPane extends BorderPane
         iconDisplayer.getChildren().addAll(myIconView);
 
         return iconDisplayer;
-
     }
 
     /**
@@ -284,14 +281,15 @@ public class IconBuilderProjPane extends BorderPane
         myIconDisplay.setStyle(null);
         if (myIconView.getImage() != null)
         {
-            if (myXPos.getValue() == 0 && myYPos.getValue() == 0)
+            iconOut = myIconDisplay.snapshot(parameters, null);
+           /* if (myXPos.getValue() == 0 && myYPos.getValue() == 0)
             {
                 iconOut = myIconView.snapshot(parameters, null);
             }
             else
             {
                 iconOut = myIconDisplay.snapshot(parameters, null);
-            }
+            }*/
         }
         return iconOut;
     }
@@ -351,5 +349,4 @@ public class IconBuilderProjPane extends BorderPane
     {
         return myYPos.getValue().intValue();
     }
-
 }
