@@ -28,7 +28,25 @@ public class GridBuilder extends TilePane
     private IconRecord mySelectedIcon;
 
     /** The chosen icon collection. */
-    private final String theChosen;
+    private String theChosen = "";
+
+    /**Get theChosen.
+     *
+     * @return theChosen the collection selected from the tree
+     */
+    public String getTheChosen()
+    {
+        return theChosen;
+    }
+
+    /** Sets theChosen.
+     *
+     * @param theChosen he collection selected from the tree
+     */
+    public void setTheChosen(String theChosen)
+    {
+        this.theChosen = theChosen;
+    }
 
     private int numcols = 4;
 
@@ -41,11 +59,11 @@ public class GridBuilder extends TilePane
      * @param category the category the icons belong to on the tree.
      */
 
-    public GridBuilder(int tileWidth, IconRegistry iconRegistry, String category)
+    public GridBuilder(int tileWidth, IconRegistry iconRegistry)//, String category)
     {
         myTileWidth = tileWidth;
         myIconRegistry = iconRegistry;
-        theChosen = category;
+        //theChosen = category;
         // Temporary getting to replace the ugly setStyle and make all buttons
         // use one file.
          //getStyleClass().add("IconManagerStyle.css");
@@ -79,7 +97,7 @@ public class GridBuilder extends TilePane
             cc.setPercentWidth(100 / numcols);
             getColumnConstraints().add(cc);
         }*/
-        System.out.println("the chosen is:   " + theChosen);
+        System.out.println("the chosen in construct is:   " + theChosen);
     }
 
     /**
