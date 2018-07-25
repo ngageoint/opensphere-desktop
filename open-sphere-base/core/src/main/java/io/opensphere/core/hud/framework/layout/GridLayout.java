@@ -43,6 +43,17 @@ public class GridLayout extends AbstractLayout<GridLayoutConstraints>
         myComponents.put(subComp, constraint);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.hud.framework.AbstractLayout#getConstraints(io.opensphere.core.hud.framework.Component)
+     */
+    @Override
+    public GridLayoutConstraints getConstraints(Component subComp)
+    {
+        return myComponents.get(subComp);
+    }
+
     @Override
     public void complete()
     {

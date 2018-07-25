@@ -8,7 +8,6 @@ import io.opensphere.core.hud.framework.Window;
 import io.opensphere.core.hud.framework.Window.ToolLocation;
 import io.opensphere.core.model.ScreenPosition;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.ThreadUtilities;
 
 /**
  * 
@@ -25,7 +24,7 @@ public class DefaultControlsLayoutManager implements ControlsLayoutManager
     public DefaultControlsLayoutManager(Toolbox toolbox)
     {
         myToolbox = toolbox;
-        ThreadUtilities.runBackground(() ->
+        java.awt.EventQueue.invokeLater(() ->
         {
             Dimension screenSize = myToolbox.getUIRegistry().getMainFrameProvider().get().getSize();
 

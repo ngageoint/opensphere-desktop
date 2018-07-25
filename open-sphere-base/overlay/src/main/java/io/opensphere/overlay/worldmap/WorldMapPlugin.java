@@ -1,5 +1,6 @@
 package io.opensphere.overlay.worldmap;
 
+import java.awt.Dimension;
 import java.util.concurrent.ScheduledExecutorService;
 
 import io.opensphere.core.api.adapter.AbstractHUDWindowMenuItemPlugin;
@@ -13,6 +14,15 @@ import io.opensphere.core.model.ScreenPosition;
 /** Plug-in that provides a 2D world map overlay. */
 public class WorldMapPlugin extends AbstractHUDWindowMenuItemPlugin
 {
+    /** The width of the container to draw. */
+    private static final int WIDTH = 300;
+
+    /** The distance from the right of the screen to draw the controls. */
+    private static final int DEFAULT_RIGHT_MARGIN = 48;
+
+    /** The distance from the top of the screen to draw the controls. */
+    private static final int DEFAULT_TOP_MARGIN = 14;
+
     /**
      * Constructor.
      */
@@ -24,8 +34,14 @@ public class WorldMapPlugin extends AbstractHUDWindowMenuItemPlugin
     @Override
     protected Window<?, ?> createWindow(TransformerHelper helper, ScheduledExecutorService executor)
     {
-        ScreenPosition mapUpLeft = new ScreenPosition(100, 100);
-        ScreenPosition mapLowRight = new ScreenPosition(mapUpLeft.getX() + 300, mapUpLeft.getY() + 150);
+        Dimension screenSize = getToolbox().getUIRegistry().getMainFrameProvider().get().getSize();
+
+        int topLeftX = (int)screenSize.getWidth() - DEFAULT_RIGHT_MARGIN - WIDTH;
+        int topLeftY = DEFAULT_TOP_MARGIN;
+
+        ScreenPosition mapUpLeft = new ScreenPosition(topLeftX, topLeftY);
+        ScreenPosition mapLowRight = new ScreenPosition(mapUpLeft.getX() + WIDTH, mapUpLeft.getY() + 150);
+
         ScreenBoundingBox worldmapLocation = new ScreenBoundingBox(mapUpLeft, mapLowRight);
         Window<?, ?> window = new HUDWorldMap(helper, executor, worldmapLocation, ToolLocation.NORTHEAST,
                 ResizeOption.RESIZE_KEEP_FIXED_SIZE)
@@ -37,11 +53,6 @@ public class WorldMapPlugin extends AbstractHUDWindowMenuItemPlugin
                 updateStoredLocationPreference();
             }
         };
-
-        if (useDefaultLocation())
-        {
-            window.moveToDefaultLocation();
-        }
 
         return window;
     }

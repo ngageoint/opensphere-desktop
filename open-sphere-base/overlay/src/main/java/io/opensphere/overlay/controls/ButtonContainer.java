@@ -6,8 +6,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import io.opensphere.core.geometry.renderproperties.ZOrderRenderProperties;
-import io.opensphere.core.hud.border.SimpleLineBorder;
 import io.opensphere.core.hud.framework.Component;
+import io.opensphere.core.hud.framework.EmptyBorder;
 import io.opensphere.core.hud.framework.TransformerHelper;
 import io.opensphere.core.hud.framework.Window;
 import io.opensphere.core.hud.framework.layout.GridLayout;
@@ -49,7 +49,7 @@ public class ButtonContainer extends Window<GridLayoutConstraints, GridLayout>
     public ButtonContainer(TransformerHelper hudTransformer, ScreenBoundingBox size, ToolLocation locationHint,
             ResizeOption resize, Function<Component, ControlComponent>... controlCreators)
     {
-        super(hudTransformer, size, locationHint, resize, ZOrderRenderProperties.TOP_Z - 30);
+        super(hudTransformer, size, locationHint, resize, ZOrderRenderProperties.TOP_Z - 22);
         myVerticalOrientationProperty = new ConcurrentBooleanProperty(true);
         myButtons = FXCollections.observableArrayList();
         for (Function<Component, ControlComponent> function : controlCreators)
@@ -67,36 +67,28 @@ public class ButtonContainer extends Window<GridLayoutConstraints, GridLayout>
     @Override
     public void init()
     {
-        // set the border
-        SimpleLineBorder.Builder borderBuilder = new SimpleLineBorder.Builder();
-        borderBuilder.setHeight(3);
-        borderBuilder.setWidth(3);
-        borderBuilder.setLineWidth(2);
-        borderBuilder.setLineColor(BORDER_COLOR);
-        setBorder(new SimpleLineBorder(this, borderBuilder));
+        setBorder(new EmptyBorder());
         initBorder();
 
         // add the buttons:
         int xPosition = 0;
         int yPosition = 0;
 
-        int buttonSize = 30;
+        int buttonSize = 22;
 
         if (myVerticalOrientationProperty.get())
         {
-            int width = 4 + myButtons.stream().map(c -> c.getWidth()).max(Integer::compare).orElse(30);
+            int width = 4 + myButtons.stream().map(c -> c.getWidth()).max(Integer::compare).orElse(22);
             int height = 4 + myButtons.stream().map(c -> c.getHeight()).collect(Collectors.summingInt(Integer::intValue));
 
             setLayout(new GridLayout(width, height, this));
-//            setLayout(new GridLayout(buttonSize + 4, buttonSize * myButtons.size() + 4, this));
         }
         else
         {
             int width = 4 + myButtons.stream().map(c -> c.getWidth()).collect(Collectors.summingInt(Integer::intValue));
-            int height = 4 + myButtons.stream().map(c -> c.getHeight()).max(Integer::compare).orElse(30);
+            int height = 4 + myButtons.stream().map(c -> c.getHeight()).max(Integer::compare).orElse(22);
 
             setLayout(new GridLayout(width, height, this));
-//            setLayout(new GridLayout(buttonSize * myButtons.size() + 4, buttonSize + 4, this));
         }
 
         for (ControlComponent component : myButtons)

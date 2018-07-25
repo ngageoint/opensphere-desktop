@@ -6,8 +6,10 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
 
+import io.opensphere.core.MapManager;
 import io.opensphere.core.api.adapter.AbstractHUDWindowMenuItemPlugin;
 import io.opensphere.core.hud.framework.Component;
 import io.opensphere.core.hud.framework.TransformerHelper;
@@ -16,8 +18,10 @@ import io.opensphere.core.hud.framework.Window.ResizeOption;
 import io.opensphere.core.hud.framework.Window.ToolLocation;
 import io.opensphere.core.model.ScreenBoundingBox;
 import io.opensphere.core.model.ScreenPosition;
+import io.opensphere.core.projection.Projection;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.ColorUtilities;
+import io.opensphere.core.viewer.impl.AbstractDynamicViewer;
 import io.opensphere.core.viewer.impl.ViewControlTranslator;
 
 /**
@@ -26,19 +30,21 @@ import io.opensphere.core.viewer.impl.ViewControlTranslator;
 public class ZoomControlsPlugin extends AbstractHUDWindowMenuItemPlugin
 {
     /** The size of the buttons, in pixels. */
-    private static final int BUTTON_SIZE = 30;
+    private static final int BUTTON_SIZE = 22;
 
     /** The distance from the right of the screen to draw the controls. */
-    private static final int DEFAULT_RIGHT_MARGIN = 25;
+    private static final int DEFAULT_RIGHT_MARGIN = 14;
 
     /** The distance from the top of the screen to draw the controls. */
-    private static final int DEFAULT_TOP_MARGIN = 25;
+    private static final int DEFAULT_TOP_MARGIN = 15;
 
     /** The width of the container to draw. */
-    private static final int WIDTH = 35;
+    private static final int WIDTH = 30;
 
     /** The height of the container to draw. */
-    private static final int HEIGHT = 65;
+    private static final int HEIGHT = 88;
+
+    private ButtonContainer myWindow;
 
     /** Constructor. */
     public ZoomControlsPlugin()
@@ -69,10 +75,10 @@ public class ZoomControlsPlugin extends AbstractHUDWindowMenuItemPlugin
 
         // TODO integrate with ControlsLayoutManager to do the offset stuff.
 
-        ButtonContainer window = new ButtonContainer(helper, size, ToolLocation.NORTHEAST, ResizeOption.RESIZE_KEEP_FIXED_SIZE,
-                this::createZoomInButton, this::createZoomOutButton, this::createSpacer, this::createChangeProjectionButton);
+        myWindow = new ButtonContainer(helper, size, ToolLocation.NORTHEAST, ResizeOption.RESIZE_KEEP_FIXED_SIZE,
+                this::createZoomInButton, this::createZoomOutButton, this::createSpacer, this::createChangeProjection2DButton);
 
-        return window;
+        return myWindow;
     }
 
     /**
@@ -83,7 +89,9 @@ public class ZoomControlsPlugin extends AbstractHUDWindowMenuItemPlugin
      */
     private BufferedImageButton createZoomInButton(Component parent)
     {
-        return new BufferedImageButton(parent, this::zoomIn, drawIcon(AwesomeIconSolid.PLUS));
+        BufferedImageButton button = new BufferedImageButton(parent, this::zoomIn, drawIcon(AwesomeIconSolid.PLUS));
+        button.setFrameLocation(new ScreenBoundingBox(new ScreenPosition(0, 0), new ScreenPosition(22, 22)));
+        return button;
     }
 
     /**
@@ -94,13 +102,18 @@ public class ZoomControlsPlugin extends AbstractHUDWindowMenuItemPlugin
      */
     private BufferedImageButton createZoomOutButton(Component parent)
     {
-        return new BufferedImageButton(parent, this::zoomOut, drawIcon(AwesomeIconSolid.MINUS));
+        BufferedImageButton button = new BufferedImageButton(parent, this::zoomOut, drawIcon(AwesomeIconSolid.MINUS));
+        button.setFrameLocation(new ScreenBoundingBox(new ScreenPosition(0, 0), new ScreenPosition(22, 22)));
+        return button;
     }
 
-    private BufferedImageButton createChangeProjectionButton(Component parent)
+    private BufferedImageButton createChangeProjection2DButton(Component parent)
     {
-        BufferedImageButton button = new BufferedImageButton(parent, this::changeProjection, drawIcon("2D"));
-        button.setBottomMargin(2);
+        BufferedImageButton button = new BufferedImageButton(parent, this::changeProjection, drawIcon("3D"));
+        button.setFrameLocation(new ScreenBoundingBox(new ScreenPosition(0, 0), new ScreenPosition(22, 22)));
+        button.setBottomMargin(-3);
+        button.setAlternateImage(drawIcon("2D"));
+
         return button;
     }
 
@@ -116,32 +129,15 @@ public class ZoomControlsPlugin extends AbstractHUDWindowMenuItemPlugin
         Graphics2D graphics = image.createGraphics();
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        graphics.setColor(ColorUtilities.opacitizeColor(Color.DARK_GRAY, 0.8f));
+        graphics.setColor(ColorUtilities.opacitizeColor(ColorUtilities.convertFromHexString("FF333333", 1, 2, 3, 0), 0.445f));
         graphics.fillRect(0, 0, BUTTON_SIZE, BUTTON_SIZE);
 
-        graphics.setFont(icon.getFont().deriveFont(Font.PLAIN, 18));
+        graphics.setFont(icon.getFont().deriveFont(Font.PLAIN, 14));
         graphics.setColor(Color.WHITE);
 
-        graphics.drawString(icon.getFontCode(), 7, 22);
+        graphics.drawString(icon.getFontCode(), 5, 16);
         graphics.dispose();
         return image;
-    }
-
-    private void zoomIn()
-    {
-        ViewControlTranslator translator = getToolbox().getMapManager().getCurrentControlTranslator();
-        translator.zoomView(-translator.getZoomRate());
-    }
-
-    private void zoomOut()
-    {
-        ViewControlTranslator translator = getToolbox().getMapManager().getCurrentControlTranslator();
-        translator.zoomView(translator.getZoomRate());
-    }
-
-    private void changeProjection()
-    {
-
     }
 
     private BufferedImage drawIcon(String text)
@@ -151,15 +147,49 @@ public class ZoomControlsPlugin extends AbstractHUDWindowMenuItemPlugin
         Graphics2D graphics = image.createGraphics();
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        graphics.setColor(ColorUtilities.opacitizeColor(Color.DARK_GRAY, 0.8f));
+        graphics.setColor(ColorUtilities.opacitizeColor(ColorUtilities.convertFromHexString("FF333333", 1, 2, 3, 0), 0.445f));
         graphics.fillRect(0, 0, BUTTON_SIZE, BUTTON_SIZE);
 
-        graphics.setFont(graphics.getFont().deriveFont(Font.PLAIN, 18));
+        graphics.setFont(graphics.getFont().deriveFont(Font.BOLD, 13));
         graphics.setColor(Color.WHITE);
 
-        graphics.drawString(text, 3, 22);
+        graphics.drawString(text, 1, 16);
         graphics.dispose();
         return image;
+    }
+
+    private void zoomIn(BufferedImageButton sourceButton)
+    {
+        ViewControlTranslator translator = getToolbox().getMapManager().getCurrentControlTranslator();
+        translator.zoomView(-translator.getZoomRate());
+    }
+
+    private void zoomOut(BufferedImageButton sourceButton)
+    {
+        ViewControlTranslator translator = getToolbox().getMapManager().getCurrentControlTranslator();
+        translator.zoomView(translator.getZoomRate());
+    }
+
+    private void changeProjection(BufferedImageButton sourceButton)
+    {
+        sourceButton.reverseImages();
+
+        MapManager mapManager = getToolbox().getMapManager();
+        Projection currentProjection = mapManager.getProjection();
+
+        Map<Projection, Class<? extends AbstractDynamicViewer>> projections = mapManager.getProjections();
+
+        Projection newProjection;
+        if (currentProjection.getName().equals("3-D"))
+        {
+            newProjection = projections.keySet().stream().filter(p -> p.getName().equals("Equirectangular")).findFirst()
+                    .orElse(null);
+        }
+        else
+        {
+            newProjection = projections.keySet().stream().filter(p -> p.getName().equals("3-D")).findFirst().orElse(null);
+        }
+        mapManager.setProjection(projections.get(newProjection));
     }
 
 }
