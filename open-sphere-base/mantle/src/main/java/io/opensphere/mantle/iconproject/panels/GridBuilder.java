@@ -7,9 +7,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
+
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
@@ -22,7 +21,17 @@ public class GridBuilder extends TilePane
     private final int myTileWidth;
 
     /** The icon registry used for the pane. */
-    private final IconRegistry myIconRegistry;
+    private IconRegistry myIconRegistry;
+
+    public IconRegistry getMyIconRegistry()
+    {
+        return myIconRegistry;
+    }
+
+    public void setMyIconRegistry(IconRegistry myIconRegistry)
+    {
+        this.myIconRegistry = myIconRegistry;
+    }
 
     /** the selected icon to be used for the builder. */
     private IconRecord mySelectedIcon;
@@ -48,7 +57,7 @@ public class GridBuilder extends TilePane
         this.theChosen = theChosen;
     }
 
-    private int numcols = 4;
+    //private final int numcols = 4;
 
     /**
      * The GridBuilder constructor. sets up the rows and columns for the icon
@@ -63,23 +72,24 @@ public class GridBuilder extends TilePane
     {
         myTileWidth = tileWidth;
         myIconRegistry = iconRegistry;
+        //System.out.println("my reg is: " + myIconRegistry);
         //theChosen = category;
         // Temporary getting to replace the ugly setStyle and make all buttons
         // use one file.
-         //getStyleClass().add("IconManagerStyle.css");
-         //setId("BoxStyle");
+        //getStyleClass().add("IconManagerStyle.css");
+        //setId("BoxStyle");
 
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
-        int counter = 3000    ;
-        
+        int counter = 3000;//4069
+
         for (int numcols = 4; numcols <= 100; numcols++) {
             Button sample = gridButtonBuilder(counter);
             setMargin(sample,new Insets(5.,5.,5.,5.));
             getChildren().add(sample);
             counter = counter + 1;
         }
-        
+
         /*
         for (int row = 0; row <= 10; row++)
         {
@@ -97,7 +107,7 @@ public class GridBuilder extends TilePane
             cc.setPercentWidth(100 / numcols);
             getColumnConstraints().add(cc);
         }*/
-        System.out.println("the chosen in construct is:   " + theChosen);
+        //System.out.println("the chosen in construct is:   " + theChosen);
     }
 
     /**
@@ -144,5 +154,15 @@ public class GridBuilder extends TilePane
     {
         IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myIconRegistry, mySelectedIcon);
         builderPane.setVisible(true);
+    }
+
+    /**
+     * Clears the gridPane
+     */
+    public void refresh()
+    {
+        getChildren().clear();
+        System.out.println("clearing yo");
+        //new GridBuilder(myTileWidth, myIconRegistry);
     }
 }

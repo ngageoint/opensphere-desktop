@@ -3,7 +3,6 @@ package io.opensphere.mantle.iconproject.panels;
 import java.awt.EventQueue;
 import java.awt.Window;
 
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeItem;
@@ -13,7 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
-import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.view.AddIconDialog;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
@@ -26,8 +24,8 @@ public class MainPanel extends SplitPane
     /** The Icon registry. */
     private final IconRegistry myIconRegistry;
 
-    /** The Icon Display Grid */
-    private GridBuilder myIconGrid;
+    /** The Icon Display Grid. */
+    private final GridBuilder myIconGrid;
 
     /** The Customize Icon button. */
     private final ButtonBuilder myCustIconButton = new ButtonBuilder("Customize Icon", false);
@@ -44,11 +42,10 @@ public class MainPanel extends SplitPane
     /** The left Panel. */
     private final AnchorPane myLeftView;
 
+    private final TreeBuilder treeBuilder;
+
     /** The treeView choice. */
     //private String theChoice = "";
-
-    /** The icon grid. */
-    GridBuilder myIconGrid;
 
     /**
      * The MainPanel constructor.
@@ -61,11 +58,10 @@ public class MainPanel extends SplitPane
         myIconRegistry = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry();
         myLeftView = new AnchorPane();
 
-        TreeBuilder treeBuilder = new TreeBuilder(myIconRegistry, null);
+        treeBuilder = new TreeBuilder(myIconRegistry, null);
         myTreeView = new TreeView<>(treeBuilder);
 
         myIconGrid = new GridBuilder(90, myIconRegistry);//, theChoice);
-        System.out.println("choice is:   " + theChoice);
 
         setDividerPositions(0.25, 0.98);
         setLayoutY(48.0);
@@ -133,9 +129,14 @@ public class MainPanel extends SplitPane
     private void treeHandle(TreeItem<String> newValue)
     {
         System.out.println("Choice is:  " + newValue.getValue());
-        //theChoice = newValue.getValue();
-        myIconGrid.setTheChosen(newValue.getValue());//theChoice);
-        //
+        //myIconGrid.setTheChosen(newValue.getValue());//theChoice);
+        //myIconGrid.setMyIconRegistry(myIconRegistry);
+        //myIconGrid.refresh();
+
+        ////////
+        //System.out.println("The type is: " + treeBuilder.getIconTreeObject().getType());
+        //System.out.println("the records are: " + treeBuilder.getIconTreeObject().getRecords(true));
+
     }
 
     /**
