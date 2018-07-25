@@ -124,20 +124,20 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
      */
     private void getChildrenRecords(List<IconRecord> addToList, TreeItem<String> item, boolean recurse)
     {
-        /*if (item != null && item.getUserObject() instanceof DefaultIconRecordTreeItemObject)
+        if (item != null)// && item.getUserObject() instanceof DefaultIconRecordTreeItemObject)
         {
-            DefaultIconRecordTreeItemObject nodeObj = (DefaultIconRecordTreeItemObject)node.getUserObject();
-            if (nodeObj.getType() == Type.LEAF)
+            //DefaultIconRecordTreeItemObject nodeObj = (DefaultIconRecordTreeItemObject)node.getUserObject();
+            if (myType == Type.LEAF)
             {
-                addToList.addAll(nodeObj.myIconRecords);
+                addToList.addAll(myIconRecords);
             }
-            else
+            /*else
             {
-                if (item.getChildCount() > 0)
+                if (node.getChildCount() > 0)
                 {
-                    for (int i = 0; i < item.getChildCount(); i++)
+                    for (int i = 0; i < node.getChildCount(); i++)
                     {
-                        TreeNode tn = item.getChildAt(i);
+                        TreeNode tn = node.getChildAt(i);
                         if (tn instanceof DefaultMutableTreeNode)
                         {
                             DefaultMutableTreeNode dmtn = (DefaultMutableTreeNode)tn;
@@ -152,9 +152,8 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
                         }
                     }
                 }
-            }
-        }*/
-        System.out.println("ahhhhhh");
+            }*/
+        }
     }
 
 }
