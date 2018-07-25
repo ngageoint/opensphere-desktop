@@ -6,9 +6,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
@@ -43,17 +42,16 @@ public class GridBuilder extends TilePane
 
     public GridBuilder(int tileWidth, IconRegistry iconRegistry, String category)
     {
-        myTileWidth = tileWidth;
+        myTileWidth = tileWidth;    
         myIconRegistry = iconRegistry;
         theChosen = category;
         // Temporary getting to replace the ugly setStyle and make all buttons
         // use one file.
          //getStyleClass().add("IconManagerStyle.css");
          //setId("BoxStyle");
-
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
-        int counter = 3000    ;
+        int counter = 3000;
         
         for (int numcols = 4; numcols <= 100; numcols++) {
             Button sample = gridButtonBuilder(counter);
@@ -61,7 +59,6 @@ public class GridBuilder extends TilePane
             getChildren().add(sample);
             counter = counter + 1;
         }
-        
         /*
         for (int row = 0; row <= 10; row++)
         {
@@ -79,7 +76,6 @@ public class GridBuilder extends TilePane
             cc.setPercentWidth(100 / numcols);
             getColumnConstraints().add(cc);
         }*/
-        System.out.println("the chosen is:   " + theChosen);
     }
 
     /**
@@ -95,6 +91,7 @@ public class GridBuilder extends TilePane
         generic.setMaxSize(myTileWidth, myTileWidth);
         generic.setPadding(new Insets(5, 5, 5, 5));
         String text = myIconRegistry.getIconRecordByIconId(count).getName();
+        generic.setTooltip(new Tooltip(myIconRegistry.getIconRecordByIconId(count).getImageURL().toString()));
         generic.setText(text);
         generic.setContentDisplay(ContentDisplay.TOP);
         generic.setAlignment(Pos.BOTTOM_CENTER);
