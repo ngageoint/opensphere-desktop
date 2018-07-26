@@ -1,6 +1,7 @@
 package io.opensphere.mantle.iconproject.panels;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +19,7 @@ import io.opensphere.mantle.iconproject.impl.IconRecordTreeItemUserObject;
 
 /**
  * The TreeBuilder class.
- *
+ * Builds the tree in the icon panel
  */
 public class TreeBuilder extends TreeItem<String>
 {
@@ -28,18 +29,8 @@ public class TreeBuilder extends TreeItem<String>
     /** The object that holds main treeItem info. */
     private DefaultIconRecordTreeItemObject iconTreeObject;
 
-    /** The object that holds sub treeItem info. */
-    private DefaultIconRecordTreeItemObject subIconTreeObject;
-
-    public DefaultIconRecordTreeItemObject getIconTreeObject()
-    {
-        return iconTreeObject;
-    }
-
-    public void setIconTreeObject(DefaultIconRecordTreeItemObject iconTreeObject)
-    {
-        this.iconTreeObject = iconTreeObject;
-    }
+    /** The icon record map with the collection name string as the key and the list of the icon record as the value. */
+    private final Map<String, List<IconRecord>> recordMap = new HashMap<>();
 
     /**
      * Creates a tree structure with the icon records from the registry that
@@ -55,8 +46,7 @@ public class TreeBuilder extends TreeItem<String>
         myIconRegistry = iconReg;
 
         List<IconRecord> records = myIconRegistry.getIconRecords(filter);
-        Collections.sort(records,
-                (r1, r2) -> AlphanumComparator.compareNatural(r1.getImageURL().toString(), r2.getImageURL().toString()));
+        Collections.sort(records, (r1, r2) -> AlphanumComparator.compareNatural(r1.getImageURL().toString(), r2.getImageURL().toString()));
         Set<String> collectionSet = New.set();
         Map<String, Map<String, List<IconRecord>>> collectionToSubCatIconRecMap = New.map();
         String defaultSubCat = "DEFAULT";
@@ -130,14 +120,14 @@ public class TreeBuilder extends TreeItem<String>
                     List<IconRecord> defaultRecList = subToRecListMap.get(defaultSubCat);
                     // set enum to leaf
                     iconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(mainNode, collection, defaultRecList,
-                            IconRecordTreeItemUserObject.NameType.COLLECTION);
-                    System.out.println("The records I'm giving areee: " + iconTreeObject.getRecords(true));
+                            IconRecordTreeItemUserObject.NameType.COLLECTION, null);
+                    recordMap.put(collection, iconTreeObject.getRecords(true));
                 }
                 else // like !found from example
                 {
                     // set enum to folder
                     iconTreeObject = DefaultIconRecordTreeItemObject.createFolderNode(mainNode, collection,
-                            IconRecordTreeItemUserObject.NameType.COLLECTION);
+                            IconRecordTreeItemUserObject.NameType.COLLECTION, null);
                 }
 
                 getChildren().add(iconTreeObject.getMyTreeItem());
@@ -147,18 +137,36 @@ public class TreeBuilder extends TreeItem<String>
                     TreeItem<String> depNode = new TreeItem<>();
                     // set enum to leaf
                     iconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(depNode, subCat, subToRecListMap.get(subCat),
-                            IconRecordTreeItemUserObject.NameType.SUBCATEGORY);
+                            IconRecordTreeItemUserObject.NameType.SUBCATEGORY, collection);
                     mainNode.getChildren().add(iconTreeObject.getMyTreeItem());
-                    System.out.println("The records I'm giving areee: " + iconTreeObject.getRecords(true));
-                    //subIconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(depNode, subCat, subToRecListMap.get(subCat),
-                    //        IconRecordTreeItemUserObject.NameType.SUBCATEGORY);
-                    //mainNode.getChildren().add(subIconTreeObject.getMyTreeItem());
-                    //System.out.println("The records I'm giving areee: " + subIconTreeObject.getRecords(true));
-
-
+                    recordMap.put(collection, iconTreeObject.getRecords(true));
                 }
             }
         }
+    }
+    /**
+     * The getter for the iconTreeObject.
+     * @return iconTreeObject
+     */
+    public DefaultIconRecordTreeItemObject getIconTreeObject()
+    {
+        return iconTreeObject;
+    }
 
+    /**
+     * The setter for the iconTreeObject.
+     * @param theIconTreeObject the iconTreeObject
+     */
+    public void setIconTreeObject(DefaultIconRecordTreeItemObject theIconTreeObject)
+    {
+        iconTreeObject = theIconTreeObject;
+    }
+    /**
+     * The getter for the record map.
+     * @return recordMap the map of collection, iconrecord lists
+     */
+    public Map<String, List<IconRecord>> getRecordMap()
+    {
+        return recordMap;
     }
 }
