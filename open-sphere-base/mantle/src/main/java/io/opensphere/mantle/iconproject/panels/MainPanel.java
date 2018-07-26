@@ -2,6 +2,9 @@ package io.opensphere.mantle.iconproject.panels;
 
 import java.awt.EventQueue;
 import java.awt.Window;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
@@ -10,6 +13,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 
 import io.opensphere.core.Toolbox;
+import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
 import io.opensphere.mantle.iconproject.view.AddIconDialog;
@@ -44,8 +48,7 @@ public class MainPanel extends SplitPane
 
     private final TreeBuilder treeBuilder;
 
-    /** The treeView choice. */
-    //private String theChoice = "";
+    Map<String, List<IconRecord>> recordMap = new HashMap<>();
 
     /**
      * The MainPanel constructor.
@@ -61,7 +64,11 @@ public class MainPanel extends SplitPane
         treeBuilder = new TreeBuilder(myIconRegistry, null);
         myTreeView = new TreeView<>(treeBuilder);
 
-        myIconGrid = new GridBuilder(90, myIconRegistry);//, theChoice);
+        recordMap = new HashMap<>(treeBuilder.getRecordMap());
+
+        List<IconRecord> recordList = recordMap.get("User Added");
+
+        myIconGrid = new GridBuilder(90, recordList, myIconRegistry);
 
         setDividerPositions(0.25, 0.98);
         setLayoutY(48.0);
@@ -78,8 +85,8 @@ public class MainPanel extends SplitPane
         {
             EventQueue.invokeLater(() ->
             {
-                AddIconDialog IconImporter = new AddIconDialog(owner,myIconRegistry);
-                IconImporter.setVisible(true);
+                AddIconDialog iconImporter = new AddIconDialog(owner, myIconRegistry);
+                iconImporter.setVisible(true);
             });
         });
 
@@ -117,8 +124,6 @@ public class MainPanel extends SplitPane
 
         myLeftView.getChildren().addAll(myTreeView, myAddIconButton, myCustIconButton, myGenIconButton);
         getItems().addAll(myLeftView, myScrollPane);
-
-
     }
 
     /**
@@ -137,6 +142,18 @@ public class MainPanel extends SplitPane
         //System.out.println("The type is: " + treeBuilder.getIconTreeObject().getType());
         //System.out.println("the records are: " + treeBuilder.getIconTreeObject().getRecords(true));
 
+        if(treeBuilder.getIconTreeObject().getType().toString().equals("COLLECTION"))
+        {
+            System.out.println("the actual records are: " + recordMap.get(newValue.getValue()));
+            myIconGrid.setMyRecordList(recordMap.get(newValue.getValue()));
+        }
+        else
+        {
+            //TreeItem<String> parent =
+            String parent = treeBuilder.getIconTreeObject().getParent();
+            System.out.println("parent is:  " + parent + " type is: " + treeBuilder.getIconTreeObject().getType());
+            //myIconGrid.setMyRecordList(record);
+        }
     }
 
     /**
