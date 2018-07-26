@@ -16,6 +16,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
+import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.view.AddIconDialog;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
@@ -27,7 +28,10 @@ public class MainPanel extends SplitPane
 {
     /** The Icon registry. */
     private final IconRegistry myIconRegistry;
-
+    
+    /** The Model*/
+    private final PanelModel myPanelModel = new PanelModel();
+    
     /** The Icon Display Grid. */
     private final GridBuilder myIconGrid;
 
@@ -49,6 +53,7 @@ public class MainPanel extends SplitPane
     private final TreeBuilder treeBuilder;
 
     Map<String, List<IconRecord>> recordMap = new HashMap<>();
+   
 
     /**
      * The MainPanel constructor.
@@ -59,6 +64,8 @@ public class MainPanel extends SplitPane
     public MainPanel(Toolbox tb, Window owner)
     {
         myIconRegistry = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry();
+        myPanelModel.setMyIconRegistry(myIconRegistry);
+        
         myLeftView = new AnchorPane();
 
         treeBuilder = new TreeBuilder(myIconRegistry, null);
@@ -66,7 +73,7 @@ public class MainPanel extends SplitPane
 
         recordMap = new HashMap<>(treeBuilder.getRecordMap());
 
-        List<IconRecord> recordList = recordMap.get("GoogleEarth");
+        List<IconRecord> recordList = recordMap.get("User Added");
 
         myIconGrid = new GridBuilder(90, recordList, myIconRegistry);
 
@@ -85,7 +92,7 @@ public class MainPanel extends SplitPane
         {
             EventQueue.invokeLater(() ->
             {
-                AddIconDialog iconImporter = new AddIconDialog(owner, myIconRegistry);
+                AddIconDialog iconImporter = new AddIconDialog(owner,myPanelModel);
                 iconImporter.setVisible(true);
             });
         });
