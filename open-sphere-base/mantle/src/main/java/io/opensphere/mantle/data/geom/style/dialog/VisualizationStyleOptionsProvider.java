@@ -2,8 +2,6 @@ package io.opensphere.mantle.data.geom.style.dialog;
 
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -21,6 +19,7 @@ import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleController;
 
 /**
@@ -44,7 +43,7 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
     private final VisualizationStyleController myStyleController;
 
     /** Preferences for the toolbar. */
-    private final Preferences toolbarPreferences;
+    private final Preferences myToolbarPreferences;
 
     /** Flag indicating if the text should be shown on the toolbar buttons. */
     private boolean myShowToolbarLabels;
@@ -76,9 +75,9 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
         super(prefsRegistry, VisualizationStyleControlDialog.TITLE);
         myStyleController = controller;
 
-        toolbarPreferences = prefsRegistry.getPreferences(ToolbarManager.class);
-        myShowToolbarLabels = toolbarPreferences.getBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, true);
-        toolbarPreferences.addPreferenceChangeListener(SHOW_ICON_BUTTON_TEXT_PREF_KEY, myTextListener);
+        myToolbarPreferences = prefsRegistry.getPreferences(ToolbarManager.class);
+        myShowToolbarLabels = myToolbarPreferences.getBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, true);
+        myToolbarPreferences.addPreferenceChangeListener(SHOW_ICON_BUTTON_TEXT_PREF_KEY, myTextListener);
 
         initializePanel();
     }
@@ -172,18 +171,15 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
     {
         JButton button = new JButton("Reset All Styles");
         button.setFocusable(false);
-        button.addActionListener(new ActionListener()
+        button.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            Quantify.collectMetric("mist3d.settings.styles.reset-all-styles-button");
+            int option = JOptionPane.showConfirmDialog(SwingUtilities.getWindowAncestor(myResetAllStyleDataButton),
+                    "Are you sure you want to reset all styles to default and clear all style data?",
+                    "Reset All Style Confirmation", JOptionPane.OK_CANCEL_OPTION);
+            if (option == JOptionPane.OK_OPTION)
             {
-                int option = JOptionPane.showConfirmDialog(SwingUtilities.getWindowAncestor(myResetAllStyleDataButton),
-                        "Are you sure you want to reset all styles to default and clear all style data?",
-                        "Reset All Style Confirmation", JOptionPane.OK_CANCEL_OPTION);
-                if (option == JOptionPane.OK_OPTION)
-                {
-                    myStyleController.resetAllStyleSettings(this);
-                }
+                myStyleController.resetAllStyleSettings(this);
             }
         });
 
@@ -198,9 +194,11 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
     private JCheckBox createShowToolbarLabelsCheckBox()
     {
         JCheckBox checkbox = new JCheckBox("Show Icon Labels on Toolbar", myShowToolbarLabels);
-        checkbox.addActionListener(ev ->
+        checkbox.addActionListener(e ->
         {
-            toolbarPreferences.putBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, !myShowToolbarLabels, this);
+            Quantify.collectEnableDisableMetric("mist3d.settings.styles.show-icon-labels-on-toolbar",
+                    myShowToolbarLabelsCheckBox.isSelected());
+            myToolbarPreferences.putBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, !myShowToolbarLabels, this);
         });
 
         return checkbox;

@@ -133,7 +133,8 @@ public class AnimationConfig
 
     /**
      * Constructor.
-     *
+     * 
+     * @param toolbox the toolbox through which application state is accessed.
      * @param animationModel the animation model
      */
     public AnimationConfig(AnimationModel animationModel)

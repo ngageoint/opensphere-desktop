@@ -113,10 +113,7 @@ public class FeatureActionsController extends EventListenerService
             @Override
             public void visualizationStyleDatatypeChanged(VisualizationStyleDatatypeChangeEvent evt)
             {
-                if (!evt.isNewIsDefaultStyle())
-                {
-                    myProcrastinatingExecutor.execute(() -> handleModelChange(evt.getDTIKey()));
-                }
+                myProcrastinatingExecutor.execute(() -> handleModelChange(evt.getDTIKey()));
             }
 
             @Override

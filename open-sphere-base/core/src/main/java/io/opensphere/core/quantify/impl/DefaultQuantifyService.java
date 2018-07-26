@@ -2,6 +2,7 @@ package io.opensphere.core.quantify.impl;
 
 import java.time.Duration;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -10,12 +11,13 @@ import org.apache.log4j.Logger;
 
 import io.opensphere.core.quantify.QuantifySender;
 import io.opensphere.core.quantify.QuantifyService;
+import io.opensphere.core.quantify.QuantifyUtils;
 import io.opensphere.core.quantify.model.Metric;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
+import javafx.beans.property.BooleanProperty;
 
-/**
- *
- */
+/** The default implementation of the quantify service. */
 public class DefaultQuantifyService implements QuantifyService
 {
     /** Logger reference. */
@@ -28,7 +30,7 @@ public class DefaultQuantifyService implements QuantifyService
     private final Map<String, Metric> myMetrics;
 
     /** The sender to which to send metrics. */
-    private final QuantifySender mySender;
+    private final Set<QuantifySender> mySenders;
 
     /** The frequency at which metrics are sent. */
     private final Duration mySendFrequency;
@@ -37,13 +39,22 @@ public class DefaultQuantifyService implements QuantifyService
     private final ScheduledExecutorService mySendScheduler;
 
     /**
+     * The property in which the enabled state of the quantify plugin is
+     * maintained.
+     */
+    private final BooleanProperty myEnabledProperty = new ConcurrentBooleanProperty(true);
+
+    /**
      * Creates a new service instance bound to the supplied sender.
      *
-     * @param sender the sender to which to send the metrics.
+     * @param senders the senders to which to send the metrics.
+     * @param enabledProperty the property to which the enabled property is
+     *            bound.
      */
-    public DefaultQuantifyService(QuantifySender sender)
+    public DefaultQuantifyService(Set<QuantifySender> senders, BooleanProperty enabledProperty)
     {
-        mySender = sender;
+        mySenders = senders;
+        myEnabledProperty.bind(enabledProperty);
         myMetrics = New.map();
         mySendFrequency = Duration.ofMinutes(5);
         mySendScheduler = Executors.newSingleThreadScheduledExecutor();
@@ -70,13 +81,17 @@ public class DefaultQuantifyService implements QuantifyService
     @Override
     public void collectMetric(String key)
     {
-        synchronized (myMetrics)
+        String normalizedKey = QuantifyUtils.normalize(key);
+        if (myEnabledProperty.get())
         {
-            if (!myMetrics.containsKey(key))
+            synchronized (myMetrics)
             {
-                myMetrics.put(key, new Metric(key));
+                if (!myMetrics.containsKey(normalizedKey))
+                {
+                    myMetrics.put(key, new Metric(normalizedKey));
+                }
+                myMetrics.get(normalizedKey).increment();
             }
-            myMetrics.get(key).increment();
         }
     }
 
@@ -88,11 +103,36 @@ public class DefaultQuantifyService implements QuantifyService
     @Override
     public void flush()
     {
-        synchronized (myMetrics)
+        if (myEnabledProperty.get())
         {
-            LOG.info("Sending metrics.");
-            mySender.send(New.collection(myMetrics.values()));
-            myMetrics.clear();
+            synchronized (myMetrics)
+            {
+                LOG.info("Sending metrics.");
+                mySenders.forEach(s -> s.send(New.collection(myMetrics.values())));
+                myMetrics.clear();
+            }
         }
+    }
+
+    /**
+     * Gets the value of the senders ({@link #mySenders}) field.
+     *
+     * @return the value stored in the {@link #mySenders} field.
+     */
+    @Override
+    public Set<QuantifySender> getSenders()
+    {
+        return mySenders;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.quantify.QuantifyService#enabledProperty()
+     */
+    @Override
+    public BooleanProperty enabledProperty()
+    {
+        return myEnabledProperty;
     }
 }

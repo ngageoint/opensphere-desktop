@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import io.opensphere.core.SecurityManager;
 import io.opensphere.core.options.OptionsProvider;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.security.config.v1.SecurityConfiguration;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
@@ -158,6 +159,8 @@ public class TrustedCertificatesOptionsProvider extends AbstractTableOptionsProv
     @Override
     protected void deleteRow(int row)
     {
+        Quantify.collectMetric("mist3d.settings.security.trusted-certificates.delete-button");
+
         byte[] encoded;
         try
         {
@@ -237,6 +240,8 @@ public class TrustedCertificatesOptionsProvider extends AbstractTableOptionsProv
     @Override
     protected void showDetails(int row)
     {
+        Quantify.collectMetric("mist3d.settings.security.trusted-certificates.details-button");
+
         assert EventQueue.isDispatchThread();
 
         X509Certificate item = CollectionUtilities.getItem(getSecurityManager().getTrustedServerCerts(), row);

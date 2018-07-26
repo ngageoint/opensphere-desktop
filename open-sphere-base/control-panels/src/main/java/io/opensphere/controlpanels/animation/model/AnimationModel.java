@@ -9,7 +9,10 @@ import java.util.Set;
 
 import io.opensphere.controlpanels.timeline.chart.ChartType;
 import io.opensphere.core.model.time.TimeSpan;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.units.duration.Duration;
+import io.opensphere.core.util.ListDataEvent;
+import io.opensphere.core.util.ListDataListener;
 import io.opensphere.core.util.ObservableList;
 import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.StrongObservableValue;
@@ -93,6 +96,8 @@ public class AnimationModel
 
     /**
      * Constructor.
+     * 
+     * @param toolbox The toolbox through which application state is accessed.
      */
     public AnimationModel()
     {
@@ -106,6 +111,27 @@ public class AnimationModel
         myUISpanLock.set(Boolean.FALSE);
 
         myFadeUser.addListener(this::userChangedFade);
+
+        mySkippedIntervals.addChangeListener(new ListDataListener<TimeSpan>()
+        {
+            @Override
+            public void elementsRemoved(ListDataEvent<TimeSpan> e)
+            {
+                Quantify.collectMetric("mist3d.timeline.remove-skip-interval");
+            }
+
+            @Override
+            public void elementsChanged(ListDataEvent<TimeSpan> e)
+            {
+                Quantify.collectMetric("mist3d.timeline.change-skip-interval");
+            }
+
+            @Override
+            public void elementsAdded(ListDataEvent<TimeSpan> e)
+            {
+                Quantify.collectMetric("mist3d.timeline.add-skip-interval");
+            }
+        });
     }
 
     /**

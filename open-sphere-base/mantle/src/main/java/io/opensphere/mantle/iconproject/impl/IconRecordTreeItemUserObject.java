@@ -47,6 +47,13 @@ public interface IconRecordTreeItemUserObject
     Type getType();
 
     /**
+     * Gets the parent collection.
+     *
+     * @return the parent collection
+     */
+    String getParent();
+
+    /**
      * To string.
      *
      * @return the string

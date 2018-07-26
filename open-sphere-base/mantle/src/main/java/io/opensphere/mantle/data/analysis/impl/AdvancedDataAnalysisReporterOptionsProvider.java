@@ -1,13 +1,11 @@
 package io.opensphere.mantle.data.analysis.impl;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.swing.GridBagPanel;
 
 /**
@@ -79,18 +77,15 @@ public class AdvancedDataAnalysisReporterOptionsProvider extends AbstractOptions
     private JButton getClearRegistryDataButton()
     {
         JButton clearRegistryDataButton = new JButton("Clear Data Analysis Registry Data");
-        clearRegistryDataButton.addActionListener(new ActionListener()
+        clearRegistryDataButton.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            Quantify.collectMetric("mist3d.settings.data-analyzer.advanced.clear-registry-data-button");
+            int option = JOptionPane.showConfirmDialog(getOptionsPanel(),
+                "Are you sure you want to delete the registry contents?\nThis action cannot be undone.",
+                "Clear Data Analysis Registry", JOptionPane.OK_CANCEL_OPTION);
+            if (option == JOptionPane.OK_OPTION)
             {
-                int option = JOptionPane.showConfirmDialog(getOptionsPanel(),
-                        "Are you sure you want to delete the registry contents?\nThis action cannot be undone.",
-                        "Clear Data Analysis Registry", JOptionPane.OK_CANCEL_OPTION);
-                if (option == JOptionPane.OK_OPTION)
-                {
-                    myDataAnalysisReporterImpl.clearAllColumnAnalysisData();
-                }
+                myDataAnalysisReporterImpl.clearAllColumnAnalysisData();
             }
         });
         return clearRegistryDataButton;
@@ -104,13 +99,10 @@ public class AdvancedDataAnalysisReporterOptionsProvider extends AbstractOptions
     private JButton getRegistryContentsReportTextButton()
     {
         JButton registryContentsReportTextButton = new JButton("Registry Contents Report (Text)");
-        registryContentsReportTextButton.addActionListener(new ActionListener()
+        registryContentsReportTextButton.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                myDataAnalysisReporterImpl.showRegistryReportText();
-            }
+            Quantify.collectMetric("mist3d.settings.data-analyzer.advanced.contents-report-text-button");
+            myDataAnalysisReporterImpl.showRegistryReportText();
         });
         return registryContentsReportTextButton;
     }
@@ -123,13 +115,10 @@ public class AdvancedDataAnalysisReporterOptionsProvider extends AbstractOptions
     private JButton getRegistryContentsReportXMLButton()
     {
         JButton registryContentsReportXMLButton = new JButton("Registry Contents Report (XML)");
-        registryContentsReportXMLButton.addActionListener(new ActionListener()
+        registryContentsReportXMLButton.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                myDataAnalysisReporterImpl.showXMLRegistryReport();
-            }
+            Quantify.collectMetric("mist3d.settings.data-analyzer.advanced.contents-report-xml-button");
+            myDataAnalysisReporterImpl.showXMLRegistryReport();
         });
         return registryContentsReportXMLButton;
     }

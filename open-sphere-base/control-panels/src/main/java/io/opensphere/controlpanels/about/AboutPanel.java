@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -30,6 +31,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.Quantify;
+import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.StringUtilities;
@@ -120,7 +123,7 @@ public class AboutPanel extends AbstractHUDPanel
         mySystemPropertiesMap.clear();
         final Properties p = System.getProperties();
         final List<Object> keys = New.list(p.keySet());
-        Collections.sort(keys, new Comparator<Object>()
+        Collections.sort(keys, new Comparator<>()
         {
             @Override
             public int compare(Object o1, Object o2)
@@ -214,7 +217,7 @@ public class AboutPanel extends AbstractHUDPanel
         p.setMaximumSize(new Dimension(1000, 26));
 
         final JLabel lb = new JLabel(string);
-        lb.setHorizontalAlignment(JLabel.RIGHT);
+        lb.setHorizontalAlignment(SwingConstants.RIGHT);
         final JPanel lbPnl = new JPanel(new BorderLayout());
         lbPnl.setBackground(Colors.TRANSPARENT_BLACK);
         final Dimension d = new Dimension(160, 20);
@@ -246,13 +249,10 @@ public class AboutPanel extends AbstractHUDPanel
             {
                 final JButton openBtn = new JButton("Open");
                 openBtn.setMargin(ButtonPanel.INSETS_MEDIUM);
-                openBtn.addActionListener(new ActionListener()
+                openBtn.addActionListener(e ->
                 {
-                    @Override
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        openFolder(file);
-                    }
+                    Quantify.collectMetric("mist3d.help.about.open-location." + string);
+                    openFolder(file);
                 });
                 p.add(openBtn, BorderLayout.EAST);
             }
@@ -269,8 +269,8 @@ public class AboutPanel extends AbstractHUDPanel
     private JPanel getAboutPanel()
     {
         final JLabel lb = new JLabel("About");
-        lb.setHorizontalAlignment(JLabel.CENTER);
-        lb.setHorizontalTextPosition(JLabel.CENTER);
+        lb.setHorizontalAlignment(SwingConstants.CENTER);
+        lb.setHorizontalTextPosition(SwingConstants.CENTER);
         final JPanel lbPanel1 = new JPanel(new BorderLayout());
         lbPanel1.setBackground(Colors.TRANSPARENT_BLACK);
         lbPanel1.setMaximumSize(new Dimension(1000, 20));
@@ -291,8 +291,8 @@ public class AboutPanel extends AbstractHUDPanel
         if (StringUtils.isNotEmpty(labelText))
         {
             final JLabel lb = new JLabel(labelText);
-            lb.setHorizontalAlignment(JLabel.CENTER);
-            lb.setHorizontalTextPosition(JLabel.CENTER);
+            lb.setHorizontalAlignment(SwingConstants.CENTER);
+            lb.setHorizontalTextPosition(SwingConstants.CENTER);
             lbPanel1 = new JPanel(new BorderLayout());
             lbPanel1.setBackground(Colors.TRANSPARENT_BLACK);
             lbPanel1.setMaximumSize(new Dimension(1000, 20));
@@ -370,8 +370,8 @@ public class AboutPanel extends AbstractHUDPanel
     private JPanel getLocationsPanel()
     {
         final JLabel lb3 = new JLabel("Locations");
-        lb3.setHorizontalAlignment(JLabel.CENTER);
-        lb3.setHorizontalTextPosition(JLabel.CENTER);
+        lb3.setHorizontalAlignment(SwingConstants.CENTER);
+        lb3.setHorizontalTextPosition(SwingConstants.CENTER);
         final JPanel lbPanel3 = new JPanel(new BorderLayout());
         lbPanel3.setBackground(Colors.TRANSPARENT_BLACK);
         lbPanel3.setMaximumSize(new Dimension(1000, 20));
@@ -388,8 +388,8 @@ public class AboutPanel extends AbstractHUDPanel
     {
         final JLabel lb2 = new JLabel(mySystemPropertiesMap.get("opensphere.title"));
         lb2.setFont(lb2.getFont().deriveFont(Font.BOLD, lb2.getFont().getSize() + 2));
-        lb2.setHorizontalAlignment(JLabel.CENTER);
-        lb2.setHorizontalTextPosition(JLabel.CENTER);
+        lb2.setHorizontalAlignment(SwingConstants.CENTER);
+        lb2.setHorizontalTextPosition(SwingConstants.CENTER);
         final JPanel lbPanel2 = new JPanel(new BorderLayout());
         lbPanel2.setBackground(Colors.TRANSPARENT_BLACK);
         lbPanel2.setMaximumSize(new Dimension(1000, 25));

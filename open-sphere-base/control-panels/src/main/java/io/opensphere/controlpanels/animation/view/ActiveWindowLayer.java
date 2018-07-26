@@ -32,6 +32,7 @@ import io.opensphere.controlpanels.timeline.DraggableTimeWindowLayer;
 import io.opensphere.controlpanels.timeline.ObservableTimeSpan;
 import io.opensphere.controlpanels.timeline.SnapFunction;
 import io.opensphere.core.TimeManager;
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.animation.AnimationState.Direction;
 import io.opensphere.core.model.time.TimeInstant;
 import io.opensphere.core.model.time.TimeSpan;
@@ -105,18 +106,24 @@ class ActiveWindowLayer extends CompositeLayer
      */
     private Polygon myTriangle;
 
+    /** The toolbox through which application state is accessed. */
+    private final Toolbox myToolbox;
+
     /**
      * Constructor.
-     *
+     * 
+     * 
+     * @param toolbox The toolbox through which application state is accessed.
      * @param timeModel the time model
      * @param animationModel the animation model
      * @param millisPerPixel the resolution of the timeline display
      * @param timeManager the time manager
      */
-    public ActiveWindowLayer(ObservableValue<TimeSpan> timeModel, AnimationModel animationModel, Supplier<Double> millisPerPixel,
-            TimeManager timeManager)
+    public ActiveWindowLayer(Toolbox toolbox, ObservableValue<TimeSpan> timeModel, AnimationModel animationModel,
+            Supplier<Double> millisPerPixel, TimeManager timeManager)
     {
         super();
+        myToolbox = toolbox;
         myTimeModel = timeModel;
         myAnimationModel = animationModel;
         myTimeManager = timeManager;
@@ -151,8 +158,8 @@ class ActiveWindowLayer extends CompositeLayer
         SnapFunction rightSnapFunction = new ActiveDurationEndSnapFunction(myTimeSpanStartSupplier, myTimeSpanEndSupplier,
                 animationModel, millisPerPixel);
 
-        myDragHandles = new AnimationDragHandlesLayer(observableTimeSpan, constraint, leftSnapFunction, rightSnapFunction,
-                animationModel.playStateProperty(), "active", AnimationConstants.ACTIVE_HANDLE_COLOR,
+        myDragHandles = new AnimationDragHandlesLayer(toolbox, observableTimeSpan, constraint, leftSnapFunction,
+                rightSnapFunction, animationModel.playStateProperty(), "active", AnimationConstants.ACTIVE_HANDLE_COLOR,
                 AnimationConstants.ACTIVE_HANDLE_HOVER_COLOR);
         getLayers().add(myDragHandles);
 

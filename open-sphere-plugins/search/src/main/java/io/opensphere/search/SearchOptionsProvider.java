@@ -11,6 +11,7 @@ import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.options.impl.OptionsPanel;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.swing.input.DontShowDialog;
 
 /**
@@ -68,7 +69,11 @@ public class SearchOptionsProvider extends AbstractOptionsProvider
             JPanel panel = new JPanel();
             panel.add(new JLabel("Action to take when search results may have changed:"));
             myComboBox = new JComboBox<>(RequeryOption.values());
-            myComboBox.addActionListener(l -> saveSelection());
+            myComboBox.addActionListener(e ->
+            {
+                Quantify.collectMetric("mist3d.settings.search.action-if-search-results-changed-selection");
+                saveSelection();
+            });
             panel.add(myComboBox);
             myPanel = new OptionsPanel(panel);
         }

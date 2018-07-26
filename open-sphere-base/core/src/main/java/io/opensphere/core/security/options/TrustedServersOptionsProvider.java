@@ -14,6 +14,7 @@ import javax.swing.table.TableModel;
 import io.opensphere.core.SecurityManager;
 import io.opensphere.core.options.OptionsProvider;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.security.config.v1.SecurityConfiguration;
 
 /**
@@ -60,6 +61,8 @@ public class TrustedServersOptionsProvider extends AbstractTableOptionsProvider
     @Override
     protected void deleteRow(int row)
     {
+        Quantify.collectMetric("mist3d.settings.security.trusted-servers.delete-button");
+
         Object selectedServer = getTable().getModel().getValueAt(row, 0);
         SecurityConfiguration config = getConfig().clone();
         Collection<String> userTrustedServers = config.getUserTrustedServers();
@@ -95,6 +98,8 @@ public class TrustedServersOptionsProvider extends AbstractTableOptionsProvider
     @Override
     protected void showDetails(int row)
     {
+        Quantify.collectMetric("mist3d.settings.security.trusted-servers.details-button");
+
         assert EventQueue.isDispatchThread();
 
         Object selectedServer = getTable().getModel().getValueAt(row, 0);
