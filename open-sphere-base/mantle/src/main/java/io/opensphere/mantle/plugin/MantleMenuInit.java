@@ -98,7 +98,7 @@ class MantleMenuInit
             public void actionPerformed(ActionEvent e)
             {
                 iconManager.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
-                iconManager.setVisible(true);
+                //iconManager.setVisible(true);
                 new IconProjFrame(myToolbox);
             }
         });

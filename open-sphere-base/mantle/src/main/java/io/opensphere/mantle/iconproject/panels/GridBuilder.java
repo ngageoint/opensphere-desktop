@@ -16,7 +16,7 @@ import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.iconproject.view.IconCustomizerDialog;
 
 /** Crates the Icon Display Grid. */
-public class GridBuilder extends TilePane
+public class GridBuilder extends TilePane// implements Runnable
 {
     /** The width used for icon buttons. */
     private final int myTileWidth;
@@ -24,9 +24,10 @@ public class GridBuilder extends TilePane
     /** The icon registry used for the pane. */
     private IconRegistry myIconRegistry;
 
-    /** the selected icon to be used for the builder. */
+    /** The selected icon to be used for the builder. */
     private IconRecord mySelectedIcon;
 
+    /** The icon record list. */
     List<IconRecord> myRecordList;
 
     /**
@@ -34,26 +35,48 @@ public class GridBuilder extends TilePane
      * grid.
      *
      * @param tileWidth the width of each tile(button).
+     * @param recList the icon record list
      * @param iconRegistry the icon registry
-     * @param category the category the icons belong to on the tree.
      */
-
     public GridBuilder(int tileWidth, List<IconRecord> recList, IconRegistry iconRegistry)//, String category)
     {
         myTileWidth = tileWidth;
         myIconRegistry = iconRegistry;
         myRecordList = recList;
+
+        //System.out.println("making grid with:  " + myRecordList);
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
 
         for (IconRecord record : myRecordList)
         {
             Button sample  = buttonBuilder(record);
-            setMargin(sample,new Insets(5., 5., 5., 5.));
+            setMargin(sample, new Insets(5, 5, 5, 5));
             getChildren().add(sample);
         }
     }
 
+    /*@Override
+    public void run()
+    {
+        System.out.println("&^^^^^^^^^^^^^^^^^^^^^is this running?");
+        setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+                + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
+
+        for (IconRecord record : myRecordList)
+        {
+            Button sample = buttonBuilder(record);
+            setMargin(sample, new Insets(5, 5, 5, 5));
+            getChildren().add(sample);
+        }
+    }*/
+
+    /**
+     * Creates the image buttons to be placed in the grid.
+     *
+     * @param record the IconRecord
+     * @return generic the made button
+     */
     private Button buttonBuilder(IconRecord record)
     {
         Button generic = new Button();
@@ -95,7 +118,7 @@ public class GridBuilder extends TilePane
     }
 
     /**
-     * Clears the gridPane
+     * Clears the gridPane.
      */
     public void refresh()
     {
@@ -104,24 +127,43 @@ public class GridBuilder extends TilePane
         //new GridBuilder(myTileWidth, myIconRegistry);
     }
 
+    /**
+     * The getter for the IconRegistry.
+     *
+     * @return myIconRegistry the icon registry
+     */
     public IconRegistry getMyIconRegistry()
     {
         return myIconRegistry;
     }
 
-    public void setMyIconRegistry(IconRegistry myIconRegistry)
+    /**
+     * Sets the myIconRegistry.
+     *
+     * @param theIconRegistry the icon registry
+     */
+    public void setMyIconRegistry(IconRegistry theIconRegistry)
     {
-        this.myIconRegistry = myIconRegistry;
+        myIconRegistry = theIconRegistry;
     }
 
+    /**
+     * Gets the record list of icons.
+     *
+     * @return myRecordList the recordList of icons
+     */
     public List<IconRecord> getMyRecordList()
     {
         return myRecordList;
     }
 
-    public void setMyRecordList(List<IconRecord> myRecordList)
+    /**
+     * Sets the record list of icons.
+     *
+     * @param theRecordList the recordList of icons
+     */
+    public void setMyRecordList(List<IconRecord> theRecordList)
     {
-        this.myRecordList = myRecordList;
+        myRecordList = theRecordList;
     }
-
 }

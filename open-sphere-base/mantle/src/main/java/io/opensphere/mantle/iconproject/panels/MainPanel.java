@@ -5,6 +5,7 @@ import java.awt.Window;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
@@ -50,6 +51,10 @@ public class MainPanel extends SplitPane
 
     Map<String, List<IconRecord>> recordMap = new HashMap<>();
 
+    ScrollPane myScrollPane;
+
+    //private final Thread myGridLoader;
+
     /**
      * The MainPanel constructor.
      *
@@ -69,6 +74,8 @@ public class MainPanel extends SplitPane
         List<IconRecord> recordList = recordMap.get("GoogleEarth");
 
         myIconGrid = new GridBuilder(90, recordList, myIconRegistry);
+        //myGridLoader = new Thread(myIconGrid);
+        //startThread();
 
         setDividerPositions(0.25, 0.98);
         setLayoutY(48.0);
@@ -124,6 +131,8 @@ public class MainPanel extends SplitPane
 
         myLeftView.getChildren().addAll(myTreeView, myAddIconButton, myCustIconButton, myGenIconButton);
         getItems().addAll(myLeftView, myScrollPane);
+
+
     }
 
     /**
@@ -134,30 +143,29 @@ public class MainPanel extends SplitPane
     private void treeHandle(TreeItem<String> newValue)
     {
         System.out.println("Choice is:  " + newValue.getValue());
-        //System.out.println(" type is: " + treeBuilder.getIconTreeObject().getNameType());
-        //myIconGrid.setTheChosen(newValue.getValue());//theChoice);
-        //myIconGrid.setMyIconRegistry(myIconRegistry);
-        //myIconGrid.refresh();
 
-        ////////
-        //System.out.println("The type is: " + treeBuilder.getIconTreeObject().getType());
-        //System.out.println("the records are: " + treeBuilder.getIconTreeObject().getRecords(true));
-        /*
-        if(treeBuilder.getIconTreeObject().getNameType().toString().equals("COLLECTION"))
+        getItems().remove(myScrollPane);
+        getChildren().remove(myScrollPane);
+        String colName = newValue.getValue();
+
+        if (recordMap.get(colName) == null)
         {
-            String parent = treeBuilder.getIconTreeObject().getParent();
-            System.out.println("parent is:  " + parent);
-            System.out.println("the actual records are: " + recordMap.get(newValue.getValue()));
-            myIconGrid.setMyRecordList(recordMap.get(newValue.getValue()));
+            for (Entry<String, List<IconRecord>> entry : recordMap.entrySet())
+            {
+                String key = entry.getKey();
+                List<IconRecord> value = entry.getValue();
+
+                if (value.get(0).getSubCategory() != null && value.get(0).getSubCategory().toString().equals(colName))
+                {
+                    colName = key;
+                    break;
+                }
+            }
         }
-        else
-        {
-            //TreeItem<String> parent =
-            String parent = treeBuilder.getIconTreeObject().getParent();
-            System.out.println("parent is:  " + parent);
-
-            //myIconGrid.setMyRecordList(record);
-        }*/
+        //myScrollPane.setContent(null);
+        System.out.println("fixed choihce: " + colName);
+        myScrollPane = new ScrollPane(new GridBuilder(90, recordMap.get(colName), myIconRegistry));
+        getItems().addAll(myScrollPane);
     }
 
     /**
