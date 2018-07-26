@@ -5,7 +5,7 @@ import java.awt.Window;
 
 import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.mantle.icon.IconRegistry;
-import io.opensphere.mantle.iconproject.panels.IconProjCollectionNamesPane;
+import io.opensphere.mantle.iconproject.panels.CollectionNamesPane;
 
 public class AddIconDialog extends JFXDialog
 {
@@ -17,8 +17,9 @@ public class AddIconDialog extends JFXDialog
     public AddIconDialog(Window owner,IconRegistry iconRegistry)
     {
         super(owner, "Add Icon From File",false);
-        setMinimumSize(new Dimension(200,150));
-        setFxNode(new IconProjCollectionNamesPane(iconRegistry.getCollectionNames()));
+        setMinimumSize(new Dimension(500,300));
+        setLocationRelativeTo(owner);
+        setFxNode(new CollectionNamesPane(iconRegistry));
     }
 
 }

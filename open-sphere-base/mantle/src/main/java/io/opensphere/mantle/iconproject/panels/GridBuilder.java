@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 
@@ -38,7 +39,8 @@ public class GridBuilder extends TilePane// implements Runnable
      * @param recList the icon record list
      * @param iconRegistry the icon registry
      */
-    public GridBuilder(int tileWidth, List<IconRecord> recList, IconRegistry iconRegistry)//, String category)
+
+    public GridBuilder(int tileWidth, List<IconRecord> recList, IconRegistry iconRegistry)
     {
         myTileWidth = tileWidth;
         myIconRegistry = iconRegistry;
@@ -82,9 +84,10 @@ public class GridBuilder extends TilePane// implements Runnable
         Button generic = new Button();
         generic.setMinSize(myTileWidth, myTileWidth);
         generic.setMaxSize(myTileWidth, myTileWidth);
-        generic.setPadding(new Insets(5, 5, 5, 5));
-
         String text = record.getName();
+        generic.setPadding(new Insets(5, 5, 5, 5));
+        generic.setTooltip(new Tooltip(text));
+
         generic.setText(text);
         generic.setContentDisplay(ContentDisplay.TOP);
         generic.setAlignment(Pos.BOTTOM_CENTER);
@@ -124,7 +127,7 @@ public class GridBuilder extends TilePane// implements Runnable
     {
         getChildren().clear();
         System.out.println("clearing yo");
-        //new GridBuilder(myTileWidth, myIconRegistry);
+        // new GridBuilder(myTileWidth, myIconRegistry);
     }
 
     /**
