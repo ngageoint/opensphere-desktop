@@ -37,7 +37,7 @@ import javafx.scene.text.FontPosture;
  * A panel in which a user may select an existing collection or create a new
  * one.
  */
-public class IconProjCollectionNamesPane extends BorderPane
+public class CollectionNamesPane extends BorderPane
 {
     /**
      * serialVersionUID.
@@ -88,7 +88,7 @@ public class IconProjCollectionNamesPane extends BorderPane
      * @param collectionNameSet The set of collection names to display in the
      *            panel.
      */
-    public IconProjCollectionNamesPane(IconRegistry iconRegistry)
+    public CollectionNamesPane(IconRegistry iconRegistry)
     {
         myIconRegistry = iconRegistry;
         Set<String> collectionNameSet = myIconRegistry.getCollectionNames();
@@ -157,7 +157,6 @@ public class IconProjCollectionNamesPane extends BorderPane
 
     private void updateCollectionName()
     {
-        // TODO Auto-generated method stub
 
     }
 
