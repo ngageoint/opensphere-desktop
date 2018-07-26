@@ -45,6 +45,7 @@ import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.order.OrderChangeListener;
 import io.opensphere.core.order.impl.DefaultOrderCategory;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.lang.EqualsHelper;
@@ -126,12 +127,12 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
                 if (LoadsToUtilities.isTimelineEnabled(dataType))
                 {
                     menuItems.add(SwingUtilities.newMenuItem("Remove from Timeline",
-                        e -> LoadsToUtilities.setIncludeInTimeline(dataType, false)));
+                            e -> LoadsToUtilities.setIncludeInTimeline(dataType, false)));
                 }
                 else
                 {
                     menuItems.add(SwingUtilities.newMenuItem("Add to Timeline",
-                        e -> LoadsToUtilities.setIncludeInTimeline(dataType, true)));
+                            e -> LoadsToUtilities.setIncludeInTimeline(dataType, true)));
                 }
             }
             if (LoadsToUtilities.allowAnalyzeSelection(dataType))
@@ -139,12 +140,12 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
                 if (LoadsToUtilities.isAnalyzeEnabled(dataType))
                 {
                     menuItems.add(SwingUtilities.newMenuItem("Remove from Analyze Window",
-                        e -> LoadsToUtilities.setIncludeInAnalyze(dataType, false)));
+                            e -> LoadsToUtilities.setIncludeInAnalyze(dataType, false)));
                 }
                 else
                 {
                     menuItems.add(SwingUtilities.newMenuItem("Add to Analyze Window",
-                        e -> LoadsToUtilities.setIncludeInAnalyze(dataType, true)));
+                            e -> LoadsToUtilities.setIncludeInAnalyze(dataType, true)));
                 }
             }
 
@@ -616,6 +617,8 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
         viewBy.addActionListener(e ->
         {
             String activeType = viewBy.getSelectedItem().toString();
+            Quantify.collectMetric("mist3d.layer-manager.group-by." + activeType);
+
             myLayerControlPanel.setSelected(new LayerSelectedEvent(true, null, null));
             getController().setSelected(null);
             getController().setViewByTypeFromString(activeType);
@@ -679,6 +682,7 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
      */
     private void deactivateSelectedLayers()
     {
+        Quantify.collectMetric("mist3d.layer-manager.button-row.de-activate-selected-layers");
         List<TreeTableTreeNode> nodes = getSelectedNodes();
         if (nodes != null && !nodes.isEmpty())
         {
@@ -686,7 +690,7 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
             for (TreeTableTreeNode node : nodes)
             {
                 LayerUtilities.recursivelyAddAllDataGroupsToSet(groupsToDeactivate, node,
-                    g -> g != null && g.userActivationStateControl());
+                        g -> g != null && g.userActivationStateControl());
             }
             if (!groupsToDeactivate.isEmpty())
             {
@@ -700,6 +704,7 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
      */
     private void deleteSelectedLayers()
     {
+        Quantify.collectMetric("mist3d.layer-manager.button-row.delete-selected-my-places");
         int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the selected layers?",
                 "Delete Confirmation", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.OK_OPTION)
@@ -782,7 +787,11 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
             myPlayLayersButton.setToolTipText("Stream all available layers.");
             myPlayLayersButton.setEnabled(true);
             myPlayLayersButton.setActionCommand(IconUtil.IconType.PLAY.toString());
-            myPlayLayersButton.addActionListener(e -> controlStreamingLayers(e));
+            myPlayLayersButton.addActionListener(e ->
+            {
+                Quantify.collectMetric("mist3d.layer-manager.button-row.stream-all.play");
+                controlStreamingLayers(e);
+            });
         }
         return myPlayLayersButton;
     }
@@ -800,7 +809,11 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
             myPauseLayersButton.setToolTipText("Pause all streaming layers.");
             myPauseLayersButton.setEnabled(true);
             myPauseLayersButton.setActionCommand(IconUtil.IconType.PAUSE.toString());
-            myPauseLayersButton.addActionListener(e -> controlStreamingLayers(e));
+            myPauseLayersButton.addActionListener(e ->
+            {
+                Quantify.collectMetric("mist3d.layer-manager.button-row.stream-all.pause");
+                controlStreamingLayers(e);
+            });
         }
         return myPauseLayersButton;
     }
@@ -818,7 +831,11 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
             myStopLayersButton.setToolTipText("Stop all streaming layers.");
             myStopLayersButton.setEnabled(true);
             myStopLayersButton.setActionCommand(IconUtil.IconType.STOP.toString());
-            myStopLayersButton.addActionListener(e -> controlStreamingLayers(e));
+            myStopLayersButton.addActionListener(e ->
+            {
+                Quantify.collectMetric("mist3d.layer-manager.button-row.stream-all.stop");
+                controlStreamingLayers(e);
+            });
         }
         return myStopLayersButton;
     }
@@ -893,14 +910,17 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
         {
             if (DataTreeButtonProvisioner.GEAR_BUTTON.equals(command))
             {
+                Quantify.collectMetric("mist3d.layer-manager.tree.layer-settings");
                 myLayerDetailsCoordinator.showLayerDetailsForGroup(dataGroupInfo, LayerDetailPanel.SETTINGS_TAB);
             }
             else if (DataTreeButtonProvisioner.FILTER_BUTTON.equals(command))
             {
+                Quantify.collectMetric("mist3d.layer-manager.tree.filters");
                 myToolbox.getEventManager().publishEvent(new ShowFilterDialogEvent(dataGroupInfo.getId()));
             }
             else if (DataTreeButtonProvisioner.REMOVE_BUTTON.equals(command))
             {
+                Quantify.collectMetric("mist3d.layer-manager.tree.remove");
                 DataTypeInfo dataType = getDataTypeForEvent(e);
                 if (dataType != null)
                 {
@@ -916,6 +936,13 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
         if (DataTreeButtonProvisioner.PLAY_BUTTON.equals(command) || DataTreeButtonProvisioner.PAUSE_BUTTON.equals(command)
                 || DataTreeButtonProvisioner.STOP_BUTTON.equals(command))
         {
+            Quantify.collectConditionalMetric("mist3d.layer-manager.tree.play",
+                    DataTreeButtonProvisioner.PLAY_BUTTON.equals(command));
+            Quantify.collectConditionalMetric("mist3d.layer-manager.tree.pause",
+                    DataTreeButtonProvisioner.PAUSE_BUTTON.equals(command));
+            Quantify.collectConditionalMetric("mist3d.layer-manager.tree.stop",
+                    DataTreeButtonProvisioner.STOP_BUTTON.equals(command));
+
             StreamingSupport streamingSupport = StreamingSupportUpdater.getStreamingSupport(node);
             if (streamingSupport != null)
             {
@@ -926,6 +953,7 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
         }
         else if (DataTreeButtonProvisioner.PLAYCLOCK_BUTTON.equals(command))
         {
+            Quantify.collectMetric("mist3d.layer-manager.tree.playclock");
             StreamingSupport streamingSupport = StreamingSupportUpdater.getStreamingSupport(node);
             if (streamingSupport != null)
             {
@@ -935,6 +963,7 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
         }
         else if (DataTreeButtonProvisioner.DELETE_BUTTON.equals(command))
         {
+            Quantify.collectMetric("mist3d.layer-manager.tree.delete");
             GroupByNodeUserObject userObject = LayerUtilities.getUserObject(node);
             if (userObject != null)
             {
@@ -957,6 +986,7 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
         }
         else if (DataTreeButtonProvisioner.POPOUT_BUTTON.equals(command))
         {
+            Quantify.collectMetric("mist3d.layer-manager.tree.popout");
             if (myPopperOuter == null)
             {
                 myPopperOuter = new LayerPopperOuter(getToolbox(), this);
@@ -1052,7 +1082,7 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
 
         DataGroupController controller = MantleToolboxUtils.getMantleToolbox(myToolbox).getDataGroupController();
         Collection<DataTypeInfo> dataTypes = controller.findActiveMembers(
-            t -> t.getStreamingSupport().isStreamingEnabled() && t.getStreamingSupport().getPlayState().get() != playState);
+                t -> t.getStreamingSupport().isStreamingEnabled() && t.getStreamingSupport().getPlayState().get() != playState);
         for (DataTypeInfo dataType : dataTypes)
         {
             ThreadUtilities.runCpu((Runnable)() -> dataType.getStreamingSupport().getPlayState().set(playState));
@@ -1066,6 +1096,8 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
      */
     private void toggleFeatureVisibility(final boolean visible)
     {
+        Quantify.collectEnableDisableMetric("mist3d.layer-manager.button-row.toggle-feature-visibility", visible);
+
         findNodes(new Predicate<GroupByNodeUserObject>()
         {
             @Override
@@ -1102,6 +1134,7 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
      */
     private void toggleTileVisibility(final boolean visible)
     {
+        Quantify.collectEnableDisableMetric("mist3d.layer-manager.button-row.toggle-tile-visibility", visible);
         findNodes(new Predicate<GroupByNodeUserObject>()
         {
             @Override

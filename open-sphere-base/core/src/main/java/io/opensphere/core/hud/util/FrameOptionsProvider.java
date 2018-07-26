@@ -3,7 +3,6 @@ package io.opensphere.core.hud.util;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -21,6 +20,7 @@ import com.bric.swing.ColorPicker;
 
 import io.opensphere.core.options.impl.AbstractPreferencesOptionsProvider;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.swing.AbstractHUDPanel;
 import io.opensphere.core.util.swing.ColorCircleIcon;
 import io.opensphere.core.util.swing.LinkedSliderTextField;
@@ -58,9 +58,6 @@ public class FrameOptionsProvider extends AbstractPreferencesOptionsProvider
 
     /** The HUD background opacity slider. */
     private LinkedSliderTextField myBackgroundOpacitySlider;
-
-    /** The opacity slider listener. */
-    private transient ActionListener myOpacitySliderListener;
 
     /** The my background color button. */
     private JButton myBackgroundColorButton;
@@ -126,25 +123,6 @@ public class FrameOptionsProvider extends AbstractPreferencesOptionsProvider
     }
 
     /**
-     * Accessor for the background color button action listener.
-     *
-     * @return The action listener.
-     */
-    private ActionListener createColorButtonActionListener()
-    {
-        return e ->
-        {
-            Color c = ColorPicker.showDialog(SwingUtilities.getWindowAncestor(myMainPanel), myBackgroundColor, true);
-            if (c != null)
-            {
-                setBackgroundColor(c);
-                getPreferencesRegistry().getPreferences(AbstractHUDPanel.class).putInt(AbstractHUDPanel.ourHUDBackgroundColorKey,
-                        myBackgroundColor.getRGB(), this);
-            }
-        };
-    }
-
-    /**
      * Create the description for the background color controls.
      *
      * @return The text area containing the description.
@@ -183,7 +161,17 @@ public class FrameOptionsProvider extends AbstractPreferencesOptionsProvider
             myBackgroundColorButton.setBackground(Color.LIGHT_GRAY);
             myBackgroundColorButton.setMaximumSize(new Dimension(20, 20));
             myBackgroundColorButton.setIcon(new ColorCircleIcon(Color.black));
-            myBackgroundColorButton.addActionListener(createColorButtonActionListener());
+            myBackgroundColorButton.addActionListener(e ->
+            {
+                Quantify.collectMetric("mist3d.settings.hud-options.color-button");
+                Color c = ColorPicker.showDialog(SwingUtilities.getWindowAncestor(myMainPanel), myBackgroundColor, true);
+                if (c != null)
+                {
+                    setBackgroundColor(c);
+                    getPreferencesRegistry().getPreferences(AbstractHUDPanel.class)
+                            .putInt(AbstractHUDPanel.ourHUDBackgroundColorKey, myBackgroundColor.getRGB(), this);
+                }
+            });
         }
         return myBackgroundColorButton;
     }
@@ -239,9 +227,18 @@ public class FrameOptionsProvider extends AbstractPreferencesOptionsProvider
 
         myStickyCheckbox = new JCheckBox("Stick to Edges");
         myStickyCheckbox.setSelected(stickToEdge);
-        myStickyCheckbox.addActionListener(e -> updateStickyPreference());
+        myStickyCheckbox.addActionListener(e ->
+        {
+            Quantify.collectEnableDisableMetric("mist3d.settings.hud-options.stick-to-edge", myStickyCheckbox.isSelected());
+            updateStickyPreference();
+        });
+
         myInsetSpinner = new JSpinner(new SpinnerNumberModel(inset, 0, 25, 1));
-        myInsetSpinner.addChangeListener(e -> updateStickyPreference());
+        myInsetSpinner.addChangeListener(e ->
+        {
+            Quantify.collectMetric("mist3d.settings.hud-options.inset-change");
+            updateStickyPreference();
+        });
 
         panel.add(myStickyCheckbox);
         panel.add(myInsetSpinner);
@@ -266,33 +263,20 @@ public class FrameOptionsProvider extends AbstractPreferencesOptionsProvider
             myBackgroundOpacitySlider.setMaximumSize(sliderSize);
             myBackgroundOpacitySlider.setPreferredSize(sliderSize);
             myBackgroundOpacitySlider.setSize(sliderSize);
-            myBackgroundOpacitySlider.addSliderFieldChangeListener(getOpacitySliderListener());
-            myBackgroundOpacitySlider.setBackground(myBackgroundColor);
-            myBackgroundOpacitySlider.setValues(opacityPct);
-        }
-        return myBackgroundOpacitySlider;
-    }
-
-    /**
-     * The listener for the color slider that updates blue value.
-     *
-     * @return The blue color slider listener.
-     */
-    private ActionListener getOpacitySliderListener()
-    {
-        if (myOpacitySliderListener == null)
-        {
-            myOpacitySliderListener = e ->
+            myBackgroundOpacitySlider.addSliderFieldChangeListener(e ->
             {
+                Quantify.collectMetric("mist3d.settings.hud-options.opacity-change");
                 int alpha = (int)(getOpacitySlider().getSliderValue() * ALPHA_FACTOR);
                 Color color = new Color(myBackgroundColor.getRed(), myBackgroundColor.getGreen(), myBackgroundColor.getBlue(),
                         alpha);
                 setBackgroundColor(color);
                 getPreferencesRegistry().getPreferences(AbstractHUDPanel.class).putInt(AbstractHUDPanel.ourHUDBackgroundColorKey,
                         myBackgroundColor.getRGB(), this);
-            };
+            });
+            myBackgroundOpacitySlider.setBackground(myBackgroundColor);
+            myBackgroundOpacitySlider.setValues(opacityPct);
         }
-        return myOpacitySliderListener;
+        return myBackgroundOpacitySlider;
     }
 
     /**

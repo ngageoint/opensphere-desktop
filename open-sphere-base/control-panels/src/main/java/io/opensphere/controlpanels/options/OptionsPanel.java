@@ -40,6 +40,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.impl.TopicOrSubTopicMatchesRegexOptionsProviderFilter;
 import io.opensphere.core.options.OptionsProvider;
 import io.opensphere.core.options.OptionsProviderUserObject;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.NonSuckingObservable;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.swing.AbstractHUDPanel;
@@ -542,6 +543,7 @@ class OptionsPanel extends AbstractHUDPanel
                             if (userObj instanceof OptionsProviderUserObject)
                             {
                                 OptionsProviderUserObject o = (OptionsProviderUserObject)userObj;
+                                collectSettingsMenuSelectionMetrics(node, o);
                                 setCurrentOptionsProvider(o.getOptionsProvider());
                             }
                         }
@@ -550,6 +552,29 @@ class OptionsPanel extends AbstractHUDPanel
             });
         }
         return myTopicTree;
+    }
+
+    /**
+     * Collects metrics on the selected menu option on the left side of the settings menu.
+     *
+     * @param node the selected menu node
+     * @param optionsProviderObject the selected menu options provider object
+     */
+    private void collectSettingsMenuSelectionMetrics(DefaultMutableTreeNode node, OptionsProviderUserObject optionsProviderObject)
+    {
+        if (node.getParent() != null)
+        {
+            Object parent = ((DefaultMutableTreeNode)node.getParent()).getUserObject();
+            if (parent instanceof OptionsProviderUserObject)
+            {
+                Quantify.collectMetric("mist3d.settings.left-menu-options." + ((OptionsProviderUserObject)parent).getNodeName()
+                        + "." + optionsProviderObject.getNodeName());
+            }
+        }
+        else
+        {
+            Quantify.collectMetric("mist3d.settings.left-menu-options." + optionsProviderObject.getNodeName());
+        }
     }
 
     /**

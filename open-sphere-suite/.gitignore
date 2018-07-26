@@ -1,3 +1,7 @@
 /target/
 /.pmd
 /.apt_generated/
+<<<<<<< HEAD
+=======
+/.apt_generated_tests/
+>>>>>>> snapshot_5.2.5

@@ -22,9 +22,11 @@ import io.opensphere.controlpanels.timeline.DragHandlesLayer;
 import io.opensphere.controlpanels.timeline.ObservableTimeSpan;
 import io.opensphere.controlpanels.timeline.SnapFunction;
 import io.opensphere.controlpanels.timeline.TimelineLayer;
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.context.TimespanContextKey;
 import io.opensphere.core.model.time.TimeInstant;
 import io.opensphere.core.model.time.TimeSpan;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.ChangeListener;
 import io.opensphere.core.util.NoEffectPredicate;
@@ -52,9 +54,13 @@ class AnimationDragHandlesLayer extends DragHandlesLayer
     /** The snap function for the right handle. */
     private final SnapFunction myRightSnapFunction;
 
+    /** The toolbox through which application state is accessed. */
+    private final Toolbox myToolbox;
+
     /**
      * Constructor.
-     *
+     * 
+     * @param toolbox The toolbox through which application state is accessed.
      * @param observableTimeSpan the observable time span
      * @param constraint constraint on where the time span can be dragged
      * @param leftSnapFunction the snap function for the left drag handle
@@ -64,12 +70,13 @@ class AnimationDragHandlesLayer extends DragHandlesLayer
      * @param color the color
      * @param hoverColor the hover color
      */
-    public AnimationDragHandlesLayer(ObservableTimeSpan observableTimeSpan,
+    public AnimationDragHandlesLayer(Toolbox toolbox, ObservableTimeSpan observableTimeSpan,
             final Function<? super TimeInstant, ? extends TimeInstant> constraint, SnapFunction leftSnapFunction,
             SnapFunction rightSnapFunction, final ObservableValue<PlayState> playState, String name, Color color,
             Color hoverColor)
     {
         super(observableTimeSpan, name, constraint, leftSnapFunction, rightSnapFunction, color, hoverColor);
+        myToolbox = toolbox;
         myName = name;
         myConstraint = new NoEffectPredicate<TimeInstant>(constraint);
         myLeftSnapFunction = leftSnapFunction;
@@ -137,15 +144,12 @@ class AnimationDragHandlesLayer extends DragHandlesLayer
         TimeSpan dragSelectionSpan = TimeSpan.get(left, right);
 
         JMenuItem item = new JMenuItem(StringUtilities.concat("Set ", myName, " span here"));
-        item.addActionListener(new ActionListener()
+        item.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            Quantify.collectMetric("mist3d.timeline.buttons.advanced-animation-controls.set-" + myName + "-span-here");
+            if (timeSpanAllowed(dragSelectionSpan))
             {
-                if (timeSpanAllowed(dragSelectionSpan))
-                {
-                    getObservableTimeSpan().getSpan().set(dragSelectionSpan);
-                }
+                getObservableTimeSpan().getSpan().set(dragSelectionSpan);
             }
         });
 
@@ -167,44 +171,38 @@ class AnimationDragHandlesLayer extends DragHandlesLayer
     protected JMenu getSetMenu(final Point p)
     {
         JMenuItem startItem = new JMenuItem(myName + " span start here");
-        startItem.addActionListener(new ActionListener()
+        startItem.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            Quantify.collectMetric("mist3d.timeline.buttons.advanced-animation-controls.set-" + myName + "-span-start-here");
+            TimeInstant time = myLeftSnapFunction.getSnapDestination(getUIModel().xToTime(p.x), RoundingMode.HALF_UP);
+            if (startAllowed(time))
             {
-                TimeInstant time = myLeftSnapFunction.getSnapDestination(getUIModel().xToTime(p.x), RoundingMode.HALF_UP);
-                if (startAllowed(time))
-                {
-                    // First try keeping the other end constant.
-                    getObservableTimeSpan().getStart().set(time);
+                // First try keeping the other end constant.
+                getObservableTimeSpan().getStart().set(time);
 
-                    // If it didn't work, try keeping the duration constant.
-                    if (!getObservableTimeSpan().getStart().get().equals(time))
-                    {
-                        getObservableTimeSpan().getSpan()
-                                .set(TimeSpan.get(time, getObservableTimeSpan().getSpan().get().getDuration()));
-                    }
+                // If it didn't work, try keeping the duration constant.
+                if (!getObservableTimeSpan().getStart().get().equals(time))
+                {
+                    getObservableTimeSpan().getSpan()
+                            .set(TimeSpan.get(time, getObservableTimeSpan().getSpan().get().getDuration()));
                 }
             }
         });
         JMenuItem endItem = new JMenuItem(myName + " span end here");
-        endItem.addActionListener(new ActionListener()
+        endItem.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            Quantify.collectMetric("mist3d.timeline.buttons.advanced-animation-controls.set-" + myName + "-span-end-here");
+            TimeInstant time = myRightSnapFunction.getSnapDestination(getUIModel().xToTime(p.x), RoundingMode.HALF_UP);
+            if (endAllowed(time))
             {
-                TimeInstant time = myRightSnapFunction.getSnapDestination(getUIModel().xToTime(p.x), RoundingMode.HALF_UP);
-                if (endAllowed(time))
-                {
-                    // First try keeping the other end constant.
-                    getObservableTimeSpan().getEnd().set(time);
+                // First try keeping the other end constant.
+                getObservableTimeSpan().getEnd().set(time);
 
-                    // If it didn't work, try keeping the duration constant.
-                    if (!getObservableTimeSpan().getEnd().get().equals(time))
-                    {
-                        getObservableTimeSpan().getSpan()
-                                .set(TimeSpan.get(getObservableTimeSpan().getSpan().get().getDuration(), time));
-                    }
+                // If it didn't work, try keeping the duration constant.
+                if (!getObservableTimeSpan().getEnd().get().equals(time))
+                {
+                    getObservableTimeSpan().getSpan()
+                            .set(TimeSpan.get(getObservableTimeSpan().getSpan().get().getDuration(), time));
                 }
             }
         });

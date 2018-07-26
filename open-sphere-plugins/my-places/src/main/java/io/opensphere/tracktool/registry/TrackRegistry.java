@@ -17,6 +17,7 @@ import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.AbstractRenderableGeometry;
 import io.opensphere.core.model.GeographicPosition;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
@@ -156,6 +157,7 @@ public final class TrackRegistry
     public void createNewTrackFromPositions(List<Pair<GeographicPosition, AbstractRenderableGeometry>> positions, Toolbox toolbox,
             MyPlacesDataGroupInfo rootDataGroup, MyPlacesEditListener editListener)
     {
+        Quantify.collectMetric("mist3d.tracks.manual.create");
         List<TrackNode> nodes = New.list(positions.size());
         for (Pair<GeographicPosition, AbstractRenderableGeometry> position : positions)
         {

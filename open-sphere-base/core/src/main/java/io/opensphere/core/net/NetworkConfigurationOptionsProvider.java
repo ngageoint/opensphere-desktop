@@ -24,6 +24,7 @@ import io.opensphere.core.net.config.SystemProxyConfiguration;
 import io.opensphere.core.net.config.UrlProxyConfiguration;
 import io.opensphere.core.options.impl.AbstractPreferencesOptionsProvider;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.swing.GhostTextField;
 import io.opensphere.core.util.swing.GridBagPanel;
 
@@ -80,18 +81,22 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
     {
         if (myUseSystemProxiesButton.isSelected())
         {
+            Quantify.collectMetric("mist3d.settings.network.apply-button.use-system-proxy-settings");
             myNetworkConfigurationManager.setSelectedProxyType(ConfigurationType.SYSTEM);
         }
         else if (myUseAutoProxyButton.isSelected())
         {
+            Quantify.collectMetric("mist3d.settings.network.apply-button.automatic-proxy-configuration");
             myNetworkConfigurationManager.setSelectedProxyType(ConfigurationType.URL);
         }
         else if (myUseManualProxyButton.isSelected())
         {
+            Quantify.collectMetric("mist3d.settings.network.apply-button.manual-proxy-configuration");
             myNetworkConfigurationManager.setSelectedProxyType(ConfigurationType.MANUAL);
         }
         else
         {
+            Quantify.collectMetric("mist3d.settings.network.apply-button.no-proxy");
             myNetworkConfigurationManager.setSelectedProxyType(ConfigurationType.NONE);
         }
 

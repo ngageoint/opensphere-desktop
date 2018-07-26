@@ -25,6 +25,7 @@ import io.opensphere.core.datafilter.DataFilter;
 import io.opensphere.core.datafilter.DataFilterRegistryListener;
 import io.opensphere.core.datafilter.impl.DataFilterRegistryAdapter;
 import io.opensphere.core.model.time.TimeSpan;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.image.IconUtil.IconType;
 import io.opensphere.core.util.lang.ThreadUtilities;
@@ -426,6 +427,7 @@ public class LayerDetailLowerControlPanel extends GridBagPanel
                 @Override
                 public void actionPerformed(ActionEvent evt)
                 {
+                    Quantify.collectMetric("mist3d.layer-detail.extents-button");
                     TimeSpan extent = DataGroupInfoUtilities.findTimeExtentFromDGICollection(Collections.singleton(myDGI));
                     if (extent != null && !extent.isTimeless())
                     {

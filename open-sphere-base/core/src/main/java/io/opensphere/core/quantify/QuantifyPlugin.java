@@ -1,5 +1,8 @@
 package io.opensphere.core.quantify;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -13,6 +16,9 @@ import io.opensphere.core.quantify.impl.DefaultQuantifyService;
 import io.opensphere.core.quantify.impl.HttpQuantifySender;
 import io.opensphere.core.quantify.impl.LoggingQuantifySender;
 import io.opensphere.core.quantify.impl.QuantifyToolboxImpl;
+import io.opensphere.core.quantify.settings.QuantifyOptionsProvider;
+import io.opensphere.core.quantify.settings.QuantifySettingsModel;
+import io.opensphere.core.util.collections.New;
 
 /** A plugin used to collect metrics and send them to a remote endpoint. */
 public class QuantifyPlugin extends PluginAdapter
@@ -23,6 +29,15 @@ public class QuantifyPlugin extends PluginAdapter
     /** The service used to collect metrics. */
     private QuantifyService myService;
 
+    /** The object with which preferences are read. */
+    private Preferences myPreferences;
+
+    /** The options provider used to configure the quantify plugin. */
+    private QuantifyOptionsProvider myOptionsProvider;
+
+    /** The toolbox through which application state is accessed. */
+    private Toolbox myToolbox;
+
     /**
      * {@inheritDoc}
      *
@@ -32,22 +47,61 @@ public class QuantifyPlugin extends PluginAdapter
     @Override
     public void initialize(PluginLoaderData plugindata, Toolbox toolbox)
     {
-        Preferences preferences = toolbox.getPreferencesRegistry().getPreferences(QuantifyPlugin.class);
-        String url = preferences.getString("quantify.url", null);
+        myToolbox = toolbox;
+        myPreferences = toolbox.getPreferencesRegistry().getPreferences(QuantifyPlugin.class);
 
-        QuantifySender sender;
+        QuantifySettingsModel settingsModel = new QuantifySettingsModel(myPreferences);
+        myOptionsProvider = new QuantifyOptionsProvider(settingsModel);
+
+        myToolbox.getUIRegistry().getOptionsRegistry().addOptionsProvider(myOptionsProvider);
+
+        String url = settingsModel.urlProperty().get();
+
+        Set<QuantifySender> senders = New.set();
         if (StringUtils.isNotBlank(url))
         {
-            sender = new HttpQuantifySender(toolbox, UrlUtils.toUrl(url));
+            senders.add(new HttpQuantifySender(toolbox, UrlUtils.toUrl(url)));
         }
         else
         {
             LOG.info("Unable to find preference 'quantify.url'. Writing metrics to log.");
-            sender = new LoggingQuantifySender();
+            settingsModel.captureToLogProperty().set(true);
         }
-        myService = new DefaultQuantifyService(sender);
-        QuantifyToolbox quantifyToolbox = new QuantifyToolboxImpl(myService);
+
+        if (settingsModel.captureToLogProperty().get())
+        {
+            senders.add(new LoggingQuantifySender());
+        }
+        myService = new DefaultQuantifyService(senders, settingsModel.enabledProperty());
+
+        settingsModel.captureToLogProperty()
+                .addListener((obs, ov, nv) -> updateCaptureToLog(ov.booleanValue(), nv.booleanValue()));
+
+        QuantifyToolbox quantifyToolbox = new QuantifyToolboxImpl(settingsModel, myService);
         toolbox.getPluginToolboxRegistry().registerPluginToolbox(quantifyToolbox);
+    }
+
+    /**
+     * @param originalValue the previous value of the capture-to-log setting.
+     * @param newValue the new value of the capture-to-log setting.
+     */
+    private void updateCaptureToLog(boolean originalValue, boolean newValue)
+    {
+        if (originalValue != newValue)
+        {
+            synchronized (myService)
+            {
+                if (!newValue)
+                {
+                    myService.getSenders().removeAll(myService.getSenders().stream()
+                            .filter(s -> s instanceof LoggingQuantifySender).collect(Collectors.toSet()));
+                }
+                else
+                {
+                    myService.getSenders().add(new LoggingQuantifySender());
+                }
+            }
+        }
     }
 
     /**
@@ -59,6 +113,8 @@ public class QuantifyPlugin extends PluginAdapter
     public void close()
     {
         myService.close();
+        myToolbox.getUIRegistry().getOptionsRegistry().removeOptionsProvider(myOptionsProvider);
+
         super.close();
     }
 }

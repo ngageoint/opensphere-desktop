@@ -1,12 +1,16 @@
 package io.opensphere.controlpanels.animation.view;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.ToolTipManager;
 
 import io.opensphere.controlpanels.animation.model.AnimationModel;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.options.impl.OptionsPanel;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.swing.input.ViewPanel;
 import io.opensphere.core.util.swing.input.controller.ControllerFactory;
 
@@ -59,17 +63,69 @@ public class AnimationOptionsProvider extends AbstractOptionsProvider
                     "Do not allow the loop span to be changed by the active span");
             ToolTipManager.sharedInstance().setDismissDelay(10000);
 
-            JButton resetFrameButton = new JButton("Reset timeline size & location");
-            resetFrameButton.addActionListener(e -> myTimelineFrame.resizeAndPositionToDefault());
-
             ViewPanel panel = new ViewPanel();
-            panel.addComponent(ControllerFactory.createComponent(myAnimationModel.getRememberTimes()));
-            panel.addLabelComponent(ControllerFactory.createLabelAndComponent(myAnimationModel.getViewPreference()));
-            panel.addComponent(ControllerFactory.createComponent(myAnimationModel.getLoopSpanLocked()));
-            panel.addComponent(resetFrameButton);
+            panel.addComponent(getRememberLoopSpanCheckBox());
+            panel.addLabelComponent(getTimelineViewPreferenceComponents());
+            panel.addComponent(getLockLoopSpanCheckBox());
+            panel.addComponent(getResetFrameButton());
             myPanel = new OptionsPanel(panel);
         }
         return myPanel;
+    }
+
+    /**
+     * Gets the remember loop span checkbox.
+     *
+     * @return the remember loop span checkbox
+     */
+    private JCheckBox getRememberLoopSpanCheckBox()
+    {
+        JCheckBox rememberLoopSpanCheckBox = (JCheckBox)ControllerFactory.createComponent(myAnimationModel.getRememberTimes());
+        rememberLoopSpanCheckBox.addActionListener(e -> Quantify.collectEnableDisableMetric(
+                "mist3d.settings.timeline-and-animation.remember-loop-span", rememberLoopSpanCheckBox.isSelected()));
+        return rememberLoopSpanCheckBox;
+    }
+
+    /**
+     * Gets the timeline view preference components - label and combobox.
+     *
+     * @return the timeline view preference components
+     */
+    private JComponent[] getTimelineViewPreferenceComponents()
+    {
+        JComponent[] timelineViewPreference = ControllerFactory.createLabelAndComponent(myAnimationModel.getViewPreference());
+        ((JComboBox<?>)timelineViewPreference[1]).addActionListener(
+            e -> Quantify.collectMetric("mist3d.settings.timeline-and-animation.timeline-to-show-on-startup-selection"));
+        return timelineViewPreference;
+    }
+
+    /**
+     * Gets the lock loop span checkbox.
+     *
+     * @return the lock loop span checkbox
+     */
+    private JCheckBox getLockLoopSpanCheckBox()
+    {
+        JCheckBox lockLoopSpanCheckBox = (JCheckBox)ControllerFactory.createComponent(myAnimationModel.getLoopSpanLocked());
+        lockLoopSpanCheckBox.addActionListener(e -> Quantify.collectEnableDisableMetric(
+                "mist3d.settings.timeline-and-animation.lock-loop-span", lockLoopSpanCheckBox.isSelected()));
+        return lockLoopSpanCheckBox;
+    }
+
+    /**
+     * Gets the reset timeline frame button.
+     *
+     * @return the reset frame button
+     */
+    private JButton getResetFrameButton()
+    {
+        JButton resetFrameButton = new JButton("Reset timeline size & location");
+        resetFrameButton.addActionListener(e ->
+        {
+            Quantify.collectMetric("mist3d.settings.timeline-and-animation.reset-timeline-size-and-location-button");
+            myTimelineFrame.resizeAndPositionToDefault();
+        });
+        return resetFrameButton;
     }
 
     @Override

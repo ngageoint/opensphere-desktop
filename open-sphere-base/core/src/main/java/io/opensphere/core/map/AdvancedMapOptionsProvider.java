@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.core.util.swing.LinkedSliderTextField;
@@ -46,6 +47,7 @@ public class AdvancedMapOptionsProvider extends AbstractOptionsProvider
         @Override
         public void actionPerformed(ActionEvent evt)
         {
+            Quantify.collectMetric("mist3d.settings.map.advanced.terrain-density-change");
             LinkedSliderTextField sfp = (LinkedSliderTextField)evt.getSource();
             int reverse = 101 - sfp.getValue();
             // scale to a number between 40 and 120

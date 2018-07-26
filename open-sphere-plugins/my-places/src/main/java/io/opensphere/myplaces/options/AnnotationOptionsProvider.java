@@ -7,6 +7,7 @@ import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import de.micromata.opengis.kml.v_2_2_0.Polygon;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.myplaces.constants.Constants;
 import io.opensphere.myplaces.editor.view.AnnotationStyleEditorPanel;
 import io.opensphere.myplaces.util.ExtendedDataUtils;
@@ -54,6 +55,8 @@ public class AnnotationOptionsProvider extends AbstractOptionsProvider
     @Override
     public void applyChanges()
     {
+        Quantify.collectMetric("mist3d.settings.my-places-defaults.apply-button");
+
         getOptionsPanel().getModel().applyChanges();
 
         int index = 0;

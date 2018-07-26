@@ -7,8 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -21,8 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.SwingWorker;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
 
@@ -39,6 +35,7 @@ import io.opensphere.core.TimeManager.PrimaryTimeSpanChangeListener;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.model.time.TimeSpanList;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.units.duration.Milliseconds;
 import io.opensphere.core.util.Constants;
 import io.opensphere.core.util.ObservableValue;
@@ -229,58 +226,73 @@ class ControlPanel extends FactoryViewPanel
     {
         myRecordButton.addActionListener(e -> handleRecordPressed());
         myPlayStopButton.addActionListener(e -> handlePlayStopPressed());
-        myPreviousButton.addActionListener(e -> myAnimationModel.playStateProperty().set(PlayState.STEP_BACKWARD, true));
-        myNextButton.addActionListener(e -> myAnimationModel.playStateProperty().set(PlayState.STEP_FORWARD, true));
-        myFirstButton.addActionListener(e -> myAnimationModel.playStateProperty().set(PlayState.STEP_FIRST, true));
-        myLastButton.addActionListener(e -> myAnimationModel.playStateProperty().set(PlayState.STEP_LAST, true));
+        myPreviousButton.addActionListener(e ->
+        {
+            Quantify.collectMetric("mist3d.timeline.buttons.step-backward");
+            myAnimationModel.playStateProperty().set(PlayState.STEP_BACKWARD, true);
+        });
+        myNextButton.addActionListener(e ->
+        {
+            Quantify.collectMetric("mist3d.timeline.buttons.step-forward");
+            myAnimationModel.playStateProperty().set(PlayState.STEP_FORWARD, true);
+        });
+        myFirstButton.addActionListener(e ->
+        {
+            Quantify.collectMetric("mist3d.timeline.buttons.step-first");
+            myAnimationModel.playStateProperty().set(PlayState.STEP_FIRST, true);
+        });
+        myLastButton.addActionListener(e ->
+        {
+            Quantify.collectMetric("mist3d.timeline.buttons.step-last");
+            myAnimationModel.playStateProperty().set(PlayState.STEP_LAST, true);
+        });
     }
 
     /** Adds listeners for GUI elements not related to play movement. */
     private void addGuiListenersOther()
     {
-        myZoomInButton.addActionListener(e -> myUIModel.zoom(true, .5f));
-        myZoomOutButton.addActionListener(e -> myUIModel.zoom(false, .5f));
-        myChartTypeButton.addActionListener(new ActionListener()
+        myZoomInButton.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            Quantify.collectMetric("mist3d.timeline.buttons.zoom-in");
+            myUIModel.zoom(true, .5f);
+        });
+        myZoomOutButton.addActionListener(e ->
+        {
+            Quantify.collectMetric("mist3d.timeline.buttons.zoom-in");
+            myUIModel.zoom(false, .5f);
+        });
+        myChartTypeButton.addActionListener(e ->
+        {
+            Quantify.collectMetric("mist3d.timeline.buttons.change-chart-type");
+            myAnimationModel.getChartType().set(myChartLayer.nextChart());
+            updateChartTypeTooltip();
+            if (myChartLayer.getChartType() == ChartType.NONE)
             {
-                myAnimationModel.getChartType().set(myChartLayer.nextChart());
-                updateChartTypeTooltip();
-                if (myChartLayer.getChartType() == ChartType.NONE)
-                {
-                    myUIModel.getTemporaryMessage().set("Charting disabled");
-                }
-                else
-                {
-                    myUIModel.getTemporaryMessage().set("Chart type is now " + myChartLayer.getChartType().getDescription());
-                }
+                myUIModel.getTemporaryMessage().set("Charting disabled");
+            }
+            else
+            {
+                myUIModel.getTemporaryMessage().set("Chart type is now " + myChartLayer.getChartType().getDescription());
             }
         });
-        myControlsButton.addActionListener(new ActionListener()
+        myControlsButton.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            Quantify.collectMetric("mist3d.timeline.buttons.launch-animation-controls");
+            if (myControlsDialog == null)
             {
-                if (myControlsDialog == null)
-                {
-                    myControlsDialog = new OptionDialog(getParent(),
-                            new AdvancedControlPanel(myToolbox.getUIRegistry().getOptionsRegistry(), myAnimationModel));
-                    myControlsDialog.setModal(false);
-                    myControlsDialog.build();
-                    setLocationAbove(myControlsDialog, getParent());
-                }
-                myControlsDialog.setVisible(!myControlsDialog.isVisible());
+                myControlsDialog = new OptionDialog(getParent(),
+                        new AdvancedControlPanel(myToolbox, myToolbox.getUIRegistry().getOptionsRegistry(), myAnimationModel));
+                myControlsDialog.setModal(false);
+                myControlsDialog.build();
+                setLocationAbove(myControlsDialog, getParent());
             }
+            myControlsDialog.setVisible(!myControlsDialog.isVisible());
         });
-        mySpeedSlider.getModel().addChangeListener(new ChangeListener()
+        mySpeedSlider.getModel().addChangeListener(e ->
         {
-            @Override
-            public void stateChanged(ChangeEvent e)
-            {
-                float speed = updateSpeedLabel();
-                myAnimationModel.getFPS().set(Float.valueOf(speed));
-            }
+            Quantify.collectMetric("mist3d.timeline.buttons.drag-speed-slider");
+            float speed = updateSpeedLabel();
+            myAnimationModel.getFPS().set(Float.valueOf(speed));
         });
         bindModel(myUIModel.getUISpan(), (obs, o, n) -> updateTimeSpanLabels(myUIModel.getUISpan().get()));
     }
@@ -305,6 +317,7 @@ class ControlPanel extends FactoryViewPanel
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
             {
+                Quantify.collectMetric("mist3d.timeline.buttons.live-mode-change");
                 if (myAnimationModel.getLiveMode().get().booleanValue())
                 {
                     myAnimationModel.getLiveMode().setNameAndDescription("<html><b>LIVE</b></html>", "");
@@ -475,6 +488,7 @@ class ControlPanel extends FactoryViewPanel
     {
         if (myRecorder != null)
         {
+            Quantify.collectMetric("mist3d.timeline.buttons.recording-play");
             record();
         }
         else
@@ -482,10 +496,12 @@ class ControlPanel extends FactoryViewPanel
             PlayState currentState = myAnimationModel.getPlayState();
             if (currentState.isPlaying())
             {
+                Quantify.collectMetric("mist3d.timeline.buttons.animate-stop");
                 setPlayState(PlayState.STOP);
             }
             else
             {
+                Quantify.collectMetric("mist3d.timeline.buttons.animate-start");
                 setPlayState(PlayState.FORWARD);
             }
         }
@@ -497,6 +513,7 @@ class ControlPanel extends FactoryViewPanel
         myRecordButton.setSelected(!myRecordButton.isSelected());
         if (myRecordButton.isSelected())
         {
+            Quantify.collectMetric("mist3d.timeline.buttons.record-start");
             setPlayState(PlayState.STOP);
 
             ScreenViewer viewer = myToolbox.getMapManager().getScreenViewer();
@@ -520,11 +537,13 @@ class ControlPanel extends FactoryViewPanel
             }
             else
             {
+                Quantify.collectMetric("mist3d.timeline.buttons.record-cancel");
                 cancelRecord();
             }
         }
         else
         {
+            Quantify.collectMetric("mist3d.timeline.buttons.record-cancel");
             cancelRecord();
         }
     }
@@ -544,7 +563,7 @@ class ControlPanel extends FactoryViewPanel
             {
                 CountDownLatch recordLatch = new CountDownLatch(1);
                 myRecorder.recordSinglePass(recordLatch);
-                EventQueueUtilities.invokeLater(()->setPlayState(PlayState.FORWARD));
+                EventQueueUtilities.invokeLater(() -> setPlayState(PlayState.FORWARD));
                 try
                 {
                     recordLatch.await();

@@ -15,6 +15,7 @@ import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.options.impl.OptionsPanel;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.lang.NumberUtilities;
 import io.opensphere.core.util.swing.ComponentUtilities;
 import io.opensphere.core.util.swing.DocumentListenerAdapter;
@@ -52,6 +53,8 @@ public class WFSPluginOptionsProvider extends AbstractOptionsProvider
     @Override
     public void applyChanges()
     {
+        Quantify.collectMetric("mist3d.settings.servers.wfs.apply-button");
+
         // Save all the values to the preferences if they are valid.
         if (isMaxFeaturesValid())
         {
