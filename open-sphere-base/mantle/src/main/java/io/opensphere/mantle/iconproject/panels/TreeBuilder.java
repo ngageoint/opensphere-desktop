@@ -122,7 +122,6 @@ public class TreeBuilder extends TreeItem<String>
                     iconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(mainNode, collection, defaultRecList,
                             IconRecordTreeItemUserObject.NameType.COLLECTION, null);
                     recordMap.put(collection, iconTreeObject.getRecords(true));
-                    //System.out.println("The records I'm giving areee: " + iconTreeObject.getRecords(true));
                 }
                 else // like !found from example
                 {
@@ -141,7 +140,6 @@ public class TreeBuilder extends TreeItem<String>
                             IconRecordTreeItemUserObject.NameType.SUBCATEGORY, collection);
                     mainNode.getChildren().add(iconTreeObject.getMyTreeItem());
                     recordMap.put(collection, iconTreeObject.getRecords(true));
-                    //System.out.println("The records I'm giving areee: " + iconTreeObject.getRecords(true));
                 }
             }
         }

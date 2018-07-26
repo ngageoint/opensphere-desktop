@@ -66,7 +66,7 @@ public class MainPanel extends SplitPane
 
         recordMap = new HashMap<>(treeBuilder.getRecordMap());
 
-        List<IconRecord> recordList = recordMap.get("User Added");
+        List<IconRecord> recordList = recordMap.get("GoogleEarth");
 
         myIconGrid = new GridBuilder(90, recordList, myIconRegistry);
 
@@ -106,7 +106,7 @@ public class MainPanel extends SplitPane
         {
             EventQueue.invokeLater(() ->
             {
-
+                //TODO:
             });
         });
 
@@ -134,6 +134,7 @@ public class MainPanel extends SplitPane
     private void treeHandle(TreeItem<String> newValue)
     {
         System.out.println("Choice is:  " + newValue.getValue());
+        //System.out.println(" type is: " + treeBuilder.getIconTreeObject().getNameType());
         //myIconGrid.setTheChosen(newValue.getValue());//theChoice);
         //myIconGrid.setMyIconRegistry(myIconRegistry);
         //myIconGrid.refresh();
@@ -141,9 +142,11 @@ public class MainPanel extends SplitPane
         ////////
         //System.out.println("The type is: " + treeBuilder.getIconTreeObject().getType());
         //System.out.println("the records are: " + treeBuilder.getIconTreeObject().getRecords(true));
-
-        if(treeBuilder.getIconTreeObject().getType().toString().equals("COLLECTION"))
+        /*
+        if(treeBuilder.getIconTreeObject().getNameType().toString().equals("COLLECTION"))
         {
+            String parent = treeBuilder.getIconTreeObject().getParent();
+            System.out.println("parent is:  " + parent);
             System.out.println("the actual records are: " + recordMap.get(newValue.getValue()));
             myIconGrid.setMyRecordList(recordMap.get(newValue.getValue()));
         }
@@ -151,9 +154,10 @@ public class MainPanel extends SplitPane
         {
             //TreeItem<String> parent =
             String parent = treeBuilder.getIconTreeObject().getParent();
-            System.out.println("parent is:  " + parent + " type is: " + treeBuilder.getIconTreeObject().getType());
+            System.out.println("parent is:  " + parent);
+
             //myIconGrid.setMyRecordList(record);
-        }
+        }*/
     }
 
     /**

@@ -38,8 +38,7 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
      */
     public static DefaultIconRecordTreeItemObject createFolderNode(TreeItem<String> item, String label, NameType nt, String parent)
     {
-        System.out.println("folder created!!!!!  " + label);
-
+        //System.out.println("folder created!!!!!  " + label);
         return new DefaultIconRecordTreeItemObject(item, label, null, Type.FOLDER, nt, parent);
     }
 
@@ -55,7 +54,7 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
     public static DefaultIconRecordTreeItemObject createLeafNode(TreeItem<String> item, String label,
             List<IconRecord> recs, NameType nt, String parent)
     {
-        System.out.println("leaf created!!!!!  " + label);
+        //System.out.println("leaf created!!!!!  " + label);
         return new DefaultIconRecordTreeItemObject(item, label, recs, Type.LEAF, nt, parent);
     }
 
@@ -137,10 +136,10 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
         if (item != null)// && item.getUserObject() instanceof DefaultIconRecordTreeItemObject)
         {
             //DefaultIconRecordTreeItemObject nodeObj = (DefaultIconRecordTreeItemObject)node.getUserObject();
-            if (myType == Type.LEAF)
-            {
-                addToList.addAll(myIconRecords);
-            }
+            //if (myType == Type.LEAF)
+            //{
+            addToList.addAll(myIconRecords);
+            //}
             /*else
             {
                 if (node.getChildCount() > 0)

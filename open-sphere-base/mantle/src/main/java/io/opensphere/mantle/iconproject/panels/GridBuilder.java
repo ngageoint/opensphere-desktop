@@ -51,7 +51,6 @@ public class GridBuilder extends TilePane
             Button sample  = buttonBuilder(record);
             setMargin(sample,new Insets(5., 5., 5., 5.));
             getChildren().add(sample);
-            //System.out.println("record is: " + record);
         }
     }
 
@@ -78,41 +77,6 @@ public class GridBuilder extends TilePane
         generic.setOnAction(e ->
         {
             mySelectedIcon = record;
-        });
-
-        return generic;
-    }
-
-    /**
-     * Build buttons with Images for the grid.
-     *
-     * @param count the index of the icon
-     * @return the built button
-     */
-    public Button gridButtonBuilder(int count)
-    {
-        Button generic = new Button();
-        generic.setMinSize(myTileWidth, myTileWidth);
-        generic.setMaxSize(myTileWidth, myTileWidth);
-        generic.setPadding(new Insets(5, 5, 5, 5));
-        String text = myIconRegistry.getIconRecordByIconId(count).getName();
-
-        generic.setText(text);
-        generic.setContentDisplay(ContentDisplay.TOP);
-        generic.setAlignment(Pos.BOTTOM_CENTER);
-
-        ImageView iconView = new ImageView(myIconRegistry.getIconRecordByIconId(count).getImageURL().toString());
-
-        if (iconView.getImage().getWidth() > myTileWidth)
-        {
-            iconView.setFitHeight(myTileWidth - 25);
-            iconView.setFitWidth(myTileWidth - 25);
-        }
-
-        generic.setGraphic(iconView);
-        generic.setOnAction(e ->
-        {
-            mySelectedIcon = myIconRegistry.getIconRecordByIconId(count);
         });
 
         return generic;
