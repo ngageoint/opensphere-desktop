@@ -136,10 +136,14 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
         if (item != null)// && item.getUserObject() instanceof DefaultIconRecordTreeItemObject)
         {
             //DefaultIconRecordTreeItemObject nodeObj = (DefaultIconRecordTreeItemObject)node.getUserObject();
-            //if (myType == Type.LEAF)
-            //{
-            addToList.addAll(myIconRecords);
-            //}
+            if (myType == Type.LEAF)
+            {
+                addToList.addAll(myIconRecords);
+            }
+            else
+            {
+                System.out.println("Not a leaf");
+            }
             /*else
             {
                 if (node.getChildCount() > 0)
