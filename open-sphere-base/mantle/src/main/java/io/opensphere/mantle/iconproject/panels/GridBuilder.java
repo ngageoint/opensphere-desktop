@@ -9,6 +9,7 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
+
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
@@ -21,15 +22,43 @@ public class GridBuilder extends TilePane
     private final int myTileWidth;
 
     /** The icon registry used for the pane. */
-    private final IconRegistry myIconRegistry;
+    private IconRegistry myIconRegistry;
+
+    public IconRegistry getMyIconRegistry()
+    {
+        return myIconRegistry;
+    }
+
+    public void setMyIconRegistry(IconRegistry myIconRegistry)
+    {
+        this.myIconRegistry = myIconRegistry;
+    }
 
     /** the selected icon to be used for the builder. */
     private IconRecord mySelectedIcon;
 
     /** The chosen icon collection. */
-    private final String theChosen;
+    private String theChosen = "";
 
-    private int numcols = 4;
+    /**Get theChosen.
+     *
+     * @return theChosen the collection selected from the tree
+     */
+    public String getTheChosen()
+    {
+        return theChosen;
+    }
+
+    /** Sets theChosen.
+     *
+     * @param theChosen he collection selected from the tree
+     */
+    public void setTheChosen(String theChosen)
+    {
+        this.theChosen = theChosen;
+    }
+
+    //private final int numcols = 4;
 
     /**
      * The GridBuilder constructor. sets up the rows and columns for the icon
@@ -40,11 +69,12 @@ public class GridBuilder extends TilePane
      * @param category the category the icons belong to on the tree.
      */
 
-    public GridBuilder(int tileWidth, IconRegistry iconRegistry, String category)
+    public GridBuilder(int tileWidth, IconRegistry iconRegistry)
     {
         myTileWidth = tileWidth;    
         myIconRegistry = iconRegistry;
-        theChosen = category;
+        //System.out.println("my reg is: " + myIconRegistry);
+        //theChosen = category;
         // Temporary getting to replace the ugly setStyle and make all buttons
         // use one file.
          //getStyleClass().add("IconManagerStyle.css");
@@ -59,6 +89,7 @@ public class GridBuilder extends TilePane
             getChildren().add(sample);
             counter = counter + 1;
         }
+
         /*
         for (int row = 0; row <= 10; row++)
         {
@@ -76,6 +107,7 @@ public class GridBuilder extends TilePane
             cc.setPercentWidth(100 / numcols);
             getColumnConstraints().add(cc);
         }*/
+        //System.out.println("the chosen in construct is:   " + theChosen);
     }
 
     /**
@@ -123,5 +155,15 @@ public class GridBuilder extends TilePane
     {
         IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myIconRegistry, mySelectedIcon);
         builderPane.setVisible(true);
+    }
+
+    /**
+     * Clears the gridPane
+     */
+    public void refresh()
+    {
+        getChildren().clear();
+        System.out.println("clearing yo");
+        //new GridBuilder(myTileWidth, myIconRegistry);
     }
 }

@@ -13,6 +13,8 @@ import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.gui.AlphanumComparator;
+import io.opensphere.mantle.iconproject.impl.DefaultIconRecordTreeItemObject;
+import io.opensphere.mantle.iconproject.impl.IconRecordTreeItemUserObject;
 
 /**
  * The TreeBuilder class.
@@ -22,6 +24,22 @@ public class TreeBuilder extends TreeItem<String>
 {
     /** The icon registry. */
     private final IconRegistry myIconRegistry;
+
+    /** The object that holds main treeItem info. */
+    private DefaultIconRecordTreeItemObject iconTreeObject;
+
+    /** The object that holds sub treeItem info. */
+    private DefaultIconRecordTreeItemObject subIconTreeObject;
+
+    public DefaultIconRecordTreeItemObject getIconTreeObject()
+    {
+        return iconTreeObject;
+    }
+
+    public void setIconTreeObject(DefaultIconRecordTreeItemObject iconTreeObject)
+    {
+        this.iconTreeObject = iconTreeObject;
+    }
 
     /**
      * Creates a tree structure with the icon records from the registry that
@@ -36,12 +54,9 @@ public class TreeBuilder extends TreeItem<String>
     {
         myIconRegistry = iconReg;
 
-        // new TreeItem<String>("Icon Registry"); // not sure about this line
-        // tbh
-        // DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode();
-
         List<IconRecord> records = myIconRegistry.getIconRecords(filter);
-        Collections.sort(records, (r1, r2) -> AlphanumComparator.compareNatural(r1.getImageURL().toString(), r2.getImageURL().toString()));
+        Collections.sort(records,
+                (r1, r2) -> AlphanumComparator.compareNatural(r1.getImageURL().toString(), r2.getImageURL().toString()));
         Set<String> collectionSet = New.set();
         Map<String, Map<String, List<IconRecord>>> collectionToSubCatIconRecMap = New.map();
         String defaultSubCat = "DEFAULT";
@@ -103,8 +118,7 @@ public class TreeBuilder extends TreeItem<String>
 
         for (String collection : collectionList)
         {
-            // DefaultMutableTreeNode colNode = new DefaultMutableTreeNode();
-            TreeItem<String> colNode = new TreeItem<String>(collection);
+            TreeItem<String> mainNode = new TreeItem<>();
             Map<String, List<IconRecord>> subToRecListMap = collectionToSubCatIconRecMap.get(collection);
             if (subToRecListMap != null)
             {
@@ -113,24 +127,38 @@ public class TreeBuilder extends TreeItem<String>
 
                 if (subCatList.remove(defaultSubCat))
                 {
-                    // getChildren().add(new TreeItem<String>(collection));
-                    getChildren().add(colNode);
-                    // set tree object thingy (colNode) to name collection and
-                    // the reclist defaultRecList
-                    // this is the leaf one
+                    List<IconRecord> defaultRecList = subToRecListMap.get(defaultSubCat);
+                    // set enum to leaf
+                    iconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(mainNode, collection, defaultRecList,
+                            IconRecordTreeItemUserObject.NameType.COLLECTION);
+                    System.out.println("The records I'm giving areee: " + iconTreeObject.getRecords(true));
                 }
                 else // like !found from example
                 {
-                    // set "folder" with collection name
-                    getChildren().add(colNode);
+                    // set enum to folder
+                    iconTreeObject = DefaultIconRecordTreeItemObject.createFolderNode(mainNode, collection,
+                            IconRecordTreeItemUserObject.NameType.COLLECTION);
                 }
+
+                getChildren().add(iconTreeObject.getMyTreeItem());
+
                 for (String subCat : subCatList)
                 {
-                    TreeItem<String> depNode = new TreeItem<String>(subCat);
-                    colNode.getChildren().add(depNode);
+                    TreeItem<String> depNode = new TreeItem<>();
+                    // set enum to leaf
+                    iconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(depNode, subCat, subToRecListMap.get(subCat),
+                            IconRecordTreeItemUserObject.NameType.SUBCATEGORY);
+                    mainNode.getChildren().add(iconTreeObject.getMyTreeItem());
+                    System.out.println("The records I'm giving areee: " + iconTreeObject.getRecords(true));
+                    //subIconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(depNode, subCat, subToRecListMap.get(subCat),
+                    //        IconRecordTreeItemUserObject.NameType.SUBCATEGORY);
+                    //mainNode.getChildren().add(subIconTreeObject.getMyTreeItem());
+                    //System.out.println("The records I'm giving areee: " + subIconTreeObject.getRecords(true));
+
+
                 }
             }
         }
-        // setExpanded(true);
+
     }
 }
