@@ -158,11 +158,11 @@ public class FeatureActionExporter
                 break;
             }
         }
-        XMLUtilities.format(doc, outputStream, null);
         if (outputStream != null)
         {
             try
             {
+                XMLUtilities.format(doc, outputStream, null);
                 outputStream.close();
             }
             catch (IOException e)
