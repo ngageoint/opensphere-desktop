@@ -2,41 +2,71 @@ package io.opensphere.overlay.worldmap;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
-import java.util.List;
+import java.awt.image.BufferedImage;
+
+import org.apache.commons.lang.math.RandomUtils;
 
 import io.opensphere.core.function.Procedure;
 import io.opensphere.core.geometry.Geometry;
-import io.opensphere.core.geometry.PolygonGeometry;
-import io.opensphere.core.geometry.renderproperties.ColorRenderProperties;
-import io.opensphere.core.geometry.renderproperties.DefaultColorRenderProperties;
-import io.opensphere.core.geometry.renderproperties.DefaultPolygonRenderProperties;
+import io.opensphere.core.geometry.ImageManager;
+import io.opensphere.core.geometry.PolylineGeometry;
+import io.opensphere.core.geometry.SingletonImageProvider;
+import io.opensphere.core.geometry.TileGeometry;
+import io.opensphere.core.geometry.renderproperties.DefaultPolylineRenderProperties;
+import io.opensphere.core.geometry.renderproperties.DefaultTileRenderProperties;
+import io.opensphere.core.geometry.renderproperties.PolylineRenderProperties;
+import io.opensphere.core.geometry.renderproperties.TileRenderProperties;
 import io.opensphere.core.hud.framework.Component;
 import io.opensphere.core.hud.framework.ControlEventSupport;
+import io.opensphere.core.model.LineType;
+import io.opensphere.core.model.Position;
+import io.opensphere.core.model.ScreenBoundingBox;
 import io.opensphere.core.model.ScreenPosition;
 import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.collections.New;
 
 /**
- * 
+ * A button class displayed atop the world map.
  */
 public class WorldMapButton extends AbstractWorldMapRenderable
 {
+    /** The default color with which to draw the border. */
+    private static final Color DEFAULT_BORDER_COLOR = new Color(0xE7E7E7);
+
+    /** The default component size (assuming square components), in pixels. */
+    public static final int DEFAULT_COMPONENT_SIZE = 22;
+
     /** Support class for events from the control context. */
     private final ControlEventSupport myMouseSupport;
 
-    /** The geometry used to render the button. */
-    private PolygonGeometry myButtonGeometry;
+    /** The image to render on the button. */
+    private final BufferedImage myImage;
 
     /** The procedure called when the button is clicked. */
     private final Procedure myListener;
 
+    /** The color of the border drawn around the button. */
+    private Color myBorderColor = DEFAULT_BORDER_COLOR;
+
+    /** The size of the button to draw. */
+    private final int mySize;
+
+    /** The render properties for the primary image. */
+    private TileRenderProperties myPrimaryImageProperties;
+
     /**
-     * @param parent
+     * Creates a new button.
+     * 
+     * @param parent the component to which the button is bound.
+     * @param listener the listener called when the button is clicked.
+     * @param image the image displayed on the button.
      */
-    public WorldMapButton(Component parent, Procedure listener)
+    public WorldMapButton(Component parent, Procedure listener, BufferedImage image)
     {
         super(parent);
         myListener = listener;
+        myImage = image;
+        mySize = DEFAULT_COMPONENT_SIZE;
         myMouseSupport = new ControlEventSupport(this, getTransformer().getToolbox().getControlRegistry());
     }
 
@@ -60,25 +90,64 @@ public class WorldMapButton extends AbstractWorldMapRenderable
     public void init()
     {
         super.init();
+        ScreenBoundingBox drawBounds = getDrawBounds();
+        PolylineGeometry.Builder<Position> borderBuilder = new PolylineGeometry.Builder<>();
+        PolylineRenderProperties borderProperties = new DefaultPolylineRenderProperties(getBaseZOrder() + 5, true, false);
+        borderProperties.setWidth(2.0f);
+        borderProperties.setColor(myBorderColor);
+        borderBuilder.setLineSmoothing(true);
+        borderBuilder.setLineType(LineType.STRAIGHT_LINE);
+        ScreenPosition topLeft = new ScreenPosition(drawBounds.getWidth() - mySize, 2);
+        ScreenPosition topRight = new ScreenPosition(drawBounds.getWidth() + 4, 2);
+        ScreenPosition bottomLeft = new ScreenPosition(drawBounds.getWidth() - mySize, mySize + 4);
+        ScreenPosition bottomRight = new ScreenPosition(drawBounds.getWidth() + 4, mySize + 4);
+        borderBuilder.setVertices(New.list(topLeft, topRight, bottomRight, bottomLeft, topLeft));
 
-        ScreenPosition topLeft = new ScreenPosition(3, 2);
-        ScreenPosition topRight = new ScreenPosition(30, 2);
-        ScreenPosition bottomLeft = new ScreenPosition(3, 27);
-        ScreenPosition bottomRight = new ScreenPosition(30, 27);
+        PolylineGeometry border = new PolylineGeometry(borderBuilder, borderProperties, null);
+        getGeometries().add(border);
 
-        List<ScreenPosition> positions = New.list(topLeft, topRight, bottomRight, bottomLeft, topLeft);
+        ScreenBoundingBox drawingLocation = new ScreenBoundingBox(topLeft, bottomRight);
 
-        PolygonGeometry.Builder<ScreenPosition> polyBuilder = new PolygonGeometry.Builder<>();
+        TileGeometry.Builder<Position> builder = new TileGeometry.Builder<>();
+        builder.setBounds(drawingLocation);
+        builder.setDataModelId(RandomUtils.nextLong());
+        builder.setImageManager(new ImageManager((Void)null, new SingletonImageProvider(myImage)));
 
-        ColorRenderProperties fillColor = new DefaultColorRenderProperties(getBaseZOrder() + 5, true, true, true);
-        fillColor.setColor(ColorUtilities.opacitizeColor(Color.GRAY, 0.8f));
-        fillColor.setHighlightColor(ColorUtilities.opacitizeColor(Color.BLUE, 0.8f));
-        DefaultPolygonRenderProperties props = new DefaultPolygonRenderProperties(getBaseZOrder() + 5, true, true, fillColor);
-        polyBuilder.setVertices(positions);
-        myButtonGeometry = new PolygonGeometry(polyBuilder, props, null);
-        getGeometries().add(myButtonGeometry);
+        myPrimaryImageProperties = new DefaultTileRenderProperties(getBaseZOrder() + 4, true, true);
+        myPrimaryImageProperties.setColor(ColorUtilities.opacitizeColor(Color.WHITE, 0.8f));
+        myPrimaryImageProperties.setObscurant(false);
+        myPrimaryImageProperties.setOpacity(0.8F);
+        myPrimaryImageProperties.setHidden(false);
+        myPrimaryImageProperties.setHighlightColor(ColorUtilities.opacitizeColor(Color.BLUE, 0.8f));
 
-        myMouseSupport.setActionGeometry(myButtonGeometry);
+        TileGeometry imageGeometry = new TileGeometry(builder, myPrimaryImageProperties, null);
+        getGeometries().add(imageGeometry);
+
+        myMouseSupport.setActionGeometry(imageGeometry);
+    }
+
+    /**
+     * Draws a border around the exterior boundary of the button.
+     * 
+     * @param drawBounds the boundary of the border.
+     */
+    protected void drawBorder(ScreenBoundingBox drawBounds)
+    {
+        PolylineGeometry.Builder<Position> borderBuilder = new PolylineGeometry.Builder<>();
+        PolylineRenderProperties borderProperties = new DefaultPolylineRenderProperties(getBaseZOrder() + 5, true, false);
+        borderProperties.setWidth(2.0f);
+        borderProperties.setColor(myBorderColor);
+        borderBuilder.setLineSmoothing(true);
+        borderBuilder.setLineType(LineType.STRAIGHT_LINE);
+
+        ScreenPosition topLeft = new ScreenPosition(drawBounds.getWidth() - mySize + 4, 2);
+        ScreenPosition topRight = new ScreenPosition(drawBounds.getWidth() + 4, 2);
+        ScreenPosition bottomLeft = new ScreenPosition(drawBounds.getWidth() - mySize + 4, mySize);
+        ScreenPosition bottomRight = new ScreenPosition(drawBounds.getWidth() + 4, mySize);
+        borderBuilder.setVertices(New.list(topLeft, topRight, bottomRight, bottomLeft, topLeft));
+
+        PolylineGeometry border = new PolylineGeometry(borderBuilder, borderProperties, null);
+        getGeometries().add(border);
     }
 
     /**

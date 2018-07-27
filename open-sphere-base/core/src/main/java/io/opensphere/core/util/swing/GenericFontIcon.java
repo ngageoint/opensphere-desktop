@@ -207,9 +207,6 @@ public class GenericFontIcon implements Icon, FontIcon
 
                 graphics.setFont(myFont.deriveFont(Font.PLAIN, getSize()));
 
-                graphics.setColor(Color.ORANGE);
-                graphics.fillRect(0, 0, width, height);
-
                 graphics.setColor(getColor());
 
                 graphics.drawString(myIcon.getFontCode(), getXPos(), getYPos()+1);

@@ -1,6 +1,5 @@
 package io.opensphere.overlay.controls;
 
-import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -20,20 +19,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * 
+ * A container in which control components are rendered in a single row. Layout
+ * may be vertical or horizontal, and defaults to vertical.
  */
-public class ButtonContainer extends Window<GridLayoutConstraints, GridLayout>
+public class ControlComponentContainer extends Window<GridLayoutConstraints, GridLayout>
 {
-    private static final Color BORDER_COLOR = new Color(0xE7E7E7);
+    /** The default component size (assuming square components), in pixels. */
+    public static final int DEFAULT_COMPONENT_SIZE = 22;
 
     /**
      * The property in which the state of the vertical orientation field is
      * maintained. Defaults to true.
      */
-    private BooleanProperty myVerticalOrientationProperty;
+    private final BooleanProperty myVerticalOrientationProperty;
 
     /** The buttons housed within the button container. */
-    private ObservableList<ControlComponent> myButtons;
+    private final ObservableList<ControlComponent> myButtons;
 
     /**
      * Constructor.
@@ -46,10 +47,10 @@ public class ButtonContainer extends Window<GridLayoutConstraints, GridLayout>
      * @param controlCreators the set of functions used to create the control
      *            components to include in the container.
      */
-    public ButtonContainer(TransformerHelper hudTransformer, ScreenBoundingBox size, ToolLocation locationHint,
+    public ControlComponentContainer(TransformerHelper hudTransformer, ScreenBoundingBox size, ToolLocation locationHint,
             ResizeOption resize, Function<Component, ControlComponent>... controlCreators)
     {
-        super(hudTransformer, size, locationHint, resize, ZOrderRenderProperties.TOP_Z - 22);
+        super(hudTransformer, size, locationHint, resize, ZOrderRenderProperties.TOP_Z - 30);
         myVerticalOrientationProperty = new ConcurrentBooleanProperty(true);
         myButtons = FXCollections.observableArrayList();
         for (Function<Component, ControlComponent> function : controlCreators)
@@ -67,30 +68,12 @@ public class ButtonContainer extends Window<GridLayoutConstraints, GridLayout>
     @Override
     public void init()
     {
-        setBorder(new EmptyBorder());
-        initBorder();
+        initializeBorder();
+        initializeLayout();
 
-        // add the buttons:
+        // add the components:
         int xPosition = 0;
         int yPosition = 0;
-
-        int buttonSize = 22;
-
-        if (myVerticalOrientationProperty.get())
-        {
-            int width = 4 + myButtons.stream().map(c -> c.getWidth()).max(Integer::compare).orElse(22);
-            int height = 4 + myButtons.stream().map(c -> c.getHeight()).collect(Collectors.summingInt(Integer::intValue));
-
-            setLayout(new GridLayout(width, height, this));
-        }
-        else
-        {
-            int width = 4 + myButtons.stream().map(c -> c.getWidth()).collect(Collectors.summingInt(Integer::intValue));
-            int height = 4 + myButtons.stream().map(c -> c.getHeight()).max(Integer::compare).orElse(22);
-
-            setLayout(new GridLayout(width, height, this));
-        }
-
         for (ControlComponent component : myButtons)
         {
             if (component instanceof BufferedImageButton)
@@ -98,20 +81,22 @@ public class ButtonContainer extends Window<GridLayoutConstraints, GridLayout>
                 BufferedImageButton button = (BufferedImageButton)component;
                 GridLayoutConstraints constraints = new GridLayoutConstraints(
                         new ScreenBoundingBox(new ScreenPosition(xPosition, yPosition),
-                                new ScreenPosition(xPosition + buttonSize, yPosition + buttonSize)));
+                                new ScreenPosition(xPosition + DEFAULT_COMPONENT_SIZE, yPosition + DEFAULT_COMPONENT_SIZE)));
                 add(button, constraints);
 
                 if (myVerticalOrientationProperty.get())
                 {
-                    yPosition += buttonSize + 2;
+                    yPosition += DEFAULT_COMPONENT_SIZE + 2;
                 }
                 else
                 {
-                    xPosition += buttonSize + 2;
+                    xPosition += DEFAULT_COMPONENT_SIZE + 2;
                 }
             }
             else if (component instanceof ControlSpacer)
             {
+                // Control spacers do not actually get added, just used to
+                // calculate offsets.
                 if (myVerticalOrientationProperty.get())
                 {
                     yPosition += component.getHeight();
@@ -127,6 +112,36 @@ public class ButtonContainer extends Window<GridLayoutConstraints, GridLayout>
     }
 
     /**
+     * Configures the border of the container.
+     */
+    private void initializeBorder()
+    {
+        setBorder(new EmptyBorder());
+        initBorder();
+    }
+
+    /**
+     * Configures the layout of the container, calculating the total size of the
+     * container using the child components.
+     */
+    private void initializeLayout()
+    {
+        int width;
+        int height;
+        if (myVerticalOrientationProperty.get())
+        {
+            width = 4 + myButtons.stream().map(c -> c.getWidth()).max(Integer::compare).orElse(DEFAULT_COMPONENT_SIZE);
+            height = 4 + myButtons.stream().map(c -> c.getHeight()).collect(Collectors.summingInt(Integer::intValue));
+        }
+        else
+        {
+            width = 4 + myButtons.stream().map(c -> c.getWidth()).collect(Collectors.summingInt(Integer::intValue));
+            height = 4 + myButtons.stream().map(c -> c.getHeight()).max(Integer::compare).orElse(DEFAULT_COMPONENT_SIZE);
+        }
+        setLayout(new GridLayout(width, height, this));
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @see io.opensphere.core.hud.util.PositionBoundedFrame#repositionForInsets()
@@ -134,7 +149,7 @@ public class ButtonContainer extends Window<GridLayoutConstraints, GridLayout>
     @Override
     public void repositionForInsets()
     {
-        // TODO Auto-generated method stub
+        /* intentionally blank */
     }
 
     /**

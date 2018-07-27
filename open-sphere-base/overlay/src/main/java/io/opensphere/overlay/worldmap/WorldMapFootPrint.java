@@ -196,7 +196,7 @@ public class WorldMapFootPrint extends Renderable
 
         GeographicPosition p0 = null;
 
-        if (!origPositions.isEmpty())
+        if (origPositions != null && !origPositions.isEmpty())
         {
             p0 = origPositions.get(0);
         }

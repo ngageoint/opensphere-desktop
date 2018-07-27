@@ -13,6 +13,4 @@ public interface OverlayToolbox extends PluginToolbox
      * @return the selection mode controller
      */
     SelectionModeController getSelectionModeController();
-
-    ControlsLayoutManager getControlsLayoutManager();
 }

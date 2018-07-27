@@ -20,8 +20,6 @@ import io.opensphere.core.geometry.renderproperties.TileRenderProperties;
 import io.opensphere.core.hud.framework.Component;
 import io.opensphere.core.hud.framework.ControlEventSupport;
 import io.opensphere.core.hud.framework.Renderable;
-import io.opensphere.core.hud.framework.TransformerHelper;
-import io.opensphere.core.hud.framework.Window;
 import io.opensphere.core.math.Vector3d;
 import io.opensphere.core.model.LineType;
 import io.opensphere.core.model.Position;
@@ -29,6 +27,8 @@ import io.opensphere.core.model.ScreenBoundingBox;
 import io.opensphere.core.model.ScreenPosition;
 import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
+import javafx.beans.property.BooleanProperty;
 
 /**
  * A generic image button used in HUD overlays, in which an image is drawn, and
@@ -36,7 +36,8 @@ import io.opensphere.core.util.collections.New;
  */
 public class BufferedImageButton extends Renderable implements ControlComponent
 {
-    private static final Color BORDER_COLOR = new Color(0xE7E7E7);
+    /** The default color with which to draw the border. */
+    private static final Color DEFAULT_BORDER_COLOR = new Color(0xE7E7E7);
 
     /** Support class for events from the control context. */
     private final ControlEventSupport myMouseSupport;
@@ -44,27 +45,28 @@ public class BufferedImageButton extends Renderable implements ControlComponent
     /** The procedure called when the button is clicked. */
     private final Consumer<BufferedImageButton> myListener;
 
+    /** The property used to indicate which image should be used. */
+    private final BooleanProperty myUsePrimaryImageProperty = new ConcurrentBooleanProperty(true);
+
     /** The image to render on the button. */
     private final BufferedImage myImage;
 
     /** The image to render on the button. */
     private BufferedImage myAlternateImage;
 
+    /** The color of the border drawn around the button. */
+    private Color myBorderColor = DEFAULT_BORDER_COLOR;
+
     /** The bottom margin used in drawing the image. */
     private int myBottomMargin = -2;
 
+    /** The size of the button to draw. */
     private final int mySize;
 
-    private TileGeometry myImageGeometry;
-
-    private TileGeometry myAlternateImageGeometry;
-
-    private ScreenBoundingBox myDrawingLocation;
-
-    private TransformerHelper myTransformer;
-
+    /** The render properties for the primary image. */
     private TileRenderProperties myPrimaryImageProperties;
 
+    /** The render properties for the alternate image (if present). */
     private TileRenderProperties myAlternateImageProperties;
 
     /**
@@ -80,19 +82,34 @@ public class BufferedImageButton extends Renderable implements ControlComponent
         myListener = listener;
         myImage = image;
         myMouseSupport = new ControlEventSupport(this, getTransformer().getToolbox().getControlRegistry());
-        mySize = 22;
-
-        if (parent instanceof Window<?, ?>)
+        mySize = ControlComponentContainer.DEFAULT_COMPONENT_SIZE;
+        myUsePrimaryImageProperty.addListener((obs, ov, usePrimary) ->
         {
-            myTransformer = parent.getTransformer();
-        }
+            if (usePrimary)
+            {
+                usePrimaryImage();
+            }
+            else
+            {
+                useAlternateImage();
+            }
+        });
     }
 
     /**
-     * Sets the value of the {@link #alternateImage} field.
+     * Sets the value of the borderColor field.
      *
-     * @param alternateImage the value to store in the {@link #alternateImage}
-     *            field.
+     * @param borderColor the value to store in the borderColor field.
+     */
+    public void setBorderColor(Color borderColor)
+    {
+        myBorderColor = borderColor;
+    }
+
+    /**
+     * Sets the value of the alternateImage field.
+     *
+     * @param alternateImage the value to store in the alternateImage field.
      */
     public void setAlternateImage(BufferedImage alternateImage)
     {
@@ -159,10 +176,10 @@ public class BufferedImageButton extends Renderable implements ControlComponent
 
         ScreenPosition topLeft = drawBounds.getUpperLeft().add(new Vector3d(2, 2, 0));
         ScreenPosition bottomRight = drawBounds.getLowerRight().add(new Vector3d(-2, myBottomMargin, 0));
-        myDrawingLocation = new ScreenBoundingBox(topLeft, bottomRight);
+        ScreenBoundingBox drawingLocation = new ScreenBoundingBox(topLeft, bottomRight);
 
         TileGeometry.Builder<Position> builder = new TileGeometry.Builder<>();
-        builder.setBounds(myDrawingLocation);
+        builder.setBounds(drawingLocation);
         builder.setDataModelId(RandomUtils.nextLong());
         builder.setImageManager(new ImageManager((Void)null, new SingletonImageProvider(myImage)));
 
@@ -173,15 +190,15 @@ public class BufferedImageButton extends Renderable implements ControlComponent
         myPrimaryImageProperties.setHidden(false);
         myPrimaryImageProperties.setHighlightColor(ColorUtilities.opacitizeColor(Color.BLUE, 0.8f));
 
-        myImageGeometry = new TileGeometry(builder, myPrimaryImageProperties, null);
-        getGeometries().add(myImageGeometry);
+        TileGeometry imageGeometry = new TileGeometry(builder, myPrimaryImageProperties, null);
+        getGeometries().add(imageGeometry);
 
-        myMouseSupport.setActionGeometry(myImageGeometry);
+        myMouseSupport.setActionGeometry(imageGeometry);
 
         if (myAlternateImage != null)
         {
             TileGeometry.Builder<Position> alternateBuilder = new TileGeometry.Builder<>();
-            alternateBuilder.setBounds(myDrawingLocation);
+            alternateBuilder.setBounds(drawingLocation);
             alternateBuilder.setDataModelId(RandomUtils.nextLong());
             alternateBuilder.setImageManager(new ImageManager((Void)null, new SingletonImageProvider(myAlternateImage)));
 
@@ -192,22 +209,35 @@ public class BufferedImageButton extends Renderable implements ControlComponent
             myAlternateImageProperties.setHidden(false);
             myAlternateImageProperties.setHighlightColor(ColorUtilities.opacitizeColor(Color.BLUE, 0.8f));
 
-            myAlternateImageGeometry = new TileGeometry(alternateBuilder, myAlternateImageProperties, null);
-            getGeometries().add(myAlternateImageGeometry);
+            TileGeometry alternateImageGeometry = new TileGeometry(alternateBuilder, myAlternateImageProperties, null);
+            getGeometries().add(alternateImageGeometry);
 
-            myMouseSupport.setActionGeometry(myAlternateImageGeometry);
+            myMouseSupport.setActionGeometry(alternateImageGeometry);
+
+            if (myUsePrimaryImageProperty.get())
+            {
+                myPrimaryImageProperties.setHidden(false);
+                myAlternateImageProperties.setHidden(true);
+            }
+            else
+            {
+                myPrimaryImageProperties.setHidden(true);
+                myAlternateImageProperties.setHidden(false);
+            }
         }
     }
 
     /**
-     * @return
+     * Draws a border around the exterior boundary of the button.
+     * 
+     * @param drawBounds the boundary of the border.
      */
-    protected ScreenBoundingBox drawBorder(ScreenBoundingBox drawBounds)
+    protected void drawBorder(ScreenBoundingBox drawBounds)
     {
         PolylineGeometry.Builder<Position> borderBuilder = new PolylineGeometry.Builder<>();
         PolylineRenderProperties borderProperties = new DefaultPolylineRenderProperties(getBaseZOrder(), true, false);
         borderProperties.setWidth(3.0f);
-        borderProperties.setColor(BORDER_COLOR);
+        borderProperties.setColor(myBorderColor);
         borderBuilder.setLineSmoothing(true);
         borderBuilder.setLineType(LineType.STRAIGHT_LINE);
 
@@ -219,7 +249,6 @@ public class BufferedImageButton extends Renderable implements ControlComponent
 
         PolylineGeometry border = new PolylineGeometry(borderBuilder, borderProperties, null);
         getGeometries().add(border);
-        return drawBounds;
     }
 
     /**
@@ -242,17 +271,57 @@ public class BufferedImageButton extends Renderable implements ControlComponent
         return myBottomMargin;
     }
 
+    /**
+     * If an alternate image is provided, reverses the primary and alternate
+     * images. If no alternate image is present, then no reversal will occur.
+     */
     public void reverseImages()
     {
-        if (myPrimaryImageProperties.isHidden())
+        if (myAlternateImage != null)
         {
-            myPrimaryImageProperties.setHidden(false);
-            myAlternateImageProperties.setHidden(true);
+            if (myPrimaryImageProperties.isHidden())
+            {
+                myPrimaryImageProperties.setHidden(false);
+                myAlternateImageProperties.setHidden(true);
+            }
+            else
+            {
+                myAlternateImageProperties.setHidden(false);
+                myPrimaryImageProperties.setHidden(true);
+            }
         }
-        else
+    }
+
+    /**
+     * If an alternate image is provided, reverses the primary and alternate
+     * images. If no alternate image is present, then no reversal will occur.
+     */
+    public void usePrimaryImage()
+    {
+        myPrimaryImageProperties.setHidden(false);
+        myAlternateImageProperties.setHidden(true);
+    }
+
+    /**
+     * If an alternate image is provided, reverses the primary and alternate
+     * images. If no alternate image is present, then no reversal will occur.
+     */
+    public void useAlternateImage()
+    {
+        if (myAlternateImage != null && myAlternateImageProperties != null)
         {
             myAlternateImageProperties.setHidden(false);
             myPrimaryImageProperties.setHidden(true);
         }
+    }
+
+    /**
+     * Gets the property for tracking the UsePrimaryImage functionality.
+     *
+     * @return the property for tracking the UsePrimaryImage functionality.
+     */
+    public BooleanProperty usePrimaryImageProperty()
+    {
+        return myUsePrimaryImageProperty;
     }
 }

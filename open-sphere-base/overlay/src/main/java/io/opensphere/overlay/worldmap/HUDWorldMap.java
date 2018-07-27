@@ -1,14 +1,19 @@
 package io.opensphere.overlay.worldmap;
 
+import java.awt.Color;
 import java.util.concurrent.ScheduledExecutorService;
 
+import io.opensphere.core.function.Procedure;
 import io.opensphere.core.geometry.renderproperties.ZOrderRenderProperties;
 import io.opensphere.core.hud.framework.TransformerHelper;
 import io.opensphere.core.hud.framework.layout.GridLayout;
 import io.opensphere.core.hud.framework.layout.GridLayoutConstraints;
 import io.opensphere.core.model.ScreenBoundingBox;
 import io.opensphere.core.model.ScreenPosition;
+import io.opensphere.core.util.AwesomeIconSolid;
+import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
+import io.opensphere.overlay.controls.HUDGraphicUtilities;
 import io.opensphere.overlay.util.AbstractOverlayWindow;
 import javafx.beans.property.BooleanProperty;
 
@@ -18,19 +23,17 @@ public class HUDWorldMap extends AbstractOverlayWindow
     /** Executor shared by HUD components. */
     private final ScheduledExecutorService myExecutor;
 
+    /** The background color with which to draw controls. */
+    private static final Color DEFAULT_CONTROL_BACKGROUND = ColorUtilities.convertFromHexString("71333333", 1, 2, 3, 0);
+
     /** Responsible for drawing foot print on the map. */
     private WorldMapFootPrint myMapFootPrint;
 
+    /** The button used to minimize the world map window. */
     private WorldMapButton myMinimizeButton;
-
-    private WorldMapBackground myMapBackground;
 
     /** A property in which the minimized state is maintained. */
     private BooleanProperty myMinimizedState;
-
-    private WorldMapButton myRestoreButton;
-
-    private boolean myInitialized;
 
     /**
      * Constructor.
@@ -41,41 +44,27 @@ public class HUDWorldMap extends AbstractOverlayWindow
      *            screen).
      * @param location The predetermined location.
      * @param resize The resize behavior.
+     * @param minimizeProcedure the procedure to be called when the minimize
+     *            button is clicked.
      */
     public HUDWorldMap(TransformerHelper hudTransformer, ScheduledExecutorService executor, ScreenBoundingBox size,
-            ToolLocation location, ResizeOption resize)
+            ToolLocation location, ResizeOption resize, Procedure minimizeProcedure)
     {
         super(hudTransformer, size, location, resize, ZOrderRenderProperties.TOP_Z - 30);
         myMinimizedState = new ConcurrentBooleanProperty(false);
-        myMinimizedState.addListener((obs, ov, nv) -> redisplay(nv));
+        myMinimizedState.addListener((obs, ov, nv) -> minimizeProcedure.invoke());
         myExecutor = executor;
-        myInitialized = false;
     }
 
     @Override
     public void init()
     {
-        if (!myInitialized)
-        {
-            super.init();
-            setLayout(new GridLayout(300, 150, this));
-            myInitialized = true;
-        }
+        super.init();
+        setLayout(new GridLayout(300, 150, this));
 
-        if (isMinimized())
-        {
-            remove(myMinimizeButton);
-            remove(myMapFootPrint);
-            remove(myMapBackground);
-            addRestoreButton();
-        }
-        else
-        {
-            remove(myRestoreButton);
-            addBackground();
-            addFootprint();
-            addMinimizeButton();
-        }
+        addBackground();
+        addFootprint();
+        addMinimizeButton();
 
         getLayout().complete();
     }
@@ -106,31 +95,13 @@ public class HUDWorldMap extends AbstractOverlayWindow
         return myMinimizedState.get();
     }
 
-    private void redisplay(boolean minimize)
-    {
-        ScreenPosition delta;
-        if (minimize)
-        {
-            delta = new ScreenPosition(-271, -121);
-        }
-        else
-        {
-            delta = new ScreenPosition(271, 121);
-        }
-        resizeWindow(delta);
-        handleWindowMoved();
-    }
-
     /** Add the world map background. */
     private synchronized void addBackground()
     {
-        if (myMapBackground == null)
-        {
-            myMapBackground = new WorldMapBackground(this);
-        }
+        WorldMapBackground mapBackground = new WorldMapBackground(this);
         GridLayoutConstraints constraints = new GridLayoutConstraints(
                 new ScreenBoundingBox(new ScreenPosition(0, 0), new ScreenPosition(300, 150)));
-        add(myMapBackground, constraints);
+        add(mapBackground, constraints);
     }
 
     /** Add the visible footprint around the current position. */
@@ -145,24 +116,13 @@ public class HUDWorldMap extends AbstractOverlayWindow
         add(myMapFootPrint, constraints);
     }
 
-    private synchronized void addRestoreButton()
-    {
-        if (myRestoreButton == null)
-        {
-            myRestoreButton = new WorldMapButton(this, this::changeMinimizationState);
-        }
-
-        GridLayoutConstraints constraints = new GridLayoutConstraints(
-                new ScreenBoundingBox(new ScreenPosition(0, 0), new ScreenPosition(30, 30)));
-
-        add(myRestoreButton, constraints);
-    }
-
+    /** Adds the minimize button to the map display. */
     private synchronized void addMinimizeButton()
     {
         if (myMinimizeButton == null)
         {
-            myMinimizeButton = new WorldMapButton(this, this::changeMinimizationState);
+            myMinimizeButton = new WorldMapButton(this, this::changeMinimizationState, HUDGraphicUtilities
+                    .drawIcon(AwesomeIconSolid.ANGLE_DOUBLE_RIGHT, 22, 14, DEFAULT_CONTROL_BACKGROUND, Color.WHITE));
         }
 
         GridLayoutConstraints constraints = new GridLayoutConstraints(
@@ -171,6 +131,7 @@ public class HUDWorldMap extends AbstractOverlayWindow
         add(myMinimizeButton, constraints);
     }
 
+    /** Changes the state of the minimized property. */
     private void changeMinimizationState()
     {
         myMinimizedState.set(!myMinimizedState.get());
