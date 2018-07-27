@@ -3,6 +3,7 @@ package io.opensphere.featureactions.editor.ui;
 import java.awt.Component;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -31,6 +32,12 @@ public class SimpleFeatureActionEditorUI extends BorderPane implements SimpleFea
 
     /** The add button. */
     private Button myAddButton;
+
+    /** The export button. */
+    private Button myExportButton;
+
+    /** The import button. */
+    private Button myImportButton;
 
     /** Keeps the UI and model in sync. */
     private final SimpleFeatureActionEditorBinder myBinder;
@@ -78,6 +85,18 @@ public class SimpleFeatureActionEditorUI extends BorderPane implements SimpleFea
     }
 
     @Override
+    public Button getExportButton()
+    {
+        return myExportButton;
+    }
+
+    @Override
+    public Button getImportButton()
+    {
+        return myImportButton;
+    }
+
+    @Override
     public ValidatorSupport getValidatorSupport()
     {
         return null;
@@ -94,12 +113,25 @@ public class SimpleFeatureActionEditorUI extends BorderPane implements SimpleFea
     {
         myAddButton = FXUtilities.newIconButton("New Group", IconType.PLUS, Color.LIME);
         myAddButton.setTooltip(new Tooltip("Add a new Feature Action Group"));
+
+        myExportButton = FXUtilities.newIconButton("Export", IconType.EXPORT, Color.YELLOW);
+        myExportButton.setTooltip(new Tooltip("Export Feature Actions"));
+
+        myImportButton = FXUtilities.newIconButton("Import", IconType.IMPORT, Color.AQUA);
+        myImportButton.setTooltip(new Tooltip("Import Feature Actions"));
+
         HBox box = new HBox(5);
         Pane spacer = new Pane();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         box.getChildren().addAll(spacer, myAddButton);
         setTop(box);
         BorderPane.setMargin(getTop(), new Insets(0, 0, 8, 0));
+
+        HBox secondbox = new HBox(5);
+        secondbox.setPadding(new Insets(4, 0, 0, 0));
+        secondbox.setAlignment(Pos.CENTER_LEFT);
+        secondbox.getChildren().addAll(myExportButton, myImportButton);
+        setBottom(secondbox);
 
         myAccordion = new Accordion();
         setCenter(myAccordion);

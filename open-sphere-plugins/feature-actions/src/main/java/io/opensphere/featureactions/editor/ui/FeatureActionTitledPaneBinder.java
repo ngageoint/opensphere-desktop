@@ -190,6 +190,5 @@ public class FeatureActionTitledPaneBinder
             LOGGER.debug("Null pointer exception encountered while getting scene property. Deleting anyway.", e);
             myMainModel.getFeatureGroups().remove(myGroup);
         }
-
     }
 }

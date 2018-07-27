@@ -1,14 +1,16 @@
 package io.opensphere.featureactions.editor.ui;
 
 import java.awt.Component;
+import java.awt.EventQueue;
 import java.util.Set;
 
-import javafx.collections.ListChangeListener;
-import javafx.scene.control.TitledPane;
-
+import io.opensphere.controlpanels.layers.importdata.ImportDataController;
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.importer.ImportType;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.featureactions.editor.controller.FeatureActionEditController;
+import io.opensphere.featureactions.editor.model.FeatureActionImporter;
 import io.opensphere.featureactions.editor.model.SimpleFeatureAction;
 import io.opensphere.featureactions.editor.model.SimpleFeatureActionGroup;
 import io.opensphere.featureactions.editor.model.SimpleFeatureActions;
@@ -16,6 +18,8 @@ import io.opensphere.featureactions.model.FeatureAction;
 import io.opensphere.featureactions.model.StyleAction;
 import io.opensphere.featureactions.registry.FeatureActionsRegistry;
 import io.opensphere.mantle.data.DataTypeInfo;
+import javafx.collections.ListChangeListener;
+import javafx.scene.control.TitledPane;
 
 /**
  * Keeps the {@link SimpleFeatureActionEditor} synchronized with the
@@ -111,6 +115,16 @@ public class SimpleFeatureActionEditorBinder
         myModel.getFeatureGroups().addListener(groupsEar);
         myEditor.getAddButton().setOnAction(e -> handleAdd());
         myEditor.setSaveListener(() -> myController.applyChanges());
+        myEditor.getExportButton().setOnAction(e ->
+        {
+            Quantify.collectMetric("mist3d.feature-actions.export");
+            handleExport();
+        });
+        myEditor.getImportButton().setOnAction(e ->
+        {
+            Quantify.collectMetric("mist3d.feature-actions.import");
+            handleImport();
+        });
     }
 
     /**
@@ -183,5 +197,24 @@ public class SimpleFeatureActionEditorBinder
         {
             myEditor.getAccordion().getPanes().remove(indexOf);
         }
+    }
+
+    /**
+     * Responds when the export button is pressed.
+     */
+    private void handleExport()
+    {
+        FeatureActionExporter exporter = new FeatureActionExporter(myToolbox.getPreferencesRegistry(),
+                layer.getDisplayName(), myModel.getFeatureGroups());
+        exporter.launch(parentDialog);
+    }
+
+    /**
+     * Responds when the import button is pressed.
+     */
+    private void handleImport()
+    {
+        FeatureActionImporter importer = new FeatureActionImporter(myModel, parentDialog);
+        EventQueue.invokeLater(() -> ImportDataController.getInstance(myToolbox).importSpecific(importer, ImportType.FILE));
     }
 }
