@@ -1,5 +1,6 @@
 package io.opensphere.myplaces.importer;
 
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Comparator;
@@ -9,6 +10,8 @@ import java.util.stream.Collectors;
 import io.opensphere.core.control.action.MenuOption;
 import io.opensphere.core.export.ExportException;
 import io.opensphere.core.model.LatLonAlt;
+import io.opensphere.core.util.AwesomeIconSolid;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MapVisualizationType;
@@ -28,10 +31,15 @@ import io.opensphere.tracktool.registry.TrackRegistry;
  */
 public class DataElementTrackExporter extends AbstractDataElementExporter
 {
+    /** The name of the command / menu option to create track from selection. */
+    private static final String CREATE_TRACK_COMMAND = "Create Track From Selection";
+
     @Override
     public MenuOption getMenuOption()
     {
-        return new MenuOption("New Track", "New Track", "Copy selected points to a new track.");
+        return new MenuOption(CREATE_TRACK_COMMAND, CREATE_TRACK_COMMAND,
+                "Creates a new track by linking selected features in time order",
+                new GenericFontIcon(AwesomeIconSolid.SHARE_ALT, Color.WHITE));
     }
 
     @Override
