@@ -1,7 +1,9 @@
 package io.opensphere.mantle.iconproject.model;
 
+import java.awt.Window;
 import java.util.Set;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRegistry;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -21,6 +23,10 @@ public class PanelModel
     private Set<String> mySubCollectionNames = null;
 
     private IconRegistry myIconRegistry;
+
+    private Toolbox myToolBox;
+
+    private Window myOwner;
 
     /**
      * gets the icon display view type.
@@ -61,4 +67,25 @@ public class PanelModel
     {
         this.myIconRegistry = iconRegistry;
     }
+
+    public void setToolBox(Toolbox tb)
+    {
+        this.myToolBox = tb;
+    }
+    
+    public Toolbox getToolBox()
+    {
+        return myToolBox;
+    }
+
+    public void setOwner(Window owner)
+    {
+        this.myOwner = owner;
+    }
+    
+    public Window getOwner()
+    {
+        return myOwner;
+    }
+    
 }

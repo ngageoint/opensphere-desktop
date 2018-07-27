@@ -31,7 +31,7 @@ public class MainPanel extends SplitPane
     private final IconRegistry myIconRegistry;
     
     /** The Model*/
-    private final PanelModel myPanelModel = new PanelModel();
+    private PanelModel myPanelModel = new PanelModel();
     
     /** The Icon Display Grid. */
     private final GridBuilder myIconGrid;
@@ -58,6 +58,8 @@ public class MainPanel extends SplitPane
 
     ScrollPane myScrollPane;
 
+    private Window myOwner;
+
     //private final Thread myGridLoader;
 
     /**
@@ -66,15 +68,18 @@ public class MainPanel extends SplitPane
      * @param tb the toolbox
      * @param owner the window owner
      */
-    public MainPanel(Toolbox tb, Window owner)
+    public MainPanel(PanelModel thePanelModel)
     {
-        myIconRegistry = MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry();
+        myPanelModel = thePanelModel;
+        myOwner = myPanelModel.getOwner();
+        myIconRegistry = myPanelModel.getMyIconRegistry();
         myPanelModel.setMyIconRegistry(myIconRegistry);
         
         myLeftView = new AnchorPane();
 
         treeBuilder = new TreeBuilder(myIconRegistry, null);
         myTreeView = new TreeView<>(treeBuilder);
+        myTreeView.setShowRoot(false);
 
         recordMap = new HashMap<>(treeBuilder.getRecordMap());
 
@@ -99,7 +104,7 @@ public class MainPanel extends SplitPane
         {
             EventQueue.invokeLater(() ->
             {
-                AddIconDialog iconImporter = new AddIconDialog(owner,myPanelModel);
+                AddIconDialog iconImporter = new AddIconDialog(myOwner, myPanelModel);
                 iconImporter.setVisible(true);
             });
         });
@@ -110,7 +115,7 @@ public class MainPanel extends SplitPane
         {
             EventQueue.invokeLater(() ->
             {
-                myIconGrid.showIconCustomizer(tb, owner);
+                myIconGrid.showIconCustomizer(myOwner);
             });
         });
 

@@ -114,7 +114,7 @@ public class GridBuilder extends TilePane// implements Runnable
      * @param tb the toolbox.
      * @param owner the current window pane.
      */
-    public void showIconCustomizer(Toolbox tb, Window owner)
+    public void showIconCustomizer(Window owner)
     {
         IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myIconRegistry, mySelectedIcon);
         builderPane.setVisible(true);

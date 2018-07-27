@@ -21,17 +21,7 @@ public class IconProjFrame
     {
         myToolbox = tb;
         Window owner = myToolbox.getUIRegistry().getMainFrameProvider().get();
-        IconProjDialog theDialog = new IconProjDialog(owner, tb);
+        IconProjDialog theDialog = new IconProjDialog(owner, myToolbox);
         theDialog.setVisible(true);
-    }
-
-    /**
-     * Gets the toolbox.
-     *
-     * @return myToolbox
-     */
-    public Toolbox getMyToolbox()
-    {
-        return myToolbox;
     }
 }
