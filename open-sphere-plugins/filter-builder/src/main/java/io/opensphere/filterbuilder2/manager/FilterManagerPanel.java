@@ -25,7 +25,7 @@ import io.opensphere.controlpanels.layers.SearchAvailableLayersPanel;
 import io.opensphere.controlpanels.layers.activedata.controller.AvailableDataDataLayerController;
 import io.opensphere.controlpanels.layers.activedata.controller.PredicatedAvailableDataDataLayerController;
 import io.opensphere.core.datafilter.DataFilterOperators.Logical;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.filesystem.MnemonicFileChooser;
 import io.opensphere.core.util.image.IconUtil;
@@ -272,7 +272,7 @@ public class FilterManagerPanel extends GridBagPanel
      */
     private void editNewFilter()
     {
-        QuantifyToolboxUtils.collectMetric(myFbToolbox.getMainToolBox(), "mist3d.filter-panel.button.new-filter");
+        Quantify.collectMetric("mist3d.filter-panel.new-filter");
         DataTypeInfo editDataType = myDataType;
 
         // If no data type, ask the user for it
@@ -324,7 +324,7 @@ public class FilterManagerPanel extends GridBagPanel
      */
     private void exportFilter()
     {
-        QuantifyToolboxUtils.collectMetric(myFbToolbox.getMainToolBox(), "mist3d.filter-panel.button.export");
+        Quantify.collectMetric("mist3d.filter-panel.export");
         // Show the export dialog
         ExportFilterPanel exportPanel = new ExportFilterPanel(myFbToolbox);
         String title = StringUtilities.concat("Export ", myDataType != null ? myDataType.getDisplayName() : "All", " Filters");
@@ -351,7 +351,7 @@ public class FilterManagerPanel extends GridBagPanel
      */
     private void importFilter()
     {
-        QuantifyToolboxUtils.collectMetric(myFbToolbox.getMainToolBox(), "mist3d.filter-panel.button.import");
+        Quantify.collectMetric("mist3d.filter-panel.import");
         // Show the import dialog
         MnemonicFileChooser chooser = new MnemonicFileChooser(myFbToolbox.getMainToolBox().getPreferencesRegistry(),
                 ExportFilterPanel.class.getName());

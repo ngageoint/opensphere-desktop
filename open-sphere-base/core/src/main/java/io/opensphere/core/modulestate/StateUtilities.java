@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Node;
 
+import com.bitsys.fade.mist.state.v4.FeatureActionArrayType;
 import com.bitsys.fade.mist.state.v4.FiltersType;
 import com.bitsys.fade.mist.state.v4.LayerType;
 import com.bitsys.fade.mist.state.v4.LayersCollectionType;
@@ -167,6 +168,23 @@ public final class StateUtilities
             state.setLocalData(prop);
         }
         return prop;
+    }
+
+    /**
+     * Gets the local feature action array property, creating it if necessary.
+     *
+     * @param state the state object
+     * @return the local feature action array property
+     */
+    public static FeatureActionArrayType getFeatureActions(StateType state)
+    {
+        FeatureActionArrayType featureActionArray = state.getFeatureActions();
+        if (featureActionArray == null)
+        {
+            featureActionArray = new FeatureActionArrayType();
+            state.setFeatureActions(featureActionArray);
+        }
+        return featureActionArray;
     }
 
     /**

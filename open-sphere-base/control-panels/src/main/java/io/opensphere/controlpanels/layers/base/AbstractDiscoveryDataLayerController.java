@@ -20,7 +20,7 @@ import io.opensphere.core.datafilter.impl.DataFilterRegistryAdapter;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.ChangeSupport;
 import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.WeakChangeSupport;
@@ -230,7 +230,7 @@ public abstract class AbstractDiscoveryDataLayerController implements EventListe
      */
     public void changeActivation(Collection<DataGroupInfo> groups, boolean active)
     {
-        QuantifyToolboxUtils.collectEnableDisableMetric(getToolbox(), "mist3d.add-data-panel.button.activation", active);
+        Quantify.collectEnableDisableMetric("mist3d.add-data-panel.activation", active);
         ThreadUtilities.runBackground(() -> groups.parallelStream().filter(g -> g.userActivationStateControl())
                 .forEach(g -> myGroupActivator.activateDeactivateGroup(active, g, myConfirmer)));
     }
