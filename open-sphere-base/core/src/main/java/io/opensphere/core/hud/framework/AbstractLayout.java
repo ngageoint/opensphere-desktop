@@ -33,6 +33,15 @@ public abstract class AbstractLayout<T extends LayoutConstraints>
     public abstract void add(Component subComp, T constraint);
 
     /**
+     * Gets the constraints associated with the supplied component.
+     * 
+     * @param subComp the component for which to get the constraints.
+     * @return the constraints associated with the supplied component, or null
+     *         if none are known.
+     */
+    public abstract T getConstraints(Component subComp);
+
+    /**
      * When no more components are to be added, set the positions and initialize
      * the sub components. Until this is called sub components may not be
      * initialized.

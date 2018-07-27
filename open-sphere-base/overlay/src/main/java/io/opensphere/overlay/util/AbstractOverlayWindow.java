@@ -1,5 +1,6 @@
 package io.opensphere.overlay.util;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 
 import io.opensphere.core.hud.border.SimpleLineBorder;
@@ -14,6 +15,8 @@ import io.opensphere.core.model.ScreenBoundingBox;
  */
 public abstract class AbstractOverlayWindow extends Window<GridLayoutConstraints, GridLayout>
 {
+    private static final Color BORDER_COLOR = new Color(0xE7E7E7);
+
     /**
      * Construct me.
      *
@@ -45,7 +48,8 @@ public abstract class AbstractOverlayWindow extends Window<GridLayoutConstraints
         SimpleLineBorder.Builder borderBuilder = new SimpleLineBorder.Builder();
         borderBuilder.setHeight(3);
         borderBuilder.setWidth(3);
-        borderBuilder.setLineWidth(1);
+        borderBuilder.setLineWidth(2);
+        borderBuilder.setLineColor(BORDER_COLOR);
         setBorder(new SimpleLineBorder(this, borderBuilder));
         initBorder();
     }
