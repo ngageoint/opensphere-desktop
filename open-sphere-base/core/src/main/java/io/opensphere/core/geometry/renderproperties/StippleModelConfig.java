@@ -24,6 +24,9 @@ public class StippleModelConfig implements Serializable
     /** A simple dotted line pattern. */
     public static final StippleModelConfig DOTTED_2;
 
+    /** A simple dotted line pattern. */
+    public static final StippleModelConfig DOTTED_3;
+
     /** serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -45,6 +48,9 @@ public class StippleModelConfig implements Serializable
 
         builder.setBitPattern((short)0x0183);
         DOTTED_2 = new StippleModelConfig(builder);
+
+        builder.setBitPattern((short)0x3333);
+        DOTTED_3 = new StippleModelConfig(builder);
 
         builder.setBitPattern((short)0xF8F8);
         DASHED = new StippleModelConfig(builder);

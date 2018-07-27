@@ -14,6 +14,7 @@ import io.opensphere.core.api.adapter.PluginAdapter;
 import io.opensphere.core.control.ui.ToolbarManager.SeparatorLocation;
 import io.opensphere.core.control.ui.ToolbarManager.ToolbarLocation;
 import io.opensphere.core.hud.awt.HUDJInternalFrame;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.swing.SplitButton;
 
@@ -67,6 +68,7 @@ public class ViewBookmarkPlugin extends PluginAdapter
                 @Override
                 public void actionPerformed(ActionEvent evt)
                 {
+                    Quantify.collectMetric("mist3d.view-bookmark.save-look-angle");
                     myController.saveViewerPosition();
                 }
             });
@@ -94,6 +96,7 @@ public class ViewBookmarkPlugin extends PluginAdapter
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                Quantify.collectMetric("mist3d.view-bookmark.save-look-angle");
                 getController().saveViewerPosition();
             }
         });
@@ -103,6 +106,7 @@ public class ViewBookmarkPlugin extends PluginAdapter
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                Quantify.collectMetric("mist3d.view-bookmark.delete-look-angle");
                 getViewBookmarkManagerFrame().setVisible(true);
             }
         });

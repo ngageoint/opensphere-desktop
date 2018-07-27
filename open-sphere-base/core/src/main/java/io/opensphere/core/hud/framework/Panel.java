@@ -68,6 +68,22 @@ public abstract class Panel<S extends LayoutConstraints, T extends AbstractLayou
         myLayout.add(subComp, constraint);
     }
 
+    /**
+     * Removes the supplied component from the panel and layout.
+     * 
+     * @param component the component to remove from the panel and layout.
+     */
+    public void remove(Component component)
+    {
+        if (component == null)
+        {
+            return;
+        }
+
+        getChildren().remove(component);
+        myLayout.remove(component);
+    }
+
     @Override
     public void clearGeometries()
     {

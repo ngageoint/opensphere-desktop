@@ -29,6 +29,7 @@ import io.opensphere.core.geometry.renderproperties.StippleModelConfig;
 import io.opensphere.core.geometry.renderproperties.ZOrderRenderProperties;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.modulestate.ModuleStateController;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.ChangeSupport;
 import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.Utilities;
@@ -245,6 +246,7 @@ public class QueryRegionManagerImpl extends EventListenerService implements Quer
     @Override
     public final void removeAllQueryRegions()
     {
+        Quantify.collectMetric("mist3d.query.delete-all-queries-and-features");
         synchronized (myQueryRegions)
         {
             removeAllQueryBoundsFromGeometryRegistry();
@@ -368,6 +370,7 @@ public class QueryRegionManagerImpl extends EventListenerService implements Quer
      */
     private void cancelAllQueries()
     {
+        Quantify.collectMetric("mist3d.query.cancel-queries");
         synchronized (myQueryRegions)
         {
             removeAllQueryBoundsFromGeometryRegistry();

@@ -84,4 +84,18 @@
         <appVersion>1.0</appVersion>
         <requiredPluginDependency>OverlayPlugin</requiredPluginDependency>
     </pluginLoaderData>
+    <pluginLoaderData>
+        <id>HUDOverlayControlsPlugin</id>
+        <class>io.opensphere.overlay.controls.HUDOverlayControlsPlugin</class>
+        <appVersion>1.0</appVersion>
+        <requiredPluginDependency>OverlayPlugin</requiredPluginDependency>
+        <pluginProperty>
+            <key>parentMenuName</key>
+            <value>Main Menu Bar/View</value>
+        </pluginProperty>
+        <pluginProperty>
+            <key>menuButtonLabel</key>
+            <value>HUD Overlay Controls</value>
+        </pluginProperty>
+    </pluginLoaderData>
 </pluginLoaderCollection>

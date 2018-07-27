@@ -163,6 +163,13 @@ public interface ViewControlTranslator
     void setZoomRate(int rate);
 
     /**
+     * Gets the view zoom rate.
+     *
+     * @return the view zoom rate.
+     */
+    int getZoomRate();
+
+    /**
      * Pan the view down.
      *
      * @param event The input user event.
@@ -211,6 +218,13 @@ public interface ViewControlTranslator
      * @param event The input user event.
      */
     void yawViewRight(InputEvent event);
+
+    /**
+     * Zoom the view an arbitrary amount.
+     *
+     * @param delta The amount to zoom the view.
+     */
+    void zoomView(double delta);
 
     /**
      * Zoom the view in.

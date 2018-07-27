@@ -206,6 +206,7 @@ public class GenericFontIcon implements Icon, FontIcon
                 graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
                 graphics.setFont(myFont.deriveFont(Font.PLAIN, getSize()));
+
                 graphics.setColor(getColor());
 
                 graphics.drawString(myIcon.getFontCode(), getXPos(), getYPos()+1);
