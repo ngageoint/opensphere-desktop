@@ -34,6 +34,7 @@ import io.opensphere.core.geometry.constraint.Constraints;
 import io.opensphere.core.geometry.renderproperties.DefaultPolygonRenderProperties;
 import io.opensphere.core.geometry.renderproperties.PolygonRenderProperties;
 import io.opensphere.core.geometry.renderproperties.ZOrderRenderProperties;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
@@ -133,6 +134,7 @@ public class GeometryContextMenuProvider implements ContextMenuProvider<Geometry
                     @Override
                     public void actionPerformed(ActionEvent e)
                     {
+                        Quantify.collectMetric("mist3d.filter.clear-spatial-filters");
                         for (PolygonGeometry geom : New.set(myGeomToTypeKeysMap.keySet()))
                         {
                             removeSpatialFilter(geom);

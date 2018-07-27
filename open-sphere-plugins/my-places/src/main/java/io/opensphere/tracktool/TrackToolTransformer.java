@@ -13,6 +13,7 @@ import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.action.context.GeographicPositionsContextKey;
 import io.opensphere.core.control.ui.ToolbarManager.SeparatorLocation;
 import io.opensphere.core.control.ui.ToolbarManager.ToolbarLocation;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.swing.EventQueueUtilities;
@@ -188,6 +189,7 @@ public final class TrackToolTransformer extends DefaultTransformer
                 if (e.getButton() == MouseEvent.BUTTON1)
                 {
                     myActivationButton.setSelected(!myActivationButton.isSelected());
+                    Quantify.collectEnableDisableMetric("mist3d.track-tool.create-a-track", myActivationButton.isSelected());
                     if (myActivationButton.isSelected())
                     {
                         myActionManager.registerContextSingleActionProvider(ContextIdentifiers.ARC_CONTEXT,

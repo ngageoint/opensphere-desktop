@@ -32,7 +32,7 @@ import org.jdesktop.swingx.JXBusyLabel;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.event.EventManager;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
@@ -196,7 +196,7 @@ public class ServerManagerPanel extends JPanel implements DialogPanel, AbstractS
             @Override
             public void actionPerformed(ActionEvent evt)
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.server-panel.button.add-server");
+                Quantify.collectMetric("mist3d.server-panel.add-server");
                 getEditServerPanel().setServerSource(null, null);
                 getEditServerDialog().setTitle("Add Server");
                 getEditServerDialog().showDialog();
@@ -241,7 +241,7 @@ public class ServerManagerPanel extends JPanel implements DialogPanel, AbstractS
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.server-panel.button." + (source.isActive() ? "view" : "edit"));
+                Quantify.collectMetric("mist3d.server-panel." + (source.isActive() ? "view" : "edit"));
                 getEditServerPanel().setServerSource(source, controller.getTypeName(source));
                 getEditServerDialog().setTitle("Edit Server");
                 getEditServerDialog().showDialog();
@@ -317,7 +317,7 @@ public class ServerManagerPanel extends JPanel implements DialogPanel, AbstractS
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.server-panel.button.delete");
+                Quantify.collectMetric("mist3d.server-panel.delete");
                 String warningMessage = "Are you sure you want to remove\n\n\"" + source.getName() + "\"?";
                 int opt = JOptionPane.showConfirmDialog(myParentComponent, warningMessage, "Confirm Remove Server",
                         JOptionPane.OK_CANCEL_OPTION);
@@ -373,7 +373,7 @@ public class ServerManagerPanel extends JPanel implements DialogPanel, AbstractS
             {
                 JCheckBox eventBox = (JCheckBox)e.getSource();
                 LOGGER.info((eventBox.isSelected() ? "Activating " : "Deactivating ") + source.getName());
-                QuantifyToolboxUtils.collectEnableDisableMetric(myToolbox, "mist3d.server-panel.checkbox.status", eventBox.isSelected());
+                Quantify.collectEnableDisableMetric("mist3d.server-panel.status", eventBox.isSelected());
                 if (eventBox.isSelected())
                 {
                     controller.activateSource(source);
@@ -410,7 +410,7 @@ public class ServerManagerPanel extends JPanel implements DialogPanel, AbstractS
             public void actionPerformed(ActionEvent e)
             {
                 LOGGER.info("Canceling loading " + source.getName());
-                QuantifyToolboxUtils.collectMetric(myToolbox, "mist3d.server-panel.button.cancel");
+                Quantify.collectMetric("mist3d.server-panel.cancel");
                 controller.deactivateSource(source);
                 rebuildTable();
             }
