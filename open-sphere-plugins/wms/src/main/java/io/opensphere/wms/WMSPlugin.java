@@ -28,6 +28,7 @@ import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.control.ui.MenuBarRegistry;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.preferences.Preferences;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.net.OpenSphereContentHandlerFactory;
@@ -326,6 +327,7 @@ public class WMSPlugin extends PluginAdapter
             @Override
             public void actionPerformed(ActionEvent event)
             {
+                Quantify.collectMetric("mist3d.menu-bar.edit.clear-wms-tile-cache");
                 for (Envoy envoy : myEnvoys)
                 {
                     if (envoy instanceof WMSGetCapabilitiesEnvoy)

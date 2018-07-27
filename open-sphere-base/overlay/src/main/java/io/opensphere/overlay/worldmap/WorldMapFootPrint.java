@@ -11,6 +11,7 @@ import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.geometry.renderproperties.DefaultPolylineRenderProperties;
 import io.opensphere.core.geometry.renderproperties.PolylineRenderProperties;
+import io.opensphere.core.geometry.renderproperties.StippleModelConfig;
 import io.opensphere.core.hud.framework.Component;
 import io.opensphere.core.hud.framework.Renderable;
 import io.opensphere.core.model.Altitude;
@@ -115,7 +116,7 @@ public class WorldMapFootPrint extends Renderable
     /**
      * Draw a footprint of the visual part of the map currently seen.
      */
-    private synchronized void drawFootPrint()
+    synchronized void drawFootPrint()
     {
         List<List<ScreenPosition>> footPrint = getFootPrint();
 
@@ -128,7 +129,8 @@ public class WorldMapFootPrint extends Renderable
             {
                 PolylineGeometry.Builder<ScreenPosition> polyBuilder = new PolylineGeometry.Builder<>();
                 PolylineRenderProperties props = new DefaultPolylineRenderProperties(getBaseZOrder() + 4, true, false);
-                props.setColor(Color.ORANGE);
+                props.setStipple(StippleModelConfig.DOTTED_3);
+                props.setColor(Color.RED);
                 props.setWidth(2f);
                 polyBuilder.setVertices(positions);
                 PolylineGeometry line = new PolylineGeometry(polyBuilder, props, null);
@@ -194,7 +196,7 @@ public class WorldMapFootPrint extends Renderable
 
         GeographicPosition p0 = null;
 
-        if (!origPositions.isEmpty())
+        if (origPositions != null && !origPositions.isEmpty())
         {
             p0 = origPositions.get(0);
         }

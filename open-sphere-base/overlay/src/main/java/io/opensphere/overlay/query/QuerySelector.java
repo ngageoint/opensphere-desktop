@@ -22,6 +22,7 @@ import io.opensphere.core.control.action.ContextActionManager;
 import io.opensphere.core.control.action.ContextSingleActionProvider;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.event.DataRemovalEvent;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.SelectionMode;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.image.IconUtil.IconType;
@@ -57,6 +58,7 @@ public final class QuerySelector extends JPanel
                 SelectorToggleButton button = (SelectorToggleButton)e.getSource();
                 boolean selection = !button.isSelected();
                 SelectionMode mode = selection ? button.getMode() : SelectionMode.NONE;
+                Quantify.collectConditionalMetric("mist3d.query." + button.getMode().toString(), selection);
                 mySelectionModeController.setSelectionMode(mode);
             }
         }
@@ -210,6 +212,7 @@ public final class QuerySelector extends JPanel
             {
                 if (myToolbox.getEventManager() != null)
                 {
+                    Quantify.collectMetric("mist3d.overlay.query.clear-all");
                     int answer = JOptionPane.showConfirmDialog(SwingUtilities.getWindowAncestor(myRemoveButton),
                             "Are you sure you want to clear all?", "Clear All", JOptionPane.OK_CANCEL_OPTION);
                     if (answer == JOptionPane.OK_OPTION)

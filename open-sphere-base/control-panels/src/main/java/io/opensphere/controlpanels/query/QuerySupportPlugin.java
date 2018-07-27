@@ -33,6 +33,7 @@ import io.opensphere.core.geometry.renderproperties.PolygonRenderProperties;
 import io.opensphere.core.geometry.renderproperties.ZOrderRenderProperties;
 import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.GeographicPosition;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.plugin.queryregion.QueryRegion;
 import io.opensphere.mantle.plugin.queryregion.QueryRegionListener;
@@ -60,6 +61,7 @@ public class QuerySupportPlugin extends PluginAdapter implements QueryRegionList
                 public void actionPerformed(ActionEvent e)
                 {
                     myFeaturesSelected = ((JCheckBoxMenuItem)e.getSource()).isSelected();
+                    Quantify.collectMetric("mist3d.control-panels.show-querty-regions");
                     setQueryRegionsVisible(myFeaturesSelected);
                 }
             });

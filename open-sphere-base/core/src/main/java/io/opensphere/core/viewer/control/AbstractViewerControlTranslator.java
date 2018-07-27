@@ -243,6 +243,17 @@ public abstract class AbstractViewerControlTranslator implements ViewControlTran
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.viewer.impl.ViewControlTranslator#getZoomRate()
+     */
+    @Override
+    public int getZoomRate()
+    {
+        return myZoomRate;
+    }
+
+    /**
      * Spin the view on the main spin axis.
      *
      * @param angleRads The amount to spin, in radians.
@@ -274,6 +285,11 @@ public abstract class AbstractViewerControlTranslator implements ViewControlTran
      */
     public abstract void yawView(Vector2i from, Vector2i to);
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.viewer.impl.ViewControlTranslator#zoomInView(java.awt.event.InputEvent)
+     */
     @Override
     public void zoomInView(InputEvent event)
     {
@@ -309,13 +325,6 @@ public abstract class AbstractViewerControlTranslator implements ViewControlTran
             zoomView(myZoomRate);
         }
     }
-
-    /**
-     * Zoom the view an arbitrary amount.
-     *
-     * @param delta The amount to zoom the view.
-     */
-    public abstract void zoomView(double delta);
 
     /**
      * Get the current viewer.
