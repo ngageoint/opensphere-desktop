@@ -111,8 +111,7 @@ public class FeatureActionImporter implements FileOrURLImporter
     @Override
     public int getPrecedence()
     {
-        // what should this number be?
-        return 400;
+        return 875;
     }
 
     @Override
