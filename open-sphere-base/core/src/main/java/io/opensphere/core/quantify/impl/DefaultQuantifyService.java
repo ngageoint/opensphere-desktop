@@ -88,7 +88,7 @@ public class DefaultQuantifyService implements QuantifyService
             {
                 if (!myMetrics.containsKey(normalizedKey))
                 {
-                    myMetrics.put(key, new Metric(normalizedKey));
+                    myMetrics.put(normalizedKey, new Metric(normalizedKey));
                 }
                 myMetrics.get(normalizedKey).increment();
             }

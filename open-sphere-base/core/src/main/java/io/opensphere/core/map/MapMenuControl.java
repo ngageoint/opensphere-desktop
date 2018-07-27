@@ -16,6 +16,7 @@ import io.opensphere.core.event.EventManager;
 import io.opensphere.core.projection.Projection;
 import io.opensphere.core.projection.ProjectionChangeSupport.ProjectionChangeListener;
 import io.opensphere.core.projection.ProjectionChangedEvent;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 
 /**
@@ -76,6 +77,7 @@ public abstract class MapMenuControl implements ProjectionChangeListener
                     if (((AbstractButton)e.getSource()).isSelected())
                     {
                         setCurrentProjection(projection);
+                        Quantify.collectMetric(("mist3d.menu-bar.view.projection." + projection.getName()));
                     }
                 });
                 group.add(menuItem);

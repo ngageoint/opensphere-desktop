@@ -20,6 +20,7 @@ import io.opensphere.core.control.ui.ToolbarManager.ToolbarLocation;
 import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.swing.ColorIcon;
 import io.opensphere.core.util.swing.SmallColorPalette;
@@ -146,6 +147,8 @@ public final class GlobeBackgroundManager
             public void actionPerformed(ActionEvent e)
             {
                 myPreferences.putBoolean(ourBackgroundEnabledKey, myEnabledCheckbox.isSelected(), this);
+                Quantify.collectEnableDisableMetric("mist3d.overlay.globe-color.background",
+                        myEnabledCheckbox.isSelected());
                 if (myEnabledCheckbox.isSelected())
                 {
                     myBackgroundTransformer.publishBackground();
@@ -167,6 +170,7 @@ public final class GlobeBackgroundManager
                 final JButton button = (JButton)evt.getSource();
                 if (button.getIcon() instanceof ColorIcon)
                 {
+                    Quantify.collectMetric("mist3d.overlay.globe-color.small-color-palette");
                     myColorSelectorSplitButton.toggleDropComponentVisibility();
                     final ColorIcon cci = (ColorIcon)button.getIcon();
                     setBackgroundColor(cci.getColor());
@@ -189,6 +193,7 @@ public final class GlobeBackgroundManager
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                Quantify.collectMetric("mist3d.overlay.globe-color.open-color-menu");
                 showPicker();
             }
         });

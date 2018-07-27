@@ -7,6 +7,7 @@ import javax.swing.JMenuItem;
 
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.modulestate.ModuleStateManager;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.Utilities;
 
 /**
@@ -31,7 +32,11 @@ public class ClearStatesMenuProvider implements ContextMenuProvider<Void>
     public List<JMenuItem> getMenuItems(String contextId, Void key)
     {
         JMenuItem clearStatesMenuItem = new JMenuItem("Clear States");
-        clearStatesMenuItem.addActionListener(e -> myModuleStateManager.deactivateAllStates());
+        clearStatesMenuItem.addActionListener(e ->
+        {
+            Quantify.collectMetric("mist3d.control-panels.selection.clear-states");
+            myModuleStateManager.deactivateAllStates();
+        });
         clearStatesMenuItem.setToolTipText("Deactivate all states");
         return Collections.singletonList(clearStatesMenuItem);
     }

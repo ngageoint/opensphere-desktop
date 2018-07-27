@@ -25,6 +25,7 @@ import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.messaging.GenericSubscriber;
 import io.opensphere.core.model.GeographicPosition;
+import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.units.InvalidUnitsException;
 import io.opensphere.core.units.UnitsProvider.UnitsChangeListener;
 import io.opensphere.core.units.length.Length;
@@ -309,6 +310,7 @@ public class CompletedArcManager
      */
     private void clearAll()
     {
+        Quantify.collectMetric("mist3d.overlay.ruler.clear-ruler-measurements");
         Collection<Geometry> removes = New.collection();
         synchronized (myArcs)
         {
