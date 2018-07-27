@@ -6,6 +6,7 @@ import java.util.Set;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.iconproject.model.ImportProp;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,8 +27,8 @@ import javafx.scene.text.FontPosture;
  */
 public class SubCollectPane extends VBox
 {
-    /**`
-     * serialVersionUID.
+    /**
+     * ` serialVersionUID.
      */
     private static final long serialVersionUID = 1L;
 
@@ -97,6 +98,8 @@ public class SubCollectPane extends VBox
 
     private boolean myChoice;
 
+    private ImportProp myImportProps;
+
     /**
      * Instantiates a new sub-category selection panel.
      *
@@ -110,13 +113,14 @@ public class SubCollectPane extends VBox
     public SubCollectPane(PanelModel thePanelModel)
     {
         myPanelModel = thePanelModel;
+        myImportProps = myPanelModel.getImportProps();
         myIconRegistry = myPanelModel.getMyIconRegistry();
         String name = "Default";
         myCategorySet = myIconRegistry.getSubCategoiresForCollection(name);
         List<String> names = New.list(myCategorySet);
         Collections.sort(names);
         myComboBoxItems = FXCollections.observableArrayList(names);
-        myPanelModel.getMyCollectionName().addListener((observable, oldValue, newValue) -> updateComboBox());
+        myImportProps.getCollectionName().addListener((observable, oldValue, newValue) -> updateComboBox());
         createPanel();
     }
 
@@ -162,7 +166,7 @@ public class SubCollectPane extends VBox
             hbox.getChildren().addAll(myNoneRB, myExistingRB, myNewCatRB, myComboBox);
 
         }
-        
+
         getChildren().addAll(CollectionText, hbox);
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
@@ -172,7 +176,7 @@ public class SubCollectPane extends VBox
     private void updateComboBox()
     {
 
-        List<String> names = New.list(myIconRegistry.getSubCategoiresForCollection(myPanelModel.getMyCollectionName().get()));
+        List<String> names = New.list(myIconRegistry.getSubCategoiresForCollection(myImportProps.getCollectionName().get()));
         Collections.sort(names);
         myComboBoxItems = FXCollections.observableArrayList(names);
         getChildren().removeAll(getChildren());

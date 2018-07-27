@@ -23,6 +23,7 @@ import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
+import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.panels.IconCustomizerPane;
 
 /** The component class for building icons. */
@@ -45,11 +46,11 @@ public class IconCustomizerDialog extends JFXDialog
      * @param iconRecord the current selected icon.
      */
 
-    public IconCustomizerDialog(Window owner, IconRegistry iconRegistry, IconRecord iconRecord)
+    public IconCustomizerDialog(Window owner,PanelModel thePanelModel)
     {
         super(owner, "Customize an Icon");
-        myIconRegistry = iconRegistry;
-        IconCustomizerPane pane = new IconCustomizerPane(owner, iconRecord);
+        myIconRegistry = thePanelModel.getMyIconRegistry();
+        IconCustomizerPane pane = new IconCustomizerPane(owner, thePanelModel);
         setFxNode(pane);
         setMinimumSize(new Dimension(450, 550));
         setLocationRelativeTo(owner);

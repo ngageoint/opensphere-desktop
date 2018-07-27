@@ -16,6 +16,7 @@ import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.gui.AlphanumComparator;
 import io.opensphere.mantle.iconproject.impl.DefaultIconRecordTreeItemObject;
 import io.opensphere.mantle.iconproject.impl.IconRecordTreeItemUserObject;
+import io.opensphere.mantle.iconproject.model.PanelModel;
 
 /**
  * The TreeBuilder class.
@@ -32,6 +33,8 @@ public class TreeBuilder extends TreeItem<String>
     /** The icon record map with the collection name string as the key and the list of the icon record as the value. */
     private final Map<String, List<IconRecord>> recordMap = new HashMap<>();
 
+    private PanelModel myPanelModel;
+
     /**
      * Creates a tree structure with the icon records from the registry that
      * match the filter criteria. The tree is structured by collection name,
@@ -41,9 +44,10 @@ public class TreeBuilder extends TreeItem<String>
      * @param iconReg the iconRegistry
      * @param filter the filter for selecting records to be included.
      */
-    public TreeBuilder(IconRegistry iconReg, Predicate<IconRecord> filter)
+    public TreeBuilder(PanelModel thePanelModel, Predicate<IconRecord> filter)
     {
-        myIconRegistry = iconReg;
+        myPanelModel = thePanelModel;
+        myIconRegistry = myPanelModel.getMyIconRegistry();
 
         List<IconRecord> records = myIconRegistry.getIconRecords(filter);
         Collections.sort(records, (r1, r2) -> AlphanumComparator.compareNatural(r1.getImageURL().toString(), r2.getImageURL().toString()));

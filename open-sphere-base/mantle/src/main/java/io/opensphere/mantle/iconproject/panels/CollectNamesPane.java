@@ -7,6 +7,7 @@ import java.util.Set;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.iconproject.model.ImportProp;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,9 +41,12 @@ public class CollectNamesPane extends VBox
 
     private ToggleGroup test = new ToggleGroup();
 
+    private ImportProp myIconProps;
+
     public CollectNamesPane(PanelModel thePanelModel)
     {
         myPanelModel = thePanelModel;
+        myIconProps = myPanelModel.getImportProps();
         myIconRegistry = myPanelModel.getMyIconRegistry();
         Set<String> collectionNameSet = myIconRegistry.getCollectionNames();
 
@@ -75,8 +79,8 @@ public class CollectNamesPane extends VBox
         myExistingComboBox.setOnAction((event) ->
         {
             System.out.println("the current value is: " + myExistingComboBox.getValue());
-            myPanelModel.getMyCollectionName().set(myExistingComboBox.getValue());
-            System.out.println("value is set " + myPanelModel.getMyCollectionName().get());
+            myIconProps.getCollectionName().set(myExistingComboBox.getValue());
+            System.out.println("value is set " + myIconProps.getCollectionName().get());
             if (!options.contains(myExistingComboBox.getValue()))
             {
                 options.add(myExistingComboBox.getValue());
@@ -102,6 +106,7 @@ public class CollectNamesPane extends VBox
         getChildren().addAll(CollectionText, bottomPane);
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
+        System.out.println("Parent is: " + getParent());
 
     }
 

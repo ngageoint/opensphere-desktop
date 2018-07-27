@@ -14,6 +14,7 @@ import javafx.scene.layout.TilePane;
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.view.IconCustomizerDialog;
 
 /** Crates the Icon Display Grid. */
@@ -31,6 +32,8 @@ public class GridBuilder extends TilePane// implements Runnable
     /** The icon record list. */
     List<IconRecord> myRecordList;
 
+    private PanelModel myPanelModel;
+
     /**
      * The GridBuilder constructor. sets up the rows and columns for the icon
      * grid.
@@ -40,38 +43,34 @@ public class GridBuilder extends TilePane// implements Runnable
      * @param iconRegistry the icon registry
      */
 
-    public GridBuilder(int tileWidth, List<IconRecord> recList, IconRegistry iconRegistry)
+    public GridBuilder(int tileWidth, List<IconRecord> recList, PanelModel thePanelModel)
     {
         myTileWidth = tileWidth;
-        myIconRegistry = iconRegistry;
+        myPanelModel = thePanelModel;
+        myIconRegistry = myPanelModel.getMyIconRegistry();
         myRecordList = recList;
 
-        //System.out.println("making grid with:  " + myRecordList);
+        // System.out.println("making grid with: " + myRecordList);
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
 
-        for (IconRecord record : myRecordList)
+        for (IconRecord recordindex : myRecordList)
         {
-            Button sample  = buttonBuilder(record);
+            Button sample = buttonBuilder(recordindex);
             setMargin(sample, new Insets(5, 5, 5, 5));
             getChildren().add(sample);
         }
     }
 
-    /*@Override
-    public void run()
-    {
-        System.out.println("&^^^^^^^^^^^^^^^^^^^^^is this running?");
-        setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-                + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
-
-        for (IconRecord record : myRecordList)
-        {
-            Button sample = buttonBuilder(record);
-            setMargin(sample, new Insets(5, 5, 5, 5));
-            getChildren().add(sample);
-        }
-    }*/
+    /* @Override public void run() {
+     * System.out.println("&^^^^^^^^^^^^^^^^^^^^^is this running?");
+     * setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" +
+     * "-fx-border-width: 2;" + "-fx-border-insets: 5;" +
+     * "-fx-border-radius: 5;" + "-fx-border-color: purple;");
+     * 
+     * for (IconRecord record : myRecordList) { Button sample =
+     * buttonBuilder(record); setMargin(sample, new Insets(5, 5, 5, 5));
+     * getChildren().add(sample); } } */
 
     /**
      * Creates the image buttons to be placed in the grid.
@@ -102,7 +101,7 @@ public class GridBuilder extends TilePane// implements Runnable
 
         generic.setOnAction(e ->
         {
-            mySelectedIcon = record;
+            myPanelModel.setIconRecord(record);
         });
 
         return generic;
@@ -116,7 +115,7 @@ public class GridBuilder extends TilePane// implements Runnable
      */
     public void showIconCustomizer(Window owner)
     {
-        IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myIconRegistry, mySelectedIcon);
+        IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myPanelModel);
         builderPane.setVisible(true);
     }
 
@@ -130,43 +129,4 @@ public class GridBuilder extends TilePane// implements Runnable
         // new GridBuilder(myTileWidth, myIconRegistry);
     }
 
-    /**
-     * The getter for the IconRegistry.
-     *
-     * @return myIconRegistry the icon registry
-     */
-    public IconRegistry getMyIconRegistry()
-    {
-        return myIconRegistry;
-    }
-
-    /**
-     * Sets the myIconRegistry.
-     *
-     * @param theIconRegistry the icon registry
-     */
-    public void setMyIconRegistry(IconRegistry theIconRegistry)
-    {
-        myIconRegistry = theIconRegistry;
-    }
-
-    /**
-     * Gets the record list of icons.
-     *
-     * @return myRecordList the recordList of icons
-     */
-    public List<IconRecord> getMyRecordList()
-    {
-        return myRecordList;
-    }
-
-    /**
-     * Sets the record list of icons.
-     *
-     * @param theRecordList the recordList of icons
-     */
-    public void setMyRecordList(List<IconRecord> theRecordList)
-    {
-        myRecordList = theRecordList;
-    }
 }

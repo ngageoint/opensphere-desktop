@@ -29,10 +29,10 @@ public class MainPanel extends SplitPane
 {
     /** The Icon registry. */
     private final IconRegistry myIconRegistry;
-    
-    /** The Model*/
+
+    /** The Model */
     private PanelModel myPanelModel = new PanelModel();
-    
+
     /** The Icon Display Grid. */
     private final GridBuilder myIconGrid;
 
@@ -54,13 +54,12 @@ public class MainPanel extends SplitPane
     private final TreeBuilder treeBuilder;
 
     Map<String, List<IconRecord>> recordMap = new HashMap<>();
-   
 
     ScrollPane myScrollPane;
 
     private Window myOwner;
 
-    //private final Thread myGridLoader;
+    // private final Thread myGridLoader;
 
     /**
      * The MainPanel constructor.
@@ -73,23 +72,24 @@ public class MainPanel extends SplitPane
         myPanelModel = thePanelModel;
         myOwner = myPanelModel.getOwner();
         myIconRegistry = myPanelModel.getMyIconRegistry();
-        myPanelModel.setMyIconRegistry(myIconRegistry);
-        
+
         myLeftView = new AnchorPane();
 
-        treeBuilder = new TreeBuilder(myIconRegistry, null);
+        treeBuilder = new TreeBuilder(myPanelModel, null);
         myTreeView = new TreeView<>(treeBuilder);
         myTreeView.setShowRoot(false);
 
         recordMap = new HashMap<>(treeBuilder.getRecordMap());
-
         List<IconRecord> recordList = recordMap.get("User Added");
+        System.out.println(recordList);
 
-        myIconGrid = new GridBuilder(90, recordList, myIconRegistry);
-        //myGridLoader = new Thread(myIconGrid);
-        //startThread();
+        myIconGrid = new GridBuilder(90, recordList, myPanelModel);
+        // myGridLoader = new Thread(myIconGrid);
+        // startThread();
 
-        setDividerPositions(0.25, 0.98);
+        setDividerPositions(0.25);
+        // maxWidthProperty().multiply(0.25);
+        // setResizableWithParent(myLeftView, false);
         setLayoutY(48.0);
 
         AnchorPane.setBottomAnchor(myTreeView, 78.0);
@@ -125,11 +125,10 @@ public class MainPanel extends SplitPane
         {
             EventQueue.invokeLater(() ->
             {
-                //TODO:
             });
         });
 
-        ScrollPane myScrollPane = new ScrollPane(myIconGrid);
+        myScrollPane = new ScrollPane(myIconGrid);
         myScrollPane.setPannable(true);
         AnchorPane.setLeftAnchor(myScrollPane, 0.);
         AnchorPane.setRightAnchor(myScrollPane, 0.);
@@ -139,11 +138,10 @@ public class MainPanel extends SplitPane
         myScrollPane.setFitToWidth(true);
 
         myTreeView.getSelectionModel().selectedItemProperty()
-        .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
+                .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
 
         myLeftView.getChildren().addAll(myTreeView, myAddIconButton, myCustIconButton, myGenIconButton);
         getItems().addAll(myLeftView, myScrollPane);
-
 
     }
 
@@ -154,10 +152,6 @@ public class MainPanel extends SplitPane
      */
     private void treeHandle(TreeItem<String> newValue)
     {
-        System.out.println("Choice is:  " + newValue.getValue());
-
-        getItems().remove(myScrollPane);
-        getChildren().remove(myScrollPane);
         String colName = newValue.getValue();
 
         if (recordMap.get(colName) == null)
@@ -174,10 +168,9 @@ public class MainPanel extends SplitPane
                 }
             }
         }
-        //myScrollPane.setContent(null);
-        System.out.println("fixed choihce: " + colName);
-        myScrollPane = new ScrollPane(new GridBuilder(90, recordMap.get(colName), myIconRegistry));
-        getItems().addAll(myScrollPane);
+        System.out.println("fixed choice: " + colName);
+        myScrollPane.setContent(new GridBuilder(90, recordMap.get(colName), myPanelModel));
+
     }
 
     /**
@@ -187,21 +180,21 @@ public class MainPanel extends SplitPane
      */
     static void changeTop(boolean choice)
     {
-        //        StackPane stackPane = new StackPane();
-        //        ObservableList<Node> childs = stackPane.getChildren();
+        // StackPane stackPane = new StackPane();
+        // ObservableList<Node> childs = stackPane.getChildren();
         //
-        //        Node grid = childs.get(1);
-        //        Node list = childs.get(0);
-        //        if (choice)
-        //        {
-        //            grid.setVisible(false);
-        //            list.setVisible(true);
-        //        }
-        //        else
-        //        {
-        //            list.setVisible(false);
-        //            grid.setVisible(true);
-        //        }
+        // Node grid = childs.get(1);
+        // Node list = childs.get(0);
+        // if (choice)
+        // {
+        // grid.setVisible(false);
+        // list.setVisible(true);
+        // }
+        // else
+        // {
+        // list.setVisible(false);
+        // grid.setVisible(true);
+        // }
 
     }
 }

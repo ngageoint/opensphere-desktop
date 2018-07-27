@@ -34,6 +34,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 
 import io.opensphere.mantle.icon.IconRecord;
+import io.opensphere.mantle.iconproject.model.PanelModel;
 
 /** Panel for building custom icons. */
 public class IconCustomizerPane extends BorderPane
@@ -77,9 +78,9 @@ public class IconCustomizerPane extends BorderPane
      * @param owner the AWT Window.
      * @param record the selected icon.
      */
-    public IconCustomizerPane(Window owner, IconRecord record)
+    public IconCustomizerPane(Window owner, PanelModel thePanelModel)
     {
-        myIconRecord = record;
+        myIconRecord = thePanelModel.getIconRecord();
         setTop(createTop());
 
         setCenter(myIconDisplay = createImageView());

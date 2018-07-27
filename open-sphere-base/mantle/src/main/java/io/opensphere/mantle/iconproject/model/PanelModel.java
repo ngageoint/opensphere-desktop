@@ -4,6 +4,7 @@ import java.awt.Window;
 import java.util.Set;
 
 import io.opensphere.core.Toolbox;
+import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -20,13 +21,20 @@ public class PanelModel
     private StringProperty myCollectionName = new SimpleStringProperty("Default");
 
     /** The SubCollection Name */
-    private Set<String> mySubCollectionNames = null;
+    private Set<String> mySubCollectionList = null;
+    
+    /** The selected icon to be used for the builder. */
+    private IconRecord mySelectedIcon;
 
     private IconRegistry myIconRegistry;
 
     private Toolbox myToolBox;
 
     private Window myOwner;
+
+    private StringProperty mySubCollectionName;
+    
+    private ImportProp myImportProps = new ImportProp();
 
     /**
      * gets the icon display view type.
@@ -38,34 +46,24 @@ public class PanelModel
         return viewType;
     }
 
-    public StringProperty getMyCollectionName()
-    {
-        return myCollectionName;
-    }
-
-    public void setMyCollectionName(StringProperty myCollectionName)
-    {
-        this.myCollectionName = myCollectionName;
-    }
-
-    public Set<String> getMySubCollectionNames()
-    {
-        return mySubCollectionNames;
-    }
-
-    public void setMySubCollectionNames(Set<String> mySubCollectionName)
-    {
-        this.mySubCollectionNames = mySubCollectionName;
-    }
-
+    /**
+     * The getter for the IconRegistry.
+     *
+     * @return myIconRegistry the icon registry
+     */
     public IconRegistry getMyIconRegistry()
     {
         return myIconRegistry;
     }
-    
-    public void setMyIconRegistry(IconRegistry iconRegistry)
+
+    /**
+     * Sets the myIconRegistry.
+     *
+     * @param theIconRegistry the icon registry
+     */
+    public void setMyIconRegistry(IconRegistry theIconRegistry)
     {
-        this.myIconRegistry = iconRegistry;
+        myIconRegistry = theIconRegistry;
     }
 
     public void setToolBox(Toolbox tb)
@@ -87,5 +85,25 @@ public class PanelModel
     {
         return myOwner;
     }
-    
+
+    public ImportProp getImportProps()
+    {
+        return myImportProps;
+    }
+
+    public void setImportProps(ImportProp myImportProps)
+    {
+        this.myImportProps = myImportProps;
+    }
+
+    public IconRecord getIconRecord()
+    {
+        return mySelectedIcon;
+    }
+
+    public void setIconRecord(IconRecord mySelectedIcon)
+    {
+        this.mySelectedIcon = mySelectedIcon;
+    }
+
 }
