@@ -2,14 +2,15 @@ package io.opensphere.featureactions.editor.ui;
 
 import java.awt.Component;
 
+import javafx.scene.Node;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.BorderPane;
+
 import io.opensphere.core.Toolbox;
 import io.opensphere.featureactions.editor.model.SimpleFeatureAction;
 import io.opensphere.featureactions.editor.model.SimpleFeatureActionGroup;
 import io.opensphere.featureactions.editor.model.SimpleFeatureActions;
 import io.opensphere.mantle.data.DataTypeInfo;
-import javafx.scene.Node;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.BorderPane;
 
 /** Allows the user to edit feature actions for a specific feature group. */
 public class SimpleFeatureActionPane extends BorderPane

@@ -4,6 +4,9 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.util.Set;
 
+import javafx.collections.ListChangeListener;
+import javafx.scene.control.TitledPane;
+
 import io.opensphere.controlpanels.layers.importdata.ImportDataController;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.importer.ImportType;
@@ -18,8 +21,6 @@ import io.opensphere.featureactions.model.FeatureAction;
 import io.opensphere.featureactions.model.StyleAction;
 import io.opensphere.featureactions.registry.FeatureActionsRegistry;
 import io.opensphere.mantle.data.DataTypeInfo;
-import javafx.collections.ListChangeListener;
-import javafx.scene.control.TitledPane;
 
 /**
  * Keeps the {@link SimpleFeatureActionEditor} synchronized with the
