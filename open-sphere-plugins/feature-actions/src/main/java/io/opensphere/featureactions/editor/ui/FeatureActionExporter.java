@@ -42,9 +42,6 @@ public class FeatureActionExporter
     /** Option to export only active feature actions. */
     private static final String EXPORT_ACTIVE = "Export Active (Checked)";
 
-//    /** Option to export only the selected feature actions. */
-//    private static final String EXPORT_SELECTED = "Export Selected";
-
     /** Option to export all feature actions. */
     private static final String EXPORT_ALL = "Export All";
 
@@ -52,13 +49,13 @@ public class FeatureActionExporter
     private RadioButtonPanel<String> myButtonPanel;
 
     /** The name of the layer for the feature actions. */
-    private String myLayerName;
+    private final String myLayerName;
 
     /** The name of the file to be saved. */
     private JTextField myName;
 
     /** The list of feature actions groups in a layer. */
-    private List<SimpleFeatureActionGroup> myGroupList;
+    private final List<SimpleFeatureActionGroup> myGroupList;
 
     /** Preferences registry reference. */
     private final PreferencesRegistry myPrefsRegistry;
@@ -99,7 +96,6 @@ public class FeatureActionExporter
         dialog.buildAndShow();
         if (dialog.getSelection() == JOptionPane.OK_OPTION)
         {
-            myButtonPanel.getSelection();
             try
             {
                 Document doc = XMLUtilities.newDocument();
@@ -118,7 +114,7 @@ public class FeatureActionExporter
             }
             catch (ParserConfigurationException | XPathExpressionException | JAXBException e)
             {
-                LOGGER.error(e.getMessage(), e);
+                LOGGER.error("Failure to export Feature Actions to file.", e);
             }
         }
     }
@@ -147,7 +143,7 @@ public class FeatureActionExporter
                 }
                 catch (FileNotFoundException e)
                 {
-                    LOGGER.error("Failed to write to selected file [" + saveFile + "]: " + e, e);
+                    LOGGER.error("Failed to write to selected file [" + saveFile.getAbsolutePath() + "]: " + e, e);
                     JOptionPane.showMessageDialog(parentComponent, "Failed to write to file: " + e.getMessage(),
                             "Error writing to file", JOptionPane.ERROR_MESSAGE);
                 }
@@ -167,7 +163,7 @@ public class FeatureActionExporter
             }
             catch (IOException e)
             {
-                LOGGER.error(e, e);
+                LOGGER.error("Error in closing the file [" + chooser.getSelectedFile().getAbsolutePath() + "].", e);
             }
         }
     }

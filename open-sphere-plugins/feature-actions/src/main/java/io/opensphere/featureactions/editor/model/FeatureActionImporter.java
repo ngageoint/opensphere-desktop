@@ -75,7 +75,7 @@ public class FeatureActionImporter implements FileOrURLImporter
     @Override
     public String getDescription()
     {
-        return null;
+        return "Importer for Feature Actions.";
     }
 
     @Override
@@ -148,7 +148,7 @@ public class FeatureActionImporter implements FileOrURLImporter
         }
         catch (JAXBException e)
         {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error("Failed to read Feature Action from list of imported nodes.", e);
         }
         if (callback != null)
         {
@@ -206,7 +206,8 @@ public class FeatureActionImporter implements FileOrURLImporter
         catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException e)
         {
             nodes = null;
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error("Failed to parse input file by Feature Actions. "
+            		+ "File may not be of correct structure, or an error in I/O may have occured.", e);
         }
         return nodes;
     }
