@@ -33,16 +33,6 @@ public class GridBuilder extends TilePane
     /** The model for the main icon panel. */
     private final PanelModel myPanelModel;
 
-    /** The enum of the collection type. */
-    enum CollectType
-    {
-        /** The COLLECTION. */
-        COLLECTION,
-
-        /** The SUBCATEGORY. */
-        SUBCATEGORY
-    }
-
     /**
      * The GridBuilder constructor. sets up the rows and columns for the icon
      * grid.
@@ -50,9 +40,8 @@ public class GridBuilder extends TilePane
      * @param tileWidth the width of each tile(button).
      * @param recList the icon record list
      * @param thePanelModel the panel model
-     * @param collect the collection type
      */
-    public GridBuilder(int tileWidth, List<IconRecord> recList, PanelModel thePanelModel, String collect, String subCat)
+    public GridBuilder(int tileWidth, List<IconRecord> recList, PanelModel thePanelModel)
     {
         myTileWidth = tileWidth;
         myPanelModel = thePanelModel;
@@ -64,26 +53,9 @@ public class GridBuilder extends TilePane
 
         for (IconRecord recordindex : myRecordList)
         {
-            /*if (collect.equals("SUBCAT")) //if its a subCategory
-            {
-                //System.out.println("it is a subcat");
-                if (recordindex.getSubCategory().equals(subCat)) //if this element is part of the subcategory
-                {
-                    //System.out.println("Adding icon record: " + recordindex);
-                    Button sample = buttonBuilder(recordindex);
-                    setMargin(sample, new Insets(5, 5, 5, 5));
-                    getChildren().add(sample);
-                }
-                //else nothing
-            }
-            else //it is a collection so just add all
-            {*/
-            //System.out.println("Adding icon record: " + recordindex);
-            //System.out.println("regular collection");
             Button sample = buttonBuilder(recordindex);
             setMargin(sample, new Insets(5, 5, 5, 5));
             getChildren().add(sample);
-            //}
         }
     }
 

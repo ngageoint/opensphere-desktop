@@ -4,10 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import io.opensphere.core.util.collections.New;
-import io.opensphere.mantle.icon.IconRegistry;
-import io.opensphere.mantle.iconproject.model.ImportProp;
-import io.opensphere.mantle.iconproject.model.PanelModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -20,6 +16,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+
+import io.opensphere.core.util.collections.New;
+import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.iconproject.model.ImportProp;
+import io.opensphere.mantle.iconproject.model.PanelModel;
 
 /**
  * A panel in which a user may select a subcategory, create a new subcategory,
@@ -86,19 +87,19 @@ public class SubCollectPane extends VBox
 
     private ObservableList<String> myComboBoxItems;
 
-    private ToggleGroup myToggleGroup = new ToggleGroup();
+    private final ToggleGroup myToggleGroup = new ToggleGroup();
 
-    private PanelModel myPanelModel;
+    private final PanelModel myPanelModel;
 
-    private IconRegistry myIconRegistry;
+    private final IconRegistry myIconRegistry;
 
-    private Set<String> myCategorySet;
+    private final Set<String> myCategorySet;
 
     private boolean subCatsFromDirNames;
 
     private boolean myChoice;
 
-    private ImportProp myImportProps;
+    private final ImportProp myImportProps;
 
     /**
      * Instantiates a new sub-category selection panel.
@@ -168,14 +169,14 @@ public class SubCollectPane extends VBox
             System.out.println("it is empty");
             myComboBox.setDisable(true);
         }
-//        else if (myChoice)
-//        {
-//            mySubCatsFromDirNamesRB = new RadioButton("Create sub-categories from folder names.");
-//            mySubCatsFromDirNamesRB.setTooltip(new Tooltip("Search for all sub-folders of existing folders"
-//                    + " and add found icons with the folder name as the sub-category."));
-//            mySubCatsFromDirNamesRB.setToggleGroup(myToggleGroup);
-//            hbox.getChildren().add(mySubCatsFromDirNamesRB);
-//        }
+        //        else if (myChoice)
+        //        {
+        //            mySubCatsFromDirNamesRB = new RadioButton("Create sub-categories from folder names.");
+        //            mySubCatsFromDirNamesRB.setTooltip(new Tooltip("Search for all sub-folders of existing folders"
+        //                    + " and add found icons with the folder name as the sub-category."));
+        //            mySubCatsFromDirNamesRB.setToggleGroup(myToggleGroup);
+        //            hbox.getChildren().add(mySubCatsFromDirNamesRB);
+        //        }
         else
         {
             System.out.println("it is not empty");

@@ -48,7 +48,7 @@ public class MainPanel extends SplitPane
     /** The Icon registry. */
     private final IconRegistry myIconRegistry;
 
-    /** The Model */
+    /** The Model. */
     private PanelModel myPanelModel = new PanelModel();
 
     /** The Icon Display Grid. */
@@ -83,8 +83,6 @@ public class MainPanel extends SplitPane
     /** The owner window of the main panel. */
     private final Window myOwner;
 
-    // private final Thread myGridLoader;
-
     /**
      * The MainPanel constructor.
      *
@@ -104,9 +102,8 @@ public class MainPanel extends SplitPane
 
         recordMap = new HashMap<>(treeBuilder.getRecordMap());
         List<IconRecord> recordList = recordMap.get("User Added");
-        System.out.println(recordList);
 
-        myIconGrid = new GridBuilder(90, recordList, myPanelModel, "COLLECTION", null);
+        myIconGrid = new GridBuilder(90, recordList, myPanelModel);
 
         setDividerPositions(0.25);
         // maxWidthProperty().multiply(0.25);
@@ -189,9 +186,9 @@ public class MainPanel extends SplitPane
     private void treeHandle(TreeItem<String> newValue)
     {
         String colName = newValue.getValue();
-        System.out.println(colName);
-        myScrollPane.setContent(new GridBuilder(90, recordMap.get(colName), myPanelModel, "COLLECTION", null));
-
+        
+        myScrollPane.setContent(new GridBuilder(90, recordMap.get(colName), myPanelModel));
+        
         if (myPanelModel.getMyIconRegistry().getCollectionNames().contains(colName))
         {
             myPanelModel.getImportProps().getCollectionName().set(colName);
@@ -212,7 +209,6 @@ public class MainPanel extends SplitPane
 //            // Subcategory.
 //            iconIdList = myIconRegistry.getIconIds(value -> EqualsHelper.equals(value.getSubCategory(), obj.getLabel()));
 //        }
-
     }
 
     /**
