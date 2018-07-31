@@ -175,6 +175,7 @@ public class SubCategoryPanel extends JPanel
      */
     public boolean isSubCatsFromDirNames()
     {
+        System.out.println("the bullshit is "+ mySubCatsFromDirNamesRB != null && mySubCatsFromDirNamesRB.isSelected());
         return mySubCatsFromDirNamesRB != null && mySubCatsFromDirNamesRB.isSelected();
     }
 }

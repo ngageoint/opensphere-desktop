@@ -17,9 +17,6 @@ public class PanelModel
     /** View set to default of Grid. */
     private final ObjectProperty<ViewStyle> viewType = new SimpleObjectProperty<>(this, "viewtype", ViewStyle.GRID);
 
-    /** The Collection Name */
-    private StringProperty myCollectionName = new SimpleStringProperty("Default");
-
     /** The SubCollection Name */
     private Set<String> mySubCollectionList = null;
     
@@ -91,11 +88,6 @@ public class PanelModel
         return myImportProps;
     }
 
-    public void setImportProps(ImportProp myImportProps)
-    {
-        this.myImportProps = myImportProps;
-    }
-
     public IconRecord getIconRecord()
     {
         return mySelectedIcon;
@@ -105,5 +97,4 @@ public class PanelModel
     {
         this.mySelectedIcon = mySelectedIcon;
     }
-
 }

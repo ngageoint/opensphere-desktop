@@ -1,22 +1,8 @@
 package io.opensphere.mantle.iconproject.panels;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
 import io.opensphere.mantle.iconproject.model.PanelModel;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.embed.swing.SwingNode;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 
 /**
  * A panel in which a user may select an existing collection or create a new
@@ -44,7 +30,6 @@ public class AddIconPane extends BorderPane
 
         setTop(createCollection());
         setCenter(createSubCollection());
-        System.out.println("AddIconPane  gg Parent is: " + getScene());
     }
 
     private VBox createCollection()
@@ -55,7 +40,6 @@ public class AddIconPane extends BorderPane
 
     private VBox createSubCollection()
     {
-
         SubCollectPane bottomPane = new SubCollectPane(myPanelModel);
         return bottomPane;
     }
@@ -99,7 +83,4 @@ public class AddIconPane extends BorderPane
 //
 //        return (scene);
 //    }
-    
-    
-
 }

@@ -229,7 +229,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
                     try
                     {
                         List<DefaultIconProvider> providerList = IconProviderFactory.createFromDirectory(resultFile, colName,
-                                "IconManager", pnl.isSubCatsFromDirNames(), pnl.isSubCatsFromDirNames(), pnl.getCategory());
+                                "IconManager", pnl.isSubCatsFromDirNames(), pnl.getCategory());
                         myIconRegistry.addIcons(providerList, this);
                     }
                     catch (IOException e)

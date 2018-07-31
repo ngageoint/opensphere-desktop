@@ -16,34 +16,24 @@ public class ImportProp
 
     private StringProperty mySubCollectionName;
 
-    public StringProperty getCollectionName()
+    public StringProperty getSubCollectionName()
     {
-        return myCollectionName;
+        return mySubCollectionName;
     }
 
-    public void setMyCollectionName(StringProperty myCollectionName)
-    {
-        this.myCollectionName = myCollectionName;
-    }
-
-    public Set<String> getMySubCollectionNames()
+    public Set<String> getSubCollectionList()
     {
         return mySubCollectionList;
     }
 
-    public void setSubCollectionName(StringProperty CollectionName)
+    public void setSubCollectionList(Set<String> mySubCollectionList)
     {
-        this.mySubCollectionName = CollectionName;
+        this.mySubCollectionList = mySubCollectionList;
     }
 
-    public void setMySubCollectionNames(Set<String> mySubCollectionName)
+    public StringProperty getCollectionName()
     {
-        this.mySubCollectionList = mySubCollectionName;
-    }
-
-    public StringProperty getSubCollectionName()
-    {
-        return null;
+        return myCollectionName;
     }
 
 }
