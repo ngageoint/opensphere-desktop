@@ -1,8 +1,11 @@
 package io.opensphere.mantle.iconproject.model;
 
 import java.awt.Window;
+import java.util.List;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 import io.opensphere.core.Toolbox;
@@ -26,9 +29,14 @@ public class PanelModel
 
     /** The owner of this window. */
     private Window myOwner;
+    
+    /** The value used for the tilewidth. */
+    private IntegerProperty myTileWidth = new SimpleIntegerProperty(100);
 
     /** The import property. */
     private ImportProp myImportProps = new ImportProp();
+
+    private List<IconRecord> myIconRecordList;
 
     /**
      * gets the icon display view type.
@@ -48,6 +56,11 @@ public class PanelModel
     public IconRegistry getMyIconRegistry()
     {
         return myIconRegistry;
+    }
+    
+    public IntegerProperty getTileWidth()
+    {
+        return myTileWidth;
     }
 
     /**
@@ -138,5 +151,15 @@ public class PanelModel
     public void setIconRecord(IconRecord theSelectedIcon)
     {
         mySelectedIcon = theSelectedIcon;
+    }
+
+    public List<IconRecord> getRecordList()
+    {
+        return myIconRecordList;
+    }
+
+    public void setIconRecordList(List<IconRecord> list)
+    {
+       myIconRecordList = list;
     }
 }
