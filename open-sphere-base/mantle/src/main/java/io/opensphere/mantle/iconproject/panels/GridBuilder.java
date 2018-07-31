@@ -41,12 +41,12 @@ public class GridBuilder extends TilePane
      * @param recList the icon record list
      * @param thePanelModel the panel model
      */
-    public GridBuilder(int tileWidth, List<IconRecord> recList, PanelModel thePanelModel)
+    public GridBuilder(PanelModel thePanelModel)
     {
-        myTileWidth = tileWidth;
         myPanelModel = thePanelModel;
+        myTileWidth = myPanelModel.getTileWidth().get();
         //myIconRegistry = myPanelModel.getMyIconRegistry();
-        myRecordList = recList;
+        myRecordList = myPanelModel.getRecordList();
 
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: purple;");

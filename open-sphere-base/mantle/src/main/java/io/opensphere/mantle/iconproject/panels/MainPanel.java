@@ -101,13 +101,12 @@ public class MainPanel extends SplitPane
         myTreeView.setShowRoot(false);
 
         recordMap = new HashMap<>(treeBuilder.getRecordMap());
-        List<IconRecord> recordList = recordMap.get("User Added");
+        myPanelModel.setIconRecordList(recordMap.get("Default"));
 
-        myIconGrid = new GridBuilder(90, recordList, myPanelModel);
+        myIconGrid = new GridBuilder(myPanelModel);
 
         setDividerPositions(0.25);
-        // maxWidthProperty().multiply(0.25);
-        // setResizableWithParent(myLeftView, false);
+        setResizableWithParent(myLeftView, false);
         setLayoutY(48.0);
 
         AnchorPane.setBottomAnchor(myTreeView, 78.0);
@@ -186,8 +185,8 @@ public class MainPanel extends SplitPane
     private void treeHandle(TreeItem<String> newValue)
     {
         String colName = newValue.getValue();
-        
-        myScrollPane.setContent(new GridBuilder(90, recordMap.get(colName), myPanelModel));
+        myPanelModel.setIconRecordList(recordMap.get(colName));
+        myScrollPane.setContent(new GridBuilder(myPanelModel));
         
         if (myPanelModel.getMyIconRegistry().getCollectionNames().contains(colName))
         {
