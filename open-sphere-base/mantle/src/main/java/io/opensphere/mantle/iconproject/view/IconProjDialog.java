@@ -34,9 +34,9 @@ public class IconProjDialog extends JFXDialog
         myPanelModel.setMyIconRegistry(MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry());
         setLocationRelativeTo(owner);
         setSize(900, 600);
-
         setFxNode(new IconProjView(myPanelModel));
         setMinimumSize(new Dimension(800, 600));
+        
     }
 
     /** Packages UI elements into one pane. */

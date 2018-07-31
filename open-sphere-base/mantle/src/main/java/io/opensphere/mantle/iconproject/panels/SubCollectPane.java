@@ -133,8 +133,11 @@ public class SubCollectPane extends VBox
 
         myNoneRB = new RadioButton("No Sub-category");
         myNoneRB.setToggleGroup(myToggleGroup);
-        myNoneRB.setOnAction(event -> {myComboBox.setEditable(false);
-            myComboBox.setDisable(true);});
+        myNoneRB.setOnAction(event ->
+        {
+            myComboBox.setEditable(false);
+            myComboBox.setDisable(true);
+        });
 
         myExistingRB = new RadioButton("Existing");
         myExistingRB.setToggleGroup(myToggleGroup);
@@ -220,13 +223,9 @@ public class SubCollectPane extends VBox
         return myNoneRB.isSelected();
     }
 
-    /**
-     * Checks if is sub cats from dir names.
-     *
-     * @return true, if is sub cats from dir names
-     */
-    public boolean isSubCatsFromDirNames()
+    public void updateSubCollectName()
     {
-        return mySubCatsFromDirNamesRB != null && mySubCatsFromDirNamesRB.isSelected();
+        myPanelModel.getImportProps().getSubCollectionName().set(myComboBox.getValue());
     }
+
 }

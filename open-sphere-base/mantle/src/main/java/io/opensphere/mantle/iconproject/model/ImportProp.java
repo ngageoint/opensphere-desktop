@@ -12,9 +12,9 @@ public class ImportProp
     private StringProperty myCollectionName = new SimpleStringProperty("Default");
 
     /** The SubCollection Name */
-    private Set<String> mySubCollectionList = null;
+    private Set<String> mySubCollectionList;
 
-    private StringProperty mySubCollectionName;
+    private StringProperty mySubCollectionName= new SimpleStringProperty("");
 
     public StringProperty getSubCollectionName()
     {
@@ -26,9 +26,9 @@ public class ImportProp
         return mySubCollectionList;
     }
 
-    public void setSubCollectionList(Set<String> mySubCollectionList)
+    public void setSubCollectionList(Set<String> theSubCollectionList)
     {
-        this.mySubCollectionList = mySubCollectionList;
+        mySubCollectionList = theSubCollectionList;
     }
 
     public StringProperty getCollectionName()

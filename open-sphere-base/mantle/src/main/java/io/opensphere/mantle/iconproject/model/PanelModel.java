@@ -27,8 +27,6 @@ public class PanelModel
     /** The owner of this window. */
     private Window myOwner;
 
-    // private StringProperty mySubCollectionName;
-
     /** The import property. */
     private ImportProp myImportProps = new ImportProp();
 

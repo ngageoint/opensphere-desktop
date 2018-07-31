@@ -26,9 +26,11 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import io.opensphere.core.util.filesystem.MnemonicFileChooser;
 import io.opensphere.core.util.image.ImageUtil;
+import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject.NameType;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.icon.impl.IconProviderFactory;
 import io.opensphere.mantle.icon.impl.gui.SubCategoryPanel;
@@ -130,7 +132,8 @@ public class MainPanel extends SplitPane
             EventQueue.invokeLater(() ->
             {
                 System.out.println("File has been Selected");
-                loadFromFile(myPanelModel.getImportProps().getCollectionName().get(), null);
+                loadFromFile(myPanelModel.getImportProps().getCollectionName().get(),
+                        myPanelModel.getImportProps().getSubCollectionName().get());
             });
         });
 
@@ -186,8 +189,30 @@ public class MainPanel extends SplitPane
     private void treeHandle(TreeItem<String> newValue)
     {
         String colName = newValue.getValue();
-
+        System.out.println(colName);
         myScrollPane.setContent(new GridBuilder(90, recordMap.get(colName), myPanelModel, "COLLECTION", null));
+
+        if (myPanelModel.getMyIconRegistry().getCollectionNames().contains(colName))
+        {
+            myPanelModel.getImportProps().getCollectionName().set(colName);
+        }
+        else
+        {
+            myPanelModel.getImportProps().getCollectionName().set(recordMap.get(colName).get(0).getCollectionName());
+            myPanelModel.getImportProps().getSubCollectionName().set(colName);
+        }
+
+//        if (obj.getNameType() == NameType.COLLECTION)
+//        {
+//            iconIdList = myIconRegistry
+//                    .getIconIds(value -> EqualsHelper.equals(value.getCollectionName(), obj.getLabel()));
+//        }
+//        else
+//        {
+//            // Subcategory.
+//            iconIdList = myIconRegistry.getIconIds(value -> EqualsHelper.equals(value.getSubCategory(), obj.getLabel()));
+//        }
+
     }
 
     /**
@@ -230,7 +255,7 @@ public class MainPanel extends SplitPane
             {
                 System.out.println("the Icon Url is : " + result.toURI().toURL());
                 System.out.println("loading from file under the name:  " + collectionName);
-                IconProvider provider = new DefaultIconProvider(result.toURI().toURL(), collectionName, null, "User");
+                IconProvider provider = new DefaultIconProvider(result.toURI().toURL(), collectionName, subCatName, "User");
                 myPanelModel.getMyIconRegistry().addIcon(provider, this);
             }
             catch (MalformedURLException e)
