@@ -1,9 +1,11 @@
 package io.opensphere.mantle.data.geom.style.dialog;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -21,7 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
-import javax.swing.Scrollable;
+import javax.swing.ScrollPaneConstants;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.Colors;
@@ -105,6 +107,10 @@ public class MiniStylePanel extends JPanel
      */
     private JScrollPane myScrollPane;
 
+    private GridBagLayout myLayout;
+
+    private GridBagConstraints myConstraints;
+
     /**
      * Instantiates a new mini style panel.
      *
@@ -120,7 +126,18 @@ public class MiniStylePanel extends JPanel
         myDGI = dgi;
         myDTI = dti;
 
-        myInternalPanel = new MiniStyleInternalScrollablePane();
+        myInternalPanel = new JPanel();
+        myInternalPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 300));
+        myInternalPanel.setMinimumSize(new Dimension(150, 300));
+        myLayout = new GridBagLayout();
+        myConstraints = new GridBagConstraints();
+        myInternalPanel.setLayout(myLayout);
+
+        myConstraints.anchor = GridBagConstraints.NORTHWEST;
+        myConstraints.fill = GridBagConstraints.HORIZONTAL;
+        myConstraints.weightx = 1.0;
+        myConstraints.gridx = 0;
+        myConstraints.gridy = 0;
 
         myEnableCustomTypeCheckBox = new JCheckBox("Enable Custom Style", false);
         myEnableCustomTypeCheckBox.setBorder(null);
@@ -131,12 +148,7 @@ public class MiniStylePanel extends JPanel
             rebuildUI();
         });
 
-        Box hBox = Box.createHorizontalBox();
-        hBox.add(myEnableCustomTypeCheckBox);
-        hBox.add(Box.createHorizontalGlue());
-
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(hBox);
     }
 
     @Override
@@ -190,6 +202,12 @@ public class MiniStylePanel extends JPanel
             {
                 destroy();
 
+                Box hBox = Box.createHorizontalBox();
+                hBox.add(myEnableCustomTypeCheckBox);
+                hBox.add(Box.createHorizontalGlue());
+                hBox.add(Box.createHorizontalStrut(5));
+                add(hBox);
+
                 VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox)
                         .getVisualizationStyleController();
                 boolean shouldBeSelected = vsc.isTypeUsingCustom(myDGI, myDTI);
@@ -210,68 +228,30 @@ public class MiniStylePanel extends JPanel
                             MiniStyleTypePanel mstp = new MiniStyleTypePanel(myToolbox, fc, myDGI, myDTI, isFirst);
 
                             myTypePanels.add(mstp);
+
+                            myLayout.setConstraints(mstp, myConstraints);
                             myInternalPanel.add(mstp);
+
+                            myConstraints.gridy++;
 
                             isFirst = false;
                         }
                     }
 
-                    myScrollPane = new JScrollPane();
-                    myScrollPane.setViewportView(myInternalPanel);
-
+                    myScrollPane = new JScrollPane(myInternalPanel);
+                    myScrollPane.getVerticalScrollBar().setUnitIncrement(25);
+                    myScrollPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, 300));
+                    myScrollPane.setMinimumSize(new Dimension(150, 300));
+                    myScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                    myScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
                     add(myScrollPane);
                 }
 
+                setBackground(Color.CYAN);
                 revalidate();
                 repaint();
             }
         });
-    }
-
-    /** Implementation of a Scrollable JPanel. */
-    private static class MiniStyleInternalScrollablePane extends JPanel implements Scrollable
-    {
-        /** you know what this is for */
-        private static final long serialVersionUID = 1L;
-
-        /** Height of JScrollPane viewport. */
-        private static final int MAX_HEIGHT = 300;
-
-        /** Number of pixels per scrollable unit; scrollbar arrows. */
-        private static final int SCROLL_INCREMENT_PX = 25;
-
-        /** Number of pixels per block unit; scrollbar anchor & mouse wheel. */
-        private static final int BLOCK_INCREMENT_PX = 50;
-
-        @Override
-        public Dimension getPreferredScrollableViewportSize()
-        {
-            return new Dimension(getPreferredSize().width, MAX_HEIGHT);
-        }
-
-        @Override
-        public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction)
-        {
-            return SCROLL_INCREMENT_PX;
-        }
-
-        @Override
-        public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction)
-        {
-            return BLOCK_INCREMENT_PX;
-        }
-
-        @Override
-        public boolean getScrollableTracksViewportWidth()
-        {
-            return false;
-        }
-
-        @Override
-        public boolean getScrollableTracksViewportHeight()
-        {
-            return false;
-        }
     }
 
     /**
@@ -381,18 +361,11 @@ public class MiniStylePanel extends JPanel
             myStyleSelectComboBox.setSize(160, 22);
             myStyleSelectComboBox.setPreferredSize(myStyleSelectComboBox.getSize());
             myStyleSelectComboBox.setMaximumSize(new Dimension(500, 24));
-            myStyleSelectCBActionListener = new ActionListener()
+            myStyleSelectCBActionListener = (e) ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox)
-                            .getVisualizationStyleController();
-                    StyleNodeUserObject node = (StyleNodeUserObject)myStyleSelectComboBox.getSelectedItem();
-                    VisualizationStyle vs = vsc.getStyleForEditorWithConfigValues(node.getStyleClass(), myFeatureClass, myDGI,
-                            myDTI);
-                    vsc.setSelectedStyleClass(vs, myFeatureClass, myDGI, myDTI, MiniStyleTypePanel.this);
-                }
+                StyleNodeUserObject node = (StyleNodeUserObject)myStyleSelectComboBox.getSelectedItem();
+                VisualizationStyle vs = vsc.getStyleForEditorWithConfigValues(node.getStyleClass(), myFeatureClass, myDGI, myDTI);
+                vsc.setSelectedStyleClass(vs, myFeatureClass, myDGI, myDTI, MiniStyleTypePanel.this);
             };
             myStyleSelectComboBox.addActionListener(myStyleSelectCBActionListener);
 

@@ -842,13 +842,12 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
         GridBagPanel providerPanel = new GridBagPanel();
         JLabel textField = new JLabel("Unique ID Column: ");
         providerPanel.add(textField);
-        providerPanel.fillHorizontal();
 
         uniqueProvider.setMinimumSize(new Dimension(100, 24));
-        providerPanel.add(uniqueProvider);
+        providerPanel.fillHorizontal().add(uniqueProvider);
 
         myProviderPanel.setVisible(true);
-        myProviderPanel.add(providerPanel);
+        myProviderPanel.fillHorizontal().add(providerPanel);
         myProviderPanel.revalidate();
         myProviderPanel.repaint();
     }
