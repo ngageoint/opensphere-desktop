@@ -12,7 +12,7 @@ public class IconProjGenDialog extends JFXDialog
 {
 
     /** The current IconRegistry. */
-    private IconRegistry myIconRegistry;
+    private final IconRegistry myIconRegistry;
 
     /**
      * Constructor.
@@ -26,7 +26,7 @@ public class IconProjGenDialog extends JFXDialog
     {
         super(owner, "Generate an Icon");
         myIconRegistry = iconRegistry;
-        System.out.println(myIconRegistry.getAllAssignedElementIds().toString());
+        System.out.println("projgendialog: " + myIconRegistry.getAllAssignedElementIds().toString());
 
         GenIconPane pane = new GenIconPane();
         setFxNode(pane);

@@ -5,7 +5,6 @@ import java.awt.Window;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
@@ -83,7 +82,7 @@ public class MainPanel extends SplitPane
         List<IconRecord> recordList = recordMap.get("User Added");
         System.out.println(recordList);
 
-        myIconGrid = new GridBuilder(90, recordList, myPanelModel);
+        myIconGrid = new GridBuilder(90, recordList, myPanelModel, "COLLECTION", null);
 
         setDividerPositions(0.25);
         // maxWidthProperty().multiply(0.25);
@@ -150,8 +149,9 @@ public class MainPanel extends SplitPane
     private void treeHandle(TreeItem<String> newValue)
     {
         String colName = newValue.getValue();
+        System.out.println("colname from newval is: "  + colName);
 
-        if (recordMap.get(colName) == null)
+        /*if (recordMap.get(colName) == null)
         {
             for (Entry<String, List<IconRecord>> entry : recordMap.entrySet())
             {
@@ -165,7 +165,31 @@ public class MainPanel extends SplitPane
                 }
             }
         }
-        myScrollPane.setContent(new GridBuilder(90, recordMap.get(colName), myPanelModel));
+        myScrollPane.setContent(new GridBuilder(90, recordMap.get(colName), myPanelModel));*/
+        /*if (recordMap.get(colName) == null) //if subcat essentially
+        {
+            System.out.println("the thing is null");
+            String subCatName = colName;
+            for (Entry<String, List<IconRecord>> entry : recordMap.entrySet())
+            {
+                String key = entry.getKey();
+                List<IconRecord> value = entry.getValue();
+                System.out.println("key is:  " + key);
+                if (value.get(0).getSubCategory() != null && value.get(0).getSubCategory().equals(subCatName))
+                {
+                    colName = key;
+                    System.out.println("found");
+                    break;
+                }
+            }
+            System.out.println("col name is: " + colName + "  subcat name is: " + subCatName);
+            myScrollPane.setContent(new GridBuilder(90, recordMap.get(colName), myPanelModel, "SUBCAT", subCatName));
+        }
+        else //if not subcat aka if collection
+        {
+            System.out.println("It is not null");*/
+        myScrollPane.setContent(new GridBuilder(90, recordMap.get(colName), myPanelModel, "COLLECTION", null));
+        //}
     }
 
     /**
