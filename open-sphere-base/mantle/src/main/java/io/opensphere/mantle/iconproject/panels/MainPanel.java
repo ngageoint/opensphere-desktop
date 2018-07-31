@@ -77,7 +77,7 @@ public class MainPanel extends SplitPane
         myTreeView.setShowRoot(false);
 
         recordMap = new HashMap<>(treeBuilder.getRecordMap());
-        List<IconRecord> recordList = recordMap.get("User Added");
+        List<IconRecord> recordList = recordMap.get("Default");
 
         myIconGrid = new GridBuilder(90, recordList, myPanelModel);
 
