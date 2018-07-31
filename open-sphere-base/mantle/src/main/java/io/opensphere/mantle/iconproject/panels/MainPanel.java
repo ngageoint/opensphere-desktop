@@ -10,7 +10,6 @@ import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -70,21 +69,24 @@ public class MainPanel extends SplitPane
     /** The left Panel. */
     private final AnchorPane myLeftView;
 
+    /** The treeBuilder object. */
     private final TreeBuilder treeBuilder;
 
+    /** The map of collection name keys and icon record list values. */
     Map<String, List<IconRecord>> recordMap = new HashMap<>();
 
+    /** The main panel's scroll pane which contains the grid of icons. */
     ScrollPane myScrollPane;
 
-    private Window myOwner;
+    /** The owner window of the main panel. */
+    private final Window myOwner;
 
     // private final Thread myGridLoader;
 
     /**
      * The MainPanel constructor.
      *
-     * @param tb the toolbox
-     * @param owner the window owner
+     * @param thePanelModel the model for the main panel
      */
     public MainPanel(PanelModel thePanelModel)
     {
@@ -102,9 +104,7 @@ public class MainPanel extends SplitPane
         List<IconRecord> recordList = recordMap.get("User Added");
         System.out.println(recordList);
 
-        myIconGrid = new GridBuilder(90, recordList, myPanelModel);
-        // myGridLoader = new Thread(myIconGrid);
-        // startThread();
+        myIconGrid = new GridBuilder(90, recordList, myPanelModel, "COLLECTION", null);
 
         setDividerPositions(0.25);
         // maxWidthProperty().multiply(0.25);
@@ -173,6 +173,7 @@ public class MainPanel extends SplitPane
 
         myTreeView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
+
         myLeftView.getChildren().addAll(myTreeView, myAddIconButton, myCustIconButton, myGenIconButton);
         getItems().addAll(myLeftView, myScrollPane);
     }
@@ -185,23 +186,8 @@ public class MainPanel extends SplitPane
     private void treeHandle(TreeItem<String> newValue)
     {
         String colName = newValue.getValue();
-        myPanelModel.getImportProps().getCollectionName().set(colName);
-        if (recordMap.get(colName) == null)
-        {
-            for (Entry<String, List<IconRecord>> entry : recordMap.entrySet())
-            {
-                String key = entry.getKey();
-                List<IconRecord> value = entry.getValue();
 
-                if (value.get(0).getSubCategory() != null && value.get(0).getSubCategory().toString().equals(colName))
-                {
-                    colName = key;
-                    break;
-                }
-            }
-        }
-        System.out.println("fixed choice: " + colName);
-        myScrollPane.setContent(new GridBuilder(90, recordMap.get(colName), myPanelModel));
+        myScrollPane.setContent(new GridBuilder(90, recordMap.get(colName), myPanelModel, "COLLECTION", null));
     }
 
     /**
@@ -243,13 +229,9 @@ public class MainPanel extends SplitPane
             try
             {
                 System.out.println("the Icon Url is : " + result.toURI().toURL());
-                // myIconRegistry.addIcon(new
-                // DefaultIconProvider(result.toURI().toURL(), collectionName,
-                // subCatName, "User"), this);
                 System.out.println("loading from file under the name:  " + collectionName);
-                IconProvider provider = new DefaultIconProvider(result.toURI().toURL(), collectionName, null,
-                        "User");
-                myIconRegistry.addIcon(provider, this);
+                IconProvider provider = new DefaultIconProvider(result.toURI().toURL(), collectionName, null, "User");
+                myPanelModel.getMyIconRegistry().addIcon(provider, this);
             }
             catch (MalformedURLException e)
             {
@@ -274,6 +256,5 @@ public class MainPanel extends SplitPane
                 System.exit(0);
             }
         });
-
     }
 }

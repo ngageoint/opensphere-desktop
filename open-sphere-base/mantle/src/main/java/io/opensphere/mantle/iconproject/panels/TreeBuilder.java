@@ -33,7 +33,8 @@ public class TreeBuilder extends TreeItem<String>
     /** The icon record map with the collection name string as the key and the list of the icon record as the value. */
     private final Map<String, List<IconRecord>> recordMap = new HashMap<>();
 
-    private PanelModel myPanelModel;
+    /** The model for the main panel. */
+    private final PanelModel myPanelModel;
 
     /**
      * Creates a tree structure with the icon records from the registry that
@@ -41,7 +42,7 @@ public class TreeBuilder extends TreeItem<String>
      * sub-category, and icon record. The user object for each leaf-node is the
      * {@link IconRecordTreeNodeUserObject}
      *
-     * @param iconReg the iconRegistry
+     * @param thePanelModel the model for the main panel
      * @param filter the filter for selecting records to be included.
      */
     public TreeBuilder(PanelModel thePanelModel, Predicate<IconRecord> filter)
@@ -109,11 +110,13 @@ public class TreeBuilder extends TreeItem<String>
         {
             collectionList.add(0, IconRecord.FAVORITES_COLLECTION);
         }
+        System.out.println("NEWWWWWWWWWWWWWWWWWWWWW");
 
         for (String collection : collectionList)
         {
             TreeItem<String> mainNode = new TreeItem<>();
             Map<String, List<IconRecord>> subToRecListMap = collectionToSubCatIconRecMap.get(collection);
+            System.out.println("collection is: " + collection);
             if (subToRecListMap != null)
             {
                 List<String> subCatList = New.list(subToRecListMap.keySet());
@@ -123,6 +126,7 @@ public class TreeBuilder extends TreeItem<String>
                 {
                     List<IconRecord> defaultRecList = subToRecListMap.get(defaultSubCat);
                     // set enum to leaf
+                    System.out.println("leaf collection is:  " + collection);
                     iconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(mainNode, collection, defaultRecList,
                             IconRecordTreeItemUserObject.NameType.COLLECTION, null);
                     recordMap.put(collection, iconTreeObject.getRecords(true));
@@ -130,8 +134,10 @@ public class TreeBuilder extends TreeItem<String>
                 else // like !found from example
                 {
                     // set enum to folder
+                    //System.out.println("folder collection is: " + collection);
                     iconTreeObject = DefaultIconRecordTreeItemObject.createFolderNode(mainNode, collection,
                             IconRecordTreeItemUserObject.NameType.COLLECTION, null);
+                    recordMap.put(collection, iconTreeObject.getRecords(true));
                 }
 
                 getChildren().add(iconTreeObject.getMyTreeItem());
@@ -140,10 +146,12 @@ public class TreeBuilder extends TreeItem<String>
                 {
                     TreeItem<String> depNode = new TreeItem<>();
                     // set enum to leaf
+                    System.out.println("subcat is: " + subCat + " and the collection is : " + collection);
                     iconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(depNode, subCat, subToRecListMap.get(subCat),
                             IconRecordTreeItemUserObject.NameType.SUBCATEGORY, collection);
                     mainNode.getChildren().add(iconTreeObject.getMyTreeItem());
-                    recordMap.put(collection, iconTreeObject.getRecords(true));
+                    recordMap.put(subCat, iconTreeObject.getRecords(true));
+                    //System.out.println("sub record: " +  subToRecListMap.get(subCat));
                 }
             }
         }

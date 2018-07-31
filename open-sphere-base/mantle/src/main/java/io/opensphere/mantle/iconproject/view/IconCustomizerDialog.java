@@ -15,9 +15,7 @@ import javafx.scene.image.WritableImage;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.log4j.Logger;
 
-import io.opensphere.core.Notify;
 import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
@@ -33,7 +31,7 @@ public class IconCustomizerDialog extends JFXDialog
     private static final long serialVersionUID = -8284546944940700345L;
 
     /** The logger for this class. */
-    private static final Logger LOGGER = Logger.getLogger(IconCustomizerDialog.class);
+    //private static final Logger LOGGER = Logger.getLogger(IconCustomizerDialog.class);
 
     /** The Icon Registry. */
     private final IconRegistry myIconRegistry;
@@ -42,11 +40,9 @@ public class IconCustomizerDialog extends JFXDialog
      * Wraps the IconCustomizerPane into a java swing window.
      *
      * @param owner the parent window.
-     * @param iconRegistry the icon registry.
-     * @param iconRecord the current selected icon.
+     * @param thePanelModel the model for the main panel.
      */
-
-    public IconCustomizerDialog(Window owner,PanelModel thePanelModel)
+    public IconCustomizerDialog(Window owner, PanelModel thePanelModel)
     {
         super(owner, "Customize an Icon");
         myIconRegistry = thePanelModel.getMyIconRegistry();
