@@ -11,28 +11,27 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 
-import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.view.IconCustomizerDialog;
 
 /** Crates the Icon Display Grid. */
-public class GridBuilder extends TilePane// implements Runnable
+public class GridBuilder extends TilePane
 {
     /** The width used for icon buttons. */
     private final int myTileWidth;
 
     /** The icon registry used for the pane. */
-    private IconRegistry myIconRegistry;
+    //private final IconRegistry myIconRegistry;
 
     /** The selected icon to be used for the builder. */
-    private IconRecord mySelectedIcon;
+    //private IconRecord mySelectedIcon;
 
     /** The icon record list. */
     List<IconRecord> myRecordList;
 
-    private PanelModel myPanelModel;
+    /** The model for the main icon panel. */
+    private final PanelModel myPanelModel;
 
     /**
      * The GridBuilder constructor. sets up the rows and columns for the icon
@@ -40,17 +39,16 @@ public class GridBuilder extends TilePane// implements Runnable
      *
      * @param tileWidth the width of each tile(button).
      * @param recList the icon record list
-     * @param iconRegistry the icon registry
+     * @param thePanelModel the panel model
      */
 
     public GridBuilder(int tileWidth, List<IconRecord> recList, PanelModel thePanelModel)
     {
         myTileWidth = tileWidth;
         myPanelModel = thePanelModel;
-        myIconRegistry = myPanelModel.getMyIconRegistry();
+        //myIconRegistry = myPanelModel.getMyIconRegistry();
         myRecordList = recList;
 
-        // System.out.println("making grid with: " + myRecordList);
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
 
@@ -61,16 +59,6 @@ public class GridBuilder extends TilePane// implements Runnable
             getChildren().add(sample);
         }
     }
-
-    /* @Override public void run() {
-     * System.out.println("&^^^^^^^^^^^^^^^^^^^^^is this running?");
-     * setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" +
-     * "-fx-border-width: 2;" + "-fx-border-insets: 5;" +
-     * "-fx-border-radius: 5;" + "-fx-border-color: purple;");
-     * 
-     * for (IconRecord record : myRecordList) { Button sample =
-     * buttonBuilder(record); setMargin(sample, new Insets(5, 5, 5, 5));
-     * getChildren().add(sample); } } */
 
     /**
      * Creates the image buttons to be placed in the grid.
@@ -110,7 +98,6 @@ public class GridBuilder extends TilePane// implements Runnable
     /**
      * Shows the icon customizer.
      *
-     * @param tb the toolbox.
      * @param owner the current window pane.
      */
     public void showIconCustomizer(Window owner)
@@ -118,15 +105,4 @@ public class GridBuilder extends TilePane// implements Runnable
         IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myPanelModel);
         builderPane.setVisible(true);
     }
-
-    /**
-     * Clears the gridPane.
-     */
-    public void refresh()
-    {
-        getChildren().clear();
-        System.out.println("clearing yo");
-        // new GridBuilder(myTileWidth, myIconRegistry);
-    }
-
 }

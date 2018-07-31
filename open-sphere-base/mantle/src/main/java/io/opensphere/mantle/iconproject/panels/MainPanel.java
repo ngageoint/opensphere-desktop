@@ -13,13 +13,10 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 
-import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.view.AddIconDialog;
-import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /**
  * The Class Main Panel.
@@ -28,7 +25,7 @@ import io.opensphere.mantle.util.MantleToolboxUtils;
 public class MainPanel extends SplitPane
 {
     /** The Icon registry. */
-    private final IconRegistry myIconRegistry;
+    //private final IconRegistry myIconRegistry;
 
     /** The Model */
     private PanelModel myPanelModel = new PanelModel();
@@ -51,27 +48,30 @@ public class MainPanel extends SplitPane
     /** The left Panel. */
     private final AnchorPane myLeftView;
 
+    /** The treeBuilder object. */
     private final TreeBuilder treeBuilder;
 
+    /** The map of collection name keys and icon record list values. */
     Map<String, List<IconRecord>> recordMap = new HashMap<>();
 
+    /** The main panel's scroll pane which contains the grid of icons. */
     ScrollPane myScrollPane;
 
-    private Window myOwner;
+    /** The owner window of the main panel. */
+    private final Window myOwner;
 
     // private final Thread myGridLoader;
 
     /**
      * The MainPanel constructor.
      *
-     * @param tb the toolbox
-     * @param owner the window owner
+     * @param thePanelModel the model for the main panel
      */
     public MainPanel(PanelModel thePanelModel)
     {
         myPanelModel = thePanelModel;
         myOwner = myPanelModel.getOwner();
-        myIconRegistry = myPanelModel.getMyIconRegistry();
+        //myIconRegistry = myPanelModel.getMyIconRegistry();
 
         myLeftView = new AnchorPane();
 
@@ -84,8 +84,6 @@ public class MainPanel extends SplitPane
         System.out.println(recordList);
 
         myIconGrid = new GridBuilder(90, recordList, myPanelModel);
-        // myGridLoader = new Thread(myIconGrid);
-        // startThread();
 
         setDividerPositions(0.25);
         // maxWidthProperty().multiply(0.25);
@@ -138,11 +136,10 @@ public class MainPanel extends SplitPane
         myScrollPane.setFitToWidth(true);
 
         myTreeView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
+        .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
 
         myLeftView.getChildren().addAll(myTreeView, myAddIconButton, myCustIconButton, myGenIconButton);
         getItems().addAll(myLeftView, myScrollPane);
-
     }
 
     /**
@@ -168,9 +165,7 @@ public class MainPanel extends SplitPane
                 }
             }
         }
-        System.out.println("fixed choice: " + colName);
         myScrollPane.setContent(new GridBuilder(90, recordMap.get(colName), myPanelModel));
-
     }
 
     /**
@@ -195,6 +190,5 @@ public class MainPanel extends SplitPane
         // list.setVisible(false);
         // grid.setVisible(true);
         // }
-
     }
 }

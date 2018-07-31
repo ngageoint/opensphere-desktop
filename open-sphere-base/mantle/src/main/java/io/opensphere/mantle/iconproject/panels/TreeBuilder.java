@@ -33,7 +33,8 @@ public class TreeBuilder extends TreeItem<String>
     /** The icon record map with the collection name string as the key and the list of the icon record as the value. */
     private final Map<String, List<IconRecord>> recordMap = new HashMap<>();
 
-    private PanelModel myPanelModel;
+    /** The model for the main panel. */
+    private final PanelModel myPanelModel;
 
     /**
      * Creates a tree structure with the icon records from the registry that
@@ -41,7 +42,7 @@ public class TreeBuilder extends TreeItem<String>
      * sub-category, and icon record. The user object for each leaf-node is the
      * {@link IconRecordTreeNodeUserObject}
      *
-     * @param iconReg the iconRegistry
+     * @param thePanelModel the model for the main panel
      * @param filter the filter for selecting records to be included.
      */
     public TreeBuilder(PanelModel thePanelModel, Predicate<IconRecord> filter)
