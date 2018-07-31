@@ -134,15 +134,30 @@ public class SubCollectPane extends VBox
 
         myNoneRB = new RadioButton("No Sub-category");
         myNoneRB.setToggleGroup(myToggleGroup);
+        myNoneRB.setOnAction(event ->
+        {
+            myComboBox.setEditable(false);
+            myComboBox.setDisable(true);
+        });
 
         myExistingRB = new RadioButton("Existing");
         myExistingRB.setToggleGroup(myToggleGroup);
+        myExistingRB.setOnAction(event ->
+        {
+            myComboBox.setEditable(false);
+            myComboBox.setDisable(false);
+        });
 
         myComboBox = new ComboBox<>(myComboBoxItems);
         HBox existingPnl = new HBox();
         existingPnl.getChildren().addAll(myExistingRB, myComboBox);
 
         myNewCatRB = new RadioButton("New");
+        myNewCatRB.setOnAction(event ->
+        {
+            myComboBox.setDisable(false);
+            myComboBox.setEditable(true);
+        });
         myNewCatRB.setToggleGroup(myToggleGroup);
 
         hbox.setAlignment(Pos.BASELINE_LEFT);
@@ -150,8 +165,9 @@ public class SubCollectPane extends VBox
 
         if (myComboBoxItems.isEmpty())
         {
-            hbox.getChildren().addAll(myNoneRB, myNewCatRB);
+            hbox.getChildren().addAll(myNoneRB, myNewCatRB, myComboBox);
             System.out.println("it is empty");
+            myComboBox.setDisable(true);
         }
         //        else if (myChoice)
         //        {
@@ -208,13 +224,9 @@ public class SubCollectPane extends VBox
         return myNoneRB.isSelected();
     }
 
-    /**
-     * Checks if is sub cats from dir names.
-     *
-     * @return true, if is sub cats from dir names
-     */
-    public boolean isSubCatsFromDirNames()
+    public void updateSubCollectName()
     {
-        return mySubCatsFromDirNamesRB != null && mySubCatsFromDirNamesRB.isSelected();
+        myPanelModel.getImportProps().getSubCollectionName().set(myComboBox.getValue());
     }
+
 }

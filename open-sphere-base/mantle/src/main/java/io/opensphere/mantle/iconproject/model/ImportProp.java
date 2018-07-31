@@ -12,38 +12,28 @@ public class ImportProp
     private StringProperty myCollectionName = new SimpleStringProperty("Default");
 
     /** The SubCollection Name */
-    private Set<String> mySubCollectionList = null;
+    private Set<String> mySubCollectionList;
 
-    private StringProperty mySubCollectionName;
+    private StringProperty mySubCollectionName= new SimpleStringProperty("");
 
-    public StringProperty getCollectionName()
+    public StringProperty getSubCollectionName()
     {
-        return myCollectionName;
+        return mySubCollectionName;
     }
 
-    public void setMyCollectionName(StringProperty myCollectionName)
-    {
-        this.myCollectionName = myCollectionName;
-    }
-
-    public Set<String> getMySubCollectionNames()
+    public Set<String> getSubCollectionList()
     {
         return mySubCollectionList;
     }
 
-    public void setSubCollectionName(StringProperty CollectionName)
+    public void setSubCollectionList(Set<String> theSubCollectionList)
     {
-        this.mySubCollectionName = CollectionName;
+        mySubCollectionList = theSubCollectionList;
     }
 
-    public void setMySubCollectionNames(Set<String> mySubCollectionName)
+    public StringProperty getCollectionName()
     {
-        this.mySubCollectionList = mySubCollectionName;
-    }
-
-    public StringProperty getSubCollectionName()
-    {
-        return null;
+        return myCollectionName;
     }
 
 }

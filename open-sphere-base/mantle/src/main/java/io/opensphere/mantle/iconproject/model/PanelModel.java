@@ -15,12 +15,6 @@ public class PanelModel
     /** View set to default of Grid. */
     private final ObjectProperty<ViewStyle> viewType = new SimpleObjectProperty<>(this, "viewtype", ViewStyle.GRID);
 
-    /** The Collection Name. */
-    //private StringProperty myCollectionName = new SimpleStringProperty("Default");
-
-    /** The SubCollection Name. */
-    //private Set<String> mySubCollectionList = null;
-
     /** The selected icon to be used for the builder. */
     private IconRecord mySelectedIcon;
 
@@ -32,8 +26,6 @@ public class PanelModel
 
     /** The owner of this window. */
     private Window myOwner;
-
-    //private StringProperty mySubCollectionName;
 
     /** The import property. */
     private ImportProp myImportProps = new ImportProp();
