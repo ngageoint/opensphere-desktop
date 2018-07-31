@@ -8,6 +8,9 @@ import javafx.scene.control.TreeItem;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.icon.IconRecord;
 
+/**
+ * The Class DefaultIconRecordTreeItemUserObject.
+ */
 public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItemUserObject
 {
     /** The Icon record. */
@@ -31,41 +34,44 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
     /**
      * Creates the folder node.
      *
-     * @param node the node
+     * @param item the treeItem
      * @param label the label
      * @param nt the nametype
+     * @param parent the name of the parent treeItem
+     *
      * @return the default icon record tree node user object
      */
     public static DefaultIconRecordTreeItemObject createFolderNode(TreeItem<String> item, String label, NameType nt, String parent)
     {
-        //System.out.println("folder created!!!!!  " + label);
         return new DefaultIconRecordTreeItemObject(item, label, null, Type.FOLDER, nt, parent);
     }
 
     /**
      * Creates the leaf node.
      *
-     * @param node the node
+     * @param item the treeItem
      * @param label the label
      * @param recs the recs
      * @param nt the nt
+     * @param parent the name of the parent treeItem
+     *
      * @return the default icon record tree node user object
      */
     public static DefaultIconRecordTreeItemObject createLeafNode(TreeItem<String> item, String label,
             List<IconRecord> recs, NameType nt, String parent)
     {
-        //System.out.println("leaf created!!!!!  " + label);
         return new DefaultIconRecordTreeItemObject(item, label, recs, Type.LEAF, nt, parent);
     }
 
     /**
      * Instantiates a new default icon record tree node user object.
      *
-     * @param node the node
+     * @param item the treeItem
      * @param label the label
      * @param recs the recs
      * @param type the type
      * @param nt the nt
+     * @param parent the parent treeItem
      */
     private DefaultIconRecordTreeItemObject(TreeItem<String> item, String label, List<IconRecord> recs, Type type,
             NameType nt, String parent)
@@ -128,7 +134,7 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
      * Gets the children records.
      *
      * @param addToList the add to list
-     * @param node the node
+     * @param item the treeItem
      * @param recurse the recurse
      */
     private void getChildrenRecords(List<IconRecord> addToList, TreeItem<String> item, boolean recurse)
@@ -140,33 +146,6 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
             {
                 addToList.addAll(myIconRecords);
             }
-            else
-            {
-                System.out.println("Not a leaf");
-            }
-            /*else
-            {
-                if (node.getChildCount() > 0)
-                {
-                    for (int i = 0; i < node.getChildCount(); i++)
-                    {
-                        TreeNode tn = node.getChildAt(i);
-                        if (tn instanceof DefaultMutableTreeNode)
-                        {
-                            DefaultMutableTreeNode dmtn = (DefaultMutableTreeNode)tn;
-                            if (dmtn.getUserObject() instanceof IconRecordTreeNodeUserObject)
-                            {
-                                IconRecordTreeNodeUserObject childUO = (IconRecordTreeNodeUserObject)dmtn.getUserObject();
-                                if (childUO.getType() == Type.LEAF || childUO.getType() == Type.FOLDER && recurse)
-                                {
-                                    getChildrenRecords(addToList, dmtn, recurse);
-                                }
-                            }
-                        }
-                    }
-                }
-            }*/
         }
     }
-
 }
