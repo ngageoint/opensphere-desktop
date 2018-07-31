@@ -91,7 +91,7 @@ public final class IconProviderFactory
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public static List<DefaultIconProvider> createFromDirectory(File iconDirectory, String collectionName, String sourceKey,
-            boolean recurseSubDirectories, boolean subDirsAsSubCategories, String subCatIfNotFromDirNames) throws IOException
+            boolean recurseSubDirectories, String subCatIfNotFromDirNames) throws IOException
     {
         List<DefaultIconProvider> result = New.linkedList();
         if (iconDirectory.isDirectory())
@@ -104,7 +104,7 @@ public final class IconProviderFactory
                     if (aFile.isDirectory() && recurseSubDirectories)
                     {
                         createProvidersFromDirectory(result, aFile, collectionName, sourceKey, recurseSubDirectories,
-                                subDirsAsSubCategories, subCatIfNotFromDirNames);
+                                recurseSubDirectories, subCatIfNotFromDirNames);
                     }
                     else
                     {

@@ -26,7 +26,7 @@ public class IconProjDialog extends JFXDialog
      * @param owner the calling window.
      * @param tb the toolbox for registry items.
      */
-    public IconProjDialog(Window owner,Toolbox tb)
+    public IconProjDialog(Window owner, Toolbox tb)
     {
         super(owner, "Intern Icon Manager", false);
         myPanelModel.setToolBox(tb);
@@ -34,16 +34,16 @@ public class IconProjDialog extends JFXDialog
         myPanelModel.setMyIconRegistry(MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry());
         setLocationRelativeTo(owner);
         setSize(900, 600);
-
         setFxNode(new IconProjView(myPanelModel));
         setMinimumSize(new Dimension(800, 600));
+
     }
 
     /** Packages UI elements into one pane. */
     public class IconProjView extends AnchorPane
     {
         /** The top bar consisting of view,sizing, and filter. */
-        final TopMenuBar myTopMenuBar = new TopMenuBar();
+        final TopMenuBar myTopMenuBar;
 
         /** Panel comprised of Tree and icon display. */
         final MainPanel myMainPanel;
@@ -61,6 +61,7 @@ public class IconProjDialog extends JFXDialog
         {
             myPanelModel = thePanelModel;
             myMainPanel = new MainPanel(myPanelModel);
+            myTopMenuBar = new TopMenuBar(myPanelModel);
             setTopAnchor(myMainPanel, 30.0);
             setBottomAnchor(myMainPanel, 0.0);
             setLeftAnchor(myMainPanel, -8.);

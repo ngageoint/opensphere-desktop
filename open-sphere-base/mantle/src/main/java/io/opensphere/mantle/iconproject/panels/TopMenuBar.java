@@ -2,6 +2,7 @@ package io.opensphere.mantle.iconproject.panels;
 
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
 import io.opensphere.mantle.iconproject.impl.LabelMaker;
+import io.opensphere.mantle.iconproject.model.PanelModel;
 import javafx.beans.property.Property;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -55,12 +56,15 @@ public class TopMenuBar extends HBox
     /** The bar to enter text to filter icon results. */
     private TextField myTextField = new TextField();
 
+    private PanelModel myPanelModel;
+
     /** Creates the top menu bar of the icon manager UI. */
-    public TopMenuBar()
+    public TopMenuBar(PanelModel thePanelModel)
     {
         mySearchBar = createFilterBar();
         myViewToggle = createViewToggle();
         mySizeMenu = createSizeMenu();
+        myPanelModel = thePanelModel;
 
         Region region1 = new Region();
         HBox.setHgrow(region1, Priority.ALWAYS);
@@ -109,6 +113,17 @@ public class TopMenuBar extends HBox
     public ButtonBar createSizeMenu()
     {
         ButtonBar theSizeMenu = new ButtonBar();
+        myEnlargeButton.setOnAction(event ->
+        {
+            int origTile = myPanelModel.getTileWidth().get();
+            myPanelModel.getTileWidth().set(origTile + 10);
+        });
+        
+        myShrinkButton.setOnAction(event ->
+        {
+            int origTile = myPanelModel.getTileWidth().get();
+            myPanelModel.getTileWidth().set(origTile - 10);
+        });
         theSizeMenu.getButtons().addAll(mySizeLabel, myShrinkButton, myEnlargeButton);
         return theSizeMenu;
     }

@@ -47,8 +47,7 @@ public class CollectNamesPane extends VBox
     {
         myPanelModel = thePanelModel;
         myIconProps = myPanelModel.getImportProps();
-        myIconRegistry = myPanelModel.getMyIconRegistry();
-        Set<String> collectionNameSet = myIconRegistry.getCollectionNames();
+        Set<String> collectionNameSet =  myPanelModel.getMyIconRegistry().getCollectionNames();
 
         collectionNameSet.remove(IconRecord.DEFAULT_COLLECTION);
         collectionNameSet.remove(IconRecord.USER_ADDED_COLLECTION);
@@ -78,12 +77,11 @@ public class CollectNamesPane extends VBox
         myExistingComboBox.getSelectionModel().selectFirst();
         myExistingComboBox.setOnAction((event) ->
         {
-            System.out.println("the current value is: " + myExistingComboBox.getValue());
             myIconProps.getCollectionName().set(myExistingComboBox.getValue());
-            System.out.println("value is set " + myIconProps.getCollectionName().get());
             if (!options.contains(myExistingComboBox.getValue()))
             {
                 options.add(myExistingComboBox.getValue());
+                System.out.println("added to registry" + myPanelModel.getMyIconRegistry().getCollectionNames());
             }
         });
 
@@ -107,11 +105,12 @@ public class CollectNamesPane extends VBox
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
         System.out.println("Parent is: " + getParent());
-
     }
 
-    private void updateCollectionName()
+    public void updateCollectionName()
     {
+        myPanelModel.getImportProps().getCollectionName().set(myExistingComboBox.getValue());
+        System.out.print("the shit" + myPanelModel.getImportProps().getCollectionName().get());
     }
 
     /**
@@ -134,4 +133,5 @@ public class CollectNamesPane extends VBox
     {
         return myExistingComboBox.getSelectionModel().getSelectedItem();
     }
+
 }
