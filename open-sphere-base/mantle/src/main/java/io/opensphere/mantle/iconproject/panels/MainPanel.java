@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
@@ -27,6 +28,7 @@ import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.view.AddIconDialog;
+import io.opensphere.mantle.iconproject.view.IconPopupMenu;
 
 /**
  * The Class Main Panel.
@@ -83,6 +85,7 @@ public class MainPanel extends SplitPane
         myOwner = myPanelModel.getOwner();
         myIconRegistry = myPanelModel.getMyIconRegistry();
         myLeftView = new AnchorPane();
+        
         myPanelModel.getTileWidth().addListener((o,v,m) -> {
             refresh();
         });
@@ -90,7 +93,7 @@ public class MainPanel extends SplitPane
         treeBuilder = new TreeBuilder(myPanelModel, null);
         myTreeView = new TreeView<>(treeBuilder);
         myTreeView.setShowRoot(false);
-
+        myTreeView.getSelectionModel().select(myTreeView.getRow((myTreeView.getTreeItem(2))));
         recordMap = new HashMap<>(treeBuilder.getRecordMap());
         myPanelModel.setIconRecordList(recordMap.get("Default"));
 
@@ -163,6 +166,7 @@ public class MainPanel extends SplitPane
 
         myTreeView.getSelectionModel().selectedItemProperty()
         .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
+        
 
         myLeftView.getChildren().addAll(myTreeView, myAddIconButton, myCustIconButton, myGenIconButton);
         getItems().addAll(myLeftView, myScrollPane);
@@ -266,4 +270,5 @@ public class MainPanel extends SplitPane
         AddIconDialog iconImporter = new AddIconDialog(myOwner, myPanelModel);
         iconImporter.setVisible(true);
     }
+    
 }

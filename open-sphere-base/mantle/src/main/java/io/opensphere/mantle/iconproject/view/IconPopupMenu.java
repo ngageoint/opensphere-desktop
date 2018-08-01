@@ -5,8 +5,11 @@ import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 
+import java.awt.EventQueue;
+
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.iconproject.impl.IconPopupMenuImpl;
+import io.opensphere.mantle.iconproject.model.PanelModel;
 
 /**
  * The Class IconPopup Menu.
@@ -15,14 +18,15 @@ public class IconPopupMenu extends ContextMenu
 {
     /**
      * The constructor for the class IconPopupMenu.
+     * 
      * @param selectedIcon the selected icon
      */
-    public IconPopupMenu(IconRecord selectedIcon)
+    public IconPopupMenu(PanelModel thePanelModel)
     {
-        IconPopupMenuImpl selector = new IconPopupMenuImpl(selectedIcon);
+        IconPopupMenuImpl selector = new IconPopupMenuImpl(thePanelModel);
 
-        MenuItem item1 = new MenuItem("Add to Favorites");
-        item1.setOnAction(new EventHandler<ActionEvent>()
+        MenuItem favAction = new MenuItem("Add to Favorites");
+        favAction.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
             public void handle(ActionEvent event)
@@ -31,26 +35,35 @@ public class IconPopupMenu extends ContextMenu
             }
         });
 
-        MenuItem item2 = new MenuItem("Rotate Icon");
-        item2.setOnAction(new EventHandler<ActionEvent>()
+        MenuItem rotateAction = new MenuItem("Rotate Icon");
+        rotateAction.setOnAction(event ->
         {
-            @Override
-            public void handle(ActionEvent event)
+            EventQueue.invokeLater(() ->
             {
                 selector.rotate();
-            }
+            });
         });
 
-        MenuItem item3 = new MenuItem("Delete Icon");
-        item3.setOnAction(new EventHandler<ActionEvent>()
+        MenuItem deleteAction = new MenuItem("Delete Icon");
+        deleteAction.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
             public void handle(ActionEvent event)
             {
-                selector.delete();
+                selector.delete(true);
             }
         });
 
-        getItems().addAll(item1, item2, item3);
+        MenuItem removeAction = new MenuItem("Remove Icon");
+        removeAction.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                selector.delete(false);
+            }
+        });
+
+        getItems().addAll(favAction, rotateAction, deleteAction, removeAction);
     }
 }

@@ -192,7 +192,6 @@ public class IconCustomizerPane extends BorderPane
         CheckBox saveState = new CheckBox();
         saveState.selectedProperty().set(false);
         saveState.selectedProperty().bindBidirectional(mySave);
-        saveState.selectedProperty().addListener(event -> System.out.println(saveState.selectedProperty().get()));
 
         SaveInfo.getChildren().addAll(saveState, helpInfo);
         SaveInfo.setSpacing(5.);

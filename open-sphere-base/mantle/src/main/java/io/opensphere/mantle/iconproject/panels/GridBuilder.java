@@ -18,6 +18,7 @@ import javafx.scene.layout.TilePane;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.view.IconCustomizerDialog;
+import io.opensphere.mantle.iconproject.view.IconPopupMenu;
 
 /** Crates the Icon Display Grid. */
 public class GridBuilder extends TilePane
@@ -70,7 +71,7 @@ public class GridBuilder extends TilePane
      */
     private void menuBuilder()
     {
-        cMenu = myPanelModel.showPopupMenu();
+        cMenu = showPopupMenu();
     }
 
     /**
@@ -130,4 +131,15 @@ public class GridBuilder extends TilePane
         IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myPanelModel);
         builderPane.setVisible(true);
     }
+    
+    /**
+     * Shows the iconpopupmenu.
+     *
+     * @return the built context menu
+     */
+    public ContextMenu showPopupMenu()
+    {
+        return new IconPopupMenu(myPanelModel);
+    }
+    
 }

@@ -42,18 +42,6 @@ public class PanelModel
     private List<IconRecord> myIconRecordList;
 
     private ViewModel myViewModel;
-    
-    
-
-    /**
-     * Shows the iconpopupmenu.
-     *
-     * @return the built context menu
-     */
-    public ContextMenu showPopupMenu()
-    {
-        return new IconPopupMenu(getIconRecord());
-    }
 
     /**
      * gets the icon display view type.
