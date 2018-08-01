@@ -8,9 +8,11 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ContextMenu;
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.iconproject.view.IconPopupMenu;
 
 /** The model for the IconManagerFrame. */
 public class PanelModel
@@ -29,18 +31,29 @@ public class PanelModel
 
     /** The owner of this window. */
     private Window myOwner;
-    
+
     /** The value used for the tilewidth. */
-    private IntegerProperty myTileWidth = new SimpleIntegerProperty(100);
+    private final IntegerProperty myTileWidth = new SimpleIntegerProperty(100);
 
     /** The import property. */
     private ImportProp myImportProps = new ImportProp();
 
+    /** The icon record list. */
     private List<IconRecord> myIconRecordList;
 
     private ViewModel myViewModel;
     
     
+
+    /**
+     * Shows the iconpopupmenu.
+     *
+     * @return the built context menu
+     */
+    public ContextMenu showPopupMenu()
+    {
+        return new IconPopupMenu(getIconRecord());
+    }
 
     /**
      * gets the icon display view type.
@@ -61,7 +74,12 @@ public class PanelModel
     {
         return myIconRegistry;
     }
-    
+
+    /**
+     * The getter for the tile width.
+     *
+     * @return myTileWidth the width of the tiles
+     */
     public IntegerProperty getTileWidth()
     {
         return myTileWidth;
@@ -138,9 +156,9 @@ public class PanelModel
     }
 
     /**
-     * Gets the icon record.
+     * Gets the selected icon record.
      *
-     * @return the icon record
+     * @return the selected icon record
      */
     public IconRecord getIconRecord()
     {
@@ -157,14 +175,24 @@ public class PanelModel
         mySelectedIcon = theSelectedIcon;
     }
 
+    /**
+     * The getter for the icon record list.
+     *
+     * @return myIconRecordList the icon record list
+     */
     public List<IconRecord> getRecordList()
     {
         return myIconRecordList;
     }
 
+    /**
+     * The setter for the icon record list.
+     *
+     * @param list the icon record list
+     */
     public void setIconRecordList(List<IconRecord> list)
     {
-       myIconRecordList = list;
+        myIconRecordList = list;
     }
 
     public ViewModel getViewModel()
