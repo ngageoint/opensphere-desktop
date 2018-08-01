@@ -73,6 +73,15 @@ public class GridBuilder extends TilePane
     {
         cMenu = showPopupMenu();
     }
+    /**
+     * Shows the iconpopupmenu.
+     *
+     * @return the built context menu
+     */
+    //public ContextMenu showPopupMenu()
+    //{
+      //  return new IconPopupMenu(myPanelModel);
+    //}
 
     /**
      * Creates the image buttons to be placed in the grid.

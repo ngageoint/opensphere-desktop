@@ -18,13 +18,12 @@ import io.opensphere.mantle.util.MantleToolboxUtils;
 /**
  * The Class IconPopupMenuImpl.
  */
+
 public class IconPopupMenuImpl
 {
     /** The selected icon. */
     IconRecord mySelectedIcon;
-
     private PanelModel myPanelModel;
-
     /**
      * The constructor for IconPopupMenuImpl.
      *
@@ -39,7 +38,7 @@ public class IconPopupMenuImpl
     /**
      * Adds the selected icon to favorites.
      */
-    public void addToFav()
+    public void addToFav(PanelModel myPanel)
     {
         System.out.println("Adding: " + mySelectedIcon + " to favorites");
 

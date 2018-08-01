@@ -4,8 +4,6 @@ import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -32,6 +30,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+
+import javax.imageio.ImageIO;
 
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.iconproject.model.PanelModel;
@@ -76,7 +76,7 @@ public class IconCustomizerPane extends BorderPane
      * Constructs a new panel containing the icon customizer.
      *
      * @param owner the AWT Window.
-     * @param record the selected icon.
+     * @param thePanelModel the panel model
      */
     public IconCustomizerPane(Window owner, PanelModel thePanelModel)
     {
@@ -87,7 +87,7 @@ public class IconCustomizerPane extends BorderPane
         setRight(createRight());
 
         VBox bottom = createBottom();
-        BorderPane.setMargin(bottom, new Insets(5., 0., 0., 0.));
+        BorderPane.setMargin(bottom, new Insets(5, 0, 0, 0));
         setBottom(bottom);
     }
 
@@ -208,9 +208,9 @@ public class IconCustomizerPane extends BorderPane
     {
         HBox iconDisplayer = new HBox();
         iconDisplayer.setAlignment(Pos.CENTER);
-         iconDisplayer.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
-         + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" +
-         "-fx-border-color: purple;");
+        iconDisplayer.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
+                + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" +
+                "-fx-border-color: purple;");
         iconDisplayer.setId("BoxStyle");
         myIconView = new ImageView(myIconRecord.getImageURL().toString());
         myIconView.rotateProperty().bind(myRotation);
@@ -282,7 +282,7 @@ public class IconCustomizerPane extends BorderPane
         if (myIconView.getImage() != null)
         {
             iconOut = myIconDisplay.snapshot(parameters, null);
-           /* if (myXPos.getValue() == 0 && myYPos.getValue() == 0)
+            /* if (myXPos.getValue() == 0 && myYPos.getValue() == 0)
             {
                 iconOut = myIconView.snapshot(parameters, null);
             }
