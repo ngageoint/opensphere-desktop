@@ -26,6 +26,7 @@ import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
+import io.opensphere.mantle.iconproject.impl.RegistryMap;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.view.AddIconDialog;
 import io.opensphere.mantle.iconproject.view.IconPopupMenu;
@@ -57,13 +58,13 @@ public class MainPanel extends SplitPane
     private final ButtonBuilder myGenIconButton = new ButtonBuilder("Generate New Icon", false);
 
     /** The tree view. */
-    private final TreeView<String> myTreeView;
+    private TreeView<String> myTreeView;
 
     /** The left Panel. */
     private final AnchorPane myLeftView;
 
     /** The treeBuilder object. */
-    private final TreeBuilder treeBuilder;
+    private TreeBuilder treeBuilder;
 
     /** The map of collection name keys and icon record list values. */
     Map<String, List<IconRecord>> recordMap = new HashMap<>();
@@ -85,18 +86,27 @@ public class MainPanel extends SplitPane
         myOwner = myPanelModel.getOwner();
         myIconRegistry = myPanelModel.getMyIconRegistry();
         myLeftView = new AnchorPane();
-        
-        myPanelModel.getTileWidth().addListener((o,v,m) -> {
+
+        myPanelModel.getTileWidth().addListener((o, v, m) ->
+        {
             refresh();
         });
 
         treeBuilder = new TreeBuilder(myPanelModel, null);
         myTreeView = new TreeView<>(treeBuilder);
         myTreeView.setShowRoot(false);
-        myTreeView.getSelectionModel().select(myTreeView.getRow((myTreeView.getTreeItem(2))));
+
+        for (int i = 0; i <= myTreeView.getExpandedItemCount(); i++)
+        {
+            if ((myTreeView.getTreeItem(i).getValue()) == "Default")
+            {
+                myTreeView.getSelectionModel().select(myTreeView.getRow((myTreeView.getTreeItem(i))));
+                break;
+            }
+        }
+        System.out.println("tree +    " + myTreeView.getTreeItem(2).getValue());
         recordMap = new HashMap<>(treeBuilder.getRecordMap());
         myPanelModel.setIconRecordList(recordMap.get("Default"));
-
         myIconGrid = new GridBuilder(myPanelModel);
 
         setDividerPositions(0.25);
@@ -126,6 +136,7 @@ public class MainPanel extends SplitPane
                         myPanelModel.getImportProps().getSubCollectionName().get());
             });
         });
+        File.setOnAction(event -> refresh());
 
         Folder.setOnAction(event ->
         {
@@ -165,8 +176,7 @@ public class MainPanel extends SplitPane
         myScrollPane.setFitToWidth(true);
 
         myTreeView.getSelectionModel().selectedItemProperty()
-        .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
-        
+                .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
 
         myLeftView.getChildren().addAll(myTreeView, myAddIconButton, myCustIconButton, myGenIconButton);
         getItems().addAll(myLeftView, myScrollPane);
@@ -174,7 +184,27 @@ public class MainPanel extends SplitPane
 
     public void refresh()
     {
+        // RegistryMap test = new RegistryMap(myPanelModel);
+        // test.refreshRegistry();
+
         System.out.println("Icon Grid starting to Refreshed!!!!!!!");
+
+        treeBuilder = new TreeBuilder(myPanelModel, null);
+        myTreeView = new TreeView<>(treeBuilder);
+        myTreeView.setShowRoot(false);
+
+        for (int i = 0; i <= myTreeView.getExpandedItemCount(); i++)
+        {
+            if ((myTreeView.getTreeItem(i).getValue()) == "Default")
+            {
+                myTreeView.getSelectionModel().select(myTreeView.getRow((myTreeView.getTreeItem(i))));
+                break;
+            }
+        }
+        recordMap = new HashMap<>(treeBuilder.getRecordMap());
+
+        myPanelModel.setIconRecordList(recordMap.get(myTreeView.getSelectionModel().getSelectedItem().getValue()));
+
         myScrollPane.setContent(new GridBuilder(myPanelModel));
         System.out.println("Icon Grid has been refreshed!!!!!!!");
     }
@@ -200,16 +230,18 @@ public class MainPanel extends SplitPane
             myPanelModel.getImportProps().getSubCollectionName().set(colName);
         }
 
-        //        if (obj.getNameType() == NameType.COLLECTION)
-        //        {
-        //            iconIdList = myIconRegistry
-        //                    .getIconIds(value -> EqualsHelper.equals(value.getCollectionName(), obj.getLabel()));
-        //        }
-        //        else
-        //        {
-        //            // Subcategory.
-        //            iconIdList = myIconRegistry.getIconIds(value -> EqualsHelper.equals(value.getSubCategory(), obj.getLabel()));
-        //        }
+        // if (obj.getNameType() == NameType.COLLECTION)
+        // {
+        // iconIdList = myIconRegistry
+        // .getIconIds(value -> EqualsHelper.equals(value.getCollectionName(),
+        // obj.getLabel()));
+        // }
+        // else
+        // {
+        // // Subcategory.
+        // iconIdList = myIconRegistry.getIconIds(value ->
+        // EqualsHelper.equals(value.getSubCategory(), obj.getLabel()));
+        // }
     }
 
     /**
@@ -259,7 +291,6 @@ public class MainPanel extends SplitPane
             {
             }
         }
-        myPanelModel.getViewModel().getMainPanel().refresh();
     }
 
     /**
@@ -269,6 +300,7 @@ public class MainPanel extends SplitPane
     {
         AddIconDialog iconImporter = new AddIconDialog(myOwner, myPanelModel);
         iconImporter.setVisible(true);
+        myPanelModel.getViewModel().getMainPanel().refresh();
     }
-    
+
 }
