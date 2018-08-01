@@ -5,21 +5,22 @@ import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 
-import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.iconproject.impl.IconPopupMenuImpl;
+import io.opensphere.mantle.iconproject.model.PanelModel;
 
 /**
  * The Class IconPopup Menu.
  */
+
 public class IconPopupMenu extends ContextMenu
 {
     /**
      * The constructor for the class IconPopupMenu.
      * @param selectedIcon the selected icon
      */
-    public IconPopupMenu(IconRecord selectedIcon)
+    public IconPopupMenu(PanelModel thePanelModel)
     {
-        IconPopupMenuImpl selector = new IconPopupMenuImpl(selectedIcon);
+        IconPopupMenuImpl selector = new IconPopupMenuImpl(thePanelModel);
 
         MenuItem item1 = new MenuItem("Add to Favorites");
         item1.setOnAction(new EventHandler<ActionEvent>()
@@ -27,7 +28,7 @@ public class IconPopupMenu extends ContextMenu
             @Override
             public void handle(ActionEvent event)
             {
-                selector.addToFav();
+                selector.addToFav(thePanelModel);
             }
         });
 
@@ -53,4 +54,5 @@ public class IconPopupMenu extends ContextMenu
 
         getItems().addAll(item1, item2, item3);
     }
+
 }

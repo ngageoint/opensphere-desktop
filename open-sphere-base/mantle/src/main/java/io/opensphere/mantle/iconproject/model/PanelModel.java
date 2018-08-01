@@ -7,12 +7,10 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ContextMenu;
+
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
-import io.opensphere.mantle.iconproject.view.IconPopupMenu;
 
 /** The model for the IconManagerFrame. */
 public class PanelModel
@@ -42,18 +40,8 @@ public class PanelModel
     private List<IconRecord> myIconRecordList;
 
     private ViewModel myViewModel;
-    
-    
 
-    /**
-     * Shows the iconpopupmenu.
-     *
-     * @return the built context menu
-     */
-    public ContextMenu showPopupMenu()
-    {
-        return new IconPopupMenu(getIconRecord());
-    }
+
 
     /**
      * gets the icon display view type.
