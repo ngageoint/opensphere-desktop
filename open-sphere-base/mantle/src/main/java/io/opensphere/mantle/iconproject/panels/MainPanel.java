@@ -181,9 +181,9 @@ public class MainPanel extends SplitPane
 
     public void refresh()
     {
-        System.out.println("Icon Grid has been Refreshed!!!!!!!");
+        System.out.println("Icon Grid starting to Refreshed!!!!!!!");
         myScrollPane.setContent(new GridBuilder(myPanelModel));
-        System.out.println("Icon Grid has been fucked!!!!!!!");
+        System.out.println("Icon Grid has been refreshed!!!!!!!");
     }
 
     /**
