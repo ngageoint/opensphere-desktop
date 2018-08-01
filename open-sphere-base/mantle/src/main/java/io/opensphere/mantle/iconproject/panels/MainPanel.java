@@ -5,16 +5,10 @@ import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-
-import org.apache.commons.lang3.StringUtils;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.MenuButton;
@@ -24,18 +18,13 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
-import io.opensphere.core.util.filesystem.MnemonicFileChooser;
+
 import io.opensphere.core.util.image.ImageUtil;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
-import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject.NameType;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
-import io.opensphere.mantle.icon.impl.IconProviderFactory;
-import io.opensphere.mantle.icon.impl.gui.SubCategoryPanel;
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
-import io.opensphere.mantle.iconproject.model.ImportProp;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.view.AddIconDialog;
 
@@ -171,7 +160,7 @@ public class MainPanel extends SplitPane
         myScrollPane.setFitToWidth(true);
 
         myTreeView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
+        .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
 
         myLeftView.getChildren().addAll(myTreeView, myAddIconButton, myCustIconButton, myGenIconButton);
         getItems().addAll(myLeftView, myScrollPane);
@@ -187,7 +176,7 @@ public class MainPanel extends SplitPane
         String colName = newValue.getValue();
         myPanelModel.setIconRecordList(recordMap.get(colName));
         myScrollPane.setContent(new GridBuilder(myPanelModel));
-        
+
         if (myPanelModel.getMyIconRegistry().getCollectionNames().contains(colName))
         {
             myPanelModel.getImportProps().getCollectionName().set(colName);
@@ -198,16 +187,16 @@ public class MainPanel extends SplitPane
             myPanelModel.getImportProps().getSubCollectionName().set(colName);
         }
 
-//        if (obj.getNameType() == NameType.COLLECTION)
-//        {
-//            iconIdList = myIconRegistry
-//                    .getIconIds(value -> EqualsHelper.equals(value.getCollectionName(), obj.getLabel()));
-//        }
-//        else
-//        {
-//            // Subcategory.
-//            iconIdList = myIconRegistry.getIconIds(value -> EqualsHelper.equals(value.getSubCategory(), obj.getLabel()));
-//        }
+        //        if (obj.getNameType() == NameType.COLLECTION)
+        //        {
+        //            iconIdList = myIconRegistry
+        //                    .getIconIds(value -> EqualsHelper.equals(value.getCollectionName(), obj.getLabel()));
+        //        }
+        //        else
+        //        {
+        //            // Subcategory.
+        //            iconIdList = myIconRegistry.getIconIds(value -> EqualsHelper.equals(value.getSubCategory(), obj.getLabel()));
+        //        }
     }
 
     /**

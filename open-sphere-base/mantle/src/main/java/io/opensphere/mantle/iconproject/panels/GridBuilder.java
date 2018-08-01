@@ -3,12 +3,16 @@ package io.opensphere.mantle.iconproject.panels;
 import java.awt.Window;
 import java.util.List;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 
 import io.opensphere.mantle.icon.IconRecord;
@@ -18,14 +22,16 @@ import io.opensphere.mantle.iconproject.view.IconCustomizerDialog;
 /** Crates the Icon Display Grid. */
 public class GridBuilder extends TilePane
 {
+    ContextMenu cMenu = new ContextMenu();
+
     /** The width used for icon buttons. */
     private final int myTileWidth;
 
     /** The icon registry used for the pane. */
-    //private final IconRegistry myIconRegistry;
+    // private final IconRegistry myIconRegistry;
 
     /** The selected icon to be used for the builder. */
-    //private IconRecord mySelectedIcon;
+    // private IconRecord mySelectedIcon;
 
     /** The icon record list. */
     List<IconRecord> myRecordList;
@@ -45,7 +51,7 @@ public class GridBuilder extends TilePane
     {
         myPanelModel = thePanelModel;
         myTileWidth = myPanelModel.getTileWidth().get();
-        //myIconRegistry = myPanelModel.getMyIconRegistry();
+        // myIconRegistry = myPanelModel.getMyIconRegistry();
         myRecordList = myPanelModel.getRecordList();
 
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
@@ -57,6 +63,14 @@ public class GridBuilder extends TilePane
             setMargin(sample, new Insets(5, 5, 5, 5));
             getChildren().add(sample);
         }
+    }
+
+    /**
+     * Creates the context menu.
+     */
+    private void menuBuilder()
+    {
+        cMenu = myPanelModel.showPopupMenu();
     }
 
     /**
@@ -85,10 +99,22 @@ public class GridBuilder extends TilePane
             iconView.setFitWidth(myTileWidth - 25);
         }
         generic.setGraphic(iconView);
-
-        generic.setOnAction(e ->
+        generic.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
         {
-            myPanelModel.setIconRecord(record);
+            @Override
+            public void handle(MouseEvent e)
+            {
+                if (e.getButton() == MouseButton.PRIMARY)
+                {
+                    myPanelModel.setIconRecord(record);
+                }
+                if (e.getButton() == MouseButton.SECONDARY)
+                {
+                    myPanelModel.setIconRecord(record);
+                    menuBuilder();
+                    generic.setContextMenu(cMenu);
+                }
+            }
         });
 
         return generic;
