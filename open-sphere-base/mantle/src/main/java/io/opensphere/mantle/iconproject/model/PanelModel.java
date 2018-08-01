@@ -41,8 +41,6 @@ public class PanelModel
 
     private ViewModel myViewModel;
 
-
-
     /**
      * gets the icon display view type.
      *

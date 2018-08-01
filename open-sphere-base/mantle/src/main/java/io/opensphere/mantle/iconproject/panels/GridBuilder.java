@@ -78,10 +78,10 @@ public class GridBuilder extends TilePane
      *
      * @return the built context menu
      */
-    public ContextMenu showPopupMenu()
-    {
-        return new IconPopupMenu(myPanelModel);
-    }
+    //public ContextMenu showPopupMenu()
+    //{
+      //  return new IconPopupMenu(myPanelModel);
+    //}
 
     /**
      * Creates the image buttons to be placed in the grid.
@@ -140,4 +140,15 @@ public class GridBuilder extends TilePane
         IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myPanelModel);
         builderPane.setVisible(true);
     }
+    
+    /**
+     * Shows the iconpopupmenu.
+     *
+     * @return the built context menu
+     */
+    public ContextMenu showPopupMenu()
+    {
+        return new IconPopupMenu(myPanelModel);
+    }
+    
 }
