@@ -25,24 +25,54 @@ import javafx.scene.text.FontPosture;
 
 public class CollectNamesPane extends VBox
 {
+    /**
+     * 
+     */
     private RadioButton myExistingRB;
 
+    /**
+     * 
+     */
     private ComboBox<String> myExistingComboBox;
 
+    /**
+     * 
+     */
     private ObservableList<String> options;
 
+    /**
+     * 
+     */
     private RadioButton myNewRB;
 
+    /**
+     * 
+     */
     private TextField myNewTF;
 
+    /**
+     * 
+     */
     private PanelModel myPanelModel;
 
+    /**
+     * 
+     */
     private IconRegistry myIconRegistry;
 
+    /**
+     * 
+     */
     private ToggleGroup test = new ToggleGroup();
 
+    /**
+     * 
+     */
     private ImportProp myIconProps;
 
+    /**
+     * @param thePanelModel
+     */
     public CollectNamesPane(PanelModel thePanelModel)
     {
         myPanelModel = thePanelModel;
@@ -105,12 +135,6 @@ public class CollectNamesPane extends VBox
         setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
         System.out.println("Parent is: " + getParent());
-    }
-
-    public void updateCollectionName()
-    {
-        myPanelModel.getImportProps().getCollectionName().set(myExistingComboBox.getValue());
-        System.out.print("the shit" + myPanelModel.getImportProps().getCollectionName().get());
     }
 
     /**

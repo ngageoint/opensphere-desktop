@@ -117,6 +117,8 @@ public class TopMenuBar extends HBox
         {
             int origTile = myPanelModel.getTileWidth().get();
             myPanelModel.getTileWidth().set(origTile + 10);
+            myPanelModel.getViewModel().getMainPanel().myScrollPane.setContent(new GridBuilder(myPanelModel));
+            myPanelModel.getViewModel().getMainPanel().refresh();
         });
         
         myShrinkButton.setOnAction(event ->

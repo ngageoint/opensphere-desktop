@@ -7,8 +7,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ContextMenu;
-
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
@@ -40,6 +40,10 @@ public class PanelModel
 
     /** The icon record list. */
     private List<IconRecord> myIconRecordList;
+
+    private ViewModel myViewModel;
+    
+    
 
     /**
      * Shows the iconpopupmenu.
@@ -190,4 +194,15 @@ public class PanelModel
     {
         myIconRecordList = list;
     }
+
+    public ViewModel getViewModel()
+    {
+        return myViewModel;
+    }
+
+    public void setViewModel(ViewModel theViewModel)
+    {
+        myViewModel = theViewModel;
+    }
+
 }

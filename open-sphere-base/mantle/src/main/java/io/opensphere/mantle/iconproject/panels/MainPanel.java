@@ -82,8 +82,10 @@ public class MainPanel extends SplitPane
         myPanelModel = thePanelModel;
         myOwner = myPanelModel.getOwner();
         myIconRegistry = myPanelModel.getMyIconRegistry();
-
         myLeftView = new AnchorPane();
+        myPanelModel.getTileWidth().addListener((o,v,m) -> {
+            refresh();
+        });
 
         treeBuilder = new TreeBuilder(myPanelModel, null);
         myTreeView = new TreeView<>(treeBuilder);
@@ -166,6 +168,13 @@ public class MainPanel extends SplitPane
         getItems().addAll(myLeftView, myScrollPane);
     }
 
+    public void refresh()
+    {
+        System.out.println("Icon Grid starting to Refreshed!!!!!!!");
+        myScrollPane.setContent(new GridBuilder(myPanelModel));
+        System.out.println("Icon Grid has been refreshed!!!!!!!");
+    }
+
     /**
      * The tree event handler.
      *
@@ -246,6 +255,7 @@ public class MainPanel extends SplitPane
             {
             }
         }
+        myPanelModel.getViewModel().getMainPanel().refresh();
     }
 
     /**
@@ -253,17 +263,7 @@ public class MainPanel extends SplitPane
      */
     private void addIconsFromFolder()
     {
-
         AddIconDialog iconImporter = new AddIconDialog(myOwner, myPanelModel);
         iconImporter.setVisible(true);
-        iconImporter.addWindowListener(new WindowAdapter()
-        {
-            @Override
-            public void windowClosing(WindowEvent e)
-            {
-                System.out.println("WindowClosingDemo.windowClosing");
-                System.exit(0);
-            }
-        });
     }
 }

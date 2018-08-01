@@ -6,6 +6,7 @@ import java.awt.Window;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.mantle.iconproject.model.PanelModel;
+import io.opensphere.mantle.iconproject.model.ViewModel;
 import io.opensphere.mantle.iconproject.panels.MainPanel;
 import io.opensphere.mantle.iconproject.panels.TopMenuBar;
 import io.opensphere.mantle.util.MantleToolboxUtils;
@@ -49,6 +50,8 @@ public class IconProjDialog extends JFXDialog
         final MainPanel myMainPanel;
 
         private PanelModel myPanelModel;
+        
+        private ViewModel myViewModel= new ViewModel();
 
         /**
          * Creates subpannels for UI.
@@ -60,14 +63,21 @@ public class IconProjDialog extends JFXDialog
         public IconProjView(PanelModel thePanelModel)
         {
             myPanelModel = thePanelModel;
+            
             myMainPanel = new MainPanel(myPanelModel);
+            myViewModel.setMainPanel(myMainPanel);
+            
             myTopMenuBar = new TopMenuBar(myPanelModel);
+            myViewModel.setTopMenuBar(myTopMenuBar);
+            
             setTopAnchor(myMainPanel, 30.0);
             setBottomAnchor(myMainPanel, 0.0);
             setLeftAnchor(myMainPanel, -8.);
             setRightAnchor(myMainPanel, 0.);
             setLeftAnchor(myTopMenuBar, 0.);
             setRightAnchor(myTopMenuBar, 0.);
+            
+            myPanelModel.setViewModel(myViewModel);
             getChildren().addAll(myMainPanel, myTopMenuBar);
         }
     }
