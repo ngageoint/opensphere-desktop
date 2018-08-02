@@ -228,7 +228,7 @@ public class StateControllerImpl implements StateController
             myOrderManager.activateParticipant(dti);
             ddgi.activationProperty().addListener(myActivationListener);
             ddgi.addMember(dti, this);
-            ddgi.activationProperty().setActive(false);
+//            ddgi.activationProperty().setActive(false);
             myRootGroupInfo.addChild(ddgi, this);
             DataModelCategory category = new DataModelCategory("state", StateView.class.getName(), id);
             myToolbox.getDataRegistry().addModels(new SimpleSessionOnlyCacheDeposit<>(category, STATE_DESCRIPTOR,
@@ -239,6 +239,10 @@ public class StateControllerImpl implements StateController
     @Override
     public void toggleState(String id)
     {
+        if (myRootGroupInfo.getGroupById(id) == null)
+        {
+            repairState(id);
+        }
         myToggleLock = true;
         if (!isStateActive(id))
         {
@@ -264,5 +268,23 @@ public class StateControllerImpl implements StateController
             return;
         }
         myModuleStateManager.toggleState(id);
+    }
+
+    /**
+     * Re-adds the state since it wasn't found in the collection of data groups.
+     *
+     * @param id The name of the state.
+     */
+    private void repairState(String id)
+    {
+        String description = myModuleStateManager.getStateDescription(id);
+        Collection<? extends String> tags = myModuleStateManager.getStateTags(id);
+        Collection<? extends String> modules = myModuleStateManager.getStateModules(id);
+        if (myModuleStateManager.isStateActive(id))
+        {
+            myModuleStateManager.toggleState(id);
+        }
+        myModuleStateManager.unregisterState(id);
+        saveState(id, description, tags, modules, true, null);
     }
 }

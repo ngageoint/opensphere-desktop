@@ -70,6 +70,9 @@ public class StateImportController implements FileOrURLImporter
     /** The parent component provider. */
     private final Supplier<? extends Component> myParentProvider;
 
+    /** The state controller. */
+    private StateController myStateController;
+
     /**
      * The toolbox.
      */
@@ -242,6 +245,16 @@ public class StateImportController implements FileOrURLImporter
         importURL(aURL, null, callback);
     }
 
+    /**
+     * Sets the state controller.
+     * (This is necessary since passing the controller around during plugin initialization doesn't work).
+     *
+     * @param controller The controller to be set.
+     */
+    public void setStateController(StateController controller)
+    {
+        myStateController = controller;
+    }
     /**
      * Determines if the input stream can be imported.
      *
@@ -425,8 +438,8 @@ public class StateImportController implements FileOrURLImporter
         Collection<? extends String> sel = dialog.getSelectedModules();
         EventQueueUtilities.waitCursorRun(myParentProvider.get(), () ->
         {
-            myModuleStateManager.registerState(id, desc, tags, sel, state);
-            myModuleStateManager.toggleState(id);
+            myStateController.saveState(id, desc, tags, sel, true, null);
+            myStateController.toggleState(id);
         });
     }
 

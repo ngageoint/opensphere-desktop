@@ -265,6 +265,16 @@ public class ModuleStateManagerImpl implements ModuleStateManager
     }
 
     @Override
+    public Collection<? extends String> getStateModules(String state)
+    {
+        synchronized (myStateMap)
+        {
+            StateDataExtended stateData = myStateMap.get(state);
+            return stateData == null ? Collections.<String>emptyList() : stateData.getModules();
+        }
+    }
+
+    @Override
     public Collection<? extends String> getStateTags(String state)
     {
         synchronized (myStateMap)

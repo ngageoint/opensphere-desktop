@@ -89,6 +89,14 @@ public interface ModuleStateManager
     String getStateDescription(String state);
 
     /**
+     * Gets the modules for a state.
+     *
+     * @param state The id of the state.
+     * @return The modules.
+     */
+    Collection<? extends String> getStateModules(String state);
+
+    /**
      * Get the tags for a state.
      *
      * @param state The id of the state.
