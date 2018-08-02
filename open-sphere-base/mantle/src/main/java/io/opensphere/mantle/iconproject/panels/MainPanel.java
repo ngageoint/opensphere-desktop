@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -53,8 +54,6 @@ public class MainPanel extends SplitPane
     private final ButtonBuilder myCustIconButton = new ButtonBuilder("Customize Icon", false);
 
     /** The button to add the icon. */
-    // private final ButtonBuilder myAddIconButton = new ButtonBuilder("Add Icon
-    // from File", false);
     private final MenuButton myAddIconButton = new MenuButton("Add Icon From");
 
     /** The button to generate a new icon. */
@@ -206,6 +205,7 @@ public class MainPanel extends SplitPane
             {
 
                 System.out.println("Icon Grid starting to Refreshed!!!!!!!");
+
                 myLeftView.getChildren().removeAll(myTreeView);
                 createTreeView(myTreeView.getSelectionModel().getSelectedItem());
                 myLeftView.getChildren().addAll(myTreeView);

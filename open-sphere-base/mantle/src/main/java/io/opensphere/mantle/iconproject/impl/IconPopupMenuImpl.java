@@ -90,5 +90,7 @@ public class IconPopupMenuImpl
             System.out.println("Removing from registry: " + mySelectedIcon);
             myPanelModel.getMyIconRegistry().removeIcon(mySelectedIcon, this);
         }
+        myPanelModel.getViewModel().getMainPanel().refresh();
+        
     }
 }
