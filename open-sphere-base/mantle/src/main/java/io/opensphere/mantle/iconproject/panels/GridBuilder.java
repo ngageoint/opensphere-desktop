@@ -54,8 +54,9 @@ public class GridBuilder extends TilePane
         // myIconRegistry = myPanelModel.getMyIconRegistry();
         myRecordList = myPanelModel.getRecordList();
 
-        setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-                + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
+        // setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" +
+        // "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+        // + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
 
         for (IconRecord recordindex : myRecordList)
         {

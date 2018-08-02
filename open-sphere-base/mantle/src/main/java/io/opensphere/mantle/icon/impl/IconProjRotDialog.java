@@ -56,23 +56,23 @@ public class IconProjRotDialog extends JFXDialog
         IconRotPane pane = new IconRotPane(myIconRecord);
         setFxNode(pane);
         setAcceptEar(() -> saveRotatedIcon(myIconRecord, pane.getRotation(), pane.getSaveState()));
-        try
-        {
-            BufferedImage image = ImageIO.read(myIconRecord.getImageURL());
-
-            if (image.getWidth() > 150)
-            {
-                setSize(500, 600);
-            }
-            else
-            {
-                setSize(Math.max(image.getWidth() + 20, 310), Math.max(image.getHeight() + 20, 200));
-            }
-        }
-        catch (IOException e)
-        {
-            setSize(310, 200);
-        }
+//        try
+//        {
+//            BufferedImage image = ImageIO.read(myIconRecord.getImageURL());
+//
+//            if (image.getWidth() > 150)
+//            {
+//                setSize(500, 600);
+//            }
+//            else
+//            {
+//                setSize(Math.max(image.getWidth() + 20, 310), Math.max(image.getHeight() + 20, 200));
+//            }
+//        }
+//        catch (IOException e)
+//        {
+//            setSize(310, 200);
+//        }
         setLocationRelativeTo(owner);
     }
 

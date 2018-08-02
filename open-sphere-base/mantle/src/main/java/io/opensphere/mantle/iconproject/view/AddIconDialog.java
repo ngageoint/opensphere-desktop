@@ -40,7 +40,7 @@ public class AddIconDialog extends JFXDialog
         super(owner, "Add Icon From Folder", false);
         myPanelModel = thePanelModel;
         myOwner = owner;
-        setMinimumSize(new Dimension(500, 300));
+        setMinimumSize(new Dimension(400, 250));
         setLocationRelativeTo(owner);
         myAddIconPane = new AddIconPane(myPanelModel);
         setFxNode(myAddIconPane);

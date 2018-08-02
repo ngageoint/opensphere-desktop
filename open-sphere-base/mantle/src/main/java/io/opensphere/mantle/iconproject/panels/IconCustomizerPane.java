@@ -81,10 +81,10 @@ public class IconCustomizerPane extends BorderPane
     public IconCustomizerPane(Window owner, PanelModel thePanelModel)
     {
         myIconRecord = thePanelModel.getIconRecord();
-        setTop(createTop());
 
         setCenter(myIconDisplay = createImageView());
         setRight(createRight());
+        setTop(createTop());
 
         VBox bottom = createBottom();
         BorderPane.setMargin(bottom, new Insets(5, 0, 0, 0));
@@ -188,12 +188,13 @@ public class IconCustomizerPane extends BorderPane
 
         Label helpInfo = new Label("Replace Existing Icon?");
         helpInfo.setFont(Font.font(helpInfo.getFont().getFamily(), FontPosture.ITALIC, 11));
+        helpInfo.setPadding(new Insets(0,3.,0,0));
 
         CheckBox saveState = new CheckBox();
         saveState.selectedProperty().set(false);
         saveState.selectedProperty().bindBidirectional(mySave);
 
-        SaveInfo.getChildren().addAll(saveState, helpInfo);
+        SaveInfo.getChildren().addAll(helpInfo,saveState);
         SaveInfo.setSpacing(5.);
         cnrlBox.getChildren().addAll(controlBox, SaveInfo);
         return cnrlBox;

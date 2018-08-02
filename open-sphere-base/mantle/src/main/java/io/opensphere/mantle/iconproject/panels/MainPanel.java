@@ -93,20 +93,10 @@ public class MainPanel extends SplitPane
 
         myPanelModel.getTileWidth().addListener((o, v, m) -> refresh());
 
-        createTreeView();
+        createTreeView(null);
         recordMap = new HashMap<>(treeBuilder.getRecordMap());
         myPanelModel.setIconRecordList(recordMap.get("Default"));
         myIconGrid = new GridBuilder(myPanelModel);
-
-        setDividerPositions(0.25);
-        setResizableWithParent(myLeftView, false);
-        setLayoutY(48.0);
-
-        AnchorPane.setBottomAnchor(myTreeView, 78.0);
-        AnchorPane.setLeftAnchor(myTreeView, 0.0);
-        AnchorPane.setRightAnchor(myTreeView, 0.0);
-        AnchorPane.setTopAnchor(myTreeView, 0.0);
-        myTreeView.setLayoutY(8.0);
 
         AnchorPane.setLeftAnchor(myAddIconButton, 0.);
         AnchorPane.setRightAnchor(myAddIconButton, 0.);
@@ -171,23 +161,40 @@ public class MainPanel extends SplitPane
         getItems().addAll(myLeftView, myScrollPane);
     }
 
-    private void createTreeView()
+    private void createTreeView(TreeItem<String> treeItem)
     {
         treeBuilder = new TreeBuilder(myPanelModel, null);
         myTreeView = new TreeView<>(treeBuilder);
         myTreeView.setShowRoot(false);
 
-        for (int i = 0; i <= myTreeView.getExpandedItemCount(); i++)
+        setDividerPositions(0.25);
+        setResizableWithParent(myLeftView, false);
+        setLayoutY(48.0);
+
+        AnchorPane.setBottomAnchor(myTreeView, 78.0);
+        AnchorPane.setLeftAnchor(myTreeView, 0.0);
+        AnchorPane.setRightAnchor(myTreeView, 0.0);
+        AnchorPane.setTopAnchor(myTreeView, 0.0);
+
+        if (treeItem == null)
         {
-            if ((myTreeView.getTreeItem(i).getValue()) == "Default")
+            for (int i = 0; i <= myTreeView.getExpandedItemCount(); i++)
             {
-                myTreeView.getSelectionModel().select(myTreeView.getRow((myTreeView.getTreeItem(i))));
-                break;
+                if ((myTreeView.getTreeItem(i).getValue()) == "Default")
+                {
+                    myTreeView.getSelectionModel().select(myTreeView.getRow((myTreeView.getTreeItem(i))));
+                    break;
+                }
             }
-        }        
-        
+        }
+        else
+        {
+            myTreeView.getSelectionModel().select(treeItem);
+
+        }
+
         myTreeView.getSelectionModel().selectedItemProperty()
-        .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
+                .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
     }
 
     public void refresh()
@@ -199,10 +206,9 @@ public class MainPanel extends SplitPane
             {
 
                 System.out.println("Icon Grid starting to Refreshed!!!!!!!");
-                createTreeView();
-                myLeftView.getChildren().removeAll(myLeftView.getChildren());
-                myLeftView.getChildren().addAll(myTreeView, myAddIconButton, myCustIconButton, myGenIconButton);
-
+                myLeftView.getChildren().removeAll(myTreeView);
+                createTreeView(myTreeView.getSelectionModel().getSelectedItem());
+                myLeftView.getChildren().addAll(myTreeView);
 
                 recordMap = new HashMap<>(treeBuilder.getRecordMap());
 

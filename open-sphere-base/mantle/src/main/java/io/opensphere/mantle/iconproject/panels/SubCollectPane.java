@@ -134,6 +134,7 @@ public class SubCollectPane extends VBox
 
         myNoneRB = new RadioButton("No Sub-category");
         myNoneRB.setToggleGroup(myToggleGroup);
+        myNoneRB.setSelected(true);
         myNoneRB.setOnAction(event ->
         {
             myComboBox.setEditable(false);
@@ -188,8 +189,9 @@ public class SubCollectPane extends VBox
         }
 
         getChildren().addAll(CollectionText, hbox);
-        setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-                + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
+       // setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+       //         + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
+        setStyle("-fx-padding: 10");
     }
 
     private void updateComboBox()
