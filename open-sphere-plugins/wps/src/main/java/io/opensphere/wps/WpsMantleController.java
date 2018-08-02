@@ -254,11 +254,18 @@ public class WpsMantleController extends EventListenerService
         }
         LOG.info("Added " + itemsAdded + " datatypes as processes for " + serverUrl);
 
-        LegacyWpsExecuteEnvoy envoy = new LegacyWpsExecuteEnvoy(myToolbox, myServerDetails.get(serverUrl),
-                myServerDataGroups.get(serverUrl), pCapabilities);
-        envoy.open();
+        if (myServerDetails.get(serverUrl) != null)
+        {
+            LegacyWpsExecuteEnvoy envoy = new LegacyWpsExecuteEnvoy(myToolbox, myServerDetails.get(serverUrl),
+                    myServerDataGroups.get(serverUrl), pCapabilities);
+            envoy.open();
 
-        myStreamingServerEnvoys.put(serverUrl, envoy);
+            myStreamingServerEnvoys.put(serverUrl, envoy);
+        }
+        else
+        {
+            LOG.warn("Unable to activate WPS portion of server due to missing server details ('" + serverUrl + "')");
+        }
     }
 
     /**
@@ -654,6 +661,9 @@ public class WpsMantleController extends EventListenerService
      */
     public void addServerDetails(String pServerId, ServerConnectionParams pServer)
     {
+        LOG.info("Adding server details for server with ID '" + pServerId + "', and parameters are not null: ["
+                + (pServer != null) + "]");
+
         myServerDetails.put(pServerId, pServer);
         DataModelCategory savedProcessCategory = new DataModelCategory(pServerId, OGCServerSource.WPS_SERVICE, "Saved Processes");
         loadSaved(savedProcessCategory);

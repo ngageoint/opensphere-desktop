@@ -22,6 +22,9 @@ public class DefaultOrderCategory implements OrderCategory
     /** The family for my-places layer participants. */
     public static final String DEFAULT_MY_PLACES_LAYER_FAMILY = "My Places Layer Family";
 
+    /** The family for my-places layer participants. */
+    public static final String DEFAULT_AREAS_LAYER_FAMILY = "Areas Layer Family";
+
     /**
      * The category of participants who provide elevation data for earth
      * terrain.
@@ -44,7 +47,10 @@ public class DefaultOrderCategory implements OrderCategory
     public static final OrderCategory IMAGE_SCREEN_CATEGORY = new DefaultOrderCategory("Image Screen Layers", 36000, 37000);
 
     /** The category for My Places. */
-    public static final OrderCategory MY_PLACES_CATEGORY = new DefaultOrderCategory("My Places Layers", 36000, 37000);
+    public static final OrderCategory MY_PLACES_CATEGORY = new DefaultOrderCategory("My Places Layers",  36000, 37000);
+
+    /** The category for My Places. */
+    public static final OrderCategory AREAS_CATEGORY = new DefaultOrderCategory("Areas Layers", 50000, 51000);
 
     /** The id of this category. */
     private final String myCategoryId;

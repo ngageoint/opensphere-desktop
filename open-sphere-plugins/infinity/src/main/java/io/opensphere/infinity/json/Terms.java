@@ -12,6 +12,9 @@ public class Terms
     /** The missing. */
     private long myMissing;
 
+    /** The Script. */
+    private Script myScript;
+
     /**
      * Constructor.
      */
@@ -31,6 +34,19 @@ public class Terms
         myField = field;
         mySize = size;
         myMissing = missing;
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param field the field
+     * @param size the size
+     * @param dayOfWeek whether dayOfWeek or hourOfDay
+     */
+    public Terms(String field, int size, boolean dayOfWeek)
+    {
+        mySize = size;
+        myScript = new Script(field, dayOfWeek);
     }
 
     /**
@@ -91,5 +107,25 @@ public class Terms
     public void setMissing(long missing)
     {
         myMissing = missing;
+    }
+
+    /**
+     * Get the script.
+     *
+     * @return the script
+     */
+    public Script getScript()
+    {
+        return myScript;
+    }
+
+    /**
+     * Set the script.
+     *
+     * @param script the script to set
+     */
+    public void setScript(Script script)
+    {
+        myScript = script;
     }
 }

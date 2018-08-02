@@ -101,11 +101,10 @@ public class IconBuilderPane extends BorderPane
     {
         AnchorPane box = new AnchorPane();
 
-        Spinner<Number> sizeSpinner = new Spinner<>(12, 200, 200);
+        Spinner<Number> sizeSpinner = new Spinner<>(12, 200, 200, 10);
         sizeSpinner.setPrefWidth(spinwidth);
         sizeSpinner.getValueFactory().valueProperty().bindBidirectional(mySize);
         sizeSpinner.setEditable(true);
-        sizeSpinner.getStyleClass().clear();
 
         Label sizeLabel = new Label("Size: ", sizeSpinner);
         sizeLabel.setContentDisplay(ContentDisplay.RIGHT);
@@ -147,7 +146,6 @@ public class IconBuilderPane extends BorderPane
         spinner.setPrefWidth(spinwidth);
         spinner.getValueFactory().valueProperty().bindBidirectional(myRotation);
         spinner.setEditable(true);
-        spinner.getStyleClass().clear();
 
         Label rotLabel = new Label("Rotation: ", spinner);
         rotLabel.setContentDisplay(ContentDisplay.BOTTOM);
@@ -172,13 +170,12 @@ public class IconBuilderPane extends BorderPane
         HBox controlBox = new HBox(10);
         controlBox.setAlignment(Pos.BASELINE_LEFT);
 
-        Spinner<Number> xSpinner = new Spinner<>(-100, 100, 0);
+        Spinner<Number> xSpinner = new Spinner<>(-100, 100, 0, 10);
         xSpinner.setPrefWidth(spinwidth);
         xSpinner.getValueFactory().valueProperty().bindBidirectional(myXPos);
         xSpinner.setEditable(true);
-        xSpinner.getStyleClass().clear();
 
-        Spinner<Number> ySpinner = new Spinner<>(0, 200, 0);
+        Spinner<Number> ySpinner = new Spinner<>(0, 200, 0, 10);
         ySpinner.setPrefWidth(spinwidth);
         ySpinner.getValueFactory().valueProperty().bindBidirectional(myYPos);
         ySpinner.setEditable(true);
