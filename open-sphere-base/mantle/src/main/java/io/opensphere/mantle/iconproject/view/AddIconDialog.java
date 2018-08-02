@@ -92,6 +92,5 @@ public class AddIconDialog extends JFXDialog
 //            {
 //            }
 //        }
-        myPanelModel.getViewModel().getMainPanel().refresh();
     }
 }
