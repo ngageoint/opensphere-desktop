@@ -4,11 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import io.opensphere.core.util.collections.New;
-import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.IconRegistry;
-import io.opensphere.mantle.iconproject.model.ImportProp;
-import io.opensphere.mantle.iconproject.model.PanelModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -23,52 +18,58 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 
+import io.opensphere.core.util.collections.New;
+import io.opensphere.mantle.icon.IconRecord;
+import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.iconproject.model.ImportProp;
+import io.opensphere.mantle.iconproject.model.PanelModel;
+
 public class CollectNamesPane extends VBox
 {
     /**
-     * 
+     *
      */
-    private RadioButton myExistingRB;
+    private final RadioButton myExistingRB;
 
     /**
-     * 
+     *
      */
-    private ComboBox<String> myExistingComboBox;
+    private final ComboBox<String> myExistingComboBox;
 
     /**
-     * 
+     *
      */
-    private ObservableList<String> options;
+    private final ObservableList<String> options;
 
     /**
-     * 
+     *
      */
-    private RadioButton myNewRB;
+    private final RadioButton myNewRB;
 
     /**
-     * 
+     *
      */
-    private TextField myNewTF;
+    private final TextField myNewTF;
 
     /**
-     * 
+     *
      */
-    private PanelModel myPanelModel;
+    private final PanelModel myPanelModel;
 
     /**
-     * 
+     *
      */
     private IconRegistry myIconRegistry;
 
     /**
-     * 
+     *
      */
-    private ToggleGroup test = new ToggleGroup();
+    private final ToggleGroup test = new ToggleGroup();
 
     /**
-     * 
+     *
      */
-    private ImportProp myIconProps;
+    private final ImportProp myIconProps;
 
     /**
      * @param thePanelModel
@@ -139,7 +140,7 @@ public class CollectNamesPane extends VBox
     /**
      * Controls whether the user can enter data via the textfield or the drop
      * down menu provided by the combobox.
-     * 
+     *
      * @param b the indication of which state the buttons should be set to.
      */
     private void lockfeature(boolean b)

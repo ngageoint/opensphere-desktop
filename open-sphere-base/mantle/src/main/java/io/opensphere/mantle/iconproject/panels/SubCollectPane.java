@@ -163,7 +163,7 @@ public class SubCollectPane extends VBox
         hbox.setAlignment(Pos.BASELINE_LEFT);
         hbox.setSpacing(5.);
         myComboBox.setOnAction(event -> {
-            
+
             if (!(myToggleGroup.getSelectedToggle() == myNewCatRB)){
                 myExistingRB.selectedProperty().set(true);
             }
