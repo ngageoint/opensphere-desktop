@@ -104,6 +104,5 @@ public class IconCustomizerDialog extends JFXDialog
         catch (IOException e)
         {
         }
-        myPanelModel.getViewModel().getMainPanel().refresh();
     }
 }

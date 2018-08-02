@@ -1,5 +1,10 @@
 package io.opensphere.mantle.iconproject.panels;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import io.opensphere.mantle.icon.IconRecord;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -17,13 +22,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 
 /** Icon rotation pane. */
 public class IconRotPane extends BorderPane
 {
     /** The rotation value model. */
     private final IntegerProperty myRotation = new SimpleIntegerProperty();
-    
+
     /** The save state selection. */
     private final BooleanProperty mySave = new SimpleBooleanProperty(false);
 
@@ -39,18 +46,19 @@ public class IconRotPane extends BorderPane
         setBottom(createControlPanel());
     }
 
-    private HBox createTop()
+    private AnchorPane createTop()
     {
-        HBox top = new HBox();
-        
+        AnchorPane top = new AnchorPane();
+
         CheckBox saveState = new CheckBox();
         saveState.selectedProperty().set(false);
         saveState.selectedProperty().bindBidirectional(mySave);
-        
+
         Label message = new Label("Replace existing icon?");
+        message.setFont(Font.font(message.getFont().getFamily(), FontPosture.ITALIC, 11));
         message.setContentDisplay(ContentDisplay.RIGHT);
         AnchorPane.setRightAnchor(top, 0.);
-        top.getChildren().addAll(message,saveState);
+        top.getChildren().addAll(message, saveState);
         return top;
     }
 
@@ -73,6 +81,31 @@ public class IconRotPane extends BorderPane
     private ImageView createImageView(IconRecord record)
     {
         ImageView imageView = new ImageView(record.getImageURL().toString());
+
+        BufferedImage iconActual = null;
+        try
+        {
+            iconActual = ImageIO.read(record.getImageURL());
+        }
+        catch (IOException e)
+        {
+        }
+        if (iconActual.getWidth() > 150)
+        {
+            imageView.setFitWidth(150);
+            imageView.setFitHeight(150);
+        }
+        else if (iconActual.getWidth() < 40)
+        {
+            imageView.setFitWidth(50);
+            imageView.setFitHeight(50);
+        }
+        else
+        {
+            imageView.setFitWidth(iconActual.getTileWidth());
+            imageView.setFitHeight(iconActual.getHeight());
+        }
+
         imageView.rotateProperty().bind(myRotation);
         return imageView;
     }

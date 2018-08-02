@@ -58,7 +58,6 @@ public class IconPopupMenuImpl
 //                    providerList.add(provider);
 
         myPanelModel.getMyIconRegistry().addIcon(provider, this);
-        myPanelModel.getViewModel().getMainPanel().refresh();
     }
 
     /**
