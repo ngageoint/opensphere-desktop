@@ -23,6 +23,7 @@ import io.opensphere.mantle.iconproject.view.IconPopupMenu;
 /** Crates the Icon Display Grid. */
 public class GridBuilder extends TilePane
 {
+    /** The icon options context menu. */
     ContextMenu cMenu = new ContextMenu();
 
     /** The width used for icon buttons. */
@@ -44,8 +45,6 @@ public class GridBuilder extends TilePane
      * The GridBuilder constructor. sets up the rows and columns for the icon
      * grid.
      *
-     * @param tileWidth the width of each tile(button).
-     * @param recList the icon record list
      * @param thePanelModel the panel model
      */
     public GridBuilder(PanelModel thePanelModel)
@@ -73,15 +72,6 @@ public class GridBuilder extends TilePane
     {
         cMenu = showPopupMenu();
     }
-    /**
-     * Shows the iconpopupmenu.
-     *
-     * @return the built context menu
-     */
-    //public ContextMenu showPopupMenu()
-    //{
-      //  return new IconPopupMenu(myPanelModel);
-    //}
 
     /**
      * Creates the image buttons to be placed in the grid.
@@ -105,8 +95,8 @@ public class GridBuilder extends TilePane
         ImageView iconView = new ImageView(record.getImageURL().toString());
         if (iconView.getImage().getWidth() > myTileWidth)
         {
-            iconView.setFitHeight(myTileWidth - 25);
-            iconView.setFitWidth(myTileWidth - 25);
+            iconView.setFitHeight(myTileWidth - 35);
+            iconView.setFitWidth(myTileWidth - 35);
         }
         generic.setGraphic(iconView);
         generic.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
@@ -140,7 +130,7 @@ public class GridBuilder extends TilePane
         IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myPanelModel);
         builderPane.setVisible(true);
     }
-    
+
     /**
      * Shows the iconpopupmenu.
      *
@@ -150,5 +140,4 @@ public class GridBuilder extends TilePane
     {
         return new IconPopupMenu(myPanelModel);
     }
-    
 }
