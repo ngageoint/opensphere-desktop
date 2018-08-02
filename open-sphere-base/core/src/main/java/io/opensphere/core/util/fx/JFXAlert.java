@@ -180,7 +180,10 @@ public class JFXAlert extends JDialog
         });
         for (ButtonType buttonType : buttons)
         {
-            getButtonTypes().add(buttonType);
+            if (buttonType != null)
+            {
+                getButtonTypes().add(buttonType);
+            }
         }
     }
 
@@ -261,6 +264,18 @@ public class JFXAlert extends JDialog
     public final ObservableList<ButtonType> getButtonTypes()
     {
         return myButtons;
+    }
+
+    /**
+     * Gets the node corresponding to the supplied button type, if defined.
+     * 
+     * @param buttonType the button type for which to get the node.
+     * @return the node for the supplied button type, if present,
+     *         <code>null</code> otherwise.
+     */
+    public final Node getButton(ButtonType buttonType)
+    {
+        return myButtonNodes.get(buttonType);
     }
 
     /**
