@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuButton;
@@ -61,10 +64,12 @@ public class MainPanel extends SplitPane
     private TreeView<String> myTreeView;
 
     /** The left Panel. */
-    private final AnchorPane myLeftView;
+    private AnchorPane myLeftView = new AnchorPane();
 
     /** The treeBuilder object. */
     private TreeBuilder treeBuilder;
+
+    private IntegerProperty myCounter = new SimpleIntegerProperty(1);
 
     /** The map of collection name keys and icon record list values. */
     Map<String, List<IconRecord>> recordMap = new HashMap<>();
@@ -85,26 +90,10 @@ public class MainPanel extends SplitPane
         myPanelModel = thePanelModel;
         myOwner = myPanelModel.getOwner();
         myIconRegistry = myPanelModel.getMyIconRegistry();
-        myLeftView = new AnchorPane();
 
-        myPanelModel.getTileWidth().addListener((o, v, m) ->
-        {
-            refresh();
-        });
+        myPanelModel.getTileWidth().addListener((o, v, m) -> refresh());
 
-        treeBuilder = new TreeBuilder(myPanelModel, null);
-        myTreeView = new TreeView<>(treeBuilder);
-        myTreeView.setShowRoot(false);
-
-        for (int i = 0; i <= myTreeView.getExpandedItemCount(); i++)
-        {
-            if ((myTreeView.getTreeItem(i).getValue()) == "Default")
-            {
-                myTreeView.getSelectionModel().select(myTreeView.getRow((myTreeView.getTreeItem(i))));
-                break;
-            }
-        }
-        System.out.println("tree +    " + myTreeView.getTreeItem(2).getValue());
+        createTreeView();
         recordMap = new HashMap<>(treeBuilder.getRecordMap());
         myPanelModel.setIconRecordList(recordMap.get("Default"));
         myIconGrid = new GridBuilder(myPanelModel);
@@ -131,19 +120,23 @@ public class MainPanel extends SplitPane
         {
             EventQueue.invokeLater(() ->
             {
-                System.out.println("File has been Selected");
                 loadFromFile(myPanelModel.getImportProps().getCollectionName().get(),
                         myPanelModel.getImportProps().getSubCollectionName().get());
+                refresh();
             });
-        });
-        File.setOnAction(event -> refresh());
 
+        });
+
+        myCounter.addListener((o, v, n) ->
+        {
+
+        });
         Folder.setOnAction(event ->
         {
             EventQueue.invokeLater(() ->
             {
-                System.out.println("Folder has been Selected");
                 addIconsFromFolder();
+                refresh();
             });
         });
 
@@ -154,6 +147,7 @@ public class MainPanel extends SplitPane
             EventQueue.invokeLater(() ->
             {
                 myIconGrid.showIconCustomizer(myOwner);
+                refresh();
             });
         });
 
@@ -161,9 +155,7 @@ public class MainPanel extends SplitPane
         myGenIconButton.lockButton(myGenIconButton);
         myGenIconButton.setOnAction(event ->
         {
-            EventQueue.invokeLater(() ->
-            {
-            });
+            refresh();
         });
 
         myScrollPane = new ScrollPane(myIconGrid);
@@ -175,20 +167,12 @@ public class MainPanel extends SplitPane
         myScrollPane.setFitToHeight(true);
         myScrollPane.setFitToWidth(true);
 
-        myTreeView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
-
         myLeftView.getChildren().addAll(myTreeView, myAddIconButton, myCustIconButton, myGenIconButton);
         getItems().addAll(myLeftView, myScrollPane);
     }
 
-    public void refresh()
+    private void createTreeView()
     {
-        // RegistryMap test = new RegistryMap(myPanelModel);
-        // test.refreshRegistry();
-
-        System.out.println("Icon Grid starting to Refreshed!!!!!!!");
-
         treeBuilder = new TreeBuilder(myPanelModel, null);
         myTreeView = new TreeView<>(treeBuilder);
         myTreeView.setShowRoot(false);
@@ -200,13 +184,35 @@ public class MainPanel extends SplitPane
                 myTreeView.getSelectionModel().select(myTreeView.getRow((myTreeView.getTreeItem(i))));
                 break;
             }
-        }
-        recordMap = new HashMap<>(treeBuilder.getRecordMap());
+        }        
+        
+        myTreeView.getSelectionModel().selectedItemProperty()
+        .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
+    }
 
-        myPanelModel.setIconRecordList(recordMap.get(myTreeView.getSelectionModel().getSelectedItem().getValue()));
+    public void refresh()
+    {
+        Platform.runLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
 
-        myScrollPane.setContent(new GridBuilder(myPanelModel));
-        System.out.println("Icon Grid has been refreshed!!!!!!!");
+                System.out.println("Icon Grid starting to Refreshed!!!!!!!");
+                createTreeView();
+                myLeftView.getChildren().removeAll(myLeftView.getChildren());
+                myLeftView.getChildren().addAll(myTreeView, myAddIconButton, myCustIconButton, myGenIconButton);
+
+
+                recordMap = new HashMap<>(treeBuilder.getRecordMap());
+
+                myPanelModel.setIconRecordList(recordMap.get(myTreeView.getSelectionModel().getSelectedItem().getValue()));
+
+                myScrollPane.setContent(new GridBuilder(myPanelModel));
+                System.out.println("Icon Grid has been refreshed!!!!!!!");
+
+            }
+        });
     }
 
     /**
@@ -300,7 +306,6 @@ public class MainPanel extends SplitPane
     {
         AddIconDialog iconImporter = new AddIconDialog(myOwner, myPanelModel);
         iconImporter.setVisible(true);
-        myPanelModel.getViewModel().getMainPanel().refresh();
     }
 
 }

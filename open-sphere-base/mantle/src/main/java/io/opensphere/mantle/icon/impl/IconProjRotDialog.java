@@ -52,14 +52,22 @@ public class IconProjRotDialog extends JFXDialog
         myPanelModel = thePanelModel;
         myIconRegistry = myPanelModel.getMyIconRegistry();
         myIconRecord = myPanelModel.getIconRecord();
-        setMinimumSize(new Dimension(310, 200));
+        setMinimumSize(new Dimension(450, 550));
         IconRotPane pane = new IconRotPane(myIconRecord);
         setFxNode(pane);
         setAcceptEar(() -> saveRotatedIcon(myIconRecord, pane.getRotation(), pane.getSaveState()));
         try
         {
             BufferedImage image = ImageIO.read(myIconRecord.getImageURL());
-            setSize(Math.max(image.getWidth() + 50, 310), Math.max(image.getHeight() + 170, 200));
+
+            if (image.getWidth() > 150)
+            {
+                setSize(500, 600);
+            }
+            else
+            {
+                setSize(Math.max(image.getWidth() + 20, 310), Math.max(image.getHeight() + 20, 200));
+            }
         }
         catch (IOException e)
         {
@@ -99,7 +107,6 @@ public class IconProjRotDialog extends JFXDialog
                 IconProvider provider = new DefaultIconProvider(imageURL, IconRecord.USER_ADDED_COLLECTION, null, "User");
                 myIconRegistry.addIcon(provider, this);
             }
-            myPanelModel.getViewModel().getMainPanel().refresh();
             // .refreshFromRegistry(IconRecord.USER_ADDED_COLLECTION);
         }
         catch (IOException e)

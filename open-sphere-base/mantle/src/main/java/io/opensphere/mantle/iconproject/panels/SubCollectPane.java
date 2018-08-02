@@ -172,7 +172,6 @@ public class SubCollectPane extends VBox
         if (myComboBoxItems.isEmpty())
         {
             hbox.getChildren().addAll(myNoneRB, myNewCatRB, myComboBox);
-            System.out.println("it is empty");
             myComboBox.setDisable(true);
         }
         //        else if (myChoice)
@@ -185,7 +184,6 @@ public class SubCollectPane extends VBox
         //        }
         else
         {
-            System.out.println("it is not empty");
             hbox.getChildren().addAll(myNoneRB, myExistingRB, myNewCatRB, myComboBox);
         }
 
