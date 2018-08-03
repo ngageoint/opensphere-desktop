@@ -44,6 +44,8 @@ public final class QuerySelector extends JPanel
     /** serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    private final QuerySelectorSplitButton mySplitButton;
+
     /** The Box button. */
     private final SelectorToggleButton myBoxButton;
 
@@ -114,11 +116,15 @@ public final class QuerySelector extends JPanel
                 setDefaultModeBorder();
                 manager.deregisterContextSingleActionProvider(ContextIdentifiers.DEFAULT_MOUSE_CONTEXT, MouseEvent.class,
                         myDrawProvider);
+                mySplitButton.toggledProperty().set(false);
             }
             else
             {
                 manager.registerContextSingleActionProvider(ContextIdentifiers.DEFAULT_MOUSE_CONTEXT, MouseEvent.class,
                         myDrawProvider);
+                mySplitButton.toggledProperty().set(true);
+                mySplitButton.currentSelectionModeProperty().set(mode);
+
                 if (mode == SelectionMode.BOUNDING_BOX)
                 {
                     myBoxButton.setSelected(true);
@@ -130,6 +136,10 @@ public final class QuerySelector extends JPanel
                 else if (mode == SelectionMode.POLYGON)
                 {
                     myPolyButton.setSelected(true);
+                }
+                else if (mode == SelectionMode.LINE)
+                {
+                    // TODO
                 }
             }
         }
@@ -174,6 +184,15 @@ public final class QuerySelector extends JPanel
 
         myDefaultButtonBorder = myPolyButton.getBorder();
 
+        mySplitButton = new QuerySelectorSplitButton();
+//        mySplitButton.currentSelectionModeProperty().addListener((obs, oldMode, newMode) ->
+//        {
+//            boolean selection = !mySplitButton.isSelected();
+//            SelectionMode mode = selection ? newMode : SelectionMode.NONE;
+//            Quantify.collectConditionalMetric("mist3d.query." + newMode.toString(), selection);
+//            mySelectionModeController.setSelectionMode(newMode);
+//        });
+
         setDefaultModeBorder();
 
         addLegendIcons(toolbox);
@@ -197,6 +216,9 @@ public final class QuerySelector extends JPanel
         gbc.gridx = 3;
         gbc.insets = new Insets(0, 2, 0, 2);
         add(myRemoveButton, gbc);
+
+        gbc.gridx = 4;
+        add(mySplitButton, gbc);
     }
 
     /** Gets the removes the button. */
@@ -257,6 +279,8 @@ public final class QuerySelector extends JPanel
         myCircleButton.setBorder(myDefaultButtonBorder);
         myPolyButton.setSelected(false);
         myPolyButton.setBorder(myDefaultButtonBorder);
+
+        mySplitButton.setSelected(false);
     }
 
     /**
@@ -278,6 +302,8 @@ public final class QuerySelector extends JPanel
         {
             myPolyButton.setBorder(new LineBorder(IconUtil.ICON_SELECTION_FOREGROUND.darker(), 1, false));
         }
+
+        mySplitButton.currentSelectionModeProperty().set(defaultMode);
     }
 
     /**
