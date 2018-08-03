@@ -52,7 +52,7 @@ public class StateControllerImpl implements StateController
     /** The data group controller. */
     private final DataGroupController myDataController;
 
-    /** The order manager for data type infos. */
+    /** The order manager for data type info. */
     private final DataTypeInfoOrderManager myOrderManager;
 
     /** The lock to control calls for toggling state. */
@@ -186,17 +186,6 @@ public class StateControllerImpl implements StateController
             myModuleStateManager.unregisterState(id);
 
             unhookState(id);
-//            DataGroupInfo dgi = myRootGroupInfo.getGroupById(id);
-//            if (dgi != null)
-//            {
-//                for (DataTypeInfo dataTypeInfo : dgi.getMembers(false))
-//                {
-//                    myOrderManager.deactivateParticipant(dataTypeInfo);
-//                }
-//                myRootGroupInfo.removeChild(dgi, this);
-//                myToolbox.getDataRegistry().removeModels(new DataModelCategory("state", StateView.class.getName(), id), false);
-//                myDataController.cleanUpGroup(dgi);
-//            }
         }
     }
 
@@ -225,28 +214,12 @@ public class StateControllerImpl implements StateController
             myModuleStateManager.registerState(id, description, tags, modules, state);
 
             hookState(id, state);
-//            DefaultDataGroupInfo ddgi = new DefaultDataGroupInfo(false, myToolbox, "State", id, id);
-//            ddgi.setAssistant(new StateDataGroupInfoAssistant(this));
-//            DataTypeInfo dti = new DefaultDataTypeInfo(myToolbox, "State", "state:" + id, "State", id, true);
-//            myOrderManager.activateParticipant(dti);
-//            ddgi.activationProperty().addListener(myActivationListener);
-//            ddgi.addMember(dti, this);
-//            ddgi.activationProperty().setActive(false);
-//            myRootGroupInfo.addChild(ddgi, this);
-//            DataModelCategory category = new DataModelCategory("state", StateView.class.getName(), id);
-//            myToolbox.getDataRegistry().addModels(new SimpleSessionOnlyCacheDeposit<>(category, STATE_DESCRIPTOR,
-//                    Collections.singleton(state)));
         }
     }
 
     @Override
     public void toggleState(String id)
     {
-//        if (myRootGroupInfo.getGroupById(id) == null)
-//        {
-//            hookState(id, myModuleStateManager.getState(id));
-//            return;
-//        }
         myToggleLock = true;
         if (!isStateActive(id))
         {
@@ -269,13 +242,18 @@ public class StateControllerImpl implements StateController
         myOrderManager.activateParticipant(dti);
         ddgi.activationProperty().addListener(myActivationListener);
         ddgi.addMember(dti, this);
-//        ddgi.activationProperty().setActive(false);
+        ddgi.activationProperty().setActive(false);
         myRootGroupInfo.addChild(ddgi, this);
         DataModelCategory category = new DataModelCategory("state", StateView.class.getName(), id);
         myToolbox.getDataRegistry().addModels(new SimpleSessionOnlyCacheDeposit<>(category, STATE_DESCRIPTOR,
                 Collections.singleton(state)));
     }
 
+    /**
+     * Removes a state from the data group collection.
+     *
+     * @param id The name of the state.
+     */
     private void unhookState(String id)
     {
         DataGroupInfo dgi = myRootGroupInfo.getGroupById(id);
@@ -291,11 +269,15 @@ public class StateControllerImpl implements StateController
         }
     }
 
+    /**
+     * During startup, checks to see if any states exist that aren't hooked,
+     * and if they aren't, adds the state to the data group collection.
+     */
     private void checkInitialStates()
     {
         for (String id : myModuleStateManager.getRegisteredStateIds())
         {
-        	if (myRootGroupInfo.getGroupById(id) == null)
+            if (myRootGroupInfo.getGroupById(id) == null)
             {
                 hookState(id, myModuleStateManager.getState(id));
             }
@@ -310,7 +292,7 @@ public class StateControllerImpl implements StateController
     {
         if (!myToggleLock)
         {
-        	myModuleStateManager.toggleState(id);
+            myModuleStateManager.toggleState(id);
         }
     }
 }
