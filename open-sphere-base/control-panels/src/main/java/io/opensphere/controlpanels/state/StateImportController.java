@@ -438,7 +438,8 @@ public class StateImportController implements FileOrURLImporter
         Collection<? extends String> sel = dialog.getSelectedModules();
         EventQueueUtilities.waitCursorRun(myParentProvider.get(), () ->
         {
-            myStateController.saveState(id, desc, tags, sel, true, null);
+            myModuleStateManager.registerState(id, desc, tags, sel, state);
+            myStateController.hookState(id, state);
             myStateController.toggleState(id);
         });
     }

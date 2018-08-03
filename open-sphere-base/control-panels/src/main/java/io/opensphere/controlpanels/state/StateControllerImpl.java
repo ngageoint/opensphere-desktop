@@ -113,6 +113,7 @@ public class StateControllerImpl implements StateController
         myOrderManager = new DefaultDataTypeInfoOrderManager(myToolbox.getOrderManagerRegistry());
         myOrderManager.open();
         myToggleLock = false;
+        checkInitialStates();
     }
 
     @Override
@@ -184,17 +185,18 @@ public class StateControllerImpl implements StateController
             }
             myModuleStateManager.unregisterState(id);
 
-            DataGroupInfo dgi = myRootGroupInfo.getGroupById(id);
-            if (dgi != null)
-            {
-                for (DataTypeInfo dataTypeInfo : dgi.getMembers(false))
-                {
-                    myOrderManager.deactivateParticipant(dataTypeInfo);
-                }
-                myRootGroupInfo.removeChild(dgi, this);
-                myToolbox.getDataRegistry().removeModels(new DataModelCategory("state", StateView.class.getName(), id), false);
-                myDataController.cleanUpGroup(dgi);
-            }
+            unhookState(id);
+//            DataGroupInfo dgi = myRootGroupInfo.getGroupById(id);
+//            if (dgi != null)
+//            {
+//                for (DataTypeInfo dataTypeInfo : dgi.getMembers(false))
+//                {
+//                    myOrderManager.deactivateParticipant(dataTypeInfo);
+//                }
+//                myRootGroupInfo.removeChild(dgi, this);
+//                myToolbox.getDataRegistry().removeModels(new DataModelCategory("state", StateView.class.getName(), id), false);
+//                myDataController.cleanUpGroup(dgi);
+//            }
         }
     }
 
@@ -222,27 +224,29 @@ public class StateControllerImpl implements StateController
         {
             myModuleStateManager.registerState(id, description, tags, modules, state);
 
-            DefaultDataGroupInfo ddgi = new DefaultDataGroupInfo(false, myToolbox, "State", id, id);
-            ddgi.setAssistant(new StateDataGroupInfoAssistant(this));
-            DataTypeInfo dti = new DefaultDataTypeInfo(myToolbox, "State", "state:" + id, "State", id, true);
-            myOrderManager.activateParticipant(dti);
-            ddgi.activationProperty().addListener(myActivationListener);
-            ddgi.addMember(dti, this);
+            hookState(id, state);
+//            DefaultDataGroupInfo ddgi = new DefaultDataGroupInfo(false, myToolbox, "State", id, id);
+//            ddgi.setAssistant(new StateDataGroupInfoAssistant(this));
+//            DataTypeInfo dti = new DefaultDataTypeInfo(myToolbox, "State", "state:" + id, "State", id, true);
+//            myOrderManager.activateParticipant(dti);
+//            ddgi.activationProperty().addListener(myActivationListener);
+//            ddgi.addMember(dti, this);
 //            ddgi.activationProperty().setActive(false);
-            myRootGroupInfo.addChild(ddgi, this);
-            DataModelCategory category = new DataModelCategory("state", StateView.class.getName(), id);
-            myToolbox.getDataRegistry().addModels(new SimpleSessionOnlyCacheDeposit<>(category, STATE_DESCRIPTOR,
-                    Collections.singleton(state)));
+//            myRootGroupInfo.addChild(ddgi, this);
+//            DataModelCategory category = new DataModelCategory("state", StateView.class.getName(), id);
+//            myToolbox.getDataRegistry().addModels(new SimpleSessionOnlyCacheDeposit<>(category, STATE_DESCRIPTOR,
+//                    Collections.singleton(state)));
         }
     }
 
     @Override
     public void toggleState(String id)
     {
-        if (myRootGroupInfo.getGroupById(id) == null)
-        {
-            repairState(id);
-        }
+//        if (myRootGroupInfo.getGroupById(id) == null)
+//        {
+//            hookState(id, myModuleStateManager.getState(id));
+//            return;
+//        }
         myToggleLock = true;
         if (!isStateActive(id))
         {
@@ -256,6 +260,47 @@ public class StateControllerImpl implements StateController
         myModuleStateManager.toggleState(id);
     }
 
+    @Override
+    public void hookState(String id, StateType state)
+    {
+        DefaultDataGroupInfo ddgi = new DefaultDataGroupInfo(false, myToolbox, "State", id, id);
+        ddgi.setAssistant(new StateDataGroupInfoAssistant(this));
+        DataTypeInfo dti = new DefaultDataTypeInfo(myToolbox, "State", "state:" + id, "State", id, true);
+        myOrderManager.activateParticipant(dti);
+        ddgi.activationProperty().addListener(myActivationListener);
+        ddgi.addMember(dti, this);
+//        ddgi.activationProperty().setActive(false);
+        myRootGroupInfo.addChild(ddgi, this);
+        DataModelCategory category = new DataModelCategory("state", StateView.class.getName(), id);
+        myToolbox.getDataRegistry().addModels(new SimpleSessionOnlyCacheDeposit<>(category, STATE_DESCRIPTOR,
+                Collections.singleton(state)));
+    }
+
+    private void unhookState(String id)
+    {
+        DataGroupInfo dgi = myRootGroupInfo.getGroupById(id);
+        if (dgi != null)
+        {
+            for (DataTypeInfo dataTypeInfo : dgi.getMembers(false))
+            {
+                myOrderManager.deactivateParticipant(dataTypeInfo);
+            }
+            myRootGroupInfo.removeChild(dgi, this);
+            myToolbox.getDataRegistry().removeModels(new DataModelCategory("state", StateView.class.getName(), id), false);
+            myDataController.cleanUpGroup(dgi);
+        }
+    }
+
+    private void checkInitialStates()
+    {
+        for (String id : myModuleStateManager.getRegisteredStateIds())
+        {
+        	if (myRootGroupInfo.getGroupById(id) == null)
+            {
+                hookState(id, myModuleStateManager.getState(id));
+            }
+        }
+    }
     /**
      * Toggle the state if the toggle was initiated from the activation listener.
      *
@@ -263,28 +308,9 @@ public class StateControllerImpl implements StateController
      */
     private void toggleStateWithLock(String id)
     {
-        if (myToggleLock)
+        if (!myToggleLock)
         {
-            return;
+        	myModuleStateManager.toggleState(id);
         }
-        myModuleStateManager.toggleState(id);
-    }
-
-    /**
-     * Re-adds the state since it wasn't found in the collection of data groups.
-     *
-     * @param id The name of the state.
-     */
-    private void repairState(String id)
-    {
-        String description = myModuleStateManager.getStateDescription(id);
-        Collection<? extends String> tags = myModuleStateManager.getStateTags(id);
-        Collection<? extends String> modules = myModuleStateManager.getStateModules(id);
-        if (myModuleStateManager.isStateActive(id))
-        {
-            myModuleStateManager.toggleState(id);
-        }
-        myModuleStateManager.unregisterState(id);
-        saveState(id, description, tags, modules, true, null);
     }
 }
