@@ -16,6 +16,7 @@ import org.xml.sax.SAXException;
 
 import com.bitsys.fade.mist.state.v4.StateType;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.matchers.EasyMockHelper;
 import io.opensphere.core.modulestate.ModuleStateManager;
 import io.opensphere.core.util.XMLUtilities;
@@ -62,7 +63,8 @@ public class StateControllerImplTest
                 EasyMockHelper.eq(stateCapture));
         EasyMock.replay(moduleStateManager, modules);
 
-        StateControllerImpl controller = new StateControllerImpl(moduleStateManager);
+        Toolbox toolbox = EasyMock.createMock(Toolbox.class);
+        StateControllerImpl controller = new StateControllerImpl(toolbox);
         controller.saveState(id, description, tags, modules, true, outputStream);
 
         EasyMock.verify(moduleStateManager, modules);

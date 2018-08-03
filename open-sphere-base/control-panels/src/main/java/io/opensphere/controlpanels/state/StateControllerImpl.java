@@ -119,7 +119,10 @@ public class StateControllerImpl implements StateController
     @Override
     public void deactivateAllStates()
     {
-        myModuleStateManager.deactivateAllStates();
+        for (String id : myModuleStateManager.getActiveStateIds())
+        {
+            toggleState(id);
+        }
     }
 
     @Override
@@ -244,7 +247,7 @@ public class StateControllerImpl implements StateController
         ddgi.addMember(dti, this);
         ddgi.activationProperty().setActive(false);
         myRootGroupInfo.addChild(ddgi, this);
-        DataModelCategory category = new DataModelCategory("state", StateView.class.getName(), id);
+        DataModelCategory category = new DataModelCategory("state", StateType.class.getName(), id);
         myToolbox.getDataRegistry().addModels(new SimpleSessionOnlyCacheDeposit<>(category, STATE_DESCRIPTOR,
                 Collections.singleton(state)));
     }
@@ -264,7 +267,7 @@ public class StateControllerImpl implements StateController
                 myOrderManager.deactivateParticipant(dataTypeInfo);
             }
             myRootGroupInfo.removeChild(dgi, this);
-            myToolbox.getDataRegistry().removeModels(new DataModelCategory("state", StateView.class.getName(), id), false);
+            myToolbox.getDataRegistry().removeModels(new DataModelCategory("state", StateType.class.getName(), id), false);
             myDataController.cleanUpGroup(dgi);
         }
     }

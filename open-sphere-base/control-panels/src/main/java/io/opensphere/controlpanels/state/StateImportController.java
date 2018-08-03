@@ -247,7 +247,6 @@ public class StateImportController implements FileOrURLImporter
 
     /**
      * Sets the state controller.
-     * (This is necessary since passing the controller around during plugin initialization doesn't work).
      *
      * @param controller The controller to be set.
      */
