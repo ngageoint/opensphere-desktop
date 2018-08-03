@@ -23,6 +23,20 @@ public interface SimpleFeatureActionEditor
     Button getAddButton();
 
     /**
+     * Gets the export button.
+     *
+     * @return The export button.
+     */
+    Button getExportButton();
+
+    /**
+     * Gets the import button.
+     *
+     * @return The export button.
+     */
+    Button getImportButton();
+
+    /**
      * Sets the saving listener.
      *
      * @param runnable The save listener.

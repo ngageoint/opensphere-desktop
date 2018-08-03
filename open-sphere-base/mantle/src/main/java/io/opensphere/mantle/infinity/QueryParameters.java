@@ -35,8 +35,11 @@ public class QueryParameters implements Serializable
     /** The offset of the bin. */
     private Double myBinOffset;
 
-    /** The min doc count of the bin. This represents the minimum count needed to return a bin. */
-    private int myMinDocCount;
+    /** The date interval. */
+    private String myDateInterval;
+
+    /** The date format. */
+    private String myDateFormat;
 
     /** The geometry field in the layer. */
     private String myGeomField;
@@ -49,6 +52,9 @@ public class QueryParameters implements Serializable
 
     /** The geometry type. */
     private GeometryType myGeometryType;
+
+    /** The dayOfWeek Boolean. */
+    private Boolean myDayOfWeek;
 
     /**
      * Gets the geometry.
@@ -130,7 +136,6 @@ public class QueryParameters implements Serializable
         myBinFieldType = binFieldType;
     }
 
-
     /**
      * Gets the bin's width.
      *
@@ -169,6 +174,46 @@ public class QueryParameters implements Serializable
     public void setBinOffset(Double binOffset)
     {
         myBinOffset = binOffset;
+    }
+
+    /**
+     * Get the date interval.
+     *
+     * @return the dateInterval
+     */
+    public String getDateInterval()
+    {
+        return myDateInterval;
+    }
+
+    /**
+     * Set the date interval.
+     *
+     * @param dateInterval the dateInterval to set
+     */
+    public void setDateInterval(String dateInterval)
+    {
+        myDateInterval = dateInterval;
+    }
+
+    /**
+     * Get the date format.
+     *
+     * @return the dateFormat
+     */
+    public String getDateFormat()
+    {
+        return myDateFormat;
+    }
+
+    /**
+     * Set the date format.
+     *
+     * @param dateFormat the dateFormat to set
+     */
+    public void setDateFormat(String dateFormat)
+    {
+        myDateFormat = dateFormat;
     }
 
     /**
@@ -251,26 +296,6 @@ public class QueryParameters implements Serializable
         myGeometryType = geometryType;
     }
 
-    /**
-     * Get the minDocCount.
-     *
-     * @return the minDocCount
-     */
-    public int getMinDocCount()
-    {
-        return myMinDocCount;
-    }
-
-    /**
-     * Set the minDocCount.
-     *
-     * @param minDocCount the minDocCount to set
-     */
-    public void setMinDocCount(int minDocCount)
-    {
-        myMinDocCount = minDocCount;
-    }
-
     /** Geometry type. */
     public enum GeometryType
     {
@@ -279,5 +304,24 @@ public class QueryParameters implements Serializable
 
         /** Shape type. */
         SHAPE;
+    }
+
+    /**
+     * Get the dayOfWeek.
+     * @return the dayOfWeek
+     */
+    public Boolean getDayOfWeek()
+    {
+        return myDayOfWeek;
+    }
+
+    /**
+     * Set the dayOfWeek.
+     *
+     * @param dayOfWeek the dayOfWeek to set
+     */
+    public void setDayOfWeek(Boolean dayOfWeek)
+    {
+        myDayOfWeek = dayOfWeek;
     }
 }

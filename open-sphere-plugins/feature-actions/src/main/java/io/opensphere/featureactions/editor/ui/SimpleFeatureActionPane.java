@@ -99,7 +99,6 @@ public class SimpleFeatureActionPane extends BorderPane
             myDnDHandler.handleNewCell(myGroup, row);
             return row;
         });
-
         return myActionsList;
     }
 }
