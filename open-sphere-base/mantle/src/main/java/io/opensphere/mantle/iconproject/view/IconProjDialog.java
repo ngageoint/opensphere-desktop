@@ -1,7 +1,10 @@
 package io.opensphere.mantle.iconproject.view;
 
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.fx.JFXDialog;
@@ -27,9 +30,9 @@ public class IconProjDialog extends JFXDialog
      * @param owner the calling window.
      * @param tb the toolbox for registry items.
      */
-    public IconProjDialog(Window owner, Toolbox tb)
+    public IconProjDialog(Window owner, Toolbox tb,boolean showCancel)
     {
-        super(owner, "Intern Icon Manager", false);
+        super(owner, "Intern Icon Manager", showCancel);
         myPanelModel.setToolBox(tb);
         myPanelModel.setOwner(owner);
         myPanelModel.setMyIconRegistry(MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry());
@@ -50,8 +53,8 @@ public class IconProjDialog extends JFXDialog
         final MainPanel myMainPanel;
 
         private PanelModel myPanelModel;
-        
-        private ViewModel myViewModel= new ViewModel();
+
+        private ViewModel myViewModel = new ViewModel();
 
         /**
          * Creates subpannels for UI.
@@ -63,22 +66,27 @@ public class IconProjDialog extends JFXDialog
         public IconProjView(PanelModel thePanelModel)
         {
             myPanelModel = thePanelModel;
-            
+
             myMainPanel = new MainPanel(myPanelModel);
             myViewModel.setMainPanel(myMainPanel);
-            
+
             myTopMenuBar = new TopMenuBar(myPanelModel);
             myViewModel.setTopMenuBar(myTopMenuBar);
-            
+
             setTopAnchor(myMainPanel, 30.0);
             setBottomAnchor(myMainPanel, 0.0);
             setLeftAnchor(myMainPanel, -8.);
             setRightAnchor(myMainPanel, 0.);
             setLeftAnchor(myTopMenuBar, 0.);
             setRightAnchor(myTopMenuBar, 0.);
-            
+
             myPanelModel.setViewModel(myViewModel);
             getChildren().addAll(myMainPanel, myTopMenuBar);
         }
+    }
+
+    public PanelModel getMyPanelModel()
+    {
+        return myPanelModel;
     }
 }

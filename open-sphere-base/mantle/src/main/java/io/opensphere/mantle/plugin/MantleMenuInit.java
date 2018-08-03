@@ -13,7 +13,7 @@ import io.opensphere.core.control.ui.MenuBarRegistry;
 import io.opensphere.core.quantify.Quantify;
 import io.opensphere.mantle.data.geom.style.dialog.VisualizationStyleControlDialog;
 import io.opensphere.mantle.icon.impl.gui.IconManagerFrame;
-import io.opensphere.mantle.iconproject.view.IconProjFrame;
+import io.opensphere.mantle.iconproject.view.IconProjDialog;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.mantle.util.TextViewDialog;
 
@@ -55,7 +55,7 @@ class MantleMenuInit
             }
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.DEBUG_MENU)
-        .add(deCacheSummaryMI);
+                .add(deCacheSummaryMI);
     }
 
     /**
@@ -79,7 +79,7 @@ class MantleMenuInit
             }
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.DEBUG_MENU)
-        .add(iconManagerMI);
+                .add(iconManagerMI);
     }
 
     /**
@@ -101,12 +101,13 @@ class MantleMenuInit
                 Quantify.collectMetric("mist3d.menu-bar.tools.icon-manager");
                 iconManager.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
                 iconManager.setVisible(true);
-                new IconProjFrame(myToolbox);
+                IconProjDialog internIconManager = new IconProjDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(), myToolbox,false);
+                internIconManager.setVisible(true);
             }
         });
 
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.TOOLS_MENU)
-        .add(iconManagerMI);
+                .add(iconManagerMI);
     }
 
     /**
@@ -129,6 +130,6 @@ class MantleMenuInit
             }
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.TOOLS_MENU)
-        .add(visStyleControlMI);
+                .add(visStyleControlMI);
     }
 }

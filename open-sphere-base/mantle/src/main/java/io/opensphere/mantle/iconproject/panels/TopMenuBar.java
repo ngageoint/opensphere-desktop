@@ -6,6 +6,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -116,12 +117,14 @@ public class TopMenuBar extends HBox
             myPanelModel.getTileWidth().set(origTile + 10);
             myPanelModel.getViewModel().getMainPanel().myScrollPane.setContent(new GridBuilder(myPanelModel));
         });
+        myEnlargeButton.setTooltip(new Tooltip("Increase Icon Size"));
 
         myShrinkButton.setOnAction(event ->
         {
             int origTile = myPanelModel.getTileWidth().get();
             myPanelModel.getTileWidth().set(origTile - 10);
         });
+        myShrinkButton.setTooltip(new Tooltip("Decrease Icon Size"));
         theSizeMenu.getButtons().addAll(mySizeLabel, myShrinkButton, myEnlargeButton);
         return theSizeMenu;
     }

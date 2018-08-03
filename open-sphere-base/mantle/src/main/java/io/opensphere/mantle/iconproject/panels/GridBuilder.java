@@ -1,7 +1,12 @@
 package io.opensphere.mantle.iconproject.panels;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Window;
 import java.util.List;
+
+import javax.swing.JPanel;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -13,9 +18,11 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
-
+import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.icon.IconRecord;
+import io.opensphere.mantle.icon.impl.gui.IconChooserPanel.RecordImageIcon;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.view.IconCustomizerDialog;
 import io.opensphere.mantle.iconproject.view.IconPopupMenu;
@@ -64,6 +71,41 @@ public class GridBuilder extends TilePane
             setMargin(sample, new Insets(5, 5, 5, 5));
             getChildren().add(sample);
         }
+
+//        {
+//            int borderSize = 6;
+//            if (myTileWidth == 0)
+//            {
+//                myTileWidth += 100;
+//            }
+//            int iconWidth = (int)(myTileWidth - borderSize);
+//            int width = myGridPanel.getWidth();
+//            if (width < 0 || width > 5000)
+//            {
+//                width = 400;
+//            }
+//
+//            int height = myGridPanel.getHeight();
+//            if (height < 0 || height > 5000)
+//            {
+//                height = 400;
+//            }
+//            int numIconRowsInView = (int)Math.ceil((double)height / (double)myTileWidth);
+//            GridPane grid;
+//
+//                    int numIconsPerRow = myTileWidth > width ? 1 : (int)Math.floor((double)width / (double)myTileWidth);
+//                    int numRows = (int)Math.ceil((double)myRecordList.size() / (double)numIconsPerRow);
+//                    grid = new GridPane();
+//                    numRows < numIconRowsInView ? numIconRowsInView : numRows, numIconsPerRow
+//                    for (int i = 0; i < myRecordList.size(); i++)
+//                    {
+//                        Button sample = buttonBuilder(recordindex);
+//                        grid.getChildren().add(sample);
+//                        grid.add(imageBT);
+//                    }
+//                  
+//        }
+
     }
 
     /**

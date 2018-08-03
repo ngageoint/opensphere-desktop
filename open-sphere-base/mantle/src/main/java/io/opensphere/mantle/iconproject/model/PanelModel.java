@@ -7,7 +7,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
@@ -39,6 +38,7 @@ public class PanelModel
     /** The icon record list. */
     private List<IconRecord> myIconRecordList;
 
+    /** The model for the panels contained in the UI. */
     private ViewModel myViewModel;
 
     /**
@@ -181,14 +181,23 @@ public class PanelModel
         myIconRecordList = list;
     }
 
+    /**
+     * Gets the value of the {@link #myViewModel} field.
+     *
+     * @return the value stored in the {@link #myViewModel} field.
+     */
     public ViewModel getViewModel()
     {
         return myViewModel;
     }
 
+    /**
+     * Sets the value of the {@link #myViewModel} field.
+     *
+     * @param theViewModel the value to store in the {@link #myViewModel} field.
+     */
     public void setViewModel(ViewModel theViewModel)
     {
-        myViewModel = theViewModel;
+        this.myViewModel = theViewModel;
     }
-
 }

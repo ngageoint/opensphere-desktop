@@ -105,15 +105,13 @@ public class IconCustomizerPane extends BorderPane
         sizeSlider.setShowTickLabels(true);
         sizeSlider.setMajorTickUnit(.5);
         sizeSlider.valueProperty().bindBidirectional(myScale);
-        Label sizeLabel = new Label("Scale: ", sizeSlider);
-        sizeLabel.setContentDisplay(ContentDisplay.RIGHT);
 
-        /*Spinner<Number> sizeSpin = new Spinner<>(0.0, 3.0, 1, .1);
+        Spinner<Number> sizeSpin = new Spinner<>(0.0, 3.0, 1, .1);
         sizeSpin.setPrefWidth(55.);
         sizeSpin.getValueFactory().valueProperty().bindBidirectional(myScale);
         sizeSpin.setEditable(true);
         Label sizeLabel = new Label("Scale: ", sizeSpin);
-        sizeLabel.setContentDisplay(ContentDisplay.RIGHT);*/
+        sizeLabel.setContentDisplay(ContentDisplay.RIGHT);
         AnchorPane.setRightAnchor(sizeLabel, 0.);
 
         myColorPicker = new ColorPicker();
@@ -125,7 +123,7 @@ public class IconCustomizerPane extends BorderPane
             updateImageColor();
         });
         myTopBar.setSpacing(5.);
-        myTopBar.getChildren().addAll(myColorPicker, sizeLabel, sizeSlider);//sizeSpin);
+        myTopBar.getChildren().addAll(myColorPicker, sizeLabel, sizeSpin);
         return myTopBar;
     }
 

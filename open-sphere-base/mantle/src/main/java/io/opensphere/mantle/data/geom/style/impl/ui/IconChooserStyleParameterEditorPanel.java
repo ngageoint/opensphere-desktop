@@ -23,6 +23,8 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.impl.gui.IconChooserDialog;
+import io.opensphere.mantle.iconproject.view.IconProjDialog;
+import javafx.scene.control.ButtonBar.ButtonData;
 
 /**
  * The Class IconChooserStyleParameterEditorPanel.
@@ -102,22 +104,38 @@ public class IconChooserStyleParameterEditorPanel extends AbstractStyleParameter
     {
         if (e.getSource() == myButton)
         {
-            final IconChooserDialog icd = new IconChooserDialog(this, true, IconChooserDialog.DEFAULT_MESSAGE, myStyle.getToolbox());
-            icd.setSelectedUrl(getParameterValue());
-            icd.addActionListener(new ActionListener()
+
+            IconProjDialog fileDialog = new IconProjDialog(myStyle.getToolbox().getUIRegistry().getMainFrameProvider().get(),
+                    myStyle.getToolbox(), true);
+            fileDialog.setVisible(true);
+
+            if (fileDialog.getResponse() == null || fileDialog.getResponse().equals(ButtonData.CANCEL_CLOSE))
             {
-                @Override
-                public void actionPerformed(ActionEvent e2)
-                {
-                    if (e2.getActionCommand() == IconChooserDialog.ICON_SELECTED)
-                    {
-                        IconRecord rec = icd.getSelectedIcon();
-                        setParamValue(rec.getImageURL().toString());
-                    }
-                }
-            });
-            icd.setVisible(true);
+                // Do not update the icon in the viewer.
+            }
+            else // Updates the icon picker view.
+            {
+                IconRecord rec = fileDialog.getMyPanelModel().getIconRecord();
+                setParamValue(rec.getImageURL().toString());
+            }
+//Old file chooser code
+//            final IconChooserDialog icd = new IconChooserDialog(this, true, IconChooserDialog.DEFAULT_MESSAGE, myStyle.getToolbox());
+//            icd.setSelectedUrl(getParameterValue());
+//            icd.addActionListener(new ActionListener()
+//            {
+//                @Override
+//                public void actionPerformed(ActionEvent e2)
+//                {
+//                    if (e2.getActionCommand() == IconChooserDialog.ICON_SELECTED)
+//                    {
+//                        IconRecord rec = icd.getSelectedIcon();
+//                        setParamValue(rec.getImageURL().toString());
+//                    }
+//                }
+//            });
+//            icd.setVisible(true);
         }
+
     }
 
     /** Update. */
