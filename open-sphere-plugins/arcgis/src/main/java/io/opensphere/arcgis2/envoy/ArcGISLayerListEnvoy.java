@@ -197,7 +197,7 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
 
                 for (String folder : info.getFolders())
                 {
-                    if (StringUtils.startsWith(folder, includedSubpath) || includedSubpath == null)
+                    if (StringUtils.startsWith(includedSubpath, folder) || includedSubpath == null)
                     {
                         String folderUrl = UrlUtilities.concatUrlFragments(category.getCategory(), folder);
                         queryFolder(category, folderUrl, queryReceiver, includedSubpath);
