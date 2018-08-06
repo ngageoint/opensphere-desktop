@@ -65,7 +65,6 @@ public class QuerySelectorSplitButton extends SplitButton
             {
                 setIcon(myModeIcons.get(myCurrentSelectionMode.get()).getDefaultIcon());
             }
-
         });
 
         createIconModifyingMenuItem(myModeIcons.get(SelectionMode.BOUNDING_BOX));
@@ -110,8 +109,8 @@ public class QuerySelectorSplitButton extends SplitButton
         item.addActionListener(e ->
         {
             setIcon(metadata.getSelectedIcon());
-            toggledProperty().set(true);
             currentSelectionModeProperty().set(metadata.getMode());
+            fireActionPerformed(e);
         });
 
         addMenuItem(item);
@@ -128,6 +127,17 @@ public class QuerySelectorSplitButton extends SplitButton
         // intercepts the super implementation to bind behavior to the toggled
         // property.
         toggledProperty().set(b);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see javax.swing.AbstractButton#isSelected()
+     */
+    @Override
+    public boolean isSelected()
+    {
+        return toggledProperty().get();
     }
 
     private static class SelectionModeMetadata
