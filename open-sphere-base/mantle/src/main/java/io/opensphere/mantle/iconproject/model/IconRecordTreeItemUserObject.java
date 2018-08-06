@@ -1,4 +1,4 @@
-package io.opensphere.mantle.iconproject.impl;
+package io.opensphere.mantle.iconproject.model;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import io.opensphere.mantle.icon.IconRecord;
 public interface IconRecordTreeItemUserObject
 {
     /**
-     * Gets the treeItem
+     * Gets the treeItem.
      * @return the treeItem
      */
     TreeItem<String> getMyTreeItem();

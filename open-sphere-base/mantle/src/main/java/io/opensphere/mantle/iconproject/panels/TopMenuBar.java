@@ -16,6 +16,7 @@ import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
 import io.opensphere.mantle.iconproject.impl.LabelMaker;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 
+/** An HBox containing display size controls, view style, and filter options. */
 public class TopMenuBar extends HBox
 {
     /** The label for the icon display size. */
@@ -54,9 +55,14 @@ public class TopMenuBar extends HBox
     /** The bar to enter text to filter icon results. */
     private final TextField myTextField = new TextField();
 
+    /** The model used for the UI. */
     private final PanelModel myPanelModel;
 
-    /** Creates the top menu bar of the icon manager UI. */
+    /**
+     * Creates the top menu bar of the icon manager UI.
+     *
+     * @param thePanelModel the current UI model.
+     */
     public TopMenuBar(PanelModel thePanelModel)
     {
         mySearchBar = createFilterBar();
@@ -169,3 +175,4 @@ public class TopMenuBar extends HBox
         return slider;
     }
 }
+

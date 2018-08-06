@@ -1,4 +1,4 @@
-package io.opensphere.mantle.icon.impl;
+package io.opensphere.mantle.iconproject.impl;
 
 import java.awt.Dimension;
 import java.awt.Window;
@@ -32,25 +32,26 @@ public class IconProjRotDialog extends JFXDialog
     /** The logger. */
     private static final Logger LOGGER = Logger.getLogger(IconProjRotDialog.class);
 
+    /** The current icon registry. */
     private IconRegistry myIconRegistry;
 
+    /** The icon being rotated. */
     private IconRecord myIconRecord;
 
+    /** The current UI model. */
     private PanelModel myPanelModel;
 
     /**
-     * Constructor.
+     * Creates a small window to quickly rotate an icon.
      *
      * @param owner the owner
-     * @param myIconRecord the icon record
-     * @param iconRegistry the icon registry
-     * @param chooserPanel the icon chooser panel
+     * @param thePanelModel the current UI model.
      */
     public IconProjRotDialog(Window owner, PanelModel thePanelModel)
     {
         super(owner, "Rotate Icon");
         myPanelModel = thePanelModel;
-        myIconRegistry = myPanelModel.getMyIconRegistry();
+        myIconRegistry = myPanelModel.getIconRegistry();
         myIconRecord = myPanelModel.getIconRecord();
         setMinimumSize(new Dimension(450, 550));
         IconRotPane pane = new IconRotPane(myIconRecord);
@@ -77,10 +78,11 @@ public class IconProjRotDialog extends JFXDialog
     }
 
     /**
-     * Rotates and saves the icon to the icon registry.
+     * Saves the modified icon to the icon registry.
      *
-     * @param record the icon record
-     * @param rotation the rotation
+     * @param record the icon being rotated.
+     * @param rotation the numerical amount the icon has been rotated.
+     * @param saveChoice the users indication of whether to replace the existing icon.
      */
     private void saveRotatedIcon(IconRecord record, int rotation, boolean saveChoice)
     {
@@ -92,7 +94,6 @@ public class IconProjRotDialog extends JFXDialog
 
             if (saveChoice)
             {
-
                 String filename = record.getImageURL().toString();
                 filename = filename.replace("file:", "");
                 filename = filename.replace("%20", " ");
@@ -115,5 +116,5 @@ public class IconProjRotDialog extends JFXDialog
             LOGGER.error(e, e);
         }
     }
-
 }
+

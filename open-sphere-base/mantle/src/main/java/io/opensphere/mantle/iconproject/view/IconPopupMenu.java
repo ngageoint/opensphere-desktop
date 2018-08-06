@@ -6,20 +6,20 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 
 import java.awt.EventQueue;
-import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.iconproject.impl.IconPopupMenuImpl;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 
 /**
- * The Class IconPopup Menu.
+ * A popup menu to be called from an icon button to perform an action such as
+ * favorite,rotate,remove, and delete features. All actions are handled inside
+ * this class.
  */
-
 public class IconPopupMenu extends ContextMenu
 {
     /**
-     * The constructor for the class IconPopupMenu.
-     * 
-     * @param selectedIcon the selected icon
+     * The main method to instantiate a new IconPopupMenu.
+     *
+     * @param thePanelModel the model used to get registry items.
      */
     public IconPopupMenu(PanelModel thePanelModel)
     {
@@ -31,7 +31,7 @@ public class IconPopupMenu extends ContextMenu
             @Override
             public void handle(ActionEvent event)
             {
-                selector.addToFav(thePanelModel);
+                selector.addToFav();
             }
         });
 
@@ -63,8 +63,17 @@ public class IconPopupMenu extends ContextMenu
                 selector.delete(false);
             }
         });
+        
+        MenuItem unSelectAction = new MenuItem("Unselect All Icons");
+        unSelectAction.setOnAction(event ->
+        {
+            EventQueue.invokeLater(() ->
+            {
+                selector.unSelectIcons();
+            });
+        });
 
-        getItems().addAll(favAction, rotateAction, deleteAction, removeAction);
+        getItems().addAll(favAction, rotateAction, deleteAction, removeAction,unSelectAction);
     }
-
 }
+

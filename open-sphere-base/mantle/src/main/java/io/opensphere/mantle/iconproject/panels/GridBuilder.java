@@ -1,12 +1,7 @@
 package io.opensphere.mantle.iconproject.panels;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Window;
 import java.util.List;
-
-import javax.swing.JPanel;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -18,11 +13,8 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
-import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.impl.gui.IconChooserPanel.RecordImageIcon;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.view.IconCustomizerDialog;
 import io.opensphere.mantle.iconproject.view.IconPopupMenu;
@@ -35,12 +27,6 @@ public class GridBuilder extends TilePane
 
     /** The width used for icon buttons. */
     private final int myTileWidth;
-
-    /** The icon registry used for the pane. */
-    // private final IconRegistry myIconRegistry;
-
-    /** The selected icon to be used for the builder. */
-    // private IconRecord mySelectedIcon;
 
     /** The icon record list. */
     List<IconRecord> myRecordList;
@@ -58,12 +44,7 @@ public class GridBuilder extends TilePane
     {
         myPanelModel = thePanelModel;
         myTileWidth = myPanelModel.getTileWidth().get();
-        // myIconRegistry = myPanelModel.getMyIconRegistry();
         myRecordList = myPanelModel.getRecordList();
-
-        // setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" +
-        // "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-        // + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
 
         for (IconRecord recordindex : myRecordList)
         {
@@ -71,7 +52,6 @@ public class GridBuilder extends TilePane
             setMargin(sample, new Insets(5, 5, 5, 5));
             getChildren().add(sample);
         }
-
 //        {
 //            int borderSize = 6;
 //            if (myTileWidth == 0)
@@ -103,17 +83,7 @@ public class GridBuilder extends TilePane
 //                        grid.getChildren().add(sample);
 //                        grid.add(imageBT);
 //                    }
-//                  
 //        }
-
-    }
-
-    /**
-     * Creates the context menu.
-     */
-    private void menuBuilder()
-    {
-        cMenu = showPopupMenu();
     }
 
     /**
@@ -150,16 +120,17 @@ public class GridBuilder extends TilePane
                 if (e.getButton() == MouseButton.PRIMARY)
                 {
                     myPanelModel.setIconRecord(record);
+                    myPanelModel.getSelectedIcons().put(record, generic);
+                    generic.setStyle("-fx-border-style: solid inside;" + "-fx-border-width: 3;" + "-fx-border-radius: 5;"
+                            + "-fx-border-color: red;");
                 }
                 if (e.getButton() == MouseButton.SECONDARY)
                 {
                     myPanelModel.setIconRecord(record);
-                    menuBuilder();
-                    generic.setContextMenu(cMenu);
+                    generic.setContextMenu(new IconPopupMenu(myPanelModel));
                 }
             }
         });
-
         return generic;
     }
 
@@ -172,15 +143,5 @@ public class GridBuilder extends TilePane
     {
         IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myPanelModel);
         builderPane.setVisible(true);
-    }
-
-    /**
-     * Shows the iconpopupmenu.
-     *
-     * @return the built context menu
-     */
-    public ContextMenu showPopupMenu()
-    {
-        return new IconPopupMenu(myPanelModel);
     }
 }

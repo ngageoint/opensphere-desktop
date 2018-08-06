@@ -16,7 +16,7 @@ import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.gui.AlphanumComparator;
 import io.opensphere.mantle.iconproject.impl.DefaultIconRecordTreeItemObject;
-import io.opensphere.mantle.iconproject.impl.IconRecordTreeItemUserObject;
+import io.opensphere.mantle.iconproject.model.IconRecordTreeItemUserObject;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 
 /**
@@ -49,7 +49,7 @@ public class TreeBuilder extends TreeItem<String>
     public TreeBuilder(PanelModel thePanelModel, Predicate<IconRecord> filter)
     {
         myPanelModel = thePanelModel;
-        myIconRegistry = myPanelModel.getMyIconRegistry();
+        myIconRegistry = myPanelModel.getIconRegistry();
 
         List<IconRecord> records = myIconRegistry.getIconRecords(filter);
         Collections.sort(records, (r1, r2) -> AlphanumComparator.compareNatural(r1.getImageURL().toString(), r2.getImageURL().toString()));

@@ -85,7 +85,6 @@ public class IconCustomizerPane extends BorderPane
         setCenter(myIconDisplay = createImageView());
         setRight(createRight());
         setTop(createTop());
-
         VBox bottom = createBottom();
         BorderPane.setMargin(bottom, new Insets(5, 0, 0, 0));
         setBottom(bottom);
@@ -98,7 +97,7 @@ public class IconCustomizerPane extends BorderPane
      */
     private HBox createTop()
     {
-        HBox myTopBar = new HBox();
+        HBox topMenuBar = new HBox();
         Slider sizeSlider = new Slider(0, 3, 1);
         sizeSlider.setOrientation(Orientation.HORIZONTAL);
         sizeSlider.setShowTickMarks(true);
@@ -106,8 +105,18 @@ public class IconCustomizerPane extends BorderPane
         sizeSlider.setMajorTickUnit(.5);
         sizeSlider.valueProperty().bindBidirectional(myScale);
 
-        Spinner<Number> sizeSpin = new Spinner<>(0.0, 3.0, 1, .1);
-        sizeSpin.setPrefWidth(55.);
+        final double sizeIncr = .1;
+        double maxScale;
+        if (myIconDisplay.getBoundsInLocal().getWidth() < 150)
+        {
+            maxScale = 4;
+        }
+        else
+        {
+            maxScale = 3;
+        }
+        Spinner<Number> sizeSpin = new Spinner<>(0.0, maxScale, 1., sizeIncr);
+        sizeSpin.setPrefWidth(spinwidth);
         sizeSpin.getValueFactory().valueProperty().bindBidirectional(myScale);
         sizeSpin.setEditable(true);
         Label sizeLabel = new Label("Scale: ", sizeSpin);
@@ -122,9 +131,9 @@ public class IconCustomizerPane extends BorderPane
             myColor = myColorPicker.getValue();
             updateImageColor();
         });
-        myTopBar.setSpacing(5.);
-        myTopBar.getChildren().addAll(myColorPicker, sizeLabel, sizeSpin);
-        return myTopBar;
+        topMenuBar.setSpacing(5);
+        topMenuBar.getChildren().addAll(myColorPicker, sizeLabel, sizeSpin);
+        return topMenuBar;
     }
 
     /**
@@ -145,7 +154,8 @@ public class IconCustomizerPane extends BorderPane
         rotSlider.valueProperty().bindBidirectional(myRotation);
 
         Spinner<Number> rotSpinner = new Spinner<>(-180., 180., 0.);
-        rotSpinner.setPrefWidth(40.0);
+        final Double minwidth = 40.;
+        rotSpinner.setPrefWidth(minwidth);
         rotSpinner.getValueFactory().valueProperty().bindBidirectional(myRotation);
         rotSpinner.setEditable(true);
         rotSpinner.getStyleClass().clear();
@@ -172,13 +182,14 @@ public class IconCustomizerPane extends BorderPane
 
         HBox controlBox = new HBox(10);
         controlBox.setAlignment(Pos.BASELINE_LEFT);
-
-        Spinner<Number> xSpin = new Spinner<>(-100., 100., 0., 5.);
+        final double spinIncr = 5.;
+        final double spinStrt = 0.;
+        Spinner<Number> xSpin = new Spinner<>(-100, 100, spinStrt, spinIncr);
         xSpin.setPrefWidth(spinwidth);
         xSpin.getValueFactory().valueProperty().bindBidirectional(myXPos);
         xSpin.setEditable(true);
 
-        Spinner<Number> ySpin = new Spinner<>(-125., 125., 0., 5.);
+        Spinner<Number> ySpin = new Spinner<>(-125, 125, spinStrt, spinIncr);
         ySpin.setPrefWidth(spinwidth);
         ySpin.getValueFactory().valueProperty().bindBidirectional(myYPos);
         ySpin.setEditable(true);
@@ -191,19 +202,19 @@ public class IconCustomizerPane extends BorderPane
 
         controlBox.getChildren().addAll(xLabel, xSpin, yLabel, ySpin);
 
-        HBox SaveInfo = new HBox();
+        HBox saveInfo = new HBox();
 
         Label helpInfo = new Label("Replace Existing Icon?");
         helpInfo.setFont(Font.font(helpInfo.getFont().getFamily(), FontPosture.ITALIC, 11));
-        helpInfo.setPadding(new Insets(0,3.,0,0));
+        helpInfo.setPadding(new Insets(0, 3, 0, 0));
 
         CheckBox saveState = new CheckBox();
         saveState.selectedProperty().set(false);
         saveState.selectedProperty().bindBidirectional(mySave);
 
-        SaveInfo.getChildren().addAll(helpInfo,saveState);
-        SaveInfo.setSpacing(5.);
-        cnrlBox.getChildren().addAll(controlBox, SaveInfo);
+        saveInfo.getChildren().addAll(helpInfo, saveState);
+        saveInfo.setSpacing(5);
+        cnrlBox.getChildren().addAll(controlBox, saveInfo);
         return cnrlBox;
     }
 
@@ -217,8 +228,7 @@ public class IconCustomizerPane extends BorderPane
         HBox iconDisplayer = new HBox();
         iconDisplayer.setAlignment(Pos.CENTER);
         iconDisplayer.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
-                + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" +
-                "-fx-border-color: purple;");
+                + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
         iconDisplayer.setId("BoxStyle");
         myIconView = new ImageView(myIconRecord.getImageURL().toString());
         myIconView.rotateProperty().bind(myRotation);
@@ -253,7 +263,6 @@ public class IconCustomizerPane extends BorderPane
         myIconView.scaleYProperty().bind(myScale);
 
         iconDisplayer.getChildren().addAll(myIconView);
-
         return iconDisplayer;
     }
 
@@ -263,9 +272,10 @@ public class IconCustomizerPane extends BorderPane
      */
     private void updateImageColor()
     {
+        final double specConst = .75;
         Lighting lighting = new Lighting();
         lighting.setDiffuseConstant(1.0);
-        lighting.setSpecularConstant(0.75);
+        lighting.setSpecularConstant(specConst);
         lighting.setSpecularExponent(0.0);
         lighting.setSurfaceScale(0.0);
         lighting.setLight(new Light.Distant(45, 45, myColor));
@@ -290,14 +300,6 @@ public class IconCustomizerPane extends BorderPane
         if (myIconView.getImage() != null)
         {
             iconOut = myIconDisplay.snapshot(parameters, null);
-            /* if (myXPos.getValue() == 0 && myYPos.getValue() == 0)
-            {
-                iconOut = myIconView.snapshot(parameters, null);
-            }
-            else
-            {
-                iconOut = myIconDisplay.snapshot(parameters, null);
-            }*/
         }
         return iconOut;
     }
@@ -310,7 +312,6 @@ public class IconCustomizerPane extends BorderPane
     public String getImageName()
 
     {
-
         if (myColor != null)
 
         {
@@ -332,6 +333,11 @@ public class IconCustomizerPane extends BorderPane
         return mySave.get();
     }
 
+    /**
+     * Gets the icon being modified.
+     *
+     * @return myIconRecord the current Icon being edited.
+     */
     public IconRecord getIconRecord()
     {
         return myIconRecord;

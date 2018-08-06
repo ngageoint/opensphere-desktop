@@ -7,6 +7,7 @@ import javafx.scene.control.TreeItem;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.icon.IconRecord;
+import io.opensphere.mantle.iconproject.model.IconRecordTreeItemUserObject;
 
 /**
  * The Class DefaultIconRecordTreeItemUserObject.

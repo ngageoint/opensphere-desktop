@@ -27,10 +27,16 @@ import javafx.scene.layout.AnchorPane;
 
 public class LoadPane extends JPanel
 {
+    /** The serial ID. */
+    private static final long serialVersionUID = -5913383302540771819L;
+    
+    /** The Sub Category currently selected. */
     private String mySubCatName;
-
+    
+    /** The current UI model. */
     private PanelModel myPanelModel;
-
+    
+    /** The Category currently selected. */
     private String myCollectionName;
 
     /**
@@ -181,3 +187,4 @@ public class LoadPane extends JPanel
     }
 
 }
+

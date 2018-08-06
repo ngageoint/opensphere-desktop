@@ -1,11 +1,7 @@
 package io.opensphere.mantle.iconproject.view;
 
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.mantle.iconproject.model.PanelModel;
@@ -13,13 +9,13 @@ import io.opensphere.mantle.iconproject.model.ViewModel;
 import io.opensphere.mantle.iconproject.panels.MainPanel;
 import io.opensphere.mantle.iconproject.panels.TopMenuBar;
 import io.opensphere.mantle.util.MantleToolboxUtils;
-import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 
 /** Main UI Frame. */
 @SuppressWarnings("serial")
 public class IconProjDialog extends JFXDialog
 {
+    /** The model to be shared between all the UI elements. */
     private PanelModel myPanelModel = new PanelModel();
 
     /**
@@ -29,18 +25,20 @@ public class IconProjDialog extends JFXDialog
      *
      * @param owner the calling window.
      * @param tb the toolbox for registry items.
+     * @param showCancel the boolean to toggle the JFX Dialog to show or not
+     *            show the cancel option.
      */
-    public IconProjDialog(Window owner, Toolbox tb,boolean showCancel)
+
+    public IconProjDialog(Window owner, Toolbox tb, boolean showCancel)
     {
         super(owner, "Intern Icon Manager", showCancel);
         myPanelModel.setToolBox(tb);
         myPanelModel.setOwner(owner);
-        myPanelModel.setMyIconRegistry(MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry());
+        myPanelModel.setIconRegistry(MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry());
         setLocationRelativeTo(owner);
-        setSize(900, 600);
+        setSize(875, 600);
         setFxNode(new IconProjView(myPanelModel));
         setMinimumSize(new Dimension(800, 600));
-
     }
 
     /** Packages UI elements into one pane. */
@@ -52,15 +50,16 @@ public class IconProjDialog extends JFXDialog
         /** Panel comprised of Tree and icon display. */
         final MainPanel myMainPanel;
 
+        /** The Model for the entire UI. */
         private PanelModel myPanelModel;
 
+        /** The model for the display panels. */
         private ViewModel myViewModel = new ViewModel();
 
         /**
          * Creates subpannels for UI.
          *
-         * @param tb the toolbox used for registry.
-         * @param owner the parent window containing this pannel.a
+         * @param thePanelModel the model used for the UI.
          */
 
         public IconProjView(PanelModel thePanelModel)
@@ -85,6 +84,11 @@ public class IconProjDialog extends JFXDialog
         }
     }
 
+    /**
+     * Gets the model.
+     *
+     * @return myPanelModel the model used for the UI.
+     */
     public PanelModel getMyPanelModel()
     {
         return myPanelModel;

@@ -1,10 +1,5 @@
 package io.opensphere.mantle.iconproject.panels;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import io.opensphere.mantle.icon.IconRecord;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -12,14 +7,12 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -37,41 +30,15 @@ public class IconRotPane extends BorderPane
     private final BooleanProperty mySave = new SimpleBooleanProperty(false);
 
     /**
-     * Constructor.
+     * Creates the Collection Name and Sub Collection Name selection panes
+     * containing controls for user input.
      *
-     * @param record the icon record
+     * @param displayIcon the icon record
      */
-    public IconRotPane(IconRecord record)
+    public IconRotPane(IconRecord displayIcon)
     {
-     //   setTop(createTop());
-        setCenter(createImageView(record));
+        setCenter(createImageView(displayIcon));
         setBottom(createControlPanel());
-    }
-
-    private AnchorPane createTop()
-    {
-        AnchorPane top = new AnchorPane();
-
-        CheckBox saveState = new CheckBox();
-        saveState.selectedProperty().set(false);
-        saveState.selectedProperty().bindBidirectional(mySave);
-
-        Label message = new Label("Replace existing icon?");
-        message.setFont(Font.font(message.getFont().getFamily(), FontPosture.ITALIC, 11));
-        message.setContentDisplay(ContentDisplay.RIGHT);
-        AnchorPane.setRightAnchor(top, 0.);
-        top.getChildren().addAll(message, saveState);
-        return top;
-    }
-
-    /**
-     * Gets the rotation value.
-     *
-     * @return the rotation value
-     */
-    public int getRotation()
-    {
-        return myRotation.get();
     }
 
     /**
@@ -119,27 +86,27 @@ public class IconRotPane extends BorderPane
      */
     private VBox createControlPanel()
     {
-        HBox box = new HBox(8);
+        HBox rotateControls = new HBox(8);
         VBox box2 = new VBox();
-        box.setAlignment(Pos.CENTER_LEFT);
+        rotateControls.setAlignment(Pos.CENTER_LEFT);
         Slider slider = createSlider();
         Spinner<Number> spinner = createSpinner();
         HBox.setHgrow(slider, Priority.ALWAYS);
         HBox.setHgrow(spinner, Priority.NEVER);
-        
-        HBox Box3 = new HBox();
+
+        HBox saveControls = new HBox();
         CheckBox saveState = new CheckBox();
         saveState.selectedProperty().set(false);
         saveState.selectedProperty().bindBidirectional(mySave);
 
         Label message = new Label("Replace existing icon?");
         message.setFont(Font.font(message.getFont().getFamily(), FontPosture.ITALIC, 11));
-        message.setPadding(new Insets(0,5.,0,0));
+        message.setPadding(new Insets(0, 5, 0, 0));
         message.setContentDisplay(ContentDisplay.RIGHT);
-        Box3.getChildren().addAll(message,saveState);
-        
-        box.getChildren().addAll(slider, spinner);
-        box2.getChildren().addAll(box,Box3);
+        saveControls.getChildren().addAll(message, saveState);
+
+        rotateControls.getChildren().addAll(slider, spinner);
+        box2.getChildren().addAll(rotateControls, saveControls);
         return box2;
     }
 
@@ -171,8 +138,24 @@ public class IconRotPane extends BorderPane
         return spinner;
     }
 
+    /**
+     * Gets the save state.
+     * @return The users choice to replace the existing icon or save as a new
+     *         icon.
+     */
     public boolean getSaveState()
     {
         return mySave.get();
     }
+
+    /**
+     * Gets the rotation value.
+     *
+     * @return the rotation value
+     */
+    public int getRotation()
+    {
+        return myRotation.get();
+    }
 }
+

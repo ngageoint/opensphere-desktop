@@ -6,7 +6,6 @@ import java.util.Set;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.iconproject.model.ImportProp;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import javafx.collections.FXCollections;
@@ -23,61 +22,52 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 
+/**
+ * Creates the elements for the collection name selection in the Add icon
+ * Dialog.
+ */
 public class CollectNamesPane extends VBox
 {
     /**
-     * 
+     * The Radio Button to indicate only existing collection names will appear
+     * in the combobox.
      */
     private RadioButton myExistingRB;
 
     /**
-     * 
+     * The ComboBox to show the current collections names and take in user input
+     * for new collection names.
      */
     private ComboBox<String> myExistingComboBox;
 
-    /**
-     * 
-     */
+    /** The existing collection name choices. */
     private ObservableList<String> options;
 
-    /**
-     * 
-     */
+    /** The Radio Button to enable the user to enter a new collection name. */
     private RadioButton myNewRB;
 
-    /**
-     * 
-     */
+    /** The text for the new Radio Button. */
     private TextField myNewTF;
 
-    /**
-     * 
-     */
+    /** The model for the UI. */
     private PanelModel myPanelModel;
 
-    /**
-     * 
-     */
-    private IconRegistry myIconRegistry;
+    /** The toggle group for the New and Existing radio buttons. */
+    private ToggleGroup myToggleGroup = new ToggleGroup();
 
-    /**
-     * 
-     */
-    private ToggleGroup test = new ToggleGroup();
-
-    /**
-     * 
-     */
+    /** The model for the importation properties. */
     private ImportProp myIconProps;
 
     /**
-     * @param thePanelModel
+     * Creates the Collection Name selection controls and packages into a VBox.
+     *
+     * @param thePanelModel the current UI model.
      */
     public CollectNamesPane(PanelModel thePanelModel)
     {
         myPanelModel = thePanelModel;
         myIconProps = myPanelModel.getImportProps();
-        Set<String> collectionNameSet =  myPanelModel.getMyIconRegistry().getCollectionNames();
+        Set<String> collectionNameSet = myPanelModel.getIconRegistry().getCollectionNames();
 
         collectionNameSet.remove(IconRecord.DEFAULT_COLLECTION);
         collectionNameSet.remove(IconRecord.USER_ADDED_COLLECTION);
@@ -92,9 +82,9 @@ public class CollectNamesPane extends VBox
 
         HBox bottomPane = new HBox();
 
-        Label CollectionText = new Label("Select collection name for icons:");
-        CollectionText.setFont(Font.font(CollectionText.getFont().getFamily(), FontPosture.ITALIC, 11));
-        CollectionText.setContentDisplay(ContentDisplay.BOTTOM);
+        Label collectionMessage = new Label("Select collection name for icons:");
+        collectionMessage.setFont(Font.font(collectionMessage.getFont().getFamily(), FontPosture.ITALIC, 11));
+        collectionMessage.setContentDisplay(ContentDisplay.BOTTOM);
 
         myExistingRB = new RadioButton("Existing");
         myExistingRB.setSelected(true);
@@ -111,7 +101,7 @@ public class CollectNamesPane extends VBox
             if (!options.contains(myExistingComboBox.getValue()))
             {
                 options.add(myExistingComboBox.getValue());
-                System.out.println("added to registry" + myPanelModel.getMyIconRegistry().getCollectionNames());
+                System.out.println("added to registry" + myPanelModel.getIconRegistry().getCollectionNames());
             }
         });
 
@@ -123,15 +113,15 @@ public class CollectNamesPane extends VBox
 
         myNewTF = new TextField();
         myNewTF.setDisable(true);
-        bottomPane.setSpacing(5.);
+        bottomPane.setSpacing(5);
         bottomPane.setAlignment(Pos.BASELINE_LEFT);
 
-        myExistingRB.setToggleGroup(test);
-        myNewRB.setToggleGroup(test);
+        myExistingRB.setToggleGroup(myToggleGroup);
+        myNewRB.setToggleGroup(myToggleGroup);
         bottomPane.getChildren().addAll(myExistingRB, myNewRB, myExistingComboBox);
-        bottomPane.setSpacing(5.);
+        bottomPane.setSpacing(5);
 
-        getChildren().addAll(CollectionText, bottomPane);
+        getChildren().addAll(collectionMessage, bottomPane);
 //        setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
 //                + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
         setStyle("-fx-padding: 10");
@@ -140,12 +130,13 @@ public class CollectNamesPane extends VBox
     /**
      * Controls whether the user can enter data via the textfield or the drop
      * down menu provided by the combobox.
-     * 
-     * @param b the indication of which state the buttons should be set to.
+     *
+     * @param isEditable the indication of which state the buttons should be set
+     *            to.
      */
-    private void lockfeature(boolean b)
+    private void lockfeature(boolean isEditable)
     {
-        myExistingComboBox.setEditable(b);
+        myExistingComboBox.setEditable(isEditable);
     }
 
     /**
@@ -157,5 +148,4 @@ public class CollectNamesPane extends VBox
     {
         return myExistingComboBox.getSelectionModel().getSelectedItem();
     }
-
 }

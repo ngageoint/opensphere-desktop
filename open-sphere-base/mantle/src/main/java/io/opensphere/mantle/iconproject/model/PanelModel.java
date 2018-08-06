@@ -1,12 +1,14 @@
 package io.opensphere.mantle.iconproject.model;
 
 import java.awt.Window;
+import java.util.HashMap;
 import java.util.List;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.control.Button;
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
@@ -17,7 +19,7 @@ public class PanelModel
     /** View set to default of Grid. */
     private final ObjectProperty<ViewStyle> viewType = new SimpleObjectProperty<>(this, "viewtype", ViewStyle.GRID);
 
-    /** The selected icon to be used for the builder. */
+    /** The selected icon to be used for customization dialogs. */
     private IconRecord mySelectedIcon;
 
     /** The registry of icons. */
@@ -30,7 +32,7 @@ public class PanelModel
     private Window myOwner;
 
     /** The value used for the tilewidth. */
-    private final IntegerProperty myTileWidth = new SimpleIntegerProperty(100);
+    private final IntegerProperty myTileWidth = new SimpleIntegerProperty(80);
 
     /** The import property. */
     private ImportProp myImportProps = new ImportProp();
@@ -40,6 +42,9 @@ public class PanelModel
 
     /** The model for the panels contained in the UI. */
     private ViewModel myViewModel;
+
+    /** The icons currently selected. */
+    private HashMap<IconRecord, Button> mySelectedIcons = new HashMap<IconRecord, Button>();
 
     /**
      * gets the icon display view type.
@@ -56,7 +61,7 @@ public class PanelModel
      *
      * @return myIconRegistry the icon registry
      */
-    public IconRegistry getMyIconRegistry()
+    public IconRegistry getIconRegistry()
     {
         return myIconRegistry;
     }
@@ -76,7 +81,7 @@ public class PanelModel
      *
      * @param theIconRegistry the icon registry
      */
-    public void setMyIconRegistry(IconRegistry theIconRegistry)
+    public void setIconRegistry(IconRegistry theIconRegistry)
     {
         myIconRegistry = theIconRegistry;
     }
@@ -198,6 +203,28 @@ public class PanelModel
      */
     public void setViewModel(ViewModel theViewModel)
     {
-        this.myViewModel = theViewModel;
+        myViewModel = theViewModel;
+    }
+
+    /**
+     * Gets the value of the {@link #mySelectedIcons} field.
+     *
+     * @return the value stored in the {@link #mySelectedIcons} field.
+     */
+    public HashMap<IconRecord, Button> getSelectedIcons()
+    {
+        return mySelectedIcons;
+    }
+
+    /**
+     * Sets the value of the {@link #mySelectedIcons} field.
+     *
+     * @param theSelectedIcons
+     *            the value to store in the {@link #mySelectedIcons} field.
+     */
+    public void setSelectedIcons(HashMap<IconRecord, Button> theSelectedIcons)
+    {
+        mySelectedIcons = theSelectedIcons;
     }
 }
+

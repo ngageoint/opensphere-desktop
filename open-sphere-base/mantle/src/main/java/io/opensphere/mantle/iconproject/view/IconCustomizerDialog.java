@@ -24,7 +24,7 @@ import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.panels.IconCustomizerPane;
 
-/** The component class for building icons. */
+/** The window to customize icons. */
 public class IconCustomizerDialog extends JFXDialog
 {
     /** serial ID. */
@@ -35,27 +35,27 @@ public class IconCustomizerDialog extends JFXDialog
 
     /** The Icon Registry. */
     private final IconRegistry myIconRegistry;
-
+    /** the current UI model. */
     private PanelModel myPanelModel;
 
     /**
      * Wraps the IconCustomizerPane into a java swing window.
      *
      * @param owner the parent window.
-     * @param thePanelModel the model for the main panel.
+     * @param thePanelModel the model for the overall UI.
      */
     public IconCustomizerDialog(Window owner, PanelModel thePanelModel)
     {
         super(owner, "Customize an Icon");
         myPanelModel = thePanelModel;
-        myIconRegistry = thePanelModel.getMyIconRegistry();
+        myIconRegistry = thePanelModel.getIconRegistry();
         IconCustomizerPane pane = new IconCustomizerPane(owner, thePanelModel);
-        setFxNode(pane);
         setMinimumSize(new Dimension(450, 550));
         setLocationRelativeTo(owner);
+        setResizable(false);
+        setFxNode(pane);
         setAcceptEar(() -> saveImage(pane.getFinalImage(), pane.getImageName(), pane.getSaveState(), pane.getIconRecord(),
                 pane.getXPos(), pane.getYPos()));
-        setResizable(false);
     }
 
     /**
@@ -104,5 +104,6 @@ public class IconCustomizerDialog extends JFXDialog
         catch (IOException e)
         {
         }
+        myPanelModel.getViewModel().getMainPanel().refresh();
     }
 }

@@ -29,11 +29,6 @@ import io.opensphere.mantle.iconproject.model.PanelModel;
 public class SubCollectPane extends VBox
 {
     /**
-     * ` serialVersionUID.
-     */
-    private static final long serialVersionUID = 1L;
-
-    /**
      * The combo box from which an existing category is selected. This is
      * disabled if the user is entering a new category.
      */
@@ -69,68 +64,51 @@ public class SubCollectPane extends VBox
      */
     private RadioButton myNoneRB;
 
-    /**
-     * The radio button with which the user selects the mode of the name panel
-     * to create subcategories from directory names. This radio button may not
-     * be instantiated, and is available if the constructor is called with a
-     * value of <code>true</code> for its second argument. This button is in a
-     * group with {@link #myExistingRB}, {@link #myNewCatRB}, and
-     * {@link #myNoneRB}, and the group is used to put the panel in a mode in
-     * which the user may select an existing group, or create a new group.
-     */
-    private RadioButton mySubCatsFromDirNamesRB;
-
-    /**
-     * The text field into which the user may enter a new category name. This
-     * field is disabled if the user is selecting an existing category.
-     */
-
+    /** The selection options contained in the combo context menu. */
     private ObservableList<String> myComboBoxItems;
 
+    /**
+     * The toggle group containing {@link #myExistingRB}
+     * {@link #myNewCatRB} @{@link #myNoneRB}.
+     */
     private final ToggleGroup myToggleGroup = new ToggleGroup();
 
+    /** The UI model. */
     private final PanelModel myPanelModel;
 
+    /** The icon registry. */
     private final IconRegistry myIconRegistry;
 
+    /** The names of sub collection names. */
     private final Set<String> myCategorySet;
 
-    private boolean subCatsFromDirNames;
-
-    private boolean myChoice;
-
+    /** The importation properties model.  */
     private final ImportProp myImportProps;
 
     /**
      * Instantiates a new sub-category selection panel.
      *
-     * @param categorySet the set of categories with which to populate the
-     *            selection panel.
-     * @param subCatsFromDirNames true if the user should be allowed to create
-     *            subcategories from directory names, false otherwise (if
-     *            <code>true</code>, this causes the instantiation of
-     *            {@link #mySubCatsFromDirNamesRB}).
+     * @param thePanelModel the model to be used for the registry items.
      */
     public SubCollectPane(PanelModel thePanelModel)
     {
         myPanelModel = thePanelModel;
         myImportProps = myPanelModel.getImportProps();
-        myIconRegistry = myPanelModel.getMyIconRegistry();
-        String name = "Default";
-        myCategorySet = myIconRegistry.getSubCategoiresForCollection(name);
+        myIconRegistry = myPanelModel.getIconRegistry();
+        myCategorySet = myIconRegistry.getSubCategoiresForCollection("Default");
         List<String> names = New.list(myCategorySet);
         Collections.sort(names);
         myComboBoxItems = FXCollections.observableArrayList(names);
         myImportProps.getCollectionName().addListener((observable, oldValue, newValue) -> updateComboBox());
         createPanel();
     }
-
+    /** Creates the panel for the Sub Collection controls. */
     private void createPanel()
     {
         HBox hbox = new HBox();
-        Label CollectionText = new Label("Do you want to add a sub-category to your icon?:");
-        CollectionText.setFont(Font.font(CollectionText.getFont().getFamily(), FontPosture.ITALIC, 11));
-        CollectionText.setContentDisplay(ContentDisplay.BOTTOM);
+        Label subCollectMessage = new Label("Do you want to add a sub-category to your icon?:");
+        subCollectMessage.setFont(Font.font(subCollectMessage.getFont().getFamily(), FontPosture.ITALIC, 11));
+        subCollectMessage.setContentDisplay(ContentDisplay.BOTTOM);
 
         myNoneRB = new RadioButton("No Sub-category");
         myNoneRB.setToggleGroup(myToggleGroup);
@@ -162,10 +140,11 @@ public class SubCollectPane extends VBox
         myNewCatRB.setToggleGroup(myToggleGroup);
 
         hbox.setAlignment(Pos.BASELINE_LEFT);
-        hbox.setSpacing(5.);
-        myComboBox.setOnAction(event -> {
-
-            if (!(myToggleGroup.getSelectedToggle() == myNewCatRB)){
+        hbox.setSpacing(5);
+        myComboBox.setOnAction(event ->
+        {
+            if (!(myToggleGroup.getSelectedToggle() == myNewCatRB))
+            {
                 myExistingRB.selectedProperty().set(true);
             }
         });
@@ -175,25 +154,31 @@ public class SubCollectPane extends VBox
             hbox.getChildren().addAll(myNoneRB, myNewCatRB, myComboBox);
             myComboBox.setDisable(true);
         }
-        //        else if (myChoice)
-        //        {
-        //            mySubCatsFromDirNamesRB = new RadioButton("Create sub-categories from folder names.");
-        //            mySubCatsFromDirNamesRB.setTooltip(new Tooltip("Search for all sub-folders of existing folders"
-        //                    + " and add found icons with the folder name as the sub-category."));
-        //            mySubCatsFromDirNamesRB.setToggleGroup(myToggleGroup);
-        //            hbox.getChildren().add(mySubCatsFromDirNamesRB);
-        //        }
+        // else if (myChoice)
+        // {
+        // mySubCatsFromDirNamesRB = new RadioButton("Create sub-categories from
+        // folder names.");
+        // mySubCatsFromDirNamesRB.setTooltip(new Tooltip("Search for all
+        // sub-folders of existing folders"
+        // + " and add found icons with the folder name as the sub-category."));
+        // mySubCatsFromDirNamesRB.setToggleGroup(myToggleGroup);
+        // hbox.getChildren().add(mySubCatsFromDirNamesRB);
+        // }
         else
         {
             hbox.getChildren().addAll(myNoneRB, myExistingRB, myNewCatRB, myComboBox);
         }
 
-        getChildren().addAll(CollectionText, hbox);
-       // setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-       //         + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
+        getChildren().addAll(subCollectMessage, hbox);
+        // setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" +
+        // "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+        // + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
         setStyle("-fx-padding: 10");
     }
 
+    /**
+     * Updates the values contained in the {@link #myComboBox }drop down menu.
+     */
     private void updateComboBox()
     {
         List<String> names = New.list(myIconRegistry.getSubCategoiresForCollection(myImportProps.getCollectionName().get()));
@@ -230,9 +215,9 @@ public class SubCollectPane extends VBox
         return myNoneRB.isSelected();
     }
 
+    /** Updates the value of the sub collection name in the model. */
     public void updateSubCollectName()
     {
         myPanelModel.getImportProps().getSubCollectionName().set(myComboBox.getValue());
     }
-
 }

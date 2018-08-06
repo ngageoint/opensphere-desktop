@@ -2,20 +2,14 @@ package io.opensphere.mantle.iconproject.panels;
 
 import java.awt.EventQueue;
 import java.awt.Window;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Pos;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
@@ -23,32 +17,27 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
-
+import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.core.util.image.ImageUtil;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
-import io.opensphere.mantle.iconproject.impl.RegistryMap;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.view.AddIconDialog;
-import io.opensphere.mantle.iconproject.view.IconPopupMenu;
 
 /**
- * The Class Main Panel.
+ * The Main Panel in the Icon Manager UI comprised of the tree hierarchy and
+ * icon display window.
  *
  */
 public class MainPanel extends SplitPane
 {
-    /** The Icon registry. */
-    private final IconRegistry myIconRegistry;
-
     /** The Model. */
     private PanelModel myPanelModel = new PanelModel();
 
     /** The Icon Display Grid. */
-    private final GridBuilder myIconGrid;
+    private GridBuilder myIconGrid;
 
     /** The Customize Icon button. */
     private final ButtonBuilder myCustIconButton = new ButtonBuilder("Customize Icon", false);
@@ -68,8 +57,6 @@ public class MainPanel extends SplitPane
     /** The treeBuilder object. */
     private TreeBuilder treeBuilder;
 
-    private IntegerProperty myCounter = new SimpleIntegerProperty(1);
-
     /** The map of collection name keys and icon record list values. */
     Map<String, List<IconRecord>> recordMap = new HashMap<>();
 
@@ -88,7 +75,6 @@ public class MainPanel extends SplitPane
     {
         myPanelModel = thePanelModel;
         myOwner = myPanelModel.getOwner();
-        myIconRegistry = myPanelModel.getMyIconRegistry();
 
         myPanelModel.getTileWidth().addListener((o, v, m) -> refresh());
 
@@ -101,31 +87,24 @@ public class MainPanel extends SplitPane
         AnchorPane.setRightAnchor(myAddIconButton, 0.);
         AnchorPane.setBottomAnchor(myAddIconButton, 52.0);
 
-        MenuItem File = new MenuItem("File");
-        MenuItem Folder = new MenuItem("Folder");
-        myAddIconButton.getItems().addAll(File, Folder);
+        MenuItem fileOption = new MenuItem("File");
+        MenuItem folderOption = new MenuItem("Folder");
+        myAddIconButton.getItems().addAll(fileOption, folderOption);
         myAddIconButton.setAlignment(Pos.CENTER);
-        File.setOnAction(event ->
+        fileOption.setOnAction(event ->
         {
             EventQueue.invokeLater(() ->
             {
                 loadFromFile(myPanelModel.getImportProps().getCollectionName().get(),
                         myPanelModel.getImportProps().getSubCollectionName().get());
-                refresh();
             });
-
         });
 
-        myCounter.addListener((o, v, n) ->
-        {
-
-        });
-        Folder.setOnAction(event ->
+        folderOption.setOnAction(event ->
         {
             EventQueue.invokeLater(() ->
             {
                 addIconsFromFolder();
-                refresh();
             });
         });
 
@@ -136,7 +115,6 @@ public class MainPanel extends SplitPane
             EventQueue.invokeLater(() ->
             {
                 myIconGrid.showIconCustomizer(myOwner);
-                refresh();
             });
         });
 
@@ -160,6 +138,11 @@ public class MainPanel extends SplitPane
         getItems().addAll(myLeftView, myScrollPane);
     }
 
+    /**
+     * Creates the icon tree hierarchy.
+     *
+     * @param treeItem the name of an item to add to the tree.
+     */
     private void createTreeView(TreeItem<String> treeItem)
     {
         treeBuilder = new TreeBuilder(myPanelModel, null);
@@ -189,13 +172,15 @@ public class MainPanel extends SplitPane
         else
         {
             myTreeView.getSelectionModel().select(treeItem);
-
         }
 
         myTreeView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
     }
 
+    /**
+     * Creates a new Tree Hierarchy and Icon Display Grid to reflect changes.
+     */
     public void refresh()
     {
         Platform.runLater(new Runnable()
@@ -203,20 +188,16 @@ public class MainPanel extends SplitPane
             @Override
             public void run()
             {
-
-                System.out.println("Icon Grid starting to Refreshed!!!!!!!");
-
                 myLeftView.getChildren().removeAll(myTreeView);
                 createTreeView(myTreeView.getSelectionModel().getSelectedItem());
                 myLeftView.getChildren().addAll(myTreeView);
 
                 recordMap = new HashMap<>(treeBuilder.getRecordMap());
-
                 myPanelModel.setIconRecordList(recordMap.get(myTreeView.getSelectionModel().getSelectedItem().getValue()));
 
-                myScrollPane.setContent(new GridBuilder(myPanelModel));
+                myScrollPane.setContent(myIconGrid = new GridBuilder(myPanelModel));
+                myPanelModel.getSelectedIcons().clear();
                 System.out.println("Icon Grid has been refreshed!!!!!!!");
-
             }
         });
     }
@@ -229,10 +210,13 @@ public class MainPanel extends SplitPane
     private void treeHandle(TreeItem<String> newValue)
     {
         String colName = newValue.getValue();
+        if (!myPanelModel.getRecordList().equals(recordMap.get(colName)))
+        {
+            myPanelModel.getSelectedIcons().clear();
+        }
         myPanelModel.setIconRecordList(recordMap.get(colName));
-        myScrollPane.setContent(new GridBuilder(myPanelModel));
-
-        if (myPanelModel.getMyIconRegistry().getCollectionNames().contains(colName))
+        myScrollPane.setContent(myIconGrid = new GridBuilder(myPanelModel));
+        if (myPanelModel.getIconRegistry().getCollectionNames().contains(colName))
         {
             myPanelModel.getImportProps().getCollectionName().set(colName);
         }
@@ -241,7 +225,6 @@ public class MainPanel extends SplitPane
             myPanelModel.getImportProps().getCollectionName().set(recordMap.get(colName).get(0).getCollectionName());
             myPanelModel.getImportProps().getSubCollectionName().set(colName);
         }
-
         // if (obj.getNameType() == NameType.COLLECTION)
         // {
         // iconIdList = myIconRegistry
@@ -281,7 +264,7 @@ public class MainPanel extends SplitPane
     }
 
     /**
-     * Load from file.
+     * Loads a single icon from a file.
      *
      * @param collectionName the collection name
      * @param subCatName the sub cat name
@@ -294,14 +277,16 @@ public class MainPanel extends SplitPane
         {
             try
             {
-                System.out.println("the Icon Url is : " + result.toURI().toURL());
-                System.out.println("loading from file under the name:  " + collectionName);
                 IconProvider provider = new DefaultIconProvider(result.toURI().toURL(), collectionName, subCatName, "User");
-                myPanelModel.getMyIconRegistry().addIcon(provider, this);
+                myPanelModel.getIconRegistry().addIcon(provider, this);
             }
             catch (MalformedURLException e)
             {
+                JFXDialog test = new JFXDialog(myOwner, "Failed to load Icons");
+                test.setFxNode(myScrollPane);
+                test.setVisible(true);
             }
+            refresh();
         }
     }
 
@@ -313,5 +298,11 @@ public class MainPanel extends SplitPane
         AddIconDialog iconImporter = new AddIconDialog(myOwner, myPanelModel);
         iconImporter.setVisible(true);
     }
-
+    /**
+     * Gets the current icon display grid. 
+     *  @return myIconGrid the current icon display grid.*/
+    public GridBuilder getIconGrid()
+    {
+        return myIconGrid;
+    }
 }

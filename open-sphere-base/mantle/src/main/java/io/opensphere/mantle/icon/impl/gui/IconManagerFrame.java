@@ -32,7 +32,6 @@ import io.opensphere.core.util.filesystem.MnemonicFileChooser;
 import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.impl.gui.IconChooserPanel;
 import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject;
 import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject.NameType;
 import io.opensphere.mantle.icon.IconRegistry;
@@ -46,7 +45,6 @@ import io.opensphere.mantle.util.MantleToolboxUtils;
 /**
  * A icon manager user interface.
  */
-@SuppressWarnings("PMD.GodClass")
 public class IconManagerFrame extends JFrame implements IconRegistryListener
 {
     /** Logger reference. */
@@ -70,7 +68,6 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     private final IconRegistry myIconRegistry;
 
     /** The Menu bar. */
-    @SuppressWarnings("PMD.SingularField")
     private final JMenuBar myMenuBar;
 
     /** The Toolbox. */
@@ -83,8 +80,6 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
      * Instantiates a new icon chooser dialog.
      *
      * @param tb the {@link Toolbox}
-     * @param enlargeButton. {@link iconSizeChanger}
-     * @param reduceButton. {@link iconSizeChanger}
      */
     public IconManagerFrame(Toolbox tb)
     {
@@ -148,12 +143,11 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
         createIconPopupMenuItems(iconPopupMenu);
         createTreePopupMenuItems(treePopupMenu);
         myIconRegistry.addListener(this);
-   
     }
 
     /**
      * Initiates icon resizing.
-     * 
+     *
      * @param enlarge the {@link #JButton reduceButton/increaseButton}
      */
     private void setIconSize(boolean enlarge)
@@ -175,9 +169,9 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     private void showBuilderDialog()
     {
         PanelModel thePanelModel = new PanelModel();
-        thePanelModel.setMyIconRegistry(MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry());
+        thePanelModel.setIconRegistry(MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry());
         thePanelModel.setIconRecord(myChooserPanel.getLastPopupTriggerIconRecord());
-        IconCustomizerDialog dialog = new IconCustomizerDialog(this,thePanelModel);
+        IconCustomizerDialog dialog = new IconCustomizerDialog(this, thePanelModel);
         dialog.setVisible(true);
     }
 
@@ -341,7 +335,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
      * Creates the menu bar and popup buttons for
      * {@link #createMenuBarFileMenuItems()}
      * {@link #createIconPopupMenuItems(JPopupMenu)}.
-     * 
+     *
      * @return buttonList
      */
     private List<JMenuItem> getMenuItems()
