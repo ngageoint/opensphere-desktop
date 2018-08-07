@@ -101,10 +101,7 @@ public class StateControllerImpl implements StateController
     @Override
     public void deactivateAllStates()
     {
-        for (String id : myModuleStateManager.getActiveStateIds())
-        {
-            toggleState(id);
-        }
+        myModuleStateManager.getActiveStateIds().stream().forEach(n -> toggleState(n));
     }
 
     @Override
