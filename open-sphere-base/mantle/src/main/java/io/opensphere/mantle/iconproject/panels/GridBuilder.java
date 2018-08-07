@@ -120,6 +120,7 @@ public class GridBuilder extends TilePane
                 if (e.getButton() == MouseButton.PRIMARY)
                 {
                     myPanelModel.setIconRecord(record);
+                    myPanelModel.getSelectedRecord().set(record);
                     myPanelModel.getSelectedIcons().put(record, generic);
                     generic.setStyle("-fx-border-style: solid inside;" + "-fx-border-width: 3;" + "-fx-border-radius: 5;"
                             + "-fx-border-color: red;");

@@ -25,6 +25,7 @@ import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.view.AddIconDialog;
+import io.opensphere.mantle.iconproject.view.TreePopupMenu;
 
 /**
  * The Main Panel in the Icon Manager UI comprised of the tree hierarchy and
@@ -148,9 +149,13 @@ public class MainPanel extends SplitPane
         treeBuilder = new TreeBuilder(myPanelModel, null);
         myTreeView = new TreeView<>(treeBuilder);
         myTreeView.setShowRoot(false);
-
+        myTreeView.setContextMenu(new TreePopupMenu(myPanelModel));
+        
+        myPanelModel.getTreeObj().getMyObsTree().set(myTreeView);
+        myPanelModel.getTreeObj().getMyObsTree()
+        .addListener((o, v, n) -> refreshTree());
+        
         setDividerPositions(0.25);
-        setResizableWithParent(myLeftView, false);
         setLayoutY(48.0);
 
         AnchorPane.setBottomAnchor(myTreeView, 78.0);
@@ -188,10 +193,7 @@ public class MainPanel extends SplitPane
             @Override
             public void run()
             {
-                myLeftView.getChildren().removeAll(myTreeView);
-                createTreeView(myTreeView.getSelectionModel().getSelectedItem());
-                myLeftView.getChildren().addAll(myTreeView);
-
+                refreshTree();
                 recordMap = new HashMap<>(treeBuilder.getRecordMap());
                 myPanelModel.setIconRecordList(recordMap.get(myTreeView.getSelectionModel().getSelectedItem().getValue()));
 
@@ -201,7 +203,14 @@ public class MainPanel extends SplitPane
             }
         });
     }
+    /** Refreshes the Tree Hierarchy.*/
+    public void refreshTree()
+    {
+        myLeftView.getChildren().removeAll(myTreeView);
+        createTreeView(myTreeView.getSelectionModel().getSelectedItem());
+        myLeftView.getChildren().addAll(myTreeView);
 
+    }
     /**
      * The tree event handler.
      *
@@ -295,14 +304,23 @@ public class MainPanel extends SplitPane
      */
     private void addIconsFromFolder()
     {
+        System.out.println(myPanelModel.getIconRegistry().getAllAssignedElementIds());
         AddIconDialog iconImporter = new AddIconDialog(myOwner, myPanelModel);
         iconImporter.setVisible(true);
     }
+
     /**
-     * Gets the current icon display grid. 
-     *  @return myIconGrid the current icon display grid.*/
+     * Gets the current icon display grid.
+     * 
+     * @return myIconGrid the current icon display grid.
+     */
     public GridBuilder getIconGrid()
     {
         return myIconGrid;
+    }
+
+    public TreeItem<String> getTree()
+    {
+        return null;
     }
 }

@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.iconproject.impl.DefaultIconRecordTreeItemObject;
 
 /** The model for the IconManagerFrame. */
 public class PanelModel
@@ -45,6 +46,15 @@ public class PanelModel
 
     /** The icons currently selected. */
     private HashMap<IconRecord, Button> mySelectedIcons = new HashMap<IconRecord, Button>();
+
+    /** The Tree model */
+    private DefaultIconRecordTreeItemObject myTreeObj;
+
+    /**
+     * The observable selected record for updating picker buttons in feature
+     * actions.
+     */
+    private ObjectProperty<IconRecord> mySelectedRecord = new SimpleObjectProperty<IconRecord>();
 
     /**
      * gets the icon display view type.
@@ -219,12 +229,41 @@ public class PanelModel
     /**
      * Sets the value of the {@link #mySelectedIcons} field.
      *
-     * @param theSelectedIcons
-     *            the value to store in the {@link #mySelectedIcons} field.
+     * @param theSelectedIcons the value to store in the
+     *            {@link #mySelectedIcons} field.
      */
     public void setSelectedIcons(HashMap<IconRecord, Button> theSelectedIcons)
     {
         mySelectedIcons = theSelectedIcons;
     }
-}
 
+    /**
+     * Gets the value of the {@link #mySelectedRecord} field.
+     *
+     * @return the value stored in the {@link #mySelectedRecord} field.
+     */
+    public ObjectProperty<IconRecord> getSelectedRecord()
+    {
+        return mySelectedRecord;
+    }
+
+    /**
+     * Gets the value of the {@link #myTreeObj} field.
+     *
+     * @return the value stored in the {@link #myTreeObj} field.
+     */
+    public DefaultIconRecordTreeItemObject getTreeObj()
+    {
+        return myTreeObj;
+    }
+
+    /**
+     * Sets the value of the {@link #myTreeObj} field.
+     *
+     * @param theTreeObj the value to store in the {@link #myTreeObj} field.
+     */
+    public void setTreeObj(DefaultIconRecordTreeItemObject theTreeObj)
+    {
+        myTreeObj = theTreeObj;
+    }
+}

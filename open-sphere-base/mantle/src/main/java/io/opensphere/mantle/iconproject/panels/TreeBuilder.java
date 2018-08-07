@@ -85,6 +85,7 @@ public class TreeBuilder extends TreeItem<String>
 
         buildTreeFromMaps(this, collectionSet, collectionToSubCatIconRecMap, defaultSubCat);
         setExpanded(true);
+      //  System.out.println("collects to subcats " + collectionSet);
     }
 
     /**
@@ -148,24 +149,9 @@ public class TreeBuilder extends TreeItem<String>
                 }
             }
         }
-    }
-    /**
-     * The getter for the iconTreeObject.
-     * @return iconTreeObject
-     */
-    public DefaultIconRecordTreeItemObject getIconTreeObject()
-    {
-        return iconTreeObject;
+        myPanelModel.setTreeObj(iconTreeObject);
     }
 
-    /**
-     * The setter for the iconTreeObject.
-     * @param theIconTreeObject the iconTreeObject
-     */
-    public void setIconTreeObject(DefaultIconRecordTreeItemObject theIconTreeObject)
-    {
-        iconTreeObject = theIconTreeObject;
-    }
     /**
      * The getter for the record map.
      * @return recordMap the map of collection, iconrecord lists

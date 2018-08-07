@@ -3,8 +3,10 @@ package io.opensphere.mantle.iconproject.impl;
 import java.util.Collections;
 import java.util.List;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.TreeItem;
-
+import javafx.scene.control.TreeView;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.iconproject.model.IconRecordTreeItemUserObject;
@@ -32,6 +34,10 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
     /** The Parent Collection. */
     private final String myParent;
 
+    /** The Observable Selected Tree Node */
+    @SuppressWarnings("rawtypes")
+    private ObjectProperty<TreeView> myObsTree= new SimpleObjectProperty<TreeView>();
+    
     /**
      * Creates the folder node.
      *
@@ -74,7 +80,7 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
      * @param nt the nt
      * @param parent the parent treeItem
      */
-    private DefaultIconRecordTreeItemObject(TreeItem<String> item, String label, List<IconRecord> recs, Type type,
+    public DefaultIconRecordTreeItemObject(TreeItem<String> item, String label, List<IconRecord> recs, Type type,
             NameType nt, String parent)
     {
         //
@@ -148,5 +154,16 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
                 addToList.addAll(myIconRecords);
             }
         }
+    }
+
+    /**
+     * Gets the value of the {@link #myObsTree} field.
+     *
+     * @return the value stored in the {@link #myObsTree} field.
+     */
+    @SuppressWarnings("rawtypes")
+    public ObjectProperty<TreeView> getMyObsTree()
+    {
+        return myObsTree;
     }
 }

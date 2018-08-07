@@ -11,6 +11,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.impl.gui.IconChooserDialog;
+import io.opensphere.mantle.iconproject.view.IconProjDialog;
 
 /**
  * Displays the {@link IconChooserDialog} and gets the {@link IconRecord} from
@@ -39,17 +40,10 @@ public class IconChooserDisplayerImpl implements IconChooserDisplayer
 
         EventQueueUtilities.runOnEDT(() ->
         {
-            IconChooserDialog fileDialog = new IconChooserDialog(myParent.get(), true, toolbox);
-            fileDialog.addActionListener(action ->
+            IconProjDialog fileDialog = new IconProjDialog(myParent.get(), toolbox, false);
+            fileDialog.getMyPanelModel().getSelectedRecord().addListener((o, v, n) ->
             {
-                if (action.getActionCommand() == IconChooserDialog.ICON_SELECTED)
-                {
-                    selectedIcon.set(fileDialog.getSelectedIcon());
-                }
-                else
-                {
-                    selectedIcon.set(null);
-                }
+                selectedIcon.set(fileDialog.getMyPanelModel().getIconRecord());
             });
             fileDialog.setVisible(true);
         });

@@ -104,16 +104,11 @@ public class IconChooserStyleParameterEditorPanel extends AbstractStyleParameter
     {
         if (e.getSource() == myButton)
         {
-
             IconProjDialog fileDialog = new IconProjDialog(myStyle.getToolbox().getUIRegistry().getMainFrameProvider().get(),
                     myStyle.getToolbox(), true);
             fileDialog.setVisible(true);
 
-            if (fileDialog.getResponse() == null || fileDialog.getResponse().equals(ButtonData.CANCEL_CLOSE))
-            {
-                // Do not update the icon in the viewer.
-            }
-            else // Updates the icon picker view.
+            if (!(fileDialog.getResponse() == null || fileDialog.getResponse().equals(ButtonData.CANCEL_CLOSE)))
             {
                 IconRecord rec = fileDialog.getMyPanelModel().getIconRecord();
                 setParamValue(rec.getImageURL().toString());
@@ -135,7 +130,6 @@ public class IconChooserStyleParameterEditorPanel extends AbstractStyleParameter
 //            });
 //            icd.setVisible(true);
         }
-
     }
 
     /** Update. */
