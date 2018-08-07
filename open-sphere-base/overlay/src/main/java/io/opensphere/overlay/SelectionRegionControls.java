@@ -89,6 +89,7 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
             if (myDefaultDrawingMode)
             {
                 myDefaultDrawingMode = false;
+                LOGGER.info("Handling menu cancellation.");
                 myModeController.setSelectionMode(SelectionMode.NONE);
             }
             else
@@ -321,6 +322,8 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
     @Override
     public synchronized void relinquishRegionContext(String usurpationContext)
     {
+
+        LOGGER.info("Relenquishing region context.");
         myUsurpationContext = null;
         myModeController.setSelectionMode(myDefaultMode);
         myModeController.setSelectionMode(SelectionMode.NONE);
@@ -563,6 +566,7 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
                 myUsurpationContext == null ? ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT : myUsurpationContext,
                 selectionBoxGeometries);
 
+        LOGGER.info("Handling completion of polygon.");
         myModeController.setSelectionMode(SelectionMode.NONE);
 
         // TODO pass in bounding box
@@ -572,6 +576,7 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
     /** Cancel whatever is being drawn and perform any cleanup as necessary. */
     private synchronized void cancelAndCleanup()
     {
+        LOGGER.info("Cancelling and cleaning up.");
         myShowingMenu = false;
         getTransformer().clearRegion();
         mySelectionBoxHandler.setSelectionRegionDescription(null);

@@ -6,9 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
@@ -26,7 +24,6 @@ import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.SelectionMode;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.image.IconUtil.IconType;
-import io.opensphere.core.util.swing.IconButton;
 import io.opensphere.core.util.swing.misc.ControlMenuOptionContextSplitButton;
 import io.opensphere.overlay.OverlayToolboxUtils;
 import io.opensphere.overlay.SelectionModeChangeListener;
@@ -47,24 +44,8 @@ public final class QuerySelector extends JPanel
     /** serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The button through which query actions are performed. */
     private final QuerySelectorSplitButton mySplitButton;
-
-    /** The Button press listener. */
-    private final transient MouseListener myButtonListener = new MouseAdapter()
-    {
-        @Override
-        public void mouseClicked(MouseEvent e)
-        {
-            if (e.getButton() == MouseEvent.BUTTON1)
-            {
-                SelectorToggleButton button = (SelectorToggleButton)e.getSource();
-                boolean selection = !button.isSelected();
-                SelectionMode mode = selection ? button.getMode() : SelectionMode.NONE;
-                Quantify.collectConditionalMetric("mist3d.query." + button.getMode().toString(), selection);
-                mySelectionModeController.setSelectionMode(mode);
-            }
-        }
-    };
 
     /**
      * The context for using the unmodified mouse actions for drawing on the
@@ -84,6 +65,8 @@ public final class QuerySelector extends JPanel
         {
             deselectAllButtons();
             setDefaultModeBorder();
+
+            LOG.info("Setting selection mode from invalidation.");
             mySelectionModeController.setSelectionMode(SelectionMode.NONE);
         }
     };
@@ -94,33 +77,11 @@ public final class QuerySelector extends JPanel
     /** The Selection mode controller. */
     private final transient SelectionModeController mySelectionModeController;
 
-    /** Listener for changes to the selection mode. */
-    private final transient SelectionModeChangeListener mySelectionModeListener = new SelectionModeChangeListener()
-    {
-        @Override
-        public void selectionModeChanged(SelectionMode mode)
-        {
-            ContextActionManager manager = myToolbox.getUIRegistry().getContextActionManager();
-            deselectAllButtons();
-            if (mode == SelectionMode.NONE)
-            {
-                setDefaultModeBorder();
-                manager.deregisterContextSingleActionProvider(ContextIdentifiers.DEFAULT_MOUSE_CONTEXT, MouseEvent.class,
-                        myDrawProvider);
-                mySplitButton.toggledProperty().set(false);
-            }
-            else
-            {
-                manager.registerContextSingleActionProvider(ContextIdentifiers.DEFAULT_MOUSE_CONTEXT, MouseEvent.class,
-                        myDrawProvider);
-                mySplitButton.toggledProperty().set(true);
-                mySplitButton.currentSelectionModeProperty().set(mode);
-            }
-        }
-    };
-
     /** The Toolbox. */
     private final transient Toolbox myToolbox;
+
+    /** Listener for changes to the selection mode. */
+    private final transient SelectionModeChangeListener mySelectionModeListener;
 
     /**
      * Instantiates a new query selector.
@@ -131,6 +92,8 @@ public final class QuerySelector extends JPanel
     {
         super(false);
         myToolbox = toolbox;
+
+        mySelectionModeListener = this::selectionModeChanged;
         mySelectionModeController = OverlayToolboxUtils.getOverlayToolbox(toolbox).getSelectionModeController();
         mySelectionModeController.addSelectionModeChangeListener(mySelectionModeListener);
 
@@ -138,7 +101,7 @@ public final class QuerySelector extends JPanel
         setBorder(null);
         setLayout(new GridBagLayout());
 
-        mySplitButton = new QuerySelectorSplitButton();
+        mySplitButton = new QuerySelectorSplitButton(OverlayToolboxUtils.getOverlayToolbox(toolbox));
         mySplitButton.toggledProperty().set(false);
         mySplitButton.currentSelectionModeProperty().set(mySelectionModeController.getDefaultSelectionMode());
         mySplitButton.currentSelectionModeProperty().addListener((obs, oldMode, newMode) ->
@@ -169,6 +132,32 @@ public final class QuerySelector extends JPanel
 
         gbc.gridx++;
         add(mySplitButton, gbc);
+    }
+
+    /**
+     * An event handler method used to react to selection mode changes.
+     * 
+     * @param mode the new selection mode of the application.
+     */
+    private void selectionModeChanged(SelectionMode mode)
+    {
+        ContextActionManager manager = myToolbox.getUIRegistry().getContextActionManager();
+        deselectAllButtons();
+        if (mode == SelectionMode.NONE)
+        {
+            LOG.info("Changing selection mode to none.");
+            setDefaultModeBorder();
+            manager.deregisterContextSingleActionProvider(ContextIdentifiers.DEFAULT_MOUSE_CONTEXT, MouseEvent.class,
+                    myDrawProvider);
+            mySplitButton.toggledProperty().set(false);
+        }
+        else
+        {
+            manager.registerContextSingleActionProvider(ContextIdentifiers.DEFAULT_MOUSE_CONTEXT, MouseEvent.class,
+                    myDrawProvider);
+            mySplitButton.toggledProperty().set(true);
+            mySplitButton.currentSelectionModeProperty().set(mode);
+        }
     }
 
     /** Gets the removes the button. */
@@ -254,39 +243,6 @@ public final class QuerySelector extends JPanel
         public DeleteSplitButton(Toolbox tb, String text, Icon icon)
         {
             super(tb.getUIRegistry().getContextActionManager(), text, icon, ContextIdentifiers.DELETE_CONTEXT, Void.class);
-        }
-    }
-
-    /**
-     * The Class SelectorToggleButton.
-     */
-    private static class SelectorToggleButton extends IconButton
-    {
-        /** serialVersionUID. */
-        private static final long serialVersionUID = 1L;
-
-        /** The Mode. */
-        private final SelectionMode myMode;
-
-        /**
-         * Instantiates a new selector toggle button.
-         *
-         * @param mode the mode
-         */
-        public SelectorToggleButton(SelectionMode mode)
-        {
-            super();
-            myMode = mode;
-        }
-
-        /**
-         * Gets the mode.
-         *
-         * @return the mode
-         */
-        public SelectionMode getMode()
-        {
-            return myMode;
         }
     }
 }
