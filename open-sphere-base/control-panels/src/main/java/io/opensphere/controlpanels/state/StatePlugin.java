@@ -74,7 +74,9 @@ public class StatePlugin extends PluginAdapter
      */
     void initializeAfterPlugins()
     {
-        myStateView = new StateView(new StateControllerImpl(myToolbox.getModuleStateManager()), myToolbox);
+        StateController controller = new StateControllerImpl(myToolbox);
+        myStateView = new StateView(controller, myToolbox);
+        myImportController.setStateController(controller);
         myToolbox.getUIRegistry().getToolbarComponentRegistry().registerToolbarComponent(ToolbarLocation.NORTH, "State",
                 myStateView.getStateControlButton(), 470, SeparatorLocation.LEFT);
         myToolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(myStateView.getStateControlButton().getIcon(), "State",

@@ -4,6 +4,8 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Map;
 
+import com.bitsys.fade.mist.state.v4.StateType;
+
 /** Controller for the state plugin. */
 public interface StateController
 {
@@ -100,4 +102,12 @@ public interface StateController
      * @param id The id of the state.
      */
     void toggleState(String id);
+
+    /**
+     * Attach an existing state to the data group collection.
+     *
+     * @param id The name of the state.
+     * @param state The state.
+     */
+    void hookState(String id, StateType state);
 }
