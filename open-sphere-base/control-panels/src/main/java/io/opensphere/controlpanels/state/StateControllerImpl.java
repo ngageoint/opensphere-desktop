@@ -67,35 +67,17 @@ public class StateControllerImpl implements StateController
         @Override
         public void handleDeactivating(DataGroupInfo dgi)
         {
-            if (dgi.hasMembers(false))
-            {
-                for (DataTypeInfo dti : dgi.getMembers(false))
-                {
-                    if (isStateActive(dti.getDisplayName()))
-                    {
-                        toggleStateWithLock(dti.getDisplayName());
-                    }
-                }
-            }
+            dgi.getMembers(false).stream().map(dti -> dti.getDisplayName()).filter(n -> isStateActive(n)).
+                forEach(n -> toggleStateWithLock(n));
         }
 
         @Override
         public boolean handleActivating(DataGroupInfo dgi, io.opensphere.core.util.lang.PhasedTaskCanceller canceller)
                 throws DataGroupActivationException, InterruptedException
         {
-            boolean stateWasToggled = false;
-            if (dgi.hasMembers(false))
-            {
-                for (DataTypeInfo dti : dgi.getMembers(false))
-                {
-                    if (!isStateActive(dti.getDisplayName()))
-                    {
-                        toggleStateWithLock(dti.getDisplayName());
-                        stateWasToggled = true;
-                    }
-                }
-            }
-            return stateWasToggled;
+            dgi.getMembers(false).stream().map(dti -> dti.getDisplayName()).filter(n -> !isStateActive(n)).
+                forEach(n -> toggleStateWithLock(n));
+            return true;
         }
     };
     /**
@@ -180,16 +162,12 @@ public class StateControllerImpl implements StateController
     @Override
     public void removeStates(Collection<? extends String> stateIds)
     {
-        for (String id : stateIds)
+        stateIds.stream().filter(n -> isStateActive(n)).forEach(n -> myModuleStateManager.toggleState(n));
+        stateIds.stream().forEach(n ->
         {
-            if (myModuleStateManager.isStateActive(id))
-            {
-                myModuleStateManager.toggleState(id);
-            }
-            myModuleStateManager.unregisterState(id);
-
-            unhookState(id);
-        }
+            myModuleStateManager.unregisterState(n);
+            unhookState(n);
+        });
     }
 
     @Override
@@ -262,10 +240,7 @@ public class StateControllerImpl implements StateController
         DataGroupInfo dgi = myRootGroupInfo.getGroupById(id);
         if (dgi != null)
         {
-            for (DataTypeInfo dataTypeInfo : dgi.getMembers(false))
-            {
-                myOrderManager.deactivateParticipant(dataTypeInfo);
-            }
+            dgi.getMembers(false).stream().forEach(n -> myOrderManager.deactivateParticipant(n));
             myRootGroupInfo.removeChild(dgi, this);
             myToolbox.getDataRegistry().removeModels(new DataModelCategory("state", StateType.class.getName(), id), false);
             myDataController.cleanUpGroup(dgi);
@@ -278,13 +253,8 @@ public class StateControllerImpl implements StateController
      */
     private void checkInitialStates()
     {
-        for (String id : myModuleStateManager.getRegisteredStateIds())
-        {
-            if (myRootGroupInfo.getGroupById(id) == null)
-            {
-                hookState(id, myModuleStateManager.getState(id));
-            }
-        }
+        myModuleStateManager.getRegisteredStateIds().stream().filter(n -> myRootGroupInfo.getGroupById(n) == null)
+            .forEach(n -> hookState(n, myModuleStateManager.getState(n)));
     }
     /**
      * Toggle the state if the toggle was initiated from the activation listener.
