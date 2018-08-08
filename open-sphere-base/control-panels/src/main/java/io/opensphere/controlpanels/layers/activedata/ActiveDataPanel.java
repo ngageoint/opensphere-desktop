@@ -49,7 +49,6 @@ import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.lang.EqualsHelper;
-import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.core.util.swing.IconButton;
