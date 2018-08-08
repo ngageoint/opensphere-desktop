@@ -1085,7 +1085,7 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
                 t -> t.getStreamingSupport().isStreamingEnabled() && t.getStreamingSupport().getPlayState().get() != playState);
         for (DataTypeInfo dataType : dataTypes)
         {
-            ThreadUtilities.runCpu((Runnable)() -> dataType.getStreamingSupport().getPlayState().set(playState));
+            EventQueueUtilities.runOnEDT(() -> dataType.getStreamingSupport().getPlayState().set(playState));
         }
     }
 
