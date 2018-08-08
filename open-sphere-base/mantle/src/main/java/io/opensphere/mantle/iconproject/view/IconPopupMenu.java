@@ -63,7 +63,6 @@ public class IconPopupMenu extends ContextMenu
                 selector.delete(false);
             }
         });
-        
         MenuItem unSelectAction = new MenuItem("Unselect All Icons");
         unSelectAction.setOnAction(event ->
         {
@@ -72,8 +71,6 @@ public class IconPopupMenu extends ContextMenu
                 selector.unSelectIcons();
             });
         });
-
-        getItems().addAll(favAction, rotateAction, deleteAction, removeAction,unSelectAction);
+        getItems().addAll(favAction, rotateAction, deleteAction, removeAction, unSelectAction);
     }
 }
-

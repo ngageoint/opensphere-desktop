@@ -105,12 +105,12 @@ public class IconChooserStyleParameterEditorPanel extends AbstractStyleParameter
         if (e.getSource() == myButton)
         {
             IconProjDialog fileDialog = new IconProjDialog(myStyle.getToolbox().getUIRegistry().getMainFrameProvider().get(),
-                    myStyle.getToolbox(), true);
+                    myStyle.getToolbox(), true, false);
             fileDialog.setVisible(true);
 
             if (!(fileDialog.getResponse() == null || fileDialog.getResponse().equals(ButtonData.CANCEL_CLOSE)))
             {
-                IconRecord rec = fileDialog.getMyPanelModel().getIconRecord();
+                IconRecord rec = fileDialog.getMyPanelModel().getSelectedRecord().get();
                 setParamValue(rec.getImageURL().toString());
             }
 //Old file chooser code

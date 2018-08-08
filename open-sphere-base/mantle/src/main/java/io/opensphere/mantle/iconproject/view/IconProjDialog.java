@@ -18,6 +18,9 @@ public class IconProjDialog extends JFXDialog
     /** The model to be shared between all the UI elements. */
     private PanelModel myPanelModel = new PanelModel();
 
+    /** The model for the display panels. */
+    private ViewModel myViewModel = new ViewModel();
+
     /**
      * Constructor.
      *
@@ -27,18 +30,23 @@ public class IconProjDialog extends JFXDialog
      * @param tb the toolbox for registry items.
      * @param showCancel the boolean to toggle the JFX Dialog to show or not
      *            show the cancel option.
+     *            @param theMulti the option to enable or disable selecting multiple icons.
      */
 
-    public IconProjDialog(Window owner, Toolbox tb, boolean showCancel)
+    public IconProjDialog(Window owner, Toolbox tb, boolean showCancel, boolean theMulti)
     {
         super(owner, "Intern Icon Manager", showCancel);
         myPanelModel.setToolBox(tb);
         myPanelModel.setOwner(owner);
         myPanelModel.setIconRegistry(MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry());
-        setLocationRelativeTo(owner);
+        myViewModel.setMulti(theMulti);
+        myPanelModel.setViewModel(myViewModel);
         setSize(875, 600);
         setFxNode(new IconProjView(myPanelModel));
         setMinimumSize(new Dimension(800, 600));
+        myPanelModel.getViewModel().getMainPanel().setDividerPositions(0.28);
+        myPanelModel.getViewModel().getMainPanel().setLayoutY(48.0);
+        setLocationRelativeTo(owner);
     }
 
     /** Packages UI elements into one pane. */
@@ -54,7 +62,7 @@ public class IconProjDialog extends JFXDialog
         private PanelModel myPanelModel;
 
         /** The model for the display panels. */
-        private ViewModel myViewModel = new ViewModel();
+        private ViewModel myViewModel;
 
         /**
          * Creates subpannels for UI.
@@ -65,7 +73,8 @@ public class IconProjDialog extends JFXDialog
         public IconProjView(PanelModel thePanelModel)
         {
             myPanelModel = thePanelModel;
-
+            myViewModel = myPanelModel.getViewModel();
+            
             myMainPanel = new MainPanel(myPanelModel);
             myViewModel.setMainPanel(myMainPanel);
 

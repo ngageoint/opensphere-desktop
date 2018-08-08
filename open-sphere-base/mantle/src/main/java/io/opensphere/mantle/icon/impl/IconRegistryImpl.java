@@ -838,4 +838,14 @@ public class IconRegistryImpl implements IconRegistry
         }
         myPrefs.putJAXBObject(PREFERENCE_KEY, config, false, this);
     }
+
+    @Override
+    public void deleteIcon(IconRecord iconToDelete)
+    {
+        String filename = iconToDelete.getImageURL().toString();
+        filename = filename.replace("file:", "");
+        filename = filename.replace("%20", " ");
+        File iconActual = new File(filename);
+        iconActual.delete();
+    }
 }

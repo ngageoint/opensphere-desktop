@@ -78,7 +78,6 @@ public class MainPanel extends SplitPane
         myOwner = myPanelModel.getOwner();
 
         myPanelModel.getTileWidth().addListener((o, v, m) -> refresh());
-
         createTreeView(null);
         recordMap = new HashMap<>(treeBuilder.getRecordMap());
         myPanelModel.setIconRecordList(recordMap.get("Default"));
@@ -135,7 +134,8 @@ public class MainPanel extends SplitPane
         myScrollPane.setFitToHeight(true);
         myScrollPane.setFitToWidth(true);
 
-        myLeftView.getChildren().addAll(myTreeView, myAddIconButton, myCustIconButton, myGenIconButton);
+        myLeftView.getChildren().addAll(myAddIconButton, myCustIconButton, myGenIconButton, myTreeView);
+        setResizableWithParent(myLeftView, false);
         getItems().addAll(myLeftView, myScrollPane);
     }
 
@@ -150,13 +150,8 @@ public class MainPanel extends SplitPane
         myTreeView = new TreeView<>(treeBuilder);
         myTreeView.setShowRoot(false);
         myTreeView.setContextMenu(new TreePopupMenu(myPanelModel));
-        
         myPanelModel.getTreeObj().getMyObsTree().set(myTreeView);
-        myPanelModel.getTreeObj().getMyObsTree()
-        .addListener((o, v, n) -> refreshTree());
-        
-        setDividerPositions(0.25);
-        setLayoutY(48.0);
+        myPanelModel.getTreeObj().getMyObsTree().addListener((o, v, n) -> refreshTree());
 
         AnchorPane.setBottomAnchor(myTreeView, 78.0);
         AnchorPane.setLeftAnchor(myTreeView, 0.0);
@@ -203,14 +198,15 @@ public class MainPanel extends SplitPane
             }
         });
     }
-    /** Refreshes the Tree Hierarchy.*/
+
+    /** Refreshes the Tree Hierarchy. */
     public void refreshTree()
     {
-        myLeftView.getChildren().removeAll(myTreeView);
+        myLeftView.getChildren().remove(myTreeView);
         createTreeView(myTreeView.getSelectionModel().getSelectedItem());
         myLeftView.getChildren().addAll(myTreeView);
-
     }
+
     /**
      * The tree event handler.
      *
@@ -311,16 +307,11 @@ public class MainPanel extends SplitPane
 
     /**
      * Gets the current icon display grid.
-     * 
+     *
      * @return myIconGrid the current icon display grid.
      */
     public GridBuilder getIconGrid()
     {
         return myIconGrid;
-    }
-
-    public TreeItem<String> getTree()
-    {
-        return null;
     }
 }

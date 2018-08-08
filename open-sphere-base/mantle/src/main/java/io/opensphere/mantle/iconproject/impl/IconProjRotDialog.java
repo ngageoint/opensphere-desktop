@@ -52,7 +52,7 @@ public class IconProjRotDialog extends JFXDialog
         super(owner, "Rotate Icon");
         myPanelModel = thePanelModel;
         myIconRegistry = myPanelModel.getIconRegistry();
-        myIconRecord = myPanelModel.getIconRecord();
+        myIconRecord = myPanelModel.getSelectedRecord().get();
         setMinimumSize(new Dimension(450, 550));
         IconRotPane pane = new IconRotPane(myIconRecord);
         setFxNode(pane);

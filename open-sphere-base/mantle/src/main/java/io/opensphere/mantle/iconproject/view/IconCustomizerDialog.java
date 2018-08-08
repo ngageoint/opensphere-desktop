@@ -31,10 +31,12 @@ public class IconCustomizerDialog extends JFXDialog
     private static final long serialVersionUID = -8284546944940700345L;
 
     /** The logger for this class. */
-    //private static final Logger LOGGER = Logger.getLogger(IconCustomizerDialog.class);
+    // private static final Logger LOGGER =
+    // Logger.getLogger(IconCustomizerDialog.class);
 
     /** The Icon Registry. */
     private final IconRegistry myIconRegistry;
+
     /** the current UI model. */
     private PanelModel myPanelModel;
 
@@ -100,10 +102,10 @@ public class IconCustomizerDialog extends JFXDialog
                 IconProvider provider = new DefaultIconProvider(imageURL, IconRecord.USER_ADDED_COLLECTION, null, "User");
                 myIconRegistry.addIcon(provider, this);
             }
+            myPanelModel.getViewModel().getMainPanel().refresh();
         }
         catch (IOException e)
         {
         }
-        myPanelModel.getViewModel().getMainPanel().refresh();
     }
 }

@@ -1,7 +1,5 @@
 package io.opensphere.mantle.iconproject.impl;
 
-import java.io.File;
-
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import javafx.scene.control.TreeItem;
@@ -25,10 +23,14 @@ public class TreePopupMenuImpl
     public TreePopupMenuImpl(PanelModel thePanelModel)
     {
         myPanelModel = thePanelModel;
-        mySelectedIcon = myPanelModel.getIconRecord();
+        mySelectedIcon = myPanelModel.getSelectedRecord().get();
     }
 
-    /** Removes the tree from the display and registry. */
+    /**
+     * Removes the tree from the display and registry.
+     *
+     * @param doDelete the toggle to create
+     */
     public void remove(boolean doDelete)
     {
         for (int i = 0; i <= myPanelModel.getIconRegistry().getIconIds().max(); i++)
@@ -41,13 +43,10 @@ public class TreePopupMenuImpl
                         .selectedItemProperty().get();
                 if (temp.getCollectionName().equals(samp.getValue()))
                 {
-                    String filename = myPanelModel.getIconRegistry().getIconRecordByIconId(i).getImageURL().toString();
-                    filename.replace("file:", "");
-                    filename = filename.replace("%20", " ");
-                    File iconActual = new File(filename);
-                    myPanelModel.getIconRegistry().removeIcon(i, this);
-                    if (doDelete) {
-                        iconActual.delete();
+                    myPanelModel.getIconRegistry().removeIcon(temp, this);
+                    if (doDelete)
+                    {
+                        myPanelModel.getIconRegistry().deleteIcon(temp);
                     }
                 }
             }

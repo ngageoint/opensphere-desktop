@@ -18,8 +18,12 @@ public class ViewModel
      */
     private MainPanel myMainPanel;
 
+    /** The option to disable or enable the user to select multiple icons. */
+    private boolean myMulti;
+
     /**
      * Sets the top menu bar.
+     * 
      * @param theTopMenuBar the menu bar.
      */
     public void setTopMenuBar(TopMenuBar theTopMenuBar)
@@ -29,6 +33,7 @@ public class ViewModel
 
     /**
      * Gets the top menu bar.
+     * 
      * @return myTopMenuBar the menu bar.
      */
     public TopMenuBar getTopMenuBar()
@@ -38,6 +43,7 @@ public class ViewModel
 
     /**
      * Sets the main display panel.
+     * 
      * @param theMainPanel the main split panel display.
      */
     public void setMainPanel(MainPanel theMainPanel)
@@ -47,11 +53,22 @@ public class ViewModel
 
     /**
      * Gets the main panel.
+     * 
      * @return myMainPanel the curent main panel.
      */
     public MainPanel getMainPanel()
     {
         return myMainPanel;
     }
-}
 
+    public boolean getMulti()
+    {
+        return myMulti;
+    }
+
+    /** */
+    public void setMulti(boolean theMulti)
+    {
+        myMulti = theMulti;
+    }
+}

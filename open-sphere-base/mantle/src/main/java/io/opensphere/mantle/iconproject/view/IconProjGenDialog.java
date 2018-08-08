@@ -8,9 +8,9 @@ import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.iconproject.panels.GenIconPane;
 
 /** Creates the Icon Generation Window. */
+@SuppressWarnings("serial")
 public class IconProjGenDialog extends JFXDialog
 {
-
     /** The current IconRegistry. */
     private final IconRegistry myIconRegistry;
 

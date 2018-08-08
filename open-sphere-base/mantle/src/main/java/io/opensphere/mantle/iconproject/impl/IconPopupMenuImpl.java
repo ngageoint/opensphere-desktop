@@ -1,12 +1,8 @@
 package io.opensphere.mantle.iconproject.impl;
 
-import java.awt.Dimension;
 import java.io.File;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane;
 
 import io.opensphere.core.util.collections.New;
@@ -15,9 +11,8 @@ import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.iconproject.model.PanelModel;
+import io.opensphere.mantle.iconproject.panels.ErrorPane;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 
 /**
  * The Class IconPopupMenuImpl.
@@ -38,7 +33,7 @@ public class IconPopupMenuImpl
     public IconPopupMenuImpl(PanelModel thePanelModel)
     {
         myPanelModel = thePanelModel;
-        mySelectedIcon = myPanelModel.getIconRecord();
+        mySelectedIcon = myPanelModel.getSelectedRecord().get();
     }
 
     /**
@@ -48,7 +43,7 @@ public class IconPopupMenuImpl
     public void addToFav()
     {
         Set<IconRecord> recordSet = myPanelModel.getSelectedIcons().keySet();
-        if (recordSet.isEmpty() && myPanelModel.getIconRecord() == null)
+        if (recordSet.isEmpty() && mySelectedIcon == null)
         {
             JOptionPane.showMessageDialog(myPanelModel.getOwner(),
                     "There are currently no icons selected.\nSelect at least one icon and try again.",
@@ -98,25 +93,10 @@ public class IconPopupMenuImpl
      */
     private void showMultiSelectMessage()
     {
-        JFXDialog test = new JFXDialog(myPanelModel.getOwner(), "Error Rotating Icons", true);
-        ScheduledExecutorService s = Executors.newSingleThreadScheduledExecutor();
-        s.schedule(new Runnable()
-        {
-            public void run()
-            {
-                test.setVisible(false); // should be invoked on the EDT
-                test.dispose();
-            }
-        }, 2, TimeUnit.SECONDS);
-
-        test.setMinimumSize(new Dimension(200, 250));
-        test.setLocationRelativeTo(myPanelModel.getOwner());
-
-        AnchorPane test2 = new AnchorPane();
-        test2.getChildren().add(new Label("Multiple Icons selected. Please select one icon then try again."));
-        test.setFxNode(test2);
-        test.setVisible(true);
-
+        ErrorPane errorLoader = new ErrorPane();
+        JFXDialog test2 = errorLoader.createErrorPane(2, "Multiple Icons selected. Please select one icon then try again.",
+                "Error Loading Icons", myPanelModel);
+        test2.setLocationRelativeTo(myPanelModel.getOwner());
         System.out.println("Dialog closed");
     }
 
@@ -129,7 +109,7 @@ public class IconPopupMenuImpl
     {
         Set<IconRecord> recordSet = myPanelModel.getSelectedIcons().keySet();
 
-        if (recordSet.isEmpty() && myPanelModel.getIconRecord() == null)
+        if (recordSet.isEmpty() && myPanelModel.getSelectedRecord().get() == null)
         {
             JOptionPane.showMessageDialog(myPanelModel.getOwner(),
                     "There are currently no icons selected.\nSelect at least one icon and try again.",
@@ -139,22 +119,17 @@ public class IconPopupMenuImpl
         {
             for (IconRecord rec : recordSet)
             {
-                String filename = rec.getImageURL().toString();
                 myPanelModel.getIconRegistry().removeIcon(rec, this);
-//                System.out.println("should have multiple:  " +  myPanelModel.getIconRegistry()));
                 if (doDelete)
                 {
-                    filename = filename.replace("file:", "");
-                    filename = filename.replace("%20", " ");
-                    File iconActual = new File(filename);
-                    iconActual.delete();
+                    myPanelModel.getIconRegistry().deleteIcon(rec);
                 }
             }
         }
         else
         {
-            String filename = myPanelModel.getIconRecord().getImageURL().toString();
-            myPanelModel.getIconRegistry().removeIcon(myPanelModel.getIconRecord(), this);
+            String filename = myPanelModel.getSelectedRecord().get().getImageURL().toString();
+            myPanelModel.getIconRegistry().removeIcon(myPanelModel.getSelectedRecord().get(), this);
             if (doDelete)
             {
                 filename = filename.replace("file:", "");

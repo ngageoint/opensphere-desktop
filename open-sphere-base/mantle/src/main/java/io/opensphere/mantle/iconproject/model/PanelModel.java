@@ -21,7 +21,7 @@ public class PanelModel
     private final ObjectProperty<ViewStyle> viewType = new SimpleObjectProperty<>(this, "viewtype", ViewStyle.GRID);
 
     /** The selected icon to be used for customization dialogs. */
-    private IconRecord mySelectedIcon;
+    private ObjectProperty<IconRecord> mySelectedRecord = new SimpleObjectProperty<IconRecord>();
 
     /** The registry of icons. */
     private IconRegistry myIconRegistry;
@@ -47,14 +47,8 @@ public class PanelModel
     /** The icons currently selected. */
     private HashMap<IconRecord, Button> mySelectedIcons = new HashMap<IconRecord, Button>();
 
-    /** The Tree model */
+    /** The Tree model. */
     private DefaultIconRecordTreeItemObject myTreeObj;
-
-    /**
-     * The observable selected record for updating picker buttons in feature
-     * actions.
-     */
-    private ObjectProperty<IconRecord> mySelectedRecord = new SimpleObjectProperty<IconRecord>();
 
     /**
      * gets the icon display view type.
@@ -154,26 +148,6 @@ public class PanelModel
     public void setImportProps(ImportProp theImportProps)
     {
         myImportProps = theImportProps;
-    }
-
-    /**
-     * Gets the selected icon record.
-     *
-     * @return the selected icon record
-     */
-    public IconRecord getIconRecord()
-    {
-        return mySelectedIcon;
-    }
-
-    /**
-     * Sets the selected icon.
-     *
-     * @param theSelectedIcon the selected icon
-     */
-    public void setIconRecord(IconRecord theSelectedIcon)
-    {
-        mySelectedIcon = theSelectedIcon;
     }
 
     /**

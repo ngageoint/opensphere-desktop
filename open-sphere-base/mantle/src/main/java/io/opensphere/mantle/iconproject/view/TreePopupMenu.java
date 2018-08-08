@@ -5,8 +5,6 @@ import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 
-import java.awt.EventQueue;
-import io.opensphere.mantle.iconproject.impl.IconPopupMenuImpl;
 import io.opensphere.mantle.iconproject.impl.TreePopupMenuImpl;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 
@@ -35,7 +33,7 @@ public class TreePopupMenu extends ContextMenu
             }
         });
         MenuItem deleteAction = new MenuItem("Delete Items?");
-        removeAction.setOnAction(new EventHandler<ActionEvent>()
+        deleteAction.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
             public void handle(ActionEvent event)
