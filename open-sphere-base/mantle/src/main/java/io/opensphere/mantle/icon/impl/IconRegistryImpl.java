@@ -40,6 +40,13 @@ import io.opensphere.mantle.icon.IconRegistryListener;
 import io.opensphere.mantle.icon.LoadedIconPool;
 import io.opensphere.mantle.icon.config.v1.IconRecordConfig;
 import io.opensphere.mantle.icon.config.v1.IconRegistryConfig;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.scene.control.TreeItem;
 
 /**
  * The Class IconRegistryImpl.
@@ -83,6 +90,12 @@ public class IconRegistryImpl implements IconRegistry
 
     /** The preferences. */
     private final Preferences myPrefs;
+
+    /** The value used for the tilewidth. */
+    private final IntegerProperty myTileWidth = new SimpleIntegerProperty();
+
+    /** The tree which will be selected on start up. */
+    private final ObjectProperty<TreeItem<String>> myInitTreeSelection = new SimpleObjectProperty<TreeItem<String>>(new TreeItem<String>("temp"));
 
     /** The executor used for launching updates. */
     private final Executor mySaveExecutor = new ProcrastinatingExecutor(new ScheduledThreadPoolExecutor(2,
@@ -848,4 +861,20 @@ public class IconRegistryImpl implements IconRegistry
         File iconActual = new File(filename);
         iconActual.delete();
     }
+
+    @Override
+    public IntegerProperty getIconWidth()
+    {
+        return myTileWidth;
+    }
+
+//    /**
+//     * Gets the value of the {@link #myInitTreeSelection} field.
+//     * 
+//     * @return the value stored in the {@link #myInitTreeSelection} field.
+//     */
+//    public ObjectProperty<TreeItem<String>> getInitTreeSelection()
+//    {
+//        return myInitTreeSelection;
+//    }
 }

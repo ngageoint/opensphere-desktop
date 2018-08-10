@@ -135,13 +135,13 @@ public class TreeBuilder extends TreeItem<String>
                     recordMap.put(collection, iconTreeObject.getRecords(true));
                 }
 
-                getChildren().add(iconTreeObject.getMyTreeItem());
+                getChildren().add(iconTreeObject.getMyTreeItem().get());
                 for (String subCat : subCatList)
                 {
                     TreeItem<String> depNode = new TreeItem<>();
                     iconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(depNode, subCat, subToRecListMap.get(subCat),
                             IconRecordTreeItemUserObject.NameType.SUBCATEGORY, collection);
-                    mainNode.getChildren().add(iconTreeObject.getMyTreeItem());
+                    mainNode.getChildren().add(iconTreeObject.getMyTreeItem().get());
                     recordMap.put(subCat, iconTreeObject.getRecords(true));
                     ArrayList<IconRecord> test = new ArrayList<>(recordMap.get(collection));
                     test.addAll(iconTreeObject.getRecords(true));

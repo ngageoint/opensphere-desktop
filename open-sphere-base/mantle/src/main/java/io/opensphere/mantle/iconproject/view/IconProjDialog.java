@@ -9,6 +9,7 @@ import io.opensphere.mantle.iconproject.model.ViewModel;
 import io.opensphere.mantle.iconproject.panels.MainPanel;
 import io.opensphere.mantle.iconproject.panels.TopMenuBar;
 import io.opensphere.mantle.util.MantleToolboxUtils;
+import javafx.scene.control.TreeItem;
 import javafx.scene.layout.AnchorPane;
 
 /** Main UI Frame. */
@@ -21,6 +22,9 @@ public class IconProjDialog extends JFXDialog
     /** The model for the display panels. */
     private ViewModel myViewModel = new ViewModel();
 
+    /** The Toolbox. */
+    private Toolbox myToolbox;
+
     /**
      * Constructor.
      *
@@ -30,23 +34,48 @@ public class IconProjDialog extends JFXDialog
      * @param tb the toolbox for registry items.
      * @param showCancel the boolean to toggle the JFX Dialog to show or not
      *            show the cancel option.
-     *            @param theMulti the option to enable or disable selecting multiple icons.
+     * @param theMulti the option to enable or disable selecting multiple icons.
      */
 
+    @SuppressWarnings("unchecked")
     public IconProjDialog(Window owner, Toolbox tb, boolean showCancel, boolean theMulti)
     {
         super(owner, "Intern Icon Manager", showCancel);
+        myToolbox = tb;
         myPanelModel.setToolBox(tb);
         myPanelModel.setOwner(owner);
         myPanelModel.setIconRegistry(MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry());
         myViewModel.setMulti(theMulti);
         myPanelModel.setViewModel(myViewModel);
+        setMinimumSize(new Dimension(800, 600));
         setSize(875, 600);
         setFxNode(new IconProjView(myPanelModel));
-        setMinimumSize(new Dimension(800, 600));
-        myPanelModel.getViewModel().getMainPanel().setDividerPositions(0.28);
-        myPanelModel.getViewModel().getMainPanel().setLayoutY(48.0);
+        System.out.println("the bean for sizing grid is " + myPanelModel.getIconRegistry().getIconWidth());
+        if (myPanelModel.getIconRegistry().getIconWidth().get() == 0)
+        {
+            myPanelModel.getTileWidth().set(80);
+        }
+        else
+        {
+            myPanelModel.getTileWidth().set(myPanelModel.getIconRegistry().getIconWidth().get());
+        }
+
         setLocationRelativeTo(owner);
+        setAcceptEar(() -> savePrefs());
+        myPanelModel.getViewModel().getMainPanel().setDividerPositions(.28);
+    }
+
+    /**
+     * Saves icon manager preferences such as display width, display view, tree
+     * selection. This ONLY saves during session. NOT across sessions.
+     */
+    // For now the only saved preference is display width.
+    private void savePrefs()
+    {
+        MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getIconWidth().set(myPanelModel.getTileWidth().get());
+        
+    //    TreeItem<String> samp = (TreeItem<String>)myPanelModel.getTreeObj().getMyObsTree().get().getSelectionModel()
+    //            .selectedItemProperty().get()
     }
 
     /** Packages UI elements into one pane. */
@@ -74,7 +103,7 @@ public class IconProjDialog extends JFXDialog
         {
             myPanelModel = thePanelModel;
             myViewModel = myPanelModel.getViewModel();
-            
+
             myMainPanel = new MainPanel(myPanelModel);
             myViewModel.setMainPanel(myMainPanel);
 

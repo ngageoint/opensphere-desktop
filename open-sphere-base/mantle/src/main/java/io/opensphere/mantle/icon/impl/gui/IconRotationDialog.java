@@ -54,13 +54,14 @@ public class IconRotationDialog extends JFXDialog
         try
         {
             BufferedImage image = ImageIO.read(record.getImageURL());
-            setSize(Math.max(image.getWidth() + 50, 310), Math.max(image.getHeight() + 170, 200));
+            setSize(image.getWidth() + 50, image.getHeight() + 170);
         }
         catch (IOException e)
         {
             setSize(310, 200);
         }
         setLocationRelativeTo(owner);
+        
     }
 
     /**

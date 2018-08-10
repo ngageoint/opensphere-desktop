@@ -33,7 +33,7 @@ public class PanelModel
     private Window myOwner;
 
     /** The value used for the tilewidth. */
-    private final IntegerProperty myTileWidth = new SimpleIntegerProperty(80);
+    private final IntegerProperty myCurrentTileWidth = new SimpleIntegerProperty();
 
     /** The import property. */
     private ImportProp myImportProps = new ImportProp();
@@ -77,7 +77,7 @@ public class PanelModel
      */
     public IntegerProperty getTileWidth()
     {
-        return myTileWidth;
+        return myCurrentTileWidth;
     }
 
     /**

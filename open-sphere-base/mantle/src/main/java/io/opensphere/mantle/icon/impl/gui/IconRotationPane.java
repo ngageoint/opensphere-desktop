@@ -1,5 +1,10 @@
 package io.opensphere.mantle.icon.impl.gui;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import io.opensphere.mantle.icon.IconRecord;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -50,6 +55,31 @@ public class IconRotationPane extends BorderPane
     {
         ImageView imageView = new ImageView(record.getImageURL().toString());
         imageView.rotateProperty().bind(myRotation);
+
+        BufferedImage iconActual = null;
+        try
+        {
+            iconActual = ImageIO.read(record.getImageURL());
+        }
+        catch (IOException e)
+        {
+        }
+        if (iconActual.getWidth() > 150)
+        {
+            imageView.setFitWidth(150);
+            imageView.setFitHeight(150);
+        }
+        else if (iconActual.getWidth() < 40)
+        {
+            imageView.setFitWidth(50);
+            imageView.setFitHeight(50);
+        }
+        else
+        {
+            imageView.setFitWidth(iconActual.getTileWidth());
+            imageView.setFitHeight(iconActual.getHeight());
+        }
+
         return imageView;
     }
 

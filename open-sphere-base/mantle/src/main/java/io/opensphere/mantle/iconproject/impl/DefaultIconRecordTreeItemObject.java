@@ -26,7 +26,7 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
     private final NameType myNameType;
 
     /** The TreeItem. */
-    private final TreeItem<String> myItem;
+    private final ObjectProperty<TreeItem<String>> myItem = new SimpleObjectProperty<TreeItem<String>>();
 
     /** The Type. */
     private final Type myType;
@@ -88,14 +88,14 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
         myType = type;
         myNameType = nt;
         myLabel = label;
-        myItem = item;
+        myItem.set(item);
         myIconRecords = recs;
         myParent = parent;
-        myItem.setValue(myLabel);
+        myItem.get().setValue((myLabel));
     }
 
     @Override
-    public TreeItem<String> getMyTreeItem()
+    public ObjectProperty<TreeItem<String>> getMyTreeItem()
     {
         return myItem;
     }
@@ -116,7 +116,7 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
     public List<IconRecord> getRecords(boolean recurse)
     {
         List<IconRecord> subList = New.linkedList();
-        getChildrenRecords(subList, myItem, recurse);
+        getChildrenRecords(subList, myItem.get(), recurse);
         return subList.isEmpty() ? Collections.<IconRecord>emptyList() : New.list(subList);
     }
 
