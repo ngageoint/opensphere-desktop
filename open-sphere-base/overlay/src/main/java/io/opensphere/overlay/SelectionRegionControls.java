@@ -90,14 +90,12 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
             if (myDefaultDrawingMode)
             {
                 myDefaultDrawingMode = false;
-                LOGGER.info("Handling menu cancellation.");
                 myModeController.setSelectionMode(SelectionMode.NONE);
             }
             else
             {
                 myModeController.setSelectionMode(myModeController.getDefaultSelectionMode());
             }
-            LOGGER.info("Selection cancelled.");
         }
 
         @Override
@@ -413,7 +411,9 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
     }
 
     /**
-     * @param llas
+     * Draws a line using the supplied points.
+     * 
+     * @param llas the points with which to draw the line.
      */
     protected void setLineDraw(List<LatLonAlt> llas)
     {
@@ -439,7 +439,6 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
             }
             LatLonAlt labelLocation = llas.get(llas.size() - 1);
 
-            LOGGER.info("Label Location: " + labelLocation);
             getTransformer().setRegion(geom, myColor, null, labelLocation, sb.toString());
         }
         catch (IllegalArgumentException e)
@@ -597,7 +596,6 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
         mySelectionBoxHandler.selectionRegionCompleted(mouseEvent,
                 myUsurpationContext == null ? ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT : myUsurpationContext, geometries);
 
-        LOGGER.info("Handling completion of polygon.");
         myModeController.setSelectionMode(SelectionMode.NONE);
 
         // TODO pass in bounding box
@@ -705,7 +703,6 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
                         getTransformer().clearRegion();
                         mySelectionBoxHandler.setSelectionRegionDescription(null);
                         finishRegion();
-                        LOGGER.info("Selection cancelled.");
                     }
                     else if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE || keyEvent.getKeyCode() == KeyEvent.VK_ENTER)
                     {
