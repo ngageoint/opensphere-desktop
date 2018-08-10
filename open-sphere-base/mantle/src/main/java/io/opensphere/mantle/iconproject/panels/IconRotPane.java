@@ -1,5 +1,10 @@
 package io.opensphere.mantle.iconproject.panels;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import io.opensphere.mantle.icon.IconRecord;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -51,29 +56,19 @@ public class IconRotPane extends BorderPane
     {
         ImageView imageView = new ImageView(record.getImageURL().toString());
 
-//        BufferedImage iconActual = null;
-//        try
-//        {
-//            iconActual = ImageIO.read(record.getImageURL());
-//        }
-//        catch (IOException e)
-//        {
-//        }
-//        if (iconActual.getWidth() > 150)
-//        {
-//            imageView.setFitWidth(150);
-//            imageView.setFitHeight(150);
-//        }
-//        else if (iconActual.getWidth() < 40)
-//        {
-//            imageView.setFitWidth(50);
-//            imageView.setFitHeight(50);
-//        }
-//        else
-//        {
-//            imageView.setFitWidth(iconActual.getTileWidth());
-//            imageView.setFitHeight(iconActual.getHeight());
-//        }
+        BufferedImage iconActual = null;
+        try
+        {
+            iconActual = ImageIO.read(record.getImageURL());
+        }
+        catch (IOException e)
+        {
+        }
+        if (iconActual.getWidth() > 300)
+        {
+            imageView.setFitWidth(300);
+            imageView.setFitHeight(300);
+        }
 
         imageView.rotateProperty().bind(myRotation);
         return imageView;
@@ -140,6 +135,7 @@ public class IconRotPane extends BorderPane
 
     /**
      * Gets the save state.
+     *
      * @return The users choice to replace the existing icon or save as a new
      *         icon.
      */
@@ -158,4 +154,3 @@ public class IconRotPane extends BorderPane
         return myRotation.get();
     }
 }
-

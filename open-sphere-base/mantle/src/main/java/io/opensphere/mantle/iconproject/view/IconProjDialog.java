@@ -50,16 +50,15 @@ public class IconProjDialog extends JFXDialog
         setMinimumSize(new Dimension(800, 600));
         setSize(875, 600);
         setFxNode(new IconProjView(myPanelModel));
-        System.out.println("the bean for sizing grid is " + myPanelModel.getIconRegistry().getIconWidth());
-        if (myPanelModel.getIconRegistry().getIconWidth().get() == 0)
+        if (myPanelModel.getIconRegistry().getManagerPrefs().getIconWidth().getValue() != 0)
         {
-            myPanelModel.getTileWidth().set(80);
-        }
-        else
-        {
-            myPanelModel.getTileWidth().set(myPanelModel.getIconRegistry().getIconWidth().get());
+            myPanelModel.getCurrentTileWidth().set(myPanelModel.getIconRegistry().getManagerPrefs().getIconWidth().get());
         }
 
+        if (myPanelModel.getIconRegistry().getManagerPrefs().getInitTreeSelection().get().getValue() != "tem    p")
+        {
+            myPanelModel.getViewModel().getMainPanel().refresh();
+        }
         setLocationRelativeTo(owner);
         setAcceptEar(() -> savePrefs());
         myPanelModel.getViewModel().getMainPanel().setDividerPositions(.28);
@@ -70,12 +69,17 @@ public class IconProjDialog extends JFXDialog
      * selection. This ONLY saves during session. NOT across sessions.
      */
     // For now the only saved preference is display width.
+    @SuppressWarnings("unchecked")
     private void savePrefs()
     {
-        MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getIconWidth().set(myPanelModel.getTileWidth().get());
-        
-    //    TreeItem<String> samp = (TreeItem<String>)myPanelModel.getTreeObj().getMyObsTree().get().getSelectionModel()
-    //            .selectedItemProperty().get()
+        MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs().getIconWidth()
+                .set(myPanelModel.getCurrentTileWidth().get());
+        MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs().getInitTreeSelection()
+                .set((TreeItem<String>)myPanelModel.getTreeObj().getMyObsTree().get().getSelectionModel().selectedItemProperty()
+                        .get());
+        // TreeItem<String> samp =
+        // (TreeItem<String>)myPanelModel.getTreeObj().getMyObsTree().get().getSelectionModel()
+        // .selectedItemProperty().get()
     }
 
     /** Packages UI elements into one pane. */

@@ -53,27 +53,27 @@ public class IconProjRotDialog extends JFXDialog
         myPanelModel = thePanelModel;
         myIconRegistry = myPanelModel.getIconRegistry();
         myIconRecord = myPanelModel.getSelectedRecord().get();
-        setMinimumSize(new Dimension(450, 550));
+        setMinimumSize(new Dimension(250, 350));
+        setSize(new Dimension(450, 550));
         IconRotPane pane = new IconRotPane(myIconRecord);
         setFxNode(pane);
         setAcceptEar(() -> saveRotatedIcon(myIconRecord, pane.getRotation(), pane.getSaveState()));
-//        try
-//        {
-//            BufferedImage image = ImageIO.read(myIconRecord.getImageURL());
-//
-//            if (image.getWidth() > 150)
-//            {
-//                setSize(500, 600);
-//            }
-//            else
-//            {
-//                setSize(Math.max(image.getWidth() + 20, 310), Math.max(image.getHeight() + 20, 200));
-//            }
-//        }
-//        catch (IOException e)
-//        {
-//            setSize(310, 200);
-//        }
+        try
+        {
+            BufferedImage image = ImageIO.read(myIconRecord.getImageURL());
+            if (image.getWidth() >= 300)
+            {
+                setSize(450, 550);
+            }
+            else
+            {
+                setSize(image.getWidth() + 50, image.getHeight() + 110);
+            }
+        }
+        catch (IOException e)
+        {
+            setSize(310, 150);
+        }
         setLocationRelativeTo(owner);
     }
 
@@ -82,7 +82,8 @@ public class IconProjRotDialog extends JFXDialog
      *
      * @param record the icon being rotated.
      * @param rotation the numerical amount the icon has been rotated.
-     * @param saveChoice the users indication of whether to replace the existing icon.
+     * @param saveChoice the users indication of whether to replace the existing
+     *            icon.
      */
     private void saveRotatedIcon(IconRecord record, int rotation, boolean saveChoice)
     {
@@ -108,7 +109,7 @@ public class IconProjRotDialog extends JFXDialog
                 IconProvider provider = new DefaultIconProvider(imageURL, IconRecord.USER_ADDED_COLLECTION, null, "User");
                 myIconRegistry.addIcon(provider, this);
             }
-            // .refreshFromRegistry(IconRecord.USER_ADDED_COLLECTION);
+            myPanelModel.getViewModel().getMainPanel().refresh();
         }
         catch (IOException e)
         {
@@ -117,4 +118,3 @@ public class IconProjRotDialog extends JFXDialog
         }
     }
 }
-

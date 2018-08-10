@@ -63,7 +63,7 @@ public class IconPopupMenu extends ContextMenu
                 selector.delete(false);
             }
         });
-        MenuItem unSelectAction = new MenuItem("Unselect All Icons");
+        MenuItem unSelectAction = new MenuItem("UnSelect All Icons");
         unSelectAction.setOnAction(event ->
         {
             EventQueue.invokeLater(() ->
@@ -71,6 +71,15 @@ public class IconPopupMenu extends ContextMenu
                 selector.unSelectIcons();
             });
         });
-        getItems().addAll(favAction, rotateAction, deleteAction, removeAction, unSelectAction);
+
+        MenuItem deSelectAction = new MenuItem("DeSelect Icon");
+        deSelectAction.setOnAction(event ->
+        {
+            EventQueue.invokeLater(() ->
+            {
+                selector.unSelectIcon();
+            });
+        });
+        getItems().addAll(favAction, rotateAction, deleteAction, removeAction, unSelectAction, deSelectAction);
     }
 }

@@ -43,7 +43,7 @@ public class GridBuilder extends TilePane
     public GridBuilder(PanelModel thePanelModel)
     {
         myPanelModel = thePanelModel;
-        myTileWidth = myPanelModel.getTileWidth().get();
+        myTileWidth = myPanelModel.getCurrentTileWidth().get();
         myRecordList = myPanelModel.getRecordList();
 
         for (IconRecord recordindex : myRecordList)
@@ -99,17 +99,17 @@ public class GridBuilder extends TilePane
         generic.setMaxSize(myTileWidth, myTileWidth);
         String text = record.getName();
         generic.setPadding(new Insets(5, 5, 5, 5));
-        generic.setTooltip(new Tooltip(text));
+        generic.setTooltip(new Tooltip(record.getId() + record.getImageURL().toString()));
 
         generic.setText(text);
         generic.setContentDisplay(ContentDisplay.TOP);
         generic.setAlignment(Pos.BOTTOM_CENTER);
 
         ImageView iconView = new ImageView(record.getImageURL().toString());
-        if (iconView.getImage().getWidth() > myTileWidth)
+        if (iconView.getImage().getWidth() + 20 > myTileWidth)
         {
-            iconView.setFitHeight(myTileWidth - 35);
-            iconView.setFitWidth(myTileWidth - 35);
+            iconView.setFitHeight(myTileWidth - 40);
+            iconView.setFitWidth(myTileWidth - 40);
         }
         generic.setGraphic(iconView);
         generic.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
@@ -117,21 +117,18 @@ public class GridBuilder extends TilePane
             @Override
             public void handle(MouseEvent e)
             {
-                if (e.getButton() == MouseButton.PRIMARY)
-                {
-                    myPanelModel.getSelectedRecord().set(record);
-                    if (myPanelModel.getViewModel().getMulti())
-                    {
-                        generic.setStyle("-fx-border-style: solid inside;" + "-fx-border-width: 3;" + "-fx-border-radius: 5;"
-                                + "-fx-border-color: red;");
-                        myPanelModel.getSelectedIcons().put(record, generic);
-                    }
-                }
                 if (e.getButton() == MouseButton.SECONDARY)
                 {
-                    myPanelModel.getSelectedRecord().set(record);
                     generic.setContextMenu(new IconPopupMenu(myPanelModel));
                 }
+                if (myPanelModel.getViewModel().getMulti())
+                {
+                    generic.setStyle("-fx-effect: dropshadow(three-pass-box, purple, 20, 0, 0, 0);");
+                    myPanelModel.getSelectedIcons().put(record, generic);
+                }
+                myPanelModel.getSelectedRecord().set(record);
+                myPanelModel.getSelectedIconMap().clear();
+                myPanelModel.getSelectedIconMap().put(record, generic);
             }
         });
         return generic;

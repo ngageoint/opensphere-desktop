@@ -1,6 +1,5 @@
 package io.opensphere.mantle.iconproject.impl;
 
-import java.io.File;
 import java.util.List;
 import java.util.Set;
 import javax.swing.JOptionPane;
@@ -84,7 +83,6 @@ public class IconPopupMenuImpl
             IconProjRotDialog dialog = new IconProjRotDialog(myPanelModel.getOwner(), myPanelModel);
             dialog.setVisible(true);
         }
-        myPanelModel.getViewModel().getMainPanel().refresh();
     }
 
     /**
@@ -97,7 +95,7 @@ public class IconPopupMenuImpl
         JFXDialog test2 = errorLoader.createErrorPane(2, "Multiple Icons selected. Please select one icon then try again.",
                 "Error Loading Icons", myPanelModel);
         test2.setLocationRelativeTo(myPanelModel.getOwner());
-        System.out.println("Dialog closed");
+        unSelectIcons();
     }
 
     /**
@@ -122,20 +120,16 @@ public class IconPopupMenuImpl
                 myPanelModel.getIconRegistry().removeIcon(rec, this);
                 if (doDelete)
                 {
-                    myPanelModel.getIconRegistry().deleteIcon(rec);
+                    myPanelModel.getIconRegistry().deleteIcon(rec, myPanelModel);
                 }
             }
         }
         else
         {
-            String filename = myPanelModel.getSelectedRecord().get().getImageURL().toString();
             myPanelModel.getIconRegistry().removeIcon(myPanelModel.getSelectedRecord().get(), this);
             if (doDelete)
             {
-                filename = filename.replace("file:", "");
-                filename = filename.replace("%20", " ");
-                File iconActual = new File(filename);
-                iconActual.delete();
+                myPanelModel.getIconRegistry().deleteIcon(myPanelModel.getSelectedRecord().get(), myPanelModel);
             }
         }
         myPanelModel.getViewModel().getMainPanel().refresh();
@@ -150,5 +144,16 @@ public class IconPopupMenuImpl
             myPanelModel.getViewModel().getMainPanel().getIconGrid().getChildren().get(idx).setStyle("");
         }
         myPanelModel.getSelectedIcons().clear();
+    }
+
+    /** Un-Selects the Icons visually and in the registry. */
+    public void unSelectIcon()
+    {
+        for (Button recordindex : myPanelModel.getSelectedIconMap().values())
+        {
+            int idx = myPanelModel.getViewModel().getMainPanel().getIconGrid().getChildren().indexOf(recordindex);
+            myPanelModel.getViewModel().getMainPanel().getIconGrid().getChildren().get(idx).setStyle("");
+        }
+        myPanelModel.getSelectedIconMap().clear();
     }
 }

@@ -32,8 +32,11 @@ public class PanelModel
     /** The owner of this window. */
     private Window myOwner;
 
-    /** The value used for the tilewidth. */
-    private final IntegerProperty myCurrentTileWidth = new SimpleIntegerProperty();
+    /**
+     * The value used for the tilewidth. The number inside is the default value
+     * on program startup.
+     */
+    private final IntegerProperty myCurrentTileWidth = new SimpleIntegerProperty(80);
 
     /** The import property. */
     private ImportProp myImportProps = new ImportProp();
@@ -49,6 +52,12 @@ public class PanelModel
 
     /** The Tree model. */
     private DefaultIconRecordTreeItemObject myTreeObj;
+
+    /**
+     * Used to keep track of which icon and button are selected on the grid for
+     * single selection purposes.
+     */
+    private HashMap<IconRecord, Button> myHash = new HashMap<IconRecord, Button>();
 
     /**
      * gets the icon display view type.
@@ -75,7 +84,7 @@ public class PanelModel
      *
      * @return myTileWidth the width of the tiles
      */
-    public IntegerProperty getTileWidth()
+    public IntegerProperty getCurrentTileWidth()
     {
         return myCurrentTileWidth;
     }
@@ -239,5 +248,16 @@ public class PanelModel
     public void setTreeObj(DefaultIconRecordTreeItemObject theTreeObj)
     {
         myTreeObj = theTreeObj;
+    }
+
+    /**
+     * Gets the selected icon map.
+     *
+     * @return myHash a map containing an icon record and it's corresponding
+     *         button in the display.
+     */
+    public HashMap<IconRecord, Button> getSelectedIconMap()
+    {
+        return myHash;
     }
 }

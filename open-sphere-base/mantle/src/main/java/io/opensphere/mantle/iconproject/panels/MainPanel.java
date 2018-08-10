@@ -77,8 +77,8 @@ public class MainPanel extends SplitPane
         myPanelModel = thePanelModel;
         myOwner = myPanelModel.getOwner();
 
-        myPanelModel.getTileWidth().addListener((o, v, m) -> refresh());
-        createTreeView(null);
+        myPanelModel.getCurrentTileWidth().addListener((o, v, m) -> refresh());
+        createTreeView(myPanelModel.getIconRegistry().getManagerPrefs().getInitTreeSelection().get());
         recordMap = new HashMap<>(treeBuilder.getRecordMap());
         myPanelModel.setIconRecordList(recordMap.get("Default"));
         myIconGrid = new GridBuilder(myPanelModel);
@@ -158,7 +158,7 @@ public class MainPanel extends SplitPane
         AnchorPane.setRightAnchor(myTreeView, 0.0);
         AnchorPane.setTopAnchor(myTreeView, 0.0);
 
-        if (treeItem == null)
+        if (treeItem.getValue() == "temp")
         {
             for (int i = 0; i <= myTreeView.getExpandedItemCount(); i++)
             {
@@ -171,9 +171,15 @@ public class MainPanel extends SplitPane
         }
         else
         {
-            myTreeView.getSelectionModel().select(treeItem);
+            for (int i = 0; i <= myTreeView.getExpandedItemCount(); i++)
+            {
+                if ((myTreeView.getTreeItem(i).getValue()) == treeItem.getValue())
+                {
+                    myTreeView.getSelectionModel().select(myTreeView.getRow((myTreeView.getTreeItem(i))));
+                    break;
+                }
+            }
         }
-
         myTreeView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> treeHandle(newValue));
     }
@@ -191,10 +197,8 @@ public class MainPanel extends SplitPane
                 refreshTree();
                 recordMap = new HashMap<>(treeBuilder.getRecordMap());
                 myPanelModel.setIconRecordList(recordMap.get(myTreeView.getSelectionModel().getSelectedItem().getValue()));
-
                 myScrollPane.setContent(myIconGrid = new GridBuilder(myPanelModel));
                 myPanelModel.getSelectedIcons().clear();
-                System.out.println("Icon Grid has been refreshed!!!!!!!");
             }
         });
     }
@@ -300,7 +304,6 @@ public class MainPanel extends SplitPane
      */
     private void addIconsFromFolder()
     {
-        System.out.println(myPanelModel.getIconRegistry().getAllAssignedElementIds());
         AddIconDialog iconImporter = new AddIconDialog(myOwner, myPanelModel);
         iconImporter.setVisible(true);
     }

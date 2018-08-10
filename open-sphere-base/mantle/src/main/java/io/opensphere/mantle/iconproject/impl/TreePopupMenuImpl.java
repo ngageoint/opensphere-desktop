@@ -46,7 +46,7 @@ public class TreePopupMenuImpl
                     myPanelModel.getIconRegistry().removeIcon(temp, this);
                     if (doDelete)
                     {
-                        myPanelModel.getIconRegistry().deleteIcon(temp);
+                        myPanelModel.getIconRegistry().deleteIcon(temp, myPanelModel);
                     }
                 }
             }

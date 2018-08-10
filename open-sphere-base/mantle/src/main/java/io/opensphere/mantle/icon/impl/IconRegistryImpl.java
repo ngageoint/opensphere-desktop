@@ -40,18 +40,12 @@ import io.opensphere.mantle.icon.IconRegistryListener;
 import io.opensphere.mantle.icon.LoadedIconPool;
 import io.opensphere.mantle.icon.config.v1.IconRecordConfig;
 import io.opensphere.mantle.icon.config.v1.IconRegistryConfig;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.scene.control.TreeItem;
+import io.opensphere.mantle.iconproject.model.IconManagerPrefs;
+import io.opensphere.mantle.iconproject.model.PanelModel;
 
 /**
  * The Class IconRegistryImpl.
  */
-@SuppressWarnings("PMD.GodClass")
 public class IconRegistryImpl implements IconRegistry
 {
     /** The key used to store the preferences. */
@@ -91,15 +85,12 @@ public class IconRegistryImpl implements IconRegistry
     /** The preferences. */
     private final Preferences myPrefs;
 
-    /** The value used for the tilewidth. */
-    private final IntegerProperty myTileWidth = new SimpleIntegerProperty();
-
-    /** The tree which will be selected on start up. */
-    private final ObjectProperty<TreeItem<String>> myInitTreeSelection = new SimpleObjectProperty<TreeItem<String>>(new TreeItem<String>("temp"));
-
     /** The executor used for launching updates. */
     private final Executor mySaveExecutor = new ProcrastinatingExecutor(new ScheduledThreadPoolExecutor(2,
             new NamedThreadFactory("IconRegistry::IO"), SuppressableRejectedExecutionHandler.getInstance()), 1000);
+
+    /** The model containing the preferences for the Icon Manager start up. */
+    private IconManagerPrefs myIconManagerPrefs = new IconManagerPrefs();
 
     /**
      * Instantiates a new icon registry impl.
@@ -158,7 +149,7 @@ public class IconRegistryImpl implements IconRegistry
             myDataElementIdLock.unlock();
         }
         myChangeSupport.notifyListeners(
-                listener -> listener.iconsUnassigned(Collections.singletonList(Long.valueOf(deId)), source), EXECUTOR);
+            listener -> listener.iconsUnassigned(Collections.singletonList(Long.valueOf(deId)), source), EXECUTOR);
     }
 
     @Override
@@ -574,7 +565,7 @@ public class IconRegistryImpl implements IconRegistry
             myDataElementIdLock.unlock();
         }
         myChangeSupport.notifyListeners(
-                listener -> listener.iconAssigned(iconId, Collections.singletonList(Long.valueOf(deId)), source), EXECUTOR);
+            listener -> listener.iconAssigned(iconId, Collections.singletonList(Long.valueOf(deId)), source), EXECUTOR);
     }
 
     @Override
@@ -852,10 +843,31 @@ public class IconRegistryImpl implements IconRegistry
         myPrefs.putJAXBObject(PREFERENCE_KEY, config, false, this);
     }
 
-    @Override
-    public void deleteIcon(IconRecord iconToDelete)
+    /**
+     * Physically removes Icons from your machine and simultaneously deletes
+     * duplicates which may appear in the registry.
+     *
+     * @param iconToDelete the icon selected for deletion.
+     * @param thePanelModel the model to use for registry.
+     */
+    public void deleteIcon(IconRecord iconToDelete, PanelModel thePanelModel)
     {
         String filename = iconToDelete.getImageURL().toString();
+        // This loop logic is to make sure it is removed from all the
+        // directories. The null check ensures it works on all machines since
+        // icon # may change on computer to computer.
+        for (int idx = 0; idx <= thePanelModel.getIconRegistry().getIconIds().max(); idx++)
+        {
+            IconRecord temp = thePanelModel.getIconRegistry().getIconRecordByIconId(idx);
+            if (temp != null)
+            {
+                if (temp.getImageURL().toString().equals(filename))
+                {
+                    thePanelModel.getIconRegistry().removeIcon(this.getIconRecordByIconId(idx), this);
+                    System.out.println("Duplciate found");
+                }
+            }
+        }
         filename = filename.replace("file:", "");
         filename = filename.replace("%20", " ");
         File iconActual = new File(filename);
@@ -863,18 +875,8 @@ public class IconRegistryImpl implements IconRegistry
     }
 
     @Override
-    public IntegerProperty getIconWidth()
+    public IconManagerPrefs getManagerPrefs()
     {
-        return myTileWidth;
+        return myIconManagerPrefs;
     }
-
-//    /**
-//     * Gets the value of the {@link #myInitTreeSelection} field.
-//     * 
-//     * @return the value stored in the {@link #myInitTreeSelection} field.
-//     */
-//    public ObjectProperty<TreeItem<String>> getInitTreeSelection()
-//    {
-//        return myInitTreeSelection;
-//    }
 }

@@ -119,16 +119,16 @@ public class TopMenuBar extends HBox
         ButtonBar theSizeMenu = new ButtonBar();
         myEnlargeButton.setOnAction(event ->
         {
-            int origTile = myPanelModel.getTileWidth().get();
-            myPanelModel.getTileWidth().set(origTile + 10);
+            int origTile = myPanelModel.getCurrentTileWidth().get();
+            myPanelModel.getCurrentTileWidth().set(origTile + 10);
             myPanelModel.getViewModel().getMainPanel().myScrollPane.setContent(new GridBuilder(myPanelModel));
         });
         myEnlargeButton.setTooltip(new Tooltip("Increase Icon Size"));
 
         myShrinkButton.setOnAction(event ->
         {
-            int origTile = myPanelModel.getTileWidth().get();
-            myPanelModel.getTileWidth().set(origTile - 10);
+            int origTile = myPanelModel.getCurrentTileWidth().get();
+            myPanelModel.getCurrentTileWidth().set(origTile - 10);
         });
         myShrinkButton.setTooltip(new Tooltip("Decrease Icon Size"));
         theSizeMenu.getButtons().addAll(mySizeLabel, myShrinkButton, myEnlargeButton);

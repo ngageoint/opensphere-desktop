@@ -7,10 +7,8 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import gnu.trove.list.TIntList;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.StringProperty;
-import javafx.scene.control.TreeItem;
+import io.opensphere.mantle.iconproject.model.IconManagerPrefs;
+import io.opensphere.mantle.iconproject.model.PanelModel;
 
 /**
  * The Interface IconRegistry.
@@ -231,8 +229,9 @@ public interface IconRegistry
      * Delets the icon file from the machine.
      *
      * @param iconToDelete the IconRecord to delete.
+     * @param thePanelModel used for registry.
      */
-    void deleteIcon(IconRecord iconToDelete);
+    void deleteIcon(IconRecord iconToDelete, PanelModel thePanelModel);
 
     /**
      * Removes the listener.
@@ -288,16 +287,11 @@ public interface IconRegistry
     void setIconForElements(List<Long> deIds, int iconId, Object source);
 
     /**
-     * Gets the tilewidth for display icons in the Icon Manager.
-     * 
-     * @return myTileWidth the set value.
+     * Sets up the preferences to be used when using the program. Are reset on
+     * the start up of the program to their default values.
+     *
+     * @return IconManagerPrefs the startup valeus for the tree selection, tile
+     *         width, and view selection.
      */
-    IntegerProperty getIconWidth();
-
-//    /**
-//     * Gets the intial tree selectin for tree heirarchy.
-//     * 
-//     * @return myInitialTree the set value.
-//     */
-//    ObjectProperty<TreeItem<String>> getInitTreeSelection();
+    IconManagerPrefs getManagerPrefs();
 }

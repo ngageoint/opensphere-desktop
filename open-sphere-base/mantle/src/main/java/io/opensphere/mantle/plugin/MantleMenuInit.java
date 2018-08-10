@@ -99,8 +99,8 @@ class MantleMenuInit
             public void actionPerformed(ActionEvent e)
             {
                 Quantify.collectMetric("mist3d.menu-bar.tools.icon-manager");
-            //    iconManager.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
-            //    iconManager.setVisible(true);
+                iconManager.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
+                    iconManager.setVisible(true);
                 IconProjDialog internIconManager = new IconProjDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
                         myToolbox, false, true);
                 internIconManager.setVisible(true);
