@@ -64,7 +64,7 @@ public class UIRegistryImpl implements UIRegistry
     private final IconLegendRegistry myIconLegendRegistry = new IconLegendRegistryImpl();
 
     /** The supplier for the main frame. */
-    private final Supplier<? extends JFrame> myFrameSupplier = new Supplier<JFrame>()
+    private final Supplier<? extends JFrame> myFrameSupplier = new Supplier<>()
     {
         @Override
         public JFrame get()

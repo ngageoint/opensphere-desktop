@@ -166,6 +166,14 @@ public class SplitButton extends IconButton
     }
 
     /**
+     * Adds a separator to the menu.
+     */
+    public void addSeparator()
+    {
+        myMenu.addSeparator();
+    }
+
+    /**
      * Get the dropRegionWidth.
      *
      * @return the dropRegionWidth

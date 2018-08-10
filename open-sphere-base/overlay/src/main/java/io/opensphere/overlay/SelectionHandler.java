@@ -4,7 +4,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import io.opensphere.core.control.action.MenuOptionListener;
-import io.opensphere.core.geometry.PolygonGeometry;
+import io.opensphere.core.geometry.Geometry;
 
 /**
  * Interface for things that handle region selections.
@@ -32,7 +32,7 @@ public interface SelectionHandler
      * @param context The context to notify.
      * @param geometries The geometries of the region.
      */
-    void selectionRegionCompleted(MouseEvent mouseEvent, String context, List<PolygonGeometry> geometries);
+    void selectionRegionCompleted(MouseEvent mouseEvent, String context, List<Geometry> geometries);
 
     /**
      * Set a description of the current selection region, which may be
