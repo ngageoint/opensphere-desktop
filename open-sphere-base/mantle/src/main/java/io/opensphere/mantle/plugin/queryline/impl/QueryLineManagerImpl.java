@@ -10,7 +10,7 @@ import io.opensphere.mantle.plugin.selection.BufferRegionCreator;
 import io.opensphere.mantle.plugin.selection.SelectionCommand;
 
 /**
- * 
+ * Default implementation of a Query line manager.
  */
 public class QueryLineManagerImpl implements QueryLineManager
 {
@@ -18,7 +18,9 @@ public class QueryLineManagerImpl implements QueryLineManager
     private final BufferRegionCreator myBufferRegionCreator;
 
     /**
+     * Creates a new manager instance using the supplied toolbox.
      * 
+     * @param toolbox the toolbox through which application state is accessed.
      */
     public QueryLineManagerImpl(Toolbox toolbox)
     {
