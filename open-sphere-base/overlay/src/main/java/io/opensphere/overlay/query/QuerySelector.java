@@ -13,8 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import org.apache.log4j.Logger;
-
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextActionManager;
 import io.opensphere.core.control.action.ContextSingleActionProvider;
@@ -35,9 +33,6 @@ import io.opensphere.overlay.SelectionModeController;
  */
 public final class QuerySelector extends JPanel
 {
-    /** Logger reference. */
-    private static final Logger LOG = Logger.getLogger(QuerySelector.class);
-
     /** The title of the window. */
     public static final String TITLE = "Query Selector";
 
@@ -66,7 +61,6 @@ public final class QuerySelector extends JPanel
             deselectAllButtons();
             setDefaultModeBorder();
 
-            LOG.info("Setting selection mode from invalidation.");
             mySelectionModeController.setSelectionMode(SelectionMode.NONE);
         }
     };
@@ -112,7 +106,6 @@ public final class QuerySelector extends JPanel
 
         mySplitButton.addActionListener(e ->
         {
-            LOG.info("Action performed on split button.");
             mySelectionModeController.setSelectionMode(mySplitButton.currentSelectionModeProperty().get());
         });
 
@@ -145,7 +138,6 @@ public final class QuerySelector extends JPanel
         deselectAllButtons();
         if (mode == SelectionMode.NONE)
         {
-            LOG.info("Changing selection mode to none.");
             setDefaultModeBorder();
             manager.deregisterContextSingleActionProvider(ContextIdentifiers.DEFAULT_MOUSE_CONTEXT, MouseEvent.class,
                     myDrawProvider);
