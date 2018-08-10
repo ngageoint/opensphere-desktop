@@ -236,6 +236,15 @@ public class ModuleStateManagerImpl implements ModuleStateManager
     }
 
     @Override
+    public StateType getState(String state)
+    {
+        synchronized (myStateMap)
+        {
+            return myStateMap.get(state).getState();
+        }
+    }
+
+    @Override
     public Map<String, Collection<? extends String>> getStateDependenciesForModules(Collection<? extends String> modules)
     {
         Map<String, Collection<? extends String>> stateDependencies = New.map();

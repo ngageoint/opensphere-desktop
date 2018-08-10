@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.swing.Icon;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.event.PopupMenuEvent;
@@ -31,8 +32,11 @@ public class SplitButton extends IconButton
     /** The serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /** The Draws split. */
-    private final boolean myDrawsSplit;
+    /**
+     * If the main part and drop-down part of the button have different
+     * functionality.
+     */
+    private final boolean myHasMultipleFunctions;
 
     /** The width of the region which activates the drop menu. */
     private int myDropRegionWidth = 14;
@@ -40,8 +44,8 @@ public class SplitButton extends IconButton
     /** The dynamic menu items. */
     private final List<Component> myDynamicMenuItems = New.list();
 
-    /** Whether to show the popup for a normal click (when not on the arrow). */
-    private boolean myIsAlwaysPopup;
+    /** The static menu items. */
+    private final List<Component> myStaticMenuItems = New.list();
 
     /** True if the button press was over the menu, false otherwise. */
     private boolean myIsMenuPress;
@@ -56,7 +60,9 @@ public class SplitButton extends IconButton
     private boolean mySkipNextMenu;
 
     /**
-     * Constructor.
+     * Instantiates a new split button. In this case, pressing the main part
+     * button will have a different effect than pressing the drop-down part of
+     * the button.
      *
      * @param text the text
      * @param icon the icon
@@ -67,26 +73,20 @@ public class SplitButton extends IconButton
     }
 
     /**
-     * Instantiates a new split button. In this case, the split part of the
-     * button will not be drawn and pressing the button anywhere on the button
-     * will show the popup menu.
+     * Instantiates a new split button with the option to have the main part of
+     * the button do something different than the drop-down part of the button.
      *
      * @param text the text
      * @param icon the icon
-     * @param drawSplit the draw split
+     * @param hasMultipleFunctions if the main part and drop-down part of the
+     *            button have different functionality
      */
-    public SplitButton(String text, Icon icon, boolean drawSplit)
+    public SplitButton(String text, Icon icon, boolean hasMultipleFunctions)
     {
         super(text, icon);
-        myDrawsSplit = drawSplit;
-        if (myDrawsSplit)
-        {
-            addExtraSpace();
-        }
-        else
-        {
-            myIsAlwaysPopup = true;
-        }
+        myHasMultipleFunctions = hasMultipleFunctions;
+
+        addExtraSpace();
 
         // Listen to mouse events to determine where the user clicked
         addMouseListener(new MouseAdapter()
@@ -106,7 +106,7 @@ public class SplitButton extends IconButton
             @Override
             public void mousePressed(MouseEvent e)
             {
-                myIsMenuPress = myDrawsSplit && e.getX() >= getWidth() - myDropRegionWidth;
+                myIsMenuPress = myHasMultipleFunctions && e.getX() >= getWidth() - myDropRegionWidth || !myHasMultipleFunctions;
             }
         });
 
@@ -162,6 +162,7 @@ public class SplitButton extends IconButton
     {
         pMenuItem.setFocusable(false);
         myMenu.add(pMenuItem);
+        myStaticMenuItems.add(pMenuItem);
     }
 
     /**
@@ -208,17 +209,6 @@ public class SplitButton extends IconButton
     }
 
     /**
-     * Sets whether to show the popup for a normal click (when not on the
-     * arrow).
-     *
-     * @param isAlwaysPopup whether to always show the popup
-     */
-    public void setAlwaysPopup(boolean isAlwaysPopup)
-    {
-        myIsAlwaysPopup = isAlwaysPopup;
-    }
-
-    /**
      * Set the dropRegionWidth.
      *
      * @param dropRegionWidth the dropRegionWidth to set
@@ -233,25 +223,27 @@ public class SplitButton extends IconButton
      */
     public void toggleDropComponentVisibility()
     {
-        // Remove the old dynamic menu items
-        if (!myDynamicMenuItems.isEmpty())
-        {
-            for (Component c : myDynamicMenuItems)
-            {
-                myMenu.remove(c);
-            }
-            myDynamicMenuItems.clear();
-        }
+        List<Component> newDynamicMenuItems = getDynamicMenuItems();
 
-        // Add the new dynamic menu items
-        List<Component> newDynamicItems = getDynamicMenuItems();
-        if (!newDynamicItems.isEmpty())
+        // determine if there are/were dynamic menu items
+        if (!myDynamicMenuItems.isEmpty() || !newDynamicMenuItems.isEmpty())
         {
-            myDynamicMenuItems.addAll(newDynamicItems);
-            for (Component c : newDynamicItems)
+            // clear the menu completely
+            myMenu.removeAll();
+            myDynamicMenuItems.clear();
+
+            // determine if there are dynamic items to add to the menu
+            if (!newDynamicMenuItems.isEmpty())
             {
-                myMenu.add(c);
+                myDynamicMenuItems.addAll(newDynamicMenuItems);
+                myMenu.add(new JLabel(getDynamicMenuItemsLabel()));
+                myDynamicMenuItems.forEach(item -> myMenu.add(item));
+                myMenu.addSeparator();
             }
+
+            // add static menu items back either below the dynamic menu items or
+            // alone if there were no dynamic menu items to add
+            myStaticMenuItems.forEach(item -> myMenu.add(item));
         }
 
         boolean empty = myMenu.getComponentCount() == 0;
@@ -282,7 +274,7 @@ public class SplitButton extends IconButton
             mySkipNextMenu = false;
             return;
         }
-        if (myIsMenuPress || myIsAlwaysPopup)
+        if (myIsMenuPress)
         {
             toggleDropComponentVisibility();
         }
@@ -293,7 +285,8 @@ public class SplitButton extends IconButton
     }
 
     /**
-     * Gets the dynamic menu items.
+     * Gets the dynamic menu items. Exists to be overwritten if dynamic menu
+     * items are needed
      *
      * @return the dynamic menu items
      */
@@ -302,44 +295,49 @@ public class SplitButton extends IconButton
         return Collections.emptyList();
     }
 
+    /**
+     * Gets the dynamic menu items' label. Exists to be overwritten if dynamic
+     * menu items are needed
+     *
+     * @return the dynamic menu items' label
+     */
+    protected String getDynamicMenuItemsLabel()
+    {
+        return null;
+    }
+
     @Override
     protected void paintComponent(Graphics g)
     {
         super.paintComponent(g);
 
-        if (myDrawsSplit)
-        {
-            int margin = 3;
-            int triWidth = myDropRegionWidth / 2;
-            int triHeight = (triWidth + 1) / 2;
+        int margin = 3;
+        int triWidth = myDropRegionWidth / 2;
+        int triHeight = (triWidth + 1) / 2;
 
-            Graphics2D g2d = (Graphics2D)g;
-            int lineX = getWidth() - myDropRegionWidth - 1;
+        Graphics2D g2d = (Graphics2D)g;
+        int lineX = getWidth() - myDropRegionWidth - 1;
 
-            // Draw vertical line
-            g2d.setColor(Colors.LF_SECONDARY1);
-            g2d.drawLine(lineX, 1, lineX, getHeight() - 1);
+        // Draw vertical line
+        g2d.setColor(Colors.LF_SECONDARY1);
+        g2d.drawLine(lineX, 1, lineX, getHeight() - 1);
 
-            // Draw triangle
-            int x1 = lineX + margin + 1;
-            int x2 = x1 + triWidth;
-            int x3 = x1 + (triWidth - 1) / 2;
-            int y1 = getHeight() / 2;
-            int y2 = y1;
-            int y3 = y1 + triHeight;
-            g2d.setColor(isEnabled() ? Color.WHITE : Color.GRAY);
-            g2d.fillPolygon(new int[] { x1, x2, x3 }, new int[] { y1, y2, y3 }, 3);
-        }
+        // Draw triangle
+        int x1 = lineX + margin + 1;
+        int x2 = x1 + triWidth;
+        int x3 = x1 + (triWidth - 1) / 2;
+        int y1 = getHeight() / 2;
+        int y2 = y1;
+        int y3 = y1 + triHeight;
+        g2d.setColor(isEnabled() ? Color.WHITE : Color.GRAY);
+        g2d.fillPolygon(new int[] { x1, x2, x3 }, new int[] { y1, y2, y3 }, 3);
     }
 
     @Override
     protected void sizeToFit()
     {
         super.sizeToFit();
-        if (myDrawsSplit)
-        {
-            addExtraSpace();
-        }
+        addExtraSpace();
     }
 
     /**

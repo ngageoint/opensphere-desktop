@@ -9,6 +9,7 @@ import io.opensphere.core.control.ui.ToolbarManager.ToolbarLocation;
 import io.opensphere.core.event.ApplicationLifecycleEvent;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import io.opensphere.core.util.swing.SplitButton;
 
 /**
  * Plugin that provides the controls for saving and restoring state.
@@ -18,8 +19,8 @@ public class StatePlugin extends PluginAdapter
     /** The toolbox. */
     private Toolbox myToolbox;
 
-    /** The menu provider for the clear button. */
-    private ClearStatesMenuProvider myClearStatesMenuProvider;
+    /** The menu provider for the disable button. */
+    private DisableStatesMenuProvider myDisableStatesMenuProvider;
 
     /** The import controller. */
     private StateImportController myImportController;
@@ -48,9 +49,9 @@ public class StatePlugin extends PluginAdapter
     {
         myToolbox = toolbox;
 
-        myClearStatesMenuProvider = new ClearStatesMenuProvider(toolbox.getModuleStateManager());
+        myDisableStatesMenuProvider = new DisableStatesMenuProvider(toolbox.getModuleStateManager());
         toolbox.getUIRegistry().getContextActionManager().registerContextMenuItemProvider(ContextIdentifiers.DELETE_CONTEXT,
-                Void.class, myClearStatesMenuProvider);
+                Void.class, myDisableStatesMenuProvider);
 
         myImportController = new StateImportController(toolbox.getUIRegistry().getMainFrameProvider(),
                 toolbox.getModuleStateManager(), toolbox);
@@ -64,7 +65,7 @@ public class StatePlugin extends PluginAdapter
     {
         myToolbox.getUIRegistry().getToolbarComponentRegistry().deregisterToolbarComponent(ToolbarLocation.NORTH, "State");
         myToolbox.getUIRegistry().getContextActionManager().deregisterContextMenuItemProvider(ContextIdentifiers.DELETE_CONTEXT,
-                Void.class, myClearStatesMenuProvider);
+                Void.class, myDisableStatesMenuProvider);
         myToolbox.getImporterRegistry().removeImporter(myImportController);
     }
 
@@ -74,13 +75,17 @@ public class StatePlugin extends PluginAdapter
      */
     void initializeAfterPlugins()
     {
-        myStateView = new StateView(new StateControllerImpl(myToolbox.getModuleStateManager()), myToolbox);
-        myToolbox.getUIRegistry().getToolbarComponentRegistry().registerToolbarComponent(ToolbarLocation.NORTH, "State",
-                myStateView.getStateControlButton(), 470, SeparatorLocation.LEFT);
-        myToolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(myStateView.getStateControlButton().getIcon(), "State",
-                "Launches the Save State dialog which allows the current state of the tool to be saved. Different "
-                        + "parts of the current state can be saved including Filters, Time, Current View, Animation, Map Layers"
-                        + " and Layers, Query Regions, and Styles. There is also a dropdown button that allows states to be"
-                        + " cleared, deleted, activated, or saved.");
+        StateController controller = new StateControllerImpl(myToolbox);
+        myStateView = new StateView(controller, myImportController, myToolbox);
+        myImportController.setStateController(controller);
+
+        SplitButton stateControlButton = myStateView.getStateControlButton();
+        myToolbox.getUIRegistry().getToolbarComponentRegistry().registerToolbarComponent(ToolbarLocation.NORTH,
+                stateControlButton.getText(), stateControlButton, 470, SeparatorLocation.LEFT);
+        myToolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(stateControlButton.getIcon(),
+                stateControlButton.getText(),
+                "Shows state controls for activating/deactivating a state, importing a state (via file or url), saving a state, "
+                        + "disabling states, and deleting states. Different parts of the current state can be saved including "
+                        + "Filters, Time, Current View, Animation, Map Layers and Layers, Query Regions, and Styles. ");
     }
 }

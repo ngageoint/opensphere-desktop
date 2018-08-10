@@ -526,11 +526,9 @@ public final class ActiveLayerControlPanel extends LayerControlPanel
      */
     private JButton buildExportButton()
     {
-        myExportButton = new SplitButton(null, null);
+        myExportButton = new SplitButton(null, null, false);
         IconUtil.setIcons(myExportButton, IconType.EXPORT);
         myExportButton.setToolTipText("Export the selected layers");
-        myExportButton.setAlwaysPopup(true);
-
         return myExportButton;
     }
 

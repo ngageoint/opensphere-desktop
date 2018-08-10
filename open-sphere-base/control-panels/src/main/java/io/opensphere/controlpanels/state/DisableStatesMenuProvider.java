@@ -13,7 +13,7 @@ import io.opensphere.core.util.Utilities;
 /**
  * A menu provider for the clear states button.
  */
-public class ClearStatesMenuProvider implements ContextMenuProvider<Void>
+public class DisableStatesMenuProvider implements ContextMenuProvider<Void>
 {
     /** The module state manager. */
     private final ModuleStateManager myModuleStateManager;
@@ -23,7 +23,7 @@ public class ClearStatesMenuProvider implements ContextMenuProvider<Void>
      *
      * @param moduleStateManager The module state manager.
      */
-    public ClearStatesMenuProvider(ModuleStateManager moduleStateManager)
+    public DisableStatesMenuProvider(ModuleStateManager moduleStateManager)
     {
         myModuleStateManager = Utilities.checkNull(moduleStateManager, "moduleStateManager");
     }
@@ -31,14 +31,14 @@ public class ClearStatesMenuProvider implements ContextMenuProvider<Void>
     @Override
     public List<JMenuItem> getMenuItems(String contextId, Void key)
     {
-        JMenuItem clearStatesMenuItem = new JMenuItem("Clear States");
-        clearStatesMenuItem.addActionListener(e ->
+        JMenuItem disableStatesMenuItem = new JMenuItem("Disable States");
+        disableStatesMenuItem.addActionListener(e ->
         {
-            Quantify.collectMetric("mist3d.control-panels.selection.clear-states");
+            Quantify.collectMetric("mist3d.control-panels.selection.disable-states");
             myModuleStateManager.deactivateAllStates();
         });
-        clearStatesMenuItem.setToolTipText("Deactivate all states");
-        return Collections.singletonList(clearStatesMenuItem);
+        disableStatesMenuItem.setToolTipText("Deactivate all states");
+        return Collections.singletonList(disableStatesMenuItem);
     }
 
     @Override
