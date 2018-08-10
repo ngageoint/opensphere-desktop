@@ -8,11 +8,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Polygon;
 
 import io.opensphere.core.MapManager;
@@ -23,7 +25,6 @@ import io.opensphere.core.control.ControlContext;
 import io.opensphere.core.control.ControlRegistry;
 import io.opensphere.core.control.DefaultKeyPressedBinding;
 import io.opensphere.core.control.DefaultMouseBinding;
-import io.opensphere.core.control.DiscreteEventAdapter;
 import io.opensphere.core.control.action.MenuOptionListener;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.ui.RegionSelectionManager;
@@ -32,12 +33,10 @@ import io.opensphere.core.event.EventManager;
 import io.opensphere.core.event.RegionEvent;
 import io.opensphere.core.event.RegionEvent.RegionEventType;
 import io.opensphere.core.geometry.Geometry;
-import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.geometry.renderproperties.DefaultPolylineRenderProperties;
 import io.opensphere.core.geometry.renderproperties.PolylineRenderProperties;
 import io.opensphere.core.geometry.renderproperties.ZOrderRenderProperties;
-import io.opensphere.core.math.Vector3d;
 import io.opensphere.core.math.WGS84EarthConstants;
 import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.model.GeographicBoundingBox;
@@ -66,7 +65,8 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
     private final Color myColor = new Color(50, 0, 255, 255);
 
     /**
-     * When true, this control is drawing in the default mode and a control toolbar button is not selected.
+     * When true, this control is drawing in the default mode and a control
+     * toolbar button is not selected.
      */
     private boolean myDefaultDrawingMode;
 
@@ -74,7 +74,8 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
     private MouseEvent myLastMouse;
 
     /**
-     * Listener for when a menu item has been selected or the menu has been cancelled.
+     * Listener for when a menu item has been selected or the menu has been
+     * cancelled.
      */
     private final transient MenuOptionListener myMenuOptionListner = new MenuOptionListener()
     {
@@ -112,58 +113,29 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
     /** The selection box handler. */
     private final SelectionHandler mySelectionBoxHandler;
 
-    /** Listener to changes in the selection mode. */
-    private final SelectionModeChangeListener mySelectionModeListener = new SelectionModeChangeListener()
-    {
-        @Override
-        public void selectionModeChanged(SelectionMode mode)
-        {
-            if (!myShowingMenu && !(myDefaultDrawingMode && mode != SelectionMode.NONE))
-            {
-                LOGGER.info("Selection cancelled.");
-                getTransformer().clearRegion();
-                mySelectionBoxHandler.setSelectionRegionDescription(null);
-                finishRegion();
-            }
-        }
-    };
-
     /**
-     * When true the menu is being displayed, so do not tell the transformer to clean up the geometries yet.
+     * When true the menu is being displayed, so do not tell the transformer to
+     * clean up the geometries yet.
      */
     private volatile boolean myShowingMenu;
 
+    /** Listener to changes in the selection mode. */
+    private final SelectionModeChangeListener mySelectionModeListener;
+
     /**
-     * The context to which notifications are provided instead of the default context.
+     * The context to which notifications are provided instead of the default
+     * context.
      */
     private String myUsurpationContext;
 
-    /**
-     * The selection mode before usurpation was activated.
-     */
+    /** The selection mode before usurpation was activated. */
     private SelectionMode myDefaultMode;
 
-    /**
-     * The event manager through which event pub / sub occurs.
-     */
+    /** The event manager through which event pub / sub occurs. */
     private final EventManager myEventManager;
 
-    /**
-     * Creates the line segment geometry.
-     *
-     * @param point1 the point1
-     * @param point2 the point2
-     * @param c the c
-     * @param zOrder the z order
-     * @return the polyline geometry
-     */
-    public static PolylineGeometry createLineSegmentGeometry(LatLonAlt point1, LatLonAlt point2, Color c, int zOrder)
-    {
-        List<LatLonAlt> llaList = New.list(2);
-        llaList.add(point1);
-        llaList.add(point2);
-        return createPolylineGeometry(llaList, c, zOrder);
-    }
+    /** The factory used to create new JTS geometries. */
+    private final GeometryFactory myGeometryFactory;
 
     /**
      * Creates the polyline geometry.
@@ -175,20 +147,16 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
      */
     public static PolylineGeometry createPolylineGeometry(Collection<LatLonAlt> points, Color c, int zOrder)
     {
-        PolylineGeometry.Builder<GeographicPosition> builder = new PolylineGeometry.Builder<GeographicPosition>();
-        Vector3d offsetVec = new Vector3d(0., 0., 0.);
-        List<GeographicPosition> posList = New.list(points.size());
-        for (LatLonAlt lla : points)
-        {
-            posList.add(new GeographicPosition(LatLonAlt.createFromDegrees(lla.getLatD(), lla.getLonD(), ReferenceLevel.TERRAIN))
-                    .add(offsetVec));
-        }
+        PolylineGeometry.Builder<GeographicPosition> builder = new PolylineGeometry.Builder<>();
+        List<GeographicPosition> posList = points.stream().map(
+                lla -> new GeographicPosition(LatLonAlt.createFromDegrees(lla.getLatD(), lla.getLonD(), ReferenceLevel.TERRAIN)))
+                .collect(Collectors.toList());
+
         builder.setVertices(posList);
         PolylineRenderProperties props = new DefaultPolylineRenderProperties(zOrder, true, false);
         props.setColor(c);
         props.setWidth(3);
-        PolylineGeometry pg = new PolylineGeometry(builder, props, null);
-        return pg;
+        return new PolylineGeometry(builder, props, null);
     }
 
     /**
@@ -242,11 +210,13 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
     /**
      * Construct the Selection Box Controls.
      *
-     * @param pEventManager the event manager through which event pub / sub occurs.
+     * @param pEventManager the event manager through which event pub / sub
+     *            occurs.
      * @param mapManager The map manager.
      * @param unitsRegistry The units registry.
      * @param uiRegistry The UI registry.
-     * @param transformer The transformer used to generate selection region geometries.
+     * @param transformer The transformer used to generate selection region
+     *            geometries.
      * @param handler The handler to notify when a bounding box is selected.
      * @param smc the smc
      */
@@ -254,9 +224,22 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
             UIRegistry uiRegistry, SelectionRegionTransformer transformer, SelectionHandler handler, SelectionModeController smc)
     {
         super(mapManager, unitsRegistry, transformer);
+
+        myGeometryFactory = new GeometryFactory();
         myEventManager = pEventManager;
         myModeController = smc;
         mySelectionBoxHandler = handler;
+
+        mySelectionModeListener = mode ->
+        {
+            if (!myShowingMenu && !(myDefaultDrawingMode && mode != SelectionMode.NONE))
+            {
+                getTransformer().clearRegion();
+                mySelectionBoxHandler.setSelectionRegionDescription(null);
+                finishRegion();
+            }
+        };
+
         myModeController.addSelectionModeChangeListener(mySelectionModeListener);
 
         if (uiRegistry != null)
@@ -322,8 +305,6 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
     @Override
     public synchronized void relinquishRegionContext(String usurpationContext)
     {
-
-        LOGGER.info("Relenquishing region context.");
         myUsurpationContext = null;
         myModeController.setSelectionMode(myDefaultMode);
         myModeController.setSelectionMode(SelectionMode.NONE);
@@ -335,6 +316,23 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
         myUsurpationContext = usurpationContext;
         myDefaultMode = myModeController.getDefaultSelectionMode();
         myModeController.setSelectionMode(mode);
+    }
+
+    /**
+     * Completes the creation of a line.
+     * 
+     * @return true when the line is complete, false otherwise.
+     */
+    protected synchronized boolean completeLine()
+    {
+        MouseEvent mousePosition = myLastMouse;
+        if (myModeController.getSelectionMode() == SelectionMode.LINE && getPositions().size() > 2)
+        {
+            setCompleted(mousePosition);
+            finishLine();
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -353,18 +351,6 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
             return true;
         }
         return false;
-    }
-
-    /**
-     * Create a {@link Polygon} that approximates a circle.
-     *
-     * @param center The center of the circle.
-     * @param edge A point at the edge of the circle.
-     * @return The polygon.
-     */
-    protected Polygon createCircle(LatLonAlt center, LatLonAlt edge)
-    {
-        return JTSUtilities.createCircle(center, edge, JTSUtilities.NUM_CIRCLE_SEGMENTS);
     }
 
     @Override
@@ -400,7 +386,7 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
         String labelString = sb.toString();
         String desc = StringUtilities.concat("BoundingBox selection: ", begin, " ", end);
 
-        Polygon geom = JTSUtilities.createPolygon(left, right, bottom, top, new GeometryFactory());
+        Polygon geom = JTSUtilities.createPolygon(left, right, bottom, top, myGeometryFactory);
 
         getTransformer().setRegion(geom, getColor(), null, end, labelString);
         myEventManager.publishEvent(new RegionEvent(this, RegionEventType.REGION_SELECTED, bbox));
@@ -416,21 +402,60 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
      */
     protected void setCircleSelection(LatLonAlt center, LatLonAlt edge)
     {
-        Polygon geom = createCircle(center, edge);
+        Polygon geom = JTSUtilities.createCircle(center, edge, JTSUtilities.NUM_CIRCLE_SEGMENTS);
         double meters = GeographicBody3D.greatCircleDistanceM(center, edge, WGS84EarthConstants.RADIUS_EQUATORIAL_M);
-        StringBuilder sb = new StringBuilder();
-        sb.append("Radius: ").append(getDistanceString(meters, getUnitsRegistry().getPreferredUnits(Length.class)));
-        String labelString = sb.toString();
-        PolylineGeometry pg = createLineSegmentGeometry(center, edge, Color.blue, ZOrderRenderProperties.TOP_Z);
+        String labelString = StringUtilities.concat("Radius: ",
+                getDistanceString(meters, getUnitsRegistry().getPreferredUnits(Length.class)));
+        PolylineGeometry pg = createPolylineGeometry(List.of(center, edge), Color.blue, ZOrderRenderProperties.TOP_Z);
         String desc = StringUtilities.concat("Circle selection: center is ", center, " edge is ", edge);
         mySelectionBoxHandler.setSelectionRegionDescription(desc);
         getTransformer().setRegion(geom, myColor, Collections.singletonList((Geometry)pg), edge, labelString);
     }
 
     /**
+     * @param llas
+     */
+    protected void setLineDraw(List<LatLonAlt> llas)
+    {
+        Coordinate[] coord = new Coordinate[llas.size() + 1];
+        for (int i = 0; i < llas.size(); i++)
+        {
+            LatLonAlt lla = llas.get(i);
+            coord[i] = new Coordinate(lla.getLonD(), lla.getLatD());
+        }
+        coord[coord.length - 1] = coord[coord.length - 2];
+        try
+        {
+            LineString geom = myGeometryFactory.createLineString(coord);
+
+            // Build up the label.
+            StringBuilder sb = new StringBuilder("TOT: ");
+            sb.append(getDistanceString(getTotalPathLengthMeters(llas), getUnitsRegistry().getPreferredUnits(Length.class)));
+            if (llas.size() >= 2)
+            {
+                double lastSegDist = GeographicBody3D.greatCircleDistanceM(llas.get(llas.size() - 1), llas.get(llas.size() - 2),
+                        WGS84EarthConstants.RADIUS_EQUATORIAL_M);
+                sb.append("\nSEG: ").append(getDistanceString(lastSegDist, getUnitsRegistry().getPreferredUnits(Length.class)));
+            }
+            LatLonAlt labelLocation = llas.get(llas.size() - 1);
+
+            LOGGER.info("Label Location: " + labelLocation);
+            getTransformer().setRegion(geom, myColor, null, labelLocation, sb.toString());
+        }
+        catch (IllegalArgumentException e)
+        {
+            if (LOGGER.isDebugEnabled())
+            {
+                LOGGER.debug("Failed to construct line: " + e, e);
+            }
+        }
+    }
+
+    /**
      * Set the selection box as pickable.
      *
-     * @param mouseEvent The mouse event which occurred upon completion of the region.
+     * @param mouseEvent The mouse event which occurred upon completion of the
+     *            region.
      */
     protected synchronized void setCompleted(MouseEvent mouseEvent)
     {
@@ -455,7 +480,6 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
             coord[i] = new Coordinate(lla.getLonD(), lla.getLatD());
         }
         coord[coord.length - 1] = coord[0];
-        GeometryFactory geomFactory = new GeometryFactory();
         try
         {
             // Make sure we draw that first segment while we're dragging the
@@ -469,7 +493,7 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
                 coord[2] = coord[1];
             }
 
-            Polygon geom = geomFactory.createPolygon(geomFactory.createLinearRing(coord), null);
+            Polygon geom = myGeometryFactory.createPolygon(myGeometryFactory.createLinearRing(coord), null);
 
             // Build up the label.
             double totalDist = getTotalPathLengthMeters(llas);
@@ -488,14 +512,13 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
             // and decorate on top with an opaque version to make it appear that
             // the final leg is for guidance only.
             Color c = new Color(myColor.getRed(), myColor.getGreen(), myColor.getBlue(), 100);
-            String desc = StringUtilities.concat("Polygon selection: ", llas);
             getTransformer().setRegion(geom, finalLeg ? myColor : c,
                     Collections.singletonList((Geometry)createPolylineGeometry(llas, myColor, ZOrderRenderProperties.TOP_Z)),
                     labelLoc, finalLeg ? null : labelString);
             getTransformer().setRegion(geom, finalLeg ? myColor : c,
                     Collections.singletonList((Geometry)createPolylineGeometry(llas, myColor, ZOrderRenderProperties.TOP_Z)),
                     labelLoc, finalLeg ? null : labelString);
-            mySelectionBoxHandler.setSelectionRegionDescription(desc);
+            mySelectionBoxHandler.setSelectionRegionDescription(StringUtilities.concat("Polygon selection: ", llas));
         }
         catch (IllegalArgumentException e)
         {
@@ -513,6 +536,7 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
         {
             return;
         }
+
         List<LatLonAlt> llas = addEndPoint(positions, endPoint == null ? null : endPoint.getPoint());
         if (llas == null)
         {
@@ -530,6 +554,10 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
             case CIRCLE:
                 setCircleSelection(llas.get(0), llas.get(1));
                 break;
+            case LINE:
+                myLastMouse = endPoint;
+                setLineDraw(llas);
+                break;
             default:
                 throw new UnexpectedEnumException(myModeController.getSelectionMode());
         }
@@ -538,12 +566,14 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
     /**
      * Called when the selection box has been drawn, will notify listeners.
      *
-     * @param mouseEvent The mouse event which occurred upon completion of the region.
+     * @param mouseEvent The mouse event which occurred upon completion of the
+     *            region.
      * @param selectionBoxGeometries The selection box geometries.
      */
-    protected synchronized void setSelectionBoxDrawn(MouseEvent mouseEvent, List<PolygonGeometry> selectionBoxGeometries)
+    protected synchronized void setSelectionBoxDrawn(MouseEvent mouseEvent, List<Geometry> selectionBoxGeometries)
     {
-        if (!myShowingMenu && myModeController.getSelectionMode() != SelectionMode.POLYGON && !selectionBoxGeometries.isEmpty())
+        if (!myShowingMenu && (myModeController.getSelectionMode() != SelectionMode.POLYGON
+                && myModeController.getSelectionMode() != SelectionMode.LINE) && !selectionBoxGeometries.isEmpty())
         {
             handleCompletion(mouseEvent, selectionBoxGeometries);
         }
@@ -555,16 +585,17 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
      * @param mouseEvent the mouse event
      * @param selectionBoxGeometries the geometries
      */
-    private void handleCompletion(MouseEvent mouseEvent, List<PolygonGeometry> selectionBoxGeometries)
+    private void handleCompletion(MouseEvent mouseEvent, List<? extends Geometry> selectionBoxGeometries)
     {
         if (myUsurpationContext == null)
         {
             myShowingMenu = true;
         }
 
+        List<Geometry> geometries = New.list(selectionBoxGeometries);
+
         mySelectionBoxHandler.selectionRegionCompleted(mouseEvent,
-                myUsurpationContext == null ? ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT : myUsurpationContext,
-                selectionBoxGeometries);
+                myUsurpationContext == null ? ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT : myUsurpationContext, geometries);
 
         LOGGER.info("Handling completion of polygon.");
         myModeController.setSelectionMode(SelectionMode.NONE);
@@ -576,7 +607,6 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
     /** Cancel whatever is being drawn and perform any cleanup as necessary. */
     private synchronized void cancelAndCleanup()
     {
-        LOGGER.info("Cancelling and cleaning up.");
         myShowingMenu = false;
         getTransformer().clearRegion();
         mySelectionBoxHandler.setSelectionRegionDescription(null);
@@ -589,8 +619,8 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
     }
 
     /**
-     * Listener for key events which can occur during drawing. Since this is a compound adapter it will only receive KEY_PRESSED
-     * or KEY_RELEASED events.
+     * Listener for key events which can occur during drawing. Since this is a
+     * compound adapter it will only receive KEY_PRESSED or KEY_RELEASED events.
      */
     protected class TargetedCompoundKeyListener extends CompoundEventAdapter
     {
@@ -603,31 +633,27 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
         @Override
         public void eventEnded(final InputEvent event)
         {
-            getQueryRegionExecutor().execute(new Runnable()
+            getQueryRegionExecutor().execute(() ->
             {
-                @Override
-                public void run()
+                KeyEvent keyEvent = (KeyEvent)event;
+                if (keyEvent.getKeyCode() == KeyEvent.VK_SHIFT && myDefaultDrawingMode)
                 {
-                    KeyEvent keyEvent = (KeyEvent)event;
-                    if (keyEvent.getKeyCode() == KeyEvent.VK_SHIFT && myDefaultDrawingMode)
+                    if (myModeController.getSelectionMode() == SelectionMode.POLYGON)
                     {
-                        if (myModeController.getSelectionMode() == SelectionMode.POLYGON)
+                        if (!myShowingMenu && !completePolygon())
                         {
-                            if (!myShowingMenu && !completePolygon())
-                            {
-                                cancelAndCleanup();
-                            }
+                            cancelAndCleanup();
                         }
-                        else
-                        {
-                            if (!myShowingMenu)
-                            {
-                                cancelAndCleanup();
-                            }
-                        }
-                        myDefaultDrawingMode = false;
-                        myModeController.setSelectionMode(SelectionMode.NONE);
                     }
+                    else
+                    {
+                        if (!myShowingMenu)
+                        {
+                            cancelAndCleanup();
+                        }
+                    }
+                    myDefaultDrawingMode = false;
+                    myModeController.setSelectionMode(SelectionMode.NONE);
                 }
             });
         }
@@ -655,8 +681,9 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
     }
 
     /**
-     * Listener for key events which can occur during drawing. Since this is a discrete adapter it will only receive KEY_TYPED
-     * events and never KEY_PRESSED or KEY_RELEASED events.
+     * Listener for key events which can occur during drawing. Since this is a
+     * discrete adapter it will only receive KEY_TYPED events and never
+     * KEY_PRESSED or KEY_RELEASED events.
      */
     protected class TargetedDiscreteKeyListener extends TargetedDiscreteEventAdapter
     {
@@ -668,25 +695,21 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
             {
                 keyEvent.consume();
             }
-            getQueryRegionExecutor().execute(new Runnable()
+            getQueryRegionExecutor().execute(() ->
             {
-                @Override
-                public void run()
+                if (keyEvent.getID() == KeyEvent.KEY_PRESSED)
                 {
-                    if (keyEvent.getID() == KeyEvent.KEY_PRESSED)
+                    if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE)
                     {
-                        if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE)
-                        {
-                            myShowingMenu = false;
-                            getTransformer().clearRegion();
-                            mySelectionBoxHandler.setSelectionRegionDescription(null);
-                            finishRegion();
-                            LOGGER.info("Selection cancelled.");
-                        }
-                        else if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE || keyEvent.getKeyCode() == KeyEvent.VK_ENTER)
-                        {
-                            completePolygon();
-                        }
+                        myShowingMenu = false;
+                        getTransformer().clearRegion();
+                        mySelectionBoxHandler.setSelectionRegionDescription(null);
+                        finishRegion();
+                        LOGGER.info("Selection cancelled.");
+                    }
+                    else if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE || keyEvent.getKeyCode() == KeyEvent.VK_ENTER)
+                    {
+                        completePolygon();
                     }
                 }
             });
@@ -703,8 +726,9 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
     }
 
     /**
-     * Listener for handling mouse events which are targeted to me when I have a drawing mode currently set. This covers the
-     * majority of the actual drawing operations.
+     * Listener for handling mouse events which are targeted to me when I have a
+     * drawing mode currently set. This covers the majority of the actual
+     * drawing operations.
      */
     protected class TargetedModedMouseListener extends TargetedDiscreteEventAdapter
     {
@@ -721,57 +745,72 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
                 event.consume();
             }
             else if (event.getID() == MouseEvent.MOUSE_CLICKED && (event.getButton() == 1 && event.getClickCount() == 2
-                    || event.getButton() == 3 && myModeController.getSelectionMode() == SelectionMode.POLYGON))
+                    || event.getButton() == 3 && (myModeController.getSelectionMode() == SelectionMode.POLYGON
+                            || myModeController.getSelectionMode() == SelectionMode.LINE)))
             {
                 event.consume();
             }
 
-            getQueryRegionExecutor().execute(new Runnable()
+            getQueryRegionExecutor().execute(() -> handleMouseDrawEvent(event));
+        }
+
+        /**
+         * Handles the mouse draw event.
+         * 
+         * @param event the event to handle.
+         */
+        private void handleMouseDrawEvent(final MouseEvent event)
+        {
+            if (event.getID() == MouseEvent.MOUSE_PRESSED)
             {
-                @Override
-                public void run()
+                addPosition(event.getPoint());
+            }
+            else if (event.getID() == MouseEvent.MOUSE_RELEASED)
+            {
+                List<Geometry> selectionBoxGeometries = New.list(getTransformer().getGeometries());
+                if (myModeController.getSelectionMode() != SelectionMode.POLYGON
+                        && myModeController.getSelectionMode() != SelectionMode.LINE)
                 {
-                    if (event.getID() == MouseEvent.MOUSE_PRESSED)
+                    finishRegion();
+                }
+                // Inform listeners that selection region has been
+                // drawn.
+                setSelectionBoxDrawn(event, selectionBoxGeometries);
+            }
+            else if (event.getID() == MouseEvent.MOUSE_DRAGGED)
+            {
+                setSelectionBox(getPositions(), event);
+            }
+            else if (event.getID() == MouseEvent.MOUSE_MOVED)
+            {
+                setSelectionBox(getPositions(), event);
+            }
+            else if (event.getID() == MouseEvent.MOUSE_CLICKED)
+            {
+                if (event.getButton() == 1 && event.getClickCount() == 2)
+                {
+                    if (myModeController.getSelectionMode() == SelectionMode.POLYGON)
                     {
-                        addPosition(event.getPoint());
+                        completePolygon();
                     }
-                    else if (event.getID() == MouseEvent.MOUSE_RELEASED)
+                    else if (myModeController.getSelectionMode() == SelectionMode.LINE)
                     {
-                        List<PolygonGeometry> selectionBoxGeometries = getTransformer().getGeometries();
-                        if (myModeController.getSelectionMode() != SelectionMode.POLYGON)
-                        {
-                            finishRegion();
-                        }
-                        // Inform listeners that selection region has been
-                        // drawn.
-                        setSelectionBoxDrawn(event, selectionBoxGeometries);
-                    }
-                    else if (event.getID() == MouseEvent.MOUSE_DRAGGED)
-                    {
-                        setSelectionBox(getPositions(), event);
-                    }
-                    else if (event.getID() == MouseEvent.MOUSE_MOVED)
-                    {
-                        setSelectionBox(getPositions(), event);
-                    }
-                    else if (event.getID() == MouseEvent.MOUSE_CLICKED)
-                    {
-                        if (event.getButton() == 1 && event.getClickCount() == 2)
-                        {
-                            if (myModeController.getSelectionMode() == SelectionMode.POLYGON)
-                            {
-                                completePolygon();
-                            }
-                        }
-                        else if (event.getButton() == 3 && myModeController.getSelectionMode() == SelectionMode.POLYGON
-                                && getPositions().size() > 1)
-                        {
-                            getPositions().remove(getPositions().size() - 1);
-                            setSelectionBox(getPositions(), event);
-                        }
+                        completeLine();
                     }
                 }
-            });
+                else if (event.getButton() == 3 && myModeController.getSelectionMode() == SelectionMode.POLYGON
+                        && getPositions().size() > 1)
+                {
+                    getPositions().remove(getPositions().size() - 1);
+                    setSelectionBox(getPositions(), event);
+                }
+                else if (event.getButton() == 3 && myModeController.getSelectionMode() == SelectionMode.LINE
+                        && getPositions().size() > 1)
+                {
+                    getPositions().remove(getPositions().size() - 1);
+                    setSelectionBox(getPositions(), event);
+                }
+            }
         }
 
         @Override
@@ -785,32 +824,9 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
     }
 
     /**
-     * Abstract class which establishes the target priority and that the listener must be targeted.
-     */
-    private abstract static class TargetedDiscreteEventAdapter extends DiscreteEventAdapter
-    {
-        /** Constructor. */
-        public TargetedDiscreteEventAdapter()
-        {
-            super("Selection Controls", "Draw Selection Region", "Used for drawing selection regions.");
-        }
-
-        @Override
-        public int getTargetPriority()
-        {
-            return 2000;
-        }
-
-        @Override
-        public boolean mustBeTargeted()
-        {
-            return true;
-        }
-    }
-
-    /**
-     * Listener for handling mouse events which are targeted to me when I have no current drawing mode. This is specifically for
-     * events which will cause default drawing mode to be engaged.
+     * Listener for handling mouse events which are targeted to me when I have
+     * no current drawing mode. This is specifically for events which will cause
+     * default drawing mode to be engaged.
      */
     private class TargetedNoModeMouseListener extends TargetedDiscreteEventAdapter
     {
@@ -818,15 +834,11 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
         public void eventOccurred(final InputEvent event)
         {
             event.consume();
-            getQueryRegionExecutor().execute(new Runnable()
+            getQueryRegionExecutor().execute(() ->
             {
-                @Override
-                public void run()
-                {
-                    myDefaultDrawingMode = true;
-                    myModeController.setSelectionMode(myModeController.getDefaultSelectionMode());
-                    addPosition(((MouseEvent)event).getPoint());
-                }
+                myDefaultDrawingMode = true;
+                myModeController.setSelectionMode(myModeController.getDefaultSelectionMode());
+                addPosition(((MouseEvent)event).getPoint());
             });
         }
 

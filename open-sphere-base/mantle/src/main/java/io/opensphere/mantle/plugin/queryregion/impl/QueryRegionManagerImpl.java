@@ -50,13 +50,14 @@ import io.opensphere.mantle.util.MantleToolboxUtils;
 /**
  * Implementation for {@link QueryRegionManager}.
  */
-public class QueryRegionManagerImpl extends EventListenerService implements QueryRegionManager, SelectionCommandProcessor
+public class QueryRegionManagerImpl extends EventListenerService
+        implements QueryRegionManager, SelectionCommandProcessor
 {
     /** Change support for query region listeners. */
     private final ChangeSupport<QueryRegionListener> myChangeSupport = WeakChangeSupport.create();
 
     /** The Delete context menu provider. */
-    private final ContextMenuProvider<Void> myDeleteContextMenuProvider = new ContextMenuProvider<Void>()
+    private final ContextMenuProvider<Void> myDeleteContextMenuProvider = new ContextMenuProvider<>()
     {
         @Override
         public List<JMenuItem> getMenuItems(String contextId, Void key)
@@ -125,17 +126,13 @@ public class QueryRegionManagerImpl extends EventListenerService implements Quer
 
         // Register the state manager after all the other plugins so that
         // queries will get activated after other layers.
-        myListener = new EventListener<ApplicationLifecycleEvent>()
+        myListener = event ->
         {
-            @Override
-            public void notify(ApplicationLifecycleEvent event)
+            if (event.getStage() == ApplicationLifecycleEvent.Stage.PLUGINS_INITIALIZED)
             {
-                if (event.getStage() == ApplicationLifecycleEvent.Stage.PLUGINS_INITIALIZED)
-                {
-                    myToolbox.getModuleStateManager().registerModuleStateController("Query Areas", myModuleStateController);
-                    myToolbox.getEventManager().unsubscribe(ApplicationLifecycleEvent.class, myListener);
-                    myListener = null;
-                }
+                myToolbox.getModuleStateManager().registerModuleStateController("Query Areas", myModuleStateController);
+                myToolbox.getEventManager().unsubscribe(ApplicationLifecycleEvent.class, myListener);
+                myListener = null;
             }
         };
         myToolbox.getEventManager().subscribe(ApplicationLifecycleEvent.class, myListener);

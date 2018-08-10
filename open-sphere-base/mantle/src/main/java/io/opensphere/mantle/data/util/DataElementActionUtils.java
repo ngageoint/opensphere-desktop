@@ -66,7 +66,7 @@ public interface DataElementActionUtils
      * @param radiusMeters the radius meters
      * @param source the source of the query
      */
-    void queryPointRadiusFromDataElmentCenters(List<Long> dataElementIds, double radiusMeters, Object source);
+    void queryPointRadiusFromDataElementCenters(List<Long> dataElementIds, double radiusMeters, Object source);
 
     /**
      * Request geometry rebuild.

@@ -22,6 +22,7 @@ import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.action.context.GeometryContextKey;
 import io.opensphere.core.geometry.PolygonGeometry;
+import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.util.Utilities;
@@ -127,7 +128,7 @@ public class RegionTypeController extends PlaceTypeController
      *
      * @param geometry the geometry
      */
-    private void createRegionFromGeometry(PolygonGeometry geometry)
+    protected void createRegionFromGeometry(PolygonGeometry geometry)
     {
         assert EventQueue.isDispatchThread();
 
@@ -154,6 +155,36 @@ public class RegionTypeController extends PlaceTypeController
     }
 
     /**
+     * Creates the save roi from geometry.
+     *
+     * @param geometry the geometry
+     */
+    protected void createLineFromGeometry(PolylineGeometry geometry)
+    {
+        assert EventQueue.isDispatchThread();
+
+        Set<String> names = new TreeSet<>();
+        Function<Placemark, Void> func = input ->
+        {
+            if (input.getGeometry() instanceof Polygon && input.getName().startsWith("Region-"))
+            {
+                names.add(input.getName());
+            }
+            return null;
+        };
+
+        myPlacesModel.applyToEachPlacemark(func);
+
+        String roiName = StringUtilities.getUniqueName("Region-", names);
+
+        MyPlacesDataGroupInfo parentDataGroup = myPlacesModel.getDataGroups();
+
+        Placemark placemark = RegionUtils.createLineFromPositions(new Folder(), roiName, geometry.getVertices());
+
+        launchEditor(placemark, parentDataGroup);
+    }
+
+    /**
      * Geometry ContextMenuProvider.
      */
     private class GeometryContextMenuProvider implements ContextMenuProvider<GeometryContextKey>
@@ -163,11 +194,17 @@ public class RegionTypeController extends PlaceTypeController
         {
             List<JMenuItem> options = new LinkedList<>();
             if ((ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT.equals(contextId)
-                    || ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT.equals(contextId))
-                    && key.getGeometry() instanceof PolygonGeometry)
+                    || ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT.equals(contextId)))
             {
-                JMenuItem saveMI = new JMenuItem("Save as ROI");
-                saveMI.addActionListener(e -> createRegionFromGeometry((PolygonGeometry)key.getGeometry()));
+                JMenuItem saveMI = new JMenuItem("Save as Area");
+                if (key.getGeometry() instanceof PolygonGeometry)
+                {
+                    saveMI.addActionListener(e -> createRegionFromGeometry((PolygonGeometry)key.getGeometry()));
+                }
+                else if (key.getGeometry() instanceof PolylineGeometry)
+                {
+                    saveMI.addActionListener(e -> createLineFromGeometry((PolylineGeometry)key.getGeometry()));
+                }
                 options.add(saveMI);
             }
 
