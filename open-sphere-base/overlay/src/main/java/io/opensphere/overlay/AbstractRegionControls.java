@@ -130,20 +130,14 @@ public abstract class AbstractRegionControls
         List<LatLonAlt> llas = new ArrayList<>(positions.size() + 1);
         llas.addAll(positions);
 
-        LOGGER.info("Adding endpoint: endpoint == null [" + (endPoint == null) + "]");
-
         if (endPoint != null)
         {
-            LOGGER.info("Adding endpoint: endpoint '" + endPoint + "'");
-
             GeographicPosition position = getMapManager().convertToPosition(new Vector2i(endPoint), ReferenceLevel.ELLIPSOID);
-            LOGGER.info("Converted Position: position == null [" + (position == null) + "]");
 
             if (position == null)
             {
                 return null;
             }
-            LOGGER.info("Converted Position: position.getLatLonAlt(): [" + position.getLatLonAlt() + "]");
             llas.add(position.getLatLonAlt());
         }
         return llas;
@@ -168,12 +162,11 @@ public abstract class AbstractRegionControls
     }
 
     /**
-     * 
+     * Completes drawing the current line.
      */
     protected void finishLine()
     {
-        // TODO Auto-generated method stub
-
+        /* intentionally blank */
     }
 
     /**
