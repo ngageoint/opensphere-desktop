@@ -22,7 +22,8 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.jts.JTSUtilities;
 
 /**
- * 
+ * Utilities which utilize both JTS geometries and core geometries for operating
+ * on lines.
  */
 public class JTSLineStringUtilities
 {
@@ -33,9 +34,13 @@ public class JTSLineStringUtilities
     private static final int DEFAULT_ZORDER = ZOrderRenderProperties.TOP_Z - 1000;
 
     /**
-     * @param region
-     * @param color
-     * @return
+     * Builds a set of core geometries for the supplied line sets. Defaults to
+     * using other utilities if the supplied region is not a line.
+     * 
+     * @param region the region to convert to a line set.
+     * @param color the color to apply to the converted line.
+     * @return a {@link List} of {@link Geometry} objects generated from the
+     *         supplied region.
      */
     public static List<? extends Geometry> buildLineSet(com.vividsolutions.jts.geom.Geometry region, Color color)
     {
@@ -91,10 +96,14 @@ public class JTSLineStringUtilities
     }
 
     /**
-     * @param color
-     * @param width
-     * @param pickable
-     * @return
+     * Creates an instance of the {@link PolylineRenderProperties} class for use
+     * in generating new {@link PolylineGeometry} instances.
+     * 
+     * @param color the color to include in the properties object.
+     * @param width the width to include in the properties object.
+     * @param pickable the 'pickable' state to include in the properties object.
+     * @return a new properties object to use in creating
+     *         {@link PolylineGeometry} objects.
      */
     private static PolylineRenderProperties createPolylineProperties(Color color, int width, boolean pickable)
     {
