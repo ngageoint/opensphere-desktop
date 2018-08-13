@@ -43,6 +43,7 @@ public enum SelectionCommand
     SELECT("Select", "Select features in region"),
     /** SELECT_EXCLUSIVE. */
     SELECT_EXCLUSIVE("Select Exclusive", "Select features in region, deselect all other features");
+
     /** The Constant FILTERS_ACTIVE. */
     private static final String FILTERS_ACTIVE = " (Filters Active)";
 
@@ -118,7 +119,6 @@ public enum SelectionCommand
     {
         List<JMenuItem> menuItems = new ArrayList<>();
         menuItems.add(CREATE_BUFFER_REGION.createMenuItem(al));
-        menuItems.add(CREATE_BUFFER_REGION_FOR_SELECTED_SEGMENT.createMenuItem(al));
         return menuItems;
     }
 

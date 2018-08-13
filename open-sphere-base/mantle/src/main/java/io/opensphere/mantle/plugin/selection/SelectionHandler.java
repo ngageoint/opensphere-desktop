@@ -61,6 +61,9 @@ public class SelectionHandler
     /** The my command to processor map. */
     private final EnumMap<SelectionCommand, List<WeakReference<SelectionCommandProcessor>>> myCommandToProcessorMap;
 
+    /** The my command to processor map. */
+    private final EnumMap<SelectionCommand, List<WeakReference<LineSelectionCommandProcessor>>> myLineCommandToProcessorMap;
+
     /** The data group controller. */
     private final DataGroupController myDataGroupController;
 
@@ -71,7 +74,7 @@ public class SelectionHandler
     private PointGeometry myNoGeometryPoint;
 
     /** The Default context menu provider. */
-    private final ContextMenuProvider<ScreenPositionContextKey> myDefaultContextMenuProvider = new ContextMenuProvider<ScreenPositionContextKey>()
+    private final ContextMenuProvider<ScreenPositionContextKey> myDefaultContextMenuProvider = new ContextMenuProvider<>()
     {
         @Override
         public List<JMenuItem> getMenuItems(String contextId, ScreenPositionContextKey key)
@@ -86,10 +89,7 @@ public class SelectionHandler
                 myNoGeometryPoint = new PointGeometry(pointGeometry, new DefaultPointRenderProperties(0, true, true, true), null);
                 return SelectionCommand.getNoGeometryMenuItems(myMenuActionListener);
             }
-            else
-            {
-                return Collections.emptyList();
-            }
+            return Collections.emptyList();
         }
 
         @Override
@@ -106,7 +106,7 @@ public class SelectionHandler
      * The menu provider for events related to single geometry selection or
      * completion.
      */
-    private final ContextMenuProvider<GeometryContextKey> myGeometryContextMenuProvider = new ContextMenuProvider<GeometryContextKey>()
+    private final ContextMenuProvider<GeometryContextKey> myGeometryContextMenuProvider = new ContextMenuProvider<>()
     {
         @Override
         public List<JMenuItem> getMenuItems(String contextId, GeometryContextKey key)
@@ -122,6 +122,12 @@ public class SelectionHandler
             {
                 return SelectionCommand.getSelectionRegionMenuItems(
                         new PolygonCommandActionListener(Collections.singleton(key.getGeometry())), hasLoadFilters());
+            }
+            else if (contextId.equals(ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT)
+                    && key.getGeometry() instanceof PolylineGeometry)
+            {
+                return SelectionCommand.getPolylineMenuItems(
+                        new PolylineCommandActionListener(Collections.singleton(key.getGeometry())), hasLoadFilters());
             }
             return menuItems;
         }
@@ -142,7 +148,7 @@ public class SelectionHandler
     /**
      * The menu provider for events which occur on multiple polygon geometries.
      */
-    private final ContextMenuProvider<MultiGeometryContextKey> myMultiGeometryContextMenuProvider = new ContextMenuProvider<MultiGeometryContextKey>()
+    private final ContextMenuProvider<MultiGeometryContextKey> myMultiGeometryContextMenuProvider = new ContextMenuProvider<>()
     {
         @Override
         public List<JMenuItem> getMenuItems(String contextId, MultiGeometryContextKey key)
@@ -205,6 +211,7 @@ public class SelectionHandler
         myDataTypeController = pTypeController;
         myExecutor = Executors.newFixedThreadPool(1, new NamedThreadFactory("SelectionHandler:Dispatch", 3, 4));
         myCommandToProcessorMap = new EnumMap<>(SelectionCommand.class);
+        myLineCommandToProcessorMap = new EnumMap<>(SelectionCommand.class);
         myToolbox = toolbox;
         myDataGroupController = dataGroupController;
         myQueryRegionManager = queryRegionManager;
@@ -295,6 +302,45 @@ public class SelectionHandler
     }
 
     /**
+     * Register selection command processor.
+     *
+     * @param command the command to be processed
+     * @param processor the processor to process the command
+     */
+    public void registerLineSelectionCommandProcessor(SelectionCommand command, LineSelectionCommandProcessor processor)
+    {
+        synchronized (myLineCommandToProcessorMap)
+        {
+            List<WeakReference<LineSelectionCommandProcessor>> scpList = myLineCommandToProcessorMap.computeIfAbsent(command,
+                    k -> new LinkedList<>());
+            // Make sure we don't already have this processor in our set, remove
+            // any garbage collected listeners from the set.
+            Iterator<WeakReference<LineSelectionCommandProcessor>> wrItr = scpList.iterator();
+            boolean found = false;
+            WeakReference<LineSelectionCommandProcessor> wr = null;
+            LineSelectionCommandProcessor proc = null;
+            while (wrItr.hasNext())
+            {
+                wr = wrItr.next();
+                proc = wr.get();
+                if (proc == null)
+                {
+                    wrItr.remove();
+                }
+                else if (Utilities.sameInstance(processor, proc))
+                {
+                    found = true;
+                }
+            }
+            // If we didn't find it in the set already add it.
+            if (!found)
+            {
+                scpList.add(new WeakReference<>(processor));
+            }
+        }
+    }
+
+    /**
      * Handle the creation of a selection region.
      *
      * @param bounds The bounds of the selection regions.
@@ -303,6 +349,19 @@ public class SelectionHandler
     public void selectionRegionCreated(List<PolygonGeometry> bounds, String command)
     {
         doPurgeCheck(selectionCommand(command), bounds);
+    }
+
+    /**
+     * Handle the creation of a selection region.
+     *
+     * @param bounds The bounds of the selection regions.
+     * @param command The command causing region creation.
+     */
+    public void selectionLineCreated(List<PolylineGeometry> bounds, String command)
+    {
+        SelectionCommand selectionCommand = selectionCommand(command);
+
+        notifyLineSelectionCommandProcessors(bounds, selectionCommand);
     }
 
     /**
@@ -531,7 +590,7 @@ public class SelectionHandler
         catch (IllegalArgumentException ex)
         {
             // Unknown command returned.
-            LOGGER.warn("Illegal Selection Command Recieved: " + actionCommand);
+            LOGGER.warn("Illegal Selection Command Recieved: " + actionCommand, ex);
         }
         return null;
     }
@@ -569,6 +628,39 @@ public class SelectionHandler
         });
     }
 
+    /**
+     * Notify selection command processors.
+     *
+     * @param bounds the bounds
+     * @param command the command
+     */
+    private void notifyLineSelectionCommandProcessors(Collection<? extends PolylineGeometry> bounds, SelectionCommand command)
+    {
+        myExecutor.execute(() ->
+        {
+            synchronized (myLineCommandToProcessorMap)
+            {
+                List<WeakReference<LineSelectionCommandProcessor>> wrList = myLineCommandToProcessorMap.get(command);
+                if (wrList != null && !wrList.isEmpty())
+                {
+                    Iterator<WeakReference<LineSelectionCommandProcessor>> wrItr = wrList.iterator();
+                    while (wrItr.hasNext())
+                    {
+                        LineSelectionCommandProcessor lstr = wrItr.next().get();
+                        if (lstr == null)
+                        {
+                            wrItr.remove();
+                        }
+                        else
+                        {
+                            lstr.selectionOccurred(bounds, command);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
     /** Action listener for actions on the menu items. */
     private final class PolygonCommandActionListener implements ActionListener
     {
@@ -582,19 +674,36 @@ public class SelectionHandler
          */
         public PolygonCommandActionListener(Collection<? extends Geometry> geoms)
         {
-            for (Geometry geom : geoms)
-            {
-                if (geom instanceof PolygonGeometry)
-                {
-                    myGeometries.add((PolygonGeometry)geom);
-                }
-            }
+            geoms.stream().filter(g -> g instanceof PolygonGeometry).map(g -> (PolygonGeometry)g).forEach(myGeometries::add);
         }
 
         @Override
         public void actionPerformed(ActionEvent evt)
         {
             selectionRegionCreated(myGeometries, ((JMenuItem)evt.getSource()).getActionCommand());
+        }
+    }
+
+    /** Action listener for actions on the menu items. */
+    private final class PolylineCommandActionListener implements ActionListener
+    {
+        /** The geometry associated with the menu action. */
+        private final List<PolylineGeometry> myGeometries = new LinkedList<>();
+
+        /**
+         * Constructor.
+         *
+         * @param geoms The geometries associated with the menu action.
+         */
+        public PolylineCommandActionListener(Collection<? extends Geometry> geoms)
+        {
+            geoms.stream().filter(g -> g instanceof PolylineGeometry).map(g -> (PolylineGeometry)g).forEach(myGeometries::add);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt)
+        {
+            selectionLineCreated(myGeometries, ((JMenuItem)evt.getSource()).getActionCommand());
         }
     }
 

@@ -9,12 +9,12 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.border.Border;
+
+import com.vividsolutions.jts.geom.LineString;
 
 import io.opensphere.core.api.DefaultTransformer;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.ImageManager;
-import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.SingletonImageProvider;
 import io.opensphere.core.geometry.TileGeometry;
 import io.opensphere.core.geometry.renderproperties.DefaultTileRenderProperties;
@@ -27,6 +27,7 @@ import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.ScreenPosition;
 import io.opensphere.core.util.jts.core.JTSCoreGeometryUtilities;
+import io.opensphere.core.util.jts.core.JTSLineStringUtilities;
 import io.opensphere.core.util.swing.SwingImageHelper;
 
 /**
@@ -44,7 +45,7 @@ public class SelectionRegionTransformer extends DefaultTransformer
     private Collection<Geometry> myDecoratorGeometries = Collections.emptySet();
 
     /** The geometries for the region. */
-    private List<PolygonGeometry> myGeometries = Collections.emptyList();
+    private List<? extends Geometry> myGeometries = Collections.emptyList();
 
     /** The Label geometries. */
     private Collection<TileGeometry> myLabelGeometries = Collections.emptySet();
@@ -70,7 +71,7 @@ public class SelectionRegionTransformer extends DefaultTransformer
      *
      * @return The geometries.
      */
-    public synchronized List<PolygonGeometry> getGeometries()
+    public synchronized List<? extends Geometry> getGeometries()
     {
         return myGeometries;
     }
@@ -109,14 +110,23 @@ public class SelectionRegionTransformer extends DefaultTransformer
             if (!myGeometries.isEmpty())
             {
                 publishGeometries(Collections.<Geometry>emptySet(), myGeometries);
-                myGeometries = Collections.<PolygonGeometry>emptyList();
+                myGeometries = Collections.<Geometry>emptyList();
             }
         }
         else
         {
-            Collection<PolygonGeometry> oldGeometries = myGeometries;
-            myGeometries = JTSCoreGeometryUtilities.buildSelectionPolygonSet(region, boundaryColor);
-            publishGeometries(myGeometries, oldGeometries);
+            if (!(region instanceof LineString))
+            {
+                Collection<? extends Geometry> oldGeometries = myGeometries;
+                myGeometries = JTSCoreGeometryUtilities.buildSelectionPolygonSet(region, boundaryColor);
+                publishGeometries(myGeometries, oldGeometries);
+            }
+            else
+            {
+                Collection<? extends Geometry> oldGeometries = myGeometries;
+                myGeometries = JTSLineStringUtilities.buildLineSet(region, boundaryColor);
+                publishGeometries(myGeometries, oldGeometries);
+            }
         }
 
         if (labelPos == null || label == null)
@@ -147,10 +157,9 @@ public class SelectionRegionTransformer extends DefaultTransformer
         List<String> lines = Arrays.asList(label.split("\n"));
         // Do not let the background color be completely transparent, otherwise
         // it would not be pickable except where there is text.
-        Color background = new Color(84, 84, 107, 190);
-        Border bevel = BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED);
-        BufferedImage image = SwingImageHelper.textToImage(true, lines, background, ourForegroundColor, bevel,
-                Font.decode(LABEL_FONT));
+        Color background = new Color(84, 84, 107, 140);
+        BufferedImage image = SwingImageHelper.textToImage(true, lines, background, ourForegroundColor,
+                BorderFactory.createEmptyBorder(), Font.decode(LABEL_FONT));
         GeographicPosition attachment = new GeographicPosition(labelPos);
 
         ScreenPosition upperLeft = new ScreenPosition(0., 0.);
@@ -159,7 +168,7 @@ public class SelectionRegionTransformer extends DefaultTransformer
         GeoScreenBoundingBox gsbb = new GeoScreenBoundingBox(upperLeft, lowerRight,
                 new GeographicBoxAnchor(attachment, v2i, 0f, 0f));
 
-        TileGeometry.Builder<ScreenPosition> tileBuilder = new TileGeometry.Builder<ScreenPosition>();
+        TileGeometry.Builder<ScreenPosition> tileBuilder = new TileGeometry.Builder<>();
         TileRenderProperties props = new DefaultTileRenderProperties(0, true, true);
         tileBuilder.setBounds(gsbb);
         SingletonImageProvider imageProvider = new SingletonImageProvider(image, Image.CompressionType.D3DFMT_A8R8G8B8);

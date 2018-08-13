@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
+import org.apache.log4j.Logger;
+
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
 
@@ -35,6 +37,9 @@ import io.opensphere.core.viewer.impl.DynamicViewer;
  */
 public abstract class AbstractRegionControls
 {
+    /** Logger reference. */
+    private static final Logger LOGGER = Logger.getLogger(AbstractRegionControls.class);
+
     /**
      * The latitude (positive or negative) at which locking to the pole is
      * possible.
@@ -124,17 +129,16 @@ public abstract class AbstractRegionControls
     {
         List<LatLonAlt> llas = new ArrayList<>(positions.size() + 1);
         llas.addAll(positions);
+
         if (endPoint != null)
         {
             GeographicPosition position = getMapManager().convertToPosition(new Vector2i(endPoint), ReferenceLevel.ELLIPSOID);
+
             if (position == null)
             {
                 return null;
             }
-            else
-            {
-                llas.add(position.getLatLonAlt());
-            }
+            llas.add(position.getLatLonAlt());
         }
         return llas;
     }
@@ -155,6 +159,14 @@ public abstract class AbstractRegionControls
                 myPositions.add(latLonAlt);
             }
         }
+    }
+
+    /**
+     * Completes drawing the current line.
+     */
+    protected void finishLine()
+    {
+        /* intentionally blank */
     }
 
     /**

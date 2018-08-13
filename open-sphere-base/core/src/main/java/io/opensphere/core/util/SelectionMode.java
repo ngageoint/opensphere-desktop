@@ -16,4 +16,7 @@ public enum SelectionMode
 
     /** Polygon selection mode. */
     POLYGON,
+
+    /** Line "selection" mode. */
+    LINE;
 }

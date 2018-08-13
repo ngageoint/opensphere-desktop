@@ -6,16 +6,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextActionManager;
@@ -26,7 +22,6 @@ import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.SelectionMode;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.image.IconUtil.IconType;
-import io.opensphere.core.util.swing.IconButton;
 import io.opensphere.core.util.swing.misc.ControlMenuOptionContextSplitButton;
 import io.opensphere.overlay.OverlayToolboxUtils;
 import io.opensphere.overlay.SelectionModeChangeListener;
@@ -44,37 +39,14 @@ public final class QuerySelector extends JPanel
     /** serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /** The Box button. */
-    private final SelectorToggleButton myBoxButton;
-
-    /** The Button press listener. */
-    private final transient MouseListener myButtonListener = new MouseAdapter()
-    {
-        @Override
-        public void mouseClicked(MouseEvent e)
-        {
-            if (e.getButton() == MouseEvent.BUTTON1)
-            {
-                SelectorToggleButton button = (SelectorToggleButton)e.getSource();
-                boolean selection = !button.isSelected();
-                SelectionMode mode = selection ? button.getMode() : SelectionMode.NONE;
-                Quantify.collectConditionalMetric("mist3d.query." + button.getMode().toString(), selection);
-                mySelectionModeController.setSelectionMode(mode);
-            }
-        }
-    };
-
-    /** The Circle button. */
-    private final SelectorToggleButton myCircleButton;
-
-    /** The border for the buttons is saved so that it can be restored. */
-    private final Border myDefaultButtonBorder;
+    /** The button through which query actions are performed. */
+    private final QuerySelectorSplitButton mySplitButton;
 
     /**
      * The context for using the unmodified mouse actions for drawing on the
      * canvas.
      */
-    private final transient ContextSingleActionProvider<MouseEvent> myDrawProvider = new ContextSingleActionProvider<MouseEvent>()
+    private final transient ContextSingleActionProvider<MouseEvent> myDrawProvider = new ContextSingleActionProvider<>()
     {
         @Override
         public void doAction(String contextId, MouseEvent key, int x, int y)
@@ -88,12 +60,10 @@ public final class QuerySelector extends JPanel
         {
             deselectAllButtons();
             setDefaultModeBorder();
+
             mySelectionModeController.setSelectionMode(SelectionMode.NONE);
         }
     };
-
-    /** The Poly button. */
-    private final SelectorToggleButton myPolyButton;
 
     /** The Remove button. */
     private DeleteSplitButton myRemoveButton;
@@ -101,42 +71,11 @@ public final class QuerySelector extends JPanel
     /** The Selection mode controller. */
     private final transient SelectionModeController mySelectionModeController;
 
-    /** Listener for changes to the selection mode. */
-    private final transient SelectionModeChangeListener mySelectionModeListener = new SelectionModeChangeListener()
-    {
-        @Override
-        public void selectionModeChanged(SelectionMode mode)
-        {
-            ContextActionManager manager = myToolbox.getUIRegistry().getContextActionManager();
-            deselectAllButtons();
-            if (mode == SelectionMode.NONE)
-            {
-                setDefaultModeBorder();
-                manager.deregisterContextSingleActionProvider(ContextIdentifiers.DEFAULT_MOUSE_CONTEXT, MouseEvent.class,
-                        myDrawProvider);
-            }
-            else
-            {
-                manager.registerContextSingleActionProvider(ContextIdentifiers.DEFAULT_MOUSE_CONTEXT, MouseEvent.class,
-                        myDrawProvider);
-                if (mode == SelectionMode.BOUNDING_BOX)
-                {
-                    myBoxButton.setSelected(true);
-                }
-                else if (mode == SelectionMode.CIRCLE)
-                {
-                    myCircleButton.setSelected(true);
-                }
-                else if (mode == SelectionMode.POLYGON)
-                {
-                    myPolyButton.setSelected(true);
-                }
-            }
-        }
-    };
-
     /** The Toolbox. */
     private final transient Toolbox myToolbox;
+
+    /** Listener for changes to the selection mode. */
+    private final transient SelectionModeChangeListener mySelectionModeListener;
 
     /**
      * Instantiates a new query selector.
@@ -147,6 +86,8 @@ public final class QuerySelector extends JPanel
     {
         super(false);
         myToolbox = toolbox;
+
+        mySelectionModeListener = this::selectionModeChanged;
         mySelectionModeController = OverlayToolboxUtils.getOverlayToolbox(toolbox).getSelectionModeController();
         mySelectionModeController.addSelectionModeChangeListener(mySelectionModeListener);
 
@@ -154,25 +95,19 @@ public final class QuerySelector extends JPanel
         setBorder(null);
         setLayout(new GridBagLayout());
 
-        myBoxButton = new SelectorToggleButton(SelectionMode.BOUNDING_BOX);
-        IconUtil.setIcons(myBoxButton, "/images/rectangle.png", IconUtil.DEFAULT_ICON_FOREGROUND,
-                IconUtil.ICON_SELECTION_FOREGROUND);
-        myBoxButton.setToolTipText("Draw a rectangle on the map for queries, zoom, or selection");
-        myBoxButton.addMouseListener(myButtonListener);
+        mySplitButton = new QuerySelectorSplitButton(OverlayToolboxUtils.getOverlayToolbox(toolbox));
+        mySplitButton.toggledProperty().set(false);
+        mySplitButton.currentSelectionModeProperty().set(mySelectionModeController.getDefaultSelectionMode());
+        mySplitButton.currentSelectionModeProperty().addListener((obs, oldMode, newMode) ->
+        {
+            Quantify.collectConditionalMetric("mist3d.query." + newMode.toString(), mySplitButton.isSelected());
+            mySelectionModeController.setSelectionMode(newMode);
+        });
 
-        myCircleButton = new SelectorToggleButton(SelectionMode.CIRCLE);
-        IconUtil.setIcons(myCircleButton, "/images/circle.png", IconUtil.DEFAULT_ICON_FOREGROUND,
-                IconUtil.ICON_SELECTION_FOREGROUND);
-        myCircleButton.setToolTipText("Draw a circle on the map for queries, zoom, or selection");
-        myCircleButton.addMouseListener(myButtonListener);
-
-        myPolyButton = new SelectorToggleButton(SelectionMode.POLYGON);
-        IconUtil.setIcons(myPolyButton, "/images/polygon2.png", IconUtil.DEFAULT_ICON_FOREGROUND,
-                IconUtil.ICON_SELECTION_FOREGROUND);
-        myPolyButton.setToolTipText("Draw a polygon on the map for queries, zoom, or selection");
-        myPolyButton.addMouseListener(myButtonListener);
-
-        myDefaultButtonBorder = myPolyButton.getBorder();
+        mySplitButton.addActionListener(e ->
+        {
+            mySelectionModeController.setSelectionMode(mySplitButton.currentSelectionModeProperty().get());
+        });
 
         setDefaultModeBorder();
 
@@ -181,22 +116,40 @@ public final class QuerySelector extends JPanel
         createRemoveSplitButton();
 
         GridBagConstraints gbc = new GridBagConstraints();
+
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(0, 2, 0, 2);
-        add(myBoxButton, gbc);
-
-        gbc.gridx = 1;
-        gbc.insets = new Insets(0, 2, 0, 2);
-        add(myCircleButton, gbc);
-
-        gbc.gridx = 2;
-        gbc.insets = new Insets(0, 2, 0, 2);
-        add(myPolyButton, gbc);
-
-        gbc.gridx = 3;
         gbc.insets = new Insets(0, 2, 0, 2);
         add(myRemoveButton, gbc);
+
+        gbc.gridx++;
+        add(mySplitButton, gbc);
+    }
+
+    /**
+     * An event handler method used to react to selection mode changes.
+     * 
+     * @param mode the new selection mode of the application.
+     */
+    private void selectionModeChanged(SelectionMode mode)
+    {
+        ContextActionManager manager = myToolbox.getUIRegistry().getContextActionManager();
+        deselectAllButtons();
+        if (mode == SelectionMode.NONE)
+        {
+            setDefaultModeBorder();
+            manager.deregisterContextSingleActionProvider(ContextIdentifiers.DEFAULT_MOUSE_CONTEXT, MouseEvent.class,
+                    myDrawProvider);
+            mySplitButton.toggledProperty().set(false);
+        }
+        else
+        {
+            manager.registerContextSingleActionProvider(ContextIdentifiers.DEFAULT_MOUSE_CONTEXT, MouseEvent.class,
+                    myDrawProvider);
+            mySplitButton.toggledProperty().set(true);
+            mySplitButton.currentSelectionModeProperty().set(mode);
+        }
     }
 
     /** Gets the removes the button. */
@@ -251,12 +204,7 @@ public final class QuerySelector extends JPanel
      */
     private void deselectAllButtons()
     {
-        myBoxButton.setSelected(false);
-        myBoxButton.setBorder(myDefaultButtonBorder);
-        myCircleButton.setSelected(false);
-        myCircleButton.setBorder(myDefaultButtonBorder);
-        myPolyButton.setSelected(false);
-        myPolyButton.setBorder(myDefaultButtonBorder);
+        mySplitButton.setSelected(false);
     }
 
     /**
@@ -266,18 +214,7 @@ public final class QuerySelector extends JPanel
     private void setDefaultModeBorder()
     {
         SelectionMode defaultMode = mySelectionModeController.getDefaultSelectionMode();
-        if (defaultMode == SelectionMode.BOUNDING_BOX)
-        {
-            myBoxButton.setBorder(new LineBorder(IconUtil.ICON_SELECTION_FOREGROUND.darker(), 1, false));
-        }
-        else if (defaultMode == SelectionMode.CIRCLE)
-        {
-            myCircleButton.setBorder(new LineBorder(IconUtil.ICON_SELECTION_FOREGROUND.darker(), 1, false));
-        }
-        else if (defaultMode == SelectionMode.POLYGON)
-        {
-            myPolyButton.setBorder(new LineBorder(IconUtil.ICON_SELECTION_FOREGROUND.darker(), 1, false));
-        }
+        mySplitButton.currentSelectionModeProperty().set(defaultMode);
     }
 
     /**
@@ -298,39 +235,6 @@ public final class QuerySelector extends JPanel
         public DeleteSplitButton(Toolbox tb, String text, Icon icon)
         {
             super(tb.getUIRegistry().getContextActionManager(), text, icon, ContextIdentifiers.DELETE_CONTEXT, Void.class);
-        }
-    }
-
-    /**
-     * The Class SelectorToggleButton.
-     */
-    private static class SelectorToggleButton extends IconButton
-    {
-        /** serialVersionUID. */
-        private static final long serialVersionUID = 1L;
-
-        /** The Mode. */
-        private final SelectionMode myMode;
-
-        /**
-         * Instantiates a new selector toggle button.
-         *
-         * @param mode the mode
-         */
-        public SelectorToggleButton(SelectionMode mode)
-        {
-            super();
-            myMode = mode;
-        }
-
-        /**
-         * Gets the mode.
-         *
-         * @return the mode
-         */
-        public SelectionMode getMode()
-        {
-            return myMode;
         }
     }
 }

@@ -56,6 +56,7 @@ public class QueryManager
         @Override
         public void fractionCompleteChanged(QueryTracker tracker, float fractionComplete)
         {
+            /* intentionally blank */
         }
 
         @Override

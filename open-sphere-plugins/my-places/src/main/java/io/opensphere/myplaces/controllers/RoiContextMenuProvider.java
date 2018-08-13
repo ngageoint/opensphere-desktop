@@ -9,7 +9,7 @@ import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import de.micromata.opengis.kml.v_2_2_0.Polygon;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextMenuProvider;
-import io.opensphere.core.geometry.PolygonGeometry;
+import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.myplaces.models.MyPlacesDataTypeInfo;
@@ -44,7 +44,7 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupCont
 
             if (kmlPlacemark.getGeometry() instanceof Polygon)
             {
-                PolygonGeometry geom = RegionUtils.createGeometry(kmlPlacemark);
+                PolylineGeometry geom = RegionUtils.createGeometry(kmlPlacemark);
                 menuItems = MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler().getGeometryMenuItems(geom);
             }
 
