@@ -19,13 +19,11 @@ import com.bitsys.fade.mist.state.v4.StateType;
 
 import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.Toolbox;
-import io.opensphere.core.cache.SimpleSessionOnlyCacheDeposit;
 import io.opensphere.core.data.DataRegistry;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.matchers.EasyMockHelper;
 import io.opensphere.core.modulestate.ModuleStateManager;
 import io.opensphere.core.order.OrderCategory;
-import io.opensphere.core.order.OrderChangeListener;
 import io.opensphere.core.order.OrderManager;
 import io.opensphere.core.order.OrderManagerRegistry;
 import io.opensphere.core.util.XMLUtilities;
@@ -110,27 +108,19 @@ public class StateControllerImplTest
         EasyMock.expect(pluginToolboxRegistry.getPluginToolbox(MantleToolbox.class)).andReturn(mantleToolbox).atLeastOnce();
         DataGroupController dataGroupController = support.createMock(DataGroupController.class);
         EasyMock.expect(mantleToolbox.getDataGroupController()).andReturn(dataGroupController);
-        DataTypeInfoPreferenceAssistant preferenceAssistant = support.createMock(DataTypeInfoPreferenceAssistant.class);
+        DataTypeInfoPreferenceAssistant preferenceAssistant = support.createNiceMock(DataTypeInfoPreferenceAssistant.class);
         EasyMock.expect(mantleToolbox.getDataTypeInfoPreferenceAssistant()).andReturn(preferenceAssistant).atLeastOnce();
-        EasyMock.expect(preferenceAssistant.isVisiblePreference("state:stateid")).andReturn(true).atLeastOnce();
-        EasyMock.expect(preferenceAssistant.getColorPreference("state:stateid", -1)).andReturn(1);
-        EasyMock.expect(preferenceAssistant.getOpacityPreference("state:stateid", 255)).andReturn(255);
         EasyMock.expect(dataGroupController.addRootDataGroupInfo(EasyMock.isA(DataGroupInfo.class), EasyMock.isA(Object.class))).andReturn(true);
         OrderManagerRegistry orderManagerRegistry = support.createMock(OrderManagerRegistry.class);
         EasyMock.expect(toolbox.getOrderManagerRegistry()).andReturn(orderManagerRegistry);
-        OrderManager orderManager = support.createMock(OrderManager.class);
+        OrderManager orderManager = support.createNiceMock(OrderManager.class);
         EasyMock.expect(orderManagerRegistry.getOrderManager(EasyMock.anyString(), EasyMock.isA(OrderCategory.class))).andReturn(orderManager);
-        orderManager.addParticipantChangeListener(EasyMock.isA(OrderChangeListener.class));
-        EasyMock.expectLastCall();
         EventManager eventManager = support.createMock(EventManager.class);
         EasyMock.expect(toolbox.getEventManager()).andReturn(eventManager).atLeastOnce();
         eventManager.publishEvent(EasyMock.isA(AbstractDataGroupInfoChangeEvent.class));
         EasyMock.expectLastCall().atLeastOnce();
         DataRegistry dataRegistry = support.createNiceMock(DataRegistry.class);
         EasyMock.expect(toolbox.getDataRegistry()).andReturn(dataRegistry).atLeastOnce();
-        SimpleSessionOnlyCacheDeposit<StateType> cacheDeposit = support.createMock(SimpleSessionOnlyCacheDeposit.class);
-        long[] longArray = new long[0];
-        EasyMock.expect(dataRegistry.addModels(cacheDeposit)).andStubReturn(longArray);
         return toolbox;
     }
 }
