@@ -17,6 +17,7 @@ import io.opensphere.core.control.action.ContextActionManager;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.event.EventManager;
+import io.opensphere.core.modulestate.ModuleStateManager;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesImpl;
 import io.opensphere.core.preferences.PreferencesRegistry;
@@ -27,6 +28,7 @@ import io.opensphere.featureactions.editor.ui.FeatureActionsMenuProvider;
 import io.opensphere.featureactions.registry.FeatureActionsRegistry;
 import io.opensphere.featureactions.toolbox.FeatureActionsToolbox;
 import io.opensphere.mantle.MantleToolbox;
+import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
 import io.opensphere.mantle.data.geom.style.dialog.StyleManagerController;
@@ -107,12 +109,16 @@ public class FeatureActionsPluginTest
         EasyMock.expect(toolboxRegistry.getRegistrationService(EasyMock.isA(FeatureActionsToolbox.class)))
                 .andReturn(registrationService);
         EasyMock.expect(toolboxRegistry.getPluginToolbox(MantleToolbox.class)).andReturn(mantle).atLeastOnce();
+        DataGroupController dataGroupController = support.createMock(DataGroupController.class);
+        EasyMock.expect(mantle.getDataGroupController()).andReturn(dataGroupController);
+        ModuleStateManager stateManager = support.createNiceMock(ModuleStateManager.class);
 
         Toolbox toolbox = support.createMock(Toolbox.class);
         EasyMock.expect(toolbox.getPreferencesRegistry()).andReturn(prefsRegistry).atLeastOnce();
         EasyMock.expect(toolbox.getEventManager()).andReturn(eventManager);
         EasyMock.expect(toolbox.getUIRegistry()).andReturn(uiRegistry);
         EasyMock.expect(toolbox.getPluginToolboxRegistry()).andReturn(toolboxRegistry).atLeastOnce();
+        EasyMock.expect(toolbox.getModuleStateManager()).andReturn(stateManager);
 
         return toolbox;
     }
