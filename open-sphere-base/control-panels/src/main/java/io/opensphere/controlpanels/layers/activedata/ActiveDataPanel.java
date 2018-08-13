@@ -49,7 +49,6 @@ import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.lang.EqualsHelper;
-import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.core.util.swing.IconButton;
@@ -1085,7 +1084,7 @@ public final class ActiveDataPanel extends AbstractDiscoveryDataPanel implements
                 t -> t.getStreamingSupport().isStreamingEnabled() && t.getStreamingSupport().getPlayState().get() != playState);
         for (DataTypeInfo dataType : dataTypes)
         {
-            ThreadUtilities.runCpu((Runnable)() -> dataType.getStreamingSupport().getPlayState().set(playState));
+            EventQueueUtilities.runOnEDT(() -> dataType.getStreamingSupport().getPlayState().set(playState));
         }
     }
 
