@@ -227,11 +227,11 @@ public class ModuleStateManagerImpl implements ModuleStateManager
     }
 
     @Override
-    public Collection<? extends String> getRegisteredStateIds()
+    public Collection<String> getRegisteredStateIds()
     {
         synchronized (myStateMap)
         {
-            return New.unmodifiableSet(myStateMap.keySet());
+            return New.set(myStateMap.keySet());
         }
     }
 

@@ -70,7 +70,7 @@ public interface ModuleStateManager
      *
      * @return The state ids.
      */
-    Collection<? extends String> getRegisteredStateIds();
+    Collection<String> getRegisteredStateIds();
 
     /**
      * Gets the state itself.
