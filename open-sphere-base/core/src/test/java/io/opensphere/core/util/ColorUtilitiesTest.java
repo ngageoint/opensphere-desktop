@@ -153,6 +153,59 @@ public class ColorUtilitiesTest
         Assert.assertEquals(ColorUtilities.opacitizeColor(color2.darker(), 10), ColorUtilities.darken(color2, .7));
     }
 
+    /** Test for {@link ColorUtilities#lighten(Color)} from saturation of 100% down to around 3%. */
+    @Test
+    public void testLighten()
+    {
+        float[] originalHSB = new float[3];
+        Color.RGBtoHSB(Color.BLUE.getRed(), Color.BLUE.getGreen(), Color.BLUE.getBlue(), originalHSB);
+
+        Color light1 = ColorUtilities.lighten(Color.BLUE);
+        float[] light1HSB = new float[3];
+        Color.RGBtoHSB(light1.getRed(), light1.getGreen(), light1.getBlue(), light1HSB);
+
+        Color light2 = ColorUtilities.lighten(light1);
+        float[] light2HSB = new float[3];
+        Color.RGBtoHSB(light2.getRed(), light2.getGreen(), light2.getBlue(), light2HSB);
+
+        Color light3 = ColorUtilities.lighten(light2);
+        float[] light3HSB = new float[3];
+        Color.RGBtoHSB(light3.getRed(), light3.getGreen(), light3.getBlue(), light3HSB);
+
+        Color light4 = ColorUtilities.lighten(light3);
+        float[] light4HSB = new float[3];
+        Color.RGBtoHSB(light4.getRed(), light4.getGreen(), light4.getBlue(), light4HSB);
+
+        Color light5 = ColorUtilities.lighten(light4);
+        float[] light5HSB = new float[3];
+        Color.RGBtoHSB(light5.getRed(), light5.getGreen(), light5.getBlue(), light5HSB);
+
+        // Lightened once - same hue and brightness - saturation divided by 2
+        Assert.assertEquals(light1HSB[0], originalHSB[0], 0);
+        Assert.assertEquals(light1HSB[1], .5, 0.01);
+        Assert.assertEquals(light1HSB[2], originalHSB[2], 0);
+
+        // Lightened once - same hue and brightness - saturation divided by 4
+        Assert.assertEquals(light2HSB[0], originalHSB[0], 0);
+        Assert.assertEquals(light2HSB[1], .25, 0.01);
+        Assert.assertEquals(light2HSB[2], originalHSB[2], 0);
+
+        // Lightened once - same hue and brightness - saturation divided by 8
+        Assert.assertEquals(light3HSB[0], originalHSB[0], 0);
+        Assert.assertEquals(light3HSB[1], .125, 0.01);
+        Assert.assertEquals(light3HSB[2], originalHSB[2], 0);
+
+        // Lightened once - same hue and brightness - saturation divided by 16
+        Assert.assertEquals(light4HSB[0], originalHSB[0], 0);
+        Assert.assertEquals(light4HSB[1], .0625, 0.01);
+        Assert.assertEquals(light4HSB[2], originalHSB[2], 0);
+
+        // Lightened once - same hue and brightness - saturation divided by 32
+        Assert.assertEquals(light5HSB[0], originalHSB[0], 0);
+        Assert.assertEquals(light5HSB[1], .03125, 0.01);
+        Assert.assertEquals(light5HSB[2], originalHSB[2], 0);
+    }
+
     /**
      * Test for {@link ColorUtilities#getBrightness(Color)}.
      */
