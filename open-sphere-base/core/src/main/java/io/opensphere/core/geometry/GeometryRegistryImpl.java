@@ -57,7 +57,7 @@ public class GeometryRegistryImpl extends DefaultGenericPublisher<Geometry> impl
     public GeometryRegistryImpl(ExecutorService dataRetrieverExecutor)
     {
         myDataRetrieverExecutor = dataRetrieverExecutor;
-        myAddToDataModelMap = false;
+        myAddToDataModelMap = true;
     }
 
     @Override
@@ -110,6 +110,7 @@ public class GeometryRegistryImpl extends DefaultGenericPublisher<Geometry> impl
      * @param dataModelId The data model id.
      * @return The geometries.
      */
+    @Override
     public List<? extends Geometry> getGeometriesForDataModel(long dataModelId)
     {
         synchronized (myDataModelMap)
@@ -137,6 +138,7 @@ public class GeometryRegistryImpl extends DefaultGenericPublisher<Geometry> impl
      * @param dataModelIds The data model ids.
      * @return The geometries.
      */
+    @Override
     public List<Geometry> getGeometriesForDataModels(long[] dataModelIds)
     {
         List<Geometry> result = New.list(dataModelIds.length);

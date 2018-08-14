@@ -5,7 +5,6 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.util.Collections;
 
-import net.jcip.annotations.NotThreadSafe;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.PopupMenuEvent;
@@ -21,6 +20,7 @@ import io.opensphere.core.units.UnitsProvider;
 import io.opensphere.core.units.length.Kilometers;
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.jts.core.JTSCoreGeometryUtilities;
+import net.jcip.annotations.NotThreadSafe;
 
 /**
  * Creates a buffer region.
@@ -56,18 +56,27 @@ public class BufferRegionCreator
     {
         myToolbox = toolbox;
     }
+    
+    /**
+     * Gets the value of the {@link #myToolbox} field.
+     *
+     * @return the value stored in the {@link #myToolbox} field.
+     */
+    protected Toolbox getToolbox()
+    {
+        return myToolbox;
+    }
 
     /**
      * Creates the buffer region for last selection geometry.
      *
-     * @param geometry
-     *
+     * @param geometry the geometry for which to create the buffer.
      */
     public void createBuffer(Geometry geometry)
     {
         myGeometry = geometry;
         UnitsProvider<Length> uProv = myToolbox.getUnitsRegistry().getUnitsProvider(Length.class);
-        Length defaultBuffer = defaultBuffer(uProv);
+        Length defaultBuffer = createDefaultBuffer(uProv);
         // show the buffer when the dialog pops up:
         handleBufferEdit(defaultBuffer);
         BufferRegionInputPanel inputPanel = new BufferRegionInputPanel(defaultBuffer, uProv, getBufferRangeMessage(),
@@ -86,7 +95,7 @@ public class BufferRegionCreator
      * @param provider the provider from which units are provided.
      * @return the default length extracted from the supplied units provider.
      */
-    private static Length defaultBuffer(UnitsProvider<Length> provider)
+    private static Length createDefaultBuffer(UnitsProvider<Length> provider)
     {
         return provider.convert(provider.getPreferredFixedScaleUnits(DEFAULT_BUFFER_DISTANCE), DEFAULT_BUFFER_DISTANCE);
     }
@@ -99,7 +108,7 @@ public class BufferRegionCreator
      */
     private void handleBufferEdit(Length pLength)
     {
-        if (lengthOkay(pLength))
+        if (isLengthValid(pLength))
         {
             handlePreviewBuffer(pLength.inMeters());
         }
@@ -150,7 +159,7 @@ public class BufferRegionCreator
      * @param distance buffer distance in meters
      * @return the buffer geometry if supported, or <i>g</i>
      */
-    private static Geometry bufferOrSame(Geometry geometry, double distance)
+    protected Geometry bufferOrSame(Geometry geometry, double distance)
     {
         Geometry newG = JTSCoreGeometryUtilities.getBufferGeom(geometry, distance);
         if (newG != null)
@@ -165,7 +174,7 @@ public class BufferRegionCreator
      *
      * @param geometry the geometry to register.
      */
-    private void registerGeometry(Geometry geometry)
+    protected void registerGeometry(Geometry geometry)
     {
         myToolbox.getGeometryRegistry().addGeometriesForSource(this, Collections.singletonList(geometry));
     }
@@ -188,7 +197,7 @@ public class BufferRegionCreator
      * @param pLength the buffer distance to validate.
      * @return true if and only if the given distance is acceptable
      */
-    private boolean lengthOkay(Length pLength)
+    private boolean isLengthValid(Length pLength)
     {
         if (myGeometry instanceof PolygonGeometry)
         {
@@ -225,7 +234,7 @@ public class BufferRegionCreator
             try
             {
                 Length returnValue = inputPanel.getDistance();
-                if (lengthOkay(returnValue))
+                if (isLengthValid(returnValue))
                 {
                     destroyPreview();
                     return returnValue;
@@ -238,14 +247,56 @@ public class BufferRegionCreator
             }
         }
     }
+    
+    /**
+     * Sets the value of the {@link #myGeometry} field.
+     *
+     * @param geometry 
+     *            the value to store in the {@link #myGeometry} field.
+     */
+    protected void setGeometry(Geometry geometry)
+    {
+        myGeometry = geometry;
+    }
+    
+    /**
+     * Gets the value of the {@link #myGeometry} field.
+     *
+     * @return the value stored in the {@link #myGeometry} field.
+     */
+    protected Geometry getGeometry()
+    {
+        return myGeometry;
+    }
+    
+    /**
+     * Sets the value of the {@link #myPreviewGeometry} field.
+     *
+     * @param previewGeometry 
+     *            the value to store in the {@link #myPreviewGeometry} field.
+     */
+    protected void setPreviewGeometry(Geometry previewGeometry)
+    {
+        myPreviewGeometry = previewGeometry;
+    }
+    
+    /**
+     * Gets the value of the {@link #myPreviewGeometry} field.
+     *
+     * @return the value stored in the {@link #myPreviewGeometry} field.
+     */
+    protected Geometry getPreviewGeometry()
+    {
+        return myPreviewGeometry;
+    }
 
     /**
      * Handle create buffer.
      *
-     * @param point the point
+     * @param point the screen location at which to show the popup.
      * @param distance the buffer distance
      */
-    private void handleCreateBuffer(Point point, double distance)
+    protected void handleCreateBuffer(Point point, double distance)
     {
         myGeometry = bufferOrSame(myGeometry, distance);
         if (myGeometry == null)
@@ -298,7 +349,7 @@ public class BufferRegionCreator
      * @param title title
      * @param msg message
      */
-    private void errorPopup(String title, String msg)
+    protected void errorPopup(String title, String msg)
     {
         JOptionPane.showMessageDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(), msg, title,
                 JOptionPane.ERROR_MESSAGE);

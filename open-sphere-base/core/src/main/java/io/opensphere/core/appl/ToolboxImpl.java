@@ -31,7 +31,7 @@ import io.opensphere.core.data.DataRegistry;
 import io.opensphere.core.datafilter.DataFilterRegistry;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.event.EventManagerImpl;
-import io.opensphere.core.geometry.GeometryRegistryImpl;
+import io.opensphere.core.geometry.GeometryRegistry;
 import io.opensphere.core.importer.ImporterRegistry;
 import io.opensphere.core.map.MapManagerImpl;
 import io.opensphere.core.metrics.MetricsRegistry;
@@ -247,7 +247,7 @@ abstract class ToolboxImpl implements Toolbox
     }
 
     @Override
-    public GeometryRegistryImpl getGeometryRegistry()
+    public GeometryRegistry getGeometryRegistry()
     {
         return myRegistryManager.getGeometryRegistry();
     }
