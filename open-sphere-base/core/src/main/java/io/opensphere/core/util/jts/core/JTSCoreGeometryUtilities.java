@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
 import io.opensphere.core.geometry.Geometry;
@@ -84,6 +85,22 @@ public final class JTSCoreGeometryUtilities
             // Draw a box around the bottom of the volume.
             return Collections.singletonList(buildBox(positions, color));
         }
+    }
+
+    /**
+     * Converts the supplied {@link PointGeometry} to an instance of the JTS
+     * {@link Point} class.
+     * 
+     * @param geometry the geometry to convert.
+     * @return a JTS Point instance generated from the supplied geometry.
+     */
+    public static Point convertToJTSPoint(PointGeometry geometry)
+    {
+        Position position = geometry.getPosition();
+        Vector3d vec = position.asVector3d();
+        Coordinate coordinate = new Coordinate(vec.getX(), vec.getY(), vec.getZ());
+
+        return JTSUtilities.GEOMETRY_FACTORY.createPoint(coordinate);
     }
 
     /**

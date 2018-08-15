@@ -51,6 +51,16 @@ public interface GeometryRegistry extends GenericSubscriber<Geometry>
     Collection<Geometry> getGeometries();
 
     /**
+     * Get all the geometries currently in the registry that are a certain
+     * concrete class.
+     *
+     * @param <T> The concrete implementation of the {@code Geometry} interface.
+     * @param cl The concrete class.
+     * @return The geometries.
+     */
+    <T extends Geometry> Collection<T> getGeometriesOfClass(Class<T> cl);
+
+    /**
      * Get the geometries that have been added associated with a particular
      * source, that are of a specific concrete type.
      * <p>

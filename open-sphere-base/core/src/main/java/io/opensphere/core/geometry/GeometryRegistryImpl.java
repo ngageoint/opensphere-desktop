@@ -34,8 +34,8 @@ public class GeometryRegistryImpl extends DefaultGenericPublisher<Geometry> impl
     private final TLongObjectHashMap<Object> myDataModelMap = new TLongObjectHashMap<>();
 
     /**
-     * Whether to add geometries to the data model map. Nothing currently uses the data model map functionality so it's set to
-     * false to save memory.
+     * Whether to add geometries to the data model map. Nothing currently uses
+     * the data model map functionality so it's set to false to save memory.
      */
     private final boolean myAddToDataModelMap;
 
@@ -180,13 +180,11 @@ public class GeometryRegistryImpl extends DefaultGenericPublisher<Geometry> impl
     }
 
     /**
-     * Get all the geometries currently in the registry that are a certain
-     * concrete class.
+     * {@inheritDoc}
      *
-     * @param <T> The concrete implementation of the {@code Geometry} interface.
-     * @param cl The concrete class.
-     * @return The geometries.
+     * @see io.opensphere.core.geometry.GeometryRegistry#getGeometriesOfClass(java.lang.Class)
      */
+    @Override
     public <T extends Geometry> Collection<T> getGeometriesOfClass(Class<T> cl)
     {
         return myRegistry.getObjectsOfClass(cl);

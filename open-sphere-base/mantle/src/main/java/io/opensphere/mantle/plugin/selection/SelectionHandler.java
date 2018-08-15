@@ -736,6 +736,33 @@ public class SelectionHandler
             myLastGeometry = geom;
             menuItems = SelectionCommand.getPointMenuItems(myMenuActionListener, hasLoadFilters());
         }
+        else if (geom instanceof GeometryGroupGeometry)
+        {
+            myLastGeometry = geom;
+            if (!((GeometryGroupGeometry)geom).getGeometries().isEmpty())
+            {
+                // assumption: All geometries contained within the group are of
+                // the same type
+                Geometry sampleGeometry = ((GeometryGroupGeometry)geom).getGeometries().iterator().next();
+                if (sampleGeometry instanceof PolygonGeometry)
+                {
+                    menuItems = SelectionCommand.getPolygonMenuItems(myMenuActionListener, hasLoadFilters(), false);
+                }
+                else if (sampleGeometry instanceof PolylineGeometry)
+                {
+                    menuItems = SelectionCommand.getPolylineMenuItems(myMenuActionListener, hasLoadFilters());
+                }
+                else if (sampleGeometry instanceof PointGeometry)
+                {
+                    menuItems = SelectionCommand.getPointMenuItems(myMenuActionListener, hasLoadFilters());
+                }
+                else
+                {
+                    LOGGER.warn("Unrecognized geometry group type: '" + geom.getClass().getName()
+                            + "' cannot be used to create a buffer.");
+                }
+            }
+        }
         else
         {
             LOGGER.warn("Unrecognized geometry type: '" + geom.getClass().getName() + "' cannot be used to create a buffer.");
