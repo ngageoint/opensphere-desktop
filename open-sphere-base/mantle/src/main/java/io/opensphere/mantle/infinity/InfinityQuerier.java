@@ -77,11 +77,16 @@ public class InfinityQuerier
         {
             queryParameters.setBinFieldType(dataType.getMetaDataInfo().getKeyClassType(binField));
         }
-        queryParameters.setBinWidth(binParams.getBinWidth());
-        queryParameters.setBinOffset(binParams.getBinOffset());
-        queryParameters.setDateFormat(binParams.getDateFormat());
-        queryParameters.setDateInterval(binParams.getDateInterval());
-        queryParameters.setDayOfWeek(binParams.getDayOfWeek());
+
+        if (binParams != null)
+        {
+            queryParameters.setBinWidth(binParams.getBinWidth());
+            queryParameters.setBinOffset(binParams.getBinOffset());
+            queryParameters.setDateFormat(binParams.getDateFormat());
+            queryParameters.setDateInterval(binParams.getDateInterval());
+            queryParameters.setDayOfWeek(binParams.getDayOfWeek());
+        }
+
         queryParameters.setGeomField(geomField);
         queryParameters.setTimeField(timeField);
         queryParameters.setEndTimeField(endTimeField);
