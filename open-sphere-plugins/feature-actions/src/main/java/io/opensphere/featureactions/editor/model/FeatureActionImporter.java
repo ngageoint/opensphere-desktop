@@ -136,12 +136,21 @@ public class FeatureActionImporter implements FileOrURLImporter
             for (int i = 0; i < nodeList.getLength(); i++)
             {
                 FeatureAction featureAction = XMLUtilities.readXMLObject(nodeList.item(i), FeatureAction.class);
+                boolean foundGroup = false;
                 for (SimpleFeatureActionGroup simpleGroup : myModel.getFeatureGroups())
                 {
                     if (simpleGroup.getGroupName().equals(featureAction.getGroupName()))
                     {
                         Platform.runLater(() -> simpleGroup.getActions().add(new SimpleFeatureAction(featureAction)));
+                        foundGroup = true;
                     }
+                }
+                if (!foundGroup)
+                {
+                    SimpleFeatureActionGroup featureActionGroup = new SimpleFeatureActionGroup();
+                    featureActionGroup.setGroupName(featureAction.getGroupName());
+                    featureActionGroup.getActions().add(new SimpleFeatureAction(featureAction));
+                    Platform.runLater(() -> myModel.getFeatureGroups().add(featureActionGroup));
                 }
             }
             success = true;
