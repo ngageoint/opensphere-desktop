@@ -10,6 +10,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import io.opensphere.arcgis2.envoy.ArcGISDescribeLayerEnvoy;
@@ -183,7 +184,7 @@ public class ArcGISLayerProvider
         String groupId = sourceURL;
         for (String name : layer.getPath())
         {
-            groupId = UrlUtilities.concatUrlFragments(groupId, name);
+            groupId = UrlUtilities.concatUrlFragments(groupId, StringUtils.endsWith(groupId, name) ? "" : name);
 
             DefaultDataGroupInfo group = groupMap.get(name);
             if (group == null)

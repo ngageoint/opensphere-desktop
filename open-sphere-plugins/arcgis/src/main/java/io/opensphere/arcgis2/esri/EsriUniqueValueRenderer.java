@@ -15,9 +15,6 @@ import org.codehaus.jackson.annotate.JsonProperty;
 @JsonAutoDetect(JsonMethod.NONE)
 public class EsriUniqueValueRenderer extends EsriRenderer
 {
-    /** Version ID. */
-    private static final long serialVersionUID = 1L;
-
     /** My default label. */
     @JsonProperty("defaultLabel")
     private String myDefaultLabel;
