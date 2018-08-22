@@ -17,9 +17,6 @@ import org.codehaus.jackson.annotate.JsonProperty;
 @JsonAutoDetect(JsonMethod.NONE)
 public class EsriPictureFillSymbol extends EsriPictureMarkerSymbol
 {
-    /** Version ID. */
-    private static final long serialVersionUID = 1L;
-
     /** My Outline. */
     @JsonProperty("outline")
     private EsriSimpleLineSymbol myOutline;

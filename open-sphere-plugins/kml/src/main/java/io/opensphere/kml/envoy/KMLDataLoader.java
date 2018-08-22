@@ -19,8 +19,8 @@ import org.apache.log4j.Logger;
 
 import io.opensphere.core.Notify;
 import io.opensphere.core.Notify.Method;
-import io.opensphere.core.common.connection.HttpHeaders.HttpResponseHeader;
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.common.connection.HttpHeaders.HttpResponseHeader;
 import io.opensphere.core.server.HttpServer;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.server.ServerProvider;
@@ -186,22 +186,15 @@ public class KMLDataLoader
         {
             // Check for Windows drive letters
             String parentPath;
-            try
+            parentPath = myDataSource.getParentDataSource() == null ? null
+                    : new File(KMLLinkHelper.toBaseURL(myDataSource.getParentDataSource()).toString()).toURI().getPath();
+            if (parentPath != null && file.getPath().contains(parentPath))
             {
-                parentPath = myDataSource.getParentDataSource() == null ? null
-                        : new File(KMLLinkHelper.toBaseURL(myDataSource.getParentDataSource()).toURI()).getPath();
-                if (parentPath != null && file.getPath().contains(parentPath))
+                Matcher matcher = Pattern.compile(Pattern.quote(parentPath) + "[/\\\\]?([A-z]:.+)").matcher(file.getPath());
+                if (matcher.matches())
                 {
-                    Matcher matcher = Pattern.compile(Pattern.quote(parentPath) + "[/\\\\]?([A-z]:.+)").matcher(file.getPath());
-                    if (matcher.matches())
-                    {
-                        file = new File(matcher.group(1));
-                    }
+                    file = new File(matcher.group(1));
                 }
-            }
-            catch (URISyntaxException e)
-            {
-                LOGGER.error(e, e);
             }
         }
         myDataSource.setActualPath(file.toString());
