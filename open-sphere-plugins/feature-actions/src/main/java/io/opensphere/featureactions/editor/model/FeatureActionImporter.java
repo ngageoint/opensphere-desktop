@@ -24,6 +24,7 @@ import io.opensphere.core.importer.FileOrURLImporter;
 import io.opensphere.core.importer.ImportCallback;
 import io.opensphere.core.modulestate.StateXML;
 import io.opensphere.core.util.XMLUtilities;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.featureactions.model.FeatureAction;
 import javafx.application.Platform;
@@ -150,7 +151,7 @@ public class FeatureActionImporter implements FileOrURLImporter
                     SimpleFeatureActionGroup featureActionGroup = new SimpleFeatureActionGroup();
                     featureActionGroup.setGroupName(featureAction.getGroupName());
                     featureActionGroup.getActions().add(new SimpleFeatureAction(featureAction));
-                    Platform.runLater(() -> myModel.getFeatureGroups().add(featureActionGroup));
+                    FXUtilities.runAndWait(() ->  myModel.getFeatureGroups().add(featureActionGroup));
                 }
             }
             success = true;
