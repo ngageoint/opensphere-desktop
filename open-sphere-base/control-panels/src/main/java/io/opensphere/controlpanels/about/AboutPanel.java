@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -392,22 +393,6 @@ public class AboutPanel extends AbstractHUDPanel
                 }
             }
 
-            private boolean deleteDirectory(File file)
-            {
-                if (file.isDirectory())
-                {
-                    File[] subfiles = file.listFiles();
-                    if (subfiles != null)
-                    {
-                        for (File child : subfiles)
-                        {
-                            deleteDirectory(child);
-                        }
-                    }
-                }
-                return file.delete();
-            }
-
             private void restart()
             {
                 final String installPath = new File(System.getProperty("user.dir")).getParentFile().getAbsolutePath();
@@ -425,9 +410,9 @@ public class AboutPanel extends AbstractHUDPanel
                     @Override
                     public void run()
                     {
-                        deleteDirectory(new File(mySystemPropertiesMap.get("opensphere.path.runtime")));
                         try
                         {
+                            FileUtils.deleteDirectory(new File(mySystemPropertiesMap.get("opensphere.path.runtime")));
                             Runtime.getRuntime().exec(command);
                         }
                         catch (IOException e)
