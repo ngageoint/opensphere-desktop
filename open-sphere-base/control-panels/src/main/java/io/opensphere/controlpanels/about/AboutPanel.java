@@ -383,7 +383,7 @@ public class AboutPanel extends AbstractHUDPanel
             public void actionPerformed(ActionEvent e)
             {
                 int result = JOptionPane.showConfirmDialog(myAboutFrame, "This action will delete all Vortex files.\n"
-                        + "Data, security settings, servers, and other application state infomation will be removed, "
+                        + "Data, security settings, servers, and other application state information will be removed, "
                         + "reverting this application to a clean state.\nThis application will then restart. Do you wish to proceed?",
                         "WARNING", JOptionPane.YES_NO_OPTION);
                 if (result == JOptionPane.YES_OPTION)
