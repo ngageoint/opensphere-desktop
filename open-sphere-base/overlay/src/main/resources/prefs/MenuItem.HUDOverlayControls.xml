@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><preferences topic="MenuItem.HUD Overlay Controls">
+   <preference class="java.lang.Boolean" key="visible">
+      <value>true</value>
+   </preference>
+</preferences>
