@@ -546,12 +546,6 @@ public final class JTSUtilities
         Coordinate[] coords = null;
         if (!vertices.isEmpty())
         {
-//            coords = new Coordinate[vertices.size() + 1];
-//            List<Coordinate> convertedVertices = vertices.stream().map(p -> generateCoordinate(p)).collect(Collectors.toList());
-//            for (int i = 0; i < convertedVertices.size(); i++)
-//            {
-//                coords[i] = convertedVertices.get(i);
-//            }
             coords = vertices.stream().map(p -> generateCoordinate(p)).toArray(size -> new Coordinate[vertices.size() + 1]);
             coords[coords.length - 1] = coords[0];
         }
@@ -705,8 +699,8 @@ public final class JTSUtilities
     /**
      * Confine longitude to the interval [-180, 180).
      * 
-     * @param p bla
-     * @return bla
+     * @param p the polygon to confine.
+     * @return a polygon confined to the designated interval.
      */
     public static Polygon cutLon180(Polygon p)
     {
@@ -727,9 +721,9 @@ public final class JTSUtilities
     /**
      * Confine longitude to the interval [-180, 180).
      * 
-     * @param coords bla
+     * @param coords the coordinates to confine.
      * @param close use true if the endpoints much match
-     * @return bla
+     * @return an array of coordinates confined to the designated interval.
      */
     private static Coordinate[] cutLon180(Coordinate[] coords, boolean close)
     {
@@ -753,8 +747,8 @@ public final class JTSUtilities
     /**
      * Confine longitude to the interval [-180, 180).
      * 
-     * @param c bla
-     * @return bla
+     * @param c a coordinate to confine to the longitude interval.
+     * @return a coordinate confined to the longitude interval.
      */
     private static Coordinate cutLon180(Coordinate c)
     {
@@ -919,43 +913,31 @@ public final class JTSUtilities
             normalizeByBoundingBox(copy, bounds);
             return doDivideOnAntimeridian(copy);
         }
-        else
+        if (winding == PolygonWinding.UNKNOWN)
         {
-            if (winding == PolygonWinding.UNKNOWN)
+            Polygon copy = (Polygon)polygon.clone();
+            boolean normalized = normalizeBySegmentLength(copy);
+            if (normalized)
             {
-                Polygon copy = (Polygon)polygon.clone();
-                boolean normalized = normalizeBySegmentLength(copy);
-                if (normalized)
-                {
-                    return doDivideOnAntimeridian(copy);
-                }
-                else
-                {
-                    return Collections.singletonList(polygon);
-                }
+                return doDivideOnAntimeridian(copy);
             }
-            else
-            {
-                // Get the natural winding. If this is different then the
-                // winding we know we should have then we crossed the
-                // antimeridian.
-                PolygonWinding naturalWinding = getNaturalWinding(polygon.getExteriorRing().getCoordinates());
-                if (naturalWinding.equals(winding))
-                {
-                    return Collections.singletonList(polygon);
-                }
-                else
-                {
-                    // TODO we can use the winding direction to determine the
-                    // interior of the polygon. We should be able to use this to
-                    // correctly normalize the polygon and allow for segments
-                    // longer than 180 degrees longitudinally.
-                    Polygon copy = (Polygon)polygon.clone();
-                    normalizeBySegmentLength(copy);
-                    return doDivideOnAntimeridian(copy);
-                }
-            }
+            return Collections.singletonList(polygon);
         }
+        // Get the natural winding. If this is different then the
+        // winding we know we should have then we crossed the
+        // antimeridian.
+        PolygonWinding naturalWinding = getNaturalWinding(polygon.getExteriorRing().getCoordinates());
+        if (naturalWinding.equals(winding))
+        {
+            return Collections.singletonList(polygon);
+        }
+        // TODO we can use the winding direction to determine the
+        // interior of the polygon. We should be able to use this to
+        // correctly normalize the polygon and allow for segments
+        // longer than 180 degrees longitudinally.
+        Polygon copy = (Polygon)polygon.clone();
+        normalizeBySegmentLength(copy);
+        return doDivideOnAntimeridian(copy);
     }
 
     /**
