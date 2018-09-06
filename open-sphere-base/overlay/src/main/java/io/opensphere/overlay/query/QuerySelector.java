@@ -19,9 +19,12 @@ import io.opensphere.core.control.action.ContextSingleActionProvider;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.event.DataRemovalEvent;
 import io.opensphere.core.quantify.Quantify;
+import io.opensphere.core.util.AwesomeIconRegular;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.SelectionMode;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.image.IconUtil.IconType;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.util.swing.misc.ControlMenuOptionContextSplitButton;
 import io.opensphere.overlay.OverlayToolboxUtils;
 import io.opensphere.overlay.SelectionModeChangeListener;
@@ -129,7 +132,7 @@ public final class QuerySelector extends JPanel
 
     /**
      * An event handler method used to react to selection mode changes.
-     * 
+     *
      * @param mode the new selection mode of the application.
      */
     private void selectionModeChanged(SelectionMode mode)
@@ -184,19 +187,32 @@ public final class QuerySelector extends JPanel
      */
     private void addLegendIcons(Toolbox toolbox)
     {
-        Icon boxIcon = IconUtil.getNormalIcon("/images/rectangle.png");
+        Icon boxIcon = new GenericFontIcon(AwesomeIconRegular.SQUARE, IconUtil.DEFAULT_ICON_FOREGROUND);
         toolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(boxIcon, "Query Selector(Rectangle)",
                 "Press the Shift button and click the map and drag to create a rectangular area on the map for querying, zooming, purging, etc.");
 
-        Icon circleIcon = IconUtil.getNormalIcon("/images/circle.png");
+        Icon circleIcon = new GenericFontIcon(AwesomeIconRegular.CIRCLE, IconUtil.DEFAULT_ICON_FOREGROUND);
         toolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(circleIcon, "Query Selector(Circle)",
                 "Press the Shift button and click the map and drag to create a circular area on the map for querying, zooming, purging, etc.");
 
-        Icon polyIcon = IconUtil.getNormalIcon("/images/polygon2.png");
+        Icon polyIcon = new GenericFontIcon(AwesomeIconRegular.STAR, IconUtil.DEFAULT_ICON_FOREGROUND);
         toolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(polyIcon, "Query Selector(Polygon)",
-                "Press the Shift button and click the map. Move the cursor and each subsequent click will add a side to the polygon. "
-                        + "To end the polygon, while holding the Shift button, right click the mouse. "
-                        + "The polygon can also be used for querying, zooming, purging, etc.");
+                "Press the Shift button and click the map. Move the cursor and each subsequent click will add an edge to the polygon. "
+                        + "While holding the Shift button, double left clicking the mouse will end the polygon, "
+                        + "and right clicking will remove the most recent edge of the polygon. "
+                        + "The polygon can be used for querying, zooming, purging, etc.");
+        Icon lineIcon = new GenericFontIcon(AwesomeIconSolid.LONG_ARROW_ALT_RIGHT, IconUtil.DEFAULT_ICON_FOREGROUND);
+        toolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(lineIcon, "Query Selector(Line)",
+                 "Press the Shift button and click the map. Move the cursor and each subsequent click will add an edge to the line. "
+                        + "While holding the Shift button, double left clicking the mouse will end the line, "
+                        + "and right clicking will remove the most recent edge of the line. "
+                        + "The line can be used for querying, zooming, purging, etc. Only points along the line's edges are affected.");
+        Icon clearIcon = IconUtil.getColorizedIcon(IconType.CLOSE, Color.RED);
+        toolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(clearIcon, "Clear",
+                 "Cancels, disables, or cleans up various parts of the application the user may have used. "
+                        + "These include queries, search results, spatial filters, goto points, and states. "
+                        + "Use the dropdown menu to select one target to clear. "
+                        + "Additionally, in the active layers window, this button will disable the currently selected layer(s).");
     }
 
     /**

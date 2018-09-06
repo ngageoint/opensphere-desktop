@@ -193,7 +193,7 @@ public class VideoRecorderPlugin extends PluginAdapter
                 "Video Recorder",
                 "Opens the 'Record a video' dialog. Enter a file name and press the 'Ok' button. "
                         + "The 'Video Recorder' button begins to flash. Press it to start your recording. "
-                        + "Press it a second time to end your recodring.");
+                        + "Press it a second time to end your recording.");
     }
 
     /**

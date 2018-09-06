@@ -204,11 +204,11 @@ public class LayersFrame extends AbstractInternalFrame
             Icon reloadIcon = IconUtil.getNormalIcon(IconType.RELOAD);
             iconLegendRegistry.addIconToLegend(reloadIcon, "Reload",
                     "The reload button provides users with a way to reload file/url based data without having to "
-                            + "remove the data and reload it using the import wizard.");
+                            + "remove the data and reimport it using the import wizard.");
 
             Icon layerSetIcon = IconUtil.getNormalIcon(IconType.STAR);
             iconLegendRegistry.addIconToLegend(layerSetIcon, "Layer Set",
-                    "A layer set is the set of layers currently displayed in the 'Active' data layer tree."
+                    "A layer set is the set of layers currently displayed in the 'Active' data layer tree. "
                             + "To save a set, either click the 'Layer Set' button or use the dropdown.");
 
             ImageIcon screenCaptureIcon = IconUtil.getNormalIcon("/images/screencapture.png");
@@ -218,6 +218,31 @@ public class LayersFrame extends AbstractInternalFrame
             Icon popoutIcon = new ImageIcon(ImageIO.read(LayersFrame.class.getResource("/images/new-tab.png")));
             iconLegendRegistry.addIconToLegend(popoutIcon, "Open Layer in New Window",
                     "Opens a new Active Layer window showing only the clicked on layer and the layers below the clicked on layer.");
+
+            Icon addDataIcon = IconUtil.getColorizedIcon(IconType.PLUS, Color.GREEN);
+            iconLegendRegistry.addIconToLegend(addDataIcon, "Add Data",
+                    "Opens the 'Add Data' window. Users can import, activate/deactivate, edit, and remove layers from this window. "
+                    + "Use the dropdown menu to directly select a type of data to import.");
+
+            Icon layersIcon = IconUtil.getNormalIcon(IconType.STACK);
+            iconLegendRegistry.addIconToLegend(layersIcon, "Active Layers",
+                    "Opens the 'Layers' window, where users can interact with Layers, My Places, Areas, etc.");
+
+            Icon deleteIcon = IconUtil.getNormalIcon(IconType.DELETE);
+            iconLegendRegistry.addIconToLegend(deleteIcon, "Delete My Place",
+                    "Deletes all currently selected My Places.");
+
+            Icon playIcon = IconUtil.getColorizedIcon(IconType.PLAY, Color.GREEN);
+            iconLegendRegistry.addIconToLegend(playIcon, "Play Streaming Layers",
+                    "Starts the streaming application for all applicable layers.");
+
+            Icon pauseIcon = IconUtil.getColorizedIcon(IconType.PAUSE, Color.YELLOW);
+            iconLegendRegistry.addIconToLegend(pauseIcon, "Pause Streaming Layers",
+                    "Pauses the streams for all layers that are currently streaming.");
+
+            Icon stopIcon = IconUtil.getColorizedIcon(IconType.STOP, Color.RED);
+            iconLegendRegistry.addIconToLegend(stopIcon, "Stop Streaming Layers",
+                    "Stops the streams for all layers that have enabled streams.");
         }
         catch (IOException e)
         {

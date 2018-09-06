@@ -1,5 +1,6 @@
 package io.opensphere.controlpanels.animation;
 
+import javax.swing.Icon;
 import javax.swing.JMenu;
 
 import io.opensphere.controlpanels.animation.controller.AnimationController;
@@ -10,6 +11,8 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.api.adapter.PluginAdapter;
 import io.opensphere.core.control.ui.MenuBarRegistry;
 import io.opensphere.core.util.ThreadConfined;
+import io.opensphere.core.util.image.IconUtil;
+import io.opensphere.core.util.image.IconUtil.IconType;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 
 /**
@@ -38,6 +41,7 @@ public class TimelinePlugin extends PluginAdapter
         myLiveStateController = new LiveStateController(myController);
         toolbox.getModuleStateManager().registerModuleStateController("Animation", myStateController);
         toolbox.getModuleStateManager().registerModuleStateController("Time", myLiveStateController);
+        addLegendIcons(toolbox);
 
         EventQueueUtilities.runOnEDTAndWait(new Runnable()
         {
@@ -68,5 +72,18 @@ public class TimelinePlugin extends PluginAdapter
                 }
             }
         });
+    }
+
+    /**
+     * Adds icons to the icon legend.
+     *
+     * @param toolbox the toolbox
+     */
+    private void addLegendIcons(Toolbox toolbox)
+    {
+        Icon timeIcon = IconUtil.getNormalIcon(IconType.CLOCK);
+        toolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(timeIcon, "Timeline",
+                "Opens the timeline, where data in temporal layers can be viewed in an animation. "
+                    + "Additionally, in the active layers window, this button toggles the layer being included in the timeline.");
     }
 }

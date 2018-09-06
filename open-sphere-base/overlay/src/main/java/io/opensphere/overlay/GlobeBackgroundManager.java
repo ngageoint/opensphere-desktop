@@ -107,7 +107,7 @@ public final class GlobeBackgroundManager
         }
 
         uiRegistry.getIconLegendRegistry().addIconToLegend(IconUtil.getNormalIcon("/images/earth-filled.png"),
-                "Earth background color",
+                "Globe color",
                 "All base layers should be turned off or opacitized before the earth background is visible. "
                         + "Press the button to access the color picker directly or select one of the preset "
                         + "colors from the dropdown.");
