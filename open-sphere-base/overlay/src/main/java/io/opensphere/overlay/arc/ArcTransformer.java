@@ -185,7 +185,7 @@ public final class ArcTransformer extends DefaultTransformer
         myToolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(arcLengthIcon, "ArcLength Tool",
                 "To measure, click the map. As the cursor moves, a segment will be created that displays the current length "
                         + "and heading. Click a second time to end the first segment and start another. To finish measuring, "
-                        + "press the Enter or Spacebar key or double click");
+                        + "press the Enter or Spacebar key or double click.");
     }
 
     /**
