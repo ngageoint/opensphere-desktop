@@ -148,7 +148,7 @@ public class LayersFrame extends AbstractInternalFrame
         myLayerManagerTabbedPane.setShowIconsOnTab(true);
         myLayerManagerTabbedPane.setOpaque(false);
         myLayerManagerTabbedPane.setBackground(new Color(0, 0, 0, 0));
-        myLayerManagerTabbedPane.setTabShape(JideTabbedPane.SHAPE_ECLIPSE3X);
+        myLayerManagerTabbedPane.setTabShape(JideTabbedPane.SHAPE_DEFAULT);
         myLayerManagerTabbedPane.setTabPlacement(SwingConstants.TOP);
         myLayerManagerTabbedPane.addTab("Active", null, myActiveDataPanel, null);
         myLayerManagerTabbedPane.setSelectedIndex(0);
