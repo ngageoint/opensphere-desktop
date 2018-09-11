@@ -11,6 +11,8 @@ import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
 
@@ -152,6 +154,21 @@ public class LayersFrame extends AbstractInternalFrame
         myLayerManagerTabbedPane.setTabPlacement(SwingConstants.TOP);
         myLayerManagerTabbedPane.addTab("Active", null, myActiveDataPanel, null);
         myLayerManagerTabbedPane.setSelectedIndex(0);
+        myLayerManagerTabbedPane.setBackgroundAt(0, Color.BLACK);
+
+        myLayerManagerTabbedPane.addChangeListener(new ChangeListener()
+        {
+            int lastTab;
+
+            @Override
+            public void stateChanged(ChangeEvent e)
+            {
+                JideTabbedPane pane = (JideTabbedPane)e.getSource();
+                pane.setBackgroundAt(lastTab, new Color(0, 0, 0, 0));
+                pane.setBackgroundAt(pane.getSelectedIndex(), Color.BLACK);
+                lastTab = pane.getSelectedIndex();
+            }
+        });
 
         // Add this to the shared component registry.
         myToolbox.getUIRegistry().getSharedComponentRegistry().registerComponent("ControlPanels.LayerManager.tabbedPane",
