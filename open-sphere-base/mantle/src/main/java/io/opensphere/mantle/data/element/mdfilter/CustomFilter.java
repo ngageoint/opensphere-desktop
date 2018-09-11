@@ -61,6 +61,10 @@ public interface CustomFilter
      */
     boolean isActive();
 
+    boolean isFromState();
+
+    void setFromState(boolean isFromState);
+
     /**
      * Sets the active.
      *

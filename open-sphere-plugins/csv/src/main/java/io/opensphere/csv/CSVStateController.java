@@ -32,6 +32,7 @@ import io.opensphere.core.util.XMLUtilities;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.BooleanUtilities;
+import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.csv.config.v2.CSVDataSource;
 import io.opensphere.csvcommon.CSVStateConstants;
 import io.opensphere.csvcommon.config.v2.CSVColumnFormat;
@@ -92,7 +93,7 @@ public class CSVStateController extends AbstractLayerStateController<CSVDataSour
                             csvSource.setName(displayName);
                             csvSource.setActive(true);
                             csvSource.setTransient(true);
-                            csvSource.setFromStateSource(true);
+                            csvSource.setFromState(true);
 
                             myEnvoy.getCSVFileController().addSource(csvSource);
                             addResource(id, csvSource);
@@ -116,8 +117,8 @@ public class CSVStateController extends AbstractLayerStateController<CSVDataSour
         for (LayerType layer : csvLayers)
         {
             CSVDataSource csvSource = toDataSource(layer, id);
-            myEnvoy.getCSVFileController().getFileImporter().importSource(csvSource, Collections.emptySet(),
-                () -> addResource(id, csvSource));
+            ThreadUtilities.runBackground(() -> myEnvoy.getCSVFileController().getFileImporter().importSource(csvSource,
+                    Collections.emptySet(), () -> addResource(id, csvSource)));
         }
     }
 
@@ -167,7 +168,7 @@ public class CSVStateController extends AbstractLayerStateController<CSVDataSour
                 try
                 {
                     CSVDataSource csvSource = csvDTI.getFileSource().clone();
-                    csvSource.setFromStateSource(true);
+                    csvSource.setFromState(true);
                     csvSource.setVisible(csvDTI.isVisible());
                     XMLUtilities.marshalJAXBObjectToElement(csvSource, dataLayerNode,
                             JAXBContextHelper.getCachedContext(CSVDataSource.class.getPackage()));
@@ -256,7 +257,7 @@ public class CSVStateController extends AbstractLayerStateController<CSVDataSour
         dataSource.setActive(true);
         dataSource.setVisible(layer.isVisible());
         dataSource.setTransient(true);
-        dataSource.setFromStateSource(true);
+        dataSource.setFromState(true);
 //        dataSource.setSourceClassificationHeader(ch);
         dataSource.getLayerSettings().setColor(StateUtilities.parseColor(getColor(layer)));
         dataSource.getLayerSettings().setTimelineEnabled(BooleanUtilities.toBoolean(layer.isTemporal()));
@@ -371,7 +372,7 @@ public class CSVStateController extends AbstractLayerStateController<CSVDataSour
                 CSVDataTypeInfo csvDTI = (CSVDataTypeInfo)csvType;
                 if (!uniqueDataTypes.containsKey(csvDTI.getUrl()))
                 {
-                    if (csvDTI.getFileSource().isFromStateSource())
+                    if (csvDTI.getFileSource().isFromState())
                     {
                         String[] nameTok = csvDTI.getFileSource().getName().split("-\\(");
                         csvDTI.getFileSource().setName(nameTok[0]);
@@ -398,7 +399,7 @@ public class CSVStateController extends AbstractLayerStateController<CSVDataSour
                     if (info instanceof CSVDataTypeInfo)
                     {
                         CSVDataTypeInfo csvInfo = (CSVDataTypeInfo)info;
-                        if (!csvInfo.getFileSource().isFromStateSource())
+                        if (!csvInfo.getFileSource().isFromState())
                         {
                             return true;
                         }

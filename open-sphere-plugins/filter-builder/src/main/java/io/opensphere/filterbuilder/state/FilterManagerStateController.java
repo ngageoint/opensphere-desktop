@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import net.jcip.annotations.GuardedBy;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -68,6 +67,7 @@ import io.opensphere.mantle.data.element.mdfilter.OGCFilters;
 import io.opensphere.mantle.plugin.queryregion.QueryRegion;
 import io.opensphere.mantle.plugin.queryregion.QueryRegionManager;
 import io.opensphere.mantle.util.JTSGMLUtilities;
+import net.jcip.annotations.GuardedBy;
 import net.opengis.gml._311.AbstractGeometryType;
 import net.opengis.kml._220.BoundaryType;
 import net.opengis.kml._220.LinearRingType;
@@ -393,6 +393,7 @@ public class FilterManagerStateController extends AbstractModuleStateController
                     logicOps.setId(Integer.toHexString(filter.hashCode()));
                     logicOps.setTitle(filter.getName());
                     logicOps.setActive(filter.isActive());
+                    logicOps.setFromState(true);
                     logicOps.setUrlKey(filter.getSource().getTypeKey());
                     logicOps.setServerName(filter.getServerName());
                     ChoiceModel<Logical> comboOp = myController.getCombinationOperator(filter.getSource().getTypeKey());

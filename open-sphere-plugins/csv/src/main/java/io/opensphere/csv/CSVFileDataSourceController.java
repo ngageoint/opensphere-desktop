@@ -307,18 +307,21 @@ public class CSVFileDataSourceController extends AbstractDataSourceController
             MantleToolboxUtils.getMantleToolbox(getToolbox()).getDataGroupController().addRootDataGroupInfo(myMasterGroup, this);
             for (CSVDataSource source : myConfig.getCSVSourceList())
             {
-                DataTypeInfo dti = CSVTypeInfoGenerator.generateTypeInfo(getToolbox(), source, true, true);
-                source.setDataTypeInfo(dti);
-                String category = source.getName();
-                DefaultDataGroupInfo dgi = new DefaultDataGroupInfo(false, getToolbox(), "CSV", dti.getTypeKey(), category);
+                if (!source.isFromState())
+                {
+                    DataTypeInfo dti = CSVTypeInfoGenerator.generateTypeInfo(getToolbox(), source, true, true);
+                    source.setDataTypeInfo(dti);
+                    String category = source.getName();
+                    DefaultDataGroupInfo dgi = new DefaultDataGroupInfo(false, getToolbox(), "CSV", dti.getTypeKey(), category);
 
-                myOrderManager.activateParticipant(dti);
+                    myOrderManager.activateParticipant(dti);
 
-                source.setDataGroupInfo(dgi);
-                dgi.setAssistant(myCSVDataGroupInfoAssistant);
-                dgi.activationProperty().addListener(myActivationListener);
-                dgi.addMember(dti, this);
-                myMasterGroup.addChild(dgi, this);
+                    source.setDataGroupInfo(dgi);
+                    dgi.setAssistant(myCSVDataGroupInfoAssistant);
+                    dgi.activationProperty().addListener(myActivationListener);
+                    dgi.addMember(dti, this);
+                    myMasterGroup.addChild(dgi, this);
+                }
             }
         }
         finally
