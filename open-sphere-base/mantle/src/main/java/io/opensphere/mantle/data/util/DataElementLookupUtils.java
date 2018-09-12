@@ -143,7 +143,8 @@ public interface DataElementLookupUtils
      *             retrieved.
      */
     List<DataElement> getDataElements(List<Long> dataElementIds, DataTypeInfo dtiHint, String dataTypeInfoKeyHint,
-            boolean ignoreMapGeometrySupport) throws DataElementLookupException;
+            boolean ignoreMapGeometrySupport)
+        throws DataElementLookupException;
 
     /**
      * Gets all data elements for the given data type.
@@ -222,6 +223,33 @@ public interface DataElementLookupUtils
             boolean ignoreMapGeometrySupport);
 
     /**
+     * Retrieves all the parts of a MapDataElement and reconstitutes them into
+     * an actual MapDataElement. The dtiHint and dataTypeInfoKeyHint can help
+     * prevent multiple queries from running against the data model. They are
+     * used in the dtiHint first, then the dataTypeInfoKeyHint second. If
+     * neither hint is provided then they will be queried first so that the
+     * remainder of the element can be retrieved and reformed.
+     *
+     * @param dataElementIds the internal registry ids of the elements to
+     *            retrieve.
+     * @param dtiHint the {@link DataTypeInfo} for the point if known ( null if
+     *            not known is okay )
+     * @param dataTypeInfoKeyHint the key for the DataTypeInfo if known ( null
+     *            if not known is okay )
+     * @param ignoreMapGeometrySupport the ignore map data elements map geometry
+     *            support ( don't get the extra MGS parts )
+     * @return the map data elements.
+     * @throws DataElementLookupException if the dtiHint or dataTypeInfoKeyHint
+     *             are the wrong type for any of the ids provided, or if the
+     *             types retrieved are of different data types, or if the data
+     *             type cannot be determined, or if all the ids cannot be
+     *             retrieved.
+     */
+    List<MapDataElement> getMapDataElements(List<Long> dataElementIds, DataTypeInfo dtiHint, String dataTypeInfoKeyHint,
+            boolean ignoreMapGeometrySupport)
+        throws DataElementLookupException;
+
+    /**
      * Gets the MapGeometrySupport for given list DataElements.
      *
      * @param dataElementIds the internal registry ids of the elements
@@ -288,7 +316,8 @@ public interface DataElementLookupUtils
      *             type or if the keyName is invalid.
      */
     List<Object> getMetaDataPropertyValues(List<Long> dataElementIds, String keyName, DataTypeInfo dtiHint,
-            String dataTypeInfoKeyHint) throws DataElementLookupException;
+            String dataTypeInfoKeyHint)
+        throws DataElementLookupException;
 
     /**
      * Gets a MetaDataProvider for a given DataElement.

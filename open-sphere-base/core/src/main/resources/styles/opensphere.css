@@ -26,6 +26,18 @@
     -fx-text-fill: linear-gradient(to bottom, derive(-opensphere-dark, 20%) 10%, derive(-opensphere-dark, -40%) 80%);
 }
 
+.icons-Font-Awesome-5-Free-Solid {
+    -fx-font-family: "Font Awesome 5 Free Solid";
+}
+
+.icons-Font-Awesome-5-Free-Regular {
+    -fx-font-family: "Font Awesome 5 Free Regular";
+}
+
+.icons-Font-Awesome-5-Brands-Regular {
+    -fx-font-family: "Font Awesome 5 Brands Regular";
+}
+
 .icons-FontAwesome {
     -fx-font-family: FontAwesome;
 }

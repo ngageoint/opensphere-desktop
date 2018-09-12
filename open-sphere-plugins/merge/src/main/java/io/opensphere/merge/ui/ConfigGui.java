@@ -362,7 +362,7 @@ public class ConfigGui
             JoinGui gui = new JoinGui();
             JFXDialog edDialog = GuiUtil.okCancelDialog(myDialog, "Edit Join");
             edDialog.setFxNode(GuiUtil.vScroll(gui.getMainPane()));
-            edDialog.setAcceptEar(() -> acceptJoinEdits(gui.getModel()));
+            edDialog.setAcceptListener(() -> acceptJoinEdits(gui.getModel()));
             edDialog.setSize(new Dimension(450, 450));
             gui.setup(myToolbox, edDialog);
             gui.setData(myItem.getJoin());

@@ -1,7 +1,6 @@
 package io.opensphere.core.geometry.util;
 
 import java.util.Collection;
-import java.util.List;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.MultiPoint;
@@ -9,8 +8,6 @@ import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.impl.CoordinateArraySequence;
 
 import io.opensphere.core.geometry.PointGeometry;
-import io.opensphere.core.model.Position;
-import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.jts.JTSUtilities;
 
 /**
@@ -35,22 +32,9 @@ public final class PointGeometryUtils
      */
     public static MultiPoint convertToMultiPoint(Collection<PointGeometry> points)
     {
-        Point[] convertedPoints = new Point[points.size()];
-        for (PointGeometry pointGeometry : points)
-        {
-            pointGeometry.getPosition().asVector3d();
-            pointGeometry.getPosition();
-        }
-
-        List<Position> positions = New.list(points.size());
-        points.forEach(pg -> positions.add(pg.getPosition()));
-        Coordinate[] coordinates = JTSUtilities.generateCoords(positions);
-
-        for (int i = 0; i < coordinates.length; i++)
-        {
-            convertedPoints[i] = new Point(new CoordinateArraySequence(new Coordinate[] { coordinates[i] }),
-                    JTSUtilities.GEOMETRY_FACTORY);
-        }
+        Point[] convertedPoints = points.stream().map(p -> JTSUtilities.generateCoordinate(p.getPosition()))
+                .map(c -> new Point(new CoordinateArraySequence(new Coordinate[] { c }), JTSUtilities.GEOMETRY_FACTORY))
+                .toArray(Point[]::new);
 
         return new MultiPoint(convertedPoints, JTSUtilities.GEOMETRY_FACTORY);
     }

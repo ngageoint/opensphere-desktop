@@ -178,7 +178,7 @@ public class FeatureActionTitledPaneBinder
                     JFrame parent = myUiRegistry.getMainFrameProvider().get();
                     JFXDialog dialog = new JFXDialog(parent, "Delete Group?", () -> new Label(message));
                     dialog.setLocationRelativeTo(parent);
-                    dialog.setAcceptEar(() -> myMainModel.getFeatureGroups().remove(myGroup));
+                    dialog.setAcceptListener(() -> myMainModel.getFeatureGroups().remove(myGroup));
                     dialog.setModal(true);
                     dialog.setSize(new Dimension(320, 120));
                     dialog.setVisible(true);

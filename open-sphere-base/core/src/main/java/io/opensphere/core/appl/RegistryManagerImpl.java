@@ -16,6 +16,7 @@ import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.control.ui.impl.UIRegistryImpl;
 import io.opensphere.core.data.DataRegistryImpl;
 import io.opensphere.core.datafilter.impl.DataFilterRegistryImpl;
+import io.opensphere.core.geometry.GeometryRegistry;
 import io.opensphere.core.geometry.GeometryRegistryImpl;
 import io.opensphere.core.hud.awt.HUDFrame;
 import io.opensphere.core.hud.awt.HUDJInternalFrame;
@@ -50,7 +51,7 @@ public class RegistryManagerImpl
     private final GenericRegistry<Envoy> myEnvoyRegistry;
 
     /** The geometry registry. */
-    private final GeometryRegistryImpl myGeometryRegistry;
+    private final GeometryRegistry myGeometryRegistry;
 
     /** The importer registry. */
     private final ImporterRegistryImpl myImporterRegistry;
@@ -194,7 +195,7 @@ public class RegistryManagerImpl
      *
      * @return The geometry registry.
      */
-    public GeometryRegistryImpl getGeometryRegistry()
+    public GeometryRegistry getGeometryRegistry()
     {
         return myGeometryRegistry;
     }

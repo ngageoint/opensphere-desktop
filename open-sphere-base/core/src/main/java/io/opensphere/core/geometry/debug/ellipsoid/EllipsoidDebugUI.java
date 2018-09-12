@@ -59,7 +59,7 @@ public class EllipsoidDebugUI extends GridPane
         dialog.setResizable(true);
         dialog.setLocationRelativeTo(toolbox.getUIRegistry().getMainFrameProvider().get());
         dialog.setModal(false);
-        dialog.setAcceptEar(controller);
+        dialog.setAcceptListener(controller);
         dialog.setVisible(true);
     }
 
