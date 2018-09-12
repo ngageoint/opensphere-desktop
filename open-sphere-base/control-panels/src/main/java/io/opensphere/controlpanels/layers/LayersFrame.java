@@ -150,11 +150,12 @@ public class LayersFrame extends AbstractInternalFrame
         myLayerManagerTabbedPane.setShowIconsOnTab(true);
         myLayerManagerTabbedPane.setOpaque(false);
         myLayerManagerTabbedPane.setBackground(new Color(0, 0, 0, 0));
-        myLayerManagerTabbedPane.setTabShape(JideTabbedPane.SHAPE_DEFAULT);
+        myLayerManagerTabbedPane.setTabShape(JideTabbedPane.SHAPE_ROUNDED_VSNET);
         myLayerManagerTabbedPane.setTabPlacement(SwingConstants.TOP);
         myLayerManagerTabbedPane.addTab("Active", null, myActiveDataPanel, null);
         myLayerManagerTabbedPane.setSelectedIndex(0);
-        myLayerManagerTabbedPane.setBackgroundAt(0, Color.BLACK);
+        myLayerManagerTabbedPane.setBackgroundAt(0, new Color(141, 132, 189, 255));
+        myLayerManagerTabbedPane.setForeground(Color.WHITE);
 
         myLayerManagerTabbedPane.addChangeListener(new ChangeListener()
         {
@@ -165,8 +166,8 @@ public class LayersFrame extends AbstractInternalFrame
             {
                 JideTabbedPane pane = (JideTabbedPane)e.getSource();
                 pane.setBackgroundAt(lastTab, new Color(0, 0, 0, 0));
-                pane.setBackgroundAt(pane.getSelectedIndex(), Color.BLACK);
                 lastTab = pane.getSelectedIndex();
+                pane.setBackgroundAt(lastTab, new Color(141, 132, 189, 255));
             }
         });
 
