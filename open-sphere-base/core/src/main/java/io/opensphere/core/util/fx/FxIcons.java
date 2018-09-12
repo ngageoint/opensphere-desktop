@@ -106,6 +106,7 @@ public final class FxIcons
     {
         Label label = new Label(pIcon.getFontCode());
         label.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+        String fontName = "icons-" + pIcon.getFont().getFontName();
         label.getStyleClass().addAll("icons", "icons-" + pIcon.getFont().getFontName());
         label.setStyle("-fx-font-size: " + pSize + "px;");
         return label;
@@ -125,8 +126,11 @@ public final class FxIcons
         Label label = new Label(icon.getFontCode());
         label.setTextFill(color);
         label.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
-        label.getStyleClass().addAll("icons", "icons-" + icon.getFont().getFontName());
-        label.setStyle("-fx-font-size: " + size + "px;");
+        String fontName = "icons-" + icon.getFont().getFontName().replaceAll("\\s", "-");
+        label.getStyleClass().addAll("icons", fontName);
+        String style = "-fx-font-size: " + size + "px; -fx-text-fill: rgb(" + (int)(color.getRed() * 255) + ","
+                + (int)(color.getGreen() * 255) + "," + (int)(color.getBlue() * 255) + ");";
+        label.setStyle(style);
 
         return label;
     }

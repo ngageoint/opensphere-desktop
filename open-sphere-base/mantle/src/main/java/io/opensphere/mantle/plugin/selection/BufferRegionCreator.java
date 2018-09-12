@@ -32,7 +32,7 @@ public class BufferRegionCreator
     /**
      * The Constant DEFAULT_BUFFER_DISTANCE.
      */
-    private static final Length DEFAULT_BUFFER_DISTANCE = Length.create(Kilometers.class, 5.0);
+    public static final Length DEFAULT_BUFFER_DISTANCE = Length.create(Kilometers.class, 5.0);
 
     /**
      * The toolbox.
@@ -106,7 +106,7 @@ public class BufferRegionCreator
      *
      * @param pLength the buffer distance supplied by the editor.
      */
-    private void handleBufferEdit(Length pLength)
+    public void handleBufferEdit(Length pLength)
     {
         if (isLengthValid(pLength))
         {
@@ -182,7 +182,7 @@ public class BufferRegionCreator
     /**
      * Destroy preview.
      */
-    private void destroyPreview()
+    protected void destroyPreview()
     {
         if (myPreviewGeometry != null)
         {

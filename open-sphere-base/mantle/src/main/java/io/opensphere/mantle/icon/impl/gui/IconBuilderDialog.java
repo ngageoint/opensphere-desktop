@@ -52,7 +52,7 @@ public class IconBuilderDialog extends JFXDialog
         setMinimumSize(new Dimension(450, 600));
 
         setLocationRelativeTo(owner);
-        setAcceptEar(() -> saveImage(pane.getFinalImage(), pane.getImageName()));
+        setAcceptListener(() -> saveImage(pane.getFinalImage(), pane.getImageName()));
     }
 
     /**

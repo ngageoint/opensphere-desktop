@@ -14,6 +14,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.MultiLineString;
+import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.PrecisionModel;
 
@@ -694,6 +695,28 @@ public final class JTSUtilities
         }
         return result == null ? null
                 : GEOMETRY_FACTORY.getCoordinateSequenceFactory().create(New.array(result, Coordinate.class));
+    }
+
+    /**
+     * Confines the child polygons' longitude to the interval [-180, 180).
+     * 
+     * @param p the polygon to confine.
+     * @return a polygon confined to the designated interval.
+     */
+    public static MultiPolygon cutLon180(MultiPolygon p)
+    {
+        if (p == null)
+        {
+            return null;
+        }
+        List<Polygon> confinedChildren = New.list();
+
+        for (int i = 0; i < p.getNumGeometries(); i++)
+        {
+            confinedChildren.add(cutLon180((Polygon)p.getGeometryN(i)));
+        }
+
+        return GEOMETRY_FACTORY.createMultiPolygon(confinedChildren.stream().toArray(Polygon[]::new));
     }
 
     /**

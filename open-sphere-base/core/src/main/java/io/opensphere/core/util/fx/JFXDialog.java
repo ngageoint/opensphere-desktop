@@ -30,7 +30,10 @@ public class JFXDialog extends JDialog
     private ButtonPaneNew myButtonPane;
 
     /** Attach to the button bar for handling acceptance events. */
-    private Runnable acceptEar;
+    private Runnable myAcceptListener;
+
+    /** Attach to the button bar for handling reject events. */
+    private Runnable myRejectListener;
 
     /** The root GUI node. */
 //    @ThreadConfined("JavaFX")
@@ -165,6 +168,7 @@ public class JFXDialog extends JDialog
             @Override
             public void accept()
             {
+                /* intentionally blank */
             }
         });
     }
@@ -174,12 +178,27 @@ public class JFXDialog extends JDialog
      *
      * @param r a simple callback
      */
-    public void setAcceptEar(Runnable r)
+    public void setAcceptListener(Runnable r)
     {
-        acceptEar = r;
+        myAcceptListener = r;
         if (myButtonPane != null)
         {
-            myButtonPane.setAcceptEar(acceptEar);
+            myButtonPane.setAcceptListener(myAcceptListener);
+        }
+    }
+
+    /**
+     * Sets the value of the {@link #myRejectListener} field.
+     *
+     * @param rejectListener the value to store in the {@link #myRejectListener}
+     *            field.
+     */
+    public void setRejectListener(Runnable rejectListener)
+    {
+        myRejectListener = rejectListener;
+        if (myButtonPane != null)
+        {
+            myButtonPane.setRejectListener(myRejectListener);
         }
     }
 
@@ -269,7 +288,8 @@ public class JFXDialog extends JDialog
             myButtonPane = new ButtonPaneNew(OpenSphereButtonBar.okay(), guiNode, guiEditor);
         }
         myButtonPane.addButtonClickListener(this::handleButtonClick);
-        myButtonPane.setAcceptEar(acceptEar);
+        myButtonPane.setAcceptListener(myAcceptListener);
+        myButtonPane.setRejectListener(myRejectListener);
         return FXUtilities.addDesktopStyle(new Scene(myButtonPane));
     }
 
