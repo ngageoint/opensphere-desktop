@@ -93,7 +93,7 @@ public final class JTSCoreGeometryUtilities
     /**
      * Converts the supplied {@link PointGeometry} to an instance of the JTS
      * {@link Point} class.
-     * 
+     *
      * @param geometry the geometry to convert.
      * @return a JTS Point instance generated from the supplied geometry.
      */
@@ -167,9 +167,15 @@ public final class JTSCoreGeometryUtilities
     }
 
     /**
-     * @param bufferPolygon
-     * @param polyProps
-     * @return
+     * Converts the supplied {@link MultiPolygon} to a
+     * {@link GeometryGroupGeometry}.
+     *
+     * @param multiPolygon the multipolygon to convert.
+     * @param polyProps the properties to apply to converted children of the
+     *            supplied polygon.
+     * @param groupProperties the properties the new
+     *            {@link GeometryGroupGeometry}.
+     * @return a group geometry generated from the supplied multipolygon.
      */
     private static GeometryGroupGeometry convertToMultiPolygonGeometry(MultiPolygon multiPolygon,
             PolygonRenderProperties polyProps, ZOrderRenderProperties groupProperties)
