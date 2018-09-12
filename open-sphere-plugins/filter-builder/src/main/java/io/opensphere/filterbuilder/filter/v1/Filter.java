@@ -11,7 +11,6 @@ import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import net.jcip.annotations.GuardedBy;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -25,6 +24,7 @@ import io.opensphere.filterbuilder.FilterBuilderPlugin;
 import io.opensphere.filterbuilder.filter.FilterComponentEvent;
 import io.opensphere.filterbuilder.filter.FilterComponentListener;
 import io.opensphere.mantle.data.DataTypeInfo;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Filter: an object to represent a data filter. Used by the {@link FilterBuilderPlugin} plugin.
@@ -41,6 +41,9 @@ public class Filter extends FilterItem implements DataFilter, Comparable<Filter>
     /** The active flag. */
     @XmlAttribute(name = "active", required = true)
     private boolean myActive;
+
+    @XmlAttribute(name = "fromState")
+    private boolean myIsFromState;
 
     /** The columns used in the creation of the filter. */
     @SuppressWarnings("PMD.LooseCoupling")
@@ -252,6 +255,7 @@ public class Filter extends FilterItem implements DataFilter, Comparable<Filter>
     {
         Filter f = new Filter();
         f.myActive = myActive;
+        f.myIsFromState = myIsFromState;
         f.myName = myName;
         f.myFilterDescription = myFilterDescription;
         f.myFilterCount = myFilterCount;
@@ -641,5 +645,15 @@ public class Filter extends FilterItem implements DataFilter, Comparable<Filter>
     {
         myGroup.setFilterComponentListener(this);
         myFilterChangeListeners = new ArrayList<>();
+    }
+
+    public boolean isFromState()
+    {
+        return myIsFromState;
+    }
+
+    public void setFromState(boolean isFromState)
+    {
+        myIsFromState = isFromState;
     }
 }

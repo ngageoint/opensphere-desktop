@@ -162,6 +162,7 @@ public class FilterManagerStateController extends AbstractModuleStateController
                                 continue;
                             }
                             dataFilter = convertFilter(id, filter, filterDti);
+                            dataFilter.setFromState(true);
                             myFilterRegistry.registerFilter(id + "!!" + filter.getFilterId(), dataFilter);
                             filtersForState.add(filter);
                         }
@@ -228,6 +229,7 @@ public class FilterManagerStateController extends AbstractModuleStateController
 
                         if (dataFilter.isActive())
                         {
+                            dataFilter.setFromState(true);
                             myController.setCombinationOperator(dataFilter.getSource().getTypeKey(),
                                     DataFilterOperators.Logical.valueOf(dataFilter.getMatch().toUpperCase()));
                             myController.addFilter(dataFilter);
@@ -385,6 +387,7 @@ public class FilterManagerStateController extends AbstractModuleStateController
         {
             if (filter.isActive())
             {
+                filter.setFromState(true);
                 myActiveFilters.add(filter);
                 try
                 {

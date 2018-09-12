@@ -321,7 +321,7 @@ public class FilterBuilderControllerImpl implements FilterBuilderController
             {
                 for (CustomFilter filter : importFilters)
                 {
-                    if (filter instanceof CustomBinaryLogicOpType)
+                    if (filter instanceof CustomBinaryLogicOpType && !filter.isFromState())
                     {
                         // Fill in server name as website doesn't fill it in
                         if (filter.getServerName() == null)
@@ -622,21 +622,24 @@ public class FilterBuilderControllerImpl implements FilterBuilderController
             {
                 for (Filter f : filters)
                 {
-                    // Make sure the native type is included among the
-                    // supported types--old files may not include it in the
-                    // list, as it is implicitly supported.
-                    Source nativeSource = f.getSource();
-                    nativeSource.setActive(f.isActive());
-                    String nativeType = nativeSource.getTypeKey();
-                    boolean found = f.getOtherSources().stream().anyMatch(s -> s.getTypeKey().equals(nativeType));
-                    if (!found)
+                    if (!f.isFromState())
                     {
-                        f.getOtherSources().add(nativeSource);
-                    }
+                        // Make sure the native type is included among the
+                        // supported types--old files may not include it in the
+                        // list, as it is implicitly supported.
+                        Source nativeSource = f.getSource();
+                        nativeSource.setActive(f.isActive());
+                        String nativeType = nativeSource.getTypeKey();
+                        boolean found = f.getOtherSources().stream().anyMatch(s -> s.getTypeKey().equals(nativeType));
+                        if (!found)
+                        {
+                            f.getOtherSources().add(nativeSource);
+                        }
 
-                    // GCD: setting the group name is probably unnecessary
-                    f.getFilterGroup().setName(f.getName());
-                    addFilter(f);
+                        // GCD: setting the group name is probably unnecessary
+                        f.getFilterGroup().setName(f.getName());
+                        addFilter(f);
+                    }
                 }
             }
         }
@@ -666,41 +669,46 @@ public class FilterBuilderControllerImpl implements FilterBuilderController
     {
         if (!filter.isVirtual())
         {
+            myFilters.remove(filter);
             LOGGER.warn("removed a prototype!");
-            return;
-        }
-        String typeKey = filter.getTypeKey();
-        Filter par = filter.getParent();
-        if (par.getOtherSources().size() == 1)
-        {
-            // if the prototype has only one supported type, deleting support
-            // for that one type causes the prototype to be deleted
-            myFilters.remove(par);
-        }
-        else if (!par.getTypeKey().equals(typeKey))
-        {
-            // if support is removed for a type other than the prototype's
-            // native type, just take the Source out of its support list
-            filter.removeFromParent();
         }
         else
         {
-            // if support for the prototype's native type is removed, then
-            // another prototype will have to be created
-            String altType = par.getOtherSources().stream().map(s -> s.getTypeKey()).filter(t -> !t.equals(typeKey)).findAny()
-                    .get();
-            // altType cannot be null--more than one type must be present
-            Filter copy = myCopier.copyFilter(par, altType);
-            copy.getOtherSources().removeIf(s -> s.getTypeKey().equals(par.getTypeKey()));
-            myFilters.remove(par);
-            myFilters.add(copy);
-        }
+            String typeKey = filter.getTypeKey();
+            Filter par = filter.getParent();
+            if (par.getOtherSources().size() == 1)
+            {
+                // if the prototype has only one supported type, deleting
+                // support
+                // for that one type causes the prototype to be deleted
+                myFilters.remove(par);
+            }
+            else if (!par.getTypeKey().equals(typeKey))
+            {
+                // if support is removed for a type other than the prototype's
+                // native type, just take the Source out of its support list
+                filter.removeFromParent();
+            }
+            else
+            {
+                // if support for the prototype's native type is removed, then
+                // another prototype will have to be created
+                String altType = par.getOtherSources().stream().map(s -> s.getTypeKey()).filter(t -> !t.equals(typeKey)).findAny()
+                        .get();
+                // altType cannot be null--more than one type must be present
+                Filter copy = myCopier.copyFilter(par, altType);
+                copy.getOtherSources().removeIf(s -> s.getTypeKey().equals(par.getTypeKey()));
+                myFilters.remove(par);
+                myFilters.add(copy);
+            }
 
-        // if the filter was active on the type for which support was removed,
-        // reconstruct the active filtering mechanism
-        if (filter.isActive())
-        {
-            updateActiveFilter(typeKey);
+            // if the filter was active on the type for which support was
+            // removed,
+            // reconstruct the active filtering mechanism
+            if (filter.isActive())
+            {
+                updateActiveFilter(typeKey);
+            }
         }
 
         filter.removeFilterChangeListener(myIndividualFilterChangeListener);

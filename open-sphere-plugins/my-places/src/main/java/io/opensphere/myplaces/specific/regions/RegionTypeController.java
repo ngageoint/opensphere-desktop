@@ -193,10 +193,10 @@ public class RegionTypeController extends PlaceTypeController
         public List<JMenuItem> getMenuItems(String contextId, GeometryContextKey key)
         {
             List<JMenuItem> options = new LinkedList<>();
-            if ((ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT.equals(contextId)
-                    || ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT.equals(contextId)))
+            if (ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT.equals(contextId)
+                    || ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT.equals(contextId))
             {
-                JMenuItem saveMI = new JMenuItem("Save as Area");
+                JMenuItem saveMI = new JMenuItem("Save as Place");
                 if (key.getGeometry() instanceof PolygonGeometry)
                 {
                     saveMI.addActionListener(e -> createRegionFromGeometry((PolygonGeometry)key.getGeometry()));
