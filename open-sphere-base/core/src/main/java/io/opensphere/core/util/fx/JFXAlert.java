@@ -268,7 +268,7 @@ public class JFXAlert extends JDialog
 
     /**
      * Gets the node corresponding to the supplied button type, if defined.
-     * 
+     *
      * @param buttonType the button type for which to get the node.
      * @return the node for the supplied button type, if present,
      *         <code>null</code> otherwise.
@@ -366,8 +366,11 @@ public class JFXAlert extends JDialog
         setLocationRelativeTo(getOwner());
         setVisible(true);
 
-        myMainPanel.setScene(null);
-        EventQueue.invokeLater(() -> dispose());
+        EventQueue.invokeLater(() ->
+        {
+            myMainPanel.setScene(null);
+            dispose();
+        });
         return Optional.ofNullable(myResponse);
     }
 
