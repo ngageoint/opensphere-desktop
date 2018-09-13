@@ -45,6 +45,10 @@ public class LayerActivator
         {
             System.out.println("No data groups to activate");
         }
+        else
+        {
+            System.out.println("Activating - " + dataGroups);
+        }
 
         for (DataGroupInfo dataGroup : dataGroups)
         {

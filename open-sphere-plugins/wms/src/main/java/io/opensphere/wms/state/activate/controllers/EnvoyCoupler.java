@@ -60,6 +60,7 @@ public class EnvoyCoupler
     {
         myWmsPlugin = wmsPlugin;
         myEnvoyRegistry = envoyRegistry;
+        LOGGER.info("REGISTRY for wms - " + myEnvoyRegistry.getObjects());
         myDataController = dataController;
     }
 
@@ -79,6 +80,8 @@ public class EnvoyCoupler
 
         for (WMSLayerState state : states)
         {
+            LOGGER.info("Getting related envoys for WMS Layer State - " + state.getUrl());
+
             WMSEnvoy envoy = serversAndEnvoys.get(state.getUrl());
 
             if (envoy != null)
@@ -112,6 +115,7 @@ public class EnvoyCoupler
             }
             else
             {
+                LOGGER.info("Null envoy for state - " + state.getUrl());
                 notLoadedServers.add(state.getUrl());
             }
         }
@@ -135,6 +139,9 @@ public class EnvoyCoupler
         Map<String, WMSEnvoy> serversAndEnvoys = New.map();
 
         Collection<Envoy> envoys = myEnvoyRegistry.getObjectsForSource(myWmsPlugin);
+
+        LOGGER.info("server envoys - " + envoys);
+
         for (Envoy envoy : envoys)
         {
             if (envoy instanceof WMSEnvoy)

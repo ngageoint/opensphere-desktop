@@ -10,8 +10,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import net.jcip.annotations.GuardedBy;
-
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.event.ApplicationLifecycleEvent;
 import io.opensphere.core.event.ApplicationLifecycleEvent.Stage;
@@ -21,6 +19,7 @@ import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.server.toolbox.ServerSourceController;
 import io.opensphere.server.toolbox.ServerSourceControllerManager;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Implementation of {@link ServerSourceControllerManager} interface. Builds a
@@ -185,6 +184,7 @@ public class ServerSourceControllerManagerImpl implements ServerSourceController
 
             if (add)
             {
+                System.out.println("Adding server source controller: " + controller);
                 controllers.add(controller);
             }
         }
@@ -233,6 +233,7 @@ public class ServerSourceControllerManagerImpl implements ServerSourceController
     {
         if (event.getStage() == Stage.PLUGINS_INITIALIZED)
         {
+            System.out.println("ServerSourceControllerMangerImpl controllers initializing");
             myPluginExecutor.execute(this::initializeControllers);
         }
     }

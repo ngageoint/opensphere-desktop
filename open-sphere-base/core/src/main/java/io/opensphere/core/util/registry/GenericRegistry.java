@@ -103,6 +103,8 @@ public class GenericRegistry<E> extends DefaultGenericPublisher<E> implements Ge
     {
         Collection<E> result;
         Set<E> set;
+        System.out.println("Objects in registry for source " + source.getClass() + ": " + mySourceToObjectMap);
+
         synchronized (mySourceToObjectMap)
         {
             set = mySourceToObjectMap.get(source);

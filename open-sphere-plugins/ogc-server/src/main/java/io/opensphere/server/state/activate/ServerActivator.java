@@ -84,6 +84,8 @@ public class ServerActivator implements EventListener<ServerConfigEvent>
                     servers = serverSource.getServersInNode((StateType)object);
                 }
 
+                System.out.println("servers to activate: " + servers);
+
                 if (!servers.isEmpty())
                 {
                     ServerSourceFilterer filterer = stateController.getServerSourceFilterer();
@@ -93,6 +95,8 @@ public class ServerActivator implements EventListener<ServerConfigEvent>
                     List<IDataSource> nonActiveServers = filterer.getNonActiveServers(servers);
 
                     List<IDataSource> nonAddedServers = filterer.getNonAddedServers(servers);
+
+                    System.out.println("Need to add then activate: " + nonAddedServers + " " + nonActiveServers);
 
                     addThenActivate(controller, nonAddedServers, nonActiveServers);
                 }

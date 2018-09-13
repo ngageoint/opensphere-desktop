@@ -280,6 +280,8 @@ public class WMSPlugin extends PluginAdapter
      */
     protected WMSGetCapabilitiesEnvoy findEnvoy(String id)
     {
+        LOGGER.info("Finding envoy for WMS now " + id);
+
         WMSGetCapabilitiesEnvoy returnEnvoy = null;
         for (Envoy envoy : myEnvoys)
         {
