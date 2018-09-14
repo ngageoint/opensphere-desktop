@@ -80,17 +80,8 @@ public class DefaultCustomization implements ServerCustomization
             throw new IllegalArgumentException("Non-unit durations are not supported: " + dur);
         }
 
-        String formatString = "";
         SimpleDateFormat format = getFormat(dur.getClass());
-        if (dur instanceof Weeks)
-        {
-            formatString = StringUtilities.concat(format.format(span.getStartDate()), "/", format.format(span.getEndDate()));
-        }
-        else
-        {
-            formatString = format.format(span.getStartDate());
-        }
-        return formatString;
+        return StringUtilities.concat(format.format(span.getStartDate()), "/", format.format(span.getEndDate()));
     }
 
     @Override
