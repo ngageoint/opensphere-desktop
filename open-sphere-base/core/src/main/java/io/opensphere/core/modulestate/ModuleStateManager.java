@@ -73,14 +73,6 @@ public interface ModuleStateManager
     Collection<String> getRegisteredStateIds();
 
     /**
-     * Gets the state itself.
-     *
-     * @param state The name of the state.
-     * @return The state.
-     */
-    StateType getState(String state);
-
-    /**
      * Gets the state dependencies for a set of modules.
      *
      * @param modules the modules
