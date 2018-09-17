@@ -40,16 +40,6 @@ public class LayerActivator
     {
         List<DataGroupInfo> toActivate = New.list();
         List<DataGroupInfo> toReactivate = New.list();
-
-        if (dataGroups.isEmpty())
-        {
-            System.out.println("No data groups to activate");
-        }
-        else
-        {
-            System.out.println("Activating - " + dataGroups);
-        }
-
         for (DataGroupInfo dataGroup : dataGroups)
         {
             if (!isDataLayers || dataGroup.getMembers(false).size() >= 2)

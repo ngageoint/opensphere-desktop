@@ -34,6 +34,7 @@ public class CustomBinaryLogicOpType extends BinaryLogicOpType implements Custom
     @XmlAttribute(name = "active", required = false)
     private boolean myIsActive;
 
+    /** If the filter is from a state. */
     @XmlAttribute(name = "fromState")
     private boolean myIsFromState;
 

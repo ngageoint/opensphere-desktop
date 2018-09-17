@@ -42,6 +42,7 @@ public class Filter extends FilterItem implements DataFilter, Comparable<Filter>
     @XmlAttribute(name = "active", required = true)
     private boolean myActive;
 
+    /** If the filter is from a state. */
     @XmlAttribute(name = "fromState")
     private boolean myIsFromState;
 
@@ -480,6 +481,12 @@ public class Filter extends FilterItem implements DataFilter, Comparable<Filter>
         return myActive;
     }
 
+    @Override
+    public boolean isFromState()
+    {
+        return myIsFromState;
+    }
+
     /**
      * Checks to see if the filter is a valid filter. In order for the filter to be valid its main {@link Group} must be valid.
      *
@@ -532,6 +539,16 @@ public class Filter extends FilterItem implements DataFilter, Comparable<Filter>
             myActive = active;
             fireFilterChangeEvent(new FilterChangeEvent(this, pSource, FilterChangeEvent.ACTIVE_STATE));
         }
+    }
+
+    /**
+     * Sets if the filter is from a state.
+     *
+     * @param isFromState if the filter is from a state
+     */
+    public void setFromState(boolean isFromState)
+    {
+        myIsFromState = isFromState;
     }
 
     /**
@@ -645,15 +662,5 @@ public class Filter extends FilterItem implements DataFilter, Comparable<Filter>
     {
         myGroup.setFilterComponentListener(this);
         myFilterChangeListeners = new ArrayList<>();
-    }
-
-    public boolean isFromState()
-    {
-        return myIsFromState;
-    }
-
-    public void setFromState(boolean isFromState)
-    {
-        myIsFromState = isFromState;
     }
 }

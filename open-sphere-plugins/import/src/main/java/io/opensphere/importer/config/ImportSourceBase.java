@@ -132,11 +132,11 @@ public abstract class ImportSourceBase extends AbstractDataSource implements Clo
     /**
      * Marks this source as one that is associated with a saved state.
      *
-     * @param fromStateSource the new from state source
+     * @param isFromState the new from state source
      */
-    public void setFromState(boolean fromStateSource)
+    public void setFromState(boolean isFromState)
     {
-        myIsFromState = fromStateSource;
+        myIsFromState = isFromState;
     }
 
     /**

@@ -80,4 +80,11 @@ public interface DataFilter extends DataFilterItem
      * @return true, if is active
      */
     boolean isActive();
+
+    /**
+     * True if this is from a state.
+     *
+     * @return true, if is from a state
+     */
+    boolean isFromState();
 }

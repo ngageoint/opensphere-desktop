@@ -138,8 +138,6 @@ public class StateActivator
             Collection<? extends WMSLayerState> states)
         throws InterruptedException
     {
-        System.out.println("Activate states - " + stateId + " " + states);
-
         List<WMSEnvoyAndState> envoyAndStates = myEnvoyCoupler.retrieveRelatedEnvoys(states);
         List<WMSEnvoyAndLayerEnvoy> envoys = myLayerBuilder.buildLayers(envoyAndStates, stateId, tags);
         List<DataGroupInfo> groups = StreamUtilities.map(envoys,
