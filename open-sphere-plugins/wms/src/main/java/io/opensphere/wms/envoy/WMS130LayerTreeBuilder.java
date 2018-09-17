@@ -263,7 +263,7 @@ public class WMS130LayerTreeBuilder extends AbstractWMSLayerTreeBuilder
         {
             if (dim.getName().equalsIgnoreCase("time"))
             {
-                String timeString = dim.getValue();
+                String timeString = dim.getValue().trim();
                 try
                 {
                     return WMSTimeUtils.parseISOTimeExtent(timeString);
