@@ -70,9 +70,6 @@ public class StateImportController implements FileOrURLImporter
     /** The parent component provider. */
     private final Supplier<? extends Component> myParentProvider;
 
-    /** The state controller. */
-    private StateController myStateController;
-
     /**
      * The toolbox.
      */
@@ -245,15 +242,6 @@ public class StateImportController implements FileOrURLImporter
         importURL(aURL, null, callback);
     }
 
-    /**
-     * Sets the state controller.
-     *
-     * @param controller The controller to be set.
-     */
-    public void setStateController(StateController controller)
-    {
-        myStateController = controller;
-    }
     /**
      * Determines if the input stream can be imported.
      *
@@ -438,8 +426,7 @@ public class StateImportController implements FileOrURLImporter
         EventQueueUtilities.waitCursorRun(myParentProvider.get(), () ->
         {
             myModuleStateManager.registerState(id, desc, tags, sel, state);
-            myStateController.hookState(id, state);
-            myStateController.toggleState(id);
+            myModuleStateManager.toggleState(id);
         });
     }
 
