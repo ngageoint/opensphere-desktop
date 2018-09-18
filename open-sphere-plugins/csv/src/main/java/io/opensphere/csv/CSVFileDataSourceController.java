@@ -407,8 +407,7 @@ public class CSVFileDataSourceController extends AbstractDataSourceController
     }
 
     /**
-     * Determines whether the controller has the given source. The source
-     * doesn't have to match 100%, just have the same name.
+     * Determines whether the controller has the given source. The source doesn't have to match 100%, just have the same name.
      *
      * @param source the data source
      * @return whether the controller has the data source
