@@ -27,9 +27,9 @@ public abstract class ImportSourceBase extends AbstractDataSource implements Clo
     @XmlElement(name = "visible")
     protected boolean myIsVisible = true;
 
-    /** Whether this is from a state source. */
-    @XmlTransient
-    protected boolean myFromStateSource;
+    /** Whether this is from a state. */
+    @XmlElement(name = "fromState")
+    protected boolean myIsFromState;
 
     /** The load error. */
     @XmlTransient
@@ -124,19 +124,19 @@ public abstract class ImportSourceBase extends AbstractDataSource implements Clo
      *
      * @return true, if is from state source
      */
-    public boolean isFromStateSource()
+    public boolean isFromState()
     {
-        return myFromStateSource;
+        return myIsFromState;
     }
 
     /**
      * Marks this source as one that is associated with a saved state.
      *
-     * @param fromStateSource the new from state source
+     * @param isFromState the new from state source
      */
-    public void setFromStateSource(boolean fromStateSource)
+    public void setFromState(boolean isFromState)
     {
-        myFromStateSource = fromStateSource;
+        myIsFromState = isFromState;
     }
 
     /**
@@ -243,7 +243,7 @@ public abstract class ImportSourceBase extends AbstractDataSource implements Clo
         result = prime * result + HashCodeHelper.getHashCode(mySourceUri);
         result = prime * result + HashCodeHelper.getHashCode(getLayer());
         result = prime * result + HashCodeHelper.getHashCode(myIsVisible);
-        result = prime * result + HashCodeHelper.getHashCode(myFromStateSource);
+        result = prime * result + HashCodeHelper.getHashCode(myIsFromState);
         return result;
     }
 
@@ -263,7 +263,7 @@ public abstract class ImportSourceBase extends AbstractDataSource implements Clo
         return Objects.equals(mySourceUri, other.mySourceUri)
                 && Objects.equals(getLayer(), other.getLayer())
                 && myIsVisible == other.myIsVisible
-                && myFromStateSource == other.myFromStateSource;
+                && myIsFromState == other.myIsFromState;
         //@formatter:on
     }
 
@@ -278,7 +278,7 @@ public abstract class ImportSourceBase extends AbstractDataSource implements Clo
         builder.append(", isVisible=");
         builder.append(myIsVisible);
         builder.append(", fromStateSource=");
-        builder.append(myFromStateSource);
+        builder.append(myIsFromState);
         builder.append(", loadError=");
         builder.append(myLoadError);
         builder.append(']');

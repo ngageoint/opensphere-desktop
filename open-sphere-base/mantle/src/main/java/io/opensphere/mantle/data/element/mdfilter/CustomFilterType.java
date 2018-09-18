@@ -32,6 +32,10 @@ public class CustomFilterType extends FilterType implements CustomFilter
     @XmlAttribute(name = "active", required = false)
     private boolean myIsActive;
 
+    /** If the filter is from a state. */
+    @XmlAttribute(name = "fromState")
+    private boolean myIsFromState;
+
     /**
      * Whether this filter matches any(or) or all(and) other filters. TRUE is
      * match all
@@ -140,6 +144,18 @@ public class CustomFilterType extends FilterType implements CustomFilter
     public String getUrlKey()
     {
         return myUrlKey;
+    }
+
+    @Override
+    public boolean isFromState()
+    {
+        return myIsFromState;
+    }
+
+    @Override
+    public void setFromState(boolean isFromState)
+    {
+        myIsFromState = isFromState;
     }
 
     /**

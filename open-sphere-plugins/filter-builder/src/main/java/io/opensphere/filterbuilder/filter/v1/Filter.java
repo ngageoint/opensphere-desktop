@@ -11,7 +11,6 @@ import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import net.jcip.annotations.GuardedBy;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -25,6 +24,7 @@ import io.opensphere.filterbuilder.FilterBuilderPlugin;
 import io.opensphere.filterbuilder.filter.FilterComponentEvent;
 import io.opensphere.filterbuilder.filter.FilterComponentListener;
 import io.opensphere.mantle.data.DataTypeInfo;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Filter: an object to represent a data filter. Used by the {@link FilterBuilderPlugin} plugin.
@@ -41,6 +41,10 @@ public class Filter extends FilterItem implements DataFilter, Comparable<Filter>
     /** The active flag. */
     @XmlAttribute(name = "active", required = true)
     private boolean myActive;
+
+    /** If the filter is from a state. */
+    @XmlAttribute(name = "fromState")
+    private boolean myIsFromState;
 
     /** The columns used in the creation of the filter. */
     @SuppressWarnings("PMD.LooseCoupling")
@@ -252,6 +256,7 @@ public class Filter extends FilterItem implements DataFilter, Comparable<Filter>
     {
         Filter f = new Filter();
         f.myActive = myActive;
+        f.myIsFromState = myIsFromState;
         f.myName = myName;
         f.myFilterDescription = myFilterDescription;
         f.myFilterCount = myFilterCount;
@@ -476,6 +481,12 @@ public class Filter extends FilterItem implements DataFilter, Comparable<Filter>
         return myActive;
     }
 
+    @Override
+    public boolean isFromState()
+    {
+        return myIsFromState;
+    }
+
     /**
      * Checks to see if the filter is a valid filter. In order for the filter to be valid its main {@link Group} must be valid.
      *
@@ -528,6 +539,16 @@ public class Filter extends FilterItem implements DataFilter, Comparable<Filter>
             myActive = active;
             fireFilterChangeEvent(new FilterChangeEvent(this, pSource, FilterChangeEvent.ACTIVE_STATE));
         }
+    }
+
+    /**
+     * Sets if the filter is from a state.
+     *
+     * @param isFromState if the filter is from a state
+     */
+    public void setFromState(boolean isFromState)
+    {
+        myIsFromState = isFromState;
     }
 
     /**
