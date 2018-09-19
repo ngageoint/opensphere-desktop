@@ -122,6 +122,26 @@ public final class JTSCoreGeometryUtilities
     }
 
     /**
+     * Convert the supplied geometry group (assumption: composed only of
+     * {@link PolygonGeometry}s) to an instance of the JTS {@link MultiPolygon}.
+     *
+     * @param geom the geometry group to convert to a {@link MultiPolygon}.
+     * @return the polygon
+     */
+    public static MultiPolygon convertToJTSPolygon(GeometryGroupGeometry geom)
+    {
+        if (geom.getGeometries().isEmpty())
+        {
+            return null;
+        }
+
+        Polygon[] polygons = geom.getGeometries().stream().filter(g -> g instanceof PolygonGeometry)
+                .map(g -> convertToJTSPolygon((PolygonGeometry)g)).toArray(Polygon[]::new);
+
+        return JTSUtilities.GEOMETRY_FACTORY.createMultiPolygon(polygons);
+    }
+
+    /**
      * Convert to JTS polygons and split on antimeridian.
      *
      * @param geoms The geometries to convert.
@@ -177,7 +197,7 @@ public final class JTSCoreGeometryUtilities
      *            {@link GeometryGroupGeometry}.
      * @return a group geometry generated from the supplied multipolygon.
      */
-    private static GeometryGroupGeometry convertToMultiPolygonGeometry(MultiPolygon multiPolygon,
+    public static GeometryGroupGeometry convertToMultiPolygonGeometry(MultiPolygon multiPolygon,
             PolygonRenderProperties polyProps, ZOrderRenderProperties groupProperties)
     {
         if (multiPolygon == null)
@@ -248,7 +268,13 @@ public final class JTSCoreGeometryUtilities
 
         Geometry firstGeometry = geometries.iterator().next();
         com.vividsolutions.jts.geom.Geometry unifiedJtsGeometry = null;
-        if (firstGeometry instanceof PolylineGeometry)
+        if (firstGeometry instanceof PolygonGeometry)
+        {
+            Set<PolygonGeometry> polygons = New.set(geometries.size());
+            geometries.forEach(g -> polygons.add((PolygonGeometry)g));
+            unifiedJtsGeometry = PolygonGeometryUtils.convertToMultiPolygon(polygons);
+        }
+        else if (firstGeometry instanceof PolylineGeometry)
         {
             Set<PolylineGeometry> polylines = New.set(geometries.size());
             geometries.forEach(g -> polylines.add((PolylineGeometry)g));
@@ -259,12 +285,6 @@ public final class JTSCoreGeometryUtilities
             Set<PointGeometry> points = New.set(geometries.size());
             geometries.forEach(g -> points.add((PointGeometry)g));
             unifiedJtsGeometry = PointGeometryUtils.convertToMultiPoint(points);
-        }
-        else if (firstGeometry instanceof PolygonGeometry)
-        {
-            Set<PolygonGeometry> polygons = New.set(geometries.size());
-            geometries.forEach(g -> polygons.add((PolygonGeometry)g));
-            unifiedJtsGeometry = PolygonGeometryUtils.convertToMultiPolygon(polygons);
         }
         else
         {
