@@ -31,8 +31,9 @@ public class PurgeByRegionCommandWorker extends PolygonRegionCommandWorker
     @Override
     public void process()
     {
-        // Don't purge anything from base.
-        if (getProvider() != null && getProvider().getDataType() != null
+        // Don't purge anything from base, or any areas
+        if (getProvider() != null && getProvider().getDataType() != null 
+                && !getProvider().getDataType().getClass().getSimpleName().startsWith("Area")
                 && getProvider().getDataType().getBasicVisualizationInfo() != null
                 && getProvider().getDataType().getBasicVisualizationInfo().getLoadsTo().isAnalysisEnabled())
         {
