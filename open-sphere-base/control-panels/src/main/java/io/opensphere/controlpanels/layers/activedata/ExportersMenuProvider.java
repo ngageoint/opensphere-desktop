@@ -53,7 +53,7 @@ public class ExportersMenuProvider implements ContextMenuProvider<MultiDataGroup
             if (!exporters.isEmpty())
             {
                 JMenu exportMenu = new JMenu("Export");
-                exportMenu.setIcon(new GenericFontIcon(AwesomeIconSolid.DOWNLOAD, Color.WHITE, 12));
+                exportMenu.setIcon(new GenericFontIcon(AwesomeIconSolid.DOWNLOAD, Color.WHITE));
                 for (JMenuItem menuItem : new ExportMenuProvider().getMenuItems(myToolbox, "To ", exporters))
                 {
                     exportMenu.add(menuItem);

@@ -1,9 +1,8 @@
 package io.opensphere.myplaces.controllers;
 
+import java.awt.Component;
 import java.util.Collections;
 import java.util.List;
-
-import javax.swing.JMenuItem;
 
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import de.micromata.opengis.kml.v_2_2_0.Polygon;
@@ -34,9 +33,9 @@ public class RoiContextMenuProvider implements ContextMenuProvider<DataGroupCont
     }
 
     @Override
-    public List<JMenuItem> getMenuItems(String contextId, DataGroupContextKey key)
+    public List<Component> getMenuItems(String contextId, DataGroupContextKey key)
     {
-        List<JMenuItem> menuItems = Collections.emptyList();
+        List<Component> menuItems = Collections.emptyList();
         if (key.getDataType() instanceof MyPlacesDataTypeInfo)
         {
             MyPlacesDataTypeInfo type = (MyPlacesDataTypeInfo)key.getDataType();

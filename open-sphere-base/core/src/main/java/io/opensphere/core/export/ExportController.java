@@ -1,5 +1,6 @@
 package io.opensphere.core.export;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.util.Collection;
 import java.util.Collections;
@@ -11,7 +12,9 @@ import io.opensphere.core.control.action.ContextActionManager;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.action.context.GeometryContextKey;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.Service;
+import io.opensphere.core.util.swing.GenericFontIcon;
 
 /**
  * The controller that adds certain exporter context menus to the context action
@@ -42,6 +45,7 @@ public class ExportController implements Service
                 if (!menuItems.isEmpty())
                 {
                     JMenu exportMenu = new JMenu("Export");
+                    exportMenu.setIcon(new GenericFontIcon(AwesomeIconSolid.DOWNLOAD, Color.WHITE));
                     for (Component item : menuItems)
                     {
                         exportMenu.add(item);
