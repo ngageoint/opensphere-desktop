@@ -29,19 +29,13 @@ import net.jcip.annotations.NotThreadSafe;
 @NotThreadSafe
 public class BufferRegionCreator
 {
-    /**
-     * The Constant DEFAULT_BUFFER_DISTANCE.
-     */
+    /** The default distance of a new buffer. */
     public static final Length DEFAULT_BUFFER_DISTANCE = Length.create(Kilometers.class, 5.0);
 
-    /**
-     * The toolbox.
-     */
+    /** The toolbox. */
     private final Toolbox myToolbox;
 
-    /**
-     * The selection geometry.
-     */
+    /** The selection geometry. */
     private Geometry myGeometry;
 
     /** The Preview geometry. */

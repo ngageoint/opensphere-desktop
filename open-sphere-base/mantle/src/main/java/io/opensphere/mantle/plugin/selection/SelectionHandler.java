@@ -29,6 +29,7 @@ import io.opensphere.core.control.action.context.MultiGeometryContextKey;
 import io.opensphere.core.control.action.context.ScreenPositionContextKey;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.GeometryGroupGeometry;
+import io.opensphere.core.geometry.MultiPolygonGeometry;
 import io.opensphere.core.geometry.PointGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.PolylineGeometry;
@@ -127,8 +128,8 @@ public class SelectionHandler
             else if (contextId.equals(ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT)
                     && key.getGeometry() instanceof PolylineGeometry)
             {
-                return SelectionCommandFactory.getPolylineMenuItems(
-                        new PolylineCommandActionListener(Collections.singleton(key.getGeometry())));
+                return SelectionCommandFactory
+                        .getPolylineMenuItems(new PolylineCommandActionListener(Collections.singleton(key.getGeometry())));
             }
             return menuItems;
         }
@@ -501,7 +502,8 @@ public class SelectionHandler
             Quantify.collectMetric("mist3d.tracks.create-buffer-for-selected-segment");
             myBufferRegionCreator.createBuffer(myLastGeometry);
         }
-        else if (myLastGeometry instanceof PolygonGeometry)
+        else if (myLastGeometry instanceof PolygonGeometry || (myLastGeometry instanceof GeometryGroupGeometry
+                && ((GeometryGroupGeometry)myLastGeometry).getGeometries().iterator().next() instanceof PolygonGeometry))
         {
             Set<PolygonGeometry> geom = Collections.singleton((PolygonGeometry)myLastGeometry);
             myLastGeometry = null;
@@ -540,6 +542,16 @@ public class SelectionHandler
         DataTypeInfo dataType = myDataTypeController.getDataTypeInfoForGeometryId(pGeometry.getDataModelId());
         if (dataType != null)
         {
+            if (pGeometry instanceof PolygonGeometry)
+            {
+                MapDataElementTransformer transformer = myDataTypeController.getTransformerForType(dataType.getTypeKey());
+                MultiPolygonGeometry.Builder<GeographicPosition> builder = new MultiPolygonGeometry.Builder<>(
+                        GeographicPosition.class);
+                Collection<PolygonGeometry> geometries = myToolbox.getGeometryRegistry().getGeometriesForSource(transformer,
+                        PolygonGeometry.class);
+                builder.setInitialGeometries(geometries);
+                return new MultiPolygonGeometry(builder, ((PolygonGeometry)pGeometry).getRenderProperties(), null);
+            }
             MapDataElementTransformer transformer = myDataTypeController.getTransformerForType(dataType.getTypeKey());
             GeometryGroupGeometry.Builder builder = new GeometryGroupGeometry.Builder(GeographicPosition.class);
             builder.setInitialGeometries(myToolbox.getGeometryRegistry()
@@ -710,7 +722,7 @@ public class SelectionHandler
         }
         else if (geom instanceof PolygonGeometry)
         {
-            myLastGeometry = geom;
+            myLastGeometry = getCompleteGeometryGroup(geom);
             menuItems = SelectionCommandFactory.getPolygonMenuItems(myMenuActionListener, hasLoadFilters(), false);
         }
         else if (geom instanceof PolylineGeometry)
