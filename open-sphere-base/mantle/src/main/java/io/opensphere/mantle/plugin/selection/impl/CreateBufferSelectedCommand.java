@@ -10,15 +10,15 @@ import io.opensphere.mantle.plugin.selection.SelectionCommandGroup;
  * Command to create a polygon that buffers the selected line segment, which can
  * be used for queries, selections, etc.
  */
-public class CreateBufferSelectedSegmentCommand extends AbstractSelectionCommand
+public class CreateBufferSelectedCommand extends AbstractSelectionCommand
 {
     /**
      * Creates a new command.
      */
-    public CreateBufferSelectedSegmentCommand()
+    public CreateBufferSelectedCommand()
     {
-        super("CREATE_BUFFER_REGION_FOR_SELECTED_SEGMENT", "Create Buffer Region For Selected Segment",
-                "Create a polygon that buffers the selected line segment, which can be used for queries, selections, etc.",
+        super("CREATE_BUFFER_REGION_FOR_SELECTED_SEGMENT", "Create Buffer Region For Selected",
+                "Create a polygon that buffers the selected item, which can be used for queries, selections, etc.",
                 SelectionCommandGroup.TOOLS, new GenericFontIcon(AwesomeIconSolid.BULLSEYE, Color.WHITE, 12));
     }
 }

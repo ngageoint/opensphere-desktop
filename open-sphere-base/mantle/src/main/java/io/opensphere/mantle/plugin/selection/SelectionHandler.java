@@ -490,10 +490,13 @@ public class SelectionHandler
             }
             else
             {
-                myBufferRegionCreator.createBuffer(myLastGeometry);
+                // check to see if the geometry is a member of a group of
+                // multiple geometries. if so, create the buffer for the group
+                // instead of the individual geometry:
+                myBufferRegionCreator.createBuffer(getCompleteGeometryGroup(myLastGeometry));
             }
         }
-        else if (cmd.equals(SelectionCommandFactory.CREATE_BUFFER_REGION_FOR_SELECTED_SEGMENT))
+        else if (cmd.equals(SelectionCommandFactory.CREATE_BUFFER_REGION_FOR_SELECTED))
         {
             Quantify.collectMetric("mist3d.tracks.create-buffer-for-selected-segment");
             myBufferRegionCreator.createBuffer(myLastGeometry);

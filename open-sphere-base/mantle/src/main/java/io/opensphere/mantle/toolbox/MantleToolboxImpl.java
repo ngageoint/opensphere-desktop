@@ -154,7 +154,7 @@ public class MantleToolboxImpl implements MantleToolbox
 
         myQueryLineManager = new QueryLineManagerImpl(aToolbox);
         mySelectionHandler.registerLineSelectionCommandProcessor(SelectionCommandFactory.CREATE_BUFFER_REGION, myQueryLineManager);
-        mySelectionHandler.registerLineSelectionCommandProcessor(SelectionCommandFactory.CREATE_BUFFER_REGION_FOR_SELECTED_SEGMENT,
+        mySelectionHandler.registerLineSelectionCommandProcessor(SelectionCommandFactory.CREATE_BUFFER_REGION_FOR_SELECTED,
                 myQueryLineManager);
 
         myDataTypeInfoPreferenceAssistant = new DataTypeInfoPreferenceAssistantImpl(myParentToolbox);

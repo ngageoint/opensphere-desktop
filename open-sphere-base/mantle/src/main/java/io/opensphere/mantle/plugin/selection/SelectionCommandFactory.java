@@ -18,7 +18,7 @@ import io.opensphere.mantle.plugin.selection.impl.AddFeaturesCommand;
 import io.opensphere.mantle.plugin.selection.impl.AddFeaturesCurrentFrame;
 import io.opensphere.mantle.plugin.selection.impl.CancelQueryCommand;
 import io.opensphere.mantle.plugin.selection.impl.CreateBufferCommand;
-import io.opensphere.mantle.plugin.selection.impl.CreateBufferSelectedSegmentCommand;
+import io.opensphere.mantle.plugin.selection.impl.CreateBufferSelectedCommand;
 import io.opensphere.mantle.plugin.selection.impl.DeselectCommand;
 import io.opensphere.mantle.plugin.selection.impl.LoadFeaturesCommand;
 import io.opensphere.mantle.plugin.selection.impl.LoadFeaturesCurrentFrameCommand;
@@ -50,7 +50,7 @@ public class SelectionCommandFactory
     public static final SelectionCommand CREATE_BUFFER_REGION = new CreateBufferCommand();
 
     /** Buffer Line. */
-    public static final SelectionCommand CREATE_BUFFER_REGION_FOR_SELECTED_SEGMENT = new CreateBufferSelectedSegmentCommand();
+    public static final SelectionCommand CREATE_BUFFER_REGION_FOR_SELECTED = new CreateBufferSelectedCommand();
 
     /** DESELECT. */
     public static final SelectionCommand DESELECT = new DeselectCommand();
@@ -75,7 +75,7 @@ public class SelectionCommandFactory
      */
     private static final List<SelectionCommand> DEFAULT_COMMANDS = List.of(ADD_FEATURES, ADD_FEATURES_CURRENT_FRAME,
             LOAD_FEATURES, LOAD_FEATURES_CURRENT_FRAME, CANCEL_QUERY, CREATE_BUFFER_REGION,
-            CREATE_BUFFER_REGION_FOR_SELECTED_SEGMENT, DESELECT, REMOVE_ALL, SELECT, SELECT_EXCLUSIVE);
+            CREATE_BUFFER_REGION_FOR_SELECTED, DESELECT, REMOVE_ALL, SELECT, SELECT_EXCLUSIVE);
 
     /**
      * Default set of commands.
@@ -151,6 +151,7 @@ public class SelectionCommandFactory
         {
             menuItems.add(createHeader("TOOLS"));
             menuItems.add(CREATE_BUFFER_REGION.createMenuItem(listener));
+            menuItems.add(CREATE_BUFFER_REGION_FOR_SELECTED.createMenuItem(listener));
         }
         return menuItems;
     }
