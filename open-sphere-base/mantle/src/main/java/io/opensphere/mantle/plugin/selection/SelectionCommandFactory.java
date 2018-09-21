@@ -27,7 +27,7 @@ import io.opensphere.mantle.plugin.selection.impl.SelectCommand;
 import io.opensphere.mantle.plugin.selection.impl.SelectExclusiveCommand;
 
 /**
- *
+ * A factory implementation for selection command implementations.
  */
 public class SelectionCommandFactory
 {
@@ -82,12 +82,6 @@ public class SelectionCommandFactory
      */
     private static final Map<String, SelectionCommand> DEFAULT_COMMAND_MAP = DEFAULT_COMMANDS.stream()
             .collect(Collectors.toMap(c -> c.getName(), c -> c));
-//
-//    /**
-//     * Default set of commands.
-//     */
-//    private static final Map<String, SelectionCommand> CLASSNAME_COMMAND_MAP = DEFAULT_COMMANDS.stream()
-//            .collect(Collectors.toMap(c -> c.getClass().getName(), c -> c));
 
     /**
      * Gets the selection command from its string action command counterpart.
@@ -101,10 +95,6 @@ public class SelectionCommandFactory
         {
             return DEFAULT_COMMAND_MAP.get(name);
         }
-//        else if (CLASSNAME_COMMAND_MAP.containsKey(name))
-//        {
-//            return CLASSNAME_COMMAND_MAP.get(name);
-//        }
         // Unknown command returned.
         LOGGER.warn("Illegal Selection Command Recieved: " + name);
         return null;
@@ -128,10 +118,9 @@ public class SelectionCommandFactory
      * Gets the point menu items.
      *
      * @param al the {@link ActionListener}
-     * @param hasFilters Whether there are filters associated with the menu.
      * @return the point menu items
      */
-    public static List<Component> getPointMenuItems(ActionListener al, boolean hasFilters)
+    public static List<Component> getPointMenuItems(ActionListener al)
     {
         List<Component> menuItems = new ArrayList<>();
         menuItems.add(CREATE_BUFFER_REGION.createMenuItem(al));
@@ -170,10 +159,9 @@ public class SelectionCommandFactory
      * Gets the polyline menu items.
      *
      * @param al the {@link ActionListener}
-     * @param hasFilters Whether there are filters associated with the menu.
      * @return the polyline menu items
      */
-    public static List<Component> getPolylineMenuItems(ActionListener al, boolean hasFilters)
+    public static List<Component> getPolylineMenuItems(ActionListener al)
     {
         List<Component> menuItems = new ArrayList<>();
         menuItems.add(CREATE_BUFFER_REGION.createMenuItem(al));
@@ -247,6 +235,13 @@ public class SelectionCommandFactory
         return menuOpts;
     }
 
+    /**
+     * Creates a menu header as a JLabel using the supplied text.
+     *
+     * @param title the title to apply to the header.
+     * @return a {@link Component} in which the supplied text is rendered as a
+     *         header.
+     */
     private static JLabel createHeader(String title)
     {
         JLabel e = new JLabel(title);

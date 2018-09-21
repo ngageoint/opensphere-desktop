@@ -128,7 +128,7 @@ public class SelectionHandler
                     && key.getGeometry() instanceof PolylineGeometry)
             {
                 return SelectionCommandFactory.getPolylineMenuItems(
-                        new PolylineCommandActionListener(Collections.singleton(key.getGeometry())), hasLoadFilters());
+                        new PolylineCommandActionListener(Collections.singleton(key.getGeometry())));
             }
             return menuItems;
         }
@@ -713,12 +713,12 @@ public class SelectionHandler
         else if (geom instanceof PolylineGeometry)
         {
             myLastGeometry = geom;
-            menuItems = SelectionCommandFactory.getPolylineMenuItems(myMenuActionListener, hasLoadFilters());
+            menuItems = SelectionCommandFactory.getPolylineMenuItems(myMenuActionListener);
         }
         else if (geom instanceof PointGeometry)
         {
             myLastGeometry = geom;
-            menuItems = SelectionCommandFactory.getPointMenuItems(myMenuActionListener, hasLoadFilters());
+            menuItems = SelectionCommandFactory.getPointMenuItems(myMenuActionListener);
         }
         else if (geom instanceof GeometryGroupGeometry)
         {
@@ -734,11 +734,11 @@ public class SelectionHandler
                 }
                 else if (sampleGeometry instanceof PolylineGeometry)
                 {
-                    menuItems = SelectionCommandFactory.getPolylineMenuItems(myMenuActionListener, hasLoadFilters());
+                    menuItems = SelectionCommandFactory.getPolylineMenuItems(myMenuActionListener);
                 }
                 else if (sampleGeometry instanceof PointGeometry)
                 {
-                    menuItems = SelectionCommandFactory.getPointMenuItems(myMenuActionListener, hasLoadFilters());
+                    menuItems = SelectionCommandFactory.getPointMenuItems(myMenuActionListener);
                 }
                 else
                 {
