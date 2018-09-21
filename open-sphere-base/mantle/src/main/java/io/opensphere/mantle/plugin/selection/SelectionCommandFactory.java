@@ -27,7 +27,7 @@ import io.opensphere.mantle.plugin.selection.impl.SelectCommand;
 import io.opensphere.mantle.plugin.selection.impl.SelectExclusiveCommand;
 
 /**
- * 
+ *
  */
 public class SelectionCommandFactory
 {
@@ -82,6 +82,12 @@ public class SelectionCommandFactory
      */
     private static final Map<String, SelectionCommand> DEFAULT_COMMAND_MAP = DEFAULT_COMMANDS.stream()
             .collect(Collectors.toMap(c -> c.getName(), c -> c));
+//
+//    /**
+//     * Default set of commands.
+//     */
+//    private static final Map<String, SelectionCommand> CLASSNAME_COMMAND_MAP = DEFAULT_COMMANDS.stream()
+//            .collect(Collectors.toMap(c -> c.getClass().getName(), c -> c));
 
     /**
      * Gets the selection command from its string action command counterpart.
@@ -91,15 +97,16 @@ public class SelectionCommandFactory
      */
     public static SelectionCommand getSelectionCommand(String name)
     {
-        try
+        if (DEFAULT_COMMAND_MAP.containsKey(name))
         {
             return DEFAULT_COMMAND_MAP.get(name);
         }
-        catch (IllegalArgumentException ex)
-        {
-            // Unknown command returned.
-            LOGGER.warn("Illegal Selection Command Recieved: " + name, ex);
-        }
+//        else if (CLASSNAME_COMMAND_MAP.containsKey(name))
+//        {
+//            return CLASSNAME_COMMAND_MAP.get(name);
+//        }
+        // Unknown command returned.
+        LOGGER.warn("Illegal Selection Command Recieved: " + name);
         return null;
     }
 
@@ -249,7 +256,7 @@ public class SelectionCommandFactory
 
     /**
      * Gets a collection of the known set of default commands.
-     * 
+     *
      * @return a collection of the known set of default commands.
      */
     public static Collection<SelectionCommand> getAllCommands()

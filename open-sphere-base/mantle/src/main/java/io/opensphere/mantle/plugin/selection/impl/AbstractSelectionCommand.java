@@ -182,7 +182,7 @@ public abstract class AbstractSelectionCommand implements SelectionCommand
             jmi.setIcon(getIcon());
         }
         jmi.setToolTipText(getTooltip());
-        jmi.setActionCommand(toString());
+        jmi.setActionCommand(getName());
         if (al != null)
         {
             jmi.addActionListener(al);
