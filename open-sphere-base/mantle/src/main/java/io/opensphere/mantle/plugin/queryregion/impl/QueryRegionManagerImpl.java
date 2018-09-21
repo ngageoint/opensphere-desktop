@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import javax.swing.JMenuItem;
 
@@ -21,6 +22,7 @@ import io.opensphere.core.event.DataRemovalEvent;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.event.EventListenerService;
 import io.opensphere.core.geometry.Geometry;
+import io.opensphere.core.geometry.MultiPolygonGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.constraint.Constraints;
 import io.opensphere.core.geometry.renderproperties.DefaultPolygonRenderProperties;
@@ -404,7 +406,17 @@ public class QueryRegionManagerImpl extends EventListenerService implements Quer
                 props.setStipple(StippleModelConfig.DOTTED);
             }
 
-            output.add(geom.derive(props, (Constraints)null));
+            if (geom instanceof MultiPolygonGeometry)
+            {
+                MultiPolygonGeometry multiPolygonGeometry = (MultiPolygonGeometry)geom;
+                output.addAll(multiPolygonGeometry.getGeometries().stream().map(g -> g.derive(props, (Constraints)null))
+                        .collect(Collectors.toList()));
+            }
+            else
+            {
+                output.add(geom.derive(props, (Constraints)null));
+            }
+
         }
 
         return output;
