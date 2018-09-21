@@ -1,5 +1,6 @@
 package io.opensphere.core.map;
 
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.util.Collection;
@@ -28,7 +29,9 @@ import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.Position;
 import io.opensphere.core.units.angle.Angle;
 import io.opensphere.core.units.length.Length;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.viewer.impl.ViewerAnimator;
 
 /** Helper class to provide context menus for a map manager. */
@@ -59,6 +62,7 @@ public class MapManagerMenuProvider
             if (pos != null)
             {
                 JMenuItem center = new JMenuItem("Center On");
+                center.setIcon(new GenericFontIcon(AwesomeIconSolid.BULLSEYE, Color.WHITE));
                 center.addActionListener(arg0 -> new ViewerAnimator(myMapManager.getStandardViewer(), pos).start());
                 menuItems.add(center);
 
@@ -124,10 +128,12 @@ public class MapManagerMenuProvider
                 List<JMenuItem> menuItems = New.list();
 
                 JMenuItem zoom = new JMenuItem("Zoom to");
+                zoom.setIcon(new GenericFontIcon(AwesomeIconSolid.CROP, Color.WHITE, 12));
                 addZoomAction(zoom, Collections.singleton(key.getGeometry()));
                 menuItems.add(zoom);
 
                 JMenuItem center = new JMenuItem("Center On");
+                center.setIcon(new GenericFontIcon(AwesomeIconSolid.BULLSEYE, Color.WHITE));
                 addCenterAction(center, Collections.singleton(key.getGeometry()));
                 menuItems.add(center);
 
@@ -158,8 +164,10 @@ public class MapManagerMenuProvider
             List<JMenuItem> menuItems = New.list();
 
             JMenuItem zoom = new JMenuItem("Zoom to");
+            zoom.setIcon(new GenericFontIcon(AwesomeIconSolid.CROP, Color.WHITE, 12));
             menuItems.add(zoom);
             JMenuItem center = new JMenuItem("Center On");
+            center.setIcon(new GenericFontIcon(AwesomeIconSolid.BULLSEYE, Color.WHITE));
             menuItems.add(center);
 
             if (key.getGeometries().isEmpty())

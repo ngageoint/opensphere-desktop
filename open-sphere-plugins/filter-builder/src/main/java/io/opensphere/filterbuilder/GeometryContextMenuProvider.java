@@ -35,6 +35,7 @@ import io.opensphere.core.geometry.renderproperties.DefaultPolygonRenderProperti
 import io.opensphere.core.geometry.renderproperties.PolygonRenderProperties;
 import io.opensphere.core.geometry.renderproperties.ZOrderRenderProperties;
 import io.opensphere.core.quantify.Quantify;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
@@ -42,6 +43,7 @@ import io.opensphere.core.util.collections.StreamUtilities;
 import io.opensphere.core.util.jts.core.JTSCoreGeometryUtilities;
 import io.opensphere.core.util.predicate.AndPredicate;
 import io.opensphere.core.util.swing.ButtonPanel;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.util.swing.LinkButton;
 import io.opensphere.core.util.swing.OptionDialog;
 import io.opensphere.mantle.data.DataGroupInfo;
@@ -165,17 +167,20 @@ public class GeometryContextMenuProvider implements ContextMenuProvider<Geometry
             final PolygonGeometry matchingGeom = getGeometry((PolygonGeometry)key.getGeometry());
             if (matchingGeom == null)
             {
-                JMenuItem saveMI = new JMenuItem("Create spatial filter...");
+                JMenuItem saveMI = new JMenuItem("Create spatial filter");
+                saveMI.setIcon(new GenericFontIcon(AwesomeIconSolid.FILTER, Color.WHITE));
                 saveMI.addActionListener(evt -> createSpatialFilter((PolygonGeometry)key.getGeometry()));
                 options.add(saveMI);
             }
             else
             {
-                JMenuItem manageLayersMI = new JMenuItem("Manage spatial filter...");
+                JMenuItem manageLayersMI = new JMenuItem("Manage spatial filter");
+                manageLayersMI.setIcon(new GenericFontIcon(AwesomeIconSolid.FILTER, Color.WHITE));
                 manageLayersMI.addActionListener(evt -> manageLayers(matchingGeom));
                 options.add(manageLayersMI);
 
                 JMenuItem removeMI = new JMenuItem("Remove spatial filter");
+                removeMI.setIcon(new GenericFontIcon(AwesomeIconSolid.FILTER, Color.WHITE));
                 removeMI.addActionListener(evt -> removeSpatialFilter(matchingGeom));
                 options.add(removeMI);
             }

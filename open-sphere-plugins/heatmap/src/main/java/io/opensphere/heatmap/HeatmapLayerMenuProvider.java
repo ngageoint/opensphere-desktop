@@ -1,5 +1,6 @@
 package io.opensphere.heatmap;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.util.Collection;
 import java.util.Collections;
@@ -10,7 +11,9 @@ import javax.swing.JMenuItem;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextActionManager;
 import io.opensphere.core.control.action.ContextMenuProvider;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.Service;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.util.swing.SwingUtilities;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
@@ -84,6 +87,7 @@ public class HeatmapLayerMenuProvider implements ContextMenuProvider<DataGroupCo
         {
             JMenuItem menuItem = SwingUtilities.newMenuItem(HeatmapController.MENU_TEXT,
                     e -> myHeatmapController.create(key.getDataType()));
+            menuItem.setIcon( new GenericFontIcon(AwesomeIconSolid.FIRE, Color.WHITE, 12));
             menuItem.setEnabled(hasFeatures(key.getDataType()));
 
             menuItems = Collections.singletonList(menuItem);

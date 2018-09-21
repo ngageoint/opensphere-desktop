@@ -5,8 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.JMenuItem;
-
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.geometry.Geometry;
@@ -41,7 +39,7 @@ public class RoiMultiMenuProvider implements ContextMenuProvider<MultiDataGroupC
     @Override
     public Collection<? extends Component> getMenuItems(String contextId, MultiDataGroupContextKey key)
     {
-        List<JMenuItem> menuItems = Collections.emptyList();
+        List<Component> menuItems = Collections.emptyList();
         Collection<Geometry> geometries = New.list();
         Collection<DataTypeInfo> dataTypes = getDataTypes(key);
 

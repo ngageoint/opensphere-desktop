@@ -8,6 +8,7 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.plugin.queryline.QueryLineManager;
 import io.opensphere.mantle.plugin.selection.BufferRegionCreator;
 import io.opensphere.mantle.plugin.selection.SelectionCommand;
+import io.opensphere.mantle.plugin.selection.SelectionCommandFactory;
 
 /**
  * Default implementation of a Query line manager.
@@ -36,13 +37,9 @@ public class QueryLineManagerImpl implements QueryLineManager
     @Override
     public void selectionOccurred(Collection<? extends PolylineGeometry> lines, SelectionCommand cmd)
     {
-        switch (cmd)
+        if (cmd.equals(SelectionCommandFactory.CREATE_BUFFER_REGION))
         {
-            case CREATE_BUFFER_REGION:
-                lines.forEach(l -> EventQueueUtilities.runOnEDT(() -> myBufferRegionCreator.createBuffer(l)));
-                break;
-            default:
-                break;
+            lines.forEach(l -> EventQueueUtilities.runOnEDT(() -> myBufferRegionCreator.createBuffer(l)));
         }
     }
 }

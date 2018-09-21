@@ -92,6 +92,10 @@ public class CheckBoxMenuOption extends MenuOption
             {
                 item.setToolTipText(getTooltip());
             }
+            if (getIcon() != null)
+            {
+                item.setIcon(getIcon());
+            }
             if (listener != null)
             {
                 item.addActionListener(listener);
