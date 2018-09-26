@@ -251,7 +251,7 @@ public final class JTSGMLUtilities
             ringType.setPosList(pointList);
 
             AbstractRingPropertyType interior = GML_OBJECT_FACTORY.createAbstractRingPropertyType();
-            interior.setRing(GML_OBJECT_FACTORY.createAbstractRing(ringType));
+            interior.setRing(GML_OBJECT_FACTORY.createLinearRing(ringType));
 
             polygonType.getInterior().add(GML_OBJECT_FACTORY.createInterior(interior));
         }
