@@ -932,26 +932,18 @@ public abstract class AbstractDiscoveryDataPanel extends AbstractHUDPanel
      */
     protected void updateCheckboxState()
     {
-        myUpdateCheckBoxExecutor.execute(new Runnable()
+        myUpdateCheckBoxExecutor.execute(() ->
         {
-            @Override
-            public void run()
+            EventQueueUtilities.runOnEDT(() ->
             {
-                EventQueueUtilities.runOnEDT(new Runnable()
+                TreeTableTreeNode node = getRootNode();
+                if (node != null)
                 {
-                    @Override
-                    public void run()
-                    {
-                        TreeTableTreeNode node = getRootNode();
-                        if (node != null)
-                        {
-                            AbstractDiscoveryDataPanelHelper.updateCheckBoxTreeState(node, myCheckBoxChangeListener);
-                            myTree.updateCheckboxState();
-                        }
-                        myTree.repaint();
-                    }
-                });
-            }
+                    AbstractDiscoveryDataPanelHelper.updateCheckBoxTreeState(node, myCheckBoxChangeListener);
+                    myTree.updateCheckboxState();
+                }
+                myTree.repaint();
+            });
         });
     }
 
@@ -960,26 +952,17 @@ public abstract class AbstractDiscoveryDataPanel extends AbstractHUDPanel
      */
     protected void updateLabelState()
     {
-        myUpdateCheckBoxExecutor.execute(new Runnable()
+        myUpdateCheckBoxExecutor.execute(() ->
         {
-            @Override
-            public void run()
+            EventQueueUtilities.runOnEDT(() ->
             {
-                EventQueueUtilities.runOnEDT(new Runnable()
+                TreeTableTreeNode node = getRootNode();
+                if (node != null)
                 {
-                    @Override
-                    public void run()
-                    {
-                        TreeTableTreeNode node = getRootNode();
-                        if (node != null)
-                        {
-                            AbstractDiscoveryDataPanelHelper.updateCheckBoxTreeLabels(node,
-                                    getController().getDataGroupController());
-                        }
-                        myTree.repaint();
-                    }
-                });
-            }
+                    AbstractDiscoveryDataPanelHelper.updateCheckBoxTreeLabels(node, getController().getDataGroupController());
+                }
+                myTree.repaint();
+            });
         });
     }
 

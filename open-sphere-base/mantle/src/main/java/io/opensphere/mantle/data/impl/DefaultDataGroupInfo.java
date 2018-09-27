@@ -14,7 +14,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import net.jcip.annotations.GuardedBy;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 
@@ -51,6 +50,7 @@ import io.opensphere.mantle.data.event.DataGroupInfoMembersClearedEvent;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.EventHandler;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Default implementation of the {@link DataGroupInfo}.
@@ -174,9 +174,11 @@ public class DefaultDataGroupInfo implements DataGroupInfo
     }
 
     /**
-     * CTOR for group info with id for the group. Note: Display name will be set to id initially.
+     * CTOR for group info with id for the group. Note: Display name will be set
+     * to id initially.
      *
-     * @param rootNode - true if this is a root level node ( root nodes cannot have parents set )
+     * @param rootNode - true if this is a root level node ( root nodes cannot
+     *            have parents set )
      * @param aToolbox the toolbox
      * @param providerType the provider type
      * @param id - the id for the group
@@ -189,7 +191,8 @@ public class DefaultDataGroupInfo implements DataGroupInfo
     /**
      * Instantiates a new default data group info.
      *
-     * @param rootNode - true if this is a root level node ( root nodes cannot have parents set )
+     * @param rootNode - true if this is a root level node ( root nodes cannot
+     *            have parents set )
      * @param aToolbox the toolbox
      * @param providerType the provider type
      * @param id the id for the group.
@@ -1021,6 +1024,11 @@ public class DefaultDataGroupInfo implements DataGroupInfo
                     removed = dgi.removeMember(dti, recursive, source);
                     if (removed)
                     {
+                        if (dgi.getMembers(false).isEmpty() && dgi.getChildren().isEmpty())
+                        {
+                            // remove the group too:
+                            removeChild(dgi, source);
+                        }
                         break;
                     }
                 }
@@ -1205,7 +1213,8 @@ public class DefaultDataGroupInfo implements DataGroupInfo
      *
      * @param dgi The child to remove.
      * @param source The source making the change.
-     * @param keepActive True if the state of the child should not change, otherwise the child will be set to inactive.
+     * @param keepActive True if the state of the child should not change,
+     *            otherwise the child will be set to inactive.
      * @return True if the remove was successful.
      */
     private boolean removeChild(DataGroupInfo dgi, Object source, boolean keepActive)
