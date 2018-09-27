@@ -5,9 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.IntFunction;
+import java.util.stream.Collectors;
 
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.NotThreadSafe;
+import javafx.beans.value.ChangeListener;
+
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableModel;
 
@@ -17,7 +18,10 @@ import gnu.trove.iterator.TIntIterator;
 import gnu.trove.iterator.TLongIterator;
 import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.list.array.TLongArrayList;
+import io.opensphere.analysis.prefs.MGRSPreferences;
 import io.opensphere.analysis.table.model.MetaColumn;
+import io.opensphere.analysis.util.MGRSUtilities;
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.IntegerRange;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.model.time.TimeSpanList;
@@ -28,9 +32,11 @@ import io.opensphere.core.util.swing.table.AbstractRowDataProvider;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.element.DataElement;
-import io.opensphere.mantle.data.util.DataElementLookupException;
+import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.util.DataElementLookupUtils;
-import javafx.beans.value.ChangeListener;
+import io.opensphere.mantle.util.MantleToolboxUtils;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.NotThreadSafe;
 
 /**
  * Data element provider for the list tool table model.
@@ -40,6 +46,8 @@ class DataElementProvider extends AbstractRowDataProvider<List<?>>
 {
     /** The logger. */
     private static final Logger LOGGER = Logger.getLogger(DataElementProvider.class);
+
+    private Toolbox myToolbox;
 
     /** The mantle data element lookup utilities. */
     private DataElementLookupUtils myDataElementLookupUtils;
@@ -82,11 +90,13 @@ class DataElementProvider extends AbstractRowDataProvider<List<?>>
      * @param metaColumns the meta columns
      * @param timeColumnIndex the time column index
      */
-    public DataElementProvider(TableModel model, MantleToolbox mantleToolbox, DataTypeInfo dataType,
-            List<MetaColumn<?>> metaColumns, int timeColumnIndex)
+    public DataElementProvider(TableModel model, Toolbox toolbox, DataTypeInfo dataType, List<MetaColumn<?>> metaColumns,
+            int timeColumnIndex)
     {
         super(model);
-        if (mantleToolbox != null)
+        myToolbox = toolbox;
+        MantleToolbox mantleToolbox;
+        if (toolbox != null && (mantleToolbox = MantleToolboxUtils.getMantleToolbox(toolbox)) != null)
         {
             myDataElementLookupUtils = mantleToolbox.getDataElementLookupUtils();
 //            myRetriever = mantleToolbox.getDataElementCache().getDirectAccessRetriever(dataType);
@@ -380,16 +390,8 @@ class DataElementProvider extends AbstractRowDataProvider<List<?>>
         if (columnIndex >= myMetaColumns.size())
         {
             String columnName = getModel().getColumnName(columnIndex);
-            try
-            {
-                result = myDataElementLookupUtils.getMetaDataPropertyValues(getDataElementIds(), columnName, myDataType,
-                        myDataType.getTypeKey());
-            }
-            catch (DataElementLookupException e)
-            {
-                result = Collections.<Object>emptyList();
-                LOGGER.error(e);
-            }
+            result = getDataElementIds().stream().map(id -> lookupDataElement(id.longValue()).getMetaData().getValue(columnName))
+                    .collect(Collectors.toList());
         }
         else
         {
@@ -437,7 +439,13 @@ class DataElementProvider extends AbstractRowDataProvider<List<?>>
      */
     public DataElement lookupDataElement(long id)
     {
-        DataElement dataElement;
+        DataElement dataElement = myDataElementLookupUtils.getDataElement(id, myDataType, myDataType.getTypeKey());
+        if (dataElement instanceof MapDataElement)
+        {
+            // If the element is a MapDataElement, generate an element with MGRS Derived data
+            return MGRSUtilities.getMGRSDataElement((MapDataElement)dataElement,
+                    MGRSPreferences.getListToolMGRSPrecision(myToolbox.getPreferencesRegistry()), this);
+        }
         // User label doesn't currently show up with direct access DataElements
 //        if (myRetriever.getMapGeometrySupport(id) == null)
 //        {
@@ -447,7 +455,6 @@ class DataElementProvider extends AbstractRowDataProvider<List<?>>
 //        {
 //            dataElement = new DirectAccessMapDataElement(id, myRetriever);
 //        }
-        dataElement = myDataElementLookupUtils.getDataElement(id, myDataType, myDataType.getTypeKey());
         return dataElement;
     }
 

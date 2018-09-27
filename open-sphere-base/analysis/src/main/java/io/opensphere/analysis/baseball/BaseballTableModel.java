@@ -1,10 +1,7 @@
 package io.opensphere.analysis.baseball;
 
-import java.util.Collections;
 import java.util.List;
 
-import io.opensphere.analysis.table.model.MGRSMetaColumn;
-import io.opensphere.analysis.table.model.MetaColumn;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.collections.New;
@@ -47,7 +44,6 @@ class BaseballTableModel extends AbstractColumnTableModel
         myValues = New.list();
         setColumnIdentifiers("Field", "Value");
         setColumnClasses(String.class, Object.class);
-        addMetaColumnData();
         addNormalData(prefsRegistry);
         setTimeField();
     }
@@ -84,19 +80,6 @@ class BaseballTableModel extends AbstractColumnTableModel
     {
         String key = myKeys.get(rowIndex);
         return myElement.getDataTypeInfo().getMetaDataInfo().getSpecialTypeForKey(key);
-    }
-
-    /**
-     * Adds meta column data.
-     */
-    private void addMetaColumnData()
-    {
-        List<MetaColumn<?>> metaColumns = Collections.<MetaColumn<?>>singletonList(new MGRSMetaColumn());
-        for (MetaColumn<?> metaColumn : metaColumns)
-        {
-            myKeys.add(metaColumn.getColumnIdentifier());
-            myValues.add(metaColumn.getValue(-1, myElement));
-        }
     }
 
     /**

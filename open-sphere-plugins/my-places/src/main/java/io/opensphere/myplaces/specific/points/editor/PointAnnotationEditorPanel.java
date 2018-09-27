@@ -13,7 +13,7 @@ import de.micromata.opengis.kml.v_2_2_0.ExtendedData;
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import de.micromata.opengis.kml.v_2_2_0.Point;
 import io.opensphere.core.mgrs.MGRSConverter;
-import io.opensphere.core.mgrs.MGRSUtil;
+import io.opensphere.core.mgrs.MGRSCoreUtil;
 import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.model.GeographicPosition;
@@ -152,7 +152,7 @@ public class PointAnnotationEditorPanel extends AnnotationEditorPanel
         }
 
         int precision = Integer.parseInt(getMGRSPrecisionComboBox().getSelectedItem().toString());
-        String mgrsString = MGRSUtil.reducePrecision(mgrs, precision);
+        String mgrsString = MGRSCoreUtil.reducePrecision(mgrs, precision);
 
         Point point = pt.createAndSetPoint();
         ExtendedData extendedData = pt.getExtendedData();

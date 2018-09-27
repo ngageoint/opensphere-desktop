@@ -15,13 +15,16 @@ import io.opensphere.core.model.LatLonAlt;
 
 /** Class that holds utility methods for MGRS calculations. */
 @SuppressWarnings("PMD.GodClass")
-public final class MGRSUtil
+public final class MGRSCoreUtil
 {
     /** The default altitude to use. */
     private static final double ALTM = 0.5;
 
+    /** The MGRS derived meta column identifier. */
+    public static final String MGRS_DERIVED = "MGRS Derived";
+
     /** Logger reference. */
-    private static final Logger LOGGER = Logger.getLogger(MGRSUtil.class);
+    private static final Logger LOGGER = Logger.getLogger(MGRSCoreUtil.class);
 
     /**
      * Check the given corner positions and create a bounding box for a hammer
@@ -752,7 +755,7 @@ public final class MGRSUtil
     /**
      * Private constructor.
      */
-    private MGRSUtil()
+    private MGRSCoreUtil()
     {
     }
 }
