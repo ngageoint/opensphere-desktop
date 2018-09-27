@@ -27,6 +27,7 @@ import io.opensphere.core.order.OrderCategory;
 import io.opensphere.core.order.OrderManager;
 import io.opensphere.core.order.OrderManagerRegistry;
 import io.opensphere.core.util.XMLUtilities;
+import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.AbstractDataGroupInfoChangeEvent;
@@ -75,14 +76,13 @@ public class StateControllerImplTest
                 EasyMockHelper.eq(stateCapture));
         EasyMockSupport support = new EasyMockSupport();
 
-//        Toolbox toolbox = createToolbox(support, moduleStateManager);
-//        Collection<String> idCollection = New.collection();
-//        EasyMock.expect(moduleStateManager.getRegisteredStateIds()).andReturn(idCollection);
+        Toolbox toolbox = createToolbox(support, moduleStateManager);
+        Collection<String> idCollection = New.collection();
+        EasyMock.expect(moduleStateManager.getRegisteredStateIds()).andReturn(idCollection);
         EasyMock.replay(moduleStateManager, modules);
         support.replayAll();
 
-//        StateControllerImpl controller = new StateControllerImpl(toolbox);
-        StateControllerImpl controller = new StateControllerImpl(moduleStateManager);
+        StateControllerImpl controller = new StateControllerImpl(toolbox);
         controller.saveState(id, description, tags, modules, true, outputStream);
         support.verifyAll();
 
