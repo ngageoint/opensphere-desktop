@@ -5,14 +5,13 @@
     <parent>
         <groupId>io.open-sphere.install</groupId>
         <artifactId>open-sphere-install</artifactId>
-        <version>5.2.5-SNAPSHOT</version>
+        <version>5.2.6-SNAPSHOT</version>
     </parent>
     <artifactId>open-sphere-install-linux64</artifactId>
     <name>${application.display.name} Installer (Linux 64-Bit)</name>
     <packaging>pom</packaging>
 
     <properties>
-        <izpack.version>5.1.1</izpack.version>
         <staging.dir>${project.build.directory}/staging</staging.dir>
         <staging.dir.remote>${project.build.directory}/remote_staging</staging.dir.remote>
         <project.version.build>${build.product.number}</project.version.build>

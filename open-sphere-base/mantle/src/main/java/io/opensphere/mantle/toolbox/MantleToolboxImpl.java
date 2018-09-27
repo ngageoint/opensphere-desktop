@@ -45,7 +45,7 @@ import io.opensphere.mantle.plugin.queryline.QueryLineManager;
 import io.opensphere.mantle.plugin.queryline.impl.QueryLineManagerImpl;
 import io.opensphere.mantle.plugin.queryregion.QueryRegionManager;
 import io.opensphere.mantle.plugin.queryregion.impl.QueryRegionManagerImpl;
-import io.opensphere.mantle.plugin.selection.SelectionCommand;
+import io.opensphere.mantle.plugin.selection.SelectionCommandFactory;
 import io.opensphere.mantle.plugin.selection.SelectionHandler;
 import io.opensphere.mantle.util.dynenum.DynamicEnumerationRegistry;
 import io.opensphere.mantle.util.dynenum.impl.DynamicEnumerationRegistryImpl;
@@ -146,15 +146,15 @@ public class MantleToolboxImpl implements MantleToolbox
         mySelectionHandler = new SelectionHandler(aToolbox, myDataGroupController, myDataTypeController, qrmi, myDataElementCache,
                 myDataElementUpdateUtils);
         mySelectionHandler.install(aToolbox);
-        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommand.ADD_FEATURES, qrmi);
-        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommand.ADD_FEATURES_CURRENT_FRAME, qrmi);
-        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommand.LOAD_FEATURES, qrmi);
-        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommand.LOAD_FEATURES_CURRENT_FRAME, qrmi);
-        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommand.CANCEL_QUERY, qrmi);
+        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommandFactory.ADD_FEATURES, qrmi);
+        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommandFactory.ADD_FEATURES_CURRENT_FRAME, qrmi);
+        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommandFactory.LOAD_FEATURES, qrmi);
+        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommandFactory.LOAD_FEATURES_CURRENT_FRAME, qrmi);
+        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommandFactory.CANCEL_QUERY, qrmi);
 
         myQueryLineManager = new QueryLineManagerImpl(aToolbox);
-        mySelectionHandler.registerLineSelectionCommandProcessor(SelectionCommand.CREATE_BUFFER_REGION, myQueryLineManager);
-        mySelectionHandler.registerLineSelectionCommandProcessor(SelectionCommand.CREATE_BUFFER_REGION_FOR_SELECTED_SEGMENT,
+        mySelectionHandler.registerLineSelectionCommandProcessor(SelectionCommandFactory.CREATE_BUFFER_REGION, myQueryLineManager);
+        mySelectionHandler.registerLineSelectionCommandProcessor(SelectionCommandFactory.CREATE_BUFFER_REGION_FOR_SELECTED,
                 myQueryLineManager);
 
         myDataTypeInfoPreferenceAssistant = new DataTypeInfoPreferenceAssistantImpl(myParentToolbox);

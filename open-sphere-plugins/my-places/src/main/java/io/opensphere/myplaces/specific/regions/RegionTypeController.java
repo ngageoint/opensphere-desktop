@@ -1,5 +1,7 @@
 package io.opensphere.myplaces.specific.regions;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -25,8 +27,10 @@ import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.LatLonAlt;
+import io.opensphere.core.util.AwesomeIconRegular;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.lang.StringUtilities;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.mantle.data.MapVisualizationType;
 import io.opensphere.myplaces.models.MyPlacesDataGroupInfo;
 import io.opensphere.myplaces.models.MyPlacesDataTypeInfo;
@@ -190,13 +194,14 @@ public class RegionTypeController extends PlaceTypeController
     private class GeometryContextMenuProvider implements ContextMenuProvider<GeometryContextKey>
     {
         @Override
-        public List<JMenuItem> getMenuItems(String contextId, GeometryContextKey key)
+        public List<Component> getMenuItems(String contextId, GeometryContextKey key)
         {
-            List<JMenuItem> options = new LinkedList<>();
-            if ((ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT.equals(contextId)
-                    || ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT.equals(contextId)))
+            List<Component> options = new LinkedList<>();
+            if (ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT.equals(contextId)
+                    || ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT.equals(contextId))
             {
-                JMenuItem saveMI = new JMenuItem("Save as Area");
+                JMenuItem saveMI = new JMenuItem("Save as Place");
+                saveMI.setIcon(new GenericFontIcon(AwesomeIconRegular.SAVE, Color.WHITE));
                 if (key.getGeometry() instanceof PolygonGeometry)
                 {
                     saveMI.addActionListener(e -> createRegionFromGeometry((PolygonGeometry)key.getGeometry()));

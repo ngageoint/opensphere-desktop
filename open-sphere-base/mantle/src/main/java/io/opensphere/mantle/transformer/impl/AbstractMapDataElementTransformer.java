@@ -24,7 +24,7 @@ import io.opensphere.mantle.data.element.VisualizationState;
 import io.opensphere.mantle.data.element.event.DataElementDoubleClickedEvent;
 import io.opensphere.mantle.data.element.event.DataElementHighlightChangeEvent;
 import io.opensphere.mantle.data.element.event.consolidated.AbstractConsolidatedDataElementChangeEvent;
-import io.opensphere.mantle.plugin.selection.SelectionCommand;
+import io.opensphere.mantle.plugin.selection.SelectionCommandFactory;
 import io.opensphere.mantle.plugin.selection.SelectionCommandProcessor;
 import io.opensphere.mantle.transformer.MapDataElementTransformer;
 import io.opensphere.mantle.util.MantleToolboxUtils;
@@ -107,13 +107,13 @@ public abstract class AbstractMapDataElementTransformer implements MapDataElemen
                 new DefaultMouseBinding(MouseEvent.MOUSE_CLICKED));
 
         MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler()
-                .registerSelectionCommandProcessor(SelectionCommand.SELECT, mySelectionCommandProcessor);
+                .registerSelectionCommandProcessor(SelectionCommandFactory.SELECT, mySelectionCommandProcessor);
         MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler()
-                .registerSelectionCommandProcessor(SelectionCommand.DESELECT, mySelectionCommandProcessor);
+                .registerSelectionCommandProcessor(SelectionCommandFactory.DESELECT, mySelectionCommandProcessor);
         MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler()
-                .registerSelectionCommandProcessor(SelectionCommand.SELECT_EXCLUSIVE, mySelectionCommandProcessor);
+                .registerSelectionCommandProcessor(SelectionCommandFactory.SELECT_EXCLUSIVE, mySelectionCommandProcessor);
         MantleToolboxUtils.getMantleToolbox(myToolbox).getSelectionHandler()
-                .registerSelectionCommandProcessor(SelectionCommand.PURGE, myPurgeCommandProcessor);
+                .registerSelectionCommandProcessor(SelectionCommandFactory.REMOVE_ALL, myPurgeCommandProcessor);
     }
 
     @Override

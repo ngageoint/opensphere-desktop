@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import javax.swing.JMenuItem;
 
@@ -21,6 +22,7 @@ import io.opensphere.core.event.DataRemovalEvent;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.event.EventListenerService;
 import io.opensphere.core.geometry.Geometry;
+import io.opensphere.core.geometry.MultiPolygonGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.constraint.Constraints;
 import io.opensphere.core.geometry.renderproperties.DefaultPolygonRenderProperties;
@@ -44,14 +46,14 @@ import io.opensphere.mantle.plugin.queryregion.QueryRegion;
 import io.opensphere.mantle.plugin.queryregion.QueryRegionListener;
 import io.opensphere.mantle.plugin.queryregion.QueryRegionManager;
 import io.opensphere.mantle.plugin.selection.SelectionCommand;
+import io.opensphere.mantle.plugin.selection.SelectionCommandFactory;
 import io.opensphere.mantle.plugin.selection.SelectionCommandProcessor;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /**
  * Implementation for {@link QueryRegionManager}.
  */
-public class QueryRegionManagerImpl extends EventListenerService
-        implements QueryRegionManager, SelectionCommandProcessor
+public class QueryRegionManagerImpl extends EventListenerService implements QueryRegionManager, SelectionCommandProcessor
 {
     /** Change support for query region listeners. */
     private final ChangeSupport<QueryRegionListener> myChangeSupport = WeakChangeSupport.create();
@@ -310,29 +312,29 @@ public class QueryRegionManagerImpl extends EventListenerService
     @Override
     public void selectionOccurred(Collection<? extends PolygonGeometry> bounds, SelectionCommand cmd)
     {
-        switch (cmd)
+        if (cmd.equals(SelectionCommandFactory.ADD_FEATURES))
         {
-            case ADD_FEATURES:
-                addQueryRegion(deriveQueryPolygons(bounds, false), getFilterMap());
-                break;
-            case ADD_FEATURES_CURRENT_FRAME:
-                addQueryRegion(deriveQueryPolygons(bounds, true), myToolbox.getTimeManager().getPrimaryActiveTimeSpans(),
-                        getFilterMap());
-                break;
-            case LOAD_FEATURES:
-                removeAllQueryRegions();
-                addQueryRegion(deriveQueryPolygons(bounds, false), getFilterMap());
-                break;
-            case LOAD_FEATURES_CURRENT_FRAME:
-                removeAllQueryRegions();
-                addQueryRegion(deriveQueryPolygons(bounds, true), myToolbox.getTimeManager().getPrimaryActiveTimeSpans(),
-                        getFilterMap());
-                break;
-            case CANCEL_QUERY:
-                removeQueryRegion(bounds);
-                break;
-            default:
-                break;
+            addQueryRegion(deriveQueryPolygons(bounds, false), getFilterMap());
+        }
+        else if (cmd.equals(SelectionCommandFactory.ADD_FEATURES_CURRENT_FRAME))
+        {
+            addQueryRegion(deriveQueryPolygons(bounds, true), myToolbox.getTimeManager().getPrimaryActiveTimeSpans(),
+                    getFilterMap());
+        }
+        else if (cmd.equals(SelectionCommandFactory.LOAD_FEATURES))
+        {
+            removeAllQueryRegions();
+            addQueryRegion(deriveQueryPolygons(bounds, false), getFilterMap());
+        }
+        else if (cmd.equals(SelectionCommandFactory.LOAD_FEATURES_CURRENT_FRAME))
+        {
+            removeAllQueryRegions();
+            addQueryRegion(deriveQueryPolygons(bounds, true), myToolbox.getTimeManager().getPrimaryActiveTimeSpans(),
+                    getFilterMap());
+        }
+        else if (cmd.equals(SelectionCommandFactory.CANCEL_QUERY))
+        {
+            removeQueryRegion(bounds);
         }
     }
 
@@ -404,7 +406,17 @@ public class QueryRegionManagerImpl extends EventListenerService
                 props.setStipple(StippleModelConfig.DOTTED);
             }
 
-            output.add(geom.derive(props, (Constraints)null));
+            if (geom instanceof MultiPolygonGeometry)
+            {
+                MultiPolygonGeometry multiPolygonGeometry = (MultiPolygonGeometry)geom;
+                output.addAll(multiPolygonGeometry.getGeometries().stream().map(g -> g.derive(props, (Constraints)null))
+                        .collect(Collectors.toList()));
+            }
+            else
+            {
+                output.add(geom.derive(props, (Constraints)null));
+            }
+
         }
 
         return output;

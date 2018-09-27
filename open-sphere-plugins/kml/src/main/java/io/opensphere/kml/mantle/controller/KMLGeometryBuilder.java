@@ -538,7 +538,19 @@ public class KMLGeometryBuilder
      */
     private Polygon normalize(final Polygon polygon)
     {
-        return convertToKML((com.vividsolutions.jts.geom.Polygon)convertToJTS(polygon).buffer(0));
+        com.vividsolutions.jts.geom.Geometry jtsGeometry = convertToJTS(polygon).buffer(0);
+
+        if (jtsGeometry instanceof com.vividsolutions.jts.geom.Polygon)
+        {
+            return convertToKML((com.vividsolutions.jts.geom.Polygon)jtsGeometry);
+        }
+
+        // TODO: temporary fix because JTS Geometry.buffer() can sometimes fail
+        // and return a badly formed multipolygon when a polygon crosses the
+        // meridian, antimeridian, or equator - if the polygon also overlaps, it
+        // may cause further issues with the kml loading to return the polygon
+        // without normalizing it, so this needs to be fixed in a better way later.
+        return polygon;
     }
 
     /**

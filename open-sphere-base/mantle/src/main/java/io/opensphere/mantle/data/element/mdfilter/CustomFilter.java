@@ -62,6 +62,20 @@ public interface CustomFilter
     boolean isActive();
 
     /**
+     * True if this is from a state.
+     *
+     * @return true, if is from a state
+     */
+    boolean isFromState();
+
+    /**
+     * Sets if the filter is from a state.
+     *
+     * @param isFromState if the filter is from a state
+     */
+    void setFromState(boolean isFromState);
+
+    /**
      * Sets the active.
      *
      * @param isActive the new active

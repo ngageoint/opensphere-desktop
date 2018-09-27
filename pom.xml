@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.open-sphere</groupId>
 	<artifactId>open-sphere</artifactId>
-	<version>5.2.5-SNAPSHOT</version>
+	<version>5.2.6-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>${application.display.name}</name>
 	<description>
@@ -82,6 +82,7 @@
 		<org.eclipse.jetty.version>9.4.9.v20180320</org.eclipse.jetty.version>
 		<release.url>https://nexus.devops.geointservices.io/content/repositories/FADE-COTS/</release.url>
 		<jaxb.version>2.3.0</jaxb.version>
+		<izpack.version>5.1.3</izpack.version>
 	</properties>
 	<build>
 		<pluginManagement>
@@ -309,7 +310,7 @@
 				<plugin>
 					<groupId>org.codehaus.izpack</groupId>
 					<artifactId>izpack-maven-plugin</artifactId>
-					<version>5.1.3-SNAPSHOT</version>
+					<version>${izpack.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -852,7 +853,7 @@
 			<dependency>
 				<groupId>org.codehaus.izpack</groupId>
 				<artifactId>izpack-panel</artifactId>
-				<version>5.1.3-SNAPSHOT</version>
+				<version>${izpack.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.jidesoft</groupId>

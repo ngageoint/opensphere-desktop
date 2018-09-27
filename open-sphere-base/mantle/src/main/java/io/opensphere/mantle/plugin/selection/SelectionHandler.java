@@ -1,15 +1,16 @@
 package io.opensphere.mantle.plugin.selection;
 
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,6 +29,7 @@ import io.opensphere.core.control.action.context.MultiGeometryContextKey;
 import io.opensphere.core.control.action.context.ScreenPositionContextKey;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.GeometryGroupGeometry;
+import io.opensphere.core.geometry.MultiPolygonGeometry;
 import io.opensphere.core.geometry.PointGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.PolylineGeometry;
@@ -59,10 +61,10 @@ public class SelectionHandler
     private static final Logger LOGGER = Logger.getLogger(SelectionHandler.class);
 
     /** The my command to processor map. */
-    private final EnumMap<SelectionCommand, List<WeakReference<SelectionCommandProcessor>>> myCommandToProcessorMap;
+    private final Map<SelectionCommand, List<WeakReference<SelectionCommandProcessor>>> myCommandToProcessorMap;
 
     /** The my command to processor map. */
-    private final EnumMap<SelectionCommand, List<WeakReference<LineSelectionCommandProcessor>>> myLineCommandToProcessorMap;
+    private final Map<SelectionCommand, List<WeakReference<LineSelectionCommandProcessor>>> myLineCommandToProcessorMap;
 
     /** The data group controller. */
     private final DataGroupController myDataGroupController;
@@ -77,7 +79,7 @@ public class SelectionHandler
     private final ContextMenuProvider<ScreenPositionContextKey> myDefaultContextMenuProvider = new ContextMenuProvider<>()
     {
         @Override
-        public List<JMenuItem> getMenuItems(String contextId, ScreenPositionContextKey key)
+        public List<Component> getMenuItems(String contextId, ScreenPositionContextKey key)
         {
             final GeographicPosition pos = myToolbox.getMapManager().convertToPosition(new Vector2i(key.getPosition().asPoint()),
                     ReferenceLevel.ELLIPSOID);
@@ -87,7 +89,7 @@ public class SelectionHandler
                 PointGeometry.Builder<GeographicPosition> pointGeometry = new PointGeometry.Builder<>();
                 pointGeometry.setPosition(pos);
                 myNoGeometryPoint = new PointGeometry(pointGeometry, new DefaultPointRenderProperties(0, true, true, true), null);
-                return SelectionCommand.getNoGeometryMenuItems(myMenuActionListener);
+                return SelectionCommandFactory.getNoGeometryMenuItems(myMenuActionListener);
             }
             return Collections.emptyList();
         }
@@ -109,9 +111,9 @@ public class SelectionHandler
     private final ContextMenuProvider<GeometryContextKey> myGeometryContextMenuProvider = new ContextMenuProvider<>()
     {
         @Override
-        public List<JMenuItem> getMenuItems(String contextId, GeometryContextKey key)
+        public List<Component> getMenuItems(String contextId, GeometryContextKey key)
         {
-            List<JMenuItem> menuItems = New.list();
+            List<Component> menuItems = New.list();
             if (contextId.equals(ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT))
             {
                 Geometry geom = key.getGeometry();
@@ -120,14 +122,14 @@ public class SelectionHandler
             else if (contextId.equals(ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT)
                     && key.getGeometry() instanceof PolygonGeometry)
             {
-                return SelectionCommand.getSelectionRegionMenuItems(
+                return SelectionCommandFactory.getSelectionRegionMenuItems(
                         new PolygonCommandActionListener(Collections.singleton(key.getGeometry())), hasLoadFilters());
             }
             else if (contextId.equals(ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT)
                     && key.getGeometry() instanceof PolylineGeometry)
             {
-                return SelectionCommand.getPolylineMenuItems(
-                        new PolylineCommandActionListener(Collections.singleton(key.getGeometry())), hasLoadFilters());
+                return SelectionCommandFactory
+                        .getPolylineMenuItems(new PolylineCommandActionListener(Collections.singleton(key.getGeometry())));
             }
             return menuItems;
         }
@@ -151,15 +153,18 @@ public class SelectionHandler
     private final ContextMenuProvider<MultiGeometryContextKey> myMultiGeometryContextMenuProvider = new ContextMenuProvider<>()
     {
         @Override
-        public List<JMenuItem> getMenuItems(String contextId, MultiGeometryContextKey key)
+        public List<Component> getMenuItems(String contextId, MultiGeometryContextKey key)
         {
-            List<JMenuItem> menuItems = getMultiGeometryMenu(key.getGeometries());
+            List<Component> menuItems = getMultiGeometryMenu(key.getGeometries());
             if (key.getGeometries().isEmpty())
             {
-                for (JMenuItem item : menuItems)
+                for (Component item : menuItems)
                 {
                     item.setEnabled(false);
-                    item.setToolTipText("No geometries selected for action.");
+                    if (item instanceof JMenuItem)
+                    {
+                        ((JMenuItem)item).setToolTipText("No geometries selected for action.");
+                    }
                 }
             }
             return menuItems;
@@ -210,8 +215,8 @@ public class SelectionHandler
     {
         myDataTypeController = pTypeController;
         myExecutor = Executors.newFixedThreadPool(1, new NamedThreadFactory("SelectionHandler:Dispatch", 3, 4));
-        myCommandToProcessorMap = new EnumMap<>(SelectionCommand.class);
-        myLineCommandToProcessorMap = new EnumMap<>(SelectionCommand.class);
+        myCommandToProcessorMap = New.map();
+        myLineCommandToProcessorMap = New.map();
         myToolbox = toolbox;
         myDataGroupController = dataGroupController;
         myQueryRegionManager = queryRegionManager;
@@ -348,7 +353,7 @@ public class SelectionHandler
      */
     public void selectionRegionCreated(List<PolygonGeometry> bounds, String command)
     {
-        doPurgeCheck(selectionCommand(command), bounds);
+        doPurgeCheck(SelectionCommandFactory.getSelectionCommand(command), bounds);
     }
 
     /**
@@ -359,7 +364,7 @@ public class SelectionHandler
      */
     public void selectionLineCreated(List<PolylineGeometry> bounds, String command)
     {
-        SelectionCommand selectionCommand = selectionCommand(command);
+        SelectionCommand selectionCommand = SelectionCommandFactory.getSelectionCommand(command);
 
         notifyLineSelectionCommandProcessors(bounds, selectionCommand);
     }
@@ -423,7 +428,7 @@ public class SelectionHandler
     {
         synchronized (myCommandToProcessorMap)
         {
-            for (SelectionCommand command : SelectionCommand.values())
+            for (SelectionCommand command : SelectionCommandFactory.getAllCommands())
             {
                 unregisterSelectionCommandProcessor(command, processor);
             }
@@ -461,14 +466,14 @@ public class SelectionHandler
     {
         assert EventQueue.isDispatchThread();
         destroyPreview();
-        SelectionCommand cmd = selectionCommand(act);
+        SelectionCommand cmd = SelectionCommandFactory.getSelectionCommand(act);
         if (cmd == null)
         {
             return;
         }
         if (myLastGeometry == null)
         {
-            if (cmd == SelectionCommand.CREATE_BUFFER_REGION)
+            if (cmd.equals(SelectionCommandFactory.CREATE_BUFFER_REGION))
             {
                 myLastGeometry = myNoGeometryPoint;
             }
@@ -477,7 +482,7 @@ public class SelectionHandler
                 doPurgeCheck(cmd, null);
             }
         }
-        if (cmd == SelectionCommand.CREATE_BUFFER_REGION)
+        if (cmd.equals(SelectionCommandFactory.CREATE_BUFFER_REGION))
         {
             Quantify.collectMetric("mist3d.select.create-buffer-region");
             if (myLastGeometry instanceof PolylineGeometry && !(myLastGeometry instanceof PolygonGeometry))
@@ -486,15 +491,19 @@ public class SelectionHandler
             }
             else
             {
-                myBufferRegionCreator.createBuffer(myLastGeometry);
+                // check to see if the geometry is a member of a group of
+                // multiple geometries. if so, create the buffer for the group
+                // instead of the individual geometry:
+                myBufferRegionCreator.createBuffer(getCompleteGeometryGroup(myLastGeometry));
             }
         }
-        else if (cmd == SelectionCommand.CREATE_BUFFER_REGION_FOR_SELECTED_SEGMENT)
+        else if (cmd.equals(SelectionCommandFactory.CREATE_BUFFER_REGION_FOR_SELECTED))
         {
             Quantify.collectMetric("mist3d.tracks.create-buffer-for-selected-segment");
             myBufferRegionCreator.createBuffer(myLastGeometry);
         }
-        else if (myLastGeometry instanceof PolygonGeometry)
+        else if (myLastGeometry instanceof PolygonGeometry || (myLastGeometry instanceof GeometryGroupGeometry
+                && ((GeometryGroupGeometry)myLastGeometry).getGeometries().iterator().next() instanceof PolygonGeometry))
         {
             Set<PolygonGeometry> geom = Collections.singleton((PolygonGeometry)myLastGeometry);
             myLastGeometry = null;
@@ -533,6 +542,16 @@ public class SelectionHandler
         DataTypeInfo dataType = myDataTypeController.getDataTypeInfoForGeometryId(pGeometry.getDataModelId());
         if (dataType != null)
         {
+            if (pGeometry instanceof PolygonGeometry)
+            {
+                MapDataElementTransformer transformer = myDataTypeController.getTransformerForType(dataType.getTypeKey());
+                MultiPolygonGeometry.Builder<GeographicPosition> builder = new MultiPolygonGeometry.Builder<>(
+                        GeographicPosition.class);
+                Collection<PolygonGeometry> geometries = myToolbox.getGeometryRegistry().getGeometriesForSource(transformer,
+                        PolygonGeometry.class);
+                builder.setInitialGeometries(geometries);
+                return new MultiPolygonGeometry(builder, ((PolygonGeometry)pGeometry).getRenderProperties(), null);
+            }
             MapDataElementTransformer transformer = myDataTypeController.getTransformerForType(dataType.getTypeKey());
             GeometryGroupGeometry.Builder builder = new GeometryGroupGeometry.Builder(GeographicPosition.class);
             builder.setInitialGeometries(myToolbox.getGeometryRegistry()
@@ -557,10 +576,10 @@ public class SelectionHandler
         /* Do a special confirmation for purge here before notifying the command
          * processors. Probably not the best way to do this, refactor later into
          * something more generic. */
-        if (cmd != SelectionCommand.PURGE)
+        if (!cmd.equals(SelectionCommandFactory.REMOVE_ALL))
         {
             // special case: deselect with no bounds, so deselect all
-            if (selectionBounds == null && cmd == SelectionCommand.DESELECT)
+            if (selectionBounds == null && cmd.equals(SelectionCommandFactory.DESELECT))
             {
                 myDataElementUpdateUtils.setDataElementsSelected(false, myDataElementCache.getAllElementIdsAsList(), null, this);
             }
@@ -573,26 +592,6 @@ public class SelectionHandler
         {
             notifySelectionCommandProcessors(selectionBounds, cmd);
         }
-    }
-
-    /**
-     * Gets the selection command from its string action command counterpart.
-     *
-     * @param actionCommand the command to convert to a {@link SelectionCommand}
-     * @return the selection command or null if not valid.
-     */
-    private SelectionCommand selectionCommand(String actionCommand)
-    {
-        try
-        {
-            return SelectionCommand.valueOf(actionCommand);
-        }
-        catch (IllegalArgumentException ex)
-        {
-            // Unknown command returned.
-            LOGGER.warn("Illegal Selection Command Recieved: " + actionCommand, ex);
-        }
-        return null;
     }
 
     /**
@@ -713,28 +712,28 @@ public class SelectionHandler
      * @param geom the geometry
      * @return menu items
      */
-    public List<JMenuItem> getGeometryMenuItems(Geometry geom)
+    public List<Component> getGeometryMenuItems(Geometry geom)
     {
-        List<JMenuItem> menuItems = New.list();
+        List<Component> menuItems = New.list();
         if (myQueryRegionManager.getQueryRegion(geom) != null)
         {
             myLastGeometry = geom;
-            menuItems = SelectionCommand.getQueryRegionMenuItems(myMenuActionListener, hasLoadFilters());
+            menuItems = SelectionCommandFactory.getQueryRegionMenuItems(myMenuActionListener, hasLoadFilters());
         }
         else if (geom instanceof PolygonGeometry)
         {
-            myLastGeometry = geom;
-            menuItems = SelectionCommand.getPolygonMenuItems(myMenuActionListener, hasLoadFilters(), false);
+            myLastGeometry = getCompleteGeometryGroup(geom);
+            menuItems = SelectionCommandFactory.getPolygonMenuItems(myMenuActionListener, hasLoadFilters(), false);
         }
         else if (geom instanceof PolylineGeometry)
         {
             myLastGeometry = geom;
-            menuItems = SelectionCommand.getPolylineMenuItems(myMenuActionListener, hasLoadFilters());
+            menuItems = SelectionCommandFactory.getPolylineMenuItems(myMenuActionListener);
         }
         else if (geom instanceof PointGeometry)
         {
             myLastGeometry = geom;
-            menuItems = SelectionCommand.getPointMenuItems(myMenuActionListener, hasLoadFilters());
+            menuItems = SelectionCommandFactory.getPointMenuItems(myMenuActionListener);
         }
         else if (geom instanceof GeometryGroupGeometry)
         {
@@ -746,15 +745,15 @@ public class SelectionHandler
                 Geometry sampleGeometry = ((GeometryGroupGeometry)geom).getGeometries().iterator().next();
                 if (sampleGeometry instanceof PolygonGeometry)
                 {
-                    menuItems = SelectionCommand.getPolygonMenuItems(myMenuActionListener, hasLoadFilters(), false);
+                    menuItems = SelectionCommandFactory.getPolygonMenuItems(myMenuActionListener, hasLoadFilters(), false);
                 }
                 else if (sampleGeometry instanceof PolylineGeometry)
                 {
-                    menuItems = SelectionCommand.getPolylineMenuItems(myMenuActionListener, hasLoadFilters());
+                    menuItems = SelectionCommandFactory.getPolylineMenuItems(myMenuActionListener);
                 }
                 else if (sampleGeometry instanceof PointGeometry)
                 {
-                    menuItems = SelectionCommand.getPointMenuItems(myMenuActionListener, hasLoadFilters());
+                    menuItems = SelectionCommandFactory.getPointMenuItems(myMenuActionListener);
                 }
                 else
                 {
@@ -776,8 +775,8 @@ public class SelectionHandler
      * @param geometries the geometries
      * @return menuItems the menu
      */
-    public List<JMenuItem> getMultiGeometryMenu(Collection<? extends Geometry> geometries)
+    public List<Component> getMultiGeometryMenu(Collection<? extends Geometry> geometries)
     {
-        return SelectionCommand.getRoiMenuItems(new PolygonCommandActionListener(geometries), hasLoadFilters());
+        return SelectionCommandFactory.getRoiMenuItems(new PolygonCommandActionListener(geometries), hasLoadFilters());
     }
 }

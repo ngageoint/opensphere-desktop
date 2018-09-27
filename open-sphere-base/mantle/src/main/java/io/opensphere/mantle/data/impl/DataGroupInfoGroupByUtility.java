@@ -62,6 +62,7 @@ public final class DataGroupInfoGroupByUtility
         NodeUserObjectGenerator uoGen = userObjGen == null ? new DefaultNodeUserObjectGenerator() : userObjGen;
         TreeOptions treeOptions = builder.getTreeOptions();
 
+        dataGroups.removeIf(e -> e.getId().equals("Area"));
         if (treeOptions == null || treeOptions.isFlattenTree())
         {
             createFlattenedTree(builder, uoGen, dataGroups, result);

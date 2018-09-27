@@ -7,6 +7,7 @@ import com.vividsolutions.jts.geom.Polygon;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.plugin.selection.SelectionCommand;
+import io.opensphere.mantle.plugin.selection.SelectionCommandFactory;
 import io.opensphere.mantle.transformer.impl.worker.DataElementTransformerWorkerDataProvider;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
@@ -32,29 +33,30 @@ public class SelectionCommandWorker extends PolygonRegionCommandWorker
     public void process()
     {
         List<Long> idsToChange = New.list(getProvider().getGeometrySet().size());
-        switch (getCommand())
+        SelectionCommand command = getCommand();
+
+        if (command.equals(SelectionCommandFactory.SELECT))
         {
-            case SELECT:
-                idsToChange.addAll(getIntersectingIdSet());
-                MantleToolboxUtils.getDataElementUpdateUtils(getProvider().getToolbox()).setDataElementsSelectionState(
-                        getIntersectingIdSet(), idsToChange, getProvider().getDataType().getTypeKey(),
-                        getProvider().getUpdateSource());
-                break;
-            case SELECT_EXCLUSIVE:
-                idsToChange.addAll(getIntersectingIdSet());
-                idsToChange.addAll(getNonIntersectingIdSet());
-                MantleToolboxUtils.getDataElementUpdateUtils(getProvider().getToolbox()).setDataElementsSelectionState(
-                        getIntersectingIdSet(), idsToChange, getProvider().getDataType().getTypeKey(),
-                        getProvider().getUpdateSource());
-                break;
-            case DESELECT:
-                idsToChange.addAll(getIntersectingIdSet());
-                MantleToolboxUtils.getDataElementUpdateUtils(getProvider().getToolbox()).setDataElementsSelectionState(
-                        Collections.<Long>emptySet(), idsToChange, getProvider().getDataType().getTypeKey(),
-                        getProvider().getUpdateSource());
-                break;
-            default:
-                break;
+            idsToChange.addAll(getIntersectingIdSet());
+            MantleToolboxUtils.getDataElementUpdateUtils(getProvider().getToolbox()).setDataElementsSelectionState(
+                    getIntersectingIdSet(), idsToChange, getProvider().getDataType().getTypeKey(),
+                    getProvider().getUpdateSource());
+        }
+        else if (command.equals(SelectionCommandFactory.SELECT_EXCLUSIVE))
+        {
+            idsToChange.addAll(getIntersectingIdSet());
+            idsToChange.addAll(getNonIntersectingIdSet());
+            MantleToolboxUtils.getDataElementUpdateUtils(getProvider().getToolbox()).setDataElementsSelectionState(
+                    getIntersectingIdSet(), idsToChange, getProvider().getDataType().getTypeKey(),
+                    getProvider().getUpdateSource());
+        }
+        else if (command.equals(SelectionCommandFactory.DESELECT))
+        {
+            idsToChange.addAll(getIntersectingIdSet());
+            MantleToolboxUtils.getDataElementUpdateUtils(getProvider().getToolbox()).setDataElementsSelectionState(
+                    Collections.<Long>emptySet(), idsToChange, getProvider().getDataType().getTypeKey(),
+                    getProvider().getUpdateSource());
+
         }
     }
 }

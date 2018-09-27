@@ -6,7 +6,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
@@ -14,10 +18,16 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.control.BoundEventListener;
+import io.opensphere.core.control.ControlContext;
+import io.opensphere.core.control.ControlRegistry;
+import io.opensphere.core.control.DefaultKeyPressedBinding;
+import io.opensphere.core.control.DiscreteEventAdapter;
 import io.opensphere.core.control.action.ContextActionManager;
 import io.opensphere.core.control.action.ContextSingleActionProvider;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.event.DataRemovalEvent;
+import io.opensphere.core.event.EventListener;
 import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.AwesomeIconRegular;
 import io.opensphere.core.util.AwesomeIconSolid;
@@ -80,6 +90,12 @@ public final class QuerySelector extends JPanel
     /** Listener for changes to the selection mode. */
     private final transient SelectionModeChangeListener mySelectionModeListener;
 
+    /** Hold a reference to my listeners. */
+    private final List<BoundEventListener> myControlEventListeners = new ArrayList<>();
+
+    /** A reference to the subscriber for data removal events. */
+    private EventListener<? super DataRemovalEvent> mySubscriber;
+
     /**
      * Instantiates a new query selector.
      *
@@ -107,13 +123,8 @@ public final class QuerySelector extends JPanel
             mySelectionModeController.setSelectionMode(newMode);
         });
 
-        mySplitButton.addActionListener(e ->
-        {
-            mySelectionModeController.setSelectionMode(mySplitButton.currentSelectionModeProperty().get());
-        });
-
+        addEventListeners();
         setDefaultModeBorder();
-
         addLegendIcons(toolbox);
 
         createRemoveSplitButton();
@@ -128,6 +139,40 @@ public final class QuerySelector extends JPanel
 
         gbc.gridx++;
         add(mySplitButton, gbc);
+    }
+
+    /**
+     * Configures event listeners on the button.
+     */
+    private void addEventListeners()
+    {
+        mySplitButton.addActionListener(e ->
+        {
+            if (mySplitButton.toggledProperty().get())
+            {
+                mySelectionModeController.setSelectionMode(SelectionMode.NONE);
+            }
+            else
+            {
+                mySelectionModeController.setSelectionMode(mySplitButton.currentSelectionModeProperty().get());
+            }
+        });
+
+        DiscreteEventAdapter escapeListener = new DiscreteEventAdapter("Query", "Cancel Query",
+                "Move the camera so it faces directly at the surface with north up.")
+        {
+            @Override
+            public void eventOccurred(InputEvent event)
+            {
+                mySelectionModeController.setSelectionMode(SelectionMode.NONE);
+            }
+        };
+        myControlEventListeners.add(escapeListener);
+        ControlContext context = myToolbox.getControlRegistry().getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT);
+        context.addListener(escapeListener, new DefaultKeyPressedBinding(KeyEvent.VK_ESCAPE));
+
+        mySubscriber = e -> mySelectionModeController.setSelectionMode(SelectionMode.NONE);
+        myToolbox.getEventManager().subscribe(DataRemovalEvent.class, mySubscriber);
     }
 
     /**
@@ -152,6 +197,7 @@ public final class QuerySelector extends JPanel
                     myDrawProvider);
             mySplitButton.toggledProperty().set(true);
             mySplitButton.currentSelectionModeProperty().set(mode);
+            mySplitButton.getMenu().setVisible(false);
         }
     }
 
@@ -203,13 +249,13 @@ public final class QuerySelector extends JPanel
                         + "The polygon can be used for querying, zooming, purging, etc.");
         Icon lineIcon = new GenericFontIcon(AwesomeIconSolid.LONG_ARROW_ALT_RIGHT, IconUtil.DEFAULT_ICON_FOREGROUND);
         toolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(lineIcon, "Query Selector(Line)",
-                 "Press the Shift button and click the map. Move the cursor and each subsequent click will add an edge to the line. "
+                "Press the Shift button and click the map. Move the cursor and each subsequent click will add an edge to the line. "
                         + "While holding the Shift button, double left clicking the mouse will end the line, "
                         + "and right clicking will remove the most recent edge of the line. "
                         + "The line can be used for querying, zooming, purging, etc. Only points along the line's edges are affected.");
         Icon clearIcon = IconUtil.getColorizedIcon(IconType.CLOSE, Color.RED);
         toolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(clearIcon, "Clear",
-                 "Cancels, disables, or cleans up various parts of the application the user may have used. "
+                "Cancels, disables, or cleans up various parts of the application the user may have used. "
                         + "These include queries, search results, spatial filters, goto points, and states. "
                         + "Use the dropdown menu to select one target to clear. "
                         + "Additionally, in the active layers window, this button will disable the currently selected layer(s).");

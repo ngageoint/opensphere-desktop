@@ -29,19 +29,13 @@ import net.jcip.annotations.NotThreadSafe;
 @NotThreadSafe
 public class BufferRegionCreator
 {
-    /**
-     * The Constant DEFAULT_BUFFER_DISTANCE.
-     */
+    /** The default distance of a new buffer. */
     public static final Length DEFAULT_BUFFER_DISTANCE = Length.create(Kilometers.class, 5.0);
 
-    /**
-     * The toolbox.
-     */
+    /** The toolbox. */
     private final Toolbox myToolbox;
 
-    /**
-     * The selection geometry.
-     */
+    /** The selection geometry. */
     private Geometry myGeometry;
 
     /** The Preview geometry. */
@@ -56,7 +50,7 @@ public class BufferRegionCreator
     {
         myToolbox = toolbox;
     }
-    
+
     /**
      * Gets the value of the {@link #myToolbox} field.
      *
@@ -247,18 +241,17 @@ public class BufferRegionCreator
             }
         }
     }
-    
+
     /**
      * Sets the value of the {@link #myGeometry} field.
      *
-     * @param geometry 
-     *            the value to store in the {@link #myGeometry} field.
+     * @param geometry the value to store in the {@link #myGeometry} field.
      */
     protected void setGeometry(Geometry geometry)
     {
         myGeometry = geometry;
     }
-    
+
     /**
      * Gets the value of the {@link #myGeometry} field.
      *
@@ -268,18 +261,18 @@ public class BufferRegionCreator
     {
         return myGeometry;
     }
-    
+
     /**
      * Sets the value of the {@link #myPreviewGeometry} field.
      *
-     * @param previewGeometry 
-     *            the value to store in the {@link #myPreviewGeometry} field.
+     * @param previewGeometry the value to store in the
+     *            {@link #myPreviewGeometry} field.
      */
     protected void setPreviewGeometry(Geometry previewGeometry)
     {
         myPreviewGeometry = previewGeometry;
     }
-    
+
     /**
      * Gets the value of the {@link #myPreviewGeometry} field.
      *
