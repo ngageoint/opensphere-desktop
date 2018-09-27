@@ -38,10 +38,7 @@ public final class LayerUtilities
         }
         if (node.getChildCount() > 0)
         {
-            for (TreeTableTreeNode child : node.getChildren())
-            {
-                findNodes(setToAddTo, child, selector);
-            }
+            node.getChildren().forEach(child -> findNodes(setToAddTo, child, selector));
         }
     }
 
@@ -71,10 +68,7 @@ public final class LayerUtilities
         }
         if (node.getChildCount() > 0)
         {
-            for (TreeTableTreeNode child : node.getChildren())
-            {
-                recursivelyAddAllDataGroupsToSet(groupsToDeactivate, child, dgiFilter);
-            }
+            node.getChildren().forEach(child -> recursivelyAddAllDataGroupsToSet(groupsToDeactivate, child, dgiFilter));
         }
     }
 
@@ -99,10 +93,7 @@ public final class LayerUtilities
         }
         if (node.getChildCount() > 0)
         {
-            for (TreeTableTreeNode child : node.getChildren())
-            {
-                recursivelyAddAllDataGroupsToSet(groupsToDeactivate, child, dgiFilter);
-            }
+            node.getChildren().forEach(child -> recursivelyAddAllDataGroupsToSet(groupsToDeactivate, child, dgiFilter));
         }
     }
 
@@ -132,10 +123,7 @@ public final class LayerUtilities
         }
         if (node.getChildCount() > 0)
         {
-            for (TreeTableTreeNode child : node.getChildren())
-            {
-                recursivelyAddAllDataTypesToMap(typesToGroups, child, dgiFilter);
-            }
+            node.getChildren().forEach(child -> recursivelyAddAllDataTypesToMap(typesToGroups, child, dgiFilter));
         }
     }
 

@@ -11,7 +11,6 @@ import io.opensphere.myplaces.models.MyPlacesModel;
 
 /**
  * Listens for data type info color changes.
- *
  */
 public class DataGroupInfoMemberRemovedListener implements EventListener<DataGroupInfoMemberRemovedEvent>
 {
@@ -56,16 +55,12 @@ public class DataGroupInfoMemberRemovedListener implements EventListener<DataGro
     @Override
     public void notify(final DataGroupInfoMemberRemovedEvent event)
     {
-        EventQueueUtilities.invokeLater(new Runnable()
+        EventQueueUtilities.invokeLater(() ->
         {
-            @Override
-            public void run()
+            if (event.getRemoved() instanceof MyPlacesDataTypeInfo)
             {
-                if (event.getRemoved() instanceof MyPlacesDataTypeInfo)
-                {
-                    Kml kml = myKmlTranslator.toKml(myModel.getDataGroups());
-                    myModel.setMyPlaces(kml);
-                }
+                Kml kml = myKmlTranslator.toKml(myModel.getDataGroups());
+                myModel.setMyPlaces(kml);
             }
         });
     }
