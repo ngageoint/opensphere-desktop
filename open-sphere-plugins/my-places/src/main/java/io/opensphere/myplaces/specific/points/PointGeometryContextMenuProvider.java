@@ -1,5 +1,6 @@
 package io.opensphere.myplaces.specific.points;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.Collection;
@@ -8,8 +9,8 @@ import java.util.List;
 
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu.Separator;
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import io.opensphere.core.control.action.ContextActionManager;
@@ -20,7 +21,9 @@ import io.opensphere.core.control.action.context.GeometryContextKey;
 import io.opensphere.core.control.action.context.ScreenPositionContextKey;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.model.GeographicPosition;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.myplaces.constants.Constants;
 import io.opensphere.myplaces.editor.controller.AnnotationEditController;
 import io.opensphere.myplaces.models.DataCouple;
@@ -36,7 +39,7 @@ public class PointGeometryContextMenuProvider extends MyPointsMenuItemProvider
         implements OverridingContextMenuProvider<GeometryContextKey>
 {
     /** The default context menu provider. */
-    private final ContextMenuProvider<ScreenPositionContextKey> myDefaultContextMenuProvider = new ContextMenuProvider<ScreenPositionContextKey>()
+    private final ContextMenuProvider<ScreenPositionContextKey> myDefaultContextMenuProvider = new ContextMenuProvider<>()
     {
         @Override
         public List<JMenuItem> getMenuItems(String contextId, ScreenPositionContextKey key)
@@ -44,14 +47,11 @@ public class PointGeometryContextMenuProvider extends MyPointsMenuItemProvider
             final GeographicPosition pos = myController.convertPointToGeographicPosition(key.getPosition().asPoint());
             if (pos != null)
             {
-                JMenuItem mi = new JMenuItem("Create map point here...");
+                JMenuItem mi = new JMenuItem("Save as Place", new GenericFontIcon(AwesomeIconSolid.MAP_MARKER_ALT, Color.WHITE));
                 mi.addActionListener(e -> myTypeController.createAnnotationPointFromPosition(pos));
                 return Collections.singletonList(mi);
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         @Override
@@ -133,7 +133,7 @@ public class PointGeometryContextMenuProvider extends MyPointsMenuItemProvider
 
                 if (type.isGroup())
                 {
-                    menuItems.add(new JSeparator(Separator.HORIZONTAL));
+                    menuItems.add(new JSeparator(SwingConstants.HORIZONTAL));
                 }
             }
         }
