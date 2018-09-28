@@ -55,6 +55,7 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
     /**
      * Constructor.
      *
+     * @param toolbox the toolbox
      * @param dataType the data type
      */
     public ListToolTableModel(Toolbox toolbox, DataTypeInfo dataType)

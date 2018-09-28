@@ -12,8 +12,6 @@ import javafx.beans.value.ChangeListener;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableModel;
 
-import org.apache.log4j.Logger;
-
 import gnu.trove.iterator.TIntIterator;
 import gnu.trove.iterator.TLongIterator;
 import gnu.trove.list.array.TIntArrayList;
@@ -44,9 +42,7 @@ import net.jcip.annotations.NotThreadSafe;
 @NotThreadSafe
 class DataElementProvider extends AbstractRowDataProvider<List<?>>
 {
-    /** The logger. */
-    private static final Logger LOGGER = Logger.getLogger(DataElementProvider.class);
-
+    /** The toolbox. */
     private Toolbox myToolbox;
 
     /** The mantle data element lookup utilities. */
@@ -85,7 +81,7 @@ class DataElementProvider extends AbstractRowDataProvider<List<?>>
      * Constructor.
      *
      * @param model the table model
-     * @param mantleToolbox the mantle toolbox
+     * @param toolbox the toolbox
      * @param dataType the data type
      * @param metaColumns the meta columns
      * @param timeColumnIndex the time column index
@@ -442,9 +438,9 @@ class DataElementProvider extends AbstractRowDataProvider<List<?>>
         DataElement dataElement = myDataElementLookupUtils.getDataElement(id, myDataType, myDataType.getTypeKey());
         if (dataElement instanceof MapDataElement)
         {
-            // If the element is a MapDataElement, generate an element with MGRS Derived data
+            // If the element is a MapDataElement, generate a replacement element with MGRS Derived data
             return MGRSUtilities.getMGRSDataElement((MapDataElement)dataElement,
-                    MGRSPreferences.getListToolMGRSPrecision(myToolbox.getPreferencesRegistry()), this);
+                    MGRSPreferences.getToolMGRSPrecision(myToolbox.getPreferencesRegistry()), this);
         }
         // User label doesn't currently show up with direct access DataElements
 //        if (myRetriever.getMapGeometrySupport(id) == null)

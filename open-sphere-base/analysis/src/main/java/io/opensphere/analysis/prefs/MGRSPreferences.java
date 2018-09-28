@@ -14,7 +14,7 @@ public class MGRSPreferences
      * @param prefsRegistry The system preferences registry.
      * @return the mgrs precision.
      */
-    public static int getListToolMGRSPrecision(PreferencesRegistry prefsRegistry)
+    public static int getToolMGRSPrecision(PreferencesRegistry prefsRegistry)
     {
         return prefsRegistry.getPreferences(MGRSPreferences.class).getInt(MGRS_PRECISION_PREFERENCE, 10);
     }

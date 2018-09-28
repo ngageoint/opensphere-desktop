@@ -1,48 +1,82 @@
 package io.opensphere.analysis.util;
 
+import io.opensphere.core.mgrs.MGRSCalcUtils;
 import io.opensphere.core.mgrs.MGRSConverter;
-import io.opensphere.core.mgrs.MGRSCoreUtil;
 import io.opensphere.core.mgrs.UTM;
 import io.opensphere.core.model.GeographicPosition;
+import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 import io.opensphere.mantle.data.element.impl.DefaultMapDataElement;
+import io.opensphere.mantle.data.element.impl.MDILinkedMetaDataProvider;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
 import io.opensphere.mantle.data.geom.MapLocationGeometrySupport;
 
+/** Class that holds utility methods to add MGRS values to data elements. */
 public class MGRSUtilities
 {
+    /** The MGRS derived column identifier. */
+    public static final String MGRS_DERIVED = "MGRS Derived";
+
+    /** The default MGRS derived precision. */
     public static final int DEFAULT_MGRS_PRECISION = 10;
 
+    /**
+     * Gets a new {@link DefaultMapDataElement} which is like the original element, but with the additional field 'MGRS Derived'.
+     *
+     * @param element the original element to create the MGRS value for
+     * @param precision the precision to use in calculating the MGRS value
+     * @param source the calling object
+     * @return a data element which includes the MGRS value now
+     */
     public static DataElement getMGRSDataElement(MapDataElement element, int precision, Object source)
     {
-        MetaDataProvider mgrsProvider = MGRSUtilities.getMetaDataProviderWithMGRS(element.getMetaData(),
-                element.getDataTypeInfo().getMetaDataInfo(), element.getMapGeometrySupport(), precision, source);
+        DataTypeInfo dataTypeInfo = element.getDataTypeInfo();
+        MapGeometrySupport mapSupport = element.getMapGeometrySupport();
+        MetaDataProvider mgrsProvider = getMGRSMetaDataProvider(element.getMetaData(), dataTypeInfo, mapSupport, precision, source);
 
-        return new DefaultMapDataElement(element.getId(), element.getTimeSpan(), element.getDataTypeInfo(), mgrsProvider,
-                element.getMapGeometrySupport());
+        return new DefaultMapDataElement(element.getId(), element.getTimeSpan(), dataTypeInfo, mgrsProvider, mapSupport);
     }
 
-    public static MetaDataProvider getMetaDataProviderWithMGRS(MetaDataProvider provider, MetaDataInfo info,
-            MapGeometrySupport mapSupport, int precision, Object source)
+    /**
+     * Gets a {@link MetaDataProvider} with the additional field 'MGRS Derived'.
+     *
+     * @param provider the original {@link MetaDataProvider}
+     * @param dataTypeInfo the {@link DataTypeInfo}
+     * @param mapSupport the {@link MapGeometrySupport} for calculating the MGRS value
+     * @param precision the precision to use in calculating the MGRS value
+     * @param source the calling object
+     * @return a new {@link MetaDataProvider} with the additional field 'MGRS Derived' or the original provider if a new one could not be created
+     */
+    public static MetaDataProvider getMGRSMetaDataProvider(MetaDataProvider provider, DataTypeInfo dataTypeInfo, MapGeometrySupport mapSupport, int precision, Object source)
     {
-        if (provider != null && info != null && mapSupport != null)
+        MetaDataInfo metaInfo;
+        if (provider != null && dataTypeInfo != null  && (metaInfo = dataTypeInfo.getMetaDataInfo()) != null)
         {
-            info.addKey(MGRSCoreUtil.MGRS_DERIVED, String.class, source);
-            provider.setValue(MGRSCoreUtil.MGRS_DERIVED, getMGRSValue(mapSupport, precision));
+            metaInfo.addKey(MGRS_DERIVED, String.class, source);
+            MetaDataProvider newProvider = new MDILinkedMetaDataProvider(metaInfo, provider.getValues());
+            newProvider.setValue(MGRS_DERIVED, getMGRSValue(mapSupport, precision));
+            return newProvider;
         }
         return provider;
     }
 
-    private static String getMGRSValue(MapGeometrySupport mapSupport, int precision)
+    /**
+     * Gets the calculated MGRS value.
+     *
+     * @param mapSupport the {@link MapGeometrySupport} for calculating the MGRS value
+     * @param precision the precision to use in calculating the MGRS value
+     * @return the MGRS value
+     */
+    public static String getMGRSValue(MapGeometrySupport mapSupport, int precision)
     {
         String value = null;
         if (mapSupport instanceof MapLocationGeometrySupport)
         {
             UTM utmCoords = new UTM(new GeographicPosition(((MapLocationGeometrySupport)mapSupport).getLocation()));
-            value = MGRSCoreUtil.reducePrecision(new MGRSConverter().createString(utmCoords), precision);
+            value = MGRSCalcUtils.reducePrecision(new MGRSConverter().createString(utmCoords), precision);
         }
         return value;
     }

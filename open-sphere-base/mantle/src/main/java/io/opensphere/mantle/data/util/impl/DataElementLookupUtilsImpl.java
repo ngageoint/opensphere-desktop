@@ -793,7 +793,7 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
                 if (entry.getLoadedElementData() != null)
                 {
                     List<Object> metaData = entry.getLoadedElementData().getMetaData();
-                    mdp = new MDILinkedMetaDataProvider(dti.getMetaDataInfo(), metaData);
+                    mdp = MDILinkedMetaDataProvider.createImmutableBackedMetaDataProvider(dti.getMetaDataInfo(), metaData);
                     originId = entry.getLoadedElementData().getOriginId();
                     mgs = entry.getLoadedElementData().getMapGeometrySupport();
                 }

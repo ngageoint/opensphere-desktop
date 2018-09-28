@@ -49,7 +49,7 @@ public class BaseballController extends EventListenerService
             DataElementLookupUtils lookupUtils = MantleToolboxUtils.getDataElementLookupUtils(myToolbox);
             DataElement element = lookupUtils.getDataElement(event.getRegistryId(), null, event.getDataTypeKey());
 
-            // If the element is a MapDataElement, generate an element with MGRS Derived data
+            // If the element is a MapDataElement, generate a replacement element with MGRS Derived data
             if (element instanceof MapDataElement)
             {
                 element = MGRSUtilities.getMGRSDataElement((MapDataElement)element, MGRSUtilities.DEFAULT_MGRS_PRECISION, this);

@@ -332,7 +332,6 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
         {
             List<String> keyNames = myDTI.getMetaDataInfo().getKeyNames();
             dynColumnNameSet.addAll(keyNames.subList(myOriginalColumnCount, keyNames.size()));
-            dynColumnNameSet.removeIf(columnName -> columnName.equals("MGRS Derived"));
         }
         return dynColumnNameSet;
     }
