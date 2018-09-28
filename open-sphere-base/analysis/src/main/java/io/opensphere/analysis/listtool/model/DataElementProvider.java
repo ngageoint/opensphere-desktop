@@ -27,7 +27,6 @@ import io.opensphere.core.util.cache.SimpleIntCache;
 import io.opensphere.core.util.collections.FixedSizeBufferMap;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.table.AbstractRowDataProvider;
-import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
@@ -91,12 +90,8 @@ class DataElementProvider extends AbstractRowDataProvider<List<?>>
     {
         super(model);
         myToolbox = toolbox;
-        MantleToolbox mantleToolbox;
-        if (toolbox != null && (mantleToolbox = MantleToolboxUtils.getMantleToolbox(toolbox)) != null)
-        {
-            myDataElementLookupUtils = mantleToolbox.getDataElementLookupUtils();
+        myDataElementLookupUtils = MantleToolboxUtils.getDataElementLookupUtils(toolbox);
 //            myRetriever = mantleToolbox.getDataElementCache().getDirectAccessRetriever(dataType);
-        }
         myDataType = dataType;
         myMetaColumns = metaColumns;
         myTimeColumnIndex = timeColumnIndex;
