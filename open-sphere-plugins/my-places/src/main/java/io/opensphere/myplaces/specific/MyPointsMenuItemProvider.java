@@ -24,7 +24,7 @@ import io.opensphere.myplaces.models.DataTypeInfoMyPlaceChangedEvent;
 public abstract class MyPointsMenuItemProvider implements ActionListener
 {
     /** The Menu components. */
-    protected final Map<ItemType, JMenuItem> myMenuItems = New.map();
+    private final Map<ItemType, JMenuItem> myMenuItems = New.map();
 
     /**
      * Instantiates a new places context menu provider.
