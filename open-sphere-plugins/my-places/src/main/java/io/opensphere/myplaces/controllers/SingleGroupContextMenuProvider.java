@@ -64,18 +64,18 @@ public class SingleGroupContextMenuProvider extends MyPointsMenuItemProvider
     public void actionPerformed(ActionEvent e)
     {
         Object src = e.getSource();
-        if (menuItems.get(ItemType.CENTER_ON) == src)
+        if (myMenuItems.get(ItemType.CENTER_ON) == src)
         {
             if (myPlacemark != null)
             {
                 myController.gotoPoint(myType);
             }
         }
-        else if (menuItems.get(ItemType.EDIT) == src)
+        else if (myMenuItems.get(ItemType.EDIT) == src)
         {
             myType.launchEditor(myGroup, Collections.singletonList(myType));
         }
-        else if (menuItems.get(ItemType.DELETE) == src)
+        else if (myMenuItems.get(ItemType.DELETE) == src)
         {
             int response = JOptionPane.showConfirmDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
                     "Are you sure you want to delete " + myType.getDisplayName() + "?", "Delete Confirmation",
@@ -85,19 +85,19 @@ public class SingleGroupContextMenuProvider extends MyPointsMenuItemProvider
                 myGroup.removeMember(myType, false, this);
             }
         }
-        else if (menuItems.get(ItemType.HIDE_POINT) == src)
+        else if (myMenuItems.get(ItemType.HIDE_POINT) == src)
         {
             doMenuItemAction(myType, myPlacemark, Constants.IS_FEATURE_ON_ID, false);
         }
-        else if (menuItems.get(ItemType.SHOW_POINT) == src)
+        else if (myMenuItems.get(ItemType.SHOW_POINT) == src)
         {
             doMenuItemAction(myType, myPlacemark, Constants.IS_FEATURE_ON_ID, true);
         }
-        else if (menuItems.get(ItemType.SHOW_BUBBLE) == src)
+        else if (myMenuItems.get(ItemType.SHOW_BUBBLE) == src)
         {
             doMenuItemAction(myType, myPlacemark, Constants.IS_ANNOHIDE_ID, false);
         }
-        else if (menuItems.get(ItemType.HIDE_BUBBLE) == src)
+        else if (myMenuItems.get(ItemType.HIDE_BUBBLE) == src)
         {
             doMenuItemAction(myType, myPlacemark, Constants.IS_ANNOHIDE_ID, true);
         }

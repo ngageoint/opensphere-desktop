@@ -66,7 +66,8 @@ public class MapManagerMenuProvider
                 center.addActionListener(arg0 -> new ViewerAnimator(myMapManager.getStandardViewer(), pos).start());
                 menuItems.add(center);
 
-                JMenuItem copyToClipboard = new JMenuItem("Copy coordinates to clipboard");
+                JMenuItem copyToClipboard = new JMenuItem("Copy coordinates to clipboard",
+                        new GenericFontIcon(AwesomeIconSolid.COPY, Color.WHITE));
                 copyToClipboard.addActionListener(arg0 ->
                 {
                     if (myUnitsRegistry != null)
@@ -87,7 +88,8 @@ public class MapManagerMenuProvider
                 });
                 menuItems.add(copyToClipboard);
 
-                JMenuItem copyMGRSToClipboard = new JMenuItem("Copy MGRS to clipboard");
+                JMenuItem copyMGRSToClipboard = new JMenuItem("Copy MGRS to clipboard",
+                        new GenericFontIcon(AwesomeIconSolid.COPY, Color.WHITE));
                 copyMGRSToClipboard.addActionListener(arg0 ->
                 {
                     String label = new MGRSConverter().createString(new UTM(pos));

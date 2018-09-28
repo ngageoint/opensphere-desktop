@@ -197,8 +197,9 @@ public class RegionTypeController extends PlaceTypeController
         public List<Component> getMenuItems(String contextId, GeometryContextKey key)
         {
             List<Component> options = new LinkedList<>();
-            if (ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT.equals(contextId)
+            if ((ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT.equals(contextId)
                     || ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT.equals(contextId))
+                    && (key.getGeometry() instanceof PolygonGeometry || key.getGeometry() instanceof PolylineGeometry))
             {
                 JMenuItem saveMI = new JMenuItem("Save as Place");
                 saveMI.setIcon(new GenericFontIcon(AwesomeIconRegular.SAVE, Color.WHITE));
