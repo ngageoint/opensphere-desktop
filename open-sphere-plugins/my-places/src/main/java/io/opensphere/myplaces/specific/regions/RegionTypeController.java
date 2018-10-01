@@ -23,6 +23,7 @@ import io.opensphere.core.control.action.ContextActionManager;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.action.context.GeometryContextKey;
+import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.GeometryGroupGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.PolylineGeometry;
@@ -130,12 +131,29 @@ public class RegionTypeController extends PlaceTypeController
         }
     }
 
+    public void createRegion(Geometry geometry)
+    {
+        if (geometry instanceof PolygonGeometry)
+        {
+            createRegionFromGeometry((PolygonGeometry)geometry);
+        }
+        else if (geometry instanceof GeometryGroupGeometry)
+        {
+            createRegionFromMultiGeometry((GeometryGroupGeometry)geometry);
+        }
+        else
+        {
+            throw new UnsupportedOperationException(
+                    "Geometries of type '" + geometry.getClass().getName() + "' are not supported.");
+        }
+    }
+
     /**
      * Creates the save roi from multiple geometries.
      *
      * @param geometries the group of geometries
      */
-    public void createRegionFromMultiGeometry(GeometryGroupGeometry geometries)
+    protected void createRegionFromMultiGeometry(GeometryGroupGeometry geometries)
     {
         assert EventQueue.isDispatchThread();
         Set<String> names = new TreeSet<>();
@@ -165,7 +183,7 @@ public class RegionTypeController extends PlaceTypeController
      *
      * @param geometry the geometry
      */
-    public void createRegionFromGeometry(PolygonGeometry geometry)
+    protected void createRegionFromGeometry(PolygonGeometry geometry)
     {
         assert EventQueue.isDispatchThread();
 
