@@ -23,12 +23,15 @@ import io.opensphere.core.control.action.ContextActionManager;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.action.context.GeometryContextKey;
+import io.opensphere.core.geometry.GeometryGroupGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.LatLonAlt;
+import io.opensphere.core.model.Position;
 import io.opensphere.core.util.AwesomeIconRegular;
 import io.opensphere.core.util.Utilities;
+import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.mantle.data.MapVisualizationType;
@@ -128,11 +131,41 @@ public class RegionTypeController extends PlaceTypeController
     }
 
     /**
+     * Creates the save roi from multiple geometries.
+     *
+     * @param geometries the group of geometries
+     */
+    public void createRegionFromMultiGeometry(GeometryGroupGeometry geometries)
+    {
+        assert EventQueue.isDispatchThread();
+        Set<String> names = new TreeSet<>();
+        Function<Placemark, Void> func = input ->
+        {
+            if (input.getGeometry() instanceof Polygon && input.getName().startsWith("Region-"))
+            {
+                names.add(input.getName());
+            }
+            return null;
+        };
+        myPlacesModel.applyToEachPlacemark(func);
+        String roiName = StringUtilities.getUniqueName("Region-", names);
+        MyPlacesDataGroupInfo parentDataGroup = myPlacesModel.getDataGroups();
+        List<Position> vertices = New.list();
+        geometries.getGeometries().stream().filter(g -> g instanceof PolygonGeometry)
+                .forEach(g -> vertices.addAll(((PolygonGeometry)g).getVertices()));
+        Collection<List<? extends Position>> holes = New.collection();
+        geometries.getGeometries().stream().filter(g -> g instanceof PolygonGeometry)
+                .forEach(g -> (((PolygonGeometry)g).getHoles()).forEach(e -> holes.add(e)));
+        Placemark placemark = RegionUtils.createRegionFromPositions(new Folder(), roiName, vertices, holes);
+        launchEditor(placemark, parentDataGroup);
+    }
+
+    /**
      * Creates the save roi from geometry.
      *
      * @param geometry the geometry
      */
-    protected void createRegionFromGeometry(PolygonGeometry geometry)
+    public void createRegionFromGeometry(PolygonGeometry geometry)
     {
         assert EventQueue.isDispatchThread();
 
