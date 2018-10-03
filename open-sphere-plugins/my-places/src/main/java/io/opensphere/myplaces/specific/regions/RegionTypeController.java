@@ -131,6 +131,11 @@ public class RegionTypeController extends PlaceTypeController
         }
     }
 
+    /**
+     * Creates the save roi from the geometry.
+     *
+     * @param geometry the geometry
+     */
     public void createRegion(Geometry geometry)
     {
         if (geometry instanceof PolygonGeometry)
