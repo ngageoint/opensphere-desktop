@@ -166,6 +166,7 @@ public class SelectionCommandFactory
     {
         List<Component> menuItems = new ArrayList<>();
         menuItems.add(CREATE_BUFFER_REGION.createMenuItem(al));
+        menuItems.add(CREATE_BUFFER_REGION_FOR_SELECTED.createMenuItem(al));
         return menuItems;
     }
 
