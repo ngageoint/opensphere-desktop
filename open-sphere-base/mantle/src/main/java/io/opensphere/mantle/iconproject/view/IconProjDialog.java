@@ -60,7 +60,8 @@ public class IconProjDialog extends JFXDialog
             myPanelModel.getViewModel().getMainPanel().refresh();
         }
         setLocationRelativeTo(owner);
-        setAcceptEar(() -> savePrefs());
+        setAcceptListener(() -> savePrefs());
+//        setAcceptEar();
         myPanelModel.getViewModel().getMainPanel().setDividerPositions(.28);
     }
 

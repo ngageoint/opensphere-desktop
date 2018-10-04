@@ -114,7 +114,7 @@ public class MainPanel extends SplitPane
         {
             EventQueue.invokeLater(() ->
             {
-                myIconGrid.showIconCustomizer(myOwner);
+            	myIconGrid.showIconCustomizer(myOwner);
             });
         });
 
@@ -158,11 +158,15 @@ public class MainPanel extends SplitPane
         AnchorPane.setRightAnchor(myTreeView, 0.0);
         AnchorPane.setTopAnchor(myTreeView, 0.0);
 
-        if (treeItem.getValue() == "temp")
+        if (treeItem == null)
         {
-            for (int i = 0; i <= myTreeView.getExpandedItemCount(); i++)
+        	myTreeView.getSelectionModel().select(myTreeView.getRow(myTreeView.getTreeItem(0)));
+        }
+        else if (treeItem.getValue().equals("temp"))
+        {
+            for (int i = 0; i < myTreeView.getExpandedItemCount(); i++)
             {
-                if ((myTreeView.getTreeItem(i).getValue()) == "Default")
+                if ((myTreeView.getTreeItem(i).getValue()).equals("Default"))
                 {
                     myTreeView.getSelectionModel().select(myTreeView.getRow((myTreeView.getTreeItem(i))));
                     break;
@@ -171,9 +175,9 @@ public class MainPanel extends SplitPane
         }
         else
         {
-            for (int i = 0; i <= myTreeView.getExpandedItemCount(); i++)
+            for (int i = 0; i < myTreeView.getExpandedItemCount(); i++)
             {
-                if ((myTreeView.getTreeItem(i).getValue()) == treeItem.getValue())
+                if ((myTreeView.getTreeItem(i).getValue()).equals(treeItem.getValue()))
                 {
                     myTreeView.getSelectionModel().select(myTreeView.getRow((myTreeView.getTreeItem(i))));
                     break;
@@ -196,7 +200,9 @@ public class MainPanel extends SplitPane
             {
                 refreshTree();
                 recordMap = new HashMap<>(treeBuilder.getRecordMap());
-                myPanelModel.setIconRecordList(recordMap.get(myTreeView.getSelectionModel().getSelectedItem().getValue()));
+                String item = myTreeView.getSelectionModel().getSelectedItem() == null ? myTreeView.getTreeItem(0).getValue() : 
+                        myTreeView.getSelectionModel().getSelectedItem().getValue();
+                myPanelModel.setIconRecordList(recordMap.get(item));
                 myScrollPane.setContent(myIconGrid = new GridBuilder(myPanelModel));
                 myPanelModel.getSelectedIcons().clear();
             }

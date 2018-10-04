@@ -48,7 +48,7 @@ public class AddIconDialog extends JFXDialog
         setLocationRelativeTo(owner);
         myAddIconPane = new AddIconPane(myPanelModel);
         setFxNode(myAddIconPane);
-        setAcceptEar(() -> loadFromFolder(myAddIconPane.getCollectionNamePane().getCollectionName(),
+        setAcceptListener(() -> loadFromFolder(myAddIconPane.getCollectionNamePane().getCollectionName(),
                 myAddIconPane.getSubCollectPane().getSubCategory()));
     }
 

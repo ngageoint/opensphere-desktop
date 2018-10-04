@@ -56,7 +56,7 @@ public class IconCustomizerDialog extends JFXDialog
         setLocationRelativeTo(owner);
         setResizable(false);
         setFxNode(pane);
-        setAcceptEar(() -> saveImage(pane.getFinalImage(), pane.getImageName(), pane.getSaveState(), pane.getIconRecord(),
+        setAcceptListener(() -> saveImage(pane.getFinalImage(), pane.getImageName(), pane.getSaveState(), pane.getIconRecord(),
                 pane.getXPos(), pane.getYPos()));
     }
 

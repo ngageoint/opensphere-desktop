@@ -141,7 +141,11 @@ public class GridBuilder extends TilePane
      */
     public void showIconCustomizer(Window owner)
     {
-        IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myPanelModel);
-        builderPane.setVisible(true);
+    	if (myPanelModel.getSelectedRecord().get() != null)
+    	{
+    	    IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myPanelModel);
+            builderPane.setVisible(true);
+    	}
+        
     }
 }

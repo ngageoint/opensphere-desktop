@@ -32,7 +32,7 @@ public class TreePopupMenu extends ContextMenu
                 selector.remove(false);
             }
         });
-        MenuItem deleteAction = new MenuItem("Delete Items?");
+        MenuItem deleteAction = new MenuItem("Delete Items");
         deleteAction.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override

@@ -864,7 +864,6 @@ public class IconRegistryImpl implements IconRegistry
                 if (temp.getImageURL().toString().equals(filename))
                 {
                     thePanelModel.getIconRegistry().removeIcon(this.getIconRecordByIconId(idx), this);
-                    System.out.println("Duplciate found");
                 }
             }
         }

@@ -225,11 +225,17 @@ public class IconCustomizerPane extends BorderPane
      */
     private HBox createImageView()
     {
+    	if (myIconRecord == null)
+    	{
+    	    return null;
+    	}
+
         HBox iconDisplayer = new HBox();
         iconDisplayer.setAlignment(Pos.CENTER);
         iconDisplayer.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
                 + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
         iconDisplayer.setId("BoxStyle");
+        
         myIconView = new ImageView(myIconRecord.getImageURL().toString());
         myIconView.rotateProperty().bind(myRotation);
         myIconView.translateXProperty().bind(myXPos);
