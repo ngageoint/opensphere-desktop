@@ -2,6 +2,9 @@ package io.opensphere.core.util.fx;
 
 import java.util.function.Consumer;
 
+import io.opensphere.core.util.ValidationStatus;
+import io.opensphere.core.util.ValidatorSupport;
+import io.opensphere.core.util.ValidatorSupport.ValidationStatusChangeListener;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -11,10 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-
-import io.opensphere.core.util.ValidationStatus;
-import io.opensphere.core.util.ValidatorSupport;
-import io.opensphere.core.util.ValidatorSupport.ValidationStatusChangeListener;
 
 /** Standard pane with button bar at bottom. */
 public class ButtonPaneNew extends BorderPane
@@ -35,10 +34,14 @@ public class ButtonPaneNew extends BorderPane
     private Label myStatusLabel;
 
     /** A simpler alternative to using an Editor. */
-    private Runnable acceptEar;
+    private Runnable myAcceptListener;
+
+    /** The listener called when the reject button is clicked. */
+    private Runnable myRejectListener;
 
     /**
      * Create with a Node and an Editor.
+     *
      * @param gui the main GUI Node
      * @param ed an Editor
      */
@@ -49,6 +52,7 @@ public class ButtonPaneNew extends BorderPane
 
     /**
      * Create with a Node, an Editor, and an ObservableButtonBar.
+     *
      * @param btn buttons
      * @param gui the main GUI Node
      * @param ed an Editor
@@ -60,21 +64,25 @@ public class ButtonPaneNew extends BorderPane
 
     /**
      * Install an Editor.
+     *
      * @param ed an Editor
      */
     public void setEditor(Editor ed)
     {
         myEditor = ed;
         if (myEditor != null)
+        {
             Platform.runLater(() -> validate((o, s, m) -> setValidationStatus(s, m)));
-        // By using Platform.runLater, we delay attaching and invoking the
-        // validation listener until after everything is constructed.  If
-        // we don't, then styling (during construction) can interfere with
-        // reporting errors or warnings (from the validation support).
+            // By using Platform.runLater, we delay attaching and invoking the
+            // validation listener until after everything is constructed. If
+            // we don't, then styling (during construction) can interfere with
+            // reporting errors or warnings (from the validation support).
+        }
     }
 
     /**
      * Perform initial setup, including laying out the GUI.
+     *
      * @param btn buttons
      * @param gui the main GUI Node
      * @param ed an Editor
@@ -98,26 +106,43 @@ public class ButtonPaneNew extends BorderPane
     /**
      * Attach the specified <i>ear</i> to the resident Editor's
      * ValidatorSupport, if possible.
+     *
      * @param ear a listener
      */
     private void validate(ValidationStatusChangeListener ear)
     {
         if (myEditor == null)
+        {
             return;
+        }
         ValidatorSupport val = myEditor.getValidatorSupport();
         if (val == null)
+        {
             return;
+        }
         val.addAndNotifyValidationListener(ear);
     }
 
     /**
-     * Register a callback for acceptance.  This is a lighter-weight option in
+     * Register a callback for acceptance. This is a lighter-weight option in
      * comparison with using the Editor framework.
+     *
      * @param r the callback
      */
-    public void setAcceptEar(Runnable r)
+    public void setAcceptListener(Runnable r)
     {
-        acceptEar = r;
+        myAcceptListener = r;
+    }
+
+    /**
+     * Sets the value of the {@link #myRejectListener} field.
+     *
+     * @param rejectListener the value to store in the {@link #myRejectListener}
+     *            field.
+     */
+    public void setRejectListener(Runnable rejectListener)
+    {
+        myRejectListener = rejectListener;
     }
 
     /**
@@ -140,9 +165,20 @@ public class ButtonPaneNew extends BorderPane
         if (response == ButtonData.OK_DONE)
         {
             if (myEditor != null)
+            {
                 myEditor.accept();
-            if (acceptEar != null)
-                acceptEar.run();
+            }
+            if (myAcceptListener != null)
+            {
+                myAcceptListener.run();
+            }
+        }
+        else if (response == ButtonData.CANCEL_CLOSE)
+        {
+            if (myRejectListener != null)
+            {
+                myRejectListener.run();
+            }
         }
     }
 
@@ -154,8 +190,8 @@ public class ButtonPaneNew extends BorderPane
      */
     public void setValidationStatus(ValidationStatus status, String message)
     {
-        Node okButton = myButtonBar.getButtons().stream().filter(b -> ButtonBar.getButtonData(b) == ButtonData.OK_DONE)
-                .findAny().orElse(null);
+        Node okButton = myButtonBar.getButtons().stream().filter(b -> ButtonBar.getButtonData(b) == ButtonData.OK_DONE).findAny()
+                .orElse(null);
         if (okButton != null)
         {
             okButton.setDisable(status == ValidationStatus.ERROR);

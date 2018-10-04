@@ -155,7 +155,7 @@ public class DataElementActionUtilsImpl implements DataElementActionUtils
     }
 
     @Override
-    public void queryPointRadiusFromDataElmentCenters(List<Long> dataElementIds, double radiusMeters, Object source)
+    public void queryPointRadiusFromDataElementCenters(List<Long> dataElementIds, double radiusMeters, Object source)
     {
         List<MapGeometrySupport> mgsList = MantleToolboxUtils.getDataElementLookupUtils(myToolbox)
                 .getMapGeometrySupport(dataElementIds);

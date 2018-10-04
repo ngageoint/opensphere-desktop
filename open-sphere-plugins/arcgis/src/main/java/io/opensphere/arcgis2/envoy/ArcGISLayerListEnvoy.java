@@ -207,7 +207,7 @@ public class ArcGISLayerListEnvoy extends AbstractEnvoy implements DataRegistryD
                 for (Service service : info.getServices())
                 {
                     String name = service.getName();
-                    if (StringUtils.startsWith(includedSubpath, name) || includedSubpath == null)
+                    if (StringUtils.startsWith(name, includedSubpath) || includedSubpath == null)
                     {
                         int indexOfSlash = name.indexOf('/');
                         if (indexOfSlash >= 0 && indexOfSlash + 1 < name.length())

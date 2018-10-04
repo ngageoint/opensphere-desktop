@@ -293,6 +293,23 @@ public final class ColorUtilities
     }
 
     /**
+     * Get a color which is lighter than the starting color. Modifies the color
+     * in terms of hue/saturation/brightness by reducing saturation. There may
+     * be some rounding, but the lighter color should be roughly half as
+     * saturated.
+     *
+     * @param color the starting color
+     * @return the lighter color
+     */
+    public static Color lighten(Color color)
+    {
+        float[] hsb = new float[3];
+        Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), hsb);
+        hsb[1] = hsb[1] / 2;
+        return new Color(Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]));
+    }
+
+    /**
      * Get the relative brightness of a color. The typical linear calculations
      * for this (e.g. (red + green + blue)/3) tend to give terrible results for
      * colors in the yellow and green ranges, so this method uses a non-linear

@@ -227,7 +227,7 @@ public abstract class GeometryGroupProcessor<E extends AbstractGeometryGroup> ex
         RegistryChangeListener listen = new RegistryChangeListener(distrib);
         myRegListeners.put(group, listen);
 
-        GeometryRegistryImpl reg = new GeometryRegistryImpl(myDataRetriever);
+        GeometryRegistry reg = new GeometryRegistryImpl(myDataRetriever);
         reg.addSubscriber(listen);
 
         group.setGeometryRegistry(reg);

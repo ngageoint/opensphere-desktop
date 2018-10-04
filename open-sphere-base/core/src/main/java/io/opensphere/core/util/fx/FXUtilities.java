@@ -597,8 +597,8 @@ public final class FXUtilities
      */
     private static void addDesktopStyle(ObservableList<String> stylesheets)
     {
-        loadFont("FontAwesome Solid", "/fonts/fa-solid-900.ttf");
         loadFont("FontAwesome Regular", "/fonts/fa-regular-400.ttf");
+        loadFont("FontAwesome Solid", "/fonts/fa-solid-900.ttf");
         loadFont("FontAwesome Brands", "/fonts/fa-brands-400.ttf");
 
         stylesheets.add(FXUtilities.class.getResource("/styles/opensphere.css").toExternalForm());
@@ -615,7 +615,8 @@ public final class FXUtilities
         final URL fontUrl = FXUtilities.class.getResource(fontPath);
         if (fontUrl != null)
         {
-            Font.loadFont(fontUrl.toExternalForm(), 12);
+            Font font = Font.loadFont(fontUrl.toExternalForm(), 12);
+            LOG.info("Loaded font " + packageName + " family: '" + font.getFamily() + "' name: '" + font.getName() + "'");
         }
         else
         {

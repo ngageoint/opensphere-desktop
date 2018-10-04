@@ -33,12 +33,6 @@ public class GeometryRegistryImpl extends DefaultGenericPublisher<Geometry> impl
      */
     private final TLongObjectHashMap<Object> myDataModelMap = new TLongObjectHashMap<>();
 
-    /**
-     * Whether to add geometries to the data model map. Nothing currently uses the data model map functionality so it's set to
-     * false to save memory.
-     */
-    private final boolean myAddToDataModelMap;
-
     /** Data retriever executor. */
     private final ExecutorService myDataRetrieverExecutor;
 
@@ -57,7 +51,6 @@ public class GeometryRegistryImpl extends DefaultGenericPublisher<Geometry> impl
     public GeometryRegistryImpl(ExecutorService dataRetrieverExecutor)
     {
         myDataRetrieverExecutor = dataRetrieverExecutor;
-        myAddToDataModelMap = false;
     }
 
     @Override
@@ -110,6 +103,7 @@ public class GeometryRegistryImpl extends DefaultGenericPublisher<Geometry> impl
      * @param dataModelId The data model id.
      * @return The geometries.
      */
+    @Override
     public List<? extends Geometry> getGeometriesForDataModel(long dataModelId)
     {
         synchronized (myDataModelMap)
@@ -137,6 +131,7 @@ public class GeometryRegistryImpl extends DefaultGenericPublisher<Geometry> impl
      * @param dataModelIds The data model ids.
      * @return The geometries.
      */
+    @Override
     public List<Geometry> getGeometriesForDataModels(long[] dataModelIds)
     {
         List<Geometry> result = New.list(dataModelIds.length);
@@ -178,13 +173,11 @@ public class GeometryRegistryImpl extends DefaultGenericPublisher<Geometry> impl
     }
 
     /**
-     * Get all the geometries currently in the registry that are a certain
-     * concrete class.
+     * {@inheritDoc}
      *
-     * @param <T> The concrete implementation of the {@code Geometry} interface.
-     * @param cl The concrete class.
-     * @return The geometries.
+     * @see io.opensphere.core.geometry.GeometryRegistry#getGeometriesOfClass(java.lang.Class)
      */
+    @Override
     public <T extends Geometry> Collection<T> getGeometriesOfClass(Class<T> cl)
     {
         return myRegistry.getObjectsOfClass(cl);
@@ -328,7 +321,7 @@ public class GeometryRegistryImpl extends DefaultGenericPublisher<Geometry> impl
      */
     private void addToDataModelMap(Geometry geom)
     {
-        if (geom.getDataModelId() != -1 && myAddToDataModelMap)
+        if (geom.getDataModelId() != -1)
         {
             synchronized (myDataModelMap)
             {

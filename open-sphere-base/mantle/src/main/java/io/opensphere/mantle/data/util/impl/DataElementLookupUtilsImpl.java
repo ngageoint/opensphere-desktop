@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
@@ -366,6 +367,29 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.util.DataElementLookupUtils#getMapDataElements(java.util.List,
+     *      io.opensphere.mantle.data.DataTypeInfo, java.lang.String, boolean)
+     */
+    @Override
+    public List<MapDataElement> getMapDataElements(List<Long> dataElementIds, DataTypeInfo dtiHint, String dataTypeInfoKeyHint,
+            boolean ignoreMapGeometrySupport)
+        throws DataElementLookupException
+    {
+        Utilities.checkNull(dataElementIds, DATA_ELEMENT_IDS);
+        if (dataElementIds.isEmpty())
+        {
+            return Collections.emptyList();
+        }
+        List<DataElement> resultList = retrieveDataElements(dataElementIds, dtiHint, dataTypeInfoKeyHint,
+                ignoreMapGeometrySupport);
+
+        return resultList.stream().filter(e -> e instanceof MapDataElement).map(e -> (MapDataElement)e)
+                .collect(Collectors.toList());
+    }
+
     @Override
     public List<MapGeometrySupport> getMapGeometrySupport(List<Long> dataElementIds)
     {
@@ -374,8 +398,8 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
         {
             return Collections.<MapGeometrySupport>emptyList();
         }
-        SimpleListResultCacheIdQuery<MapGeometrySupport> query = new SimpleListResultCacheIdQuery<MapGeometrySupport>(
-                dataElementIds, new QueryAccessConstraint(false, false, false, false, true))
+        SimpleListResultCacheIdQuery<MapGeometrySupport> query = new SimpleListResultCacheIdQuery<>(dataElementIds,
+                new QueryAccessConstraint(false, false, false, false, true))
         {
             @Override
             public void process(Long id, CacheEntryView entry)
@@ -403,7 +427,7 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
      */
     public MapGeometrySupport getMapGeometrySupport(Long dataElementId)
     {
-        SimpleResultCacheIdQuery<MapGeometrySupport> query = new SimpleResultCacheIdQuery<MapGeometrySupport>(
+        SimpleResultCacheIdQuery<MapGeometrySupport> query = new SimpleResultCacheIdQuery<>(
                 Collections.singletonList(dataElementId), new QueryAccessConstraint(false, false, false, false, true))
         {
             @Override
@@ -432,13 +456,13 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
      * Long overload.
      *
      * @see #getMetaData(long)
-     * @param dataElementId
+     * @param dataElementId the data element ID for which to get metadata.
      * @return the meta data List or null if id not found.
      */
     public List<Object> getMetaData(Long dataElementId)
     {
-        SimpleResultCacheIdQuery<List<Object>> query = new SimpleResultCacheIdQuery<List<Object>>(
-                Collections.singletonList(dataElementId), new QueryAccessConstraint(false, false, false, true, false))
+        SimpleResultCacheIdQuery<List<Object>> query = new SimpleResultCacheIdQuery<>(Collections.singletonList(dataElementId),
+                new QueryAccessConstraint(false, false, false, true, false))
         {
             @Override
             public void process(Long id, CacheEntryView entry)
@@ -474,7 +498,7 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
         @SuppressWarnings("null")
         final int keyIndex = dti.getMetaDataInfo().getKeyIndex(keyName);
 
-        SimpleResultCacheIdQuery<List<Object>> query = new SimpleResultCacheIdQuery<List<Object>>(dataElementIds,
+        SimpleResultCacheIdQuery<List<Object>> query = new SimpleResultCacheIdQuery<>(dataElementIds,
                 new QueryAccessConstraint(false, false, false, true, false), new ArrayList<>(maxSamples))
         {
             @Override
@@ -520,7 +544,7 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
 
         final int keyIndex = dti.getMetaDataInfo().getKeyIndex(keyName);
 
-        SimpleResultCacheIdQuery<List<Object>> query = new SimpleResultCacheIdQuery<List<Object>>(dataElementIds,
+        SimpleResultCacheIdQuery<List<Object>> query = new SimpleResultCacheIdQuery<>(dataElementIds,
                 new QueryAccessConstraint(false, false, false, true, false), new ArrayList<>(dataElementIds.size()))
         {
             @Override
@@ -557,7 +581,7 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
      */
     public MetaDataProvider getMetaDataProvider(Long dataElementId)
     {
-        SimpleResultCacheIdQuery<Pair<String, List<Object>>> query = new SimpleResultCacheIdQuery<Pair<String, List<Object>>>(
+        SimpleResultCacheIdQuery<Pair<String, List<Object>>> query = new SimpleResultCacheIdQuery<>(
                 Collections.singletonList(dataElementId), new QueryAccessConstraint(false, false, false, true, false))
         {
             @Override
@@ -608,7 +632,7 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
     public Long getOriginId(Long dataElementId)
     {
         Long origId = null;
-        SimpleResultCacheIdQuery<Long> ciq = new SimpleResultCacheIdQuery<Long>(Collections.singletonList(dataElementId),
+        SimpleResultCacheIdQuery<Long> ciq = new SimpleResultCacheIdQuery<>(Collections.singletonList(dataElementId),
                 new QueryAccessConstraint(false, false, true, false, false))
         {
             @Override
@@ -640,8 +664,8 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
             return new TLongObjectHashMap<>();
         }
 
-        SimpleResultCacheIdQuery<TLongObjectHashMap<Long>> ciq = new SimpleResultCacheIdQuery<TLongObjectHashMap<Long>>(
-                dataElementIds, new QueryAccessConstraint(false, false, true, false, false))
+        SimpleResultCacheIdQuery<TLongObjectHashMap<Long>> ciq = new SimpleResultCacheIdQuery<>(dataElementIds,
+                new QueryAccessConstraint(false, false, true, false, false))
         {
             @Override
             public void process(Long id, CacheEntryView entry)
@@ -745,7 +769,7 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
 
         final boolean isMapDataElement = isMapDataElement(dti);
 
-        SimpleListResultCacheIdQuery<DataElement> query = new SimpleListResultCacheIdQuery<DataElement>(dataElementIds,
+        SimpleListResultCacheIdQuery<DataElement> query = new SimpleListResultCacheIdQuery<>(dataElementIds,
                 new QueryAccessConstraint(true, true, true, true, !ignoreMapGeometrySupport))
         {
             @Override

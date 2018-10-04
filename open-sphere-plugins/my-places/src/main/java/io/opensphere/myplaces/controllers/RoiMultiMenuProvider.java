@@ -5,12 +5,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.JMenuItem;
-
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.geometry.Geometry;
-import io.opensphere.core.geometry.PolygonGeometry;
+import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfo.MultiDataGroupContextKey;
@@ -41,7 +39,7 @@ public class RoiMultiMenuProvider implements ContextMenuProvider<MultiDataGroupC
     @Override
     public Collection<? extends Component> getMenuItems(String contextId, MultiDataGroupContextKey key)
     {
-        List<JMenuItem> menuItems = Collections.emptyList();
+        List<Component> menuItems = Collections.emptyList();
         Collection<Geometry> geometries = New.list();
         Collection<DataTypeInfo> dataTypes = getDataTypes(key);
 
@@ -50,7 +48,7 @@ public class RoiMultiMenuProvider implements ContextMenuProvider<MultiDataGroupC
             if (dti instanceof MyPlacesDataTypeInfo)
             {
                 MyPlacesDataTypeInfo type = (MyPlacesDataTypeInfo)dti;
-                PolygonGeometry theGeom = RegionUtils.createGeometry(type.getKmlPlacemark());
+                PolylineGeometry theGeom = RegionUtils.createGeometry(type.getKmlPlacemark());
 
                 geometries.add(theGeom);
             }

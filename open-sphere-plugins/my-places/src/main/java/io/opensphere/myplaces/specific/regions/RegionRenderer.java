@@ -20,7 +20,7 @@ import io.opensphere.core.callout.Callout;
 import io.opensphere.core.callout.CalloutDragListener;
 import io.opensphere.core.callout.CalloutImpl;
 import io.opensphere.core.geometry.Geometry;
-import io.opensphere.core.geometry.PolygonGeometry;
+import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.math.Vector2i;
 import io.opensphere.core.messaging.GenericSubscriber;
 import io.opensphere.core.mgrs.MGRSConverter;
@@ -89,7 +89,7 @@ public class RegionRenderer extends DefaultTransformer implements Renderer
     private OpenListener myOpenListener;
 
     /** Map of models to geometries. */
-    private final Map<Placemark, PolygonGeometry> myPlacemarkGeometryMap = new IdentityHashMap<>();
+    private final Map<Placemark, PolylineGeometry> myPlacemarkGeometryMap = new IdentityHashMap<>();
 
     /**
      * Constructs a new point renderer.
@@ -158,7 +158,7 @@ public class RegionRenderer extends DefaultTransformer implements Renderer
         {
             if (!myPlacemarkGeometryMap.containsKey(placemark))
             {
-                PolygonGeometry geom = RegionUtils.createGeometry(placemark);
+                PolylineGeometry geom = RegionUtils.createGeometry(placemark);
                 myPlacemarkGeometryMap.put(placemark, geom);
                 myModel.getGeomIdToPlaceMarks().put(Long.valueOf(geom.getDataModelId()), placemark);
                 if (ExtendedDataUtils.getBoolean(placemark.getExtendedData(), Constants.IS_FEATURE_ON_ID, true))
@@ -177,9 +177,9 @@ public class RegionRenderer extends DefaultTransformer implements Renderer
         Set<Placemark> featureSet = new WrappedMapSet<>(new IdentityHashMap<Placemark, Void>(), null);
         featureSet.addAll(featuresToRender);
 
-        for (Iterator<Entry<Placemark, PolygonGeometry>> iter = myPlacemarkGeometryMap.entrySet().iterator(); iter.hasNext();)
+        for (Iterator<Entry<Placemark, PolylineGeometry>> iter = myPlacemarkGeometryMap.entrySet().iterator(); iter.hasNext();)
         {
-            Entry<Placemark, PolygonGeometry> entry = iter.next();
+            Entry<Placemark, PolylineGeometry> entry = iter.next();
             Placemark placemark = entry.getKey();
             if (!featureSet.contains(placemark))
             {
@@ -222,7 +222,7 @@ public class RegionRenderer extends DefaultTransformer implements Renderer
      * @param geom The geometry.
      * @return The geographic anchor.
      */
-    protected LatLonAlt getCalloutAnchor(PolygonGeometry geom)
+    protected LatLonAlt getCalloutAnchor(PolylineGeometry geom)
     {
         LatLonAlt anchor = null;
         for (Position position : geom.getVertices())
@@ -245,7 +245,7 @@ public class RegionRenderer extends DefaultTransformer implements Renderer
      * @param placemark The placemark.
      * @return The text lines.
      */
-    protected List<? extends String> getCalloutText(PolygonGeometry geom, Placemark placemark)
+    protected List<? extends String> getCalloutText(PolylineGeometry geom, Placemark placemark)
     {
         List<String> text = New.list();
         if (ExtendedDataUtils.getBoolean(placemark.getExtendedData(), Constants.IS_TITLE, false))
@@ -302,7 +302,7 @@ public class RegionRenderer extends DefaultTransformer implements Renderer
      * @param placemark The placemark.
      * @param adds The return collection of added geometries.
      */
-    private void addCallout(PolygonGeometry geom, Placemark placemark, Collection<? super Geometry> adds)
+    private void addCallout(PolylineGeometry geom, Placemark placemark, Collection<? super Geometry> adds)
     {
         LatLonAlt anchor = getCalloutAnchor(geom);
         if (anchor == null)

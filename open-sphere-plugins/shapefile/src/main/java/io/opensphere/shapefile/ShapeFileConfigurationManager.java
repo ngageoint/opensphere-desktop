@@ -64,7 +64,7 @@ class ShapeFileConfigurationManager
         ShapeFileDataSource sourceV2 = new ShapeFileDataSource(new File(sourceV1.getPath()).toURI());
         sourceV2.setActive(sourceV1.isActive());
         sourceV2.setVisible(sourceV1.isVisible());
-        sourceV2.setFromStateSource(sourceV1.isFromStateSource());
+        sourceV2.setFromState(sourceV1.isFromStateSource());
 
         // Layer settings fields
         sourceV2.getLayerSettings().setName(sourceV1.getName());

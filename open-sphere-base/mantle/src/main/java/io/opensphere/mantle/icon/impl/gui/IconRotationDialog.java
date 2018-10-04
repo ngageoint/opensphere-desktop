@@ -50,7 +50,7 @@ public class IconRotationDialog extends JFXDialog
         setMinimumSize(new Dimension(310, 200));
         IconRotationPane pane = new IconRotationPane(record);
         setFxNode(pane);
-        setAcceptEar(() -> saveRotatedIcon(record, pane.getRotation()));
+        setAcceptListener(() -> saveRotatedIcon(record, pane.getRotation()));
         try
         {
             BufferedImage image = ImageIO.read(record.getImageURL());

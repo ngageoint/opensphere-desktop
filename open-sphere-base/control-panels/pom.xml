@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>io.open-sphere</groupId>
 		<artifactId>open-sphere-base</artifactId>
-		<version>5.2.5-SNAPSHOT</version>
+		<version>5.2.6-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -24,8 +24,8 @@
 		</dependency>
 		<dependency>
 			<groupId>io.open-sphere</groupId>
-	<artifactId>test-support</artifactId>
-	<scope>test</scope>
+			<artifactId>test-support</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 		    <groupId>com.sun.xml.bind</groupId>

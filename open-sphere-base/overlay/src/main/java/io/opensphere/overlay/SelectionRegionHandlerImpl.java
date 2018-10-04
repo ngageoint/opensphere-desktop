@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.control.action.MenuOptionListener;
-import io.opensphere.core.geometry.PolygonGeometry;
+import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.util.collections.CollectionUtilities;
 
 /**
@@ -63,7 +63,7 @@ public class SelectionRegionHandlerImpl implements SelectionHandler
     }
 
     @Override
-    public void selectionRegionCompleted(MouseEvent mouseEvent, String contextId, List<PolygonGeometry> selectionBoxGeometries)
+    public void selectionRegionCompleted(MouseEvent mouseEvent, String contextId, List<Geometry> selectionBoxGeometries)
     {
         if (CollectionUtilities.hasContent(selectionBoxGeometries))
         {

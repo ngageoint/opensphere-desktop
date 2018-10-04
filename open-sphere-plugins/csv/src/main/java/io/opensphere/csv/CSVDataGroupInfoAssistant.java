@@ -50,8 +50,7 @@ public class CSVDataGroupInfoAssistant extends DefaultDataGroupInfoAssistant
             if (dti instanceof CSVDataTypeInfo)
             {
                 CSVDataTypeInfo cdti = (CSVDataTypeInfo)dti;
-                myController.removeSource(cdti.getFileSource(), true,
-                        myController.getToolbox().getUIRegistry().getMainFrameProvider().get());
+                myController.removeSource(cdti.getFileSource(), true, null);
             }
         }
     }

@@ -14,6 +14,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.MultiLineString;
+import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.PrecisionModel;
 
@@ -509,6 +510,33 @@ public final class JTSUtilities
     }
 
     /**
+     * Generate the JTS coordinates for the vertex.
+     *
+     * @param vertex The position for which the coordinate is desired.
+     * @return The JTS coordinate.
+     */
+    public static Coordinate generateCoordinate(Position vertex)
+    {
+        Coordinate coordinate;
+        if (vertex instanceof GeographicPosition)
+        {
+            GeographicPosition geo = (GeographicPosition)vertex;
+            coordinate = new Coordinate(geo.getLatLonAlt().getLonD(), geo.getLatLonAlt().getLatD(), geo.getLatLonAlt().getAltM());
+        }
+        if (vertex instanceof ScreenPosition)
+        {
+            Vector3d position = vertex.asVector3d();
+            coordinate = new Coordinate(position.getX(), position.getY());
+        }
+        else
+        {
+            Vector3d position = vertex.asVector3d();
+            coordinate = new Coordinate(position.getX(), position.getY(), position.getZ());
+        }
+        return coordinate;
+    }
+
+    /**
      * Generate the JTS coordinates for the vertices.
      *
      * @param vertices The vertices for which the coordinates are desired.
@@ -519,28 +547,7 @@ public final class JTSUtilities
         Coordinate[] coords = null;
         if (!vertices.isEmpty())
         {
-            coords = new Coordinate[vertices.size() + 1];
-            Vector3d position = null;
-            for (int i = 0; i < vertices.size(); i++)
-            {
-                Position vertex = vertices.get(i);
-                if (vertex instanceof GeographicPosition)
-                {
-                    GeographicPosition geo = (GeographicPosition)vertex;
-                    coords[i] = new Coordinate(geo.getLatLonAlt().getLonD(), geo.getLatLonAlt().getLatD(),
-                            geo.getLatLonAlt().getAltM());
-                }
-                if (vertex instanceof ScreenPosition)
-                {
-                    position = vertices.get(i).asVector3d();
-                    coords[i] = new Coordinate(position.getX(), position.getY());
-                }
-                else
-                {
-                    position = vertices.get(i).asVector3d();
-                    coords[i] = new Coordinate(position.getX(), position.getY(), position.getZ());
-                }
-            }
+            coords = vertices.stream().map(p -> generateCoordinate(p)).toArray(size -> new Coordinate[vertices.size() + 1]);
             coords[coords.length - 1] = coords[0];
         }
         return coords;
@@ -691,9 +698,32 @@ public final class JTSUtilities
     }
 
     /**
+     * Confines the child polygons' longitude to the interval [-180, 180).
+     * 
+     * @param p the polygon to confine.
+     * @return a polygon confined to the designated interval.
+     */
+    public static MultiPolygon cutLon180(MultiPolygon p)
+    {
+        if (p == null)
+        {
+            return null;
+        }
+        List<Polygon> confinedChildren = New.list();
+
+        for (int i = 0; i < p.getNumGeometries(); i++)
+        {
+            confinedChildren.add(cutLon180((Polygon)p.getGeometryN(i)));
+        }
+
+        return GEOMETRY_FACTORY.createMultiPolygon(confinedChildren.stream().toArray(Polygon[]::new));
+    }
+
+    /**
      * Confine longitude to the interval [-180, 180).
-     * @param p bla
-     * @return bla
+     * 
+     * @param p the polygon to confine.
+     * @return a polygon confined to the designated interval.
      */
     public static Polygon cutLon180(Polygon p)
     {
@@ -713,9 +743,10 @@ public final class JTSUtilities
 
     /**
      * Confine longitude to the interval [-180, 180).
-     * @param coords bla
+     * 
+     * @param coords the coordinates to confine.
      * @param close use true if the endpoints much match
-     * @return bla
+     * @return an array of coordinates confined to the designated interval.
      */
     private static Coordinate[] cutLon180(Coordinate[] coords, boolean close)
     {
@@ -738,8 +769,9 @@ public final class JTSUtilities
 
     /**
      * Confine longitude to the interval [-180, 180).
-     * @param c bla
-     * @return bla
+     * 
+     * @param c a coordinate to confine to the longitude interval.
+     * @return a coordinate confined to the longitude interval.
      */
     private static Coordinate cutLon180(Coordinate c)
     {
@@ -753,6 +785,7 @@ public final class JTSUtilities
     /**
      * Adjusts the vertices of a LineString much as the namesake method for
      * Polygon.
+     * 
      * @param ln a LineString
      * @return an adjusted LineString
      */
@@ -767,9 +800,10 @@ public final class JTSUtilities
 
     /**
      * Adjusts the vertices of a Polygon that may span the antimeridian in
-     * degrees of longitude.  The result is a new Polygon that is geometrically
-     * representative of the original but whose longitude coordinates may not
-     * be confined to a specific 360-degree interval.
+     * degrees of longitude. The result is a new Polygon that is geometrically
+     * representative of the original but whose longitude coordinates may not be
+     * confined to a specific 360-degree interval.
+     * 
      * @param p the Polygon
      * @return the modified Polygon
      */
@@ -778,7 +812,7 @@ public final class JTSUtilities
         GeometryFactory fact = new GeometryFactory();
         Coordinate[] ex = joinLon(p.getExteriorRing().getCoordinates(), true);
         int nHole = p.getNumInteriorRing();
-        LinearRing[]  holes = new LinearRing[nHole];
+        LinearRing[] holes = new LinearRing[nHole];
         for (int i = 0; i < nHole; i++)
         {
             holes[i] = fact.createLinearRing(joinLon(p.getInteriorRingN(i).getCoordinates(), ex[0], true));
@@ -788,6 +822,7 @@ public final class JTSUtilities
 
     /**
      * As the namesake but with no external point of reference.
+     * 
      * @param coords set of points
      * @param close use true if the endpoints much match
      * @return adjusted points
@@ -798,8 +833,9 @@ public final class JTSUtilities
     }
 
     /**
-     * Adjust a set of points to be in a contiguous region of longitude with
-     * the specified origin point.
+     * Adjust a set of points to be in a contiguous region of longitude with the
+     * specified origin point.
+     * 
      * @param coords set of points
      * @param origin origin point
      * @param close use true if the endpoints much match
@@ -830,10 +866,11 @@ public final class JTSUtilities
     /**
      * Given a starting point as (lon, lat, alt) and an ending point, calculate
      * an equivalent ending point such that the difference in longitude always
-     * lies in the half-open interval [-180, 180).  If the original ending
-     * point already satisfies the desired condition, then it is returned
-     * unmodified; otherwise a new Coordinate with the altered longitude value
-     * is created and returned.
+     * lies in the half-open interval [-180, 180). If the original ending point
+     * already satisfies the desired condition, then it is returned unmodified;
+     * otherwise a new Coordinate with the altered longitude value is created
+     * and returned.
+     * 
      * @param c0 a starting point with longitude in degrees
      * @param c1 an ending point with longitude in degrees
      * @return see above
@@ -851,6 +888,7 @@ public final class JTSUtilities
     /**
      * Convert a longitude value in degrees to an equivalent value that is in
      * the half-open interval [-180, 180).
+     * 
      * @param x longitude in degrees
      * @return see above
      */
@@ -898,43 +936,31 @@ public final class JTSUtilities
             normalizeByBoundingBox(copy, bounds);
             return doDivideOnAntimeridian(copy);
         }
-        else
+        if (winding == PolygonWinding.UNKNOWN)
         {
-            if (winding == PolygonWinding.UNKNOWN)
+            Polygon copy = (Polygon)polygon.clone();
+            boolean normalized = normalizeBySegmentLength(copy);
+            if (normalized)
             {
-                Polygon copy = (Polygon)polygon.clone();
-                boolean normalized = normalizeBySegmentLength(copy);
-                if (normalized)
-                {
-                    return doDivideOnAntimeridian(copy);
-                }
-                else
-                {
-                    return Collections.singletonList(polygon);
-                }
+                return doDivideOnAntimeridian(copy);
             }
-            else
-            {
-                // Get the natural winding. If this is different then the
-                // winding we know we should have then we crossed the
-                // antimeridian.
-                PolygonWinding naturalWinding = getNaturalWinding(polygon.getExteriorRing().getCoordinates());
-                if (naturalWinding.equals(winding))
-                {
-                    return Collections.singletonList(polygon);
-                }
-                else
-                {
-                    // TODO we can use the winding direction to determine the
-                    // interior of the polygon. We should be able to use this to
-                    // correctly normalize the polygon and allow for segments
-                    // longer than 180 degrees longitudinally.
-                    Polygon copy = (Polygon)polygon.clone();
-                    normalizeBySegmentLength(copy);
-                    return doDivideOnAntimeridian(copy);
-                }
-            }
+            return Collections.singletonList(polygon);
         }
+        // Get the natural winding. If this is different then the
+        // winding we know we should have then we crossed the
+        // antimeridian.
+        PolygonWinding naturalWinding = getNaturalWinding(polygon.getExteriorRing().getCoordinates());
+        if (naturalWinding.equals(winding))
+        {
+            return Collections.singletonList(polygon);
+        }
+        // TODO we can use the winding direction to determine the
+        // interior of the polygon. We should be able to use this to
+        // correctly normalize the polygon and allow for segments
+        // longer than 180 degrees longitudinally.
+        Polygon copy = (Polygon)polygon.clone();
+        normalizeBySegmentLength(copy);
+        return doDivideOnAntimeridian(copy);
     }
 
     /**

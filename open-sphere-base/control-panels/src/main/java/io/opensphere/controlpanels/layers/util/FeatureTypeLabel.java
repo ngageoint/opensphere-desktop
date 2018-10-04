@@ -141,7 +141,7 @@ public class FeatureTypeLabel extends JLabel
             ourTilesDarkOutlineIcon = new ImageIcon(
                     ImageIO.read(FeatureTypeLabel.class.getResource("/images/tiles-base-darkoutline.png")));
 
-            ourTracksIcon = new ImageIcon(ImageIO.read(FeatureTypeLabel.class.getResource("/images/path.png")));
+            ourTracksIcon = new ImageIcon(ImageIO.read(FeatureTypeLabel.class.getResource("/images/path-default.png")));
             ourTracksLightOutlineIcon = new ImageIcon(
                     ImageIO.read(FeatureTypeLabel.class.getResource("/images/path-lightoutline.png")));
             ourTracksDarkOutlineIcon = new ImageIcon(
@@ -208,20 +208,20 @@ public class FeatureTypeLabel extends JLabel
                 "Tracks can be created manually, by using existing meta data points, or by using a set of points in the list tool."
                         + "The controls for creating a track are very similar to the ArcLength tool.");
         iconReg.addIconToLegend(IconUtil.getNormalIcon(ourImageryIcon), "Imagery Layer",
-                "Imagery layers are images that have been georectified and overlaid on the map at thier corresponding location..");
+                "Imagery layers are images that have been georectified and overlaid on the map at their corresponding location.");
         iconReg.addIconToLegend(ourTerrainIcon, "Terrain Layer",
                 "A terrain layer provides a vertical offset associated with a point "
                         + "on the earth which gives the appearance of height to layers that are overlaid on terrain layers.");
         iconReg.addIconToLegend(IconUtil.getNormalIcon(ourAnnotationFeaturesIcon), "Annotation Features",
                 "An annotation feature is a user added point on the map that is highly customizable. "
-                        + "These annotations show up in the 'Layers' panel under the 'My Places' category");
+                        + "These annotations show up in the 'Layers' panel under the 'My Places' category.");
         iconReg.addIconToLegend(IconUtil.getNormalIcon(ourAnnotationRegionsIcon), "Annotation Regions",
                 "An annotation region is a user created polygon or circle on the map. "
                         + "It can be used for querying data, purging data, and zooming. "
-                        + "These annotations show up in the 'Layers' panel under the 'My Places' category");
+                        + "These annotations show up in the 'Layers' panel under the 'My Places' category.");
         iconReg.addIconToLegend(IconUtil.getNormalIcon(ourUnknownTypeIcon), "Unknown Type",
                 "This application attempts to identify layer types based on many criteria. "
-                        + "If a layer type does not fit any of the know criteria, the layer will be assigned the 'Unknown Type'");
+                        + "If a layer type does not fit any of the known criteria, the layer will be assigned the 'Unknown Type'.");
     }
 
     /**

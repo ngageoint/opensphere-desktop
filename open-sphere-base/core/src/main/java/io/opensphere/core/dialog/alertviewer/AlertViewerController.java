@@ -4,6 +4,8 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import net.jcip.annotations.ThreadSafe;
+
+import javax.swing.Icon;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
@@ -16,6 +18,8 @@ import io.opensphere.core.dialog.alertviewer.toast.ToastController;
 import io.opensphere.core.event.EventListenerService;
 import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.ThreadConfined;
+import io.opensphere.core.util.image.IconUtil;
+import io.opensphere.core.util.image.IconUtil.IconType;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -45,6 +49,7 @@ class AlertViewerController extends EventListenerService
         super(toolbox.getEventManager(), 1);
         myToolbox = toolbox;
         myToaster = new ToastController(toolbox.getUIRegistry().getMainFrameProvider());
+        addLegendIcons(toolbox);
 
         bindEvent(UserMessageEvent.class, this::handleUserMessageEvent);
     }
@@ -110,5 +115,17 @@ class AlertViewerController extends EventListenerService
             myAlerts.remove(0);
         }
         myAlerts.add(alert);
+    }
+
+    /**
+     * Adds icons to the icon legend.
+     *
+     * @param toolbox the toolbox
+     */
+    private void addLegendIcons(Toolbox toolbox)
+    {
+        Icon alertIcon = IconUtil.getNormalIcon(IconType.NOTIFICATION);
+        toolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(alertIcon, "Alert",
+                "Opens the alert window. Messages, notifications, warnings, and errors from the application will appear here.");
     }
 }

@@ -1,5 +1,6 @@
 package io.opensphere.heatmap;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,7 +15,9 @@ import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.action.context.GeometryContextKey;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.PolygonGeometry;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.Service;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.util.swing.SwingUtilities;
 
 /** Heat map menu provider for query geometries. */
@@ -86,6 +89,7 @@ public class HeatmapGeometryMenuProvider implements ContextMenuProvider<Geometry
         {
             JMenuItem menuItem = SwingUtilities.newMenuItem(HeatmapController.MENU_TEXT,
                 e -> myHeatmapController.create(geometry));
+            menuItem.setIcon( new GenericFontIcon(AwesomeIconSolid.FIRE, Color.WHITE, 12));
             menuItems = Collections.singletonList(menuItem);
         }
 

@@ -9,16 +9,21 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
+import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.GeometryGroupGeometry;
+import io.opensphere.core.geometry.MultiPolygonGeometry;
 import io.opensphere.core.geometry.PointGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.geometry.renderproperties.DefaultPolygonRenderProperties;
+import io.opensphere.core.geometry.renderproperties.DefaultZOrderRenderProperties;
 import io.opensphere.core.geometry.renderproperties.PolygonRenderProperties;
 import io.opensphere.core.geometry.renderproperties.ZOrderRenderProperties;
 import io.opensphere.core.geometry.util.PointGeometryUtils;
@@ -87,6 +92,22 @@ public final class JTSCoreGeometryUtilities
     }
 
     /**
+     * Converts the supplied {@link PointGeometry} to an instance of the JTS
+     * {@link Point} class.
+     *
+     * @param geometry the geometry to convert.
+     * @return a JTS Point instance generated from the supplied geometry.
+     */
+    public static Point convertToJTSPoint(PointGeometry geometry)
+    {
+        Position position = geometry.getPosition();
+        Vector3d vec = position.asVector3d();
+        Coordinate coordinate = new Coordinate(vec.getX(), vec.getY(), vec.getZ());
+
+        return JTSUtilities.GEOMETRY_FACTORY.createPoint(coordinate);
+    }
+
+    /**
      * Convert to jts polygon.
      *
      * @param geom the geom
@@ -99,6 +120,26 @@ public final class JTSCoreGeometryUtilities
             return null;
         }
         return JTSUtilities.createJTSPolygon(geom.getVertices(), geom.getHoles());
+    }
+
+    /**
+     * Convert the supplied geometry group (assumption: composed only of
+     * {@link PolygonGeometry}s) to an instance of the JTS {@link MultiPolygon}.
+     *
+     * @param geom the geometry group to convert to a {@link MultiPolygon}.
+     * @return the polygon
+     */
+    public static MultiPolygon convertToJTSPolygon(GeometryGroupGeometry geom)
+    {
+        if (geom.getGeometries().isEmpty())
+        {
+            return null;
+        }
+
+        Polygon[] polygons = geom.getGeometries().stream().filter(g -> g instanceof PolygonGeometry)
+                .map(g -> convertToJTSPolygon((PolygonGeometry)g)).toArray(Polygon[]::new);
+
+        return JTSUtilities.GEOMETRY_FACTORY.createMultiPolygon(polygons);
     }
 
     /**
@@ -147,6 +188,63 @@ public final class JTSCoreGeometryUtilities
     }
 
     /**
+     * Converts the supplied {@link MultiPolygon} to a
+     * {@link GeometryGroupGeometry}.
+     *
+     * @param multiPolygon the multipolygon to convert.
+     * @param polyProps the properties to apply to converted children of the
+     *            supplied polygon.
+     * @param groupProperties the properties the new
+     *            {@link GeometryGroupGeometry}.
+     * @return a group geometry generated from the supplied multipolygon.
+     */
+    public static GeometryGroupGeometry convertToGeometryGroupGeometry(MultiPolygon multiPolygon,
+            PolygonRenderProperties polyProps, ZOrderRenderProperties groupProperties)
+    {
+        if (multiPolygon == null)
+        {
+            return null;
+        }
+
+        GeometryGroupGeometry.Builder builder = new GeometryGroupGeometry.Builder(GeographicPosition.class);
+
+        for (int i = 0; i < multiPolygon.getNumGeometries(); i++)
+        {
+            Polygon initialGeometry = (Polygon)multiPolygon.getGeometryN(i);
+            builder.getInitialGeometries().add(convertToPolygonGeometry(initialGeometry, polyProps));
+        }
+
+        return new GeometryGroupGeometry(builder, groupProperties);
+    }
+
+    /**
+     * Converts the supplied {@link MultiPolygon} to a
+     * {@link GeometryGroupGeometry}.
+     *
+     * @param multiPolygon the multipolygon to convert.
+     * @param polyProps the properties to apply to converted children of the
+     *            supplied polygon.
+     * @return a group geometry generated from the supplied multipolygon.
+     */
+    public static MultiPolygonGeometry convertToMultiPolygonGeometry(MultiPolygon multiPolygon, PolygonRenderProperties polyProps)
+    {
+        if (multiPolygon == null)
+        {
+            return null;
+        }
+
+        MultiPolygonGeometry.Builder<GeographicPosition> builder = new MultiPolygonGeometry.Builder<>(GeographicPosition.class);
+
+        for (int i = 0; i < multiPolygon.getNumGeometries(); i++)
+        {
+            Polygon initialGeometry = (Polygon)multiPolygon.getGeometryN(i);
+            builder.getInitialGeometries().add(convertToPolygonGeometry(initialGeometry, polyProps));
+        }
+
+        return new MultiPolygonGeometry(builder, polyProps, null);
+    }
+
+    /**
      * Create a "buffer" PolygonGeometry for a Geometry which is a
      * PolygonGeometry, a PolylineGeometry (but not also a PolygonGeometry), or
      * a PointGeometry.
@@ -155,9 +253,13 @@ public final class JTSCoreGeometryUtilities
      * @param distM the buffer distance in meters
      * @return the buffer, if supported, or null
      */
-    public static PolygonGeometry getBufferGeom(Geometry g, double distM)
+    public static AbstractGeometry getBufferGeom(Geometry g, double distM)
     {
-        if (g instanceof PolygonGeometry)
+        if (g instanceof MultiPolygonGeometry)
+        {
+            return createBufferAroundMultiPolygon((MultiPolygonGeometry)g, distM);
+        }
+        else if (g instanceof PolygonGeometry)
         {
             return createBufferAroundPolygon((PolygonGeometry)g, distM);
         }
@@ -187,7 +289,35 @@ public final class JTSCoreGeometryUtilities
      * @return a {@link PolygonGeometry} in which the buffer is expressed, or
      *         null if none could be created.
      */
-    public static PolygonGeometry createBufferAroundGroup(GeometryGroupGeometry pGroup, double pDistanceInMeters)
+    public static AbstractGeometry createBufferAroundMultiPolygon(MultiPolygonGeometry pGroup, double pDistanceInMeters)
+    {
+        Collection<PolygonGeometry> geometries = pGroup.getGeometries();
+
+        if (geometries.isEmpty())
+        {
+            return null;
+        }
+
+        com.vividsolutions.jts.geom.Geometry unifiedJtsGeometry = null;
+        Set<PolygonGeometry> polygons = New.set(geometries.size());
+        geometries.forEach(g -> polygons.add(g));
+        unifiedJtsGeometry = PolygonGeometryUtils.convertToMultiPolygon(polygons);
+
+        return createBuffer(unifiedJtsGeometry, pDistanceInMeters);
+    }
+
+    /**
+     * Create a buffer {@link PolygonGeometry} for the supplied geometry group.
+     * The group may be composed of one or more constituent geometries, however,
+     * all children of the group must be of the same type.
+     *
+     * @param pGroup the group for which to create the buffer.
+     * @param pDistanceInMeters the distance, expressed in meters, of away from
+     *            the group at which the buffer will be drawn.
+     * @return a {@link PolygonGeometry} in which the buffer is expressed, or
+     *         null if none could be created.
+     */
+    public static AbstractGeometry createBufferAroundGroup(GeometryGroupGeometry pGroup, double pDistanceInMeters)
     {
         Collection<Geometry> geometries = pGroup.getGeometries();
 
@@ -198,7 +328,13 @@ public final class JTSCoreGeometryUtilities
 
         Geometry firstGeometry = geometries.iterator().next();
         com.vividsolutions.jts.geom.Geometry unifiedJtsGeometry = null;
-        if (firstGeometry instanceof PolylineGeometry)
+        if (firstGeometry instanceof PolygonGeometry)
+        {
+            Set<PolygonGeometry> polygons = New.set(geometries.size());
+            geometries.forEach(g -> polygons.add((PolygonGeometry)g));
+            unifiedJtsGeometry = PolygonGeometryUtils.convertToMultiPolygon(polygons);
+        }
+        else if (firstGeometry instanceof PolylineGeometry)
         {
             Set<PolylineGeometry> polylines = New.set(geometries.size());
             geometries.forEach(g -> polylines.add((PolylineGeometry)g));
@@ -209,12 +345,6 @@ public final class JTSCoreGeometryUtilities
             Set<PointGeometry> points = New.set(geometries.size());
             geometries.forEach(g -> points.add((PointGeometry)g));
             unifiedJtsGeometry = PointGeometryUtils.convertToMultiPoint(points);
-        }
-        else if (firstGeometry instanceof PolygonGeometry)
-        {
-            Set<PolygonGeometry> polygons = New.set(geometries.size());
-            geometries.forEach(g -> polygons.add((PolygonGeometry)g));
-            unifiedJtsGeometry = PolygonGeometryUtils.convertToMultiPolygon(polygons);
         }
         else
         {
@@ -236,11 +366,22 @@ public final class JTSCoreGeometryUtilities
      *            in meters.
      * @return a {@link PolygonGeometry} in which the buffer is expressed.
      */
-    public static PolygonGeometry createBuffer(com.vividsolutions.jts.geom.Geometry pJtsGeometry, double pDistanceInMeters)
+    public static AbstractGeometry createBuffer(com.vividsolutions.jts.geom.Geometry pJtsGeometry, double pDistanceInMeters)
     {
         LatLonAlt center = JTSUtilities.convertToLatLonAlt(ReferenceLevel.ELLIPSOID, pJtsGeometry.getCoordinate()).get(0);
         LatLonAlt edge = azRadiusPt(center, 0, pDistanceInMeters);
         double latDist = Math.abs(center.getLatD() - edge.getLatD());
+        if (pJtsGeometry instanceof GeometryCollection)
+        {
+            com.vividsolutions.jts.geom.Geometry buffer = pJtsGeometry.buffer(latDist);
+            if (buffer instanceof Polygon)
+            {
+                Polygon bufferPolygon = JTSUtilities.cutLon180((Polygon)buffer);
+                return convertToPolygonGeometry(bufferPolygon, polyProps());
+            }
+            MultiPolygon bufferPolygon = JTSUtilities.cutLon180((MultiPolygon)buffer);
+            return convertToGeometryGroupGeometry(bufferPolygon, polyProps(), createZOrderRenderProperties());
+        }
 
         Polygon bufferPolygon = JTSUtilities.cutLon180((Polygon)pJtsGeometry.buffer(latDist));
         return convertToPolygonGeometry(bufferPolygon, polyProps());
@@ -401,6 +542,12 @@ public final class JTSCoreGeometryUtilities
         props.setColor(c);
         props.setWidth(w);
         return props;
+    }
+
+    public static ZOrderRenderProperties createZOrderRenderProperties()
+    {
+        ZOrderRenderProperties properties = new DefaultZOrderRenderProperties(DEFAULT_ZORDER, true);
+        return properties;
     }
 
     /** Disallow instantiation. */

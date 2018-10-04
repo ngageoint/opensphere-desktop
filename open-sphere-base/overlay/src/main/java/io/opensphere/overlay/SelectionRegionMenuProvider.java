@@ -3,7 +3,6 @@ package io.opensphere.overlay;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +24,12 @@ import io.opensphere.core.control.action.context.GeometryContextKey;
 import io.opensphere.core.geometry.ColorGeometry;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.PolygonGeometry;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.ChangeSupport;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import io.opensphere.core.util.swing.GenericFontIcon;
 
 /**
  * Displays a selection region.
@@ -111,42 +112,25 @@ public class SelectionRegionMenuProvider implements ContextMenuProvider<Geometry
         if ((color & 0xff000000) == 0)
         {
             JMenuItem show = new JMenuItem("Show");
-            show.addActionListener(new ActionListener()
-            {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    ((ColorGeometry)geom).getRenderProperties().setColorARGB(color | 0xff000000);
-                }
-            });
+            show.addActionListener(e -> ((ColorGeometry)geom).getRenderProperties().setColorARGB(color | 0xff000000));
             menuItems.add(show);
         }
         else
         {
             JMenuItem hide = new JMenuItem("Hide");
-            hide.addActionListener(new ActionListener()
-            {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    ((ColorGeometry)geom).getRenderProperties().setColorARGB(color & 0x00ffffff);
-                }
-            });
+            hide.addActionListener(e -> ((ColorGeometry)geom).getRenderProperties().setColorARGB(color & 0x00ffffff));
             menuItems.add(hide);
         }
 
-        JMenuItem setColor = new JMenuItem("Override Color...");
-        setColor.addActionListener(new ActionListener()
+        JMenuItem setColor = new JMenuItem("Override Color");
+        setColor.setIcon(new GenericFontIcon(AwesomeIconSolid.TINT, Color.WHITE));
+        setColor.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            Color oldColor = ((ColorGeometry)geom).getRenderProperties().getColor();
+            Color selectColor = ColorPicker.showDialog(null, "Choose Color", oldColor, true);
+            if (selectColor != null && !selectColor.equals(oldColor))
             {
-                Color oldColor = ((ColorGeometry)geom).getRenderProperties().getColor();
-                Color selectColor = ColorPicker.showDialog(null, "Choose Color", oldColor, true);
-                if (selectColor != null && !selectColor.equals(oldColor))
-                {
-                    ((ColorGeometry)geom).getRenderProperties().setColor(selectColor);
-                }
+                ((ColorGeometry)geom).getRenderProperties().setColor(selectColor);
             }
         });
         menuItems.add(setColor);
@@ -163,14 +147,7 @@ public class SelectionRegionMenuProvider implements ContextMenuProvider<Geometry
     @Override
     public void popupMenuCanceled(PopupMenuEvent arg0)
     {
-        myChangeSupport.notifyListeners(new ChangeSupport.Callback<MenuOptionListener>()
-        {
-            @Override
-            public void notify(MenuOptionListener listener)
-            {
-                listener.handleMenuCancelled();
-            }
-        }, ourExecutor);
+        myChangeSupport.notifyListeners(listener -> listener.handleMenuCancelled(), ourExecutor);
     }
 
     @Override
@@ -203,16 +180,12 @@ public class SelectionRegionMenuProvider implements ContextMenuProvider<Geometry
     public void showMenu(final MouseEvent mouseEvent, final String contextId,
             final List<? extends Geometry> selectionBoxGeometries)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
-            {
-                ActionContext<GeometryContextKey> context = myControlActionManager.getActionContext(contextId,
-                        GeometryContextKey.class);
-                context.doAction(new GeometryContextKey(selectionBoxGeometries.get(0)), (Component)mouseEvent.getSource(),
-                        mouseEvent.getX(), mouseEvent.getY(), SelectionRegionMenuProvider.this);
-            }
+            ActionContext<GeometryContextKey> context = myControlActionManager.getActionContext(contextId,
+                    GeometryContextKey.class);
+            context.doAction(new GeometryContextKey(selectionBoxGeometries.get(0)), (Component)mouseEvent.getSource(),
+                    mouseEvent.getX(), mouseEvent.getY(), SelectionRegionMenuProvider.this);
         });
     }
 
@@ -224,13 +197,6 @@ public class SelectionRegionMenuProvider implements ContextMenuProvider<Geometry
      */
     private void notifyMenuOptionListeners(final String context, final String command)
     {
-        myChangeSupport.notifyListeners(new ChangeSupport.Callback<MenuOptionListener>()
-        {
-            @Override
-            public void notify(MenuOptionListener listener)
-            {
-                listener.menuOptionSelected(context, command);
-            }
-        }, ourExecutor);
+        myChangeSupport.notifyListeners(listener -> listener.menuOptionSelected(context, command), ourExecutor);
     }
 }

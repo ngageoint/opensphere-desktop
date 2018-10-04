@@ -11,6 +11,10 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.event.EventHandler;
+
 import javax.naming.OperationNotSupportedException;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
@@ -21,9 +25,6 @@ import io.opensphere.core.model.Quadrilateral;
 import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.event.EventHandler;
 
 /**
  * A grouping of associated DataTypeInfo, that can possibly form a node in a tree of associated groups of data.
@@ -36,6 +37,9 @@ public interface DataGroupInfo
 {
     /** The context id for actions against active data groups. */
     String ACTIVE_DATA_CONTEXT = "ACTIVE_DATA_GROUP_CONTEXT";
+
+    /** The context id for actions against areas. */
+    String AREA_CONTEXT = "AREA_CONTEXT";
 
     /**
      * Comparator that orders {@link DataGroupInfo}s by their display names (case insensitive).

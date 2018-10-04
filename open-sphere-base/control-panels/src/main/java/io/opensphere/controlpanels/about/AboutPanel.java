@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -20,10 +21,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -32,7 +35,6 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.quantify.Quantify;
-import io.opensphere.core.quantify.QuantifyToolboxUtils;
 import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.StringUtilities;
@@ -83,6 +85,9 @@ public class AboutPanel extends AbstractHUDPanel
 
     /** The OS working directory. */
     private String myWorkingDirectory;
+
+    /** The Delete Vortex button. */
+    private JButton myDeleteVortexButton;
 
     /**
      * Instantiates a new layer manager panel.
@@ -363,6 +368,67 @@ public class AboutPanel extends AbstractHUDPanel
     }
 
     /**
+     * Creates the delete vortex button. Deletes all files under the vortex runtime path.
+     * After being clicked, will initiate a dialog asking the user if they are sure about
+     * doing this. If so, the vortex files will be deleted and the application will restart.
+     *
+     * @return the delete vortex button
+     */
+    private JButton createDeleteVortexButton()
+    {
+        myDeleteVortexButton = new JButton("Delete Vortex");
+        myDeleteVortexButton.setMargin(ButtonPanel.INSETS_MEDIUM);
+        myDeleteVortexButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                int result = JOptionPane.showConfirmDialog(myAboutFrame, "This action will delete all Vortex files.\n"
+                        + "Data, security settings, servers, and other application state information will be removed, "
+                        + "reverting this application to a clean state.\nThis application will then restart. Do you wish to proceed?",
+                        "WARNING", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION)
+                {
+                    restart();
+                }
+            }
+
+            private void restart()
+            {
+                final String installPath = new File(System.getProperty("user.dir")).getParentFile().getAbsolutePath();
+                String command;
+                if (System.getProperty("os.name").contains("Windows"))
+                {
+                    command = "\"" + Paths.get(installPath, "launch.bat").normalize().toString() + "\"";
+                }
+                else
+                {
+                    command = Paths.get(installPath, "launch.sh").normalize().toString();
+                }
+                Runtime.getRuntime().addShutdownHook(new Thread()
+                {
+                    @Override
+                    public void run()
+                    {
+                        try
+                        {
+                            FileUtils.deleteDirectory(new File(mySystemPropertiesMap.get("opensphere.path.runtime")));
+                            Runtime.getRuntime().exec(command);
+                        }
+                        catch (IOException e)
+                        {
+                            LOGGER.error("Failed to execute new instance of application command.", e);
+                        }
+                    }
+                });
+
+                System.exit(0);
+            }
+        });
+        return myDeleteVortexButton;
+    }
+
+    /**
      * Gets the locations panel.
      *
      * @return the locations panel
@@ -468,6 +534,8 @@ public class AboutPanel extends AbstractHUDPanel
         rtPanel.add(getMoreButton());
         rtPanel.add(Box.createHorizontalStrut(5));
         rtPanel.add(createExportButton());
+        rtPanel.add(Box.createHorizontalStrut(5));
+        rtPanel.add(createDeleteVortexButton());
         rtPanel.add(Box.createHorizontalStrut(5));
         rtPanel.add(getCloseButton());
         rtPanel.add(Box.createHorizontalGlue());

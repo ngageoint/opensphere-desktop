@@ -34,6 +34,10 @@ public class CustomBinaryLogicOpType extends BinaryLogicOpType implements Custom
     @XmlAttribute(name = "active", required = false)
     private boolean myIsActive;
 
+    /** If the filter is from a state. */
+    @XmlAttribute(name = "fromState")
+    private boolean myIsFromState;
+
     /**
      * Whether this filter matches any(or) or all(and) other filters. TRUE is
      * match all
@@ -156,6 +160,18 @@ public class CustomBinaryLogicOpType extends BinaryLogicOpType implements Custom
     public boolean isActive()
     {
         return myIsActive;
+    }
+
+    @Override
+    public boolean isFromState()
+    {
+        return myIsFromState;
+    }
+
+    @Override
+    public void setFromState(boolean isFromState)
+    {
+        myIsFromState = isFromState;
     }
 
     /**

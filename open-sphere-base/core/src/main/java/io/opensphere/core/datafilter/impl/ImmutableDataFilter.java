@@ -26,6 +26,9 @@ public class ImmutableDataFilter implements DataFilter
     /** The active. */
     private final boolean myActive;
 
+    /** If this filter is from a state. */
+    private final boolean myIsFromState;
+
     /** The Columns. */
     private final List<? extends String> myColumns;
 
@@ -74,6 +77,7 @@ public class ImmutableDataFilter implements DataFilter
         myFilterGroup = filter.getFilterGroup() == null ? null : new ImmutableDataFilterGroup(filter.getFilterGroup());
         myFilterCount = filter.getFilterCount();
         myActive = filter.isActive();
+        myIsFromState = filter.isFromState();
         myServerName = filter.getServerName();
         myFilterDescription = filter.getFilterDescription();
     }
@@ -99,6 +103,7 @@ public class ImmutableDataFilter implements DataFilter
         mySQLLikeString = sqlLikeStr;
         myFilterCount = 0;
         myActive = true;
+        myIsFromState = false;
         myServerName = null;
         myFilterDescription = null;
     }
@@ -213,6 +218,12 @@ public class ImmutableDataFilter implements DataFilter
     public boolean isActive()
     {
         return myActive;
+    }
+
+    @Override
+    public boolean isFromState()
+    {
+        return myIsFromState;
     }
 
     @Override

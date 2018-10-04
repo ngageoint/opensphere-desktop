@@ -1,5 +1,7 @@
 package io.opensphere.myplaces.specific.regions;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -22,10 +24,13 @@ import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.action.context.GeometryContextKey;
 import io.opensphere.core.geometry.PolygonGeometry;
+import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.LatLonAlt;
+import io.opensphere.core.util.AwesomeIconRegular;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.lang.StringUtilities;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.mantle.data.MapVisualizationType;
 import io.opensphere.myplaces.models.MyPlacesDataGroupInfo;
 import io.opensphere.myplaces.models.MyPlacesDataTypeInfo;
@@ -127,7 +132,7 @@ public class RegionTypeController extends PlaceTypeController
      *
      * @param geometry the geometry
      */
-    private void createRegionFromGeometry(PolygonGeometry geometry)
+    protected void createRegionFromGeometry(PolygonGeometry geometry)
     {
         assert EventQueue.isDispatchThread();
 
@@ -154,20 +159,57 @@ public class RegionTypeController extends PlaceTypeController
     }
 
     /**
+     * Creates the save roi from geometry.
+     *
+     * @param geometry the geometry
+     */
+    protected void createLineFromGeometry(PolylineGeometry geometry)
+    {
+        assert EventQueue.isDispatchThread();
+
+        Set<String> names = new TreeSet<>();
+        Function<Placemark, Void> func = input ->
+        {
+            if (input.getGeometry() instanceof Polygon && input.getName().startsWith("Region-"))
+            {
+                names.add(input.getName());
+            }
+            return null;
+        };
+
+        myPlacesModel.applyToEachPlacemark(func);
+
+        String roiName = StringUtilities.getUniqueName("Region-", names);
+
+        MyPlacesDataGroupInfo parentDataGroup = myPlacesModel.getDataGroups();
+
+        Placemark placemark = RegionUtils.createLineFromPositions(new Folder(), roiName, geometry.getVertices());
+
+        launchEditor(placemark, parentDataGroup);
+    }
+
+    /**
      * Geometry ContextMenuProvider.
      */
     private class GeometryContextMenuProvider implements ContextMenuProvider<GeometryContextKey>
     {
         @Override
-        public List<JMenuItem> getMenuItems(String contextId, GeometryContextKey key)
+        public List<Component> getMenuItems(String contextId, GeometryContextKey key)
         {
-            List<JMenuItem> options = new LinkedList<>();
-            if ((ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT.equals(contextId)
+            List<Component> options = new LinkedList<>();
+            if (ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT.equals(contextId)
                     || ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT.equals(contextId))
-                    && key.getGeometry() instanceof PolygonGeometry)
             {
-                JMenuItem saveMI = new JMenuItem("Save as ROI");
-                saveMI.addActionListener(e -> createRegionFromGeometry((PolygonGeometry)key.getGeometry()));
+                JMenuItem saveMI = new JMenuItem("Save as Place");
+                saveMI.setIcon(new GenericFontIcon(AwesomeIconRegular.SAVE, Color.WHITE));
+                if (key.getGeometry() instanceof PolygonGeometry)
+                {
+                    saveMI.addActionListener(e -> createRegionFromGeometry((PolygonGeometry)key.getGeometry()));
+                }
+                else if (key.getGeometry() instanceof PolylineGeometry)
+                {
+                    saveMI.addActionListener(e -> createLineFromGeometry((PolylineGeometry)key.getGeometry()));
+                }
                 options.add(saveMI);
             }
 

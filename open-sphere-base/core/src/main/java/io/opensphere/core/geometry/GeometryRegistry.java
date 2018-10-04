@@ -1,6 +1,7 @@
 package io.opensphere.core.geometry;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 import io.opensphere.core.image.ImageProvider;
@@ -48,6 +49,16 @@ public interface GeometryRegistry extends GenericSubscriber<Geometry>
      * @return The geometries.
      */
     Collection<Geometry> getGeometries();
+
+    /**
+     * Get all the geometries currently in the registry that are a certain
+     * concrete class.
+     *
+     * @param <T> The concrete implementation of the {@code Geometry} interface.
+     * @param cl The concrete class.
+     * @return The geometries.
+     */
+    <T extends Geometry> Collection<T> getGeometriesOfClass(Class<T> cl);
 
     /**
      * Get the geometries that have been added associated with a particular
@@ -125,4 +136,22 @@ public interface GeometryRegistry extends GenericSubscriber<Geometry>
      * @param caps The rendering capabilities.
      */
     void setRenderingCapabilities(RenderingCapabilities caps);
+
+    /**
+     * Get the geometries in this registry that are associated with some data
+     * models.
+     *
+     * @param dataModelIds The data model ids.
+     * @return The geometries.
+     */
+    List<Geometry> getGeometriesForDataModels(long[] dataModelIds);
+
+    /**
+     * Get the geometries in this registry that are associated with a data
+     * model.
+     *
+     * @param dataModelId The data model id.
+     * @return The geometries.
+     */
+    List<? extends Geometry> getGeometriesForDataModel(long dataModelId);
 }

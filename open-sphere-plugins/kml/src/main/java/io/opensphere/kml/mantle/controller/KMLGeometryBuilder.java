@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,9 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+
+import com.vividsolutions.jts.geom.CoordinateSequence;
+import com.vividsolutions.jts.geom.impl.CoordinateArraySequenceFactory;
 
 import de.micromata.opengis.kml.v_2_2_0.AltitudeMode;
 import de.micromata.opengis.kml.v_2_2_0.Boundary;
@@ -29,6 +33,7 @@ import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.LineType;
 import io.opensphere.core.server.ServerProviderRegistry;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.jts.JTSUtilities;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.kml.common.model.KMLDataSource;
 import io.opensphere.kml.common.util.KMLDataRegistryHelper;
@@ -496,17 +501,18 @@ public class KMLGeometryBuilder
      */
     private MapGeometrySupport createMapPolygonSupport(final Polygon polygon, final Style style, final boolean useSimpleGeom)
     {
-        AltitudeMode altitudeMode = getUserAltitudeMode(polygon.getAltitudeMode());
-        boolean isExtrude = isExtrude(polygon.isExtrude(), altitudeMode);
-        boolean isTessellate = polygon.isTessellate() != null && polygon.isTessellate().booleanValue();
+        Polygon normalizedPolygon = normalize(polygon);
+        AltitudeMode altitudeMode = getUserAltitudeMode(normalizedPolygon.getAltitudeMode());
+        boolean isExtrude = isExtrude(normalizedPolygon.isExtrude(), altitudeMode);
+        boolean isTessellate = normalizedPolygon.isTessellate() != null && normalizedPolygon.isTessellate().booleanValue();
 
         // Create the outer boundary
         List<LatLonAlt> outerRing = KMLSpatialTemporalUtils
-                .convertCoordinates(polygon.getOuterBoundaryIs().getLinearRing().getCoordinates(), altitudeMode);
+                .convertCoordinates(normalizedPolygon.getOuterBoundaryIs().getLinearRing().getCoordinates(), altitudeMode);
 
         // Create the inner boundaries
-        Collection<List<LatLonAlt>> innerRings = New.collection(polygon.getInnerBoundaryIs().size());
-        for (Boundary innerBoundary : polygon.getInnerBoundaryIs())
+        Collection<List<LatLonAlt>> innerRings = New.collection(normalizedPolygon.getInnerBoundaryIs().size());
+        for (Boundary innerBoundary : normalizedPolygon.getInnerBoundaryIs())
         {
             if (!innerBoundary.getLinearRing().getCoordinates().isEmpty())
             {
@@ -518,6 +524,106 @@ public class KMLGeometryBuilder
 
         return createMapGeometrySupport(outerRing, innerRings, style, useSimpleGeom, isExtrude, isTessellate,
                 DefaultMapPolygonGeometrySupport.class);
+    }
+
+    /**
+     * "Normalizes" the supplied polygon. KML polygons may be specified
+     * erroneously with overlapping sections, which can cause failures during
+     * rendering. The normalization will calculate the true external boundary of
+     * the polygon without including any overlapped regions, eliminating this
+     * issue.
+     * 
+     * @param polygon the polygon to normalize.
+     * @return the normalized polygon.
+     */
+    private Polygon normalize(final Polygon polygon)
+    {
+        com.vividsolutions.jts.geom.Geometry jtsGeometry = convertToJTS(polygon).buffer(0);
+
+        if (jtsGeometry instanceof com.vividsolutions.jts.geom.Polygon)
+        {
+            return convertToKML((com.vividsolutions.jts.geom.Polygon)jtsGeometry);
+        }
+
+        // TODO: temporary fix because JTS Geometry.buffer() can sometimes fail
+        // and return a badly formed multipolygon when a polygon crosses the
+        // meridian, antimeridian, or equator - if the polygon also overlaps, it
+        // may cause further issues with the kml loading to return the polygon
+        // without normalizing it, so this needs to be fixed in a better way later.
+        return polygon;
+    }
+
+    /**
+     * Converts the supplied JTS Polygon to a KML Polygon.
+     * 
+     * @param jtsPolygon the JTS polygon to convert.
+     * @return a KML Polygon created from the converted JTS polygon.
+     */
+    private Polygon convertToKML(com.vividsolutions.jts.geom.Polygon jtsPolygon)
+    {
+        Polygon polygon = new Polygon();
+        polygon.setOuterBoundaryIs(convertToKmlBoundary(jtsPolygon.getExteriorRing()));
+
+        for (int i = 0; i < jtsPolygon.getNumInteriorRing(); i++)
+        {
+            polygon.addToInnerBoundaryIs(convertToKmlBoundary(jtsPolygon.getInteriorRingN(i)));
+        }
+
+        return polygon;
+    }
+
+    /**
+     * Converts the supplied KML Polygon to a JTS Polygon.
+     * 
+     * @param polygon the KML polygon to convert.
+     * @return a JTS Polygon created from the converted KML polygon.
+     */
+    private com.vividsolutions.jts.geom.Polygon convertToJTS(Polygon polygon)
+    {
+        com.vividsolutions.jts.geom.LinearRing jtsOuterRing = convertToJTSLinearRing(
+                polygon.getOuterBoundaryIs().getLinearRing());
+        com.vividsolutions.jts.geom.LinearRing[] holes = polygon.getInnerBoundaryIs().stream()
+                .map(b -> convertToJTSLinearRing(b.getLinearRing())).toArray(com.vividsolutions.jts.geom.LinearRing[]::new);
+
+        com.vividsolutions.jts.geom.Polygon jtsPolygon = new com.vividsolutions.jts.geom.Polygon(jtsOuterRing, holes,
+                JTSUtilities.GEOMETRY_FACTORY);
+
+        return jtsPolygon;
+    }
+
+    /**
+     * Converts the supplied JTS Line string to a KML {@link Boundary}.
+     * 
+     * @param ring the ring to convert to a LinearRing.
+     * @return a LinearRing generated from the supplied line string.
+     */
+    private Boundary convertToKmlBoundary(com.vividsolutions.jts.geom.LineString ring)
+    {
+        LinearRing kmlRing = new LinearRing();
+        Arrays.stream(ring.getCoordinates()).forEach(c -> kmlRing.addToCoordinates(c.x, c.y, c.z));
+
+        Boundary boundary = new Boundary();
+        boundary.setLinearRing(kmlRing);
+        return boundary;
+    }
+
+    /**
+     * Converts the supplied KML {@link LinearRing} to a JTS
+     * {@link com.vividsolutions.jts.geom.LinearRing} instance.
+     * 
+     * @param ring the KML linear ring to convert.
+     * @return a JTS linear ring generated from the supplied KML linear ring.
+     */
+    private com.vividsolutions.jts.geom.LinearRing convertToJTSLinearRing(LinearRing ring)
+    {
+        com.vividsolutions.jts.geom.Coordinate[] jtsCoordinates = ring.getCoordinates().stream()
+                .map(c -> new com.vividsolutions.jts.geom.Coordinate(c.getLongitude(), c.getLatitude(), c.getAltitude()))
+                .toArray(com.vividsolutions.jts.geom.Coordinate[]::new);
+        CoordinateSequence sequence = CoordinateArraySequenceFactory.instance().create(jtsCoordinates);
+
+        com.vividsolutions.jts.geom.LinearRing jtsOuterRing = new com.vividsolutions.jts.geom.LinearRing(sequence,
+                JTSUtilities.GEOMETRY_FACTORY);
+        return jtsOuterRing;
     }
 
     /**

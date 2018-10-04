@@ -179,7 +179,7 @@ public abstract class AbstractMergeMergeContextMenuProvider<CONTEXT_KEY_TYPE ext
         JoinGui gui = new JoinGui();
         JFXDialog dialog = GuiUtil.okCancelDialog(myToolbox, "Join Layers");
         dialog.setFxNode(GuiUtil.vScroll(gui.getMainPane()));
-        dialog.setAcceptEar(() -> ThreadUtilities.runCpu(() -> handleJoin(gui.getModel())));
+        dialog.setAcceptListener(() -> ThreadUtilities.runCpu(() -> handleJoin(gui.getModel())));
         dialog.setSize(new Dimension(450, 450));
         gui.setup(myToolbox, dialog);
         gui.setData(dataTypes);

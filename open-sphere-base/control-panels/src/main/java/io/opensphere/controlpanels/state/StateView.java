@@ -1,5 +1,6 @@
 package io.opensphere.controlpanels.state;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -29,29 +30,34 @@ import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 import org.apache.log4j.Logger;
 
+import io.opensphere.controlpanels.layers.importdata.ImportDataController;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.MenuBarRegistry;
 import io.opensphere.core.export.ExportException;
 import io.opensphere.core.export.Exporter;
 import io.opensphere.core.export.Exporters;
+import io.opensphere.core.importer.FileOrURLImporterMenuItem;
+import io.opensphere.core.importer.ImportType;
 import io.opensphere.core.modulestate.SaveStateDialog;
 import io.opensphere.core.modulestate.StateData;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.quantify.Quantify;
+import io.opensphere.core.util.AwesomeIconRegular;
+import io.opensphere.core.util.AwesomeIconSolid;
+import io.opensphere.core.util.FontIconEnum;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.filesystem.MnemonicFileChooser;
-import io.opensphere.core.util.image.IconUtil;
-import io.opensphere.core.util.image.IconUtil.IconType;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.core.util.swing.OptionDialog;
 import io.opensphere.core.util.swing.SplitButton;
 import io.opensphere.core.util.taskactivity.CancellableTaskActivity;
@@ -67,6 +73,9 @@ class StateView
     /** The state controller. */
     private final StateController myController;
 
+    /** The state import controller. */
+    private final StateImportController myImportController;
+
     /** The toolbox. */
     private final Toolbox myToolbox;
 
@@ -80,19 +89,49 @@ class StateView
     private final SplitButton myStateControlButton;
 
     /**
+     * The import action listener for the import state from file/url menu items.
+     */
+    private final ActionListener myImportActionListener = new ActionListener()
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getSource() instanceof FileOrURLImporterMenuItem)
+            {
+                FileOrURLImporterMenuItem importerMenuItem = (FileOrURLImporterMenuItem)e.getSource();
+                ImportDataController.getInstance(myToolbox).importSpecific(importerMenuItem.getImporter(),
+                        importerMenuItem.getImportType());
+            }
+        }
+    };
+
+    /**
      * Constructor.
      *
-     * @param controller The state controller.
-     * @param toolbox The toolbox.
+     * @param controller The state controller
+     * @param importController The state import controller
+     * @param toolbox The toolbox
      */
-    public StateView(StateController controller, Toolbox toolbox)
+    public StateView(StateController controller, StateImportController importController, Toolbox toolbox)
     {
         myController = Utilities.checkNull(controller, "controller");
+        myImportController = Utilities.checkNull(importController, "importController");
         myToolbox = toolbox;
         myPrefsRegistry = Utilities.checkNull(toolbox.getPreferencesRegistry(), "prefsRegistry");
         myMenuBarRegistry = Utilities.checkNull(toolbox.getUIRegistry().getMenuBarRegistry(), "menuBarRegistry");
 
-        myStateControlButton = new SplitButton(null, null)
+        myStateControlButton = createStateControlButton();
+    }
+
+    /**
+     * Creates the state control split button with dropdown menu.
+     *
+     * @return the state control button
+     */
+    private SplitButton createStateControlButton()
+    {
+        SplitButton stateControlButton = new SplitButton("States", new GenericFontIcon(AwesomeIconSolid.BOOKMARK, Color.YELLOW),
+                false)
         {
             /** Serial version UID. */
             private static final long serialVersionUID = 1L;
@@ -100,38 +139,71 @@ class StateView
             @Override
             protected List<Component> getDynamicMenuItems()
             {
-                Collection<? extends String> states = myController.getAvailableStates();
-                List<Component> menuItems = New.list(states.size());
-                for (String state : states)
+                List<Component> menuItems = New.list();
+                myController.getAvailableStates().forEach(state ->
                 {
-                    JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(new ToggleStateAction(state));
+                    JMenuItem menuItem = new JCheckBoxMenuItem(new ToggleStateAction(state));
                     String stateDescription = myController.getStateDescription(state);
                     menuItem.setToolTipText(StringUtilities.concat("Toggle ", state, " (description: ",
                             stateDescription.isEmpty() ? "empty" : stateDescription, ")"));
+                    menuItem.setHorizontalTextPosition(SwingConstants.LEFT);
                     menuItems.add(menuItem);
-                }
+                });
                 return menuItems;
             }
+
+            @Override
+            protected String getDynamicMenuItemsLabel()
+            {
+                return "SAVED STATES";
+            }
         };
-        SaveStateAction saveStateAction = new SaveStateAction();
-        myStateControlButton.setAction(saveStateAction);
-        myStateControlButton.setText("Save State");
 
-        JMenuItem saveStateMenuItem = new JMenuItem(saveStateAction);
-        myStateControlButton.addMenuItem(saveStateMenuItem);
-        JMenuItem clearMenuItem = new JMenuItem(new ClearStatesAction());
-        myStateControlButton.addMenuItem(clearMenuItem);
-        JMenuItem deleteMenuItem = new JMenuItem(new DeleteStatesAction());
-        myStateControlButton.addMenuItem(deleteMenuItem);
-        myStateControlButton.add(new JSeparator());
+        stateControlButton.setToolTipText("States controls");
 
-        IconUtil.setIcons(myStateControlButton, IconType.DISK);
+        stateControlButton.addMenuItem(createImportMenuItem(ImportType.URL, "Import a state from a URL"));
+        stateControlButton.addMenuItem(createImportMenuItem(ImportType.FILE, "Import a state from a file"));
+        stateControlButton.addMenuItem(
+                createActionMenuItem(new SaveStateAction(), AwesomeIconRegular.SAVE, "Save the current application state"));
+        stateControlButton
+                .addMenuItem(createActionMenuItem(new DisableStatesAction(), AwesomeIconSolid.TIMES, "Deactivate all states"));
+        stateControlButton.addMenuItem(
+                createActionMenuItem(new DeleteStatesAction(), AwesomeIconSolid.TRASH_ALT, "Remove states from the application"));
 
-        String saveTooltip = "Save the current application state";
-        myStateControlButton.setToolTipText(saveTooltip);
-        saveStateMenuItem.setToolTipText(saveTooltip);
-        clearMenuItem.setToolTipText("Deactivate all states");
-        deleteMenuItem.setToolTipText("Remove states from the application");
+        return stateControlButton;
+    }
+
+    /**
+     * Create an import menu item. Currently supports importing a url, file, or
+     * file group
+     *
+     * @param type the import type
+     * @param tooltip the menu item tooltip
+     * @return the import menu item
+     */
+    private JMenuItem createImportMenuItem(ImportType type, String tooltip)
+    {
+        JMenuItem importMenuItem = new FileOrURLImporterMenuItem(myImportController, type);
+        importMenuItem.setIcon(new GenericFontIcon(AwesomeIconSolid.CLOUD_DOWNLOAD_ALT, Color.WHITE));
+        importMenuItem.setToolTipText(tooltip);
+        importMenuItem.addActionListener(myImportActionListener);
+        return importMenuItem;
+    }
+
+    /**
+     * Creates an action menu item.
+     *
+     * @param action the menu item action
+     * @param icon the menu item icon
+     * @param tooltip the menu item tooltip
+     * @return the action menu item
+     */
+    private JMenuItem createActionMenuItem(Action action, FontIconEnum icon, String tooltip)
+    {
+        JMenuItem actionMenuItem = new JMenuItem(action);
+        actionMenuItem.setIcon(new GenericFontIcon(icon, Color.WHITE));
+        actionMenuItem.setToolTipText(tooltip);
+        return actionMenuItem;
     }
 
     /**
@@ -326,9 +398,9 @@ class StateView
     }
 
     /**
-     * Clear states action.
+     * Disable states action.
      */
-    private final class ClearStatesAction extends AbstractAction
+    private final class DisableStatesAction extends AbstractAction
     {
         /** Serial version UID. */
         private static final long serialVersionUID = 1L;
@@ -336,21 +408,21 @@ class StateView
         /**
          * Constructor.
          */
-        public ClearStatesAction()
+        public DisableStatesAction()
         {
-            super("Clear States");
+            super("Disable States");
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            Quantify.collectMetric("mist3d.state.clear-states");
+            Quantify.collectMetric("mist3d.states.disable-states");
             myController.deactivateAllStates();
         }
     }
 
     /**
-     * Delete state action.
+     * Delete states action.
      */
     private final class DeleteStatesAction extends AbstractAction
     {
@@ -362,13 +434,13 @@ class StateView
          */
         public DeleteStatesAction()
         {
-            super("Delete States...");
+            super("Delete States");
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            Quantify.collectMetric("mist3d.state.remove-states");
+            Quantify.collectMetric("mist3d.states.delete-states");
             Collection<? extends String> availableStates = myController.getAvailableStates();
             if (availableStates.isEmpty())
             {
@@ -417,19 +489,19 @@ class StateView
          */
         public SaveStateAction()
         {
-            super("Save State...");
+            super("Save State");
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            Quantify.collectMetric("mist3d.state.create-state");
+            Quantify.collectMetric("mist3d.states.save-state");
             saveState();
         }
     }
 
     /**
-     * Save state action.
+     * Toggle state action.
      */
     private final class ToggleStateAction extends AbstractAction
     {
@@ -449,13 +521,14 @@ class StateView
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            Quantify.collectMetric("mist3d.state.activate-state");
+            boolean activeState = myController.isStateActive(getName());
+            Quantify.collectMetric("mist3d.states." + (activeState ? "deactivate" : "activate") + "-state");
             CancellableTaskActivity ta = new CancellableTaskActivity();
-            ta.setLabelValue((myController.isStateActive(getName()) ? "Deactivating state " : "Activating state ") + getName());
+            ta.setLabelValue((activeState ? "Deactivating state " : "Activating state ") + getName());
             ta.setActive(true);
             myMenuBarRegistry.addTaskActivity(ta);
             SwingWorker<Void, Void> worker = EventQueueUtilities.waitCursorRun(myStateControlButton,
-                    () -> myController.toggleState(getName()), () -> ta.setComplete(true));
+                () -> myController.toggleState(getName()), () -> ta.setComplete(true));
             ta.cancelledProperty().addListener((v, o, n) -> worker.cancel(true));
         }
 

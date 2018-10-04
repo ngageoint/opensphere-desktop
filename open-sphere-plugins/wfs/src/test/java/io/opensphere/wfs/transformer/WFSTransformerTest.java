@@ -16,6 +16,7 @@ import io.opensphere.core.common.geospatial.model.DataPoint;
 import io.opensphere.core.data.DataRegistry;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.geometry.Geometry;
+import io.opensphere.core.geometry.GeometryRegistry;
 import io.opensphere.core.geometry.GeometryRegistryImpl;
 import io.opensphere.core.geometry.PointGeometry;
 import io.opensphere.core.model.GeographicPosition;
@@ -79,7 +80,7 @@ public class WFSTransformerTest
     private Toolbox getTestToolbox()
     {
         DataRegistry dataRegistry = EasyMock.createMock(DataRegistry.class);
-        GeometryRegistryImpl geomRegistry = new GeometryRegistryImpl(null);
+        GeometryRegistry geomRegistry = new GeometryRegistryImpl(null);
         EventManager eventMgr = EasyMock.createMock(EventManager.class);
         TimeManager timeMgr = EasyMock.createMock(TimeManager.class);
 

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import javax.swing.JMenuItem;
 
@@ -21,6 +22,7 @@ import io.opensphere.core.event.DataRemovalEvent;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.event.EventListenerService;
 import io.opensphere.core.geometry.Geometry;
+import io.opensphere.core.geometry.MultiPolygonGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.constraint.Constraints;
 import io.opensphere.core.geometry.renderproperties.DefaultPolygonRenderProperties;
@@ -44,6 +46,7 @@ import io.opensphere.mantle.plugin.queryregion.QueryRegion;
 import io.opensphere.mantle.plugin.queryregion.QueryRegionListener;
 import io.opensphere.mantle.plugin.queryregion.QueryRegionManager;
 import io.opensphere.mantle.plugin.selection.SelectionCommand;
+import io.opensphere.mantle.plugin.selection.SelectionCommandFactory;
 import io.opensphere.mantle.plugin.selection.SelectionCommandProcessor;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
@@ -56,7 +59,7 @@ public class QueryRegionManagerImpl extends EventListenerService implements Quer
     private final ChangeSupport<QueryRegionListener> myChangeSupport = WeakChangeSupport.create();
 
     /** The Delete context menu provider. */
-    private final ContextMenuProvider<Void> myDeleteContextMenuProvider = new ContextMenuProvider<Void>()
+    private final ContextMenuProvider<Void> myDeleteContextMenuProvider = new ContextMenuProvider<>()
     {
         @Override
         public List<JMenuItem> getMenuItems(String contextId, Void key)
@@ -125,17 +128,13 @@ public class QueryRegionManagerImpl extends EventListenerService implements Quer
 
         // Register the state manager after all the other plugins so that
         // queries will get activated after other layers.
-        myListener = new EventListener<ApplicationLifecycleEvent>()
+        myListener = event ->
         {
-            @Override
-            public void notify(ApplicationLifecycleEvent event)
+            if (event.getStage() == ApplicationLifecycleEvent.Stage.PLUGINS_INITIALIZED)
             {
-                if (event.getStage() == ApplicationLifecycleEvent.Stage.PLUGINS_INITIALIZED)
-                {
-                    myToolbox.getModuleStateManager().registerModuleStateController("Query Areas", myModuleStateController);
-                    myToolbox.getEventManager().unsubscribe(ApplicationLifecycleEvent.class, myListener);
-                    myListener = null;
-                }
+                myToolbox.getModuleStateManager().registerModuleStateController("Query Areas", myModuleStateController);
+                myToolbox.getEventManager().unsubscribe(ApplicationLifecycleEvent.class, myListener);
+                myListener = null;
             }
         };
         myToolbox.getEventManager().subscribe(ApplicationLifecycleEvent.class, myListener);
@@ -313,29 +312,29 @@ public class QueryRegionManagerImpl extends EventListenerService implements Quer
     @Override
     public void selectionOccurred(Collection<? extends PolygonGeometry> bounds, SelectionCommand cmd)
     {
-        switch (cmd)
+        if (cmd.equals(SelectionCommandFactory.ADD_FEATURES))
         {
-            case ADD_FEATURES:
-                addQueryRegion(deriveQueryPolygons(bounds, false), getFilterMap());
-                break;
-            case ADD_FEATURES_CURRENT_FRAME:
-                addQueryRegion(deriveQueryPolygons(bounds, true), myToolbox.getTimeManager().getPrimaryActiveTimeSpans(),
-                        getFilterMap());
-                break;
-            case LOAD_FEATURES:
-                removeAllQueryRegions();
-                addQueryRegion(deriveQueryPolygons(bounds, false), getFilterMap());
-                break;
-            case LOAD_FEATURES_CURRENT_FRAME:
-                removeAllQueryRegions();
-                addQueryRegion(deriveQueryPolygons(bounds, true), myToolbox.getTimeManager().getPrimaryActiveTimeSpans(),
-                        getFilterMap());
-                break;
-            case CANCEL_QUERY:
-                removeQueryRegion(bounds);
-                break;
-            default:
-                break;
+            addQueryRegion(deriveQueryPolygons(bounds, false), getFilterMap());
+        }
+        else if (cmd.equals(SelectionCommandFactory.ADD_FEATURES_CURRENT_FRAME))
+        {
+            addQueryRegion(deriveQueryPolygons(bounds, true), myToolbox.getTimeManager().getPrimaryActiveTimeSpans(),
+                    getFilterMap());
+        }
+        else if (cmd.equals(SelectionCommandFactory.LOAD_FEATURES))
+        {
+            removeAllQueryRegions();
+            addQueryRegion(deriveQueryPolygons(bounds, false), getFilterMap());
+        }
+        else if (cmd.equals(SelectionCommandFactory.LOAD_FEATURES_CURRENT_FRAME))
+        {
+            removeAllQueryRegions();
+            addQueryRegion(deriveQueryPolygons(bounds, true), myToolbox.getTimeManager().getPrimaryActiveTimeSpans(),
+                    getFilterMap());
+        }
+        else if (cmd.equals(SelectionCommandFactory.CANCEL_QUERY))
+        {
+            removeQueryRegion(bounds);
         }
     }
 
@@ -407,7 +406,17 @@ public class QueryRegionManagerImpl extends EventListenerService implements Quer
                 props.setStipple(StippleModelConfig.DOTTED);
             }
 
-            output.add(geom.derive(props, (Constraints)null));
+            if (geom instanceof MultiPolygonGeometry)
+            {
+                MultiPolygonGeometry multiPolygonGeometry = (MultiPolygonGeometry)geom;
+                output.addAll(multiPolygonGeometry.getGeometries().stream().map(g -> g.derive(props, (Constraints)null))
+                        .collect(Collectors.toList()));
+            }
+            else
+            {
+                output.add(geom.derive(props, (Constraints)null));
+            }
+
         }
 
         return output;

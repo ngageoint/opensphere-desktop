@@ -41,9 +41,11 @@ import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.IconRegistryImpl;
 import io.opensphere.mantle.mp.MapAnnotationPointRegistry;
 import io.opensphere.mantle.mp.impl.MapAnnotationPointRegistryImpl;
+import io.opensphere.mantle.plugin.queryline.QueryLineManager;
+import io.opensphere.mantle.plugin.queryline.impl.QueryLineManagerImpl;
 import io.opensphere.mantle.plugin.queryregion.QueryRegionManager;
 import io.opensphere.mantle.plugin.queryregion.impl.QueryRegionManagerImpl;
-import io.opensphere.mantle.plugin.selection.SelectionCommand;
+import io.opensphere.mantle.plugin.selection.SelectionCommandFactory;
 import io.opensphere.mantle.plugin.selection.SelectionHandler;
 import io.opensphere.mantle.util.dynenum.DynamicEnumerationRegistry;
 import io.opensphere.mantle.util.dynenum.impl.DynamicEnumerationRegistryImpl;
@@ -98,6 +100,9 @@ public class MantleToolboxImpl implements MantleToolbox
     /** The query region manager. */
     private final QueryRegionManager myQueryRegionManager;
 
+    /** The manager in which query line operations are handled. */
+    private final QueryLineManager myQueryLineManager;
+
     /** The selection handler. */
     private final SelectionHandler mySelectionHandler;
 
@@ -131,7 +136,8 @@ public class MantleToolboxImpl implements MantleToolbox
         myDataElementCache = new DataElementCacheImpl(aToolbox, MantleCacheUtils.getElementCacheConfiguration(pluginProperties),
                 (DynamicMetadataManagerImpl)myDynamicColumnManager, myDynamicEnumerationRegistry);
         myColumnTypeDetector = new ColumnTypeDetectorImpl();
-        myDataTypeController = new DataTypeControllerImpl(aToolbox, (DataElementCacheImpl)myDataElementCache, myColumnTypeDetector);
+        myDataTypeController = new DataTypeControllerImpl(aToolbox, (DataElementCacheImpl)myDataElementCache,
+                myColumnTypeDetector);
         myDataTypeController.initialize();
         myDataGroupController = new DataGroupControllerImpl(aToolbox);
         final QueryRegionManagerImpl qrmi = new QueryRegionManagerImpl(aToolbox, myDataGroupController);
@@ -140,11 +146,17 @@ public class MantleToolboxImpl implements MantleToolbox
         mySelectionHandler = new SelectionHandler(aToolbox, myDataGroupController, myDataTypeController, qrmi, myDataElementCache,
                 myDataElementUpdateUtils);
         mySelectionHandler.install(aToolbox);
-        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommand.ADD_FEATURES, qrmi);
-        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommand.ADD_FEATURES_CURRENT_FRAME, qrmi);
-        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommand.LOAD_FEATURES, qrmi);
-        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommand.LOAD_FEATURES_CURRENT_FRAME, qrmi);
-        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommand.CANCEL_QUERY, qrmi);
+        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommandFactory.ADD_FEATURES, qrmi);
+        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommandFactory.ADD_FEATURES_CURRENT_FRAME, qrmi);
+        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommandFactory.LOAD_FEATURES, qrmi);
+        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommandFactory.LOAD_FEATURES_CURRENT_FRAME, qrmi);
+        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommandFactory.CANCEL_QUERY, qrmi);
+
+        myQueryLineManager = new QueryLineManagerImpl(aToolbox);
+        mySelectionHandler.registerLineSelectionCommandProcessor(SelectionCommandFactory.CREATE_BUFFER_REGION, myQueryLineManager);
+        mySelectionHandler.registerLineSelectionCommandProcessor(SelectionCommandFactory.CREATE_BUFFER_REGION_FOR_SELECTED,
+                myQueryLineManager);
+
         myDataTypeInfoPreferenceAssistant = new DataTypeInfoPreferenceAssistantImpl(myParentToolbox);
         myIconRegistry = createIconRegistry(pluginProperties);
         myMapGeometrySupportConverterRegistry = new MapGeometrySupportConverterRegistryImpl(aToolbox);
@@ -293,7 +305,8 @@ public class MantleToolboxImpl implements MantleToolbox
      */
     private IconRegistry createIconRegistry(Properties pluginProperties)
     {
-        final String runtimeDir = StringUtilities.expandProperties(System.getProperty("opensphere.path.runtime"), System.getProperties());
+        final String runtimeDir = StringUtilities.expandProperties(System.getProperty("opensphere.path.runtime"),
+                System.getProperties());
         final File iconCacheParent = new File(runtimeDir + File.separator + "iconCache");
         final String iconCacheLocation = pluginProperties.getProperty("iconCacheLocation", iconCacheParent.getAbsolutePath());
         final File iconCache = new File(iconCacheLocation);
@@ -325,6 +338,7 @@ public class MantleToolboxImpl implements MantleToolbox
         final ColumnMappingResourcesImpl resources = new ColumnMappingResourcesImpl(
                 (MutableColumnMappingController)toolbox.getDataFilterRegistry().getColumnMappingController(),
                 toolbox.getUIRegistry().getMainFrameProvider(), myDataGroupController);
-        toolbox.getUIRegistry().getOptionsRegistry().addOptionsProvider(new ColumnMappingOptionsProvider(myParentToolbox, resources));
+        toolbox.getUIRegistry().getOptionsRegistry()
+                .addOptionsProvider(new ColumnMappingOptionsProvider(myParentToolbox, resources));
     }
 }
