@@ -261,21 +261,21 @@ public class MainPanel extends SplitPane
      */
     static void changeTop(boolean choice)
     {
-        // StackPane stackPane = new StackPane();
-        // ObservableList<Node> childs = stackPane.getChildren();
-        //
-        // Node grid = childs.get(1);
-        // Node list = childs.get(0);
-        // if (choice)
-        // {
-        // grid.setVisible(false);
-        // list.setVisible(true);
-        // }
-        // else
-        // {
-        // list.setVisible(false);
-        // grid.setVisible(true);
-        // }
+//         StackPane stackPane = new StackPane();
+//         ObservableList<Node> childs = stackPane.getChildren();
+//        
+//         Node grid = childs.get(1);
+//         Node list = childs.get(0);
+//         if (choice)
+//         {
+//         grid.setVisible(false);
+//         list.setVisible(true);
+//         }
+//         else
+//         {
+//         list.setVisible(false);
+//         grid.setVisible(true);
+//         }
     }
 
     /**

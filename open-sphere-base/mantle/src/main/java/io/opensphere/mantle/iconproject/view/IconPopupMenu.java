@@ -25,7 +25,7 @@ public class IconPopupMenu extends ContextMenu
     {
         IconPopupMenuImpl selector = new IconPopupMenuImpl(thePanelModel);
 
-        MenuItem favAction = new MenuItem("Add to Favorites");
+        MenuItem favAction = new MenuItem("Add Selected Icon(s) to Favorites");
         favAction.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
@@ -35,16 +35,16 @@ public class IconPopupMenu extends ContextMenu
             }
         });
 
-        MenuItem rotateAction = new MenuItem("Rotate Icon");
+        MenuItem rotateAction = new MenuItem("Customize Icon");
         rotateAction.setOnAction(event ->
         {
             EventQueue.invokeLater(() ->
             {
-                selector.rotate();
+                selector.customize();
             });
         });
 
-        MenuItem deleteAction = new MenuItem("Delete Icon");
+        MenuItem deleteAction = new MenuItem("Delete Selected Icon(s)");
         deleteAction.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
@@ -54,7 +54,7 @@ public class IconPopupMenu extends ContextMenu
             }
         });
 
-        MenuItem removeAction = new MenuItem("Remove Icon");
+        MenuItem removeAction = new MenuItem("Remove Selected Icon(s)");
         removeAction.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override

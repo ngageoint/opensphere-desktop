@@ -11,6 +11,7 @@ import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.panels.ErrorPane;
+import io.opensphere.mantle.iconproject.view.IconCustomizerDialog;
 import javafx.scene.control.Button;
 
 /**
@@ -70,32 +71,12 @@ public class IconPopupMenuImpl
     }
 
     /**
-     * Rotates the selected icon.
+     * Customize the selected icon.
      */
-    public void rotate()
+    public void customize()
     {
-        if (myPanelModel.getSelectedIcons().size() >= 2)
-        {
-            showMultiSelectMessage();
-        }
-        else
-        {
-            IconProjRotDialog dialog = new IconProjRotDialog(myPanelModel.getOwner(), myPanelModel);
-            dialog.setVisible(true);
-        }
-    }
-
-    /**
-     * Shows a generic error message in JavaFX if there are multiple icons
-     * selected when trying to perform a single icon event.
-     */
-    private void showMultiSelectMessage()
-    {
-        ErrorPane errorLoader = new ErrorPane();
-        JFXDialog test2 = errorLoader.createErrorPane(2, "Multiple Icons selected. Please select one icon then try again.",
-                "Error Loading Icons", myPanelModel);
-        test2.setLocationRelativeTo(myPanelModel.getOwner());
-        unSelectIcons();
+        IconCustomizerDialog dialog = new IconCustomizerDialog(myPanelModel.getOwner(), myPanelModel);
+        dialog.setVisible(true);
     }
 
     /**
