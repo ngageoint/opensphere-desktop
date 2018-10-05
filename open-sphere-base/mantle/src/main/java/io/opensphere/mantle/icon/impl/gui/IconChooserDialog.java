@@ -104,7 +104,7 @@ public class IconChooserDialog extends JDialog
 
         JPanel closePanel = new JPanel();
         closePanel.setLayout(new BoxLayout(closePanel, BoxLayout.X_AXIS));
-        JButton closeButton = new JButton("Cancel");
+        JButton closeButton = new JButton("Close");
         closeButton.setMaximumSize(new Dimension(100, 30));
         closeButton.addActionListener(e -> close(CANCELLED));
         closePanel.add(Box.createHorizontalGlue());
