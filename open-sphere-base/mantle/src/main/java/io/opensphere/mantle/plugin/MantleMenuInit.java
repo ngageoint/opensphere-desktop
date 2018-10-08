@@ -88,9 +88,6 @@ class MantleMenuInit
     public void createAndInstallIconManagerMenuItem()
     {
         assert EventQueue.isDispatchThread();
-//        final IconManagerFrame iconManager = new IconManagerFrame(myToolbox);
-//        myToolbox.getUIRegistry().getSharedComponentRegistry().registerComponent("Mantle-IconManager", iconManager);
-
         JMenuItem iconManagerMI = new JMenuItem("Icon Manager");
         iconManagerMI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
         iconManagerMI.addActionListener(new ActionListener()
@@ -99,14 +96,11 @@ class MantleMenuInit
             public void actionPerformed(ActionEvent e)
             {
                 Quantify.collectMetric("mist3d.menu-bar.tools.icon-manager");
-//                iconManager.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
-//                    iconManager.setVisible(true);
                 IconProjDialog internIconManager = new IconProjDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
                         myToolbox, false, true);
                 internIconManager.setVisible(true);
             }
         });
-
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.TOOLS_MENU)
                 .add(iconManagerMI);
     }

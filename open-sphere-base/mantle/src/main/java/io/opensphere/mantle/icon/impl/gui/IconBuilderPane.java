@@ -125,7 +125,7 @@ public class IconBuilderPane extends BorderPane
         AnchorPane.setLeftAnchor(sizeSpinner, 10.);
         myColorPicker = new ColorPicker();
 
-        box.getChildren().addAll(myColorPicker, button, sizeLabel, sizeSpinner);
+        box.getChildren().addAll(button, myColorPicker, sizeLabel, sizeSpinner);
 
         return box;
     }
@@ -216,7 +216,7 @@ public class IconBuilderPane extends BorderPane
         box.setAlignment(Pos.CENTER);
 
         Rectangle border = new Rectangle(0, 0, Color.TRANSPARENT);
-      //  border.setStroke(Color.WHITE);
+//        border.setStroke(Color.WHITE);
         border.setManaged(false);
 
         myImageRenderView.boundsInParentProperty().addListener((v, o, n) ->

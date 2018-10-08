@@ -80,10 +80,10 @@ public class IconProjDialog extends JFXDialog
     public class IconProjView extends AnchorPane
     {
         /** The top bar consisting of view,sizing, and filter. */
-        final TopMenuBar myTopMenuBar;
+        final private TopMenuBar myTopMenuBar;
 
         /** Panel comprised of Tree and icon display. */
-        final MainPanel myMainPanel;
+        final private MainPanel myMainPanel;
 
         /** The Model for the entire UI. */
         private PanelModel myPanelModel;
@@ -96,7 +96,6 @@ public class IconProjDialog extends JFXDialog
          *
          * @param thePanelModel the model used for the UI.
          */
-
         public IconProjView(PanelModel thePanelModel)
         {
             myPanelModel = thePanelModel;

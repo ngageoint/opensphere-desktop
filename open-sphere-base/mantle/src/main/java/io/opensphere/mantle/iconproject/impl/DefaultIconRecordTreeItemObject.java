@@ -43,15 +43,15 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
      *
      * @param item the treeItem
      * @param label the label
-     * @param nt the nametype
+     * @param nametype the nametype
      * @param parent the name of the parent treeItem
      *
      * @return the default icon record tree node user object
      */
-    public static DefaultIconRecordTreeItemObject createFolderNode(TreeItem<String> item, String label, NameType nt,
+    public static DefaultIconRecordTreeItemObject createFolderNode(TreeItem<String> item, String label, NameType nametype,
             String parent)
     {
-        return new DefaultIconRecordTreeItemObject(item, label, null, Type.FOLDER, nt, parent);
+        return new DefaultIconRecordTreeItemObject(item, label, null, Type.FOLDER, nametype, parent);
     }
 
     /**
@@ -59,16 +59,16 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
      *
      * @param item the treeItem
      * @param label the label
-     * @param recs the recs
-     * @param nt the nt
+     * @param recs the list of icon records
+     * @param nametype the nametype
      * @param parent the name of the parent treeItem
      *
      * @return the default icon record tree node user object
      */
     public static DefaultIconRecordTreeItemObject createLeafNode(TreeItem<String> item, String label, List<IconRecord> recs,
-            NameType nt, String parent)
+            NameType nametype, String parent)
     {
-        return new DefaultIconRecordTreeItemObject(item, label, recs, Type.LEAF, nt, parent);
+        return new DefaultIconRecordTreeItemObject(item, label, recs, Type.LEAF, nametype, parent);
     }
 
     /**
@@ -76,17 +76,16 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
      *
      * @param item the treeItem
      * @param label the label
-     * @param recs the recs
+     * @param recs the list of icon records
      * @param type the type
-     * @param nt the nt
+     * @param nametype the nametype
      * @param parent the parent treeItem
      */
-    public DefaultIconRecordTreeItemObject(TreeItem<String> item, String label, List<IconRecord> recs, Type type, NameType nt,
+    public DefaultIconRecordTreeItemObject(TreeItem<String> item, String label, List<IconRecord> recs, Type type, NameType nametype,
             String parent)
     {
-        //
         myType = type;
-        myNameType = nt;
+        myNameType = nametype;
         myLabel = label;
         myItem.set(item);
         myIconRecords = recs;
@@ -147,11 +146,8 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
      */
     private void getChildrenRecords(List<IconRecord> addToList, TreeItem<String> item, boolean recurse)
     {
-        if (item != null)// && item.getUserObject() instanceof
-                         // DefaultIconRecordTreeItemObject)
+        if (item != null)
         {
-            // DefaultIconRecordTreeItemObject nodeObj =
-            // (DefaultIconRecordTreeItemObject)node.getUserObject();
             if (myType == Type.LEAF)
             {
                 addToList.addAll(myIconRecords);

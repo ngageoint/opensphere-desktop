@@ -27,12 +27,8 @@ import io.opensphere.mantle.iconproject.panels.IconCustomizerPane;
 /** The window to customize icons. */
 public class IconCustomizerDialog extends JFXDialog
 {
-    /** serial ID. */
+    /** Serial ID. */
     private static final long serialVersionUID = -8284546944940700345L;
-
-    /** The logger for this class. */
-    // private static final Logger LOGGER =
-    // Logger.getLogger(IconCustomizerDialog.class);
 
     /** The Icon Registry. */
     private final IconRegistry myIconRegistry;

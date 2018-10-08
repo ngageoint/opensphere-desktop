@@ -6,7 +6,6 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.impl.gui.IconChooserDialog;
 
-
 /**
  * Displays the {@link IconChooserDialog} and gets the {@link IconRecord} of the
  * icon the user picked.

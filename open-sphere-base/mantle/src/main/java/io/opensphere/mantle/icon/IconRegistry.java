@@ -226,7 +226,7 @@ public interface IconRegistry
     boolean removeIcons(TIntList iconIdsToRemove, Object source);
 
     /**
-     * Delets the icon file from the machine.
+     * Deletes the icon file from the machine.
      *
      * @param iconToDelete the IconRecord to delete.
      * @param thePanelModel used for registry.

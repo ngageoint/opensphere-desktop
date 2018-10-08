@@ -13,7 +13,7 @@ public class ViewModel
     private TopMenuBar myTopMenuBar;
 
     /**
-     * the SplitPane containing the Tree hierarchy, Add,Generate,and Customize
+     * The SplitPane containing the Tree hierarchy, Add, Generate, and Customize
      * Icon components on the Left and the Icon Display Grid on the Right.
      */
     private MainPanel myMainPanel;

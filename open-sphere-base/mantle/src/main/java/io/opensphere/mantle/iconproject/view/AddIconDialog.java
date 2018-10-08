@@ -18,9 +18,7 @@ import io.opensphere.mantle.iconproject.panels.AddIconPane;
 /** Creates window for importing icons from folder and handles registry. */
 public class AddIconDialog extends JFXDialog
 {
-    /**
-     * Wraps the Add Icon into a java FX pannel.
-     */
+    /** Serial ID. */
     private static final long serialVersionUID = -4136694415228468073L;
 
     /** The model for UI elements. */

@@ -160,7 +160,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
         {
             tileWidth -= 20;
         }
-        myChooserPanel.setIconSize(myChooserPanel.getResizeRecods(), false, tileWidth);
+        myChooserPanel.setIconSize(myChooserPanel.getResizeRecords(), false, tileWidth);
     }
 
     /**

@@ -85,7 +85,6 @@ public class TreeBuilder extends TreeItem<String>
 
         buildTreeFromMaps(this, collectionSet, collectionToSubCatIconRecMap, defaultSubCat);
         setExpanded(true);
-      //  System.out.println("collects to subcats " + collectionSet);
     }
 
     /**
@@ -153,8 +152,9 @@ public class TreeBuilder extends TreeItem<String>
     }
 
     /**
-     * The getter for the record map.
-     * @return recordMap the map of collection, iconrecord lists
+     * Gets the record map.
+     *
+     * @return the map of collection, iconrecord lists
      */
     public Map<String, List<IconRecord>> getRecordMap()
     {

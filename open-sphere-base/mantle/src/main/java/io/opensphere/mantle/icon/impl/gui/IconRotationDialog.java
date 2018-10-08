@@ -61,7 +61,6 @@ public class IconRotationDialog extends JFXDialog
             setSize(310, 200);
         }
         setLocationRelativeTo(owner);
-        
     }
 
     /**

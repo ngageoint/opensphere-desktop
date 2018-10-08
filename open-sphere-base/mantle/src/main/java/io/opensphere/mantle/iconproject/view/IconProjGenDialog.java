@@ -16,7 +16,6 @@ import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.icon.impl.gui.IconBuilderPane;
-import io.opensphere.mantle.iconproject.panels.GenIconPane;
 
 /** Creates the Icon Generation Window. */
 @SuppressWarnings("serial")

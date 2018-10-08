@@ -17,7 +17,6 @@ import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
-import io.opensphere.mantle.iconproject.panels.IconCustomizerPane;
 
 /** The component class for building icons. */
 public class IconBuilderDialog extends JFXDialog
@@ -56,6 +55,12 @@ public class IconBuilderDialog extends JFXDialog
         setAcceptListener(() -> saveImage(pane.getFinalImage(), pane.getImageName()));
     }
 
+    /**
+     * Constructor.
+     *
+     * @param owner the owner
+     * @param iconRegistry the icon registry
+     */
     public IconBuilderDialog(Window owner, IconRegistry iconRegistry)
     {
         super(owner, "Build an Icon");

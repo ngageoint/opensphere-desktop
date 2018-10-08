@@ -34,6 +34,7 @@ public class ButtonBuilder extends Button
 
     /**
      * Locks the icon buttons position.
+     *
      * @param inputButton the button being locked.
      */
     public void lockButton(Button inputButton)

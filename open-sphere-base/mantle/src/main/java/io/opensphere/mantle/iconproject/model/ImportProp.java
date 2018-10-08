@@ -12,13 +12,13 @@ import javafx.beans.property.StringProperty;
 public class ImportProp
 {
     /** The Collection Name. */
-    private StringProperty myCollectionName = new SimpleStringProperty("Default");
+    private final StringProperty myCollectionName = new SimpleStringProperty("Default");
 
     /** The SubCollection List. */
     private Set<String> mySubCollectionList;
 
     /** The SubCollection Name. */
-    private StringProperty mySubCollectionName = new SimpleStringProperty("");
+    private final StringProperty mySubCollectionName = new SimpleStringProperty("");
 
     /**
      * Gets the unique SubCollection chosen by the user during icon importation.

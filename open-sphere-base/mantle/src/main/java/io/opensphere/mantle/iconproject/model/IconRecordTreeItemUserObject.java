@@ -14,6 +14,7 @@ public interface IconRecordTreeItemUserObject
 {
     /**
      * Gets the treeItem.
+     *
      * @return the treeItem
      */
     ObjectProperty<TreeItem<String>> getMyTreeItem();

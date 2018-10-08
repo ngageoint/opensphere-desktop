@@ -83,9 +83,6 @@ public final class IconProviderFactory
      * @param sourceKey the source key for traceability to the provider.
      * @param recurseSubDirectories the recurse sub directories ( true to
      *            recurse into sub-directories )
-     * @param subDirsAsSubCategories the sub dirs as sub categories ( true to
-     *            use the sub-directory paths from the parent as sub categories
-     *            )
      * @param subCatIfNotFromDirNames the sub cat if not from dir names
      * @return the list of {@link IconImageProvider}
      * @throws IOException Signals that an I/O exception has occurred.

@@ -221,7 +221,7 @@ public class IconCustomizerPane extends BorderPane
     /**
      * Creates the ImageView which renders the selected icon.
      *
-     * @return the iconDisplayer - the Hbox containing the icon.
+     * @return the iconDisplayer the Hbox containing the icon.
      */
     private HBox createImageView()
     {

@@ -149,10 +149,10 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     /** The optional selected icon URL. */
     private String mySelectedUrl;
 
-    /** The icon display width */
+    /** The icon display width. */
     private int myTileWidth;
 
-    /** The list of icons being resized */
+    /** The list of icons being resized. */
     private List<IconRecord> myResizeRecords = New.list();
 
     /**
@@ -194,6 +194,11 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         mySelectedUrl = selectedUrl;
     }
 
+    /**
+     * Gets the selected icon URL.
+     *
+     * @return the icon url
+     */
     public String getSelectedURL()
     {
         return mySelectedUrl;
@@ -525,8 +530,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
             }
         }
         iconRecordList = iconRecordList == null ? Collections.<IconRecord>emptyList() : iconRecordList;
-        displayIconRecords(iconRecordList, true,myTileWidth);
-        //System.out.println("the reclist:   " + recList);
+        displayIconRecords(iconRecordList, true, myTileWidth);
     }
 
     /**
@@ -601,8 +605,8 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
      *
      * @param iconRecordList the record list
      * @param canCancel the can cancel
+     * @param tileWidth the tile width
      */
-
     private void displayIconRecords(final List<IconRecord> iconRecordList, boolean canCancel, int tileWidth)
     {
         showLoadingScreen();
@@ -617,7 +621,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
 
     /**
      * Shows resizes icons and displays loading screen until done.
-     * 
+     *
      * @param iconSizeRecords the icons being resized
      * @param tileWidth the new tile width
      * @param canCancel the can cancel option
@@ -630,7 +634,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     }
 
     /**
-     * Shows the icon loading screen for repaint
+     * Shows the icon loading screen for repaint.
      */
     public void showLoadingScreen()
     {
@@ -673,10 +677,8 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
 
     /**
      * Gets the resized icon record.
-     *
-     * @param myResizeRecords the resized icons record
      */
-    public List<IconRecord> getResizeRecods()
+    public List<IconRecord> getResizeRecords()
     {
         return myResizeRecords;
     }
@@ -710,6 +712,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
          *
          * @param iconRecords the record list
          * @param canCancel the can cancel
+         * @param tileWidth the tile width
          */
         public BuildIconGridWorker(List<IconRecord> iconRecords, boolean canCancel, int tileWidth)
         {
@@ -722,7 +725,6 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         @Override
         public void run()
         {
-
             int borderSize = 6;
             if (myTileWidth == 0)
             {
@@ -1018,5 +1020,4 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
             return myRecord;
         }
     }
-
 }

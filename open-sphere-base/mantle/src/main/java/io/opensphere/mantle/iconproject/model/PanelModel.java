@@ -60,7 +60,7 @@ public class PanelModel
     private HashMap<IconRecord, Button> mySingleSelectedIcon = new HashMap<IconRecord, Button>();
 
     /**
-     * gets the icon display view type.
+     * Gets the icon display view type.
      *
      * @return viewType the chosen view.
      */

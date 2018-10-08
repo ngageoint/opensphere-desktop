@@ -102,6 +102,7 @@ public class SubCollectPane extends VBox
         myImportProps.getCollectionName().addListener((observable, oldValue, newValue) -> updateComboBox());
         createPanel();
     }
+
     /** Creates the panel for the Sub Collection controls. */
     private void createPanel()
     {
@@ -154,25 +155,12 @@ public class SubCollectPane extends VBox
             hbox.getChildren().addAll(myNoneRB, myNewCatRB, myComboBox);
             myComboBox.setDisable(true);
         }
-        // else if (myChoice)
-        // {
-        // mySubCatsFromDirNamesRB = new RadioButton("Create sub-categories from
-        // folder names.");
-        // mySubCatsFromDirNamesRB.setTooltip(new Tooltip("Search for all
-        // sub-folders of existing folders"
-        // + " and add found icons with the folder name as the sub-category."));
-        // mySubCatsFromDirNamesRB.setToggleGroup(myToggleGroup);
-        // hbox.getChildren().add(mySubCatsFromDirNamesRB);
-        // }
         else
         {
             hbox.getChildren().addAll(myNoneRB, myExistingRB, myNewCatRB, myComboBox);
         }
 
         getChildren().addAll(subCollectMessage, hbox);
-        // setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" +
-        // "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-        // + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
         setStyle("-fx-padding: 10");
     }
 
@@ -215,7 +203,9 @@ public class SubCollectPane extends VBox
         return myNoneRB.isSelected();
     }
 
-    /** Updates the value of the sub collection name in the model. */
+    /**
+     * Updates the value of the sub collection name in the model.
+     */    
     public void updateSubCollectName()
     {
         myPanelModel.getImportProps().getSubCollectionName().set(myComboBox.getValue());

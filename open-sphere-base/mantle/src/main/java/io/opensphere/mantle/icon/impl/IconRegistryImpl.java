@@ -858,10 +858,10 @@ public class IconRegistryImpl implements IconRegistry
         // icon # may change on computer to computer.
         for (int idx = 0; idx <= thePanelModel.getIconRegistry().getIconIds().max(); idx++)
         {
-            IconRecord temp = thePanelModel.getIconRegistry().getIconRecordByIconId(idx);
-            if (temp != null)
+            IconRecord iconRecord = thePanelModel.getIconRegistry().getIconRecordByIconId(idx);
+            if (iconRecord != null)
             {
-                if (temp.getImageURL().toString().equals(filename))
+                if (iconRecord.getImageURL().toString().equals(filename))
                 {
                     thePanelModel.getIconRegistry().removeIcon(this.getIconRecordByIconId(idx), this);
                 }

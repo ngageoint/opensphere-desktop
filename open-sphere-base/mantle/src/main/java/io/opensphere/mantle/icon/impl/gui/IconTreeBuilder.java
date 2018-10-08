@@ -44,8 +44,7 @@ public class IconTreeBuilder
     {
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode();
         List<IconRecord> records = myIconRegistry.getIconRecords(filter);
-        Collections.sort(records,
-                (r1, r2) -> AlphanumComparator.compareNatural(r1.getImageURL().toString(), r2.getImageURL().toString()));
+        Collections.sort(records, (r1, r2) -> AlphanumComparator.compareNatural(r1.getImageURL().toString(), r2.getImageURL().toString()));
         Set<String> collectionSet = New.set();
         Map<String, Map<String, List<IconRecord>>> collectionToSubCatIconRecMap = New.map();
         String defaultSubCat = "DEFAULT";

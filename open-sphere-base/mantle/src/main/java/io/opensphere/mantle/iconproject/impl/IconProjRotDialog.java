@@ -82,8 +82,7 @@ public class IconProjRotDialog extends JFXDialog
      *
      * @param record the icon being rotated.
      * @param rotation the numerical amount the icon has been rotated.
-     * @param saveChoice the users indication of whether to replace the existing
-     *            icon.
+     * @param saveChoice the users indication of whether to replace the existing icon.
      */
     private void saveRotatedIcon(IconRecord record, int rotation, boolean saveChoice)
     {

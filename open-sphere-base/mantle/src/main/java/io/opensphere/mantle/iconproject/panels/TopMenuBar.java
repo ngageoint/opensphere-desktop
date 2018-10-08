@@ -89,7 +89,7 @@ public class TopMenuBar extends HBox
     private ButtonBar createFilterBar()
     {
         ButtonBar theSearchBar = new ButtonBar();
-        theSearchBar.getButtons().addAll(mySearchLabel, myTextField); //TODO
+        theSearchBar.getButtons().addAll(mySearchLabel, myTextField);
         return theSearchBar;
     }
 
@@ -121,7 +121,7 @@ public class TopMenuBar extends HBox
         {
             int origTile = myPanelModel.getCurrentTileWidth().get();
             myPanelModel.getCurrentTileWidth().set(origTile + 10);
-            myPanelModel.getViewModel().getMainPanel().myScrollPane.setContent(new GridBuilder(myPanelModel));
+            myPanelModel.getViewModel().getMainPanel().getScrollPane().setContent(new GridBuilder(myPanelModel));
         });
         myEnlargeButton.setTooltip(new Tooltip("Increase Icon Size"));
 

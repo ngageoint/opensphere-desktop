@@ -19,7 +19,7 @@ import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.view.IconCustomizerDialog;
 import io.opensphere.mantle.iconproject.view.IconPopupMenu;
 
-/** Crates the Icon Display Grid. */
+/** Creates the Icon Display Grid. */
 public class GridBuilder extends TilePane
 {
     /** The icon options context menu. */
@@ -35,7 +35,7 @@ public class GridBuilder extends TilePane
     private final PanelModel myPanelModel;
 
     /**
-     * The GridBuilder constructor. sets up the rows and columns for the icon
+     * The GridBuilder constructor. Sets up the rows and columns for the icon
      * grid.
      *
      * @param thePanelModel the panel model

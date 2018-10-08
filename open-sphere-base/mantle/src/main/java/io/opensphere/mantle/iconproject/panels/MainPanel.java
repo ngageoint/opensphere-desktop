@@ -31,7 +31,6 @@ import io.opensphere.mantle.iconproject.view.TreePopupMenu;
 /**
  * The Main Panel in the Icon Manager UI comprised of the tree hierarchy and
  * icon display window.
- *
  */
 public class MainPanel extends SplitPane
 {
@@ -60,10 +59,10 @@ public class MainPanel extends SplitPane
     private TreeBuilder treeBuilder;
 
     /** The map of collection name keys and icon record list values. */
-    Map<String, List<IconRecord>> recordMap = new HashMap<>();
+    private Map<String, List<IconRecord>> recordMap = new HashMap<>();
 
     /** The main panel's scroll pane which contains the grid of icons. */
-    ScrollPane myScrollPane;
+    private ScrollPane myScrollPane;
 
     /** The owner window of the main panel. */
     private final Window myOwner;
@@ -128,7 +127,6 @@ public class MainPanel extends SplitPane
                 IconProjGenDialog dialog = new IconProjGenDialog(myOwner, myPanelModel.getIconRegistry());
                 dialog.setVisible(true);
             });
-//        	refresh();
         });
 
         myScrollPane = new ScrollPane(myIconGrid);
@@ -253,7 +251,7 @@ public class MainPanel extends SplitPane
      *
      * @param choice the selected toggle.
      */
-    static void changeTop(boolean choice)
+    static public void changeTop(boolean choice)
     {
 //         StackPane stackPane = new StackPane();
 //         ObservableList<Node> childs = stackPane.getChildren();
@@ -311,10 +309,20 @@ public class MainPanel extends SplitPane
     /**
      * Gets the current icon display grid.
      *
-     * @return myIconGrid the current icon display grid.
+     * @return the current icon display grid
      */
     public GridBuilder getIconGrid()
     {
         return myIconGrid;
+    }
+
+    /**
+     * Gets the scroll pane.
+     *
+     * @return the scroll pane
+     */
+    public ScrollPane getScrollPane()
+    {
+        return myScrollPane;
     }
 }

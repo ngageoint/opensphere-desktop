@@ -72,7 +72,7 @@ public class AddIconPane extends BorderPane
     }
 
     /**
-     * Sets the current sub collection pane.
+     * Gets the current sub collection pane.
      *
      * @return mySubCollectPane the sub collection name input pane.
      */

@@ -62,7 +62,6 @@ public class ErrorPane
      */
     public BorderPane errorMessagePane(String theMessage)
     {
-        System.out.println("code updates!!!!!!!!!!!!!!!!!!!");
         BorderPane messagePane = new BorderPane();
         Image image = new Image("images/warns.png");
         ImageView errorIcon = new ImageView(image);

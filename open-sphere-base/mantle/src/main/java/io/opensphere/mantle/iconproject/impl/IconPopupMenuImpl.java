@@ -36,7 +36,6 @@ public class IconPopupMenuImpl
 
     /**
      * Adds the selected icon to favorites.
-     *
      */
     public void addToFav()
     {
@@ -47,7 +46,7 @@ public class IconPopupMenuImpl
                     "There are currently no icons selected.\nSelect at least one icon and try again.",
                     "No Icons Selected Warning", JOptionPane.WARNING_MESSAGE);
         }
-        else if (recordSet.size() >= 2)
+        else if (recordSet.size() > 1)
         {
             List<IconProvider> providerList = New.list(recordSet.size());
             for (IconRecord rec : recordSet)
@@ -92,7 +91,7 @@ public class IconPopupMenuImpl
                     "There are currently no icons selected.\nSelect at least one icon and try again.",
                     "No Icons Selected Warning", JOptionPane.WARNING_MESSAGE);
         }
-        else if (recordSet.size() >= 2)
+        else if (recordSet.size() > 1)
         {
             for (IconRecord rec : recordSet)
             {
