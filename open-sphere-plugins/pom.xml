@@ -30,6 +30,7 @@
         <module>google-places</module>
         <module>heatmap</module>
         <module>hud</module>
+        <module>icon-manager</module>
         <module>imagery</module>
         <module>import</module>
         <module>infinity</module>
