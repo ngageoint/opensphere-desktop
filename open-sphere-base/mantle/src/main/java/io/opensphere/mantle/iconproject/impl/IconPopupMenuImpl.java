@@ -5,12 +5,10 @@ import java.util.Set;
 import javax.swing.JOptionPane;
 
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.iconproject.model.PanelModel;
-import io.opensphere.mantle.iconproject.panels.ErrorPane;
 import io.opensphere.mantle.iconproject.view.IconCustomizerDialog;
 import javafx.scene.control.Button;
 

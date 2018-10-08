@@ -40,7 +40,7 @@ public class IconProjDialog extends JFXDialog
     @SuppressWarnings("unchecked")
     public IconProjDialog(Window owner, Toolbox tb, boolean showCancel, boolean theMulti)
     {
-        super(owner, "Intern Icon Manager", showCancel);
+        super(owner, "Icon Manager", showCancel);
         myToolbox = tb;
         myPanelModel.setToolBox(tb);
         myPanelModel.setOwner(owner);
@@ -55,13 +55,9 @@ public class IconProjDialog extends JFXDialog
             myPanelModel.getCurrentTileWidth().set(myPanelModel.getIconRegistry().getManagerPrefs().getIconWidth().get());
         }
 
-        if (myPanelModel.getIconRegistry().getManagerPrefs().getInitTreeSelection().get().getValue() != "tem    p")
-        {
-            myPanelModel.getViewModel().getMainPanel().refresh();
-        }
+        myPanelModel.getViewModel().getMainPanel().refresh();
         setLocationRelativeTo(owner);
         setAcceptListener(() -> savePrefs());
-//        setAcceptEar();
         myPanelModel.getViewModel().getMainPanel().setDividerPositions(.28);
     }
 
@@ -78,9 +74,6 @@ public class IconProjDialog extends JFXDialog
         MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs().getInitTreeSelection()
                 .set((TreeItem<String>)myPanelModel.getTreeObj().getMyObsTree().get().getSelectionModel().selectedItemProperty()
                         .get());
-        // TreeItem<String> samp =
-        // (TreeItem<String>)myPanelModel.getTreeObj().getMyObsTree().get().getSelectionModel()
-        // .selectedItemProperty().get()
     }
 
     /** Packages UI elements into one pane. */

@@ -110,17 +110,22 @@ public class IconBuilderPane extends BorderPane
         sizeLabel.setContentDisplay(ContentDisplay.RIGHT);
         AnchorPane.setRightAnchor(sizeLabel, 50.);
 
-        /* Button button = new Button("Select an Icon");
-         * button.setOnAction((evt) -> { IconBuilderChoiceDialog iconChoice =
-         * new IconBuilderChoiceDialog(); int result =
-         * JOptionPane.showConfirmDialog(myOwner, iconChoice, "Select an Icon",
-         * JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE); if (result
-         * == JOptionPane.OK_OPTION) { updateImageView(iconChoice.getValue()); }
-         * }); */
+        Button button = new Button("Select an Icon");
+        button.setOnAction((evt) ->
+        {
+            IconBuilderChoiceDialog iconChoice = new IconBuilderChoiceDialog();
+            int result = JOptionPane.showConfirmDialog(myOwner, iconChoice, "Select an Icon",
+            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (result == JOptionPane.OK_OPTION)
+            {
+                updateImageView(iconChoice.getValue());
+            }
+        });
+        
         AnchorPane.setLeftAnchor(sizeSpinner, 10.);
         myColorPicker = new ColorPicker();
 
-        box.getChildren().addAll(myColorPicker, sizeLabel, sizeSpinner);
+        box.getChildren().addAll(myColorPicker, button, sizeLabel, sizeSpinner);
 
         return box;
     }

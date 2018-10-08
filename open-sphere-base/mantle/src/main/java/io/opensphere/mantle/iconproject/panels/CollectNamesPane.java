@@ -101,7 +101,6 @@ public class CollectNamesPane extends VBox
             if (!options.contains(myExistingComboBox.getValue()))
             {
                 options.add(myExistingComboBox.getValue());
-                System.out.println("added to registry" + myPanelModel.getIconRegistry().getCollectionNames());
             }
         });
 
@@ -122,8 +121,6 @@ public class CollectNamesPane extends VBox
         bottomPane.setSpacing(5);
 
         getChildren().addAll(collectionMessage, bottomPane);
-//        setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-//                + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
         setStyle("-fx-padding: 10");
     }
 

@@ -2,9 +2,20 @@ package io.opensphere.mantle.iconproject.view;
 
 import java.awt.Dimension;
 import java.awt.Window;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.URL;
 
+import javax.imageio.ImageIO;
+
+import io.opensphere.core.Notify;
 import io.opensphere.core.util.fx.JFXDialog;
+import io.opensphere.mantle.icon.IconProvider;
+import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.icon.impl.DefaultIconProvider;
+import io.opensphere.mantle.icon.impl.gui.IconBuilderPane;
 import io.opensphere.mantle.iconproject.panels.GenIconPane;
 
 /** Creates the Icon Generation Window. */
@@ -28,11 +39,41 @@ public class IconProjGenDialog extends JFXDialog
         myIconRegistry = iconRegistry;
         System.out.println("projgendialog: " + myIconRegistry.getAllAssignedElementIds().toString());
 
-        GenIconPane pane = new GenIconPane();
+//        GenIconPane pane = new GenIconPane();
+        IconBuilderPane pane = new IconBuilderPane(owner);
         setFxNode(pane);
         setMinimumSize(new Dimension(450, 550));
         setLocationRelativeTo(owner);
-        // setAcceptEar(() -> saveImage(pane.getFinalImage(),
-        // pane.getImageName()));
+        setAcceptListener(() -> saveImage(pane.getFinalImage(), pane.getImageName()));
+    }
+    
+    /**
+     * Saves a built image to the Icon Registry.
+     *
+     * @param image the image to save
+     * @param name the image name
+     */
+    private void saveImage(BufferedImage image, String name)
+    {
+        if (image == null || name == null)
+        {
+            return;
+        }
+
+        try
+        {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", outputStream);
+
+            URL imageURL = myIconRegistry.getIconCache().cacheIcon(outputStream.toByteArray(), name, true);
+            IconProvider provider = new DefaultIconProvider(imageURL, IconRecord.USER_ADDED_COLLECTION, null, "User");
+
+            myIconRegistry.addIcon(provider, this);
+        }
+        catch (IOException e)
+        {
+            Notify.error(e.getMessage());
+//            LOGGER.error(e, e);
+        }
     }
 }

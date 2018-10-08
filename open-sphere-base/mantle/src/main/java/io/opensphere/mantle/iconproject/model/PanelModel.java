@@ -57,7 +57,7 @@ public class PanelModel
      * Used to keep track of which icon and button are selected on the grid for
      * single selection purposes.
      */
-    private HashMap<IconRecord, Button> myHash = new HashMap<IconRecord, Button>();
+    private HashMap<IconRecord, Button> mySingleSelectedIcon = new HashMap<IconRecord, Button>();
 
     /**
      * gets the icon display view type.
@@ -258,6 +258,6 @@ public class PanelModel
      */
     public HashMap<IconRecord, Button> getSelectedIconMap()
     {
-        return myHash;
+        return mySingleSelectedIcon;
     }
 }

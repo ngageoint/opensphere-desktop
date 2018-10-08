@@ -89,7 +89,7 @@ public class TopMenuBar extends HBox
     private ButtonBar createFilterBar()
     {
         ButtonBar theSearchBar = new ButtonBar();
-        theSearchBar.getButtons().addAll(mySearchLabel, myTextField);
+        theSearchBar.getButtons().addAll(mySearchLabel, myTextField); //TODO
         return theSearchBar;
     }
 

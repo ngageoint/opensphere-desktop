@@ -10,10 +10,9 @@ public class GenIconPane extends BorderPane
     /** Creates the wrapper. */
     public GenIconPane()
     {
-        WebView browser = new WebView();
-        WebEngine webEngine = browser.getEngine();
-        webEngine.load("http://www.google.com");
-        setCenter(browser);
+//        WebView browser = new WebView();
+//        WebEngine webEngine = browser.getEngine();
+//        webEngine.load("http://www.google.com");
+//        setCenter(browser);
     }
-
 }

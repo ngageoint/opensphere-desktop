@@ -25,6 +25,7 @@ import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.view.AddIconDialog;
+import io.opensphere.mantle.iconproject.view.IconProjGenDialog;
 import io.opensphere.mantle.iconproject.view.TreePopupMenu;
 
 /**
@@ -122,7 +123,12 @@ public class MainPanel extends SplitPane
         myGenIconButton.lockButton(myGenIconButton);
         myGenIconButton.setOnAction(event ->
         {
-            refresh();
+        	EventQueue.invokeLater(() ->
+            {
+                IconProjGenDialog dialog = new IconProjGenDialog(myOwner, myPanelModel.getIconRegistry());
+                dialog.setVisible(true);
+            });
+//        	refresh();
         });
 
         myScrollPane = new ScrollPane(myIconGrid);
@@ -240,18 +246,6 @@ public class MainPanel extends SplitPane
             myPanelModel.getImportProps().getCollectionName().set(recordMap.get(colName).get(0).getCollectionName());
             myPanelModel.getImportProps().getSubCollectionName().set(colName);
         }
-        // if (obj.getNameType() == NameType.COLLECTION)
-        // {
-        // iconIdList = myIconRegistry
-        // .getIconIds(value -> EqualsHelper.equals(value.getCollectionName(),
-        // obj.getLabel()));
-        // }
-        // else
-        // {
-        // // Subcategory.
-        // iconIdList = myIconRegistry.getIconIds(value ->
-        // EqualsHelper.equals(value.getSubCategory(), obj.getLabel()));
-        // }
     }
 
     /**
