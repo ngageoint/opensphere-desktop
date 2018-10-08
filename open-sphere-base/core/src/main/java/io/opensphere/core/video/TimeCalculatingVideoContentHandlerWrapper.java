@@ -2,14 +2,13 @@ package io.opensphere.core.video;
 
 import java.util.function.Consumer;
 
-import net.jcip.annotations.GuardedBy;
-
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.image.ImageIOImage;
 import io.opensphere.core.model.time.TimeInstant;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.lang.EqualsHelper;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * A wrapper for a video content handler that calculates the presentation time

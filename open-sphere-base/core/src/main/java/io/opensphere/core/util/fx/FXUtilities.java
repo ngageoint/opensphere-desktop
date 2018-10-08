@@ -415,10 +415,7 @@ public final class FXUtilities
             {
                 return null;
             }
-            else
-            {
-                return c;
-            }
+            return c;
         }));
 
         return text;

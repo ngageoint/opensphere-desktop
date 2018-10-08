@@ -216,7 +216,7 @@ public abstract class AbstractProcessor<E extends Geometry> implements Renderabl
     private final RepaintListener myRepaintListener;
 
     /** The state change handler for the state machine. */
-    private final StateChangeHandler<E> myStateChangeHandler = new StateChangeHandler<E>()
+    private final StateChangeHandler<E> myStateChangeHandler = new StateChangeHandler<>()
     {
         @Override
         public void handleStateChanged(List<? extends E> objects, ThreadedStateMachine.State newState,
@@ -525,13 +525,10 @@ public abstract class AbstractProcessor<E extends Geometry> implements Renderabl
             {
                 return myMapContext.getProjection();
             }
-            else
-            {
-                // Use the raw projection so that copies of snapshots are not
-                // saved in the render data for renderers which are not
-                // projection sensitive.
-                return myMapContext.getRawProjection();
-            }
+            // Use the raw projection so that copies of snapshots are not
+            // saved in the render data for renderers which are not
+            // projection sensitive.
+            return myMapContext.getRawProjection();
         }
 
         return null;

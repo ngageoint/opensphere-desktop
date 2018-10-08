@@ -53,7 +53,7 @@ public class GroupSpikeGeometry extends AbstractGroupHeightGeometry
                 float adjustedHeight = (float)entry.getValue().getAdjustedHeight();
                 spikeProperty.setHeight(getRenderProperties().getHeight() + adjustedHeight);
 
-                FrustumGeometry.Builder<Position> spikeBuilder = new FrustumGeometry.Builder<Position>();
+                FrustumGeometry.Builder<Position> spikeBuilder = new FrustumGeometry.Builder<>();
                 spikeBuilder.setPosition(entry.getValue().getCenterLocation());
                 spikeBuilder.setCircularPoints(4);
                 spikeBuilder.setBaseRadius(getRenderProperties().getWidth());

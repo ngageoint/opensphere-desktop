@@ -169,7 +169,7 @@ class ColladaMeshTrianglesParser
             Image colladaImage = triangle.getImage();
             if (colladaImage != null)
             {
-                Pair<Image, UUID> key = new Pair<Image, UUID>(colladaImage, UUID.randomUUID());
+                Pair<Image, UUID> key = new Pair<>(colladaImage, UUID.randomUUID());
                 polyBuilder.setImageManager(new ImageManager(key, myImageProvider));
                 List<Vector2d> textureCoords = getTextureCoords(geometry, triangles);
                 if (LOGGER.isDebugEnabled())

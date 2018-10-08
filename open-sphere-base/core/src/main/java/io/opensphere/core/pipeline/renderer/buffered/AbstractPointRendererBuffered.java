@@ -138,11 +138,8 @@ public abstract class AbstractPointRendererBuffered<T extends AbstractRenderable
         {
             return false;
         }
-        else
-        {
-            myGroupTimeSpan = span;
-            return true;
-        }
+        myGroupTimeSpan = span;
+        return true;
     }
 
     @Override

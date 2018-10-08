@@ -18,7 +18,7 @@ public class TimeSpanMatcher extends AbstractPropertyMatcher<TimeSpan> implement
      */
     public TimeSpanMatcher(String propertyName, TimeSpan timeSpan)
     {
-        super(new PropertyDescriptor<TimeSpan>(propertyName, TimeSpan.class), timeSpan);
+        super(new PropertyDescriptor<>(propertyName, TimeSpan.class), timeSpan);
     }
 
     @Override
@@ -59,10 +59,7 @@ public class TimeSpanMatcher extends AbstractPropertyMatcher<TimeSpan> implement
             TimeSpan ts = (TimeSpan)operand;
             return ts.overlaps(getOperand());
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     @Override

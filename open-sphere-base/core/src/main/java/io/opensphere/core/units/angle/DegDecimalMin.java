@@ -70,10 +70,7 @@ public class DegDecimalMin extends Angle
         {
             return formatValue(deg, precision) + pos;
         }
-        else
-        {
-            return formatValue(-deg, precision) + neg;
-        }
+        return formatValue(-deg, precision) + neg;
     }
 
     /**

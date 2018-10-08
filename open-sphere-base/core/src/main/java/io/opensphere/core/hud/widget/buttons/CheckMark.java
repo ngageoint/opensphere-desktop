@@ -42,7 +42,7 @@ public class CheckMark extends Renderable
         double upper = center.getY() - ourHeight / 2;
         double lower = upper + ourHeight;
 
-        PolylineGeometry.Builder<ScreenPosition> lineBldr = new PolylineGeometry.Builder<ScreenPosition>();
+        PolylineGeometry.Builder<ScreenPosition> lineBldr = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = new DefaultPolylineRenderProperties(getBaseZOrder() + 5, true, false);
         props.setColor(getBaseColor());
         props.setWidth(2f);

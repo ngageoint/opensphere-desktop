@@ -131,7 +131,7 @@ public class RetrieveDataModelCategoriesTask extends DatabaseTask implements Sta
         List<DataModelCategory> results;
         if (rs.next())
         {
-            SharedObjectPool<DataModelCategory> dmcPool = getGroupIds().length > 1 ? new SharedObjectPool<DataModelCategory>()
+            SharedObjectPool<DataModelCategory> dmcPool = getGroupIds().length > 1 ? new SharedObjectPool<>()
                     : null;
             results = New.list();
             int index;

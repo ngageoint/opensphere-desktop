@@ -46,7 +46,7 @@ public class ConcurrentLazyMap<K, V> extends LazyMap<K, V>
      */
     public static <K, V> ConcurrentLazyMap<K, V> create(Map<K, V> map, Class<? extends K> keyType)
     {
-        return new ConcurrentLazyMap<K, V>(map, keyType);
+        return new ConcurrentLazyMap<>(map, keyType);
     }
 
     /**
@@ -62,7 +62,7 @@ public class ConcurrentLazyMap<K, V> extends LazyMap<K, V>
     public static <K, V> ConcurrentLazyMap<K, V> create(Map<K, V> map, Class<? extends K> keyType,
             Factory<? super K, ? extends V> factory)
     {
-        return new ConcurrentLazyMap<K, V>(map, keyType, factory);
+        return new ConcurrentLazyMap<>(map, keyType, factory);
     }
 
     /**

@@ -172,7 +172,7 @@ public class EllipseGeometry extends PolygonGeometry
     @Override
     protected Builder<? extends Position> createRawBuilder()
     {
-        return new Builder<Position>();
+        return new Builder<>();
     }
 
     /**

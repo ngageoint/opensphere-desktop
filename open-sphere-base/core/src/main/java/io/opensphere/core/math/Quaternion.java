@@ -539,19 +539,16 @@ public final class Quaternion
         {
             return Vector3d.ORIGIN;
         }
-        else
-        {
-            return new Vector3d(
-                    myW * myW * vect.getX() + 2 * myY * myW * vect.getZ() - 2 * myZ * myW * vect.getY() + myX * myX * vect.getX()
-                            + 2 * myY * myX * vect.getY() + 2 * myZ * myX * vect.getZ() - myZ * myZ * vect.getX()
-                            - myY * myY * vect.getX(),
-                    2 * myX * myY * vect.getX() + myY * myY * vect.getY() + 2 * myZ * myY * vect.getZ()
-                            + 2 * myW * myZ * vect.getX() - myZ * myZ * vect.getY() + myW * myW * vect.getY()
-                            - 2 * myX * myW * vect.getZ() - myX * myX * vect.getY(),
-                    2 * myX * myZ * vect.getX() + 2 * myY * myZ * vect.getY() + myZ * myZ * vect.getZ()
-                            - 2 * myW * myY * vect.getX() - myY * myY * vect.getZ() + 2 * myW * myX * vect.getY()
-                            - myX * myX * vect.getZ() + myW * myW * vect.getZ());
-        }
+        return new Vector3d(
+                myW * myW * vect.getX() + 2 * myY * myW * vect.getZ() - 2 * myZ * myW * vect.getY() + myX * myX * vect.getX()
+                        + 2 * myY * myX * vect.getY() + 2 * myZ * myX * vect.getZ() - myZ * myZ * vect.getX()
+                        - myY * myY * vect.getX(),
+                2 * myX * myY * vect.getX() + myY * myY * vect.getY() + 2 * myZ * myY * vect.getZ() + 2 * myW * myZ * vect.getX()
+                        - myZ * myZ * vect.getY() + myW * myW * vect.getY() - 2 * myX * myW * vect.getZ()
+                        - myX * myX * vect.getY(),
+                2 * myX * myZ * vect.getX() + 2 * myY * myZ * vect.getY() + myZ * myZ * vect.getZ() - 2 * myW * myY * vect.getX()
+                        - myY * myY * vect.getZ() + 2 * myW * myX * vect.getY() - myX * myX * vect.getZ()
+                        + myW * myW * vect.getZ());
     }
 
     /**

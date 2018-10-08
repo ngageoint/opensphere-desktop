@@ -1,7 +1,5 @@
 package io.opensphere.core.geometry.constraint;
 
-import net.jcip.annotations.Immutable;
-
 import io.opensphere.core.math.Vector3d;
 import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.Altitude.ReferenceLevel;
@@ -9,6 +7,7 @@ import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.projection.Projection;
 import io.opensphere.core.util.lang.UnexpectedEnumException;
+import net.jcip.annotations.Immutable;
 
 /**
  * Constrains geometry visibility based on viewer position.

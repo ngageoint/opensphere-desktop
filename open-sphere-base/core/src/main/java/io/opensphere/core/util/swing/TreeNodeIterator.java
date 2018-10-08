@@ -50,25 +50,19 @@ public class TreeNodeIterator implements Iterator<TreeNode>
             {
                 return myCurrentChildIterator.next();
             }
-            else
-            {
-                myCurrentChildIterator = null;
-            }
+            myCurrentChildIterator = null;
         }
         if (myChildCount == 0 || myIndex + 1 == myChildCount)
         {
             throw new NoSuchElementException();
         }
-        else
+        myIndex++;
+        TreeNode child = myNode.getChildAt(myIndex);
+        if (child.getChildCount() > 0)
         {
-            myIndex++;
-            TreeNode child = myNode.getChildAt(myIndex);
-            if (child.getChildCount() > 0)
-            {
-                myCurrentChildIterator = new TreeNodeIterator(child);
-            }
-            return child;
+            myCurrentChildIterator = new TreeNodeIterator(child);
         }
+        return child;
     }
 
     @Override

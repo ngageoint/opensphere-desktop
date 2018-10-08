@@ -64,7 +64,7 @@ public class PolygonMeshProcessor extends TextureProcessor<PolygonMeshGeometry>
     @Override
     public void generateDryRunGeometries()
     {
-        PolygonMeshGeometry.Builder<ScreenPosition> polyBuilder = new PolygonMeshGeometry.Builder<ScreenPosition>();
+        PolygonMeshGeometry.Builder<ScreenPosition> polyBuilder = new PolygonMeshGeometry.Builder<>();
         PolygonMeshRenderProperties props = new DefaultPolygonMeshRenderProperties(0, true, true, true);
         props.setColor(Color.BLUE);
         props.setLighting(LightingModelConfigGL.getDefaultLight());

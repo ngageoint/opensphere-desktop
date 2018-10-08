@@ -359,7 +359,7 @@ public interface Projection extends TerrainElevationProvider, ElevationChangeLis
         @Override
         public SimpleTesseraVertex<T> adjustToModelCenter(Vector3d modelCenter)
         {
-            return new SimpleProjectedTesseraVertex<T>(getCoordinates(), myModelCoordinates.subtract(modelCenter));
+            return new SimpleProjectedTesseraVertex<>(getCoordinates(), myModelCoordinates.subtract(modelCenter));
         }
 
         @Override

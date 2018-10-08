@@ -96,10 +96,7 @@ public final class NumberPropertyMatcher<T extends Number> extends AbstractPrope
                 throw new UnexpectedEnumException(myOperator);
             }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     @Override

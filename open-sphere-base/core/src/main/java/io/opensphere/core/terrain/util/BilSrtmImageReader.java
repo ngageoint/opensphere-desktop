@@ -356,10 +356,7 @@ public class BilSrtmImageReader implements ElevationImageReader
             }
             return sum / validValues;
         }
-        else
-        {
-            return getMissingDataValue();
-        }
+        return getMissingDataValue();
     }
 
     /**

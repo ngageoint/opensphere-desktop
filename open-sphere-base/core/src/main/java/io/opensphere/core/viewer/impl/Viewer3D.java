@@ -261,10 +261,7 @@ public class Viewer3D extends AbstractDynamicViewer
         {
             return getCenteredView(position);
         }
-        else
-        {
-            return getCenteredView(position.multiply(-1));
-        }
+        return getCenteredView(position.multiply(-1));
     }
 
     @Override
@@ -418,14 +415,11 @@ public class Viewer3D extends AbstractDynamicViewer
                 }
                 return myProjectionMatrixClippedFarToCenter.clone();
             }
-            else
+            if (myProjectionMatrixClipped == null)
             {
-                if (myProjectionMatrixClipped == null)
-                {
-                    myProjectionMatrixClipped = generateProjectionMatrixClipped(false);
-                }
-                return myProjectionMatrixClipped.clone();
+                myProjectionMatrixClipped = generateProjectionMatrixClipped(false);
             }
+            return myProjectionMatrixClipped.clone();
         }
     }
 
@@ -642,15 +636,12 @@ public class Viewer3D extends AbstractDynamicViewer
         {
             return getZoomToFitView(bounds);
         }
-        else
-        {
-            ViewerPosition3D centeredView = getCenteredView(centroidHint);
-            double halfSpan = getModel().getBoundingRadius();
-            // Do not divide by 2 since we are only using half the span.
-            double distance = halfSpan / Math.tan(myHalfFOVx);
-            Vector3d pos = centroidHint.add(centeredView.getDir().multiply(-distance));
-            return new ViewerPosition3D(pos, centeredView.getDir(), centeredView.getUp());
-        }
+        ViewerPosition3D centeredView = getCenteredView(centroidHint);
+        double halfSpan = getModel().getBoundingRadius();
+        // Do not divide by 2 since we are only using half the span.
+        double distance = halfSpan / Math.tan(myHalfFOVx);
+        Vector3d pos = centroidHint.add(centeredView.getDir().multiply(-distance));
+        return new ViewerPosition3D(pos, centeredView.getDir(), centeredView.getUp());
     }
 
     @Override
@@ -667,44 +658,41 @@ public class Viewer3D extends AbstractDynamicViewer
             LOGGER.trace("inView center is in view");
             return true;
         }
-        else
+        Vector3d localTopNormal = ellipsoid.normalToLocal(myTopClip.getNormal()).getNormalized();
+        Vector3d topEllipsePoint = ellipsoid.localToModel(localTopNormal);
+        if (!myTopClip.isInFront(topEllipsePoint, 0.))
         {
-            Vector3d localTopNormal = ellipsoid.normalToLocal(myTopClip.getNormal()).getNormalized();
-            Vector3d topEllipsePoint = ellipsoid.localToModel(localTopNormal);
-            if (!myTopClip.isInFront(topEllipsePoint, 0.))
-            {
-                LOGGER.trace("not in front topClip");
-                return false;
-            }
-            Vector3d localBottomNormal = ellipsoid.normalToLocal(myBottomClip.getNormal()).getNormalized();
-            Vector3d bottomEllipsePoint = ellipsoid.localToModel(localBottomNormal);
-            if (!myBottomClip.isInFront(bottomEllipsePoint, 0.))
-            {
-                LOGGER.trace("not in front bottomClip");
-                return false;
-            }
-            Vector3d localLeftNormal = ellipsoid.normalToLocal(myLeftClip.getNormal()).getNormalized();
-            Vector3d leftEllipsePoint = ellipsoid.localToModel(localLeftNormal);
-            if (!myLeftClip.isInFront(leftEllipsePoint, 0.))
-            {
-                LOGGER.trace("not in front leftClip");
-                return false;
-            }
-            Vector3d localRightNormal = ellipsoid.normalToLocal(myRightClip.getNormal()).getNormalized();
-            Vector3d rightEllipsePoint = ellipsoid.localToModel(localRightNormal);
-            if (!myRightClip.isInFront(rightEllipsePoint, 0.))
-            {
-                LOGGER.trace("not in front rightClip");
-                return false;
-            }
-            if (myTopClip.hasIntersection(topEllipsePoint, bottomEllipsePoint)
-                    || myBottomClip.hasIntersection(topEllipsePoint, bottomEllipsePoint)
-                    || myRightClip.hasIntersection(leftEllipsePoint, rightEllipsePoint)
-                    || myLeftClip.hasIntersection(leftEllipsePoint, rightEllipsePoint))
-            {
-                LOGGER.trace("inView intersects frustrum");
-                return true;
-            }
+            LOGGER.trace("not in front topClip");
+            return false;
+        }
+        Vector3d localBottomNormal = ellipsoid.normalToLocal(myBottomClip.getNormal()).getNormalized();
+        Vector3d bottomEllipsePoint = ellipsoid.localToModel(localBottomNormal);
+        if (!myBottomClip.isInFront(bottomEllipsePoint, 0.))
+        {
+            LOGGER.trace("not in front bottomClip");
+            return false;
+        }
+        Vector3d localLeftNormal = ellipsoid.normalToLocal(myLeftClip.getNormal()).getNormalized();
+        Vector3d leftEllipsePoint = ellipsoid.localToModel(localLeftNormal);
+        if (!myLeftClip.isInFront(leftEllipsePoint, 0.))
+        {
+            LOGGER.trace("not in front leftClip");
+            return false;
+        }
+        Vector3d localRightNormal = ellipsoid.normalToLocal(myRightClip.getNormal()).getNormalized();
+        Vector3d rightEllipsePoint = ellipsoid.localToModel(localRightNormal);
+        if (!myRightClip.isInFront(rightEllipsePoint, 0.))
+        {
+            LOGGER.trace("not in front rightClip");
+            return false;
+        }
+        if (myTopClip.hasIntersection(topEllipsePoint, bottomEllipsePoint)
+                || myBottomClip.hasIntersection(topEllipsePoint, bottomEllipsePoint)
+                || myRightClip.hasIntersection(leftEllipsePoint, rightEllipsePoint)
+                || myLeftClip.hasIntersection(leftEllipsePoint, rightEllipsePoint))
+        {
+            LOGGER.trace("inView intersects frustrum");
+            return true;
         }
         if (cullCosine < 1. && ellipsoid.getZAxis().getNormalized().dot(getPosition().getDir()) > cullCosine)
         {
@@ -861,18 +849,15 @@ public class Viewer3D extends AbstractDynamicViewer
             {
                 return;
             }
-            else
+            geopos = mapContext.getProjection().convertToPosition(pos, ReferenceLevel.ELLIPSOID);
+            double elevation = TerrainUtil.getInstance().getElevationInMeters(mapContext, geopos);
+            geopos = new GeographicPosition(LatLonAlt.createFromDegreesMeters(geopos.getLatLonAlt().getLatD(),
+                    geopos.getLatLonAlt().getLonD(), geopos.getLatLonAlt().getAltM() - elevation, ReferenceLevel.TERRAIN));
+            if (!validateNewPosition(geopos))
             {
-                geopos = mapContext.getProjection().convertToPosition(pos, ReferenceLevel.ELLIPSOID);
-                double elevation = TerrainUtil.getInstance().getElevationInMeters(mapContext, geopos);
-                geopos = new GeographicPosition(LatLonAlt.createFromDegreesMeters(geopos.getLatLonAlt().getLatD(),
-                        geopos.getLatLonAlt().getLonD(), geopos.getLatLonAlt().getAltM() - elevation, ReferenceLevel.TERRAIN));
-                if (!validateNewPosition(geopos))
-                {
-                    return;
-                }
-//                System.out.println(geopos);
+                return;
             }
+//                System.out.println(geopos);
         }
         ViewerPosition3D viewerPosition = new ViewerPosition3D(scaledPos, dir, up);
         viewerPosition.setGeoPosition(geopos);

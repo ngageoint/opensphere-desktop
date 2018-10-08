@@ -85,7 +85,7 @@ public class TerrainTileGeometry extends AbstractTileGeometry<TerrainTileGeometr
     @Override
     protected Builder<Position> createRawBuilder()
     {
-        return new Builder<Position>();
+        return new Builder<>();
     }
 
     @Override

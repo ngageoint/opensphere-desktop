@@ -63,7 +63,7 @@ public final class EventQueueUtilities
             cursor = cursorOwner.getCursor();
             cursorOwner.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         }
-        SwingWorker<T, Void> worker = new SwingWorker<T, Void>()
+        SwingWorker<T, Void> worker = new SwingWorker<>()
         {
             @Override
             @SuppressWarnings("PMD.SignatureDeclareThrowsException")
@@ -264,10 +264,7 @@ public final class EventQueueUtilities
                     {
                         throw (RuntimeException)e.getCause();
                     }
-                    else
-                    {
-                        throw (Error)e.getCause();
-                    }
+                    throw (Error)e.getCause();
                 }
             }
         }
@@ -339,7 +336,7 @@ public final class EventQueueUtilities
         assert EventQueue.isDispatchThread();
         final Cursor cursor = cursorOwner.getCursor();
         cursorOwner.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>()
+        SwingWorker<Void, Void> worker = new SwingWorker<>()
         {
             @Override
             protected Void doInBackground()
@@ -371,10 +368,7 @@ public final class EventQueueUtilities
                     {
                         throw (RuntimeException)e.getCause();
                     }
-                    else
-                    {
-                        throw (Error)e.getCause();
-                    }
+                    throw (Error)e.getCause();
                 }
                 catch (InterruptedException e)
                 {

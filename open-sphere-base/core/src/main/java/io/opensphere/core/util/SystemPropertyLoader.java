@@ -195,10 +195,7 @@ public final class SystemPropertyLoader
                 return false;
             }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     /** Disallow instantiation. */

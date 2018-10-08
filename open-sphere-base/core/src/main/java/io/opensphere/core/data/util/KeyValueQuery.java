@@ -31,8 +31,8 @@ public class KeyValueQuery<K extends Serializable, V> extends DefaultQuery
     public KeyValueQuery(DataModelCategory dataModelCategory, K key, PropertyDescriptor<K> keyPropertyDescriptor,
             PropertyDescriptor<V> valuePropertyDescriptor)
     {
-        super(dataModelCategory, Collections.singletonList(new DefaultPropertyValueReceiver<V>(valuePropertyDescriptor)),
-                Collections.<PropertyMatcher<K>>singletonList(new GeneralPropertyMatcher<K>(keyPropertyDescriptor, key)),
+        super(dataModelCategory, Collections.singletonList(new DefaultPropertyValueReceiver<>(valuePropertyDescriptor)),
+                Collections.<PropertyMatcher<K>>singletonList(new GeneralPropertyMatcher<>(keyPropertyDescriptor, key)),
                 Collections.<OrderSpecifier>emptyList());
     }
 

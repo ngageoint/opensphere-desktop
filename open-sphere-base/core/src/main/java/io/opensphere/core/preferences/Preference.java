@@ -66,7 +66,7 @@ class Preference<T>
      */
     public static Preference<Element> createFromDOMElement(String key, Element value) throws IllegalArgumentException
     {
-        return new Preference<Element>(key, value);
+        return new Preference<>(key, value);
     }
 
     /**
@@ -142,19 +142,16 @@ class Preference<T>
                 }
             }
         }
-        else
+        try
         {
-            try
+            if (getValue().equals(other.getValue()))
             {
-                if (getValue().equals(other.getValue()))
-                {
-                    return true;
-                }
+                return true;
             }
-            catch (JAXBException e)
-            {
-                LOGGER.warn("JAXBException during equals(): " + e, e);
-            }
+        }
+        catch (JAXBException e)
+        {
+            LOGGER.warn("JAXBException during equals(): " + e, e);
         }
         return false;
     }
@@ -274,11 +271,8 @@ class Preference<T>
             {
                 return (byte[])value;
             }
-            else
-            {
-                warnWrongValueType(byte[].class, value);
-                return def;
-            }
+            warnWrongValueType(byte[].class, value);
+            return def;
         }
         catch (JAXBException e)
         {
@@ -303,11 +297,8 @@ class Preference<T>
             {
                 return (Element)value;
             }
-            else
-            {
-                warnWrongValueType(Boolean.class, value);
-                return def;
-            }
+            warnWrongValueType(Boolean.class, value);
+            return def;
         }
         catch (JAXBException e)
         {
@@ -834,16 +825,13 @@ class Preference<T>
         {
             return getClass().getSimpleName() + " (uninitialized)";
         }
-        else
+        try
         {
-            try
-            {
-                return getValue().toString();
-            }
-            catch (JAXBException e)
-            {
-                return "Could not unmarshal value.";
-            }
+            return getValue().toString();
+        }
+        catch (JAXBException e)
+        {
+            return "Could not unmarshal value.";
         }
     }
 
@@ -929,13 +917,10 @@ class Preference<T>
         {
             return (T)myData;
         }
-        else
+        JAXBContext context2 = contextSupplier == null ? JAXBContextHelper.getCachedContext(myClass) : contextSupplier.get();
+        synchronized (myData)
         {
-            JAXBContext context2 = contextSupplier == null ? JAXBContextHelper.getCachedContext(myClass) : contextSupplier.get();
-            synchronized (myData)
-            {
-                return XMLUtilities.readXMLObject((Element)myData, context2, myClass);
-            }
+            return XMLUtilities.readXMLObject((Element)myData, context2, myClass);
         }
     }
 

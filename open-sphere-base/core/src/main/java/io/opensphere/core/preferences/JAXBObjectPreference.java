@@ -67,10 +67,7 @@ class JAXBObjectPreference<T> extends Preference<T>
         {
             return XMLUtilities.marshalJAXBObjectToElement(getValue((T)null, (SupplierX<JAXBContext, JAXBException>)null));
         }
-        else
-        {
-            return XMLUtilities.marshalJAXBObjectToElement(getValue((T)null, (SupplierX<JAXBContext, JAXBException>)null),
-                    myJAXBContextSupplier.get());
-        }
+        return XMLUtilities.marshalJAXBObjectToElement(getValue((T)null, (SupplierX<JAXBContext, JAXBException>)null),
+                myJAXBContextSupplier.get());
     }
 }

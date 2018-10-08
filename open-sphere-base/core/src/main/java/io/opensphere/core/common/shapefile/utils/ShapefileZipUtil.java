@@ -51,7 +51,7 @@ public class ShapefileZipUtil
         }
 
         ESRIShapefile shapefile = null;
-        List<File> tempFiles = new ArrayList<File>();
+        List<File> tempFiles = new ArrayList<>();
         String selectedEntryName = null;
         String shapeName = null;
         while (tempFiles.size() < 3)

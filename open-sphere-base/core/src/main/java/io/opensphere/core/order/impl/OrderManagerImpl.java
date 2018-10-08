@@ -406,10 +406,7 @@ public class OrderManagerImpl implements OrderManager
             // The participant is already in the desired spot.
             return currentOrder;
         }
-        else
-        {
-            removeParticipant(participant);
-        }
+        removeParticipant(participant);
 
         int assignedOrder;
         TObjectIntMap<OrderParticipantKey> moved = new TObjectIntHashMap<>(Math.abs(referenceOrder - currentOrder));
@@ -477,10 +474,7 @@ public class OrderManagerImpl implements OrderManager
             // The participant is already in the desired spot.
             return currentOrder;
         }
-        else
-        {
-            removeParticipant(participant);
-        }
+        removeParticipant(participant);
 
         int assignedOrder;
         TObjectIntMap<OrderParticipantKey> moved = new TObjectIntHashMap<>(Math.abs(referenceOrder - currentOrder));
@@ -662,7 +656,7 @@ public class OrderManagerImpl implements OrderManager
             @Override
             public void run()
             {
-                ChangeSupport.Callback<OrderChangeListener> callback = new ChangeSupport.Callback<OrderChangeListener>()
+                ChangeSupport.Callback<OrderChangeListener> callback = new ChangeSupport.Callback<>()
                 {
                     @Override
                     public void notify(OrderChangeListener listener)

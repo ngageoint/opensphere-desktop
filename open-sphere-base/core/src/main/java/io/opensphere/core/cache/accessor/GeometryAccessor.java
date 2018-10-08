@@ -19,7 +19,7 @@ public abstract class GeometryAccessor<S> extends AbstractIntervalPropertyAccess
     public static final String GEOMETRY_PROPERTY_NAME = "geom";
 
     /** The property descriptor. */
-    public static final PropertyDescriptor<Geometry> PROPERTY_DESCRIPTOR = new PropertyDescriptor<Geometry>(
+    public static final PropertyDescriptor<Geometry> PROPERTY_DESCRIPTOR = new PropertyDescriptor<>(
             GEOMETRY_PROPERTY_NAME, Geometry.class);
 
     /** A geometry factory. */

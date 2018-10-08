@@ -79,11 +79,8 @@ public final class DecimalDegrees extends Angle
             return new StringBuilder().append(format(width - DEGREES_SHORT_LABEL.length() - 1, precision, getMagnitude()))
                     .append(DEGREES_SHORT_LABEL).append(positive).toString();
         }
-        else
-        {
-            return new StringBuilder().append(format(width - DEGREES_SHORT_LABEL.length() - 1, precision, -getMagnitude()))
-                    .append(DEGREES_SHORT_LABEL).append(negative).toString();
-        }
+        return new StringBuilder().append(format(width - DEGREES_SHORT_LABEL.length() - 1, precision, -getMagnitude()))
+                .append(DEGREES_SHORT_LABEL).append(negative).toString();
     }
 
     /**

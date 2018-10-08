@@ -6,6 +6,8 @@ import java.util.Observable;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import io.opensphere.core.util.NonSuckingObservable;
+import io.opensphere.core.util.collections.New;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -16,9 +18,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
-
-import io.opensphere.core.util.NonSuckingObservable;
-import io.opensphere.core.util.collections.New;
 
 /**
  * ListView of CheckBoxes.

@@ -291,10 +291,7 @@ public class ElevationManager
                     {
                         return null;
                     }
-                    else
-                    {
-                        return provider.getBoundingBox();
-                    }
+                    return provider.getBoundingBox();
                 }
                 higherOrdered.add(provider);
             }
@@ -384,14 +381,11 @@ public class ElevationManager
                 {
                     return false;
                 }
-                else
+                for (GeographicPolygon testRegion : testProvider.getRegions())
                 {
-                    for (GeographicPolygon testRegion : testProvider.getRegions())
+                    if (testRegion.contains(region, 0.))
                     {
-                        if (testRegion.contains(region, 0.))
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
             }
@@ -490,21 +484,6 @@ public class ElevationManager
      */
     private void notifyElevationListeners(final ElevationChangedEvent event)
     {
-        myNotificationExecutor.execute(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                ChangeSupport.Callback<ElevationChangeListener> callback = new ChangeSupport.Callback<ElevationChangeListener>()
-                {
-                    @Override
-                    public void notify(ElevationChangeListener listener)
-                    {
-                        listener.handleElevationChange(event);
-                    }
-                };
-                myChangeSupport.notifyListeners(callback);
-            }
-        });
+        myNotificationExecutor.execute(() -> myChangeSupport.notifyListeners(listener -> listener.handleElevationChange(event)));
     }
 }

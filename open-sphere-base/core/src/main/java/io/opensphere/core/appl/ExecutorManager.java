@@ -15,10 +15,9 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
-
 import org.apache.log4j.Logger;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.MemoryManager;
 import io.opensphere.core.MemoryManager.MemoryListener;
 import io.opensphere.core.MemoryManager.Status;
@@ -58,7 +57,7 @@ class ExecutorManager
     private ThreadPoolConfigs myConfigs;
 
     /** Factory for envoy thread pool executors. */
-    private final Factory<String, ExecutorController> myEnvoyExecutorFactory = new Factory<String, ExecutorController>()
+    private final Factory<String, ExecutorController> myEnvoyExecutorFactory = new Factory<>()
     {
         @Override
         public ExecutorController create(final String key)

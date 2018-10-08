@@ -14,7 +14,6 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import net.jcip.annotations.GuardedBy;
 import javax.media.opengl.GL;
 
 import org.apache.log4j.Logger;
@@ -50,6 +49,7 @@ import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.core.viewer.ViewChangeSupport.ViewChangeType;
 import io.opensphere.core.viewer.Viewer;
 import io.opensphere.core.viewer.impl.MapContext;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Organize and group geometries to send to the various assorted processors.
@@ -783,32 +783,26 @@ public class GeometryDistributor
             {
                 return active != null && active.getPrimary().intersects(span);
             }
-            else
+            final AnimationState state = animationPlan.findState(span, currentAnimationState.getDirection());
+            if (state == null)
             {
-                final AnimationState state = animationPlan.findState(span, currentAnimationState.getDirection());
-                if (state == null)
-                {
-                    return false;
-                }
-                else
-                {
-                    boolean result = false;
-                    try
-                    {
-                        result = animationPlan.calculateDistance(currentAnimationState, state) == 0;
-                    }
-                    catch (final RuntimeException e)
-                    {
-                        // If this test fails just fail the in range test as
-                        // this always happens during a plan change where the
-                        // distributor has yet to receive the updated plan and
-                        // ends up in a race condition with the animation
-                        // manager adjusting to the new plan.
-                        result = false;
-                    }
-                    return result;
-                }
+                return false;
             }
+            boolean result = false;
+            try
+            {
+                result = animationPlan.calculateDistance(currentAnimationState, state) == 0;
+            }
+            catch (final RuntimeException e)
+            {
+                // If this test fails just fail the in range test as
+                // this always happens during a plan change where the
+                // distributor has yet to receive the updated plan and
+                // ends up in a race condition with the animation
+                // manager adjusting to the new plan.
+                result = false;
+            }
+            return result;
         }
         else
         {
@@ -1113,27 +1107,24 @@ public class GeometryDistributor
         {
             return false;
         }
-        else
+        animationPlan.getTimeSpanForState(state);
+        boolean inRange = false;
+        try
         {
-            animationPlan.getTimeSpanForState(state);
-            boolean inRange = false;
-            try
-            {
-                final int distance = animationPlan.calculateDistance(currentAnimationState, state);
-                inRange = distance <= loadAhead;
-            }
-            catch (final RuntimeException e)
-            {
-                // If this test fails just fail the in range test as this always
-                // happens during a plan
-                // change where the distributor has yet to receive the updated
-                // plan and ends up in
-                // a race condition with the animation manager adjusting to the
-                // new plan.
-                inRange = false;
-            }
-            return inRange;
+            final int distance = animationPlan.calculateDistance(currentAnimationState, state);
+            inRange = distance <= loadAhead;
         }
+        catch (final RuntimeException e)
+        {
+            // If this test fails just fail the in range test as this always
+            // happens during a plan
+            // change where the distributor has yet to receive the updated
+            // plan and ends up in
+            // a race condition with the animation manager adjusting to the
+            // new plan.
+            inRange = false;
+        }
+        return inRange;
     }
 
     /**

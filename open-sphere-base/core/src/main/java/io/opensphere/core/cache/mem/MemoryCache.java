@@ -206,7 +206,7 @@ public class MemoryCache implements Cache
         else
         {
             Factory<PropertyDescriptor, Pair<TLongSet, List<Object>>> factory;
-            factory = new LazyMap.Factory<PropertyDescriptor, Pair<TLongSet, List<Object>>>()
+            factory = new LazyMap.Factory<>()
             {
                 @Override
                 public Pair<TLongSet, List<Object>> create(PropertyDescriptor key)
@@ -416,10 +416,7 @@ public class MemoryCache implements Cache
         {
             throw new UnsupportedOperationException("Cannot get satisfaction with no nested cache installed.");
         }
-        else
-        {
-            return myNestedCache.getIntervalSatisfactions(category, parameters);
-        }
+        return myNestedCache.getIntervalSatisfactions(category, parameters);
     }
 
     @Override
@@ -499,10 +496,7 @@ public class MemoryCache implements Cache
         {
             return myNestedCache.getValueSizes(ids, property);
         }
-        else
-        {
-            return new long[ids.length];
-        }
+        return new long[ids.length];
     }
 
     @Override
@@ -522,22 +516,19 @@ public class MemoryCache implements Cache
         {
             throw new UnsupportedOperationException("Cannot insert objects without a nested cache to generate ids.");
         }
-        else
+        final long[] ids = myNestedCache.put(insert, listener);
+
+        if (ids.length > 0)
         {
-            final long[] ids = myNestedCache.put(insert, listener);
-
-            if (ids.length > 0)
-            {
-                cacheObjects(ids, insert.getInput(), insert.getAccessors());
-            }
-
-            if (listener != null)
-            {
-                notifyListenerForNonPersistentAccessors(listener, insert.getAccessors(), ids);
-            }
-
-            return ids;
+            cacheObjects(ids, insert.getInput(), insert.getAccessors());
         }
+
+        if (listener != null)
+        {
+            notifyListenerForNonPersistentAccessors(listener, insert.getAccessors(), ids);
+        }
+
+        return ids;
     }
 
     @Override

@@ -716,21 +716,15 @@ public class ListCheckBoxTree extends CheckBoxTree
             {
                 return false;
             }
-            else
+            Rectangle bounds = _tree.getPathBounds(path);
+            // Use the actual checkbox width instead of Jide's
+            // implementation, which doesn't support wider checkboxes.
+            int hotspot = _tree.getCheckBox().getPreferredSize().width;
+            if (_tree.getComponentOrientation().isLeftToRight())
             {
-                Rectangle bounds = _tree.getPathBounds(path);
-                // Use the actual checkbox width instead of Jide's
-                // implementation, which doesn't support wider checkboxes.
-                int hotspot = _tree.getCheckBox().getPreferredSize().width;
-                if (_tree.getComponentOrientation().isLeftToRight())
-                {
-                    return e.getX() < bounds.x + hotspot;
-                }
-                else
-                {
-                    return e.getX() > bounds.x + bounds.width - hotspot;
-                }
+                return e.getX() < bounds.x + hotspot;
             }
+            return e.getX() > bounds.x + bounds.width - hotspot;
         }
     }
 

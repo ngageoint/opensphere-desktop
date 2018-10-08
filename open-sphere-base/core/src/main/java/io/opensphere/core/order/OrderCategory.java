@@ -16,7 +16,7 @@ public interface OrderCategory
      * A static case insensitive alphabetical comparator for categories by
      * category id.
      */
-    Comparator<OrderCategory> ourCompareByCaseInsensitiveCategoryId = new Comparator<OrderCategory>()
+    Comparator<OrderCategory> ourCompareByCaseInsensitiveCategoryId = new Comparator<>()
     {
         @Override
         public int compare(OrderCategory o1, OrderCategory o2)
@@ -26,7 +26,7 @@ public interface OrderCategory
     };
 
     /** A static lexicographical comparator for categories by category id. */
-    Comparator<OrderCategory> ourCompareByCategoryId = new Comparator<OrderCategory>()
+    Comparator<OrderCategory> ourCompareByCategoryId = new Comparator<>()
     {
         @Override
         public int compare(OrderCategory o1, OrderCategory o2)
@@ -40,7 +40,7 @@ public interface OrderCategory
      * where the range with the lowest minimum integer is less than another
      * range.
      */
-    Comparator<OrderCategory> ourCompareByOrderRange = new Comparator<OrderCategory>()
+    Comparator<OrderCategory> ourCompareByOrderRange = new Comparator<>()
     {
         @Override
         public int compare(OrderCategory o1, OrderCategory o2)

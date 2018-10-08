@@ -3,8 +3,6 @@ package io.opensphere.core.util.swing.input;
 import java.awt.Component;
 import java.awt.Font;
 
-import javafx.beans.property.ReadOnlyProperty;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JCheckBox;
@@ -12,6 +10,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 import io.opensphere.core.util.swing.GridBagPanel;
+import javafx.beans.property.ReadOnlyProperty;
 
 /**
  * A panel that can be used for most views.

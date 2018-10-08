@@ -129,7 +129,7 @@ public class TileProcessor extends TextureProcessor<TileGeometry> implements Spl
     @Override
     public void generateDryRunGeometries()
     {
-        TileGeometry.Builder<GeographicPosition> builder = new TileGeometry.Builder<GeographicPosition>();
+        TileGeometry.Builder<GeographicPosition> builder = new TileGeometry.Builder<>();
         builder.setBounds(new GeographicBoundingBox(LatLonAlt.createFromDegrees(0, 0), LatLonAlt.createFromDegrees(10, 10)));
         BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics g = image.getGraphics();
@@ -701,10 +701,7 @@ public class TileProcessor extends TextureProcessor<TileGeometry> implements Spl
                 {
                     return true;
                 }
-                else
-                {
-                    cache.putCacheAssociation(geom, position, Vector3d.class, Vector3d.SIZE_BYTES, 0L);
-                }
+                cache.putCacheAssociation(geom, position, Vector3d.class, Vector3d.SIZE_BYTES, 0L);
             }
             inView = getViewer().isInView(position, 0.) && !isObscured(position);
         }

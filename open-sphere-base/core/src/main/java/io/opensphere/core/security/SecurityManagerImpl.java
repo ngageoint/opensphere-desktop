@@ -21,8 +21,6 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -66,6 +64,8 @@ import io.opensphere.core.util.security.SecurityUtilities;
 import io.opensphere.core.util.security.UsernamePasswordProvider;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.swing.OptionDialog;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /** Implementation of security manager interface. */
 @ThreadSafe
@@ -872,7 +872,7 @@ public class SecurityManagerImpl implements SecurityManager
     {
         try
         {
-            final Callable<Boolean> userPromptCallable = new Callable<Boolean>()
+            final Callable<Boolean> userPromptCallable = new Callable<>()
             {
                 @Override
                 public Boolean call() throws SecretKeyProviderException
@@ -890,10 +890,7 @@ public class SecurityManagerImpl implements SecurityManager
                 clearEncryptedData();
                 return getSecretKey(null);
             }
-            else
-            {
-                throw new SecretKeyProviderException("Private key not available.");
-            }
+            throw new SecretKeyProviderException("Private key not available.");
         }
         catch (final ExecutionException e)
         {

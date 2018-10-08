@@ -107,7 +107,7 @@ public class TrackGeometry extends GeometryGroupGeometry
             if (previous != null && !previous.equals(pos))
             {
                 // Create Arrows
-                PolylineGeometry.Builder<GeographicPosition> arrowBuilder = new PolylineGeometry.Builder<GeographicPosition>();
+                PolylineGeometry.Builder<GeographicPosition> arrowBuilder = new PolylineGeometry.Builder<>();
                 arrowBuilder.setDataModelId(builder.getDataModelId());
                 arrowBuilder.setRapidUpdate(builder.isRapidUpdate());
 
@@ -155,7 +155,7 @@ public class TrackGeometry extends GeometryGroupGeometry
         for (Position pos : myLines.getVertices())
         {
             // Create nodes
-            PointGeometry.Builder<Position> pointBuilder = new PointGeometry.Builder<Position>();
+            PointGeometry.Builder<Position> pointBuilder = new PointGeometry.Builder<>();
             pointBuilder.setRapidUpdate(builder.isRapidUpdate());
             pointBuilder.setDataModelId(builder.getDataModelId());
 

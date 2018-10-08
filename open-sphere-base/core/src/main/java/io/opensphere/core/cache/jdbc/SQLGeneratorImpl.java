@@ -864,10 +864,7 @@ public class SQLGeneratorImpl implements SQLGenerator
             sb.setLength(sb.length() - 2);
             return sb.toString();
         }
-        else
-        {
-            return StringUtilities.EMPTY;
-        }
+        return StringUtilities.EMPTY;
     }
 
     /**
@@ -904,10 +901,7 @@ public class SQLGeneratorImpl implements SQLGenerator
         {
             throw new UnsupportedOperationException("Property matcher type is not supported: " + parameter.getClass());
         }
-        else
-        {
-            expressionBuilder.buildExpression(parameter, columnNames, quote, join, where);
-        }
+        expressionBuilder.buildExpression(parameter, columnNames, quote, join, where);
     }
 
     /**

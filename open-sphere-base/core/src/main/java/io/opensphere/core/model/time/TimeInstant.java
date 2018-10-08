@@ -8,8 +8,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
 
-import net.jcip.annotations.Immutable;
-
 import io.opensphere.core.units.duration.Duration;
 import io.opensphere.core.units.duration.Milliseconds;
 import io.opensphere.core.util.Constants;
@@ -18,6 +16,7 @@ import io.opensphere.core.util.DateTimeUtilities;
 import io.opensphere.core.util.MathUtil;
 import io.opensphere.core.util.SizeProvider;
 import io.opensphere.core.util.Utilities;
+import net.jcip.annotations.Immutable;
 
 /**
  * An instant in time.
@@ -81,11 +80,17 @@ public abstract class TimeInstant implements Comparable<TimeInstant>, Serializab
     public static TimeInstant max(TimeInstant t1, TimeInstant t2)
     {
         if (t1 == null)
+        {
             return t2;
+        }
         if (t2 == null)
+        {
             return t1;
+        }
         if (t2.isAfter(t1))
+        {
             return t2;
+        }
         return t1;
     }
 
@@ -99,11 +104,17 @@ public abstract class TimeInstant implements Comparable<TimeInstant>, Serializab
     public static TimeInstant min(TimeInstant t1, TimeInstant t2)
     {
         if (t1 == null)
+        {
             return t2;
+        }
         if (t2 == null)
+        {
             return t1;
+        }
         if (t2.isBefore(t1))
+        {
             return t2;
+        }
         return t1;
     }
 
@@ -194,10 +205,7 @@ public abstract class TimeInstant implements Comparable<TimeInstant>, Serializab
         {
             return this;
         }
-        else
-        {
-            return plus(dur.negate());
-        }
+        return plus(dur.negate());
     }
 
     /**

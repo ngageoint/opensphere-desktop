@@ -2,9 +2,9 @@ package io.opensphere.core.pipeline.renderer.buffered;
 
 import java.nio.FloatBuffer;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.media.opengl.GL;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.pipeline.util.RenderContext;
 import io.opensphere.core.util.Constants;
@@ -63,10 +63,7 @@ public class VertexAttributeBufferObject extends AbstractBufferObject<FloatBuffe
             rc.getGL2().glVertexAttribPointer(vertAttrIndex, 2, GL.GL_FLOAT, false, 0, 0);
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     @Override

@@ -180,10 +180,7 @@ public class DefaultWizardStepListModel implements WizardStepListModel
             myCurrentStep = assertValidStep(step);
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     /**

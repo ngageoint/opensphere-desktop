@@ -239,7 +239,7 @@ public class LabelRendererImmediate extends AbstractRenderer<LabelGeometry> impl
                 ShaderPropertiesSet propertiesSet = new ShaderPropertiesSet();
                 Collection<Pair<String, float[]>> uniforms = New.collection(1);
                 propertiesSet.setShaderCode(ourShadowCode);
-                uniforms.add(new Pair<String, float[]>("uOutlineColor", outlineColor.getComponents(null)));
+                uniforms.add(new Pair<>("uOutlineColor", outlineColor.getComponents(null)));
                 propertiesSet.setFloatUniforms(uniforms);
                 FragmentShaderProperties fragProps = new DefaultFragmentShaderProperties();
                 fragProps.setupShader(propertiesSet);

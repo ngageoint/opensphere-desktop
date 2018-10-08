@@ -37,10 +37,7 @@ public class DeleteModelsTask extends DatabaseTask implements StatementUser<Void
         {
             return "Ids " + Arrays.toString(myCombinedIds) + " cleared from cache in ";
         }
-        else
-        {
-            return myCombinedIds.length + " ids cleared from cache in ";
-        }
+        return myCombinedIds.length + " ids cleared from cache in ";
     }
 
     @Override

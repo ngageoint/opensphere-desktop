@@ -254,14 +254,11 @@ public final class MGRSUtil
                         }
                         return newPos;
                     }
-                    else
+                    if (LOGGER.isDebugEnabled())
                     {
-                        if (LOGGER.isDebugEnabled())
-                        {
-                            LOGGER.debug("Both points outside of bounding box, can't determine intersection.");
-                        }
-                        return null;
+                        LOGGER.debug("Both points outside of bounding box, can't determine intersection.");
                     }
+                    return null;
                 }
 
                 // Check for special case when these two points cross the

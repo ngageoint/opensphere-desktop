@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-import net.jcip.annotations.NotThreadSafe;
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.stream.StreamSource;
 
@@ -39,6 +38,7 @@ import io.opensphere.core.util.XMLUtilities;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
+import net.jcip.annotations.NotThreadSafe;
 
 /**
  * Parses COLLADA models and generates {@link PolygonMeshGeometry}s from them.

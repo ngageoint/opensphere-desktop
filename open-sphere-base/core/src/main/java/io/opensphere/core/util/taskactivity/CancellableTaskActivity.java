@@ -1,10 +1,9 @@
 package io.opensphere.core.util.taskactivity;
 
+import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
-
-import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
 
 /**
  * A {@link TaskActivity} that contains a settable boolean to indicate if the
@@ -20,7 +19,7 @@ public class CancellableTaskActivity extends TaskActivity
     /**
      * The progress of the task.
      */
-    private final SimpleObjectProperty<Double> myProgress = new SimpleObjectProperty<Double>(Double.valueOf(0));
+    private final SimpleObjectProperty<Double> myProgress = new SimpleObjectProperty<>(Double.valueOf(0));
 
     /**
      * Creates an active task activity with the given label.

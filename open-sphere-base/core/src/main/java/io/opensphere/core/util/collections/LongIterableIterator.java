@@ -31,10 +31,7 @@ public class LongIterableIterator implements Iterator<Long>
         {
             return myListIterator.hasNext();
         }
-        else
-        {
-            return myBlockIterator.hasNext() || myListIterator.hasNext();
-        }
+        return myBlockIterator.hasNext() || myListIterator.hasNext();
     }
 
     @Override
@@ -48,12 +45,9 @@ public class LongIterableIterator implements Iterator<Long>
         {
             return myBlockIterator.next();
         }
-        else
+        if (myListIterator.hasNext())
         {
-            if (myListIterator.hasNext())
-            {
-                myBlockIterator = myListIterator.next().iterator();
-            }
+            myBlockIterator = myListIterator.next().iterator();
         }
         return myBlockIterator.next();
     }

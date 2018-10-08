@@ -175,18 +175,15 @@ public class RetrieveGroupIdsTask extends DatabaseTask implements ConnectionUser
         {
             return Collections.emptySet();
         }
-        else
+        Collection<IntervalPropertyMatcher<?>> result = New.collection();
+        for (IntervalPropertyMatcher<?> intervalPropertyMatcher : getParameters())
         {
-            Collection<IntervalPropertyMatcher<?>> result = New.collection();
-            for (IntervalPropertyMatcher<?> intervalPropertyMatcher : getParameters())
+            if (intervalPropertyMatcher instanceof GeometryMatcher)
             {
-                if (intervalPropertyMatcher instanceof GeometryMatcher)
-                {
-                    result.add(intervalPropertyMatcher);
-                }
+                result.add(intervalPropertyMatcher);
             }
-            return result;
         }
+        return result;
     }
 
     /**

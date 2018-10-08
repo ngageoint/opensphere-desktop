@@ -1,7 +1,5 @@
 package io.opensphere.core.appl;
 
-import net.jcip.annotations.GuardedBy;
-
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.MemoryManager;
@@ -9,6 +7,7 @@ import io.opensphere.core.util.ChangeSupport;
 import io.opensphere.core.util.MemoryUtilities;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
+import net.jcip.annotations.GuardedBy;
 
 /** Implementation class for {@link MemoryManager}. */
 class MemoryManagerImpl implements MemoryManager

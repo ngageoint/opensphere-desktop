@@ -214,11 +214,8 @@ public abstract class TimeSpanList extends AbstractList<TimeSpan> implements Ser
             {
                 return true;
             }
-            else
-            {
-                // Make the remainder mutable.
-                remainder = New.list(remainder);
-            }
+            // Make the remainder mutable.
+            remainder = New.list(remainder);
         }
 
         return false;
@@ -391,10 +388,7 @@ public abstract class TimeSpanList extends AbstractList<TimeSpan> implements Ser
                 TimeSpan intersection = myTimeSpan.getIntersection(ts);
                 return intersection == null ? emptyList() : singleton(intersection);
             }
-            else
-            {
-                return emptyList();
-            }
+            return emptyList();
         }
 
         @Override

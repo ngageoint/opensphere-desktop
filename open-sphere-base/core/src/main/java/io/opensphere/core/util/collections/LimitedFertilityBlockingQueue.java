@@ -286,10 +286,7 @@ public class LimitedFertilityBlockingQueue<E> extends LinkedBlockingQueue<E>
             }
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     /**

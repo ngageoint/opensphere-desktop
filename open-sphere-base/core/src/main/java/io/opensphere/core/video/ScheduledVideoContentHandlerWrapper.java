@@ -6,12 +6,6 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import javafx.beans.property.ReadOnlyProperty;
-import javafx.beans.value.ChangeListener;
-
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
-
 import org.apache.log4j.Logger;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -23,6 +17,10 @@ import io.opensphere.core.units.duration.Seconds;
 import io.opensphere.core.util.Constants;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
+import javafx.beans.property.ReadOnlyProperty;
+import javafx.beans.value.ChangeListener;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * A wrapper for a video content handler that delivers video content at
@@ -191,7 +189,7 @@ public class ScheduledVideoContentHandlerWrapper<T> implements VideoContentHandl
         }
 
         long ptsOffsetMillis = ptsMillis - myReferencePtsMillis;
-        TimestampedContent<T> timestamped = new TimestampedContent<T>(content,
+        TimestampedContent<T> timestamped = new TimestampedContent<>(content,
                 myReferenceTime.plus(new Milliseconds(ptsOffsetMillis)), ptsMillis);
         if (timestamped.getTimestamp().minus(TimeInstant.get()).isLessThan(MAX_SLEEP))
         {
@@ -348,10 +346,7 @@ public class ScheduledVideoContentHandlerWrapper<T> implements VideoContentHandl
             return TimeInstant
                     .get(myReferenceTime.getEpochMillis() + (System.nanoTime() - myFirstNanoTime) / Constants.NANO_PER_MILLI);
         }
-        else
-        {
-            return handle;
-        }
+        return handle;
     }
 
     /**

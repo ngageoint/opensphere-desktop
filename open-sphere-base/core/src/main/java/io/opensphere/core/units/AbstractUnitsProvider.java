@@ -189,10 +189,7 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
         {
             return getDisplayClass(convert(type, value));
         }
-        else
-        {
-            return type;
-        }
+        return type;
     }
 
     @Override

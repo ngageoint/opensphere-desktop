@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-import net.jcip.annotations.Immutable;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -18,6 +17,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.opensphere.core.util.lang.ExpectedCloneableException;
 import io.opensphere.core.util.lang.ImpossibleException;
 import io.opensphere.core.util.lang.StringUtilities;
+import net.jcip.annotations.Immutable;
 
 /**
  * An encrypted byte array that can be used in a JAXB object.

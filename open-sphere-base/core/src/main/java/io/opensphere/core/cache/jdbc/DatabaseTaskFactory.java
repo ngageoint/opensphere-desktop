@@ -200,7 +200,7 @@ public class DatabaseTaskFactory
      */
     public <T> InsertTask<T> getInsertTask(CacheDeposit<T> insert, CacheModificationListener listener)
     {
-        return new InsertTask<T>(insert, listener, this);
+        return new InsertTask<>(insert, listener, this);
     }
 
     /**
@@ -403,6 +403,6 @@ public class DatabaseTaskFactory
     public <T> InsertTask<T> getUpdateTask(long[] ids, Collection<? extends T> input,
             Collection<PersistentPropertyAccessor<? super T, ?>> persistentAccessors, CacheModificationListener listener)
     {
-        return new InsertTask<T>(ids, input, persistentAccessors, listener, this);
+        return new InsertTask<>(ids, input, persistentAccessors, listener, this);
     }
 }

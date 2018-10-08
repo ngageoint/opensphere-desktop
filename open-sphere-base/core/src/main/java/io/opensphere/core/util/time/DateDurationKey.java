@@ -201,10 +201,7 @@ public class DateDurationKey implements Comparable<DateDurationKey>
             DateDurationKey other = (DateDurationKey)o;
             return getDuration().equals(other.getDuration()) && getStartDate().getTime() == other.getStartDate().getTime();
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     /**

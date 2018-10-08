@@ -48,10 +48,7 @@ public abstract class AbstractSecondBasedDuration extends Duration
         {
             return -o.compareTo(this);
         }
-        else
-        {
-            return super.compareTo(o);
-        }
+        return super.compareTo(o);
     }
 
     @Override

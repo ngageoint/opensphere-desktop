@@ -79,10 +79,7 @@ public class PrivateKeyProviderFilter
             {
                 return "That certificate is not current.";
             }
-            else
-            {
-                return "That certificate is current.";
-            }
+            return "That certificate is current.";
         }
         else if (!provider.hasKeyType(myKeyTypes))
         {
@@ -113,10 +110,7 @@ public class PrivateKeyProviderFilter
             {
                 return "The certificate must be encrypted, and that one is not.";
             }
-            else
-            {
-                return "The certificate cannot be encrypted, but that one is.";
-            }
+            return "The certificate cannot be encrypted, but that one is.";
         }
         else
         {

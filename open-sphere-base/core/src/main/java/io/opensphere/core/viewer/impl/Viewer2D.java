@@ -412,10 +412,7 @@ public class Viewer2D extends AbstractDynamicViewer
         {
             return isInView(ellipsoid.getCenter(), ((Sphere)ellipsoid).getRadius());
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     @Override

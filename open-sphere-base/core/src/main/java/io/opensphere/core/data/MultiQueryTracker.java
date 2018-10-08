@@ -7,8 +7,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import net.jcip.annotations.GuardedBy;
-
 import org.apache.log4j.Logger;
 
 import com.vividsolutions.jts.geom.TopologyException;
@@ -25,6 +23,7 @@ import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Nulls;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Keeps track of the parts of a multi-segment query.
@@ -262,10 +261,7 @@ public class MultiQueryTracker extends DefaultQueryTracker
                 tracker.setQueryStatus(getQueryStatus(), (Throwable)null);
                 return tracker;
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
         finally
         {
@@ -390,10 +386,7 @@ public class MultiQueryTracker extends DefaultQueryTracker
                 myUnsatisfiedLock.readLock().unlock();
             }
         }
-        else
-        {
-            return super.toString();
-        }
+        return super.toString();
     }
 
     /**
@@ -524,10 +517,7 @@ public class MultiQueryTracker extends DefaultQueryTracker
                 }
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
         finally
         {

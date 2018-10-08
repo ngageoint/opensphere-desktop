@@ -86,7 +86,7 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
         Utilities.checkNull(builder.getPriorityComparator(), "builder.getPriorityComparator()");
         myPriorityComparator = builder.getPriorityComparator();
 
-        myViewAltitudeSupplier = new MemoizingSupplier<Kilometers>(new Supplier<Kilometers>()
+        myViewAltitudeSupplier = new MemoizingSupplier<>(new Supplier<Kilometers>()
         {
             @Override
             public Kilometers get()
@@ -101,7 +101,7 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
     @Override
     public void generateDryRunGeometries()
     {
-        PointSpriteGeometry.Builder<GeographicPosition> builder = new PointSpriteGeometry.Builder<GeographicPosition>();
+        PointSpriteGeometry.Builder<GeographicPosition> builder = new PointSpriteGeometry.Builder<>();
 
         PointRenderProperties props = new DefaultPointRenderProperties(0, true, true, true);
 

@@ -36,7 +36,7 @@ public class ImageProvidingGeometryHelper<E>
     //@formatter:off
     @SuppressWarnings("rawtypes")
     private final LazyMap.Factory<ImageProvidingGeometry.Observer, ImageManager.Observer> myFactory =
-        new LazyMap.Factory<ImageProvidingGeometry.Observer, ImageManager.Observer>()
+        new LazyMap.Factory<>()
         {
             @Override
             public ImageManager.Observer create(final ImageProvidingGeometry.Observer observer)
@@ -44,7 +44,6 @@ public class ImageProvidingGeometryHelper<E>
                 return new ImageManager.Observer()
                 {
                     @Override
-                    @SuppressWarnings("unchecked")
                     public void dataReady()
                     {
                         observer.dataReady(getObservable());

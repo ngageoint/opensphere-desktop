@@ -212,12 +212,9 @@ public class PaletteBuilder
         {
             return aNode.paletteIndex;
         }
-        else
-        {
-            int childIndex = getBranchIndex(aColor, aNode.level);
+        int childIndex = getBranchIndex(aColor, aNode.level);
 
-            return findColorIndex(aNode.children[childIndex], aColor);
-        }
+        return findColorIndex(aNode.children[childIndex], aColor);
     }
 
     protected void buildPalette()

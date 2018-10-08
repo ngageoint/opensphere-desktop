@@ -7,10 +7,9 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import net.jcip.annotations.GuardedBy;
-
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.collections.New;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Manages time span governors for multiple contexts.

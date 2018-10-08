@@ -2,6 +2,7 @@ package io.opensphere.core.util.swing;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Window;
@@ -16,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.Validatable;
@@ -186,10 +188,10 @@ public class OptionDialog extends JDialog
      */
     public OptionDialog(Component parent, Component component, String title)
     {
-        super(getFirstWindow(parent), title, JDialog.DEFAULT_MODALITY_TYPE);
+        super(getFirstWindow(parent), title, Dialog.DEFAULT_MODALITY_TYPE);
         myParent = parent;
         setComponentInternal(component);
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**

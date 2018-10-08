@@ -69,7 +69,7 @@ public class CreateIdJoinTableTask extends DatabaseTask implements StatementUser
         getCacheUtilities().execute(createTableSql, stmt);
 
         final String sql = getSQLGenerator().generateInsert(tempTableName, getIdColumnName());
-        PreparedStatementUser<Void> user = new PreparedStatementUser<Void>()
+        PreparedStatementUser<Void> user = new PreparedStatementUser<>()
         {
             @Override
             public Void run(Connection unused, PreparedStatement pstmt) throws CacheException

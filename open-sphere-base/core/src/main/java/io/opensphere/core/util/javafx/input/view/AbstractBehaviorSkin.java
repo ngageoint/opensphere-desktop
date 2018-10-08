@@ -1,5 +1,6 @@
 package io.opensphere.core.util.javafx.input.view;
 
+import io.opensphere.core.util.javafx.input.view.behavior.AbstractBehavior;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -7,8 +8,6 @@ import javafx.scene.control.Control;
 import javafx.scene.control.SkinBase;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
-
-import io.opensphere.core.util.javafx.input.view.behavior.AbstractBehavior;
 
 /**
  * An extension of the {@link SkinBase} class, in which behavior support is added to the skin hierarchy.

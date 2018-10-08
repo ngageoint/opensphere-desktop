@@ -336,14 +336,11 @@ public class MGRSConverter
         {
             return true;
         }
-        else
+        if (LOGGER.isDebugEnabled())
         {
-            if (LOGGER.isDebugEnabled())
-            {
-                LOGGER.debug("MGRS string format incorrect, unable to parse.");
-            }
-            return false;
+            LOGGER.debug("MGRS string format incorrect, unable to parse.");
         }
+        return false;
     }
 
     /**

@@ -118,7 +118,7 @@ public class AnimatedGifEncoder
         BufferedImage converted = anImage;
         if (scale)
         {
-            Image scaledImage = anImage.getScaledInstance(scaleWidth, scaleHeight, BufferedImage.SCALE_SMOOTH);
+            Image scaledImage = anImage.getScaledInstance(scaleWidth, scaleHeight, Image.SCALE_SMOOTH);
             converted = new BufferedImage(scaleWidth, scaleHeight, BufferedImage.TYPE_3BYTE_BGR);
             Graphics graphics = converted.getGraphics();
             graphics.drawImage(scaledImage, 0, 0, null);

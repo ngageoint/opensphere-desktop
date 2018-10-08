@@ -2,9 +2,9 @@ package io.opensphere.core.pipeline.renderer.buffered;
 
 import java.nio.IntBuffer;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.media.opengl.GL;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.pipeline.util.RenderContext;
 import io.opensphere.core.util.Constants;
@@ -50,10 +50,7 @@ public class IndexBufferObject extends AbstractBufferObject<IntBuffer>
             rc.getGL().glDrawElements(drawMode, myVertexCount, GL.GL_UNSIGNED_INT, 0);
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     /**

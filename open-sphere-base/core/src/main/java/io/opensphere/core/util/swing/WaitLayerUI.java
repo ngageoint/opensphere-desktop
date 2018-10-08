@@ -14,11 +14,12 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.function.Function;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.swing.JComponent;
 import javax.swing.JLayer;
 import javax.swing.Timer;
 import javax.swing.plaf.LayerUI;
+
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 /**
  * UI that can be used to paint a wait indicator over a component.
@@ -112,7 +113,7 @@ public class WaitLayerUI<V extends Component> extends LayerUI<V> implements Acti
      */
     public static <T extends Component> JLayer<T> wrap(T component, float viewFade, Function<T, Rectangle> transform)
     {
-        return new JLayer<>(component, new WaitLayerUI<T>(viewFade, transform));
+        return new JLayer<>(component, new WaitLayerUI<>(viewFade, transform));
     }
 
     /**

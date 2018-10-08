@@ -4,9 +4,8 @@ import java.util.Collection;
 import java.util.Objects;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
-import net.jcip.annotations.GuardedBy;
-
 import io.opensphere.core.util.ref.Reference;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Default implementation of ObservableValue.

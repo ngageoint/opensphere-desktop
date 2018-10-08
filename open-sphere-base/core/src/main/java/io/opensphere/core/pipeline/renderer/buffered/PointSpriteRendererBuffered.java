@@ -92,7 +92,7 @@ public class PointSpriteRendererBuffered<T extends PointSpriteGeometry> extends 
                     groupTimeSpan);
             buffers.put(entry.getKey(), pointData);
         }
-        setRenderData(new PointSpriteRenderData<PointSpriteGeometry>(buffers, rejects, projection, groupTimeSpan));
+        setRenderData(new PointSpriteRenderData<>(buffers, rejects, projection, groupTimeSpan));
     }
 
     @Override
@@ -238,7 +238,7 @@ public class PointSpriteRendererBuffered<T extends PointSpriteGeometry> extends 
      */
     private ModelDataRetriever<T> createSpecialDataRetriever(final ModelDataRetriever<T> dataRetriever)
     {
-        ModelDataRetriever<T> specialDataRetriever = new ModelDataRetriever<T>()
+        ModelDataRetriever<T> specialDataRetriever = new ModelDataRetriever<>()
         {
             @Override
             public AbstractRenderer.ModelData getModelData(T geom, Projection proj, AbstractRenderer.ModelData override,
@@ -329,7 +329,7 @@ public class PointSpriteRendererBuffered<T extends PointSpriteGeometry> extends 
         @Override
         public GeometryRenderer<PointSpriteGeometry> createRenderer()
         {
-            return new PointSpriteRendererBuffered<PointSpriteGeometry>(getCache());
+            return new PointSpriteRendererBuffered<>(getCache());
         }
 
         @Override

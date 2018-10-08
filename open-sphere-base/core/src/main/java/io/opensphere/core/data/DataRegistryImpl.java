@@ -178,10 +178,7 @@ public class DataRegistryImpl implements DataRegistry
         {
             return new long[0];
         }
-        else
-        {
-            return listener.getReports().iterator().next().getIds();
-        }
+        return listener.getReports().iterator().next().getIds();
     }
 
     @Override
@@ -674,11 +671,8 @@ public class DataRegistryImpl implements DataRegistry
                 {
                     throw new IllegalArgumentException("Cannot have more than one geometry accessor.");
                 }
-                else
-                {
-                    foundGeometryAccessor = true;
-                    foundIntervalAccessor = true;
-                }
+                foundGeometryAccessor = true;
+                foundIntervalAccessor = true;
             }
             else if (accessor instanceof IntervalPropertyAccessor)
             {
@@ -1098,10 +1092,7 @@ public class DataRegistryImpl implements DataRegistry
             r.run();
             return cacheTracker.getIds().length > 0;
         }
-        else
-        {
-            myExecutor.execute(r);
-        }
+        myExecutor.execute(r);
         return false;
     }
 

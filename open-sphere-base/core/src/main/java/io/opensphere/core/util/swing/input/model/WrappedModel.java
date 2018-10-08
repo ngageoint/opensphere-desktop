@@ -42,7 +42,7 @@ public abstract class WrappedModel<T> extends StrongObservableValue<T> implement
     private Object myChangedSource;
 
     /** The value change listener. */
-    private final ChangeListener<Object> myChangeListener = new ChangeListener<Object>()
+    private final ChangeListener<Object> myChangeListener = new ChangeListener<>()
     {
         @Override
         public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue)

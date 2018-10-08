@@ -2,6 +2,7 @@ package io.opensphere.core.util.fx;
 
 import java.util.function.Consumer;
 
+import io.opensphere.core.util.Service;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
@@ -9,8 +10,6 @@ import javafx.collections.WeakListChangeListener;
 import javafx.scene.control.Skin;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
-import io.opensphere.core.util.Service;
 
 /**
  * Watches a {@link TableView} and resizes columns as necessary to accommodate

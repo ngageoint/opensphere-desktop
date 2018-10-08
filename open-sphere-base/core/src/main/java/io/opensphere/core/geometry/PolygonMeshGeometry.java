@@ -277,7 +277,7 @@ public class PolygonMeshGeometry extends AbstractColorGeometry implements ImageP
     @Override
     protected Builder<? extends Position> createRawBuilder()
     {
-        return new Builder<Position>();
+        return new Builder<>();
     }
 
     /**

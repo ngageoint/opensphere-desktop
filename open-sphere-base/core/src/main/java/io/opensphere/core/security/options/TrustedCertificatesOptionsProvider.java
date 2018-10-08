@@ -66,7 +66,7 @@ public class TrustedCertificatesOptionsProvider extends AbstractTableOptionsProv
             }
         };
 
-        SwingWorker<Object[][], Void> worker = new SwingWorker<Object[][], Void>()
+        SwingWorker<Object[][], Void> worker = new SwingWorker<>()
         {
             @Override
             protected Object[][] doInBackground()
@@ -107,10 +107,7 @@ public class TrustedCertificatesOptionsProvider extends AbstractTableOptionsProv
                     {
                         throw (Error)e.getCause();
                     }
-                    else
-                    {
-                        throw (RuntimeException)e.getCause();
-                    }
+                    throw (RuntimeException)e.getCause();
                 }
             }
         };

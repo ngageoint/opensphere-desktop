@@ -30,7 +30,6 @@ import io.opensphere.core.model.Tessera;
 import io.opensphere.core.model.TesseraList;
 import io.opensphere.core.model.TesseraList.TesseraBlock;
 import io.opensphere.core.projection.GeographicBody3D;
-import io.opensphere.core.projection.Projection;
 import io.opensphere.core.terrain.util.AbsoluteElevationProvider;
 import io.opensphere.core.terrain.util.ElevationChangedEvent;
 import io.opensphere.core.util.MathUtil;
@@ -127,13 +126,9 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
         if (startLLA.getAltitudeReference() == Altitude.ReferenceLevel.TERRAIN)
         {
             Pair<List<TerrainVertex>, TerrainModelCursor> verts = getLineModel(start, end, type, modelCenter);
-            return new Pair<Tessera<GeographicPosition>, Projection.ProjectionCursor>(
-                    new SimpleTessera<GeographicPosition>(verts.getFirstObject()), verts.getSecondObject());
+            return new Pair<>(new SimpleTessera<>(verts.getFirstObject()), verts.getSecondObject());
         }
-        else
-        {
-            return getCelestialBody().convertLineToModel(start, end, type, modelCenter);
-        }
+        return getCelestialBody().convertLineToModel(start, end, type, modelCenter);
     }
 
     @Override
@@ -152,13 +147,9 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
         if (startLLA.getAltitudeReference() == Altitude.ReferenceLevel.TERRAIN)
         {
             Pair<List<TerrainVertex>, TerrainModelCursor> verts = getLineModel((TerrainModelCursor)start, end, type, modelCenter);
-            return new Pair<Tessera<GeographicPosition>, Projection.ProjectionCursor>(
-                    new SimpleTessera<GeographicPosition>(verts.getFirstObject()), verts.getSecondObject());
+            return new Pair<>(new SimpleTessera<>(verts.getFirstObject()), verts.getSecondObject());
         }
-        else
-        {
-            return getCelestialBody().convertLineToModel(start, end, type, modelCenter);
-        }
+        return getCelestialBody().convertLineToModel(start, end, type, modelCenter);
     }
 
     @Override
@@ -169,8 +160,7 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
 
         try
         {
-            SimpleTesseraBlockBuilder<GeographicTesseraVertex> triBuilder = new SimpleTesseraBlockBuilder<GeographicTesseraVertex>(
-                    3, modelCenter);
+            SimpleTesseraBlockBuilder<GeographicTesseraVertex> triBuilder = new SimpleTesseraBlockBuilder<>(3, modelCenter);
 
             Collection<TerrainTriangle> fullyContained = New.collection();
             Collection<TerrainTriangle> partiallyContained = New.collection();
@@ -216,9 +206,9 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
             List<TesseraBlock<GeographicTesseraVertex>> tess = New.list(1);
             if (!triBuilder.getBlockVertices().isEmpty())
             {
-                tess.add(new TesseraBlock<GeographicTesseraVertex>(triBuilder, false));
+                tess.add(new TesseraBlock<>(triBuilder, false));
             }
-            return new TesseraList<GeographicTesseraVertex>(tess);
+            return new TesseraList<>(tess);
         }
         catch (TopologyException e)
         {
@@ -255,10 +245,7 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
 
             return model;
         }
-        else
-        {
-            return super.convertQuadToModel(vert1, vert2, vert3, vert4, modelCenter);
-        }
+        return super.convertQuadToModel(vert1, vert2, vert3, vert4, modelCenter);
     }
 
     @Override
@@ -320,10 +307,7 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
             polygon.add(vert3);
             return getTesserae(new GeographicConvexPolygon(polygon), modelCenter);
         }
-        else
-        {
-            return super.convertTriangleToModel(vert1, vert2, vert3, modelCenter);
-        }
+        return super.convertTriangleToModel(vert1, vert2, vert3, modelCenter);
     }
 
     @Override
@@ -470,11 +454,11 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
         List<TesseraBlock<TerrainVertex>> tess = New.list(2);
         if (!triBuilder.getBlockVertices().isEmpty())
         {
-            tess.add(new TesseraBlock<TerrainVertex>(triBuilder, false));
+            tess.add(new TesseraBlock<>(triBuilder, false));
         }
         if (!quadBuilder.getBlockVertices().isEmpty())
         {
-            tess.add(new TesseraBlock<TerrainVertex>(quadBuilder, false));
+            tess.add(new TesseraBlock<>(quadBuilder, false));
         }
 
         // Check to see if this overlaps any petrified blocks.
@@ -497,7 +481,7 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
                 }
             }
         }
-        return new TesseraList<TerrainVertex>(tess);
+        return new TesseraList<>(tess);
     }
 
     @Override
@@ -570,7 +554,7 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
                 midTess.getSecondObject(), end, type, modelCenter);
         vertices.addAll(endTess.getFirstObject());
 
-        return new Pair<List<TerrainVertex>, ImmutableTriangleGlobeModel.TerrainModelCursor>(vertices, end);
+        return new Pair<>(vertices, end);
     }
 
     /**
@@ -633,7 +617,7 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
             TerrainLineModel model = new TerrainLineModel(getCelestialBody(), startVert, endVert, modelCenter);
             model.add(startVert, false);
             model.add(endVert, false);
-            return new Pair<List<TerrainVertex>, ImmutableTriangleGlobeModel.TerrainModelCursor>(model.getVertices(), endCursor);
+            return new Pair<>(model.getVertices(), endCursor);
         }
 
         return getLineModel(startCursor, endCursor, type, modelCenter);
@@ -714,7 +698,7 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
         if (Utilities.sameInstance(startTri, endTri)
                 || MathUtil.isZero(startVertex.subtract(endVertex).getLengthSquared(), tenth))
         {
-            return new Pair<List<TerrainVertex>, ImmutableTriangleGlobeModel.TerrainModelCursor>(model.getVertices(), end);
+            return new Pair<>(model.getVertices(), end);
         }
 
         // Get the ellipse plane based on the model coordinates for the
@@ -748,7 +732,7 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
             model.addAll(intersections, true);
         }
 
-        return new Pair<List<TerrainVertex>, ImmutableTriangleGlobeModel.TerrainModelCursor>(model.getVertices(), end);
+        return new Pair<>(model.getVertices(), end);
     }
 
     /**
@@ -886,7 +870,7 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
                 endVert.getCoordinates(), type, modelCenter);
         vertices.addAll(splitToEndTess.getFirstObject());
 
-        return new Pair<List<TerrainVertex>, ImmutableTriangleGlobeModel.TerrainModelCursor>(vertices, end);
+        return new Pair<>(vertices, end);
     }
 
     /**

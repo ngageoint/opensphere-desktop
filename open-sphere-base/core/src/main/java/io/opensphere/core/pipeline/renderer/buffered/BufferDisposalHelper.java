@@ -66,7 +66,7 @@ public class BufferDisposalHelper<E extends BufferObjectList<?>> implements Disp
      */
     public static <T extends BufferObjectList<?>> BufferDisposalHelper<T> create(Class<T> type, CacheProvider cache)
     {
-        return new BufferDisposalHelper<T>(type, cache);
+        return new BufferDisposalHelper<>(type, cache);
     }
 
     /**
@@ -80,7 +80,7 @@ public class BufferDisposalHelper<E extends BufferObjectList<?>> implements Disp
         myBufferedObjectType = Utilities.checkNull(type, "type");
         myCache = Utilities.checkNull(cache, "cache");
 
-        myBufferInsertionListener = new CacheContentListener<BufferObjectList<?>>()
+        myBufferInsertionListener = new CacheContentListener<>()
         {
             @Override
             public void handleCacheContentChange(final CacheContentEvent<BufferObjectList<?>> event)
@@ -99,7 +99,7 @@ public class BufferDisposalHelper<E extends BufferObjectList<?>> implements Disp
                                 // can use regular map lookup and only add this
                                 // reference to the map if there is no reference
                                 // for this object already.
-                                WeakReference<BufferObjectList<?>> ref = new TransparentEqualsWeakReference<BufferObjectList<?>>(
+                                WeakReference<BufferObjectList<?>> ref = new TransparentEqualsWeakReference<>(
                                         bufferObjectList, myBufferReferenceQueue);
                                 myDisposalMap.put(ref, bufferObjectList.getBufferObjects());
                             }

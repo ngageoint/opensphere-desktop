@@ -2,10 +2,9 @@ package io.opensphere.core.preferences;
 
 import java.util.concurrent.Executor;
 
+import io.opensphere.core.util.Service;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
-
-import io.opensphere.core.util.Service;
 
 /**
  * Handler that can update a double preference based on changes to a double

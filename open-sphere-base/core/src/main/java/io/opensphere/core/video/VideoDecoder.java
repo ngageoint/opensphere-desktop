@@ -4,7 +4,6 @@ import java.io.Closeable;
 import java.nio.ByteBuffer;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
-
 import io.opensphere.core.image.ImageIOImage;
 import io.opensphere.core.math.Vector2i;
 import io.opensphere.core.model.time.TimeInstant;

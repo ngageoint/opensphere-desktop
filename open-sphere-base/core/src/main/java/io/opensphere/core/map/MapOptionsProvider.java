@@ -10,6 +10,7 @@ import io.opensphere.core.options.impl.AbstractOptionsProvider;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.quantify.Quantify;
+import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.core.util.swing.LinkedSliderTextField;
 import io.opensphere.core.util.swing.LinkedSliderTextField.PanelSizeParameters;

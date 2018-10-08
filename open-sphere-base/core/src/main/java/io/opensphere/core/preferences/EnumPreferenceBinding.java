@@ -2,10 +2,9 @@ package io.opensphere.core.preferences;
 
 import java.util.concurrent.Executor;
 
+import io.opensphere.core.util.Service;
 import javafx.beans.property.ObjectProperty;
 import javafx.util.StringConverter;
-
-import io.opensphere.core.util.Service;
 
 /**
  * Handler that can update a string preference based on changes to an enum
@@ -49,7 +48,7 @@ public class EnumPreferenceBinding<E extends Enum<E>> implements Service
     public EnumPreferenceBinding(Class<E> type, ObjectProperty<E> property, Preferences prefs, String key, E def,
             Executor executor, boolean setPropertyOnce)
     {
-        StringConverter<E> converter = new StringConverter<E>()
+        StringConverter<E> converter = new StringConverter<>()
         {
             @Override
             public String toString(E object)

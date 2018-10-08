@@ -126,7 +126,7 @@ public class TextureDisposalHelper implements DisposalHelper
      */
     private CacheContentListener<TextureHandle> getTileTextureGroupContentChangeListener()
     {
-        return new CacheContentListener<TextureHandle>()
+        return new CacheContentListener<>()
         {
             @Override
             public void handleCacheContentChange(CacheContentEvent<TextureHandle> event)
@@ -150,7 +150,7 @@ public class TextureDisposalHelper implements DisposalHelper
                                     // only add this reference to the map if
                                     // there is no reference for this object
                                     // already.
-                                    WeakReference<TextureHandle> ref = new TransparentEqualsWeakReference<TextureHandle>(handle,
+                                    WeakReference<TextureHandle> ref = new TransparentEqualsWeakReference<>(handle,
                                             myTextureHandleReferenceQueue);
                                     myTextureDisposalMap.put(ref, Integer.valueOf(handle.getTextureId()));
                                 }

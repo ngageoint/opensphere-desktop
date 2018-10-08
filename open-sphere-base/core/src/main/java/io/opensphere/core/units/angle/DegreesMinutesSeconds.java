@@ -69,10 +69,7 @@ public final class DegreesMinutesSeconds extends Angle
         {
             return toShortLabelString(width - 1, precision, angle) + positive;
         }
-        else
-        {
-            return toShortLabelString(width - 1, precision, -angle) + negative;
-        }
+        return toShortLabelString(width - 1, precision, -angle) + negative;
     }
 
     /**

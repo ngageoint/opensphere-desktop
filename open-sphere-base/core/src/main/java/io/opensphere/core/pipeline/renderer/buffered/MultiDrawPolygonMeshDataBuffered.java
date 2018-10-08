@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
+import javax.media.opengl.GL2GL3;
 
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
@@ -233,7 +234,7 @@ public class MultiDrawPolygonMeshDataBuffered extends BufferObjectList<BufferObj
                 drawMode = GL.GL_TRIANGLES;
                 break;
             case QUAD_VERTEX_COUNT:
-                drawMode = GL2.GL_QUADS;
+                drawMode = GL2GL3.GL_QUADS;
                 break;
             default:
                 drawMode = GL2.GL_POLYGON;

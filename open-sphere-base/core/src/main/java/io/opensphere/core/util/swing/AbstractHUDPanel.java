@@ -320,10 +320,7 @@ public class AbstractHUDPanel extends JPanel implements PreferenceChangeListener
             {
                 return true;
             }
-            else
-            {
-                return hasHUDPanelAncestor(parent);
-            }
+            return hasHUDPanelAncestor(parent);
         }
 
         return false;

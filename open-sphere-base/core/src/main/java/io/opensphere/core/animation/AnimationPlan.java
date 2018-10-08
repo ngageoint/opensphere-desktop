@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
-
 import io.opensphere.core.animation.AnimationState.Direction;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.units.duration.Duration;

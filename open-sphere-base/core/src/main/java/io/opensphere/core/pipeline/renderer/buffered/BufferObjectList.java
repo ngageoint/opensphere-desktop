@@ -34,7 +34,7 @@ public class BufferObjectList<E extends BufferObject> extends AbstractList<E> im
      */
     public static <E extends BufferObject> BufferObjectList<E> create(E bufferObject)
     {
-        return new BufferObjectList<E>(Collections.singletonList(bufferObject));
+        return new BufferObjectList<>(Collections.singletonList(bufferObject));
     }
 
     /**

@@ -50,7 +50,7 @@ public final class PreferencesRegistryImpl implements PreferencesRegistry
      */
     public PreferencesRegistryImpl(final Executor eventExecutor, final ScheduledExecutorService persistExecutor)
     {
-        LazyMap.Factory<? super String, ? extends InternalPreferencesIF> factory = new LazyMap.Factory<String, InternalPreferencesIF>()
+        LazyMap.Factory<? super String, ? extends InternalPreferencesIF> factory = new LazyMap.Factory<>()
         {
             @Override
             public InternalPreferencesIF create(String topic)
@@ -87,10 +87,10 @@ public final class PreferencesRegistryImpl implements PreferencesRegistry
             }
         };
 
-        myTopicToPreferencesMap = new LazyMap<String, InternalPreferencesIF>(
+        myTopicToPreferencesMap = new LazyMap<>(
                 new ConcurrentHashMap<String, InternalPreferencesIF>(), String.class, factory);
 
-        LazyMap.Factory<String, PreferencesOptions> prefOptionsFactory = new LazyMap.Factory<String, PreferencesOptions>()
+        LazyMap.Factory<String, PreferencesOptions> prefOptionsFactory = new LazyMap.Factory<>()
         {
             @Override
             public PreferencesOptions create(String key)
@@ -98,7 +98,7 @@ public final class PreferencesRegistryImpl implements PreferencesRegistry
                 return new PreferencesOptions();
             }
         };
-        myTopicToPreferencesOptionsMap = new LazyMap<String, PreferencesOptions>(
+        myTopicToPreferencesOptionsMap = new LazyMap<>(
                 Collections.synchronizedMap(New.<String, PreferencesOptions>map()), String.class, prefOptionsFactory);
     }
 
@@ -109,10 +109,7 @@ public final class PreferencesRegistryImpl implements PreferencesRegistry
         {
             return getPreferences(aClass.getName());
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     @Override

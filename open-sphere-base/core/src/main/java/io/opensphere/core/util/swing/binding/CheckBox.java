@@ -3,11 +3,11 @@ package io.opensphere.core.util.swing.binding;
 import java.awt.EventQueue;
 import java.awt.event.ItemEvent;
 
+import javax.swing.JCheckBox;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
-
-import javax.swing.JCheckBox;
 
 /**
  * JCheckBox that provides some basic JavaFX-like binding.

@@ -88,7 +88,7 @@ public class TaskCanceller extends DefaultCancellable
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     public <T> Callable<T> wrap(Callable<T> c)
     {
-        return new Callable<T>()
+        return new Callable<>()
         {
             @Override
             public T call() throws Exception
@@ -100,10 +100,7 @@ public class TaskCanceller extends DefaultCancellable
                     {
                         throw new InterruptedException();
                     }
-                    else
-                    {
-                        return c.call();
-                    }
+                    return c.call();
                 }
                 finally
                 {
@@ -124,7 +121,7 @@ public class TaskCanceller extends DefaultCancellable
     @SuppressWarnings("PMD.AvoidRethrowingException")
     public <T> InterruptibleCallable<T> wrap(InterruptibleCallable<T> c)
     {
-        return new InterruptibleCallable<T>()
+        return new InterruptibleCallable<>()
         {
             @Override
             public T call() throws InterruptedException

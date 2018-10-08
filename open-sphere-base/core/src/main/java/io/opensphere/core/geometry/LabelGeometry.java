@@ -205,7 +205,7 @@ public class LabelGeometry extends AbstractColorGeometry
     @Override
     protected Builder<? extends Position> createRawBuilder()
     {
-        return new Builder<Position>();
+        return new Builder<>();
     }
 
     /**

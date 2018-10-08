@@ -34,7 +34,7 @@ abstract class AbstractProcessorListenerHelper
      * Hash strategy for render properties so listeners are added to each
      * instance once.
      */
-    private static final HashingStrategy<RenderProperties> RENDER_PROPERTY_HASH_STRATEGY = new HashingStrategy<RenderProperties>()
+    private static final HashingStrategy<RenderProperties> RENDER_PROPERTY_HASH_STRATEGY = new HashingStrategy<>()
     {
         /** Serial version UID. */
         private static final long serialVersionUID = 1L;

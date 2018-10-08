@@ -135,7 +135,7 @@ public class UnlimitedLinkedBlockingQueue<E> extends AbstractQueue<E> implements
             }
             else
             {
-                myTailNode = myTailNode.setNext(new Node<E>(e));
+                myTailNode = myTailNode.setNext(new Node<>(e));
             }
             myCondition.signal();
         }
@@ -176,16 +176,13 @@ public class UnlimitedLinkedBlockingQueue<E> extends AbstractQueue<E> implements
             {
                 return null;
             }
-            else
+            Node<E> node = myHeadNode;
+            myHeadNode = myHeadNode.getNext();
+            if (myHeadNode == null)
             {
-                Node<E> node = myHeadNode;
-                myHeadNode = myHeadNode.getNext();
-                if (myHeadNode == null)
-                {
-                    myTailNode = null;
-                }
-                return node.getObject();
+                myTailNode = null;
             }
+            return node.getObject();
         }
         finally
         {

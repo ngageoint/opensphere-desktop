@@ -37,8 +37,8 @@ public class DataObjectResult implements Serializable
      */
     public DataObjectResult()
     {
-        dataObjectList = new ArrayList<DataObject>();
-        queryTrackerList = new ArrayList<QueryTracker>();
+        dataObjectList = new ArrayList<>();
+        queryTrackerList = new ArrayList<>();
     }
 
     public List<DataObject> getDataObjectList()

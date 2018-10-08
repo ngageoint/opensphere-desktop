@@ -20,7 +20,7 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 public class PipelineMenuInit
 {
     /** Subscriber to be notified when the LAF is installed. */
-    private EventListener<ApplicationLifecycleEvent> myLifecycleSubscriber = new EventListener<ApplicationLifecycleEvent>()
+    private EventListener<ApplicationLifecycleEvent> myLifecycleSubscriber = new EventListener<>()
     {
         /**
          * Flag used to determine if both the LAF has been installed and the

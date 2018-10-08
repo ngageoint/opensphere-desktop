@@ -510,10 +510,7 @@ public final class FileUtilities
         {
             return Arrays.asList(files);
         }
-        else
-        {
-            return Collections.emptyList();
-        }
+        return Collections.emptyList();
     }
 
     /**

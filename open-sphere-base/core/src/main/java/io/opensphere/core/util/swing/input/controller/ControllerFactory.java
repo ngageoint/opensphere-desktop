@@ -332,7 +332,7 @@ public final class ControllerFactory
         if (preferredComponent == RadioButtonPanel.class)
         {
             Function<T, AbstractButton> buttonProvider = viewSettings == null || viewSettings.getIconProvider() == null ? null
-                    : new Function<T, AbstractButton>()
+                    : new Function<>()
                     {
                         @Override
                         public AbstractButton apply(T option)

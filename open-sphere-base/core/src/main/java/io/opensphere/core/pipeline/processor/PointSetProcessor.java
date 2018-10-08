@@ -61,7 +61,7 @@ public class PointSetProcessor extends AbstractProcessor<PointSetGeometry>
             colors.add(new Color(index, index, index, index));
         }
 
-        PointSetGeometry.Builder<GeographicPosition> builder = new PointSetGeometry.Builder<GeographicPosition>();
+        PointSetGeometry.Builder<GeographicPosition> builder = new PointSetGeometry.Builder<>();
         builder.setPositions(positions);
         builder.setColors(colors);
 

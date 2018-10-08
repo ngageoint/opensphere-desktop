@@ -21,7 +21,7 @@ import io.opensphere.core.util.lang.NamedThreadFactory;
 public class ToolboxListenerHelper extends CompositeService
 {
     /** The subscriber that handles envoy adds and removes. */
-    private final GenericSubscriber<Envoy> myEnvoySubscriber = new GenericSubscriber<Envoy>()
+    private final GenericSubscriber<Envoy> myEnvoySubscriber = new GenericSubscriber<>()
     {
         @Override
         public void receiveObjects(Object source, Collection<? extends Envoy> adds, Collection<? extends Envoy> removes)
@@ -87,7 +87,7 @@ public class ToolboxListenerHelper extends CompositeService
     /**
      * The subscriber that handles transformer adds and removes.
      */
-    private final GenericSubscriber<Transformer> myTransformerSubscriber = new GenericSubscriber<Transformer>()
+    private final GenericSubscriber<Transformer> myTransformerSubscriber = new GenericSubscriber<>()
     {
         @Override
         public void receiveObjects(Object source, Collection<? extends Transformer> adds,

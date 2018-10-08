@@ -121,10 +121,7 @@ public final class UserInteractionX509TrustManager extends UserInteractionAuthen
                 {
                     return;
                 }
-                else
-                {
-                    throw ex;
-                }
+                throw ex;
             }
         }
     }

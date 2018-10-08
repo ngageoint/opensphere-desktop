@@ -18,8 +18,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import net.jcip.annotations.GuardedBy;
-
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.TimeManager;
@@ -41,6 +39,7 @@ import io.opensphere.core.util.concurrent.ProcrastinatingExecutor;
 import io.opensphere.core.util.concurrent.SuppressableRejectedExecutionHandler;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.lang.StringUtilities;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Implementation of the {@link TimeManager} interface.

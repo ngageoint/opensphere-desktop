@@ -103,7 +103,7 @@ public class SlavedDateTimePicker implements ActionListener
     {
         synchronized (mySlavedDateTimePickerListeners)
         {
-            List<SlavedDateTimeListener> list = new ArrayList<SlavedDateTimeListener>(mySlavedDateTimePickerListeners);
+            List<SlavedDateTimeListener> list = new ArrayList<>(mySlavedDateTimePickerListeners);
 
             for (SlavedDateTimeListener al : list)
             {

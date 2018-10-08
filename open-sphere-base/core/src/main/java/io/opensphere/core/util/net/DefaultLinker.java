@@ -5,11 +5,10 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.Map;
 
-import net.jcip.annotations.NotThreadSafe;
-
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.util.collections.New;
+import net.jcip.annotations.NotThreadSafe;
 
 /**
  * Implementation that uses a collection of key patterns and URL patterns to

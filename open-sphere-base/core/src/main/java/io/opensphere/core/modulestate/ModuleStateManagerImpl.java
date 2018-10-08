@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
-import net.jcip.annotations.GuardedBy;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
@@ -22,6 +20,7 @@ import org.w3c.dom.Node;
 import com.bitsys.fade.mist.state.v4.StateType;
 import com.bitsys.fade.mist.state.v4.TagsType;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.Notify;
 import io.opensphere.core.modulestate.config.v1.ModuleStateData;
 import io.opensphere.core.modulestate.config.v1.ModuleStateManagerState;
@@ -38,6 +37,7 @@ import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.lang.ThreadControl;
 import io.opensphere.core.util.ref.Reference;
 import io.opensphere.core.util.ref.WeakReference;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Implementation for {@link ModuleStateManager}.
@@ -49,7 +49,7 @@ public class ModuleStateManagerImpl implements ModuleStateManager
     static final String PREFS_KEY = "State";
 
     /** The JAXB context supplier. */
-    private static final SupplierX<JAXBContext, JAXBException> CONTEXT_SUPPLIER = new SupplierX<JAXBContext, JAXBException>()
+    private static final SupplierX<JAXBContext, JAXBException> CONTEXT_SUPPLIER = new SupplierX<>()
     {
         @Override
         public JAXBContext get() throws JAXBException

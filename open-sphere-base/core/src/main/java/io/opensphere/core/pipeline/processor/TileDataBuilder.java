@@ -69,7 +69,7 @@ public final class TileDataBuilder
                 @Override
                 public LazyMap<TileDataKey, TileData> create(Projection key)
                 {
-                    return new ConcurrentLazyMap<TileDataKey, TileData>(
+                    return new ConcurrentLazyMap<>(
                             Collections.<TileDataKey, TileData>synchronizedMap(New.<TileDataKey, TileData>map()),
                             TileDataKey.class);
                 }
@@ -122,7 +122,7 @@ public final class TileDataBuilder
             {
                 ourTileDataLock.unlock();
             }
-            LazyMap.Factory<TileDataKey, TileData> factory = new LazyMap.Factory<TileDataKey, TileData>()
+            LazyMap.Factory<TileDataKey, TileData> factory = new LazyMap.Factory<>()
             {
                 @Override
                 public TileData create(TileDataKey tdk)
@@ -133,10 +133,7 @@ public final class TileDataBuilder
                     {
                         return buildTileData(keyTexCoords, projection, (GeographicBoundingBox)bbox, cache, modelCenter);
                     }
-                    else
-                    {
-                        return null;
-                    }
+                    return null;
                 }
             };
 
@@ -159,20 +156,17 @@ public final class TileDataBuilder
         {
             return null;
         }
-        else
+        LazyMap<TileDataKey, TileData> projectionMap;
+        ourTileDataLock.lock();
+        try
         {
-            LazyMap<TileDataKey, TileData> projectionMap;
-            ourTileDataLock.lock();
-            try
-            {
-                projectionMap = ourTileDataMap.get(projection);
-            }
-            finally
-            {
-                ourTileDataLock.unlock();
-            }
-            return projectionMap.getIfExists(new TileDataKey(bbox, imageTexCoords));
+            projectionMap = ourTileDataMap.get(projection);
         }
+        finally
+        {
+            ourTileDataLock.unlock();
+        }
+        return projectionMap.getIfExists(new TileDataKey(bbox, imageTexCoords));
     }
 
     /**

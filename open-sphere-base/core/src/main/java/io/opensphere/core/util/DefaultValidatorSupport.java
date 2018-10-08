@@ -12,7 +12,7 @@ public class DefaultValidatorSupport implements ValidatorSupport
     /**
      * Callback used to notify listeners.
      */
-    private final Callback<ValidatorSupport.ValidationStatusChangeListener> myCallback = new Callback<ValidatorSupport.ValidationStatusChangeListener>()
+    private final Callback<ValidatorSupport.ValidationStatusChangeListener> myCallback = new Callback<>()
     {
         @Override
         public void notify(ValidationStatusChangeListener listener)

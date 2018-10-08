@@ -150,12 +150,9 @@ public class PolygonRendererBuffered extends AbstractRenderer<PolygonGeometry> i
         {
             return false;
         }
-        else
-        {
-            myGroupTimeSpan = span;
-            getCache().clearCacheAssociations(PolylineDataBuffered.class);
-            return true;
-        }
+        myGroupTimeSpan = span;
+        getCache().clearCacheAssociations(PolylineDataBuffered.class);
+        return true;
     }
 
     @Override
@@ -280,7 +277,7 @@ public class PolygonRendererBuffered extends AbstractRenderer<PolygonGeometry> i
             {
                 polylineBuffer = new PolylineDataBuffered(modelData.getLineData(), groupTimeSpan);
             }
-            return new Pair<PolygonMeshDataBuffered, PolylineDataBuffered>(polygonBuffer, polylineBuffer);
+            return new Pair<>(polygonBuffer, polylineBuffer);
         }
         return null;
     }

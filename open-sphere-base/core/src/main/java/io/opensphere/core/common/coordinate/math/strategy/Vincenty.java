@@ -1,7 +1,5 @@
 package io.opensphere.core.common.coordinate.math.strategy;
 
-import io.opensphere.core.common.coordinate.math.EarthMath;
-
 /**
  * The Vincenty Model uses a ellipsoid Earth which is accurate down to the
  * millimeter. It uses the WGS84 ellipsoid model.
@@ -9,7 +7,7 @@ import io.opensphere.core.common.coordinate.math.EarthMath;
  * @see http://www.movable-type.co.uk/scripts/latlong.html
  * @see http://en.wikipedia.org/wiki/Vincenty%27s_formulae
  */
-public class Vincenty extends AbstractEarthMath implements EarthMath
+public class Vincenty extends AbstractEarthMath
 {
 
     /** Earth's Semi Major Axis in meters */

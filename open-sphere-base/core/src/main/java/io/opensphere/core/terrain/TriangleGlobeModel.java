@@ -261,13 +261,13 @@ public class TriangleGlobeModel extends GeographicProjectionModel
         List<TesseraBlock<TerrainVertex>> tess = new ArrayList<>(2);
         if (!triBuilder.getBlockVertices().isEmpty())
         {
-            tess.add(new TesseraBlock<TerrainVertex>(triBuilder, true));
+            tess.add(new TesseraBlock<>(triBuilder, true));
         }
         if (!quadBuilder.getBlockVertices().isEmpty())
         {
-            tess.add(new TesseraBlock<TerrainVertex>(quadBuilder, true));
+            tess.add(new TesseraBlock<>(quadBuilder, true));
         }
-        return new TesseraList<TerrainVertex>(tess);
+        return new TesseraList<>(tess);
     }
 
     @Override

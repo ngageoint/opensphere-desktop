@@ -111,10 +111,7 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
             {
                 return new LatLonZeroTerrainAlt(latD, lonD);
             }
-            else
-            {
-                return new LatLonNonZeroTerrainAlt(latD, lonD, altM);
-            }
+            return new LatLonNonZeroTerrainAlt(latD, lonD, altM);
         }
         else if (altRef == Altitude.ReferenceLevel.ELLIPSOID)
         {
@@ -122,10 +119,7 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
             {
                 return new LatLonZeroEllipsoidAlt(latD, lonD);
             }
-            else
-            {
-                return new LatLonNonZeroEllipsoidAlt(latD, lonD, altM);
-            }
+            return new LatLonNonZeroEllipsoidAlt(latD, lonD, altM);
         }
         else
         {
@@ -133,10 +127,7 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
             {
                 return new LatLonZeroCustomAlt(latD, lonD, altRef);
             }
-            else
-            {
-                return new LatLonNonZeroCustomAlt(latD, lonD, altM, altRef);
-            }
+            return new LatLonNonZeroCustomAlt(latD, lonD, altM, altRef);
         }
     }
 
@@ -485,11 +476,17 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
     {
         StringBuilder buf = new StringBuilder();
         for (int i = 0; i < Math.max(1, whole); i++)
+        {
             buf.append('#');
+        }
         if (frac > 0)
+        {
             buf.append('.');
+        }
         for (int i = 0; i < frac; i++)
+        {
             buf.append('#');
+        }
         return new DecimalFormat(buf.toString());
     }
 
@@ -509,9 +506,13 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
     {
         StringBuilder buf = degToDdmBuf(decDeg, roundOff, degSym, minSym);
         if (0.0 <= decDeg)
+        {
             buf.append(posSuffix);
+        }
         else
+        {
             buf.append(negSuffix);
+        }
         return buf.toString();
     }
 
@@ -607,9 +608,13 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
         buf.append(secStr);
         buf.append(secondSymbol);
         if (0.0 <= decDeg)
+        {
             buf.append(positiveSuffix);
+        }
         else
+        {
             buf.append(negativeSuffix);
+        }
         return buf.toString();
     }
 
@@ -1033,7 +1038,9 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
         static
         {
             for (CoordFormat f :  values())
+            {
                 strMap.put(f.toString(), f);
+            }
         }
 
         /**

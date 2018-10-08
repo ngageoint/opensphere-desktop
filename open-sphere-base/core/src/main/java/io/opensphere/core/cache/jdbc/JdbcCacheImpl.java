@@ -399,11 +399,8 @@ public class JdbcCacheImpl implements Cache
             {
                 return new long[0];
             }
-            else
-            {
-                return runTask(getDatabaseTaskFactory().getRetrieveCombinedIdsTask(groupIds, parameters, orderSpecifiers,
-                        startIndex, limit));
-            }
+            return runTask(getDatabaseTaskFactory().getRetrieveCombinedIdsTask(groupIds, parameters, orderSpecifiers, startIndex,
+                    limit));
         }
         catch (CacheException e)
         {
@@ -411,10 +408,7 @@ public class JdbcCacheImpl implements Cache
             {
                 throw (NotSerializableException)e.getCause();
             }
-            else
-            {
-                throw e;
-            }
+            throw e;
         }
     }
 
@@ -434,10 +428,7 @@ public class JdbcCacheImpl implements Cache
             {
                 throw (NotSerializableException)e.getCause();
             }
-            else
-            {
-                throw e;
-            }
+            throw e;
         }
     }
 

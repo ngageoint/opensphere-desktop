@@ -344,11 +344,8 @@ public final class Launch
                 LOGGER.info("Memory test at " + maxMemory + " was successful.");
                 break;
             }
-            else
-            {
-                LOGGER.info("Memory test at " + maxMemory + " failed.");
-                maxMemory -= 128;
-            }
+            LOGGER.info("Memory test at " + maxMemory + " failed.");
+            maxMemory -= 128;
         }
 
         if (maxMemory < maxMemoryFloorMB)
@@ -782,18 +779,15 @@ public final class Launch
                                     mySplashScreenActive = false;
                                     break;
                                 }
+                                final int ix = line.indexOf(SplashScreenManagerImpl.INIT_MESSAGE_PREFIX);
+                                if (ix >= 0)
+                                {
+                                    mySplashScreenManager.setInitMessage(
+                                            line.substring(ix + SplashScreenManagerImpl.INIT_MESSAGE_PREFIX.length()));
+                                }
                                 else
                                 {
-                                    final int ix = line.indexOf(SplashScreenManagerImpl.INIT_MESSAGE_PREFIX);
-                                    if (ix >= 0)
-                                    {
-                                        mySplashScreenManager.setInitMessage(
-                                                line.substring(ix + SplashScreenManagerImpl.INIT_MESSAGE_PREFIX.length()));
-                                    }
-                                    else
-                                    {
-                                        System.out.println(line);
-                                    }
+                                    System.out.println(line);
                                 }
                             }
                         }

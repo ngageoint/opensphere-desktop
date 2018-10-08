@@ -187,10 +187,7 @@ public final class AutoUpdateUtils
         {
             return submitLocalRequest(url);
         }
-        else
-        {
-            return submitRemoteRequest(url, toolbox);
-        }
+        return submitRemoteRequest(url, toolbox);
     }
 
     /**
@@ -234,11 +231,8 @@ public final class AutoUpdateUtils
             {
                 return responseStream;
             }
-            else
-            {
-                LOG.warn("HTTP GET Returned " + response.getResponseCode() + " indicating non-success.");
-                return null;
-            }
+            LOG.warn("HTTP GET Returned " + response.getResponseCode() + " indicating non-success.");
+            return null;
         }
         catch (IOException | URISyntaxException e)
         {

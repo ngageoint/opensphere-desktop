@@ -16,10 +16,7 @@ public abstract class AbstractShape3D extends AbstractShape implements Shape3D
         {
             return Double.NaN;
         }
-        else
-        {
-            zProjectedOntoHeadingPlane = zProjectedOntoHeadingPlane.divide(length);
-        }
+        zProjectedOntoHeadingPlane = zProjectedOntoHeadingPlane.divide(length);
         double angle = Math.signum(orientation.cross(direction).dot(zProjectedOntoHeadingPlane))
                 * orientation.getAngleDifferenceUnit(zProjectedOntoHeadingPlane.getNormalized());
         return angle < 0. ? angle + MathUtil.TWO_PI : angle;

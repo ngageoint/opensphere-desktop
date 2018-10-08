@@ -98,10 +98,7 @@ public final class ReflectionUtilities
             {
                 return (T)value;
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
         catch (IllegalArgumentException | IllegalAccessException e)
         {

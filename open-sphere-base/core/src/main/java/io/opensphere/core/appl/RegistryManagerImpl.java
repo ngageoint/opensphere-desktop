@@ -86,7 +86,7 @@ public class RegistryManagerImpl
      * Subscriber that adds internal frames that implement the importer
      * interface to the importer registry.
      */
-    private final GenericSubscriber<HUDFrame> myComponentRegistryToImporterBinding = new GenericSubscriber<HUDFrame>()
+    private final GenericSubscriber<HUDFrame> myComponentRegistryToImporterBinding = new GenericSubscriber<>()
     {
         @Override
         public void receiveObjects(Object source, Collection<? extends HUDFrame> adds, Collection<? extends HUDFrame> removes)

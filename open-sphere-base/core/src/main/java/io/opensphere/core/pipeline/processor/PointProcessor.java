@@ -57,7 +57,7 @@ public class PointProcessor extends AbstractProcessor<PointGeometry>
     @Override
     public void generateDryRunGeometries()
     {
-        PointGeometry.Builder<GeographicPosition> builder = new PointGeometry.Builder<GeographicPosition>();
+        PointGeometry.Builder<GeographicPosition> builder = new PointGeometry.Builder<>();
         builder.setPosition(new GeographicPosition(LatLonAlt.createFromDegrees(0., 0.)));
 
         PointRenderProperties renderProperties = new DefaultPointRenderProperties(

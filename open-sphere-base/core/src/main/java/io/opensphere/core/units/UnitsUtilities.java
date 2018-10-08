@@ -93,10 +93,7 @@ public final class UnitsUtilities
         {
             return createFromStrings(splitLabel.getFirstObject(), unitType, valueType);
         }
-        else
-        {
-            throw new UnitsParseException("Failed to find appropriate units for string: " + label);
-        }
+        throw new UnitsParseException("Failed to find appropriate units for string: " + label);
     }
 
     /**
@@ -120,10 +117,7 @@ public final class UnitsUtilities
         {
             return createFromStrings(splitLabel.getFirstObject(), unitType, valueType);
         }
-        else
-        {
-            throw new UnitsParseException("Failed to find appropriate units for string: " + label);
-        }
+        throw new UnitsParseException("Failed to find appropriate units for string: " + label);
     }
 
     /**

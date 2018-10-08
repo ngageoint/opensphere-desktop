@@ -20,12 +20,12 @@ public class StrongChangeSupport<T> extends AbstractChangeSupport<T>
      */
     public static <T> StrongChangeSupport<T> create()
     {
-        return new StrongChangeSupport<T>();
+        return new StrongChangeSupport<>();
     }
 
     @Override
     protected Reference<T> createReference(T listener)
     {
-        return new StrongReference<T>(listener);
+        return new StrongReference<>(listener);
     }
 }

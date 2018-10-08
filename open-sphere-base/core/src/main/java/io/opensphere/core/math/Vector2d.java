@@ -12,7 +12,7 @@ import io.opensphere.core.util.MathUtil;
 public class Vector2d extends AbstractVector implements Serializable
 {
     /** Comparator that orders coordinates such that smaller ones come first. */
-    public static final Comparator<Vector2d> LENGTH_COMPARATOR = new Comparator<Vector2d>()
+    public static final Comparator<Vector2d> LENGTH_COMPARATOR = new Comparator<>()
     {
         @Override
         public int compare(Vector2d o1, Vector2d o2)

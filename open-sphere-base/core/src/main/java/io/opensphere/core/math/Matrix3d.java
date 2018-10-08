@@ -291,10 +291,7 @@ public class Matrix3d extends AbstractMatrix
         {
             return new Vector2d(x, y);
         }
-        else
-        {
-            return new Vector2d((my00 * x + my01 * y + my02) / w, (my10 * x + my11 * y + my12) / w);
-        }
+        return new Vector2d((my00 * x + my01 * y + my02) / w, (my10 * x + my11 * y + my12) / w);
     }
 
     @Override

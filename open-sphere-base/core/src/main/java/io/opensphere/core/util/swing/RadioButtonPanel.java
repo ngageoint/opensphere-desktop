@@ -62,7 +62,7 @@ public class RadioButtonPanel<T> extends GridBagPanel implements ActionListener
         Function<T, AbstractButton> theButtonProvider = buttonProvider;
         if (theButtonProvider == null)
         {
-            theButtonProvider = new Function<T, AbstractButton>()
+            theButtonProvider = new Function<>()
             {
                 @Override
                 public AbstractButton apply(T option)

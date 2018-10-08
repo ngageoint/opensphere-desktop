@@ -279,7 +279,7 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
     private final TileSplitJoinHelper mySplitJoinHelper;
 
     /** State change handler for terrain tile states. */
-    private final StateChangeHandler<TerrainTileGeometry> myStateChangeHandler = new StateChangeHandler<TerrainTileGeometry>()
+    private final StateChangeHandler<TerrainTileGeometry> myStateChangeHandler = new StateChangeHandler<>()
     {
         @Override
         public void handleStateChanged(List<? extends TerrainTileGeometry> objects, ThreadedStateMachine.State newState,
@@ -320,7 +320,7 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
     private final ThreadedStateMachine<TerrainTileGeometry> myStateMachine;
 
     /** Observer to be notified when a geometry has new data available. */
-    private final ImageProvidingGeometry.Observer<TerrainTileGeometry> myTileGeometryObserver = new ImageProvidingGeometry.Observer<TerrainTileGeometry>()
+    private final ImageProvidingGeometry.Observer<TerrainTileGeometry> myTileGeometryObserver = new ImageProvidingGeometry.Observer<>()
     {
         @Override
         public void dataReady(TerrainTileGeometry geom)
@@ -397,7 +397,7 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
             viewChangeSupport.addViewChangeListener(myViewChangeListener);
         }
 
-        myGeometryQueue = new BatchingBlockingQueue<TerrainTileGeometry>(builder.getScheduledExecutorService(),
+        myGeometryQueue = new BatchingBlockingQueue<>(builder.getScheduledExecutorService(),
                 GEOMETRY_QUEUE_DELAY_MILLISECONDS);
 
         myGeometryQueue.addObserver(new BatchingBlockingQueue.Observer()

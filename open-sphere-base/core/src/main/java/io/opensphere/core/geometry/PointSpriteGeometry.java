@@ -24,7 +24,7 @@ public class PointSpriteGeometry extends PointGeometry implements ImageProviding
     private final boolean myIsProjectionSensitive;
 
     /** Helper for providing images. */
-    private final ImageProvidingGeometryHelper<PointSpriteGeometry> myImageProvidingGeometryHelper = new ImageProvidingGeometryHelper<PointSpriteGeometry>(
+    private final ImageProvidingGeometryHelper<PointSpriteGeometry> myImageProvidingGeometryHelper = new ImageProvidingGeometryHelper<>(
             this);
 
     /**
@@ -115,7 +115,7 @@ public class PointSpriteGeometry extends PointGeometry implements ImageProviding
     @Override
     protected Builder<? extends Position> createRawBuilder()
     {
-        return new Builder<Position>();
+        return new Builder<>();
     }
 
     /**

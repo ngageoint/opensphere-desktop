@@ -213,12 +213,9 @@ public class MultiDrawPolygonRendererBuffered extends AbstractRenderer<PolygonGe
         {
             return false;
         }
-        else
-        {
-            myGroupTimeSpan = span;
-            getCache().clearCacheAssociations(PolylineDataBuffered.class);
-            return true;
-        }
+        myGroupTimeSpan = span;
+        getCache().clearCacheAssociations(PolylineDataBuffered.class);
+        return true;
     }
 
     /**

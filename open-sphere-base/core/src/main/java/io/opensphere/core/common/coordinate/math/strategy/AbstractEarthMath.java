@@ -8,6 +8,7 @@ abstract public class AbstractEarthMath implements EarthMath
     /**
      * {@inheritDoc}
      */
+    @Override
     public double calculateBearing(double latY1, double lonX1, double latY2, double lonX2)
     {
 
@@ -36,11 +37,13 @@ abstract public class AbstractEarthMath implements EarthMath
     /**
      * {@inheritDoc}
      */
+    @Override
     abstract public double[] calculateDestination(double latY, double lonX, double distance, double bearing);
 
     /**
      * {@inheritDoc}
      */
+    @Override
     abstract public double calculateDistanceBetweenPoints(double latY, double lonX, double latY2, double lonX2);
 
 }

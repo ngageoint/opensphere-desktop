@@ -406,7 +406,7 @@ public class MenuInit
             });
             subMenu.add(unitsItem);
         }
-        final UnitsChangeListener<T> listener = new UnitsChangeListener<T>()
+        final UnitsChangeListener<T> listener = new UnitsChangeListener<>()
         {
             @Override
             public void availableUnitsChanged(Class<T> superType, Collection<Class<? extends T>> newTypes)

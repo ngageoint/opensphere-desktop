@@ -43,7 +43,7 @@ public class ViewChangeSupport
      */
     public void notifyViewChangeListeners(final Viewer viewer, Executor executor, final ViewChangeSupport.ViewChangeType type)
     {
-        final ChangeSupport.Callback<ViewChangeSupport.ViewChangeListener> callback = new ChangeSupport.Callback<ViewChangeSupport.ViewChangeListener>()
+        final ChangeSupport.Callback<ViewChangeSupport.ViewChangeListener> callback = new ChangeSupport.Callback<>()
         {
             @Override
             public void notify(ViewChangeListener listener)

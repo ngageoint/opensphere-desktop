@@ -63,10 +63,7 @@ public class WeakSingletonMap<K, V> extends AbstractMap<K, V>
         {
             return Collections.emptySet();
         }
-        else
-        {
-            return Collections.<Map.Entry<K, V>>singleton(new SimpleImmutableEntry<K, V>(key, myValue));
-        }
+        return Collections.<Map.Entry<K, V>>singleton(new SimpleImmutableEntry<>(key, myValue));
     }
 
     @Override

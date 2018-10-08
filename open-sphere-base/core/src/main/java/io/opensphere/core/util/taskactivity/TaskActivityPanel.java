@@ -12,7 +12,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import net.jcip.annotations.GuardedBy;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,6 +27,7 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * A JPanel that displays a scrolling marquis (when necessary) or a combination

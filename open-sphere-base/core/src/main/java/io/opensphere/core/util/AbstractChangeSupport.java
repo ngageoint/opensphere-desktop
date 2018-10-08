@@ -2,9 +2,8 @@ package io.opensphere.core.util;
 
 import java.util.concurrent.Executor;
 
-import net.jcip.annotations.GuardedBy;
-
 import io.opensphere.core.util.ref.Reference;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Support for notifying interested parties of generic changes.
@@ -63,7 +62,7 @@ public abstract class AbstractChangeSupport<T> implements ChangeSupport<T>
     @Override
     public ReferenceService<T> getListenerService(T listener)
     {
-        return new ReferenceService<T>(listener)
+        return new ReferenceService<>(listener)
         {
             @Override
             public void close()

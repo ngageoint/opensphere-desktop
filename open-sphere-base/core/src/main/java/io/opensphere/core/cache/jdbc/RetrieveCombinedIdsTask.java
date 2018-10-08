@@ -107,7 +107,7 @@ public class RetrieveCombinedIdsTask extends DatabaseTask implements ConnectionU
 
         final String sql = getSQLGenerator().generateRetrieveIds(getGroupIds(), getParameters(), joinTableNames,
                 getOrderSpecifiers(), getStartIndex(), getLimit(), getTypeMapper());
-        PreparedStatementUser<long[]> user = new PreparedStatementUser<long[]>()
+        PreparedStatementUser<long[]> user = new PreparedStatementUser<>()
         {
             @Override
             public long[] run(Connection unused, PreparedStatement pstmt) throws CacheException
@@ -367,7 +367,7 @@ public class RetrieveCombinedIdsTask extends DatabaseTask implements ConnectionU
         getCacheUtilities().execute(createTableSql, conn);
 
         final String sql = getSQLGenerator().generateInsert(tempTableName, ColumnNames.VALUE);
-        PreparedStatementUser<Void> user = new PreparedStatementUser<Void>()
+        PreparedStatementUser<Void> user = new PreparedStatementUser<>()
         {
             @Override
             public Void run(Connection unused, PreparedStatement pstmt) throws CacheException

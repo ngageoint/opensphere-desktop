@@ -797,15 +797,9 @@ public class ImageManager
                 {
                     return 0;
                 }
-                else
-                {
-                    return o.myComparator.compare(myComparable, o.myComparable);
-                }
+                return o.myComparator.compare(myComparable, o.myComparable);
             }
-            else
-            {
-                return myComparator.compare(myComparable, o.myComparable);
-            }
+            return myComparator.compare(myComparable, o.myComparable);
         }
 
         @Override

@@ -3,9 +3,8 @@ package io.opensphere.core.util;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
-import net.jcip.annotations.ThreadSafe;
-
 import io.opensphere.core.util.ref.Reference;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * An object property that supports having three phase change listeners.
@@ -127,10 +126,7 @@ public class ThreePhaseProperty<S>
                 myValue = value;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
     }
 

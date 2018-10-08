@@ -2,10 +2,10 @@ package io.opensphere.core.pipeline.renderer.buffered;
 
 import java.nio.FloatBuffer;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.media.opengl.GL;
 import javax.media.opengl.fixedfunc.GLPointerFunc;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.pipeline.util.RenderContext;
 import io.opensphere.core.util.Constants;
@@ -47,10 +47,7 @@ public class TextureCoordinateBufferObject extends AbstractBufferObject<FloatBuf
             rc.getGL2().glTexCoordPointer(2, GL.GL_FLOAT, 0, 0);
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     @Override

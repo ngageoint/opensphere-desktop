@@ -28,7 +28,7 @@ public class GeometryMatcher extends AbstractPropertyMatcher<Geometry> implement
      */
     public GeometryMatcher(String propertyName, GeometryMatcher.OperatorType operator, Geometry geometry)
     {
-        super(new PropertyDescriptor<Geometry>(propertyName, Geometry.class), (Geometry)geometry.clone());
+        super(new PropertyDescriptor<>(propertyName, Geometry.class), (Geometry)geometry.clone());
         myOperator = operator;
     }
 

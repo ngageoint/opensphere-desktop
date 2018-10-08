@@ -32,10 +32,7 @@ public class TimeBudget
         {
             return INDEFINITE;
         }
-        else
-        {
-            return new TimeBudget(now + milliseconds * Constants.NANO_PER_MILLI);
-        }
+        return new TimeBudget(now + milliseconds * Constants.NANO_PER_MILLI);
     }
 
     /**
@@ -51,10 +48,7 @@ public class TimeBudget
         {
             return INDEFINITE;
         }
-        else
-        {
-            return new TimeBudget(now + nanoseconds);
-        }
+        return new TimeBudget(now + nanoseconds);
     }
 
     /**
@@ -150,10 +144,7 @@ public class TimeBudget
         {
             return this;
         }
-        else
-        {
-            return TimeBudget.startMilliseconds(milliseconds);
-        }
+        return TimeBudget.startMilliseconds(milliseconds);
     }
 
     @Override

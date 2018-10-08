@@ -93,10 +93,7 @@ public class QueryTracker implements Serializable
         {
             return null;
         }
-        else
-        {
-            return query.length() > MAX_STR_LENGTH ? (query.substring(0, (MAX_STR_LENGTH - 4)) + "...") : query;
-        }
+        return query.length() > MAX_STR_LENGTH ? (query.substring(0, (MAX_STR_LENGTH - 4)) + "...") : query;
     }
 
     public String getQuery()

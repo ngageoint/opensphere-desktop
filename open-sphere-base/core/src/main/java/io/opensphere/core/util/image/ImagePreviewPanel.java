@@ -120,7 +120,7 @@ public class ImagePreviewPanel extends JPanel
         {
             myMinIndex = Math.min(myMinIndex, index);
             myMaxIndex = Math.max(myMaxIndex, index);
-            myImages.put(index, new Pair<String, BufferedImage>(label, image));
+            myImages.put(index, new Pair<>(label, image));
             if (makeCurrent || myCurrentIndex == -1)
             {
                 myControls.setVisible(true);

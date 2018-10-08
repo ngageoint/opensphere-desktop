@@ -427,10 +427,7 @@ public class DefaultQueryTracker extends TaskCanceller implements MutableQueryTr
                 {
                     return;
                 }
-                else
-                {
-                    throw new IllegalArgumentException("Cannot set query status to " + queryStatus);
-                }
+                throw new IllegalArgumentException("Cannot set query status to " + queryStatus);
             }
             // Only set the query status if it is currently RUNNING, or if the
             // new status is FAILED. Possible transitions are:

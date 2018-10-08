@@ -78,7 +78,7 @@ public class LabelProcessor extends AbstractProcessor<LabelGeometry>
     {
         super(LabelGeometry.class, builder, renderer);
         myLabelOcclusionManager = builder.getLabelOcclusionManager();
-        myViewAltitudeSupplier = new MemoizingSupplier<Kilometers>(new Supplier<Kilometers>()
+        myViewAltitudeSupplier = new MemoizingSupplier<>(new Supplier<Kilometers>()
         {
             @Override
             public Kilometers get()
@@ -93,7 +93,7 @@ public class LabelProcessor extends AbstractProcessor<LabelGeometry>
     @Override
     public void generateDryRunGeometries()
     {
-        LabelGeometry.Builder<GeographicPosition> builder = new LabelGeometry.Builder<GeographicPosition>();
+        LabelGeometry.Builder<GeographicPosition> builder = new LabelGeometry.Builder<>();
         builder.setPosition(new GeographicPosition(LatLonAlt.createFromDegrees(0., 0.)));
         builder.setText("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
         builder.setFont(Font.SANS_SERIF + " 8");

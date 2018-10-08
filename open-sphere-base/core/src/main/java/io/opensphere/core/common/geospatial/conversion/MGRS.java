@@ -264,14 +264,11 @@ public class MGRS
             // add the maximum easting and northing for the given precision
 
         }
-        else
-        {
-            // We aren't supporting UPS coordinates yet
+        // We aren't supporting UPS coordinates yet
 //            UPS ups = convertMGRSToUPS(MGRS);
 //            ups.setParameters(MGRS_a, MGRS_f);
 //            return ups.convertToGeodetic();
-            throw new RuntimeException("Error: UPS conversion not implemented.");
-        }
+        throw new RuntimeException("Error: UPS conversion not implemented.");
     }
 
     public void toUpperLeft()
@@ -334,16 +331,13 @@ public class MGRS
         {
             throw new RuntimeException("error");
         }
+        if (letters.get(0) < LETTER_N)
+        {
+            hemisphere = 'S';
+        }
         else
         {
-            if (letters.get(0) < LETTER_N)
-            {
-                hemisphere = 'S';
-            }
-            else
-            {
-                hemisphere = 'N';
-            }
+            hemisphere = 'N';
         }
 
         int ltr2_low_value = 0, ltr2_high_value = 0;

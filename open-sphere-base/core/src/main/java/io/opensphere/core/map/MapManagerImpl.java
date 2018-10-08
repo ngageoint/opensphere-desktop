@@ -293,10 +293,7 @@ public class MapManagerImpl implements MapManager
             {
                 return null;
             }
-            else
-            {
-                return getProjection().convertToPosition(modelCoords, altReference);
-            }
+            return getProjection().convertToPosition(modelCoords, altReference);
         }
         finally
         {

@@ -14,7 +14,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLContext;
 
@@ -24,6 +23,7 @@ import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureCoords;
 import com.jogamp.opengl.util.texture.TextureData;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.ImageGroup;
@@ -88,7 +88,7 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
     private static final ReentrantLock ourCacheLock = new ReentrantLock();
 
     /** Observer to be notified when a geometry has new data available. */
-    private final ImageProvidingGeometry.Observer<E> myGeometryObserver = new ImageProvidingGeometry.Observer<E>()
+    private final ImageProvidingGeometry.Observer<E> myGeometryObserver = new ImageProvidingGeometry.Observer<>()
     {
         @Override
         public void dataReady(E geom)
@@ -114,7 +114,7 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
     private final Map<ImageManager, List<E>> myImageManagersToGeoms = Collections.synchronizedMap(New.map());
 
     /** The state change handler for the geometry states. */
-    private final StateChangeHandler<E> myProcessingHandler = new StateChangeHandler<E>()
+    private final StateChangeHandler<E> myProcessingHandler = new StateChangeHandler<>()
     {
         @Override
         public void handleStateChanged(List<? extends E> objects, ThreadedStateMachine.State newState,
@@ -352,7 +352,7 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
     protected TextureGroup createTexture(E geom, TextureDataGroup textureData, TextureGroup textureGroup)
     {
         EnumMap<AbstractGeometry.RenderMode, Object> map = textureGroup == null
-                ? new EnumMap<AbstractGeometry.RenderMode, Object>(AbstractGeometry.RenderMode.class) : null;
+                ? new EnumMap<>(AbstractGeometry.RenderMode.class) : null;
         TextureCoords texCoords = null;
         GL gl = GLContext.getCurrentGL();
         for (Map.Entry<AbstractGeometry.RenderMode, TextureData> entry : textureData.getTextureDataMap().entrySet())
@@ -393,10 +393,7 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
             getCache().putCacheAssociation(geom.getImageManager(), tg, TextureGroup.class, tg.getSizeBytes(), 0L);
             return tg;
         }
-        else
-        {
-            return textureGroup;
-        }
+        return textureGroup;
     }
 
     /**
@@ -734,14 +731,11 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
                 }
             }
         }
-        else
-        {
-            textureData.flush();
+        textureData.flush();
 
-            // If the texture data could not be loaded, clear it from the cache.
-            getCache().clearCacheAssociation(geom.getImageManager(), TextureDataGroup.class);
-            return null;
-        }
+        // If the texture data could not be loaded, clear it from the cache.
+        getCache().clearCacheAssociation(geom.getImageManager(), TextureDataGroup.class);
+        return null;
     }
 
     /**
@@ -1474,19 +1468,13 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
             {
                 return reload;
             }
-            else
-            {
-                // If the state has been set IMAGE_LOADED, but we cannot
-                // find the image, restart processing for the geometry.
-                return CollectionUtilities.lazyAdd(geom, reload);
-            }
+            // If the state has been set IMAGE_LOADED, but we cannot
+            // find the image, restart processing for the geometry.
+            return CollectionUtilities.lazyAdd(geom, reload);
         }
-        else
-        {
-            // Not drawable; go straight to texture loaded.
-            textureLoaded.add(geom);
-            return reload;
-        }
+        // Not drawable; go straight to texture loaded.
+        textureLoaded.add(geom);
+        return reload;
     }
 
     /**

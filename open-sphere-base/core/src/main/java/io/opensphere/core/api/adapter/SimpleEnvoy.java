@@ -69,10 +69,7 @@ public abstract class SimpleEnvoy<T> extends AbstractEnvoy implements DataRegist
         {
             return query.getResults();
         }
-        else
-        {
-            throw new QueryException(tracker.getException().getMessage(), tracker.getException());
-        }
+        throw new QueryException(tracker.getException().getMessage(), tracker.getException());
     }
 
     /**

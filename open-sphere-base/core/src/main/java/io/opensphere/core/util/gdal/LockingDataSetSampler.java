@@ -205,10 +205,7 @@ public class LockingDataSetSampler
             Vector2d invResult = myInverseRotateAndScale.mult(new Vector2d(invTransPoint[0], invTransPoint[1]));
             return new Vector2i((int)(invResult.getX() - myXOffset), (int)(invResult.getY() + myYOffset));
         }
-        else
-        {
-            return new Vector2i((int)((lon - myXOffset) / myXScale), (int)((lat - myYOffset) / myYScale));
-        }
+        return new Vector2i((int)((lon - myXOffset) / myXScale), (int)((lat - myYOffset) / myYScale));
     }
 
     /**
@@ -281,13 +278,10 @@ public class LockingDataSetSampler
         {
             if (sumValues == null)
             {
-                return new Pair<Float, Integer>(Float.valueOf(value), Integer.valueOf(1));
+                return new Pair<>(Float.valueOf(value), Integer.valueOf(1));
             }
-            else
-            {
-                return new Pair<Float, Integer>(Float.valueOf(sumValues.getFirstObject().floatValue() + value),
-                        Integer.valueOf(sumValues.getSecondObject().intValue() + 1));
-            }
+            return new Pair<>(Float.valueOf(sumValues.getFirstObject().floatValue() + value),
+                    Integer.valueOf(sumValues.getSecondObject().intValue() + 1));
         }
         return sumValues;
     }

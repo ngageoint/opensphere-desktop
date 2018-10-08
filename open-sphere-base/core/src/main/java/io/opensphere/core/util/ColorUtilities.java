@@ -44,10 +44,7 @@ public final class ColorUtilities
                     (color1.getGreen() * alpha + color2.getGreen() * (1f - alpha)) / COLOR_COMPONENT_MAX_VALUE,
                     (color1.getBlue() * alpha + color2.getBlue() * (1f - alpha)) / COLOR_COMPONENT_MAX_VALUE);
         }
-        else
-        {
-            return color1;
-        }
+        return color1;
     }
 
     /**
@@ -429,10 +426,7 @@ public final class ColorUtilities
         {
             return startingColor;
         }
-        else
-        {
-            return new Color(startingColor.getRGB() & 0xffffff | (int)(alpha * 0xff + 0.5) << 24, true);
-        }
+        return new Color(startingColor.getRGB() & 0xffffff | (int)(alpha * 0xff + 0.5) << 24, true);
     }
 
     /**
@@ -452,10 +446,7 @@ public final class ColorUtilities
         {
             return startingColor;
         }
-        else
-        {
-            return new Color(startingColor.getRGB() & 0xffffff | alpha << 24, true);
-        }
+        return new Color(startingColor.getRGB() & 0xffffff | alpha << 24, true);
     }
 
     /**

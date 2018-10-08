@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 import edu.umd.cs.findbugs.annotations.OverrideMustInvoke;
-
 import io.opensphere.core.geometry.renderproperties.ZOrderRenderProperties;
 import io.opensphere.core.model.BoundingBox;
 import io.opensphere.core.model.GeoScreenBoundingBox;
@@ -149,7 +148,7 @@ public abstract class AbstractTileGeometry<E extends AbstractTileGeometry<? supe
         myMinimumDisplaySize = builder.getMinimumDisplaySize();
         myMaximumDisplaySize = builder.getMaximumDisplaySize();
 
-        myImageProvidingGeometryHelper = myImageManager == null ? null : new ImageProvidingGeometryHelper<E>(getObservable());
+        myImageProvidingGeometryHelper = myImageManager == null ? null : new ImageProvidingGeometryHelper<>(getObservable());
     }
 
     /**
@@ -510,11 +509,8 @@ public abstract class AbstractTileGeometry<E extends AbstractTileGeometry<? supe
         {
             return ((BoundingBox<T>)getBounds()).overlaps(boundingBox, tolerance);
         }
-        else
-        {
-            throw new IllegalArgumentException("Cannot check overlap for different position types: "
-                    + boundingBox.getPositionType() + " <> " + getPositionType());
-        }
+        throw new IllegalArgumentException("Cannot check overlap for different position types: " + boundingBox.getPositionType()
+                + " <> " + getPositionType());
     }
 
     /**
@@ -583,7 +579,7 @@ public abstract class AbstractTileGeometry<E extends AbstractTileGeometry<? supe
     @Override
     protected Builder<Position> createRawBuilder()
     {
-        return new Builder<Position>();
+        return new Builder<>();
     }
 
     @Override

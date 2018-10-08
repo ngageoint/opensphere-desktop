@@ -79,7 +79,7 @@ public class NameModel extends TextModel
         Collection<PredicateWithMessage<? super String>> predicates = New.collection();
         if (isRequired())
         {
-            predicates.add(new WrappedPredicateWithMessage<String>(new NonBlankPredicate())
+            predicates.add(new WrappedPredicateWithMessage<>(new NonBlankPredicate())
             {
                 @Override
                 public String getMessage()
@@ -101,6 +101,6 @@ public class NameModel extends TextModel
             predicates.add(myCustomPredicate);
         }
         PredicateWithMessage<String> predicate = new CompoundPredicateWithMessage<>(predicates);
-        setValidatorSupport(new ObservableValueValidatorSupport<String>(this, predicate));
+        setValidatorSupport(new ObservableValueValidatorSupport<>(this, predicate));
     }
 }

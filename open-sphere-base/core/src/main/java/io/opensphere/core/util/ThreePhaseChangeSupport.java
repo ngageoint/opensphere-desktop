@@ -7,12 +7,11 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.jcip.annotations.GuardedBy;
-
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.util.ref.Reference;
 import io.opensphere.core.util.ref.WeakReference;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Support for notifying interested parties of generic changes. This

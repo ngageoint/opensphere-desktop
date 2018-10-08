@@ -34,7 +34,7 @@ public class ChoiceComboBoxController<T> extends AbstractController<T, ChoiceMod
     private static <T> ListComboBoxModel<T> getComboBoxModel(ChoiceModel<T> model, ViewSettings<T> viewSettings)
     {
         List<T> options = getOptions(model, viewSettings);
-        return options != null ? new ListComboBoxModel<>(options) : new ListComboBoxModel<T>();
+        return options != null ? new ListComboBoxModel<>(options) : new ListComboBoxModel<>();
     }
 
     /**

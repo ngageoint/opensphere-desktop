@@ -479,10 +479,7 @@ public class TerrainTriangle implements Cloneable, Tessera<GeographicPosition>
                     lla.getLonD(), elevationM, Altitude.ReferenceLevel.ELLIPSOID));
             return getGlobe().getCelestialBody().convertToModel(posToConvert, modelCenter);
         }
-        else
-        {
-            return getGlobe().getElevationAdjustedModelPosition(pos, modelCenter);
-        }
+        return getGlobe().getElevationAdjustedModelPosition(pos, modelCenter);
     }
 
     /**

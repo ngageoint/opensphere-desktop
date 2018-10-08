@@ -17,7 +17,6 @@ import java.util.ServiceLoader;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -26,6 +25,7 @@ import javax.imageio.stream.ImageInputStream;
 
 import org.apache.log4j.Logger;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.opensphere.core.image.DDSEncoder.EncodingException;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.LazyMap;
@@ -229,10 +229,7 @@ public class ImageIOImage extends Image implements DDSEncodableImage
                 {
                     throw new IOException("Failed to encode image to DDS: no available encoder.");
                 }
-                else
-                {
-                    throw new IOException("Failed to encode image to DDS: " + errorMsg);
-                }
+                throw new IOException("Failed to encode image to DDS: " + errorMsg);
             }
         }
 
@@ -358,10 +355,7 @@ public class ImageIOImage extends Image implements DDSEncodableImage
             {
                 throw new EncodingException("Failed to encode image to DDS: no available encoder.");
             }
-            else
-            {
-                throw err;
-            }
+            throw err;
         }
         finally
         {

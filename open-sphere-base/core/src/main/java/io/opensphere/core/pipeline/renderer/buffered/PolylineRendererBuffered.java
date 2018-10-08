@@ -171,12 +171,9 @@ public class PolylineRendererBuffered extends AbstractRenderer<PolylineGeometry>
         {
             return false;
         }
-        else
-        {
-            myGroupTimeSpan = span;
-            getCache().clearCacheAssociations(PolylineDataBuffered.class);
-            return true;
-        }
+        myGroupTimeSpan = span;
+        getCache().clearCacheAssociations(PolylineDataBuffered.class);
+        return true;
     }
 
     @Override

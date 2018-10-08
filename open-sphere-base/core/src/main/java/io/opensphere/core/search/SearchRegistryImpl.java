@@ -6,11 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.jcip.annotations.GuardedBy;
-
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.util.collections.New;
+import net.jcip.annotations.GuardedBy;
 
 /** The implementation for the search registry. */
 public class SearchRegistryImpl implements SearchRegistry

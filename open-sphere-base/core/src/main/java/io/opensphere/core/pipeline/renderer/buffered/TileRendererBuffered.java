@@ -538,7 +538,7 @@ public class TileRendererBuffered extends AbstractTileRenderer
             }
         }
 
-        return new Pair<TileDataBuffered, TextureGroup>(buf, texture);
+        return new Pair<>(buf, texture);
     }
 
     /**

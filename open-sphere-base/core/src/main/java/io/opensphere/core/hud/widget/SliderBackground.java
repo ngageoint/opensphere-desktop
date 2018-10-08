@@ -76,7 +76,7 @@ public class SliderBackground extends Renderable
     {
         // TODO this is an exact match for how we build the BoxToggleBackground.
         // Maybe this be put in a utility class.
-        PolylineGeometry.Builder<ScreenPosition> lineBldr = new PolylineGeometry.Builder<ScreenPosition>();
+        PolylineGeometry.Builder<ScreenPosition> lineBldr = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = new DefaultPolylineRenderProperties(getBaseZOrder() + 2, true, false);
         props.setColor(getBaseColor());
         lineBldr.setLineSmoothing(false);
@@ -104,7 +104,7 @@ public class SliderBackground extends Renderable
      */
     private void setMesh(double left, double right, double upper, double lower)
     {
-        PolygonMeshGeometry.Builder<ScreenPosition> polyBuilder = new PolygonMeshGeometry.Builder<ScreenPosition>();
+        PolygonMeshGeometry.Builder<ScreenPosition> polyBuilder = new PolygonMeshGeometry.Builder<>();
         polyBuilder.setPolygonVertexCount(8);
 
         List<ScreenPosition> positions = new ArrayList<>();
@@ -153,7 +153,7 @@ public class SliderBackground extends Renderable
         double centerX = (left + right) / 2d;
         double centerY = (lower + upper) / 2d;
 
-        PolylineGeometry.Builder<ScreenPosition> lineBldr = new PolylineGeometry.Builder<ScreenPosition>();
+        PolylineGeometry.Builder<ScreenPosition> lineBldr = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = new DefaultPolylineRenderProperties(getBaseZOrder() + 2, true, false);
         props.setColor(ClassicHUDPalette.ourSliderTrackColor);
         props.setWidth(2f);

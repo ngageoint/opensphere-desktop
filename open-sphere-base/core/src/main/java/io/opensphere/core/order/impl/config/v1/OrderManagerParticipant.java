@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class OrderManagerParticipant
 {
     /** The Constant ourCompareByOrder. */
-    public static final Comparator<OrderManagerParticipant> ourCompareByOrder = new Comparator<OrderManagerParticipant>()
+    public static final Comparator<OrderManagerParticipant> ourCompareByOrder = new Comparator<>()
     {
         @Override
         public int compare(OrderManagerParticipant o1, OrderManagerParticipant o2)
@@ -23,7 +23,7 @@ public class OrderManagerParticipant
     };
 
     /** The Constant ourReverseCompareByOrder. */
-    public static final Comparator<OrderManagerParticipant> ourReverseCompareByOrder = new Comparator<OrderManagerParticipant>()
+    public static final Comparator<OrderManagerParticipant> ourReverseCompareByOrder = new Comparator<>()
     {
         @Override
         public int compare(OrderManagerParticipant o1, OrderManagerParticipant o2)

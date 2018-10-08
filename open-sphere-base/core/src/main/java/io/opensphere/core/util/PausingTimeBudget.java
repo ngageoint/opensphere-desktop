@@ -28,10 +28,7 @@ public class PausingTimeBudget extends TimeBudget
         {
             return INDEFINITE;
         }
-        else
-        {
-            return new PausingTimeBudget(now + milliseconds * Constants.NANO_PER_MILLI, 0L);
-        }
+        return new PausingTimeBudget(now + milliseconds * Constants.NANO_PER_MILLI, 0L);
     }
 
     /**
@@ -47,10 +44,7 @@ public class PausingTimeBudget extends TimeBudget
         {
             return INDEFINITE;
         }
-        else
-        {
-            return new PausingTimeBudget(now + milliseconds * Constants.NANO_PER_MILLI, now);
-        }
+        return new PausingTimeBudget(now + milliseconds * Constants.NANO_PER_MILLI, now);
     }
 
     /**
@@ -66,10 +60,7 @@ public class PausingTimeBudget extends TimeBudget
         {
             return INDEFINITE;
         }
-        else
-        {
-            return new PausingTimeBudget(now + nanoseconds, 0L);
-        }
+        return new PausingTimeBudget(now + nanoseconds, 0L);
     }
 
     /**
@@ -85,10 +76,7 @@ public class PausingTimeBudget extends TimeBudget
         {
             return INDEFINITE;
         }
-        else
-        {
-            return new PausingTimeBudget(now + nanoseconds, now);
-        }
+        return new PausingTimeBudget(now + nanoseconds, now);
     }
 
     /**
@@ -116,10 +104,7 @@ public class PausingTimeBudget extends TimeBudget
             myPauseTimeNanos = System.nanoTime();
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     @Override

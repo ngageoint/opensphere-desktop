@@ -684,7 +684,7 @@ public class DataRegistryListenerManager
         @Override
         public Iterator<T> iterator()
         {
-            return new Iterator<T>()
+            return new Iterator<>()
             {
                 /** Iterator over input objects. */
                 private final Iterator<? extends S> myIter = myInput.iterator();
@@ -739,7 +739,7 @@ public class DataRegistryListenerManager
         @Override
         public Iterator<T> iterator()
         {
-            return new Iterator<T>()
+            return new Iterator<>()
             {
                 /** Counter. */
                 private int myCount;
@@ -818,7 +818,7 @@ public class DataRegistryListenerManager
         @Override
         public Iterator<T> iterator()
         {
-            return new Iterator<T>()
+            return new Iterator<>()
             {
                 /** The index into the inputIds array. */
                 private int myIndex;

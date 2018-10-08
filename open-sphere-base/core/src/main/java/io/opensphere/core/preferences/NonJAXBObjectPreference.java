@@ -21,6 +21,6 @@ class NonJAXBObjectPreference<T> extends JAXBElementPreference<T>
     public NonJAXBObjectPreference(String key, T value) throws IllegalArgumentException
     {
         super(key,
-                new JAXBElement<T>(new QName("value"), value == null ? (Class<T>)Void.class : (Class<T>)value.getClass(), value));
+                new JAXBElement<>(new QName("value"), value == null ? (Class<T>)Void.class : (Class<T>)value.getClass(), value));
     }
 }

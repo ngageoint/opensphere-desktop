@@ -391,20 +391,17 @@ public abstract class AbstractRenderer<T extends Geometry> implements GeometryRe
         {
             return Collections.emptySet();
         }
-        else
+        Collection<T> pickedGeomsToRender = null;
+        for (Geometry geometry : pickedGeometries)
         {
-            Collection<T> pickedGeomsToRender = null;
-            for (Geometry geometry : pickedGeometries)
+            if (getType().isInstance(geometry) && input.contains(geometry))
             {
-                if (getType().isInstance(geometry) && input.contains(geometry))
-                {
-                    @SuppressWarnings("unchecked")
-                    T cast = (T)geometry;
-                    pickedGeomsToRender = CollectionUtilities.lazyAdd(cast, pickedGeomsToRender);
-                }
+                @SuppressWarnings("unchecked")
+                T cast = (T)geometry;
+                pickedGeomsToRender = CollectionUtilities.lazyAdd(cast, pickedGeomsToRender);
             }
-            return pickedGeomsToRender == null ? Collections.<T>emptySet() : pickedGeomsToRender;
         }
+        return pickedGeomsToRender == null ? Collections.<T>emptySet() : pickedGeomsToRender;
     }
 
     /**

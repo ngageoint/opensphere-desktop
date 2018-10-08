@@ -99,10 +99,7 @@ public class DefaultGenericSubscriberAcceptFilter implements GenericSubscriberAc
         {
             return myAcceptableSources.contains(source);
         }
-        else
-        {
-            return true;
-        }
+        return true;
     }
 
     @Override

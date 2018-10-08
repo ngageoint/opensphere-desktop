@@ -327,11 +327,8 @@ public class CachingDataRegistryDataProvider
                             // this property.
                             break;
                         }
-                        else
-                        {
-                            accessorIter = deposit.getAccessors().iterator();
-                            iteratorCreatedForThisProperty = true;
-                        }
+                        accessorIter = deposit.getAccessors().iterator();
+                        iteratorCreatedForThisProperty = true;
                     }
                     accessor = accessorIter.next();
                 }

@@ -82,7 +82,7 @@ public abstract class AbstractController<T, M extends ViewModel<T>, V extends JC
         updateViewEnabled();
         updateViewVisible();
 
-        myChangeListener = new ChangeListener<T>()
+        myChangeListener = new ChangeListener<>()
         {
             @Override
             public void changed(ObservableValue<? extends T> observable, T oldValue, T newValue)

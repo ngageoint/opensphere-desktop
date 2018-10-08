@@ -14,8 +14,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
-import net.jcip.annotations.GuardedBy;
-
 import io.opensphere.core.metrics.MetricsRegistry;
 import io.opensphere.core.pipeline.cache.CacheContentListener.CacheContentEvent;
 import io.opensphere.core.pipeline.cache.CacheContentListener.ContentChangeType;
@@ -23,6 +21,7 @@ import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.LazyCollectionProvider;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * This is a facility that allows objects to be associated with keys by object
@@ -318,7 +317,7 @@ public class LRUMemoryCache implements CacheProvider
                 Collection<Entry<Object, CacheNode>> values = map.entrySet();
                 for (Entry<Object, CacheNode> node : values)
                 {
-                    results.add(new Pair<Object, T>(node.getKey(), (T)node.getValue().getObject()));
+                    results.add(new Pair<>(node.getKey(), (T)node.getValue().getObject()));
                 }
                 myLRUObjectManager.recordUse((Set<Object>)used);
             }
@@ -532,17 +531,14 @@ public class LRUMemoryCache implements CacheProvider
             {
                 return;
             }
-            else
-            {
-                listenersForType = New.<CacheContentListener<?>>collection(listenersForType);
-            }
+            listenersForType = New.<CacheContentListener<?>>collection(listenersForType);
         }
         Collection<Object> items = New.collection(changedItems.size());
         for (CacheNode item : changedItems)
         {
             items.add(item.getObject());
         }
-        CacheContentEvent<Object> event = new CacheContentEvent<Object>(items, changeType);
+        CacheContentEvent<Object> event = new CacheContentEvent<>(items, changeType);
         for (CacheContentListener<?> cacheContentListener : listenersForType)
         {
             @SuppressWarnings("unchecked")

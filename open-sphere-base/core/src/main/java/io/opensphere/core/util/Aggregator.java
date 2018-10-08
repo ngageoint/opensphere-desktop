@@ -6,9 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
-import net.jcip.annotations.NotThreadSafe;
-
 import io.opensphere.core.util.collections.New;
+import net.jcip.annotations.NotThreadSafe;
 
 /**
  * Aggregates items.

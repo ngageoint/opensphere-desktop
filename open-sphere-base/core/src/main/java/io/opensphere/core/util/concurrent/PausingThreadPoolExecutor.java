@@ -237,10 +237,7 @@ public class PausingThreadPoolExecutor extends ThreadPoolExecutor
             {
                 return Integer.MAX_VALUE;
             }
-            else
-            {
-                return 0;
-            }
+            return 0;
         }
 
         /**

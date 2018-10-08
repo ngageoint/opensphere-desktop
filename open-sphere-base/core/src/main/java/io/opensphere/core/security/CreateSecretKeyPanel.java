@@ -71,7 +71,7 @@ public class CreateSecretKeyPanel extends JPanel implements Validatable
     /**
      * Callback called when the radio button is changed.
      */
-    private final transient Callback<ValidationStatusChangeListener> mySelectionChangeCallback = new Callback<ValidationStatusChangeListener>()
+    private final transient Callback<ValidationStatusChangeListener> mySelectionChangeCallback = new Callback<>()
     {
         @Override
         public void notify(ValidationStatusChangeListener listener)
@@ -142,24 +142,21 @@ public class CreateSecretKeyPanel extends JPanel implements Validatable
                 Arrays.fill(pw, '\0');
             }
         }
-        else
+        final PrivateKeyProvider privateKeyProvider = getSelectedPrivateKeyProvider();
+        try
         {
-            final PrivateKeyProvider privateKeyProvider = getSelectedPrivateKeyProvider();
-            try
-            {
-                final SecretKey result = KeyGenerator.getInstance(algorithm).generateKey();
-                final CryptoConfig config = new CryptoConfig(new WrappedSecretKey(result, privateKeyProvider));
-                return Pair.create(result, config);
-            }
-            catch (final NoSuchAlgorithmException e)
-            {
-                throw new NoSuchAlgorithmException("Failed to get AES key generator: " + e, e);
-            }
-            catch (final GeneralSecurityException e)
-            {
-                showPrivateKeyErrorDialog(privateKeyProvider, e);
-                return null;
-            }
+            final SecretKey result = KeyGenerator.getInstance(algorithm).generateKey();
+            final CryptoConfig config = new CryptoConfig(new WrappedSecretKey(result, privateKeyProvider));
+            return Pair.create(result, config);
+        }
+        catch (final NoSuchAlgorithmException e)
+        {
+            throw new NoSuchAlgorithmException("Failed to get AES key generator: " + e, e);
+        }
+        catch (final GeneralSecurityException e)
+        {
+            showPrivateKeyErrorDialog(privateKeyProvider, e);
+            return null;
         }
     }
 

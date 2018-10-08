@@ -4,8 +4,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Phaser;
 import java.util.concurrent.atomic.AtomicReference;
 
-import net.jcip.annotations.ThreadSafe;
-
 import io.opensphere.core.util.PropertyChangeException;
 import io.opensphere.core.util.ReferenceService;
 import io.opensphere.core.util.Service;
@@ -14,6 +12,7 @@ import io.opensphere.core.util.ThreePhaseProperty;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.ref.Reference;
 import io.opensphere.core.util.ref.WeakReference;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * A property that supports notifying listeners during a change to its value,
@@ -50,7 +49,7 @@ public class CancellableThreePhaseProperty<S>
      */
     public void addListener(CancellableThreePhasePropertyListener<S, CancellableThreePhaseProperty<S>> listener)
     {
-        myProperty.addListener(new ListenerAdapter<S, CancellableThreePhaseProperty<S>>(this, listener));
+        myProperty.addListener(new ListenerAdapter<>(this, listener));
     }
 
     /**
@@ -78,7 +77,7 @@ public class CancellableThreePhaseProperty<S>
     public ReferenceService<ThreePhaseChangeListener<S>> getListenerService(
             CancellableThreePhasePropertyListener<S, CancellableThreePhaseProperty<S>> listener)
     {
-        return myProperty.getListenerService(new ListenerAdapter<S, CancellableThreePhaseProperty<S>>(this, listener));
+        return myProperty.getListenerService(new ListenerAdapter<>(this, listener));
     }
 
     /**

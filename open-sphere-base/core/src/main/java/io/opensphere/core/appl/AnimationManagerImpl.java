@@ -6,8 +6,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.jcip.annotations.GuardedBy;
-
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.AnimationChangeListener;
@@ -33,6 +31,7 @@ import io.opensphere.core.util.WeakThreePhaseChangeSupport;
 import io.opensphere.core.util.concurrent.ReportingScheduledExecutorService;
 import io.opensphere.core.util.lang.ImpossibleException;
 import io.opensphere.core.util.lang.StringUtilities;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * The Implementation class of {@link AnimationManager}.
@@ -96,7 +95,7 @@ public class AnimationManagerImpl implements AnimationManager
     /** The change support. */
     // @formatter:off
     private final ThreePhaseChangeSupport<AnimationState, AnimationChangeListener> myChangeSupport =
-            new WeakThreePhaseChangeSupport<AnimationState, AnimationChangeListener>();
+            new WeakThreePhaseChangeSupport<>();
     // @formatter:on
 
     /** When true, ignore any requested changed to the animation plan. */

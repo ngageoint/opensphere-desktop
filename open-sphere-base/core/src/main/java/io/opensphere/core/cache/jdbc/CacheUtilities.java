@@ -315,10 +315,7 @@ public class CacheUtilities
                     throw new IllegalArgumentException(
                             "Filter parameter [" + param + "] was not found in selected columns: " + Arrays.toString(props));
                 }
-                else
-                {
-                    filters[foundAtIndex] = param;
-                }
+                filters[foundAtIndex] = param;
             }
         }
 
@@ -787,15 +784,12 @@ public class CacheUtilities
         {
             return Collections.emptySet();
         }
-        else
+        final Collection<PropertyDescriptor<?>> descriptors = New.collection();
+        for (final PropertyMatcher<?> param : matchers)
         {
-            final Collection<PropertyDescriptor<?>> descriptors = New.collection();
-            for (final PropertyMatcher<?> param : matchers)
-            {
-                descriptors.add(param.getPropertyDescriptor());
-            }
-            return descriptors;
+            descriptors.add(param.getPropertyDescriptor());
         }
+        return descriptors;
     }
 
     /**
@@ -816,7 +810,6 @@ public class CacheUtilities
         final Iterator<PersistentPropertyAccessor> iter = filtered.iterator();
         while (iter.hasNext())
         {
-            @SuppressWarnings("unchecked")
             final PersistentPropertyAccessor<T, ?> cast = iter.next();
             result.add(cast);
         }
@@ -1070,10 +1063,7 @@ public class CacheUtilities
                     {
                         return index;
                     }
-                    else
-                    {
-                        ++index;
-                    }
+                    ++index;
                 }
             }
             else
@@ -1082,16 +1072,13 @@ public class CacheUtilities
                 {
                     return index;
                 }
+                if (propertyDescriptor.getType().equals(TimeSpan.class))
+                {
+                    index += 2;
+                }
                 else
                 {
-                    if (propertyDescriptor.getType().equals(TimeSpan.class))
-                    {
-                        index += 2;
-                    }
-                    else
-                    {
-                        ++index;
-                    }
+                    ++index;
                 }
             }
         }

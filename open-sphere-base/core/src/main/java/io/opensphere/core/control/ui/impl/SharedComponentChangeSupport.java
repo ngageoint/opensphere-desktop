@@ -44,7 +44,7 @@ public class SharedComponentChangeSupport
      */
     protected void notifyComponentListeners(final String name, final ComponentChangeType type, Executor executor)
     {
-        WeakChangeSupport.Callback<SharedComponentListener> callback = new WeakChangeSupport.Callback<SharedComponentListener>()
+        WeakChangeSupport.Callback<SharedComponentListener> callback = new WeakChangeSupport.Callback<>()
         {
             @Override
             public void notify(SharedComponentListener listener)

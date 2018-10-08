@@ -2,11 +2,10 @@ package io.opensphere.core.util.fx;
 
 import java.awt.EventQueue;
 
-import javafx.scene.web.WebEngine;
-
 import javax.swing.JDialog;
 
 import io.opensphere.core.util.Utilities;
+import javafx.scene.web.WebEngine;
 
 /**
  * A dialog that contains a javascript console that uses JavaFX.

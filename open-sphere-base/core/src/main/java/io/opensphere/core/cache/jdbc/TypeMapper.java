@@ -538,7 +538,7 @@ public class TypeMapper
             final ValueTranslator<?> valueTranslator = getValueTranslator(columnTypes[activeColumns[index]]);
             translators[index] = valueTranslator;
         }
-        return new ValueTranslator<Object[]>()
+        return new ValueTranslator<>()
         {
             @Override
             public Class<Object[]> getType()

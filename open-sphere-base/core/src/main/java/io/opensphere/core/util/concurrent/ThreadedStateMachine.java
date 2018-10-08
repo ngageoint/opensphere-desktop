@@ -63,7 +63,7 @@ public class ThreadedStateMachine<E>
      * Comparator for tasks that puts them in the order of their "from" state
      * order.
      */
-    private final Comparator<Task> myTaskComparator = new Comparator<Task>()
+    private final Comparator<Task> myTaskComparator = new Comparator<>()
     {
         @Override
         public int compare(Task o1, Task o2)

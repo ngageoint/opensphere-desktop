@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
-
 import io.opensphere.core.cache.matcher.PropertyMatcher;
 import io.opensphere.core.util.Utilities;
 
@@ -114,7 +113,9 @@ public class DefaultQuery implements Query
     private static <E> List<E> unmodCopy(Collection<E> c)
     {
         if (c == null)
+        {
             return null;
+        }
         return Collections.unmodifiableList(new ArrayList<>(c));
     }
 

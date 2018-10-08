@@ -26,7 +26,7 @@ public class ProxyConfigurationMigrator implements PreConfigurationUpdateModule
         Preferences proxyPreferences = prefsRegistry.getPreferences("io.opensphere.core.net.NetworkConfigurationManagerImpl");
         Set<String> preferenceKeys = New.set("ProxyConfigUrl", "ProxyExclusionPatterns", "ProxyHost", "ProxyPort",
                 "SystemProxiesEnabled");
-        Map<String, String> preferenceValues = new HashMap<String, String>();
+        Map<String, String> preferenceValues = new HashMap<>();
 
         for (String key : preferenceKeys)
         {
@@ -58,7 +58,7 @@ public class ProxyConfigurationMigrator implements PreConfigurationUpdateModule
     {
         ProxyConfigurations proxyConfigs = new ProxyConfigurations();
 
-        List<String> exclusions = new ArrayList<String>();
+        List<String> exclusions = new ArrayList<>();
         if (preferences.get("ProxyExclusionPatterns") != null)
         {
             // split exclusions on one or more spaces, comma and one or more spaces, or comma

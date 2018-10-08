@@ -236,7 +236,7 @@ abstract class LRUObjectManager
             toBeRemovedMap = new HashMap<>(myLRUMap.size());
             for (Entry<Object, LRUNodeSet> entry : myLRUMap.entrySet())
             {
-                toBeRemovedMap.put(entry.getKey(), new HashSet<CacheNode>(entry.getValue().getNodes()));
+                toBeRemovedMap.put(entry.getKey(), new HashSet<>(entry.getValue().getNodes()));
             }
         }
 
@@ -448,7 +448,7 @@ abstract class LRUObjectManager
                 if (checkedCacheSize > 0)
                 {
                     toBeRemovedBytes += checkedCacheSize;
-                    toBeRemovedMap.put(key, new HashSet<CacheNode>(entryNodes));
+                    toBeRemovedMap.put(key, new HashSet<>(entryNodes));
                 }
             }
         }

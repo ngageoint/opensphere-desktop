@@ -291,11 +291,8 @@ public final class GLUtilities
         {
             return lastWidth;
         }
-        else
-        {
-            gl.glLineWidth(width);
-            return width;
-        }
+        gl.glLineWidth(width);
+        return width;
     }
 
     /**

@@ -25,7 +25,7 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 public abstract class MapMenuControl implements ProjectionChangeListener
 {
     /** A listener for application events. */
-    private final EventListener<ApplicationLifecycleEvent> myEventListener = new EventListener<ApplicationLifecycleEvent>()
+    private final EventListener<ApplicationLifecycleEvent> myEventListener = new EventListener<>()
     {
         @Override
         public void notify(ApplicationLifecycleEvent event)

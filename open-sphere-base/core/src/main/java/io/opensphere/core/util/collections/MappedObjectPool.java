@@ -10,13 +10,12 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
-import net.jcip.annotations.ThreadSafe;
-
 import org.apache.log4j.Logger;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.util.collections.LimitedFertilityBlockingQueue.Factory;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * A pool that can create objects according to a key as necessary up to a limit
@@ -71,7 +70,7 @@ public class MappedObjectPool<K, V>
                     @Override
                     public LimitedFertilityBlockingQueue<V> create(final K key)
                     {
-                        return new LimitedFertilityBlockingQueue<V>(coreSize, maxSize, adaptFactory(factory, key));
+                        return new LimitedFertilityBlockingQueue<>(coreSize, maxSize, adaptFactory(factory, key));
                     }
                 });
         myExecutor = cleanupExecutor;
@@ -111,10 +110,7 @@ public class MappedObjectPool<K, V>
             myMap.clear();
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     /**
@@ -298,7 +294,7 @@ public class MappedObjectPool<K, V>
      */
     protected Factory<V> adaptFactory(final LazyMap.Factory<? super K, ? extends V> factory, final K key)
     {
-        return new LimitedFertilityBlockingQueue.Factory<V>()
+        return new LimitedFertilityBlockingQueue.Factory<>()
         {
             /**
              * Serial version UID.

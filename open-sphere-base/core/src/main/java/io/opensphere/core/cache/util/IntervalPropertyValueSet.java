@@ -96,11 +96,8 @@ public class IntervalPropertyValueSet
             {
                 return null;
             }
-            else
-            {
-                T intersection = (T)((Geometry)value1).intersection((Geometry)value2);
-                return ((Geometry)intersection).isEmpty() ? null : intersection;
-            }
+            T intersection = (T)((Geometry)value1).intersection((Geometry)value2);
+            return ((Geometry)intersection).isEmpty() ? null : intersection;
         }
         else
         {
@@ -166,10 +163,7 @@ public class IntervalPropertyValueSet
             {
                 return false;
             }
-            else
-            {
-                return ((Geometry)value1).intersects((Geometry)value2);
-            }
+            return ((Geometry)value1).intersects((Geometry)value2);
         }
         else
         {
@@ -193,10 +187,7 @@ public class IntervalPropertyValueSet
         {
             return ((Geometry)value1).equals((Geometry)value2);
         }
-        else
-        {
-            return value1.equals(value2);
-        }
+        return value1.equals(value2);
     }
 
     /**
@@ -287,16 +278,13 @@ public class IntervalPropertyValueSet
                         {
                             break;
                         }
-                        else
-                        {
-                            iter2.previous();
-                            val2 = iter2.next();
+                        iter2.previous();
+                        val2 = iter2.next();
 
-                            // Since there was an intersection with a remainder,
-                            // set the flag to re-generate the combinations in
-                            // case values1 has overlapping values.
-                            notDone = true;
-                        }
+                        // Since there was an intersection with a remainder,
+                        // set the flag to re-generate the combinations in
+                        // case values1 has overlapping values.
+                        notDone = true;
                     }
                 }
             }
@@ -486,13 +474,10 @@ public class IntervalPropertyValueSet
             {
                 return false;
             }
-            else
+            List<?> values = myMap.get(entry.getKey());
+            if (values == null || !listsIntersect(entry.getValue(), values))
             {
-                List<?> values = myMap.get(entry.getKey());
-                if (values == null || !listsIntersect(entry.getValue(), values))
-                {
-                    return false;
-                }
+                return false;
             }
         }
 

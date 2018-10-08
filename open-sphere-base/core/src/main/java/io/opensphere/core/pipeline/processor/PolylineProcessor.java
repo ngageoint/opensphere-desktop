@@ -80,7 +80,7 @@ public class PolylineProcessor<E extends PolylineGeometry> extends AbstractProce
     @Override
     public void generateDryRunGeometries()
     {
-        PolylineGeometry.Builder<ScreenPosition> builder = new PolylineGeometry.Builder<ScreenPosition>();
+        PolylineGeometry.Builder<ScreenPosition> builder = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = new DefaultPolylineRenderProperties(0, true, true);
         props.setColor(Color.BLUE);
 

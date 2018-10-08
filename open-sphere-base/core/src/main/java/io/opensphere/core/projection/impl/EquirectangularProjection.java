@@ -22,7 +22,7 @@ public class EquirectangularProjection extends AbstractRectangularProjection
         Utilities.checkNull(modelCenter, "modelCenter");
         double x = LatLonAlt.normalizeLongitude(lla.getLatLonAlt().getLonD()) / DEGREES_PER_UNIT;
         double y = LatLonAlt.normalizeLatitude(lla.getLatLonAlt().getLatD()) / DEGREES_PER_UNIT;
-        
+
         return new Vector3d(x - modelCenter.getX(), y - modelCenter.getY(), 0.);
     }
 

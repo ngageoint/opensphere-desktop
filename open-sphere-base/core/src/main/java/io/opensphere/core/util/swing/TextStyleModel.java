@@ -79,7 +79,7 @@ public class TextStyleModel implements Serializable
         }
 
         myFont = new ChoiceModel<>(fontWrappers.toArray(new FontWrapper[fontWrappers.size()]));
-        myFontSize = new ChoiceModel<Integer>(new Integer[] { Integer.valueOf(6), Integer.valueOf(8), Integer.valueOf(10),
+        myFontSize = new ChoiceModel<>(new Integer[] { Integer.valueOf(6), Integer.valueOf(8), Integer.valueOf(10),
             Integer.valueOf(12), Integer.valueOf(14), Integer.valueOf(18), Integer.valueOf(24), Integer.valueOf(32),
             Integer.valueOf(48), Integer.valueOf(64), });
         myFont.setNameAndDescription("Font", "The font of the text");

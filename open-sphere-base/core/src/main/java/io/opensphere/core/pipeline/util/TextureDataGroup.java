@@ -31,7 +31,7 @@ public class TextureDataGroup
     private boolean myFlushingDisabled;
 
     /** Map of render mode to the associated <code>TextureData</code>. */
-    private final Map<AbstractGeometry.RenderMode, TextureData> myTextureDataMap = new EnumMap<AbstractGeometry.RenderMode, TextureData>(
+    private final Map<AbstractGeometry.RenderMode, TextureData> myTextureDataMap = new EnumMap<>(
             AbstractGeometry.RenderMode.class);
 
     /**
@@ -72,7 +72,7 @@ public class TextureDataGroup
      */
     public synchronized Map<AbstractGeometry.RenderMode, TextureData> getTextureDataMap()
     {
-        return new EnumMap<AbstractGeometry.RenderMode, TextureData>(myTextureDataMap);
+        return new EnumMap<>(myTextureDataMap);
     }
 
     /**
@@ -114,11 +114,8 @@ public class TextureDataGroup
                 {
                     return false;
                 }
-                else
-                {
-                    td.setMipmap(enableMipMaps);
-                    myTextureDataMap.put(entry.getKey(), td);
-                }
+                td.setMipmap(enableMipMaps);
+                myTextureDataMap.put(entry.getKey(), td);
             }
         }
         return true;

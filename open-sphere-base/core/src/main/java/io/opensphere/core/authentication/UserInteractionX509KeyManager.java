@@ -243,10 +243,7 @@ public class UserInteractionX509KeyManager extends X509ExtendedKeyManager
                 final List<? extends X509Certificate> chain = selectedProvider.getCertificateChain();
                 return chain == null ? null : chain.toArray(new X509Certificate[chain.size()]);
             }
-            else
-            {
-                return myDefaultKeyManager.getCertificateChain(alias);
-            }
+            return myDefaultKeyManager.getCertificateChain(alias);
         }
         catch (final PrivateKeyProviderException e)
         {
@@ -333,20 +330,17 @@ public class UserInteractionX509KeyManager extends X509ExtendedKeyManager
                 showErrorDialog(message);
                 return null;
             }
-            else
+            try
             {
-                try
-                {
-                    final PrivateKey privateKey = selectedProvider.getPrivateKey();
-                    mySelectedProvider = selectedProvider;
-                    return privateKey;
-                }
-                catch (final PrivateKeyProviderException e1)
-                {
-                    LOGGER.error("Error getting private key: " + e1, e1);
-                    showErrorDialog("Error getting private key: " + e1.toString());
-                    return null;
-                }
+                final PrivateKey privateKey = selectedProvider.getPrivateKey();
+                mySelectedProvider = selectedProvider;
+                return privateKey;
+            }
+            catch (final PrivateKeyProviderException e1)
+            {
+                LOGGER.error("Error getting private key: " + e1, e1);
+                showErrorDialog("Error getting private key: " + e1.toString());
+                return null;
             }
         }
         finally
@@ -533,10 +527,7 @@ public class UserInteractionX509KeyManager extends X509ExtendedKeyManager
                             {
                                 break;
                             }
-                            else
-                            {
-                                mySelectedProvider = null;
-                            }
+                            mySelectedProvider = null;
                         }
                     }
                     catch (final PrivateKeyProviderException e1)

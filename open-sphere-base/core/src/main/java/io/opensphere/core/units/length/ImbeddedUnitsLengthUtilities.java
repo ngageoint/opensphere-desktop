@@ -33,24 +33,21 @@ public final class ImbeddedUnitsLengthUtilities
         {
             return new Meters(Double.parseDouble(length));
         }
-        else
+        try
         {
-            try
+            // This should produce the correct length type when the short
+            // label matches something that we know about.
+            return new LengthUnitsProvider().fromShortLabelString(length);
+        }
+        catch (UnitsParseException e)
+        {
+            // As a last resort, look for anything matching a floating point
+            // value and assume meters for the units.
+            mat.reset();
+            if (mat.find() && mat.end() > 0)
             {
-                // This should produce the correct length type when the short
-                // label matches something that we know about.
-                return new LengthUnitsProvider().fromShortLabelString(length);
-            }
-            catch (UnitsParseException e)
-            {
-                // As a last resort, look for anything matching a floating point
-                // value and assume meters for the units.
-                mat.reset();
-                if (mat.find() && mat.end() > 0)
-                {
-                    double value = Double.parseDouble(length.substring(mat.start(), mat.end()));
-                    return new Meters(value);
-                }
+                double value = Double.parseDouble(length.substring(mat.start(), mat.end()));
+                return new Meters(value);
             }
         }
         return new Meters(0);

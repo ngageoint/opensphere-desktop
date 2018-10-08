@@ -5,6 +5,12 @@ import java.util.Date;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import javax.swing.JDialog;
+
+import io.opensphere.core.util.DateTimeFormats;
+import io.opensphere.core.util.fx.FXUtilities;
+import io.opensphere.core.util.fx.TableViewAutosizer;
+import io.opensphere.core.util.image.IconUtil.IconType;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.ListChangeListener;
@@ -29,13 +35,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.util.converter.DateStringConverter;
-
-import javax.swing.JDialog;
-
-import io.opensphere.core.util.DateTimeFormats;
-import io.opensphere.core.util.fx.FXUtilities;
-import io.opensphere.core.util.fx.TableViewAutosizer;
-import io.opensphere.core.util.image.IconUtil.IconType;
 
 /** Alert viewer dialog. */
 class AlertViewerDialog extends JDialog
@@ -109,18 +108,18 @@ class AlertViewerDialog extends JDialog
     private Node createMessageView()
     {
         TableColumn<Alert, Date> timeCol = new TableColumn<>();
-        timeCol.setCellValueFactory(v -> new ReadOnlyObjectWrapper<Date>(new Date(v.getValue().getTime())));
+        timeCol.setCellValueFactory(v -> new ReadOnlyObjectWrapper<>(new Date(v.getValue().getTime())));
         timeCol.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter(DateTimeFormats.TIME_FORMAT)));
         timeCol.setPrefWidth(0);
 
         TableColumn<Alert, io.opensphere.core.dialog.alertviewer.event.Type> severityCol = new TableColumn<>();
         severityCol.setCellValueFactory(
-            v -> new ReadOnlyObjectWrapper<io.opensphere.core.dialog.alertviewer.event.Type>(v.getValue().getLevel()));
+            v -> new ReadOnlyObjectWrapper<>(v.getValue().getLevel()));
         severityCol.setCellFactory(v -> new SeverityCell());
         severityCol.setPrefWidth(0);
 
         TableColumn<Alert, String> messageCol = new TableColumn<>();
-        messageCol.setCellValueFactory(v -> new ReadOnlyObjectWrapper<String>(v.getValue().getMessage()));
+        messageCol.setCellValueFactory(v -> new ReadOnlyObjectWrapper<>(v.getValue().getMessage()));
 
         TableView<Alert> table = new TableView<>(myAlerts);
         table.setPlaceholder(new Label());

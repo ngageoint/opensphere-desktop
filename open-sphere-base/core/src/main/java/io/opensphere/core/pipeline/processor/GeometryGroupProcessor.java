@@ -68,7 +68,7 @@ public abstract class GeometryGroupProcessor<E extends AbstractGeometryGroup> ex
         myDataRetriever = builder.getDataRetriever();
         myProcessorBuilder = builder.clone();
 
-        StateChangeHandler<E> processingHandler = new StateChangeHandler<E>()
+        StateChangeHandler<E> processingHandler = new StateChangeHandler<>()
         {
             @Override
             public void handleStateChanged(List<? extends E> objects, ThreadedStateMachine.State newState,

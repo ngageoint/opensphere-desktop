@@ -123,10 +123,7 @@ public final class GL2Utilities
             }
             return stipple;
         }
-        else
-        {
-            return lastStipple;
-        }
+        return lastStipple;
     }
 
     /**

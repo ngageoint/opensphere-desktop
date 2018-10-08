@@ -169,7 +169,7 @@ public class GarbageCollector implements Runnable
      */
     protected int[] getExpiredGroups() throws CacheException
     {
-        final ConnectionUser<int[]> user = new ConnectionUser<int[]>()
+        final ConnectionUser<int[]> user = new ConnectionUser<>()
         {
             @Override
             public int[] run(Connection conn) throws CacheException

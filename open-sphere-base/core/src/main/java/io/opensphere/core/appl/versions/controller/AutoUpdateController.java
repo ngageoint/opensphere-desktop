@@ -155,10 +155,7 @@ public class AutoUpdateController implements Service
             String remoteNewestVersion = myModel.getNewestRemoteVersion();
             return VERSION_COMPARATOR.compare(localNewestVersion, remoteNewestVersion) < 0;
         }
-        else
-        {
-            LOG.warn("Unable to determine local version, skipping auto-update.");
-        }
+        LOG.warn("Unable to determine local version, skipping auto-update.");
         return false;
     }
 

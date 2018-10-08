@@ -5,12 +5,11 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
-import net.jcip.annotations.ThreadSafe;
-
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.pipeline.util.PickManager;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * Manages coordinated removal of geometries from the {@link PickManager}.

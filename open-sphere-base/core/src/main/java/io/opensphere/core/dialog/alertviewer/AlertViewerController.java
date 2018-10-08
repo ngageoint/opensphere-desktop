@@ -3,8 +3,6 @@ package io.opensphere.core.dialog.alertviewer;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
-import net.jcip.annotations.ThreadSafe;
-
 import javax.swing.Icon;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
@@ -24,6 +22,7 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import net.jcip.annotations.ThreadSafe;
 
 /** The alert viewer controller. */
 @ThreadSafe
