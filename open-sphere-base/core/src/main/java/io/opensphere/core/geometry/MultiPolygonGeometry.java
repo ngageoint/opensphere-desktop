@@ -155,7 +155,7 @@ public class MultiPolygonGeometry extends PolygonGeometry
      *
      * @param registry the geometry registry to set
      */
-    public synchronized void setGeometryRegistry(GeometryRegistry registry)
+    protected synchronized void setGeometryRegistry(GeometryRegistry registry)
     {
         if (Utilities.sameInstance(registry, myGeometryRegistry))
         {
