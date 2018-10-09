@@ -62,7 +62,7 @@ public class IconBuilderPane extends BorderPane
     private final Window myOwner;
 
     /** The spinner width. */
-    private final double spinwidth = 40.0;
+    private final double spinwidth = 60.0;
 
     /**
      * Constructs a new IconBuilderPane.
@@ -123,6 +123,7 @@ public class IconBuilderPane extends BorderPane
         });
         
         AnchorPane.setLeftAnchor(sizeSpinner, 10.);
+        AnchorPane.setLeftAnchor(button, 150.);
         myColorPicker = new ColorPicker();
 
         box.getChildren().addAll(myColorPicker, button, sizeLabel, sizeSpinner);
@@ -184,7 +185,6 @@ public class IconBuilderPane extends BorderPane
         ySpinner.setPrefWidth(spinwidth);
         ySpinner.getValueFactory().valueProperty().bindBidirectional(myYPos);
         ySpinner.setEditable(true);
-        ySpinner.getStyleClass().clear();
 
         Label xLabel = new Label("Position:  X: ", xSpinner);
         xLabel.setContentDisplay(ContentDisplay.RIGHT);

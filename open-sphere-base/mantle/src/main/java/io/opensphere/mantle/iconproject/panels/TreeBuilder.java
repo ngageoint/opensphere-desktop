@@ -148,7 +148,7 @@ public class TreeBuilder extends TreeItem<String>
                 }
             }
         }
-        myPanelModel.setTreeObj(iconTreeObject);
+        myPanelModel.setTreeObject(iconTreeObject);
     }
 
     /**

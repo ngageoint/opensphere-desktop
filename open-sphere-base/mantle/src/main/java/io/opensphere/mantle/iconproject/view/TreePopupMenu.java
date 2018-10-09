@@ -17,11 +17,11 @@ public class TreePopupMenu extends ContextMenu
     /**
      * The main method to instantiate a new IconPopupMenu.
      *
-     * @param thePanelModel the model used to get registry items.
+     * @param panelModel the model used to get registry items.
      */
-    public TreePopupMenu(PanelModel thePanelModel)
+    public TreePopupMenu(PanelModel panelModel)
     {
-        TreePopupMenuImpl selector = new TreePopupMenuImpl(thePanelModel);
+        TreePopupMenuImpl selector = new TreePopupMenuImpl(panelModel);
 
         MenuItem removeAction = new MenuItem("Remove Items");
         removeAction.setOnAction(new EventHandler<ActionEvent>()

@@ -88,9 +88,9 @@ public class TopMenuBar extends HBox
      */
     private ButtonBar createFilterBar()
     {
-        ButtonBar theSearchBar = new ButtonBar();
-        theSearchBar.getButtons().addAll(mySearchLabel, myTextField);
-        return theSearchBar;
+        ButtonBar searchBar = new ButtonBar();
+        searchBar.getButtons().addAll(mySearchLabel, myTextField);
+        return searchBar;
     }
 
     /**
@@ -116,7 +116,7 @@ public class TopMenuBar extends HBox
      */
     public ButtonBar createSizeMenu()
     {
-        ButtonBar theSizeMenu = new ButtonBar();
+        ButtonBar sizeMenu = new ButtonBar();
         myEnlargeButton.setOnAction(event ->
         {
             int origTile = myPanelModel.getCurrentTileWidth().get();
@@ -131,8 +131,8 @@ public class TopMenuBar extends HBox
             myPanelModel.getCurrentTileWidth().set(origTile - 10);
         });
         myShrinkButton.setTooltip(new Tooltip("Decrease Icon Size"));
-        theSizeMenu.getButtons().addAll(mySizeLabel, myShrinkButton, myEnlargeButton);
-        return theSizeMenu;
+        sizeMenu.getButtons().addAll(mySizeLabel, myShrinkButton, myEnlargeButton);
+        return sizeMenu;
     }
 
     /**
@@ -145,17 +145,9 @@ public class TopMenuBar extends HBox
         ButtonBar theViewToggle = new ButtonBar();
         myListView.setText("List");
         myListView.setToggleGroup(mytoggleGroup);
-        myListView.setOnMouseClicked(event ->
-        {
-            MainPanel.changeTop(true);
-        });
         myGridView.setText("Grid");
         myGridView.setToggleGroup(mytoggleGroup);
         myGridView.setSelected(true);
-        myGridView.setOnMouseClicked(event ->
-        {
-            MainPanel.changeTop(false);
-        });
 
         theViewToggle.getButtons().addAll(myViewLabel, myListView, myGridView);
 

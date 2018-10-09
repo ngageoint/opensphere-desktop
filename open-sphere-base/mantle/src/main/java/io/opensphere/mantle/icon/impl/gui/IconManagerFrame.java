@@ -168,7 +168,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
      */
     private void showBuilderDialog()
     {
-        PanelModel thePanelModel = new PanelModel();
+        PanelModel thePanelModel = new PanelModel(myToolbox);
         thePanelModel.setIconRegistry(MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry());
         thePanelModel.getSelectedRecord().set((myChooserPanel.getLastPopupTriggerIconRecord()));
         IconCustomizerDialog dialog = new IconCustomizerDialog(this, thePanelModel);

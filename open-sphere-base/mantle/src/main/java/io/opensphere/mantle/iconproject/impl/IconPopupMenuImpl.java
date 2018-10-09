@@ -18,7 +18,7 @@ import javafx.scene.control.Button;
 public class IconPopupMenuImpl
 {
     /** The selected icon. */
-    IconRecord mySelectedIcon;
+    private IconRecord mySelectedIcon;
 
     /** The current UI model. */
     private PanelModel myPanelModel;

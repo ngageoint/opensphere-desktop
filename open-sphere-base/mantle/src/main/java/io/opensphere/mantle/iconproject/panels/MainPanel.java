@@ -35,7 +35,7 @@ import io.opensphere.mantle.iconproject.view.TreePopupMenu;
 public class MainPanel extends SplitPane
 {
     /** The Model. */
-    private PanelModel myPanelModel = new PanelModel();
+    private PanelModel myPanelModel;
 
     /** The Icon Display Grid. */
     private GridBuilder myIconGrid;
@@ -56,10 +56,10 @@ public class MainPanel extends SplitPane
     private AnchorPane myLeftView = new AnchorPane();
 
     /** The treeBuilder object. */
-    private TreeBuilder treeBuilder;
+    private TreeBuilder myTreeBuilder;
 
     /** The map of collection name keys and icon record list values. */
-    private Map<String, List<IconRecord>> recordMap = new HashMap<>();
+    private Map<String, List<IconRecord>> myRecordMap = new HashMap<>();
 
     /** The main panel's scroll pane which contains the grid of icons. */
     private ScrollPane myScrollPane;
@@ -70,17 +70,17 @@ public class MainPanel extends SplitPane
     /**
      * The MainPanel constructor.
      *
-     * @param thePanelModel the model for the main panel
+     * @param panelModel the model for the main panel
      */
-    public MainPanel(PanelModel thePanelModel)
+    public MainPanel(PanelModel panelModel)
     {
-        myPanelModel = thePanelModel;
+        myPanelModel = panelModel;
         myOwner = myPanelModel.getOwner();
 
         myPanelModel.getCurrentTileWidth().addListener((o, v, m) -> refresh());
         createTreeView(myPanelModel.getIconRegistry().getManagerPrefs().getInitTreeSelection().get());
-        recordMap = new HashMap<>(treeBuilder.getRecordMap());
-        myPanelModel.setIconRecordList(recordMap.get("Default"));
+        myRecordMap = new HashMap<>(myTreeBuilder.getRecordMap());
+        myPanelModel.setIconRecordList(myRecordMap.get("Default"));
         myIconGrid = new GridBuilder(myPanelModel);
 
         AnchorPane.setLeftAnchor(myAddIconButton, 0.);
@@ -91,43 +91,22 @@ public class MainPanel extends SplitPane
         MenuItem folderOption = new MenuItem("Folder");
         myAddIconButton.getItems().addAll(fileOption, folderOption);
         myAddIconButton.setAlignment(Pos.CENTER);
-        fileOption.setOnAction(event ->
-        {
-            EventQueue.invokeLater(() ->
-            {
-                loadFromFile(myPanelModel.getImportProps().getCollectionName().get(),
-                        myPanelModel.getImportProps().getSubCollectionName().get());
-            });
-        });
+        fileOption.setOnAction(event -> EventQueue.invokeLater(() -> loadFromFile(myPanelModel.getImportProps().getCollectionName().get(),
+                    myPanelModel.getImportProps().getSubCollectionName().get())));
 
-        folderOption.setOnAction(event ->
-        {
-            EventQueue.invokeLater(() ->
-            {
-                addIconsFromFolder();
-            });
-        });
+        folderOption.setOnAction(event -> EventQueue.invokeLater(() -> addIconsFromFolder()));
 
         AnchorPane.setBottomAnchor(myCustIconButton, 26.0);
         myCustIconButton.lockButton(myCustIconButton);
-        myCustIconButton.setOnAction(event ->
-        {
-            EventQueue.invokeLater(() ->
-            {
-            	myIconGrid.showIconCustomizer(myOwner);
-            });
-        });
+        myCustIconButton.setOnAction(event -> EventQueue.invokeLater(() -> myIconGrid.showIconCustomizer(myOwner)));
 
         AnchorPane.setBottomAnchor(myGenIconButton, 0.0);
         myGenIconButton.lockButton(myGenIconButton);
-        myGenIconButton.setOnAction(event ->
-        {
-        	EventQueue.invokeLater(() ->
+        myGenIconButton.setOnAction(event -> EventQueue.invokeLater(() ->
             {
                 IconProjGenDialog dialog = new IconProjGenDialog(myOwner, myPanelModel.getIconRegistry(), this);
                 dialog.setVisible(true);
-            });
-        });
+            }));
 
         myScrollPane = new ScrollPane(myIconGrid);
         myScrollPane.setPannable(true);
@@ -150,12 +129,12 @@ public class MainPanel extends SplitPane
      */
     private void createTreeView(TreeItem<String> treeItem)
     {
-        treeBuilder = new TreeBuilder(myPanelModel, null);
-        myTreeView = new TreeView<>(treeBuilder);
+        myTreeBuilder = new TreeBuilder(myPanelModel, null);
+        myTreeView = new TreeView<>(myTreeBuilder);
         myTreeView.setShowRoot(false);
         myTreeView.setContextMenu(new TreePopupMenu(myPanelModel));
-        myPanelModel.getTreeObj().getMyObsTree().set(myTreeView);
-        myPanelModel.getTreeObj().getMyObsTree().addListener((o, v, n) -> refreshTree());
+        myPanelModel.getTreeObject().getMyObsTree().set(myTreeView);
+        myPanelModel.getTreeObject().getMyObsTree().addListener((o, v, n) -> refreshTree());
 
         AnchorPane.setBottomAnchor(myTreeView, 78.0);
         AnchorPane.setLeftAnchor(myTreeView, 0.0);
@@ -164,7 +143,7 @@ public class MainPanel extends SplitPane
 
         if (treeItem == null)
         {
-        	myTreeView.getSelectionModel().select(myTreeView.getRow(myTreeView.getTreeItem(0)));
+            myTreeView.getSelectionModel().select(myTreeView.getRow(myTreeView.getTreeItem(0)));
         }
         else if (treeItem.getValue().equals("temp"))
         {
@@ -197,19 +176,15 @@ public class MainPanel extends SplitPane
      */
     public void refresh()
     {
-        Platform.runLater(new Runnable()
+        Platform.runLater(() ->
         {
-            @Override
-            public void run()
-            {
-                refreshTree();
-                recordMap = new HashMap<>(treeBuilder.getRecordMap());
-                String item = myTreeView.getSelectionModel().getSelectedItem() == null ? myTreeView.getTreeItem(0).getValue() : 
-                        myTreeView.getSelectionModel().getSelectedItem().getValue();
-                myPanelModel.setIconRecordList(recordMap.get(item));
-                myScrollPane.setContent(myIconGrid = new GridBuilder(myPanelModel));
-                myPanelModel.getSelectedIcons().clear();
-            }
+            refreshTree();
+            myRecordMap = new HashMap<>(myTreeBuilder.getRecordMap());
+            String item = myTreeView.getSelectionModel().getSelectedItem() == null ? myTreeView.getTreeItem(0).getValue() : 
+                    myTreeView.getSelectionModel().getSelectedItem().getValue();
+            myPanelModel.setIconRecordList(myRecordMap.get(item));
+            myScrollPane.setContent(myIconGrid = new GridBuilder(myPanelModel));
+            myPanelModel.getSelectedIcons().clear();
         });
     }
 
@@ -229,11 +204,11 @@ public class MainPanel extends SplitPane
     private void treeHandle(TreeItem<String> newValue)
     {
         String colName = newValue.getValue();
-        if (!myPanelModel.getRecordList().equals(recordMap.get(colName)))
+        if (!myPanelModel.getRecordList().equals(myRecordMap.get(colName)))
         {
             myPanelModel.getSelectedIcons().clear();
         }
-        myPanelModel.setIconRecordList(recordMap.get(colName));
+        myPanelModel.setIconRecordList(myRecordMap.get(colName));
         myScrollPane.setContent(myIconGrid = new GridBuilder(myPanelModel));
         if (myPanelModel.getIconRegistry().getCollectionNames().contains(colName))
         {
@@ -241,33 +216,9 @@ public class MainPanel extends SplitPane
         }
         else
         {
-            myPanelModel.getImportProps().getCollectionName().set(recordMap.get(colName).get(0).getCollectionName());
+            myPanelModel.getImportProps().getCollectionName().set(myRecordMap.get(colName).get(0).getCollectionName());
             myPanelModel.getImportProps().getSubCollectionName().set(colName);
         }
-    }
-
-    /**
-     * Changes the Icon Display Grid from Grid to List.
-     *
-     * @param choice the selected toggle.
-     */
-    static public void changeTop(boolean choice)
-    {
-//         StackPane stackPane = new StackPane();
-//         ObservableList<Node> childs = stackPane.getChildren();
-//        
-//         Node grid = childs.get(1);
-//         Node list = childs.get(0);
-//         if (choice)
-//         {
-//         grid.setVisible(false);
-//         list.setVisible(true);
-//         }
-//         else
-//         {
-//         list.setVisible(false);
-//         grid.setVisible(true);
-//         }
     }
 
     /**

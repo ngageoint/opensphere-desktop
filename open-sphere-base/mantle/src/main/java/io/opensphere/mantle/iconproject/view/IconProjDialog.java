@@ -17,7 +17,7 @@ import javafx.scene.layout.AnchorPane;
 public class IconProjDialog extends JFXDialog
 {
     /** The model to be shared between all the UI elements. */
-    private PanelModel myPanelModel = new PanelModel();
+    private PanelModel myPanelModel;
 
     /** The model for the display panels. */
     private ViewModel myViewModel = new ViewModel();
@@ -42,10 +42,10 @@ public class IconProjDialog extends JFXDialog
     {
         super(owner, "Icon Manager", showCancel);
         myToolbox = tb;
-        myPanelModel.setToolBox(tb);
+        myPanelModel = new PanelModel(myToolbox);
         myPanelModel.setOwner(owner);
         myPanelModel.setIconRegistry(MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry());
-        myViewModel.setMulti(theMulti);
+        myViewModel.setMultiSelectEnbled(theMulti);
         myPanelModel.setViewModel(myViewModel);
         setMinimumSize(new Dimension(800, 600));
         setSize(875, 600);
@@ -72,7 +72,7 @@ public class IconProjDialog extends JFXDialog
         MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs().getIconWidth()
                 .set(myPanelModel.getCurrentTileWidth().get());
         MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs().getInitTreeSelection()
-                .set((TreeItem<String>)myPanelModel.getTreeObj().getMyObsTree().get().getSelectionModel().selectedItemProperty()
+                .set((TreeItem<String>)myPanelModel.getTreeObject().getMyObsTree().get().getSelectionModel().selectedItemProperty()
                         .get());
     }
 

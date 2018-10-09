@@ -15,6 +15,7 @@ import javafx.scene.image.WritableImage;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.log4j.Logger;
 
 import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.mantle.icon.IconProvider;
@@ -23,12 +24,16 @@ import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.panels.IconCustomizerPane;
+import io.opensphere.mantle.util.importer.impl.URLDataLoader;
 
 /** The window to customize icons. */
 public class IconCustomizerDialog extends JFXDialog
 {
     /** Serial ID. */
     private static final long serialVersionUID = -8284546944940700345L;
+
+    /** Logger. */
+    private static final Logger LOGGER = Logger.getLogger(URLDataLoader.class);
 
     /** The Icon Registry. */
     private final IconRegistry myIconRegistry;
@@ -87,6 +92,7 @@ public class IconCustomizerDialog extends JFXDialog
                 }
                 catch (IOException e)
                 {
+                    LOGGER.error("Failed to write image.", e);
                 }
                 graphics.dispose();
             }
@@ -102,6 +108,7 @@ public class IconCustomizerDialog extends JFXDialog
         }
         catch (IOException e)
         {
+        	LOGGER.error("Failed to write image.", e);
         }
     }
 }

@@ -9,12 +9,6 @@ import javafx.scene.layout.BorderPane;
  */
 public class AddIconPane extends BorderPane
 {
-    /**
-     * serialVersionUID.
-     */
-    @SuppressWarnings("unused")
-    private static final long serialVersionUID = 1L;
-
     /** The current model for UI elements. */
     private PanelModel myPanelModel;
 
@@ -28,11 +22,11 @@ public class AddIconPane extends BorderPane
      * Instantiates the panel for getting the category and sub category from the
      * user when importing icons.
      *
-     * @param thePanelModel The current UI model to use for registry items.
+     * @param panelModel The current UI model to use for registry items.
      */
-    public AddIconPane(PanelModel thePanelModel)
+    public AddIconPane(PanelModel panelModel)
     {
-        myPanelModel = thePanelModel;
+        myPanelModel = panelModel;
 
         setCollectionNamePane(new CollectNamesPane(myPanelModel));
         setSubCollectPane(new SubCollectPane(myPanelModel));
@@ -44,11 +38,11 @@ public class AddIconPane extends BorderPane
     /**
      * Sets the current collection name pane.
      *
-     * @param theCollectionNamePane the collection name input pane.
+     * @param collectionNamePane the collection name input pane.
      */
-    public void setCollectionNamePane(CollectNamesPane theCollectionNamePane)
+    public void setCollectionNamePane(CollectNamesPane collectionNamePane)
     {
-        myCollectionNamePane = theCollectionNamePane;
+        myCollectionNamePane = collectionNamePane;
     }
 
     /**
@@ -64,11 +58,11 @@ public class AddIconPane extends BorderPane
     /**
      * Sets the current sub collection pane.
      *
-     * @param theSubCollectPane the sub collection name input pane.
+     * @param subCollectPane the sub collection name input pane.
      */
-    private void setSubCollectPane(SubCollectPane theSubCollectPane)
+    private void setSubCollectPane(SubCollectPane subCollectPane)
     {
-        mySubCollectPane = theSubCollectPane;
+        mySubCollectPane = subCollectPane;
     }
 
     /**

@@ -33,12 +33,18 @@ import javafx.scene.text.FontPosture;
 
 import javax.imageio.ImageIO;
 
+import org.apache.log4j.Logger;
+
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.iconproject.model.PanelModel;
+import io.opensphere.mantle.util.importer.impl.URLDataLoader;
 
 /** Panel for building custom icons. */
 public class IconCustomizerPane extends BorderPane
 {
+    /** Logger. */
+    private static final Logger LOGGER = Logger.getLogger(URLDataLoader.class);
+
     /** The rotation value model. */
     private final DoubleProperty myRotation = new SimpleDoubleProperty(0.);
 
@@ -61,7 +67,7 @@ public class IconCustomizerPane extends BorderPane
     private ImageView myIconView;
 
     /** The spinner width. */
-    private final double spinwidth = 59.0;
+    private final double mySpinnerWidth = 59.0;
 
     /** The IconRecord of the displayed Icon. */
     private final IconRecord myIconRecord;
@@ -76,11 +82,11 @@ public class IconCustomizerPane extends BorderPane
      * Constructs a new panel containing the icon customizer.
      *
      * @param owner the AWT Window.
-     * @param thePanelModel the panel model
+     * @param panelModel the panel model
      */
-    public IconCustomizerPane(Window owner, PanelModel thePanelModel)
+    public IconCustomizerPane(Window owner, PanelModel panelModel)
     {
-        myIconRecord = thePanelModel.getSelectedRecord().get();
+        myIconRecord = panelModel.getSelectedRecord().get();
 
         setCenter(myIconDisplay = createImageView());
         setRight(createRight());
@@ -116,7 +122,7 @@ public class IconCustomizerPane extends BorderPane
             maxScale = 3;
         }
         Spinner<Number> sizeSpin = new Spinner<>(0.0, maxScale, 1., sizeIncr);
-        sizeSpin.setPrefWidth(spinwidth);
+        sizeSpin.setPrefWidth(mySpinnerWidth);
         sizeSpin.getValueFactory().valueProperty().bindBidirectional(myScale);
         sizeSpin.setEditable(true);
         Label sizeLabel = new Label("Scale: ", sizeSpin);
@@ -185,12 +191,12 @@ public class IconCustomizerPane extends BorderPane
         final double spinIncr = 5.;
         final double spinStrt = 0.;
         Spinner<Number> xSpin = new Spinner<>(-100, 100, spinStrt, spinIncr);
-        xSpin.setPrefWidth(spinwidth);
+        xSpin.setPrefWidth(mySpinnerWidth);
         xSpin.getValueFactory().valueProperty().bindBidirectional(myXPos);
         xSpin.setEditable(true);
 
         Spinner<Number> ySpin = new Spinner<>(-125, 125, spinStrt, spinIncr);
-        ySpin.setPrefWidth(spinwidth);
+        ySpin.setPrefWidth(mySpinnerWidth);
         ySpin.getValueFactory().valueProperty().bindBidirectional(myYPos);
         ySpin.setEditable(true);
 
@@ -225,10 +231,10 @@ public class IconCustomizerPane extends BorderPane
      */
     private HBox createImageView()
     {
-    	if (myIconRecord == null)
-    	{
+        if (myIconRecord == null)
+        {
     	    return null;
-    	}
+        }
 
         HBox iconDisplayer = new HBox();
         iconDisplayer.setAlignment(Pos.CENTER);
@@ -238,8 +244,8 @@ public class IconCustomizerPane extends BorderPane
         
         myIconView = new ImageView(myIconRecord.getImageURL().toString());
         myIconView.rotateProperty().bind(myRotation);
-        myIconView.translateXProperty().bind(myXPos);
-        myIconView.translateYProperty().bind(myYPos);
+        myIconView.translateXProperty().bindBidirectional(myXPos);
+        myIconView.translateYProperty().bindBidirectional(myYPos);
 
         BufferedImage iconActual = null;
         try
@@ -248,7 +254,10 @@ public class IconCustomizerPane extends BorderPane
         }
         catch (IOException e)
         {
+            LOGGER.error("Failed to read the icon.", e);
+            return null;
         }
+
         if (iconActual.getWidth() > 150)
         {
             myIconView.setFitWidth(150);
@@ -295,7 +304,7 @@ public class IconCustomizerPane extends BorderPane
     /**
      * Retrieves the final processed image as a BufferedImage.
      *
-     * @return the the image to be saved.
+     * @return the image to be saved.
      */
     public WritableImage getFinalImage()
     {
@@ -319,10 +328,9 @@ public class IconCustomizerPane extends BorderPane
 
     {
         if (myColor != null)
-
         {
             return myIconRecord != null ? myIconRecord.getName() + "_" + myIconView.getRotate() + "_" + myColor.getRed() + "-"
-                    + +myColor.getGreen() + "-" + myColor.getBlue() : null;
+                    + myColor.getGreen() + "-" + myColor.getBlue() : null;
         }
 
         return myIconRecord != null ? myIconRecord.getName() + "_" + myIconView.getRotate() : null;
@@ -333,7 +341,6 @@ public class IconCustomizerPane extends BorderPane
      *
      * @return the currently modified icon.
      */
-
     public boolean getSaveState()
     {
         return mySave.get();
@@ -342,7 +349,7 @@ public class IconCustomizerPane extends BorderPane
     /**
      * Gets the icon being modified.
      *
-     * @return myIconRecord the current Icon being edited.
+     * @return the current Icon being edited.
      */
     public IconRecord getIconRecord()
     {
@@ -354,7 +361,6 @@ public class IconCustomizerPane extends BorderPane
      *
      * @return the current Icon's X Position.
      */
-
     public int getXPos()
     {
         return myXPos.getValue().intValue();

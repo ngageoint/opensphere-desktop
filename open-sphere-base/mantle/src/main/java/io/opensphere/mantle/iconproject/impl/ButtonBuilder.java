@@ -7,7 +7,6 @@ import javafx.scene.layout.AnchorPane;
 
 /** Creates customized buttons for the icon manager. */
 public class ButtonBuilder extends Button
-
 {
     /** The button label. */
     private final String myLabel;

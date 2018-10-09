@@ -8,7 +8,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -22,14 +21,11 @@ import io.opensphere.mantle.iconproject.view.IconPopupMenu;
 /** Creates the Icon Display Grid. */
 public class GridBuilder extends TilePane
 {
-    /** The icon options context menu. */
-    ContextMenu cMenu = new ContextMenu();
-
     /** The width used for icon buttons. */
     private final int myTileWidth;
 
     /** The icon record list. */
-    List<IconRecord> myRecordList;
+    private List<IconRecord> myRecordList;
 
     /** The model for the main icon panel. */
     private final PanelModel myPanelModel;
@@ -38,11 +34,11 @@ public class GridBuilder extends TilePane
      * The GridBuilder constructor. Sets up the rows and columns for the icon
      * grid.
      *
-     * @param thePanelModel the panel model
+     * @param panelModel the panel model
      */
-    public GridBuilder(PanelModel thePanelModel)
+    public GridBuilder(PanelModel panelModel)
     {
-        myPanelModel = thePanelModel;
+        myPanelModel = panelModel;
         myTileWidth = myPanelModel.getCurrentTileWidth().get();
         myRecordList = myPanelModel.getRecordList();
 
@@ -58,7 +54,7 @@ public class GridBuilder extends TilePane
      * Creates the image buttons to be placed in the grid.
      *
      * @param record the IconRecord
-     * @return generic the made button
+     * @return the made button
      */
     private Button buttonBuilder(IconRecord record)
     {
@@ -89,7 +85,7 @@ public class GridBuilder extends TilePane
                 {
                     generic.setContextMenu(new IconPopupMenu(myPanelModel));
                 }
-                if (myPanelModel.getViewModel().getMulti())
+                if (myPanelModel.getViewModel().getMultiSelectEnabled())
                 {
                     generic.setStyle("-fx-effect: dropshadow(three-pass-box, purple, 20, 0, 0, 0);");
                     myPanelModel.getSelectedIcons().put(record, generic);
@@ -114,6 +110,5 @@ public class GridBuilder extends TilePane
     	    IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myPanelModel);
             builderPane.setVisible(true);
     	}
-        
     }
 }

@@ -37,39 +37,39 @@ public class SubCollectPane extends VBox
     /**
      * The radio button with which the user selects the mode of the category
      * panel to use existing categories. This button is in a group with
-     * {@link #myNewCatRB}, {@link #myNoneRB} and optionally
+     * {@link #myNewCategoryButton}, {@link #myNoneButton} and optionally
      * {@link #mySubCatsFromDirNamesRB}, and the group is used to put the panel
      * in a mode in which the user may select an existing group, or create a new
      * group.
      */
-    private RadioButton myExistingRB;
+    private RadioButton myExistingButton;
 
     /**
      * The radio button with which the user selects the mode of the name panel
      * to create a new category. This button is in a group with
-     * {@link #myExistingRB}, {@link #myNoneRB} and optionally
+     * {@link #myExistingButton}, {@link #myNoneButton} and optionally
      * {@link #mySubCatsFromDirNamesRB}, and the group is used to put the panel
      * in a mode in which the user may select an existing group, or create a new
      * group.
      */
-    private RadioButton myNewCatRB;
+    private RadioButton myNewCategoryButton;
 
     /**
      * The radio button with which the user selects the mode of the name panel
      * to not use a category. This button is in a group with
-     * {@link #myExistingRB}, {@link #myNewCatRB} and optionally
+     * {@link #myExistingButton}, {@link #myNewCategoryButton} and optionally
      * {@link #mySubCatsFromDirNamesRB}, and the group is used to put the panel
      * in a mode in which the user may select an existing group, or create a new
      * group.
      */
-    private RadioButton myNoneRB;
+    private RadioButton myNoneButton;
 
     /** The selection options contained in the combo context menu. */
     private ObservableList<String> myComboBoxItems;
 
     /**
-     * The toggle group containing {@link #myExistingRB}
-     * {@link #myNewCatRB} @{@link #myNoneRB}.
+     * The toggle group containing {@link #myExistingButton}
+     * {@link #myNewCategoryButton} @{@link #myNoneButton}.
      */
     private final ToggleGroup myToggleGroup = new ToggleGroup();
 
@@ -88,11 +88,11 @@ public class SubCollectPane extends VBox
     /**
      * Instantiates a new sub-category selection panel.
      *
-     * @param thePanelModel the model to be used for the registry items.
+     * @param panelModel the model to be used for the registry items.
      */
-    public SubCollectPane(PanelModel thePanelModel)
+    public SubCollectPane(PanelModel panelModel)
     {
-        myPanelModel = thePanelModel;
+        myPanelModel = panelModel;
         myImportProps = myPanelModel.getImportProps();
         myIconRegistry = myPanelModel.getIconRegistry();
         myCategorySet = myIconRegistry.getSubCategoiresForCollection("Default");
@@ -111,18 +111,18 @@ public class SubCollectPane extends VBox
         subCollectMessage.setFont(Font.font(subCollectMessage.getFont().getFamily(), FontPosture.ITALIC, 11));
         subCollectMessage.setContentDisplay(ContentDisplay.BOTTOM);
 
-        myNoneRB = new RadioButton("No Sub-category");
-        myNoneRB.setToggleGroup(myToggleGroup);
-        myNoneRB.setSelected(true);
-        myNoneRB.setOnAction(event ->
+        myNoneButton = new RadioButton("No Sub-category");
+        myNoneButton.setToggleGroup(myToggleGroup);
+        myNoneButton.setSelected(true);
+        myNoneButton.setOnAction(event ->
         {
             myComboBox.setEditable(false);
             myComboBox.setDisable(true);
         });
 
-        myExistingRB = new RadioButton("Existing");
-        myExistingRB.setToggleGroup(myToggleGroup);
-        myExistingRB.setOnAction(event ->
+        myExistingButton = new RadioButton("Existing");
+        myExistingButton.setToggleGroup(myToggleGroup);
+        myExistingButton.setOnAction(event ->
         {
             myComboBox.setEditable(false);
             myComboBox.setDisable(false);
@@ -130,34 +130,34 @@ public class SubCollectPane extends VBox
 
         myComboBox = new ComboBox<>(myComboBoxItems);
         HBox existingPnl = new HBox();
-        existingPnl.getChildren().addAll(myExistingRB, myComboBox);
+        existingPnl.getChildren().addAll(myExistingButton, myComboBox);
 
-        myNewCatRB = new RadioButton("New");
-        myNewCatRB.setOnAction(event ->
+        myNewCategoryButton = new RadioButton("New");
+        myNewCategoryButton.setOnAction(event ->
         {
             myComboBox.setDisable(false);
             myComboBox.setEditable(true);
         });
-        myNewCatRB.setToggleGroup(myToggleGroup);
+        myNewCategoryButton.setToggleGroup(myToggleGroup);
 
         hbox.setAlignment(Pos.BASELINE_LEFT);
         hbox.setSpacing(5);
         myComboBox.setOnAction(event ->
         {
-            if (!(myToggleGroup.getSelectedToggle() == myNewCatRB))
+            if (!(myToggleGroup.getSelectedToggle() == myNewCategoryButton))
             {
-                myExistingRB.selectedProperty().set(true);
+                myExistingButton.selectedProperty().set(true);
             }
         });
 
         if (myComboBoxItems.isEmpty())
         {
-            hbox.getChildren().addAll(myNoneRB, myNewCatRB, myComboBox);
+            hbox.getChildren().addAll(myNoneButton, myNewCategoryButton, myComboBox);
             myComboBox.setDisable(true);
         }
         else
         {
-            hbox.getChildren().addAll(myNoneRB, myExistingRB, myNewCatRB, myComboBox);
+            hbox.getChildren().addAll(myNoneButton, myExistingButton, myNewCategoryButton, myComboBox);
         }
 
         getChildren().addAll(subCollectMessage, hbox);
@@ -183,7 +183,7 @@ public class SubCollectPane extends VBox
      */
     public String getSubCategory()
     {
-        if (myNewCatRB.isSelected())
+        if (myNewCategoryButton.isSelected())
         {
             return myComboBox.getSelectionModel().getSelectedItem().toString();
         }
@@ -200,7 +200,7 @@ public class SubCollectPane extends VBox
      */
     public boolean isNoCategory()
     {
-        return myNoneRB.isSelected();
+        return myNoneButton.isSelected();
     }
 
     /**

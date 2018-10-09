@@ -16,37 +16,34 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 
-/** Used to create a simple error message. */
+/** @deprecated Used to create a simple error message. */
 public class ErrorPane
 {
     /**
      * Creates a window containing a self closing popup message.
      *
      * @param timer the time before the dialog closes itself.
-     * @param theMessage the text to be displayed inside the window.
-     * @param theTitle the text for the top bar.
-     * @param thePanelModel the model used
-     * @return messageWindow the JFX Dialog.
+     * @param message the text to be displayed inside the window.
+     * @param title the text for the top bar.
+     * @param panelModel the model used
+     * @return the JFX Dialog.
      */
-    public JFXDialog createErrorPane(int timer, String theMessage, String theTitle, PanelModel thePanelModel)
+    public JFXDialog createErrorPane(int timer, String message, String title, PanelModel panelModel)
     {
-        JFXDialog messageWindow = new JFXDialog(thePanelModel.getOwner(), theTitle, true);
+        JFXDialog messageWindow = new JFXDialog(panelModel.getOwner(), title, true);
         if (timer != 0)
         {
             ScheduledExecutorService s = Executors.newSingleThreadScheduledExecutor();
-            s.schedule(new Runnable()
+            s.schedule(() ->
             {
-                public void run()
-                {
-                    messageWindow.setVisible(false);
-                    messageWindow.dispose();
-                }
+                messageWindow.setVisible(false);
+                messageWindow.dispose();
             }, timer, TimeUnit.SECONDS);
         }
         messageWindow.setSize(new Dimension(400, 170));
-        messageWindow.setLocationRelativeTo(thePanelModel.getOwner());
+        messageWindow.setLocationRelativeTo(panelModel.getOwner());
         messageWindow.setResizable(false);
-        BorderPane thePane = errorMessagePane(theMessage);
+        BorderPane thePane = errorMessagePane(message);
 
         messageWindow.setFxNode(thePane);
         messageWindow.setVisible(true);
@@ -56,11 +53,10 @@ public class ErrorPane
     /**
      * Creates the image and message text pane.
      *
-     * @param theMessage the text to be displayed.
-     * @return messagePane a borderpane containing the image and message for the
-     *         window.
+     * @param message the text to be displayed.
+     * @return a borderpane containing the image and message for the window.
      */
-    public BorderPane errorMessagePane(String theMessage)
+    public BorderPane errorMessagePane(String message)
     {
         BorderPane messagePane = new BorderPane();
         Image image = new Image("images/warns.png");
@@ -70,7 +66,7 @@ public class ErrorPane
         BorderPane.setAlignment(errorIcon, Pos.CENTER_LEFT);
         messagePane.setLeft(errorIcon);
 
-        Text displayMessage = new LabelMaker(theMessage);
+        Text displayMessage = new LabelMaker(message);
         displayMessage.setFont(Font.font(displayMessage.getFont().getFamily(), FontPosture.ITALIC, 18));
         final double wrapWidth = 200.;
         displayMessage.setWrappingWidth(wrapWidth);

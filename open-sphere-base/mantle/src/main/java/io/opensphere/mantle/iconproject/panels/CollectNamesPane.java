@@ -41,13 +41,13 @@ public class CollectNamesPane extends VBox
     private ComboBox<String> myExistingComboBox;
 
     /** The existing collection name choices. */
-    private ObservableList<String> options;
+    private ObservableList<String> myOptions;
 
     /** The Radio Button to enable the user to enter a new collection name. */
-    private RadioButton myNewRB;
+    private RadioButton myNewCollectionButton;
 
     /** The text for the new Radio Button. */
-    private TextField myNewTF;
+    private TextField myNewCollectionTextField;
 
     /** The model for the UI. */
     private PanelModel myPanelModel;
@@ -61,11 +61,11 @@ public class CollectNamesPane extends VBox
     /**
      * Creates the Collection Name selection controls and packages into a VBox.
      *
-     * @param thePanelModel the current UI model.
+     * @param panelModel the current UI model.
      */
-    public CollectNamesPane(PanelModel thePanelModel)
+    public CollectNamesPane(PanelModel panelModel)
     {
-        myPanelModel = thePanelModel;
+        myPanelModel = panelModel;
         myIconProps = myPanelModel.getImportProps();
         Set<String> collectionNameSet = myPanelModel.getIconRegistry().getCollectionNames();
 
@@ -78,7 +78,7 @@ public class CollectNamesPane extends VBox
         colNames.add(0, IconRecord.USER_ADDED_COLLECTION);
         colNames.add(0, IconRecord.DEFAULT_COLLECTION);
 
-        options = FXCollections.observableArrayList(colNames);
+        myOptions = FXCollections.observableArrayList(colNames);
 
         HBox bottomPane = new HBox();
 
@@ -88,36 +88,30 @@ public class CollectNamesPane extends VBox
 
         myExistingRB = new RadioButton("Existing");
         myExistingRB.setSelected(true);
-        myExistingRB.setOnMouseClicked(event ->
-        {
-            lockfeature(false);
-        });
+        myExistingRB.setOnMouseClicked(event -> lockfeature(false));
 
-        myExistingComboBox = new ComboBox<>(options);
+        myExistingComboBox = new ComboBox<>(myOptions);
         myExistingComboBox.getSelectionModel().selectFirst();
         myExistingComboBox.setOnAction((event) ->
         {
             myIconProps.getCollectionName().set(myExistingComboBox.getValue());
-            if (!options.contains(myExistingComboBox.getValue()))
+            if (!myOptions.contains(myExistingComboBox.getValue()))
             {
-                options.add(myExistingComboBox.getValue());
+                myOptions.add(myExistingComboBox.getValue());
             }
         });
 
-        myNewRB = new RadioButton("New");
-        myNewRB.setOnMouseClicked(event ->
-        {
-            lockfeature(true);
-        });
+        myNewCollectionButton = new RadioButton("New");
+        myNewCollectionButton.setOnMouseClicked(event -> lockfeature(true));
 
-        myNewTF = new TextField();
-        myNewTF.setDisable(true);
+        myNewCollectionTextField = new TextField();
+        myNewCollectionTextField.setDisable(true);
         bottomPane.setSpacing(5);
         bottomPane.setAlignment(Pos.BASELINE_LEFT);
 
         myExistingRB.setToggleGroup(myToggleGroup);
-        myNewRB.setToggleGroup(myToggleGroup);
-        bottomPane.getChildren().addAll(myExistingRB, myNewRB, myExistingComboBox);
+        myNewCollectionButton.setToggleGroup(myToggleGroup);
+        bottomPane.getChildren().addAll(myExistingRB, myNewCollectionButton, myExistingComboBox);
         bottomPane.setSpacing(5);
 
         getChildren().addAll(collectionMessage, bottomPane);

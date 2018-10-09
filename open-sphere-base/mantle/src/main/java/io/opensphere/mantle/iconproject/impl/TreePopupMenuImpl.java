@@ -39,7 +39,7 @@ public class TreePopupMenuImpl
             if (!(temp == null))
             {
                 @SuppressWarnings("unchecked")
-                TreeItem<String> samp = (TreeItem<String>)myPanelModel.getTreeObj().getMyObsTree().get().getSelectionModel()
+                TreeItem<String> samp = (TreeItem<String>)myPanelModel.getTreeObject().getMyObsTree().get().getSelectionModel()
                         .selectedItemProperty().get();
                 if (temp.getCollectionName().equals(samp.getValue()))
                 {
@@ -51,7 +51,7 @@ public class TreePopupMenuImpl
                 }
             }
         }
-        myPanelModel.getTreeObj().getMyObsTree().get().getRoot().getChildren()
-                .remove(myPanelModel.getTreeObj().getMyObsTree().get().getSelectionModel().getSelectedItem());
+        myPanelModel.getTreeObject().getMyObsTree().get().getRoot().getChildren()
+                .remove(myPanelModel.getTreeObject().getMyObsTree().get().getSelectionModel().getSelectedItem());
     }
 }

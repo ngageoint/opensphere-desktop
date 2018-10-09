@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.apache.log4j.Logger;
+
 import io.opensphere.mantle.icon.IconRecord;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -20,6 +22,9 @@ import javafx.scene.layout.Priority;
 /** Icon rotation pane. */
 public class IconRotationPane extends BorderPane
 {
+    /** The logger. */
+    private static final Logger LOGGER = Logger.getLogger(IconRotationDialog.class);
+
     /** The rotation value model. */
     private final IntegerProperty myRotation = new SimpleIntegerProperty();
 
@@ -60,24 +65,26 @@ public class IconRotationPane extends BorderPane
         try
         {
             iconActual = ImageIO.read(record.getImageURL());
+
+            if (iconActual.getWidth() > 150)
+            {
+                imageView.setFitWidth(150);
+                imageView.setFitHeight(150);
+            }
+            else if (iconActual.getWidth() < 40)
+            {
+                imageView.setFitWidth(50);
+                imageView.setFitHeight(50);
+            }
+            else
+            {
+                imageView.setFitWidth(iconActual.getTileWidth());
+                imageView.setFitHeight(iconActual.getHeight());
+            }
         }
         catch (IOException e)
         {
-        }
-        if (iconActual.getWidth() > 150)
-        {
-            imageView.setFitWidth(150);
-            imageView.setFitHeight(150);
-        }
-        else if (iconActual.getWidth() < 40)
-        {
-            imageView.setFitWidth(50);
-            imageView.setFitHeight(50);
-        }
-        else
-        {
-            imageView.setFitWidth(iconActual.getTileWidth());
-            imageView.setFitHeight(iconActual.getHeight());
+            LOGGER.error("Failed to read the icon.", e);
         }
 
         return imageView;

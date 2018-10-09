@@ -18,7 +18,7 @@ import io.opensphere.mantle.iconproject.impl.DefaultIconRecordTreeItemObject;
 public class PanelModel
 {
     /** View set to default of Grid. */
-    private final ObjectProperty<ViewStyle> viewType = new SimpleObjectProperty<>(this, "viewtype", ViewStyle.GRID);
+    private final ObjectProperty<ViewStyle> myViewType = new SimpleObjectProperty<>(this, "viewtype", ViewStyle.GRID);
 
     /** The selected icon to be used for customization dialogs. */
     private ObjectProperty<IconRecord> mySelectedRecord = new SimpleObjectProperty<IconRecord>();
@@ -27,7 +27,7 @@ public class PanelModel
     private IconRegistry myIconRegistry;
 
     /** The toolbox. */
-    private Toolbox myToolBox;
+    private Toolbox myToolbox;
 
     /** The owner of this window. */
     private Window myOwner;
@@ -51,7 +51,7 @@ public class PanelModel
     private HashMap<IconRecord, Button> mySelectedIcons = new HashMap<IconRecord, Button>();
 
     /** The Tree model. */
-    private DefaultIconRecordTreeItemObject myTreeObj;
+    private DefaultIconRecordTreeItemObject myTreeObject;
 
     /**
      * Used to keep track of which icon and button are selected on the grid for
@@ -60,13 +60,23 @@ public class PanelModel
     private HashMap<IconRecord, Button> mySingleSelectedIcon = new HashMap<IconRecord, Button>();
 
     /**
+     * Constructor.
+     *
+     * @param toolbox the toolbox
+     */
+    public PanelModel (Toolbox toolbox)
+    {
+        myToolbox = toolbox;
+    }
+
+    /**
      * Gets the icon display view type.
      *
      * @return viewType the chosen view.
      */
     public ObjectProperty<ViewStyle> getViewType()
     {
-        return viewType;
+        return myViewType;
     }
 
     /**
@@ -100,23 +110,13 @@ public class PanelModel
     }
 
     /**
-     * Sets the toolbox.
-     *
-     * @param tb the toolbox
-     */
-    public void setToolBox(Toolbox tb)
-    {
-        myToolBox = tb;
-    }
-
-    /**
      * Gets the toolbox.
      *
      * @return the toolbox
      */
     public Toolbox getToolBox()
     {
-        return myToolBox;
+        return myToolbox;
     }
 
     /**
@@ -231,23 +231,23 @@ public class PanelModel
     }
 
     /**
-     * Gets the value of the {@link #myTreeObj} field.
+     * Gets the value of the {@link #myTreeObject} field.
      *
-     * @return the value stored in the {@link #myTreeObj} field.
+     * @return the value stored in the {@link #myTreeObject} field.
      */
-    public DefaultIconRecordTreeItemObject getTreeObj()
+    public DefaultIconRecordTreeItemObject getTreeObject()
     {
-        return myTreeObj;
+        return myTreeObject;
     }
 
     /**
-     * Sets the value of the {@link #myTreeObj} field.
+     * Sets the value of the {@link #myTreeObject} field.
      *
-     * @param theTreeObj the value to store in the {@link #myTreeObj} field.
+     * @param treeObject the value to store in the {@link #myTreeObject} field.
      */
-    public void setTreeObj(DefaultIconRecordTreeItemObject theTreeObj)
+    public void setTreeObject(DefaultIconRecordTreeItemObject treeObject)
     {
-        myTreeObj = theTreeObj;
+        myTreeObject = treeObject;
     }
 
     /**

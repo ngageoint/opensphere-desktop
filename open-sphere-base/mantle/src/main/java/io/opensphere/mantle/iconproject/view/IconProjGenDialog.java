@@ -9,6 +9,8 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import org.apache.log4j.Logger;
+
 import io.opensphere.core.Notify;
 import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.mantle.icon.IconProvider;
@@ -22,6 +24,9 @@ import io.opensphere.mantle.iconproject.panels.MainPanel;
 @SuppressWarnings("serial")
 public class IconProjGenDialog extends JFXDialog
 {
+    /** The logger for the IconProjGenDialog class. */
+    private static final Logger LOGGER = Logger.getLogger(IconProjGenDialog.class);
+
     /** The current IconRegistry. */
     private final IconRegistry myIconRegistry;
 
@@ -41,7 +46,6 @@ public class IconProjGenDialog extends JFXDialog
         myIconRegistry = iconRegistry;
         myMainPanel = mainPanel;
 
-//        GenIconPane pane = new GenIconPane();
         IconBuilderPane pane = new IconBuilderPane(owner);
         setFxNode(pane);
         setMinimumSize(new Dimension(450, 550));
@@ -75,7 +79,7 @@ public class IconProjGenDialog extends JFXDialog
         catch (IOException e)
         {
             Notify.error(e.getMessage());
-//            LOGGER.error(e, e);
+            LOGGER.error("Failure to save newly generated icon.", e);
         }
         myMainPanel.refresh();
     }

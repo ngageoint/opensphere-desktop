@@ -19,7 +19,7 @@ public class ViewModel
     private MainPanel myMainPanel;
 
     /** The option to disable or enable the user to select multiple icons. */
-    private boolean myMulti;
+    private boolean myMultiSelectEnabled;
 
     /**
      * Sets the top menu bar.
@@ -64,11 +64,11 @@ public class ViewModel
     /**
      * Gets the multiple icon selection choice.
      *
-     * @return myMulti the toggle.
+     * @return the toggle.
      */
-    public boolean getMulti()
+    public boolean getMultiSelectEnabled()
     {
-        return myMulti;
+        return myMultiSelectEnabled;
     }
 
     /**
@@ -76,8 +76,8 @@ public class ViewModel
      *
      * @param theMulti the inputted choice.
      */
-    public void setMulti(boolean theMulti)
+    public void setMultiSelectEnbled(boolean theMulti)
     {
-        myMulti = theMulti;
+        myMultiSelectEnabled = theMulti;
     }
 }
