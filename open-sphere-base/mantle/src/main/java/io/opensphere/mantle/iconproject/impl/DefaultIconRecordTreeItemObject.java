@@ -79,7 +79,7 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
      * @param recs the list of icon records
      * @param type the type
      * @param nametype the nametype
-     * @param parent the parent treeItem
+     * @param parent the name of the parent treeItem
      */
     public DefaultIconRecordTreeItemObject(TreeItem<String> item, String label, List<IconRecord> recs, Type type, NameType nametype,
             String parent)

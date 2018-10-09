@@ -124,7 +124,7 @@ public class MainPanel extends SplitPane
         {
         	EventQueue.invokeLater(() ->
             {
-                IconProjGenDialog dialog = new IconProjGenDialog(myOwner, myPanelModel.getIconRegistry());
+                IconProjGenDialog dialog = new IconProjGenDialog(myOwner, myPanelModel.getIconRegistry(), this);
                 dialog.setVisible(true);
             });
         });

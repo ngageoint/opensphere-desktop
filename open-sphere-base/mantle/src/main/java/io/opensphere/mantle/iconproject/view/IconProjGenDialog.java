@@ -16,6 +16,7 @@ import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.icon.impl.gui.IconBuilderPane;
+import io.opensphere.mantle.iconproject.panels.MainPanel;
 
 /** Creates the Icon Generation Window. */
 @SuppressWarnings("serial")
@@ -23,6 +24,8 @@ public class IconProjGenDialog extends JFXDialog
 {
     /** The current IconRegistry. */
     private final IconRegistry myIconRegistry;
+
+    private final MainPanel myMainPanel;
 
     /**
      * Constructor.
@@ -32,11 +35,11 @@ public class IconProjGenDialog extends JFXDialog
      * @param owner the calling window.
      * @param iconRegistry the current icon registry.
      */
-    public IconProjGenDialog(Window owner, IconRegistry iconRegistry)
+    public IconProjGenDialog(Window owner, IconRegistry iconRegistry, MainPanel mainPanel)
     {
-        super(owner, "Generate an Icon");
+        super(owner, "Generate New Icon");
         myIconRegistry = iconRegistry;
-        System.out.println("projgendialog: " + myIconRegistry.getAllAssignedElementIds().toString());
+        myMainPanel = mainPanel;
 
 //        GenIconPane pane = new GenIconPane();
         IconBuilderPane pane = new IconBuilderPane(owner);
@@ -74,5 +77,6 @@ public class IconProjGenDialog extends JFXDialog
             Notify.error(e.getMessage());
 //            LOGGER.error(e, e);
         }
+        myMainPanel.refresh();
     }
 }
