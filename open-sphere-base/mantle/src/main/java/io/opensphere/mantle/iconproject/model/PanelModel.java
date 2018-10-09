@@ -60,7 +60,7 @@ public class PanelModel
     private HashMap<IconRecord, Button> mySingleSelectedIcon = new HashMap<IconRecord, Button>();
 
     /**
-     * Constructor.
+     * Builds the panel to use inside the Icon Manager.
      *
      * @param toolbox the toolbox
      */
@@ -72,7 +72,7 @@ public class PanelModel
     /**
      * Gets the icon display view type.
      *
-     * @return viewType the chosen view.
+     * @return the chosen view.
      */
     public ObjectProperty<ViewStyle> getViewType()
     {
@@ -82,7 +82,7 @@ public class PanelModel
     /**
      * The getter for the IconRegistry.
      *
-     * @return myIconRegistry the icon registry
+     * @return the icon registry
      */
     public IconRegistry getIconRegistry()
     {
@@ -92,7 +92,7 @@ public class PanelModel
     /**
      * The getter for the tile width.
      *
-     * @return myTileWidth the width of the tiles
+     * @return the width of the tiles
      */
     public IntegerProperty getCurrentTileWidth()
     {
@@ -102,11 +102,11 @@ public class PanelModel
     /**
      * Sets the myIconRegistry.
      *
-     * @param theIconRegistry the icon registry
+     * @param iconRegistry the icon registry
      */
-    public void setIconRegistry(IconRegistry theIconRegistry)
+    public void setIconRegistry(IconRegistry iconRegistry)
     {
-        myIconRegistry = theIconRegistry;
+        myIconRegistry = iconRegistry;
     }
 
     /**
@@ -152,17 +152,17 @@ public class PanelModel
     /**
      * Sets the import properties.
      *
-     * @param theImportProps the import properties
+     * @param importProps the import properties
      */
-    public void setImportProps(ImportProp theImportProps)
+    public void setImportProps(ImportProp importProps)
     {
-        myImportProps = theImportProps;
+        myImportProps = importProps;
     }
 
     /**
      * The getter for the icon record list.
      *
-     * @return myIconRecordList the icon record list
+     * @return the icon record list
      */
     public List<IconRecord> getRecordList()
     {
@@ -192,11 +192,11 @@ public class PanelModel
     /**
      * Sets the value of the {@link #myViewModel} field.
      *
-     * @param theViewModel the value to store in the {@link #myViewModel} field.
+     * @param viewModel the value to store in the {@link #myViewModel} field.
      */
-    public void setViewModel(ViewModel theViewModel)
+    public void setViewModel(ViewModel viewModel)
     {
-        myViewModel = theViewModel;
+        myViewModel = viewModel;
     }
 
     /**
@@ -212,12 +212,12 @@ public class PanelModel
     /**
      * Sets the value of the {@link #mySelectedIcons} field.
      *
-     * @param theSelectedIcons the value to store in the
+     * @param selectedIcons the value to store in the
      *            {@link #mySelectedIcons} field.
      */
-    public void setSelectedIcons(HashMap<IconRecord, Button> theSelectedIcons)
+    public void setSelectedIcons(HashMap<IconRecord, Button> selectedIcons)
     {
-        mySelectedIcons = theSelectedIcons;
+        mySelectedIcons = selectedIcons;
     }
 
     /**
@@ -253,7 +253,7 @@ public class PanelModel
     /**
      * Gets the selected icon map.
      *
-     * @return myHash a map containing an icon record and it's corresponding
+     * @return a map containing an icon record and it's corresponding
      *         button in the display.
      */
     public HashMap<IconRecord, Button> getSelectedIconMap()

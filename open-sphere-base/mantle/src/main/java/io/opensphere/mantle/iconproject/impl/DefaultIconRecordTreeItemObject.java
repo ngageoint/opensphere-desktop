@@ -36,7 +36,7 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
 
     /** The Observable Selected Tree Node. */
     @SuppressWarnings("rawtypes")
-    private ObjectProperty<TreeView> myObsTree = new SimpleObjectProperty<TreeView>();
+    private ObjectProperty<TreeView> mySelectedTreeNode = new SimpleObjectProperty<TreeView>();
 
     /**
      * Creates the folder node.
@@ -76,19 +76,19 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
      *
      * @param item the treeItem
      * @param label the label
-     * @param recs the list of icon records
+     * @param records the list of icon records
      * @param type the type
      * @param nametype the nametype
      * @param parent the name of the parent treeItem
      */
-    public DefaultIconRecordTreeItemObject(TreeItem<String> item, String label, List<IconRecord> recs, Type type, NameType nametype,
+    public DefaultIconRecordTreeItemObject(TreeItem<String> item, String label, List<IconRecord> records, Type type, NameType nametype,
             String parent)
     {
         myType = type;
         myNameType = nametype;
         myLabel = label;
         myItem.set(item);
-        myIconRecords = recs;
+        myIconRecords = records;
         myParent = parent;
         myItem.get().setValue((myLabel));
     }
@@ -156,13 +156,13 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
     }
 
     /**
-     * Gets the value of the {@link #myObsTree} field.
+     * Gets the value of the {@link #mySelectedTreeNode} field.
      *
-     * @return the value stored in the {@link #myObsTree} field.
+     * @return the value stored in the {@link #mySelectedTreeNode} field.
      */
     @SuppressWarnings("rawtypes")
     public ObjectProperty<TreeView> getMyObsTree()
     {
-        return myObsTree;
+        return mySelectedTreeNode;
     }
 }

@@ -45,14 +45,14 @@ public class IconCustomizerDialog extends JFXDialog
      * Wraps the IconCustomizerPane into a java swing window.
      *
      * @param owner the parent window.
-     * @param thePanelModel the model for the overall UI.
+     * @param panelModel the model for the overall UI.
      */
-    public IconCustomizerDialog(Window owner, PanelModel thePanelModel)
+    public IconCustomizerDialog(Window owner, PanelModel panelModel)
     {
         super(owner, "Customize an Icon");
-        myPanelModel = thePanelModel;
-        myIconRegistry = thePanelModel.getIconRegistry();
-        IconCustomizerPane pane = new IconCustomizerPane(owner, thePanelModel);
+        myPanelModel = panelModel;
+        myIconRegistry = panelModel.getIconRegistry();
+        IconCustomizerPane pane = new IconCustomizerPane(owner, panelModel);
         setMinimumSize(new Dimension(450, 550));
         setLocationRelativeTo(owner);
         setResizable(false);

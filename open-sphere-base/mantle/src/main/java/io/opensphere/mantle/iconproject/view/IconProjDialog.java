@@ -34,18 +34,18 @@ public class IconProjDialog extends JFXDialog
      * @param tb the toolbox for registry items.
      * @param showCancel the boolean to toggle the JFX Dialog to show or not
      *            show the cancel option.
-     * @param theMulti the option to enable or disable selecting multiple icons.
+     * @param multiSelectEnabled the option to enable or disable selecting multiple icons.
      */
 
     @SuppressWarnings("unchecked")
-    public IconProjDialog(Window owner, Toolbox tb, boolean showCancel, boolean theMulti)
+    public IconProjDialog(Window owner, Toolbox tb, boolean showCancel, boolean multiSelectEnabled)
     {
         super(owner, "Icon Manager", showCancel);
         myToolbox = tb;
         myPanelModel = new PanelModel(myToolbox);
         myPanelModel.setOwner(owner);
         myPanelModel.setIconRegistry(MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry());
-        myViewModel.setMultiSelectEnbled(theMulti);
+        myViewModel.setMultiSelectEnabled(multiSelectEnabled);
         myPanelModel.setViewModel(myViewModel);
         setMinimumSize(new Dimension(800, 600));
         setSize(875, 600);
@@ -94,11 +94,11 @@ public class IconProjDialog extends JFXDialog
         /**
          * Creates subpannels for UI.
          *
-         * @param thePanelModel the model used for the UI.
+         * @param panelModel the model used for the UI.
          */
-        public IconProjView(PanelModel thePanelModel)
+        public IconProjView(PanelModel panelModel)
         {
-            myPanelModel = thePanelModel;
+            myPanelModel = panelModel;
             myViewModel = myPanelModel.getViewModel();
 
             myMainPanel = new MainPanel(myPanelModel);
@@ -122,7 +122,7 @@ public class IconProjDialog extends JFXDialog
     /**
      * Gets the model.
      *
-     * @return myPanelModel the model used for the UI.
+     * @return the model used for the UI.
      */
     public PanelModel getMyPanelModel()
     {

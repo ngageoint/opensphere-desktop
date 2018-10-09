@@ -29,10 +29,10 @@ public class TreeBuilder extends TreeItem<String>
     private final IconRegistry myIconRegistry;
 
     /** The object that holds main treeItem info. */
-    private DefaultIconRecordTreeItemObject iconTreeObject;
+    private DefaultIconRecordTreeItemObject myIconTreeObject;
 
     /** The icon record map with the collection name string as the key and the list of the icon record as the value. */
-    private final Map<String, List<IconRecord>> recordMap = new HashMap<>();
+    private final Map<String, List<IconRecord>> myRecordMap = new HashMap<>();
 
     /** The model for the main panel. */
     private final PanelModel myPanelModel;
@@ -43,12 +43,12 @@ public class TreeBuilder extends TreeItem<String>
      * sub-category, and icon record. The user object for each leaf-node is the
      * {@link IconRecordTreeNodeUserObject}
      *
-     * @param thePanelModel the model for the main panel
+     * @param panelModel the model for the main panel
      * @param filter the filter for selecting records to be included.
      */
-    public TreeBuilder(PanelModel thePanelModel, Predicate<IconRecord> filter)
+    public TreeBuilder(PanelModel panelModel, Predicate<IconRecord> filter)
     {
-        myPanelModel = thePanelModel;
+        myPanelModel = panelModel;
         myIconRegistry = myPanelModel.getIconRegistry();
 
         List<IconRecord> records = myIconRegistry.getIconRecords(filter);
@@ -123,41 +123,41 @@ public class TreeBuilder extends TreeItem<String>
                 if (subCatList.remove(defaultSubCat))
                 {
                     List<IconRecord> defaultRecList = subToRecListMap.get(defaultSubCat);
-                    iconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(mainNode, collection, defaultRecList,
+                    myIconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(mainNode, collection, defaultRecList,
                             IconRecordTreeItemUserObject.NameType.COLLECTION, null);
-                    recordMap.put(collection, iconTreeObject.getRecords(true));
+                    myRecordMap.put(collection, myIconTreeObject.getRecords(true));
                 }
                 else
                 {
-                    iconTreeObject = DefaultIconRecordTreeItemObject.createFolderNode(mainNode, collection,
+                    myIconTreeObject = DefaultIconRecordTreeItemObject.createFolderNode(mainNode, collection,
                             IconRecordTreeItemUserObject.NameType.COLLECTION, null);
-                    recordMap.put(collection, iconTreeObject.getRecords(true));
+                    myRecordMap.put(collection, myIconTreeObject.getRecords(true));
                 }
 
-                getChildren().add(iconTreeObject.getMyTreeItem().get());
+                getChildren().add(myIconTreeObject.getMyTreeItem().get());
                 for (String subCat : subCatList)
                 {
                     TreeItem<String> depNode = new TreeItem<>();
-                    iconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(depNode, subCat, subToRecListMap.get(subCat),
+                    myIconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(depNode, subCat, subToRecListMap.get(subCat),
                             IconRecordTreeItemUserObject.NameType.SUBCATEGORY, collection);
-                    mainNode.getChildren().add(iconTreeObject.getMyTreeItem().get());
-                    recordMap.put(subCat, iconTreeObject.getRecords(true));
-                    ArrayList<IconRecord> test = new ArrayList<>(recordMap.get(collection));
-                    test.addAll(iconTreeObject.getRecords(true));
-                    recordMap.put(collection, test);
+                    mainNode.getChildren().add(myIconTreeObject.getMyTreeItem().get());
+                    myRecordMap.put(subCat, myIconTreeObject.getRecords(true));
+                    ArrayList<IconRecord> test = new ArrayList<>(myRecordMap.get(collection));
+                    test.addAll(myIconTreeObject.getRecords(true));
+                    myRecordMap.put(collection, test);
                 }
             }
         }
-        myPanelModel.setTreeObject(iconTreeObject);
+        myPanelModel.setTreeObject(myIconTreeObject);
     }
 
     /**
      * Gets the record map.
      *
-     * @return the map of collection, iconrecord lists
+     * @return the record map
      */
     public Map<String, List<IconRecord>> getRecordMap()
     {
-        return recordMap;
+        return myRecordMap;
     }
 }

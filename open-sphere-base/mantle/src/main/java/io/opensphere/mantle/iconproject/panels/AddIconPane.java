@@ -48,7 +48,7 @@ public class AddIconPane extends BorderPane
     /**
      * Gets the current collection name pane.
      *
-     * @return myCollectionNamePane the collection name input pane
+     * @return the collection name input pane
      */
     public CollectNamesPane getCollectionNamePane()
     {
@@ -68,7 +68,7 @@ public class AddIconPane extends BorderPane
     /**
      * Gets the current sub collection pane.
      *
-     * @return mySubCollectPane the sub collection name input pane.
+     * @return the sub collection name input pane.
      */
     public SubCollectPane getSubCollectPane()
     {

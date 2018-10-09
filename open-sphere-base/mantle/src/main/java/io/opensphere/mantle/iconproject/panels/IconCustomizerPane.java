@@ -131,7 +131,7 @@ public class IconCustomizerPane extends BorderPane
 
         myColorPicker = new ColorPicker();
 
-        myColorPicker.setOnAction((event) ->
+        myColorPicker.setOnAction(event ->
         {
             myColorPicker.show();
             myColor = myColorPicker.getValue();
@@ -227,7 +227,7 @@ public class IconCustomizerPane extends BorderPane
     /**
      * Creates the ImageView which renders the selected icon.
      *
-     * @return the iconDisplayer the Hbox containing the icon.
+     * @return the Hbox containing the icon.
      */
     private HBox createImageView()
     {

@@ -44,7 +44,7 @@ public class TopMenuBar extends HBox
     private final RadioButton myGridView = new RadioButton();
 
     /** The toggle group comprised of the two view styles. */
-    private final ToggleGroup mytoggleGroup = new ToggleGroup();
+    private final ToggleGroup myToggleGroup = new ToggleGroup();
 
     /** The bar containing the filter functionality. */
     private ButtonBar mySearchBar = new ButtonBar();
@@ -144,9 +144,9 @@ public class TopMenuBar extends HBox
     {
         ButtonBar theViewToggle = new ButtonBar();
         myListView.setText("List");
-        myListView.setToggleGroup(mytoggleGroup);
+        myListView.setToggleGroup(myToggleGroup);
         myGridView.setText("Grid");
-        myGridView.setToggleGroup(mytoggleGroup);
+        myGridView.setToggleGroup(myToggleGroup);
         myGridView.setSelected(true);
 
         theViewToggle.getButtons().addAll(myViewLabel, myListView, myGridView);

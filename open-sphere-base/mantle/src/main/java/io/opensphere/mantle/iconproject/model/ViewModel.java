@@ -24,17 +24,17 @@ public class ViewModel
     /**
      * Sets the top menu bar.
      *
-     * @param theTopMenuBar the menu bar.
+     * @param topMenuBar the menu bar.
      */
-    public void setTopMenuBar(TopMenuBar theTopMenuBar)
+    public void setTopMenuBar(TopMenuBar topMenuBar)
     {
-        myTopMenuBar = theTopMenuBar;
+        myTopMenuBar = topMenuBar;
     }
 
     /**
      * Gets the top menu bar.
      *
-     * @return myTopMenuBar the menu bar.
+     * @return the menu bar.
      */
     public TopMenuBar getTopMenuBar()
     {
@@ -44,17 +44,17 @@ public class ViewModel
     /**
      * Sets the main display panel.
      *
-     * @param theMainPanel the main split panel display.
+     * @param mainPanel the main split panel display.
      */
-    public void setMainPanel(MainPanel theMainPanel)
+    public void setMainPanel(MainPanel mainPanel)
     {
-        myMainPanel = theMainPanel;
+        myMainPanel = mainPanel;
     }
 
     /**
      * Gets the main panel.
      *
-     * @return myMainPanel the curent main panel.
+     * @return the current main panel.
      */
     public MainPanel getMainPanel()
     {
@@ -74,10 +74,10 @@ public class ViewModel
     /**
      * Sets the ability to enable or disable multiple icon selection.
      *
-     * @param theMulti the inputted choice.
+     * @param multiSelectEnabled the inputted choice.
      */
-    public void setMultiSelectEnbled(boolean theMulti)
+    public void setMultiSelectEnabled(boolean multiSelectEnabled)
     {
-        myMultiSelectEnabled = theMulti;
+        myMultiSelectEnabled = multiSelectEnabled;
     }
 }

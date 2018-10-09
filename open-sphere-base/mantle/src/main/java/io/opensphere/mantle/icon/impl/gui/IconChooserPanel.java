@@ -233,16 +233,16 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         JScrollPane treeSP = new JScrollPane(myTree);
         myTreePanel.add(treeSP, BorderLayout.CENTER);
 
-        JSplitPane jsp = new JSplitPane();
-        jsp.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-        jsp.setLeftComponent(myTreePanel);
+        JSplitPane splitPane = new JSplitPane();
+        splitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+        splitPane.setLeftComponent(myTreePanel);
 
         myGridPanel = new JPanel(new BorderLayout());
-        JScrollPane gridSP = new JScrollPane(myGridPanel);
-        gridSP.getVerticalScrollBar().setUnitIncrement(30);
-        jsp.setRightComponent(gridSP);
+        JScrollPane gridScrollPane = new JScrollPane(myGridPanel);
+        gridScrollPane.getVerticalScrollBar().setUnitIncrement(30);
+        splitPane.setRightComponent(gridScrollPane);
 
-        add(jsp, BorderLayout.CENTER);
+        add(splitPane, BorderLayout.CENTER);
 
         myTree.addTreeSelectionListener(this);
         myTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -287,10 +287,10 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
     {
         if (!mySelectedRecords.isEmpty())
         {
-            final List<RecButton> btList = New.list(mySelectedButtons);
+            final List<RecButton> buttonList = New.list(mySelectedButtons);
             EventQueueUtilities.runOnEDT(() ->
             {
-                for (RecButton bt : btList)
+                for (RecButton bt : buttonList)
                 {
                     bt.setSelectionUIState(false);
                 }

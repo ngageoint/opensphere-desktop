@@ -1,7 +1,5 @@
 package io.opensphere.mantle.iconproject.view;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 
@@ -24,23 +22,9 @@ public class TreePopupMenu extends ContextMenu
         TreePopupMenuImpl selector = new TreePopupMenuImpl(panelModel);
 
         MenuItem removeAction = new MenuItem("Remove Items");
-        removeAction.setOnAction(new EventHandler<ActionEvent>()
-        {
-            @Override
-            public void handle(ActionEvent event)
-            {
-                selector.remove(false);
-            }
-        });
+        removeAction.setOnAction(event ->  selector.remove(false));
         MenuItem deleteAction = new MenuItem("Delete Items");
-        deleteAction.setOnAction(new EventHandler<ActionEvent>()
-        {
-            @Override
-            public void handle(ActionEvent event)
-            {
-                selector.remove(true);
-            }
-        });
+        deleteAction.setOnAction(event -> selector.remove(true));
         getItems().addAll(removeAction, deleteAction);
     }
 }

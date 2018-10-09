@@ -36,7 +36,7 @@ public class IconManagerPrefs
     /**
      * Gets the tilewidth for display icons in the Icon Manager.
      *
-     * @return myTileWidth the set value.
+     * @return the set value.
      */
     public IntegerProperty getIconWidth()
     {

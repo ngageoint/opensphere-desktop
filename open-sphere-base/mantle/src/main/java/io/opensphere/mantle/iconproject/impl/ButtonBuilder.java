@@ -15,16 +15,16 @@ public class ButtonBuilder extends Button
      * Creates a new button with the supplied parameters.
      *
      * @param label the text to display inside the button.
-     * @param iconchoice the (optional) icon to display with the menu item.
+     * @param useIcon the (optional) icon to display with the menu item.
      */
-    public ButtonBuilder(String label, boolean iconchoice)
+    public ButtonBuilder(String label, boolean useIcon)
     {
         super();
         myLabel = label;
         setText(myLabel);
         setTextOverrun(javafx.scene.control.OverrunStyle.CLIP);
 
-        if (iconchoice)
+        if (useIcon)
         {
             getStyleClass().remove("button");
             setGraphic(new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("alert.png"))));
@@ -38,8 +38,7 @@ public class ButtonBuilder extends Button
      */
     public void lockButton(Button inputButton)
     {
-        Button theButton = inputButton;
-        AnchorPane.setLeftAnchor(theButton, 0.);
-        AnchorPane.setRightAnchor(theButton, 0.);
+        AnchorPane.setLeftAnchor(inputButton, 0.);
+        AnchorPane.setRightAnchor(inputButton, 0.);
     }
 }

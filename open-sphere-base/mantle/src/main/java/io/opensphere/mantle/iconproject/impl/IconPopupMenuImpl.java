@@ -26,11 +26,11 @@ public class IconPopupMenuImpl
     /**
      * The constructor for IconPopupMenuImpl.
      *
-     * @param thePanelModel the model used to get registry items.
+     * @param panelModel the model used to get registry items.
      */
-    public IconPopupMenuImpl(PanelModel thePanelModel)
+    public IconPopupMenuImpl(PanelModel panelModel)
     {
-        myPanelModel = thePanelModel;
+        myPanelModel = panelModel;
         mySelectedIcon = myPanelModel.getSelectedRecord().get();
     }
 

@@ -12,7 +12,6 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.MenuBarRegistry;
 import io.opensphere.core.quantify.Quantify;
 import io.opensphere.mantle.data.geom.style.dialog.VisualizationStyleControlDialog;
-import io.opensphere.mantle.icon.impl.gui.IconManagerFrame;
 import io.opensphere.mantle.iconproject.view.IconProjDialog;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.mantle.util.TextViewDialog;

@@ -35,12 +35,12 @@ public class AddIconDialog extends JFXDialog
      * name choices.
      *
      * @param owner the calling window.
-     * @param thePanelModel the model.
+     * @param panelModel the model.
      */
-    public AddIconDialog(Window owner, PanelModel thePanelModel)
+    public AddIconDialog(Window owner, PanelModel panelModel)
     {
         super(owner, "Add Icon From Folder", true);
-        myPanelModel = thePanelModel;
+        myPanelModel = panelModel;
         myOwner = owner;
         setMinimumSize(new Dimension(400, 250));
         setLocationRelativeTo(owner);

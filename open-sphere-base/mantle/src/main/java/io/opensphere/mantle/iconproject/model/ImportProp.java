@@ -23,7 +23,7 @@ public class ImportProp
     /**
      * Gets the unique SubCollection chosen by the user during icon importation.
      *
-     * @return mySubCollectionName the chosen SubCollection Name.
+     * @return the chosen SubCollection Name.
      */
     public StringProperty getSubCollectionName()
     {
@@ -33,7 +33,7 @@ public class ImportProp
     /**
      * Gets the list of SubCollection names.
      *
-     * @return mySubCollectionList the List of SubCollection Names that are
+     * @return the List of SubCollection Names that are
      *         attached to {@link #myCollectionName}.
      */
     public Set<String> getSubCollectionList()
@@ -45,7 +45,7 @@ public class ImportProp
      * Sets the SubCollection Names that come from the parent.
      * {@link #myCollectionName.}
      *
-     * @param theSubCollectionList the List containing the sub collection names
+     * @param the List containing the sub collection names
      *            as strings.
      */
     public void setSubCollectionList(Set<String> theSubCollectionList)
@@ -56,7 +56,7 @@ public class ImportProp
     /**
      * Returns one unique collection name, chosen or created by the User.
      *
-     * @return myCollectionName
+     * @return the collection name
      */
     public StringProperty getCollectionName()
     {

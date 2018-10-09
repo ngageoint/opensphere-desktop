@@ -62,7 +62,7 @@ public class IconBuilderPane extends BorderPane
     private final Window myOwner;
 
     /** The spinner width. */
-    private final double spinwidth = 60.0;
+    private final double mySpinerWidth = 60.0;
 
     /**
      * Constructs a new IconBuilderPane.
@@ -102,7 +102,7 @@ public class IconBuilderPane extends BorderPane
         AnchorPane box = new AnchorPane();
 
         Spinner<Number> sizeSpinner = new Spinner<>(12, 200, 200, 10);
-        sizeSpinner.setPrefWidth(spinwidth);
+        sizeSpinner.setPrefWidth(mySpinerWidth);
         sizeSpinner.getValueFactory().valueProperty().bindBidirectional(mySize);
         sizeSpinner.setEditable(true);
 
@@ -149,7 +149,7 @@ public class IconBuilderPane extends BorderPane
         slider.valueProperty().bindBidirectional(myRotation);
 
         Spinner<Number> spinner = new Spinner<>(-180, 180, 0);
-        spinner.setPrefWidth(spinwidth);
+        spinner.setPrefWidth(mySpinerWidth);
         spinner.getValueFactory().valueProperty().bindBidirectional(myRotation);
         spinner.setEditable(true);
 
@@ -177,12 +177,12 @@ public class IconBuilderPane extends BorderPane
         controlBox.setAlignment(Pos.BASELINE_LEFT);
 
         Spinner<Number> xSpinner = new Spinner<>(-100, 100, 0, 10);
-        xSpinner.setPrefWidth(spinwidth);
+        xSpinner.setPrefWidth(mySpinerWidth);
         xSpinner.getValueFactory().valueProperty().bindBidirectional(myXPos);
         xSpinner.setEditable(true);
 
         Spinner<Number> ySpinner = new Spinner<>(0, 200, 0, 10);
-        ySpinner.setPrefWidth(spinwidth);
+        ySpinner.setPrefWidth(mySpinerWidth);
         ySpinner.getValueFactory().valueProperty().bindBidirectional(myYPos);
         ySpinner.setEditable(true);
 
