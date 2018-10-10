@@ -19,7 +19,6 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.KeyStoreBuilderParameters;
 import javax.net.ssl.ManagerFactoryParameters;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocket;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509ExtendedKeyManager;
@@ -469,14 +468,10 @@ public class DefaultHttpClient implements CloseableHttpClient
             cachingHostNameVerifier = new CachingHostNameVerifier(sslConfig.getHostNameVerifier());
             final X509HostnameVerifier hostNameVerifier = new X509HostNameVerifierCourtRoom(
                     SSLSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER, cachingHostNameVerifier);
-            final SSLSocketCustomizer customizer = new SSLSocketCustomizer()
+            final SSLSocketCustomizer customizer = socket ->
             {
-                @Override
-                public void customize(final SSLSocket socket) throws IOException
-                {
-                    socket.setEnabledProtocols(sslConfig.getEnabledProtocols());
-                    socket.setEnabledCipherSuites(sslConfig.getEnabledCipherSuites());
-                }
+                socket.setEnabledProtocols(sslConfig.getEnabledProtocols());
+                socket.setEnabledCipherSuites(sslConfig.getEnabledCipherSuites());
             };
             final SSLSocketFactory socketFactory = new EnhancedSSLSocketFactory(sslContext, hostNameVerifier, customizer);
             final Scheme https = new Scheme("https", 443, socketFactory);

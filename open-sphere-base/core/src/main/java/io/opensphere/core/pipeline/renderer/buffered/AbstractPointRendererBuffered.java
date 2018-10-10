@@ -27,7 +27,7 @@ import io.opensphere.core.viewer.impl.MapContext;
  * @param <T> The geometry type.
  */
 public abstract class AbstractPointRendererBuffered<T extends AbstractRenderableGeometry> extends AbstractPointRenderer<T>
-        implements TimeFilteringRenderer
+implements TimeFilteringRenderer
 {
     /** Bits used for {@link GL2#glPushAttrib(int)}. */
     private static final int ATTRIB_BITS = GL2.GL_ENABLE_BIT | GL.GL_COLOR_BUFFER_BIT | GL2.GL_CURRENT_BIT | GL2.GL_POINT_BIT
@@ -138,11 +138,8 @@ public abstract class AbstractPointRendererBuffered<T extends AbstractRenderable
         {
             return false;
         }
-        else
-        {
-            myGroupTimeSpan = span;
-            return true;
-        }
+        myGroupTimeSpan = span;
+        return true;
     }
 
     @Override

@@ -67,18 +67,15 @@ public final class JNLPLaunch
                     {
                         break;
                     }
+                    if (index == 0)
+                    {
+                        dir = new File(dir.getPath() + Integer.toString(++index));
+                    }
                     else
                     {
-                        if (index == 0)
-                        {
-                            dir = new File(dir.getPath() + Integer.toString(++index));
-                        }
-                        else
-                        {
-                            dir = new File(dir.getPath().replace(Integer.toString(index), Integer.toString(++index)));
-                        }
-                        LOGGER.warn("Failed to delete directory " + dir + "; trying " + dir);
+                        dir = new File(dir.getPath().replace(Integer.toString(index), Integer.toString(++index)));
                     }
+                    LOGGER.warn("Failed to delete directory " + dir + "; trying " + dir);
                 }
             }
 

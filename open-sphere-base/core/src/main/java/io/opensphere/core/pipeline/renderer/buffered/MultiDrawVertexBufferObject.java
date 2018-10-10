@@ -4,7 +4,6 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
-
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.pipeline.util.RenderContext;
 
@@ -62,9 +61,6 @@ public class MultiDrawVertexBufferObject extends VertexBufferObject
             rc.getGL2().glMultiDrawArrays(drawMode, myIndexBuffer, mySizeBuffer, myIndexBuffer.remaining());
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 }

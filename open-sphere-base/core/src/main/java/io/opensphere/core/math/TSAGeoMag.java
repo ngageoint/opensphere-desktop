@@ -10,7 +10,7 @@ provided that this Notice and any statement of authorship are
 reproduced on all copies.  Neither the U.S. Government nor LANS
 makes any warranty, express or implied, or assumes any liability
 or responsibility for the use of this software.
-*/
+ */
 
 /*           License Statement from the NOAA
 The WMM source code is in the public domain and not licensed or
@@ -20,7 +20,7 @@ copyrighted works consisting predominantly of the material produced
 by U.S. government agencies must provide notice with such work(s)
 identifying the U.S. Government material incorporated and stating
 that such material is not subject to copyright protection.
-*/
+ */
 
 ////////////////////////////////////////////////////////////////////////////
 //
@@ -236,98 +236,98 @@ public class TSAGeoMag
      *   n, m,      gnm,      hnm,       dgnm,      dhnm
      */
     private final String [] input =
-    {       "    2015.0            WMM-2015        12/15/2014",
-	    "  1  0  -29438.5       0.0       10.7        0.0",
-	    "  1  1   -1501.1    4796.2       17.9      -26.8",
-	    "  2  0   -2445.3       0.0       -8.6        0.0",
-	    "  2  1    3012.5   -2845.6       -3.3      -27.1",
-	    "  2  2    1676.6    -642.0        2.4      -13.3",
-	    "  3  0    1351.1       0.0        3.1        0.0",
-	    "  3  1   -2352.3    -115.3       -6.2        8.4",
-	    "  3  2    1225.6     245.0       -0.4       -0.4",
-	    "  3  3     581.9    -538.3      -10.4        2.3",
-	    "  4  0     907.2       0.0       -0.4        0.0",
-	    "  4  1     813.7     283.4        0.8       -0.6",
-	    "  4  2     120.3    -188.6       -9.2        5.3",
-	    "  4  3    -335.0     180.9        4.0        3.0",
-	    "  4  4      70.3    -329.5       -4.2       -5.3",
-	    "  5  0    -232.6       0.0       -0.2        0.0",
-	    "  5  1     360.1      47.4        0.1        0.4",
-	    "  5  2     192.4     196.9       -1.4        1.6",
-	    "  5  3    -141.0    -119.4        0.0       -1.1",
-	    "  5  4    -157.4      16.1        1.3        3.3",
-	    "  5  5       4.3     100.1        3.8        0.1",
-	    "  6  0      69.5       0.0       -0.5        0.0",
-	    "  6  1      67.4     -20.7       -0.2        0.0",
-	    "  6  2      72.8      33.2       -0.6       -2.2",
-	    "  6  3    -129.8      58.8        2.4       -0.7",
-	    "  6  4     -29.0     -66.5       -1.1        0.1",
-	    "  6  5      13.2       7.3        0.3        1.0",
-	    "  6  6     -70.9      62.5        1.5        1.3",
-	    "  7  0      81.6       0.0        0.2        0.0",
-	    "  7  1     -76.1     -54.1       -0.2        0.7",
-	    "  7  2      -6.8     -19.4       -0.4        0.5",
-	    "  7  3      51.9       5.6        1.3       -0.2",
-	    "  7  4      15.0      24.4        0.2       -0.1",
-	    "  7  5       9.3       3.3       -0.4       -0.7",
-	    "  7  6      -2.8     -27.5       -0.9        0.1",
-	    "  7  7       6.7      -2.3        0.3        0.1",
-	    "  8  0      24.0       0.0        0.0        0.0",
-	    "  8  1       8.6      10.2        0.1       -0.3",
-	    "  8  2     -16.9     -18.1       -0.5        0.3",
-	    "  8  3      -3.2      13.2        0.5        0.3",
-	    "  8  4     -20.6     -14.6       -0.2        0.6",
-	    "  8  5      13.3      16.2        0.4       -0.1",
-	    "  8  6      11.7       5.7        0.2       -0.2",
-	    "  8  7     -16.0      -9.1       -0.4        0.3",
-	    "  8  8      -2.0       2.2        0.3        0.0",
-	    "  9  0       5.4       0.0        0.0        0.0",
-	    "  9  1       8.8     -21.6       -0.1       -0.2",
-	    "  9  2       3.1      10.8       -0.1       -0.1",
-	    "  9  3      -3.1      11.7        0.4       -0.2",
-	    "  9  4       0.6      -6.8       -0.5        0.1",
-	    "  9  5     -13.3      -6.9       -0.2        0.1",
-	    "  9  6      -0.1       7.8        0.1        0.0",
-	    "  9  7       8.7       1.0        0.0       -0.2",
-	    "  9  8      -9.1      -3.9       -0.2        0.4",
-	    "  9  9     -10.5       8.5       -0.1        0.3",
-	    " 10  0      -1.9       0.0        0.0        0.0",
-	    " 10  1      -6.5       3.3        0.0        0.1",
-	    " 10  2       0.2      -0.3       -0.1       -0.1",
-	    " 10  3       0.6       4.6        0.3        0.0",
-	    " 10  4      -0.6       4.4       -0.1        0.0",
-	    " 10  5       1.7      -7.9       -0.1       -0.2",
-	    " 10  6      -0.7      -0.6       -0.1        0.1",
-	    " 10  7       2.1      -4.1        0.0       -0.1",
-	    " 10  8       2.3      -2.8       -0.2       -0.2",
-	    " 10  9      -1.8      -1.1       -0.1        0.1",
-	    " 10 10      -3.6      -8.7       -0.2       -0.1",
-	    " 11  0       3.1       0.0        0.0        0.0",
-	    " 11  1      -1.5      -0.1        0.0        0.0",
-	    " 11  2      -2.3       2.1       -0.1        0.1",
-	    " 11  3       2.1      -0.7        0.1        0.0",
-	    " 11  4      -0.9      -1.1        0.0        0.1",
-	    " 11  5       0.6       0.7        0.0        0.0",
-	    " 11  6      -0.7      -0.2        0.0        0.0",
-	    " 11  7       0.2      -2.1        0.0        0.1",
-	    " 11  8       1.7      -1.5        0.0        0.0",
-	    " 11  9      -0.2      -2.5        0.0       -0.1",
-	    " 11 10       0.4      -2.0       -0.1        0.0",
-	    " 11 11       3.5      -2.3       -0.1       -0.1",
-	    " 12  0      -2.0       0.0        0.1        0.0",
-	    " 12  1      -0.3      -1.0        0.0        0.0",
-	    " 12  2       0.4       0.5        0.0        0.0",
-	    " 12  3       1.3       1.8        0.1       -0.1",
-	    " 12  4      -0.9      -2.2       -0.1        0.0",
-	    " 12  5       0.9       0.3        0.0        0.0",
-	    " 12  6       0.1       0.7        0.1        0.0",
-	    " 12  7       0.5      -0.1        0.0        0.0",
-	    " 12  8      -0.4       0.3        0.0        0.0",
-	    " 12  9      -0.4       0.2        0.0        0.0",
-	    " 12 10       0.2      -0.9        0.0        0.0",
-	    " 12 11      -0.9      -0.2        0.0        0.0",
-	    " 12 12       0.0       0.7        0.0        0.0",
-    };
+        {       "    2015.0            WMM-2015        12/15/2014",
+            "  1  0  -29438.5       0.0       10.7        0.0",
+            "  1  1   -1501.1    4796.2       17.9      -26.8",
+            "  2  0   -2445.3       0.0       -8.6        0.0",
+            "  2  1    3012.5   -2845.6       -3.3      -27.1",
+            "  2  2    1676.6    -642.0        2.4      -13.3",
+            "  3  0    1351.1       0.0        3.1        0.0",
+            "  3  1   -2352.3    -115.3       -6.2        8.4",
+            "  3  2    1225.6     245.0       -0.4       -0.4",
+            "  3  3     581.9    -538.3      -10.4        2.3",
+            "  4  0     907.2       0.0       -0.4        0.0",
+            "  4  1     813.7     283.4        0.8       -0.6",
+            "  4  2     120.3    -188.6       -9.2        5.3",
+            "  4  3    -335.0     180.9        4.0        3.0",
+            "  4  4      70.3    -329.5       -4.2       -5.3",
+            "  5  0    -232.6       0.0       -0.2        0.0",
+            "  5  1     360.1      47.4        0.1        0.4",
+            "  5  2     192.4     196.9       -1.4        1.6",
+            "  5  3    -141.0    -119.4        0.0       -1.1",
+            "  5  4    -157.4      16.1        1.3        3.3",
+            "  5  5       4.3     100.1        3.8        0.1",
+            "  6  0      69.5       0.0       -0.5        0.0",
+            "  6  1      67.4     -20.7       -0.2        0.0",
+            "  6  2      72.8      33.2       -0.6       -2.2",
+            "  6  3    -129.8      58.8        2.4       -0.7",
+            "  6  4     -29.0     -66.5       -1.1        0.1",
+            "  6  5      13.2       7.3        0.3        1.0",
+            "  6  6     -70.9      62.5        1.5        1.3",
+            "  7  0      81.6       0.0        0.2        0.0",
+            "  7  1     -76.1     -54.1       -0.2        0.7",
+            "  7  2      -6.8     -19.4       -0.4        0.5",
+            "  7  3      51.9       5.6        1.3       -0.2",
+            "  7  4      15.0      24.4        0.2       -0.1",
+            "  7  5       9.3       3.3       -0.4       -0.7",
+            "  7  6      -2.8     -27.5       -0.9        0.1",
+            "  7  7       6.7      -2.3        0.3        0.1",
+            "  8  0      24.0       0.0        0.0        0.0",
+            "  8  1       8.6      10.2        0.1       -0.3",
+            "  8  2     -16.9     -18.1       -0.5        0.3",
+            "  8  3      -3.2      13.2        0.5        0.3",
+            "  8  4     -20.6     -14.6       -0.2        0.6",
+            "  8  5      13.3      16.2        0.4       -0.1",
+            "  8  6      11.7       5.7        0.2       -0.2",
+            "  8  7     -16.0      -9.1       -0.4        0.3",
+            "  8  8      -2.0       2.2        0.3        0.0",
+            "  9  0       5.4       0.0        0.0        0.0",
+            "  9  1       8.8     -21.6       -0.1       -0.2",
+            "  9  2       3.1      10.8       -0.1       -0.1",
+            "  9  3      -3.1      11.7        0.4       -0.2",
+            "  9  4       0.6      -6.8       -0.5        0.1",
+            "  9  5     -13.3      -6.9       -0.2        0.1",
+            "  9  6      -0.1       7.8        0.1        0.0",
+            "  9  7       8.7       1.0        0.0       -0.2",
+            "  9  8      -9.1      -3.9       -0.2        0.4",
+            "  9  9     -10.5       8.5       -0.1        0.3",
+            " 10  0      -1.9       0.0        0.0        0.0",
+            " 10  1      -6.5       3.3        0.0        0.1",
+            " 10  2       0.2      -0.3       -0.1       -0.1",
+            " 10  3       0.6       4.6        0.3        0.0",
+            " 10  4      -0.6       4.4       -0.1        0.0",
+            " 10  5       1.7      -7.9       -0.1       -0.2",
+            " 10  6      -0.7      -0.6       -0.1        0.1",
+            " 10  7       2.1      -4.1        0.0       -0.1",
+            " 10  8       2.3      -2.8       -0.2       -0.2",
+            " 10  9      -1.8      -1.1       -0.1        0.1",
+            " 10 10      -3.6      -8.7       -0.2       -0.1",
+            " 11  0       3.1       0.0        0.0        0.0",
+            " 11  1      -1.5      -0.1        0.0        0.0",
+            " 11  2      -2.3       2.1       -0.1        0.1",
+            " 11  3       2.1      -0.7        0.1        0.0",
+            " 11  4      -0.9      -1.1        0.0        0.1",
+            " 11  5       0.6       0.7        0.0        0.0",
+            " 11  6      -0.7      -0.2        0.0        0.0",
+            " 11  7       0.2      -2.1        0.0        0.1",
+            " 11  8       1.7      -1.5        0.0        0.0",
+            " 11  9      -0.2      -2.5        0.0       -0.1",
+            " 11 10       0.4      -2.0       -0.1        0.0",
+            " 11 11       3.5      -2.3       -0.1       -0.1",
+            " 12  0      -2.0       0.0        0.1        0.0",
+            " 12  1      -0.3      -1.0        0.0        0.0",
+            " 12  2       0.4       0.5        0.0        0.0",
+            " 12  3       1.3       1.8        0.1       -0.1",
+            " 12  4      -0.9      -2.2       -0.1        0.0",
+            " 12  5       0.9       0.3        0.0        0.0",
+            " 12  6       0.1       0.7        0.1        0.0",
+            " 12  7       0.5      -0.1        0.0        0.0",
+            " 12  8      -0.4       0.3        0.0        0.0",
+            " 12  9      -0.4       0.2        0.0        0.0",
+            " 12 10       0.2      -0.9        0.0        0.0",
+            " 12 11      -0.9      -0.2        0.0        0.0",
+            " 12 12       0.0       0.7        0.0        0.0",
+        };
 
     /**
      *	Geodetic altitude in km. An input,
@@ -460,8 +460,8 @@ public class TSAGeoMag
     private double bx,by,bz,bh;
     private double re,a2,b2,c2,a4,b4,c4;
     private double r,d,ca,sa,ct, st;  // even though these only occur in one method, they must be
-                                      // created here, or won't have correct values calculated
-    				      // These values are only recalculated if the altitude changes.
+    // created here, or won't have correct values calculated
+    // These values are only recalculated if the altitude changes.
 
     //
     ////////////////////////////////////////////////////////////////////////////
@@ -583,13 +583,13 @@ public class TSAGeoMag
         catch(FileNotFoundException e)
         {
             String msg = "\nNOTICE      NOTICE      NOTICE      \n" +
-            		"WMMCOF file not found in TSAGeoMag.InitModel()\n" +
-            		"The input file WMM.COF was not found in the same\n" +
-            		"directory as the application.\n" +
-            		"The magnetic field components are set to internal values.\n";
+                    "WMMCOF file not found in TSAGeoMag.InitModel()\n" +
+                    "The input file WMM.COF was not found in the same\n" +
+                    "directory as the application.\n" +
+                    "The magnetic field components are set to internal values.\n";
             logger.warn(msg, e);
 
-/*            String message = new String(e.toString());
+            /*            String message = new String(e.toString());
 
             System.out.println("\nNOTICE      NOTICE      NOTICE      ");
             System.out.println("Error:  " + message);
@@ -597,21 +597,21 @@ public class TSAGeoMag
             System.out.println("The input file WMM.COF was not found in the same");
             System.out.println("directory as the application.");
             System.out.println("The magnetic field components are set to internal values.");
-*/
+             */
             setCoeff();
         }
 
         catch(IOException e)
         {
             String msg = "\nNOTICE      NOTICE      NOTICE      \n" +
-			"Problem reading the WMMCOF file in TSAGeoMag.InitModel()\n" +
-			"The input file WMM.COF was found, but there was a problem \n" +
-			"reading the data.\n" +
-			"The magnetic field components are set to internal values.";
+                    "Problem reading the WMMCOF file in TSAGeoMag.InitModel()\n" +
+                    "The input file WMM.COF was found, but there was a problem \n" +
+                    "reading the data.\n" +
+                    "The magnetic field components are set to internal values.";
 
             logger.warn(msg, e);
 
-/*            String message = new String(e.toString());
+            /*            String message = new String(e.toString());
             System.out.println("\nNOTICE      NOTICE      NOTICE      ");
             System.out.println("Error:  " + message);
             System.out.println("Error in TSAGeoMag.InitModel()");
@@ -619,7 +619,7 @@ public class TSAGeoMag
             System.out.println("reading the data.");
             System.out.println("The magnetic field components are set to internal values.");
 
-*/
+             */
             setCoeff();
         }
         // CONVERT SCHMIDT NORMALIZED GAUSS COEFFICIENTS TO UNNORMALIZED
@@ -947,8 +947,8 @@ public class TSAGeoMag
      */
     public double getDeclination( double dlat, double dlong )
     {
-            calcGeoMag( dlat, dlong, defaultDate, defaultAltitude );
-            return  dec;
+        calcGeoMag( dlat, dlong, defaultDate, defaultAltitude );
+        return  dec;
     }
     /**
      *	Returns the declination from the Department of
@@ -965,8 +965,8 @@ public class TSAGeoMag
      */
     public double getDeclination( double dlat, double dlong, double year, double altitude )
     {
-            calcGeoMag( dlat, dlong, year, altitude );
-            return  dec;
+        calcGeoMag( dlat, dlong, year, altitude );
+        return  dec;
     }
     /**
      *	Returns the magnetic field intensity from the
@@ -982,8 +982,8 @@ public class TSAGeoMag
      */
     public double getIntensity( double dlat, double dlong )
     {
-            calcGeoMag( dlat, dlong, defaultDate, defaultAltitude );
-            return  ti;
+        calcGeoMag( dlat, dlong, defaultDate, defaultAltitude );
+        return  ti;
     }
 
     /**
@@ -1000,8 +1000,8 @@ public class TSAGeoMag
      */
     public double getIntensity( double dlat, double dlong, double year, double altitude )
     {
-            calcGeoMag( dlat, dlong, year, altitude );
-            return  ti;
+        calcGeoMag( dlat, dlong, year, altitude );
+        return  ti;
     }
     /**
      *	Returns the horizontal magnetic field intensity from the
@@ -1017,8 +1017,8 @@ public class TSAGeoMag
      */
     public double getHorizontalIntensity( double dlat, double dlong )
     {
-            calcGeoMag( dlat, dlong, defaultDate, defaultAltitude );
-            return  bh;
+        calcGeoMag( dlat, dlong, defaultDate, defaultAltitude );
+        return  bh;
     }
 
     /**
@@ -1035,8 +1035,8 @@ public class TSAGeoMag
      */
     public double getHorizontalIntensity( double dlat, double dlong, double year, double altitude )
     {
-            calcGeoMag( dlat, dlong, year, altitude );
-            return  bh;
+        calcGeoMag( dlat, dlong, year, altitude );
+        return  bh;
     }
     /**
      *	Returns the vertical magnetic field intensity from the
@@ -1052,8 +1052,8 @@ public class TSAGeoMag
      */
     public double getVerticalIntensity( double dlat, double dlong )
     {
-            calcGeoMag( dlat, dlong, defaultDate, defaultAltitude );
-            return  bz;
+        calcGeoMag( dlat, dlong, defaultDate, defaultAltitude );
+        return  bz;
     }
 
     /**
@@ -1070,8 +1070,8 @@ public class TSAGeoMag
      */
     public double getVerticalIntensity( double dlat, double dlong, double year, double altitude )
     {
-            calcGeoMag( dlat, dlong, year, altitude );
-            return  bz;
+        calcGeoMag( dlat, dlong, year, altitude );
+        return  bz;
     }
     /**
      *	Returns the northerly magnetic field intensity from the
@@ -1087,8 +1087,8 @@ public class TSAGeoMag
      */
     public double getNorthIntensity( double dlat, double dlong )
     {
-            calcGeoMag( dlat, dlong, defaultDate, defaultAltitude );
-            return  bx;
+        calcGeoMag( dlat, dlong, defaultDate, defaultAltitude );
+        return  bx;
     }
 
     /**
@@ -1105,8 +1105,8 @@ public class TSAGeoMag
      */
     public double getNorthIntensity( double dlat, double dlong, double year, double altitude )
     {
-            calcGeoMag( dlat, dlong, year, altitude );
-            return  bx;
+        calcGeoMag( dlat, dlong, year, altitude );
+        return  bx;
     }
     /**
      *	Returns the easterly magnetic field intensity from the
@@ -1122,8 +1122,8 @@ public class TSAGeoMag
      */
     public double getEastIntensity( double dlat, double dlong )
     {
-            calcGeoMag( dlat, dlong, defaultDate, defaultAltitude );
-            return  by;
+        calcGeoMag( dlat, dlong, defaultDate, defaultAltitude );
+        return  by;
     }
 
     /**
@@ -1140,8 +1140,8 @@ public class TSAGeoMag
      */
     public double getEastIntensity( double dlat, double dlong, double year, double altitude )
     {
-            calcGeoMag( dlat, dlong, year, altitude );
-            return  by;
+        calcGeoMag( dlat, dlong, year, altitude );
+        return  by;
     }
     /**
      *	Returns the magnetic field dip angle from the
@@ -1157,8 +1157,8 @@ public class TSAGeoMag
      */
     public double getDipAngle( double dlat, double dlong )
     {
-            calcGeoMag( dlat, dlong, defaultDate, defaultAltitude );
-            return  dip;
+        calcGeoMag( dlat, dlong, defaultDate, defaultAltitude );
+        return  dip;
     }
 
     /**
@@ -1175,8 +1175,8 @@ public class TSAGeoMag
      */
     public double getDipAngle( double dlat, double dlong, double year, double altitude )
     {
-            calcGeoMag( dlat, dlong, year, altitude );
-            return  dip;
+        calcGeoMag( dlat, dlong, year, altitude );
+        return  dip;
     }
 
     /**	This method sets the input data to the internal fit coefficents.
@@ -1238,17 +1238,17 @@ public class TSAGeoMag
      */
     public double decimalYear(GregorianCalendar cal)
     {
-	int year = cal.get(Calendar.YEAR);
-	double daysInYear;
-	if(cal.isLeapYear(year))
-	{
-	    daysInYear = 366.0;
-	}
-	else
-	{
-	    daysInYear = 365.0;
-	}
+        int year = cal.get(Calendar.YEAR);
+        double daysInYear;
+        if(cal.isLeapYear(year))
+        {
+            daysInYear = 366.0;
+        }
+        else
+        {
+            daysInYear = 365.0;
+        }
 
-	return year + cal.get(Calendar.DAY_OF_YEAR)/daysInYear;
+        return year + cal.get(Calendar.DAY_OF_YEAR)/daysInYear;
     }
 }

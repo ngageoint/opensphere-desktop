@@ -33,7 +33,7 @@ public abstract class AbstractViewer implements Viewer
     private final Set<Observer> myObservers = Collections.synchronizedSet(new WeakHashSet<Observer>());
 
     /** Generators for viewer trajectories. */
-    private final Map<TrajectoryGeneratorType, TrajectoryGenerator> myTrajectoryGenerators = new HashMap<Viewer.TrajectoryGeneratorType, TrajectoryGenerator>(
+    private final Map<TrajectoryGeneratorType, TrajectoryGenerator> myTrajectoryGenerators = new HashMap<>(
             3);
 
     /**

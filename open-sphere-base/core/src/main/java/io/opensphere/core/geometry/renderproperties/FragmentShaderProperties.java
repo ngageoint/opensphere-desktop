@@ -164,7 +164,7 @@ public interface FragmentShaderProperties extends RenderProperties
 
                 PetrifyableTIntArrayList petrifiedValues = new PetrifyableTIntArrayList(values);
                 petrifiedValues.petrify();
-                col.add(new Pair<String, PetrifyableTIntArrayList>(uniform.getFirstObject(), petrifiedValues));
+                col.add(new Pair<>(uniform.getFirstObject(), petrifiedValues));
             }
             myBooleanUniforms = Collections.unmodifiableCollection(col);
         }
@@ -186,7 +186,7 @@ public interface FragmentShaderProperties extends RenderProperties
 
                 PetrifyableTFloatArrayList petrifiedValues = new PetrifyableTFloatArrayList(uniform.getSecondObject());
                 petrifiedValues.petrify();
-                col.add(new Pair<String, PetrifyableTFloatArrayList>(uniform.getFirstObject(), petrifiedValues));
+                col.add(new Pair<>(uniform.getFirstObject(), petrifiedValues));
             }
             myFloatUniforms = Collections.unmodifiableCollection(col);
         }
@@ -208,7 +208,7 @@ public interface FragmentShaderProperties extends RenderProperties
 
                 PetrifyableTIntArrayList petrifiedValues = new PetrifyableTIntArrayList(uniform.getSecondObject());
                 petrifiedValues.petrify();
-                col.add(new Pair<String, PetrifyableTIntArrayList>(uniform.getFirstObject(), petrifiedValues));
+                col.add(new Pair<>(uniform.getFirstObject(), petrifiedValues));
             }
             myIntegerUniforms = Collections.unmodifiableCollection(col);
         }

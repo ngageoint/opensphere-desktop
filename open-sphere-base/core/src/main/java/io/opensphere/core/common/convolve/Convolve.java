@@ -183,7 +183,7 @@ public class Convolve
         {
             DataEllipse e = iter.next();
             e.setOrientation(e.getOrientation() % 360); // Handle out of range
-                                                        // degrees
+            // degrees
             DoubleMatrix2D ru = buildRu(e.getSemiMajorAxis(), e.getSemiMinorAxis());
             DoubleMatrix2D a = buildA(e.getOrientation() * Math.PI / 180.0);
             DoubleMatrix2D ar = mat.mult(a, ru);

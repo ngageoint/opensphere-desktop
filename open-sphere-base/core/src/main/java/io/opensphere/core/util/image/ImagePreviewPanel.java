@@ -3,8 +3,6 @@ package io.opensphere.core.util.image;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -20,7 +18,6 @@ import org.jdesktop.swingx.JXImagePanel;
 
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
-import gnu.trove.procedure.TIntProcedure;
 import io.opensphere.core.util.lang.Pair;
 
 /**
@@ -120,7 +117,7 @@ public class ImagePreviewPanel extends JPanel
         {
             myMinIndex = Math.min(myMinIndex, index);
             myMaxIndex = Math.max(myMaxIndex, index);
-            myImages.put(index, new Pair<String, BufferedImage>(label, image));
+            myImages.put(index, new Pair<>(label, image));
             if (makeCurrent || myCurrentIndex == -1)
             {
                 myControls.setVisible(true);
@@ -267,14 +264,7 @@ public class ImagePreviewPanel extends JPanel
         JButton decrement = new JButton("<<");
         decrement.setFocusPainted(false);
         decrement.setBorder(null);
-        decrement.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                setToNextImage(false);
-            }
-        });
+        decrement.addActionListener(e -> setToNextImage(false));
         controls.add(decrement);
 
         controls.add(Box.createHorizontalStrut(3));
@@ -284,14 +274,7 @@ public class ImagePreviewPanel extends JPanel
         JButton increment = new JButton(">>");
         increment.setFocusPainted(false);
         increment.setBorder(null);
-        increment.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                setToNextImage(true);
-            }
-        });
+        increment.addActionListener(e -> setToNextImage(true));
         controls.add(increment);
 
         controls.add(Box.createHorizontalGlue());
@@ -307,15 +290,11 @@ public class ImagePreviewPanel extends JPanel
     {
         myMaxIndex = 0;
         myMinIndex = 0;
-        myImages.forEachKey(new TIntProcedure()
+        myImages.forEachKey(value ->
         {
-            @Override
-            public boolean execute(int value)
-            {
-                myMaxIndex = Math.max(myMaxIndex, value);
-                myMinIndex = Math.min(myMinIndex, value);
-                return true;
-            }
+            myMaxIndex = Math.max(myMaxIndex, value);
+            myMinIndex = Math.min(myMinIndex, value);
+            return true;
         });
     }
 

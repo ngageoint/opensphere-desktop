@@ -5,9 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.swing.JComponent;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.MenuOption;
 import io.opensphere.core.util.MimeType;

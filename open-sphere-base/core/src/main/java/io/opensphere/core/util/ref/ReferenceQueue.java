@@ -9,7 +9,7 @@ package io.opensphere.core.util.ref;
 public class ReferenceQueue<T>
 {
     /** The wrapped reference queue. */
-    private final java.lang.ref.ReferenceQueue<T> myReferenceQueue = new java.lang.ref.ReferenceQueue<T>();
+    private final java.lang.ref.ReferenceQueue<T> myReferenceQueue = new java.lang.ref.ReferenceQueue<>();
 
     /**
      * Polls this queue to see if a reference object is available. If one is

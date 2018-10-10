@@ -2,7 +2,6 @@ package io.opensphere.core.util.swing.tree;
 
 import java.awt.EventQueue;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.image.ImageObserver;
 import java.util.HashSet;
 import java.util.Set;
@@ -50,21 +49,8 @@ public class NodeImageObserver implements ImageObserver
     {
         if ((infoflags & (FRAMEBITS | ALLBITS)) != 0)
         {
-            EventQueueUtilities.invokeLater(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    for (TreePath path : myPathSet)
-                    {
-                        Rectangle rect = myTree.getPathBounds(path);
-                        if (rect != null)
-                        {
-                            myTree.repaint(rect);
-                        }
-                    }
-                }
-            });
+            EventQueueUtilities.invokeLater(() -> myPathSet.stream().filter(p -> myTree.getPathBounds(p) != null)
+                    .map(p -> myTree.getPathBounds(p)).forEach(r -> myTree.repaint(r)));
         }
         return (infoflags & (ALLBITS | ABORT)) == 0;
     }

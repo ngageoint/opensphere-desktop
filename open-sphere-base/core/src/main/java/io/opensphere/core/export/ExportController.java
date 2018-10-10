@@ -36,7 +36,7 @@ public class ExportController implements Service
     public ExportController(Toolbox toolbox)
     {
         myActionManager = toolbox.getUIRegistry().getContextActionManager();
-        myGeometryContextProvider = new ContextMenuProvider<GeometryContextKey>()
+        myGeometryContextProvider = new ContextMenuProvider<>()
         {
             @Override
             public Collection<? extends Component> getMenuItems(String contextId, GeometryContextKey key)

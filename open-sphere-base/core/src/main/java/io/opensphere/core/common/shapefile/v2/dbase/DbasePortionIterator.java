@@ -42,11 +42,13 @@ public class DbasePortionIterator implements Iterator<Object[]>
         }
     }
 
+    @Override
     public boolean hasNext()
     {
         return (nextRecord < parent.size());
     }
 
+    @Override
     public Object[] next()
     {
         Object[] metadataRow = new Object[parent.getHeader().getFields().size()];
@@ -81,6 +83,7 @@ public class DbasePortionIterator implements Iterator<Object[]>
         return metadataRow;
     }
 
+    @Override
     public void remove()
     {
         throw (new UnsupportedOperationException());

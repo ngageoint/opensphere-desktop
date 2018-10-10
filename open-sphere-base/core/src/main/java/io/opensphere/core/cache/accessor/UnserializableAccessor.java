@@ -22,7 +22,7 @@ public abstract class UnserializableAccessor<S, T> implements PropertyAccessor<S
      */
     public static <T> UnserializableAccessor<T, T> getHomogeneousAccessor(PropertyDescriptor<T> propertyDescriptor)
     {
-        return new UnserializableAccessor<T, T>(propertyDescriptor)
+        return new UnserializableAccessor<>(propertyDescriptor)
         {
             @Override
             public T access(T input)
@@ -46,7 +46,7 @@ public abstract class UnserializableAccessor<S, T> implements PropertyAccessor<S
     public static <S, T> UnserializableAccessor<S, T> getSingletonAccessor(PropertyDescriptor<T> propertyDescriptor,
             final T object)
     {
-        return new UnserializableAccessor<S, T>(propertyDescriptor)
+        return new UnserializableAccessor<>(propertyDescriptor)
         {
             @Override
             public T access(S input)

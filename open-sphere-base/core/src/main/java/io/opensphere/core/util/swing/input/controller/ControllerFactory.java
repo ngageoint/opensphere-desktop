@@ -25,7 +25,6 @@ import io.opensphere.core.util.swing.input.model.DoubleModel;
 import io.opensphere.core.util.swing.input.model.GhostTextModel;
 import io.opensphere.core.util.swing.input.model.IntegerModel;
 import io.opensphere.core.util.swing.input.model.PropertyChangeEvent;
-import io.opensphere.core.util.swing.input.model.PropertyChangeListener;
 import io.opensphere.core.util.swing.input.model.TextModel;
 import io.opensphere.core.util.swing.input.model.TimeInstantModel;
 import io.opensphere.core.util.swing.input.model.ViewModel;
@@ -168,15 +167,11 @@ public final class ControllerFactory
     public static JLabel createLabel(final ViewModel<?> model, Component component)
     {
         final JLabel label = new JLabel(model.getName() + ":");
-        model.addPropertyChangeListener(new PropertyChangeListener()
+        model.addPropertyChangeListener(e ->
         {
-            @Override
-            public void stateChanged(PropertyChangeEvent e)
+            if (e.getProperty() == PropertyChangeEvent.Property.NAME_AND_DESCRIPTION)
             {
-                if (e.getProperty() == PropertyChangeEvent.Property.NAME_AND_DESCRIPTION)
-                {
-                    label.setText(model.getName() + ":");
-                }
+                label.setText(model.getName() + ":");
             }
         });
         label.setLabelFor(component);
@@ -240,10 +235,10 @@ public final class ControllerFactory
     {
         AbstractController<?, ? extends ViewModel<?>, ? extends JComponent> controller = null;
 
-//        if (model instanceof DateModel)
-//        {
-//            controller = new DateController((DateModel)model);
-//        }
+        //        if (model instanceof DateModel)
+        //        {
+        //            controller = new DateController((DateModel)model);
+        //        }
         if (model instanceof TextModel)
         {
             if (model instanceof GhostTextModel)
@@ -332,22 +327,18 @@ public final class ControllerFactory
         if (preferredComponent == RadioButtonPanel.class)
         {
             Function<T, AbstractButton> buttonProvider = viewSettings == null || viewSettings.getIconProvider() == null ? null
-                    : new Function<T, AbstractButton>()
-                    {
-                        @Override
-                        public AbstractButton apply(T option)
-                        {
-                            IconToggleButton button = new IconToggleButton();
-                            ImageIcon icon = viewSettings.getIconProvider().apply(option);
-                            if (icon != null)
-                            {
-                                IconUtil.setIcons(button, icon, IconUtil.DEFAULT_ICON_FOREGROUND,
-                                        IconUtil.ICON_SELECTION_FOREGROUND);
-                            }
-                            button.setToolTipText(option.toString());
-                            return button;
-                        }
-                    };
+                    : option ->
+            {
+                IconToggleButton button = new IconToggleButton();
+                ImageIcon icon = viewSettings.getIconProvider().apply(option);
+                if (icon != null)
+                {
+                    IconUtil.setIcons(button, icon, IconUtil.DEFAULT_ICON_FOREGROUND,
+                            IconUtil.ICON_SELECTION_FOREGROUND);
+                }
+                button.setToolTipText(option.toString());
+                return button;
+            };
             controller = new ChoiceRadioButtonController<>(model, viewSettings, buttonProvider);
         }
         else

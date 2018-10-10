@@ -89,7 +89,7 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
     @Override
     public void generateDryRunGeometries()
     {
-        PolygonGeometry.Builder<ScreenPosition> builder = new PolygonGeometry.Builder<ScreenPosition>();
+        PolygonGeometry.Builder<ScreenPosition> builder = new PolygonGeometry.Builder<>();
         ColorRenderProperties fillColor = new DefaultColorRenderProperties(0, true, true, true);
         fillColor.setColor(Color.GREEN);
         PolygonRenderProperties props = new DefaultPolygonRenderProperties(0, true, true, fillColor);
@@ -268,7 +268,7 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
             {
                 // @formatter:off
                 SimpleTesseraBlockBuilder<SimpleProjectedTesseraVertex<ScreenPosition>> triBuilder =
-                        new SimpleTesseraBlockBuilder<SimpleProjectedTesseraVertex<ScreenPosition>>(3, Vector3d.ORIGIN);
+                        new SimpleTesseraBlockBuilder<>(3, Vector3d.ORIGIN);
                 // @formatter:on
 
                 Polygon jtsPoly = JTSCoreGeometryUtilities.convertToJTSPolygon(geo);
@@ -276,7 +276,7 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
 
                 if (!triBuilder.getBlockVertices().isEmpty())
                 {
-                    TesseraBlock<SimpleProjectedTesseraVertex<ScreenPosition>> block = new TesseraBlock<SimpleProjectedTesseraVertex<ScreenPosition>>(
+                    TesseraBlock<SimpleProjectedTesseraVertex<ScreenPosition>> block = new TesseraBlock<>(
                             triBuilder, false);
 
                     List<? extends SimpleProjectedTesseraVertex<ScreenPosition>> blockVerts = block.getVertices();
@@ -328,10 +328,7 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
             Arrays.fill(result, timeSpan);
             return Arrays.asList(result);
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     /**
@@ -422,7 +419,7 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
 
             if (drawFill)
             {
-                SimpleTesseraBlockBuilder<SimpleModelTesseraVertex> triBuilder = new SimpleTesseraBlockBuilder<SimpleModelTesseraVertex>(
+                SimpleTesseraBlockBuilder<SimpleModelTesseraVertex> triBuilder = new SimpleTesseraBlockBuilder<>(
                         3, Vector3d.ORIGIN);
 
                 Polygon jtsPoly = JTSCoreGeometryUtilities.convertToJTSPolygon(geo);
@@ -567,7 +564,7 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
 
     /** A simple generator for creating screen vertices. */
     protected static class ScreenVertexGenerator
-            extends AbstractSimpleVertexGenerator<SimpleProjectedTesseraVertex<ScreenPosition>>
+    extends AbstractSimpleVertexGenerator<SimpleProjectedTesseraVertex<ScreenPosition>>
     {
         /**
          * The converter used to generate model positions for the projected
@@ -594,7 +591,7 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
         {
             ScreenPosition position = new ScreenPosition(location.getX(), location.getY());
             Vector3d model = myPositionConverter.convertPositionToModel(position, getModelCenter());
-            return new SimpleProjectedTesseraVertex<ScreenPosition>(position, model);
+            return new SimpleProjectedTesseraVertex<>(position, model);
         }
 
         @Override

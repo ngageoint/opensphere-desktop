@@ -86,7 +86,7 @@ public class EllipseScalableGeometry extends AbstractScalableGeometry
 
     @Override
     public EllipseScalableGeometry derive(BaseRenderProperties renderProperties, Constraints constraints)
-        throws ClassCastException
+            throws ClassCastException
     {
         return new EllipseScalableGeometry(createBuilder(), (ScalableRenderProperties)renderProperties, constraints);
     }

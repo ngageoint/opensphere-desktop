@@ -3,10 +3,9 @@ package io.opensphere.core.geometry.constraint;
 import java.util.Collection;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
-import net.jcip.annotations.Immutable;
-
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.SharedObjectPool;
+import net.jcip.annotations.Immutable;
 
 /**
  * Constrains geometry visibility based on current time frame.
@@ -195,18 +194,15 @@ public class TimeConstraint
 
             return true;
         }
-        else
+        for (TimeSpan span : timeSpans)
         {
-            for (TimeSpan span : timeSpans)
+            if (check(span))
             {
-                if (check(span))
-                {
-                    return true;
-                }
+                return true;
             }
-
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -221,7 +217,7 @@ public class TimeConstraint
         return isNegative() ^ (span.isTimeless() || (span.isUnboundedStart() ? span.getEnd() > myMinimumTime
                 : span.isUnboundedEnd() ? span.getStart() < myMaximumTime
                         : span.getStart() < myMaximumTime && span.getStart() >= myMinimumTime
-                                || myMinimumTime < span.getEnd() && myMinimumTime >= span.getStart()));
+                        || myMinimumTime < span.getEnd() && myMinimumTime >= span.getStart()));
     }
 
     @Override

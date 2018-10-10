@@ -216,7 +216,7 @@ public class TileRendererImmediate extends AbstractTileRenderer implements Geome
                     drawMode = GL.GL_TRIANGLES;
                     break;
                 case QUAD_VERTEX_COUNT:
-                    drawMode = GL2.GL_QUADS;
+                    drawMode = GL2GL3.GL_QUADS;
                     break;
                 default:
                     drawMode = GL2.GL_POLYGON;

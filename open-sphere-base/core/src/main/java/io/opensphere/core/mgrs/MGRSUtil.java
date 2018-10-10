@@ -254,14 +254,11 @@ public final class MGRSUtil
                         }
                         return newPos;
                     }
-                    else
+                    if (LOGGER.isDebugEnabled())
                     {
-                        if (LOGGER.isDebugEnabled())
-                        {
-                            LOGGER.debug("Both points outside of bounding box, can't determine intersection.");
-                        }
-                        return null;
+                        LOGGER.debug("Both points outside of bounding box, can't determine intersection.");
                     }
+                    return null;
                 }
 
                 // Check for special case when these two points cross the
@@ -531,7 +528,7 @@ public final class MGRSUtil
         {
             int numDigits = desiredPrecision / 2;
             result = mgrsFullPrecision.substring(0, 5) + mgrsFullPrecision.substring(5, 5 + numDigits)
-                    + mgrsFullPrecision.substring(10, 10 + numDigits);
+            + mgrsFullPrecision.substring(10, 10 + numDigits);
         }
         return result;
     }

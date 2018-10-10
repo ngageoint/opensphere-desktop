@@ -22,7 +22,7 @@ public class WeakHashSet<E> implements Set<E>
      */
     public WeakHashSet()
     {
-        myUnderlyingMap = new WeakHashMap<E, Object>();
+        myUnderlyingMap = new WeakHashMap<>();
     }
 
     @Override
@@ -35,7 +35,9 @@ public class WeakHashSet<E> implements Set<E>
     public boolean addAll(Collection<? extends E> c)
     {
         if (c == null || c.isEmpty())
+        {
             return false;
+        }
 
         boolean changed = false;
         for (E thing : c)
@@ -110,7 +112,7 @@ public class WeakHashSet<E> implements Set<E>
     @Override
     public boolean retainAll(Collection<?> c)
     {
-        HashSet<E> local = new HashSet<E>(myUnderlyingMap.keySet());
+        HashSet<E> local = new HashSet<>(myUnderlyingMap.keySet());
         boolean changed = local.retainAll(c);
         if (changed)
         {

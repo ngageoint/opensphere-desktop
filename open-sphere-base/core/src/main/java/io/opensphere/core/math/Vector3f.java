@@ -51,10 +51,7 @@ public class Vector3f extends AbstractVector implements Cloneable
         {
             return new Vector3f(x, y, z);
         }
-        else
-        {
-            return new Vector3f((float)(x / length), (float)(y / length), (float)(z / length));
-        }
+        return new Vector3f((float)(x / length), (float)(y / length), (float)(z / length));
     }
 
     /**
@@ -313,10 +310,7 @@ public class Vector3f extends AbstractVector implements Cloneable
         {
             return this;
         }
-        else
-        {
-            return new Vector3f((float)(myX / length), (float)(myY / length), (float)(myZ / length));
-        }
+        return new Vector3f((float)(myX / length), (float)(myY / length), (float)(myZ / length));
     }
 
     /**

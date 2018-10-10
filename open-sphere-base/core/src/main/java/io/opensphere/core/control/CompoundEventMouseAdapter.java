@@ -51,7 +51,7 @@ import java.awt.event.MouseWheelListener;
  *
  */
 public class CompoundEventMouseAdapter extends CompoundEventAdapter
-        implements MouseListener, MouseMotionListener, MouseWheelListener
+implements MouseListener, MouseMotionListener, MouseWheelListener
 {
     /**
      * Construct the listener.

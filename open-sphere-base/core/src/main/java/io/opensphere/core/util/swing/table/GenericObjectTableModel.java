@@ -72,13 +72,19 @@ public class GenericObjectTableModel<T> extends AbstractColumnTableModel
     public Object getValueAt(int rowIndex, int columnIndex)
     {
         if (myRowDataProvider.getRowCount() <= rowIndex)
+        {
             return null;
+        }
         T data = myRowDataProvider.getData(rowIndex);
         if (data == null)
+        {
             return null;
+        }
         List<?> values = myRowValuesProvider.getValues(rowIndex, data);
         if (values.size() <= columnIndex)
+        {
             return null;
+        }
         return values.get(columnIndex);
     }
 

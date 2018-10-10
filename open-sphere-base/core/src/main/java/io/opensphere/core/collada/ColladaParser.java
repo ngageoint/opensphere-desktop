@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-import net.jcip.annotations.NotThreadSafe;
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.stream.StreamSource;
 
@@ -39,6 +38,7 @@ import io.opensphere.core.util.XMLUtilities;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
+import net.jcip.annotations.NotThreadSafe;
 
 /**
  * Parses COLLADA models and generates {@link PolygonMeshGeometry}s from them.
@@ -159,7 +159,7 @@ public class ColladaParser
             {
                 myImageLibrary.put(image.getId(), image);
             }
-//            myUnusedTags.addAll(myImageLibrary.keySet());
+            //            myUnusedTags.addAll(myImageLibrary.keySet());
         }
 
         if (model.getLibraryEffects() != null)
@@ -168,7 +168,7 @@ public class ColladaParser
             {
                 myEffectLibrary.put("#" + effect.getId(), effect);
             }
-//            myUnusedTags.addAll(myEffectLibrary.keySet());
+            //            myUnusedTags.addAll(myEffectLibrary.keySet());
         }
 
         if (model.getLibraryMaterials() != null)
@@ -178,7 +178,7 @@ public class ColladaParser
                 myNameMaterialLibrary.put(material.getName(), material);
                 myIdMaterialLibrary.put("#" + material.getId(), material);
             }
-//            myUnusedTags.addAll(myNameMaterialLibrary.keySet());
+            //            myUnusedTags.addAll(myNameMaterialLibrary.keySet());
         }
 
         for (io.opensphere.core.collada.jaxb.Geometry geometry : model.getLibraryGeometries())

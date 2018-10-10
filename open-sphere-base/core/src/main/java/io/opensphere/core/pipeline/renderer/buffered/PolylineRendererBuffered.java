@@ -109,7 +109,7 @@ public class PolylineRendererBuffered extends AbstractRenderer<PolylineGeometry>
             }
 
             myFadedRenderingHelper.renderEachTimeSpan(rc, renderData.getGroupTimeSpan(),
-                () -> doRender(rc, input, rejected, pickManager, dataRetriever, renderData));
+                    () -> doRender(rc, input, rejected, pickManager, dataRetriever, renderData));
         }
         finally
         {
@@ -171,12 +171,9 @@ public class PolylineRendererBuffered extends AbstractRenderer<PolylineGeometry>
         {
             return false;
         }
-        else
-        {
-            myGroupTimeSpan = span;
-            getCache().clearCacheAssociations(PolylineDataBuffered.class);
-            return true;
-        }
+        myGroupTimeSpan = span;
+        getCache().clearCacheAssociations(PolylineDataBuffered.class);
+        return true;
     }
 
     @Override
@@ -263,7 +260,7 @@ public class PolylineRendererBuffered extends AbstractRenderer<PolylineGeometry>
                     rc.glDepthMask(renderProperties.isObscurant());
 
                     GL2Utilities.renderWithTransform(rc, geom.getRenderProperties().getTransform(),
-                        () -> line.draw(rc, GL.GL_LINE_STRIP));
+                            () -> line.draw(rc, GL.GL_LINE_STRIP));
 
                     if (geom instanceof PolygonGeometry
                             && ((PolygonRenderProperties)renderProperties).getFillColorRenderProperties() != null)

@@ -19,8 +19,6 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.logging.LogManager;
 
-import javafx.application.Platform;
-
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -53,6 +51,7 @@ import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.lang.ToStringHelper;
 import io.opensphere.core.util.net.OpenSphereContentHandlerFactory;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import javafx.application.Platform;
 
 /**
  * This is the nucleus for the application, from whence all else springs. It
@@ -129,7 +128,7 @@ public class Kernel
     private final ExecutorManager myExecutorManager = new ExecutorManager();
 
     /** Subscriber for lifecycle events. */
-    private EventListener<ApplicationLifecycleEvent> myLifecycleSubscriber = new EventListener<ApplicationLifecycleEvent>()
+    private EventListener<ApplicationLifecycleEvent> myLifecycleSubscriber = new EventListener<>()
     {
         /** Flag indicating if the pipeline has been initialized. */
         private boolean myPipelineInitialized;
@@ -159,75 +158,8 @@ public class Kernel
             {
                 myToolbox.getEventManager().unsubscribe(ApplicationLifecycleEvent.class, myLifecycleSubscriber);
                 myLifecycleSubscriber = null;
-                EventQueueUtilities.invokeLater(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        LOGGER.info(DISPLAYING_MAIN_FRAME_MSG);
-                        myPipelineComponent.setVisible(true);
-                        if (Boolean.getBoolean("opensphere.enablePopToBack"))
-                        {
-                            // Toggle alwaysOnTop true then false to pop the
-                            // window to the front, since some operating systems
-                            // ignore the toFront call.
-                            myMainFrame.setAlwaysOnTop(true);
-                            myMainFrame.setAlwaysOnTop(false);
-                        }
-                        ApplicationLifecycleEvent.publishEvent(myToolbox.getEventManager(),
-                                ApplicationLifecycleEvent.Stage.MAIN_FRAME_VISIBLE);
-
-                        if ("x86".equals(System.getProperty("os.arch")) && StringUtils.isNotEmpty(System.getenv("ProgramW6432")))
-                        {
-                            JOptionPane.showMessageDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
-                                    "<html>You are running with 32-bit Java on a 64-bit operating system. "
-                                            + "The application may be unstable. Please use 64-bit Java if possible.</html>",
-                                    "Warning", JOptionPane.WARNING_MESSAGE);
-                        }
-                        else
-                        {
-                            final String version = System.getProperty("java.version");
-                            final String minVersion = System.getProperty("opensphere.min.java.version", "1.6.0_33");
-                            if (compareVersions(version, minVersion) < 0)
-                            {
-                                JOptionPane.showMessageDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
-                                        "<html>You are running an obsolete Java version (" + version
-                                                + "). Please upgrade your Java if possible.</html>",
-                                        "Warning", JOptionPane.WARNING_MESSAGE);
-                            }
-                        }
-
-                        myToolbox.getMapManager().getStandardViewer().startAnimationToPreferredPosition();
-                    }
-                });
+                EventQueueUtilities.invokeLater(() -> displayMainFrame());
             }
-        }
-
-        /**
-         * Compares the two versions.
-         *
-         * @param javaVersion The currently installed java version.
-         * @param minVersion The minimum version.
-         * @return 0 if equal, less than 0 if javaVersion is older than the
-         *         minVersion, or greater than 0 if the javaVersion is newer
-         *         than the min version.
-         */
-        private int compareVersions(String javaVersion, String minVersion)
-        {
-            int compare = 0;
-
-            final String splitRegex = "\\.|_";
-            final String[] javaVersions = javaVersion.split(splitRegex);
-            final String[] minVersions = minVersion.split(splitRegex);
-
-            for (int i = 0; i < javaVersions.length && i < minVersions.length && compare == 0; i++)
-            {
-                final int javaVersionPart = Integer.parseInt(javaVersions[i]);
-                final int minVersionPart = Integer.parseInt(minVersions[i]);
-                compare = Integer.compare(javaVersionPart, minVersionPart);
-            }
-
-            return compare;
         }
     };
 
@@ -268,14 +200,7 @@ public class Kernel
         if (MEM_LOGGER.isTraceEnabled())
         {
             final double memoryDelta = .01;
-            MemoryUtilities.addMemoryMonitor(memoryDelta, new MemoryUtilities.Callback()
-            {
-                @Override
-                public void memoryMonitored(String usageString)
-                {
-                    MEM_LOGGER.trace("Memory: " + MemoryUtilities.getCurrentMemoryUse());
-                }
-            });
+            MemoryUtilities.addMemoryMonitor(memoryDelta, usageString -> MEM_LOGGER.trace("Memory: " + MemoryUtilities.getCurrentMemoryUse()));
         }
     }
 
@@ -339,27 +264,23 @@ public class Kernel
 
             myPipelineComponent = initializePipeline();
 
-            EventQueue.invokeAndWait(new Runnable()
+            EventQueue.invokeAndWait(() ->
             {
-                @Override
-                public void run()
+                try
                 {
-                    try
-                    {
-                        new LookAndFeelInit().setLookAndFeel();
-                    }
-                    catch (final UnsupportedLookAndFeelException e)
-                    {
-                        LOGGER.error(e, e);
-                    }
-
-                    ApplicationLifecycleEvent.publishEvent(myToolbox.getEventManager(),
-                            ApplicationLifecycleEvent.Stage.LAF_INSTALLED);
-
-                    mainFrameInit.initialize(Kernel.this, myToolbox, myPipelineComponent);
-
-                    myToolbox.finishBinding();
+                    new LookAndFeelInit().setLookAndFeel();
                 }
+                catch (final UnsupportedLookAndFeelException e)
+                {
+                    LOGGER.error(e, e);
+                }
+
+                ApplicationLifecycleEvent.publishEvent(myToolbox.getEventManager(),
+                        ApplicationLifecycleEvent.Stage.LAF_INSTALLED);
+
+                mainFrameInit.initialize(Kernel.this, myToolbox, myPipelineComponent);
+
+                myToolbox.finishBinding();
             });
 
             myPluginInstances.addAll(new PluginInit(myToolbox).initializePlugins());
@@ -372,17 +293,12 @@ public class Kernel
             initializeMemoryLogger();
 
             final ControlInit controlInit = new ControlInit(myToolbox);
-            final BoundEventListener gcListener = controlInit.addGarbageCollectionControl(new Runnable()
+            final BoundEventListener gcListener = controlInit.addGarbageCollectionControl(() ->
             {
-                @Override
-                @SuppressFBWarnings("DM_GC")
-                public void run()
-                {
-                    LOGGER.info("Memory before garbage collection: " + MemoryUtilities.getCurrentMemoryUse());
-                    LOGGER.info("Requesting garbage collection...");
-                    System.gc();
-                    LOGGER.info("Memory after garbage collection: " + MemoryUtilities.getCurrentMemoryUse());
-                }
+                LOGGER.info("Memory before garbage collection: " + MemoryUtilities.getCurrentMemoryUse());
+                LOGGER.info("Requesting garbage collection...");
+                System.gc();
+                LOGGER.info("Memory after garbage collection: " + MemoryUtilities.getCurrentMemoryUse());
             });
             myControlEventListeners.add(gcListener);
         }
@@ -564,7 +480,7 @@ public class Kernel
                 {
                     JOptionPane.showMessageDialog(null,
                             "<html>Another instance of " + title
-                                    + " is already running. Please close the other instance and try again.</html>",
+                            + " is already running. Please close the other instance and try again.</html>",
                             title + " Fatal Initialization Error", JOptionPane.ERROR_MESSAGE);
                 }
                 else
@@ -582,7 +498,7 @@ public class Kernel
                     }
                     JOptionPane.showMessageDialog(null,
                             "<html>Cache initialization failed." + "<p/><p/>Try deleting the directory at <tt>" + path
-                                    + "</tt> and restarting.</html>",
+                            + "</tt> and restarting.</html>",
                             title + " Fatal Initialization Error", JOptionPane.ERROR_MESSAGE);
                 }
 
@@ -723,6 +639,73 @@ public class Kernel
                 LOGGER.debug("Failed to get system properties: " + e, e);
             }
         }
+    }
+
+    /**
+     * Displays the main frame of the application. Do not call directly.
+     */
+    final void displayMainFrame()
+    {
+        LOGGER.info(DISPLAYING_MAIN_FRAME_MSG);
+        myPipelineComponent.setVisible(true);
+        if (Boolean.getBoolean("opensphere.enablePopToBack"))
+        {
+            // Toggle alwaysOnTop true then false to pop the
+            // window to the front, since some operating systems
+            // ignore the toFront call.
+            myMainFrame.setAlwaysOnTop(true);
+            myMainFrame.setAlwaysOnTop(false);
+        }
+        ApplicationLifecycleEvent.publishEvent(myToolbox.getEventManager(), ApplicationLifecycleEvent.Stage.MAIN_FRAME_VISIBLE);
+
+        if ("x86".equals(System.getProperty("os.arch")) && StringUtils.isNotEmpty(System.getenv("ProgramW6432")))
+        {
+            JOptionPane.showMessageDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
+                    "<html>You are running with 32-bit Java on a 64-bit operating system. "
+                            + "The application may be unstable. Please use 64-bit Java if possible.</html>",
+                            "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        {
+            final String version = System.getProperty("java.version");
+            final String minVersion = System.getProperty("opensphere.min.java.version", "1.6.0_33");
+            if (compareVersions(version, minVersion) < 0)
+            {
+                JOptionPane.showMessageDialog(
+                        myToolbox.getUIRegistry().getMainFrameProvider().get(), "<html>You are running an obsolete Java version ("
+                                + version + "). Please upgrade your Java if possible.</html>",
+                                "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+
+        myToolbox.getMapManager().getStandardViewer().startAnimationToPreferredPosition();
+    }
+
+    /**
+     * Compares the two versions.
+     *
+     * @param javaVersion The currently installed java version.
+     * @param minVersion The minimum version.
+     * @return 0 if equal, less than 0 if javaVersion is older than the
+     *         minVersion, or greater than 0 if the javaVersion is newer than
+     *         the min version.
+     */
+    private int compareVersions(String javaVersion, String minVersion)
+    {
+        int compare = 0;
+
+        final String splitRegex = "\\.|_";
+        final String[] javaVersions = javaVersion.split(splitRegex);
+        final String[] minVersions = minVersion.split(splitRegex);
+
+        for (int i = 0; i < javaVersions.length && i < minVersions.length && compare == 0; i++)
+        {
+            final int javaVersionPart = Integer.parseInt(javaVersions[i]);
+            final int minVersionPart = Integer.parseInt(minVersions[i]);
+            compare = Integer.compare(javaVersionPart, minVersionPart);
+        }
+
+        return compare;
     }
 
     /**

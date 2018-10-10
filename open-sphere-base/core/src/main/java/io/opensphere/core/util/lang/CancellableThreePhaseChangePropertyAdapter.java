@@ -7,7 +7,7 @@ package io.opensphere.core.util.lang;
  * @param <S> The type of the property.
  */
 public abstract class CancellableThreePhaseChangePropertyAdapter<S>
-        implements CancellableThreePhaseProperty.CancellableThreePhasePropertyListener<S, CancellableThreePhaseProperty<S>>
+implements CancellableThreePhaseProperty.CancellableThreePhasePropertyListener<S, CancellableThreePhaseProperty<S>>
 {
     @Override
     public void commit(CancellableThreePhaseProperty<S> property, S state, PhasedTaskCanceller canceller)

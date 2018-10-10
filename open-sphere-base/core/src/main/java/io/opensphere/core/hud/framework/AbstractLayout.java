@@ -34,7 +34,7 @@ public abstract class AbstractLayout<T extends LayoutConstraints>
 
     /**
      * Gets the constraints associated with the supplied component.
-     * 
+     *
      * @param subComp the component for which to get the constraints.
      * @return the constraints associated with the supplied component, or null
      *         if none are known.

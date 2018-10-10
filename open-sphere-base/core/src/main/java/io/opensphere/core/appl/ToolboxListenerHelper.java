@@ -1,6 +1,5 @@
 package io.opensphere.core.appl;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -21,51 +20,7 @@ import io.opensphere.core.util.lang.NamedThreadFactory;
 public class ToolboxListenerHelper extends CompositeService
 {
     /** The subscriber that handles envoy adds and removes. */
-    private final GenericSubscriber<Envoy> myEnvoySubscriber = new GenericSubscriber<Envoy>()
-    {
-        @Override
-        public void receiveObjects(Object source, Collection<? extends Envoy> adds, Collection<? extends Envoy> removes)
-        {
-            for (final Envoy envoy : removes)
-            {
-                if (envoy != null)
-                {
-                    ThreadPoolExecutor envoyExecutor = getExecutorForEnvoy(envoy);
-                    envoyExecutor.execute(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            if (envoy instanceof DataRegistryDataProvider)
-                            {
-                                myToolbox.getDataRegistry().removeDataProvider((DataRegistryDataProvider)envoy);
-                            }
-                            envoy.close();
-                        }
-                    });
-                }
-            }
-            for (final Envoy envoy : adds)
-            {
-                if (envoy != null)
-                {
-                    final ThreadPoolExecutor envoyExecutor = getExecutorForEnvoy(envoy);
-                    envoyExecutor.execute(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            if (envoy instanceof DataRegistryDataProvider)
-                            {
-                                myToolbox.getDataRegistry().addDataProvider((DataRegistryDataProvider)envoy, envoyExecutor);
-                            }
-                            envoy.open(envoyExecutor);
-                        }
-                    });
-                }
-            }
-        }
-    };
+    private final GenericSubscriber<Envoy> myEnvoySubscriber;
 
     /** The manager for the executors. */
     private final ExecutorManager myExecutorManager;
@@ -77,59 +32,16 @@ public class ToolboxListenerHelper extends CompositeService
     private final Map<Transformer, ThreadedGenericTransceiver<Geometry>> myGeometryTransceivers;
 
     /**
-     * A collection of tools to be used to interact with the rest of the application.
+     * A collection of tools to be used to interact with the rest of the
+     * application.
      */
     private final Toolbox myToolbox;
 
     /** The transformer executor. */
     private final ExecutorService myTransformerExecutor;
 
-    /**
-     * The subscriber that handles transformer adds and removes.
-     */
-    private final GenericSubscriber<Transformer> myTransformerSubscriber = new GenericSubscriber<Transformer>()
-    {
-        @Override
-        public void receiveObjects(Object source, Collection<? extends Transformer> adds,
-                Collection<? extends Transformer> removes)
-        {
-            for (final Transformer transformer : removes)
-            {
-                if (transformer != null)
-                {
-                    final ThreadedGenericTransceiver<Geometry> transceiver = myGeometryTransceivers.remove(transformer);
-                    myTransformerExecutor.execute(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            transformer.close();
-                            if (transceiver != null)
-                            {
-                                transceiver.removeSubscriber(myToolbox.getGeometryRegistry());
-                                transformer.removeSubscriber(transceiver);
-                            }
-                        }
-                    });
-                }
-            }
-            for (final Transformer transformer : adds)
-            {
-                if (transformer != null)
-                {
-                    final int priority = 5;
-                    ThreadedGenericTransceiver<Geometry> transceiver = new ThreadedGenericTransceiver<>(1,
-                            new NamedThreadFactory("GeometryReceiver" + myGeometryTransceiverId.getAndIncrement(), priority,
-                                    Thread.MAX_PRIORITY));
-                    transceiver.addSubscriber(myToolbox.getGeometryRegistry());
-                    transformer.addSubscriber(transceiver);
-                    myGeometryTransceivers.put(transformer, transceiver);
-
-                    myTransformerExecutor.execute(transformer::open);
-                }
-            }
-        }
-    };
+    /** The subscriber that handles transformer adds and removes. */
+    private final GenericSubscriber<Transformer> myTransformerSubscriber;
 
     /**
      * Constructor.
@@ -144,6 +56,64 @@ public class ToolboxListenerHelper extends CompositeService
         myExecutorManager = executorManager;
         myTransformerExecutor = myExecutorManager.getTransformerExecutor();
         myGeometryTransceivers = New.weakMap();
+
+        myEnvoySubscriber = (source, adds, removes) ->
+        {
+            removes.stream().filter(envoy1 -> envoy1 != null).forEach(envoy2 ->
+            {
+                ThreadPoolExecutor envoyExecutor1 = getExecutorForEnvoy(envoy2);
+                envoyExecutor1.execute(() ->
+                {
+                    if (envoy2 instanceof DataRegistryDataProvider)
+                    {
+                        myToolbox.getDataRegistry().removeDataProvider((DataRegistryDataProvider)envoy2);
+                    }
+                    envoy2.close();
+                });
+            });
+
+            adds.stream().filter(envoy3 -> envoy3 != null).forEach(envoy4 ->
+            {
+                final ThreadPoolExecutor envoyExecutor2 = getExecutorForEnvoy(envoy4);
+                envoyExecutor2.execute(() ->
+                {
+                    if (envoy4 instanceof DataRegistryDataProvider)
+                    {
+                        myToolbox.getDataRegistry().addDataProvider((DataRegistryDataProvider)envoy4, envoyExecutor2);
+                    }
+                    envoy4.open(envoyExecutor2);
+                });
+            });
+        };
+
+        myTransformerSubscriber = (source, adds, removes) ->
+        {
+            removes.stream().filter(t1 -> t1 != null).forEach(transformer1 ->
+            {
+                final ThreadedGenericTransceiver<Geometry> transceiver1 = myGeometryTransceivers.remove(transformer1);
+                myTransformerExecutor.execute(() ->
+                {
+                    transformer1.close();
+                    if (transceiver1 != null)
+                    {
+                        transceiver1.removeSubscriber(myToolbox.getGeometryRegistry());
+                        transformer1.removeSubscriber(transceiver1);
+                    }
+                });
+            });
+
+            adds.stream().filter(t2 -> t2 != null).forEach(transformer2 ->
+            {
+                final int priority = 5;
+                ThreadedGenericTransceiver<Geometry> transceiver2 = new ThreadedGenericTransceiver<>(1, new NamedThreadFactory(
+                        "GeometryReceiver" + myGeometryTransceiverId.getAndIncrement(), priority, Thread.MAX_PRIORITY));
+                transceiver2.addSubscriber(myToolbox.getGeometryRegistry());
+                transformer2.addSubscriber(transceiver2);
+                myGeometryTransceivers.put(transformer2, transceiver2);
+
+                myTransformerExecutor.execute(transformer2::open);
+            });
+        };
 
         addService(toolbox.getTransformerRegistry().getSubscriberService(myTransformerSubscriber));
         addService(toolbox.getEnvoyRegistry().getSubscriberService(myEnvoySubscriber));

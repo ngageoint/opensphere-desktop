@@ -249,7 +249,7 @@ public final class FixedThreadPoolExecutor extends AbstractExecutorService
     {
         if (callable instanceof Comparable<?>)
         {
-            return new ComparableFutureTask<T>(callable)
+            return new ComparableFutureTask<>(callable)
             {
                 /**
                  * Extend cancel to remove the task from the queue to prevent
@@ -267,7 +267,7 @@ public final class FixedThreadPoolExecutor extends AbstractExecutorService
         }
         else if (callable != null)
         {
-            return new FutureTaskExtension<T>(callable);
+            return new FutureTaskExtension<>(callable);
         }
         else
         {
@@ -280,7 +280,7 @@ public final class FixedThreadPoolExecutor extends AbstractExecutorService
     {
         if (runnable instanceof Comparable<?>)
         {
-            return new ComparableFutureTask<T>(runnable, value)
+            return new ComparableFutureTask<>(runnable, value)
             {
                 /**
                  * Extend cancel to remove the task from the queue to prevent
@@ -298,7 +298,7 @@ public final class FixedThreadPoolExecutor extends AbstractExecutorService
         }
         else if (runnable != null)
         {
-            return new FutureTask<T>(runnable, value)
+            return new FutureTask<>(runnable, value)
             {
                 /**
                  * Extend cancel to remove the task from the queue to prevent

@@ -341,7 +341,7 @@ class DBASEPortion implements Collection<Object[]>
         if (header.fields.size() != metadata.length)
         {
             throw new IllegalArgumentException("The number of header fields (" + header.fields.size()
-                    + ") does not match the number of data fields (" + metadata.length + ")");
+            + ") does not match the number of data fields (" + metadata.length + ")");
         }
 
         return returnValue;
@@ -458,7 +458,7 @@ class DBASEPortion implements Collection<Object[]>
     }
 
     public boolean parseDBASERecord(ByteBuffer buffer, Object[] stringArray, Object[] actualArray)
-        throws IOException, ParseException
+        throws ParseException
     {
         boolean returnValue = false;
 

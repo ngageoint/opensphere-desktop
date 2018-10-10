@@ -1,7 +1,5 @@
 package io.opensphere.core.util.concurrent;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.concurrent.Executor;
 
 import javax.swing.Timer;
@@ -36,14 +34,7 @@ public class ProcrastinatingEventQueueExecutor implements Executor
         {
             myTimer.stop();
         }
-        myTimer = new Timer(myMinDelayMilliseconds, new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                command.run();
-            }
-        });
+        myTimer = new Timer(myMinDelayMilliseconds, e -> command.run());
         myTimer.setRepeats(false);
         myTimer.start();
     }

@@ -625,72 +625,72 @@ public class DDSEncoder
         // Min and Max swapped. If you understand the algorithm, this helps
         // you keep your brain on straight. (well, at least mine)
         int colors0r = minColor[0] & C565_5_MASK | minColor[0] >> 5;
-        int colors0g = minColor[1] & C565_5_MASK | minColor[1] >> 5;
-        int colors0b = minColor[2] & C565_5_MASK | minColor[2] >> 5;
-        int colors1r = maxColor[0] & C565_5_MASK | maxColor[0] >> 5;
-        int colors1g = maxColor[1] & C565_5_MASK | maxColor[1] >> 5;
-        int colors1b = maxColor[2] & C565_5_MASK | maxColor[2] >> 5;
+            int colors0g = minColor[1] & C565_5_MASK | minColor[1] >> 5;
+            int colors0b = minColor[2] & C565_5_MASK | minColor[2] >> 5;
+            int colors1r = maxColor[0] & C565_5_MASK | maxColor[0] >> 5;
+            int colors1g = maxColor[1] & C565_5_MASK | maxColor[1] >> 5;
+            int colors1b = maxColor[2] & C565_5_MASK | maxColor[2] >> 5;
 
-        // Only 3 colors encoded, not 4
-        // / 2;
-        int colors2r = colors0r + colors1r >> 1;
-        // / 2;
-        int colors2g = colors0g + colors1g >> 1;
-        // / 2;
-        int colors2b = colors0b + colors1b >> 1;
+            // Only 3 colors encoded, not 4
+            // / 2;
+            int colors2r = colors0r + colors1r >> 1;
+            // / 2;
+            int colors2g = colors0g + colors1g >> 1;
+            // / 2;
+            int colors2b = colors0b + colors1b >> 1;
 
-        for (int i = 15; i >= 0; --i)
-        {
-            int c0 = colorBlock[i][0];
-            int c1 = colorBlock[i][1];
-            int c2 = colorBlock[i][2];
-            // Math.abs is slow, and introduces a branch on each call
-            /* int d0 = Math.abs( colors0r - c0 ) + Math.abs( colors0g - c1 ) +
-             * Math.abs( colors0b - c2 ); int d1 = Math.abs( colors1r - c0 ) +
-             * Math.abs( colors1g - c1 ) + Math.abs( colors1b - c2 ); int d2 =
-             * Math.abs( colors2r - c0 ) + Math.abs( colors2g - c1 ) + Math.abs(
-             * colors2b - c2 ); */
-            int d0r = colors0r - c0;
-            int d0g = colors0g - c1;
-            int d0b = colors0b - c2;
-            d0r = (d0r ^ d0r >> 31) - (d0r >> 31);
-            d0g = (d0g ^ d0g >> 31) - (d0g >> 31);
-            d0b = (d0b ^ d0b >> 31) - (d0b >> 31);
-            int d0 = d0r + d0g + d0b;
-            int d1r = colors1r - c1;
-            int d1g = colors1g - c1;
-            int d1b = colors1b - c2;
-            d1r = (d1r ^ d1r >> 31) - (d1r >> 31);
-            d1g = (d1g ^ d1g >> 31) - (d1g >> 31);
-            d1b = (d1b ^ d1b >> 31) - (d1b >> 31);
-            int d1 = d1r + d1g + d1b;
-            int d2r = colors2r - c0;
-            int d2g = colors2g - c1;
-            int d2b = colors2b - c2;
-            d2r = (d2r ^ d2r >> 31) - (d2r >> 31);
-            d2g = (d2g ^ d2g >> 31) - (d2g >> 31);
-            d2b = (d2b ^ d2b >> 31) - (d2b >> 31);
-            int d2 = d2r + d2g + d2b;
-            int d3 = c0 | c1 | c2;
-            /* int b0 = d0 > d2 ? 1 : 0; int b1 = d1 > d2 ? 1 : 0; int b2 = d0 >
-             * d1 ? 1 : 0; */
-            // Java's insistence that a comparison operator returns a logical
-            // boolean and not
-            // an integer causes the above code, which has a ton of branches and
-            // mis-prediction
-            // opportunities. The below code, while difficult to read,
-            // accomplishes the same
-            // without branching
-            int b0 = d2 - d0 >> 31 & 0x1;
-            int b1 = d2 - d1 >> 31 & 0x1;
-            int b2 = d1 - d0 >> 31 & 0x1;
-            int x0 = b2 & (b1 ^ b2);
-            int x1 = b0 & b1;
-            // all three numbers are zero
-            int x2 = d3 == 0 ? 1 : 0;
-            result |= (x0 | x2 | (x1 | x2) << 1) << (i << 1);
-        }
-        return result;
+            for (int i = 15; i >= 0; --i)
+            {
+                int c0 = colorBlock[i][0];
+                int c1 = colorBlock[i][1];
+                int c2 = colorBlock[i][2];
+                // Math.abs is slow, and introduces a branch on each call
+                /* int d0 = Math.abs( colors0r - c0 ) + Math.abs( colors0g - c1 ) +
+                 * Math.abs( colors0b - c2 ); int d1 = Math.abs( colors1r - c0 ) +
+                 * Math.abs( colors1g - c1 ) + Math.abs( colors1b - c2 ); int d2 =
+                 * Math.abs( colors2r - c0 ) + Math.abs( colors2g - c1 ) + Math.abs(
+                 * colors2b - c2 ); */
+                int d0r = colors0r - c0;
+                int d0g = colors0g - c1;
+                int d0b = colors0b - c2;
+                d0r = (d0r ^ d0r >> 31) - (d0r >> 31);
+                d0g = (d0g ^ d0g >> 31) - (d0g >> 31);
+                d0b = (d0b ^ d0b >> 31) - (d0b >> 31);
+                int d0 = d0r + d0g + d0b;
+                int d1r = colors1r - c1;
+                int d1g = colors1g - c1;
+                int d1b = colors1b - c2;
+                d1r = (d1r ^ d1r >> 31) - (d1r >> 31);
+                d1g = (d1g ^ d1g >> 31) - (d1g >> 31);
+                d1b = (d1b ^ d1b >> 31) - (d1b >> 31);
+                int d1 = d1r + d1g + d1b;
+                int d2r = colors2r - c0;
+                int d2g = colors2g - c1;
+                int d2b = colors2b - c2;
+                d2r = (d2r ^ d2r >> 31) - (d2r >> 31);
+                d2g = (d2g ^ d2g >> 31) - (d2g >> 31);
+                d2b = (d2b ^ d2b >> 31) - (d2b >> 31);
+                int d2 = d2r + d2g + d2b;
+                int d3 = c0 | c1 | c2;
+                /* int b0 = d0 > d2 ? 1 : 0; int b1 = d1 > d2 ? 1 : 0; int b2 = d0 >
+                 * d1 ? 1 : 0; */
+                // Java's insistence that a comparison operator returns a logical
+                // boolean and not
+                // an integer causes the above code, which has a ton of branches and
+                // mis-prediction
+                // opportunities. The below code, while difficult to read,
+                // accomplishes the same
+                // without branching
+                int b0 = d2 - d0 >> 31 & 0x1;
+                int b1 = d2 - d1 >> 31 & 0x1;
+                int b2 = d1 - d0 >> 31 & 0x1;
+                int x0 = b2 & (b1 ^ b2);
+                int x1 = b0 & b1;
+                // all three numbers are zero
+                int x2 = d3 == 0 ? 1 : 0;
+                result |= (x0 | x2 | (x1 | x2) << 1) << (i << 1);
+            }
+            return result;
     }
 
     void getAlphaIndices(int[][] colorBlock, int[] indices, int minAlpha, int maxAlpha)
@@ -719,14 +719,14 @@ public class DDSEncoder
             // accomplishes the same
             // without branching
             int b1 = a - ab1 - 1 >> 31 & 0x1;
-            int b2 = a - ab2 - 1 >> 31 & 0x1;
-            int b3 = a - ab3 - 1 >> 31 & 0x1;
-            int b4 = a - ab4 - 1 >> 31 & 0x1;
-            int b5 = a - ab5 - 1 >> 31 & 0x1;
-            int b6 = a - ab6 - 1 >> 31 & 0x1;
-            int b7 = a - ab7 - 1 >> 31 & 0x1;
-            int index = b1 + b2 + b3 + b4 + b5 + b6 + b7 + 1 & 7;
-            indices[i] = index ^ (2 > index ? 1 : 0);
+        int b2 = a - ab2 - 1 >> 31 & 0x1;
+                int b3 = a - ab3 - 1 >> 31 & 0x1;
+                int b4 = a - ab4 - 1 >> 31 & 0x1;
+                int b5 = a - ab5 - 1 >> 31 & 0x1;
+                int b6 = a - ab6 - 1 >> 31 & 0x1;
+                int b7 = a - ab7 - 1 >> 31 & 0x1;
+                int index = b1 + b2 + b3 + b4 + b5 + b6 + b7 + 1 & 7;
+                indices[i] = index ^ (2 > index ? 1 : 0);
         }
     }
 
@@ -1204,30 +1204,30 @@ public class DDSEncoder
                     {
                         int resultIndex = (x + blockX + (blockY + y) * width) * resultBytesPerPixel;
                         int colorSelect = val >> (x << 1) & 3;
-                        if (colorSelect == 2)
-                        {
-                            result[resultIndex] = (byte)r2;
-                            result[resultIndex + 1] = (byte)g2;
-                            result[resultIndex + 2] = (byte)b2;
-                        }
-                        else if (colorSelect == 3)
-                        {
-                            result[resultIndex] = (byte)r3;
-                            result[resultIndex + 1] = (byte)g3;
-                            result[resultIndex + 2] = (byte)b3;
-                        }
-                        else if (colorSelect == 1)
-                        {
-                            result[resultIndex] = (byte)r1;
-                            result[resultIndex + 1] = (byte)g1;
-                            result[resultIndex + 2] = (byte)b1;
-                        }
-                        else
-                        {
-                            result[resultIndex] = (byte)r0;
-                            result[resultIndex + 1] = (byte)g0;
-                            result[resultIndex + 2] = (byte)b0;
-                        }
+                    if (colorSelect == 2)
+                    {
+                        result[resultIndex] = (byte)r2;
+                        result[resultIndex + 1] = (byte)g2;
+                        result[resultIndex + 2] = (byte)b2;
+                    }
+                    else if (colorSelect == 3)
+                    {
+                        result[resultIndex] = (byte)r3;
+                        result[resultIndex + 1] = (byte)g3;
+                        result[resultIndex + 2] = (byte)b3;
+                    }
+                    else if (colorSelect == 1)
+                    {
+                        result[resultIndex] = (byte)r1;
+                        result[resultIndex + 1] = (byte)g1;
+                        result[resultIndex + 2] = (byte)b1;
+                    }
+                    else
+                    {
+                        result[resultIndex] = (byte)r0;
+                        result[resultIndex + 1] = (byte)g0;
+                        result[resultIndex + 2] = (byte)b0;
+                    }
                     }
                 }
             }
@@ -1329,30 +1329,30 @@ public class DDSEncoder
                     {
                         int resultIndex = (x + blockX + (blockY + y) * width) * resultBytesPerPixel;
                         int colorSelect = val >> (x << 1) & 3;
-                        if (colorSelect == 2)
-                        {
-                            result[resultIndex] = (byte)r2;
-                            result[resultIndex + 1] = (byte)g2;
-                            result[resultIndex + 2] = (byte)b2;
-                        }
-                        else if (colorSelect == 3)
-                        {
-                            result[resultIndex] = (byte)r3;
-                            result[resultIndex + 1] = (byte)g3;
-                            result[resultIndex + 2] = (byte)b3;
-                        }
-                        else if (colorSelect == 1)
-                        {
-                            result[resultIndex] = (byte)r1;
-                            result[resultIndex + 1] = (byte)g1;
-                            result[resultIndex + 2] = (byte)b1;
-                        }
-                        else
-                        {
-                            result[resultIndex] = (byte)r0;
-                            result[resultIndex + 1] = (byte)g0;
-                            result[resultIndex + 2] = (byte)b0;
-                        }
+                    if (colorSelect == 2)
+                    {
+                        result[resultIndex] = (byte)r2;
+                        result[resultIndex + 1] = (byte)g2;
+                        result[resultIndex + 2] = (byte)b2;
+                    }
+                    else if (colorSelect == 3)
+                    {
+                        result[resultIndex] = (byte)r3;
+                        result[resultIndex + 1] = (byte)g3;
+                        result[resultIndex + 2] = (byte)b3;
+                    }
+                    else if (colorSelect == 1)
+                    {
+                        result[resultIndex] = (byte)r1;
+                        result[resultIndex + 1] = (byte)g1;
+                        result[resultIndex + 2] = (byte)b1;
+                    }
+                    else
+                    {
+                        result[resultIndex] = (byte)r0;
+                        result[resultIndex + 1] = (byte)g0;
+                        result[resultIndex + 2] = (byte)b0;
+                    }
                     }
                 }
             }

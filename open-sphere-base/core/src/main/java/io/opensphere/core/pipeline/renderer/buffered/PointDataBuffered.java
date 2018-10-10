@@ -105,11 +105,11 @@ public class PointDataBuffered extends BufferObjectList<PointDataBufferedBlock>
                                 min = MathUtil.getModulatedFloat(
                                         timeConstraint.getTimeSpan().isUnboundedStart() ? groupTimeSpan.getStart()
                                                 : timeConstraint.getTimeSpan().getStart(),
-                                        groupTimeSpan.getStart(), groupTimeSpan.getEnd());
+                                                groupTimeSpan.getStart(), groupTimeSpan.getEnd());
                                 max = MathUtil.getModulatedFloat(
                                         timeConstraint.getTimeSpan().isUnboundedEnd() ? groupTimeSpan.getEnd()
                                                 : timeConstraint.getTimeSpan().getEnd(),
-                                        groupTimeSpan.getStart(), groupTimeSpan.getEnd());
+                                                groupTimeSpan.getStart(), groupTimeSpan.getEnd());
                             }
                             timeIntervals.put(min);
                             timeIntervals.put(max);

@@ -8,18 +8,18 @@ import java.security.Principal;
  */
 public interface Credentials
 {
-   /**
-    * Returns the user's principal.
-    *
-    * @return the user's principal.
-    */
-   Principal getUserPrincipal();
+    /**
+     * Returns the user's principal.
+     *
+     * @return the user's principal.
+     */
+    Principal getUserPrincipal();
 
-   /**
-    * Returns the user's password. The caller takes ownership of the returned
-    * array and clears it.
-    *
-    * @return the user's password.
-    */
-   char[] getPassword();
+    /**
+     * Returns the user's password. The caller takes ownership of the returned
+     * array and clears it.
+     *
+     * @return the user's password.
+     */
+    char[] getPassword();
 }

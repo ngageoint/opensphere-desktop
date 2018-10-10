@@ -128,7 +128,7 @@ public interface Cache
      * @throws CacheException If there's a problem accessing the cache.
      */
     List<DataModelCategory> getDataModelCategoriesByModelId(long[] ids, boolean source, boolean family, boolean category)
-        throws CacheException;
+            throws CacheException;
 
     /**
      * Get the group ids that match a data model category.
@@ -181,7 +181,7 @@ public interface Cache
      */
     long[] getIds(Collection<? extends Satisfaction> satisfactions, Collection<? extends PropertyMatcher<?>> parameters,
             List<? extends OrderSpecifier> orderSpecifiers, int startIndex, int limit)
-                throws CacheException, NotSerializableException;
+                    throws CacheException, NotSerializableException;
 
     /**
      * Get the primary keys that match the input parameters.
@@ -208,7 +208,7 @@ public interface Cache
      */
     long[] getIds(DataModelCategory category, Collection<? extends PropertyMatcher<?>> parameters,
             List<? extends OrderSpecifier> orderSpecifiers, int startIndex, int limit)
-                throws CacheException, NotSerializableException;
+                    throws CacheException, NotSerializableException;
 
     /**
      * Get the primary keys that match the input parameters.
@@ -234,7 +234,7 @@ public interface Cache
      */
     long[] getIds(int[] groupIds, Collection<? extends PropertyMatcher<?>> parameters,
             List<? extends OrderSpecifier> orderSpecifiers, int startIndex, int limit)
-                throws NotSerializableException, CacheException;
+                    throws NotSerializableException, CacheException;
 
     /**
      * Get the interval combinations that can be satisfied by this cache.
@@ -318,7 +318,7 @@ public interface Cache
      *             encountered.
      */
     <T> long[] put(final CacheDeposit<T> insert, CacheModificationListener listener)
-        throws CacheException, NotSerializableException;
+            throws CacheException, NotSerializableException;
 
     /**
      * Set the class provider to be used for deserializing objects.
@@ -363,5 +363,5 @@ public interface Cache
      */
     <T> void updateValues(long[] ids, Collection<? extends T> input,
             Collection<? extends PropertyAccessor<? super T, ?>> accessors, Executor executor, CacheModificationListener listener)
-                throws CacheException, NotSerializableException;
+                    throws CacheException, NotSerializableException;
 }

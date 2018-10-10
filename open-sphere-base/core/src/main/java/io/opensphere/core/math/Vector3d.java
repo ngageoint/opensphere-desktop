@@ -73,10 +73,7 @@ public class Vector3d extends AbstractVector implements Cloneable, JAXBable<Muta
         {
             return new Vector3d(x, y, z);
         }
-        else
-        {
-            return new Vector3d(x / length, y / length, z / length);
-        }
+        return new Vector3d(x / length, y / length, z / length);
     }
 
     /**
@@ -370,10 +367,7 @@ public class Vector3d extends AbstractVector implements Cloneable, JAXBable<Muta
         {
             return this;
         }
-        else
-        {
-            return new Vector3d(myX / length, myY / length, myZ / length);
-        }
+        return new Vector3d(myX / length, myY / length, myZ / length);
     }
 
     @Override

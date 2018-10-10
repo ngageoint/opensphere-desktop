@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
-import gnu.trove.procedure.TIntObjectProcedure;
 import io.opensphere.core.util.JAXBWrapper;
 
 /**
@@ -72,17 +71,13 @@ public class IntStringMap implements JAXBWrapper<JAXBableIntStringMap>
     public final void setMap(TIntObjectMap<String> map)
     {
         myEntries.clear();
-        map.forEachEntry(new TIntObjectProcedure<String>()
+        map.forEachEntry((key, value) ->
         {
-            @Override
-            public boolean execute(int key, String value)
-            {
-                IntStringPair xmlEntry = new IntStringPair();
-                xmlEntry.setKey(key);
-                xmlEntry.setValue(value);
-                myEntries.add(xmlEntry);
-                return true;
-            }
+            IntStringPair xmlEntry = new IntStringPair();
+            xmlEntry.setKey(key);
+            xmlEntry.setValue(value);
+            myEntries.add(xmlEntry);
+            return true;
         });
     }
 

@@ -129,23 +129,19 @@ public class TextureReplacer implements Runnable
                                     GL.GL_UNSIGNED_BYTE, bytes);
                             break;
                         }
-                        else
+                        if (reg.getMinX() < 0 || reg.getMinY() < 0 || reg.getMaxX() > imageWidth || reg.getMaxY() > imageHeight)
                         {
-                            if (reg.getMinX() < 0 || reg.getMinY() < 0 || reg.getMaxX() > imageWidth
-                                    || reg.getMaxY() > imageHeight)
-                            {
-                                StringBuilder builder = new StringBuilder("The dirty region ");
-                                builder.append(reg).append(" is out side of the image bounds (").append(imageWidth).append(", ")
-                                        .append(imageHeight).append(").");
-                                LOGGER.error(builder.toString());
-                                continue;
-                            }
-
-                            ByteBuffer bytes = image
-                                    .getByteBuffer(new Rectangle(reg.getMinX(), reg.getMinY(), reg.getWidth(), reg.getHeight()));
-                            gl.glTexSubImage2D(GL.GL_TEXTURE_2D, 0, reg.getMinX(), reg.getMinY(), reg.getWidth(), reg.getHeight(),
-                                    GL2.GL_ABGR_EXT, GL.GL_UNSIGNED_BYTE, bytes);
+                            StringBuilder builder = new StringBuilder("The dirty region ");
+                            builder.append(reg).append(" is out side of the image bounds (").append(imageWidth).append(", ")
+                            .append(imageHeight).append(").");
+                            LOGGER.error(builder.toString());
+                            continue;
                         }
+
+                        ByteBuffer bytes = image
+                                .getByteBuffer(new Rectangle(reg.getMinX(), reg.getMinY(), reg.getWidth(), reg.getHeight()));
+                        gl.glTexSubImage2D(GL.GL_TEXTURE_2D, 0, reg.getMinX(), reg.getMinY(), reg.getWidth(), reg.getHeight(),
+                                GL2.GL_ABGR_EXT, GL.GL_UNSIGNED_BYTE, bytes);
                     }
                 }
                 else
@@ -166,19 +162,16 @@ public class TextureReplacer implements Runnable
                                     texture.updateImage(gl, td, GL.GL_TEXTURE_2D);
                                     break;
                                 }
-                                else
+                                if (reg.getMinX() < 0 || reg.getMinY() < 0 || reg.getMaxX() > imageWidth
+                                        || reg.getMaxY() > imageHeight)
                                 {
-                                    if (reg.getMinX() < 0 || reg.getMinY() < 0 || reg.getMaxX() > imageWidth
-                                            || reg.getMaxY() > imageHeight)
-                                    {
-                                        LOGGER.warn("Skipping out of bounds image update region " + reg + " for geometry "
-                                                + geometry);
-                                        continue;
-                                    }
-
-                                    texture.updateSubImage(gl, td, 0, reg.getMinX(), reg.getMinY(), reg.getMinX(), reg.getMinY(),
-                                            reg.getWidth(), reg.getHeight());
+                                    LOGGER.warn(
+                                            "Skipping out of bounds image update region " + reg + " for geometry " + geometry);
+                                    continue;
                                 }
+
+                                texture.updateSubImage(gl, td, 0, reg.getMinX(), reg.getMinY(), reg.getMinX(), reg.getMinY(),
+                                        reg.getWidth(), reg.getHeight());
                             }
                         }
                         finally

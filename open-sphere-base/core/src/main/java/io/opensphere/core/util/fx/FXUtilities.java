@@ -172,7 +172,7 @@ public final class FXUtilities
      * @throws TimeoutException If the request runs out of time.
      */
     public static void loadAndProcess(String url, Duration timeout, Consumer<? super WebEngine> engineConsumer)
-        throws ExecutionException, InterruptedException, TimeoutException
+            throws ExecutionException, InterruptedException, TimeoutException
     {
         loadAndProcess(timeout, engine -> engine.load(url), engineConsumer);
     }
@@ -191,7 +191,7 @@ public final class FXUtilities
      * @throws TimeoutException If the request runs out of time.
      */
     public static void loadContentAndProcess(String content, Duration timeout, Consumer<? super WebEngine> engineConsumer)
-        throws ExecutionException, InterruptedException, TimeoutException
+            throws ExecutionException, InterruptedException, TimeoutException
     {
         loadAndProcess(timeout, engine -> engine.loadContent(content), engineConsumer);
     }
@@ -415,10 +415,7 @@ public final class FXUtilities
             {
                 return null;
             }
-            else
-            {
-                return c;
-            }
+            return c;
         }));
 
         return text;
@@ -639,7 +636,7 @@ public final class FXUtilities
      */
     private static void loadAndProcess(Duration timeout, Consumer<? super WebEngine> engineLoader,
             Consumer<? super WebEngine> engineConsumer)
-        throws InterruptedException, TimeoutException, ExecutionException
+                    throws InterruptedException, TimeoutException, ExecutionException
     {
         assert !Platform.isFxApplicationThread();
 
@@ -648,15 +645,11 @@ public final class FXUtilities
 
         final AtomicReference<Throwable> errorProp = new AtomicReference<>();
         final CountDownLatch latch = new CountDownLatch(1);
-        final Runnable webengRunner = new Runnable()
+        final Runnable webengRunner = () ->
         {
-            @Override
-            public void run()
-            {
-                final WebEngine eng = setupWebEngine(engineConsumer, errorProp, latch);
-                engineSaver.set(eng);
-                engineLoader.accept(eng);
-            }
+            final WebEngine eng = setupWebEngine(engineConsumer, errorProp, latch);
+            engineSaver.set(eng);
+            engineLoader.accept(eng);
         };
         try
         {

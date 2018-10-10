@@ -401,7 +401,7 @@ public final class XMLUtilities
      */
     @SuppressWarnings("unchecked")
     public static <S extends JAXBWrapper<T>, T extends JAXBable<S>> Class<? extends S> getJAXBWrapperType(Class<T> target)
-        throws IllegalArgumentException
+            throws IllegalArgumentException
     {
         for (Type intf : target.getGenericInterfaces())
         {
@@ -543,7 +543,7 @@ public final class XMLUtilities
      * @throws JAXBException If the object cannot be marshalled.
      */
     public static Node marshalJAXBObjectToElement(Object jaxbElement, Node nodeToMarshalTo, JAXBContext context)
-        throws JAXBException
+            throws JAXBException
     {
         Node newNode = null;
         try
@@ -667,7 +667,7 @@ public final class XMLUtilities
      *             cannot be loaded.
      */
     public static <S extends JAXBWrapper<T>, T extends JAXBable<S>> T readJAXBableObject(Node node, Class<T> target)
-        throws JAXBException, ClassNotFoundException
+            throws JAXBException, ClassNotFoundException
     {
         Class<? extends JAXBWrapper<T>> wrapperType = getJAXBWrapperType(target);
         JAXBWrapper<T> obj = readXMLObject(node, wrapperType);
@@ -932,7 +932,7 @@ public final class XMLUtilities
         {
             @SuppressWarnings("unchecked")
             T result = (T)createUnmarshaller(JAXBContextHelper.getCachedContext(classes))
-                    .unmarshal(createWhitespaceDiscardingEventReader(stream));
+            .unmarshal(createWhitespaceDiscardingEventReader(stream));
             return result;
         }
         catch (RuntimeException e)
@@ -980,14 +980,7 @@ public final class XMLUtilities
             }
 
             XMLEventReader rawReader = factory.createXMLEventReader(stream);
-            reader = factory.createFilteredReader(rawReader, new EventFilter()
-            {
-                @Override
-                public boolean accept(XMLEvent event)
-                {
-                    return !(event.isCharacters() && ((Characters)event).isWhiteSpace());
-                }
-            });
+            reader = factory.createFilteredReader(rawReader, (EventFilter)event -> !(event.isCharacters() && ((Characters)event).isWhiteSpace()));
         }
         catch (XMLStreamException e)
         {

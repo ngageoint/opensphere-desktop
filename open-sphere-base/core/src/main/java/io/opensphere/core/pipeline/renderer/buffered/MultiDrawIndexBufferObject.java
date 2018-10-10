@@ -5,11 +5,11 @@ import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 import java.util.Collection;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.media.opengl.GL;
 
 import com.jogamp.common.nio.PointerBuffer;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.pipeline.util.RenderContext;
 import io.opensphere.core.util.Utilities;
@@ -76,12 +76,9 @@ public class MultiDrawIndexBufferObject implements BufferObject
         {
             return false;
         }
-        else
-        {
-            rc.getGL2().glMultiDrawElements(drawMode, mySizeBuffer.rewind(), GL.GL_UNSIGNED_INT, myPointerBuffer.rewind(),
-                    myPointerBuffer.limit());
-            return true;
-        }
+        rc.getGL2().glMultiDrawElements(drawMode, mySizeBuffer.rewind(), GL.GL_UNSIGNED_INT, myPointerBuffer.rewind(),
+                myPointerBuffer.limit());
+        return true;
     }
 
     @Override

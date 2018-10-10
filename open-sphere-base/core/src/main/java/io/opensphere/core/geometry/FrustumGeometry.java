@@ -112,7 +112,7 @@ public class FrustumGeometry extends AbstractScalableMeshGeometry
     @Override
     protected Builder<? extends Position> createRawBuilder()
     {
-        return new Builder<Position>();
+        return new Builder<>();
     }
 
     /**

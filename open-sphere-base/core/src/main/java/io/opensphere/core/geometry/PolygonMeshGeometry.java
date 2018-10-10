@@ -277,7 +277,7 @@ public class PolygonMeshGeometry extends AbstractColorGeometry implements ImageP
     @Override
     protected Builder<? extends Position> createRawBuilder()
     {
-        return new Builder<Position>();
+        return new Builder<>();
     }
 
     /**
@@ -742,7 +742,7 @@ public class PolygonMeshGeometry extends AbstractColorGeometry implements ImageP
                 if (myPositions != null && myPositions.size() % myPolygonVertexCount != 0)
                 {
                     throw new IllegalArgumentException("Size of positions [" + myPositions.size()
-                            + "] is not a multiple of the vertex count [" + myPolygonVertexCount + "].");
+                    + "] is not a multiple of the vertex count [" + myPolygonVertexCount + "].");
                 }
             }
             else
@@ -750,7 +750,7 @@ public class PolygonMeshGeometry extends AbstractColorGeometry implements ImageP
                 if (myIndices.size() % myPolygonVertexCount != 0)
                 {
                     throw new IllegalArgumentException("Size of indices [" + myIndices.size()
-                            + "] is not a multiple of the vertex count [" + myPolygonVertexCount + "].");
+                    + "] is not a multiple of the vertex count [" + myPolygonVertexCount + "].");
                 }
                 if (myPositions == null)
                 {
@@ -776,7 +776,7 @@ public class PolygonMeshGeometry extends AbstractColorGeometry implements ImageP
                 if (myPositions.size() != myNormals.size())
                 {
                     throw new IllegalArgumentException("Size of positions [" + myPositions.size()
-                            + "] must be equal to size of normals [" + myNormals.size() + "].");
+                    + "] must be equal to size of normals [" + myNormals.size() + "].");
                 }
             }
         }

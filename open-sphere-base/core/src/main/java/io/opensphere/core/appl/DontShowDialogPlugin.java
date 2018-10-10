@@ -27,7 +27,7 @@ public class DontShowDialogPlugin extends PluginAdapter
                 DontShowDialog.resetPreferences(toolbox.getPreferencesRegistry());
             });
             toolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.HELP_MENU)
-                    .add(menuButton);
+            .add(menuButton);
         });
     }
 }

@@ -25,7 +25,7 @@ public class TransparentEqualsWeakReference<T> extends WeakReference<T>
      */
     public static <T> TransparentEqualsWeakReference<T> create(T referent)
     {
-        return new TransparentEqualsWeakReference<T>(referent);
+        return new TransparentEqualsWeakReference<>(referent);
     }
 
     /**
@@ -40,7 +40,7 @@ public class TransparentEqualsWeakReference<T> extends WeakReference<T>
      */
     public static <T> TransparentEqualsWeakReference<T> create(T referent, ReferenceQueue<? super T> q)
     {
-        return new TransparentEqualsWeakReference<T>(referent, q);
+        return new TransparentEqualsWeakReference<>(referent, q);
     }
 
     /**

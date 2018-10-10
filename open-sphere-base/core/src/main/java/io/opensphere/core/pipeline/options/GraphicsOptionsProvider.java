@@ -60,7 +60,7 @@ public class GraphicsOptionsProvider extends AbstractOptionsProvider
         final JCheckBox safeModeCheckBox =
                 new JCheckBox("Use safe mode for next launch", myPreferences.getBoolean(mySafeModePrefsKey, false));
         safeModeCheckBox
-                .setToolTipText("Using safe mode will result in reduced graphics performance, but may improve stability.");
+        .setToolTipText("Using safe mode will result in reduced graphics performance, but may improve stability.");
 
         final JCheckBox displayListsCheckBox = new JCheckBox("Fast text rendering for next launch (NVIDIA recommended)",
                 myPreferences.getBoolean(myDisplayListsPrefsKey, false));

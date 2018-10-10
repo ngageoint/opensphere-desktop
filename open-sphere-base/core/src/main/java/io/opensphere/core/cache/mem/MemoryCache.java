@@ -135,8 +135,8 @@ public class MemoryCache implements Cache
         {
             try
             {
-                final List<DataModelCategory> affectedDataModelCategories = getDataModelCategoriesByGroupId(groupIds, true, true, true,
-                        true);
+                final List<DataModelCategory> affectedDataModelCategories = getDataModelCategoriesByGroupId(groupIds, true, true,
+                        true, true);
 
                 for (final DataModelCategory dmc : affectedDataModelCategories)
                 {
@@ -156,11 +156,9 @@ public class MemoryCache implements Cache
                     for (final Entry<PropertyDescriptor<?>, Iterable<?>> entry : removedValues.entrySet())
                     {
                         @SuppressWarnings("unchecked")
-                        final
-                        PropertyDescriptor<Object> desc = (PropertyDescriptor<Object>)entry.getKey();
+                        final PropertyDescriptor<Object> desc = (PropertyDescriptor<Object>)entry.getKey();
                         @SuppressWarnings("unchecked")
-                        final
-                        Iterable<Object> values = (Iterable<Object>)entry.getValue();
+                        final Iterable<Object> values = (Iterable<Object>)entry.getValue();
                         if (listener != null)
                         {
                             listener.valuesRemoved(dmc, idsForGroup, desc, values);
@@ -206,14 +204,7 @@ public class MemoryCache implements Cache
         else
         {
             Factory<PropertyDescriptor, Pair<TLongSet, List<Object>>> factory;
-            factory = new LazyMap.Factory<PropertyDescriptor, Pair<TLongSet, List<Object>>>()
-            {
-                @Override
-                public Pair<TLongSet, List<Object>> create(PropertyDescriptor key)
-                {
-                    return Pair.create((TLongSet)new TLongHashSet(), New.<Object>list());
-                }
-            };
+            factory = key -> Pair.create((TLongSet)new TLongHashSet(), New.<Object>list());
             removed = LazyMap.<PropertyDescriptor, Pair<TLongSet, List<Object>>>create(
                     New.<PropertyDescriptor, Pair<TLongSet, List<Object>>>map(), PropertyDescriptor.class, factory);
         }
@@ -304,7 +295,8 @@ public class MemoryCache implements Cache
 
     @Override
     public List<DataModelCategory> getDataModelCategoriesByGroupId(int[] ids, boolean source, boolean family, boolean category,
-            boolean distinct) throws CacheException
+            boolean distinct)
+                    throws CacheException
     {
         List<DataModelCategory> results = New.<DataModelCategory>randomAccessList(ids.length);
 
@@ -331,8 +323,8 @@ public class MemoryCache implements Cache
         if (myNestedCache != null && neededIdMap != null)
         {
             final int[] neededIds = neededIdMap.keys();
-            final List<DataModelCategory> fromNestedCache = myNestedCache.getDataModelCategoriesByGroupId(neededIds, source, family,
-                    category, false);
+            final List<DataModelCategory> fromNestedCache = myNestedCache.getDataModelCategoriesByGroupId(neededIds, source,
+                    family, category, false);
             synchronized (myGroupIdToDataModelCategoryMap)
             {
                 if (fromNestedCache.size() < neededIds.length)
@@ -362,7 +354,7 @@ public class MemoryCache implements Cache
 
     @Override
     public List<DataModelCategory> getDataModelCategoriesByModelId(long[] ids, boolean source, boolean family, boolean category)
-        throws CacheException
+            throws CacheException
     {
         final int[] groupIds = getGroupIds(ids, true);
         return getDataModelCategoriesByGroupId(groupIds, source, family, category, true);
@@ -384,7 +376,7 @@ public class MemoryCache implements Cache
     @Override
     public long[] getIds(Collection<? extends Satisfaction> satisfactions, Collection<? extends PropertyMatcher<?>> parameters,
             List<? extends OrderSpecifier> orderSpecifiers, int startIndex, int limit)
-                throws CacheException, NotSerializableException
+                    throws CacheException, NotSerializableException
     {
         verifyNestedCache();
         return myNestedCache.getIds(satisfactions, parameters, orderSpecifiers, startIndex, limit);
@@ -393,7 +385,7 @@ public class MemoryCache implements Cache
     @Override
     public long[] getIds(DataModelCategory category, Collection<? extends PropertyMatcher<?>> parameters,
             List<? extends OrderSpecifier> orderSpecifiers, int startIndex, int limit)
-                throws CacheException, NotSerializableException
+                    throws CacheException, NotSerializableException
     {
         verifyNestedCache();
         return myNestedCache.getIds(category, parameters, orderSpecifiers, startIndex, limit);
@@ -402,7 +394,7 @@ public class MemoryCache implements Cache
     @Override
     public long[] getIds(int[] groupIds, Collection<? extends PropertyMatcher<?>> parameters,
             List<? extends OrderSpecifier> orderSpecifiers, int startIndex, int limit)
-                throws NotSerializableException, CacheException
+                    throws NotSerializableException, CacheException
     {
         verifyNestedCache();
         return myNestedCache.getIds(groupIds, parameters, orderSpecifiers, startIndex, limit);
@@ -416,10 +408,7 @@ public class MemoryCache implements Cache
         {
             throw new UnsupportedOperationException("Cannot get satisfaction with no nested cache installed.");
         }
-        else
-        {
-            return myNestedCache.getIntervalSatisfactions(category, parameters);
-        }
+        return myNestedCache.getIntervalSatisfactions(category, parameters);
     }
 
     @Override
@@ -499,10 +488,7 @@ public class MemoryCache implements Cache
         {
             return myNestedCache.getValueSizes(ids, property);
         }
-        else
-        {
-            return new long[ids.length];
-        }
+        return new long[ids.length];
     }
 
     @Override
@@ -516,28 +502,25 @@ public class MemoryCache implements Cache
 
     @Override
     public <T> long[] put(CacheDeposit<T> insert, final CacheModificationListener listener)
-        throws CacheException, NotSerializableException
+            throws CacheException, NotSerializableException
     {
         if (myNestedCache == null)
         {
             throw new UnsupportedOperationException("Cannot insert objects without a nested cache to generate ids.");
         }
-        else
+        final long[] ids = myNestedCache.put(insert, listener);
+
+        if (ids.length > 0)
         {
-            final long[] ids = myNestedCache.put(insert, listener);
-
-            if (ids.length > 0)
-            {
-                cacheObjects(ids, insert.getInput(), insert.getAccessors());
-            }
-
-            if (listener != null)
-            {
-                notifyListenerForNonPersistentAccessors(listener, insert.getAccessors(), ids);
-            }
-
-            return ids;
+            cacheObjects(ids, insert.getInput(), insert.getAccessors());
         }
+
+        if (listener != null)
+        {
+            notifyListenerForNonPersistentAccessors(listener, insert.getAccessors(), ids);
+        }
+
+        return ids;
     }
 
     @Override
@@ -588,7 +571,8 @@ public class MemoryCache implements Cache
     @Override
     public <T> void updateValues(final long[] ids, final Collection<? extends T> input,
             final Collection<? extends PropertyAccessor<? super T, ?>> accessors, final Executor executor,
-            final CacheModificationListener listener) throws CacheException, NotSerializableException
+                    final CacheModificationListener listener)
+                            throws CacheException, NotSerializableException
     {
         final long t0 = System.nanoTime();
         cacheObjects(ids, input, accessors);
@@ -606,31 +590,27 @@ public class MemoryCache implements Cache
 
         if (myNestedCache != null)
         {
-            final Runnable runner = new Runnable()
+            final Runnable runner = () ->
             {
-                @Override
-                public void run()
+                try
                 {
-                    try
-                    {
-                        final long t2 = System.nanoTime();
+                    final long t2 = System.nanoTime();
 
-                        myNestedCache.updateValues(ids, input, accessors, executor, listener);
-                        if (LOGGER.isDebugEnabled())
-                        {
-                            final long t3 = System.nanoTime();
-                            LOGGER.debug(StringUtilities
-                                    .formatTimingMessage("Time to update " + ids.length + " values in nested cache: ", t3 - t2));
-                        }
-                    }
-                    catch (final CacheException e)
+                    myNestedCache.updateValues(ids, input, accessors, executor, listener);
+                    if (LOGGER.isDebugEnabled())
                     {
-                        LOGGER.error("Failed to cache data: " + e, e);
+                        final long t3 = System.nanoTime();
+                        LOGGER.debug(StringUtilities
+                                .formatTimingMessage("Time to update " + ids.length + " values in nested cache: ", t3 - t2));
                     }
-                    catch (final NotSerializableException e)
-                    {
-                        LOGGER.error("Data was not serializable for input object [" + input + "]: " + e, e);
-                    }
+                }
+                catch (final CacheException e)
+                {
+                    LOGGER.error("Failed to cache data: " + e, e);
+                }
+                catch (final NotSerializableException e)
+                {
+                    LOGGER.error("Data was not serializable for input object [" + input + "]: " + e, e);
                 }
             };
 
@@ -713,8 +693,7 @@ public class MemoryCache implements Cache
                     else
                     {
                         @SuppressWarnings("unchecked")
-                        final
-                        T cast = (T)ref.get();
+                        final T cast = (T)ref.get();
                         obj = cast;
                         if (obj == null)
                         {
@@ -752,8 +731,7 @@ public class MemoryCache implements Cache
                                 filtered[ix] = arr[activeColumns[ix]];
                             }
                             @SuppressWarnings("unchecked")
-                            final
-                            T cast = (T)filtered;
+                            final T cast = (T)filtered;
                             obj = cast;
                         }
                     }
@@ -777,7 +755,7 @@ public class MemoryCache implements Cache
      * @throws CacheException If the objects cannot be retrieved.
      */
     protected int getValuesFromNestedCache(PropertyValueMap resultMap, int[] indices, long[] neededIds, TIntList failedIndices)
-        throws CacheException
+            throws CacheException
     {
         boolean allFail = false;
         final PropertyValueMap cacheResultMap = new PropertyValueMap();
@@ -989,7 +967,8 @@ public class MemoryCache implements Cache
      * @throws CacheException If there is a cache error.
      */
     private void notifyListenerForNonPersistentAccessors(final CacheModificationListener listener,
-            Collection<? extends PropertyAccessor<?, ?>> accessors, long[] ids) throws CacheException
+            Collection<? extends PropertyAccessor<?, ?>> accessors, long[] ids)
+                    throws CacheException
     {
         final Collection<PropertyDescriptor<?>> transientPropertyDescriptors = New.collection();
         for (final PropertyAccessor<?, ?> propertyAccessor : accessors)
@@ -1004,7 +983,8 @@ public class MemoryCache implements Cache
             return;
         }
         final int[] distinctGroupIds = getGroupIds(ids, true);
-        final List<DataModelCategory> dataModelCategories = getDataModelCategoriesByGroupId(distinctGroupIds, true, true, true, false);
+        final List<DataModelCategory> dataModelCategories = getDataModelCategoriesByGroupId(distinctGroupIds, true, true, true,
+                false);
         final TIntObjectHashMap<CacheModificationReport> groupIdToReportMap = new TIntObjectHashMap<>();
         for (int index = 0; index < distinctGroupIds.length; ++index)
         {
@@ -1049,8 +1029,7 @@ public class MemoryCache implements Cache
         for (final Entry<PropertyDescriptor<?>, TLongObjectHashMap<Reference<Object>>> entry : transientCache.entrySet())
         {
             @SuppressWarnings("unchecked")
-            final
-            PropertyDescriptor<Object> propertyDescriptor = (PropertyDescriptor<Object>)entry.getKey();
+            final PropertyDescriptor<Object> propertyDescriptor = (PropertyDescriptor<Object>)entry.getKey();
             final TLongObjectHashMap<Reference<Object>> map = entry.getValue();
             final List<Object> values = new ArrayList<>(ids.length);
             synchronized (map)

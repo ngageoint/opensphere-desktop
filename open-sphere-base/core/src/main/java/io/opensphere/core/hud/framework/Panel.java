@@ -70,7 +70,7 @@ public abstract class Panel<S extends LayoutConstraints, T extends AbstractLayou
 
     /**
      * Removes the supplied component from the panel and layout.
-     * 
+     *
      * @param component the component to remove from the panel and layout.
      */
     public void remove(Component component)

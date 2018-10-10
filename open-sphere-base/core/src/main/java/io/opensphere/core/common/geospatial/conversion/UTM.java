@@ -69,6 +69,7 @@ public class UTM
         }
     }
 
+    @Override
     public String toString()
     {
         return "UTM{zone: " + zone + " hemisphere: " + hemisphere + " easting: " + easting + " northing: " + northing + " a: "

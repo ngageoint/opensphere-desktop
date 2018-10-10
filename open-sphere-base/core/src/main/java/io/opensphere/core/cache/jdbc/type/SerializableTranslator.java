@@ -70,7 +70,7 @@ public class SerializableTranslator extends AbstractValueTranslator<Serializable
      */
     @Override
     public int setValue(PreparedStatement pstmt, int column, Serializable value, boolean forInsert)
-        throws CacheException, SQLException
+            throws CacheException, SQLException
     {
         try
         {

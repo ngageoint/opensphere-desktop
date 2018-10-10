@@ -167,7 +167,7 @@ public class FilePreferencesPersistenceManager implements PreferencesPersistence
     @Override
     @SuppressWarnings("PMD.CollapsibleIfStatements")
     public synchronized void save(Preferences preferences, CipherFactory cipherFactory, boolean compressed)
-        throws IOException, JAXBException
+            throws IOException, JAXBException
     {
         final File aFile = getFile(preferences.getTopic(), getExtension(cipherFactory != null, compressed));
         if (!aFile.getParentFile().exists() && !aFile.getParentFile().mkdirs())
@@ -267,7 +267,7 @@ public class FilePreferencesPersistenceManager implements PreferencesPersistence
     {
         final StringBuilder sb = new StringBuilder();
         sb.append(myBaseDirectory).append(File.separator).append(topic.replaceAll(" ", "").replaceAll("\n", ""))
-                .append(extension);
+        .append(extension);
         return new File(sb.toString());
     }
 
@@ -283,7 +283,7 @@ public class FilePreferencesPersistenceManager implements PreferencesPersistence
      * @throws JAXBException If the XML is malformed.
      */
     private InternalPreferencesIF loadFile(File aFile, CipherFactory cipherFactory, boolean compressed)
-        throws IOException, JAXBException
+            throws IOException, JAXBException
     {
         InternalPreferencesIF prefs;
         if (compressed || cipherFactory != null)

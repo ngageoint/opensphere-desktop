@@ -83,10 +83,7 @@ public abstract class Length implements Cloneable, Serializable, Comparable<Leng
         {
             return (T)from;
         }
-        else
-        {
-            return UnitsUtilities.create(type, Length.class, from);
-        }
+        return UnitsUtilities.create(type, Length.class, from);
     }
 
     /**

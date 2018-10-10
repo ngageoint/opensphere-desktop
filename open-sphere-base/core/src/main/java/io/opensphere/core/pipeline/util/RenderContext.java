@@ -155,14 +155,11 @@ public class RenderContext
         {
             return true;
         }
-        else
+        if (warnings != null)
         {
-            if (warnings != null)
-            {
-                warnings.add(warningPrefix + ": the GL version is " + getGLVersion() + " but " + version + " is required");
-            }
-            return false;
+            warnings.add(warningPrefix + ": the GL version is " + getGLVersion() + " but " + version + " is required");
         }
+        return false;
     }
 
     /**
@@ -563,14 +560,11 @@ public class RenderContext
         {
             return true;
         }
-        else
+        if (warnings != null)
         {
-            if (warnings != null)
-            {
-                warnings.add(warningPrefix + ": " + extensionName + " is not available");
-            }
-            return false;
+            warnings.add(warningPrefix + ": " + extensionName + " is not available");
         }
+        return false;
     }
 
     /**
@@ -599,11 +593,8 @@ public class RenderContext
         {
             return true;
         }
-        else
-        {
-            warnings.addAll(tmpWarnings);
-            return false;
-        }
+        warnings.addAll(tmpWarnings);
+        return false;
     }
 
     /**
@@ -631,11 +622,8 @@ public class RenderContext
         {
             return true;
         }
-        else
-        {
-            warnings.addAll(tmpWarnings);
-            return false;
-        }
+        warnings.addAll(tmpWarnings);
+        return false;
     }
 
     /**
@@ -663,11 +651,8 @@ public class RenderContext
         {
             return true;
         }
-        else
-        {
-            warnings.addAll(tmpWarnings);
-            return false;
-        }
+        warnings.addAll(tmpWarnings);
+        return false;
     }
 
     /**

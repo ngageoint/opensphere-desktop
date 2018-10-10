@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.AbstractList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -117,14 +116,7 @@ public abstract class TimeSpanList extends AbstractList<TimeSpan> implements Ser
             {
                 arr[i] = Integer.valueOf(i++);
             }
-            Arrays.sort(arr, new Comparator<Integer>()
-            {
-                @Override
-                public int compare(Integer o1, Integer o2)
-                {
-                    return list.get(o1.intValue()).compareTo(list.get(o2.intValue()));
-                }
-            });
+            Arrays.sort(arr, (o1, o2) -> list.get(o1.intValue()).compareTo(list.get(o2.intValue())));
 
             int index0 = 0;
             TimeSpan span0 = list.get(arr[index0].intValue());
@@ -214,11 +206,8 @@ public abstract class TimeSpanList extends AbstractList<TimeSpan> implements Ser
             {
                 return true;
             }
-            else
-            {
-                // Make the remainder mutable.
-                remainder = New.list(remainder);
-            }
+            // Make the remainder mutable.
+            remainder = New.list(remainder);
         }
 
         return false;
@@ -391,10 +380,7 @@ public abstract class TimeSpanList extends AbstractList<TimeSpan> implements Ser
                 TimeSpan intersection = myTimeSpan.getIntersection(ts);
                 return intersection == null ? emptyList() : singleton(intersection);
             }
-            else
-            {
-                return emptyList();
-            }
+            return emptyList();
         }
 
         @Override

@@ -108,15 +108,11 @@ public class TimeInstantTextFieldController extends AbstractController<TimeInsta
         };
         getView().getTextField().getDocument().addDocumentListener(myDocumentListener);
 
-        myMouseWheelListener = new MouseWheelListener()
+        myMouseWheelListener = e ->
         {
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e)
+            if (getView().getTextField().isEditable())
             {
-                if (getView().getTextField().isEditable())
-                {
-                    handleMouseWheelEvent(e);
-                }
+                handleMouseWheelEvent(e);
             }
         };
         getView().getTextField().addMouseWheelListener(myMouseWheelListener);

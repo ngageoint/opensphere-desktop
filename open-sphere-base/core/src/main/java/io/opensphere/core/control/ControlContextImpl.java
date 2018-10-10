@@ -497,7 +497,7 @@ class ControlContextImpl implements ControlContext
         }
 
         Collections.sort(targetedBindings, ControlContextImpl::compare);
-        return new Pair<Collection<MouseBindingAbs>, Collection<MouseBindingAbs>>(targetedBindings, untargetedBindings);
+        return new Pair<>(targetedBindings, untargetedBindings);
     }
 
     /**

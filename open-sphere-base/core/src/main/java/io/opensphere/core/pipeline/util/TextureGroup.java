@@ -24,7 +24,7 @@ public class TextureGroup implements SizeProvider
      * Map of render mode to the key for the associated
      * <code>TextureHandle</code>.
      */
-    private Map<AbstractGeometry.RenderMode, Object> myTextureMap = new EnumMap<AbstractGeometry.RenderMode, Object>(
+    private Map<AbstractGeometry.RenderMode, Object> myTextureMap = new EnumMap<>(
             AbstractGeometry.RenderMode.class);
 
     /**

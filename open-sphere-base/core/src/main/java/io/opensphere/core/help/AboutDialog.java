@@ -133,9 +133,9 @@ public class AboutDialog extends JDialog
         StringBuilder sb = new StringBuilder(512);
         sb.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n" + "<html>\n" + "  <head>\n"
                 + "  </head>\n" + "  <body bgcolor=\"#8A8A8A\">\n" + "    <center>\n" + "      <img src=\"")
-                .append(getImageUrl().toString()).append("\"><br />\n" + "        <bold>" + "           ").append(getToolTitle())
-                .append("<br />\n" + "           ").append(getVersion())
-                .append("<br />\n" + "        </bold>" + "    </center>\n" + "  </body>" + "</html>\n");
+        .append(getImageUrl().toString()).append("\"><br />\n" + "        <bold>" + "           ").append(getToolTitle())
+        .append("<br />\n" + "           ").append(getVersion())
+        .append("<br />\n" + "        </bold>" + "    </center>\n" + "  </body>" + "</html>\n");
 
         return sb.toString();
     }

@@ -70,7 +70,7 @@ public final class CalloutGeometryUtil
         GeoScreenBoundingBox gsbb = new GeoScreenBoundingBox(upperLeft, lowerRight,
                 new GeographicBoxAnchor(attachment, callout.getAnchorOffset(), 0f, 0f));
 
-        TileGeometry.Builder<ScreenPosition> tileBuilder = new TileGeometry.Builder<ScreenPosition>();
+        TileGeometry.Builder<ScreenPosition> tileBuilder = new TileGeometry.Builder<>();
         tileBuilder.setBounds(gsbb);
         SingletonImageProvider imageProvider = new SingletonImageProvider(image, Image.CompressionType.D3DFMT_A8R8G8B8);
         tileBuilder.setImageManager(new ImageManager(null, imageProvider));

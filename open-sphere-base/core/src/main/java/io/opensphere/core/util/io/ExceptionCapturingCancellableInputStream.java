@@ -5,9 +5,8 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Collections;
 
-import net.jcip.annotations.ThreadSafe;
-
 import io.opensphere.core.util.collections.New;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * A wrapper for a {@link CancellableInputStream} that will capture any

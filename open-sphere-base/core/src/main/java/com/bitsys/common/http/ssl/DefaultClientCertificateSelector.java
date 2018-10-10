@@ -13,25 +13,23 @@ import javax.net.ssl.X509KeyManager;
  */
 public class DefaultClientCertificateSelector implements ClientCertificateSelector
 {
-   /**
-    * @see com.bitsys.common.http.ssl.ClientCertificateSelector#chooseClientAlias(java.util.Collection,
-    *      java.net.Socket, javax.net.ssl.X509KeyManager)
-    */
-   @Override
-   public String chooseClientAlias(final Collection<String> aliases, final Socket socket,
-                                   final X509KeyManager keyManager)
-   {
-      return aliases.isEmpty() ? null : aliases.iterator().next();
-   }
+    /**
+     * @see com.bitsys.common.http.ssl.ClientCertificateSelector#chooseClientAlias(java.util.Collection,
+     *      java.net.Socket, javax.net.ssl.X509KeyManager)
+     */
+    @Override
+    public String chooseClientAlias(final Collection<String> aliases, final Socket socket, final X509KeyManager keyManager)
+    {
+        return aliases.isEmpty() ? null : aliases.iterator().next();
+    }
 
-   /**
-    * @see com.bitsys.common.http.ssl.ClientCertificateSelector#chooseClientAlias(java.util.Collection,
-    *      javax.net.ssl.SSLEngine, javax.net.ssl.X509KeyManager)
-    */
-   @Override
-   public String chooseClientAlias(final Collection<String> aliases, final SSLEngine engine,
-                                   final X509KeyManager keyManager)
-   {
-      return aliases.isEmpty() ? null : aliases.iterator().next();
-   }
+    /**
+     * @see com.bitsys.common.http.ssl.ClientCertificateSelector#chooseClientAlias(java.util.Collection,
+     *      javax.net.ssl.SSLEngine, javax.net.ssl.X509KeyManager)
+     */
+    @Override
+    public String chooseClientAlias(final Collection<String> aliases, final SSLEngine engine, final X509KeyManager keyManager)
+    {
+        return aliases.isEmpty() ? null : aliases.iterator().next();
+    }
 }

@@ -14,6 +14,6 @@ public class WeakThreePhaseChangeSupport<S, T extends ThreePhaseChangeListener<S
     @Override
     protected Reference<T> createReference(T listener)
     {
-        return new WeakReference<T>(listener);
+        return new WeakReference<>(listener);
     }
 }

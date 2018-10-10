@@ -211,10 +211,7 @@ public class ProcessorDistributionKey implements Comparable<ProcessorDistributio
             {
                 return myGeometryOrderKey.compareTo(key.getGeometryOrderKey());
             }
-            else
-            {
-                return 0;
-            }
+            return 0;
         }
 
         // Render tile geometries before other things.
@@ -229,14 +226,7 @@ public class ProcessorDistributionKey implements Comparable<ProcessorDistributio
         {
             return 1;
         }
-
-        // The classes are different and neither one is a TileGeometry.
-        // Order by the geometry type hash codes to try to keep objects of the
-        // same geometry type together.
-        else
-        {
-            return myGeometryType.hashCode() < key.getGeometryType().hashCode() ? -1 : 1;
-        }
+        return myGeometryType.hashCode() < key.getGeometryType().hashCode() ? -1 : 1;
     }
 
     /**

@@ -29,7 +29,7 @@ public interface FontIcon
 
     /**
      * Gets the icon's size.
-     * 
+     *
      * @return the size
      */
     int getSize();

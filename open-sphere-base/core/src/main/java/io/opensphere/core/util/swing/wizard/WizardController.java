@@ -67,20 +67,20 @@ public class WizardController
         myDialog.addActionListener(myActionListener);
 
         myDialog.getStepPanel().getModel().getChangeSupport()
-                .addListener(new WizardStepListModel.WizardStepListModelChangeListener()
-                {
-                    @Override
-                    public void currentStepChanged(WizardStepListModel source, int step, String stepTitle)
-                    {
-                        setButtonsEnabled();
-                    }
+        .addListener(new WizardStepListModel.WizardStepListModelChangeListener()
+        {
+            @Override
+            public void currentStepChanged(WizardStepListModel source, int step, String stepTitle)
+            {
+                setButtonsEnabled();
+            }
 
-                    @Override
-                    public void stepStateChanged(WizardStepListModel source, int step, String stepTitle, StepState state)
-                    {
-                        setButtonsEnabled();
-                    }
-                });
+            @Override
+            public void stepStateChanged(WizardStepListModel source, int step, String stepTitle, StepState state)
+            {
+                setButtonsEnabled();
+            }
+        });
     }
 
     /**

@@ -10,8 +10,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import net.jcip.annotations.Immutable;
-
 import io.opensphere.core.model.RangeRelationType;
 import io.opensphere.core.units.duration.Duration;
 import io.opensphere.core.units.duration.Milliseconds;
@@ -20,6 +18,7 @@ import io.opensphere.core.util.Constants;
 import io.opensphere.core.util.DateTimeUtilities;
 import io.opensphere.core.util.SizeProvider;
 import io.opensphere.core.util.Utilities;
+import net.jcip.annotations.Immutable;
 
 /**
  * <p>
@@ -175,11 +174,17 @@ public abstract class TimeSpan implements Comparable<TimeSpan>, Serializable, Ti
     public static TimeSpan spanOrPt (Date start, Date end)
     {
         if (start != null && end != null)
+        {
             return TimeSpan.get(start.getTime(), end.getTime());
+        }
         else if (start != null)
+        {
             return TimeSpan.get(start.getTime(), start.getTime());
+        }
         else if (end != null)
+        {
             return TimeSpan.get(end.getTime(), end.getTime());
+        }
         return TimeSpan.TIMELESS;
     }
 
@@ -194,11 +199,17 @@ public abstract class TimeSpan implements Comparable<TimeSpan>, Serializable, Ti
     public static TimeSpan get(Date start, Date end)
     {
         if (start != null && end != null)
+        {
             return TimeSpan.get(start.getTime(), end.getTime());
+        }
         else if (start != null)
+        {
             return newUnboundedEndTimeSpan(start);
+        }
         else if (end != null)
+        {
             return newUnboundedStartTimeSpan(end);
+        }
         return TIMELESS;
     }
 

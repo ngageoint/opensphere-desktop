@@ -117,7 +117,7 @@ public class PointRendererBuffered<T extends PointGeometry> extends AbstractPoin
                 rc.glDepthMask(entry.getKey().isObscurant());
                 pointData.draw(rc, GL.GL_POINTS);
 
-                Pair<PointRendererBuffered<T>, RenderKey> key = new Pair<PointRendererBuffered<T>, RenderKey>(this,
+                Pair<PointRendererBuffered<T>, RenderKey> key = new Pair<>(this,
                         entry.getKey());
                 if (getCache().getCacheAssociation(key, PointDataBuffered.class) == null)
                 {
@@ -196,7 +196,7 @@ public class PointRendererBuffered<T extends PointGeometry> extends AbstractPoin
         @Override
         public GeometryRenderer<PointGeometry> createRenderer()
         {
-            return new PointRendererBuffered<PointGeometry>(getCache());
+            return new PointRendererBuffered<>(getCache());
         }
 
         @Override

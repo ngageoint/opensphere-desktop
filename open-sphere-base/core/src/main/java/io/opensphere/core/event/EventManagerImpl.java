@@ -170,39 +170,33 @@ public class EventManagerImpl implements EventManager
         {
             for (final EventListener<? super T> subscriber : subscribers)
             {
-                Runnable command = new Runnable()
+                myExecutor.execute(() ->
                 {
-                    @Override
-                    public void run()
+                    try
                     {
-                        try
-                        {
-                            long start = System.nanoTime();
+                        long start = System.nanoTime();
 
-                            // This is safe as long as T is assignable from S.
-                            @SuppressWarnings("unchecked")
-                            T castEvent = (T)event;
-                            subscriber.notify(castEvent);
+                        // This is safe as long as T is assignable from S.
+                        @SuppressWarnings("unchecked")
+                        T castEvent = (T)event;
+                        subscriber.notify(castEvent);
 
-                            /* Check for subscribers that take a long time to
-                             * handle the event */
-                            long deltaNS = System.nanoTime() - start;
-                            if (deltaNS > 200_000_000)
-                            {
-                                Object subscriberMsgProxy = LOGGER.isTraceEnabled() ? subscriber
-                                        : subscriber.getClass().getName();
-                                String message = StringUtilities.formatTimingMessage(subscriberMsgProxy + " took ", deltaNS)
-                                        + " to handle event notification for " + castEvent;
-                                LOGGER.log(deltaNS > 1_000_000_000 ? Level.ERROR : Level.WARN, message);
-                            }
-                        }
-                        catch (RuntimeException e)
+                        /* Check for subscribers that take a long time to handle
+                         * the event */
+                        long deltaNS = System.nanoTime() - start;
+                        if (deltaNS > 200_000_000)
                         {
-                            LOGGER.error("Exception while publishing an event: " + e, e);
+                            Object subscriberMsgProxy = LOGGER.isTraceEnabled() ? subscriber : subscriber.getClass().getName();
+                            String message = StringUtilities.formatTimingMessage(subscriberMsgProxy + " took ", deltaNS)
+                                    + " to handle event notification for " + castEvent;
+                            LOGGER.log(deltaNS > 1_000_000_000 ? Level.ERROR : Level.WARN, message);
                         }
                     }
-                };
-                myExecutor.execute(command);
+                    catch (RuntimeException e)
+                    {
+                        LOGGER.error("Exception while publishing an event: " + e, e);
+                    }
+                });
             }
         }
     }

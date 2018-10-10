@@ -99,6 +99,6 @@ public class UsernamePasswordOptionsProvider extends AbstractTableOptionsProvide
         EncryptedUsernamePassword item = CollectionUtilities.getItem(getConfig().getUsernamePasswords(), row);
         JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(getTable()),
                 "An encrypted password is stored for username \"" + item.getUsername() + "\" associated with " + item.getPurpose()
-                        + ".");
+                + ".");
     }
 }

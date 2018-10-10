@@ -48,7 +48,7 @@ public final class GL2LightHandler
 
     static
     {
-        ourColorMaterialModeParameterTypeMap = new EnumMap<ColorMaterialModeParameterType, Integer>(
+        ourColorMaterialModeParameterTypeMap = new EnumMap<>(
                 ColorMaterialModeParameterType.class);
         ourColorMaterialModeParameterTypeMap.put(ColorMaterialModeParameterType.AMBIENT,
                 Integer.valueOf(GLLightingFunc.GL_AMBIENT));
@@ -74,7 +74,7 @@ public final class GL2LightHandler
         ourLightModelParameterTypeMap.put(LightModelParameterType.LIGHT_MODEL_TWO_SIDE,
                 Integer.valueOf(GL2ES1.GL_LIGHT_MODEL_TWO_SIDE));
 
-        ourLightModelVectorParameterTypeMap = new EnumMap<LightModelVectorParameterType, Integer>(
+        ourLightModelVectorParameterTypeMap = new EnumMap<>(
                 LightModelVectorParameterType.class);
         ourLightModelVectorParameterTypeMap.put(LightModelVectorParameterType.LIGHT_MODEL_AMBIENT,
                 Integer.valueOf(GL2ES1.GL_LIGHT_MODEL_AMBIENT));

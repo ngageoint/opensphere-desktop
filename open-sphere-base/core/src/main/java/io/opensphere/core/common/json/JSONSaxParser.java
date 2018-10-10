@@ -176,12 +176,6 @@ public class JSONSaxParser
         LinkedList<State> myState = new LinkedList<>();
 
         /**
-         * Counter for the entire document of the number of characters
-         * processed.
-         */
-        long overAllCharCounter = 0;
-
-        /**
          * Count of the new line characters encountered while processing the
          * document.
          */
@@ -259,7 +253,6 @@ public class JSONSaxParser
             for (int i = 0; i < numChars; i++)
             {
                 currChar = buff[i];
-                overAllCharCounter++;
                 charCounter++;
 
                 // Count any new lines for our line counter.
@@ -341,7 +334,7 @@ public class JSONSaxParser
                                 {
                                     JSONSaxParseException e = new JSONSaxParseException(lineCounter, charCounter,
                                             "Pair Separator Character '" + currChar + "' found at position " + charCounter
-                                                    + " without preceeding pair " + " line " + lineCounter);
+                                            + " without preceeding pair " + " line " + lineCounter);
                                     myHandler.fatalError(e);
                                     throw e;
                                 }
@@ -513,58 +506,55 @@ public class JSONSaxParser
                                     myHandler.fatalError(e);
                                     throw e;
                                 }
-                                else
+                                sendTextBufferAsValue(ValueType.NULL);
+                                // POP NULL_VALUE
+                                myLastCompleteState = myState.pop();
+                                switch (currChar)
                                 {
-                                    sendTextBufferAsValue(ValueType.NULL);
-                                    // POP NULL_VALUE
-                                    myLastCompleteState = myState.pop();
-                                    switch (currChar)
-                                    {
-                                        case ARRAY_END:
-                                            // If in this state then double pop
-                                            // document state
-                                            // to get out of ARRAY state.
-                                            // POP ARRAY
+                                    case ARRAY_END:
+                                        // If in this state then double pop
+                                        // document state
+                                        // to get out of ARRAY state.
+                                        // POP ARRAY
+                                        myLastCompleteState = myState.pop();
+                                        myHandler.arrayEnd();
+                                        break;
+                                    case OBJECT_END:
+                                        // If in this state then double pop
+                                        // document state
+                                        // to get out of OBJECT state.
+                                        // POP VALUE
+                                        myState.pop();
+                                        // POP OBJECT
+                                        myLastCompleteState = myState.pop();
+                                        myHandler.objectEnd();
+                                        break;
+                                    case WHITE_SPACE:
+                                    case CARRIAGE_RETURN:
+                                    case NEW_LINE:
+                                    case TAB:
+                                        getTextBuffer().append(currChar);
+                                        break;
+                                    case ARRAY_ELEMENT_SEPARATOR: // or
+                                        // PAIR_SEPARATOR
+                                        // Since this could also be the
+                                        // OBJECT K/v pair separator
+                                        // check the state one above the
+                                        // current state so we
+                                        // can properly make sure we change
+                                        // to a valid state.
+                                        // and send the correct event.
+                                        if (myState.get(1) == State.OBJECT)
+                                        {
+                                            // VALUE
                                             myLastCompleteState = myState.pop();
-                                            myHandler.arrayEnd();
-                                            break;
-                                        case OBJECT_END:
-                                            // If in this state then double pop
-                                            // document state
-                                            // to get out of OBJECT state.
-                                            // POP VALUE
-                                            myState.pop();
-                                            // POP OBJECT
-                                            myLastCompleteState = myState.pop();
-                                            myHandler.objectEnd();
-                                            break;
-                                        case WHITE_SPACE:
-                                        case CARRIAGE_RETURN:
-                                        case NEW_LINE:
-                                        case TAB:
-                                            getTextBuffer().append(currChar);
-                                            break;
-                                        case ARRAY_ELEMENT_SEPARATOR: // or
-                                                                      // PAIR_SEPARATOR
-                                            // Since this could also be the
-                                            // OBJECT K/v pair separator
-                                            // check the state one above the
-                                            // current state so we
-                                            // can properly make sure we change
-                                            // to a valid state.
-                                            // and send the correct event.
-                                            if (myState.get(1) == State.OBJECT)
-                                            {
-                                                // VALUE
-                                                myLastCompleteState = myState.pop();
-                                                myHandler.keyValuePairSeparator();
-                                            }
-                                            else
-                                            {
-                                                myHandler.arrayElementSeparator();
-                                            }
-                                            break;
-                                    }
+                                            myHandler.keyValuePairSeparator();
+                                        }
+                                        else
+                                        {
+                                            myHandler.arrayElementSeparator();
+                                        }
+                                        break;
                                 }
                                 break;
                             default:
@@ -613,66 +603,63 @@ public class JSONSaxParser
                                     myHandler.fatalError(e);
                                     throw e;
                                 }
-                                else
+                                sendTextBufferAsValue(ValueType.BOOLEAN);
+                                // POP BOOLEAN_VALUE
+                                myLastCompleteState = myState.pop();
+                                switch (currChar)
                                 {
-                                    sendTextBufferAsValue(ValueType.BOOLEAN);
-                                    // POP BOOLEAN_VALUE
-                                    myLastCompleteState = myState.pop();
-                                    switch (currChar)
-                                    {
-                                        case ARRAY_END:
-                                            // In this case double pop the state
-                                            // because
-                                            // we have finished our current
-                                            // array and need to get
-                                            // that off the stack as well and
-                                            // send the proper event.
-                                            // ARRAY
+                                    case ARRAY_END:
+                                        // In this case double pop the state
+                                        // because
+                                        // we have finished our current
+                                        // array and need to get
+                                        // that off the stack as well and
+                                        // send the proper event.
+                                        // ARRAY
+                                        myLastCompleteState = myState.pop();
+                                        myHandler.arrayEnd();
+                                        break;
+                                    case OBJECT_END:
+                                        // In this case double pop the state
+                                        // because
+                                        // we have finished our current
+                                        // object and need to get
+                                        // that off the stack as well and
+                                        // send the proper event.
+                                        // POP VALUE
+                                        myState.pop();
+                                        // OBJECT
+                                        myLastCompleteState = myState.pop();
+                                        myHandler.objectEnd();
+                                        break;
+                                    case WHITE_SPACE:
+                                    case TAB:
+                                    case CARRIAGE_RETURN:
+                                    case NEW_LINE:
+                                        getTextBuffer().append(currChar);
+                                        break;
+                                    case ARRAY_ELEMENT_SEPARATOR: // ||
+                                        // PAIR_SEPARATOR
+                                        // Since the "," is both the pair
+                                        // separator and the
+                                        // array element separator and we
+                                        // could be here while
+                                        // processing either type we need to
+                                        // peek one farther
+                                        // up the stack so that we take the
+                                        // correct action and
+                                        // send the correct events.
+                                        if (myState.get(1) == State.OBJECT)
+                                        {
+                                            // VALUE
                                             myLastCompleteState = myState.pop();
-                                            myHandler.arrayEnd();
-                                            break;
-                                        case OBJECT_END:
-                                            // In this case double pop the state
-                                            // because
-                                            // we have finished our current
-                                            // object and need to get
-                                            // that off the stack as well and
-                                            // send the proper event.
-                                            // POP VALUE
-                                            myState.pop();
-                                            // OBJECT
-                                            myLastCompleteState = myState.pop();
-                                            myHandler.objectEnd();
-                                            break;
-                                        case WHITE_SPACE:
-                                        case TAB:
-                                        case CARRIAGE_RETURN:
-                                        case NEW_LINE:
-                                            getTextBuffer().append(currChar);
-                                            break;
-                                        case ARRAY_ELEMENT_SEPARATOR: // ||
-                                                                      // PAIR_SEPARATOR
-                                            // Since the "," is both the pair
-                                            // separator and the
-                                            // array element separator and we
-                                            // could be here while
-                                            // processing either type we need to
-                                            // peek one farther
-                                            // up the stack so that we take the
-                                            // correct action and
-                                            // send the correct events.
-                                            if (myState.get(1) == State.OBJECT)
-                                            {
-                                                // VALUE
-                                                myLastCompleteState = myState.pop();
-                                                myHandler.keyValuePairSeparator();
-                                            }
-                                            else
-                                            {
-                                                myHandler.arrayElementSeparator();
-                                            }
-                                            break;
-                                    }
+                                            myHandler.keyValuePairSeparator();
+                                        }
+                                        else
+                                        {
+                                            myHandler.arrayElementSeparator();
+                                        }
+                                        break;
                                 }
                                 break;
                             default:
@@ -720,54 +707,51 @@ public class JSONSaxParser
                                         myHandler.fatalError(e);
                                         throw e;
                                     }
-                                    else
+                                    sendTextBufferAsValue(ValueType.NUMBER);
+                                    // POP NUMBER_VALUE
+                                    myLastCompleteState = myState.pop();
+                                    switch (currChar)
                                     {
-                                        sendTextBufferAsValue(ValueType.NUMBER);
-                                        // POP NUMBER_VALUE
-                                        myLastCompleteState = myState.pop();
-                                        switch (currChar)
-                                        {
-                                            case ARRAY_END:
-                                                // ARRAY
+                                        case ARRAY_END:
+                                            // ARRAY
+                                            myLastCompleteState = myState.pop();
+                                            myHandler.arrayEnd();
+                                            break;
+                                        case OBJECT_END:
+                                            // POP VALUE
+                                            myState.pop();
+                                            // OBJECT
+                                            myLastCompleteState = myState.pop();
+                                            myHandler.objectEnd();
+                                            break;
+                                        case WHITE_SPACE:
+                                        case CARRIAGE_RETURN:
+                                        case NEW_LINE:
+                                        case TAB:
+                                            getTextBuffer().append(currChar);
+                                            break;
+                                        case ARRAY_ELEMENT_SEPARATOR: // ||
+                                            // PAIR_SEPARATOR
+                                            // Since the "," is both the
+                                            // pair separator and the
+                                            // array element separator and
+                                            // we could be here while
+                                            // processing either type we
+                                            // need to peek one farther
+                                            // up the stack so that we take
+                                            // the correct action and
+                                            // send the correct events.
+                                            if (myState.get(1) == State.OBJECT)
+                                            {
+                                                // VALUE
                                                 myLastCompleteState = myState.pop();
-                                                myHandler.arrayEnd();
-                                                break;
-                                            case OBJECT_END:
-                                                // POP VALUE
-                                                myState.pop();
-                                                // OBJECT
-                                                myLastCompleteState = myState.pop();
-                                                myHandler.objectEnd();
-                                                break;
-                                            case WHITE_SPACE:
-                                            case CARRIAGE_RETURN:
-                                            case NEW_LINE:
-                                            case TAB:
-                                                getTextBuffer().append(currChar);
-                                                break;
-                                            case ARRAY_ELEMENT_SEPARATOR: // ||
-                                                                          // PAIR_SEPARATOR
-                                                // Since the "," is both the
-                                                // pair separator and the
-                                                // array element separator and
-                                                // we could be here while
-                                                // processing either type we
-                                                // need to peek one farther
-                                                // up the stack so that we take
-                                                // the correct action and
-                                                // send the correct events.
-                                                if (myState.get(1) == State.OBJECT)
-                                                {
-                                                    // VALUE
-                                                    myLastCompleteState = myState.pop();
-                                                    myHandler.keyValuePairSeparator();
-                                                }
-                                                else
-                                                {
-                                                    myHandler.arrayElementSeparator();
-                                                }
-                                                break;
-                                        }
+                                                myHandler.keyValuePairSeparator();
+                                            }
+                                            else
+                                            {
+                                                myHandler.arrayElementSeparator();
+                                            }
+                                            break;
                                     }
                                     break;
                                 default:

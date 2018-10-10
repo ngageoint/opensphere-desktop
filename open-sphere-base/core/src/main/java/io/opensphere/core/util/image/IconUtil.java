@@ -547,7 +547,7 @@ public final class IconUtil
      * @throws IconRuntimeException If the resource cannot be loaded.
      */
     public static void setIcons(AbstractButton button, String resource, Color normalColor, Color selectColor)
-        throws IconRuntimeException
+            throws IconRuntimeException
     {
         setIcons(button, getIcon(resource), normalColor, selectColor);
     }

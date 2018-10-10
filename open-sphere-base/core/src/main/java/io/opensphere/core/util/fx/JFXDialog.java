@@ -36,7 +36,7 @@ public class JFXDialog extends JDialog
     private Runnable myRejectListener;
 
     /** The root GUI node. */
-//    @ThreadConfined("JavaFX")
+    //    @ThreadConfined("JavaFX")
     private volatile Node guiNode;
 
     /** Editor interface--may be the same as the GUI node. */

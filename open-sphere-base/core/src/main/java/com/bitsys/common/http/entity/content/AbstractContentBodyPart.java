@@ -7,7 +7,7 @@ import com.google.common.base.Preconditions;
 
 /**
  * This class provides a common implementation of {@link ContentBodyPart}s.
- * 
+ *
  * @param <T> the content type
  */
 public abstract class AbstractContentBodyPart<T> implements ContentBodyPart<T>

@@ -58,7 +58,7 @@ public interface StreamingServer
      * @throws IOException If there was an error communicating with the server.
      */
     UUID start(String stream, StreamHandler handler, ExecutorService executor, DataFilter filter, Geometry spatialFilter)
-        throws IOException;
+            throws IOException;
 
     /**
      * Stops the stream.

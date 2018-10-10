@@ -71,10 +71,7 @@ public abstract class AbstractMonthBasedDuration extends Duration
                 return super.compareTo(o);
             }
         }
-        else
-        {
-            return super.compareTo(o);
-        }
+        return super.compareTo(o);
     }
 
     /**

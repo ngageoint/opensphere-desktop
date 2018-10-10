@@ -6,10 +6,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableIntegerValue;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -107,24 +105,15 @@ public class BoundNumericSpinner extends VBox
         getChildren().add(myContent);
         getChildren().add(myDownButton);
 
-        setOnScroll(new EventHandler<ScrollEvent>()
+        setOnScroll(pEvent ->
         {
-            /**
-             * {@inheritDoc}
-             *
-             * @see javafx.event.EventHandler#handle(javafx.event.Event)
-             */
-            @Override
-            public void handle(ScrollEvent pEvent)
+            if (pEvent.getDeltaY() > 0)
             {
-                if (pEvent.getDeltaY() > 0)
-                {
-                    increment();
-                }
-                else
-                {
-                    decrement();
-                }
+                increment();
+            }
+            else
+            {
+                decrement();
             }
         });
 

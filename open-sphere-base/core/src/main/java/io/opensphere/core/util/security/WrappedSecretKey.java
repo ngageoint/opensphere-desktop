@@ -6,7 +6,6 @@ import java.security.PrivateKey;
 import java.security.cert.CertificateEncodingException;
 import java.util.Arrays;
 
-import net.jcip.annotations.Immutable;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -16,6 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.opensphere.core.util.lang.ExpectedCloneableException;
+import net.jcip.annotations.Immutable;
 
 /**
  * A {@link SecretKey} that is <i>wrapped</i> using
@@ -63,7 +63,7 @@ public class WrappedSecretKey implements Cloneable
      *             encoded.
      */
     public WrappedSecretKey(SecretKey secretKey, PrivateKeyProvider privateKeyProvider)
-        throws CipherException, PrivateKeyProviderException, CertificateEncodingException
+            throws CipherException, PrivateKeyProviderException, CertificateEncodingException
     {
         try
         {
@@ -161,7 +161,7 @@ public class WrappedSecretKey implements Cloneable
      *             retrieved.
      */
     public SecretKey getSecretKey(PrivateKeyProvider privateKeyProvider)
-        throws NoSuchAlgorithmException, IllegalArgumentException, CipherException, PrivateKeyProviderException
+            throws NoSuchAlgorithmException, IllegalArgumentException, CipherException, PrivateKeyProviderException
     {
         if (!privateKeyProvider.hasDigest(getDigest()))
         {

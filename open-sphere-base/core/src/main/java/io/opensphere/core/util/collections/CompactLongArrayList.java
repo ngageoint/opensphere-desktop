@@ -131,26 +131,26 @@ public class CompactLongArrayList
         return block.get(index);
     }
 
-//    /**
-//     * Gets the index of the given value.
-//     *
-//     * @param value the value
-//     * @return the index or -1
-//     */
-//    public int indexOf(long value)
-//    {
-//        int index = -1;
-//        int blockIndex;
-//        for (Block block : myBlocks)
-//        {
-//            if ((blockIndex = block.indexOf(value)) != -1)
-//            {
-//                index = blockIndex;
-//                break;
-//            }
-//        }
-//        return index;
-//    }
+    //    /**
+    //     * Gets the index of the given value.
+    //     *
+    //     * @param value the value
+    //     * @return the index or -1
+    //     */
+    //    public int indexOf(long value)
+    //    {
+    //        int index = -1;
+    //        int blockIndex;
+    //        for (Block block : myBlocks)
+    //        {
+    //            if ((blockIndex = block.indexOf(value)) != -1)
+    //            {
+    //                index = blockIndex;
+    //                break;
+    //            }
+    //        }
+    //        return index;
+    //    }
 
     /**
      * Clears the list.
@@ -323,25 +323,25 @@ public class CompactLongArrayList
             return myMinIndex <= index && index <= myMaxIndex;
         }
 
-//        /**
-//         * Gets the index of the given value.
-//         *
-//         * @param value the value
-//         * @return the index or -1
-//         */
-//        public int indexOf(long value)
-//        {
-//            int index = -1;
-//            for (int i = 0, n = size(); i < n; ++i)
-//            {
-//                if (get(i) == value)
-//                {
-//                    index = i;
-//                    break;
-//                }
-//            }
-//            return index;
-//        }
+        //        /**
+        //         * Gets the index of the given value.
+        //         *
+        //         * @param value the value
+        //         * @return the index or -1
+        //         */
+        //        public int indexOf(long value)
+        //        {
+        //            int index = -1;
+        //            for (int i = 0, n = size(); i < n; ++i)
+        //            {
+        //                if (get(i) == value)
+        //                {
+        //                    index = i;
+        //                    break;
+        //                }
+        //            }
+        //            return index;
+        //        }
 
         /**
          * Shifts the indexes by the amount.

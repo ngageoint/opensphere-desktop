@@ -30,10 +30,7 @@ public abstract class AbstractMutableGeographicProjection extends AbstractGeogra
         {
             return getSnapshot().convertLineToModel(start, end, type, modelCenter);
         }
-        else
-        {
-            throw new UnsupportedOperationException(MUTABLE_PROJECTION_MSG);
-        }
+        throw new UnsupportedOperationException(MUTABLE_PROJECTION_MSG);
     }
 
     @Override
@@ -45,11 +42,8 @@ public abstract class AbstractMutableGeographicProjection extends AbstractGeogra
         {
             return getSnapshot().convertLineToModel(start, end, type, modelCenter);
         }
-        else
-        {
-            LOGGER.error(MUTABLE_PROJECTION_MSG);
-            return null;
-        }
+        LOGGER.error(MUTABLE_PROJECTION_MSG);
+        return null;
     }
 
     @Override
@@ -63,11 +57,8 @@ public abstract class AbstractMutableGeographicProjection extends AbstractGeogra
         {
             return getSnapshot().convertQuadToModel(vert1, vert2, vert3, vert4, modelCenter);
         }
-        else
-        {
-            LOGGER.error(MUTABLE_PROJECTION_MSG);
-            return null;
-        }
+        LOGGER.error(MUTABLE_PROJECTION_MSG);
+        return null;
     }
 
     @Override
@@ -77,11 +68,8 @@ public abstract class AbstractMutableGeographicProjection extends AbstractGeogra
         {
             return getSnapshot().convertToModel(inPos, modelCenter);
         }
-        else
-        {
-            LOGGER.error(MUTABLE_PROJECTION_MSG);
-            return null;
-        }
+        LOGGER.error(MUTABLE_PROJECTION_MSG);
+        return null;
     }
 
     @Override
@@ -91,11 +79,8 @@ public abstract class AbstractMutableGeographicProjection extends AbstractGeogra
         {
             return getSnapshot().convertToPosition(inPos, altReference);
         }
-        else
-        {
-            LOGGER.error(MUTABLE_PROJECTION_MSG);
-            return null;
-        }
+        LOGGER.error(MUTABLE_PROJECTION_MSG);
+        return null;
     }
 
     @Override
@@ -108,10 +93,7 @@ public abstract class AbstractMutableGeographicProjection extends AbstractGeogra
         {
             return getSnapshot().convertTriangleToModel(vert1, vert2, vert3, modelCenter);
         }
-        else
-        {
-            LOGGER.error(MUTABLE_PROJECTION_MSG);
-            return null;
-        }
+        LOGGER.error(MUTABLE_PROJECTION_MSG);
+        return null;
     }
 }

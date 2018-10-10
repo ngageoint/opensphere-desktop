@@ -11,8 +11,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.apache.log4j.Logger;
-
 import io.opensphere.core.event.Event;
 import io.opensphere.core.event.EventConsolidator;
 import io.opensphere.core.event.EventListener;
@@ -47,10 +45,6 @@ import io.opensphere.core.util.ref.WeakReference;
  */
 public class EventCoalescer<E extends Event> implements EventListener<E>
 {
-    /** Logger reference. */
-    @SuppressWarnings("unused")
-    private static final Logger LOGGER = Logger.getLogger(EventCoalescer.class);
-
     /** The Constant DEFAULT_MAX_DISPATCH_WAIT_MS. */
     private static final long DEFAULT_MAX_DISPATCH_WAIT_MS = 200L;
 
@@ -227,38 +221,35 @@ public class EventCoalescer<E extends Event> implements EventListener<E>
         {
             return NULL_SOURCE_PROXY;
         }
-        else
+        // Search through the proxy to source weak reference map
+        // and prune out any GC'd sources. If we don't find it in the map
+        // then create a new proxy, if we do see it then return the found
+        // proxy.
+        Long foundProxy = null;
+        synchronized (mySourceProxyToSourceWRMap)
         {
-            // Search through the proxy to source weak reference map
-            // and prune out any GC'd sources. If we don't find it in the map
-            // then create a new proxy, if we do see it then return the found
-            // proxy.
-            Long foundProxy = null;
-            synchronized (mySourceProxyToSourceWRMap)
+            for (Iterator<Entry<Long, WeakReference<Object>>> itr = mySourceProxyToSourceWRMap.entrySet().iterator(); itr
+                    .hasNext();)
             {
-                for (Iterator<Entry<Long, WeakReference<Object>>> itr = mySourceProxyToSourceWRMap.entrySet().iterator(); itr
-                        .hasNext();)
+                Entry<Long, WeakReference<Object>> entry = itr.next();
+                WeakReference<Object> wr = entry.getValue();
+                if (wr.get() == null)
                 {
-                    Entry<Long, WeakReference<Object>> entry = itr.next();
-                    WeakReference<Object> wr = entry.getValue();
-                    if (wr.get() == null)
-                    {
-                        itr.remove();
-                    }
-                    else if (wr.get() == eventSource)
-                    {
-                        foundProxy = entry.getKey();
-                    }
+                    itr.remove();
                 }
-
-                if (foundProxy == null)
+                else if (wr.get() == eventSource)
                 {
-                    foundProxy = Long.valueOf(mySourceInstanceCounter.getAndIncrement());
-                    mySourceProxyToSourceWRMap.put(foundProxy, new WeakReference<Object>(eventSource));
+                    foundProxy = entry.getKey();
                 }
             }
-            return foundProxy;
+
+            if (foundProxy == null)
+            {
+                foundProxy = Long.valueOf(mySourceInstanceCounter.getAndIncrement());
+                mySourceProxyToSourceWRMap.put(foundProxy, new WeakReference<>(eventSource));
+            }
         }
+        return foundProxy;
     }
 
     /**
@@ -327,11 +318,11 @@ public class EventCoalescer<E extends Event> implements EventListener<E>
                     {
                         if (!myFired)
                         {
-//                            long ttaStart = System.currentTimeMillis();
+                            //                            long ttaStart = System.currentTimeMillis();
                             myWorkerConsolidator.addEvent(evt);
                             added = true;
                             myLastAddedToTime = System.currentTimeMillis();
-//                            LOGGER.info("EventCoalescentWorker Adding: LAT: " + myLastAddedToTime + " TTA: " + (myLastAddedToTime-ttaStart));
+                            //                            LOGGER.info("EventCoalescentWorker Adding: LAT: " + myLastAddedToTime + " TTA: " + (myLastAddedToTime-ttaStart));
                         }
                     }
                     finally
@@ -379,14 +370,14 @@ public class EventCoalescer<E extends Event> implements EventListener<E>
                         if (myLastAddedToTime != -1 && diffTime > myNoChangeFireTimeMs)
                         {
                             myFired = true;
-//                            LOGGER.info("EventCoalescentWorker Firing: " + System.currentTimeMillis());
+                            //                            LOGGER.info("EventCoalescentWorker Firing: " + System.currentTimeMillis());
                             fireEvent(this);
                         }
-//                        else
-//                        {
-//                            LOGGER.info("EventCoalescentWorker NOT Firing: Diff: " + diffTime + " LAT: " + myLastAddedToTime
-//                                    + " NCFT: " + myNoChangeFireTimeMs);
-//                        }
+                        //                        else
+                        //                        {
+                        //                            LOGGER.info("EventCoalescentWorker NOT Firing: Diff: " + diffTime + " LAT: " + myLastAddedToTime
+                        //                                    + " NCFT: " + myNoChangeFireTimeMs);
+                        //                        }
                     }
                     finally
                     {
@@ -409,7 +400,7 @@ public class EventCoalescer<E extends Event> implements EventListener<E>
          */
         public void start()
         {
-//            LOGGER.info("EventCoalescentWorker Started: " + System.currentTimeMillis());
+            //            LOGGER.info("EventCoalescentWorker Started: " + System.currentTimeMillis());
             myThread.start();
         }
     }

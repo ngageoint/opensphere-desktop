@@ -17,7 +17,7 @@ public class ApacheCredentialsProxy implements Credentials
     /**
      * Constructs a new <code>ApacheCredentialsProxy</code> from the given
      * credentials.
-     * 
+     *
      * @param credentials the credential wrapper
      */
     public ApacheCredentialsProxy(final com.bitsys.common.http.auth.Credentials credentials)

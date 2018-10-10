@@ -699,7 +699,7 @@ public final class JTSUtilities
 
     /**
      * Confines the child polygons' longitude to the interval [-180, 180).
-     * 
+     *
      * @param p the polygon to confine.
      * @return a polygon confined to the designated interval.
      */
@@ -721,7 +721,7 @@ public final class JTSUtilities
 
     /**
      * Confine longitude to the interval [-180, 180).
-     * 
+     *
      * @param p the polygon to confine.
      * @return a polygon confined to the designated interval.
      */
@@ -743,7 +743,7 @@ public final class JTSUtilities
 
     /**
      * Confine longitude to the interval [-180, 180).
-     * 
+     *
      * @param coords the coordinates to confine.
      * @param close use true if the endpoints much match
      * @return an array of coordinates confined to the designated interval.
@@ -769,7 +769,7 @@ public final class JTSUtilities
 
     /**
      * Confine longitude to the interval [-180, 180).
-     * 
+     *
      * @param c a coordinate to confine to the longitude interval.
      * @return a coordinate confined to the longitude interval.
      */
@@ -785,7 +785,7 @@ public final class JTSUtilities
     /**
      * Adjusts the vertices of a LineString much as the namesake method for
      * Polygon.
-     * 
+     *
      * @param ln a LineString
      * @return an adjusted LineString
      */
@@ -803,7 +803,7 @@ public final class JTSUtilities
      * degrees of longitude. The result is a new Polygon that is geometrically
      * representative of the original but whose longitude coordinates may not be
      * confined to a specific 360-degree interval.
-     * 
+     *
      * @param p the Polygon
      * @return the modified Polygon
      */
@@ -822,7 +822,7 @@ public final class JTSUtilities
 
     /**
      * As the namesake but with no external point of reference.
-     * 
+     *
      * @param coords set of points
      * @param close use true if the endpoints much match
      * @return adjusted points
@@ -835,7 +835,7 @@ public final class JTSUtilities
     /**
      * Adjust a set of points to be in a contiguous region of longitude with the
      * specified origin point.
-     * 
+     *
      * @param coords set of points
      * @param origin origin point
      * @param close use true if the endpoints much match
@@ -870,7 +870,7 @@ public final class JTSUtilities
      * already satisfies the desired condition, then it is returned unmodified;
      * otherwise a new Coordinate with the altered longitude value is created
      * and returned.
-     * 
+     *
      * @param c0 a starting point with longitude in degrees
      * @param c1 an ending point with longitude in degrees
      * @return see above
@@ -888,7 +888,7 @@ public final class JTSUtilities
     /**
      * Convert a longitude value in degrees to an equivalent value that is in
      * the half-open interval [-180, 180).
-     * 
+     *
      * @param x longitude in degrees
      * @return see above
      */

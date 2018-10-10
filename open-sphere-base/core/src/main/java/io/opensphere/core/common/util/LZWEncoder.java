@@ -200,53 +200,53 @@ public class LZWEncoder
         output(ClearCode, outs);
 
         outer_loop:
-        while ((c = nextPixel()) != EOF)
-        {
-            fcode = (c << maxbits) + ent;
-            // xor hashing
-            i = c << hshift ^ ent;
+            while ((c = nextPixel()) != EOF)
+            {
+                fcode = (c << maxbits) + ent;
+                // xor hashing
+                i = c << hshift ^ ent;
 
-            if (htab[i] == fcode)
-            {
-                ent = codetab[i];
-                continue;
-            }
-            else if (htab[i] >= 0) // non-empty slot
-            {
-                // secondary hash (after G. Knott)
-                disp = hsize_reg - i;
-                if (i == 0)
+                if (htab[i] == fcode)
                 {
-                    disp = 1;
+                    ent = codetab[i];
+                    continue;
                 }
-                do
+                else if (htab[i] >= 0) // non-empty slot
                 {
-                    if ((i -= disp) < 0)
+                    // secondary hash (after G. Knott)
+                    disp = hsize_reg - i;
+                    if (i == 0)
                     {
-                        i += hsize_reg;
+                        disp = 1;
                     }
+                    do
+                    {
+                        if ((i -= disp) < 0)
+                        {
+                            i += hsize_reg;
+                        }
 
-                    if (htab[i] == fcode)
-                    {
-                        ent = codetab[i];
-                        continue outer_loop;
+                        if (htab[i] == fcode)
+                        {
+                            ent = codetab[i];
+                            continue outer_loop;
+                        }
                     }
+                    while (htab[i] >= 0);
                 }
-                while (htab[i] >= 0);
+                output(ent, outs);
+                ent = c;
+                if (free_ent < maxmaxcode)
+                {
+                    // code -> hashtable
+                    codetab[i] = free_ent++;
+                    htab[i] = fcode;
+                }
+                else
+                {
+                    cl_block(outs);
+                }
             }
-            output(ent, outs);
-            ent = c;
-            if (free_ent < maxmaxcode)
-            {
-                // code -> hashtable
-                codetab[i] = free_ent++;
-                htab[i] = fcode;
-            }
-            else
-            {
-                cl_block(outs);
-            }
-        }
         // Put out the final code.
         output(ent, outs);
         output(EOFCode, outs);

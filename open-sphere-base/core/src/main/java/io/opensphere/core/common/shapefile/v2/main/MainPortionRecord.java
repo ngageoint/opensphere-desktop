@@ -90,7 +90,7 @@ public class MainPortionRecord
      * @throws IllegalArgumentException
      */
     public boolean parseRecord(ByteBuffer buffer, ShapeHeader pHeader) throws InstantiationException, IllegalAccessException,
-        IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
+    IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
     {
 
         boolean returnValue = true;

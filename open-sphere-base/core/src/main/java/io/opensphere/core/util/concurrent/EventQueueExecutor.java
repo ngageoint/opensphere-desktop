@@ -18,7 +18,7 @@ public class EventQueueExecutor implements Executor
     public void execute(Runnable command)
     {
         EventQueue.invokeLater(command);
-//        invokeLaterInstrumented(command);
+        //        invokeLaterInstrumented(command);
     }
 
     /**
@@ -43,20 +43,16 @@ public class EventQueueExecutor implements Executor
     private static Runnable getInstrumentedRunnable(Runnable runnable, Duration threshold)
     {
         Exception e = new Exception();
-        return new Runnable()
+        return () ->
         {
-            @Override
-            public void run()
+            long start = System.nanoTime();
+
+            runnable.run();
+
+            Duration runTime = Duration.ofNanos(System.nanoTime() - start);
+            if (runTime.compareTo(threshold) > 0)
             {
-                long start = System.nanoTime();
-
-                runnable.run();
-
-                Duration runTime = Duration.ofNanos(System.nanoTime() - start);
-                if (runTime.compareTo(threshold) > 0)
-                {
-                    LOGGER.error("Task took " + runTime.toMillis() + " milliseconds to run", e);
-                }
+                LOGGER.error("Task took " + runTime.toMillis() + " milliseconds to run", e);
             }
         };
     }

@@ -4,10 +4,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-import net.jcip.annotations.Immutable;
-
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.collections.New;
+import net.jcip.annotations.Immutable;
 
 /**
  * A composite time constraint that has a list of child time constraints.

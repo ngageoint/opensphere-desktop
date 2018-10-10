@@ -2,9 +2,6 @@ package io.opensphere.core.appl.versions.model;
 
 import java.io.File;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.StringProperty;
-
 import io.opensphere.core.preferences.BooleanPreferenceBinding;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.StringPreferenceBinding;
@@ -12,6 +9,8 @@ import io.opensphere.core.util.CompositeService;
 import io.opensphere.core.util.concurrent.InlineExecutor;
 import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
 import io.opensphere.core.util.javafx.ConcurrentStringProperty;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.StringProperty;
 
 /** The model of an auto-update session. */
 public class AutoUpdatePreferences extends CompositeService

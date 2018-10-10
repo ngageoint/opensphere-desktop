@@ -136,12 +136,12 @@ public abstract class ImmutableGeographicProjection extends AbstractGeographicPr
     {
         // TODO The correct way to do this should be convert to position
         // with TERRAIN reference, then check to see if the alt is positive.
-//        GeographicPosition geoPos = convertToPosition(modelCoordinates, ReferenceLevel.TERRAIN);
-//        if (geoPos.getLatLonAlt().getAltM() > 0)
-//        {
-//            return true;
-//        }
-//        return false;
+        //        GeographicPosition geoPos = convertToPosition(modelCoordinates, ReferenceLevel.TERRAIN);
+        //        if (geoPos.getLatLonAlt().getAltM() > 0)
+        //        {
+        //            return true;
+        //        }
+        //        return false;
 
         GeographicPosition geoPos = myModel.getCelestialBody().convertToPosition(modelCoordinates, ReferenceLevel.ELLIPSOID);
         GeographicPosition flatPos = new GeographicPosition(

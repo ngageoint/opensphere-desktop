@@ -28,7 +28,6 @@ import io.opensphere.core.cache.JTSHelper;
 import io.opensphere.core.cache.accessor.IntervalPropertyAccessor;
 import io.opensphere.core.cache.accessor.PersistentPropertyAccessor;
 import io.opensphere.core.cache.accessor.PropertyAccessor;
-import io.opensphere.core.cache.jdbc.StatementAppropriator.StatementUser;
 import io.opensphere.core.cache.jdbc.type.ValueTranslator;
 import io.opensphere.core.cache.matcher.GeometryMatcher;
 import io.opensphere.core.cache.matcher.IntervalPropertyMatcher;
@@ -173,7 +172,7 @@ public class CacheUtilities
      */
     public int[] convertResultSetToIntArray(ResultSet rs, Collection<? extends IntervalPropertyMatcher<?>> resultFilterParameters,
             TypeMapper typeMapper)
-        throws SQLException
+                    throws SQLException
     {
         int[] arr;
         if (rs.next())
@@ -187,7 +186,7 @@ public class CacheUtilities
                 final IntervalPropertyMatcher<?>[] matchers = New.array(resultFilterParameters, IntervalPropertyMatcher.class);
                 @SuppressWarnings("unchecked")
                 final ValueTranslator<Object>[] valueTranslators = (ValueTranslator<Object>[])typeMapper
-                        .getValueTranslators(props);
+                .getValueTranslators(props);
 
                 final List<Object> results = New.list(1);
                 do
@@ -293,8 +292,8 @@ public class CacheUtilities
      */
     public void convertResultSetToPropertyValues(ResultSet rs, PropertyDescriptor<?>[] props, List<?>[] results,
             TypeMapper typeMapper, Collection<? extends IntervalPropertyMatcher<?>> resultFilterParameters,
-            TIntList failedIndices)
-        throws CacheException
+                    TIntList failedIndices)
+                            throws CacheException
     {
         final IntervalPropertyMatcher<?>[] filters = new IntervalPropertyMatcher<?>[props.length];
         if (CollectionUtilities.hasContent(resultFilterParameters))
@@ -315,10 +314,7 @@ public class CacheUtilities
                     throw new IllegalArgumentException(
                             "Filter parameter [" + param + "] was not found in selected columns: " + Arrays.toString(props));
                 }
-                else
-                {
-                    filters[foundAtIndex] = param;
-                }
+                filters[foundAtIndex] = param;
             }
         }
 
@@ -403,14 +399,10 @@ public class CacheUtilities
      */
     public void execute(final String sql, Connection connection) throws CacheException
     {
-        new StatementAppropriator(connection).appropriateStatement(new StatementUser<Void>()
+        new StatementAppropriator(connection).appropriateStatement((conn, stmt) ->
         {
-            @Override
-            public Void run(Connection conn, Statement stmt) throws CacheException
-            {
-                execute(sql, stmt);
-                return null;
-            }
+            execute(sql, stmt);
+            return null;
         });
     }
 
@@ -423,14 +415,10 @@ public class CacheUtilities
      */
     public void execute(final String sql, ConnectionAppropriator connectionAppropriator) throws CacheException
     {
-        connectionAppropriator.appropriateStatement(new StatementUser<Void>()
+        connectionAppropriator.appropriateStatement((conn, stmt) ->
         {
-            @Override
-            public Void run(Connection conn, Statement stmt) throws CacheException
-            {
-                execute(sql, stmt);
-                return null;
-            }
+            execute(sql, stmt);
+            return null;
         });
     }
 
@@ -479,14 +467,10 @@ public class CacheUtilities
      */
     public void execute(final String sql, StatementAppropriator statementAppropriator) throws CacheException
     {
-        statementAppropriator.appropriateStatement(new StatementUser<Void>()
+        statementAppropriator.appropriateStatement((conn, stmt) ->
         {
-            @Override
-            public Void run(Connection conn, Statement stmt) throws CacheException
-            {
-                execute(sql, stmt);
-                return null;
-            }
+            execute(sql, stmt);
+            return null;
         });
     }
 
@@ -787,15 +771,12 @@ public class CacheUtilities
         {
             return Collections.emptySet();
         }
-        else
+        final Collection<PropertyDescriptor<?>> descriptors = New.collection();
+        for (final PropertyMatcher<?> param : matchers)
         {
-            final Collection<PropertyDescriptor<?>> descriptors = New.collection();
-            for (final PropertyMatcher<?> param : matchers)
-            {
-                descriptors.add(param.getPropertyDescriptor());
-            }
-            return descriptors;
+            descriptors.add(param.getPropertyDescriptor());
         }
+        return descriptors;
     }
 
     /**
@@ -816,7 +797,6 @@ public class CacheUtilities
         final Iterator<PersistentPropertyAccessor> iter = filtered.iterator();
         while (iter.hasNext())
         {
-            @SuppressWarnings("unchecked")
             final PersistentPropertyAccessor<T, ?> cast = iter.next();
             result.add(cast);
         }
@@ -953,7 +933,7 @@ public class CacheUtilities
      * @throws CacheException If the index names cannot be retrieved.
      */
     public Collection<String> getIndexNames(Connection conn, String catalog, String schema, String tableName)
-        throws CacheException
+            throws CacheException
     {
         final Collection<String> indexNames = New.collection();
         try
@@ -998,7 +978,7 @@ public class CacheUtilities
      * @throws CacheException If the table names cannot be retrieved.
      */
     public Collection<String> getTableNames(Connection conn, String catalog, String schemaPattern, String tableNamePattern)
-        throws CacheException
+            throws CacheException
     {
         final Collection<String> tableNames = New.collection();
         try
@@ -1070,10 +1050,7 @@ public class CacheUtilities
                     {
                         return index;
                     }
-                    else
-                    {
-                        ++index;
-                    }
+                    ++index;
                 }
             }
             else
@@ -1082,16 +1059,13 @@ public class CacheUtilities
                 {
                     return index;
                 }
+                if (propertyDescriptor.getType().equals(TimeSpan.class))
+                {
+                    index += 2;
+                }
                 else
                 {
-                    if (propertyDescriptor.getType().equals(TimeSpan.class))
-                    {
-                        index += 2;
-                    }
-                    else
-                    {
-                        ++index;
-                    }
+                    ++index;
                 }
             }
         }
@@ -1136,7 +1110,7 @@ public class CacheUtilities
      * @throws SQLException If a database error occurs.
      */
     public Collection<SpaceTime> readSpaceTimes(ResultSet rs, List<? extends PropertyMatcher<?>> parameters)
-        throws CacheException, SQLException
+            throws CacheException, SQLException
     {
         int startIndex = -1;
         int endIndex = -1;

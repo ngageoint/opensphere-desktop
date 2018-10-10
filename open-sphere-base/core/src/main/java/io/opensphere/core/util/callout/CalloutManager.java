@@ -159,7 +159,7 @@ public class CalloutManager<E> extends DefaultGenericPublisher<Geometry>
                 GeoScreenBubbleGeometry line = CalloutGeometryUtil.createTextBubble(gsbb, callout);
 
                 CollectionUtilities.multiMapAdd(myKeyToTilesMap, key, tile, false);
-                myTileToKeyMap.put(tile, new CalloutKey<E>(key, index));
+                myTileToKeyMap.put(tile, new CalloutKey<>(key, index));
                 myTileToLineMap.put(tile, line);
 
                 adds.add(tile);

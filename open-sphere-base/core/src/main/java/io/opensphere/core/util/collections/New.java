@@ -37,7 +37,7 @@ import io.opensphere.core.util.Utilities;
 public final class New
 {
     /** The singleton collection provider. */
-    private static final CollectionProvider<Object> COLLECTION_FACTORY = new CollectionProvider<Object>()
+    private static final CollectionProvider<Object> COLLECTION_FACTORY = new CollectionProvider<>()
     {
         @Override
         public Collection<Object> get()
@@ -65,7 +65,7 @@ public final class New
     };
 
     /** The singleton insertion-order set provider. */
-    private static final SetProvider<Object> INSERTION_ORDER_SET_FACTORY = new SetProvider<Object>()
+    private static final SetProvider<Object> INSERTION_ORDER_SET_FACTORY = new SetProvider<>()
     {
         @Override
         public Set<Object> get()
@@ -93,7 +93,7 @@ public final class New
     };
 
     /** The singleton linked list provider. */
-    private static final ListProvider<Object> LINKED_LIST_FACTORY = new ListProvider<Object>()
+    private static final ListProvider<Object> LINKED_LIST_FACTORY = new ListProvider<>()
     {
         @Override
         public List<Object> get()
@@ -121,7 +121,7 @@ public final class New
     };
 
     /** The singleton list provider. */
-    private static final ListProvider<Object> LIST_FACTORY = new ListProvider<Object>()
+    private static final ListProvider<Object> LIST_FACTORY = new ListProvider<>()
     {
         @Override
         public List<Object> get()
@@ -149,7 +149,7 @@ public final class New
     };
 
     /** The singleton map provider. */
-    private static final MapProvider<Object, Object> MAP_FACTORY = new MapProvider<Object, Object>()
+    private static final MapProvider<Object, Object> MAP_FACTORY = new MapProvider<>()
     {
         @Override
         public Map<Object, Object> get()
@@ -183,7 +183,7 @@ public final class New
     };
 
     /** The singleton natural-order set provider. */
-    private static final SetProvider<Object> NATURAL_ORDER_SET_FACTORY = new SetProvider<Object>()
+    private static final SetProvider<Object> NATURAL_ORDER_SET_FACTORY = new SetProvider<>()
     {
         @Override
         public Set<Object> get()
@@ -211,7 +211,7 @@ public final class New
     };
 
     /** The singleton random-access list provider. */
-    private static final ListProvider<Object> RANDOM_ACCESS_LIST_FACTORY = new ListProvider<Object>()
+    private static final ListProvider<Object> RANDOM_ACCESS_LIST_FACTORY = new ListProvider<>()
     {
         @Override
         public List<Object> get()
@@ -239,7 +239,7 @@ public final class New
     };
 
     /** The singleton set provider. */
-    private static final SetProvider<Object> SET_FACTORY = new SetProvider<Object>()
+    private static final SetProvider<Object> SET_FACTORY = new SetProvider<>()
     {
         @Override
         public Set<Object> get()
@@ -273,7 +273,7 @@ public final class New
     private static final SetProvider<Object> SYNCHRONIZED_SET_FACTORY = new SynchronizedSetProvider<>(SET_FACTORY);
 
     /** The singleton weak map provider. */
-    private static final MapProvider<Object, Object> WEAK_MAP_FACTORY = new MapProvider<Object, Object>()
+    private static final MapProvider<Object, Object> WEAK_MAP_FACTORY = new MapProvider<>()
     {
         @Override
         public Map<Object, Object> get()
@@ -302,7 +302,7 @@ public final class New
         @Override
         public Map<Object, Object> getSingleton(Object key, Object value)
         {
-            return new WeakSingletonMap<Object, Object>(key, value);
+            return new WeakSingletonMap<>(key, value);
         }
     };
 
@@ -349,7 +349,7 @@ public final class New
      */
     @SuppressWarnings("unchecked")
     public static <T> T[] array(Collection<? extends T> col, Class<T> type, int prefixCount, int postfixCount)
-        throws IllegalArgumentException
+            throws IllegalArgumentException
     {
         if (prefixCount < 0 || postfixCount < 0)
         {
@@ -558,7 +558,7 @@ public final class New
      */
     public static <T> Collection<T> collection()
     {
-        return new ArrayList<T>();
+        return new ArrayList<>();
     }
 
     /**
@@ -571,7 +571,7 @@ public final class New
      */
     public static <T> Collection<T> collection(Collection<? extends T> col)
     {
-        return col == null ? null : new ArrayList<T>(col);
+        return col == null ? null : new ArrayList<>(col);
     }
 
     /**
@@ -585,7 +585,7 @@ public final class New
      */
     public static <T> Collection<T> collection(int initialCapacity) throws IllegalArgumentException
     {
-        return new ArrayList<T>(initialCapacity);
+        return new ArrayList<>(initialCapacity);
     }
 
     /**
@@ -640,7 +640,7 @@ public final class New
      */
     public static <K, V> ConcurrentMap<K, V> concurrentMap()
     {
-        return new ConcurrentHashMap<K, V>();
+        return new ConcurrentHashMap<>();
     }
 
     /**
@@ -654,7 +654,7 @@ public final class New
      */
     public static <K, V> Map<K, V> concurrentMap(int initialCapacity)
     {
-        return new ConcurrentHashMap<K, V>(initialCapacity);
+        return new ConcurrentHashMap<>(initialCapacity);
     }
 
     /**
@@ -668,7 +668,7 @@ public final class New
      */
     public static <K, V> Map<K, V> concurrentMap(Map<? extends K, ? extends V> map)
     {
-        return map == null ? null : new ConcurrentHashMap<K, V>(map);
+        return map == null ? null : new ConcurrentHashMap<>(map);
     }
 
     /**
@@ -679,7 +679,7 @@ public final class New
      */
     public static <T> Deque<T> deque()
     {
-        return new LinkedList<T>();
+        return new LinkedList<>();
     }
 
     /**
@@ -693,7 +693,7 @@ public final class New
      */
     public static <T> Deque<T> deque(Collection<? extends T> col)
     {
-        return col == null ? null : new LinkedList<T>(col);
+        return col == null ? null : new LinkedList<>(col);
     }
 
     /**
@@ -776,7 +776,7 @@ public final class New
      */
     public static <K, V> Map<K, V> insertionOrderMap()
     {
-        return new LinkedHashMap<K, V>();
+        return new LinkedHashMap<>();
     }
 
     /**
@@ -790,7 +790,7 @@ public final class New
      */
     public static <K, V> Map<K, V> insertionOrderMap(int initialCapacity)
     {
-        return new LinkedHashMap<K, V>(initialCapacity);
+        return new LinkedHashMap<>(initialCapacity);
     }
 
     /**
@@ -804,7 +804,7 @@ public final class New
      */
     public static <K, V> Map<K, V> insertionOrderMap(Map<? extends K, ? extends V> map)
     {
-        return map == null ? null : new LinkedHashMap<K, V>(map);
+        return map == null ? null : new LinkedHashMap<>(map);
     }
 
     /**
@@ -815,7 +815,7 @@ public final class New
      */
     public static <E> Set<E> insertionOrderSet()
     {
-        return new LinkedHashSet<E>();
+        return new LinkedHashSet<>();
     }
 
     /**
@@ -828,7 +828,7 @@ public final class New
      */
     public static <E> Set<E> insertionOrderSet(Collection<? extends E> set)
     {
-        return set == null ? null : new LinkedHashSet<E>(set);
+        return set == null ? null : new LinkedHashSet<>(set);
     }
 
     /**
@@ -841,7 +841,7 @@ public final class New
      */
     public static <E> Set<E> insertionOrderSet(int initialCapacity)
     {
-        return new LinkedHashSet<E>(initialCapacity);
+        return new LinkedHashSet<>(initialCapacity);
     }
 
     /**
@@ -897,7 +897,7 @@ public final class New
      */
     public static <T> LazyCollectionProvider<T> lazyCollectionProvider(final CollectionProvider<T> wrapped)
     {
-        return new LazyCollectionProvider<T>()
+        return new LazyCollectionProvider<>()
         {
             /** The collection once it has been retrieved. */
             private Collection<T> myCollection;
@@ -960,10 +960,7 @@ public final class New
                 {
                     return wrapped.getEmpty();
                 }
-                else
-                {
-                    return unmodifiableCollection(myCollection);
-                }
+                return unmodifiableCollection(myCollection);
             }
         };
     }
@@ -976,7 +973,7 @@ public final class New
      */
     public static <T> List<T> linkedList()
     {
-        return new LinkedList<T>();
+        return new LinkedList<>();
     }
 
     /**
@@ -989,7 +986,7 @@ public final class New
      */
     public static <T> List<T> linkedList(Collection<? extends T> col)
     {
-        return col == null ? null : new LinkedList<T>(col);
+        return col == null ? null : new LinkedList<>(col);
     }
 
     /**
@@ -1013,7 +1010,7 @@ public final class New
      */
     public static <T> List<T> list()
     {
-        return new ArrayList<T>();
+        return new ArrayList<>();
     }
 
     /**
@@ -1026,7 +1023,7 @@ public final class New
      */
     public static <T> List<T> list(Collection<? extends T> col)
     {
-        return col == null ? null : new ArrayList<T>(col);
+        return col == null ? null : new ArrayList<>(col);
     }
 
     /**
@@ -1039,7 +1036,7 @@ public final class New
      */
     public static <T> List<T> list(int initialCapacity) throws IllegalArgumentException
     {
-        return new ArrayList<T>(initialCapacity);
+        return new ArrayList<>(initialCapacity);
     }
 
     /**
@@ -1120,7 +1117,7 @@ public final class New
      */
     public static <K, V> Map<K, V> map()
     {
-        return new HashMap<K, V>();
+        return new HashMap<>();
     }
 
     /**
@@ -1134,7 +1131,7 @@ public final class New
      */
     public static <K, V> Map<K, V> map(int initialCapacity)
     {
-        return new HashMap<K, V>(initialCapacity);
+        return new HashMap<>(initialCapacity);
     }
 
     /**
@@ -1148,7 +1145,7 @@ public final class New
      */
     public static <K, V> Map<K, V> map(Map<? extends K, ? extends V> map)
     {
-        return map == null ? null : new HashMap<K, V>(map);
+        return map == null ? null : new HashMap<>(map);
     }
 
     /**
@@ -1177,7 +1174,7 @@ public final class New
      */
     public static <K, V> SortedMap<K, V> naturalOrderMap()
     {
-        return new TreeMap<K, V>();
+        return new TreeMap<>();
     }
 
     /**
@@ -1193,7 +1190,7 @@ public final class New
      */
     public static <K, V> SortedMap<K, V> naturalOrderMap(int initialCapacity)
     {
-        return new TreeMap<K, V>();
+        return new TreeMap<>();
     }
 
     /**
@@ -1209,7 +1206,7 @@ public final class New
      */
     public static <K, V> SortedMap<K, V> naturalOrderMap(Map<? extends K, ? extends V> map)
     {
-        return map == null ? null : new TreeMap<K, V>(map);
+        return map == null ? null : new TreeMap<>(map);
     }
 
     /**
@@ -1222,7 +1219,7 @@ public final class New
      */
     public static <E> SortedSet<E> naturalOrderSet()
     {
-        return new TreeSet<E>();
+        return new TreeSet<>();
     }
 
     /**
@@ -1237,7 +1234,7 @@ public final class New
      */
     public static <E> SortedSet<E> naturalOrderSet(Collection<? extends E> set)
     {
-        return set == null ? null : new TreeSet<E>(set);
+        return set == null ? null : new TreeSet<>(set);
     }
 
     /**
@@ -1252,7 +1249,7 @@ public final class New
      */
     public static <E> SortedSet<E> naturalOrderSet(int initialCapacity)
     {
-        return new TreeSet<E>();
+        return new TreeSet<>();
     }
 
     /**
@@ -1304,7 +1301,7 @@ public final class New
      */
     public static <K, V> SortedMap<K, V> orderedMap(Comparator<? super K> comparator)
     {
-        return new TreeMap<K, V>(comparator);
+        return new TreeMap<>(comparator);
     }
 
     /**
@@ -1319,7 +1316,7 @@ public final class New
      */
     public static <K, V> SortedMap<K, V> orderedMap(int initialCapacity, Comparator<? super K> comparator)
     {
-        return new TreeMap<K, V>(comparator);
+        return new TreeMap<>(comparator);
     }
 
     /**
@@ -1354,7 +1351,7 @@ public final class New
      */
     public static <K, V> SortedMap<K, V> orderedMap(SortedMap<K, ? extends V> map)
     {
-        return map == null ? null : new TreeMap<K, V>(map);
+        return map == null ? null : new TreeMap<>(map);
     }
 
     /**
@@ -1399,7 +1396,7 @@ public final class New
      */
     public static <E> SortedSet<E> orderedSet(Comparator<? super E> comparator)
     {
-        return new TreeSet<E>(comparator);
+        return new TreeSet<>(comparator);
     }
 
     /**
@@ -1413,7 +1410,7 @@ public final class New
      */
     public static <E> SortedSet<E> orderedSet(int initialCapacity, Comparator<? super E> comparator)
     {
-        return new TreeSet<E>(comparator);
+        return new TreeSet<>(comparator);
     }
 
     /**
@@ -1426,7 +1423,7 @@ public final class New
      */
     public static <E> SortedSet<E> orderedSet(SortedSet<E> set)
     {
-        return set == null ? null : new TreeSet<E>(set);
+        return set == null ? null : new TreeSet<>(set);
     }
 
     /**
@@ -1437,7 +1434,7 @@ public final class New
      */
     public static <T> Queue<T> queue()
     {
-        return new LinkedList<T>();
+        return new LinkedList<>();
     }
 
     /**
@@ -1450,7 +1447,7 @@ public final class New
      */
     public static <T> Queue<T> queue(Collection<? extends T> col)
     {
-        return col == null ? null : new LinkedList<T>(col);
+        return col == null ? null : new LinkedList<>(col);
     }
 
     /**
@@ -1461,7 +1458,7 @@ public final class New
      */
     public static <T> List<T> randomAccessList()
     {
-        return new ArrayList<T>();
+        return new ArrayList<>();
     }
 
     /**
@@ -1474,7 +1471,7 @@ public final class New
      */
     public static <T> List<T> randomAccessList(Collection<? extends T> col)
     {
-        return col == null ? null : new ArrayList<T>(col);
+        return col == null ? null : new ArrayList<>(col);
     }
 
     /**
@@ -1487,7 +1484,7 @@ public final class New
      */
     public static <T> List<T> randomAccessList(int initialCapacity) throws IllegalArgumentException
     {
-        return new ArrayList<T>(initialCapacity);
+        return new ArrayList<>(initialCapacity);
     }
 
     /**
@@ -1531,7 +1528,7 @@ public final class New
      */
     public static <T> Set<T> set()
     {
-        return new HashSet<T>();
+        return new HashSet<>();
     }
 
     /**
@@ -1544,7 +1541,7 @@ public final class New
      */
     public static <T> Set<T> set(Collection<? extends T> col)
     {
-        return col == null ? null : new HashSet<T>(col);
+        return col == null ? null : new HashSet<>(col);
     }
 
     /**
@@ -1557,7 +1554,7 @@ public final class New
      */
     public static <T> Set<T> set(int initialCapacity) throws IllegalArgumentException
     {
-        return new HashSet<T>(initialCapacity);
+        return new HashSet<>(initialCapacity);
     }
 
     /**
@@ -1627,7 +1624,7 @@ public final class New
      */
     public static <T> CollectionProvider<T> singletonCollectionProvider(final Collection<T> col)
     {
-        return new CollectionProvider<T>()
+        return new CollectionProvider<>()
         {
             @Override
             public Collection<T> get()
@@ -1665,7 +1662,7 @@ public final class New
      */
     public static <T> ListProvider<T> singletonListProvider(final List<T> list)
     {
-        return new ListProvider<T>()
+        return new ListProvider<>()
         {
             @Override
             public List<T> get()
@@ -1720,7 +1717,7 @@ public final class New
      */
     public static <T> SetProvider<T> singletonSetProvider(final Set<T> set)
     {
-        return new SetProvider<T>()
+        return new SetProvider<>()
         {
             @Override
             public Set<T> get()
@@ -1844,8 +1841,8 @@ public final class New
                 : col.getClass().getAnnotation(Immutable.class) != null ? col
                         : col.isEmpty() ? Collections.<T>emptySet()
                                 : col.size() == 1
-                                        ? Collections.<T>singletonList(
-                                                col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
+                                ? Collections.<T>singletonList(
+                                        col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
                                         : Collections.unmodifiableCollection(collection(col));
     }
 
@@ -1864,8 +1861,8 @@ public final class New
                 : col.getClass().getAnnotation(Immutable.class) != null && col instanceof List ? (List<T>)col
                         : col.isEmpty() ? Collections.<T>emptyList()
                                 : col.size() == 1
-                                        ? Collections.<T>singletonList(
-                                                col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
+                                ? Collections.<T>singletonList(
+                                        col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
                                         : Collections.unmodifiableList(list(col));
     }
 
@@ -1916,8 +1913,8 @@ public final class New
                 : col.getClass().getAnnotation(Immutable.class) != null && col instanceof Set ? (Set<? extends T>)col
                         : col.isEmpty() ? Collections.<T>emptySet()
                                 : col.size() == 1
-                                        ? Collections.<T>singleton(
-                                                col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
+                                ? Collections.<T>singleton(
+                                        col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
                                         : Collections.unmodifiableSet(set(col));
     }
 
@@ -1930,7 +1927,7 @@ public final class New
      */
     public static <K, V> Map<K, V> weakMap()
     {
-        return new WeakHashMap<K, V>();
+        return new WeakHashMap<>();
     }
 
     /**
@@ -1944,7 +1941,7 @@ public final class New
      */
     public static <K, V> Map<K, V> weakMap(int initialCapacity) throws IllegalArgumentException
     {
-        return new WeakHashMap<K, V>(initialCapacity);
+        return new WeakHashMap<>(initialCapacity);
     }
 
     /**
@@ -1958,7 +1955,7 @@ public final class New
      */
     public static <K, V> Map<K, V> weakMap(Map<? extends K, ? extends V> initialContents)
     {
-        return new WeakHashMap<K, V>(initialContents);
+        return new WeakHashMap<>(initialContents);
     }
 
     /**
@@ -1984,7 +1981,7 @@ public final class New
      */
     public static <T> Set<T> weakSet()
     {
-        return new WeakHashSet<T>();
+        return new WeakHashSet<>();
     }
 
     /**
@@ -1997,7 +1994,7 @@ public final class New
      */
     public static <T> Set<T> weakSet(int initialCapacity) throws IllegalArgumentException
     {
-        return new WeakHashSet<T>(initialCapacity);
+        return new WeakHashSet<>(initialCapacity);
     }
 
     /** Disallow instantiation. */

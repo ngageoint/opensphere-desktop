@@ -3,8 +3,6 @@ package io.opensphere.core.dialog;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
@@ -264,29 +262,18 @@ public class LoggerDialog extends AbstractInternalFrame
             setLevelMenu.add(menuItem);
         }
         JMenuItem addLoggerMenuItem = new JMenuItem("Add Logger...");
-        addLoggerMenuItem.addActionListener(new ActionListener()
+        addLoggerMenuItem.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            final String input = JOptionPane.showInputDialog(LoggerDialog.this, "Enter the name of the logger:",
+                    loggerNode.toString());
+            if (input != null)
             {
-                final String input = JOptionPane.showInputDialog(LoggerDialog.this, "Enter the name of the logger:",
-                        loggerNode.toString());
-                if (input != null)
+                Logger.getLogger(input);
+                buildTree();
+                TreePath pathToNew = JTreeUtilities.findPathToNode(myTree, value -> value.toString().equals(input));
+                if (pathToNew != null && pathToNew.getParentPath() != null)
                 {
-                    Logger.getLogger(input);
-                    buildTree();
-                    TreePath pathToNew = JTreeUtilities.findPathToNode(myTree, new JTreeUtilities.EndCriteria<TreeNode>()
-                    {
-                        @Override
-                        public boolean found(TreeNode value)
-                        {
-                            return value.toString().equals(input);
-                        }
-                    });
-                    if (pathToNew != null && pathToNew.getParentPath() != null)
-                    {
-                        myTree.expandPath(pathToNew.getParentPath());
-                    }
+                    myTree.expandPath(pathToNew.getParentPath());
                 }
             }
         });

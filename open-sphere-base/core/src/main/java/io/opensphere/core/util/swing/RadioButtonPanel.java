@@ -62,14 +62,7 @@ public class RadioButtonPanel<T> extends GridBagPanel implements ActionListener
         Function<T, AbstractButton> theButtonProvider = buttonProvider;
         if (theButtonProvider == null)
         {
-            theButtonProvider = new Function<T, AbstractButton>()
-            {
-                @Override
-                public AbstractButton apply(T option)
-                {
-                    return new JRadioButton(option.toString());
-                }
-            };
+            theButtonProvider = option -> new JRadioButton(option.toString());
         }
 
         ButtonGroup group = new ButtonGroup();

@@ -14,16 +14,14 @@ import com.bitsys.common.http.util.ConversionUtils;
  */
 public class FormEntity extends StringEntity
 {
-   /**
-    * Constructs a <code>FormEntity</code>.
-    *
-    * @param parameters
-    *           the form parameter key-value pairs.
-    */
-   public FormEntity(final Iterable<? extends Entry<String, String>> parameters)
-   {
-      super(URLEncodedUtils.format(ConversionUtils.toNameValuePairs(parameters),
-                                   HTTP.DEF_CONTENT_CHARSET),
-         ContentType.APPLICATION_FORM_URLENCODED);
-   }
+    /**
+     * Constructs a <code>FormEntity</code>.
+     *
+     * @param parameters the form parameter key-value pairs.
+     */
+    public FormEntity(final Iterable<? extends Entry<String, String>> parameters)
+    {
+        super(URLEncodedUtils.format(ConversionUtils.toNameValuePairs(parameters), HTTP.DEF_CONTENT_CHARSET),
+                ContentType.APPLICATION_FORM_URLENCODED);
+    }
 }

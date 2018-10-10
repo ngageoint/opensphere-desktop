@@ -39,7 +39,7 @@ public class DoubleModel extends AbstractViewModel<Double>
         myMin = min;
         myMax = max;
 
-        PredicateWithMessage<Double> predicate = new WrappedPredicateWithMessage<Double>(new DoubleRangePredicate(min, max))
+        PredicateWithMessage<Double> predicate = new WrappedPredicateWithMessage<>(new DoubleRangePredicate(min, max))
         {
             @Override
             public String getMessage()
@@ -63,7 +63,7 @@ public class DoubleModel extends AbstractViewModel<Double>
                 }
             }
         };
-        setValidatorSupport(new ObservableValueValidatorSupport<Double>(this, predicate));
+        setValidatorSupport(new ObservableValueValidatorSupport<>(this, predicate));
     }
 
     /**

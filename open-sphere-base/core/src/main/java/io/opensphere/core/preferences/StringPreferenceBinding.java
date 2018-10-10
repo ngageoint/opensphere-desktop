@@ -2,10 +2,9 @@ package io.opensphere.core.preferences;
 
 import java.util.concurrent.Executor;
 
+import io.opensphere.core.util.Service;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
-
-import io.opensphere.core.util.Service;
 
 /**
  * Handler that can update a String preference based on changes to a String

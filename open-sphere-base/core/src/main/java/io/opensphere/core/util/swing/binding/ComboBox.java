@@ -4,13 +4,12 @@ import java.awt.event.ItemEvent;
 import java.util.Arrays;
 import java.util.Collection;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
-
 import javax.swing.JComboBox;
 
 import io.opensphere.core.util.swing.ListComboBoxModel;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 
 /**
  * JComboBox that provides some basic JavaFX-like binding.

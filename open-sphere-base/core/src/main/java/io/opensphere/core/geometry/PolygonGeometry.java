@@ -70,7 +70,7 @@ public class PolygonGeometry extends PolylineGeometry
             List<? extends Position> holeCopy = Collections.unmodifiableList(new ArrayList<Position>(hole));
             holes.add(holeCopy);
         }
-        myHoles = Collections.unmodifiableCollection(new ArrayList<List<? extends Position>>(holes));
+        myHoles = Collections.unmodifiableCollection(new ArrayList<>(holes));
     }
 
     @Override
@@ -181,7 +181,7 @@ public class PolygonGeometry extends PolylineGeometry
     @Override
     protected Builder<? extends Position> createRawBuilder()
     {
-        return new Builder<Position>();
+        return new Builder<>();
     }
 
     /**

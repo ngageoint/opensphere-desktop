@@ -1,7 +1,6 @@
 package io.opensphere.core.cache.jdbc;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collections;
@@ -52,22 +51,18 @@ public class ResetSchemaTask extends DatabaseTask implements StatementUser<Void>
                 new PrimaryKeyConstraint(ColumnNames.VERSION)), stmt);
 
         final String sql = getSQLGenerator().generateInsert(TableNames.SCHEMA_VERSION, ColumnNames.VERSION);
-        new StatementAppropriator(conn).appropriateStatement(new PreparedStatementUser<Void>()
+        new StatementAppropriator(conn).appropriateStatement((PreparedStatementUser<Void>)(unused, pstmt) ->
         {
-            @Override
-            public Void run(Connection unused, PreparedStatement pstmt) throws CacheException
+            try
             {
-                try
-                {
-                    pstmt.setString(1, mySchemaVersion);
-                    getCacheUtilities().executeUpdate(pstmt, sql);
-                }
-                catch (SQLException e)
-                {
-                    throw new CacheException("Failed to update schema version: " + e, e);
-                }
-                return null;
+                pstmt.setString(1, mySchemaVersion);
+                getCacheUtilities().executeUpdate(pstmt, sql);
             }
+            catch (SQLException e)
+            {
+                throw new CacheException("Failed to update schema version: " + e, e);
+            }
+            return null;
         }, sql);
         return null;
     }

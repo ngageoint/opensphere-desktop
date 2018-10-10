@@ -117,10 +117,7 @@ public class CacheInit
         {
             throw new IllegalStateException("Cache not initialized.");
         }
-        else
-        {
-            Utilities.checkNull(optsRegistry, "optsRegistry");
-            optsRegistry.addOptionsProvider(new CacheOptionsProvider(prefsRegistry, myCache));
-        }
+        Utilities.checkNull(optsRegistry, "optsRegistry");
+        optsRegistry.addOptionsProvider(new CacheOptionsProvider(prefsRegistry, myCache));
     }
 }

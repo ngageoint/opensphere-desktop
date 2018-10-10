@@ -2,11 +2,10 @@ package io.opensphere.core.search;
 
 import java.util.List;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.util.collections.New;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 /**
  * Represents a single result from a search provider.

@@ -2,10 +2,9 @@ package io.opensphere.core.util.javafx.input;
 
 import java.util.function.Supplier;
 
+import io.opensphere.core.util.Visitor;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
-
-import io.opensphere.core.util.Visitor;
 
 /**
  * A wrapper around a control, in which a variable name and a title are included with the instance definition. This class itself

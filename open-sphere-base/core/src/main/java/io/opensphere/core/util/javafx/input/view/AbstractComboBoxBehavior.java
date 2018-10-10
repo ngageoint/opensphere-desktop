@@ -7,13 +7,12 @@ import static javafx.scene.input.KeyCode.F10;
 import static javafx.scene.input.KeyCode.F4;
 import static javafx.scene.input.KeyCode.UP;
 
+import io.opensphere.core.util.javafx.input.view.behavior.AbstractBehavior;
 import javafx.event.EventTarget;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBoxBase;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-
-import io.opensphere.core.util.javafx.input.view.behavior.AbstractBehavior;
 
 /**
  * An extension of the {@link AbstractBehavior} class, in which combo-box specific behaviors are added.

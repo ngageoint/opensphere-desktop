@@ -262,7 +262,7 @@ public class AutoUpdateOptionsPanel extends ViewPanel
     private void deleteVersion(String version, Component row, JButton deleteButton)
     {
         String chooseVersionMessage = "Are you sure you want to delete version " + version + "?" + System.lineSeparator()
-                + "This action cannot be undone.";
+        + "This action cannot be undone.";
 
         int response = JOptionPane.showConfirmDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(), chooseVersionMessage,
                 "Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);

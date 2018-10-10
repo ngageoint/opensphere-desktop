@@ -66,11 +66,8 @@ abstract class UnboundedEndTimeSpan extends UnboundedTimeSpan
         {
             return Milliseconds.ZERO;
         }
-        else
-        {
-            long millis = getStart() - other.getEnd();
-            return millis > 0L ? Duration.create(Milliseconds.class, millis) : Milliseconds.ZERO;
-        }
+        long millis = getStart() - other.getEnd();
+        return millis > 0L ? Duration.create(Milliseconds.class, millis) : Milliseconds.ZERO;
     }
 
     @Override
@@ -154,10 +151,7 @@ abstract class UnboundedEndTimeSpan extends UnboundedTimeSpan
             throw new IllegalArgumentException(
                     "Cannot interpolate between a time span with an unbounded start and a timespan with a bounded start.");
         }
-        else
-        {
-            return newUnboundedEndTimeSpan(Math.round(fraction * other.getStart() + (1. - fraction) * getStart()));
-        }
+        return newUnboundedEndTimeSpan(Math.round(fraction * other.getStart() + (1. - fraction) * getStart()));
     }
 
     @Override
@@ -191,10 +185,7 @@ abstract class UnboundedEndTimeSpan extends UnboundedTimeSpan
         {
             return -1;
         }
-        else
-        {
-            return 0;
-        }
+        return 0;
     }
 
     @Override

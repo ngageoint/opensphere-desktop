@@ -97,37 +97,33 @@ public final class Serialization
     public static InputStream serializeToStream(final Serializable object, Executor executor) throws IOException
     {
         PipedInputStream is = new PipedInputStream();
-        executor.execute(new Runnable()
+        executor.execute(() ->
         {
-            @Override
-            public void run()
+            try (ObjectOutputStream oos = new ObjectOutputStream(new PipedOutputStream(is)))
             {
-                try (ObjectOutputStream oos = new ObjectOutputStream(new PipedOutputStream(is)))
+                oos.writeObject(object);
+            }
+            catch (IOException e)
+            {
+                if (e.getMessage().contains("Pipe closed"))
                 {
-                    oos.writeObject(object);
-                }
-                catch (IOException e)
-                {
-                    if (e.getMessage().contains("Pipe closed"))
-                    {
-                        if (LOGGER.isDebugEnabled())
-                        {
-                            LOGGER.debug("Failed to write object: " + e, e);
-                        }
-                    }
-                    else
-                    {
-                        LOGGER.error("Failed to write object: " + e, e);
-                    }
-                }
-                catch (RuntimeException e)
-                {
-                    // Serialization can fail in unexpected ways if the input
-                    // stream is closed prematurely.
                     if (LOGGER.isDebugEnabled())
                     {
-                        LOGGER.debug("Caught runtime exception during serialize: " + e);
+                        LOGGER.debug("Failed to write object: " + e, e);
                     }
+                }
+                else
+                {
+                    LOGGER.error("Failed to write object: " + e, e);
+                }
+            }
+            catch (RuntimeException e)
+            {
+                // Serialization can fail in unexpected ways if the input
+                // stream is closed prematurely.
+                if (LOGGER.isDebugEnabled())
+                {
+                    LOGGER.debug("Caught runtime exception during serialize: " + e);
                 }
             }
         });

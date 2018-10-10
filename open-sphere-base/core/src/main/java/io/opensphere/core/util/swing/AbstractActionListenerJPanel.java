@@ -52,18 +52,11 @@ public abstract class AbstractActionListenerJPanel extends JPanel
      */
     public void fireActionPerformed(final ActionEvent e)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            synchronized (myActionListeners)
             {
-                synchronized (myActionListeners)
-                {
-                    for (ActionListener al : myActionListeners)
-                    {
-                        al.actionPerformed(e);
-                    }
-                }
+                myActionListeners.stream().forEach(a -> a.actionPerformed(e));
             }
         });
     }

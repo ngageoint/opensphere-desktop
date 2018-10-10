@@ -9,7 +9,6 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
-
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.lang.ImpossibleException;
@@ -99,10 +98,7 @@ public class LinkPattern
             {
                 return new URL(modValue);
             }
-            else
-            {
-                return new URL(myUrlPattern.replace("%s", URLEncoder.encode(modValue, StringUtilities.DEFAULT_CHARSET.name())));
-            }
+            return new URL(myUrlPattern.replace("%s", URLEncoder.encode(modValue, StringUtilities.DEFAULT_CHARSET.name())));
         }
         catch (UnsupportedEncodingException e)
         {

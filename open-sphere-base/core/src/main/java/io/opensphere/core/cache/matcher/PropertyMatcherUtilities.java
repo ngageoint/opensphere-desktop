@@ -92,7 +92,7 @@ public final class PropertyMatcherUtilities
         }
         else if (object instanceof Serializable)
         {
-            return new GeneralIntervalPropertyMatcher<Serializable>((PropertyDescriptor<Serializable>)propertyDescriptor,
+            return new GeneralIntervalPropertyMatcher<>((PropertyDescriptor<Serializable>)propertyDescriptor,
                     (Serializable)object);
         }
         else

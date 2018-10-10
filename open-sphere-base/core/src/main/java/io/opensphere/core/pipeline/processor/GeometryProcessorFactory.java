@@ -65,21 +65,18 @@ public class GeometryProcessorFactory
                         .getGeometryProcessorClass().getConstructor(ProcessorBuilder.class);
                 return constructor.newInstance(builder);
             }
-            else
+            GeometryRenderer<?> renderer = builder.getRendererSet().getRenderer(geometryClass);
+            if (renderer == null)
             {
-                GeometryRenderer<?> renderer = builder.getRendererSet().getRenderer(geometryClass);
-                if (renderer == null)
+                if (warnings != null)
                 {
-                    if (warnings != null)
-                    {
-                        warnings.add("No renderer found for geometry type: " + geometryClass);
-                    }
-                    return null;
+                    warnings.add("No renderer found for geometry type: " + geometryClass);
                 }
-                Constructor<? extends GeometryProcessor<? extends Geometry>> constructor = processorConfig
-                        .getGeometryProcessorClass().getConstructor(ProcessorBuilder.class, GeometryRenderer.class);
-                return constructor.newInstance(builder, renderer);
+                return null;
             }
+            Constructor<? extends GeometryProcessor<? extends Geometry>> constructor = processorConfig.getGeometryProcessorClass()
+                    .getConstructor(ProcessorBuilder.class, GeometryRenderer.class);
+            return constructor.newInstance(builder, renderer);
         }
         catch (SecurityException | IllegalArgumentException | NoSuchMethodException | InstantiationException
                 | IllegalAccessException | InvocationTargetException e)

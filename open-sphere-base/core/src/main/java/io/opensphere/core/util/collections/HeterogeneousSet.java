@@ -403,10 +403,7 @@ public class HeterogeneousSet<E> extends AbstractSet<E>
             {
                 throw new IllegalStateException();
             }
-            else
-            {
-                myValueIter.remove();
-            }
+            myValueIter.remove();
         }
 
         /**

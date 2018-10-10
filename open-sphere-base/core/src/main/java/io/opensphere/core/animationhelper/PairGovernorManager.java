@@ -88,7 +88,7 @@ public class PairGovernorManager<T, Q> extends TimeSpanGovernorManager<Pair<T, Q
                     boolean matches = (context.getFirstObject() == null
                             || context.getFirstObject().equals(entry.getKey().getFirstObject()))
                             && (context.getSecondObject() == null
-                                    || context.getSecondObject().equals(entry.getKey().getSecondObject()));
+                            || context.getSecondObject().equals(entry.getKey().getSecondObject()));
                     if (matches)
                     {
                         TimeSpanGovernor governor = entry.getValue();

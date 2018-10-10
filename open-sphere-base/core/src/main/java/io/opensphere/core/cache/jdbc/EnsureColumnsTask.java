@@ -125,7 +125,7 @@ public class EnsureColumnsTask extends DatabaseTask implements ConnectionUser<Vo
      * @throws CacheException If there is a database error.
      */
     protected Collection<String> getMissingColumns(final int groupId, Collection<String> neededColumns, Connection conn)
-        throws CacheException
+            throws CacheException
     {
         Set<String> existingColumns = getDatabaseState().getExistingColumnsForGroup(groupId);
 

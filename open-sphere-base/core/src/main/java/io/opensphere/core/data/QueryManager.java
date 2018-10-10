@@ -1,7 +1,5 @@
 package io.opensphere.core.data;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
@@ -41,14 +39,7 @@ public class QueryManager
     private final Map<Query, List<MultiQueryTracker>> myQueryToTrackerMap = New.map();
 
     /** Listener to be notified when a slave tracker is done. */
-    private final ResubmitListener myResubmitListener = new ResubmitListener()
-    {
-        @Override
-        public void slaveDone(MultiQueryTracker multiTracker)
-        {
-            handleSlaveDone(multiTracker);
-        }
-    };
+    private final ResubmitListener myResubmitListener = multiTracker -> handleSlaveDone(multiTracker);
 
     /** Listener for when query trackers are done. */
     private final QueryTrackerListener myTrackerDoneListener = new QueryTrackerListener()
@@ -78,27 +69,6 @@ public class QueryManager
     public QueryManager(ResubmitListener resubmitListener)
     {
         myExternalResubmitListener = resubmitListener;
-    }
-
-    /**
-     * Get the query trackers for a query.
-     *
-     * @param query The query.
-     * @return The query trackers.
-     */
-    public Collection<? extends QueryTracker> getQueryTrackers(Query query)
-    {
-        Lock lock = myLock.readLock();
-        lock.lock();
-        try
-        {
-            List<MultiQueryTracker> list = myQueryToTrackerMap.get(query);
-            return list == null ? Collections.<QueryTracker>emptyList() : New.<QueryTracker>collection(list);
-        }
-        finally
-        {
-            lock.unlock();
-        }
     }
 
     /**

@@ -3,9 +3,9 @@ package io.opensphere.core.pipeline.renderer.buffered;
 import java.nio.Buffer;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.media.opengl.GL;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.pipeline.util.RenderContext;
 import io.opensphere.core.util.Utilities;
@@ -21,7 +21,7 @@ public abstract class AbstractBufferObject<E extends Buffer> implements BufferOb
     /** Atomic updater for myBuffer. */
     @SuppressWarnings("rawtypes")
     private static final AtomicReferenceFieldUpdater<AbstractBufferObject, Buffer> BUFFER_UPDATER = AtomicReferenceFieldUpdater
-            .newUpdater(AbstractBufferObject.class, Buffer.class, "myBuffer");
+    .newUpdater(AbstractBufferObject.class, Buffer.class, "myBuffer");
 
     /**
      * The buffer itself, which will be {@code null} after being uploaded.

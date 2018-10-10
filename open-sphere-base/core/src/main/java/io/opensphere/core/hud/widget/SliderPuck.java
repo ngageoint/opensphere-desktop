@@ -324,7 +324,7 @@ public class SliderPuck extends Renderable
      */
     private void setMesh(ScreenBoundingBox puckBox, double width, double height)
     {
-        PolygonMeshGeometry.Builder<ScreenPosition> polyBuilder = new PolygonMeshGeometry.Builder<ScreenPosition>();
+        PolygonMeshGeometry.Builder<ScreenPosition> polyBuilder = new PolygonMeshGeometry.Builder<>();
 
         List<ScreenPosition> positions = new ArrayList<>();
         List<ScreenPosition> positions2 = new ArrayList<>();

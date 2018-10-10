@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
@@ -121,10 +119,7 @@ public final class UserInteractionX509TrustManager extends UserInteractionAuthen
                 {
                     return;
                 }
-                else
-                {
-                    throw ex;
-                }
+                throw ex;
             }
         }
     }
@@ -144,21 +139,17 @@ public final class UserInteractionX509TrustManager extends UserInteractionAuthen
     private JButton getViewCertificatesButton(final X509Certificate[] chain)
     {
         JButton viewCertificateButton = new JButton("View Certificates");
-        viewCertificateButton.addActionListener(new ActionListener()
+        viewCertificateButton.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                JTextArea textArea = new JTextArea(
-                        CertificateUtilities.getDetailString(StringUtilities.EMPTY, Arrays.asList(chain)));
-                textArea.setEditable(false);
-                JScrollPane scrollPane = new JScrollPane(textArea);
-                textArea.setBackground(scrollPane.getBackground());
-                scrollPane.setPreferredSize(new Dimension(600, 400));
-                OptionDialog dialog = new OptionDialog((JButton)e.getSource(), scrollPane, "Certificate Details");
-                dialog.setButtonLabels(Collections.singleton(ButtonPanel.OK));
-                dialog.buildAndShow();
-            }
+            JTextArea textArea = new JTextArea(
+                    CertificateUtilities.getDetailString(StringUtilities.EMPTY, Arrays.asList(chain)));
+            textArea.setEditable(false);
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            textArea.setBackground(scrollPane.getBackground());
+            scrollPane.setPreferredSize(new Dimension(600, 400));
+            OptionDialog dialog = new OptionDialog((JButton)e.getSource(), scrollPane, "Certificate Details");
+            dialog.setButtonLabels(Collections.singleton(ButtonPanel.OK));
+            dialog.buildAndShow();
         });
         return viewCertificateButton;
     }
@@ -261,7 +252,7 @@ public final class UserInteractionX509TrustManager extends UserInteractionAuthen
             northPanel.setAnchor(GridBagConstraints.WEST);
             northPanel.addRow(new JLabel("<html><h2>This Connection is Untrusted.</h2><hr/></html>"));
             northPanel.addRow(new JLabel("The server at " + getServerKey()
-                    + (StringUtils.isEmpty(getServerName()) ? "" : " (" + getServerName() + ")")));
+            + (StringUtils.isEmpty(getServerName()) ? "" : " (" + getServerName() + ")")));
             northPanel.addRow(new JLabel("is presenting an unrecognized certificate."));
 
             northPanel.setAnchor(GridBagConstraints.CENTER).setInsets(10, 0, 10, 0).addRow(getViewCertificatesButton(chain));

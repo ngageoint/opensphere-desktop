@@ -121,18 +121,14 @@ public class HoverButtonTreeCellRenderer implements TreeCellRenderer
             button.setOpaque(false);
             button.setBackground(new Color(0, 0, 0, 0));
             button.setBorder(null);
-            button.addActionListener(new ActionListener()
+            button.addActionListener(e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
+                ActionListener listener = myButtonToActionListenerMap.get(e.getSource());
+                if (listener != null)
                 {
-                    ActionListener listener = myButtonToActionListenerMap.get(e.getSource());
-                    if (listener != null)
-                    {
-                        ForcePaintedButton button = (ForcePaintedButton)e.getSource();
-                        listener.actionPerformed(new ActionEvent(myMouseOverNode, e.getID(), button.getActionCommand(),
-                                e.getWhen(), e.getModifiers()));
-                    }
+                    ForcePaintedButton button1 = (ForcePaintedButton)e.getSource();
+                    listener.actionPerformed(new ActionEvent(myMouseOverNode, e.getID(), button1.getActionCommand(),
+                            e.getWhen(), e.getModifiers()));
                 }
             });
             myButtons.add(button);

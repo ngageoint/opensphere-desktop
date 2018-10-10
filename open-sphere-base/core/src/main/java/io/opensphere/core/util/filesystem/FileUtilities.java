@@ -498,22 +498,12 @@ public final class FileUtilities
             return null;
         }
 
-        final File[] files = directory.listFiles(new FilenameFilter()
-        {
-            @Override
-            public boolean accept(File dir, String name)
-            {
-                return name.endsWith(extension);
-            }
-        });
+        final File[] files = directory.listFiles((FilenameFilter)(dir, name) -> name.endsWith(extension));
         if (files != null)
         {
             return Arrays.asList(files);
         }
-        else
-        {
-            return Collections.emptyList();
-        }
+        return Collections.emptyList();
     }
 
     /**

@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
-
 import io.opensphere.core.animation.AnimationPlan;
 import io.opensphere.core.animation.AnimationState;
 import io.opensphere.core.animation.AnimationState.Direction;
@@ -86,20 +85,17 @@ public class DefaultAnimationPlan implements AnimationPlan
         {
             return delta;
         }
-        else
+        switch (getEndBehavior())
         {
-            switch (getEndBehavior())
-            {
-                case BOUNCE:
-                    return (fromState.getDirection() == Direction.FORWARD
-                            ? myAnimationSequence.size() - 1 - fromState.getStepNumber() : fromState.getStepNumber()) * 2 - delta;
-                case STOP:
-                    return Integer.MAX_VALUE;
-                case WRAP:
-                    return myAnimationSequence.size() + delta;
-                default:
-                    throw new UnexpectedEnumException(getEndBehavior());
-            }
+            case BOUNCE:
+                return (fromState.getDirection() == Direction.FORWARD ? myAnimationSequence.size() - 1 - fromState.getStepNumber()
+                        : fromState.getStepNumber()) * 2 - delta;
+            case STOP:
+                return Integer.MAX_VALUE;
+            case WRAP:
+                return myAnimationSequence.size() + delta;
+            default:
+                throw new UnexpectedEnumException(getEndBehavior());
         }
     }
 
@@ -328,10 +324,7 @@ public class DefaultAnimationPlan implements AnimationPlan
             TimeSpan second = myAnimationSequence.get(1);
             return new Milliseconds(second.getStart() - first.getStart());
         }
-        else
-        {
-            return first.getDuration();
-        }
+        return first.getDuration();
     }
 
     @Override
@@ -391,12 +384,9 @@ public class DefaultAnimationPlan implements AnimationPlan
         {
             return TimeSpan.ZERO;
         }
-        else
-        {
-            int stepNumber = getDefaultAnimationState(state).getStepNumber();
-            validateStepNumber(stepNumber);
-            return getAnimationSequence().get(stepNumber);
-        }
+        int stepNumber = getDefaultAnimationState(state).getStepNumber();
+        validateStepNumber(stepNumber);
+        return getAnimationSequence().get(stepNumber);
     }
 
     @Override
@@ -462,10 +452,7 @@ public class DefaultAnimationPlan implements AnimationPlan
         {
             return -index;
         }
-        else
-        {
-            return maxIndex - (index - maxIndex);
-        }
+        return maxIndex - (index - maxIndex);
     }
 
     /**
@@ -516,10 +503,7 @@ public class DefaultAnimationPlan implements AnimationPlan
             }
             return relativeIndex;
         }
-        else
-        {
-            return MathUtil.clamp(relativeIndex, 0, maxIndex);
-        }
+        return MathUtil.clamp(relativeIndex, 0, maxIndex);
     }
 
     @Override

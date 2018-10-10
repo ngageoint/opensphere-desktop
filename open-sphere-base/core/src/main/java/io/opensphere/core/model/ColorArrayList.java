@@ -88,19 +88,16 @@ public final class ColorArrayList extends AbstractList<Color> implements Seriali
         {
             return (ColorArrayList)input;
         }
-        else
+        PetrifyableTByteArrayList bytes = new PetrifyableTByteArrayList(input.size() * 4);
+        for (Color color : input)
         {
-            PetrifyableTByteArrayList bytes = new PetrifyableTByteArrayList(input.size() * 4);
-            for (Color color : input)
-            {
-                bytes.add((byte)color.getRed());
-                bytes.add((byte)color.getGreen());
-                bytes.add((byte)color.getBlue());
-                bytes.add((byte)color.getAlpha());
-            }
-
-            return createFromRGBABytes(bytes);
+            bytes.add((byte)color.getRed());
+            bytes.add((byte)color.getGreen());
+            bytes.add((byte)color.getBlue());
+            bytes.add((byte)color.getAlpha());
         }
+
+        return createFromRGBABytes(bytes);
     }
 
     /**

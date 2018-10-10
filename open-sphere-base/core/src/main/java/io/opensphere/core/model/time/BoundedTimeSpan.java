@@ -57,10 +57,7 @@ abstract class BoundedTimeSpan extends TimeSpan
                 return 0;
             }
         }
-        else
-        {
-            return -compareStart;
-        }
+        return -compareStart;
     }
 
     @Override
@@ -85,11 +82,8 @@ abstract class BoundedTimeSpan extends TimeSpan
             {
                 return Milliseconds.ZERO;
             }
-            else
-            {
-                long millis = getStart() - other.getEnd();
-                return millis > 0L ? Duration.create(Milliseconds.class, millis) : Milliseconds.ZERO;
-            }
+            long millis = getStart() - other.getEnd();
+            return millis > 0L ? Duration.create(Milliseconds.class, millis) : Milliseconds.ZERO;
         }
         else if (other.isUnboundedEnd())
         {
@@ -133,10 +127,7 @@ abstract class BoundedTimeSpan extends TimeSpan
                 return TimeSpan.get(start, end);
             }
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     @Override

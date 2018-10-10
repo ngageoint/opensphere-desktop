@@ -307,17 +307,17 @@ public class RangeLongBlock implements Comparable<RangeLongBlock>, Iterable<Long
     public int compareTo(RangeLongBlock o)
     {
         if (myStartValue == o.myStartValue && myEndValue == o.myEndValue)
-        // Equality
+            // Equality
         {
             return 0;
         }
         else if (myEndValue < o.myStartValue || o.myEndValue < myStartValue)
-        // Does not overlap
+            // Does not overlap
         {
             return myEndValue < o.myStartValue ? -1 : 1;
         }
         else
-        // Overlaps
+            // Overlaps
         {
             return myStartValue < o.myStartValue ? -1 : 1;
         }
@@ -408,7 +408,7 @@ public class RangeLongBlock implements Comparable<RangeLongBlock>, Iterable<Long
             result = RangeRelationType.EQUAL;
         }
         else
-        // Overlaps, is contained or contains.
+            // Overlaps, is contained or contains.
         {
             if (block.myStartValue >= myStartValue && block.myEndValue <= myEndValue)
             {
@@ -562,16 +562,13 @@ public class RangeLongBlock implements Comparable<RangeLongBlock>, Iterable<Long
         {
             throw new IllegalArgumentException("Expanding RangeLongBlock Can Only Be Done With Neighboring Values");
         }
-        else
+        if (value == myStartValue - 1)
         {
-            if (value == myStartValue - 1)
-            {
-                myStartValue = value;
-            }
-            else if (value == myEndValue + 1)
-            {
-                myEndValue = value;
-            }
+            myStartValue = value;
+        }
+        else if (value == myEndValue + 1)
+        {
+            myEndValue = value;
         }
     }
 
@@ -593,14 +590,11 @@ public class RangeLongBlock implements Comparable<RangeLongBlock>, Iterable<Long
         {
             throw new IllegalArgumentException("Cannot merge non contiguous blocks together");
         }
-        else
-        {
-            long oldStart = myStartValue;
-            long oldEnd = myEndValue;
-            myStartValue = myStartValue < other.myStartValue ? myStartValue : other.myStartValue;
-            myEndValue = myEndValue > other.myEndValue ? myEndValue : other.myEndValue;
-            return myStartValue != oldStart || myEndValue != oldEnd;
-        }
+        long oldStart = myStartValue;
+        long oldEnd = myEndValue;
+        myStartValue = myStartValue < other.myStartValue ? myStartValue : other.myStartValue;
+        myEndValue = myEndValue > other.myEndValue ? myEndValue : other.myEndValue;
+        return myStartValue != oldStart || myEndValue != oldEnd;
     }
 
     /**
@@ -669,10 +663,7 @@ public class RangeLongBlock implements Comparable<RangeLongBlock>, Iterable<Long
                 }
                 return Long.valueOf(myCurrentValue);
             }
-            else
-            {
-                throw new NoSuchElementException();
-            }
+            throw new NoSuchElementException();
         }
 
         @Override

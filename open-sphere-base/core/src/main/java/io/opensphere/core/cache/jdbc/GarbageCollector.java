@@ -1,7 +1,5 @@
 package io.opensphere.core.cache.jdbc;
 
-import java.sql.Connection;
-import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.RejectedExecutionException;
@@ -12,7 +10,6 @@ import org.apache.log4j.Logger;
 
 import io.opensphere.core.cache.CacheException;
 import io.opensphere.core.cache.jdbc.ConnectionAppropriator.ConnectionUser;
-import io.opensphere.core.cache.jdbc.StatementAppropriator.StatementUser;
 import io.opensphere.core.util.lang.StringUtilities;
 
 /**
@@ -124,7 +121,7 @@ public class GarbageCollector implements Runnable
                 {
                     final long t0 = System.nanoTime();
                     myConnectionAppropriator
-                            .appropriateStatement(myTaskFactory.getPurgeGroupsTask(new int[] { groupId.intValue() }));
+                    .appropriateStatement(myTaskFactory.getPurgeGroupsTask(new int[] { groupId.intValue() }));
                     final long et = System.nanoTime() - t0;
 
                     if (LOGGER.isDebugEnabled())
@@ -169,23 +166,12 @@ public class GarbageCollector implements Runnable
      */
     protected int[] getExpiredGroups() throws CacheException
     {
-        final ConnectionUser<int[]> user = new ConnectionUser<int[]>()
+        final ConnectionUser<int[]> user = conn -> new StatementAppropriator(conn).appropriateStatement((unused, stmt) ->
         {
-            @Override
-            public int[] run(Connection conn) throws CacheException
-            {
-                return new StatementAppropriator(conn).appropriateStatement(new StatementUser<int[]>()
-                {
-                    @Override
-                    public int[] run(Connection unused, Statement stmt) throws CacheException
-                    {
-                        final long timeThreshold = System.currentTimeMillis() - EXPIRATION_BUFFER_MS;
-                        final String sql = mySQLGenerator.generateGetExpiredGroups(timeThreshold);
-                        return myCacheUtilities.executeIntArrayQuery(stmt, sql);
-                    }
-                });
-            }
-        };
+            final long timeThreshold = System.currentTimeMillis() - EXPIRATION_BUFFER_MS;
+            final String sql = mySQLGenerator.generateGetExpiredGroups(timeThreshold);
+            return myCacheUtilities.executeIntArrayQuery(stmt, sql);
+        });
 
         return myConnectionAppropriator.appropriateConnection(user, false);
     }

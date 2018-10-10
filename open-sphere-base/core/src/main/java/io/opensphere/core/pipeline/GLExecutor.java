@@ -68,19 +68,15 @@ public class GLExecutor implements Executor
      */
     public final Executor getLoadSensitiveExecutor(final Executor standardExecutor)
     {
-        return new Executor()
+        return command ->
         {
-            @Override
-            public void execute(Runnable command)
+            if (myGLQueue.size() < 10)
             {
-                if (myGLQueue.size() < 10)
-                {
-                    GLExecutor.this.execute(command);
-                }
-                else
-                {
-                    standardExecutor.execute(command);
-                }
+                GLExecutor.this.execute(command);
+            }
+            else
+            {
+                standardExecutor.execute(command);
             }
         };
     }

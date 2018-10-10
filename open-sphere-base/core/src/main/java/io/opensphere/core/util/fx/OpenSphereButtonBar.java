@@ -2,9 +2,8 @@ package io.opensphere.core.util.fx;
 
 import java.util.Map;
 
-import javafx.scene.control.Button;
-
 import io.opensphere.core.util.collections.New;
+import javafx.scene.control.Button;
 
 /** OpenSphere button bar. */
 public class OpenSphereButtonBar extends ObservableButtonBar

@@ -3,8 +3,6 @@ package io.opensphere.core.util.swing.input.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -111,14 +109,7 @@ public class DatePickerPanel extends GridBagPanel
         myNowButton = new JButton();
         createMonthView();
 
-        myCalendarButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                getMonthPopup().show(myTextField, myTextField.getWidth(), 0);
-            }
-        });
+        myCalendarButton.addActionListener(e -> getMonthPopup().show(myTextField, myTextField.getWidth(), 0));
 
         add(myTextField);
         add(myCalendarButton);
@@ -260,14 +251,10 @@ public class DatePickerPanel extends GridBagPanel
         myMonthView.setSelectionBackground(Color.LIGHT_GRAY);
         myMonthView.setSelectionForeground(Color.BLACK);
         myMonthView.setTodayBackground(background);
-        myMonthView.addActionListener(new ActionListener()
+        myMonthView.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                getMonthPopup().setVisible(false);
-                updateModel(myMonthView.getSelectionDate());
-            }
+            getMonthPopup().setVisible(false);
+            updateModel(myMonthView.getSelectionDate());
         });
         return myMonthView;
     }
@@ -282,14 +269,10 @@ public class DatePickerPanel extends GridBagPanel
         JPanel panel = new JPanel();
         myNowButton.setMargin(ButtonPanel.INSETS_JOPTIONPANE);
         panel.add(myNowButton);
-        myNowButton.addActionListener(new ActionListener()
+        myNowButton.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                getMonthPopup().setVisible(false);
-                updateModel(TimelineUtilities.roundDown(new Date(), Days.ONE).getTime());
-            }
+            getMonthPopup().setVisible(false);
+            updateModel(TimelineUtilities.roundDown(new Date(), Days.ONE).getTime());
         });
         return panel;
     }

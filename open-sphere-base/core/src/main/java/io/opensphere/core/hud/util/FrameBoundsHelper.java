@@ -11,7 +11,6 @@ import javax.swing.JRootPane;
 
 import org.apache.log4j.Logger;
 
-import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.lang.UnexpectedEnumException;
@@ -39,33 +38,18 @@ public class FrameBoundsHelper
     private int myInset;
 
     /** Listener for changes to the frame inset preference. */
-    private final PreferenceChangeListener myInsetChangeListener = new PreferenceChangeListener()
-    {
-        @Override
-        public void preferenceChange(PreferenceChangeEvent evt)
-        {
-            synchronized (FrameBoundsHelper.this)
-            {
-                myInset = evt.getValueAsInt(FrameOptionsProvider.DEFAULT_INSET);
-                myFrame.repositionForInsets();
-            }
-        }
-    };
+    private final PreferenceChangeListener myInsetChangeListener;
 
     /** When true, the windows should stick to the edges. */
     private boolean mySticky;
 
     /** Listener for changes to the stick to edge preference. */
-    private final PreferenceChangeListener myStickyChangeListener = new PreferenceChangeListener()
+    private final PreferenceChangeListener myStickyChangeListener = evt ->
     {
-        @Override
-        public void preferenceChange(PreferenceChangeEvent evt)
+        synchronized (FrameBoundsHelper.this)
         {
-            synchronized (FrameBoundsHelper.this)
-            {
-                mySticky = evt.getValueAsBoolean(FrameOptionsProvider.DEFAULT_STICKY);
-                resetGlue();
-            }
+            mySticky = evt.getValueAsBoolean(FrameOptionsProvider.DEFAULT_STICKY);
+            resetGlue();
         }
     };
 
@@ -84,15 +68,24 @@ public class FrameBoundsHelper
             PositionBoundedFrame frame)
     {
         myFrame = frame;
+        myInsetChangeListener = evt ->
+        {
+            synchronized (FrameBoundsHelper.this)
+            {
+                myInset = evt.getValueAsInt(FrameOptionsProvider.DEFAULT_INSET);
+                myFrame.repositionForInsets();
+            }
+        };
+
         mySticky = prefsRegistry.getPreferences(FrameOptionsProvider.class).getBoolean(FrameOptionsProvider.STICKY_PREFERENCE_KEY,
                 FrameOptionsProvider.DEFAULT_STICKY);
         myInset = prefsRegistry.getPreferences(FrameOptionsProvider.class).getInt(FrameOptionsProvider.INSET_PREFERENCE_KEY,
                 FrameOptionsProvider.DEFAULT_INSET);
 
         prefsRegistry.getPreferences(FrameOptionsProvider.class)
-                .addPreferenceChangeListener(FrameOptionsProvider.INSET_PREFERENCE_KEY, myInsetChangeListener);
+        .addPreferenceChangeListener(FrameOptionsProvider.INSET_PREFERENCE_KEY, myInsetChangeListener);
         prefsRegistry.getPreferences(FrameOptionsProvider.class)
-                .addPreferenceChangeListener(FrameOptionsProvider.STICKY_PREFERENCE_KEY, myStickyChangeListener);
+        .addPreferenceChangeListener(FrameOptionsProvider.STICKY_PREFERENCE_KEY, myStickyChangeListener);
 
         myFrameProvider = frameProvider;
     }

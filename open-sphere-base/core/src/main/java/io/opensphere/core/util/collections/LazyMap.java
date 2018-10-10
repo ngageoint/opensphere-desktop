@@ -95,7 +95,7 @@ public class LazyMap<K, V> extends WrappedMap<K, V>
      */
     public static <K, V> LazyMap<K, V> create(Map<K, V> map, Class<? extends K> keyType)
     {
-        return new LazyMap<K, V>(map, keyType);
+        return new LazyMap<>(map, keyType);
     }
 
     /**
@@ -110,7 +110,7 @@ public class LazyMap<K, V> extends WrappedMap<K, V>
      */
     public static <K, V> LazyMap<K, V> create(Map<K, V> map, Class<? extends K> keyType, Factory<? super K, ? extends V> factory)
     {
-        return new LazyMap<K, V>(map, keyType, factory);
+        return new LazyMap<>(map, keyType, factory);
     }
 
     /**
@@ -124,14 +124,7 @@ public class LazyMap<K, V> extends WrappedMap<K, V>
      */
     public static <V> Factory<Object, Collection<V>> providerToFactory(final CollectionProvider<V> provider)
     {
-        return new Factory<Object, Collection<V>>()
-        {
-            @Override
-            public Collection<V> create(Object key)
-            {
-                return provider.get();
-            }
-        };
+        return key -> provider.get();
     }
 
     /**
@@ -145,14 +138,7 @@ public class LazyMap<K, V> extends WrappedMap<K, V>
      */
     public static <V> Factory<Object, List<V>> providerToFactory(final ListProvider<V> provider)
     {
-        return new Factory<Object, List<V>>()
-        {
-            @Override
-            public List<V> create(Object key)
-            {
-                return provider.get();
-            }
-        };
+        return key -> provider.get();
     }
 
     /**
@@ -166,14 +152,7 @@ public class LazyMap<K, V> extends WrappedMap<K, V>
      */
     public static <V> Factory<Object, Set<V>> providerToFactory(final SetProvider<V> provider)
     {
-        return new Factory<Object, Set<V>>()
-        {
-            @Override
-            public Set<V> create(Object key)
-            {
-                return provider.get();
-            }
-        };
+        return key -> provider.get();
     }
 
     /**

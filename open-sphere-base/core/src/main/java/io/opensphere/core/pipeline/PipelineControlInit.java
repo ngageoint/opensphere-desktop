@@ -130,14 +130,10 @@ public final class PipelineControlInit
 
         // The component registry will not yet be initialized, so the tread will
         // block until initialization is complete.
-        new Thread(new Runnable()
+        new Thread(() ->
         {
-            @Override
-            public void run()
-            {
-                ourComponentRegistry = uiRegistry.getComponentRegistry();
-                Toolkit.getDefaultToolkit().addAWTEventListener(controlListener, ourEventMask);
-            }
+            ourComponentRegistry = uiRegistry.getComponentRegistry();
+            Toolkit.getDefaultToolkit().addAWTEventListener(controlListener, ourEventMask);
         }).start();
     }
 

@@ -188,7 +188,7 @@ public class TitleBarBorder extends Renderable implements Border
      */
     private PolylineGeometry.Builder<ScreenPosition> createKillBuilder()
     {
-        PolylineGeometry.Builder<ScreenPosition> polyBuilder = new PolylineGeometry.Builder<ScreenPosition>();
+        PolylineGeometry.Builder<ScreenPosition> polyBuilder = new PolylineGeometry.Builder<>();
         polyBuilder.setLineSmoothing(false);
         return polyBuilder;
     }
@@ -200,7 +200,7 @@ public class TitleBarBorder extends Renderable implements Border
         ScreenPosition ul = bbox.getUpperLeft();
         ScreenPosition lr = bbox.getLowerRight();
 
-        PolylineGeometry.Builder<ScreenPosition> polyBuilder = new PolylineGeometry.Builder<ScreenPosition>();
+        PolylineGeometry.Builder<ScreenPosition> polyBuilder = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = new DefaultPolylineRenderProperties(4, true, false);
         props.setColor(ClassicHUDPalette.ourBottomDecorLineColor);
 
@@ -303,7 +303,7 @@ public class TitleBarBorder extends Renderable implements Border
         double boxTop = bbox.getUpperLeft().getY();
         double boxLeft = bbox.getUpperLeft().getX();
 
-        PolygonMeshGeometry.Builder<ScreenPosition> polyBuilder = new PolygonMeshGeometry.Builder<ScreenPosition>();
+        PolygonMeshGeometry.Builder<ScreenPosition> polyBuilder = new PolygonMeshGeometry.Builder<>();
         PolygonMeshRenderProperties props = new DefaultPolygonMeshRenderProperties(2, true, true, true);
         props.setColor(ClassicHUDPalette.ourTitleBarColor);
         props.setLighting(LightingModelConfigGL.getDefaultLight());
@@ -361,7 +361,7 @@ public class TitleBarBorder extends Renderable implements Border
     /** Setup the title text. */
     private void setupTitle()
     {
-        LabelGeometry.Builder<ScreenPosition> labelBuilder = new LabelGeometry.Builder<ScreenPosition>();
+        LabelGeometry.Builder<ScreenPosition> labelBuilder = new LabelGeometry.Builder<>();
         labelBuilder.setFont(Font.SANS_SERIF + " PLAIN 12");
         labelBuilder.setText(myTitle);
 

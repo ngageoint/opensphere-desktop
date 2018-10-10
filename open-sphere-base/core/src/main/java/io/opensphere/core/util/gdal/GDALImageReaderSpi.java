@@ -74,10 +74,7 @@ public class GDALImageReaderSpi extends ImageReaderSpi
                 inp.reset();
             }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     @Override

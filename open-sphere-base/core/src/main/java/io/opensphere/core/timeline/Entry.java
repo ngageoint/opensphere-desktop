@@ -34,7 +34,7 @@ class Entry
         myName = name;
         myColor = color;
         myVisible = visible;
-        myData = new TLongObjectHashMap<TimelineDatum>();
+        myData = new TLongObjectHashMap<>();
     }
 
     /**

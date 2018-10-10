@@ -2,7 +2,7 @@ package io.opensphere.core.geometry.renderproperties;
 
 /** Default implementation of {@link BaseAltitudeRenderProperties}. */
 public class DefaultBaseAltitudeRenderProperties extends DefaultPolygonMeshRenderProperties
-        implements BaseAltitudeRenderProperties
+implements BaseAltitudeRenderProperties
 {
     /** The serial id. */
     private static final long serialVersionUID = 1L;

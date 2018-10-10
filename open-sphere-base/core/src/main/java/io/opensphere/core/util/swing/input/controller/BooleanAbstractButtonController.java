@@ -1,7 +1,6 @@
 package io.opensphere.core.util.swing.input.controller;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractButton;
@@ -11,7 +10,6 @@ import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.image.IconUtil.IconStyle;
 import io.opensphere.core.util.swing.input.model.BooleanModel;
 import io.opensphere.core.util.swing.input.model.PropertyChangeEvent;
-import io.opensphere.core.util.swing.input.model.PropertyChangeListener;
 
 /**
  * A controller using an Boolean model and JToggleButton view.
@@ -31,15 +29,11 @@ public abstract class BooleanAbstractButtonController extends AbstractController
     {
         super(model, view);
 
-        model.addPropertyChangeListener(new PropertyChangeListener()
+        model.addPropertyChangeListener(e ->
         {
-            @Override
-            public void stateChanged(PropertyChangeEvent e)
+            if (e.getProperty() == PropertyChangeEvent.Property.NAME_AND_DESCRIPTION && getView().getIcon() == null)
             {
-                if (e.getProperty() == PropertyChangeEvent.Property.NAME_AND_DESCRIPTION && getView().getIcon() == null)
-                {
-                    getView().setText(getModel().getName());
-                }
+                getView().setText(getModel().getName());
             }
         });
     }
@@ -58,14 +52,7 @@ public abstract class BooleanAbstractButtonController extends AbstractController
     public void open()
     {
         super.open();
-        myActionListener = new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                handleViewChange();
-            }
-        };
+        myActionListener = e -> handleViewChange();
         getView().addActionListener(myActionListener);
 
         ViewSettings<Boolean> viewSettings = getViewSettings();

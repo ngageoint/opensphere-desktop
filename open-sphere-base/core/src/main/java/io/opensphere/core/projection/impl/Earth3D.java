@@ -103,7 +103,7 @@ public class Earth3D extends GeographicBody3D
         double cosλ = Math.cos(λ);
         double lat = Math.atan2(
                 inPos.getZ()
-                        + WGS84EarthConstants.SECOND_ECCENTRICITY_SQ * WGS84EarthConstants.SEMI_MINOR_AXIS_M * sinλ * sinλ * sinλ,
+                + WGS84EarthConstants.SECOND_ECCENTRICITY_SQ * WGS84EarthConstants.SEMI_MINOR_AXIS_M * sinλ * sinλ * sinλ,
                 φ - WGS84EarthConstants.FIRST_ECCENTRICITY_SQ * WGS84EarthConstants.SEMI_MAJOR_AXIS_M * cosλ * cosλ * cosλ);
         double sinLat = Math.sin(lat);
         double cosLat = Math.cos(lat);

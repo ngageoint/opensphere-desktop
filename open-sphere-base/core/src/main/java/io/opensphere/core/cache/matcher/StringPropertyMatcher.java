@@ -125,7 +125,7 @@ public final class StringPropertyMatcher extends AbstractPropertyMatcher<String>
      */
     public StringPropertyMatcher(String propertyName, OperatorType operator, String operand)
     {
-        super(new PropertyDescriptor<String>(propertyName, String.class), operand);
+        super(new PropertyDescriptor<>(propertyName, String.class), operand);
         myOperator = operator;
     }
 
@@ -183,15 +183,9 @@ public final class StringPropertyMatcher extends AbstractPropertyMatcher<String>
             {
                 return getPattern().matcher((String)operand).matches();
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
-        else
-        {
-            return getOperator() == OperatorType.NE ^ EqualsHelper.equals(getOperand(), operand);
-        }
+        return getOperator() == OperatorType.NE ^ EqualsHelper.equals(getOperand(), operand);
     }
 
     @Override

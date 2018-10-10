@@ -126,43 +126,35 @@ public class TextureDisposalHelper implements DisposalHelper
      */
     private CacheContentListener<TextureHandle> getTileTextureGroupContentChangeListener()
     {
-        return new CacheContentListener<TextureHandle>()
+        return event ->
         {
-            @Override
-            public void handleCacheContentChange(CacheContentEvent<TextureHandle> event)
-            {
-                final Collection<? extends TextureHandle> textureHandles = event.getChangedItems();
+            final Collection<? extends TextureHandle> textureHandles = event.getChangedItems();
 
-                ThreadUtilities.runBackground(new Runnable()
+            ThreadUtilities.runBackground(() ->
+            {
+                myDisposalLock.lock();
+                try
                 {
-                    @Override
-                    public void run()
+                    for (TextureHandle handle : textureHandles)
                     {
-                        myDisposalLock.lock();
-                        try
+                        if (handle != null)
                         {
-                            for (TextureHandle handle : textureHandles)
-                            {
-                                if (handle != null)
-                                {
-                                    // Use TransparentEqualsWeakReference so
-                                    // that we can use regular map lookup and
-                                    // only add this reference to the map if
-                                    // there is no reference for this object
-                                    // already.
-                                    WeakReference<TextureHandle> ref = new TransparentEqualsWeakReference<TextureHandle>(handle,
-                                            myTextureHandleReferenceQueue);
-                                    myTextureDisposalMap.put(ref, Integer.valueOf(handle.getTextureId()));
-                                }
-                            }
-                        }
-                        finally
-                        {
-                            myDisposalLock.unlock();
+                            // Use TransparentEqualsWeakReference so
+                            // that we can use regular map lookup and
+                            // only add this reference to the map if
+                            // there is no reference for this object
+                            // already.
+                            WeakReference<TextureHandle> ref = new TransparentEqualsWeakReference<>(handle,
+                                    myTextureHandleReferenceQueue);
+                            myTextureDisposalMap.put(ref, Integer.valueOf(handle.getTextureId()));
                         }
                     }
-                });
-            }
+                }
+                finally
+                {
+                    myDisposalLock.unlock();
+                }
+            });
         };
     }
 }

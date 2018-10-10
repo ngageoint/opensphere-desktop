@@ -216,28 +216,23 @@ public abstract class AbstractProcessor<E extends Geometry> implements Renderabl
     private final RepaintListener myRepaintListener;
 
     /** The state change handler for the state machine. */
-    private final StateChangeHandler<E> myStateChangeHandler = new StateChangeHandler<E>()
+    private final StateChangeHandler<E> myStateChangeHandler = (objects, newState, controller) ->
     {
-        @Override
-        public void handleStateChanged(List<? extends E> objects, ThreadedStateMachine.State newState,
-                StateController<E> controller)
+        if (State.class.isInstance(newState))
         {
-            if (State.class.isInstance(newState))
+            switch (State.class.cast(newState))
             {
-                switch (State.class.cast(newState))
-                {
-                    case UNPROCESSED:
-                        processUnprocessed(objects, controller);
-                        break;
-                    case DEFERRED:
-                        processDeferred(objects, controller);
-                        break;
-                    case READY:
-                        processReady(objects, controller);
-                        break;
-                    default:
-                        throw new UnexpectedEnumException(State.class.cast(newState));
-                }
+                case UNPROCESSED:
+                    processUnprocessed(objects, controller);
+                    break;
+                case DEFERRED:
+                    processDeferred(objects, controller);
+                    break;
+                case READY:
+                    processReady(objects, controller);
+                    break;
+                default:
+                    throw new UnexpectedEnumException(State.class.cast(newState));
             }
         }
     };
@@ -525,13 +520,10 @@ public abstract class AbstractProcessor<E extends Geometry> implements Renderabl
             {
                 return myMapContext.getProjection();
             }
-            else
-            {
-                // Use the raw projection so that copies of snapshots are not
-                // saved in the render data for renderers which are not
-                // projection sensitive.
-                return myMapContext.getRawProjection();
-            }
+            // Use the raw projection so that copies of snapshots are not
+            // saved in the render data for renderers which are not
+            // projection sensitive.
+            return myMapContext.getRawProjection();
         }
 
         return null;
@@ -896,27 +888,27 @@ public abstract class AbstractProcessor<E extends Geometry> implements Renderabl
         Collection<? extends E> objectsAfterMostRecent = myHasMostRecent
                 ? myMostRecentFilter.filterMostRecent(objects, getTimeManager(), true) : objects;
 
-        List<E> onscreen = New.list(objectsAfterMostRecent.size());
-        for (E geo : objectsAfterMostRecent)
-        {
-            if (isOnScreen(geo, true))
-            {
-                onscreen.add(geo);
-            }
-        }
+                List<E> onscreen = New.list(objectsAfterMostRecent.size());
+                for (E geo : objectsAfterMostRecent)
+                {
+                    if (isOnScreen(geo, true))
+                    {
+                        onscreen.add(geo);
+                    }
+                }
 
-        Collections.sort(onscreen, RENDER_ORDER_COMPARATOR);
+                Collections.sort(onscreen, RENDER_ORDER_COMPARATOR);
 
-        if (LOGGER.isTraceEnabled())
-        {
-            LOGGER.trace("Onscreen: " + onscreen);
+                if (LOGGER.isTraceEnabled())
+                {
+                    LOGGER.trace("Onscreen: " + onscreen);
 
-            Collection<? extends E> offscreen = New.set(objects);
-            offscreen.removeAll(onscreen);
-            LOGGER.trace("Offscreen: " + offscreen);
-        }
+                    Collection<? extends E> offscreen = New.set(objects);
+                    offscreen.removeAll(onscreen);
+                    LOGGER.trace("Offscreen: " + offscreen);
+                }
 
-        return onscreen;
+                return onscreen;
     }
 
     /**
@@ -1287,10 +1279,7 @@ public abstract class AbstractProcessor<E extends Geometry> implements Renderabl
         {
             if (!myReadyObservers.isEmpty() && allGeometriesReady())
             {
-                for (Runnable task : myReadyObservers)
-                {
-                    task.run();
-                }
+                myReadyObservers.forEach(t -> t.run());
                 myReadyObservers.clear();
             }
         }
@@ -1672,14 +1661,7 @@ public abstract class AbstractProcessor<E extends Geometry> implements Renderabl
      */
     protected void setOnscreenDirty()
     {
-        myDirtyExecutor.execute(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                setOnscreenDirtyImmediately();
-            }
-        });
+        myDirtyExecutor.execute(() -> setOnscreenDirtyImmediately());
     }
 
     /** Set the on-screen dirty flag. */

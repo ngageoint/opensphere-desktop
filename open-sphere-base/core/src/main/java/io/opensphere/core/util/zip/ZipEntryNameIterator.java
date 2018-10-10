@@ -6,9 +6,9 @@ import java.util.NoSuchElementException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import net.jcip.annotations.NotThreadSafe;
-
 import org.apache.log4j.Logger;
+
+import net.jcip.annotations.NotThreadSafe;
 
 /** An iterator over the names of the entries in a {@link ZipInputStream}. */
 @NotThreadSafe

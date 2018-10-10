@@ -111,7 +111,7 @@ public abstract class GeographicBody3D extends AbstractGeographicProjection
         // d=2*atan2(sqrt(a), sqrt(1-a)) to reduce rounding errors with large
         // distances.
         double a = Math.sin((endLat - startLat) / 2.0) * Math.sin((endLat - startLat) / 2.0) + Math.cos(startLat)
-                * Math.cos(endLat) * Math.sin((endLon - startLon) / 2.0) * Math.sin((endLon - startLon) / 2.0);
+        * Math.cos(endLat) * Math.sin((endLon - startLon) / 2.0) * Math.sin((endLon - startLon) / 2.0);
         double distanceRadians = 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         if (Double.isNaN(distanceRadians))

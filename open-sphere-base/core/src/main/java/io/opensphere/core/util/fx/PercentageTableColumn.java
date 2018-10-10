@@ -56,11 +56,8 @@ public class PercentageTableColumn<S, T> extends TableColumn<S, T>
             {
                 return Double.valueOf(getWidth());
             }
-            else
-            {
-                double tableWidthDouble = tableWidth.get();
-                return Double.valueOf(percentageWidth.get() * tableWidthDouble);
-            }
+            double tableWidthDouble = tableWidth.get();
+            return Double.valueOf(percentageWidth.get() * tableWidthDouble);
         }, percentageWidth, tableWidth);
     }
 

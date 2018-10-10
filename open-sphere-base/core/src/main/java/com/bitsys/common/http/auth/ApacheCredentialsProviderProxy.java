@@ -13,43 +13,40 @@ import org.apache.http.client.CredentialsProvider;
  */
 public class ApacheCredentialsProviderProxy implements CredentialsProvider
 {
-   /** This library's credentials provider. */
-   private final com.bitsys.common.http.auth.CredentialsProvider credentialsProvider;
+    /** This library's credentials provider. */
+    private final com.bitsys.common.http.auth.CredentialsProvider credentialsProvider;
 
-   /**
-    * Creates a new instance using the given
-    * {@link com.bitsys.common.http.auth.CredentialsProvider
-    * CredentialsProvider}.
-    *
-    * @param credentialsProvider
-    *           the delegated credentials provider.
-    */
-   public ApacheCredentialsProviderProxy(final com.bitsys.common.http.auth.CredentialsProvider credentialsProvider)
-   {
-      if (credentialsProvider == null)
-      {
-         throw new IllegalArgumentException("The Credentials Provider is null");
-      }
-      this.credentialsProvider = credentialsProvider;
-   }
+    /**
+     * Creates a new instance using the given
+     * {@link com.bitsys.common.http.auth.CredentialsProvider
+     * CredentialsProvider}.
+     *
+     * @param credentialsProvider the delegated credentials provider.
+     */
+    public ApacheCredentialsProviderProxy(final com.bitsys.common.http.auth.CredentialsProvider credentialsProvider)
+    {
+        if (credentialsProvider == null)
+        {
+            throw new IllegalArgumentException("The Credentials Provider is null");
+        }
+        this.credentialsProvider = credentialsProvider;
+    }
 
-   @Override
-   public void setCredentials(final AuthScope authScope, final Credentials credentials)
-   {
-      credentialsProvider.setCredentials(toAuthenticationScope(authScope),
-                                         toCredentials(credentials));
-   }
+    @Override
+    public void setCredentials(final AuthScope authScope, final Credentials credentials)
+    {
+        credentialsProvider.setCredentials(toAuthenticationScope(authScope), toCredentials(credentials));
+    }
 
-   @Override
-   public Credentials getCredentials(final AuthScope authScope)
-   {
-      return toCredentials(credentialsProvider
-         .getCredentials(toAuthenticationScope(authScope)));
-   }
+    @Override
+    public Credentials getCredentials(final AuthScope authScope)
+    {
+        return toCredentials(credentialsProvider.getCredentials(toAuthenticationScope(authScope)));
+    }
 
-   @Override
-   public void clear()
-   {
-      credentialsProvider.clear();
-   }
+    @Override
+    public void clear()
+    {
+        credentialsProvider.clear();
+    }
 }

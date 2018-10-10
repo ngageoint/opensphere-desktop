@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
-
 import io.opensphere.core.util.Utilities;
 
 /** Standard implementation of {@link PolygonRenderProperties}. */
@@ -81,10 +80,7 @@ public class DefaultPolygonRenderProperties extends DefaultPolylineRenderPropert
         {
             return Collections.singleton(this);
         }
-        else
-        {
-            return Arrays.asList((AbstractRenderProperties)this, (AbstractRenderProperties)myFillColorRenderProperties);
-        }
+        return Arrays.asList((AbstractRenderProperties)this, (AbstractRenderProperties)myFillColorRenderProperties);
     }
 
     @Override

@@ -202,7 +202,7 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
 
             @Override
             public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
-                throws BadLocationException
+                    throws BadLocationException
             {
                 if (text.matches("\\d+"))
                 {
@@ -230,7 +230,7 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
         // populate all proxy fields from configuration:
         SystemProxyConfiguration systemConfiguration = myNetworkConfigurationManager.getSystemConfiguration();
         mySystemProxyExclusionsField
-                .setText(systemConfiguration.getExclusionPatterns().stream().collect(Collectors.joining(" ")));
+        .setText(systemConfiguration.getExclusionPatterns().stream().collect(Collectors.joining(" ")));
 
         UrlProxyConfiguration urlConfiguration = myNetworkConfigurationManager.getUrlConfiguration();
         myAutoConfigProxyUrlField.setText(urlConfiguration.getProxyUrl());
@@ -239,7 +239,7 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
         myManualProxyHostField.setText(manualConfiguration.getHost());
         myManualProxyPortField.setText(Integer.toString(manualConfiguration.getPort()));
         myManualProxyExclusionsField
-                .setText(manualConfiguration.getExclusionPatterns().stream().collect(Collectors.joining(" ")));
+        .setText(manualConfiguration.getExclusionPatterns().stream().collect(Collectors.joining(" ")));
 
         ConfigurationType selectedProxyType = myNetworkConfigurationManager.getSelectedProxyType();
         switch (selectedProxyType)

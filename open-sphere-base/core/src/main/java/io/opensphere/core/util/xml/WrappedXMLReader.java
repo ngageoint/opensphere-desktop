@@ -39,7 +39,7 @@ public class WrappedXMLReader implements XMLReader
      * @throws SAXException SAX error.
      */
     public WrappedXMLReader(boolean validate, Function<ContentHandler, ContentHandler> contentHandlerProducer)
-        throws ParserConfigurationException, SAXException
+            throws ParserConfigurationException, SAXException
     {
         this(newXMLReader(validate), contentHandlerProducer);
     }

@@ -56,7 +56,7 @@ public class SimpleDataRegistryImpl<E> implements SimpleDataRegistry<E>
     public void addModel(E model)
     {
         getDataRegistry().addModels(
-                new SimpleSessionOnlyCacheDeposit<E>(getCategory(), getPropertyDescriptor(), Collections.singleton(model)));
+                new SimpleSessionOnlyCacheDeposit<>(getCategory(), getPropertyDescriptor(), Collections.singleton(model)));
     }
 
     @Override

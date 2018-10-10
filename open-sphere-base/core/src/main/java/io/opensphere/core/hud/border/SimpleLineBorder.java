@@ -115,7 +115,7 @@ public class SimpleLineBorder implements Border
         positions.add(lowerRight);
         positions.add(upperRight);
         positions.add(upperLeft);
-        PolylineGeometry.Builder<ScreenPosition> polyBuilder = new PolylineGeometry.Builder<ScreenPosition>();
+        PolylineGeometry.Builder<ScreenPosition> polyBuilder = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = new DefaultPolylineRenderProperties(0, true, false);
         props.setColor(myLineColor);
         props.setWidth(myLineWidth);

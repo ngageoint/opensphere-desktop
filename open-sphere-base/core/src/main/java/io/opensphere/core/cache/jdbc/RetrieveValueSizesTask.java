@@ -64,27 +64,23 @@ public class RetrieveValueSizesTask extends DatabaseTask implements StatementUse
         int[] distinctGroupIds = getCacheUtilities().getGroupIdsFromCombinedIds(getIds(), true);
         getDatabaseTaskFactory().getEnsureColumnsTask(distinctGroupIds, descriptors).run(conn);
 
-        CacheIdUtilities.forEachGroup(getIds(), new CacheIdUtilities.DatabaseGroupFunctor()
+        CacheIdUtilities.forEachGroup(getIds(), (combinedIds, groupId, dataIds) ->
         {
-            @Override
-            public void run(long[] combinedIds, int groupId, int[] dataIds) throws CacheException
-            {
-                long[] sizes = doGetValueSizes(conn, stmt, groupId, dataIds, columnNames);
+            long[] sizes = doGetValueSizes(conn, stmt, groupId, dataIds, columnNames);
 
-                boolean found = false;
-                long firstId = getCacheUtilities().getCombinedId(groupId, dataIds[0]);
-                for (int index = 0; index < getIds().length && !found; ++index)
+            boolean found = false;
+            long firstId = getCacheUtilities().getCombinedId(groupId, dataIds[0]);
+            for (int index = 0; index < getIds().length && !found; ++index)
+            {
+                if (getIds()[index] == firstId)
                 {
-                    if (getIds()[index] == firstId)
-                    {
-                        System.arraycopy(sizes, 0, result, index, sizes.length);
-                        found = true;
-                    }
+                    System.arraycopy(sizes, 0, result, index, sizes.length);
+                    found = true;
                 }
-                if (!found)
-                {
-                    throw new CacheException("Could not find matching combined id.");
-                }
+            }
+            if (!found)
+            {
+                throw new CacheException("Could not find matching combined id.");
             }
         });
 

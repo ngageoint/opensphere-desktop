@@ -112,11 +112,8 @@ public class PatternStringTokenizer implements StringTokenizer
             }
             return cells;
         }
-        else
-        {
-            String[] cells = new String[matcher.groupCount()];
-            Arrays.fill(cells, StringUtilities.EMPTY);
-            return Arrays.asList(cells);
-        }
+        String[] cells = new String[matcher.groupCount()];
+        Arrays.fill(cells, StringUtilities.EMPTY);
+        return Arrays.asList(cells);
     }
 }

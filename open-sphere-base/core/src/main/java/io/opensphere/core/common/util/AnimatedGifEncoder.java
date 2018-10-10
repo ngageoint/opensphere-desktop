@@ -118,7 +118,7 @@ public class AnimatedGifEncoder
         BufferedImage converted = anImage;
         if (scale)
         {
-            Image scaledImage = anImage.getScaledInstance(scaleWidth, scaleHeight, BufferedImage.SCALE_SMOOTH);
+            Image scaledImage = anImage.getScaledInstance(scaleWidth, scaleHeight, Image.SCALE_SMOOTH);
             converted = new BufferedImage(scaleWidth, scaleHeight, BufferedImage.TYPE_3BYTE_BGR);
             Graphics graphics = converted.getGraphics();
             graphics.drawImage(scaledImage, 0, 0, null);
@@ -263,8 +263,8 @@ public class AnimatedGifEncoder
 
     protected int height;
 
-// transparent color if given
-//    protected Color transparent = null;
+    // transparent color if given
+    //    protected Color transparent = null;
 
     /** transparent index in color table */
     protected int transIndex;
@@ -357,19 +357,19 @@ public class AnimatedGifEncoder
         }
     }
 
-//    /**
-//     * Sets the transparent color for the last added frame and any subsequent
-//     * frames. Since all colors are subject to modification in the quantization
-//     * process, the color in the final palette for each frame closest to the
-//     * given color becomes the transparent color for that frame. May be set to
-//     * null to indicate no transparent color.
-//     *
-//     * @param c Color to be treated as transparent on display.
-//     */
-//    public void setTransparent(Color c)
-//    {
-//        transparent = c;
-//    }
+    //    /**
+    //     * Sets the transparent color for the last added frame and any subsequent
+    //     * frames. Since all colors are subject to modification in the quantization
+    //     * process, the color in the final palette for each frame closest to the
+    //     * given color becomes the transparent color for that frame. May be set to
+    //     * null to indicate no transparent color.
+    //     *
+    //     * @param c Color to be treated as transparent on display.
+    //     */
+    //    public void setTransparent(Color c)
+    //    {
+    //        transparent = c;
+    //    }
 
     public boolean addFrame(BufferedImage ima)
     {
@@ -662,11 +662,11 @@ public class AnimatedGifEncoder
         colorDepth = 8;
         palSize = 7;
 
-//        // get closest match to transparent color if specified
-//        if (transparent != null)
-//        {
-//            transIndex = findClosest(transparent);
-//        }
+        //        // get closest match to transparent color if specified
+        //        if (transparent != null)
+        //        {
+        //            transIndex = findClosest(transparent);
+        //        }
     }
 
     /**
@@ -705,21 +705,21 @@ public class AnimatedGifEncoder
     /**
      * Extracts image pixels into byte array "pixels"
      */
-//    protected void getImagePixels()
-//    {
-//        int w = image.getWidth();
-//        int h = image.getHeight();
-//        int type = image.getType();
-//        if (w != width || h != height || type != BufferedImage.TYPE_3BYTE_BGR)
-//        {
-//            // create new image with right size/format
-//            BufferedImage temp = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
-//            Graphics2D g = temp.createGraphics();
-//            g.drawImage(image, 0, 0, null);
-//            image = temp;
-//        }
-//        pixels = ((DataBufferByte)image.getRaster().getDataBuffer()).getData();
-//    }
+    //    protected void getImagePixels()
+    //    {
+    //        int w = image.getWidth();
+    //        int h = image.getHeight();
+    //        int type = image.getType();
+    //        if (w != width || h != height || type != BufferedImage.TYPE_3BYTE_BGR)
+    //        {
+    //            // create new image with right size/format
+    //            BufferedImage temp = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+    //            Graphics2D g = temp.createGraphics();
+    //            g.drawImage(image, 0, 0, null);
+    //            image = temp;
+    //        }
+    //        pixels = ((DataBufferByte)image.getRaster().getDataBuffer()).getData();
+    //    }
 
     /**
      * Writes Graphic Control Extension
@@ -733,20 +733,20 @@ public class AnimatedGifEncoder
         // data block size
         out.write(4);
         int transp, disp;
-//        if (transparent == null)
-//        {
-//            transp = 0;
+        //        if (transparent == null)
+        //        {
+        //            transp = 0;
         // dispose = no action
-//            disp = 0;
-//        }
-//        else
-//        {
+        //            disp = 0;
+        //        }
+        //        else
+        //        {
         transp = 1;
         // force clear if using transparent color
-//            disp = 2;
+        //            disp = 2;
         // changed this to not dispose the image.
         disp = 0;
-//        }
+        //        }
         if (dispose >= 0)
         {
             // user override

@@ -3,10 +3,9 @@ package io.opensphere.core.datafilter;
 import java.util.Collection;
 import java.util.Set;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
-
 import com.vividsolutions.jts.geom.Geometry;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.datafilter.columns.ColumnMappingController;
 
 /**

@@ -43,24 +43,20 @@ public class ViewChangeSupport
      */
     public void notifyViewChangeListeners(final Viewer viewer, Executor executor, final ViewChangeSupport.ViewChangeType type)
     {
-        final ChangeSupport.Callback<ViewChangeSupport.ViewChangeListener> callback = new ChangeSupport.Callback<ViewChangeSupport.ViewChangeListener>()
+        final ChangeSupport.Callback<ViewChangeSupport.ViewChangeListener> callback = listener ->
         {
-            @Override
-            public void notify(ViewChangeListener listener)
+            final long t0 = System.nanoTime();
+            listener.viewChanged(viewer, type);
+            final long elapsed = System.nanoTime() - t0;
+            if (LOGGER.isTraceEnabled())
             {
-                final long t0 = System.nanoTime();
-                listener.viewChanged(viewer, type);
-                final long elapsed = System.nanoTime() - t0;
-                if (LOGGER.isTraceEnabled())
-                {
-                    LOGGER.trace(StringUtilities.formatTimingMessage("Time to notify view change listener [" + listener + "]: ",
-                            elapsed));
-                }
-                if (elapsed > VIEW_UPDATE_THRESHOLD_MS * Constants.NANO_PER_UNIT / Constants.MILLI_PER_UNIT)
-                {
-                    LOGGER.warn(StringUtilities.formatTimingMessage("Time to notify view change listener [" + listener
-                            + "] over threshold of " + VIEW_UPDATE_THRESHOLD_MS + " ms: ", elapsed));
-                }
+                LOGGER.trace(StringUtilities.formatTimingMessage("Time to notify view change listener [" + listener + "]: ",
+                        elapsed));
+            }
+            if (elapsed > VIEW_UPDATE_THRESHOLD_MS * Constants.NANO_PER_UNIT / Constants.MILLI_PER_UNIT)
+            {
+                LOGGER.warn(StringUtilities.formatTimingMessage("Time to notify view change listener [" + listener
+                        + "] over threshold of " + VIEW_UPDATE_THRESHOLD_MS + " ms: ", elapsed));
             }
         };
         myChangeSupport.notifyListeners(callback, executor);

@@ -46,7 +46,7 @@ public class VolatileReference<T> extends AbstractReference<T>
      */
     public VolatileReference<T> getReadOnly()
     {
-        return new ReadonlyVolatileReference<T>(this);
+        return new ReadonlyVolatileReference<>(this);
     }
 
     /**

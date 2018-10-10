@@ -33,7 +33,7 @@ public class ThreeTuple<S, T, U>
      */
     public static <S, T, U> ThreeTuple<S, T, U> create(S firstObject, T secondObject, U thirdObject)
     {
-        return new ThreeTuple<S, T, U>(firstObject, secondObject, thirdObject);
+        return new ThreeTuple<>(firstObject, secondObject, thirdObject);
     }
 
     /**

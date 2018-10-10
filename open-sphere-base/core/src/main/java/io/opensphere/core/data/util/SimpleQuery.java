@@ -36,7 +36,7 @@ public class SimpleQuery<T> extends DefaultQuery
     public SimpleQuery(DataModelCategory dataModelCategory, PropertyDescriptor<T> propertyDescriptor,
             List<? extends PropertyMatcher<?>> propertyMatchers)
     {
-        super(dataModelCategory, Collections.singletonList(new DefaultPropertyValueReceiver<T>(propertyDescriptor)),
+        super(dataModelCategory, Collections.singletonList(new DefaultPropertyValueReceiver<>(propertyDescriptor)),
                 propertyMatchers, Collections.<OrderSpecifier>emptyList());
     }
 

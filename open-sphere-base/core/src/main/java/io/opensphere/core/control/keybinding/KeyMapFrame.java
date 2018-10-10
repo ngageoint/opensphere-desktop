@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
@@ -111,7 +112,7 @@ public class KeyMapFrame extends AbstractInternalFrame
         if (!myButtonBindings.containsKey(btl.getListener().getTitle()))
         {
             bb = new ButtonBinding(myToolbox, btl);
-//            bb.addKeyBindingChangeListener(KeyMapFrame.this);
+            //            bb.addKeyBindingChangeListener(KeyMapFrame.this);
             myButtonBindings.put(btl.getListener().getTitle(), bb);
         }
         else
@@ -121,10 +122,10 @@ public class KeyMapFrame extends AbstractInternalFrame
 
         GridBagPanel buttonPanel = new GridBagPanel();
         buttonPanel.setGridx(0).setGridy(0).setInsets(0, 50, 0, 0).add(new JLabel(bb.getKeyButton().getText()));
-//        buttonPanel.incrementGridx().setInsets(0, 4, 0, 0).add(bb.getRestoreToDefaultButton());
+        //        buttonPanel.incrementGridx().setInsets(0, 4, 0, 0).add(bb.getRestoreToDefaultButton());
 
         getBindingSubPanel().setGridx(1).setInsets(0, 20, 5, 0).setGridy(rowCounter).fillNone().anchorWest().setGridwidth(1)
-                .add(buttonPanel);
+        .add(buttonPanel);
     }
 
     /**
@@ -145,7 +146,7 @@ public class KeyMapFrame extends AbstractInternalFrame
         }
 
         getBindingSubPanel().setGridx(0).setInsets(i).setGridy(rowCounter).setGridwidth(2).fillHorizontal().anchorWest()
-                .add(categoryLabel);
+        .add(categoryLabel);
     }
 
     /**
@@ -183,7 +184,7 @@ public class KeyMapFrame extends AbstractInternalFrame
         labelPanel.setBorder(BorderFactory.createLineBorder(Color.RED));
 
         getBindingSubPanel().setGridx(0).setGridy(rowCounter).setInsets(0, 100, 5, 0).setGridwidth(1).fillNone().anchorEast()
-                .add(labelToAdd);
+        .add(labelToAdd);
     }
 
     /**
@@ -239,7 +240,7 @@ public class KeyMapFrame extends AbstractInternalFrame
         if (myControlKeySP == null)
         {
             myControlKeySP = new JScrollPane(getControlKeyPanel());
-            myControlKeySP.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            myControlKeySP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         }
         return myControlKeySP;
     }
@@ -303,62 +304,62 @@ public class KeyMapFrame extends AbstractInternalFrame
             aLabel = new JLabel("Edit:");
             aLabel.setForeground(Color.ORANGE);
             contentPanel.setGridx(0).setInsets(0, 20, 0, 0).incrementGridy().setGridwidth(2).fillHorizontal().anchorWest()
-                    .add(aLabel);
+            .add(aLabel);
 
             contentPanel.setGridx(0).incrementGridy().setInsets(0, 175, 5, 0).setGridwidth(1).fillNone()
-                    .add(new JLabel("Set Logger Levels"));
+            .add(new JLabel("Set Logger Levels"));
             contentPanel.setGridx(1).setInsets(0, 65, 5, 0).fillNone().anchorWest().setGridwidth(1).add(new JLabel("Ctrl-L"));
 
             contentPanel.setGridx(0).incrementGridy().setInsets(0, 175, 5, 0).setGridwidth(1).fillNone()
-                    .add(new JLabel("Settings"));
+            .add(new JLabel("Settings"));
             contentPanel.setGridx(1).setInsets(0, 65, 5, 0).fillNone().anchorWest().setGridwidth(1).add(new JLabel("F8"));
 
             aLabel = new JLabel("View");
             aLabel.setForeground(Color.ORANGE);
             contentPanel.setGridx(0).setInsets(0, 20, 0, 0).incrementGridy().setGridwidth(2).fillHorizontal().anchorWest()
-                    .add(aLabel);
+            .add(aLabel);
 
             aLabel = new JLabel("Map Overlays:");
             aLabel.setForeground(Color.ORANGE);
             contentPanel.setGridx(0).setInsets(0, 50, 0, 0).incrementGridy().setGridwidth(2).fillHorizontal().anchorWest()
-                    .add(aLabel);
+            .add(aLabel);
 
             contentPanel.setGridx(0).incrementGridy().setInsets(0, 175, 5, 0).setGridwidth(1).fillNone()
-                    .add(new JLabel("Alert Viewer"));
+            .add(new JLabel("Alert Viewer"));
             contentPanel.setGridx(1).setInsets(0, 65, 5, 0).fillNone().anchorWest().setGridwidth(1).add(new JLabel("Ctrl-M"));
 
-//            aLabel = new JLabel("Controls:");
-//            aLabel.setForeground(Color.ORANGE);
-//            contentPanel.setGridx(0).setInsets(0, 50, 0, 0).incrementGridy().setGridwidth(2).fillHorizontal().anchorWest()
-//                    .add(aLabel);
-//
-//            contentPanel.setGridx(0).incrementGridy().setInsets(0, 175, 5, 0).setGridwidth(1).fillNone()
-//                    .add(new JLabel("My Data"));
-//            contentPanel.setGridx(1).setInsets(0, 65, 5, 0).fillNone().anchorWest().setGridwidth(1).add(new JLabel("F7"));
+            //            aLabel = new JLabel("Controls:");
+            //            aLabel.setForeground(Color.ORANGE);
+            //            contentPanel.setGridx(0).setInsets(0, 50, 0, 0).incrementGridy().setGridwidth(2).fillHorizontal().anchorWest()
+            //                    .add(aLabel);
+            //
+            //            contentPanel.setGridx(0).incrementGridy().setInsets(0, 175, 5, 0).setGridwidth(1).fillNone()
+            //                    .add(new JLabel("My Data"));
+            //            contentPanel.setGridx(1).setInsets(0, 65, 5, 0).fillNone().anchorWest().setGridwidth(1).add(new JLabel("F7"));
 
             aLabel = new JLabel("Tools:");
             aLabel.setForeground(Color.ORANGE);
             contentPanel.setGridx(0).setInsets(0, 20, 0, 0).incrementGridy().setGridwidth(2).fillHorizontal().anchorWest()
-                    .add(aLabel);
+            .add(aLabel);
 
             contentPanel.setGridx(0).incrementGridy().setInsets(0, 175, 5, 0).setGridwidth(1).fillNone()
-                    .add(new JLabel("Analyze"));
+            .add(new JLabel("Analyze"));
             contentPanel.setGridx(1).setInsets(0, 65, 5, 0).fillNone().anchorWest().setGridwidth(1)
-                    .add(new JLabel("Ctrl+Shift-X"));
+            .add(new JLabel("Ctrl+Shift-X"));
 
             contentPanel.setGridx(0).incrementGridy().setInsets(0, 175, 5, 0).setGridwidth(1).fillNone()
-                    .add(new JLabel("ArcLength (Measure)"));
+            .add(new JLabel("ArcLength (Measure)"));
             contentPanel.setGridx(1).setInsets(0, 65, 5, 0).fillNone().anchorWest().setGridwidth(1).add(new JLabel("m"));
 
             contentPanel.setGridx(0).incrementGridy().setInsets(0, 175, 5, 0).setGridwidth(1).fillNone()
-                    .add(new JLabel("Icon Manager"));
+            .add(new JLabel("Icon Manager"));
             contentPanel.setGridx(1).setInsets(0, 65, 5, 0).fillNone().anchorWest().setGridwidth(1)
-                    .add(new JLabel("Ctrl+Shift-I"));
+            .add(new JLabel("Ctrl+Shift-I"));
 
             contentPanel.setGridx(0).incrementGridy().setInsets(0, 175, 5, 0).setGridwidth(1).fillNone()
-                    .add(new JLabel("Styles"));
+            .add(new JLabel("Styles"));
             contentPanel.setGridx(1).setInsets(0, 65, 5, 0).fillNone().anchorWest().setGridwidth(1)
-                    .add(new JLabel("Ctrl+Shift-S"));
+            .add(new JLabel("Ctrl+Shift-S"));
 
             contentPanel.incrementGridy().fillVerticalSpace();
 
@@ -377,7 +378,7 @@ public class KeyMapFrame extends AbstractInternalFrame
         if (myShortcutKeySP == null)
         {
             myShortcutKeySP = new JScrollPane(getShortcutKeyPanel());
-            myShortcutKeySP.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            myShortcutKeySP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         }
         return myShortcutKeySP;
     }

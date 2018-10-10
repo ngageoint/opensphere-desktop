@@ -90,14 +90,8 @@ public class ConnectionAppropriator
     public <T> T appropriateStatement(final PreparedStatementUser<T> user, boolean transaction, final String sql,
             final String... columnNames) throws CacheException
     {
-        return appropriateConnection(new ConnectionUser<T>()
-        {
-            @Override
-            public T run(Connection conn) throws CacheException
-            {
-                return new StatementAppropriator(conn).appropriateStatement(user, sql, columnNames);
-            }
-        }, transaction);
+        return appropriateConnection(conn -> new StatementAppropriator(conn).appropriateStatement(user, sql, columnNames),
+                transaction);
     }
 
     /**
@@ -117,7 +111,7 @@ public class ConnectionAppropriator
      * @throws CacheException If there is a database error.
      */
     public <T> T appropriateStatement(final PreparedStatementUser<T> user, final String sql, final String... columnNames)
-        throws CacheException
+            throws CacheException
     {
         return appropriateStatement(user, false, sql, columnNames);
     }
@@ -153,14 +147,7 @@ public class ConnectionAppropriator
      */
     public <T> T appropriateStatement(final StatementUser<T> user, boolean transaction) throws CacheException
     {
-        return appropriateConnection(new ConnectionUser<T>()
-        {
-            @Override
-            public T run(Connection conn) throws CacheException
-            {
-                return new StatementAppropriator(conn).appropriateStatement(user);
-            }
-        }, transaction);
+        return appropriateConnection(conn -> new StatementAppropriator(conn).appropriateStatement(user), transaction);
     }
 
     /**

@@ -2,7 +2,6 @@ package io.opensphere.core.cache.jdbc;
 
 import java.io.NotSerializableException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -73,43 +72,39 @@ public class RetrieveGroupValuesTask extends RetrieveGroupIdsTask
 
         final String sql = getSQLGenerator().generateRetrieveGroupValuesSql((int[])null, (JoinTableColumn)null, getCategory(),
                 getParameters(), selectProperties, getExpirationRange(), isCritical());
-        return new StatementAppropriator(conn).appropriateStatement(new PreparedStatementUser<int[]>()
+        return new StatementAppropriator(conn).appropriateStatement((PreparedStatementUser<int[]>)(conn1, pstmt) ->
         {
-            @Override
-            public int[] run(Connection conn1, PreparedStatement pstmt) throws CacheException
+            try
             {
+                prepareGroupQueryStatement(conn1, pstmt, sql);
+
+                PropertyDescriptor<?>[] props = New.array(selectProperties, PropertyDescriptor.class, 1, 0);
+                props[0] = new PropertyDescriptor<>("", Integer.class);
+                List<?>[] results = New.array(values, List.class, 1, 0);
+                List<Integer> ids = New.list();
+                results[0] = ids;
+
+                ResultSet rs = getCacheUtilities().executeQuery(pstmt, sql);
                 try
                 {
-                    prepareGroupQueryStatement(conn1, pstmt, sql);
+                    getCacheUtilities().convertResultSetToPropertyValues(rs, props, results, getTypeMapper(),
+                            resultFilterParameters, (TIntList)null);
 
-                    PropertyDescriptor<?>[] props = New.array(selectProperties, PropertyDescriptor.class, 1, 0);
-                    props[0] = new PropertyDescriptor<>("", Integer.class);
-                    List<?>[] results = New.array(values, List.class, 1, 0);
-                    List<Integer> ids = New.list();
-                    results[0] = ids;
-
-                    ResultSet rs = getCacheUtilities().executeQuery(pstmt, sql);
-                    try
-                    {
-                        getCacheUtilities().convertResultSetToPropertyValues(rs, props, results, getTypeMapper(),
-                                resultFilterParameters, (TIntList)null);
-
-                        setResultCount(results[0].size());
-                        return CollectionUtilities.toIntArray(ids);
-                    }
-                    finally
-                    {
-                        rs.close();
-                    }
+                    setResultCount(results[0].size());
+                    return CollectionUtilities.toIntArray(ids);
                 }
-                catch (SQLException e1)
+                finally
                 {
-                    throw new CacheException("Failed to read group ids from cache: " + e1, e1);
+                    rs.close();
                 }
-                catch (NotSerializableException e)
-                {
-                    throw new CacheException(e);
-                }
+            }
+            catch (SQLException e1)
+            {
+                throw new CacheException("Failed to read group ids from cache: " + e1, e1);
+            }
+            catch (NotSerializableException e)
+            {
+                throw new CacheException(e);
             }
         }, sql);
     }

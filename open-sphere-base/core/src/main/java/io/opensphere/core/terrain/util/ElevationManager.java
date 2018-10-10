@@ -17,7 +17,6 @@ import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.order.OrderChangeListener;
 import io.opensphere.core.order.OrderManager;
 import io.opensphere.core.order.OrderParticipantKey;
-import io.opensphere.core.order.ParticipantOrderChangeEvent;
 import io.opensphere.core.order.ParticipantOrderChangeEvent.ParticipantChangeType;
 import io.opensphere.core.terrain.util.ElevationChangedEvent.ProviderChangeType;
 import io.opensphere.core.util.ChangeSupport;
@@ -41,52 +40,7 @@ public class ElevationManager
     private final ExecutorService myNotificationExecutor;
 
     /** Listener to changes to the order of elevation providers. */
-    private final OrderChangeListener myOrderListener = new OrderChangeListener()
-    {
-        @Override
-        public void orderChanged(ParticipantOrderChangeEvent event)
-        {
-            TObjectIntMap<OrderParticipantKey> participants = event.getChangedParticipants();
-            Collection<AbsoluteElevationProvider> providers = New.collection(participants.size());
-            myProvidersLock.readLock().lock();
-            try
-            {
-                for (OrderParticipantKey key : participants.keySet())
-                {
-                    AbsoluteElevationProvider provider = myProviders.get(key.getId());
-                    if (provider != null)
-                    {
-                        providers.add(provider);
-                    }
-                }
-            }
-            finally
-            {
-                myProvidersLock.readLock().unlock();
-            }
-            if (!providers.isEmpty())
-            {
-                ElevationChangedEvent elevationEvent = null;
-                if (event.getChangeType() == ParticipantChangeType.ACTIVATED)
-                {
-                    elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_ADDED);
-                }
-                else if (event.getChangeType() == ParticipantChangeType.DEACTIVATED)
-                {
-                    elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_REMOVED);
-                }
-                else if (event.getChangeType() == ParticipantChangeType.ORDER_CHANGED)
-                {
-                    elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_PRIORITY_CHANGED);
-                }
-
-                if (elevationEvent != null)
-                {
-                    notifyElevationListeners(elevationEvent);
-                }
-            }
-        }
-    };
+    private final OrderChangeListener myOrderListener;
 
     /**
      * The manager which controls the priority order for the elevation
@@ -131,6 +85,48 @@ public class ElevationManager
     public ElevationManager()
     {
         myNotificationExecutor = new FixedThreadPoolExecutor(1, new NamedThreadFactory("ElevationNotification"));
+        myOrderListener = event ->
+        {
+            TObjectIntMap<OrderParticipantKey> participants = event.getChangedParticipants();
+            Collection<AbsoluteElevationProvider> providers = New.collection(participants.size());
+            myProvidersLock.readLock().lock();
+            try
+            {
+                for (OrderParticipantKey key : participants.keySet())
+                {
+                    AbsoluteElevationProvider provider = myProviders.get(key.getId());
+                    if (provider != null)
+                    {
+                        providers.add(provider);
+                    }
+                }
+            }
+            finally
+            {
+                myProvidersLock.readLock().unlock();
+            }
+            if (!providers.isEmpty())
+            {
+                ElevationChangedEvent elevationEvent = null;
+                if (event.getChangeType() == ParticipantChangeType.ACTIVATED)
+                {
+                    elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_ADDED);
+                }
+                else if (event.getChangeType() == ParticipantChangeType.DEACTIVATED)
+                {
+                    elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_REMOVED);
+                }
+                else if (event.getChangeType() == ParticipantChangeType.ORDER_CHANGED)
+                {
+                    elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_PRIORITY_CHANGED);
+                }
+
+                if (elevationEvent != null)
+                {
+                    notifyElevationListeners(elevationEvent);
+                }
+            }
+        };
     }
 
     /**
@@ -291,10 +287,7 @@ public class ElevationManager
                     {
                         return null;
                     }
-                    else
-                    {
-                        return provider.getBoundingBox();
-                    }
+                    return provider.getBoundingBox();
                 }
                 higherOrdered.add(provider);
             }
@@ -384,14 +377,11 @@ public class ElevationManager
                 {
                     return false;
                 }
-                else
+                for (GeographicPolygon testRegion : testProvider.getRegions())
                 {
-                    for (GeographicPolygon testRegion : testProvider.getRegions())
+                    if (testRegion.contains(region, 0.))
                     {
-                        if (testRegion.contains(region, 0.))
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
             }
@@ -490,21 +480,6 @@ public class ElevationManager
      */
     private void notifyElevationListeners(final ElevationChangedEvent event)
     {
-        myNotificationExecutor.execute(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                ChangeSupport.Callback<ElevationChangeListener> callback = new ChangeSupport.Callback<ElevationChangeListener>()
-                {
-                    @Override
-                    public void notify(ElevationChangeListener listener)
-                    {
-                        listener.handleElevationChange(event);
-                    }
-                };
-                myChangeSupport.notifyListeners(callback);
-            }
-        });
+        myNotificationExecutor.execute(() -> myChangeSupport.notifyListeners(listener -> listener.handleElevationChange(event)));
     }
 }

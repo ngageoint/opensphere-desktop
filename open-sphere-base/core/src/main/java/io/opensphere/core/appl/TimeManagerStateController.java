@@ -501,13 +501,13 @@ public class TimeManagerStateController extends AbstractModuleStateController
             if (!Utilities.sameInstance(TimeManager.WILDCARD_CONSTRAINT_KEY, entry.getKey()))
             {
                 heldNode.appendChild(StateXML.createElement(timeNode.getOwnerDocument(), "key"))
-                        .setTextContent(entry.getKey().toString());
+                .setTextContent(entry.getKey().toString());
             }
 
             for (TimeSpan ts : entry.getValue())
             {
                 heldNode.appendChild(StateXML.createElement(timeNode.getOwnerDocument(), "interval"))
-                        .setTextContent(ts.toISO8601String());
+                .setTextContent(ts.toISO8601String());
             }
         }
     }

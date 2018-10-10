@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
+import javax.media.opengl.GL2GL3;
 
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.model.ColorArrayList;
@@ -74,7 +75,7 @@ public class PolygonMeshDataBuffered extends BufferObjectList<PolygonMeshBuffere
             if (data.getVertexData().getNormals() != null)
             {
                 bufferObjects
-                        .add(new NormalBufferObject(VectorBufferUtilities.vec3dToFloatBuffer(data.getVertexData().getNormals())));
+                .add(new NormalBufferObject(VectorBufferUtilities.vec3dToFloatBuffer(data.getVertexData().getNormals())));
             }
             if (data.getVertexData().getColors() != null && data.getVertexData().getTextureCoords() == null)
             {
@@ -149,10 +150,10 @@ public class PolygonMeshDataBuffered extends BufferObjectList<PolygonMeshBuffere
                     drawMode = GL.GL_TRIANGLES;
                     break;
                 case QUAD_VERTEX_COUNT:
-                    drawMode = GL2.GL_QUADS;
+                    drawMode = GL2GL3.GL_QUADS;
                     break;
                 case TRIANGLE_STRIP_VERTEX_COUNT:
-                    drawMode = GL2.GL_TRIANGLE_STRIP;
+                    drawMode = GL.GL_TRIANGLE_STRIP;
                     break;
                 default:
                     drawMode = GL2.GL_POLYGON;

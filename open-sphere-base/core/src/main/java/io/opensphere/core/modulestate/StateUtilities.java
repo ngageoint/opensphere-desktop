@@ -250,16 +250,16 @@ public final class StateUtilities
         PolygonRenderProperties renderProps = new DefaultPolygonRenderProperties(ZOrderRenderProperties.TOP_Z - 1, true, true);
         renderProps.setColor(Color.CYAN);
         renderProps.setWidth(3);
-//        Collection<TimeSpan> times = queryArea.getTimes();
-//        if (!CollectionUtilities.hasContent(times))
-//        {
-//            times = Collections.singleton(TimeSpan.TIMELESS);
-//            renderProps.setStipple(null);
-//        }
-//        else
-//        {
-//            renderProps.setStipple(StippleModelConfig.DOTTED);
-//        }
+        //        Collection<TimeSpan> times = queryArea.getTimes();
+        //        if (!CollectionUtilities.hasContent(times))
+        //        {
+        //            times = Collections.singleton(TimeSpan.TIMELESS);
+        //            renderProps.setStipple(null);
+        //        }
+        //        else
+        //        {
+        //            renderProps.setStipple(StippleModelConfig.DOTTED);
+        //        }
         return JTSCoreGeometryUtilities.convertToPolygonGeometry(jtsPolygon, renderProps);
     }
 
@@ -312,8 +312,8 @@ public final class StateUtilities
     {
         return state.getQueryEntries() == null ? Collections.emptySet()
                 : state.getQueryEntries().getQueryEntry().stream()
-                        .filter(e -> queryArea.getId().equals(e.getAreaId()) || "*".equals(e.getAreaId()))
-                        .map(e -> e.getLayerId()).collect(Collectors.toSet());
+                .filter(e -> queryArea.getId().equals(e.getAreaId()) || "*".equals(e.getAreaId()))
+                .map(e -> e.getLayerId()).collect(Collectors.toSet());
     }
 
     /**

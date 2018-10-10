@@ -19,7 +19,6 @@ import io.opensphere.core.pipeline.util.RenderContext;
 import io.opensphere.core.projection.Projection;
 import io.opensphere.core.projection.ProjectionChangedEvent;
 import io.opensphere.core.util.ChangeSupport;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.TimeBudget;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
@@ -391,20 +390,17 @@ public abstract class AbstractRenderer<T extends Geometry> implements GeometryRe
         {
             return Collections.emptySet();
         }
-        else
+        Collection<T> pickedGeomsToRender = null;
+        for (Geometry geometry : pickedGeometries)
         {
-            Collection<T> pickedGeomsToRender = null;
-            for (Geometry geometry : pickedGeometries)
+            if (getType().isInstance(geometry) && input.contains(geometry))
             {
-                if (getType().isInstance(geometry) && input.contains(geometry))
-                {
-                    @SuppressWarnings("unchecked")
-                    T cast = (T)geometry;
-                    pickedGeomsToRender = CollectionUtilities.lazyAdd(cast, pickedGeomsToRender);
-                }
+                @SuppressWarnings("unchecked")
+                T cast = (T)geometry;
+                pickedGeomsToRender = CollectionUtilities.lazyAdd(cast, pickedGeomsToRender);
             }
-            return pickedGeomsToRender == null ? Collections.<T>emptySet() : pickedGeomsToRender;
         }
+        return pickedGeomsToRender == null ? Collections.<T>emptySet() : pickedGeomsToRender;
     }
 
     /**
@@ -458,14 +454,7 @@ public abstract class AbstractRenderer<T extends Geometry> implements GeometryRe
      */
     private void notifyListeners(final Projection projection)
     {
-        myProjectionReadySupport.notifyListeners(new Callback<ProjectionReadyListener>()
-        {
-            @Override
-            public void notify(ProjectionReadyListener listener)
-            {
-                listener.projectionReady(projection);
-            }
-        });
+        myProjectionReadySupport.notifyListeners(listener -> listener.projectionReady(projection));
     }
 
     /**

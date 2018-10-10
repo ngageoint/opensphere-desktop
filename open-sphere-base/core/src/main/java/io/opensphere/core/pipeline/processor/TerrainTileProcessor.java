@@ -88,8 +88,8 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
     /** The elevation manager which manages this processor. */
     private ElevationManager myElevationManager;
 
-//    /** The regions for which I can provide elevation values. */
-//    private List<GeographicPolygon> myCoverage;
+    //    /** The regions for which I can provide elevation values. */
+    //    private List<GeographicPolygon> myCoverage;
 
     /**
      * Provider for elevation data which is available from the terrain tiles.
@@ -156,7 +156,7 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
             // area.
             return Collections.singletonList(
                     (GeographicPolygon)new GeographicConvexPolygon(GeographicBoundingBox.WHOLE_GLOBE.getVertices()));
-//            return myCoverage == null ? Collections.<GeographicPolygon>emptyList() : myCoverage;
+            //            return myCoverage == null ? Collections.<GeographicPolygon>emptyList() : myCoverage;
         }
 
         @Override
@@ -279,36 +279,31 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
     private final TileSplitJoinHelper mySplitJoinHelper;
 
     /** State change handler for terrain tile states. */
-    private final StateChangeHandler<TerrainTileGeometry> myStateChangeHandler = new StateChangeHandler<TerrainTileGeometry>()
+    private final StateChangeHandler<TerrainTileGeometry> myStateChangeHandler = (objects, newState, controller) ->
     {
-        @Override
-        public void handleStateChanged(List<? extends TerrainTileGeometry> objects, ThreadedStateMachine.State newState,
-                StateController<TerrainTileGeometry> controller)
+        if (TerrainTileState.class.isInstance(newState))
         {
-            if (TerrainTileState.class.isInstance(newState))
+            switch (TerrainTileState.class.cast(newState))
             {
-                switch (TerrainTileState.class.cast(newState))
-                {
-                    case AWAITING_IMAGE:
-                        processAwaitingImage(objects, controller);
-                        break;
-                    default:
-                        throw new UnexpectedEnumException(TerrainTileState.class.cast(newState));
-                }
+                case AWAITING_IMAGE:
+                    processAwaitingImage(objects, controller);
+                    break;
+                default:
+                    throw new UnexpectedEnumException(TerrainTileState.class.cast(newState));
             }
-            else
+        }
+        else
+        {
+            switch (State.class.cast(newState))
             {
-                switch (State.class.cast(newState))
-                {
-                    case UNPROCESSED:
-                        processUnprocessed(objects, controller);
-                        break;
-                    case READY:
-                        processReady(objects, controller);
-                        break;
-                    default:
-                        throw new UnexpectedEnumException(TerrainTileState.class.cast(newState));
-                }
+                case UNPROCESSED:
+                    processUnprocessed(objects, controller);
+                    break;
+                case READY:
+                    processReady(objects, controller);
+                    break;
+                default:
+                    throw new UnexpectedEnumException(TerrainTileState.class.cast(newState));
             }
         }
     };
@@ -320,30 +315,7 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
     private final ThreadedStateMachine<TerrainTileGeometry> myStateMachine;
 
     /** Observer to be notified when a geometry has new data available. */
-    private final ImageProvidingGeometry.Observer<TerrainTileGeometry> myTileGeometryObserver = new ImageProvidingGeometry.Observer<TerrainTileGeometry>()
-    {
-        @Override
-        public void dataReady(TerrainTileGeometry geom)
-        {
-            if (!isClosed() && geom.getImageManager().getCachedImageData() != null)
-            {
-                // Check to make sure that this tile is not orphaned.
-                if (geom.isOrphan())
-                {
-                    return;
-                }
-
-                if (geom.isRapidUpdate())
-                {
-                    processImageUpdates(Collections.singletonList(geom));
-                }
-                else
-                {
-                    myGeometryQueue.offer(geom);
-                }
-            }
-        }
-    };
+    private final ImageProvidingGeometry.Observer<TerrainTileGeometry> myTileGeometryObserver;
 
     /** Listener for view change events. */
     private final ViewChangeSupport.ViewChangeListener myViewChangeListener = new ViewChangeSupport.ViewChangeListener()
@@ -397,32 +369,47 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
             viewChangeSupport.addViewChangeListener(myViewChangeListener);
         }
 
-        myGeometryQueue = new BatchingBlockingQueue<TerrainTileGeometry>(builder.getScheduledExecutorService(),
-                GEOMETRY_QUEUE_DELAY_MILLISECONDS);
+        myGeometryQueue = new BatchingBlockingQueue<>(builder.getScheduledExecutorService(), GEOMETRY_QUEUE_DELAY_MILLISECONDS);
 
-        myGeometryQueue.addObserver(new BatchingBlockingQueue.Observer()
+        myGeometryQueue.addObserver(() ->
         {
-            @Override
-            public void objectsAdded()
+            List<TerrainTileGeometry> objs;
+            if (myGeometryQueue.size() == 1)
             {
-                List<TerrainTileGeometry> objs;
-                if (myGeometryQueue.size() == 1)
+                TerrainTileGeometry obj = myGeometryQueue.poll();
+                objs = obj == null ? Collections.<TerrainTileGeometry>emptyList() : Collections.singletonList(obj);
+            }
+            else
+            {
+                objs = New.list();
+                myGeometryQueue.drainTo(objs);
+            }
+
+            if (!isClosed() && !objs.isEmpty())
+            {
+                processImageUpdates(objs);
+            }
+        });
+        myTileGeometryObserver = geom ->
+        {
+            if (!isClosed() && geom.getImageManager().getCachedImageData() != null)
+            {
+                // Check to make sure that this tile is not orphaned.
+                if (geom.isOrphan())
                 {
-                    TerrainTileGeometry obj = myGeometryQueue.poll();
-                    objs = obj == null ? Collections.<TerrainTileGeometry>emptyList() : Collections.singletonList(obj);
+                    return;
+                }
+
+                if (geom.isRapidUpdate())
+                {
+                    processImageUpdates(Collections.singletonList(geom));
                 }
                 else
                 {
-                    objs = New.list();
-                    myGeometryQueue.drainTo(objs);
-                }
-
-                if (!isClosed() && !objs.isEmpty())
-                {
-                    processImageUpdates(objs);
+                    myGeometryQueue.offer(geom);
                 }
             }
-        });
+        };
     }
 
     @Override
@@ -447,7 +434,7 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
             if (proj instanceof MutableGlobeProjection && myElevationImageReader != null)
             {
                 ((MutableGlobeProjection)proj).getModel().getCelestialBody().getElevationManager()
-                        .deregisterProvider(myElevationProvider);
+                .deregisterProvider(myElevationProvider);
             }
         }
     }
@@ -1062,17 +1049,17 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
     }
 
     /** Set my coverage regions based on the bounding boxes of my geometries. */
-//    @SuppressWarnings("unchecked")
+    //    @SuppressWarnings("unchecked")
     private void setCoveredRegions()
     {
         // TODO changing the coverage region should cause an event to be sent
         // through the Elevation manager.
-//        List<GeographicPolygon> regions = New.list(myGeometries.size());
-//        for (TerrainTileGeometry geom : myGeometries)
-//        {
-//            regions.add(new GeographicConvexPolygon((List<? extends GeographicPosition>)geom.getBoundingBox().getVertices()));
-//        }
-//        myCoverage = regions;
+        //        List<GeographicPolygon> regions = New.list(myGeometries.size());
+        //        for (TerrainTileGeometry geom : myGeometries)
+        //        {
+        //            regions.add(new GeographicConvexPolygon((List<? extends GeographicPosition>)geom.getBoundingBox().getVertices()));
+        //        }
+        //        myCoverage = regions;
     }
 
     /** The states used by this processor in the processing state machine. */

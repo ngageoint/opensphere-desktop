@@ -17,7 +17,9 @@ public class LeastSqLineSupport
     {
         int m = Math.min(u.length, v.length);
         for (int i = 0; i < m; i++)
+        {
             add(u[i], v[i]);
+        }
     }
 
     /**
@@ -30,7 +32,9 @@ public class LeastSqLineSupport
     {
         int n = Math.min(u.length, v.length);
         for (int j = 0; j < n; j++)
+        {
             u[j] += v[j];
+        }
     }
 
     /**
@@ -44,7 +48,9 @@ public class LeastSqLineSupport
     {
         int n = Math.min(u.length, v.length);
         for (int j = 0; j < n; j++)
+        {
             u[j] += a * v[j];
+        }
     }
 
     /**
@@ -61,9 +67,15 @@ public class LeastSqLineSupport
         int r = v[0].length;
         double[][] w = new double[p][r];
         for (int i = 0; i < p; i++)
+        {
             for (int j = 0; j < r; j++)
+            {
                 for (int k = 0; k < q; k++)
+                {
                     w[i][j] += u[i][k] * v[k][j];
+                }
+            }
+        }
         return w;
     }
 
@@ -82,9 +94,15 @@ public class LeastSqLineSupport
         int r = v[0].length;
         double[][] w = new double[p][r];
         for (int i = 0; i < p; i++)
+        {
             for (int j = 0; j < r; j++)
+            {
                 for (int k = 0; k < q; k++)
+                {
                     w[i][j] += u[k][i] * v[k][j];
+                }
+            }
+        }
         return w;
     }
 
@@ -103,9 +121,15 @@ public class LeastSqLineSupport
         int r = v.length;
         double[][] w = new double[p][r];
         for (int i = 0; i < p; i++)
+        {
             for (int j = 0; j < r; j++)
+            {
                 for (int k = 0; k < q; k++)
+                {
                     w[i][j] += u[i][k] * v[j][k];
+                }
+            }
+        }
         return w;
     }
 
@@ -123,8 +147,12 @@ public class LeastSqLineSupport
         int q = u[0].length;
         double[] w = new double[p];
         for (int i = 0; i < p; i++)
+        {
             for (int j = 0; j < q; j++)
+            {
                 w[i] += u[i][j] * v[j];
+            }
+        }
         return w;
     }
 
@@ -143,8 +171,12 @@ public class LeastSqLineSupport
         int q = u.length;
         double[] w = new double[p];
         for (int i = 0; i < p; i++)
+        {
             for (int j = 0; j < q; j++)
+            {
                 w[i] += u[j][i] * v[j];
+            }
+        }
         return w;
     }
 
@@ -160,7 +192,9 @@ public class LeastSqLineSupport
         int n = Math.min(u.length, v.length);
         double sum = 0.0;
         for (int i = 0; i < n; i++)
+        {
             sum += u[i] * v[i];
+        }
         return sum;
     }
 
@@ -173,7 +207,9 @@ public class LeastSqLineSupport
     public static void scalarMult(double c, double[] u)
     {
         for (int i = 0; i < u.length; i++)
+        {
             u[i] *= c;
+        }
     }
 
     /**
@@ -192,7 +228,7 @@ public class LeastSqLineSupport
 
         double[][] diag = new double[][] {{Math.pow(lambda[0], p), 0.0},
             {0.0, Math.pow(lambda[1], p)}};
-        return multStarMatrix(basis, multMatrix(diag, basis));
+            return multStarMatrix(basis, multMatrix(diag, basis));
     }
 
     /**
@@ -205,9 +241,13 @@ public class LeastSqLineSupport
     {
         double[] lambda = eigenVal2x2(m);
         if (lambda.length == 0)
+        {
             return 0.0;
+        }
         if (lambda.length == 1)
+        {
             return 1.0;
+        }
         return lambda[1] / lambda[0];
     }
 
@@ -251,10 +291,14 @@ public class LeastSqLineSupport
     {
         // no real eigenvalues => punt
         if (lambda.length == 0)
+        {
             return null;
+        }
         // both eigenvalues are the same => all vectors are eigenvectors
         if (lambda.length == 1)
+        {
             return new double[][] {{1.0, 0.0}, {0.0, 1.0}};
+        }
 
         // find eigenvectors for the two distinct eigenvalues in descending order
         return new double[][] {eigenVec(m, lambda[0]), eigenVec(m, lambda[1])};
@@ -272,7 +316,9 @@ public class LeastSqLineSupport
         double c0 = m[0][0] - lambda;
         double c1 = m[0][1];
         if (c0 != 0.0 || c1 != 0.0)
+        {
             return orthUnit(new double[] {c0, c1});
+        }
         return orthUnit(new double[] {m[1][0], m[1][1] - lambda});
     }
 
@@ -319,13 +365,19 @@ public class LeastSqLineSupport
     public static double[] solveQuadratic(double[] p)
     {
         if (p[2] == 0.0)
+        {
             return solveLinear(p);
+        }
         double discr = sq(p[1]) - 4.0 * p[2] * p[0];
         if (discr < 0.0)
+        {
             return new double[0];
+        }
         double denom = 2.0 * p[2];
         if (discr == 0.0)
+        {
             return new double[] {-p[1] / denom};
+        }
         double rootDiscr = Math.sqrt(discr);
         return new double[] {(-p[1] + rootDiscr) / denom, (-p[1] - rootDiscr) / denom};
     }
@@ -339,7 +391,9 @@ public class LeastSqLineSupport
     public static double[] solveLinear(double[] p)
     {
         if (p[1] == 0)
+        {
             return new double[0];
+        }
         return new double[] {-p[0] / p[1]};
     }
 

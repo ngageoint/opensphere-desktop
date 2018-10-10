@@ -3,11 +3,10 @@ package io.opensphere.core.event;
 import java.util.List;
 import java.util.Map;
 
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
-
 import io.opensphere.core.util.Service;
 import io.opensphere.core.util.collections.New;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * Service for managing services created dynamically (at run time).

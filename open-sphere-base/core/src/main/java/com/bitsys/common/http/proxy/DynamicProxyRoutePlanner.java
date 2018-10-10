@@ -26,7 +26,7 @@ public class DynamicProxyRoutePlanner implements HttpRoutePlanner
 
     /**
      * Constructor.
-     * 
+     *
      * @param resolver the proxy resolver to use
      */
     public DynamicProxyRoutePlanner(final ProxyResolver resolver)

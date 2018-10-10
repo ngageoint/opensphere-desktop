@@ -17,7 +17,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
-
 import gnu.trove.TIntCollection;
 import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.list.array.TLongArrayList;
@@ -515,7 +514,7 @@ public final class CollectionUtilities
      */
     public static <T> Iterator<T> filterDowncast(final Iterator<?> iter, final Class<T> type)
     {
-        return new FilterDowncastIterator<T>(type, iter);
+        return new FilterDowncastIterator<>(type, iter);
     }
 
     /**
@@ -533,19 +532,16 @@ public final class CollectionUtilities
             List<? extends T> cast = (List<? extends T>)col;
             return cast.get(index);
         }
-        else
+        int i = 0;
+        for (Iterator<? extends T> iter = col.iterator(); iter.hasNext();)
         {
-            int i = 0;
-            for (Iterator<? extends T> iter = col.iterator(); iter.hasNext();)
+            T item = iter.next();
+            if (i++ == index)
             {
-                T item = iter.next();
-                if (i++ == index)
-                {
-                    return item;
-                }
+                return item;
             }
-            throw new IndexOutOfBoundsException("Index " + index + " is out of bounds for collection " + col);
         }
+        throw new IndexOutOfBoundsException("Index " + index + " is out of bounds for collection " + col);
     }
 
     /**
@@ -564,19 +560,16 @@ public final class CollectionUtilities
             List<? extends T> cast = (List<? extends T>)col;
             return cast.size() > index ? cast.get(index) : null;
         }
-        else
+        int i = 0;
+        for (Iterator<? extends T> iter = col.iterator(); iter.hasNext();)
         {
-            int i = 0;
-            for (Iterator<? extends T> iter = col.iterator(); iter.hasNext();)
+            T item = iter.next();
+            if (i++ == index)
             {
-                T item = iter.next();
-                if (i++ == index)
-                {
-                    return item;
-                }
+                return item;
             }
-            return null;
         }
+        return null;
     }
 
     /**
@@ -630,10 +623,7 @@ public final class CollectionUtilities
         {
             return (List<T>)col;
         }
-        else
-        {
-            return New.list(col);
-        }
+        return New.list(col);
     }
 
     /**
@@ -650,10 +640,7 @@ public final class CollectionUtilities
         {
             return (Set<T>)col;
         }
-        else
-        {
-            return New.set(col);
-        }
+        return New.set(col);
     }
 
     /**
@@ -789,7 +776,7 @@ public final class CollectionUtilities
      */
     public static <T> Iterator<T> iterate(final Iterator<? extends T> iter1, final Iterator<? extends T> iter2)
     {
-        return new Iterator<T>()
+        return new Iterator<>()
         {
             @Override
             public boolean hasNext()
@@ -804,10 +791,7 @@ public final class CollectionUtilities
                 {
                     return iter1.next();
                 }
-                else
-                {
-                    return iter2.next();
-                }
+                return iter2.next();
             }
 
             @Override
@@ -933,7 +917,7 @@ public final class CollectionUtilities
      */
     public static <T> List<T> listView(Object values, Class<T> type)
     {
-        return new PrimitiveArrayListWrapper<T>(values, type);
+        return new PrimitiveArrayListWrapper<>(values, type);
     }
 
     /**
@@ -1671,7 +1655,7 @@ public final class CollectionUtilities
      */
     public static <K, V> Set<K> toSetView(Map<K, V> map, V value)
     {
-        return new WrappedMapSet<K, V>(map, value);
+        return new WrappedMapSet<>(map, value);
     }
 
     /**

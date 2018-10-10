@@ -304,7 +304,7 @@ public class Zip
      */
     public static void zipfiles(File zipFile, List<ZipInputAdapter> zipInputs, final ProgressMonitor pm,
             final boolean progressByFiles)
-        throws FileNotFoundException, IOException
+                    throws FileNotFoundException, IOException
     {
         ZipOutputStream zipOS = new ZipOutputStream(new FileOutputStream(zipFile));
         zipOS.setLevel(9);
@@ -329,14 +329,7 @@ public class Zip
                 final String note = inputFileName;
                 final int count = entryCount;
                 final int totEntries = totalEntries;
-                SwingUtilities.invokeLater(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        pm.setNote("Adding Entry " + count + " of " + totEntries + " : " + note);
-                    }
-                });
+                SwingUtilities.invokeLater(() -> pm.setNote("Adding Entry " + count + " of " + totEntries + " : " + note));
             }
 
             ZipEntry zEntry = new ZipEntry(inputFileName);
@@ -374,19 +367,15 @@ public class Zip
                 {
                     final int progress = (int)totalWritten;
                     final int fCount = entryCount;
-                    SwingUtilities.invokeLater(new Runnable()
+                    SwingUtilities.invokeLater(() ->
                     {
-                        @Override
-                        public void run()
+                        if (progressByFiles)
                         {
-                            if (progressByFiles)
-                            {
-                                pm.setProgress(fCount);
-                            }
-                            else
-                            {
-                                pm.setProgress(progress);
-                            }
+                            pm.setProgress(fCount);
+                        }
+                        else
+                        {
+                            pm.setProgress(progress);
                         }
                     });
                 }

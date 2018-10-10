@@ -124,7 +124,7 @@ public class PluginConfigLoader
         if (schemaURL == null)
         {
             String errorStr = "Unable to load plugin schema file: " + PLUGIN_LOADER_XSD_FILENAME.substring(1)
-                    + " not found in the classpath.";
+            + " not found in the classpath.";
             LOGGER.error(errorStr);
             throw new IllegalStateException(errorStr);
         }

@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import net.jcip.annotations.GuardedBy;
 import javax.swing.JPanel;
 
 import io.opensphere.core.options.OptionsProvider;
@@ -18,6 +17,7 @@ import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.NamedThreadFactory;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * The Class AbstractOptionsProvider.

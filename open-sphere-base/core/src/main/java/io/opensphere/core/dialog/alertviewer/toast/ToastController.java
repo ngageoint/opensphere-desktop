@@ -2,8 +2,6 @@ package io.opensphere.core.dialog.alertviewer.toast;
 
 import java.awt.Color;
 import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Supplier;
 
@@ -80,17 +78,7 @@ public class ToastController implements Runnable
                 final ToastModel model = myPendingMessages.take();
                 if (model != null && myIsRunning)
                 {
-                    EventQueueUtilities.invokeLater(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            ToastView view = new ToastView(myParentProvider.get(), model);
-
-                            showAndAnimate(view);
-                        }
-                    });
-
+                    EventQueueUtilities.invokeLater(() -> showAndAnimate(new ToastView(myParentProvider.get(), model)));
                     Thread.sleep(SHOW_LENGTH + 1000);
                 }
             }
@@ -148,36 +136,28 @@ public class ToastController implements Runnable
     private void showAndAnimate(final ToastView view)
     {
         view.setVisible(true);
-        final Timer startTimer = new Timer(100, new ActionListener()
+        final Timer startTimer = new Timer(100, e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            float currentOpacity = view.getTheOpacity();
+            if (currentOpacity < MAX_OPACITY)
             {
-                float currentOpacity = view.getTheOpacity();
-                if (currentOpacity < MAX_OPACITY)
+                currentOpacity += OPACITY_DELTA;
+
+                if (currentOpacity > MAX_OPACITY)
                 {
-                    currentOpacity += OPACITY_DELTA;
-
-                    if (currentOpacity > MAX_OPACITY)
-                    {
-                        currentOpacity = MAX_OPACITY;
-                    }
-
-                    view.setTheOpacity(currentOpacity);
+                    currentOpacity = MAX_OPACITY;
                 }
+
+                view.setTheOpacity(currentOpacity);
             }
         });
         startTimer.setRepeats(true);
         startTimer.start();
 
-        Timer shutdownTimer = new Timer(SHOW_LENGTH, new ActionListener()
+        Timer shutdownTimer = new Timer(SHOW_LENGTH, e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                view.setVisible(false);
-                view.dispose();
-            }
+            view.setVisible(false);
+            view.dispose();
         });
         shutdownTimer.setRepeats(false);
         shutdownTimer.start();

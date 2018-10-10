@@ -987,12 +987,9 @@ public class MultiValueHashMap<KEY_TYPE, VALUE_TYPE> extends AbstractMultiMap<KE
         {
             return null;
         }
-        else
+        for (VALUE_TYPE val : coll)
         {
-            for (VALUE_TYPE val : coll)
-            {
-                return val;
-            }
+            return val;
         }
         return null;
     }

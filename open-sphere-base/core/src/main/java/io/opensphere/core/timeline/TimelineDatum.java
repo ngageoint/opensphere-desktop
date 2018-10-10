@@ -1,8 +1,7 @@
 package io.opensphere.core.timeline;
 
-import net.jcip.annotations.Immutable;
-
 import io.opensphere.core.model.time.TimeSpan;
+import net.jcip.annotations.Immutable;
 
 /** One point in the timeline data. */
 @Immutable

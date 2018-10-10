@@ -7,8 +7,6 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
 import java.util.Arrays;
 
-import net.jcip.annotations.Immutable;
-import net.jcip.annotations.ThreadSafe;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -17,6 +15,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.lang.ExpectedCloneableException;
 import io.opensphere.core.util.lang.StringUtilities;
+import net.jcip.annotations.Immutable;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * Comprises a message digest along with the name of the algorithm used to

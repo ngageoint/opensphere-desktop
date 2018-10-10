@@ -37,35 +37,28 @@ public class DeleteModelsTask extends DatabaseTask implements StatementUser<Void
         {
             return "Ids " + Arrays.toString(myCombinedIds) + " cleared from cache in ";
         }
-        else
-        {
-            return myCombinedIds.length + " ids cleared from cache in ";
-        }
+        return myCombinedIds.length + " ids cleared from cache in ";
     }
 
     @Override
     public Void run(final Connection conn, final Statement stmt) throws CacheException
     {
-        CacheIdUtilities.forEachGroup(myCombinedIds, new CacheIdUtilities.DatabaseGroupFunctor()
+        CacheIdUtilities.forEachGroup(myCombinedIds, (combinedIds, groupId, dataIds) ->
         {
-            @Override
-            public void run(long[] combinedIds, int groupId, int[] dataIds) throws CacheException
-            {
-                String tableName = TableNames.getDataTableName(groupId);
+            String tableName = TableNames.getDataTableName(groupId);
 
-                String sql;
-                if (dataIds.length > CacheUtilities.ID_JOIN_THRESHOLD)
-                {
-                    String joinTableName = getDatabaseTaskFactory().getCreateIdJoinTableTask(dataIds, ColumnNames.JOIN_ID)
-                            .run(conn, stmt);
-                    sql = getSQLGenerator().generateDelete(tableName, new JoinTableColumn(joinTableName));
-                }
-                else
-                {
-                    sql = getSQLGenerator().generateDelete(tableName, dataIds);
-                }
-                getCacheUtilities().execute(sql, stmt);
+            String sql;
+            if (dataIds.length > CacheUtilities.ID_JOIN_THRESHOLD)
+            {
+                String joinTableName = getDatabaseTaskFactory().getCreateIdJoinTableTask(dataIds, ColumnNames.JOIN_ID)
+                        .run(conn, stmt);
+                sql = getSQLGenerator().generateDelete(tableName, new JoinTableColumn(joinTableName));
             }
+            else
+            {
+                sql = getSQLGenerator().generateDelete(tableName, dataIds);
+            }
+            getCacheUtilities().execute(sql, stmt);
         });
         return null;
     }

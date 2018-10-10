@@ -4,7 +4,6 @@ import java.awt.event.MouseWheelListener;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.DefaultFormatter;
 
@@ -63,29 +62,18 @@ public class IntegerSpinnerController extends AbstractController<Integer, Intege
 
         // Make typing in the text field actually work
         ((DefaultFormatter)((JSpinner.DefaultEditor)getView().getEditor()).getTextField().getFormatter())
-                .setCommitsOnValidEdit(true);
+        .setCommitsOnValidEdit(true);
 
-        myPropertyChangeListener = new PropertyChangeListener()
+        myPropertyChangeListener = e ->
         {
-            @Override
-            public void stateChanged(PropertyChangeEvent e)
+            if (e.getProperty() == PropertyChangeEvent.Property.VALIDATION_CRITERIA)
             {
-                if (e.getProperty() == PropertyChangeEvent.Property.VALIDATION_CRITERIA)
-                {
-                    getView().setModel(getSpinnerModel(getModel()));
-                }
+                getView().setModel(getSpinnerModel(getModel()));
             }
         };
         getModel().addPropertyChangeListener(myPropertyChangeListener);
 
-        myChangeListener = new ChangeListener()
-        {
-            @Override
-            public void stateChanged(ChangeEvent e)
-            {
-                handleViewChange();
-            }
-        };
+        myChangeListener = e -> handleViewChange();
         getView().addChangeListener(myChangeListener);
 
         myMouseWheelListener = new IntegerModelMouseWheelListener(getModel());

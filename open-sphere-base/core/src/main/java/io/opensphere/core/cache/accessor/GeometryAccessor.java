@@ -13,13 +13,13 @@ import io.opensphere.core.cache.util.PropertyDescriptor;
  * @param <S> The type of object that provides the geometries.
  */
 public abstract class GeometryAccessor<S> extends AbstractIntervalPropertyAccessor<S, Geometry>
-        implements PersistentPropertyAccessor<S, Geometry>
+implements PersistentPropertyAccessor<S, Geometry>
 {
     /** The standard geometry property name. */
     public static final String GEOMETRY_PROPERTY_NAME = "geom";
 
     /** The property descriptor. */
-    public static final PropertyDescriptor<Geometry> PROPERTY_DESCRIPTOR = new PropertyDescriptor<Geometry>(
+    public static final PropertyDescriptor<Geometry> PROPERTY_DESCRIPTOR = new PropertyDescriptor<>(
             GEOMETRY_PROPERTY_NAME, Geometry.class);
 
     /** A geometry factory. */

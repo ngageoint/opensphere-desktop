@@ -126,15 +126,11 @@ public abstract class TileSplitJoinHelper
      */
     public void scheduleSplitJoin()
     {
-        myProcrastinatingExecutor.execute(new Runnable()
+        myProcrastinatingExecutor.execute(() ->
         {
-            @Override
-            public void run()
+            if (!myStopped)
             {
-                if (!myStopped)
-                {
-                    doSplitsAndJoins(getProcessorGeometries());
-                }
+                doSplitsAndJoins(getProcessorGeometries());
             }
         });
     }

@@ -68,7 +68,7 @@ public class GeoScreenPolygonGeometry extends PolygonGeometry
 
     @Override
     public GeoScreenPolygonGeometry derive(BaseRenderProperties renderProperties, Constraints constraints)
-        throws ClassCastException
+            throws ClassCastException
     {
         return new GeoScreenPolygonGeometry(createBuilder(), (PolygonRenderProperties)renderProperties, constraints);
     }
@@ -95,7 +95,7 @@ public class GeoScreenPolygonGeometry extends PolygonGeometry
     {
         StringBuilder sb = new StringBuilder(150);
         sb.append(getClass().getSimpleName()).append(' ').append(hashCode()).append(" [").append(getVertices())
-                .append(", attachment: ").append(getAttachment()).append(']');
+        .append(", attachment: ").append(getAttachment()).append(']');
         return sb.toString();
     }
 

@@ -89,7 +89,7 @@ public class BindingsToListener
             // the original default
             if (myOriginalBindings == null)
             {
-                myOriginalBindings = Collections.unmodifiableList(new ArrayList<Binding>(myBindings));
+                myOriginalBindings = Collections.unmodifiableList(new ArrayList<>(myBindings));
             }
 
             for (int index = 0; index < myStagedBindings.size(); index++)
@@ -191,7 +191,7 @@ public class BindingsToListener
      */
     Collection<Binding> getBindings()
     {
-        return new ArrayList<Binding>(myBindings);
+        return new ArrayList<>(myBindings);
     }
 
     /**
@@ -212,7 +212,7 @@ public class BindingsToListener
      */
     Collection<Binding> getStagedBindings()
     {
-        return myStagedBindings == null ? null : new ArrayList<Binding>(myStagedBindings);
+        return myStagedBindings == null ? null : new ArrayList<>(myStagedBindings);
     }
 
     /**

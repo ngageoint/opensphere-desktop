@@ -1,13 +1,11 @@
 package io.opensphere.core.common.coordinate.math.strategy;
 
-import io.opensphere.core.common.coordinate.math.EarthMath;
-
 /**
  * The Haversine Model uses a spherical Earth which is good for most estimates.
  *
  * @see http://www.movable-type.co.uk/scripts/latlong.html
  */
-public class Haversine extends AbstractEarthMath implements EarthMath
+public class Haversine extends AbstractEarthMath
 {
 
     /** Earth's Radius in meters. */

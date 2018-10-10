@@ -42,11 +42,8 @@ public class WrappedMapSet<K, V> extends AbstractSet<K>
         {
             return false;
         }
-        else
-        {
-            myMap.put(e, myValue);
-            return true;
-        }
+        myMap.put(e, myValue);
+        return true;
     }
 
     @Override

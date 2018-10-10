@@ -35,10 +35,7 @@ public class DeleteGroupsTask extends AbstractDeleteGroupsTask
         {
             return "Group ids " + Arrays.toString(getGroupIds()) + " cleared from cache in ";
         }
-        else
-        {
-            return getGroupIds().length + " group ids cleared from cache in ";
-        }
+        return getGroupIds().length + " group ids cleared from cache in ";
     }
 
     /**
@@ -60,9 +57,6 @@ public class DeleteGroupsTask extends AbstractDeleteGroupsTask
                     stmt);
             return getSQLGenerator().generateWhereExpression(ColumnNames.GROUP_ID, new JoinTableColumn(joinTableName));
         }
-        else
-        {
-            return getSQLGenerator().generateWhereExpression(ColumnNames.GROUP_ID, getGroupIds());
-        }
+        return getSQLGenerator().generateWhereExpression(ColumnNames.GROUP_ID, getGroupIds());
     }
 }

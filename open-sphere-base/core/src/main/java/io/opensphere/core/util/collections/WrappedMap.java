@@ -25,7 +25,7 @@ public class WrappedMap<K, V> extends AbstractProxyMap<K, V>
      */
     public static <K, V> WrappedMap<K, V> create(Map<K, V> map)
     {
-        return new WrappedMap<K, V>(map);
+        return new WrappedMap<>(map);
     }
 
     /**

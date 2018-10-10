@@ -3,6 +3,8 @@ package io.opensphere.core.util.fx;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import io.opensphere.core.util.Colors;
+import io.opensphere.core.util.ValidationStatus;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -16,9 +18,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
-import io.opensphere.core.util.Colors;
-import io.opensphere.core.util.ValidationStatus;
 
 /** Standard pane with button bar at bottom. */
 public class ButtonPane extends BorderPane

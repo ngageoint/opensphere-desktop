@@ -109,7 +109,7 @@ public class GeoScreenBubbleGeometry extends GeoScreenPolygonGeometry
 
     @Override
     public GeoScreenBubbleGeometry derive(BaseRenderProperties renderProperties, Constraints constraints)
-        throws ClassCastException
+            throws ClassCastException
     {
         return new GeoScreenBubbleGeometry(createBuilder(), (PolygonRenderProperties)renderProperties, constraints);
     }

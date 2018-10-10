@@ -1,11 +1,10 @@
 package io.opensphere.core.terrain;
 
-import net.jcip.annotations.NotThreadSafe;
-
 import io.opensphere.core.math.Vector2d;
 import io.opensphere.core.math.Vector3d;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.projection.AbstractGeographicProjection.GeographicTesseraVertex;
+import net.jcip.annotations.NotThreadSafe;
 
 /** A vertex within the terrain. */
 @NotThreadSafe

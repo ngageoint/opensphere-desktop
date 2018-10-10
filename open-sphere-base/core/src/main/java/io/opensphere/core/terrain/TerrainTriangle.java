@@ -479,10 +479,7 @@ public class TerrainTriangle implements Cloneable, Tessera<GeographicPosition>
                     lla.getLonD(), elevationM, Altitude.ReferenceLevel.ELLIPSOID));
             return getGlobe().getCelestialBody().convertToModel(posToConvert, modelCenter);
         }
-        else
-        {
-            return getGlobe().getElevationAdjustedModelPosition(pos, modelCenter);
-        }
+        return getGlobe().getElevationAdjustedModelPosition(pos, modelCenter);
     }
 
     /**
@@ -1048,14 +1045,14 @@ public class TerrainTriangle implements Cloneable, Tessera<GeographicPosition>
         {
             // TODO Currently the sets geometries added by addQuadTessera and
             // addTriangleTessera() overlap and cause rendering artifacts.
-//            if (tess.touchesPole())
-//            {
-//                tess.addQuadTessera(quadBuilder);
-//            }
-//            else
-//            {
-//                tess.addTriangleTessera(triBuilder);
-//            }
+            //            if (tess.touchesPole())
+            //            {
+            //                tess.addQuadTessera(quadBuilder);
+            //            }
+            //            else
+            //            {
+            //                tess.addTriangleTessera(triBuilder);
+            //            }
             if (!tess.isDegenerateOnGlobe())
             {
                 tess.addTriangleTessera(triBuilder);

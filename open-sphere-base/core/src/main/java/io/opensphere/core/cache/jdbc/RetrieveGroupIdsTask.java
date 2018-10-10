@@ -90,34 +90,30 @@ public class RetrieveGroupIdsTask extends DatabaseTask implements ConnectionUser
                 .extractPropertyDescriptorsFromMatchers(resultFilterParameters);
         final String sql = getSQLGenerator().generateRetrieveGroupValuesSql((int[])null, (JoinTableColumn)null, getCategory(),
                 getParameters(), filterProperties, getExpirationRange(), isCritical());
-        return new StatementAppropriator(conn).appropriateStatement(new PreparedStatementUser<int[]>()
+        return new StatementAppropriator(conn).appropriateStatement((PreparedStatementUser<int[]>)(conn1, pstmt) ->
         {
-            @Override
-            public int[] run(Connection conn1, PreparedStatement pstmt) throws CacheException
+            try
             {
+                prepareGroupQueryStatement(conn1, pstmt, sql);
+                ResultSet rs = getCacheUtilities().executeQuery(pstmt, sql);
                 try
                 {
-                    prepareGroupQueryStatement(conn1, pstmt, sql);
-                    ResultSet rs = getCacheUtilities().executeQuery(pstmt, sql);
-                    try
-                    {
-                        int[] ids = getCacheUtilities().convertResultSetToIntArray(rs, resultFilterParameters, getTypeMapper());
-                        setResultCount(ids.length);
-                        return ids;
-                    }
-                    finally
-                    {
-                        rs.close();
-                    }
+                    int[] ids = getCacheUtilities().convertResultSetToIntArray(rs, resultFilterParameters, getTypeMapper());
+                    setResultCount(ids.length);
+                    return ids;
                 }
-                catch (SQLException e1)
+                finally
                 {
-                    throw new CacheException("Failed to read group ids from cache: " + e1, e1);
+                    rs.close();
                 }
-                catch (NotSerializableException e)
-                {
-                    throw new CacheException(e);
-                }
+            }
+            catch (SQLException e1)
+            {
+                throw new CacheException("Failed to read group ids from cache: " + e1, e1);
+            }
+            catch (NotSerializableException e)
+            {
+                throw new CacheException(e);
             }
         }, sql);
     }
@@ -175,18 +171,15 @@ public class RetrieveGroupIdsTask extends DatabaseTask implements ConnectionUser
         {
             return Collections.emptySet();
         }
-        else
+        Collection<IntervalPropertyMatcher<?>> result = New.collection();
+        for (IntervalPropertyMatcher<?> intervalPropertyMatcher : getParameters())
         {
-            Collection<IntervalPropertyMatcher<?>> result = New.collection();
-            for (IntervalPropertyMatcher<?> intervalPropertyMatcher : getParameters())
+            if (intervalPropertyMatcher instanceof GeometryMatcher)
             {
-                if (intervalPropertyMatcher instanceof GeometryMatcher)
-                {
-                    result.add(intervalPropertyMatcher);
-                }
+                result.add(intervalPropertyMatcher);
             }
-            return result;
         }
+        return result;
     }
 
     /**
@@ -211,7 +204,7 @@ public class RetrieveGroupIdsTask extends DatabaseTask implements ConnectionUser
      *             serializable.
      */
     protected void prepareGroupQueryStatement(Connection conn, PreparedStatement pstmt, String sql)
-        throws CacheException, SQLException, NotSerializableException
+            throws CacheException, SQLException, NotSerializableException
     {
         int index = setStandardWhereParameters(pstmt, getCategory(), getExpirationRange(), isCritical());
 

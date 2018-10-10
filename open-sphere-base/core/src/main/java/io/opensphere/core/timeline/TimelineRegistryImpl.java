@@ -6,15 +6,14 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
-
 import io.opensphere.core.order.OrderParticipantKey;
 import io.opensphere.core.timeline.TimelineChangeEvent.TimelineChangeType;
 import io.opensphere.core.util.ChangeSupport;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.collections.StreamUtilities;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /** Timeline registry implementation. */
 @ThreadSafe

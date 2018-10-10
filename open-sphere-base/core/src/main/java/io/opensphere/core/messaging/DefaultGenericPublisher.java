@@ -33,14 +33,7 @@ public class DefaultGenericPublisher<E> implements GenericFilteringPublisher<E>
     private volatile PublishWorker<E> myPending;
 
     /** A runnable that clears {@link #myPending}. */
-    private final Runnable myPendingClearer = new Runnable()
-    {
-        @Override
-        public void run()
-        {
-            myPending = null;
-        }
-    };
+    private final Runnable myPendingClearer = () -> myPending = null;
 
     /** Weak list of subscribers. */
     private final Collection<WeakReference<GenericSubscriber<E>>> mySubscribers = new ArrayList<>();
@@ -50,7 +43,7 @@ public class DefaultGenericPublisher<E> implements GenericFilteringPublisher<E>
     {
         synchronized (mySubscribers)
         {
-            mySubscribers.add(new WeakReference<GenericSubscriber<E>>(subscriber));
+            mySubscribers.add(new WeakReference<>(subscriber));
         }
     }
 
@@ -84,7 +77,7 @@ public class DefaultGenericPublisher<E> implements GenericFilteringPublisher<E>
 
                 if (!isAlreadyInSubscriberList)
                 {
-                    mySubscribers.add(new WeakReference<GenericSubscriber<E>>(subscriber));
+                    mySubscribers.add(new WeakReference<>(subscriber));
                 }
 
                 myFilters.put(subscriber, filter);
@@ -156,7 +149,7 @@ public class DefaultGenericPublisher<E> implements GenericFilteringPublisher<E>
         PublishWorker<E> pending = myPending;
         if (pending == null || !pending.replaceAdds(removes, adds))
         {
-            PublishWorker<E> worker = new PublishWorker<E>(source, adds, removes, getSubscribers(), getSubscriberAcceptFilters(),
+            PublishWorker<E> worker = new PublishWorker<>(source, adds, removes, getSubscribers(), getSubscriberAcceptFilters(),
                     myPendingClearer);
             if (executor != null)
             {
@@ -183,10 +176,7 @@ public class DefaultGenericPublisher<E> implements GenericFilteringPublisher<E>
             {
                 return Collections.emptyMap();
             }
-            else
-            {
-                return New.map(myFilters);
-            }
+            return New.map(myFilters);
         }
     }
 
@@ -228,7 +218,7 @@ public class DefaultGenericPublisher<E> implements GenericFilteringPublisher<E>
         /** Atomic updater for {@link #myAdds}. */
         @SuppressWarnings("rawtypes")
         private static final AtomicReferenceFieldUpdater<PublishWorker, Collection> ADDS_UPDATER = AtomicReferenceFieldUpdater
-                .newUpdater(PublishWorker.class, Collection.class, "myAdds");
+        .newUpdater(PublishWorker.class, Collection.class, "myAdds");
 
         /** The collection of objects to be added. */
         private volatile Collection<? extends E> myAdds;
@@ -286,11 +276,8 @@ public class DefaultGenericPublisher<E> implements GenericFilteringPublisher<E>
             {
                 return false;
             }
-            else
-            {
-                return expected.size() == adds.size() && expected.containsAll(adds)
-                        && ADDS_UPDATER.compareAndSet(this, adds, CollectionUtilities.unmodifiableCollection(replacement));
-            }
+            return expected.size() == adds.size() && expected.containsAll(adds)
+                    && ADDS_UPDATER.compareAndSet(this, adds, CollectionUtilities.unmodifiableCollection(replacement));
         }
 
         @Override

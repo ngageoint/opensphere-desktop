@@ -43,7 +43,7 @@ public final class RenderToTextureProcessorHelper
         RenderToTextureGeometry.Builder rttgBuilder = new RenderToTextureGeometry.Builder();
         rttgBuilder.setRenderBox(new ScreenBoundingBox(new ScreenPosition(0, 0), new ScreenPosition(100, 100)));
 
-        TileGeometry.Builder<GeographicPosition> tileBuilder = new TileGeometry.Builder<GeographicPosition>();
+        TileGeometry.Builder<GeographicPosition> tileBuilder = new TileGeometry.Builder<>();
         tileBuilder.setBounds(new GeographicBoundingBox(LatLonAlt.createFromDegrees(0, 0), LatLonAlt.createFromDegrees(10, 10)));
         RenderToTextureImageProvider imageProvider = new RenderToTextureImageProvider();
         tileBuilder.setImageManager(new ImageManager(null, imageProvider));
@@ -58,7 +58,7 @@ public final class RenderToTextureProcessorHelper
 
         Collection<Geometry> subGeometries = New.collection();
 
-        PointGeometry.Builder<ScreenPosition> builder = new PointGeometry.Builder<ScreenPosition>();
+        PointGeometry.Builder<ScreenPosition> builder = new PointGeometry.Builder<>();
         builder.setPosition(new ScreenPosition(10, 10));
 
         PointRenderProperties renderProperties = new DefaultPointRenderProperties(

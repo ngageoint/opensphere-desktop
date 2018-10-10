@@ -184,7 +184,7 @@ public abstract class Component implements ControlEventListener
      */
     public <T extends Position> TileGeometry.Builder<T> getGenericTileBuilder()
     {
-        TileGeometry.Builder<T> tileBuilder = new TileGeometry.Builder<T>();
+        TileGeometry.Builder<T> tileBuilder = new TileGeometry.Builder<>();
         tileBuilder.setDivider(null);
         tileBuilder.setParent(null);
         return tileBuilder;

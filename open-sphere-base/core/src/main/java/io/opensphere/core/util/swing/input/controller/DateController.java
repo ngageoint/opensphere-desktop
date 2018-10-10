@@ -1,6 +1,5 @@
 package io.opensphere.core.util.swing.input.controller;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.Date;
@@ -45,14 +44,7 @@ public class DateController extends AbstractController<String, DateModel, DateTi
     public void open()
     {
         super.open();
-        myActionListener = new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                updateModel();
-            }
-        };
+        myActionListener = e -> updateModel();
 
         getView().addActionListener(myActionListener);
     }

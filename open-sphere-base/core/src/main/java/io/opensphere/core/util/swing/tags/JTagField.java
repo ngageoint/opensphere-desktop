@@ -2,6 +2,7 @@ package io.opensphere.core.util.swing.tags;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -69,7 +70,7 @@ public class JTagField extends JPanel
      */
     public JTagField(List<String> choices, Color tagColor)
     {
-        super(new WrappedFlowLayout(WrappedFlowLayout.LEFT, 5, 1));
+        super(new WrappedFlowLayout(FlowLayout.LEFT, 5, 1));
         myChoices = choices;
         myTagColor = tagColor;
         setPreferredSize(new Dimension(500, 28));

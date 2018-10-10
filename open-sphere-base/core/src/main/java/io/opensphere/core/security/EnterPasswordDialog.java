@@ -54,10 +54,7 @@ public final class EnterPasswordDialog
                     {
                         return password;
                     }
-                    else
-                    {
-                        JOptionPane.showMessageDialog(dialogParent, "The password is incorrect.");
-                    }
+                    JOptionPane.showMessageDialog(dialogParent, "The password is incorrect.");
                 }
                 else
                 {

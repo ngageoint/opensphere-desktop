@@ -65,7 +65,7 @@ public class NewAutoCompleteComboBoxListener implements EventHandler<KeyEvent>
 
         ObservableList<Object> list = FXCollections.observableArrayList();
         myOriginalData.stream().filter(item -> StringUtils.containsIgnoreCase(item.toString(), txt))
-                .forEach(item -> list.add(item));
+        .forEach(item -> list.add(item));
 
         source.setItems(list);
         editor.setText(txt);

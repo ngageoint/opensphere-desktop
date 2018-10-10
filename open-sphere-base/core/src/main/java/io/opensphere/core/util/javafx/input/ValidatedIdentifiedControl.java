@@ -4,7 +4,6 @@ import java.util.function.Supplier;
 
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Control;
-
 import jidefx.scene.control.validation.DecorationFreeValidationUtils;
 import jidefx.scene.control.validation.ValidationGroup;
 import jidefx.scene.control.validation.ValidationMode;

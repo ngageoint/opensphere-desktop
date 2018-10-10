@@ -63,6 +63,6 @@ public class SimpleIdQuery extends DefaultQuery
             PropertyDescriptor<T> propertyDescriptor)
     {
         this(dataModelCategory,
-                Collections.<PropertyMatcher<?>>singletonList(new GeneralPropertyMatcher<T>(propertyDescriptor, value)));
+                Collections.<PropertyMatcher<?>>singletonList(new GeneralPropertyMatcher<>(propertyDescriptor, value)));
     }
 }

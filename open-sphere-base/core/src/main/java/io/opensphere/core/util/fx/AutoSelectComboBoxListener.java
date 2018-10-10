@@ -70,8 +70,8 @@ public class AutoSelectComboBoxListener implements EventHandler<KeyEvent>
                 return;
             case ENTER:
                 Set<? extends Object> matchingEntries = items.stream()
-                        .filter(item -> StringUtils.startsWithIgnoreCase(item.toString(), editorContents))
-                        .collect(Collectors.toSet());
+                .filter(item -> StringUtils.startsWithIgnoreCase(item.toString(), editorContents))
+                .collect(Collectors.toSet());
                 if (matchingEntries.size() == 1)
                 {
                     String fullEntry = (String)matchingEntries.iterator().next();
