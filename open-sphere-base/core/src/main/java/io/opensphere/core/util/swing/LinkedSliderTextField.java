@@ -334,14 +334,7 @@ public final class LinkedSliderTextField extends AbstractHUDPanel
             public void focusGained(FocusEvent e)
             {
                 myTextHasFocus = true;
-                EventQueueUtilities.invokeLater(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        myTextField.selectAll();
-                    }
-                });
+                EventQueueUtilities.invokeLater(() -> myTextField.selectAll());
             }
 
             @Override

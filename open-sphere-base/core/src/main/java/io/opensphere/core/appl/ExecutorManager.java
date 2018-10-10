@@ -315,17 +315,8 @@ class ExecutorManager
         myMemoryManager = memoryManager;
         if (memoryManager != null)
         {
-            myMemoryListener = new MemoryListener()
-            {
-                @Override
-                public void handleMemoryStatusChange(Status oldStatus, Status newStatus)
-                {
-                    for (ExecutorController envoyExecutor : myEnvoyExecutorMap.values())
-                    {
-                        envoyExecutor.adjustToMemoryStatus(newStatus);
-                    }
-                }
-            };
+            myMemoryListener = (oldStatus, newStatus) -> myEnvoyExecutorMap.values().stream()
+                    .forEach(e -> e.adjustToMemoryStatus(newStatus));
             myMemoryManager.addMemoryListener(myMemoryListener);
         }
     }

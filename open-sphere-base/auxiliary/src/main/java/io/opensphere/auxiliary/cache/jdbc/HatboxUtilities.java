@@ -14,7 +14,6 @@ import org.apache.log4j.Logger;
 import io.opensphere.core.cache.CacheException;
 import io.opensphere.core.cache.jdbc.CacheUtilities;
 import io.opensphere.core.cache.jdbc.StatementAppropriator;
-import io.opensphere.core.cache.jdbc.StatementAppropriator.StatementUser;
 import io.opensphere.core.util.lang.StringUtilities;
 import net.sourceforge.hatbox.jts.Proc;
 
@@ -50,14 +49,7 @@ final class HatboxUtilities
         }
 
         Collection<String> existingTriggers = new StatementAppropriator(conn)
-                .appropriateStatement(new StatementUser<Collection<String>>()
-                {
-                    @Override
-                    public Collection<String> run(Connection unused, Statement stmt) throws CacheException
-                    {
-                        return getTriggerNames(cacheUtilities, stmt);
-                    }
-                });
+                .appropriateStatement((unused, stmt) -> getTriggerNames(cacheUtilities, stmt));
         dbState.getCreatedTriggers().addAll(existingTriggers);
 
         if (!existingTriggers.containsAll(neededTriggers))

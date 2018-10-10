@@ -1,6 +1,5 @@
 package io.opensphere.core.util.swing.input.controller;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
@@ -74,14 +73,7 @@ public class ChoiceComboBoxController<T> extends AbstractController<T, ChoiceMod
     public void open()
     {
         super.open();
-        myActionListener = new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                handleViewChange();
-            }
-        };
+        myActionListener = e -> handleViewChange();
         getView().addActionListener(myActionListener);
     }
 

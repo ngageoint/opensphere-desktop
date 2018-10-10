@@ -645,15 +645,11 @@ public final class FXUtilities
 
         final AtomicReference<Throwable> errorProp = new AtomicReference<>();
         final CountDownLatch latch = new CountDownLatch(1);
-        final Runnable webengRunner = new Runnable()
+        final Runnable webengRunner = () ->
         {
-            @Override
-            public void run()
-            {
-                final WebEngine eng = setupWebEngine(engineConsumer, errorProp, latch);
-                engineSaver.set(eng);
-                engineLoader.accept(eng);
-            }
+            final WebEngine eng = setupWebEngine(engineConsumer, errorProp, latch);
+            engineSaver.set(eng);
+            engineLoader.accept(eng);
         };
         try
         {

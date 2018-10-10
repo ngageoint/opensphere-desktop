@@ -144,21 +144,8 @@ public class DataRegistryListenerManager
     public void notifyAllRemoved(final Object source)
     {
         Collection<? extends ListenerData<?>> listeners = getAllListeners();
-        for (ListenerData<?> listenerData : listeners)
-        {
-            final DataRegistryListener<?> listener = listenerData.getListener();
-            if (listener != null)
-            {
-                myExecutor.execute(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        listener.allValuesRemoved(source);
-                    }
-                });
-            }
-        }
+        listeners.stream().map(ld -> ld.getListener()).filter(l -> l != null)
+                .forEach(l -> myExecutor.execute(() -> l.allValuesRemoved(source)));
     }
 
     /**
@@ -183,19 +170,15 @@ public class DataRegistryListenerManager
             }
             else
             {
-                myExecutor.execute(new Runnable()
+                myExecutor.execute(() ->
                 {
-                    @Override
-                    public void run()
+                    try
                     {
-                        try
-                        {
-                            listener.valuesRemoved(dataModelCategory, ids, source);
-                        }
-                        finally
-                        {
-                            latch.countDown();
-                        }
+                        listener.valuesRemoved(dataModelCategory, ids, source);
+                    }
+                    finally
+                    {
+                        latch.countDown();
                     }
                 });
             }
@@ -523,20 +506,15 @@ public class DataRegistryListenerManager
         PropertyDescriptor<S> listenerDesc = listenerData.getPropertyDescriptor();
         if (listener != null && listenerDesc.getType().isAssignableFrom(propertyDescriptor.getType()))
         {
-            myExecutor.execute(new Runnable()
+            myExecutor.execute(() ->
             {
-                @SuppressWarnings("unchecked")
-                @Override
-                public void run()
+                try
                 {
-                    try
-                    {
-                        ((DataRegistryListener<T>)listener).valuesRemoved(dataModelCategory, ids, values, source);
-                    }
-                    finally
-                    {
-                        latch.countDown();
-                    }
+                    ((DataRegistryListener<T>)listener).valuesRemoved(dataModelCategory, ids, values, source);
+                }
+                finally
+                {
+                    latch.countDown();
                 }
             });
         }

@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
@@ -182,14 +180,10 @@ public class ChoiceMessageDialog extends JDialog
         for (String label : buttonLabels)
         {
             JButton button = new JButton(label);
-            button.addActionListener(new ActionListener()
+            button.addActionListener(e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    mySelection = e.getActionCommand();
-                    dispatchEvent(new WindowEvent(ChoiceMessageDialog.this, WindowEvent.WINDOW_CLOSING));
-                }
+                mySelection = e.getActionCommand();
+                dispatchEvent(new WindowEvent(ChoiceMessageDialog.this, WindowEvent.WINDOW_CLOSING));
             });
             panel.add(button);
         }

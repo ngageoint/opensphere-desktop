@@ -1,8 +1,5 @@
 package io.opensphere.core.pipeline;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
@@ -31,35 +28,31 @@ public class PipelineMenuInit
         @Override
         public void notify(final ApplicationLifecycleEvent event)
         {
-            EventQueueUtilities.invokeLater(new Runnable()
+            EventQueueUtilities.invokeLater(() ->
             {
-                @Override
-                public void run()
+                if (event.getStage() == Stage.LAF_INSTALLED)
                 {
-                    if (event.getStage() == Stage.LAF_INSTALLED)
+                    myToolbox.getUIRegistry().getMenuBarRegistry()
+                            .getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.DEBUG_MENU)
+                            .add(AbstractTileRenderer.getDebugMenu(myToolbox.getMapManager()));
+                    myToolbox.getUIRegistry().getMenuBarRegistry()
+                            .getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.DEBUG_MENU)
+                            .add(EllipsoidDebugUI.getDebugMenu(myToolbox));
+                }
+                if (event.getStage() == Stage.LAF_INSTALLED || event.getStage() == Stage.PIPELINE_INITIALIZED)
+                {
+                    if (myFlag)
                     {
-                        myToolbox.getUIRegistry().getMenuBarRegistry()
-                                .getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.DEBUG_MENU)
-                                .add(AbstractTileRenderer.getDebugMenu(myToolbox.getMapManager()));
-                        myToolbox.getUIRegistry().getMenuBarRegistry()
-                                .getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.DEBUG_MENU)
-                                .add(EllipsoidDebugUI.getDebugMenu(myToolbox));
+                        installRestartInSafemodeMenu();
+
+                        myToolbox.getEventManager().unsubscribe(ApplicationLifecycleEvent.class, myLifecycleSubscriber);
+
+                        // Allow the subscriber to be cleaned up.
+                        myLifecycleSubscriber = null;
                     }
-                    if (event.getStage() == Stage.LAF_INSTALLED || event.getStage() == Stage.PIPELINE_INITIALIZED)
+                    else
                     {
-                        if (myFlag)
-                        {
-                            installRestartInSafemodeMenu();
-
-                            myToolbox.getEventManager().unsubscribe(ApplicationLifecycleEvent.class, myLifecycleSubscriber);
-
-                            // Allow the subscriber to be cleaned up.
-                            myLifecycleSubscriber = null;
-                        }
-                        else
-                        {
-                            myFlag = true;
-                        }
+                        myFlag = true;
                     }
                 }
             });
@@ -74,16 +67,12 @@ public class PipelineMenuInit
                     && Boolean.getBoolean("opensphere.enableRestart"))
             {
                 final JMenuItem mi = new JMenuItem("Restart in safe mode");
-                mi.addActionListener(new ActionListener()
+                mi.addActionListener(e ->
                 {
-                    @Override
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        final Preferences prefs = myToolbox.getPreferencesRegistry().getPreferences(Pipeline.class);
-                        prefs.putBoolean(mySafemodePrefsKey, true, this);
-                        prefs.waitForPersist();
-                        myToolbox.getSystemToolbox().requestRestart();
-                    }
+                    final Preferences prefs = myToolbox.getPreferencesRegistry().getPreferences(Pipeline.class);
+                    prefs.putBoolean(mySafemodePrefsKey, true, this);
+                    prefs.waitForPersist();
+                    myToolbox.getSystemToolbox().requestRestart();
                 });
 
                 final JMenu fileMenu = myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR,

@@ -631,14 +631,7 @@ public class UserInteractionX509KeyManager extends X509ExtendedKeyManager
      */
     private void showErrorDialog(final String message)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                JOptionPane.showMessageDialog(myAuthenticatorDelegate.getParent(), message, "SSL Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        });
+        EventQueueUtilities.runOnEDT(() -> JOptionPane.showMessageDialog(myAuthenticatorDelegate.getParent(), message,
+                "SSL Error", JOptionPane.ERROR_MESSAGE));
     }
 }

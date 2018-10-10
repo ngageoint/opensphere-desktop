@@ -9,15 +9,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import net.jcip.annotations.ThreadSafe;
-
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.AnimationChangeAdapter;
 import io.opensphere.core.AnimationManager;
 import io.opensphere.core.TimeManager;
 import io.opensphere.core.TimeManager.ActiveTimeSpanChangeListener;
-import io.opensphere.core.TimeManager.ActiveTimeSpans;
 import io.opensphere.core.TimeManager.DataLoadDurationChangeListener;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.animation.AnimationPlan;
@@ -30,6 +27,7 @@ import io.opensphere.core.util.concurrent.CatchingRunnable;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.lang.ThreadControl;
 import io.opensphere.core.util.time.TimelineUtilities;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * WMSActiveTimeMonitor monitors the core processes that control time and
@@ -48,14 +46,10 @@ public class WMSActiveTimeMonitor
      * Listen for Primary and held TimeSpan changes from the TimeManager in
      * core.
      */
-    private final ActiveTimeSpanChangeListener myActiveTimespanChangeListener = new ActiveTimeSpanChangeListener()
+    private final ActiveTimeSpanChangeListener myActiveTimespanChangeListener = active ->
     {
-        @Override
-        public void activeTimeSpansChanged(ActiveTimeSpans active)
-        {
-            updateTimes();
-            fireActiveTimeChanged(active.getPrimary().get(0));
-        }
+        updateTimes();
+        fireActiveTimeChanged(active.getPrimary().get(0));
     };
 
     /** My animation listener. */
@@ -84,14 +78,7 @@ public class WMSActiveTimeMonitor
     private volatile Set<? extends TimeSpan> myCurrentSequence;
 
     /** Listener for changes to the data load duration. */
-    private final DataLoadDurationChangeListener myDataLoadDurationChangeListener = new DataLoadDurationChangeListener()
-    {
-        @Override
-        public void dataLoadDurationChanged(Duration dataLoadDuration)
-        {
-            updateTimes();
-        }
-    };
+    private final DataLoadDurationChangeListener myDataLoadDurationChangeListener = dataLoadDuration -> updateTimes();
 
     /** Executor used to notify listeners of changes. */
     private final ExecutorService myExecutor = Executors.newSingleThreadExecutor(new NamedThreadFactory("WMSActiveTimeMonitor"));

@@ -85,29 +85,25 @@ public class BufferDisposalHelper<E extends BufferObjectList<?>> implements Disp
             @Override
             public void handleCacheContentChange(final CacheContentEvent<BufferObjectList<?>> event)
             {
-                ourExecutorService.execute(new Runnable()
+                ourExecutorService.execute(() ->
                 {
-                    @Override
-                    public void run()
+                    myDisposalLock.lock();
+                    try
                     {
-                        myDisposalLock.lock();
-                        try
+                        for (BufferObjectList<?> bufferObjectList : event.getChangedItems())
                         {
-                            for (BufferObjectList<?> bufferObjectList : event.getChangedItems())
-                            {
-                                // Use TransparentEqualsWeakReference so that we
-                                // can use regular map lookup and only add this
-                                // reference to the map if there is no reference
-                                // for this object already.
-                                WeakReference<BufferObjectList<?>> ref = new TransparentEqualsWeakReference<>(
-                                        bufferObjectList, myBufferReferenceQueue);
-                                myDisposalMap.put(ref, bufferObjectList.getBufferObjects());
-                            }
+                            // Use TransparentEqualsWeakReference so that we
+                            // can use regular map lookup and only add this
+                            // reference to the map if there is no reference
+                            // for this object already.
+                            WeakReference<BufferObjectList<?>> ref = new TransparentEqualsWeakReference<>(bufferObjectList,
+                                    myBufferReferenceQueue);
+                            myDisposalMap.put(ref, bufferObjectList.getBufferObjects());
                         }
-                        finally
-                        {
-                            myDisposalLock.unlock();
-                        }
+                    }
+                    finally
+                    {
+                        myDisposalLock.unlock();
                     }
                 });
             }

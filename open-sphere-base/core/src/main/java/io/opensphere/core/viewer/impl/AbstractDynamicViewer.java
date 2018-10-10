@@ -1,7 +1,5 @@
 package io.opensphere.core.viewer.impl;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.List;
@@ -68,26 +66,18 @@ public abstract class AbstractDynamicViewer extends AbstractViewer implements Dy
         menuItems.add(viewerMenu);
 
         JMenuItem zoom = new JMenuItem("Zoom");
-        zoom.addActionListener(new ActionListener()
+        zoom.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                ViewerAnimator animator = new ViewerAnimator(AbstractDynamicViewer.this, polygonPoints, true);
-                animator.start();
-            }
+            ViewerAnimator animator = new ViewerAnimator(AbstractDynamicViewer.this, polygonPoints, true);
+            animator.start();
         });
         viewerMenu.add(zoom);
 
         JMenuItem center = new JMenuItem("Center");
-        center.addActionListener(new ActionListener()
+        center.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                ViewerAnimator animator = new ViewerAnimator(AbstractDynamicViewer.this, polygonPoints, false);
-                animator.start();
-            }
+            ViewerAnimator animator = new ViewerAnimator(AbstractDynamicViewer.this, polygonPoints, false);
+            animator.start();
         });
         viewerMenu.add(center);
 

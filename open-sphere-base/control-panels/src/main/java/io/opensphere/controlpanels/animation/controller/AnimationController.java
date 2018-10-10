@@ -207,14 +207,8 @@ public class AnimationController extends EventListenerService
         addService(new Service()
         {
             /** Listener for changes to the requested data durations. */
-            private final RequestedDataDurationsChangeListener myListener = new RequestedDataDurationsChangeListener()
-            {
-                @Override
-                public void requestedDataDurationsChanged(final Set<? extends Duration> durations)
-                {
-                    EventQueueUtilities.invokeLater(() -> myAnimationModel.getDataLoadDurations().set(durations));
-                }
-            };
+            private final RequestedDataDurationsChangeListener myListener = durations -> EventQueueUtilities
+                    .invokeLater(() -> myAnimationModel.getDataLoadDurations().set(durations));
 
             @Override
             public void close()

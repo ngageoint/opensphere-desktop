@@ -102,35 +102,30 @@ public class HelpManagerImpl implements HelpManager
             return;
         }
 
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            // Clean up help files when app is closed.
+            myToolbox.getUIRegistry().getMainFrameProvider().get().addWindowListener(new WindowAdapter()
             {
-                // Clean up help files when app is closed.
-                myToolbox.getUIRegistry().getMainFrameProvider().get().addWindowListener(new WindowAdapter()
+                @Override
+                public void windowClosing(WindowEvent e)
                 {
-                    @Override
-                    public void windowClosing(WindowEvent e)
+                    // remove table of contents XML file.
+                    myTOCHelper.removeFile();
+                    // remove mappings XML file.
+                    myMapHelper.removeFile();
+                    // remove index XML file.
+                    myIndexHelper.removeFile();
+                    // remove master XML file.
+                    final File masterFile = new File(myHelpFileDirectory.getAbsolutePath() + File.separator + MASTER_FILE_NAME);
+                    if (!masterFile.delete())
                     {
-                        // remove table of contents XML file.
-                        myTOCHelper.removeFile();
-                        // remove mappings XML file.
-                        myMapHelper.removeFile();
-                        // remove index XML file.
-                        myIndexHelper.removeFile();
-                        // remove master XML file.
-                        final File masterFile = new File(
-                                myHelpFileDirectory.getAbsolutePath() + File.separator + MASTER_FILE_NAME);
-                        if (!masterFile.delete())
-                        {
-                            LOGGER.warn("Unable to remove the help system master file.");
-                        }
-                        // remove actual HTML help files.
-                        removeAllHelpFiles();
+                        LOGGER.warn("Unable to remove the help system master file.");
                     }
-                });
-            }
+                    // remove actual HTML help files.
+                    removeAllHelpFiles();
+                }
+            });
         });
 
         // Copy the master file to the help directory

@@ -15,8 +15,6 @@ import gnu.trove.list.array.TIntArrayList;
 import io.opensphere.core.cache.Cache;
 import io.opensphere.core.cache.CacheDeposit;
 import io.opensphere.core.cache.CacheException;
-import io.opensphere.core.cache.CacheModificationListener;
-import io.opensphere.core.cache.CacheModificationReport;
 import io.opensphere.core.cache.PropertyValueMap;
 import io.opensphere.core.cache.accessor.PropertyAccessor;
 import io.opensphere.core.cache.util.IntervalPropertyValueSet;
@@ -143,51 +141,47 @@ public class CachingDataRegistryDataProvider
             LOGGER.debug(new StringBuilder().append("Sending query to ").append(myDataProvider).append(" for ")
                     .append(tracker.getSatisfactions()));
         }
-        Runnable runner = tracker.wrapRunnable(new Runnable()
+        Runnable runner = tracker.wrapRunnable(() ->
         {
-            @Override
-            public void run()
+            if (tracker.isCancelled())
             {
-                if (tracker.isCancelled())
-                {
-                    return;
-                }
-                Query query = tracker.getQuery();
+                return;
+            }
+            Query query = tracker.getQuery();
 
-                Collection<PropertyDescriptor<?>> propertyDescriptors = getPropertyDescriptors(query);
-                CacheDepositReceiver cacheDepositReceiver = new CachingCacheDepositReceiver(tracker, listenerManager);
+            Collection<PropertyDescriptor<?>> propertyDescriptors = getPropertyDescriptors(query);
+            CacheDepositReceiver cacheDepositReceiver = new CachingCacheDepositReceiver(tracker, listenerManager);
 
-                try
+            try
+            {
+                Collection<? extends Satisfaction> satisfactions = intervalQuery ? tracker.getSatisfactions() : null;
+                myDataProvider.query(query.getDataModelCategory(), satisfactions, tracker.getParameters(),
+                        query.getOrderSpecifiers(), query.getLimit(), propertyDescriptors, cacheDepositReceiver);
+                tracker.setQueryStatus(QueryStatus.SUCCESS, (Throwable)null);
+            }
+            catch (InterruptedException e)
+            {
+                if (LOGGER.isTraceEnabled())
                 {
-                    Collection<? extends Satisfaction> satisfactions = intervalQuery ? tracker.getSatisfactions() : null;
-                    myDataProvider.query(query.getDataModelCategory(), satisfactions, tracker.getParameters(),
-                            query.getOrderSpecifiers(), query.getLimit(), propertyDescriptors, cacheDepositReceiver);
-                    tracker.setQueryStatus(QueryStatus.SUCCESS, (Throwable)null);
+                    LOGGER.trace("Data provider query interrupted.");
                 }
-                catch (InterruptedException e)
-                {
-                    if (LOGGER.isTraceEnabled())
-                    {
-                        LOGGER.trace("Data provider query interrupted.");
-                    }
 
-                    // The interrupt is likely because the tracker was
-                    // cancelled already, but let us be sure.
-                    tracker.cancel(true);
-                }
-                catch (RuntimeException e)
+                // The interrupt is likely because the tracker was
+                // cancelled already, but let us be sure.
+                tracker.cancel(true);
+            }
+            catch (RuntimeException e)
+            {
+                tracker.setQueryStatus(QueryStatus.FAILED, e);
+                LOGGER.error("Query failed: " + e, e);
+                throw e;
+            }
+            catch (QueryException e)
+            {
+                tracker.setQueryStatus(QueryStatus.FAILED, e);
+                if (LOGGER.isDebugEnabled())
                 {
-                    tracker.setQueryStatus(QueryStatus.FAILED, e);
-                    LOGGER.error("Query failed: " + e, e);
-                    throw e;
-                }
-                catch (QueryException e)
-                {
-                    tracker.setQueryStatus(QueryStatus.FAILED, e);
-                    if (LOGGER.isDebugEnabled())
-                    {
-                        LOGGER.debug("Query failed: " + e, e);
-                    }
+                    LOGGER.debug("Query failed: " + e, e);
                 }
             }
         });
@@ -372,17 +366,11 @@ public class CachingDataRegistryDataProvider
             try
             {
                 sendToPropertyReceivers(deposit, myTracker);
-                long[] ids = myCache.put(deposit, new CacheModificationListener()
-                {
-                    @Override
-                    public void cacheModified(CacheModificationReport cacheModificationReport)
-                    {
-                        myDataRegistryListenerManager.notifyAddsOrUpdates(cacheModificationReport,
+                long[] ids = myCache.put(deposit,
+                        cacheModificationReport -> myDataRegistryListenerManager.notifyAddsOrUpdates(cacheModificationReport,
                                 cacheModificationReport.getIds(), deposit.getInput(),
                                 cacheModificationReport.filterAccessors(deposit.getAccessors()), ChangeType.ADD,
-                                getDataProvider());
-                    }
-                });
+                                getDataProvider()));
                 myTracker.addIds(ids);
 
                 sendStreamsToPropertyReceivers(ids, myTracker.getQuery().getPropertyValueReceivers());

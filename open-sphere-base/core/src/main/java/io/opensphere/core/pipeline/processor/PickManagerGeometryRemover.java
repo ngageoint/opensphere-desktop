@@ -80,14 +80,7 @@ public class PickManagerGeometryRemover
             final Collection<Geometry> pickManagerRemoves = NEXT_FLUSH_UPDATER.getAndSet(this, null);
             if (pickManagerRemoves != null)
             {
-                myExecutor.execute(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        myPickManager.removeGeometries(pickManagerRemoves);
-                    }
-                });
+                myExecutor.execute(() -> myPickManager.removeGeometries(pickManagerRemoves));
             }
         }
     }

@@ -2,8 +2,6 @@ package io.opensphere.core.modulestate;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
@@ -23,9 +21,7 @@ import javax.swing.text.JTextComponent;
 
 import org.apache.commons.lang3.StringUtils;
 
-import io.opensphere.core.util.ChangeListener;
 import io.opensphere.core.util.DefaultValidatorSupport;
-import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.ValidationStatus;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.StringUtilities;
@@ -36,7 +32,6 @@ import io.opensphere.core.util.swing.OptionDialog;
 import io.opensphere.core.util.swing.input.controller.ControllerFactory;
 import io.opensphere.core.util.swing.input.model.NameModel;
 import io.opensphere.core.util.swing.input.model.PropertyChangeEvent;
-import io.opensphere.core.util.swing.input.model.PropertyChangeListener;
 import io.opensphere.core.util.swing.table.CheckBoxTable;
 import io.opensphere.core.util.swing.table.CheckBoxTableModel;
 
@@ -269,40 +264,25 @@ public abstract class AbstractStateDialog extends OptionDialog
 
         panel.style("fill").addRow(scroll);
 
-        chooseModulesCheckbox.addActionListener(new ActionListener()
+        chooseModulesCheckbox.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                scroll.setVisible(chooseModulesCheckbox.isSelected());
+            scroll.setVisible(chooseModulesCheckbox.isSelected());
 
-                int width = getWidth();
-                pack();
-                setSize(width, getHeight());
-            }
+            int width = getWidth();
+            pack();
+            setSize(width, getHeight());
         });
 
         setComponent(panel);
 
         setValidator(myValidatorSupport);
 
-        myTitleModel.addListener(new ChangeListener<String>()
+        myTitleModel.addListener((obs, ov, nv) -> myValidatorSupport.setValidationResult(myTitleModel.getValidatorSupport()));
+        myTitleModel.addPropertyChangeListener(e ->
         {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            if (e.getProperty() == PropertyChangeEvent.Property.VALIDATION_CRITERIA)
             {
                 myValidatorSupport.setValidationResult(myTitleModel.getValidatorSupport());
-            }
-        });
-        myTitleModel.addPropertyChangeListener(new PropertyChangeListener()
-        {
-            @Override
-            public void stateChanged(PropertyChangeEvent e)
-            {
-                if (e.getProperty() == PropertyChangeEvent.Property.VALIDATION_CRITERIA)
-                {
-                    myValidatorSupport.setValidationResult(myTitleModel.getValidatorSupport());
-                }
             }
         });
         myValidatorSupport.setValidationResult(myTitleModel.getValidatorSupport());
@@ -387,13 +367,7 @@ public abstract class AbstractStateDialog extends OptionDialog
     private void setModuleStates(CheckBoxTableModel cbtm, Map<String, Boolean> moduleState)
     {
         Collection<String> checked = New.collection();
-        for (Entry<String, Boolean> entry : moduleState.entrySet())
-        {
-            if (entry.getValue().booleanValue())
-            {
-                checked.add(entry.getKey());
-            }
-        }
+        moduleState.entrySet().stream().filter(e -> e.getValue().booleanValue()).forEach(e -> checked.add(e.getKey()));
         // Remove the listener to prevent looping.
         myModuleTable.getModel().removeTableModelListener(myStateListener);
         cbtm.setCheckedValues(checked);

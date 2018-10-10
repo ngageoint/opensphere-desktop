@@ -28,7 +28,6 @@ import io.opensphere.core.cache.JTSHelper;
 import io.opensphere.core.cache.accessor.IntervalPropertyAccessor;
 import io.opensphere.core.cache.accessor.PersistentPropertyAccessor;
 import io.opensphere.core.cache.accessor.PropertyAccessor;
-import io.opensphere.core.cache.jdbc.StatementAppropriator.StatementUser;
 import io.opensphere.core.cache.jdbc.type.ValueTranslator;
 import io.opensphere.core.cache.matcher.GeometryMatcher;
 import io.opensphere.core.cache.matcher.IntervalPropertyMatcher;
@@ -400,14 +399,10 @@ public class CacheUtilities
      */
     public void execute(final String sql, Connection connection) throws CacheException
     {
-        new StatementAppropriator(connection).appropriateStatement(new StatementUser<Void>()
+        new StatementAppropriator(connection).appropriateStatement((conn, stmt) ->
         {
-            @Override
-            public Void run(Connection conn, Statement stmt) throws CacheException
-            {
-                execute(sql, stmt);
-                return null;
-            }
+            execute(sql, stmt);
+            return null;
         });
     }
 
@@ -420,14 +415,10 @@ public class CacheUtilities
      */
     public void execute(final String sql, ConnectionAppropriator connectionAppropriator) throws CacheException
     {
-        connectionAppropriator.appropriateStatement(new StatementUser<Void>()
+        connectionAppropriator.appropriateStatement((conn, stmt) ->
         {
-            @Override
-            public Void run(Connection conn, Statement stmt) throws CacheException
-            {
-                execute(sql, stmt);
-                return null;
-            }
+            execute(sql, stmt);
+            return null;
         });
     }
 
@@ -476,14 +467,10 @@ public class CacheUtilities
      */
     public void execute(final String sql, StatementAppropriator statementAppropriator) throws CacheException
     {
-        statementAppropriator.appropriateStatement(new StatementUser<Void>()
+        statementAppropriator.appropriateStatement((conn, stmt) ->
         {
-            @Override
-            public Void run(Connection conn, Statement stmt) throws CacheException
-            {
-                execute(sql, stmt);
-                return null;
-            }
+            execute(sql, stmt);
+            return null;
         });
     }
 

@@ -397,24 +397,20 @@ class PluginInit
             final Map<String, Collection<PluginLoaderData>> dependencyToPluginsMap, final Set<String> initializedPluginIds,
             final Set<String> failedPluginIds, final BlockingQueue<PluginLoaderData> workQueue)
     {
-        return new PluginInitFuture(data.getId(), executor.submit(new Runnable()
+        return new PluginInitFuture(data.getId(), executor.submit(() ->
         {
-            @Override
-            public void run()
+            if (initPlugin(data))
             {
-                if (initPlugin(data))
-                {
-                    initializedPluginIds.add(data.getId());
-                }
-                else
-                {
-                    failedPluginIds.add(data.getId());
-                }
-                final Collection<? extends PluginLoaderData> dependents = dependencyToPluginsMap.get(data.getId());
-                if (dependents != null)
-                {
-                    workQueue.addAll(dependents);
-                }
+                initializedPluginIds.add(data.getId());
+            }
+            else
+            {
+                failedPluginIds.add(data.getId());
+            }
+            final Collection<? extends PluginLoaderData> dependents = dependencyToPluginsMap.get(data.getId());
+            if (dependents != null)
+            {
+                workQueue.addAll(dependents);
             }
         }));
     }

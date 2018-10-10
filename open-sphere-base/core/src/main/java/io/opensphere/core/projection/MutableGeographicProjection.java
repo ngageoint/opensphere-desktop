@@ -203,25 +203,21 @@ public abstract class MutableGeographicProjection extends AbstractMutableGeograp
         {
             return null;
         }
-        Runnable runner = new Runnable()
+        Runnable runner = () ->
         {
-            @Override
-            public void run()
+            myProjectionChangeLock.lock();
+            try
             {
-                myProjectionChangeLock.lock();
-                try
+                final Collection<GeographicBoundingBox> box = myModel.handleModelDensityChanged(density);
+                if (box != null)
                 {
-                    final Collection<GeographicBoundingBox> box = myModel.handleModelDensityChanged(density);
-                    if (box != null)
-                    {
-                        updateProjectionBounds(box);
-                        sendProjectionUpdate();
-                    }
+                    updateProjectionBounds(box);
+                    sendProjectionUpdate();
                 }
-                finally
-                {
-                    myProjectionChangeLock.unlock();
-                }
+            }
+            finally
+            {
+                myProjectionChangeLock.unlock();
             }
         };
 
@@ -274,32 +270,28 @@ public abstract class MutableGeographicProjection extends AbstractMutableGeograp
         {
             return;
         }
-        Runnable runner = new Runnable()
+        Runnable runner = () ->
         {
-            @Override
-            public void run()
+            myProjectionChangeLock.lock();
+            try
             {
-                myProjectionChangeLock.lock();
-                try
-                {
-                    boolean sendUpdate = verifyModelCenter(view);
+                boolean sendUpdate = verifyModelCenter(view);
 
-                    final Collection<GeographicBoundingBox> box = myModel.updateModelForView(view);
-                    if (box != null)
-                    {
-                        updateProjectionBounds(box);
-                        sendUpdate = true;
-                    }
-
-                    if (sendUpdate)
-                    {
-                        sendProjectionUpdate();
-                    }
-                }
-                finally
+                final Collection<GeographicBoundingBox> box = myModel.updateModelForView(view);
+                if (box != null)
                 {
-                    myProjectionChangeLock.unlock();
+                    updateProjectionBounds(box);
+                    sendUpdate = true;
                 }
+
+                if (sendUpdate)
+                {
+                    sendProjectionUpdate();
+                }
+            }
+            finally
+            {
+                myProjectionChangeLock.unlock();
             }
         };
 

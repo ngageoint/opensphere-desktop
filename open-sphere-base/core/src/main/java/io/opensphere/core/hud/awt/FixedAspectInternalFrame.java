@@ -1,8 +1,6 @@
 package io.opensphere.core.hud.awt;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JComponent;
 import javax.swing.Timer;
@@ -154,16 +152,12 @@ public class FixedAspectInternalFrame extends AbstractInternalFrame
     {
         if (myTimer == null)
         {
-            myTimer = new Timer(1000, new ActionListener()
+            myTimer = new Timer(1000, e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
+                if (myLastAllowedSize != null)
                 {
-                    if (myLastAllowedSize != null)
-                    {
-                        Dimension newSize = getAllowedSize(myLastAllowedSize, getContentPane().getSize(), myAspectRatio);
-                        setTrustedSize(newSize);
-                    }
+                    Dimension newSize = getAllowedSize(myLastAllowedSize, getContentPane().getSize(), myAspectRatio);
+                    setTrustedSize(newSize);
                 }
             });
         }

@@ -32,14 +32,7 @@ public class ToolbarComponentRegistryImpl implements ToolbarComponentRegistry
     @Override
     public void deregisterToolbarComponent(final ToolbarManager.ToolbarLocation loc, final String componentName)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                myToolbarManager.removeToolbarComponent(loc, componentName);
-            }
-        });
+        EventQueueUtilities.runOnEDT(() -> myToolbarManager.removeToolbarComponent(loc, componentName));
     }
 
     @Override
@@ -59,13 +52,7 @@ public class ToolbarComponentRegistryImpl implements ToolbarComponentRegistry
     public void registerToolbarComponent(final ToolbarManager.ToolbarLocation loc, final String componentName,
             final JComponent comp, final int relativeLoc, final SeparatorLocation separatorLocation, final Insets insets)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                myToolbarManager.addToolbarComponent(loc, componentName, comp, relativeLoc, separatorLocation, insets);
-            }
-        });
+        EventQueueUtilities.runOnEDT(
+                () -> myToolbarManager.addToolbarComponent(loc, componentName, comp, relativeLoc, separatorLocation, insets));
     }
 }

@@ -80,17 +80,7 @@ public class ToastController implements Runnable
                 final ToastModel model = myPendingMessages.take();
                 if (model != null && myIsRunning)
                 {
-                    EventQueueUtilities.invokeLater(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            ToastView view = new ToastView(myParentProvider.get(), model);
-
-                            showAndAnimate(view);
-                        }
-                    });
-
+                    EventQueueUtilities.invokeLater(() -> showAndAnimate(new ToastView(myParentProvider.get(), model)));
                     Thread.sleep(SHOW_LENGTH + 1000);
                 }
             }
@@ -170,14 +160,10 @@ public class ToastController implements Runnable
         startTimer.setRepeats(true);
         startTimer.start();
 
-        Timer shutdownTimer = new Timer(SHOW_LENGTH, new ActionListener()
+        Timer shutdownTimer = new Timer(SHOW_LENGTH, e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                view.setVisible(false);
-                view.dispose();
-            }
+            view.setVisible(false);
+            view.dispose();
         });
         shutdownTimer.setRepeats(false);
         shutdownTimer.start();

@@ -1,6 +1,5 @@
 package io.opensphere.core.util.swing.input.controller;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.function.Function;
@@ -70,14 +69,7 @@ public class ChoiceRadioButtonController<T> extends AbstractController<T, Choice
     public void open()
     {
         super.open();
-        myActionListener = new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                handleViewChange();
-            }
-        };
+        myActionListener = e -> handleViewChange();
         getView().addActionListener(myActionListener);
     }
 

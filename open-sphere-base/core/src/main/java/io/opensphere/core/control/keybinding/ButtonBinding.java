@@ -1,8 +1,6 @@
 package io.opensphere.core.control.keybinding;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -131,14 +129,10 @@ public class ButtonBinding implements KeyBindingChangeListener
             {
                 LOGGER.error("IOException reading images.", e);
             }
-            myRestoreDefaultsButton.addActionListener(new ActionListener()
+            myRestoreDefaultsButton.addActionListener(e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    myBindingAction.resetBinding(myKeyButton);
-                    myBindingsListener.commitBindingChanges();
-                }
+                myBindingAction.resetBinding(myKeyButton);
+                myBindingsListener.commitBindingChanges();
             });
         }
         return myRestoreDefaultsButton;

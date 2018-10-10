@@ -259,15 +259,7 @@ public class AbstractHUDPanel extends JPanel implements PreferenceChangeListener
     {
         myBackgroundColor = new Color(myPreferencesRegistry.getPreferences(AbstractHUDPanel.class)
                 .getInt(ourHUDBackgroundColorKey, myBackgroundColor.getRGB()), true);
-
-        EventQueueUtilities.runOnEDT(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                setBackground(myBackgroundColor);
-            }
-        });
+        EventQueueUtilities.runOnEDT(() -> setBackground(myBackgroundColor));
     }
 
     @Override

@@ -18,7 +18,6 @@ import io.opensphere.core.model.ScreenPosition;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.viewer.ViewChangeSupport;
 import io.opensphere.core.viewer.ViewChangeSupport.ViewChangeListener;
-import io.opensphere.core.viewer.Viewer;
 
 /**
  * A window differs from a regular frame in that it is responsible for
@@ -49,28 +48,20 @@ public abstract class Window<S extends LayoutConstraints, T extends AbstractLayo
     private final ToolLocation myLocationHint;
 
     /** Listen to events from the main viewer. */
-    private final ViewChangeListener myMainViewListener = new ViewChangeListener()
+    private final ViewChangeListener myMainViewListener = (viewer, type) ->
     {
-        @Override
-        public void viewChanged(Viewer viewer, ViewChangeSupport.ViewChangeType type)
+        if (type == ViewChangeSupport.ViewChangeType.WINDOW_RESIZE)
         {
-            if (type == ViewChangeSupport.ViewChangeType.WINDOW_RESIZE)
+            final Rectangle frameBounds = getBounds();
+            EventQueueUtilities.runOnEDT(() ->
             {
-                final Rectangle frameBounds = getBounds();
-                EventQueueUtilities.runOnEDT(new Runnable()
+                Rectangle adjustedBounds = myFrameBoundsHelper.getAdjustedFrameBoundsForMainFrameChange(frameBounds);
+                if (!frameBounds.equals(adjustedBounds))
                 {
-                    @Override
-                    public void run()
-                    {
-                        Rectangle adjustedBounds = myFrameBoundsHelper.getAdjustedFrameBoundsForMainFrameChange(frameBounds);
-                        if (!frameBounds.equals(adjustedBounds))
-                        {
-                            setFrameLocation(ScreenBoundingBox.fromRectangle(adjustedBounds));
-                            replaceTile();
-                        }
-                    }
-                });
-            }
+                    setFrameLocation(ScreenBoundingBox.fromRectangle(adjustedBounds));
+                    replaceTile();
+                }
+            });
         }
     };
 

@@ -1284,10 +1284,7 @@ public abstract class AbstractProcessor<E extends Geometry> implements Renderabl
         {
             if (!myReadyObservers.isEmpty() && allGeometriesReady())
             {
-                for (Runnable task : myReadyObservers)
-                {
-                    task.run();
-                }
+                myReadyObservers.forEach(t -> t.run());
                 myReadyObservers.clear();
             }
         }
@@ -1669,14 +1666,7 @@ public abstract class AbstractProcessor<E extends Geometry> implements Renderabl
      */
     protected void setOnscreenDirty()
     {
-        myDirtyExecutor.execute(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                setOnscreenDirtyImmediately();
-            }
-        });
+        myDirtyExecutor.execute(() -> setOnscreenDirtyImmediately());
     }
 
     /** Set the on-screen dirty flag. */

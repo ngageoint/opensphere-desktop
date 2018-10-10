@@ -4,7 +4,6 @@ import com.jogamp.opengl.util.texture.TextureCoords;
 
 import io.opensphere.core.TimeManager;
 import io.opensphere.core.TimeManager.ActiveTimeSpanChangeListener;
-import io.opensphere.core.TimeManager.ActiveTimeSpans;
 import io.opensphere.core.TimeManager.Fade;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.model.time.TimeSpanList;
@@ -19,14 +18,8 @@ import io.opensphere.core.util.Utilities;
 public class FadedRenderingHelper
 {
     /** The active time span change listener. */
-    private final ActiveTimeSpanChangeListener myActiveTimeSpanChangeListener = new ActiveTimeSpanChangeListener()
-    {
-        @Override
-        public void activeTimeSpansChanged(ActiveTimeSpans active)
-        {
-            setFade(active.getFade() == null || active.getDirection() >= 0 ? active.getFade() : active.getFade().reverse());
-        }
-    };
+    private final ActiveTimeSpanChangeListener myActiveTimeSpanChangeListener = active -> setFade(
+            active.getFade() == null || active.getDirection() >= 0 ? active.getFade() : active.getFade().reverse());
 
     /** The current fade setting. */
     private volatile Fade myFade;

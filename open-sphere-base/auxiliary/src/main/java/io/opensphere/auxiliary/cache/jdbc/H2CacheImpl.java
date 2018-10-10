@@ -182,14 +182,10 @@ public class H2CacheImpl extends JdbcCacheImpl
         super.setInMemorySizeBytes(bytes);
 
         LOGGER.info("Setting H2 cache_size to " + bytes / Constants.BYTES_PER_KILOBYTE + "KB");
-        getConnectionAppropriator().appropriateStatement(new StatementUser<Void>()
+        getConnectionAppropriator().appropriateStatement((conn, stmt) ->
         {
-            @Override
-            public Void run(Connection conn, Statement stmt) throws CacheException
-            {
-                getCacheUtil().execute("set cache_size " + bytes / Constants.BYTES_PER_KILOBYTE, stmt);
-                return null;
-            }
+            getCacheUtil().execute("set cache_size " + bytes / Constants.BYTES_PER_KILOBYTE, stmt);
+            return null;
         });
     }
 
@@ -274,15 +270,11 @@ public class H2CacheImpl extends JdbcCacheImpl
             // know it's the only one.
             myConnectionPool.setMaxConnections(1);
 
-            runTask(new StatementUser<Void>()
+            runTask((StatementUser<Void>)(conn2, stmt) ->
             {
-                @Override
-                public Void run(Connection conn2, Statement stmt) throws CacheException
-                {
-                    getDatabaseTaskFactory().getPurgeGroupsTask(groupIds).run(conn2, stmt);
-                    getCacheUtil().execute("SHUTDOWN COMPACT", stmt);
-                    return null;
-                }
+                getDatabaseTaskFactory().getPurgeGroupsTask(groupIds).run(conn2, stmt);
+                getCacheUtil().execute("SHUTDOWN COMPACT", stmt);
+                return null;
             });
 
             myConnectionPool.dispose();

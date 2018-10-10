@@ -324,15 +324,11 @@ public class ImageIOImage extends Image implements DDSEncodableImage
             {
                 try
                 {
-                    final InputStream result = encoder.encodeStreaming(getAWTImage(), compression, executor, new Runnable()
+                    final InputStream result = encoder.encodeStreaming(getAWTImage(), compression, executor, () ->
                     {
-                        @Override
-                        public void run()
+                        if (dispose)
                         {
-                            if (dispose)
-                            {
-                                dispose();
-                            }
+                            dispose();
                         }
                     });
                     disposeHandled = true;

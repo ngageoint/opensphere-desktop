@@ -26,44 +26,31 @@ public class ToolboxListenerHelper extends CompositeService
         @Override
         public void receiveObjects(Object source, Collection<? extends Envoy> adds, Collection<? extends Envoy> removes)
         {
-            for (final Envoy envoy : removes)
+            removes.stream().filter(envoy -> envoy != null).forEach(envoy ->
             {
-                if (envoy != null)
+                ThreadPoolExecutor envoyExecutor = getExecutorForEnvoy(envoy);
+                envoyExecutor.execute(() ->
                 {
-                    ThreadPoolExecutor envoyExecutor = getExecutorForEnvoy(envoy);
-                    envoyExecutor.execute(new Runnable()
+                    if (envoy instanceof DataRegistryDataProvider)
                     {
-                        @Override
-                        public void run()
-                        {
-                            if (envoy instanceof DataRegistryDataProvider)
-                            {
-                                myToolbox.getDataRegistry().removeDataProvider((DataRegistryDataProvider)envoy);
-                            }
-                            envoy.close();
-                        }
-                    });
-                }
-            }
-            for (final Envoy envoy : adds)
+                        myToolbox.getDataRegistry().removeDataProvider((DataRegistryDataProvider)envoy);
+                    }
+                    envoy.close();
+                });
+            });
+
+            adds.stream().filter(envoy -> envoy != null).forEach(envoy ->
             {
-                if (envoy != null)
+                final ThreadPoolExecutor envoyExecutor = getExecutorForEnvoy(envoy);
+                envoyExecutor.execute(() ->
                 {
-                    final ThreadPoolExecutor envoyExecutor = getExecutorForEnvoy(envoy);
-                    envoyExecutor.execute(new Runnable()
+                    if (envoy instanceof DataRegistryDataProvider)
                     {
-                        @Override
-                        public void run()
-                        {
-                            if (envoy instanceof DataRegistryDataProvider)
-                            {
-                                myToolbox.getDataRegistry().addDataProvider((DataRegistryDataProvider)envoy, envoyExecutor);
-                            }
-                            envoy.open(envoyExecutor);
-                        }
-                    });
-                }
-            }
+                        myToolbox.getDataRegistry().addDataProvider((DataRegistryDataProvider)envoy, envoyExecutor);
+                    }
+                    envoy.open(envoyExecutor);
+                });
+            });
         }
     };
 
@@ -77,7 +64,8 @@ public class ToolboxListenerHelper extends CompositeService
     private final Map<Transformer, ThreadedGenericTransceiver<Geometry>> myGeometryTransceivers;
 
     /**
-     * A collection of tools to be used to interact with the rest of the application.
+     * A collection of tools to be used to interact with the rest of the
+     * application.
      */
     private final Toolbox myToolbox;
 
@@ -93,41 +81,31 @@ public class ToolboxListenerHelper extends CompositeService
         public void receiveObjects(Object source, Collection<? extends Transformer> adds,
                 Collection<? extends Transformer> removes)
         {
-            for (final Transformer transformer : removes)
+            removes.stream().filter(t -> t != null).forEach(transformer ->
             {
-                if (transformer != null)
+                final ThreadedGenericTransceiver<Geometry> transceiver = myGeometryTransceivers.remove(transformer);
+                myTransformerExecutor.execute(() ->
                 {
-                    final ThreadedGenericTransceiver<Geometry> transceiver = myGeometryTransceivers.remove(transformer);
-                    myTransformerExecutor.execute(new Runnable()
+                    transformer.close();
+                    if (transceiver != null)
                     {
-                        @Override
-                        public void run()
-                        {
-                            transformer.close();
-                            if (transceiver != null)
-                            {
-                                transceiver.removeSubscriber(myToolbox.getGeometryRegistry());
-                                transformer.removeSubscriber(transceiver);
-                            }
-                        }
-                    });
-                }
-            }
-            for (final Transformer transformer : adds)
-            {
-                if (transformer != null)
-                {
-                    final int priority = 5;
-                    ThreadedGenericTransceiver<Geometry> transceiver = new ThreadedGenericTransceiver<>(1,
-                            new NamedThreadFactory("GeometryReceiver" + myGeometryTransceiverId.getAndIncrement(), priority,
-                                    Thread.MAX_PRIORITY));
-                    transceiver.addSubscriber(myToolbox.getGeometryRegistry());
-                    transformer.addSubscriber(transceiver);
-                    myGeometryTransceivers.put(transformer, transceiver);
+                        transceiver.removeSubscriber(myToolbox.getGeometryRegistry());
+                        transformer.removeSubscriber(transceiver);
+                    }
+                });
+            });
 
-                    myTransformerExecutor.execute(transformer::open);
-                }
-            }
+            adds.stream().filter(t -> t != null).forEach(transformer ->
+            {
+                final int priority = 5;
+                ThreadedGenericTransceiver<Geometry> transceiver = new ThreadedGenericTransceiver<>(1, new NamedThreadFactory(
+                        "GeometryReceiver" + myGeometryTransceiverId.getAndIncrement(), priority, Thread.MAX_PRIORITY));
+                transceiver.addSubscriber(myToolbox.getGeometryRegistry());
+                transformer.addSubscriber(transceiver);
+                myGeometryTransceivers.put(transformer, transceiver);
+
+                myTransformerExecutor.execute(transformer::open);
+            });
         }
     };
 

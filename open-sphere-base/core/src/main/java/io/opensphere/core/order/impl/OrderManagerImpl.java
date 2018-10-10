@@ -651,22 +651,7 @@ public class OrderManagerImpl implements OrderManager
     {
         // Use an executor here since this may be on the AWT thread when changes
         // are a result of GUI interaction.
-        myNotificationExecutor.execute(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                ChangeSupport.Callback<OrderChangeListener> callback = new ChangeSupport.Callback<>()
-                {
-                    @Override
-                    public void notify(OrderChangeListener listener)
-                    {
-                        listener.orderChanged(event);
-                    }
-                };
-                myChangeSupport.notifyListeners(callback);
-            }
-        });
+        myNotificationExecutor.execute(() -> myChangeSupport.notifyListeners(listener -> listener.orderChanged(event)));
     }
 
     /**

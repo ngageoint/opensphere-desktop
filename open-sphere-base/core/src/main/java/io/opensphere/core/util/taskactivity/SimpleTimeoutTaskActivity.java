@@ -20,13 +20,6 @@ public class SimpleTimeoutTaskActivity extends TaskActivity
         super();
         setActive(true);
         setLabelValue(label);
-        CommonTimer.schedule(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                setComplete(true);
-            }
-        }, longevityMS);
+        CommonTimer.schedule(() -> setComplete(true), longevityMS);
     }
 }

@@ -46,7 +46,7 @@ public class NewtMouseEventConverter implements MouseListener
      *
      * @return true when the converter is operational.
      */
-    public boolean canDispatch()
+    private boolean canDispatch()
     {
         if (myDispatcher == null)
         {
@@ -122,14 +122,7 @@ public class NewtMouseEventConverter implements MouseListener
     {
         if (canDispatch())
         {
-            EventQueueUtilities.runOnEDT(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    myDispatcher.dispatchEvent(myEventFactory.createMouseEvent(e));
-                }
-            });
+            EventQueueUtilities.runOnEDT(() -> myDispatcher.dispatchEvent(myEventFactory.createMouseEvent(e)));
         }
     }
 }

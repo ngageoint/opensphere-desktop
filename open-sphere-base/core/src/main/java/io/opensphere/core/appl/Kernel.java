@@ -158,75 +158,8 @@ public class Kernel
             {
                 myToolbox.getEventManager().unsubscribe(ApplicationLifecycleEvent.class, myLifecycleSubscriber);
                 myLifecycleSubscriber = null;
-                EventQueueUtilities.invokeLater(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        LOGGER.info(DISPLAYING_MAIN_FRAME_MSG);
-                        myPipelineComponent.setVisible(true);
-                        if (Boolean.getBoolean("opensphere.enablePopToBack"))
-                        {
-                            // Toggle alwaysOnTop true then false to pop the
-                            // window to the front, since some operating systems
-                            // ignore the toFront call.
-                            myMainFrame.setAlwaysOnTop(true);
-                            myMainFrame.setAlwaysOnTop(false);
-                        }
-                        ApplicationLifecycleEvent.publishEvent(myToolbox.getEventManager(),
-                                ApplicationLifecycleEvent.Stage.MAIN_FRAME_VISIBLE);
-
-                        if ("x86".equals(System.getProperty("os.arch")) && StringUtils.isNotEmpty(System.getenv("ProgramW6432")))
-                        {
-                            JOptionPane.showMessageDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
-                                    "<html>You are running with 32-bit Java on a 64-bit operating system. "
-                                            + "The application may be unstable. Please use 64-bit Java if possible.</html>",
-                                    "Warning", JOptionPane.WARNING_MESSAGE);
-                        }
-                        else
-                        {
-                            final String version = System.getProperty("java.version");
-                            final String minVersion = System.getProperty("opensphere.min.java.version", "1.6.0_33");
-                            if (compareVersions(version, minVersion) < 0)
-                            {
-                                JOptionPane.showMessageDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
-                                        "<html>You are running an obsolete Java version (" + version
-                                                + "). Please upgrade your Java if possible.</html>",
-                                        "Warning", JOptionPane.WARNING_MESSAGE);
-                            }
-                        }
-
-                        myToolbox.getMapManager().getStandardViewer().startAnimationToPreferredPosition();
-                    }
-                });
+                EventQueueUtilities.invokeLater(() -> displayMainFrame());
             }
-        }
-
-        /**
-         * Compares the two versions.
-         *
-         * @param javaVersion The currently installed java version.
-         * @param minVersion The minimum version.
-         * @return 0 if equal, less than 0 if javaVersion is older than the
-         *         minVersion, or greater than 0 if the javaVersion is newer
-         *         than the min version.
-         */
-        private int compareVersions(String javaVersion, String minVersion)
-        {
-            int compare = 0;
-
-            final String splitRegex = "\\.|_";
-            final String[] javaVersions = javaVersion.split(splitRegex);
-            final String[] minVersions = minVersion.split(splitRegex);
-
-            for (int i = 0; i < javaVersions.length && i < minVersions.length && compare == 0; i++)
-            {
-                final int javaVersionPart = Integer.parseInt(javaVersions[i]);
-                final int minVersionPart = Integer.parseInt(minVersions[i]);
-                compare = Integer.compare(javaVersionPart, minVersionPart);
-            }
-
-            return compare;
         }
     };
 
@@ -371,17 +304,12 @@ public class Kernel
             initializeMemoryLogger();
 
             final ControlInit controlInit = new ControlInit(myToolbox);
-            final BoundEventListener gcListener = controlInit.addGarbageCollectionControl(new Runnable()
+            final BoundEventListener gcListener = controlInit.addGarbageCollectionControl(() ->
             {
-                @Override
-                @SuppressFBWarnings("DM_GC")
-                public void run()
-                {
-                    LOGGER.info("Memory before garbage collection: " + MemoryUtilities.getCurrentMemoryUse());
-                    LOGGER.info("Requesting garbage collection...");
-                    System.gc();
-                    LOGGER.info("Memory after garbage collection: " + MemoryUtilities.getCurrentMemoryUse());
-                }
+                LOGGER.info("Memory before garbage collection: " + MemoryUtilities.getCurrentMemoryUse());
+                LOGGER.info("Requesting garbage collection...");
+                System.gc();
+                LOGGER.info("Memory after garbage collection: " + MemoryUtilities.getCurrentMemoryUse());
             });
             myControlEventListeners.add(gcListener);
         }
@@ -722,6 +650,73 @@ public class Kernel
                 LOGGER.debug("Failed to get system properties: " + e, e);
             }
         }
+    }
+
+    /**
+     * Displays the main frame of the application. Do not call directly.
+     */
+    final void displayMainFrame()
+    {
+        LOGGER.info(DISPLAYING_MAIN_FRAME_MSG);
+        myPipelineComponent.setVisible(true);
+        if (Boolean.getBoolean("opensphere.enablePopToBack"))
+        {
+            // Toggle alwaysOnTop true then false to pop the
+            // window to the front, since some operating systems
+            // ignore the toFront call.
+            myMainFrame.setAlwaysOnTop(true);
+            myMainFrame.setAlwaysOnTop(false);
+        }
+        ApplicationLifecycleEvent.publishEvent(myToolbox.getEventManager(), ApplicationLifecycleEvent.Stage.MAIN_FRAME_VISIBLE);
+
+        if ("x86".equals(System.getProperty("os.arch")) && StringUtils.isNotEmpty(System.getenv("ProgramW6432")))
+        {
+            JOptionPane.showMessageDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
+                    "<html>You are running with 32-bit Java on a 64-bit operating system. "
+                            + "The application may be unstable. Please use 64-bit Java if possible.</html>",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        {
+            final String version = System.getProperty("java.version");
+            final String minVersion = System.getProperty("opensphere.min.java.version", "1.6.0_33");
+            if (compareVersions(version, minVersion) < 0)
+            {
+                JOptionPane.showMessageDialog(
+                        myToolbox.getUIRegistry().getMainFrameProvider().get(), "<html>You are running an obsolete Java version ("
+                                + version + "). Please upgrade your Java if possible.</html>",
+                        "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+
+        myToolbox.getMapManager().getStandardViewer().startAnimationToPreferredPosition();
+    }
+
+    /**
+     * Compares the two versions.
+     *
+     * @param javaVersion The currently installed java version.
+     * @param minVersion The minimum version.
+     * @return 0 if equal, less than 0 if javaVersion is older than the
+     *         minVersion, or greater than 0 if the javaVersion is newer than
+     *         the min version.
+     */
+    private int compareVersions(String javaVersion, String minVersion)
+    {
+        int compare = 0;
+
+        final String splitRegex = "\\.|_";
+        final String[] javaVersions = javaVersion.split(splitRegex);
+        final String[] minVersions = minVersion.split(splitRegex);
+
+        for (int i = 0; i < javaVersions.length && i < minVersions.length && compare == 0; i++)
+        {
+            final int javaVersionPart = Integer.parseInt(javaVersions[i]);
+            final int minVersionPart = Integer.parseInt(minVersions[i]);
+            compare = Integer.compare(javaVersionPart, minVersionPart);
+        }
+
+        return compare;
     }
 
     /**

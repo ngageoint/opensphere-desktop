@@ -53,14 +53,8 @@ public class SpatialTemporalGeometryComparator implements Comparator<Geometry>
     private volatile Vector3d myModelCenter;
 
     /** The listener for time changes. */
-    private final ActiveTimeSpanChangeListener myTimeListener = new ActiveTimeSpanChangeListener()
-    {
-        @Override
-        public void activeTimeSpansChanged(ActiveTimeSpans active)
-        {
-            myCenterTime = TimeSpan.get(active.getPrimary().getExtent().getMidpoint());
-        }
-    };
+    private final ActiveTimeSpanChangeListener myTimeListener = active -> myCenterTime = TimeSpan
+            .get(active.getPrimary().getExtent().getMidpoint());
 
     /** The listener for view changes. */
     private final ViewChangeListener myViewChangeListener = new ViewChangeListener()

@@ -42,17 +42,13 @@ public final class ViewBookmarkUtil
                             "Projection Change Required", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
                     {
                         toolbox.getMapManager().setProjection(Viewer2D.class);
-                        EventQueueUtilities.runOnEDT(new Runnable()
+                        EventQueueUtilities.runOnEDT(() ->
                         {
-                            @Override
-                            public void run()
+                            Viewer viewer = toolbox.getMapManager().getStandardViewer();
+                            if (viewer instanceof Viewer2D)
                             {
-                                Viewer viewer = toolbox.getMapManager().getStandardViewer();
-                                if (viewer instanceof Viewer2D)
-                                {
-                                    Viewer2D view2D = (Viewer2D)viewer;
-                                    new ViewerAnimator(view2D, view.getViewerPos2D()).start();
-                                }
+                                Viewer2D view2D = (Viewer2D)viewer;
+                                new ViewerAnimator(view2D, view.getViewerPos2D()).start();
                             }
                         });
                     }
@@ -72,17 +68,13 @@ public final class ViewBookmarkUtil
                             "Projection Change Required", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
                     {
                         toolbox.getMapManager().setProjection(Viewer3D.class);
-                        EventQueueUtilities.runOnEDT(new Runnable()
+                        EventQueueUtilities.runOnEDT(() ->
                         {
-                            @Override
-                            public void run()
+                            Viewer viewer = toolbox.getMapManager().getStandardViewer();
+                            if (viewer instanceof Viewer3D)
                             {
-                                Viewer viewer = toolbox.getMapManager().getStandardViewer();
-                                if (viewer instanceof Viewer3D)
-                                {
-                                    Viewer3D view3D = (Viewer3D)viewer;
-                                    new ViewerAnimator(view3D, view.getViewerPos3D()).start();
-                                }
+                                Viewer3D view3D = (Viewer3D)viewer;
+                                new ViewerAnimator(view3D, view.getViewerPos3D()).start();
                             }
                         });
                     }

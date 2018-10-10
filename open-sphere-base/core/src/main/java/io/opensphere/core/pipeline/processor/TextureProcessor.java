@@ -240,15 +240,8 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
             }
         });
 
-        myGLExecutor.execute(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                myTextureCapabilities.setCompressedTexturesSupported(
-                        RenderContext.getCurrent().isExtensionAvailable("GL_EXT_texture_compression_s3tc"));
-            }
-        });
+        myGLExecutor.execute(() -> myTextureCapabilities.setCompressedTexturesSupported(
+                RenderContext.getCurrent().isExtensionAvailable("GL_EXT_texture_compression_s3tc")));
     }
 
     @Override
@@ -351,8 +344,8 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
      */
     protected TextureGroup createTexture(E geom, TextureDataGroup textureData, TextureGroup textureGroup)
     {
-        EnumMap<AbstractGeometry.RenderMode, Object> map = textureGroup == null
-                ? new EnumMap<>(AbstractGeometry.RenderMode.class) : null;
+        EnumMap<AbstractGeometry.RenderMode, Object> map = textureGroup == null ? new EnumMap<>(AbstractGeometry.RenderMode.class)
+                : null;
         TextureCoords texCoords = null;
         GL gl = GLContext.getCurrentGL();
         for (Map.Entry<AbstractGeometry.RenderMode, TextureData> entry : textureData.getTextureDataMap().entrySet())

@@ -2,7 +2,6 @@ package io.opensphere.core.util.swing;
 
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -158,16 +157,12 @@ public class ButtonPanel extends JPanel
             {
                 button.setIcon("/images/cancel_14x14.png");
             }
-            button.addActionListener(new ActionListener()
+            button.addActionListener(e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
+                mySelection = e.getActionCommand();
+                for (ActionListener listener : getListeners(ActionListener.class))
                 {
-                    mySelection = e.getActionCommand();
-                    for (ActionListener listener : getListeners(ActionListener.class))
-                    {
-                        listener.actionPerformed(e);
-                    }
+                    listener.actionPerformed(e);
                 }
             });
             button.addFocusListener(new FocusAdapter()

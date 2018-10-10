@@ -887,14 +887,7 @@ public class ThreadedStateMachine<E>
                 {
                     final StateChangeHandler<E> handler = pair.getStateChangeHandler();
                     Executor executor = pair.getExecutor(task.getObjects().size());
-                    executor.execute(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            executeTask(task, handler);
-                        }
-                    });
+                    executor.execute(() -> executeTask(task, handler));
                 }
             }
         }

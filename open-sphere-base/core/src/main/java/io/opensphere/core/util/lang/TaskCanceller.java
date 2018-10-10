@@ -152,30 +152,26 @@ public class TaskCanceller extends DefaultCancellable
     @SuppressWarnings("PMD.AvoidRethrowingException")
     public Runnable wrap(Runnable r)
     {
-        return new Runnable()
+        return () ->
         {
-            @Override
-            public void run()
+            try
             {
-                try
+                wrap((Callable<Void>)() ->
                 {
-                    wrap((Callable<Void>)() ->
-                    {
-                        r.run();
-                        return null;
-                    }).call();
-                }
-                catch (InterruptedException e)
-                {
-                }
-                catch (RuntimeException | Error e)
-                {
-                    throw e;
-                }
-                catch (Exception e)
-                {
-                    throw new ImpossibleException(e);
-                }
+                    r.run();
+                    return null;
+                }).call();
+            }
+            catch (InterruptedException e)
+            {
+            }
+            catch (RuntimeException | Error e)
+            {
+                throw e;
+            }
+            catch (Exception e)
+            {
+                throw new ImpossibleException(e);
             }
         };
     }

@@ -973,14 +973,7 @@ public class TileProcessor extends TextureProcessor<TileGeometry> implements Spl
     /** Confirm deferred asynchronously, using the executor. */
     private void confirmDeferred()
     {
-        myConfirmDeferredExecutor.execute(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                doConfirmDeferred();
-            }
-        });
+        myConfirmDeferredExecutor.execute(() -> doConfirmDeferred());
     }
 
     /**

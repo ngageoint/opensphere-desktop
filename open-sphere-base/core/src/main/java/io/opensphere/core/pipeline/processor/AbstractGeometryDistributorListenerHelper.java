@@ -66,14 +66,7 @@ abstract class AbstractGeometryDistributorListenerHelper
         @Override
         public void viewChanged(final Viewer view, final ViewChangeSupport.ViewChangeType type)
         {
-            myViewChangeExecutor.execute(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    handleViewChanged(view, type);
-                }
-            });
+            myViewChangeExecutor.execute(() -> handleViewChanged(view, type));
         }
     };
 

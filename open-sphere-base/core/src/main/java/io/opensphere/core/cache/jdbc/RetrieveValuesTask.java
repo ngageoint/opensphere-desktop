@@ -87,14 +87,8 @@ public class RetrieveValuesTask extends DatabaseTask implements StatementUser<Vo
         getDatabaseTaskFactory().getEnsureColumnsTask(distinctGroupIds, descriptors).run(conn);
 
         final Collection<String> columnNames = columnNamesToTypes.keySet();
-        CacheIdUtilities.forEachGroup(getIds(), new CacheIdUtilities.DatabaseGroupFunctor()
-        {
-            @Override
-            public void run(long[] combinedIds, int groupId, int[] dataIds) throws CacheException
-            {
-                doGetValues(conn, stmt, groupId, dataIds, columnNames);
-            }
-        });
+        CacheIdUtilities.forEachGroup(getIds(),
+                (combinedIds, groupId, dataIds) -> doGetValues(conn, stmt, groupId, dataIds, columnNames));
 
         return null;
     }

@@ -1,7 +1,6 @@
 package io.opensphere.core.util.swing.input.controller;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractButton;
@@ -58,14 +57,7 @@ public abstract class BooleanAbstractButtonController extends AbstractController
     public void open()
     {
         super.open();
-        myActionListener = new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                handleViewChange();
-            }
-        };
+        myActionListener = e -> handleViewChange();
         getView().addActionListener(myActionListener);
 
         ViewSettings<Boolean> viewSettings = getViewSettings();

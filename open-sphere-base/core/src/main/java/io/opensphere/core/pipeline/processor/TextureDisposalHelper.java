@@ -133,33 +133,29 @@ public class TextureDisposalHelper implements DisposalHelper
             {
                 final Collection<? extends TextureHandle> textureHandles = event.getChangedItems();
 
-                ThreadUtilities.runBackground(new Runnable()
+                ThreadUtilities.runBackground(() ->
                 {
-                    @Override
-                    public void run()
+                    myDisposalLock.lock();
+                    try
                     {
-                        myDisposalLock.lock();
-                        try
+                        for (TextureHandle handle : textureHandles)
                         {
-                            for (TextureHandle handle : textureHandles)
+                            if (handle != null)
                             {
-                                if (handle != null)
-                                {
-                                    // Use TransparentEqualsWeakReference so
-                                    // that we can use regular map lookup and
-                                    // only add this reference to the map if
-                                    // there is no reference for this object
-                                    // already.
-                                    WeakReference<TextureHandle> ref = new TransparentEqualsWeakReference<>(handle,
-                                            myTextureHandleReferenceQueue);
-                                    myTextureDisposalMap.put(ref, Integer.valueOf(handle.getTextureId()));
-                                }
+                                // Use TransparentEqualsWeakReference so
+                                // that we can use regular map lookup and
+                                // only add this reference to the map if
+                                // there is no reference for this object
+                                // already.
+                                WeakReference<TextureHandle> ref = new TransparentEqualsWeakReference<>(handle,
+                                        myTextureHandleReferenceQueue);
+                                myTextureDisposalMap.put(ref, Integer.valueOf(handle.getTextureId()));
                             }
                         }
-                        finally
-                        {
-                            myDisposalLock.unlock();
-                        }
+                    }
+                    finally
+                    {
+                        myDisposalLock.unlock();
                     }
                 });
             }

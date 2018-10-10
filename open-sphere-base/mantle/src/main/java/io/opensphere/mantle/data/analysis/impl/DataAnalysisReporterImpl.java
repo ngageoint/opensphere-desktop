@@ -83,15 +83,8 @@ public class DataAnalysisReporterImpl implements DataAnalysisReporter
         tb.getPreferencesRegistry().setPreferencesCompression(DataAnalysisReporterImpl.class, false);
         tb.getPreferencesRegistry().setPreferencesCipherFactory(DataAnalysisReporterImpl.class,
                 tb.getSecurityManager().getCipherFactory());
-        myCipherChangeListener = new CipherChangeListener()
-        {
-            @Override
-            public void cipherChanged()
-            {
-                // Force the preferences to save with the new cipher.
-                myToolbox.getPreferencesRegistry().getPreferences(DataAnalysisReporterImpl.class).waitForPersist();
-            }
-        };
+        myCipherChangeListener = () -> myToolbox.getPreferencesRegistry().getPreferences(DataAnalysisReporterImpl.class)
+                .waitForPersist();
         tb.getSecurityManager().addCipherChangeListener(myCipherChangeListener);
         myRepository = tb.getPreferencesRegistry().getPreferences(DataAnalysisReporterImpl.class)
                 .getJAXBObject(DataAnalyzerRepository.class, DATA_ANALYSIS_REPOSITORY_PREF_KEY, new DataAnalyzerRepository());

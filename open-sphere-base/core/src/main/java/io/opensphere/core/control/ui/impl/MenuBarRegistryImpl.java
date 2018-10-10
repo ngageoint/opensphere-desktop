@@ -192,15 +192,7 @@ public class MenuBarRegistryImpl implements MenuBarRegistry
         if (myTaskActivityPanel == null)
         {
             myTaskActivityPanel = new TaskActivityPanel();
-
-            EventQueueUtilities.runOnEDT(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    getMainMenuBar().add(myTaskActivityPanel);
-                }
-            });
+            EventQueueUtilities.runOnEDT(() -> getMainMenuBar().add(myTaskActivityPanel));
         }
         return myTaskActivityPanel;
     }

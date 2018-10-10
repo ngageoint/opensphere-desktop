@@ -1,6 +1,5 @@
 package io.opensphere.core.cache.jdbc;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -160,14 +159,10 @@ public class RowLimitDataTrimmer implements Runnable
         {
             try
             {
-                myConnectionAppropriator.appropriateStatement(new StatementUser<Void>()
+                myConnectionAppropriator.appropriateStatement((StatementUser<Void>)(conn, stmt) ->
                 {
-                    @Override
-                    public Void run(Connection conn, Statement stmt) throws CacheException
-                    {
-                        trimDataTable(myRowLimit, stmt);
-                        return null;
-                    }
+                    trimDataTable(myRowLimit, stmt);
+                    return null;
                 }, false);
             }
             finally

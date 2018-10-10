@@ -130,7 +130,8 @@ public class JdbcCacheImpl implements Cache
      * @throws ClassNotFoundException If the DB driver class cannot be found.
      */
     public JdbcCacheImpl(String driver, String url, String username, String password, int rowLimit,
-            ScheduledExecutorService executor) throws ClassNotFoundException
+            ScheduledExecutorService executor)
+        throws ClassNotFoundException
     {
         Class.forName(driver);
 
@@ -302,7 +303,8 @@ public class JdbcCacheImpl implements Cache
 
     @Override
     public List<DataModelCategory> getDataModelCategoriesByGroupId(final int[] groupIds, final boolean source,
-            final boolean family, final boolean category, boolean distinct) throws CacheException
+            final boolean family, final boolean category, boolean distinct)
+        throws CacheException
     {
         if (isClosed() || groupIds.length == 0 || !(source || family || category))
         {
@@ -314,7 +316,8 @@ public class JdbcCacheImpl implements Cache
 
     @Override
     public List<DataModelCategory> getDataModelCategoriesByModelId(final long[] ids, final boolean source, final boolean family,
-            final boolean category) throws CacheException
+            final boolean category)
+        throws CacheException
     {
         int[] groupIds = getGroupIds(ids, true);
         return getDataModelCategoriesByGroupId(groupIds, source, family, category, true);
@@ -340,7 +343,7 @@ public class JdbcCacheImpl implements Cache
     @Override
     public long[] getIds(Collection<? extends Satisfaction> satisfactions, Collection<? extends PropertyMatcher<?>> parameters,
             List<? extends OrderSpecifier> orderSpecifiers, int startIndex, int limit)
-                throws CacheException, NotSerializableException
+        throws CacheException, NotSerializableException
     {
         Utilities.checkNull(satisfactions, "satisfactions");
         if (isClosed() || satisfactions.isEmpty())
@@ -361,7 +364,7 @@ public class JdbcCacheImpl implements Cache
     @Override
     public long[] getIds(DataModelCategory category, Collection<? extends PropertyMatcher<?>> parameters,
             List<? extends OrderSpecifier> orderSpecifiers, int startIndex, int limit)
-                throws CacheException, NotSerializableException
+        throws CacheException, NotSerializableException
     {
         Utilities.checkNull(category, "category");
         if (isClosed())
@@ -415,7 +418,7 @@ public class JdbcCacheImpl implements Cache
     @Override
     public long[] getIds(int[] groupIds, Collection<? extends PropertyMatcher<?>> parameters,
             List<? extends OrderSpecifier> orderSpecifiers, int startIndex, int limit)
-                throws NotSerializableException, CacheException
+        throws NotSerializableException, CacheException
     {
         try
         {
@@ -567,50 +570,46 @@ public class JdbcCacheImpl implements Cache
     @Override
     public void initialize(final long millisecondsWait) throws CacheException
     {
-        Runnable initTask = new Runnable()
+        Runnable initTask = () ->
         {
-            @Override
-            public void run()
+            if (LOGGER.isDebugEnabled())
             {
-                if (LOGGER.isDebugEnabled())
+                LOGGER.debug("Initializing cache with url: " + getUrl());
+            }
+            @SuppressWarnings("PMD.PrematureDeclaration")
+            long t0 = System.nanoTime();
+            try
+            {
+                getConnectionAppropriator().appropriateStatement(new StatementUser<Void>()
                 {
-                    LOGGER.debug("Initializing cache with url: " + getUrl());
-                }
-                @SuppressWarnings("PMD.PrematureDeclaration")
-                long t0 = System.nanoTime();
-                try
-                {
-                    getConnectionAppropriator().appropriateStatement(new StatementUser<Void>()
+                    @Override
+                    public Void run(Connection conn, Statement stmt) throws CacheException
                     {
-                        @Override
-                        public Void run(Connection conn, Statement stmt) throws CacheException
-                        {
-                            initSchema(conn, stmt);
-                            return null;
-                        }
-                    });
-                }
-                catch (CacheException e)
-                {
-                    setInitializationFailed(e);
-                    return;
-                }
+                        initSchema(conn, stmt);
+                        return null;
+                    }
+                });
+            }
+            catch (CacheException e)
+            {
+                setInitializationFailed(e);
+                return;
+            }
 
-                createDataTrimmer();
+            createDataTrimmer();
 
-                setOpen();
+            setOpen();
 
-                if (LOGGER.isDebugEnabled())
-                {
-                    LOGGER.debug(StringUtilities.formatTimingMessage("Cache initialized in ", System.nanoTime() - t0));
-                }
+            if (LOGGER.isDebugEnabled())
+            {
+                LOGGER.debug(StringUtilities.formatTimingMessage("Cache initialized in ", System.nanoTime() - t0));
+            }
 
-                ScheduledExecutorService executor = getExecutor();
-                if (executor != null)
-                {
-                    getCacheUtil().startGarbageCollector(getDatabaseTaskFactory(), getSQLGenerator(), getConnectionAppropriator(),
-                            executor);
-                }
+            ScheduledExecutorService executor = getExecutor();
+            if (executor != null)
+            {
+                getCacheUtil().startGarbageCollector(getDatabaseTaskFactory(), getSQLGenerator(), getConnectionAppropriator(),
+                        executor);
             }
         };
 
@@ -702,7 +701,8 @@ public class JdbcCacheImpl implements Cache
     @Override
     public <T> void updateValues(final long[] ids, final Collection<? extends T> input,
             final Collection<? extends PropertyAccessor<? super T, ?>> accessors, Executor executor,
-            CacheModificationListener listener) throws CacheException, NotSerializableException
+            CacheModificationListener listener)
+        throws CacheException, NotSerializableException
     {
         Utilities.checkNull(ids, "ids");
         Utilities.checkNull(input, "input");

@@ -563,7 +563,8 @@ public class SecurityManagerImpl implements SecurityManager
             return;
         }
 
-        final CipherFactory newCipherFactory = new CipherFactory(new DefaultSecretKeyProvider(newSecretKey), DEFAULT_TRANSFORMATION);
+        final CipherFactory newCipherFactory = new CipherFactory(new DefaultSecretKeyProvider(newSecretKey),
+                DEFAULT_TRANSFORMATION);
 
         myDisallowSecretKeyPrompting = true;
         try
@@ -763,8 +764,8 @@ public class SecurityManagerImpl implements SecurityManager
 
         do
         {
-            final CreateSecretKeyPanel createSecretKeyPanel = new CreateSecretKeyPanel(promptMessage, privateKeyAvailable, filter, this,
-                    myPreferencesRegistry);
+            final CreateSecretKeyPanel createSecretKeyPanel = new CreateSecretKeyPanel(promptMessage, privateKeyAvailable, filter,
+                    this, myPreferencesRegistry);
             final OptionDialog dialog = new OptionDialog(SwingUtilities.getWindowAncestor(myDialogParent), createSecretKeyPanel,
                     "Configure Security");
             dialog.buildAndShow();
@@ -773,7 +774,8 @@ public class SecurityManagerImpl implements SecurityManager
                 final SecurityConfiguration config = getConfig().clone();
                 try
                 {
-                    final Pair<SecretKey, CryptoConfig> pair = createSecretKeyPanel.generateSecretKeyAndCryptoConfig(CRYPT_ALGORITHM);
+                    final Pair<SecretKey, CryptoConfig> pair = createSecretKeyPanel
+                            .generateSecretKeyAndCryptoConfig(CRYPT_ALGORITHM);
                     if (pair != null)
                     {
                         result = pair.getFirstObject();
@@ -955,20 +957,16 @@ public class SecurityManagerImpl implements SecurityManager
      */
     private void notifyCipherChangeListeners()
     {
-        ThreadUtilities.runBackground(new Runnable()
+        ThreadUtilities.runBackground(() ->
         {
-            @Override
-            public void run()
+            myCipherChangeSupport.notifyListeners(new Callback<CipherChangeListener>()
             {
-                myCipherChangeSupport.notifyListeners(new Callback<CipherChangeListener>()
+                @Override
+                public void notify(CipherChangeListener listener)
                 {
-                    @Override
-                    public void notify(CipherChangeListener listener)
-                    {
-                        listener.cipherChanged();
-                    }
-                });
-            }
+                    listener.cipherChanged();
+                }
+            });
         });
     }
 

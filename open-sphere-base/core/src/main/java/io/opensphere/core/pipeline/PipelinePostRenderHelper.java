@@ -57,22 +57,11 @@ public class PipelinePostRenderHelper
         @Override
         public void captureScheduled(final FrameBufferCaptureListener externalListener, int interval)
         {
-            Runnable task = new Runnable()
+            Runnable task = () ->
             {
-                @Override
-                public void run()
-                {
-                    // When the task is executed, capture a single frame to send
-                    // to the real listener.
-                    captureSingleFrame(new FrameBufferCaptureListener()
-                    {
-                        @Override
-                        public void handleFrameBufferCaptured(int width, int height, byte[] screenCapture)
-                        {
-                            externalListener.handleFrameBufferCaptured(width, height, screenCapture);
-                        }
-                    });
-                }
+                // When the task is executed, capture a single frame to send
+                // to the real listener.
+                captureSingleFrame((w, h, sc) -> externalListener.handleFrameBufferCaptured(w, h, sc));
             };
 
             ScheduledFuture<?> future = CommonTimer.scheduleAtFixedRate(task, 0, interval);
@@ -202,14 +191,7 @@ public class PipelinePostRenderHelper
 
             // Use an executor to move listener notification off of the GL
             // thread.
-            Runnable notify = new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    notifyListeners();
-                }
-            };
+            Runnable notify = () -> notifyListeners();
             myStreamExecutor.execute(notify);
         }
     }

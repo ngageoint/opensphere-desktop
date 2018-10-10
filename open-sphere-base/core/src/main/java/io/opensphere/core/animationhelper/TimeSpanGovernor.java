@@ -209,9 +209,6 @@ public abstract class TimeSpanGovernor
             callbacks = New.list(myCallbacks);
             myCallbacks.clear();
         }
-        for (Runnable callback : callbacks)
-        {
-            callback.run();
-        }
+        callbacks.forEach(c -> c.run());
     }
 }

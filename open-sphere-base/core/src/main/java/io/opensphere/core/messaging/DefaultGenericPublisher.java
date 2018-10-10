@@ -33,14 +33,7 @@ public class DefaultGenericPublisher<E> implements GenericFilteringPublisher<E>
     private volatile PublishWorker<E> myPending;
 
     /** A runnable that clears {@link #myPending}. */
-    private final Runnable myPendingClearer = new Runnable()
-    {
-        @Override
-        public void run()
-        {
-            myPending = null;
-        }
-    };
+    private final Runnable myPendingClearer = () -> myPending = null;
 
     /** Weak list of subscribers. */
     private final Collection<WeakReference<GenericSubscriber<E>>> mySubscribers = new ArrayList<>();
