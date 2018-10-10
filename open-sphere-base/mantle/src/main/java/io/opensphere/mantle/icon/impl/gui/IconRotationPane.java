@@ -23,7 +23,7 @@ import javafx.scene.layout.Priority;
 public class IconRotationPane extends BorderPane
 {
     /** The logger. */
-    private static final Logger LOGGER = Logger.getLogger(IconRotationDialog.class);
+    private static final Logger LOGGER = Logger.getLogger(IconRotationPane.class);
 
     /** The rotation value model. */
     private final IntegerProperty myRotation = new SimpleIntegerProperty();

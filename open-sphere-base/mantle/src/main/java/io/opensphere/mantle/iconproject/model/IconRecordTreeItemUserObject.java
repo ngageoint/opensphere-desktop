@@ -36,7 +36,7 @@ public interface IconRecordTreeItemUserObject
     /**
      * Gets icon records for this node.
      *
-     * @param recurse the recurse to all children including children folders.
+     * @param recurse whether to get all children including children folders.
      * @return the child {@link IconRecord}s.
      */
     List<IconRecord> getRecords(boolean recurse);

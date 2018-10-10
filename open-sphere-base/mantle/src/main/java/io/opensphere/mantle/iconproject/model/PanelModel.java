@@ -80,7 +80,7 @@ public class PanelModel
     }
 
     /**
-     * The getter for the IconRegistry.
+     * Gets the IconRegistry.
      *
      * @return the icon registry
      */
@@ -90,7 +90,7 @@ public class PanelModel
     }
 
     /**
-     * The getter for the tile width.
+     * Gets the tile width.
      *
      * @return the width of the tiles
      */
@@ -114,7 +114,7 @@ public class PanelModel
      *
      * @return the toolbox
      */
-    public Toolbox getToolBox()
+    public Toolbox getToolbox()
     {
         return myToolbox;
     }
@@ -160,7 +160,7 @@ public class PanelModel
     }
 
     /**
-     * The getter for the icon record list.
+     * Gets the icon record list.
      *
      * @return the icon record list
      */
@@ -170,7 +170,7 @@ public class PanelModel
     }
 
     /**
-     * The setter for the icon record list.
+     * Sets the icon record list.
      *
      * @param list the icon record list
      */

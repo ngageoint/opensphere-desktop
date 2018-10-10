@@ -33,7 +33,7 @@ public class ImportProp
     /**
      * Gets the list of SubCollection names.
      *
-     * @return the List of SubCollection Names that are
+     * @return the List of SubCollection names that are
      *         attached to {@link #myCollectionName}.
      */
     public Set<String> getSubCollectionList()
@@ -46,7 +46,6 @@ public class ImportProp
      * {@link #myCollectionName.}
      *
      * @param the List containing the sub collection names
-     *            as strings.
      */
     public void setSubCollectionList(Set<String> theSubCollectionList)
     {

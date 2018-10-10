@@ -230,7 +230,7 @@ public class MainPanel extends SplitPane
     public void loadFromFile(String collectionName, String subCatName)
     {
         File result = ImageUtil.showImageFileChooser("Choose Icon File", myOwner,
-                myPanelModel.getToolBox().getPreferencesRegistry());
+                myPanelModel.getToolbox().getPreferencesRegistry());
         if (result != null)
         {
             try
@@ -240,9 +240,9 @@ public class MainPanel extends SplitPane
             }
             catch (MalformedURLException e)
             {
-                JFXDialog test = new JFXDialog(myOwner, "Failed to load Icons");
-                test.setFxNode(myScrollPane);
-                test.setVisible(true);
+                JFXDialog failedDialog = new JFXDialog(myOwner, "Failed to load Icons");
+                failedDialog.setFxNode(myScrollPane);
+                failedDialog.setVisible(true);
             }
             refresh();
         }

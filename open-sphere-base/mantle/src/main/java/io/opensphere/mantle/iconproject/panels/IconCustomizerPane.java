@@ -37,13 +37,12 @@ import org.apache.log4j.Logger;
 
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.iconproject.model.PanelModel;
-import io.opensphere.mantle.util.importer.impl.URLDataLoader;
 
 /** Panel for building custom icons. */
 public class IconCustomizerPane extends BorderPane
 {
     /** Logger. */
-    private static final Logger LOGGER = Logger.getLogger(URLDataLoader.class);
+    private static final Logger LOGGER = Logger.getLogger(IconCustomizerPane.class);
 
     /** The rotation value model. */
     private final DoubleProperty myRotation = new SimpleDoubleProperty(0.);
@@ -52,10 +51,10 @@ public class IconCustomizerPane extends BorderPane
     private final DoubleProperty myScale = new SimpleDoubleProperty(1.);
 
     /** The X value model. */
-    private final DoubleProperty myXPos = new SimpleDoubleProperty(0.);
+    private final DoubleProperty myXPosition = new SimpleDoubleProperty(0.);
 
     /** The Y value model. */
-    private final DoubleProperty myYPos = new SimpleDoubleProperty(0.);
+    private final DoubleProperty myYPosition = new SimpleDoubleProperty(0.);
 
     /** The save state selection. */
     private final BooleanProperty mySave = new SimpleBooleanProperty(false);
@@ -111,7 +110,6 @@ public class IconCustomizerPane extends BorderPane
         sizeSlider.setMajorTickUnit(.5);
         sizeSlider.valueProperty().bindBidirectional(myScale);
 
-        final double sizeIncr = .1;
         double maxScale;
         if (myIconDisplay.getBoundsInLocal().getWidth() < 150)
         {
@@ -121,11 +119,11 @@ public class IconCustomizerPane extends BorderPane
         {
             maxScale = 3;
         }
-        Spinner<Number> sizeSpin = new Spinner<>(0.0, maxScale, 1., sizeIncr);
-        sizeSpin.setPrefWidth(mySpinnerWidth);
-        sizeSpin.getValueFactory().valueProperty().bindBidirectional(myScale);
-        sizeSpin.setEditable(true);
-        Label sizeLabel = new Label("Scale: ", sizeSpin);
+        Spinner<Number> sizeSpinner = new Spinner<>(0.0, maxScale, 1., 0.1);
+        sizeSpinner.setPrefWidth(mySpinnerWidth);
+        sizeSpinner.getValueFactory().valueProperty().bindBidirectional(myScale);
+        sizeSpinner.setEditable(true);
+        Label sizeLabel = new Label("Scale: ", sizeSpinner);
         sizeLabel.setContentDisplay(ContentDisplay.RIGHT);
         AnchorPane.setRightAnchor(sizeLabel, 0.);
 
@@ -138,7 +136,7 @@ public class IconCustomizerPane extends BorderPane
             updateImageColor();
         });
         topMenuBar.setSpacing(5);
-        topMenuBar.getChildren().addAll(myColorPicker, sizeLabel, sizeSpin);
+        topMenuBar.getChildren().addAll(myColorPicker, sizeLabel, sizeSpinner);
         return topMenuBar;
     }
 
@@ -152,26 +150,25 @@ public class IconCustomizerPane extends BorderPane
         VBox box = new VBox(8);
         box.setAlignment(Pos.TOP_CENTER);
 
-        Slider rotSlider = new Slider(-180, 180, 0);
-        rotSlider.setOrientation(Orientation.VERTICAL);
-        rotSlider.setShowTickMarks(true);
-        rotSlider.setShowTickLabels(true);
-        rotSlider.setMajorTickUnit(45);
-        rotSlider.valueProperty().bindBidirectional(myRotation);
+        Slider rotationSlider = new Slider(-180, 180, 0);
+        rotationSlider.setOrientation(Orientation.VERTICAL);
+        rotationSlider.setShowTickMarks(true);
+        rotationSlider.setShowTickLabels(true);
+        rotationSlider.setMajorTickUnit(45);
+        rotationSlider.valueProperty().bindBidirectional(myRotation);
 
-        Spinner<Number> rotSpinner = new Spinner<>(-180., 180., 0.);
-        final Double minwidth = 40.;
-        rotSpinner.setPrefWidth(minwidth);
-        rotSpinner.getValueFactory().valueProperty().bindBidirectional(myRotation);
-        rotSpinner.setEditable(true);
-        rotSpinner.getStyleClass().clear();
+        Spinner<Number> rotationSpinner = new Spinner<>(-180., 180., 0.);
+        rotationSpinner.setPrefWidth(40.);
+        rotationSpinner.getValueFactory().valueProperty().bindBidirectional(myRotation);
+        rotationSpinner.setEditable(true);
+        rotationSpinner.getStyleClass().clear();
 
-        Label rotLabel = new Label("Rotation: ", rotSpinner);
-        rotLabel.setContentDisplay(ContentDisplay.BOTTOM);
+        Label rotationLabel = new Label("Rotation: ", rotationSpinner);
+        rotationLabel.setContentDisplay(ContentDisplay.BOTTOM);
 
-        VBox.setVgrow(rotSlider, Priority.ALWAYS);
-        VBox.setVgrow(rotSpinner, Priority.NEVER);
-        box.getChildren().addAll(rotSlider, rotLabel, rotSpinner);
+        VBox.setVgrow(rotationSlider, Priority.ALWAYS);
+        VBox.setVgrow(rotationSpinner, Priority.NEVER);
+        box.getChildren().addAll(rotationSlider, rotationLabel, rotationSpinner);
 
         return box;
     }
@@ -183,30 +180,30 @@ public class IconCustomizerPane extends BorderPane
      */
     private VBox createBottom()
     {
-        VBox cnrlBox = new VBox();
-        cnrlBox.setAlignment(Pos.TOP_LEFT);
+        VBox bottomBox = new VBox();
+        bottomBox.setAlignment(Pos.TOP_LEFT);
 
         HBox controlBox = new HBox(10);
         controlBox.setAlignment(Pos.BASELINE_LEFT);
-        final double spinIncr = 5.;
-        final double spinStrt = 0.;
-        Spinner<Number> xSpin = new Spinner<>(-100, 100, spinStrt, spinIncr);
-        xSpin.setPrefWidth(mySpinnerWidth);
-        xSpin.getValueFactory().valueProperty().bindBidirectional(myXPos);
-        xSpin.setEditable(true);
+        final double spinnerStep = 5.;
+        final double spinnerInitial = 0.;
+        Spinner<Number> xSpinner = new Spinner<>(-100, 100, spinnerInitial, spinnerStep);
+        xSpinner.setPrefWidth(mySpinnerWidth);
+        xSpinner.getValueFactory().valueProperty().bindBidirectional(myXPosition);
+        xSpinner.setEditable(true);
 
-        Spinner<Number> ySpin = new Spinner<>(-125, 125, spinStrt, spinIncr);
-        ySpin.setPrefWidth(mySpinnerWidth);
-        ySpin.getValueFactory().valueProperty().bindBidirectional(myYPos);
-        ySpin.setEditable(true);
+        Spinner<Number> ySpinner = new Spinner<>(-125, 125, spinnerInitial, spinnerStep);
+        ySpinner.setPrefWidth(mySpinnerWidth);
+        ySpinner.getValueFactory().valueProperty().bindBidirectional(myYPosition);
+        ySpinner.setEditable(true);
 
-        Label xLabel = new Label("Position:  X: ", xSpin);
+        Label xLabel = new Label("Position:  X: ", xSpinner);
         xLabel.setContentDisplay(ContentDisplay.RIGHT);
 
-        Label yLabel = new Label("Y: ", ySpin);
+        Label yLabel = new Label("Y: ", ySpinner);
         yLabel.setContentDisplay(ContentDisplay.RIGHT);
 
-        controlBox.getChildren().addAll(xLabel, xSpin, yLabel, ySpin);
+        controlBox.getChildren().addAll(xLabel, xSpinner, yLabel, ySpinner);
 
         HBox saveInfo = new HBox();
 
@@ -220,8 +217,8 @@ public class IconCustomizerPane extends BorderPane
 
         saveInfo.getChildren().addAll(helpInfo, saveState);
         saveInfo.setSpacing(5);
-        cnrlBox.getChildren().addAll(controlBox, saveInfo);
-        return cnrlBox;
+        bottomBox.getChildren().addAll(controlBox, saveInfo);
+        return bottomBox;
     }
 
     /**
@@ -244,8 +241,8 @@ public class IconCustomizerPane extends BorderPane
         
         myIconView = new ImageView(myIconRecord.getImageURL().toString());
         myIconView.rotateProperty().bind(myRotation);
-        myIconView.translateXProperty().bindBidirectional(myXPos);
-        myIconView.translateYProperty().bindBidirectional(myYPos);
+        myIconView.translateXProperty().bindBidirectional(myXPosition);
+        myIconView.translateYProperty().bindBidirectional(myYPosition);
 
         BufferedImage iconActual = null;
         try
@@ -287,10 +284,9 @@ public class IconCustomizerPane extends BorderPane
      */
     private void updateImageColor()
     {
-        final double specConst = .75;
         Lighting lighting = new Lighting();
         lighting.setDiffuseConstant(1.0);
-        lighting.setSpecularConstant(specConst);
+        lighting.setSpecularConstant(0.75);
         lighting.setSpecularExponent(0.0);
         lighting.setSurfaceScale(0.0);
         lighting.setLight(new Light.Distant(45, 45, myColor));
@@ -361,9 +357,9 @@ public class IconCustomizerPane extends BorderPane
      *
      * @return the current Icon's X Position.
      */
-    public int getXPos()
+    public int getXPosition()
     {
-        return myXPos.getValue().intValue();
+        return myXPosition.getValue().intValue();
     }
 
     /**
@@ -371,8 +367,8 @@ public class IconCustomizerPane extends BorderPane
      *
      * @return the current Icon's Y Position.
      */
-    public int getYPos()
+    public int getYPosition()
     {
-        return myYPos.getValue().intValue();
+        return myYPosition.getValue().intValue();
     }
 }

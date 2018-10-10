@@ -63,7 +63,7 @@ public class AddIconDialog extends JFXDialog
         String colName = collectionName;
         String subcategory = subCollectionName;
 
-        MnemonicFileChooser chooser = new MnemonicFileChooser(myPanelModel.getToolBox().getPreferencesRegistry(),
+        MnemonicFileChooser chooser = new MnemonicFileChooser(myPanelModel.getToolbox().getPreferencesRegistry(),
                 "IconManagerFrame");
 
         chooser.setDialogTitle("Choose Folder");

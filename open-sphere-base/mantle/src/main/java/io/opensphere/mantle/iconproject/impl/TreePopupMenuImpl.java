@@ -29,24 +29,24 @@ public class TreePopupMenuImpl
     /**
      * Removes the tree from the display and registry.
      *
-     * @param doDelete the toggle to create
+     * @param doDelete the toggle to delete the icon
      */
     public void remove(boolean doDelete)
     {
         for (int i = 0; i <= myPanelModel.getIconRegistry().getIconIds().max(); i++)
         {
-            IconRecord temp = myPanelModel.getIconRegistry().getIconRecordByIconId(i);
-            if (!(temp == null))
+            IconRecord iconRecord = myPanelModel.getIconRegistry().getIconRecordByIconId(i);
+            if (!(iconRecord == null))
             {
                 @SuppressWarnings("unchecked")
-                TreeItem<String> samp = (TreeItem<String>)myPanelModel.getTreeObject().getMyObsTree().get().getSelectionModel()
+                TreeItem<String> collectionName = (TreeItem<String>)myPanelModel.getTreeObject().getMyObsTree().get().getSelectionModel()
                         .selectedItemProperty().get();
-                if (temp.getCollectionName().equals(samp.getValue()))
+                if (iconRecord.getCollectionName().equals(collectionName.getValue()))
                 {
-                    myPanelModel.getIconRegistry().removeIcon(temp, this);
+                    myPanelModel.getIconRegistry().removeIcon(iconRecord, this);
                     if (doDelete)
                     {
-                        myPanelModel.getIconRegistry().deleteIcon(temp, myPanelModel);
+                        myPanelModel.getIconRegistry().deleteIcon(iconRecord, myPanelModel);
                     }
                 }
             }

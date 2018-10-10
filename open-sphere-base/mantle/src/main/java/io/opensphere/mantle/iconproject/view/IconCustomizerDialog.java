@@ -24,7 +24,6 @@ import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.panels.IconCustomizerPane;
-import io.opensphere.mantle.util.importer.impl.URLDataLoader;
 
 /** The window to customize icons. */
 public class IconCustomizerDialog extends JFXDialog
@@ -33,7 +32,7 @@ public class IconCustomizerDialog extends JFXDialog
     private static final long serialVersionUID = -8284546944940700345L;
 
     /** Logger. */
-    private static final Logger LOGGER = Logger.getLogger(URLDataLoader.class);
+    private static final Logger LOGGER = Logger.getLogger(IconCustomizerDialog.class);
 
     /** The Icon Registry. */
     private final IconRegistry myIconRegistry;
@@ -58,7 +57,7 @@ public class IconCustomizerDialog extends JFXDialog
         setResizable(false);
         setFxNode(pane);
         setAcceptListener(() -> saveImage(pane.getFinalImage(), pane.getImageName(), pane.getSaveState(), pane.getIconRecord(),
-                pane.getXPos(), pane.getYPos()));
+                pane.getXPosition(), pane.getYPosition()));
     }
 
     /**

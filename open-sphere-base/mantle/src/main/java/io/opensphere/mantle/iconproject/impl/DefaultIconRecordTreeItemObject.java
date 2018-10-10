@@ -41,12 +41,12 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
     /**
      * Creates the folder node.
      *
-     * @param item the treeItem
+     * @param item the TreeItem
      * @param label the label
      * @param nametype the nametype
      * @param parent the name of the parent treeItem
      *
-     * @return the default icon record tree node user object
+     * @return a new node of the folder type
      */
     public static DefaultIconRecordTreeItemObject createFolderNode(TreeItem<String> item, String label, NameType nametype,
             String parent)
@@ -57,13 +57,13 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
     /**
      * Creates the leaf node.
      *
-     * @param item the treeItem
+     * @param item the TreeItem
      * @param label the label
      * @param recs the list of icon records
      * @param nametype the nametype
      * @param parent the name of the parent treeItem
      *
-     * @return the default icon record tree node user object
+     * @return a new node of the leaf type
      */
     public static DefaultIconRecordTreeItemObject createLeafNode(TreeItem<String> item, String label, List<IconRecord> recs,
             NameType nametype, String parent)
@@ -74,7 +74,7 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
     /**
      * Instantiates a new default icon record tree node user object.
      *
-     * @param item the treeItem
+     * @param item the TreeItem
      * @param label the label
      * @param records the list of icon records
      * @param type the type
@@ -141,7 +141,7 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
      * Gets the children records.
      *
      * @param addToList the add to list
-     * @param item the treeItem
+     * @param item the TreeItem
      * @param recurse the recurse
      */
     private void getChildrenRecords(List<IconRecord> addToList, TreeItem<String> item, boolean recurse)
