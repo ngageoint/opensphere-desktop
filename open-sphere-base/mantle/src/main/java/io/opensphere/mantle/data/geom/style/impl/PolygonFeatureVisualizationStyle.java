@@ -126,7 +126,7 @@ public class PolygonFeatureVisualizationStyle extends AbstractPathVisualizationS
             MapPolygonGeometrySupport mpgs = (MapPolygonGeometrySupport)bd.getMGS();
             MapVisualizationInfo mapVisInfo = bd.getDataType() == null ? null : bd.getDataType().getMapVisualizationInfo();
             BasicVisualizationInfo basicVisInfo = bd.getDataType() == null ? null : bd.getDataType().getBasicVisualizationInfo();
-            PolygonGeometry.Builder<GeographicPosition> polygonBuilder = new PolygonGeometry.Builder<GeographicPosition>();
+            PolygonGeometry.Builder<GeographicPosition> polygonBuilder = new PolygonGeometry.Builder<>();
             PolygonRenderProperties props = getRenderProperties(mapVisInfo, basicVisInfo, bd.getVS(), renderPropertyPool);
             polygonBuilder.setDataModelId(bd.getGeomId());
             polygonBuilder.setLineType(mpgs.getLineType() == null ? LineType.STRAIGHT_LINE : mpgs.getLineType());
@@ -432,7 +432,7 @@ public class PolygonFeatureVisualizationStyle extends AbstractPathVisualizationS
                         LineSegment2d crossSegment = getCrossingSegment(segment, convertedPolygon);
                         if (crossSegment != null)
                         {
-                            lineSegments.add(new Pair<LineSegment2d, LineSegment2d>(segment, crossSegment));
+                            lineSegments.add(new Pair<>(segment, crossSegment));
                         }
                     }
                 }

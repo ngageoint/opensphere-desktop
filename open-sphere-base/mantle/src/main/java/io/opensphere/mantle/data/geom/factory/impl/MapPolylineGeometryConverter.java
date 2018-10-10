@@ -44,7 +44,7 @@ public final class MapPolylineGeometryConverter extends AbstractGeometryConverte
         BasicVisualizationInfo basicVisInfo = dti.getBasicVisualizationInfo();
         boolean pickable = basicVisInfo != null && basicVisInfo.getLoadsTo().isPickable();
         int zOrder = visState.isSelected() ? ZOrderRenderProperties.TOP_Z : mapVisInfo == null ? 1000 : mapVisInfo.getZOrder();
-        PolylineGeometry.Builder<GeographicPosition> polylineBuilder = new PolylineGeometry.Builder<GeographicPosition>();
+        PolylineGeometry.Builder<GeographicPosition> polylineBuilder = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = createPolylineRenderProperties(geomSupport, visState, renderPropertyPool, pickable,
                 zOrder);
         polylineBuilder.setDataModelId(id);

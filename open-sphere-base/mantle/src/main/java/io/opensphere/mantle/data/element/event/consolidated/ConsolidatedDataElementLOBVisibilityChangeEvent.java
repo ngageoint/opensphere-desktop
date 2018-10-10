@@ -32,9 +32,9 @@ public class ConsolidatedDataElementLOBVisibilityChangeEvent extends AbstractCon
     {
         super(regIds, dataTypeKeys, source);
         myLobVisible = Collections
-                .unmodifiableList(visibleIds instanceof LinkedList<?> ? new ArrayList<Long>(visibleIds) : visibleIds);
+                .unmodifiableList(visibleIds instanceof LinkedList<?> ? new ArrayList<>(visibleIds) : visibleIds);
         myLobInvisible = Collections
-                .unmodifiableList(invisibleIds instanceof LinkedList<?> ? new ArrayList<Long>(invisibleIds) : invisibleIds);
+                .unmodifiableList(invisibleIds instanceof LinkedList<?> ? new ArrayList<>(invisibleIds) : invisibleIds);
     }
 
     /**
@@ -52,9 +52,9 @@ public class ConsolidatedDataElementLOBVisibilityChangeEvent extends AbstractCon
     {
         super(regIds, dataTypeKey, source);
         myLobVisible = Collections
-                .unmodifiableList(visibleIds instanceof LinkedList<?> ? new ArrayList<Long>(visibleIds) : visibleIds);
+                .unmodifiableList(visibleIds instanceof LinkedList<?> ? new ArrayList<>(visibleIds) : visibleIds);
         myLobInvisible = Collections
-                .unmodifiableList(invisibleIds instanceof LinkedList<?> ? new ArrayList<Long>(invisibleIds) : invisibleIds);
+                .unmodifiableList(invisibleIds instanceof LinkedList<?> ? new ArrayList<>(invisibleIds) : invisibleIds);
     }
 
     /**
@@ -72,9 +72,9 @@ public class ConsolidatedDataElementLOBVisibilityChangeEvent extends AbstractCon
     {
         super(regIds, dataTypeKeys, source);
         myLobVisible = Collections
-                .unmodifiableList(visibleIds instanceof LinkedList<?> ? new ArrayList<Long>(visibleIds) : visibleIds);
+                .unmodifiableList(visibleIds instanceof LinkedList<?> ? new ArrayList<>(visibleIds) : visibleIds);
         myLobInvisible = Collections
-                .unmodifiableList(invisibleIds instanceof LinkedList<?> ? new ArrayList<Long>(invisibleIds) : invisibleIds);
+                .unmodifiableList(invisibleIds instanceof LinkedList<?> ? new ArrayList<>(invisibleIds) : invisibleIds);
     }
 
     /**

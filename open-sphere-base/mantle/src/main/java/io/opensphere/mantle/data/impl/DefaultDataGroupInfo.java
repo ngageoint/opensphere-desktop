@@ -457,7 +457,7 @@ public class DefaultDataGroupInfo implements DataGroupInfo
         try
         {
             DefaultGroupInfoTreeNodeData nodeData = new DefaultGroupInfoTreeNodeData(myId, myDisplayName,
-                    new HashSet<DataTypeInfo>(myMemberSet), this);
+                    new HashSet<>(myMemberSet), this);
             node = new DefaultMutableTreeNode(nodeData, false);
 
             if (!myChildren.isEmpty())

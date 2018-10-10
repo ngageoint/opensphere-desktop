@@ -44,7 +44,7 @@ public interface DataGroupInfo
     /**
      * Comparator that orders {@link DataGroupInfo}s by their display names (case insensitive).
      */
-    Comparator<DataGroupInfo> CASE_INSENSITIVE_DISPLAY_NAME_COMPARATOR = new Comparator<DataGroupInfo>()
+    Comparator<DataGroupInfo> CASE_INSENSITIVE_DISPLAY_NAME_COMPARATOR = new Comparator<>()
     {
         @Override
         public int compare(DataGroupInfo o1, DataGroupInfo o2)
@@ -59,7 +59,7 @@ public interface DataGroupInfo
     };
 
     /** Comparator that orders {@link DataGroupInfo}s by their display names. */
-    Comparator<DataGroupInfo> DISPLAY_NAME_COMPARATOR = new Comparator<DataGroupInfo>()
+    Comparator<DataGroupInfo> DISPLAY_NAME_COMPARATOR = new Comparator<>()
     {
         @Override
         public int compare(DataGroupInfo o1, DataGroupInfo o2)
@@ -79,7 +79,7 @@ public interface DataGroupInfo
     /**
      * Comparator that orders {@link DataGroupInfo}s by their long display names.
      */
-    Comparator<DataGroupInfo> LONG_DISPLAY_NAME_COMPARATOR = new Comparator<DataGroupInfo>()
+    Comparator<DataGroupInfo> LONG_DISPLAY_NAME_COMPARATOR = new Comparator<>()
     {
         @Override
         public int compare(DataGroupInfo o1, DataGroupInfo o2)

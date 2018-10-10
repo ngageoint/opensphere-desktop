@@ -192,7 +192,7 @@ public class FilterGuiModTileVisualizationStyle extends AbstractTileVisualizatio
     public void setShaderParameters(ShaderPropertiesSet sps)
     {
         Collection<Pair<String, float[]>> fUnis = New.collection();
-        fUnis.add(new Pair<String, float[]>("uDrift", new float[] { getDriftFactor() }));
+        fUnis.add(new Pair<>("uDrift", new float[] { getDriftFactor() }));
         sps.setFloatUniforms(fUnis);
     }
 }

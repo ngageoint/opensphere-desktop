@@ -309,9 +309,9 @@ public class FilterSquareToothFaderTileVisualizationStyle extends AbstractTileVi
     public void setShaderParameters(ShaderPropertiesSet sps)
     {
         Collection<Pair<String, float[]>> fUnis = New.collection();
-        fUnis.add(new Pair<String, float[]>("uBeginVal", new float[] { getRangeBegin() }));
-        fUnis.add(new Pair<String, float[]>("uEndVal", new float[] { getRangeBegin() + getRangeNoiseChannelWidth() }));
-        fUnis.add(new Pair<String, float[]>("uReplaceVal", new float[] { getReduceFactor() }));
+        fUnis.add(new Pair<>("uBeginVal", new float[] { getRangeBegin() }));
+        fUnis.add(new Pair<>("uEndVal", new float[] { getRangeBegin() + getRangeNoiseChannelWidth() }));
+        fUnis.add(new Pair<>("uReplaceVal", new float[] { getReduceFactor() }));
         sps.setFloatUniforms(fUnis);
     }
 }

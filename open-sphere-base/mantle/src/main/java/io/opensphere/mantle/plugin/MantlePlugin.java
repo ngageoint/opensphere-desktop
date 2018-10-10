@@ -171,37 +171,37 @@ public class MantlePlugin extends PluginAdapter
      */
     private void createAndInstallEventCoalescers()
     {
-        myDataElementHighlightChangeCoalescer = new EventCoalescer<DataElementHighlightChangeEvent>(myToolbox.getEventManager(),
+        myDataElementHighlightChangeCoalescer = new EventCoalescer<>(myToolbox.getEventManager(),
                 DataElementHighlightChangeEvent.class, new DataElementHighlightChangeConsolidator());
         myDataElementHighlightChangeCoalescer.start();
 
-        myDataElementVisibilityChangeCoalescer = new EventCoalescer<DataElementVisibilityChangeEvent>(myToolbox.getEventManager(),
+        myDataElementVisibilityChangeCoalescer = new EventCoalescer<>(myToolbox.getEventManager(),
                 DataElementVisibilityChangeEvent.class, new DataElementVisibilityChangeConsolidator());
         myDataElementVisibilityChangeCoalescer.start();
 
-        myDataElementAltitudeChangeCoalescer = new EventCoalescer<DataElementAltitudeChangeEvent>(myToolbox.getEventManager(),
+        myDataElementAltitudeChangeCoalescer = new EventCoalescer<>(myToolbox.getEventManager(),
                 DataElementAltitudeChangeEvent.class, new DataElementAltitudeChangeConsolidator());
         myDataElementAltitudeChangeCoalescer.start();
 
-        myDataElementColorChangeCoalescer = new EventCoalescer<DataElementColorChangeEvent>(myToolbox.getEventManager(),
+        myDataElementColorChangeCoalescer = new EventCoalescer<>(myToolbox.getEventManager(),
                 DataElementColorChangeEvent.class, new DataElementColorChangeConsolidator());
         myDataElementColorChangeCoalescer.start();
 
-        myDataElementLOBVisibleChangeCoalescer = new EventCoalescer<DataElementLOBVsibilityChangeEvent>(
+        myDataElementLOBVisibleChangeCoalescer = new EventCoalescer<>(
                 myToolbox.getEventManager(), DataElementLOBVsibilityChangeEvent.class,
                 new DataElementLOBVisibilityChangeConsolidator());
         myDataElementLOBVisibleChangeCoalescer.start();
 
-        myDataElementSelectionChangeCoalescer = new EventCoalescer<DataElementSelectionChangeEvent>(myToolbox.getEventManager(),
+        myDataElementSelectionChangeCoalescer = new EventCoalescer<>(myToolbox.getEventManager(),
                 DataElementSelectionChangeEvent.class, new DataElementSelectionChangeConsolidator());
         myDataElementSelectionChangeCoalescer.start();
 
-        myDataElementMapGeometrySupportChangeCoalescer = new EventCoalescer<DataElementMapGeometrySupportChangeEvent>(
+        myDataElementMapGeometrySupportChangeCoalescer = new EventCoalescer<>(
                 myToolbox.getEventManager(), DataElementMapGeometrySupportChangeEvent.class,
                 new DataElementMapGeometrySupportChangeConsolidator());
         myDataElementSelectionChangeCoalescer.start();
 
-        myDataElementMetaDataChangeCoalescer = new EventCoalescer<DataElementMetaDataValueChangeEvent>(
+        myDataElementMetaDataChangeCoalescer = new EventCoalescer<>(
                 myToolbox.getEventManager(), DataElementMetaDataValueChangeEvent.class,
                 new DataElementMetaDataValueChangeConsolidator());
         myDataElementMetaDataChangeCoalescer.start();

@@ -13,7 +13,7 @@ public interface MutableMapAnnotationPoint extends MapAnnotationPoint
      * Comparator that orders {@link MutableMapAnnotationPoint}s by their
      * display names.
      */
-    Comparator<MutableMapAnnotationPoint> TITLE_COMPARATOR = new Comparator<MutableMapAnnotationPoint>()
+    Comparator<MutableMapAnnotationPoint> TITLE_COMPARATOR = new Comparator<>()
     {
         @Override
         public int compare(MutableMapAnnotationPoint o1, MutableMapAnnotationPoint o2)

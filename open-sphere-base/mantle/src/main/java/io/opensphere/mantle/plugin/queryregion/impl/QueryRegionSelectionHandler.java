@@ -37,7 +37,7 @@ public class QueryRegionSelectionHandler implements Service
     private final Supplier<Collection<? extends QueryRegion>> myQueryRegionSupplier;
 
     /** Handler for region selection. */
-    private final ContextActionProvider<GeometryContextKey> myRegionSelectionHandler = new ContextActionProvider<GeometryContextKey>()
+    private final ContextActionProvider<GeometryContextKey> myRegionSelectionHandler = new ContextActionProvider<>()
     {
         @Override
         public boolean doAction(String contextId, GeometryContextKey key, int x, int y)

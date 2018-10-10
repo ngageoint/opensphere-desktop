@@ -469,7 +469,7 @@ public class DefaultMapAnnotationPointGroup implements MutableMapAnnotationPoint
         myModificationLock.readLock().lock();
         try
         {
-            returnSet = new ArrayList<MapAnnotationPoint>(myMemberSet);
+            returnSet = new ArrayList<>(myMemberSet);
 
             if (recurseChildren)
             {

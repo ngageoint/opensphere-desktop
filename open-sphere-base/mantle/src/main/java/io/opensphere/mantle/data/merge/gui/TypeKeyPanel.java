@@ -300,7 +300,7 @@ public abstract class TypeKeyPanel extends JPanel
                     Object[] objs = getListModel().toArray();
                     getListModel().removeAllElements();
                     List<Object> objList = New.list(objs);
-                    Collections.sort(objList, new Comparator<Object>()
+                    Collections.sort(objList, new Comparator<>()
                     {
                         @Override
                         public int compare(Object o1, Object o2)

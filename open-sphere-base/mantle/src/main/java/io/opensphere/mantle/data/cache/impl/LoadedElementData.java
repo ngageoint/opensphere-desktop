@@ -275,7 +275,7 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
                     // the compiled class instance so we continue to operate
                     // even if not as efficiently as we could.
                     myMetaData = el.getMetaData().getValues() == null ? null
-                            : new ArrayList<Object>(convertValuesIfNecessary(deReg, el, el.getMetaData().getValues()));
+                            : new ArrayList<>(convertValuesIfNecessary(deReg, el, el.getMetaData().getValues()));
                 }
             }
             catch (ReflectiveOperationException e)
@@ -287,7 +287,7 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
         else
         {
             myMetaData = el.getMetaData().getValues() == null ? null
-                    : new ArrayList<Object>(convertValuesIfNecessary(deReg, el, el.getMetaData().getValues()));
+                    : new ArrayList<>(convertValuesIfNecessary(deReg, el, el.getMetaData().getValues()));
         }
 
         myOriginId = el.getId();

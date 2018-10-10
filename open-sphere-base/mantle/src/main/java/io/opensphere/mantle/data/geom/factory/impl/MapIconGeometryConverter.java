@@ -60,7 +60,7 @@ public final class MapIconGeometryConverter extends AbstractGeometryConverter
         MapVisualizationInfo mapVisInfo = dti.getMapVisualizationInfo();
         BasicVisualizationInfo basicVisInfo = dti.getBasicVisualizationInfo();
 
-        PointSpriteGeometry.Builder<GeographicPosition> iconBuilder = new PointSpriteGeometry.Builder<GeographicPosition>();
+        PointSpriteGeometry.Builder<GeographicPosition> iconBuilder = new PointSpriteGeometry.Builder<>();
 
         PointRenderProperties props = getIconSizeRenderPropertiesIfAvailable(visState, mapVisInfo, basicVisInfo,
                 renderPropertyPool, geomSupport, visState.isSelected() ? MantleConstants.SELECT_COLOR : geomSupport.getColor());

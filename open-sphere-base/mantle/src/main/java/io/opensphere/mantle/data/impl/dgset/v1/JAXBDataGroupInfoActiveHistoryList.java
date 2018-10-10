@@ -109,7 +109,7 @@ public class JAXBDataGroupInfoActiveHistoryList
         myHistoryListLock.lock();
         try
         {
-            result = new ArrayList<DataGroupInfoActiveHistoryRecord>(myHistoryList);
+            result = new ArrayList<>(myHistoryList);
         }
         finally
         {

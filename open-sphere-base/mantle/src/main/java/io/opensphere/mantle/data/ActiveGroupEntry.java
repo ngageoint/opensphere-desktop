@@ -8,7 +8,7 @@ import java.util.Comparator;
 public interface ActiveGroupEntry
 {
     /** The Comparator by name. */
-    Comparator<ActiveGroupEntry> ComparatorByName = new Comparator<ActiveGroupEntry>()
+    Comparator<ActiveGroupEntry> ComparatorByName = new Comparator<>()
     {
         @Override
         public int compare(ActiveGroupEntry o1, ActiveGroupEntry o2)

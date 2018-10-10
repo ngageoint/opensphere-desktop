@@ -52,7 +52,7 @@ public class ColumnMappingResourcesImpl implements ColumnMappingResources
         myController = controller;
         myParentFrameProvider = parentFrameProvider;
         groupCtrl = dataGroupController;
-        myDataTypeCache = new SimpleCache<String, DataTypeInfo>(New.map(), groupCtrl::findMemberById);
+        myDataTypeCache = new SimpleCache<>(New.map(), groupCtrl::findMemberById);
     }
 
     @Override

@@ -171,7 +171,7 @@ public final class DataGroupInfoKeyMap implements DataGroupInfoLookup
         myDGIKeyToDGIMapLock.lock();
         try
         {
-            myDGIKeyToDGIMap.put(key, new WeakReference<DataGroupInfo>(dgi));
+            myDGIKeyToDGIMap.put(key, new WeakReference<>(dgi));
         }
         finally
         {

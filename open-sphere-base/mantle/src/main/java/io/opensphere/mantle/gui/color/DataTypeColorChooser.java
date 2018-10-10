@@ -114,7 +114,7 @@ public final class DataTypeColorChooser extends SplitButton implements Service
      */
     private JPanel createQuickSelectionPanel()
     {
-        Consumer<Color> modelUpdator = new Consumer<Color>()
+        Consumer<Color> modelUpdator = new Consumer<>()
         {
             @Override
             public void accept(Color color)
@@ -199,7 +199,7 @@ public final class DataTypeColorChooser extends SplitButton implements Service
         final ColorPicker picker = new ColorPicker(true, true);
         picker.setColor(myIcon.getColor());
 
-        Consumer<Color> pickerUpdator = new Consumer<Color>()
+        Consumer<Color> pickerUpdator = new Consumer<>()
         {
             @Override
             public void accept(Color color)

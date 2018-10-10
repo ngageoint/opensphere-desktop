@@ -13,7 +13,7 @@ import io.opensphere.mantle.data.DataTypeInfo;
 public class DataLayerFilter implements Predicate<DataGroupInfo>
 {
     /** Predicate that determines if a data type is filterable. */
-    public static final Predicate<DataTypeInfo> DATA_TYPE_FILTERABLE = new Predicate<DataTypeInfo>()
+    public static final Predicate<DataTypeInfo> DATA_TYPE_FILTERABLE = new Predicate<>()
     {
         @Override
         public boolean test(DataTypeInfo dataType)

@@ -13,7 +13,7 @@ import io.opensphere.core.util.lang.BitArrays;
 public class VisualizationState implements Serializable
 {
     /** The VisualizationState property descriptor. */
-    public static final PropertyDescriptor<VisualizationState> PROPERTY_DESCRIPTOR = new PropertyDescriptor<VisualizationState>(
+    public static final PropertyDescriptor<VisualizationState> PROPERTY_DESCRIPTOR = new PropertyDescriptor<>(
             VisualizationState.class.getName(), VisualizationState.class);
 
     /** The serialVersionUID. */

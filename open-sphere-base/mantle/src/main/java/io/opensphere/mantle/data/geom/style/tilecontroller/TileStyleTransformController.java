@@ -151,7 +151,7 @@ public class TileStyleTransformController implements VisualizationStyleRegistryC
      */
     private EventListener<AbstractDataGroupInfoChangeEvent> createDGIChangeListener()
     {
-        EventListener<AbstractDataGroupInfoChangeEvent> listener = new EventListener<AbstractDataGroupInfoChangeEvent>()
+        EventListener<AbstractDataGroupInfoChangeEvent> listener = new EventListener<>()
         {
             @Override
             public void notify(AbstractDataGroupInfoChangeEvent event)

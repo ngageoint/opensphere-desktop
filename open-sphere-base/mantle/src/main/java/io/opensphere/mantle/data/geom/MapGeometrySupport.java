@@ -18,7 +18,7 @@ import io.opensphere.mantle.data.VisualizationSupport;
 public interface MapGeometrySupport extends Serializable, VisualizationSupport
 {
     /** Property descriptor used in the data registry. */
-    PropertyDescriptor<MapGeometrySupport> PROPERTY_DESCRIPTOR = new PropertyDescriptor<MapGeometrySupport>("mapGeometrySupport",
+    PropertyDescriptor<MapGeometrySupport> PROPERTY_DESCRIPTOR = new PropertyDescriptor<>("mapGeometrySupport",
             MapGeometrySupport.class);
 
     // TODO remove this until surfaces is re-implemented

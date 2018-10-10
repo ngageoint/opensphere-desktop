@@ -19,7 +19,7 @@ import io.opensphere.mantle.icon.IconProvider;
 public final class IconProviderFactory
 {
     /** The Constant iconFileTypeFilter. */
-    private static final Predicate<File> ourIconFileTypeFilter = new Predicate<File>()
+    private static final Predicate<File> ourIconFileTypeFilter = new Predicate<>()
     {
         @Override
         public boolean test(File value)

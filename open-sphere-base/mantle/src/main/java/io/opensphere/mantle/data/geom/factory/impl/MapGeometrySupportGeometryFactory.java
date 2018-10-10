@@ -78,7 +78,7 @@ public class MapGeometrySupportGeometryFactory
             throw new IllegalArgumentException(mgs.getClass().getName() + " is not currently supported");
         }
 
-        Set<Geometry> resultSet = addToSet == null ? new HashSet<Geometry>() : addToSet;
+        Set<Geometry> resultSet = addToSet == null ? new HashSet<>() : addToSet;
 
         if (addToSet != null)
         {

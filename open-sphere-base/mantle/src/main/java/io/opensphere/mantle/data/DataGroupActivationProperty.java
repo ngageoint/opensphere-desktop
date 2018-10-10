@@ -27,7 +27,7 @@ public class DataGroupActivationProperty extends CancellableThreePhaseProperty<A
      * Internal activation listener that ensures the state transitions are
      * legal.
      */
-    private final ThreePhaseChangeListener<ActivationState> myListener = new ThreePhaseChangeListener<ActivationState>()
+    private final ThreePhaseChangeListener<ActivationState> myListener = new ThreePhaseChangeListener<>()
     {
         @Override
         public void commit(ActivationState state, Phaser phaser)

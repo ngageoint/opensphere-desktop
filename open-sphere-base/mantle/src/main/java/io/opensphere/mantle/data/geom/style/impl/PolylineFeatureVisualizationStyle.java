@@ -174,7 +174,7 @@ public class PolylineFeatureVisualizationStyle extends AbstractPathVisualization
     private PolylineGeometry.Builder<GeographicPosition> createPolylineBuilder(FeatureIndividualGeometryBuilderData bd,
             MapVisualizationInfo mapVisInfo, BasicVisualizationInfo basicVisInfo)
     {
-        PolylineGeometry.Builder<GeographicPosition> polylineBuilder = new PolylineGeometry.Builder<GeographicPosition>();
+        PolylineGeometry.Builder<GeographicPosition> polylineBuilder = new PolylineGeometry.Builder<>();
         polylineBuilder.setDataModelId(bd.getGeomId());
         return polylineBuilder;
     }

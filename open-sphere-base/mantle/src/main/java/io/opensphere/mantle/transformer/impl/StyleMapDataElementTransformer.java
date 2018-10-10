@@ -81,7 +81,7 @@ public class StyleMapDataElementTransformer extends AbstractMapDataElementTransf
     @Override
     public EventListener<AbstractConsolidatedDataElementChangeEvent> createDataElementChangeListener()
     {
-        return new EventListener<AbstractConsolidatedDataElementChangeEvent>()
+        return new EventListener<>()
         {
             @Override
             public void notify(AbstractConsolidatedDataElementChangeEvent event)
@@ -97,7 +97,7 @@ public class StyleMapDataElementTransformer extends AbstractMapDataElementTransf
     @Override
     public EventListener<AbstractDataTypeInfoChangeEvent> createDataTypeChangeListener()
     {
-        return new EventListener<AbstractDataTypeInfoChangeEvent>()
+        return new EventListener<>()
         {
             @Override
             public void notify(AbstractDataTypeInfoChangeEvent event)
@@ -235,7 +235,7 @@ public class StyleMapDataElementTransformer extends AbstractMapDataElementTransf
      */
     private EventListener<ActiveDataGroupsChangedEvent> createActiveDataGroupsChangedListener()
     {
-        return new EventListener<ActiveDataGroupsChangedEvent>()
+        return new EventListener<>()
         {
             @Override
             public void notify(ActiveDataGroupsChangedEvent event)

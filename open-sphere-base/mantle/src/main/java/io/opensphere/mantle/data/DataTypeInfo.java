@@ -23,7 +23,7 @@ public interface DataTypeInfo extends Model, Comparable<DataTypeInfo>
      * Comparator that orders {@link DataTypeInfo}s by their display names (Case
      * insensitive).
      */
-    Comparator<DataTypeInfo> CASE_INSENSITIVE_DISPLAY_NAME_COMPARATOR = new Comparator<DataTypeInfo>()
+    Comparator<DataTypeInfo> CASE_INSENSITIVE_DISPLAY_NAME_COMPARATOR = new Comparator<>()
     {
         @Override
         public int compare(DataTypeInfo o1, DataTypeInfo o2)
@@ -38,7 +38,7 @@ public interface DataTypeInfo extends Model, Comparable<DataTypeInfo>
     };
 
     /** Comparator that orders {@link DataTypeInfo}s by their display names. */
-    Comparator<DataTypeInfo> DISPLAY_NAME_COMPARATOR = new Comparator<DataTypeInfo>()
+    Comparator<DataTypeInfo> DISPLAY_NAME_COMPARATOR = new Comparator<>()
     {
         @Override
         public int compare(DataTypeInfo o1, DataTypeInfo o2)

@@ -11,7 +11,7 @@ import io.opensphere.mantle.data.element.DynamicMetaDataList;
 public class CacheEntryDynamicMetaDataListSerializableAccessor extends SerializableAccessor<CacheEntry, DynamicMetaDataList>
 {
     /** Property descriptor used in the data registry. */
-    public static final PropertyDescriptor<DynamicMetaDataList> PROPERTY_DESCRIPTOR = new PropertyDescriptor<DynamicMetaDataList>(
+    public static final PropertyDescriptor<DynamicMetaDataList> PROPERTY_DESCRIPTOR = new PropertyDescriptor<>(
             "dynamicMetaDataList", DynamicMetaDataList.class);
 
     /**

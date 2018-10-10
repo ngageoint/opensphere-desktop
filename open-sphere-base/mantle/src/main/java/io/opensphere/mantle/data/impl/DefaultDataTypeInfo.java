@@ -207,7 +207,7 @@ public class DefaultDataTypeInfo implements DataTypeInfo
         // Set to default value
         setBasicVisualizationInfo(null);
 
-        myStreamingChangeListener = new ChangeListener<Boolean>()
+        myStreamingChangeListener = new ChangeListener<>()
         {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)

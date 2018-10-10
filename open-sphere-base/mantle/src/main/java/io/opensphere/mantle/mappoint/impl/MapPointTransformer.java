@@ -389,7 +389,7 @@ public class MapPointTransformer extends DefaultTransformer
             previousGeom.add(myAnnotationDots.get(mapPoint.getId()));
         }
 
-        PointGeometry.Builder<GeographicPosition> pointBuilder = new PointGeometry.Builder<GeographicPosition>();
+        PointGeometry.Builder<GeographicPosition> pointBuilder = new PointGeometry.Builder<>();
         pointBuilder.setDataModelId(mapPoint.getId());
         PointRenderProperties props = new DefaultPointRenderProperties(ZOrderRenderProperties.TOP_Z, true, true, true);
         props.setColor(mapPoint.getColor());
@@ -589,7 +589,7 @@ public class MapPointTransformer extends DefaultTransformer
         eastPoints.add(eastCenter);
         eastPoints.add(east);
 
-        PolylineGeometry.Builder<ScreenPosition> eastLineBuilder = new PolylineGeometry.Builder<ScreenPosition>();
+        PolylineGeometry.Builder<ScreenPosition> eastLineBuilder = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = new DefaultPolylineRenderProperties(ZOrderRenderProperties.TOP_Z, true, false);
         props.setColor(Color.CYAN);
         props.setWidth(1);
@@ -615,7 +615,7 @@ public class MapPointTransformer extends DefaultTransformer
         northPoints.add(northCenter);
         northPoints.add(north);
 
-        PolylineGeometry.Builder<ScreenPosition> northLineBuilder = new PolylineGeometry.Builder<ScreenPosition>();
+        PolylineGeometry.Builder<ScreenPosition> northLineBuilder = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = new DefaultPolylineRenderProperties(ZOrderRenderProperties.TOP_Z, true, false);
         props.setColor(Color.CYAN);
         props.setWidth(1);
@@ -641,7 +641,7 @@ public class MapPointTransformer extends DefaultTransformer
         southPoints.add(south);
         southPoints.add(southCenter);
 
-        PolylineGeometry.Builder<ScreenPosition> southLineBuilder = new PolylineGeometry.Builder<ScreenPosition>();
+        PolylineGeometry.Builder<ScreenPosition> southLineBuilder = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = new DefaultPolylineRenderProperties(ZOrderRenderProperties.TOP_Z, true, false);
         props.setColor(Color.CYAN);
         props.setWidth(1);
@@ -667,7 +667,7 @@ public class MapPointTransformer extends DefaultTransformer
         westPoints.add(west);
         westPoints.add(westCenter);
 
-        PolylineGeometry.Builder<ScreenPosition> westLineBuilder = new PolylineGeometry.Builder<ScreenPosition>();
+        PolylineGeometry.Builder<ScreenPosition> westLineBuilder = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = new DefaultPolylineRenderProperties(ZOrderRenderProperties.TOP_Z, true, false);
         props.setColor(Color.CYAN);
         props.setWidth(1);

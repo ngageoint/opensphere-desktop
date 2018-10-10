@@ -13,7 +13,7 @@ public class CacheEntryOriginIdSerializableAccessor extends SerializableAccessor
     public static final String CACHE_ENTRY_ORIGIN_ID_PROPERTY_NAME = "CacheEntryOrigin.ID";
 
     /** The data element origin id property descriptor. */
-    public static final PropertyDescriptor<Long> CACHE_ENTRY_ORIGIN_ID_PROPERTY_DESCRIPTOR = new PropertyDescriptor<Long>(
+    public static final PropertyDescriptor<Long> CACHE_ENTRY_ORIGIN_ID_PROPERTY_DESCRIPTOR = new PropertyDescriptor<>(
             CACHE_ENTRY_ORIGIN_ID_PROPERTY_NAME, Long.class);
 
     /**

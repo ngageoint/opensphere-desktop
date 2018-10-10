@@ -166,7 +166,7 @@ public class BlendColorTileVisualizationStyle extends AbstractTileVisualizationS
     public void setShaderParameters(ShaderPropertiesSet sps)
     {
         Collection<Pair<String, float[]>> fUnis = New.collection();
-        fUnis.add(new Pair<String, float[]>("uBlendColor", getBlendColor().getComponents(null)));
+        fUnis.add(new Pair<>("uBlendColor", getBlendColor().getComponents(null)));
         sps.setFloatUniforms(fUnis);
     }
 }

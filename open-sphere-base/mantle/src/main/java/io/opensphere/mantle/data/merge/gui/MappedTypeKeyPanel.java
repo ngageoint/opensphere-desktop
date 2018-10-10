@@ -447,7 +447,7 @@ public class MappedTypeKeyPanel extends TypeKeyPanel implements ActionListener, 
             {
                 mergeClassName = myTypes.iterator().next();
             }
-            return new Tuple2<ConversionHint, String>(hint, mergeClassName);
+            return new Tuple2<>(hint, mergeClassName);
         }
     }
 

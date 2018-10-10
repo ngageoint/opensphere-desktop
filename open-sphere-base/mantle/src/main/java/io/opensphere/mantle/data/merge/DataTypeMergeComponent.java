@@ -347,7 +347,7 @@ public class DataTypeMergeComponent
      */
     public void setMetaDataMergeKeyMapEntryList(List<MetaDataMergeKeyMapEntry> entryList)
     {
-        myMetaDataMergeKeyMapEntryList = entryList == null ? new ArrayList<MetaDataMergeKeyMapEntry>() : entryList;
+        myMetaDataMergeKeyMapEntryList = entryList == null ? new ArrayList<>() : entryList;
     }
 
     /**

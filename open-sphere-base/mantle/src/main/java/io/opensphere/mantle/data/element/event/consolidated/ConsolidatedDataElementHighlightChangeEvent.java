@@ -32,9 +32,9 @@ public class ConsolidatedDataElementHighlightChangeEvent extends AbstractConsoli
     {
         super(regIds, dataTypeKeys, source);
         myHighlighted = Collections
-                .unmodifiableList(highlightedIds instanceof LinkedList<?> ? new ArrayList<Long>(highlightedIds) : highlightedIds);
+                .unmodifiableList(highlightedIds instanceof LinkedList<?> ? new ArrayList<>(highlightedIds) : highlightedIds);
         myUnhighlighted = Collections.unmodifiableList(
-                unhighlightedIds instanceof LinkedList<?> ? new ArrayList<Long>(unhighlightedIds) : unhighlightedIds);
+                unhighlightedIds instanceof LinkedList<?> ? new ArrayList<>(unhighlightedIds) : unhighlightedIds);
     }
 
     /**
@@ -52,9 +52,9 @@ public class ConsolidatedDataElementHighlightChangeEvent extends AbstractConsoli
     {
         super(regIds, dataTypeKey, source);
         myHighlighted = Collections
-                .unmodifiableList(highlightedIds instanceof LinkedList<?> ? new ArrayList<Long>(highlightedIds) : highlightedIds);
+                .unmodifiableList(highlightedIds instanceof LinkedList<?> ? new ArrayList<>(highlightedIds) : highlightedIds);
         myUnhighlighted = Collections.unmodifiableList(
-                unhighlightedIds instanceof LinkedList<?> ? new ArrayList<Long>(unhighlightedIds) : unhighlightedIds);
+                unhighlightedIds instanceof LinkedList<?> ? new ArrayList<>(unhighlightedIds) : unhighlightedIds);
     }
 
     /**
@@ -72,9 +72,9 @@ public class ConsolidatedDataElementHighlightChangeEvent extends AbstractConsoli
     {
         super(regIds, dataTypeKeys, source);
         myHighlighted = Collections
-                .unmodifiableList(highlightedIds instanceof LinkedList<?> ? new ArrayList<Long>(highlightedIds) : highlightedIds);
+                .unmodifiableList(highlightedIds instanceof LinkedList<?> ? new ArrayList<>(highlightedIds) : highlightedIds);
         myUnhighlighted = Collections.unmodifiableList(
-                unhighlightedIds instanceof LinkedList<?> ? new ArrayList<Long>(unhighlightedIds) : unhighlightedIds);
+                unhighlightedIds instanceof LinkedList<?> ? new ArrayList<>(unhighlightedIds) : unhighlightedIds);
     }
 
     /**

@@ -13,7 +13,7 @@ public interface MapAnnotationPointGroup
      * Comparator that orders {@link MutableMapAnnotationPointGroup}s by their
      * display names.
      */
-    Comparator<MapAnnotationPointGroup> NAME_COMPARATOR = new Comparator<MapAnnotationPointGroup>()
+    Comparator<MapAnnotationPointGroup> NAME_COMPARATOR = new Comparator<>()
     {
         @Override
         public int compare(MapAnnotationPointGroup o1, MapAnnotationPointGroup o2)

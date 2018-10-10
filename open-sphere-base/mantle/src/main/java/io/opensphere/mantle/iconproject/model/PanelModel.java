@@ -21,7 +21,7 @@ public class PanelModel
     private final ObjectProperty<ViewStyle> myViewType = new SimpleObjectProperty<>(this, "viewtype", ViewStyle.GRID);
 
     /** The selected icon to be used for customization dialogs. */
-    private ObjectProperty<IconRecord> mySelectedRecord = new SimpleObjectProperty<IconRecord>();
+    private ObjectProperty<IconRecord> mySelectedRecord = new SimpleObjectProperty<>();
 
     /** The registry of icons. */
     private IconRegistry myIconRegistry;
@@ -48,7 +48,7 @@ public class PanelModel
     private ViewModel myViewModel;
 
     /** The icons currently selected. */
-    private HashMap<IconRecord, Button> mySelectedIcons = new HashMap<IconRecord, Button>();
+    private HashMap<IconRecord, Button> mySelectedIcons = new HashMap<>();
 
     /** The Tree model. */
     private DefaultIconRecordTreeItemObject myTreeObject;
@@ -57,7 +57,7 @@ public class PanelModel
      * Used to keep track of which icon and button are selected on the grid for
      * single selection purposes.
      */
-    private HashMap<IconRecord, Button> mySingleSelectedIcon = new HashMap<IconRecord, Button>();
+    private HashMap<IconRecord, Button> mySingleSelectedIcon = new HashMap<>();
 
     /**
      * Builds the panel to use inside the Icon Manager.

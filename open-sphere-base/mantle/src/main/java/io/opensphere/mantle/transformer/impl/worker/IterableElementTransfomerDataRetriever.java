@@ -58,7 +58,7 @@ public class IterableElementTransfomerDataRetriever extends AbstractElementTrans
     @Override
     public Iterator<ElementData> iterator()
     {
-        return new Iterator<ElementData>()
+        return new Iterator<>()
         {
             private final ElementData myED = new ElementData();
 
@@ -128,10 +128,10 @@ public class IterableElementTransfomerDataRetriever extends AbstractElementTrans
     public void retrieveData()
     {
         myIDList = new LinkedList<>();
-        myTSList = isRetrieveTSs() ? new LinkedList<TimeSpan>() : null;
-        myVSList = isRetrieveVS() ? new LinkedList<VisualizationState>() : null;
-        myMDList = isRetrieveMDPs() ? new LinkedList<List<Object>>() : null;
-        myMGSList = isRetrieveMGSs() ? new LinkedList<MapGeometrySupport>() : null;
+        myTSList = isRetrieveTSs() ? new LinkedList<>() : null;
+        myVSList = isRetrieveVS() ? new LinkedList<>() : null;
+        myMDList = isRetrieveMDPs() ? new LinkedList<>() : null;
+        myMGSList = isRetrieveMGSs() ? new LinkedList<>() : null;
         MantleToolboxUtils.getMantleToolbox(getToolbox()).getDataElementCache().query(new RetrieveCacheIdQuery());
     }
 

@@ -51,7 +51,7 @@ public final class MapPolygonGeometryConverter extends AbstractGeometryConverter
     {
         MapVisualizationInfo mapVisInfo = dti.getMapVisualizationInfo();
         BasicVisualizationInfo basicVisInfo = dti.getBasicVisualizationInfo();
-        PolygonGeometry.Builder<GeographicPosition> polygonBuilder = new PolygonGeometry.Builder<GeographicPosition>();
+        PolygonGeometry.Builder<GeographicPosition> polygonBuilder = new PolygonGeometry.Builder<>();
         PolygonRenderProperties props;
         Color color = visState.isSelected() ? MantleConstants.SELECT_COLOR
                 : visState.isDefaultColor() ? geomSupport.getColor() : visState.getColor();

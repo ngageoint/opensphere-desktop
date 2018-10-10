@@ -92,7 +92,7 @@ public abstract class AbstractDynamicMetadataController<T> implements DynamicMet
         }
         if (!idsRemoved.isEmpty())
         {
-            fireChangeEvent(new ArrayList<Long>(idsRemoved), source);
+            fireChangeEvent(new ArrayList<>(idsRemoved), source);
         }
     }
 

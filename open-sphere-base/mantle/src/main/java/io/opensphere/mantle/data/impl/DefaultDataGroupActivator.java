@@ -62,7 +62,7 @@ public class DefaultDataGroupActivator implements DataGroupActivator
          * checked and throws a new InterruptedException to signal the caller
          * that the thread was interrupted. */
         TaskCanceller canceller = new TaskCanceller();
-        Function<? super DataGroupInfo, ? extends Boolean> mapper = new Function<DataGroupInfo, Boolean>()
+        Function<? super DataGroupInfo, ? extends Boolean> mapper = new Function<>()
         {
             @Override
             public Boolean apply(DataGroupInfo g)
@@ -130,7 +130,7 @@ public class DefaultDataGroupActivator implements DataGroupActivator
          * checked and throws a new InterruptedException to signal the caller
          * that the thread was interrupted. */
         TaskCanceller canceller = new TaskCanceller();
-        Function<? super DataGroupInfo, ? extends Boolean> mapper = new Function<DataGroupInfo, Boolean>()
+        Function<? super DataGroupInfo, ? extends Boolean> mapper = new Function<>()
         {
             @Override
             public Boolean apply(DataGroupInfo g)

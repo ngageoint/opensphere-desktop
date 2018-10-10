@@ -194,7 +194,7 @@ class DataGroupActivationController implements DataGroupActivationManager
         final DataGroupInfoActiveSet initialSet = myActiveSetConfig.getSetByName(USER_ACTIVATED_SET_NAME);
         if (initialSet != null && !initialSet.getGroupEntries().isEmpty())
         {
-            myLifeCycleEventListener = new EventListener<ApplicationLifecycleEvent>()
+            myLifeCycleEventListener = new EventListener<>()
             {
                 @Override
                 public void notify(ApplicationLifecycleEvent event)

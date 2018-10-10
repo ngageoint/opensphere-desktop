@@ -239,7 +239,7 @@ public class DataTypeInfoPreferenceAssistantImpl implements DataTypeInfoPreferen
      */
     private EventListener<AbstractDataTypeInfoChangeEvent> createDataTypeChangeListener()
     {
-        return new EventListener<AbstractDataTypeInfoChangeEvent>()
+        return new EventListener<>()
         {
             @Override
             public void notify(AbstractDataTypeInfoChangeEvent event)

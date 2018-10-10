@@ -668,7 +668,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
                     ? bd.getMGS().followTerrain() ? Altitude.ReferenceLevel.TERRAIN : mlgs.getLocation().getAltitudeReference()
                     : altRef.getReference();
 
-            FrustumGeometry.Builder<GeographicPosition> builder = new FrustumGeometry.Builder<GeographicPosition>();
+            FrustumGeometry.Builder<GeographicPosition> builder = new FrustumGeometry.Builder<>();
             builder.setPosition(new GeographicPosition(LatLonAlt.createFromDegreesMeters(mlgs.getLocation().getLatD(),
                     mlgs.getLocation().getLonD(), alt, refLevel)));
             builder.setDataModelId(bd.getGeomId());

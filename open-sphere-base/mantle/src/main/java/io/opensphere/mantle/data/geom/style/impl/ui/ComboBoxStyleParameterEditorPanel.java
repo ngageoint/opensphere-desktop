@@ -141,7 +141,7 @@ public class ComboBoxStyleParameterEditorPanel extends AbstractStyleParameterEdi
             choiceToProxyMap.put(o, proxy);
             result.add(proxy);
         }
-        Collections.sort(result, new Comparator<Object>()
+        Collections.sort(result, new Comparator<>()
         {
             @Override
             public int compare(Object o1, Object o2)
