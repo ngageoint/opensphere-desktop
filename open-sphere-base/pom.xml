@@ -26,6 +26,6 @@
 		<module>overlay</module>
 		<module>test-support</module>
 		<module>xyz-tile</module>
-        <module>column-mappings</module>
-  </modules>
+		<module>column-mappings</module>
+	</modules>
 </project>

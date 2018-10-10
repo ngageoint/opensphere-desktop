@@ -83,15 +83,12 @@ public final class IconProviderFactory
      * @param sourceKey the source key for traceability to the provider.
      * @param recurseSubDirectories the recurse sub directories ( true to
      *            recurse into sub-directories )
-     * @param subDirsAsSubCategories the sub dirs as sub categories ( true to
-     *            use the sub-directory paths from the parent as sub categories
-     *            )
      * @param subCatIfNotFromDirNames the sub cat if not from dir names
      * @return the list of {@link IconImageProvider}
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public static List<DefaultIconProvider> createFromDirectory(File iconDirectory, String collectionName, String sourceKey,
-            boolean recurseSubDirectories, boolean subDirsAsSubCategories, String subCatIfNotFromDirNames) throws IOException
+            boolean recurseSubDirectories, String subCatIfNotFromDirNames) throws IOException
     {
         List<DefaultIconProvider> result = New.linkedList();
         if (iconDirectory.isDirectory())
@@ -104,7 +101,7 @@ public final class IconProviderFactory
                     if (aFile.isDirectory() && recurseSubDirectories)
                     {
                         createProvidersFromDirectory(result, aFile, collectionName, sourceKey, recurseSubDirectories,
-                                subDirsAsSubCategories, subCatIfNotFromDirNames);
+                                recurseSubDirectories, subCatIfNotFromDirNames);
                     }
                     else
                     {

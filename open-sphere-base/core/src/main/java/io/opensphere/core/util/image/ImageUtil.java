@@ -432,7 +432,7 @@ public final class ImageUtil
             // create a graphics object to paint to
             Graphics2D tGraphics2D = tThumbImage.createGraphics();
             tGraphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-            //  draw the image scaled
+            // draw the image scaled
             tGraphics2D.drawImage(image, 0, 0, newWidth, newHeight, null);
 
             ByteArrayOutputStream output = new ByteArrayOutputStream();
