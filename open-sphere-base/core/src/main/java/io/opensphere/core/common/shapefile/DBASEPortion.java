@@ -458,7 +458,7 @@ class DBASEPortion implements Collection<Object[]>
     }
 
     public boolean parseDBASERecord(ByteBuffer buffer, Object[] stringArray, Object[] actualArray)
-            throws IOException, ParseException
+        throws ParseException
     {
         boolean returnValue = false;
 

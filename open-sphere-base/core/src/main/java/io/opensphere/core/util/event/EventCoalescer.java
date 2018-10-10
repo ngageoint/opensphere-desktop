@@ -11,8 +11,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.apache.log4j.Logger;
-
 import io.opensphere.core.event.Event;
 import io.opensphere.core.event.EventConsolidator;
 import io.opensphere.core.event.EventListener;
@@ -47,10 +45,6 @@ import io.opensphere.core.util.ref.WeakReference;
  */
 public class EventCoalescer<E extends Event> implements EventListener<E>
 {
-    /** Logger reference. */
-    @SuppressWarnings("unused")
-    private static final Logger LOGGER = Logger.getLogger(EventCoalescer.class);
-
     /** The Constant DEFAULT_MAX_DISPATCH_WAIT_MS. */
     private static final long DEFAULT_MAX_DISPATCH_WAIT_MS = 200L;
 

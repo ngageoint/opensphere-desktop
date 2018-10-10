@@ -176,12 +176,6 @@ public class JSONSaxParser
         LinkedList<State> myState = new LinkedList<>();
 
         /**
-         * Counter for the entire document of the number of characters
-         * processed.
-         */
-        long overAllCharCounter = 0;
-
-        /**
          * Count of the new line characters encountered while processing the
          * document.
          */
@@ -259,7 +253,6 @@ public class JSONSaxParser
             for (int i = 0; i < numChars; i++)
             {
                 currChar = buff[i];
-                overAllCharCounter++;
                 charCounter++;
 
                 // Count any new lines for our line counter.
