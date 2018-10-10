@@ -270,10 +270,7 @@ public final class KeyStoreUtils
             {
                 throw (KeyStoreException)firstException;
             }
-            else
-            {
-                throw new IOException(firstException);
-            }
+            throw new IOException(firstException);
         }
         return keyStore;
     }
