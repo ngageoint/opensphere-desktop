@@ -7,6 +7,8 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import gnu.trove.list.TIntList;
+import io.opensphere.mantle.iconproject.model.IconManagerPrefs;
+import io.opensphere.mantle.iconproject.model.PanelModel;
 
 /**
  * The Interface IconRegistry.
@@ -224,6 +226,14 @@ public interface IconRegistry
     boolean removeIcons(TIntList iconIdsToRemove, Object source);
 
     /**
+     * Deletes the icon file from the machine.
+     *
+     * @param iconToDelete the IconRecord to delete.
+     * @param thePanelModel used for registry.
+     */
+    void deleteIcon(IconRecord iconToDelete, PanelModel thePanelModel);
+
+    /**
      * Removes the listener.
      *
      * NOTE: Listener is held as a weak reference.
@@ -275,4 +285,13 @@ public interface IconRegistry
      * @param source the source initiating the change
      */
     void setIconForElements(List<Long> deIds, int iconId, Object source);
+
+    /**
+     * Sets up the preferences to be used when using the program. Are reset on
+     * the start up of the program to their default values.
+     *
+     * @return IconManagerPrefs the startup valeus for the tree selection, tile
+     *         width, and view selection.
+     */
+    IconManagerPrefs getManagerPrefs();
 }

@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -61,7 +62,7 @@ public class IconBuilderPane extends BorderPane
     private final Window myOwner;
 
     /** The spinner width. */
-    private final double spinwidth = 60.0;
+    private final double mySpinerWidth = 60.0;
 
     /**
      * Constructs a new IconBuilderPane.
@@ -96,34 +97,36 @@ public class IconBuilderPane extends BorderPane
      *
      * @return the icon selection & color controls
      */
-    private HBox createTop()
+    private AnchorPane createTop()
     {
-        HBox box = new HBox();
+        AnchorPane box = new AnchorPane();
 
         Spinner<Number> sizeSpinner = new Spinner<>(12, 200, 200, 10);
-        sizeSpinner.setPrefWidth(spinwidth);
+        sizeSpinner.setPrefWidth(mySpinerWidth);
         sizeSpinner.getValueFactory().valueProperty().bindBidirectional(mySize);
         sizeSpinner.setEditable(true);
 
         Label sizeLabel = new Label("Size: ", sizeSpinner);
         sizeLabel.setContentDisplay(ContentDisplay.RIGHT);
-        // AnchorPane.setRightAnchor(sizeLabel, 50.);
+        AnchorPane.setRightAnchor(sizeLabel, 50.);
 
         Button button = new Button("Select an Icon");
         button.setOnAction((evt) ->
         {
             IconBuilderChoiceDialog iconChoice = new IconBuilderChoiceDialog();
-            int result = JOptionPane.showConfirmDialog(myOwner, iconChoice, "Select an Icon", JOptionPane.OK_CANCEL_OPTION,
-                    JOptionPane.PLAIN_MESSAGE);
+            int result = JOptionPane.showConfirmDialog(myOwner, iconChoice, "Select an Icon",
+            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.OK_OPTION)
             {
                 updateImageView(iconChoice.getValue());
             }
         });
-
+        
+        AnchorPane.setLeftAnchor(sizeSpinner, 10.);
+        AnchorPane.setLeftAnchor(button, 150.);
         myColorPicker = new ColorPicker();
 
-        box.getChildren().addAll(button, myColorPicker, sizeLabel, sizeSpinner);
+        box.getChildren().addAll(myColorPicker, button, sizeLabel, sizeSpinner);
 
         return box;
     }
@@ -146,7 +149,7 @@ public class IconBuilderPane extends BorderPane
         slider.valueProperty().bindBidirectional(myRotation);
 
         Spinner<Number> spinner = new Spinner<>(-180, 180, 0);
-        spinner.setPrefWidth(spinwidth);
+        spinner.setPrefWidth(mySpinerWidth);
         spinner.getValueFactory().valueProperty().bindBidirectional(myRotation);
         spinner.setEditable(true);
 
@@ -174,12 +177,12 @@ public class IconBuilderPane extends BorderPane
         controlBox.setAlignment(Pos.BASELINE_LEFT);
 
         Spinner<Number> xSpinner = new Spinner<>(-100, 100, 0, 10);
-        xSpinner.setPrefWidth(spinwidth);
+        xSpinner.setPrefWidth(mySpinerWidth);
         xSpinner.getValueFactory().valueProperty().bindBidirectional(myXPos);
         xSpinner.setEditable(true);
 
         Spinner<Number> ySpinner = new Spinner<>(0, 200, 0, 10);
-        ySpinner.setPrefWidth(spinwidth);
+        ySpinner.setPrefWidth(mySpinerWidth);
         ySpinner.getValueFactory().valueProperty().bindBidirectional(myYPos);
         ySpinner.setEditable(true);
 

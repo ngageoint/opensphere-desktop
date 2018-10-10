@@ -40,11 +40,12 @@ import io.opensphere.mantle.icon.IconRegistryListener;
 import io.opensphere.mantle.icon.LoadedIconPool;
 import io.opensphere.mantle.icon.config.v1.IconRecordConfig;
 import io.opensphere.mantle.icon.config.v1.IconRegistryConfig;
+import io.opensphere.mantle.iconproject.model.IconManagerPrefs;
+import io.opensphere.mantle.iconproject.model.PanelModel;
 
 /**
  * The Class IconRegistryImpl.
  */
-@SuppressWarnings("PMD.GodClass")
 public class IconRegistryImpl implements IconRegistry
 {
     /** The key used to store the preferences. */
@@ -87,6 +88,9 @@ public class IconRegistryImpl implements IconRegistry
     /** The executor used for launching updates. */
     private final Executor mySaveExecutor = new ProcrastinatingExecutor(new ScheduledThreadPoolExecutor(2,
             new NamedThreadFactory("IconRegistry::IO"), SuppressableRejectedExecutionHandler.getInstance()), 1000);
+
+    /** The model containing the preferences for the Icon Manager start up. */
+    private IconManagerPrefs myIconManagerPrefs = new IconManagerPrefs();
 
     /**
      * Instantiates a new icon registry impl.
@@ -145,7 +149,7 @@ public class IconRegistryImpl implements IconRegistry
             myDataElementIdLock.unlock();
         }
         myChangeSupport.notifyListeners(
-                listener -> listener.iconsUnassigned(Collections.singletonList(Long.valueOf(deId)), source), EXECUTOR);
+            listener -> listener.iconsUnassigned(Collections.singletonList(Long.valueOf(deId)), source), EXECUTOR);
     }
 
     @Override
@@ -561,7 +565,7 @@ public class IconRegistryImpl implements IconRegistry
             myDataElementIdLock.unlock();
         }
         myChangeSupport.notifyListeners(
-                listener -> listener.iconAssigned(iconId, Collections.singletonList(Long.valueOf(deId)), source), EXECUTOR);
+            listener -> listener.iconAssigned(iconId, Collections.singletonList(Long.valueOf(deId)), source), EXECUTOR);
     }
 
     @Override
@@ -837,5 +841,41 @@ public class IconRegistryImpl implements IconRegistry
             myIconRegistryLock.unlock();
         }
         myPrefs.putJAXBObject(PREFERENCE_KEY, config, false, this);
+    }
+
+    /**
+     * Physically removes Icons from your machine and simultaneously deletes
+     * duplicates which may appear in the registry.
+     *
+     * @param iconToDelete the icon selected for deletion.
+     * @param thePanelModel the model to use for registry.
+     */
+    public void deleteIcon(IconRecord iconToDelete, PanelModel thePanelModel)
+    {
+        String filename = iconToDelete.getImageURL().toString();
+        // This loop logic is to make sure it is removed from all the
+        // directories. The null check ensures it works on all machines since
+        // icon # may change on computer to computer.
+        for (int idx = 0; idx <= thePanelModel.getIconRegistry().getIconIds().max(); idx++)
+        {
+            IconRecord iconRecord = thePanelModel.getIconRegistry().getIconRecordByIconId(idx);
+            if (iconRecord != null)
+            {
+                if (iconRecord.getImageURL().toString().equals(filename))
+                {
+                    thePanelModel.getIconRegistry().removeIcon(this.getIconRecordByIconId(idx), this);
+                }
+            }
+        }
+        filename = filename.replace("file:", "");
+        filename = filename.replace("%20", " ");
+        File iconActual = new File(filename);
+        iconActual.delete();
+    }
+
+    @Override
+    public IconManagerPrefs getManagerPrefs()
+    {
+        return myIconManagerPrefs;
     }
 }

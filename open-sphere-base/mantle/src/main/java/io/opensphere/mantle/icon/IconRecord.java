@@ -10,7 +10,7 @@ public interface IconRecord
     /** The Constant DEFAULT_COLLECTION. */
     String DEFAULT_COLLECTION = "Default";
 
-    /** The Constant USER_ADDED_COLLECTION. */
+    /** The Constant FAVORITES_COLLECTION. */
     String FAVORITES_COLLECTION = "Favorites";
 
     /** The Constant USER_ADDED_COLLECTION. */
