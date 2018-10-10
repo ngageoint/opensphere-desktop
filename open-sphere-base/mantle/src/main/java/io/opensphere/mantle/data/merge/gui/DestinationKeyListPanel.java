@@ -270,10 +270,8 @@ public class DestinationKeyListPanel extends JPanel implements KeyMoveListener
                     pp.getPanel().addTypeKeyEntry(data);
                     return true;
                 }
-                else
-                {
-                    EventQueueUtilities.invokeLater(() -> JOptionPane.showMessageDialog(myDestKeyList, "Could not accept key because:\n" + errors.get(0)));
-                }
+                EventQueueUtilities.invokeLater(
+                        () -> JOptionPane.showMessageDialog(myDestKeyList, "Could not accept key because:\n" + errors.get(0)));
             }
 
             return false;

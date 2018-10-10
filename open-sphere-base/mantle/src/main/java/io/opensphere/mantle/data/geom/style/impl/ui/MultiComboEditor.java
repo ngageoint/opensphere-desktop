@@ -590,10 +590,7 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
             {
                 return "NONE";
             }
-            else
-            {
-                return val.toString();
-            }
+            return val.toString();
         }
 
         /**

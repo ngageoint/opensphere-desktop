@@ -145,10 +145,7 @@ public class DataTypeToIdMap
         {
             return result.getValues();
         }
-        else
-        {
-            return new long[0];
-        }
+        return new long[0];
     }
 
     /**

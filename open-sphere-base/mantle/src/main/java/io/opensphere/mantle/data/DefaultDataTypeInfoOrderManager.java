@@ -18,6 +18,10 @@ import io.opensphere.core.util.collections.New;
  */
 public class DefaultDataTypeInfoOrderManager implements DataTypeInfoOrderManager
 {
+    /** A map of the order key to the data type info being ordered. */
+    private final Map<OrderParticipantKey, DataTypeInfo> myOrderKeyMap = Collections
+            .synchronizedMap(New.<OrderParticipantKey, DataTypeInfo>weakMap());
+
     /** Listener for changes to the order. */
     private final OrderChangeListener myOrderChangeListener = event ->
     {
@@ -34,10 +38,6 @@ public class DefaultDataTypeInfoOrderManager implements DataTypeInfoOrderManager
             });
         }
     };
-
-    /** A map of the order key to the data type info being ordered. */
-    private final Map<OrderParticipantKey, DataTypeInfo> myOrderKeyMap = Collections
-            .synchronizedMap(New.<OrderParticipantKey, DataTypeInfo>weakMap());
 
     /** Manager which determines the z-order of the CPTC results. */
     private final OrderManager myOrderManager;

@@ -490,16 +490,13 @@ public class PolygonFeatureVisualizationStyle extends AbstractPathVisualizationS
             {
                 return new LineSegment2d(intersections.get(0), intersections.get(1));
             }
-            else
+            Collections.sort(intersections, new Line2d.DistanceComparator(cross));
+            for (int j = 0; j < intersections.size(); j += 2)
             {
-                Collections.sort(intersections, new Line2d.DistanceComparator(cross));
-                for (int j = 0; j < intersections.size(); j += 2)
+                LineSegment2d crossSegment = new LineSegment2d(intersections.get(j), intersections.get(j + 1));
+                if (segment.intersects(crossSegment))
                 {
-                    LineSegment2d crossSegment = new LineSegment2d(intersections.get(j), intersections.get(j + 1));
-                    if (segment.intersects(crossSegment))
-                    {
-                        return crossSegment;
-                    }
+                    return crossSegment;
                 }
             }
         }

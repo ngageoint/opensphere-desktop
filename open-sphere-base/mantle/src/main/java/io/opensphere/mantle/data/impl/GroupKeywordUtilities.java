@@ -145,10 +145,7 @@ public final class GroupKeywordUtilities
             }
             return result.toString();
         }
-        else
-        {
-            return viewFilter;
-        }
+        return viewFilter;
     }
 
     /** Disallow instantiation. */

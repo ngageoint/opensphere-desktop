@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.FrustumGeometry;
 import io.opensphere.core.geometry.Geometry;
@@ -694,10 +693,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
         {
             return getBaseRadius() * getTopScale() * getWidthScale();
         }
-        else
-        {
-            return getBaseRadius() * getWidthScale();
-        }
+        return getBaseRadius() * getWidthScale();
     }
 
     /**
@@ -732,10 +728,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
         {
             return getBaseRadius() * getWidthScale();
         }
-        else
-        {
-            return getBaseRadius() * getTopScale() * getWidthScale();
-        }
+        return getBaseRadius() * getTopScale() * getWidthScale();
     }
 
 //    @Override

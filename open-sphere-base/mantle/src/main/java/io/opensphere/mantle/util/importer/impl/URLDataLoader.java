@@ -67,21 +67,18 @@ public class URLDataLoader
             File file = new File(myURLDataSource.getPath());
             return loadLocalFile(file);
         }
-        else
+        try
         {
-            try
-            {
-                URL url = new URL(myURLDataSource.getPath());
-                return loadURL(url);
-            }
-            catch (MalformedURLException e)
-            {
-                LOGGER.warn(e.getMessage());
-                myURLDataSource.setLoadError(true);
-                myURLDataSource.setErrorMessage("Malformed URL: " + e.getMessage());
-                myURLDataSource.setFailureReason(FailureReason.MALFORMED_URL);
-                return null;
-            }
+            URL url = new URL(myURLDataSource.getPath());
+            return loadURL(url);
+        }
+        catch (MalformedURLException e)
+        {
+            LOGGER.warn(e.getMessage());
+            myURLDataSource.setLoadError(true);
+            myURLDataSource.setErrorMessage("Malformed URL: " + e.getMessage());
+            myURLDataSource.setFailureReason(FailureReason.MALFORMED_URL);
+            return null;
         }
     }
 
@@ -221,36 +218,30 @@ public class URLDataLoader
         {
             return null;
         }
+        if (response.getResponseCode() == HttpURLConnection.HTTP_OK)
+        {
+            logContentLength(response);
+            setResponseHeaders(response);
+
+            return is;
+        }
+        if (response.getResponseCode() == HttpURLConnection.HTTP_UNAUTHORIZED)
+        {
+            myURLDataSource.setFailureReason(FailureReason.INVALID_BASIC_AUTH);
+        }
+        else if (response.getResponseCode() == HttpURLConnection.HTTP_FORBIDDEN)
+        {
+            myURLDataSource.setFailureReason(FailureReason.INVALID_EITHER);
+        }
         else
         {
-            if (response.getResponseCode() == HttpURLConnection.HTTP_OK)
-            {
-                logContentLength(response);
-                setResponseHeaders(response);
-
-                return is;
-            }
-            else
-            {
-                if (response.getResponseCode() == HttpURLConnection.HTTP_UNAUTHORIZED)
-                {
-                    myURLDataSource.setFailureReason(FailureReason.INVALID_BASIC_AUTH);
-                }
-                else if (response.getResponseCode() == HttpURLConnection.HTTP_FORBIDDEN)
-                {
-                    myURLDataSource.setFailureReason(FailureReason.INVALID_EITHER);
-                }
-                else
-                {
-                    myURLDataSource.setFailureReason(FailureReason.OTHER);
-                }
-                StringBuilder msg = new StringBuilder().append(response.getResponseCode()).append(' ');
-                msg.append(response.getResponseMessage()).append(": ").append(myURLDataSource.getPath());
-                myURLDataSource.setErrorMessage(msg.toString());
-                LOGGER.error(msg.toString());
-                return null;
-            }
+            myURLDataSource.setFailureReason(FailureReason.OTHER);
         }
+        StringBuilder msg = new StringBuilder().append(response.getResponseCode()).append(' ');
+        msg.append(response.getResponseMessage()).append(": ").append(myURLDataSource.getPath());
+        myURLDataSource.setErrorMessage(msg.toString());
+        LOGGER.error(msg.toString());
+        return null;
     }
 
     /**
@@ -276,10 +267,7 @@ public class URLDataLoader
             }
         }
         // Download it as a remote URL
-        else
-        {
-            return loadRemoteURL(aURL);
-        }
+        return loadRemoteURL(aURL);
     }
 
     /**

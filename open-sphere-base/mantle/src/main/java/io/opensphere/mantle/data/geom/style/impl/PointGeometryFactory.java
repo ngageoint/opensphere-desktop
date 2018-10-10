@@ -82,9 +82,6 @@ public class PointGeometryFactory
         {
             return MantleConstants.SELECT_COLOR;
         }
-        else
-        {
-            return bd.getVS().isDefaultColor() ? defaultColor : bd.getVS().getColor();
-        }
+        return bd.getVS().isDefaultColor() ? defaultColor : bd.getVS().getColor();
     }
 }

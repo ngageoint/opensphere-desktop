@@ -207,17 +207,11 @@ public class DataGroupActivationProperty extends CancellableThreePhaseProperty<A
                 {
                     return true;
                 }
-                else
-                {
-                    setValue(ActivationState.ERROR, 0L, false);
-                    return false;
-                }
+                setValue(ActivationState.ERROR, 0L, false);
+                return false;
             }
-            else
-            {
-                return isInactiveOrDeactivation() || setValue(ActivationState.DEACTIVATING, timeoutMillis, true)
-                        && setValue(ActivationState.INACTIVE, timeoutMillis, true);
-            }
+            return isInactiveOrDeactivation() || setValue(ActivationState.DEACTIVATING, timeoutMillis, true)
+                    && setValue(ActivationState.INACTIVE, timeoutMillis, true);
         }
         catch (InterruptedException e)
         {

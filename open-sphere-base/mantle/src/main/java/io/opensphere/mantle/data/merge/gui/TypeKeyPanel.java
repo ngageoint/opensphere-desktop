@@ -293,10 +293,7 @@ public abstract class TypeKeyPanel extends JPanel
                             String val2 = ((TypeKeyEntry)o2).getKeyName();
                             return val1.compareTo(val2);
                         }
-                        else
-                        {
-                            return 0;
-                        }
+                        return 0;
                     });
                     DefaultListModel model = new DefaultListModel();
                     for (Object entry : objList)

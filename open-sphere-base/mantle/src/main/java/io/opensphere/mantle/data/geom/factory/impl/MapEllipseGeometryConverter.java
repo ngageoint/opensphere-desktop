@@ -86,11 +86,8 @@ public final class MapEllipseGeometryConverter extends AbstractGeometryConverter
             MapEllipseGeometrySupport megs = (MapEllipseGeometrySupport)geomSupport;
             return convert(megs, id, dti, visState, renderPropertyPool);
         }
-        else
-        {
-            throw new IllegalArgumentException("MapGeometrySupport \"" + geomSupport.getClass().getName()
-                    + "\" is not an instance of \"" + getConvertedClassType().getName() + "\"");
-        }
+        throw new IllegalArgumentException("MapGeometrySupport \"" + geomSupport.getClass().getName()
+                + "\" is not an instance of \"" + getConvertedClassType().getName() + "\"");
     }
 
     @Override

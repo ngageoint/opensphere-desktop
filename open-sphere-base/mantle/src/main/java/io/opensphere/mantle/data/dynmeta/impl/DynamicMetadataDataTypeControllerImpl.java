@@ -318,10 +318,7 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
         {
             return myDTI.getMetaDataInfo().getKeyNames().get(index);
         }
-        else
-        {
-            throw new IllegalArgumentException("The specified column index is not a dynamic column.");
-        }
+        throw new IllegalArgumentException("The specified column index is not a dynamic column.");
     }
 
     @Override
@@ -390,10 +387,7 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
         {
             return getValue(elementCacheId, index);
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     @Override
@@ -487,10 +481,7 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
         {
             throw new IllegalArgumentException("The column " + columnName + " is not a dynamic column.");
         }
-        else
-        {
-            return index;
-        }
+        return index;
     }
 
     /**

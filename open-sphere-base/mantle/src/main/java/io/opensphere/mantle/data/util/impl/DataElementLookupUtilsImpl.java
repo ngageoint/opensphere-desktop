@@ -648,10 +648,7 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
         {
             return Long.valueOf(-1L);
         }
-        else
-        {
-            return origId;
-        }
+        return origId;
     }
 
     @Override

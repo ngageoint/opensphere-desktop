@@ -87,10 +87,7 @@ public class DynamicMetaDataListViewProxy implements List<Object>
         {
             return myDynColumnCoordinator.getValue(myElementCacheId, index);
         }
-        else
-        {
-            return myUnderlyingList == null ? null : myUnderlyingList.get(index);
-        }
+        return myUnderlyingList == null ? null : myUnderlyingList.get(index);
     }
 
     @Override

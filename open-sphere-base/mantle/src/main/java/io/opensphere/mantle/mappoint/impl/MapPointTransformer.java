@@ -90,13 +90,7 @@ public class MapPointTransformer extends DefaultTransformer
     private TileGeometry myDragTile;
 
     /** Listen to events from the main viewer to redraw our cross-hair. */
-    private final ViewChangeListener myMainViewListener = (viewer, type) ->
-    {
-        if (type == ViewChangeType.WINDOW_RESIZE && myShouldDisplayCrossHair)
-        {
-            myViewChangeExecutor.execute(MapPointTransformer.this::drawCrossHairs);
-        }
-    };
+    private final ViewChangeListener myMainViewListener;
 
     /** The bounding box at the time the mouse drag began. */
     private GeoScreenBoundingBox myMouseDownBox;
@@ -250,6 +244,13 @@ public class MapPointTransformer extends DefaultTransformer
         myToolbox = toolbox;
         myViewChangeExecutor = new ProcrastinatingExecutor(executor);
         myCalloutDragChangeSupport = new WeakChangeSupport<>();
+        myMainViewListener = (viewer, type) ->
+        {
+            if (type == ViewChangeType.WINDOW_RESIZE && myShouldDisplayCrossHair)
+            {
+                myViewChangeExecutor.execute(MapPointTransformer.this::drawCrossHairs);
+            }
+        };
 
         // Register as a listener for view change events
         toolbox.getMapManager().getViewChangeSupport().addViewChangeListener(myMainViewListener);

@@ -60,10 +60,7 @@ public class MapDataElementGeometryAccessor extends GeometryAccessor<MapDataElem
             result = geomFactory.createGeometryCollection(geomList.toArray(new Geometry[geomList.size()]));
             return result;
         }
-        else
-        {
-            result = createGeometryFromTopLevelGeometrySupport(mapGeomSupport, geomFactory);
-        }
+        result = createGeometryFromTopLevelGeometrySupport(mapGeomSupport, geomFactory);
 
         return result;
     }

@@ -492,10 +492,7 @@ public class DefaultMapAnnotationPointGroup implements MutableMapAnnotationPoint
         {
             return this;
         }
-        else
-        {
-            return myParent.getTopParent();
-        }
+        return myParent.getTopParent();
     }
 
     @Override

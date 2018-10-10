@@ -39,10 +39,7 @@ public class DataTypeInfoDisplayNameProxy extends ToStringProxy<DataTypeInfo>
             Collections.sort(resultList, comp == null ? (x, y) -> x.toString().compareTo(y.toString()) : comp);
             return resultList;
         }
-        else
-        {
-            return Collections.<DataTypeInfoDisplayNameProxy>emptyList();
-        }
+        return Collections.<DataTypeInfoDisplayNameProxy>emptyList();
     }
 
     /**

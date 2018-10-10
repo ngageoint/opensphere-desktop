@@ -14,7 +14,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import net.jcip.annotations.GuardedBy;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 
@@ -51,6 +50,7 @@ import io.opensphere.mantle.data.event.DataGroupInfoMembersClearedEvent;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.EventHandler;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Default implementation of the {@link DataGroupInfo}.
@@ -1139,10 +1139,7 @@ public class DefaultDataGroupInfo implements DataGroupInfo
         {
             throw new UnsupportedOperationException("A parent cannot be set for a Root node.");
         }
-        else
-        {
-            myParent = parent;
-        }
+        myParent = parent;
     }
 
     /**

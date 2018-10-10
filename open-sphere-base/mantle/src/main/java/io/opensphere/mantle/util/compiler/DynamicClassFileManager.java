@@ -73,10 +73,7 @@ public class DynamicClassFileManager extends ForwardingJavaFileManager<JavaFileM
         {
             return ((URIJavaFileObject)file).getBinaryName();
         }
-        else
-        {
-            return super.inferBinaryName(location, file);
-        }
+        return super.inferBinaryName(location, file);
     }
 
     @Override

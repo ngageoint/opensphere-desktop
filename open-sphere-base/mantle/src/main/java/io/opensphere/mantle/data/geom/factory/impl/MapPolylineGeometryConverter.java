@@ -129,11 +129,8 @@ public final class MapPolylineGeometryConverter extends AbstractGeometryConverte
             MapPolylineGeometrySupport megs = (MapPolylineGeometrySupport)geomSupport;
             return MapPolylineGeometryConverter.convert(getToolbox(), megs, id, dti, visState, renderPropertyPool);
         }
-        else
-        {
-            throw new IllegalArgumentException("MapGeometrySupport \"" + geomSupport.getClass().getName()
-                    + "\" is not an instance of \"" + getConvertedClassType().getName() + "\"");
-        }
+        throw new IllegalArgumentException("MapGeometrySupport \"" + geomSupport.getClass().getName()
+                + "\" is not an instance of \"" + getConvertedClassType().getName() + "\"");
     }
 
     @Override

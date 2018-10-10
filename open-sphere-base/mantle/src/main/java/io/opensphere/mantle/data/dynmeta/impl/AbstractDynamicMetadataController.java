@@ -202,10 +202,7 @@ public abstract class AbstractDynamicMetadataController<T> implements DynamicMet
             throw new IllegalArgumentException("The class " + value.getClass()
                     + " is not a valid type for this dynamic column, only " + getColumnClass().getName() + " is acceptable.");
         }
-        else
-        {
-            return (T)value;
-        }
+        return (T)value;
     }
 
     /**

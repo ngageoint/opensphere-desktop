@@ -158,11 +158,8 @@ public final class MapPointGeometryConverter extends AbstractGeometryConverter
             MapPointGeometrySupport localSupport = (MapPointGeometrySupport)geomSupport;
             return convert(getToolbox(), localSupport, id, dti, visState, renderPropertyPool);
         }
-        else
-        {
-            throw new IllegalArgumentException("MapGeometrySupport \"" + geomSupport.getClass().getName()
-                    + "\" is not an instance of \"" + getConvertedClassType().getName() + "\"");
-        }
+        throw new IllegalArgumentException("MapGeometrySupport \"" + geomSupport.getClass().getName()
+                + "\" is not an instance of \"" + getConvertedClassType().getName() + "\"");
     }
 
     @Override

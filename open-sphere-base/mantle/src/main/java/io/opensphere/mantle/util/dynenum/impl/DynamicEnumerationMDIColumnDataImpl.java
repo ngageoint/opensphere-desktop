@@ -157,10 +157,7 @@ public class DynamicEnumerationMDIColumnDataImpl implements DynamicEnumerationMD
         {
             return null;
         }
-        else
-        {
-            return DynamicEnumerationKeyFactory.createKey(myTypeId, myMetaDataKeyId, valueId);
-        }
+        return DynamicEnumerationKeyFactory.createKey(myTypeId, myMetaDataKeyId, valueId);
     }
 
     @Override
