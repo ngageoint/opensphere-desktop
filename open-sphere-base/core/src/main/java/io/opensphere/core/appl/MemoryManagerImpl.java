@@ -192,14 +192,7 @@ class MemoryManagerImpl implements MemoryManager
                 LOGGER.debug("Memory ratio is now " + ratio);
             }
             LOGGER.info("Memory status changed from " + oldStatus + " to " + newStatus);
-            myChangeSupport.notifyListeners(new ChangeSupport.Callback<MemoryManager.MemoryListener>()
-            {
-                @Override
-                public void notify(MemoryListener listener)
-                {
-                    listener.handleMemoryStatusChange(oldStatus, newStatus);
-                }
-            });
+            myChangeSupport.notifyListeners(listener -> listener.handleMemoryStatusChange(oldStatus, newStatus));
 
             if (newStatus.compareTo(oldStatus) > 0)
             {

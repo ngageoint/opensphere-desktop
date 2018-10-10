@@ -57,43 +57,39 @@ class ExecutorManager
     private ThreadPoolConfigs myConfigs;
 
     /** Factory for envoy thread pool executors. */
-    private final Factory<String, ExecutorController> myEnvoyExecutorFactory = new Factory<>()
+    private final Factory<String, ExecutorController> myEnvoyExecutorFactory = key ->
     {
-        @Override
-        public ExecutorController create(final String key)
+        ThreadPoolConfig config = StreamUtilities.filterOne(myConfigs.getConfigs(),
+                t -> Pattern.matches(t.getNamePattern(), key));
+
+        if (config == null)
         {
-            ThreadPoolConfig config = StreamUtilities.filterOne(myConfigs.getConfigs(),
-                    t -> Pattern.matches(t.getNamePattern(), key));
-
-            if (config == null)
+            if (LOGGER.isDebugEnabled())
             {
-                if (LOGGER.isDebugEnabled())
-                {
-                    LOGGER.debug("No configuration key found for thread pool with key " + key);
-                }
-                config = new ThreadPoolConfig();
-                config.setMinimumThreadCount(0);
-                config.setNormalThreadCount(10);
-                config.setRestrictedThreadCount(1);
+                LOGGER.debug("No configuration key found for thread pool with key " + key);
             }
-
-            String name = "Envoy[" + key + "]";
-            PausingThreadPoolExecutor pausingThreadPoolExecutor = new PausingThreadPoolExecutor(config.getNormalThreadCount(),
-                    config.getNormalThreadCount(), 20, TimeUnit.SECONDS,
-                    new NamedThreadFactory(name, THREAD_PRIORITY, MAX_THREAD_PRIORITY),
-                    SuppressableRejectedExecutionHandler.getInstance());
-            pausingThreadPoolExecutor.allowCoreThreadTimeOut(true);
-            ExecutorController holder = new ExecutorController(name, pausingThreadPoolExecutor, config);
-            if (myMemoryManager != null)
-            {
-                holder.adjustToMemoryStatus(myMemoryManager.getMemoryStatus());
-            }
-            else
-            {
-                LOGGER.info("Created thread pool " + name + " with size " + holder.getExecutor().getCorePoolSize());
-            }
-            return holder;
+            config = new ThreadPoolConfig();
+            config.setMinimumThreadCount(0);
+            config.setNormalThreadCount(10);
+            config.setRestrictedThreadCount(1);
         }
+
+        String name = "Envoy[" + key + "]";
+        PausingThreadPoolExecutor pausingThreadPoolExecutor = new PausingThreadPoolExecutor(config.getNormalThreadCount(),
+                config.getNormalThreadCount(), 20, TimeUnit.SECONDS,
+                new NamedThreadFactory(name, THREAD_PRIORITY, MAX_THREAD_PRIORITY),
+                SuppressableRejectedExecutionHandler.getInstance());
+        pausingThreadPoolExecutor.allowCoreThreadTimeOut(true);
+        ExecutorController holder = new ExecutorController(name, pausingThreadPoolExecutor, config);
+        if (myMemoryManager != null)
+        {
+            holder.adjustToMemoryStatus(myMemoryManager.getMemoryStatus());
+        }
+        else
+        {
+            LOGGER.info("Created thread pool " + name + " with size " + holder.getExecutor().getCorePoolSize());
+        }
+        return holder;
     };
 
     /** An executor for envoy work. */

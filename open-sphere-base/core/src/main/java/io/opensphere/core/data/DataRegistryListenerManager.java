@@ -461,23 +461,19 @@ public class DataRegistryListenerManager
                     // as <S>.
                     final Pair<long[], Iterable<S>> pair = generateIterable(report.getIds(), ids, input, acc);
 
-                    myExecutor.execute(new Runnable()
+                    myExecutor.execute(() ->
                     {
-                        @Override
-                        public void run()
+                        if (type == ChangeType.ADD)
                         {
-                            if (type == ChangeType.ADD)
-                            {
-                                listener.valuesAdded(dataModelCategory, pair.getFirstObject(), pair.getSecondObject(), source);
-                            }
-                            else if (type == ChangeType.UPDATE)
-                            {
-                                listener.valuesUpdated(dataModelCategory, pair.getFirstObject(), pair.getSecondObject(), source);
-                            }
-                            else
-                            {
-                                throw new UnexpectedEnumException(type);
-                            }
+                            listener.valuesAdded(dataModelCategory, pair.getFirstObject(), pair.getSecondObject(), source);
+                        }
+                        else if (type == ChangeType.UPDATE)
+                        {
+                            listener.valuesUpdated(dataModelCategory, pair.getFirstObject(), pair.getSecondObject(), source);
+                        }
+                        else
+                        {
+                            throw new UnexpectedEnumException(type);
                         }
                     });
                 }

@@ -3,13 +3,11 @@ package io.opensphere.core.util.swing.input.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Set;
 import java.util.function.Predicate;
 
 import io.opensphere.core.util.ChangeListener;
 import io.opensphere.core.util.ChangeSupport;
-import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.StrongChangeSupport;
 import io.opensphere.core.util.StrongObservableValue;
 import io.opensphere.core.util.ValidationStatus;
@@ -42,32 +40,20 @@ public abstract class WrappedModel<T> extends StrongObservableValue<T> implement
     private Object myChangedSource;
 
     /** The value change listener. */
-    private final ChangeListener<Object> myChangeListener = new ChangeListener<>()
+    private final ChangeListener<Object> myChangeListener = (observable, oldValue, newValue) ->
     {
-        @Override
-        public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue)
-        {
-            // Pass the change up to my listeners
-            myChangedSource = observable;
-            fireChangeEvent();
-            myChangedSource = null;
+        // Pass the change up to my listeners
+        myChangedSource = observable;
+        fireChangeEvent();
+        myChangedSource = null;
 
-            // Fire an additional event for listeners that need the event source
-            myPropertyChangeListener
-                    .stateChanged(new PropertyChangeEvent(observable, PropertyChangeEvent.Property.WRAPPED_VALUE_CHANGED));
-        }
+        // Fire an additional event for listeners that need the event source
+        myPropertyChangeListener
+                .stateChanged(new PropertyChangeEvent(observable, PropertyChangeEvent.Property.WRAPPED_VALUE_CHANGED));
     };
 
     /** The property change listener. */
-    private final PropertyChangeListener myPropertyChangeListener = new PropertyChangeListener()
-    {
-        @Override
-        public void stateChanged(final PropertyChangeEvent e)
-        {
-            // Pass the event up to my listeners
-            myPropertyChangeSupport.notifyListeners(listener -> listener.stateChanged(e));
-        }
-    };
+    private final PropertyChangeListener myPropertyChangeListener = e -> myPropertyChangeSupport.notifyListeners(listener -> listener.stateChanged(e));
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener)
@@ -104,25 +90,11 @@ public abstract class WrappedModel<T> extends StrongObservableValue<T> implement
     {
         String firstError = null;
 
-        Collection<ViewModel<?>> modelsToCheck = StreamUtilities.filter(myModels, new Predicate<ViewModel<?>>()
-        {
-            @Override
-            public boolean test(ViewModel<?> model)
-            {
-                return model.isEnabled() && model.isVisible() && model.getValidationStatus() != ValidationStatus.VALID;
-            }
-        });
+        Collection<ViewModel<?>> modelsToCheck = StreamUtilities.filter(myModels, (Predicate<ViewModel<?>>)model -> model.isEnabled() && model.isVisible() && model.getValidationStatus() != ValidationStatus.VALID);
 
         if (!modelsToCheck.isEmpty())
         {
-            ViewModel<?> worstModel = Collections.max(modelsToCheck, new Comparator<ViewModel<?>>()
-            {
-                @Override
-                public int compare(ViewModel<?> o1, ViewModel<?> o2)
-                {
-                    return o1.getValidationStatus().compareTo(o2.getValidationStatus());
-                }
-            });
+            ViewModel<?> worstModel = Collections.max(modelsToCheck, (o1, o2) -> o1.getValidationStatus().compareTo(o2.getValidationStatus()));
             firstError = worstModel.getErrorMessage();
         }
 

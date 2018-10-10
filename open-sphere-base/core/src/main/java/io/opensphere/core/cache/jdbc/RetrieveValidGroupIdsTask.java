@@ -1,7 +1,6 @@
 package io.opensphere.core.cache.jdbc;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -61,28 +60,24 @@ public class RetrieveValidGroupIdsTask extends DatabaseTask implements Statement
         final String sql = getSQLGenerator().generateRetrieveGroupValuesSql(getGroupIds(), joinTableColumn,
                 (DataModelCategory)null, (Collection<PropertyMatcher<?>>)null, (Collection<PropertyDescriptor<?>>)null,
                 expirationRange, (Boolean)null);
-        return new StatementAppropriator(conn).appropriateStatement(new PreparedStatementUser<int[]>()
+        return new StatementAppropriator(conn).appropriateStatement((PreparedStatementUser<int[]>)(unused, pstmt) ->
         {
-            @Override
-            public int[] run(Connection unused, PreparedStatement pstmt) throws CacheException
+            try
             {
+                pstmt.setLong(1, expirationRange.getStart());
+                ResultSet rs = getCacheUtilities().executeQuery(pstmt, sql);
                 try
                 {
-                    pstmt.setLong(1, expirationRange.getStart());
-                    ResultSet rs = getCacheUtilities().executeQuery(pstmt, sql);
-                    try
-                    {
-                        return getCacheUtilities().convertResultSetToIntArray(rs);
-                    }
-                    finally
-                    {
-                        rs.close();
-                    }
+                    return getCacheUtilities().convertResultSetToIntArray(rs);
                 }
-                catch (SQLException e)
+                finally
                 {
-                    throw new CacheException("Failed to read group ids from cache: " + e, e);
+                    rs.close();
                 }
+            }
+            catch (SQLException e)
+            {
+                throw new CacheException("Failed to read group ids from cache: " + e, e);
             }
         }, sql);
     }

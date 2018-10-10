@@ -88,24 +88,20 @@ public class TaskCanceller extends DefaultCancellable
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     public <T> Callable<T> wrap(Callable<T> c)
     {
-        return new Callable<>()
+        return () ->
         {
-            @Override
-            public T call() throws Exception
+            addCurrentThread();
+            try
             {
-                addCurrentThread();
-                try
+                if (isCancelled())
                 {
-                    if (isCancelled())
-                    {
-                        throw new InterruptedException();
-                    }
-                    return c.call();
+                    throw new InterruptedException();
                 }
-                finally
-                {
-                    removeCurrentThread();
-                }
+                return c.call();
+            }
+            finally
+            {
+                removeCurrentThread();
             }
         };
     }
@@ -121,23 +117,19 @@ public class TaskCanceller extends DefaultCancellable
     @SuppressWarnings("PMD.AvoidRethrowingException")
     public <T> InterruptibleCallable<T> wrap(InterruptibleCallable<T> c)
     {
-        return new InterruptibleCallable<>()
+        return () ->
         {
-            @Override
-            public T call() throws InterruptedException
+            try
             {
-                try
-                {
-                    return wrap((Callable<T>)() -> c.call()).call();
-                }
-                catch (RuntimeException | Error | InterruptedException e)
-                {
-                    throw e;
-                }
-                catch (Exception e)
-                {
-                    throw new ImpossibleException(e);
-                }
+                return wrap((Callable<T>)() -> c.call()).call();
+            }
+            catch (RuntimeException | Error | InterruptedException e1)
+            {
+                throw e1;
+            }
+            catch (Exception e2)
+            {
+                throw new ImpossibleException(e2);
             }
         };
     }

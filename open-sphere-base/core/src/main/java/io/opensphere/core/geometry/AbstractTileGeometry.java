@@ -16,7 +16,6 @@ import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.GeographicQuadrilateral;
 import io.opensphere.core.model.Position;
 import io.opensphere.core.model.Quadrilateral;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.TimeBudget;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
@@ -652,14 +651,7 @@ public abstract class AbstractTileGeometry<E extends AbstractTileGeometry<? supe
          */
         public void fireSplitJoinChangeRequest()
         {
-            myChangeSupport.notifyListeners(new Callback<AbstractTileGeometry.SplitJoinRequestListener>()
-            {
-                @Override
-                public void notify(SplitJoinRequestListener listener)
-                {
-                    listener.splitJoinRequest();
-                }
-            });
+            myChangeSupport.notifyListeners(listener -> listener.splitJoinRequest());
         }
 
         @Override

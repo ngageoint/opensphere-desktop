@@ -13,7 +13,6 @@ import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
-import gnu.trove.procedure.TIntObjectProcedure;
 import io.opensphere.core.order.OrderCategory;
 import io.opensphere.core.order.OrderChangeListener;
 import io.opensphere.core.order.OrderManager;
@@ -112,14 +111,10 @@ public class OrderManagerImpl implements OrderManager
 
         if (participants != null)
         {
-            participants.forEachEntry(new TIntObjectProcedure<OrderParticipantKey>()
+            participants.forEachEntry((key, value) ->
             {
-                @Override
-                public boolean execute(int key, OrderParticipantKey value)
-                {
-                    insertParticipant(value, key);
-                    return true;
-                }
+                insertParticipant(value, key);
+                return true;
             });
         }
     }

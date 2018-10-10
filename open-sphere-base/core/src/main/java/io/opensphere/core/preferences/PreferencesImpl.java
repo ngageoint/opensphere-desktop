@@ -122,14 +122,7 @@ public class PreferencesImpl implements InternalPreferencesIF
      */
     protected PreferencesImpl()
     {
-        Factory<String, ChangeSupport<PreferenceChangeListener>> changeSupportFactory = new Factory<>()
-        {
-            @Override
-            public ChangeSupport<PreferenceChangeListener> create(String key)
-            {
-                return new WeakChangeSupport<>();
-            }
-        };
+        Factory<String, ChangeSupport<PreferenceChangeListener>> changeSupportFactory = key -> new WeakChangeSupport<>();
         myChangeSupportMap = new LazyMap<>(
                 new ConcurrentHashMap<String, ChangeSupport<PreferenceChangeListener>>(), String.class, changeSupportFactory);
     }

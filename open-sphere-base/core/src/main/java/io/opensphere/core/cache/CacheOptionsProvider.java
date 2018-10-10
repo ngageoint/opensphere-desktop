@@ -21,7 +21,6 @@ import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
-import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
@@ -75,14 +74,7 @@ public class CacheOptionsProvider extends AbstractOptionsProvider
         myPrefs = prefsRegistry.getPreferences(Cache.class);
         myCache = cache;
 
-        myPreferenceChangeListener = new PreferenceChangeListener()
-        {
-            @Override
-            public void preferenceChange(PreferenceChangeEvent evt)
-            {
-                myCache.setOnDiskSizeLimitBytes(evt.getValueAsLong(DEFAULT_SIZE_LIMIT_BYTES));
-            }
-        };
+        myPreferenceChangeListener = evt -> myCache.setOnDiskSizeLimitBytes(evt.getValueAsLong(DEFAULT_SIZE_LIMIT_BYTES));
         myPrefs.addPreferenceChangeListener(SIZE_LIMIT_PREFS_KEY, myPreferenceChangeListener);
 
         cache.setOnDiskSizeLimitBytes(myPrefs.getLong(SIZE_LIMIT_PREFS_KEY, DEFAULT_SIZE_LIMIT_BYTES));

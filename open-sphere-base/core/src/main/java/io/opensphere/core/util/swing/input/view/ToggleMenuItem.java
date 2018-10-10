@@ -4,7 +4,6 @@ import javax.swing.JMenuItem;
 
 import io.opensphere.core.util.Service;
 import io.opensphere.core.util.swing.input.model.BooleanModel;
-import io.opensphere.core.util.swing.input.model.PropertyChangeEvent;
 import io.opensphere.core.util.swing.input.model.PropertyChangeEvent.Property;
 import io.opensphere.core.util.swing.input.model.PropertyChangeListener;
 
@@ -22,15 +21,11 @@ public class ToggleMenuItem extends JMenuItem implements Service
     private final BooleanModel myBooleanModel;
 
     /** Listener for changes to the enabled state of the model. */
-    private final transient PropertyChangeListener myPropertyChangeListener = new PropertyChangeListener()
+    private final transient PropertyChangeListener myPropertyChangeListener = e ->
     {
-        @Override
-        public void stateChanged(PropertyChangeEvent e)
+        if (e.getProperty() == Property.ENABLED)
         {
-            if (e.getProperty() == Property.ENABLED)
-            {
-                setEnabled(myBooleanModel.isEnabled());
-            }
+            setEnabled(myBooleanModel.isEnabled());
         }
     };
 

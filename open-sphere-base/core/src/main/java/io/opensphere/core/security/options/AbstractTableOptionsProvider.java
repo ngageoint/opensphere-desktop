@@ -6,8 +6,6 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -18,7 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
-import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
@@ -105,21 +102,17 @@ public abstract class AbstractTableOptionsProvider extends AbstractSecurityOptio
 
         panel.add(buttonPanel, BorderLayout.SOUTH);
 
-        ListSelectionListener listSelectionListener = new ListSelectionListener()
+        ListSelectionListener listSelectionListener = e ->
         {
-            @Override
-            public void valueChanged(ListSelectionEvent e)
+            if (myTable.getSelectedRowCount() == 0)
             {
-                if (myTable.getSelectedRowCount() == 0)
-                {
-                    myDetailsButton.setEnabled(false);
-                    myDeleteButton.setEnabled(false);
-                }
-                else
-                {
-                    myDetailsButton.setEnabled(myTable.getSelectedRowCount() == 1);
-                    myDeleteButton.setEnabled(canDeleteRows(JTableUtilities.getSelectedModelRows(myTable)));
-                }
+                myDetailsButton.setEnabled(false);
+                myDeleteButton.setEnabled(false);
+            }
+            else
+            {
+                myDetailsButton.setEnabled(myTable.getSelectedRowCount() == 1);
+                myDeleteButton.setEnabled(canDeleteRows(JTableUtilities.getSelectedModelRows(myTable)));
             }
         };
         myTable.getSelectionModel().addListSelectionListener(listSelectionListener);
@@ -212,23 +205,19 @@ public abstract class AbstractTableOptionsProvider extends AbstractSecurityOptio
         myDeleteButton = new JButton("Delete...");
         myDeleteButton.setMargin(ButtonPanel.INSETS_MEDIUM);
         myDeleteButton.setToolTipText(getDeleteToolTipText());
-        myDeleteButton.addActionListener(new ActionListener()
+        myDeleteButton.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            if (myTable.getSelectedRowCount() == 0)
             {
-                if (myTable.getSelectedRowCount() == 0)
+                JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(getTable()), "No row selected");
+            }
+            else
+            {
+                if (showDeleteMessageDialog())
                 {
-                    JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(getTable()), "No row selected");
-                }
-                else
-                {
-                    if (showDeleteMessageDialog())
+                    for (int index = 0; index < myTable.getSelectedRowCount(); ++index)
                     {
-                        for (int index = 0; index < myTable.getSelectedRowCount(); ++index)
-                        {
-                            deleteRow(myTable.convertRowIndexToModel(myTable.getSelectedRow()));
-                        }
+                        deleteRow(myTable.convertRowIndexToModel(myTable.getSelectedRow()));
                     }
                 }
             }
@@ -243,19 +232,15 @@ public abstract class AbstractTableOptionsProvider extends AbstractSecurityOptio
         myDetailsButton = new JButton("Details");
         myDetailsButton.setMargin(ButtonPanel.INSETS_MEDIUM);
         myDetailsButton.setToolTipText("Select a single row for details.");
-        myDetailsButton.addActionListener(new ActionListener()
+        myDetailsButton.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            if (myTable.getSelectedRowCount() == 0)
             {
-                if (myTable.getSelectedRowCount() == 0)
-                {
-                    JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(getTable()), "No row selected");
-                }
-                else
-                {
-                    showDetails(myTable.convertRowIndexToModel(myTable.getSelectedRow()));
-                }
+                JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(getTable()), "No row selected");
+            }
+            else
+            {
+                showDetails(myTable.convertRowIndexToModel(myTable.getSelectedRow()));
             }
         });
     }

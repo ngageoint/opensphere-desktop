@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.locks.Lock;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import com.jogamp.opengl.util.texture.TextureCoords;
 
@@ -86,15 +85,11 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
         Utilities.checkNull(builder.getPriorityComparator(), "builder.getPriorityComparator()");
         myPriorityComparator = builder.getPriorityComparator();
 
-        myViewAltitudeSupplier = new MemoizingSupplier<>(new Supplier<Kilometers>()
+        myViewAltitudeSupplier = new MemoizingSupplier<>(() ->
         {
-            @Override
-            public Kilometers get()
-            {
-                GeographicPosition viewPosition = getMapContext().getProjection()
-                        .convertToPosition(getViewer().getPosition().getLocation(), Altitude.ReferenceLevel.ELLIPSOID);
-                return new Kilometers(viewPosition.getAlt().getKilometers());
-            }
+            GeographicPosition viewPosition = getMapContext().getProjection()
+                    .convertToPosition(getViewer().getPosition().getLocation(), Altitude.ReferenceLevel.ELLIPSOID);
+            return new Kilometers(viewPosition.getAlt().getKilometers());
         });
     }
 

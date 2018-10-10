@@ -15,7 +15,6 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.input.ViewPanel;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 
 /**
  * A panel that contains radio buttons, one for each value in an enum. The
@@ -47,15 +46,11 @@ public class EnumRadioButtonPanel<E extends Enum<E>> extends ViewPanel
             buttonGroup.add(btn);
             btn.addActionListener(buttonListener);
 
-            ChangeListener<? super E> propListener = new ChangeListener<>()
+            ChangeListener<? super E> propListener = (v, o, n) ->
             {
-                @Override
-                public void changed(ObservableValue<? extends E> v, E o, E n)
+                if (Objects.equals(n, t))
                 {
-                    if (Objects.equals(n, t))
-                    {
-                        btn.setSelected(true);
-                    }
+                    btn.setSelected(true);
                 }
             };
             prop.addListener(propListener);

@@ -21,7 +21,6 @@ import io.opensphere.core.model.time.TimeSpanList;
 import io.opensphere.core.units.duration.Duration;
 import io.opensphere.core.units.duration.Seconds;
 import io.opensphere.core.viewer.ViewChangeSupport.ViewChangeListener;
-import io.opensphere.core.viewer.ViewChangeSupport.ViewChangeType;
 import io.opensphere.core.viewer.Viewer;
 import io.opensphere.core.viewer.impl.MapContext;
 
@@ -57,14 +56,7 @@ public class SpatialTemporalGeometryComparator implements Comparator<Geometry>
             .get(active.getPrimary().getExtent().getMidpoint());
 
     /** The listener for view changes. */
-    private final ViewChangeListener myViewChangeListener = new ViewChangeListener()
-    {
-        @Override
-        public void viewChanged(Viewer viewer, ViewChangeType type)
-        {
-            setModelCenter(viewer);
-        }
-    };
+    private final ViewChangeListener myViewChangeListener = (viewer, type) -> setModelCenter(viewer);
 
     /**
      * Constructor.

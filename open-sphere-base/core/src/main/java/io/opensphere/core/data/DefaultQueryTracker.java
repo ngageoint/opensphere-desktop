@@ -21,7 +21,6 @@ import io.opensphere.core.cache.matcher.PropertyMatcherUtilities;
 import io.opensphere.core.data.util.Query;
 import io.opensphere.core.data.util.QueryTracker;
 import io.opensphere.core.data.util.Satisfaction;
-import io.opensphere.core.util.ChangeSupport;
 import io.opensphere.core.util.StrongChangeSupport;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
@@ -404,14 +403,7 @@ public class DefaultQueryTracker extends TaskCanceller implements MutableQueryTr
         myFractionComplete = fractionComplete;
         if (myChangeSupport != null)
         {
-            myChangeSupport.notifyListeners(new ChangeSupport.Callback<QueryTracker.QueryTrackerListener>()
-            {
-                @Override
-                public void notify(QueryTrackerListener listener)
-                {
-                    listener.fractionCompleteChanged(DefaultQueryTracker.this, fractionComplete);
-                }
-            }, null);
+            myChangeSupport.notifyListeners(listener -> listener.fractionCompleteChanged(DefaultQueryTracker.this, fractionComplete), null);
         }
     }
 
@@ -453,14 +445,7 @@ public class DefaultQueryTracker extends TaskCanceller implements MutableQueryTr
         setFractionComplete(1f);
         if (myChangeSupport != null)
         {
-            myChangeSupport.notifyListeners(new ChangeSupport.Callback<QueryTracker.QueryTrackerListener>()
-            {
-                @Override
-                public void notify(QueryTrackerListener listener)
-                {
-                    listener.statusChanged(DefaultQueryTracker.this, queryStatus);
-                }
-            }, null);
+            myChangeSupport.notifyListeners(listener -> listener.statusChanged(DefaultQueryTracker.this, queryStatus), null);
         }
     }
 

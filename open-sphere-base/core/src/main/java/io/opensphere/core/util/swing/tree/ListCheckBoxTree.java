@@ -22,7 +22,6 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ToolTipManager;
-import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreeNode;
@@ -209,17 +208,13 @@ public class ListCheckBoxTree extends CheckBoxTree
             setTransferHandler(transferHandler);
 
             // When selection changes, inform the drag and drop controller
-            getSelectionModel().addTreeSelectionListener(new TreeSelectionListener()
+            getSelectionModel().addTreeSelectionListener(e ->
             {
-                @Override
-                public void valueChanged(final TreeSelectionEvent e)
-                {
-                    transferHandler.getController().selectionChanged(e.getPath(), e.isAddedPath());
+                transferHandler.getController().selectionChanged(e.getPath(), e.isAddedPath());
 
-                    // Because we are already on the EDT, scroll to the visible
-                    // path after the panel has had a chance to update.
-                    EventQueueUtilities.invokeLater(() -> ListCheckBoxTree.this.scrollPathToVisible(e.getPath()));
-                }
+                // Because we are already on the EDT, scroll to the visible
+                // path after the panel has had a chance to update.
+                EventQueueUtilities.invokeLater(() -> ListCheckBoxTree.this.scrollPathToVisible(e.getPath()));
             });
         }
     }
@@ -448,56 +443,52 @@ public class ListCheckBoxTree extends CheckBoxTree
      */
     private TreeSelectionListener getCheckBoxSelectionListener()
     {
-        return new TreeSelectionListener()
+        return e ->
         {
-            @Override
-            public void valueChanged(TreeSelectionEvent e)
+            if (!myIgnoreSelectionEvents)
             {
-                if (!myIgnoreSelectionEvents)
+                boolean isSelected = e.isAddedPath();
+
+                // Get the list of nodes to update
+                List<TreeNode> leafNodes = JTreeUtilities.flatten(mapTreeNodesFromPaths(e.getPaths()), node1 -> node1.isLeaf());
+
+                // Check with the user before large selections
+                boolean doIt = true;
+                if (isSelected && mySelectionWarnThreshold != null && leafNodes.size() >= mySelectionWarnThreshold.intValue())
                 {
-                    boolean isSelected = e.isAddedPath();
+                    int option = JOptionPane.showConfirmDialog(ListCheckBoxTree.this.getParent(),
+                            "Are you sure you want to select " + leafNodes.size() + " items?", "Confirm Selection",
+                            JOptionPane.YES_NO_OPTION);
+                    doIt = option == JOptionPane.YES_OPTION;
+                }
 
-                    // Get the list of nodes to update
-                    List<TreeNode> leafNodes = JTreeUtilities.flatten(mapTreeNodesFromPaths(e.getPaths()), node -> node.isLeaf());
-
-                    // Check with the user before large selections
-                    boolean doIt = true;
-                    if (isSelected && mySelectionWarnThreshold != null && leafNodes.size() >= mySelectionWarnThreshold.intValue())
+                // Update the selection state
+                if (doIt)
+                {
+                    int index = 0;
+                    for (TreeNode node2 : leafNodes)
                     {
-                        int option = JOptionPane.showConfirmDialog(ListCheckBoxTree.this.getParent(),
-                                "Are you sure you want to select " + leafNodes.size() + " items?", "Confirm Selection",
-                                JOptionPane.YES_NO_OPTION);
-                        doIt = option == JOptionPane.YES_OPTION;
-                    }
-
-                    // Update the selection state
-                    if (doIt)
-                    {
-                        int index = 0;
-                        for (TreeNode node : leafNodes)
+                        if (node2 instanceof TreeTableTreeNode)
                         {
-                            if (node instanceof TreeTableTreeNode)
+                            TreeTableTreeNode tableNode = (TreeTableTreeNode)node2;
+                            if (tableNode.getPayload().getButton().isSelected() != isSelected)
                             {
-                                TreeTableTreeNode tableNode = (TreeTableTreeNode)node;
+                                tableNode.getPayload().getButton().setSelected(isSelected);
+                                fireCheckboxAction(tableNode);
+
                                 if (tableNode.getPayload().getButton().isSelected() != isSelected)
                                 {
-                                    tableNode.getPayload().getButton().setSelected(isSelected);
-                                    fireCheckboxAction(tableNode);
-
-                                    if (tableNode.getPayload().getButton().isSelected() != isSelected)
-                                    {
-                                        getCheckBoxTreeSelectionModel().removeSelectionPath(e.getPaths()[index]);
-                                    }
+                                    getCheckBoxTreeSelectionModel().removeSelectionPath(e.getPaths()[index]);
                                 }
                             }
-
-                            index++;
                         }
+
+                        index++;
                     }
-                    else
-                    {
-                        getCheckBoxTreeSelectionModel().removeSelectionPaths(e.getPaths());
-                    }
+                }
+                else
+                {
+                    getCheckBoxTreeSelectionModel().removeSelectionPaths(e.getPaths());
                 }
             }
         };

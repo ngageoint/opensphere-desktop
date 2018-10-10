@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import gnu.trove.list.TIntList;
@@ -192,14 +191,7 @@ public class BinaryTimeTree<E extends TimeSpanProvider>
     {
         if (collection.size() > 1)
         {
-            Collections.sort(collection, new Comparator<E>()
-            {
-                @Override
-                public int compare(E orA, E orB)
-                {
-                    return orB.getTimeSpan().compareTo(orA.getTimeSpan());
-                }
-            });
+            Collections.sort(collection, (orA, orB) -> orB.getTimeSpan().compareTo(orA.getTimeSpan()));
         }
 
         myTopNode.setRange(enlargeTimeRange(collection, myTopNode.getRange()));

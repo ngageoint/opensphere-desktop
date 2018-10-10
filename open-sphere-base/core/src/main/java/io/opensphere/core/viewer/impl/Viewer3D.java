@@ -25,12 +25,10 @@ import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.ScreenPosition;
-import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.projection.AbstractGeographicProjection;
 import io.opensphere.core.projection.Projection;
 import io.opensphere.core.projection.ProjectionChangeSupport.ProjectionChangeListener;
-import io.opensphere.core.projection.ProjectionChangedEvent;
 import io.opensphere.core.util.MathUtil;
 import io.opensphere.core.util.TerrainUtil;
 import io.opensphere.core.util.lang.EqualsHelper;
@@ -97,27 +95,16 @@ public class Viewer3D extends AbstractDynamicViewer
     private final ViewerPosition3D myPosition = new ViewerPosition3D();
 
     /** Listener for preference changes. */
-    private final PreferenceChangeListener myPreferenceChangeListener = new PreferenceChangeListener()
+    private final PreferenceChangeListener myPreferenceChangeListener = evt ->
     {
-        @Override
-        public void preferenceChange(PreferenceChangeEvent evt)
+        if (evt.getSource() != Viewer3D.this)
         {
-            if (evt.getSource() != Viewer3D.this)
-            {
-                setPosition(getPreferences().getJAXBObject(ViewerPosition3D.class, POSITION_PREF_KEY, new ViewerPosition3D()));
-            }
+            setPosition(getPreferences().getJAXBObject(ViewerPosition3D.class, POSITION_PREF_KEY, new ViewerPosition3D()));
         }
     };
 
     /** Listener for projection changes. */
-    private final ProjectionChangeListener myProjectionChangeListener = new ProjectionChangeListener()
-    {
-        @Override
-        public void projectionChanged(ProjectionChangedEvent evt)
-        {
-            resetProjectionMatrixClipped();
-        }
-    };
+    private final ProjectionChangeListener myProjectionChangeListener = evt -> resetProjectionMatrixClipped();
 
     /** The projection matrix. */
     private float[] myProjectionMatrix;

@@ -12,18 +12,14 @@ import io.opensphere.core.util.MathUtil;
 public class Vector2d extends AbstractVector implements Serializable
 {
     /** Comparator that orders coordinates such that smaller ones come first. */
-    public static final Comparator<Vector2d> LENGTH_COMPARATOR = new Comparator<>()
+    public static final Comparator<Vector2d> LENGTH_COMPARATOR = (o1, o2) ->
     {
-        @Override
-        public int compare(Vector2d o1, Vector2d o2)
-        {
-            // Since we are only interested in the magnitude, the square of the
-            // distance may be used for efficiency.
-            double val1 = o1.getLengthSquared();
-            double val2 = o2.getLengthSquared();
-            double delta = Math.abs(val1 - val2);
-            return delta < MathUtil.DBL_EPSILON ? 0 : val1 < val2 ? 1 : -1;
-        }
+        // Since we are only interested in the magnitude, the square of the
+        // distance may be used for efficiency.
+        double val1 = o1.getLengthSquared();
+        double val2 = o2.getLengthSquared();
+        double delta = Math.abs(val1 - val2);
+        return delta < MathUtil.DBL_EPSILON ? 0 : val1 < val2 ? 1 : -1;
     };
 
     /** A vector with zero for each component. */

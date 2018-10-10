@@ -83,14 +83,10 @@ public class MapManagerImpl implements MapManager
     private final Preferences myPreferences;
 
     /** The lead projection change listener. */
-    private final ProjectionChangeSupport.ProjectionChangeListener myProjectionChangeListener = new ProjectionChangeSupport.ProjectionChangeListener()
+    private final ProjectionChangeSupport.ProjectionChangeListener myProjectionChangeListener = evt ->
     {
-        @Override
-        public void projectionChanged(ProjectionChangedEvent evt)
-        {
-            myProjectionManager.notifyProjectionChangeListeners(evt, myUpdateExecutor);
-            myCurrentViewer.get().validateViewerPosition();
-        }
+        myProjectionManager.notifyProjectionChangeListeners(evt, myUpdateExecutor);
+        myCurrentViewer.get().validateViewerPosition();
     };
 
     /** The current index into {@link #ourProjectionMap}. */
@@ -124,14 +120,7 @@ public class MapManagerImpl implements MapManager
     private final ViewerManager myViewerManager;
 
     /** The observer I use to know when the view has changed. */
-    private final DynamicViewer.Observer myViewerObserver = new DynamicViewer.Observer()
-    {
-        @Override
-        public void notifyViewChanged(ViewChangeSupport.ViewChangeType type)
-        {
-            myViewerManager.notifyViewChangeListeners(myUpdateExecutor, type);
-        }
-    };
+    private final DynamicViewer.Observer myViewerObserver = type -> myViewerManager.notifyViewChangeListeners(myUpdateExecutor, type);
 
     /**
      * Initialize the mappings of projections to viewers and viewers to control

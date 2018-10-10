@@ -59,43 +59,39 @@ public class WizardDialog
     /**
      * Listener for validation on wizard panels.
      */
-    private final ValidationStatusChangeListener myPanelValidationListener = new ValidationStatusChangeListener()
+    private final ValidationStatusChangeListener myPanelValidationListener = (object, valid, message) ->
     {
-        @Override
-        public void statusChanged(Object object, ValidationStatus valid, String message)
+        if (Utilities.sameInstance(myWizardPanels.get(myStepListModel.getCurrentStepTitle()), object))
         {
-            if (Utilities.sameInstance(myWizardPanels.get(myStepListModel.getCurrentStepTitle()), object))
+            myValidator.setValidationResult(valid, message);
+        }
+        for (int step = 0; step < myStepListModel.getStepCount(); ++step)
+        {
+            String stepTitle = myStepListModel.getStepTitle(step);
+            if (Utilities.sameInstance(myWizardPanels.get(stepTitle), object))
             {
-                myValidator.setValidationResult(valid, message);
-            }
-            for (int step = 0; step < myStepListModel.getStepCount(); ++step)
-            {
-                String stepTitle = myStepListModel.getStepTitle(step);
-                if (Utilities.sameInstance(myWizardPanels.get(stepTitle), object))
+                if (valid == ValidationStatus.VALID)
                 {
-                    if (valid == ValidationStatus.VALID)
+                    myStepListModel.setStepState(stepTitle, StepState.VALID);
+                }
+                else
+                {
+                    StepState stepState = myStepListModel.getStepState(step);
+                    if (stepState == StepState.VALID || stepState == StepState.WARNING || stepState == StepState.INVALID
+                            || myStepListModel.getCurrentStep() == step)
                     {
-                        myStepListModel.setStepState(stepTitle, StepState.VALID);
-                    }
-                    else
-                    {
-                        StepState stepState = myStepListModel.getStepState(step);
-                        if (stepState == StepState.VALID || stepState == StepState.WARNING || stepState == StepState.INVALID
-                                || myStepListModel.getCurrentStep() == step)
+                        if (valid == ValidationStatus.ERROR)
                         {
-                            if (valid == ValidationStatus.ERROR)
-                            {
-                                myStepListModel.setStepState(stepTitle, StepState.INVALID);
-                            }
-                            else
-                            {
-                                myStepListModel.setStepState(stepTitle, StepState.WARNING);
-                            }
+                            myStepListModel.setStepState(stepTitle, StepState.INVALID);
+                        }
+                        else
+                        {
+                            myStepListModel.setStepState(stepTitle, StepState.WARNING);
                         }
                     }
-
-                    break;
                 }
+
+                break;
             }
         }
     };

@@ -1,6 +1,5 @@
 package io.opensphere.core.map;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
@@ -42,19 +41,15 @@ public class AdvancedMapOptionsProvider extends AbstractOptionsProvider
      * This listener is used in combination with {@link WeakChangeSupport}, so
      * keep a reference to prevent the listener from becoming weakly reachable.
      */
-    private final ActionListener mySliderListener = new ActionListener()
+    private final ActionListener mySliderListener = evt ->
     {
-        @Override
-        public void actionPerformed(ActionEvent evt)
-        {
-            Quantify.collectMetric("mist3d.settings.map.advanced.terrain-density-change");
-            LinkedSliderTextField sfp = (LinkedSliderTextField)evt.getSource();
-            int reverse = 101 - sfp.getValue();
-            // scale to a number between 40 and 120
-            int scaled = (int)(40 + reverse * SCALE_SPREAD);
+        Quantify.collectMetric("mist3d.settings.map.advanced.terrain-density-change");
+        LinkedSliderTextField sfp = (LinkedSliderTextField)evt.getSource();
+        int reverse = 101 - sfp.getValue();
+        // scale to a number between 40 and 120
+        int scaled = (int)(40 + reverse * SCALE_SPREAD);
 
-            myPreferences.putInt(MODEL_DENSITY_KEY, scaled, AdvancedMapOptionsProvider.this);
-        }
+        myPreferences.putInt(MODEL_DENSITY_KEY, scaled, AdvancedMapOptionsProvider.this);
     };
 
     /**

@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import io.opensphere.core.util.ChangeListener;
-import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.Service;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.ValidationStatus;
@@ -82,48 +81,40 @@ public abstract class AbstractController<T, M extends ViewModel<T>, V extends JC
         updateViewEnabled();
         updateViewVisible();
 
-        myChangeListener = new ChangeListener<>()
+        myChangeListener = (observable, oldValue, newValue) ->
         {
-            @Override
-            public void changed(ObservableValue<? extends T> observable, T oldValue, T newValue)
-            {
-                assert EventQueue.isDispatchThread();
-                handleModelChange();
-            }
+            assert EventQueue.isDispatchThread();
+            handleModelChange();
         };
         myModel.addListener(myChangeListener);
 
-        myPropertyChangeListener = new PropertyChangeListener()
+        myPropertyChangeListener = e ->
         {
-            @Override
-            public void stateChanged(PropertyChangeEvent e)
+            assert EventQueue.isDispatchThread();
+            if (e.getProperty() == PropertyChangeEvent.Property.ENABLED)
             {
-                assert EventQueue.isDispatchThread();
-                if (e.getProperty() == PropertyChangeEvent.Property.ENABLED)
-                {
-                    updateViewEnabled();
-                }
-                else if (e.getProperty() == PropertyChangeEvent.Property.VISIBLE)
-                {
-                    updateViewVisible();
-                }
-                else if (e.getProperty() == PropertyChangeEvent.Property.OPTIONS)
-                {
-                    updateViewOptions();
-                }
-                else if (e.getProperty() == PropertyChangeEvent.Property.VALIDATION_CRITERIA)
-                {
-                    updateViewLookAndFeel();
-                }
-                else if (e.getProperty() == PropertyChangeEvent.Property.VIEW_PARAMETERS)
-                {
-                    updateViewParameters();
-                }
-                else if (e.getProperty() == PropertyChangeEvent.Property.NAME_AND_DESCRIPTION)
-                {
-                    // This will also update the tool tip.
-                    updateViewLookAndFeel();
-                }
+                updateViewEnabled();
+            }
+            else if (e.getProperty() == PropertyChangeEvent.Property.VISIBLE)
+            {
+                updateViewVisible();
+            }
+            else if (e.getProperty() == PropertyChangeEvent.Property.OPTIONS)
+            {
+                updateViewOptions();
+            }
+            else if (e.getProperty() == PropertyChangeEvent.Property.VALIDATION_CRITERIA)
+            {
+                updateViewLookAndFeel();
+            }
+            else if (e.getProperty() == PropertyChangeEvent.Property.VIEW_PARAMETERS)
+            {
+                updateViewParameters();
+            }
+            else if (e.getProperty() == PropertyChangeEvent.Property.NAME_AND_DESCRIPTION)
+            {
+                // This will also update the tool tip.
+                updateViewLookAndFeel();
             }
         };
         myModel.addPropertyChangeListener(myPropertyChangeListener);

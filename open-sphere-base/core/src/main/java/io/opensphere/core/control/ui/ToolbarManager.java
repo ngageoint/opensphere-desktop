@@ -27,7 +27,6 @@ import javax.swing.SwingConstants;
 
 import org.apache.commons.lang3.StringUtils;
 
-import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
@@ -90,14 +89,10 @@ public class ToolbarManager
     /**
      * Listener for showIconButtonText preference updates.
      */
-    private final PreferenceChangeListener myTextListener = new PreferenceChangeListener()
+    private final PreferenceChangeListener myTextListener = evt ->
     {
-        @Override
-        public void preferenceChange(PreferenceChangeEvent evt)
-        {
-            myShowIconButtonText = evt.getValueAsBoolean(!myShowIconButtonText);
-            myIconButtons.forEach(b -> b.setTextPainted(myShowIconButtonText));
-        }
+        myShowIconButtonText = evt.getValueAsBoolean(!myShowIconButtonText);
+        myIconButtons.forEach(b -> b.setTextPainted(myShowIconButtonText));
     };
 
     /** Icon buttons that have been added to the toolbar and can have text. */

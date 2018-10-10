@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JComponent;
 import javax.swing.Timer;
@@ -136,20 +134,16 @@ public class FlashingBorder implements Border
          */
         public RepaintTimer(int periodMillis)
         {
-            super(periodMillis, new ActionListener()
+            super(periodMillis, e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
+                if (!myContainedComponent.isVisible())
                 {
-                    if (!myContainedComponent.isVisible())
-                    {
-                        cleanup();
-                        return;
-                    }
-
-                    myUsePrimary = !myUsePrimary;
-                    myContainedComponent.repaint();
+                    cleanup();
+                    return;
                 }
+
+                myUsePrimary = !myUsePrimary;
+                myContainedComponent.repaint();
             });
         }
     }

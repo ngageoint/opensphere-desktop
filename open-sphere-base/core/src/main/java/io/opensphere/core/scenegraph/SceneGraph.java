@@ -36,21 +36,17 @@ public class SceneGraph<E, T extends SceneGraphParameter>
      * class of parameter with less disparate parameters will be before the
      * class of parameter with more disparate parameters.
      */
-    private final Comparator<Entry<Object, Set<SceneGraphParameter>>> myEntryComparator = new Comparator<>()
+    private final Comparator<Entry<Object, Set<SceneGraphParameter>>> myEntryComparator = (o1, o2) ->
     {
-        @Override
-        public int compare(Entry<Object, Set<SceneGraphParameter>> o1, Entry<Object, Set<SceneGraphParameter>> o2)
+        Object type1 = o1.getKey();
+        Object type2 = o2.getKey();
+        if (type1.equals(type2))
         {
-            Object type1 = o1.getKey();
-            Object type2 = o2.getKey();
-            if (type1.equals(type2))
-            {
-                return 0;
-            }
-            int size1 = o1.getValue().size();
-            int size2 = o2.getValue().size();
-            return size1 < size2 ? -1 : size1 > size2 ? 1 : 0;
+            return 0;
         }
+        int size1 = o1.getValue().size();
+        int size2 = o2.getValue().size();
+        return size1 < size2 ? -1 : size1 > size2 ? 1 : 0;
     };
 
     /** A map of parameters to objects. */

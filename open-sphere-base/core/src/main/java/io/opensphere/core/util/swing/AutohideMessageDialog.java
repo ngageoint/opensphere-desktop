@@ -2,8 +2,6 @@ package io.opensphere.core.util.swing;
 
 import java.awt.Component;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
@@ -14,8 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.util.Constants;
@@ -185,42 +181,34 @@ public class AutohideMessageDialog extends ChoiceMessageDialog
         myHideCheckbox.setHorizontalAlignment(SwingConstants.RIGHT);
         myHideCheckbox.setFocusPainted(false);
         setCheckboxText();
-        myTimer = new Timer(0, new ActionListener()
+        myTimer = new Timer(0, e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            if (myTimeBudget.isExpired())
             {
-                if (myTimeBudget.isExpired())
-                {
-                    myTimer.stop();
-                    dispatchEvent(new WindowEvent(AutohideMessageDialog.this, WindowEvent.WINDOW_CLOSING));
-                }
-                else
-                {
-                    setCheckboxText();
-                    myTimer.setDelay(Math.min(myTimeBudget.getRemainingMilliseconds(), Constants.MILLI_PER_UNIT));
-                }
+                myTimer.stop();
+                dispatchEvent(new WindowEvent(AutohideMessageDialog.this, WindowEvent.WINDOW_CLOSING));
+            }
+            else
+            {
+                setCheckboxText();
+                myTimer.setDelay(Math.min(myTimeBudget.getRemainingMilliseconds(), Constants.MILLI_PER_UNIT));
             }
         });
-        myHideCheckbox.addChangeListener(new ChangeListener()
+        myHideCheckbox.addChangeListener(e ->
         {
-            @Override
-            public void stateChanged(ChangeEvent e)
+            if (prefs != null)
             {
-                if (prefs != null)
-                {
-                    prefs.putBoolean(prefsKey, ((JCheckBox)e.getSource()).isSelected(), AutohideMessageDialog.this);
-                }
-                if (((JCheckBox)e.getSource()).isSelected())
-                {
-                    startTimer();
-                }
-                else
-                {
-                    myTimeBudget = null;
-                    setCheckboxText();
-                    myTimer.stop();
-                }
+                prefs.putBoolean(prefsKey, ((JCheckBox)e.getSource()).isSelected(), AutohideMessageDialog.this);
+            }
+            if (((JCheckBox)e.getSource()).isSelected())
+            {
+                startTimer();
+            }
+            else
+            {
+                myTimeBudget = null;
+                setCheckboxText();
+                myTimer.stop();
             }
         });
         return myHideCheckbox;

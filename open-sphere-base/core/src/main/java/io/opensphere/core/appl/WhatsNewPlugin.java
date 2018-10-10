@@ -79,15 +79,11 @@ public class WhatsNewPlugin extends PluginAdapter
     private Toolbox myToolbox;
 
     /** Listener for lifecycle events. */
-    private final EventListener<ApplicationLifecycleEvent> myLifeCycleEventListener = new EventListener<>()
+    private final EventListener<ApplicationLifecycleEvent> myLifeCycleEventListener = event ->
     {
-        @Override
-        public void notify(ApplicationLifecycleEvent event)
+        if (event.getStage() == ApplicationLifecycleEvent.Stage.MAIN_FRAME_VISIBLE)
         {
-            if (event.getStage() == ApplicationLifecycleEvent.Stage.MAIN_FRAME_VISIBLE)
-            {
-                EventQueueUtilities.runOnEDT(() -> showWhatsNew(false));
-            }
+            EventQueueUtilities.runOnEDT(() -> showWhatsNew(false));
         }
     };
 

@@ -28,7 +28,6 @@ import org.apache.log4j.Logger;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.opensphere.core.image.DDSEncoder.EncodingException;
 import io.opensphere.core.util.Utilities;
-import io.opensphere.core.util.collections.LazyMap;
 import io.opensphere.core.util.collections.MappedObjectPool;
 import io.opensphere.core.util.concurrent.CommonTimer;
 import io.opensphere.core.util.image.ImageUtil;
@@ -59,14 +58,7 @@ public class ImageIOImage extends Image implements DDSEncodableImage
 
     /** Pool for buffered images. */
     private static final MappedObjectPool<BufferedImageSpecs, BufferedImage> BUFFERED_IMAGE_POOL = new MappedObjectPool<>(
-            BufferedImageSpecs.class, new LazyMap.Factory<BufferedImageSpecs, BufferedImage>()
-            {
-                @Override
-                public BufferedImage create(BufferedImageSpecs specs)
-                {
-                    return specs.createBufferedImage();
-                }
-            }, 20, 20, CLEANUP_EXECUTOR);
+            BufferedImageSpecs.class, specs -> specs.createBufferedImage(), 20, 20, CLEANUP_EXECUTOR);
 
     /** serialVersionUID. */
     private static final long serialVersionUID = 2L;

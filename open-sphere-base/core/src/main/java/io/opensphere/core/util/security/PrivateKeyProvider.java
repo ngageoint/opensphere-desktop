@@ -19,14 +19,7 @@ import javax.security.auth.x500.X500Principal;
 public interface PrivateKeyProvider
 {
     /** Comparator that compares providers by their aliases. */
-    Comparator<PrivateKeyProvider> ALIAS_COMPARATOR = new Comparator<>()
-    {
-        @Override
-        public int compare(PrivateKeyProvider o1, PrivateKeyProvider o2)
-        {
-            return o1.getAlias().compareTo(o2.getAlias());
-        }
-    };
+    Comparator<PrivateKeyProvider> ALIAS_COMPARATOR = (o1, o2) -> o1.getAlias().compareTo(o2.getAlias());
 
     /**
      * Get the alias associated with this key.

@@ -54,14 +54,7 @@ public class MutableNamespaceContext implements NamespaceContext
     @Override
     public Iterator<String> getPrefixes(final String namespaceURI)
     {
-        Predicate<Entry<String, String>> predicate = new Predicate<>()
-        {
-            @Override
-            public boolean test(Entry<String, String> input)
-            {
-                return input.getValue().equals(namespaceURI);
-            }
-        };
+        Predicate<Entry<String, String>> predicate = input -> input.getValue().equals(namespaceURI);
         return new PredicateIterator<>(myMap.entrySet().iterator(), predicate)
         {
             @Override

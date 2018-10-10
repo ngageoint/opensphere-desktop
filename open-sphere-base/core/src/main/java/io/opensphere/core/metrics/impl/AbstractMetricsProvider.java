@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 
 import io.opensphere.core.metrics.MetricsProvider;
 import io.opensphere.core.metrics.MetricsRegistry;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.lang.EqualsHelper;
@@ -87,14 +86,7 @@ public abstract class AbstractMetricsProvider implements MetricsProvider
     public final void fireUpdated()
     {
         myLastUpdatedTime = System.nanoTime();
-        myWeakChangeSupport.notifyListeners(new Callback<MetricsProviderListener>()
-        {
-            @Override
-            public void notify(MetricsProviderListener listener)
-            {
-                listener.providerUpdated(AbstractMetricsProvider.this);
-            }
-        }, ourEventExecutor);
+        myWeakChangeSupport.notifyListeners(listener -> listener.providerUpdated(AbstractMetricsProvider.this), ourEventExecutor);
     }
 
     @Override

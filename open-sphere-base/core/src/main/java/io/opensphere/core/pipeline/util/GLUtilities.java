@@ -423,14 +423,10 @@ public final class GLUtilities
                 return null;
         }
 
-        TextureData.Flusher flusher = new TextureData.Flusher()
+        TextureData.Flusher flusher = () ->
         {
-            @Override
-            public void flush()
-            {
-                oglImage.close();
-                dds.dispose();
-            }
+            oglImage.close();
+            dds.dispose();
         };
 
         return new TextureData(GLProfile.getDefault(), internalFormat, dds.getWidth(), dds.getHeight(), 0, pixelFormat,
@@ -446,14 +442,7 @@ public final class GLUtilities
      */
     private static TextureData createTextureDataUncompressed(final DDSImage image) throws IOException
     {
-        TextureData.Flusher flusher = new TextureData.Flusher()
-        {
-            @Override
-            public void flush()
-            {
-                image.dispose();
-            }
-        };
+        TextureData.Flusher flusher = () -> image.dispose();
 
         int pixelFormat = image.getCompressionType() == Image.CompressionType.D3DFMT_DXT5 ? GL.GL_RGBA : GL.GL_RGB;
         int internalFormat = pixelFormat;

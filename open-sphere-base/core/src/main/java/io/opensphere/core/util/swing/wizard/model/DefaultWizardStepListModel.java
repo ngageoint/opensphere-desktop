@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import io.opensphere.core.util.ChangeSupport;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.StrongChangeSupport;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
@@ -204,14 +203,7 @@ public class DefaultWizardStepListModel implements WizardStepListModel
     protected final void notifyCurrentStepChanged(final int step)
     {
         final String stepTitle = myStepTitles.get(step);
-        myChangeSupport.notifyListeners(new Callback<WizardStepListModelChangeListener>()
-        {
-            @Override
-            public void notify(WizardStepListModelChangeListener listener)
-            {
-                listener.currentStepChanged(DefaultWizardStepListModel.this, step, stepTitle);
-            }
-        });
+        myChangeSupport.notifyListeners(listener -> listener.currentStepChanged(DefaultWizardStepListModel.this, step, stepTitle));
     }
 
     /**
@@ -223,14 +215,7 @@ public class DefaultWizardStepListModel implements WizardStepListModel
     protected final void notifyStepStateChanged(final int step, final StepState state)
     {
         final String stepTitle = myStepTitles.get(step);
-        myChangeSupport.notifyListeners(new Callback<WizardStepListModelChangeListener>()
-        {
-            @Override
-            public void notify(WizardStepListModelChangeListener listener)
-            {
-                listener.stepStateChanged(DefaultWizardStepListModel.this, step, stepTitle, state);
-            }
-        });
+        myChangeSupport.notifyListeners(listener -> listener.stepStateChanged(DefaultWizardStepListModel.this, step, stepTitle, state));
     }
 
     /**

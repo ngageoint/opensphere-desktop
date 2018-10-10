@@ -1,7 +1,6 @@
 package io.opensphere.core.map;
 
 import io.opensphere.core.options.OptionsRegistry;
-import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.PreferencesRegistry;
 
@@ -15,25 +14,14 @@ public abstract class MapManagerPreferenceHelper
     private final MapOptionsProvider myMapOptionsProvider;
 
     /** Listener for changes to the model density preference. */
-    private final PreferenceChangeListener myModelDensityListener = new PreferenceChangeListener()
+    private final PreferenceChangeListener myModelDensityListener = evt ->
     {
-        @Override
-        public void preferenceChange(PreferenceChangeEvent evt)
-        {
-            int density = evt.getValueAsInt(80);
-            handleModelDensityChanged(density);
-        }
+        int density = evt.getValueAsInt(80);
+        handleModelDensityChanged(density);
     };
 
     /** Listener for changes to the zoom rate preference. */
-    private final PreferenceChangeListener myZoomListener = new PreferenceChangeListener()
-    {
-        @Override
-        public void preferenceChange(PreferenceChangeEvent evt)
-        {
-            handleZoomRateChanged(evt.getValueAsInt(20));
-        }
-    };
+    private final PreferenceChangeListener myZoomListener = evt -> handleZoomRateChanged(evt.getValueAsInt(20));
 
     /** The system preferences registry. */
     private final PreferencesRegistry myPrefsRegistry;

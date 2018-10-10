@@ -592,14 +592,7 @@ public class IntervalPropertyValueSet
         @SuppressWarnings("rawtypes")
         private final Map<PropertyDescriptor, List<Object>> myMap = new LazyMap<>(
                 New.<PropertyDescriptor, List<Object>>insertionOrderMap(), PropertyDescriptor.class,
-                new LazyMap.Factory<PropertyDescriptor, List<Object>>()
-                {
-                    @Override
-                    public List<Object> create(PropertyDescriptor key)
-                    {
-                        return New.list();
-                    }
-                });
+                key -> New.list());
 
         /**
          * Add a property value to the set.

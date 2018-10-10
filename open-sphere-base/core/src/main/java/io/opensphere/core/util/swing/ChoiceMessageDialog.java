@@ -15,8 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  * A dialog used to display a message to the user. The message may include
@@ -95,15 +93,11 @@ public class ChoiceMessageDialog extends JDialog
             getContentPane().add(tabbedPane, BorderLayout.CENTER);
             tabbedPane.addTab("Details", detailsPanel);
             pack();
-            tabbedPane.addChangeListener(new ChangeListener()
+            tabbedPane.addChangeListener(e ->
             {
-                @Override
-                public void stateChanged(ChangeEvent e)
+                if (((JTabbedPane)e.getSource()).getSelectedComponent() == detailsPanel)
                 {
-                    if (((JTabbedPane)e.getSource()).getSelectedComponent() == detailsPanel)
-                    {
-                        pack();
-                    }
+                    pack();
                 }
             });
         }

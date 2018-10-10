@@ -71,20 +71,16 @@ public class CreateSecretKeyPanel extends JPanel implements Validatable
     /**
      * Callback called when the radio button is changed.
      */
-    private final transient Callback<ValidationStatusChangeListener> mySelectionChangeCallback = new Callback<>()
+    private final transient Callback<ValidationStatusChangeListener> mySelectionChangeCallback = listener ->
     {
-        @Override
-        public void notify(ValidationStatusChangeListener listener)
+        if (isPasswordOptionSelected())
         {
-            if (isPasswordOptionSelected())
-            {
-                myValidatorSupport.setValidationResult(myPasswordPanel.getValidatorSupport());
-            }
-            else
-            {
-                myValidatorSupport.setValidationResult(myCertificateSelectionPanel.getValidatorSupport().getValidationStatus(),
-                        null);
-            }
+            myValidatorSupport.setValidationResult(myPasswordPanel.getValidatorSupport());
+        }
+        else
+        {
+            myValidatorSupport.setValidationResult(myCertificateSelectionPanel.getValidatorSupport().getValidationStatus(),
+                    null);
         }
     };
 

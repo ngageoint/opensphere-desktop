@@ -80,34 +80,27 @@ public class BufferDisposalHelper<E extends BufferObjectList<?>> implements Disp
         myBufferedObjectType = Utilities.checkNull(type, "type");
         myCache = Utilities.checkNull(cache, "cache");
 
-        myBufferInsertionListener = new CacheContentListener<>()
+        myBufferInsertionListener = event -> ourExecutorService.execute(() ->
         {
-            @Override
-            public void handleCacheContentChange(final CacheContentEvent<BufferObjectList<?>> event)
+            myDisposalLock.lock();
+            try
             {
-                ourExecutorService.execute(() ->
+                for (BufferObjectList<?> bufferObjectList : event.getChangedItems())
                 {
-                    myDisposalLock.lock();
-                    try
-                    {
-                        for (BufferObjectList<?> bufferObjectList : event.getChangedItems())
-                        {
-                            // Use TransparentEqualsWeakReference so that we
-                            // can use regular map lookup and only add this
-                            // reference to the map if there is no reference
-                            // for this object already.
-                            WeakReference<BufferObjectList<?>> ref = new TransparentEqualsWeakReference<>(bufferObjectList,
-                                    myBufferReferenceQueue);
-                            myDisposalMap.put(ref, bufferObjectList.getBufferObjects());
-                        }
-                    }
-                    finally
-                    {
-                        myDisposalLock.unlock();
-                    }
-                });
+                    // Use TransparentEqualsWeakReference so that we
+                    // can use regular map lookup and only add this
+                    // reference to the map if there is no reference
+                    // for this object already.
+                    WeakReference<BufferObjectList<?>> ref = new TransparentEqualsWeakReference<>(bufferObjectList,
+                            myBufferReferenceQueue);
+                    myDisposalMap.put(ref, bufferObjectList.getBufferObjects());
+                }
             }
-        };
+            finally
+            {
+                myDisposalLock.unlock();
+            }
+        });
     }
 
     @Override

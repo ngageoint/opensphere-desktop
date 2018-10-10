@@ -6,8 +6,6 @@ import java.awt.Rectangle;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.JComponent;
 import javax.swing.JScrollPane;
@@ -60,14 +58,7 @@ public class ModifiedTreeUI extends BasicTreeUI
     public void installUI(JComponent c)
     {
         super.installUI(c);
-        myTree.addPropertyChangeListener("ancestor", new PropertyChangeListener()
-        {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt)
-            {
-                parentDidChange();
-            }
-        });
+        myTree.addPropertyChangeListener("ancestor", evt -> parentDidChange());
     }
 
     @Override

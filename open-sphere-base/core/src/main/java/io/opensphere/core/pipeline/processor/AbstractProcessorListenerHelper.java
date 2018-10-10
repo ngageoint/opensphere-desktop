@@ -56,14 +56,7 @@ abstract class AbstractProcessorListenerHelper
     private final ProcrastinatingExecutor myConstraintsChangedExecutor;
 
     /** Listener for changes to constraints. */
-    private final ConstraintsChangedListener myConstraintsListener = new ConstraintsChangedListener()
-    {
-        @Override
-        public void constraintsChanged(final ConstraintsChangedEvent evt)
-        {
-            myConstraintsChangedExecutor.execute(() -> handleConstraintsChanged(evt));
-        }
-    };
+    private final ConstraintsChangedListener myConstraintsListener = evt -> myConstraintsChangedExecutor.execute(() -> handleConstraintsChanged(evt));
 
     /** The display interval change listener. */
     private volatile ActiveTimeSpanChangeListener myDisplayIntervalChangeListener;
@@ -75,14 +68,7 @@ abstract class AbstractProcessorListenerHelper
     private final ProcrastinatingExecutor myRenderPropertyChangedExecutor;
 
     /** Listener for changes to render properties. */
-    private final RenderPropertyChangeListener myRenderPropertyListener = new RenderPropertyChangeListener()
-    {
-        @Override
-        public void propertyChanged(final RenderPropertyChangedEvent evt)
-        {
-            myRenderPropertyChangedExecutor.execute(() -> handlePropertyChanged(evt));
-        }
-    };
+    private final RenderPropertyChangeListener myRenderPropertyListener = evt -> myRenderPropertyChangedExecutor.execute(() -> handlePropertyChanged(evt));
 
     /** Reference to the time manager. */
     private final TimeManager myTimeManager;

@@ -41,14 +41,7 @@ public class ProcrastinatingExecutor implements Executor
      * The latest future. This is initialized with a meaningless object simply
      * to avoid null checks elsewhere.
      */
-    private Future<?> myLatestFuture = new FutureTask<>(new Callable<>()
-    {
-        @Override
-        public Object call()
-        {
-            return null;
-        }
-    });
+    private Future<?> myLatestFuture = new FutureTask<>(() -> null);
 
     /** The latest scheduled runner. */
     private Runnable myLatestRunner;

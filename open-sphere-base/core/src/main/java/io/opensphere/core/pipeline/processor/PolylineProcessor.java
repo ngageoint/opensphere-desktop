@@ -9,7 +9,6 @@ import java.util.concurrent.locks.Lock;
 import org.apache.log4j.Logger;
 
 import gnu.trove.list.array.TIntArrayList;
-import gnu.trove.procedure.TIntProcedure;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.PolylineGeometry;
@@ -249,14 +248,10 @@ public class PolylineProcessor<E extends PolylineGeometry> extends AbstractProce
             ts1 = TimeSpan.TIMELESS;
             ts2 = TimeSpan.TIMELESS;
         }
-        lineSegmentIndices.forEach(new TIntProcedure()
+        lineSegmentIndices.forEach(index ->
         {
-            @Override
-            public boolean execute(int index)
-            {
-                timeSpans.add(ts1.interpolate(ts2, (double)index / (lineSegmentSize - 1)));
-                return true;
-            }
+            timeSpans.add(ts1.interpolate(ts2, (double)index / (lineSegmentSize - 1)));
+            return true;
         });
     }
 

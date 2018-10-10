@@ -64,16 +64,9 @@ public final class TileDataBuilder
      */
     private static final Map<Projection, LazyMap<TileDataKey, TileData>> ourTileDataMap = LazyMap.create(
             New.<Projection, LazyMap<TileDataKey, TileData>>map(), Projection.class,
-            new LazyMap.Factory<Projection, LazyMap<TileDataKey, TileData>>()
-            {
-                @Override
-                public LazyMap<TileDataKey, TileData> create(Projection key)
-                {
-                    return new ConcurrentLazyMap<>(
-                            Collections.<TileDataKey, TileData>synchronizedMap(New.<TileDataKey, TileData>map()),
-                            TileDataKey.class);
-                }
-            });
+            key -> new ConcurrentLazyMap<>(
+                    Collections.<TileDataKey, TileData>synchronizedMap(New.<TileDataKey, TileData>map()),
+                    TileDataKey.class));
 
     /**
      * Build the tile data for a geometry.
@@ -122,19 +115,15 @@ public final class TileDataBuilder
             {
                 ourTileDataLock.unlock();
             }
-            LazyMap.Factory<TileDataKey, TileData> factory = new LazyMap.Factory<>()
+            LazyMap.Factory<TileDataKey, TileData> factory = tdk ->
             {
-                @Override
-                public TileData create(TileDataKey tdk)
+                Quadrilateral<?> bbox = tdk.getBoundingBox();
+                TextureCoords keyTexCoords = tdk.getImageTextureCoords();
+                if (bbox instanceof GeographicBoundingBox)
                 {
-                    Quadrilateral<?> bbox = tdk.getBoundingBox();
-                    TextureCoords keyTexCoords = tdk.getImageTextureCoords();
-                    if (bbox instanceof GeographicBoundingBox)
-                    {
-                        return buildTileData(keyTexCoords, projection, (GeographicBoundingBox)bbox, cache, modelCenter);
-                    }
-                    return null;
+                    return buildTileData(keyTexCoords, projection, (GeographicBoundingBox)bbox, cache, modelCenter);
                 }
+                return null;
             };
 
             return projectionMap.get(new TileDataKey(geom.getBounds(), imageTexCoords), factory);

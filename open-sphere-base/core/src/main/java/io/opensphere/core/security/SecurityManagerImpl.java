@@ -32,13 +32,11 @@ import org.apache.log4j.Logger;
 
 import io.opensphere.core.CipherChangeListener;
 import io.opensphere.core.SecurityManager;
-import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.security.config.v1.CryptoConfig;
 import io.opensphere.core.security.config.v1.SecurityConfiguration;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
@@ -102,25 +100,21 @@ public class SecurityManagerImpl implements SecurityManager
     private Collection<X509Certificate> myPackagedTrustStoreCerts;
 
     /** Listener for preference changes. */
-    private final PreferenceChangeListener myPreferenceChangeListener = new PreferenceChangeListener()
+    private final PreferenceChangeListener myPreferenceChangeListener = evt ->
     {
-        @Override
-        public void preferenceChange(PreferenceChangeEvent evt)
+        synchronized (SecurityManagerImpl.this)
         {
-            synchronized (SecurityManagerImpl.this)
-            {
-                myUserTrustedCerts = null;
+            myUserTrustedCerts = null;
 
-                final CryptoConfig cryptoConfig = getConfig().getCryptoConfig();
-                if (cryptoConfig == null || cryptoConfig.getWrappedSecretKey() == null && cryptoConfig.getDigest() == null)
-                {
-                    mySecretKeyCache = null;
-                }
-            }
-            if (!Utilities.sameInstance(evt.getSource(), SecurityManagerImpl.this))
+            final CryptoConfig cryptoConfig = getConfig().getCryptoConfig();
+            if (cryptoConfig == null || cryptoConfig.getWrappedSecretKey() == null && cryptoConfig.getDigest() == null)
             {
-                loadPrivateKeyProviders();
+                mySecretKeyCache = null;
             }
+        }
+        if (!Utilities.sameInstance(evt.getSource(), SecurityManagerImpl.this))
+        {
+            loadPrivateKeyProviders();
         }
     };
 
@@ -208,20 +202,16 @@ public class SecurityManagerImpl implements SecurityManager
      */
     public SecurityManagerImpl(PreferencesRegistry prefsRegistry, Window dialogParent)
     {
-        myCipherFactory = new CipherFactory(new SecretKeyProvider()
+        myCipherFactory = new CipherFactory(() ->
         {
-            @Override
-            public SecretKey getSecretKey() throws SecretKeyProviderException
+            synchronized (SecurityManagerImpl.this)
             {
-                synchronized (SecurityManagerImpl.this)
+                if (mySecretKeyCache == null)
                 {
-                    if (mySecretKeyCache == null)
-                    {
-                        mySecretKeyCache = SecurityManagerImpl.this
-                                .getSecretKey("If you do not enter a password, your encrypted data will be lost. Are you sure?");
-                    }
-                    return mySecretKeyCache;
+                    mySecretKeyCache = SecurityManagerImpl.this
+                            .getSecretKey("If you do not enter a password, your encrypted data will be lost. Are you sure?");
                 }
+                return mySecretKeyCache;
             }
         }, DEFAULT_TRANSFORMATION);
 
@@ -874,18 +864,14 @@ public class SecurityManagerImpl implements SecurityManager
     {
         try
         {
-            final Callable<Boolean> userPromptCallable = new Callable<>()
+            final Callable<Boolean> userPromptCallable = () ->
             {
-                @Override
-                public Boolean call() throws SecretKeyProviderException
-                {
-                    final int choice = JOptionPane.showOptionDialog(myDialogParent,
-                            "<html>The private key used to encrypt local data is not available.<br/>Looking for "
-                                    + digest.toString()
-                                    + "<p/>Would you like to delete your encrypted data (including passwords and certificates) and start over?</html>",
-                            "Cannot load private key", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null, null, null);
-                    return Boolean.valueOf(choice == JOptionPane.OK_OPTION);
-                }
+                final int choice = JOptionPane.showOptionDialog(myDialogParent,
+                        "<html>The private key used to encrypt local data is not available.<br/>Looking for "
+                                + digest.toString()
+                                + "<p/>Would you like to delete your encrypted data (including passwords and certificates) and start over?</html>",
+                        "Cannot load private key", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null, null, null);
+                return Boolean.valueOf(choice == JOptionPane.OK_OPTION);
             };
             if (EventQueueUtilities.callOnEdt(userPromptCallable).booleanValue())
             {
@@ -959,14 +945,7 @@ public class SecurityManagerImpl implements SecurityManager
     {
         ThreadUtilities.runBackground(() ->
         {
-            myCipherChangeSupport.notifyListeners(new Callback<CipherChangeListener>()
-            {
-                @Override
-                public void notify(CipherChangeListener listener)
-                {
-                    listener.cipherChanged();
-                }
-            });
+            myCipherChangeSupport.notifyListeners(listener -> listener.cipherChanged());
         });
     }
 

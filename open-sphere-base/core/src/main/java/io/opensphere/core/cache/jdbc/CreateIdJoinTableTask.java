@@ -1,7 +1,6 @@
 package io.opensphere.core.cache.jdbc;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
@@ -69,29 +68,25 @@ public class CreateIdJoinTableTask extends DatabaseTask implements StatementUser
         getCacheUtilities().execute(createTableSql, stmt);
 
         final String sql = getSQLGenerator().generateInsert(tempTableName, getIdColumnName());
-        PreparedStatementUser<Void> user = new PreparedStatementUser<>()
+        PreparedStatementUser<Void> user = (unused, pstmt) ->
         {
-            @Override
-            public Void run(Connection unused, PreparedStatement pstmt) throws CacheException
+            try
             {
-                try
+                for (int index = 0; index < getIds().length;)
                 {
-                    for (int index = 0; index < getIds().length;)
+                    int id = getIds()[index++];
+                    pstmt.setInt(1, id);
+                    if (getCacheUtilities().executeUpdate(pstmt, sql) != 1)
                     {
-                        int id = getIds()[index++];
-                        pstmt.setInt(1, id);
-                        if (getCacheUtilities().executeUpdate(pstmt, sql) != 1)
-                        {
-                            throw new CacheException("Failed to insert value into join table.");
-                        }
+                        throw new CacheException("Failed to insert value into join table.");
                     }
+                }
 
-                    return null;
-                }
-                catch (SQLException e)
-                {
-                    throw getCacheUtilities().createCacheException(sql, e);
-                }
+                return null;
+            }
+            catch (SQLException e)
+            {
+                throw getCacheUtilities().createCacheException(sql, e);
             }
         };
 

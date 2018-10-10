@@ -580,14 +580,10 @@ public class JdbcCacheImpl implements Cache
             long t0 = System.nanoTime();
             try
             {
-                getConnectionAppropriator().appropriateStatement(new StatementUser<Void>()
+                getConnectionAppropriator().appropriateStatement((conn, stmt) ->
                 {
-                    @Override
-                    public Void run(Connection conn, Statement stmt) throws CacheException
-                    {
-                        initSchema(conn, stmt);
-                        return null;
-                    }
+                    initSchema(conn, stmt);
+                    return null;
                 });
             }
             catch (CacheException e)

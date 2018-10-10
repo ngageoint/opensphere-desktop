@@ -14,7 +14,6 @@ import io.opensphere.core.image.Image;
 import io.opensphere.core.image.ImmediateImageProvider;
 import io.opensphere.core.image.ObservableImageProvider;
 import io.opensphere.core.util.ChangeSupport;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.WeakChangeSupport;
 
 /**
@@ -139,14 +138,7 @@ public class RenderToTextureImageProvider
         }
         if (isReady())
         {
-            myChangeSupport.notifyListeners(new Callback<ObservableImageProvider.Observer>()
-            {
-                @Override
-                public void notify(ObservableImageProvider.Observer listener)
-                {
-                    listener.dataReady();
-                }
-            });
+            myChangeSupport.notifyListeners(listener -> listener.dataReady());
         }
     }
 

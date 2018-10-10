@@ -40,14 +40,7 @@ public abstract class MutableGeographicProjection extends AbstractMutableGeograp
     private boolean myModelCenterDirty;
 
     /** Listener for changes to the elevation providers. */
-    private final ElevationChangeListener myElevationListener = new ElevationChangeListener()
-    {
-        @Override
-        public Collection<GeographicBoundingBox> handleElevationChange(ElevationChangedEvent event)
-        {
-            return MutableGeographicProjection.this.handleElevationChange(event);
-        }
-    };
+    private final ElevationChangeListener myElevationListener = event -> MutableGeographicProjection.this.handleElevationChange(event);
 
     /** An executor that procrastinates before running tasks. */
     private final Executor myMergeSplitExecutor = CommonTimer.createProcrastinatingExecutor(1000);

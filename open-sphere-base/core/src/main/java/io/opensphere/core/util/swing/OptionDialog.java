@@ -23,7 +23,6 @@ import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.Validatable;
 import io.opensphere.core.util.ValidationStatus;
 import io.opensphere.core.util.ValidatorSupport;
-import io.opensphere.core.util.ValidatorSupport.ValidationStatusChangeListener;
 import io.opensphere.core.util.collections.CollectionUtilities;
 
 /**
@@ -508,14 +507,7 @@ public class OptionDialog extends JDialog
         {
             panel.addRow(buildErrorLabel());
 
-            myValidatorSupport.addAndNotifyValidationListener(new ValidationStatusChangeListener()
-            {
-                @Override
-                public void statusChanged(Object object, ValidationStatus valid, String message)
-                {
-                    updateErrorState(valid, message);
-                }
-            });
+            myValidatorSupport.addAndNotifyValidationListener((object, valid, message) -> updateErrorState(valid, message));
         }
         panel.addRow(buildBottomPanel());
         return panel;

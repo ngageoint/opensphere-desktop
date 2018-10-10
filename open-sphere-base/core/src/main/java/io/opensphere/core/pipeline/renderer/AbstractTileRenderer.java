@@ -2,7 +2,6 @@ package io.opensphere.core.pipeline.renderer;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 
@@ -71,16 +70,12 @@ public abstract class AbstractTileRenderer extends AbstractRenderer<TileGeometry
     {
         JMenu menu = new JMenu("Tile Rendering");
 
-        ActionListener listener = new ActionListener()
+        ActionListener listener = e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                toggleFeature(e.getActionCommand());
-                mapContext.getProjectionChangeSupport().notifyProjectionChangeListeners(
-                        new ProjectionChangedEvent(mapContext.getProjection(), mapContext.getProjection().getSnapshot(), true),
-                        null);
-            }
+            toggleFeature(e.getActionCommand());
+            mapContext.getProjectionChangeSupport().notifyProjectionChangeListeners(
+                    new ProjectionChangedEvent(mapContext.getProjection(), mapContext.getProjection().getSnapshot(), true),
+                    null);
         };
         JCheckBoxMenuItem menuItem;
         menuItem = new JCheckBoxMenuItem(DEBUG_TESSELLATION_LINES);

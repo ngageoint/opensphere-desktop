@@ -238,15 +238,10 @@ public class PointSpriteRendererBuffered<T extends PointSpriteGeometry> extends 
      */
     private ModelDataRetriever<T> createSpecialDataRetriever(final ModelDataRetriever<T> dataRetriever)
     {
-        ModelDataRetriever<T> specialDataRetriever = new ModelDataRetriever<>()
+        ModelDataRetriever<T> specialDataRetriever = (geom, proj, override, timeBudget) ->
         {
-            @Override
-            public AbstractRenderer.ModelData getModelData(T geom, Projection proj, AbstractRenderer.ModelData override,
-                    TimeBudget timeBudget)
-            {
-                TextureModelData modelData = (TextureModelData)dataRetriever.getModelData(geom, proj, override, timeBudget);
-                return modelData.getModelData();
-            }
+            TextureModelData modelData = (TextureModelData)dataRetriever.getModelData(geom, proj, override, timeBudget);
+            return modelData.getModelData();
         };
         return specialDataRetriever;
     }

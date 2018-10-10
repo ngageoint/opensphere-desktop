@@ -49,16 +49,12 @@ public class ModuleStateManagerImpl implements ModuleStateManager
     static final String PREFS_KEY = "State";
 
     /** The JAXB context supplier. */
-    private static final SupplierX<JAXBContext, JAXBException> CONTEXT_SUPPLIER = new SupplierX<>()
+    private static final SupplierX<JAXBContext, JAXBException> CONTEXT_SUPPLIER = () ->
     {
-        @Override
-        public JAXBContext get() throws JAXBException
-        {
-            List<Class<?>> list = New.list(StateV4ReaderWriter.getClasses());
-            list.add(ModuleStateManagerState.class);
-            Class<?>[] array = list.toArray(new Class<?>[list.size()]);
-            return JAXBContextHelper.getCachedContext(array);
-        }
+        List<Class<?>> list = New.list(StateV4ReaderWriter.getClasses());
+        list.add(ModuleStateManagerState.class);
+        Class<?>[] array = list.toArray(new Class<?>[list.size()]);
+        return JAXBContextHelper.getCachedContext(array);
     };
 
     /** Logger reference. */

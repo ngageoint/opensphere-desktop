@@ -216,28 +216,23 @@ public abstract class AbstractProcessor<E extends Geometry> implements Renderabl
     private final RepaintListener myRepaintListener;
 
     /** The state change handler for the state machine. */
-    private final StateChangeHandler<E> myStateChangeHandler = new StateChangeHandler<>()
+    private final StateChangeHandler<E> myStateChangeHandler = (objects, newState, controller) ->
     {
-        @Override
-        public void handleStateChanged(List<? extends E> objects, ThreadedStateMachine.State newState,
-                StateController<E> controller)
+        if (State.class.isInstance(newState))
         {
-            if (State.class.isInstance(newState))
+            switch (State.class.cast(newState))
             {
-                switch (State.class.cast(newState))
-                {
-                    case UNPROCESSED:
-                        processUnprocessed(objects, controller);
-                        break;
-                    case DEFERRED:
-                        processDeferred(objects, controller);
-                        break;
-                    case READY:
-                        processReady(objects, controller);
-                        break;
-                    default:
-                        throw new UnexpectedEnumException(State.class.cast(newState));
-                }
+                case UNPROCESSED:
+                    processUnprocessed(objects, controller);
+                    break;
+                case DEFERRED:
+                    processDeferred(objects, controller);
+                    break;
+                case READY:
+                    processReady(objects, controller);
+                    break;
+                default:
+                    throw new UnexpectedEnumException(State.class.cast(newState));
             }
         }
     };

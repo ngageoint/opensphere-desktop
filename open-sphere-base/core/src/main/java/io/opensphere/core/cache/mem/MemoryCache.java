@@ -204,14 +204,7 @@ public class MemoryCache implements Cache
         else
         {
             Factory<PropertyDescriptor, Pair<TLongSet, List<Object>>> factory;
-            factory = new LazyMap.Factory<>()
-            {
-                @Override
-                public Pair<TLongSet, List<Object>> create(PropertyDescriptor key)
-                {
-                    return Pair.create((TLongSet)new TLongHashSet(), New.<Object>list());
-                }
-            };
+            factory = key -> Pair.create((TLongSet)new TLongHashSet(), New.<Object>list());
             removed = LazyMap.<PropertyDescriptor, Pair<TLongSet, List<Object>>>create(
                     New.<PropertyDescriptor, Pair<TLongSet, List<Object>>>map(), PropertyDescriptor.class, factory);
         }

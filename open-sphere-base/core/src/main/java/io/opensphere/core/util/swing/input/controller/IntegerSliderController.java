@@ -4,7 +4,6 @@ import java.awt.event.MouseWheelListener;
 
 import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import io.opensphere.core.util.swing.input.model.IntegerModel;
@@ -60,27 +59,16 @@ public class IntegerSliderController extends AbstractController<Integer, Integer
     {
         super.open();
 
-        myPropertyChangeListener = new PropertyChangeListener()
+        myPropertyChangeListener = e ->
         {
-            @Override
-            public void stateChanged(PropertyChangeEvent e)
+            if (e.getProperty() == PropertyChangeEvent.Property.VALIDATION_CRITERIA)
             {
-                if (e.getProperty() == PropertyChangeEvent.Property.VALIDATION_CRITERIA)
-                {
-                    getView().setModel(getSliderModel(getModel()));
-                }
+                getView().setModel(getSliderModel(getModel()));
             }
         };
         getModel().addPropertyChangeListener(myPropertyChangeListener);
 
-        myChangeListener = new ChangeListener()
-        {
-            @Override
-            public void stateChanged(ChangeEvent e)
-            {
-                handleViewChange();
-            }
-        };
+        myChangeListener = e -> handleViewChange();
         getView().addChangeListener(myChangeListener);
 
         myMouseWheelListener = new IntegerModelMouseWheelListener(getModel());

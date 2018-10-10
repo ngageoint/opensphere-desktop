@@ -65,14 +65,7 @@ public class MappedObjectPool<K, V>
             final int maxSize, @Nullable Executor cleanupExecutor)
     {
         myMap = LazyMap.create(Collections.synchronizedMap(New.<K, LimitedFertilityBlockingQueue<V>>map()), keyType,
-                new LazyMap.Factory<K, LimitedFertilityBlockingQueue<V>>()
-                {
-                    @Override
-                    public LimitedFertilityBlockingQueue<V> create(final K key)
-                    {
-                        return new LimitedFertilityBlockingQueue<>(coreSize, maxSize, adaptFactory(factory, key));
-                    }
-                });
+                key -> new LimitedFertilityBlockingQueue<>(coreSize, maxSize, adaptFactory(factory, key)));
         myExecutor = cleanupExecutor;
         myCleanupRunnable = myExecutor == null ? null : new Runnable()
         {

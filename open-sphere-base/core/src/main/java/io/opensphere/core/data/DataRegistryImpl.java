@@ -96,27 +96,23 @@ public class DataRegistryImpl implements DataRegistry
     {
         myExecutor = executor;
         myCache = new MemoryCache(cache);
-        myCache.setClassProvider(new ClassProvider()
+        myCache.setClassProvider(className ->
         {
-            @Override
-            public Class<?> getClass(String className)
-            {
-                Class<?> theClass = null;
+            Class<?> theClass = null;
 
-                synchronized (myClassProviders)
+            synchronized (myClassProviders)
+            {
+                for (ClassProvider provider : myClassProviders)
                 {
-                    for (ClassProvider provider : myClassProviders)
+                    theClass = provider.getClass(className);
+                    if (theClass != null)
                     {
-                        theClass = provider.getClass(className);
-                        if (theClass != null)
-                        {
-                            break;
-                        }
+                        break;
                     }
                 }
-
-                return theClass;
             }
+
+            return theClass;
         });
     }
 

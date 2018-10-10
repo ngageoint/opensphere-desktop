@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import org.apache.log4j.Logger;
 
@@ -78,15 +77,11 @@ public class LabelProcessor extends AbstractProcessor<LabelGeometry>
     {
         super(LabelGeometry.class, builder, renderer);
         myLabelOcclusionManager = builder.getLabelOcclusionManager();
-        myViewAltitudeSupplier = new MemoizingSupplier<>(new Supplier<Kilometers>()
+        myViewAltitudeSupplier = new MemoizingSupplier<>(() ->
         {
-            @Override
-            public Kilometers get()
-            {
-                GeographicPosition viewPosition = getMapContext().getProjection()
-                        .convertToPosition(getViewer().getPosition().getLocation(), Altitude.ReferenceLevel.ELLIPSOID);
-                return new Kilometers(viewPosition.getAlt().getKilometers());
-            }
+            GeographicPosition viewPosition = getMapContext().getProjection()
+                    .convertToPosition(getViewer().getPosition().getLocation(), Altitude.ReferenceLevel.ELLIPSOID);
+            return new Kilometers(viewPosition.getAlt().getKilometers());
         });
     }
 

@@ -279,36 +279,31 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
     private final TileSplitJoinHelper mySplitJoinHelper;
 
     /** State change handler for terrain tile states. */
-    private final StateChangeHandler<TerrainTileGeometry> myStateChangeHandler = new StateChangeHandler<>()
+    private final StateChangeHandler<TerrainTileGeometry> myStateChangeHandler = (objects, newState, controller) ->
     {
-        @Override
-        public void handleStateChanged(List<? extends TerrainTileGeometry> objects, ThreadedStateMachine.State newState,
-                StateController<TerrainTileGeometry> controller)
+        if (TerrainTileState.class.isInstance(newState))
         {
-            if (TerrainTileState.class.isInstance(newState))
+            switch (TerrainTileState.class.cast(newState))
             {
-                switch (TerrainTileState.class.cast(newState))
-                {
-                    case AWAITING_IMAGE:
-                        processAwaitingImage(objects, controller);
-                        break;
-                    default:
-                        throw new UnexpectedEnumException(TerrainTileState.class.cast(newState));
-                }
+                case AWAITING_IMAGE:
+                    processAwaitingImage(objects, controller);
+                    break;
+                default:
+                    throw new UnexpectedEnumException(TerrainTileState.class.cast(newState));
             }
-            else
+        }
+        else
+        {
+            switch (State.class.cast(newState))
             {
-                switch (State.class.cast(newState))
-                {
-                    case UNPROCESSED:
-                        processUnprocessed(objects, controller);
-                        break;
-                    case READY:
-                        processReady(objects, controller);
-                        break;
-                    default:
-                        throw new UnexpectedEnumException(TerrainTileState.class.cast(newState));
-                }
+                case UNPROCESSED:
+                    processUnprocessed(objects, controller);
+                    break;
+                case READY:
+                    processReady(objects, controller);
+                    break;
+                default:
+                    throw new UnexpectedEnumException(TerrainTileState.class.cast(newState));
             }
         }
     };
@@ -320,27 +315,23 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
     private final ThreadedStateMachine<TerrainTileGeometry> myStateMachine;
 
     /** Observer to be notified when a geometry has new data available. */
-    private final ImageProvidingGeometry.Observer<TerrainTileGeometry> myTileGeometryObserver = new ImageProvidingGeometry.Observer<>()
+    private final ImageProvidingGeometry.Observer<TerrainTileGeometry> myTileGeometryObserver = geom ->
     {
-        @Override
-        public void dataReady(TerrainTileGeometry geom)
+        if (!isClosed() && geom.getImageManager().getCachedImageData() != null)
         {
-            if (!isClosed() && geom.getImageManager().getCachedImageData() != null)
+            // Check to make sure that this tile is not orphaned.
+            if (geom.isOrphan())
             {
-                // Check to make sure that this tile is not orphaned.
-                if (geom.isOrphan())
-                {
-                    return;
-                }
+                return;
+            }
 
-                if (geom.isRapidUpdate())
-                {
-                    processImageUpdates(Collections.singletonList(geom));
-                }
-                else
-                {
-                    myGeometryQueue.offer(geom);
-                }
+            if (geom.isRapidUpdate())
+            {
+                processImageUpdates(Collections.singletonList(geom));
+            }
+            else
+            {
+                myGeometryQueue.offer(geom);
             }
         }
     };
@@ -400,27 +391,23 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
         myGeometryQueue = new BatchingBlockingQueue<>(builder.getScheduledExecutorService(),
                 GEOMETRY_QUEUE_DELAY_MILLISECONDS);
 
-        myGeometryQueue.addObserver(new BatchingBlockingQueue.Observer()
+        myGeometryQueue.addObserver(() ->
         {
-            @Override
-            public void objectsAdded()
+            List<TerrainTileGeometry> objs;
+            if (myGeometryQueue.size() == 1)
             {
-                List<TerrainTileGeometry> objs;
-                if (myGeometryQueue.size() == 1)
-                {
-                    TerrainTileGeometry obj = myGeometryQueue.poll();
-                    objs = obj == null ? Collections.<TerrainTileGeometry>emptyList() : Collections.singletonList(obj);
-                }
-                else
-                {
-                    objs = New.list();
-                    myGeometryQueue.drainTo(objs);
-                }
+                TerrainTileGeometry obj = myGeometryQueue.poll();
+                objs = obj == null ? Collections.<TerrainTileGeometry>emptyList() : Collections.singletonList(obj);
+            }
+            else
+            {
+                objs = New.list();
+                myGeometryQueue.drainTo(objs);
+            }
 
-                if (!isClosed() && !objs.isEmpty())
-                {
-                    processImageUpdates(objs);
-                }
+            if (!isClosed() && !objs.isEmpty())
+            {
+                processImageUpdates(objs);
             }
         });
     }

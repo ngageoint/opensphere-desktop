@@ -15,7 +15,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.text.JTextComponent;
 
@@ -55,22 +54,18 @@ public abstract class AbstractStateDialog extends OptionDialog
     /**
      * Listener that effects changes on the entire set of modules in the model.
      */
-    private final transient TableModelListener myStateListener = new TableModelListener()
+    private final transient TableModelListener myStateListener = e ->
     {
-        @Override
-        public void tableChanged(TableModelEvent e)
+        if (e.getSource() instanceof CheckBoxTableModel)
         {
-            if (e.getSource() instanceof CheckBoxTableModel)
-            {
-                CheckBoxTableModel cbtm = (CheckBoxTableModel)e.getSource();
-                Map<String, Boolean> moduleState = getModuleSelectionState(cbtm);
-                // The module the user is currently clicking.
-                String selectedModule = (String)cbtm.getValueAt(e.getFirstRow(), 1);
-                Collection<? extends String> dependencyList = myStateDependencies.get(selectedModule);
-                boolean forwardDependency = dependencyList != null && !dependencyList.isEmpty();
-                setDependencies(cbtm, moduleState, selectedModule, forwardDependency);
-                setModuleStates(cbtm, moduleState);
-            }
+            CheckBoxTableModel cbtm = (CheckBoxTableModel)e.getSource();
+            Map<String, Boolean> moduleState = getModuleSelectionState(cbtm);
+            // The module the user is currently clicking.
+            String selectedModule = (String)cbtm.getValueAt(e.getFirstRow(), 1);
+            Collection<? extends String> dependencyList = myStateDependencies.get(selectedModule);
+            boolean forwardDependency = dependencyList != null && !dependencyList.isEmpty();
+            setDependencies(cbtm, moduleState, selectedModule, forwardDependency);
+            setModuleStates(cbtm, moduleState);
         }
     };
 

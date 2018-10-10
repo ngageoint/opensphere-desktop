@@ -44,19 +44,15 @@ public class SharedComponentChangeSupport
      */
     protected void notifyComponentListeners(final String name, final ComponentChangeType type, Executor executor)
     {
-        WeakChangeSupport.Callback<SharedComponentListener> callback = new WeakChangeSupport.Callback<>()
+        WeakChangeSupport.Callback<SharedComponentListener> callback = listener ->
         {
-            @Override
-            public void notify(SharedComponentListener listener)
+            if (type == ComponentChangeType.ADDED)
             {
-                if (type == ComponentChangeType.ADDED)
-                {
-                    listener.componentAdded(name);
-                }
-                else if (type == ComponentChangeType.REMOVED)
-                {
-                    listener.componentRemoved(name);
-                }
+                listener.componentAdded(name);
+            }
+            else if (type == ComponentChangeType.REMOVED)
+            {
+                listener.componentRemoved(name);
             }
         };
         myChangeSupport.notifyListeners(callback, executor);

@@ -1,6 +1,5 @@
 package io.opensphere.core.appl;
 
-import java.util.Collection;
 import java.util.function.Predicate;
 
 import javax.swing.JFrame;
@@ -86,18 +85,14 @@ public class RegistryManagerImpl
      * Subscriber that adds internal frames that implement the importer
      * interface to the importer registry.
      */
-    private final GenericSubscriber<HUDFrame> myComponentRegistryToImporterBinding = new GenericSubscriber<>()
+    private final GenericSubscriber<HUDFrame> myComponentRegistryToImporterBinding = (source, adds, removes) ->
     {
-        @Override
-        public void receiveObjects(Object source, Collection<? extends HUDFrame> adds, Collection<? extends HUDFrame> removes)
-        {
-            Predicate<HUDFrame> importerPredicate = f -> f instanceof HUDJInternalFrame
-                    && ((HUDJInternalFrame)f).getInternalFrame() instanceof FileOrURLImporter;
-            adds.stream().filter(importerPredicate)
-                    .forEach(f -> myImporterRegistry.addImporter((FileOrURLImporter)((HUDJInternalFrame)f).getInternalFrame()));
-            removes.stream().filter(importerPredicate).forEach(
-                f -> myImporterRegistry.removeImporter((FileOrURLImporter)((HUDJInternalFrame)f).getInternalFrame()));
-        }
+        Predicate<HUDFrame> importerPredicate = f1 -> f1 instanceof HUDJInternalFrame
+                && ((HUDJInternalFrame)f1).getInternalFrame() instanceof FileOrURLImporter;
+        adds.stream().filter(importerPredicate)
+                .forEach(f2 -> myImporterRegistry.addImporter((FileOrURLImporter)((HUDJInternalFrame)f2).getInternalFrame()));
+        removes.stream().filter(importerPredicate).forEach(
+            f3 -> myImporterRegistry.removeImporter((FileOrURLImporter)((HUDJInternalFrame)f3).getInternalFrame()));
     };
 
     /** The units registry. */

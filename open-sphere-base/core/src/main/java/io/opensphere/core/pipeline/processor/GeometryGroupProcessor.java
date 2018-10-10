@@ -68,28 +68,23 @@ public abstract class GeometryGroupProcessor<E extends AbstractGeometryGroup> ex
         myDataRetriever = builder.getDataRetriever();
         myProcessorBuilder = builder.clone();
 
-        StateChangeHandler<E> processingHandler = new StateChangeHandler<>()
+        StateChangeHandler<E> processingHandler = (objects, newState, controller) ->
         {
-            @Override
-            public void handleStateChanged(List<? extends E> objects, ThreadedStateMachine.State newState,
-                    StateController<E> controller)
+            if (GroupState.class.isInstance(newState))
             {
-                if (GroupState.class.isInstance(newState))
+                switch (GroupState.class.cast(newState))
                 {
-                    switch (GroupState.class.cast(newState))
-                    {
-                        case PROCESSING_STARTED:
-                            processProcessingStarted(objects, controller);
-                            break;
-                        case AWAITING_SUB_GEOMETRIES:
-                            processAwaitingSubGeometries(objects, controller);
-                            break;
-                        case RENDER_SUB_GEOMETRIES:
-                            processRenderSubGeometries(objects, controller);
-                            break;
-                        default:
-                            throw new UnexpectedEnumException(GroupState.class.cast(newState));
-                    }
+                    case PROCESSING_STARTED:
+                        processProcessingStarted(objects, controller);
+                        break;
+                    case AWAITING_SUB_GEOMETRIES:
+                        processAwaitingSubGeometries(objects, controller);
+                        break;
+                    case RENDER_SUB_GEOMETRIES:
+                        processRenderSubGeometries(objects, controller);
+                        break;
+                    default:
+                        throw new UnexpectedEnumException(GroupState.class.cast(newState));
                 }
             }
         };

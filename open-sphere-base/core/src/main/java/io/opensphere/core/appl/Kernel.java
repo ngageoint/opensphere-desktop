@@ -200,14 +200,7 @@ public class Kernel
         if (MEM_LOGGER.isTraceEnabled())
         {
             final double memoryDelta = .01;
-            MemoryUtilities.addMemoryMonitor(memoryDelta, new MemoryUtilities.Callback()
-            {
-                @Override
-                public void memoryMonitored(String usageString)
-                {
-                    MEM_LOGGER.trace("Memory: " + MemoryUtilities.getCurrentMemoryUse());
-                }
-            });
+            MemoryUtilities.addMemoryMonitor(memoryDelta, usageString -> MEM_LOGGER.trace("Memory: " + MemoryUtilities.getCurrentMemoryUse()));
         }
     }
 
@@ -271,27 +264,23 @@ public class Kernel
 
             myPipelineComponent = initializePipeline();
 
-            EventQueue.invokeAndWait(new Runnable()
+            EventQueue.invokeAndWait(() ->
             {
-                @Override
-                public void run()
+                try
                 {
-                    try
-                    {
-                        new LookAndFeelInit().setLookAndFeel();
-                    }
-                    catch (final UnsupportedLookAndFeelException e)
-                    {
-                        LOGGER.error(e, e);
-                    }
-
-                    ApplicationLifecycleEvent.publishEvent(myToolbox.getEventManager(),
-                            ApplicationLifecycleEvent.Stage.LAF_INSTALLED);
-
-                    mainFrameInit.initialize(Kernel.this, myToolbox, myPipelineComponent);
-
-                    myToolbox.finishBinding();
+                    new LookAndFeelInit().setLookAndFeel();
                 }
+                catch (final UnsupportedLookAndFeelException e)
+                {
+                    LOGGER.error(e, e);
+                }
+
+                ApplicationLifecycleEvent.publishEvent(myToolbox.getEventManager(),
+                        ApplicationLifecycleEvent.Stage.LAF_INSTALLED);
+
+                mainFrameInit.initialize(Kernel.this, myToolbox, myPipelineComponent);
+
+                myToolbox.finishBinding();
             });
 
             myPluginInstances.addAll(new PluginInit(myToolbox).initializePlugins());

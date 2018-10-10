@@ -50,54 +50,43 @@ public final class PreferencesRegistryImpl implements PreferencesRegistry
      */
     public PreferencesRegistryImpl(final Executor eventExecutor, final ScheduledExecutorService persistExecutor)
     {
-        LazyMap.Factory<? super String, ? extends InternalPreferencesIF> factory = new LazyMap.Factory<>()
+        LazyMap.Factory<? super String, ? extends InternalPreferencesIF> factory = topic ->
         {
-            @Override
-            public InternalPreferencesIF create(String topic)
+            PreferencesOptions opts = myTopicToPreferencesOptionsMap.get(topic);
+            opts.lock();
+            Collection<? extends PreferencesPersistenceManager> persistenceManagers = getPersistenceManagers(topic, opts);
+            InternalPreferencesIF preferences = loadPreferences(topic, opts, persistenceManagers);
+            if (preferences == null)
             {
-                PreferencesOptions opts = myTopicToPreferencesOptionsMap.get(topic);
-                opts.lock();
-                Collection<? extends PreferencesPersistenceManager> persistenceManagers = getPersistenceManagers(topic, opts);
-                InternalPreferencesIF preferences = loadPreferences(topic, opts, persistenceManagers);
-                if (preferences == null)
-                {
-                    preferences = new PreferencesImpl(topic);
-                }
-
-                preferences.setEventDispatchExecutor(eventExecutor);
-                PreferencesPersistenceManager saveManager = getSaveManager(persistenceManagers);
-                if (saveManager == null)
-                {
-                    LOGGER.warn("No persistence manager that supports saving preferences could be found.");
-                }
-                else
-                {
-                    preferences.setPersistExecutor(persistExecutor);
-                    preferences.setPersistenceManager(saveManager);
-                    if (opts.isCompressed())
-                    {
-                        preferences.setCompressed(true);
-                    }
-                    if (opts.getCipherFactory() != null)
-                    {
-                        preferences.setCipherFactory(opts.getCipherFactory());
-                    }
-                }
-                return preferences;
+                preferences = new PreferencesImpl(topic);
             }
+
+            preferences.setEventDispatchExecutor(eventExecutor);
+            PreferencesPersistenceManager saveManager = getSaveManager(persistenceManagers);
+            if (saveManager == null)
+            {
+                LOGGER.warn("No persistence manager that supports saving preferences could be found.");
+            }
+            else
+            {
+                preferences.setPersistExecutor(persistExecutor);
+                preferences.setPersistenceManager(saveManager);
+                if (opts.isCompressed())
+                {
+                    preferences.setCompressed(true);
+                }
+                if (opts.getCipherFactory() != null)
+                {
+                    preferences.setCipherFactory(opts.getCipherFactory());
+                }
+            }
+            return preferences;
         };
 
         myTopicToPreferencesMap = new LazyMap<>(
                 new ConcurrentHashMap<String, InternalPreferencesIF>(), String.class, factory);
 
-        LazyMap.Factory<String, PreferencesOptions> prefOptionsFactory = new LazyMap.Factory<>()
-        {
-            @Override
-            public PreferencesOptions create(String key)
-            {
-                return new PreferencesOptions();
-            }
-        };
+        LazyMap.Factory<String, PreferencesOptions> prefOptionsFactory = key -> new PreferencesOptions();
         myTopicToPreferencesOptionsMap = new LazyMap<>(
                 Collections.synchronizedMap(New.<String, PreferencesOptions>map()), String.class, prefOptionsFactory);
     }

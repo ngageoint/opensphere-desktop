@@ -17,7 +17,6 @@ import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.order.OrderChangeListener;
 import io.opensphere.core.order.OrderManager;
 import io.opensphere.core.order.OrderParticipantKey;
-import io.opensphere.core.order.ParticipantOrderChangeEvent;
 import io.opensphere.core.order.ParticipantOrderChangeEvent.ParticipantChangeType;
 import io.opensphere.core.terrain.util.ElevationChangedEvent.ProviderChangeType;
 import io.opensphere.core.util.ChangeSupport;
@@ -41,49 +40,45 @@ public class ElevationManager
     private final ExecutorService myNotificationExecutor;
 
     /** Listener to changes to the order of elevation providers. */
-    private final OrderChangeListener myOrderListener = new OrderChangeListener()
+    private final OrderChangeListener myOrderListener = event ->
     {
-        @Override
-        public void orderChanged(ParticipantOrderChangeEvent event)
+        TObjectIntMap<OrderParticipantKey> participants = event.getChangedParticipants();
+        Collection<AbsoluteElevationProvider> providers = New.collection(participants.size());
+        myProvidersLock.readLock().lock();
+        try
         {
-            TObjectIntMap<OrderParticipantKey> participants = event.getChangedParticipants();
-            Collection<AbsoluteElevationProvider> providers = New.collection(participants.size());
-            myProvidersLock.readLock().lock();
-            try
+            for (OrderParticipantKey key : participants.keySet())
             {
-                for (OrderParticipantKey key : participants.keySet())
+                AbsoluteElevationProvider provider = myProviders.get(key.getId());
+                if (provider != null)
                 {
-                    AbsoluteElevationProvider provider = myProviders.get(key.getId());
-                    if (provider != null)
-                    {
-                        providers.add(provider);
-                    }
+                    providers.add(provider);
                 }
             }
-            finally
+        }
+        finally
+        {
+            myProvidersLock.readLock().unlock();
+        }
+        if (!providers.isEmpty())
+        {
+            ElevationChangedEvent elevationEvent = null;
+            if (event.getChangeType() == ParticipantChangeType.ACTIVATED)
             {
-                myProvidersLock.readLock().unlock();
+                elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_ADDED);
             }
-            if (!providers.isEmpty())
+            else if (event.getChangeType() == ParticipantChangeType.DEACTIVATED)
             {
-                ElevationChangedEvent elevationEvent = null;
-                if (event.getChangeType() == ParticipantChangeType.ACTIVATED)
-                {
-                    elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_ADDED);
-                }
-                else if (event.getChangeType() == ParticipantChangeType.DEACTIVATED)
-                {
-                    elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_REMOVED);
-                }
-                else if (event.getChangeType() == ParticipantChangeType.ORDER_CHANGED)
-                {
-                    elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_PRIORITY_CHANGED);
-                }
+                elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_REMOVED);
+            }
+            else if (event.getChangeType() == ParticipantChangeType.ORDER_CHANGED)
+            {
+                elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_PRIORITY_CHANGED);
+            }
 
-                if (elevationEvent != null)
-                {
-                    notifyElevationListeners(elevationEvent);
-                }
+            if (elevationEvent != null)
+            {
+                notifyElevationListeners(elevationEvent);
             }
         }
     };

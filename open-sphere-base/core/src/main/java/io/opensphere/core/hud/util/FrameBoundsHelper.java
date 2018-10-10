@@ -11,7 +11,6 @@ import javax.swing.JRootPane;
 
 import org.apache.log4j.Logger;
 
-import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.lang.UnexpectedEnumException;
@@ -39,16 +38,12 @@ public class FrameBoundsHelper
     private int myInset;
 
     /** Listener for changes to the frame inset preference. */
-    private final PreferenceChangeListener myInsetChangeListener = new PreferenceChangeListener()
+    private final PreferenceChangeListener myInsetChangeListener = evt ->
     {
-        @Override
-        public void preferenceChange(PreferenceChangeEvent evt)
+        synchronized (FrameBoundsHelper.this)
         {
-            synchronized (FrameBoundsHelper.this)
-            {
-                myInset = evt.getValueAsInt(FrameOptionsProvider.DEFAULT_INSET);
-                myFrame.repositionForInsets();
-            }
+            myInset = evt.getValueAsInt(FrameOptionsProvider.DEFAULT_INSET);
+            myFrame.repositionForInsets();
         }
     };
 
@@ -56,16 +51,12 @@ public class FrameBoundsHelper
     private boolean mySticky;
 
     /** Listener for changes to the stick to edge preference. */
-    private final PreferenceChangeListener myStickyChangeListener = new PreferenceChangeListener()
+    private final PreferenceChangeListener myStickyChangeListener = evt ->
     {
-        @Override
-        public void preferenceChange(PreferenceChangeEvent evt)
+        synchronized (FrameBoundsHelper.this)
         {
-            synchronized (FrameBoundsHelper.this)
-            {
-                mySticky = evt.getValueAsBoolean(FrameOptionsProvider.DEFAULT_STICKY);
-                resetGlue();
-            }
+            mySticky = evt.getValueAsBoolean(FrameOptionsProvider.DEFAULT_STICKY);
+            resetGlue();
         }
     };
 

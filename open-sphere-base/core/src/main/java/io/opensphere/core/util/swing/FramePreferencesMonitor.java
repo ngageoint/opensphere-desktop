@@ -6,9 +6,7 @@ import java.awt.Frame;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.JComponent;
@@ -131,14 +129,7 @@ public class FramePreferencesMonitor
                 frame.setExtendedState(Frame.MAXIMIZED_BOTH);
             }
 
-            myWindowStateListener = new WindowStateListener()
-            {
-                @Override
-                public void windowStateChanged(WindowEvent e)
-                {
-                    savePreferences();
-                }
-            };
+            myWindowStateListener = e -> savePreferences();
             frame.addWindowStateListener(myWindowStateListener);
         }
 
@@ -146,14 +137,7 @@ public class FramePreferencesMonitor
         {
             JComponent comp = (JComponent)myWindow;
             comp.putClientProperty(ROLL_PROPERTY, Boolean.valueOf(prefRoll));
-            myPropertyChangeListener = new PropertyChangeListener()
-            {
-                @Override
-                public void propertyChange(PropertyChangeEvent evt)
-                {
-                    savePreferences();
-                }
-            };
+            myPropertyChangeListener = evt -> savePreferences();
             comp.addPropertyChangeListener(ROLL_PROPERTY, myPropertyChangeListener);
         }
     }

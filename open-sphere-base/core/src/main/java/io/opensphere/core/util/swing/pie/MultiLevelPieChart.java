@@ -341,14 +341,7 @@ public class MultiLevelPieChart<T> extends JComponent
         });
 
         // Repaint when the selection model changes
-        mySelectionModel.addChangeListener(new ChangeListener()
-        {
-            @Override
-            public void stateChanged(ChangeType changeType, Object source)
-            {
-                repaint();
-            }
-        });
+        mySelectionModel.addChangeListener((changeType, source) -> repaint());
     }
 
     /**

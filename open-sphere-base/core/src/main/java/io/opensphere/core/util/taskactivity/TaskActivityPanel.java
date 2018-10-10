@@ -26,7 +26,6 @@ import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import net.jcip.annotations.GuardedBy;
 
 /**
@@ -67,27 +66,23 @@ public class TaskActivityPanel extends JPanel
     private int myLastSubIndex;
 
     /** Listener to be notified whenever the task activities change. */
-    private final InvalidationListener myListener = new InvalidationListener()
+    private final InvalidationListener myListener = b ->
     {
-        @Override
-        public void invalidated(Observable b)
+        ProgressManagerDialog dialog;
+        synchronized (TaskActivityPanel.this)
         {
-            ProgressManagerDialog dialog;
-            synchronized (TaskActivityPanel.this)
-            {
-                myInvalid = true;
+            myInvalid = true;
 
-                if (myFuture == null)
-                {
-                    myFuture = myExecutor.scheduleAtFixedRate(new CatchingRunnable(TaskActivityPanel.this::rebuildLabel), 100,
-                            300, TimeUnit.MILLISECONDS);
-                }
-                dialog = myDialog;
-            }
-            if (dialog != null)
+            if (myFuture == null)
             {
-                dialog.refresh();
+                myFuture = myExecutor.scheduleAtFixedRate(new CatchingRunnable(TaskActivityPanel.this::rebuildLabel), 100,
+                        300, TimeUnit.MILLISECONDS);
             }
+            dialog = myDialog;
+        }
+        if (dialog != null)
+        {
+            dialog.refresh();
         }
     };
 

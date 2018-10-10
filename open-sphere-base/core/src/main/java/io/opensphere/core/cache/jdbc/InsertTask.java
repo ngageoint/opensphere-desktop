@@ -747,40 +747,36 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
         final String sql = getSQLGenerator().generateInsert(TableNames.DATA_GROUP, ColumnNames.GROUP_ID, ColumnNames.SOURCE,
                 ColumnNames.FAMILY, ColumnNames.CATEGORY, ColumnNames.CREATION_TIME, ColumnNames.EXPIRATION_TIME,
                 ColumnNames.CRITICAL);
-        new StatementAppropriator(conn).appropriateStatement(new PreparedStatementUser<Void>()
+        new StatementAppropriator(conn).appropriateStatement((PreparedStatementUser<Void>)(conn1, pstmt) ->
         {
-            @Override
-            public Void run(Connection conn1, PreparedStatement pstmt) throws CacheException
+            try
             {
-                try
+                pstmt.setInt(1, groupId);
+                pstmt.setString(2, getCategory().getSource());
+                pstmt.setString(3, getCategory().getFamily());
+                pstmt.setString(4, getCategory().getCategory());
+
+                // creation time
+                pstmt.setLong(5, System.currentTimeMillis());
+
+                if (getExpiration() == null)
                 {
-                    pstmt.setInt(1, groupId);
-                    pstmt.setString(2, getCategory().getSource());
-                    pstmt.setString(3, getCategory().getFamily());
-                    pstmt.setString(4, getCategory().getCategory());
-
-                    // creation time
-                    pstmt.setLong(5, System.currentTimeMillis());
-
-                    if (getExpiration() == null)
-                    {
-                        pstmt.setNull(6, Types.BIGINT);
-                    }
-                    else
-                    {
-                        pstmt.setLong(6, getExpiration().getTime());
-                    }
-
-                    pstmt.setBoolean(7, isCritical());
-
-                    getCacheUtilities().executeUpdate(pstmt, sql);
-
-                    return null;
+                    pstmt.setNull(6, Types.BIGINT);
                 }
-                catch (final SQLException e)
+                else
                 {
-                    throw new CacheException(getPrepareFailureMsg(sql, e), e);
+                    pstmt.setLong(6, getExpiration().getTime());
                 }
+
+                pstmt.setBoolean(7, isCritical());
+
+                getCacheUtilities().executeUpdate(pstmt, sql);
+
+                return null;
+            }
+            catch (final SQLException e)
+            {
+                throw new CacheException(getPrepareFailureMsg(sql, e), e);
             }
         }, sql);
         if (LOGGER.isDebugEnabled())

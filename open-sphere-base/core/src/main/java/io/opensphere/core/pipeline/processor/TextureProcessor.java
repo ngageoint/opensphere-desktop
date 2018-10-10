@@ -88,15 +88,11 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
     private static final ReentrantLock ourCacheLock = new ReentrantLock();
 
     /** Observer to be notified when a geometry has new data available. */
-    private final ImageProvidingGeometry.Observer<E> myGeometryObserver = new ImageProvidingGeometry.Observer<>()
+    private final ImageProvidingGeometry.Observer<E> myGeometryObserver = geom ->
     {
-        @Override
-        public void dataReady(E geom)
+        if (!isClosed() && geom.getImageManager().getCachedImageData() != null)
         {
-            if (!isClosed() && geom.getImageManager().getCachedImageData() != null)
-            {
-                handleImageReady(geom);
-            }
+            handleImageReady(geom);
         }
     };
 
@@ -114,31 +110,26 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
     private final Map<ImageManager, List<E>> myImageManagersToGeoms = Collections.synchronizedMap(New.map());
 
     /** The state change handler for the geometry states. */
-    private final StateChangeHandler<E> myProcessingHandler = new StateChangeHandler<>()
+    private final StateChangeHandler<E> myProcessingHandler = (objects, newState, controller) ->
     {
-        @Override
-        public void handleStateChanged(List<? extends E> objects, ThreadedStateMachine.State newState,
-                StateController<E> controller)
+        if (TextureState.class.isInstance(newState))
         {
-            if (TextureState.class.isInstance(newState))
+            switch (TextureState.class.cast(newState))
             {
-                switch (TextureState.class.cast(newState))
-                {
-                    case IMAGE_LOADED:
-                        processImageLoaded(objects, controller);
-                        break;
-                    case AWAITING_IMAGE:
-                        processAwaitingImage(objects, controller);
-                        break;
-                    case TEXTURE_DATA_LOADED:
-                        processTextureDataLoaded(objects, controller);
-                        break;
-                    case TEXTURE_LOADED:
-                        ThreadUtilities.runCpu(() -> processTextureLoaded(objects, controller));
-                        break;
-                    default:
-                        throw new UnexpectedEnumException(TextureState.class.cast(newState));
-                }
+                case IMAGE_LOADED:
+                    processImageLoaded(objects, controller);
+                    break;
+                case AWAITING_IMAGE:
+                    processAwaitingImage(objects, controller);
+                    break;
+                case TEXTURE_DATA_LOADED:
+                    processTextureDataLoaded(objects, controller);
+                    break;
+                case TEXTURE_LOADED:
+                    ThreadUtilities.runCpu(() -> processTextureLoaded(objects, controller));
+                    break;
+                default:
+                    throw new UnexpectedEnumException(TextureState.class.cast(newState));
             }
         }
     };
@@ -216,27 +207,23 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
         myGeometryQueue = new BatchingBlockingQueue<>(getNonGLScheduledExecutor(), GEOMETRY_QUEUE_DELAY_MILLISECONDS);
 
         // Observer that gets called whenever a geometry has new image data.
-        myGeometryQueue.addObserver(new BatchingBlockingQueue.Observer()
+        myGeometryQueue.addObserver(() ->
         {
-            @Override
-            public void objectsAdded()
+            List<E> objs;
+            if (myGeometryQueue.size() == 1)
             {
-                List<E> objs;
-                if (myGeometryQueue.size() == 1)
-                {
-                    E obj = myGeometryQueue.poll();
-                    objs = obj == null ? Collections.<E>emptyList() : Collections.singletonList(obj);
-                }
-                else
-                {
-                    objs = New.list();
-                    myGeometryQueue.drainTo(objs);
-                }
+                E obj = myGeometryQueue.poll();
+                objs = obj == null ? Collections.<E>emptyList() : Collections.singletonList(obj);
+            }
+            else
+            {
+                objs = New.list();
+                myGeometryQueue.drainTo(objs);
+            }
 
-                if (!isClosed() && !objs.isEmpty())
-                {
-                    processImageUpdates(objs);
-                }
+            if (!isClosed() && !objs.isEmpty())
+            {
+                processImageUpdates(objs);
             }
         });
 
