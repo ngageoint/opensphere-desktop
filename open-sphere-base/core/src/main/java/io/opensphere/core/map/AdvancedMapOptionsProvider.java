@@ -41,16 +41,7 @@ public class AdvancedMapOptionsProvider extends AbstractOptionsProvider
      * This listener is used in combination with {@link WeakChangeSupport}, so
      * keep a reference to prevent the listener from becoming weakly reachable.
      */
-    private final ActionListener mySliderListener = evt ->
-    {
-        Quantify.collectMetric("mist3d.settings.map.advanced.terrain-density-change");
-        LinkedSliderTextField sfp = (LinkedSliderTextField)evt.getSource();
-        int reverse = 101 - sfp.getValue();
-        // scale to a number between 40 and 120
-        int scaled = (int)(40 + reverse * SCALE_SPREAD);
-
-        myPreferences.putInt(MODEL_DENSITY_KEY, scaled, AdvancedMapOptionsProvider.this);
-    };
+    private final ActionListener mySliderListener;
 
     /**
      * The main panel for holding any display elements used for setting the
@@ -67,6 +58,16 @@ public class AdvancedMapOptionsProvider extends AbstractOptionsProvider
     {
         super(MAP_ADVANCED_TOPIC);
         myPreferences = prefsRegistry.getPreferences(AdvancedMapOptionsProvider.class);
+        mySliderListener = evt ->
+        {
+            Quantify.collectMetric("mist3d.settings.map.advanced.terrain-density-change");
+            LinkedSliderTextField sfp = (LinkedSliderTextField)evt.getSource();
+            int reverse = 101 - sfp.getValue();
+            // scale to a number between 40 and 120
+            int scaled = (int)(40 + reverse * SCALE_SPREAD);
+
+            myPreferences.putInt(MODEL_DENSITY_KEY, scaled, AdvancedMapOptionsProvider.this);
+        };
     }
 
     @Override

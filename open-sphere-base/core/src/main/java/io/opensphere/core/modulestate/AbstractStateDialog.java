@@ -54,20 +54,7 @@ public abstract class AbstractStateDialog extends OptionDialog
     /**
      * Listener that effects changes on the entire set of modules in the model.
      */
-    private final transient TableModelListener myStateListener = e ->
-    {
-        if (e.getSource() instanceof CheckBoxTableModel)
-        {
-            CheckBoxTableModel cbtm = (CheckBoxTableModel)e.getSource();
-            Map<String, Boolean> moduleState = getModuleSelectionState(cbtm);
-            // The module the user is currently clicking.
-            String selectedModule = (String)cbtm.getValueAt(e.getFirstRow(), 1);
-            Collection<? extends String> dependencyList = myStateDependencies.get(selectedModule);
-            boolean forwardDependency = dependencyList != null && !dependencyList.isEmpty();
-            setDependencies(cbtm, moduleState, selectedModule, forwardDependency);
-            setModuleStates(cbtm, moduleState);
-        }
-    };
+    private final transient TableModelListener myStateListener;
 
     /** The tags field. */
     private final GhostTextField myTagsField = new GhostTextField("Tags organize states: e.g., states, population");
@@ -100,6 +87,21 @@ public abstract class AbstractStateDialog extends OptionDialog
     {
         super(parent, null, title);
         myStateDependencies = stateDependencies;
+        myStateListener = e ->
+        {
+            if (e.getSource() instanceof CheckBoxTableModel)
+            {
+                CheckBoxTableModel cbtm = (CheckBoxTableModel)e.getSource();
+                Map<String, Boolean> moduleState = getModuleSelectionState(cbtm);
+                // The module the user is currently clicking.
+                String selectedModule = (String)cbtm.getValueAt(e.getFirstRow(), 1);
+                Collection<? extends String> dependencyList = myStateDependencies.get(selectedModule);
+                boolean forwardDependency = dependencyList != null && !dependencyList.isEmpty();
+                setDependencies(cbtm, moduleState, selectedModule, forwardDependency);
+                setModuleStates(cbtm, moduleState);
+            }
+        };
+
         myModuleTable = new CheckBoxTable("", "Title", Boolean.TRUE, availableModules);
         myModuleTable.getModel().addTableModelListener(myStateListener);
     }

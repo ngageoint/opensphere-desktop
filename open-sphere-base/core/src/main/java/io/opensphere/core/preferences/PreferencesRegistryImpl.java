@@ -50,6 +50,10 @@ public final class PreferencesRegistryImpl implements PreferencesRegistry
      */
     public PreferencesRegistryImpl(final Executor eventExecutor, final ScheduledExecutorService persistExecutor)
     {
+        LazyMap.Factory<String, PreferencesOptions> prefOptionsFactory = key -> new PreferencesOptions();
+        myTopicToPreferencesOptionsMap = new LazyMap<>(Collections.synchronizedMap(New.<String, PreferencesOptions>map()),
+                String.class, prefOptionsFactory);
+
         LazyMap.Factory<? super String, ? extends InternalPreferencesIF> factory = topic ->
         {
             PreferencesOptions opts = myTopicToPreferencesOptionsMap.get(topic);
@@ -85,10 +89,6 @@ public final class PreferencesRegistryImpl implements PreferencesRegistry
 
         myTopicToPreferencesMap = new LazyMap<>(
                 new ConcurrentHashMap<String, InternalPreferencesIF>(), String.class, factory);
-
-        LazyMap.Factory<String, PreferencesOptions> prefOptionsFactory = key -> new PreferencesOptions();
-        myTopicToPreferencesOptionsMap = new LazyMap<>(
-                Collections.synchronizedMap(New.<String, PreferencesOptions>map()), String.class, prefOptionsFactory);
     }
 
     @Override

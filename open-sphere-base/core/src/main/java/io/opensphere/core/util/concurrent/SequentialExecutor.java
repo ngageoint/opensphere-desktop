@@ -24,38 +24,42 @@ public class SequentialExecutor implements Executor
     private boolean myPending;
 
     /** Wrapper task. */
-    private final Runnable myTask = () ->
+    private final Runnable myTask = new Runnable()
     {
-        try
+        @Override
+        public void run()
         {
-            Runnable job;
-            synchronized (myWorkQueue)
+            try
             {
-                job = myWorkQueue.poll();
-            }
-            if (job != null)
-            {
-                job.run();
-            }
-        }
-        finally
-        {
-            boolean needExecute;
-            synchronized (myWorkQueue)
-            {
-                if (myWorkQueue.isEmpty())
+                Runnable job;
+                synchronized (myWorkQueue)
                 {
-                    myPending = false;
-                    needExecute = false;
+                    job = myWorkQueue.poll();
                 }
-                else
+                if (job != null)
                 {
-                    needExecute = true;
+                    job.run();
                 }
             }
-            if (needExecute)
+            finally
             {
-                myExecutor.execute(myTask);
+                boolean needExecute;
+                synchronized (myWorkQueue)
+                {
+                    if (myWorkQueue.isEmpty())
+                    {
+                        myPending = false;
+                        needExecute = false;
+                    }
+                    else
+                    {
+                        needExecute = true;
+                    }
+                }
+                if (needExecute)
+                {
+                    myExecutor.execute(myTask);
+                }
             }
         }
     };

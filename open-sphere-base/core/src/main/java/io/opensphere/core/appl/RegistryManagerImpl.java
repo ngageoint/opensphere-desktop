@@ -85,15 +85,7 @@ public class RegistryManagerImpl
      * Subscriber that adds internal frames that implement the importer
      * interface to the importer registry.
      */
-    private final GenericSubscriber<HUDFrame> myComponentRegistryToImporterBinding = (source, adds, removes) ->
-    {
-        Predicate<HUDFrame> importerPredicate = f1 -> f1 instanceof HUDJInternalFrame
-                && ((HUDJInternalFrame)f1).getInternalFrame() instanceof FileOrURLImporter;
-        adds.stream().filter(importerPredicate)
-                .forEach(f2 -> myImporterRegistry.addImporter((FileOrURLImporter)((HUDJInternalFrame)f2).getInternalFrame()));
-        removes.stream().filter(importerPredicate).forEach(
-            f3 -> myImporterRegistry.removeImporter((FileOrURLImporter)((HUDJInternalFrame)f3).getInternalFrame()));
-    };
+    private final GenericSubscriber<HUDFrame> myComponentRegistryToImporterBinding;
 
     /** The units registry. */
     private final UnitsRegistry myUnitsRegistry;
@@ -124,6 +116,15 @@ public class RegistryManagerImpl
         myImporterRegistry = new ImporterRegistryImpl();
         myOrderManagerRegistry = new OrderManagerRegistryImpl(myPreferencesRegistry);
         myServerProviderRegistry = new ServerProviderRegistryImpl();
+        myComponentRegistryToImporterBinding = (source, adds, removes) ->
+        {
+            Predicate<HUDFrame> importerPredicate = f1 -> f1 instanceof HUDJInternalFrame
+                    && ((HUDJInternalFrame)f1).getInternalFrame() instanceof FileOrURLImporter;
+            adds.stream().filter(importerPredicate)
+                    .forEach(f2 -> myImporterRegistry.addImporter((FileOrURLImporter)((HUDJInternalFrame)f2).getInternalFrame()));
+            removes.stream().filter(importerPredicate).forEach(
+                    f3 -> myImporterRegistry.removeImporter((FileOrURLImporter)((HUDJInternalFrame)f3).getInternalFrame()));
+        };
     }
 
     /**

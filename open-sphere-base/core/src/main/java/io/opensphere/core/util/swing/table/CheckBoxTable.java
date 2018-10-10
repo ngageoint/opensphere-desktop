@@ -21,19 +21,7 @@ public class CheckBoxTable extends JTable
     /**
      * Item listener for the checkbox that gets installed in the table header.
      */
-    private final transient ItemListener myItemListener = e ->
-    {
-        if (e.getSource() instanceof AbstractButton && !myUpdating)
-        {
-            myUpdating = true;
-            boolean checked = e.getStateChange() == ItemEvent.SELECTED;
-            for (int row = 0; row < getRowCount(); row++)
-            {
-                getModel().setValueAt(Boolean.valueOf(checked), row, 0);
-            }
-            myUpdating = false;
-        }
-    };
+    private final transient ItemListener myItemListener;
 
     /**
      * Flag used to prevent undesired interaction between the header checkbox
@@ -53,6 +41,20 @@ public class CheckBoxTable extends JTable
             Collection<? extends String> values)
     {
         super(new CheckBoxTableModel(checkBoxHeader, valueHeader, initialCheckBoxState, values));
+
+        myItemListener = e ->
+        {
+            if (e.getSource() instanceof AbstractButton && !myUpdating)
+            {
+                myUpdating = true;
+                boolean checked = e.getStateChange() == ItemEvent.SELECTED;
+                for (int row = 0; row < getRowCount(); row++)
+                {
+                    getModel().setValueAt(Boolean.valueOf(checked), row, 0);
+                }
+                myUpdating = false;
+            }
+        };
 
         if (checkBoxHeader.length() == 0)
         {

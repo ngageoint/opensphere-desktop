@@ -39,6 +39,10 @@ public abstract class WrappedModel<T> extends StrongObservableValue<T> implement
      */
     private Object myChangedSource;
 
+    /** The property change listener. */
+    private final PropertyChangeListener myPropertyChangeListener = e -> myPropertyChangeSupport
+            .notifyListeners(listener -> listener.stateChanged(e));
+
     /** The value change listener. */
     private final ChangeListener<Object> myChangeListener = (observable, oldValue, newValue) ->
     {
@@ -51,9 +55,6 @@ public abstract class WrappedModel<T> extends StrongObservableValue<T> implement
         myPropertyChangeListener
                 .stateChanged(new PropertyChangeEvent(observable, PropertyChangeEvent.Property.WRAPPED_VALUE_CHANGED));
     };
-
-    /** The property change listener. */
-    private final PropertyChangeListener myPropertyChangeListener = e -> myPropertyChangeSupport.notifyListeners(listener -> listener.stateChanged(e));
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener)
@@ -90,11 +91,14 @@ public abstract class WrappedModel<T> extends StrongObservableValue<T> implement
     {
         String firstError = null;
 
-        Collection<ViewModel<?>> modelsToCheck = StreamUtilities.filter(myModels, (Predicate<ViewModel<?>>)model -> model.isEnabled() && model.isVisible() && model.getValidationStatus() != ValidationStatus.VALID);
+        Collection<ViewModel<?>> modelsToCheck = StreamUtilities.filter(myModels,
+                (Predicate<ViewModel<?>>)model -> model.isEnabled() && model.isVisible()
+                        && model.getValidationStatus() != ValidationStatus.VALID);
 
         if (!modelsToCheck.isEmpty())
         {
-            ViewModel<?> worstModel = Collections.max(modelsToCheck, (o1, o2) -> o1.getValidationStatus().compareTo(o2.getValidationStatus()));
+            ViewModel<?> worstModel = Collections.max(modelsToCheck,
+                    (o1, o2) -> o1.getValidationStatus().compareTo(o2.getValidationStatus()));
             firstError = worstModel.getErrorMessage();
         }
 

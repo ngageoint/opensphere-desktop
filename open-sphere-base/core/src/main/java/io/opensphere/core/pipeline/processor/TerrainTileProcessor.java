@@ -315,26 +315,7 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
     private final ThreadedStateMachine<TerrainTileGeometry> myStateMachine;
 
     /** Observer to be notified when a geometry has new data available. */
-    private final ImageProvidingGeometry.Observer<TerrainTileGeometry> myTileGeometryObserver = geom ->
-    {
-        if (!isClosed() && geom.getImageManager().getCachedImageData() != null)
-        {
-            // Check to make sure that this tile is not orphaned.
-            if (geom.isOrphan())
-            {
-                return;
-            }
-
-            if (geom.isRapidUpdate())
-            {
-                processImageUpdates(Collections.singletonList(geom));
-            }
-            else
-            {
-                myGeometryQueue.offer(geom);
-            }
-        }
-    };
+    private final ImageProvidingGeometry.Observer<TerrainTileGeometry> myTileGeometryObserver;
 
     /** Listener for view change events. */
     private final ViewChangeSupport.ViewChangeListener myViewChangeListener = new ViewChangeSupport.ViewChangeListener()
@@ -388,8 +369,7 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
             viewChangeSupport.addViewChangeListener(myViewChangeListener);
         }
 
-        myGeometryQueue = new BatchingBlockingQueue<>(builder.getScheduledExecutorService(),
-                GEOMETRY_QUEUE_DELAY_MILLISECONDS);
+        myGeometryQueue = new BatchingBlockingQueue<>(builder.getScheduledExecutorService(), GEOMETRY_QUEUE_DELAY_MILLISECONDS);
 
         myGeometryQueue.addObserver(() ->
         {
@@ -410,6 +390,26 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
                 processImageUpdates(objs);
             }
         });
+        myTileGeometryObserver = geom ->
+        {
+            if (!isClosed() && geom.getImageManager().getCachedImageData() != null)
+            {
+                // Check to make sure that this tile is not orphaned.
+                if (geom.isOrphan())
+                {
+                    return;
+                }
+
+                if (geom.isRapidUpdate())
+                {
+                    processImageUpdates(Collections.singletonList(geom));
+                }
+                else
+                {
+                    myGeometryQueue.offer(geom);
+                }
+            }
+        };
     }
 
     @Override

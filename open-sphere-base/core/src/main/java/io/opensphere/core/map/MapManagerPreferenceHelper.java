@@ -14,11 +14,7 @@ public abstract class MapManagerPreferenceHelper
     private final MapOptionsProvider myMapOptionsProvider;
 
     /** Listener for changes to the model density preference. */
-    private final PreferenceChangeListener myModelDensityListener = evt ->
-    {
-        int density = evt.getValueAsInt(80);
-        handleModelDensityChanged(density);
-    };
+    private final PreferenceChangeListener myModelDensityListener = evt -> handleModelDensityChanged(evt.getValueAsInt(80));
 
     /** Listener for changes to the zoom rate preference. */
     private final PreferenceChangeListener myZoomListener = evt -> handleZoomRateChanged(evt.getValueAsInt(20));

@@ -57,44 +57,10 @@ class ExecutorManager
     private ThreadPoolConfigs myConfigs;
 
     /** Factory for envoy thread pool executors. */
-    private final Factory<String, ExecutorController> myEnvoyExecutorFactory = key ->
-    {
-        ThreadPoolConfig config = StreamUtilities.filterOne(myConfigs.getConfigs(),
-                t -> Pattern.matches(t.getNamePattern(), key));
-
-        if (config == null)
-        {
-            if (LOGGER.isDebugEnabled())
-            {
-                LOGGER.debug("No configuration key found for thread pool with key " + key);
-            }
-            config = new ThreadPoolConfig();
-            config.setMinimumThreadCount(0);
-            config.setNormalThreadCount(10);
-            config.setRestrictedThreadCount(1);
-        }
-
-        String name = "Envoy[" + key + "]";
-        PausingThreadPoolExecutor pausingThreadPoolExecutor = new PausingThreadPoolExecutor(config.getNormalThreadCount(),
-                config.getNormalThreadCount(), 20, TimeUnit.SECONDS,
-                new NamedThreadFactory(name, THREAD_PRIORITY, MAX_THREAD_PRIORITY),
-                SuppressableRejectedExecutionHandler.getInstance());
-        pausingThreadPoolExecutor.allowCoreThreadTimeOut(true);
-        ExecutorController holder = new ExecutorController(name, pausingThreadPoolExecutor, config);
-        if (myMemoryManager != null)
-        {
-            holder.adjustToMemoryStatus(myMemoryManager.getMemoryStatus());
-        }
-        else
-        {
-            LOGGER.info("Created thread pool " + name + " with size " + holder.getExecutor().getCorePoolSize());
-        }
-        return holder;
-    };
+    private final Factory<String, ExecutorController> myEnvoyExecutorFactory;
 
     /** An executor for envoy work. */
-    private final Map<String, ExecutorController> myEnvoyExecutorMap = LazyMap
-            .create(Collections.synchronizedMap(New.<String, ExecutorController>map()), String.class, myEnvoyExecutorFactory);
+    private final Map<String, ExecutorController> myEnvoyExecutorMap;
 
     /** The memory listener used to reduce pool sizes when memory gets low. */
     @Nullable
@@ -139,6 +105,42 @@ class ExecutorManager
                 preferencesThreadFactory.new ThreadNamer("persist"), SuppressableRejectedExecutionHandler.getInstance()));
         myAnimatorExecutor = new ReportingScheduledExecutorService(new ScheduledThreadPoolExecutor(1,
                 new NamedThreadFactory("TimeAnimator"), SuppressableRejectedExecutionHandler.getInstance()));
+        myEnvoyExecutorFactory = key ->
+        {
+            ThreadPoolConfig config = StreamUtilities.filterOne(myConfigs.getConfigs(),
+                    t -> Pattern.matches(t.getNamePattern(), key));
+
+            if (config == null)
+            {
+                if (LOGGER.isDebugEnabled())
+                {
+                    LOGGER.debug("No configuration key found for thread pool with key " + key);
+                }
+                config = new ThreadPoolConfig();
+                config.setMinimumThreadCount(0);
+                config.setNormalThreadCount(10);
+                config.setRestrictedThreadCount(1);
+            }
+
+            String name = "Envoy[" + key + "]";
+            PausingThreadPoolExecutor pausingThreadPoolExecutor = new PausingThreadPoolExecutor(config.getNormalThreadCount(),
+                    config.getNormalThreadCount(), 20, TimeUnit.SECONDS,
+                    new NamedThreadFactory(name, THREAD_PRIORITY, MAX_THREAD_PRIORITY),
+                    SuppressableRejectedExecutionHandler.getInstance());
+            pausingThreadPoolExecutor.allowCoreThreadTimeOut(true);
+            ExecutorController holder = new ExecutorController(name, pausingThreadPoolExecutor, config);
+            if (myMemoryManager != null)
+            {
+                holder.adjustToMemoryStatus(myMemoryManager.getMemoryStatus());
+            }
+            else
+            {
+                LOGGER.info("Created thread pool " + name + " with size " + holder.getExecutor().getCorePoolSize());
+            }
+            return holder;
+        };
+        myEnvoyExecutorMap = LazyMap.create(Collections.synchronizedMap(New.<String, ExecutorController>map()), String.class,
+                myEnvoyExecutorFactory);
     }
 
     /**

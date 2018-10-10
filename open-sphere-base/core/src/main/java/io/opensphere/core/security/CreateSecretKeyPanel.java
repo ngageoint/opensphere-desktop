@@ -71,18 +71,7 @@ public class CreateSecretKeyPanel extends JPanel implements Validatable
     /**
      * Callback called when the radio button is changed.
      */
-    private final transient Callback<ValidationStatusChangeListener> mySelectionChangeCallback = listener ->
-    {
-        if (isPasswordOptionSelected())
-        {
-            myValidatorSupport.setValidationResult(myPasswordPanel.getValidatorSupport());
-        }
-        else
-        {
-            myValidatorSupport.setValidationResult(myCertificateSelectionPanel.getValidatorSupport().getValidationStatus(),
-                    null);
-        }
-    };
+    private final transient Callback<ValidationStatusChangeListener> mySelectionChangeCallback;
 
     /** The validation support. */
     private final transient DefaultValidatorSupport myValidatorSupport = new DefaultValidatorSupport(this);
@@ -101,6 +90,18 @@ public class CreateSecretKeyPanel extends JPanel implements Validatable
     {
         super(new BorderLayout());
         initialize(promptMessage, allowPrivateKey, filter, securityManager, preferencesRegistry);
+        mySelectionChangeCallback = listener ->
+        {
+            if (isPasswordOptionSelected())
+            {
+                myValidatorSupport.setValidationResult(myPasswordPanel.getValidatorSupport());
+            }
+            else
+            {
+                myValidatorSupport.setValidationResult(myCertificateSelectionPanel.getValidatorSupport().getValidationStatus(),
+                        null);
+            }
+        };
     }
 
     /**

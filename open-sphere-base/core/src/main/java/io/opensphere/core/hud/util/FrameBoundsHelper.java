@@ -38,14 +38,7 @@ public class FrameBoundsHelper
     private int myInset;
 
     /** Listener for changes to the frame inset preference. */
-    private final PreferenceChangeListener myInsetChangeListener = evt ->
-    {
-        synchronized (FrameBoundsHelper.this)
-        {
-            myInset = evt.getValueAsInt(FrameOptionsProvider.DEFAULT_INSET);
-            myFrame.repositionForInsets();
-        }
-    };
+    private final PreferenceChangeListener myInsetChangeListener;
 
     /** When true, the windows should stick to the edges. */
     private boolean mySticky;
@@ -75,6 +68,15 @@ public class FrameBoundsHelper
             PositionBoundedFrame frame)
     {
         myFrame = frame;
+        myInsetChangeListener = evt ->
+        {
+            synchronized (FrameBoundsHelper.this)
+            {
+                myInset = evt.getValueAsInt(FrameOptionsProvider.DEFAULT_INSET);
+                myFrame.repositionForInsets();
+            }
+        };
+
         mySticky = prefsRegistry.getPreferences(FrameOptionsProvider.class).getBoolean(FrameOptionsProvider.STICKY_PREFERENCE_KEY,
                 FrameOptionsProvider.DEFAULT_STICKY);
         myInset = prefsRegistry.getPreferences(FrameOptionsProvider.class).getInt(FrameOptionsProvider.INSET_PREFERENCE_KEY,

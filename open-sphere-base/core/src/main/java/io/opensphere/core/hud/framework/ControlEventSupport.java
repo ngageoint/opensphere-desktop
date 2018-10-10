@@ -58,26 +58,7 @@ public class ControlEventSupport
     private Geometry myPickedGeometry;
 
     /** Listener for pick changes. */
-    private final PickListener myPickListener = evt ->
-    {
-        // If I have a picked geometry, then receiving a pick event means
-        // that either no geometry is picked, or a different geometry is
-        // picked.
-        if (myPickedGeometry != null)
-        {
-            mySelectionListener.mouseExited(myPickedGeometry, evt.getLocation());
-        }
-
-        if (myActionGeometries.contains(evt.getPickedGeometry()))
-        {
-            myPickedGeometry = evt.getPickedGeometry();
-            mySelectionListener.mouseEntered(myPickedGeometry, evt.getLocation());
-        }
-        else
-        {
-            myPickedGeometry = null;
-        }
-    };
+    private final PickListener myPickListener;
 
     /** The listener to whom I send events. */
     private final ControlEventListener mySelectionListener;
@@ -91,6 +72,26 @@ public class ControlEventSupport
     public ControlEventSupport(ControlEventListener listener, ControlRegistry controlRegistry)
     {
         mySelectionListener = listener;
+        myPickListener = evt ->
+        {
+            // If I have a picked geometry, then receiving a pick event means
+            // that either no geometry is picked, or a different geometry is
+            // picked.
+            if (myPickedGeometry != null)
+            {
+                mySelectionListener.mouseExited(myPickedGeometry, evt.getLocation());
+            }
+
+            if (myActionGeometries.contains(evt.getPickedGeometry()))
+            {
+                myPickedGeometry = evt.getPickedGeometry();
+                mySelectionListener.mouseEntered(myPickedGeometry, evt.getLocation());
+            }
+            else
+            {
+                myPickedGeometry = null;
+            }
+        };
         myControlRegistry = controlRegistry;
         register();
     }

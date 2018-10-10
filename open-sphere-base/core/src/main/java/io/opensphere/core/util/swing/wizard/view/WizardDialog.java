@@ -56,6 +56,15 @@ public class WizardDialog
     /** The model for the wizard panels. */
     private WizardPanelModel myPanelModel;
 
+    /** The model for the list of steps. */
+    private WizardStepListModel myStepListModel;
+
+    /** The validation support for the wizard dialog. */
+    private final DefaultValidatorSupport myValidator = new DefaultValidatorSupport(null);
+
+    /** Map of step titles to wizard panels. */
+    private final Map<String, Component> myWizardPanels = New.map();
+
     /**
      * Listener for validation on wizard panels.
      */
@@ -108,19 +117,8 @@ public class WizardDialog
         }
     };
 
-    /** The model for the list of steps. */
-    private WizardStepListModel myStepListModel;
-
     /** The panel containing the wizard steps. */
     private final WizardStepList myStepPanel;
-
-    /**
-     * The validation support for the wizard dialog.
-     */
-    private final DefaultValidatorSupport myValidator = new DefaultValidatorSupport(null);
-
-    /** Map of step titles to wizard panels. */
-    private final Map<String, Component> myWizardPanels = New.map();
 
     /** The minimum size. */
     private Dimension myMinimumSize;

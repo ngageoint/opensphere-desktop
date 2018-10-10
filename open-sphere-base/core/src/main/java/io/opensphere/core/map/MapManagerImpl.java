@@ -82,13 +82,6 @@ public class MapManagerImpl implements MapManager
     /** The preferences for the map manager. */
     private final Preferences myPreferences;
 
-    /** The lead projection change listener. */
-    private final ProjectionChangeSupport.ProjectionChangeListener myProjectionChangeListener = evt ->
-    {
-        myProjectionManager.notifyProjectionChangeListeners(evt, myUpdateExecutor);
-        myCurrentViewer.get().validateViewerPosition();
-    };
-
     /** The current index into {@link #ourProjectionMap}. */
     private int myProjectionIndex = -1;
 
@@ -119,8 +112,11 @@ public class MapManagerImpl implements MapManager
     /** Manager for view stuff. */
     private final ViewerManager myViewerManager;
 
+    /** The lead projection change listener. */
+    private final ProjectionChangeSupport.ProjectionChangeListener myProjectionChangeListener;
+
     /** The observer I use to know when the view has changed. */
-    private final DynamicViewer.Observer myViewerObserver = type -> myViewerManager.notifyViewChangeListeners(myUpdateExecutor, type);
+    private final DynamicViewer.Observer myViewerObserver;
 
     /**
      * Initialize the mappings of projections to viewers and viewers to control
@@ -224,6 +220,12 @@ public class MapManagerImpl implements MapManager
         myPreferenceHelper = new MapManagerPreferenceHelperImpl(prefsRegistry, uiRegistry.getOptionsRegistry());
 
         myStateManager = stateManager;
+        myProjectionChangeListener = evt ->
+        {
+            myProjectionManager.notifyProjectionChangeListeners(evt, myUpdateExecutor);
+            myCurrentViewer.get().validateViewerPosition();
+        };
+        myViewerObserver = type -> myViewerManager.notifyViewChangeListeners(myUpdateExecutor, type);
     }
 
     /**

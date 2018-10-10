@@ -21,13 +21,7 @@ public class ToggleMenuItem extends JMenuItem implements Service
     private final BooleanModel myBooleanModel;
 
     /** Listener for changes to the enabled state of the model. */
-    private final transient PropertyChangeListener myPropertyChangeListener = e ->
-    {
-        if (e.getProperty() == Property.ENABLED)
-        {
-            setEnabled(myBooleanModel.isEnabled());
-        }
-    };
+    private final transient PropertyChangeListener myPropertyChangeListener;
 
     /**
      * Constructor.
@@ -40,6 +34,13 @@ public class ToggleMenuItem extends JMenuItem implements Service
     {
         super(booleanModel.get().booleanValue() ? trueText : falseText);
         myBooleanModel = booleanModel;
+        myPropertyChangeListener = e ->
+        {
+            if (e.getProperty() == Property.ENABLED)
+            {
+                setEnabled(myBooleanModel.isEnabled());
+            }
+        };
         addActionListener(e ->
         {
             booleanModel.toggleValue();

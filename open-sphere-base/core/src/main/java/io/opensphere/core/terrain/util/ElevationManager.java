@@ -40,48 +40,7 @@ public class ElevationManager
     private final ExecutorService myNotificationExecutor;
 
     /** Listener to changes to the order of elevation providers. */
-    private final OrderChangeListener myOrderListener = event ->
-    {
-        TObjectIntMap<OrderParticipantKey> participants = event.getChangedParticipants();
-        Collection<AbsoluteElevationProvider> providers = New.collection(participants.size());
-        myProvidersLock.readLock().lock();
-        try
-        {
-            for (OrderParticipantKey key : participants.keySet())
-            {
-                AbsoluteElevationProvider provider = myProviders.get(key.getId());
-                if (provider != null)
-                {
-                    providers.add(provider);
-                }
-            }
-        }
-        finally
-        {
-            myProvidersLock.readLock().unlock();
-        }
-        if (!providers.isEmpty())
-        {
-            ElevationChangedEvent elevationEvent = null;
-            if (event.getChangeType() == ParticipantChangeType.ACTIVATED)
-            {
-                elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_ADDED);
-            }
-            else if (event.getChangeType() == ParticipantChangeType.DEACTIVATED)
-            {
-                elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_REMOVED);
-            }
-            else if (event.getChangeType() == ParticipantChangeType.ORDER_CHANGED)
-            {
-                elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_PRIORITY_CHANGED);
-            }
-
-            if (elevationEvent != null)
-            {
-                notifyElevationListeners(elevationEvent);
-            }
-        }
-    };
+    private final OrderChangeListener myOrderListener;
 
     /**
      * The manager which controls the priority order for the elevation
@@ -126,6 +85,48 @@ public class ElevationManager
     public ElevationManager()
     {
         myNotificationExecutor = new FixedThreadPoolExecutor(1, new NamedThreadFactory("ElevationNotification"));
+        myOrderListener = event ->
+        {
+            TObjectIntMap<OrderParticipantKey> participants = event.getChangedParticipants();
+            Collection<AbsoluteElevationProvider> providers = New.collection(participants.size());
+            myProvidersLock.readLock().lock();
+            try
+            {
+                for (OrderParticipantKey key : participants.keySet())
+                {
+                    AbsoluteElevationProvider provider = myProviders.get(key.getId());
+                    if (provider != null)
+                    {
+                        providers.add(provider);
+                    }
+                }
+            }
+            finally
+            {
+                myProvidersLock.readLock().unlock();
+            }
+            if (!providers.isEmpty())
+            {
+                ElevationChangedEvent elevationEvent = null;
+                if (event.getChangeType() == ParticipantChangeType.ACTIVATED)
+                {
+                    elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_ADDED);
+                }
+                else if (event.getChangeType() == ParticipantChangeType.DEACTIVATED)
+                {
+                    elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_REMOVED);
+                }
+                else if (event.getChangeType() == ParticipantChangeType.ORDER_CHANGED)
+                {
+                    elevationEvent = new ElevationChangedEvent(providers, null, ProviderChangeType.PROVIDER_PRIORITY_CHANGED);
+                }
+
+                if (elevationEvent != null)
+                {
+                    notifyElevationListeners(elevationEvent);
+                }
+            }
+        };
     }
 
     /**
