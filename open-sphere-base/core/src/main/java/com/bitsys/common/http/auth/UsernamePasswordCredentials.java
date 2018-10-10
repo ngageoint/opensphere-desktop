@@ -31,14 +31,7 @@ public class UsernamePasswordCredentials implements Credentials
         {
             throw new IllegalArgumentException("The password is null");
         }
-        userPrincipal = new Principal()
-        {
-            @Override
-            public String getName()
-            {
-                return userName;
-            }
-        };
+        userPrincipal = () -> userName;
         this.password = password.clone();
     }
 
