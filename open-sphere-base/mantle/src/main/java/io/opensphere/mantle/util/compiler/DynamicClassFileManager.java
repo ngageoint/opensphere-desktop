@@ -44,14 +44,7 @@ public class DynamicClassFileManager extends ForwardingJavaFileManager<JavaFileM
         super(mgr);
         try
         {
-            myLoader = AccessController.doPrivileged(new PrivilegedAction<ByteArrayClassLoader>()
-            {
-                @Override
-                public ByteArrayClassLoader run()
-                {
-                    return new ByteArrayClassLoader();
-                }
-            });
+            myLoader = AccessController.doPrivileged((PrivilegedAction<ByteArrayClassLoader>)() -> new ByteArrayClassLoader());
         }
         catch (RuntimeException ex)
         {

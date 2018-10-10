@@ -259,14 +259,7 @@ public class MapAnnotationPointRegistryImpl
     @Override
     public TreeNode createTreeNodeWithChildrenInPrefferedOrder(Predicate<? super MutableMapAnnotationPointGroup> nodeFilter)
     {
-        return createTreeNode(new Comparator<MutableMapAnnotationPointGroup>()
-        {
-            @Override
-            public int compare(MutableMapAnnotationPointGroup o1, MutableMapAnnotationPointGroup o2)
-            {
-                return Integer.compare(o1.getPreferredOrder(), o2.getPreferredOrder());
-            }
-        }, nodeFilter);
+        return createTreeNode((o1, o2) -> Integer.compare(o1.getPreferredOrder(), o2.getPreferredOrder()), nodeFilter);
     }
 
     @Override

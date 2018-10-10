@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.RenderingCapabilities;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.CollectionUtilities;
@@ -398,14 +397,7 @@ public class VisualizationStyleRegistryImpl implements VisualizationStyleRegistr
     private void fireDefaultStyleChanged(final Class<? extends VisualizationSupport> mgsClass,
             final Class<? extends VisualizationStyle> styleClass, final Object source)
     {
-        myChangeSupport.notifyListeners(new Callback<VisualizationStyleRegistry.VisualizationStyleRegistryChangeListener>()
-        {
-            @Override
-            public void notify(VisualizationStyleRegistryChangeListener listener)
-            {
-                listener.defaultStyleChanged(mgsClass, styleClass, source);
-            }
-        }, ourExecutor);
+        myChangeSupport.notifyListeners(listener -> listener.defaultStyleChanged(mgsClass, styleClass, source), ourExecutor);
     }
 
     /**
@@ -415,14 +407,7 @@ public class VisualizationStyleRegistryImpl implements VisualizationStyleRegistr
      */
     private void fireStyleDataTypeChangeEventListener(final VisualizationStyleDatatypeChangeEvent event)
     {
-        myChangeSupport.notifyListeners(new Callback<VisualizationStyleRegistry.VisualizationStyleRegistryChangeListener>()
-        {
-            @Override
-            public void notify(VisualizationStyleRegistryChangeListener listener)
-            {
-                listener.visualizationStyleDatatypeChanged(event);
-            }
-        }, ourExecutor);
+        myChangeSupport.notifyListeners(listener -> listener.visualizationStyleDatatypeChanged(event), ourExecutor);
     }
 
     /**
@@ -433,13 +418,6 @@ public class VisualizationStyleRegistryImpl implements VisualizationStyleRegistr
      */
     private void fireVisualizationStyleInstalled(final Class<? extends VisualizationStyle> styleClass, final Object source)
     {
-        myChangeSupport.notifyListeners(new Callback<VisualizationStyleRegistry.VisualizationStyleRegistryChangeListener>()
-        {
-            @Override
-            public void notify(VisualizationStyleRegistryChangeListener listener)
-            {
-                listener.visualizationStyleInstalled(styleClass, source);
-            }
-        }, ourExecutor);
+        myChangeSupport.notifyListeners(listener -> listener.visualizationStyleInstalled(styleClass, source), ourExecutor);
     }
 }

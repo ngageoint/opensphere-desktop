@@ -13,23 +13,19 @@ public interface MutableMapAnnotationPoint extends MapAnnotationPoint
      * Comparator that orders {@link MutableMapAnnotationPoint}s by their
      * display names.
      */
-    Comparator<MutableMapAnnotationPoint> TITLE_COMPARATOR = new Comparator<>()
+    Comparator<MutableMapAnnotationPoint> TITLE_COMPARATOR = (o1, o2) ->
     {
-        @Override
-        public int compare(MutableMapAnnotationPoint o1, MutableMapAnnotationPoint o2)
+        int result = 0;
+        try
         {
-            int result = 0;
-            try
-            {
-                result = o1.getTitle() == null ? o2.getTitle() == null ? 0 : "".compareTo(o2.getTitle())
-                        : o1.getTitle().compareTo(o2.getTitle());
-            }
-            catch (RuntimeException e)
-            {
-                result = 0;
-            }
-            return result;
+            result = o1.getTitle() == null ? o2.getTitle() == null ? 0 : "".compareTo(o2.getTitle())
+                    : o1.getTitle().compareTo(o2.getTitle());
         }
+        catch (RuntimeException e)
+        {
+            result = 0;
+        }
+        return result;
     };
 
     /**

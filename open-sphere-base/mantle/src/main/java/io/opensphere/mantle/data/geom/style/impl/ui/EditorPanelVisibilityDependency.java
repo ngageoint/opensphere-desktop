@@ -106,18 +106,14 @@ public class EditorPanelVisibilityDependency implements FeatureVisualizationCont
      */
     protected void setPanelsVisibility(final boolean visible)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            for (AbstractStyleParameterEditorPanel pnl : myPanelsToShowHide)
             {
-                for (AbstractStyleParameterEditorPanel pnl : myPanelsToShowHide)
-                {
-                    pnl.setVisible(visible);
-                }
-                myControlPanelToMonitor.revalidate();
-                myControlPanelToMonitor.repaint();
+                pnl.setVisible(visible);
             }
+            myControlPanelToMonitor.revalidate();
+            myControlPanelToMonitor.repaint();
         });
     }
 }

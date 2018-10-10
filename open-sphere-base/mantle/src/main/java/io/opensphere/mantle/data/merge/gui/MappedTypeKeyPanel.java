@@ -92,23 +92,19 @@ public class MappedTypeKeyPanel extends TypeKeyPanel implements ActionListener, 
         getJList().setCellRenderer(new CustomListCellRenderer());
         myPopupMenu = new JPopupMenu();
         myRemoveMI = new JMenuItem("Remove");
-        myRemoveMI.addActionListener(new ActionListener()
+        myRemoveMI.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            if (myPopupSelectedIndex != -1)
             {
-                if (myPopupSelectedIndex != -1)
+                try
                 {
-                    try
-                    {
-                        TypeKeyEntry obj = getJList().getModel().getElementAt(myPopupSelectedIndex);
-                        myDataTypeMergePanel.returnTypeEntryToSource(obj);
-                        myPopupSelectedIndex = -1;
-                    }
-                    catch (RuntimeException ex)
-                    {
-                        LOGGER.warn(e);
-                    }
+                    TypeKeyEntry obj = getJList().getModel().getElementAt(myPopupSelectedIndex);
+                    myDataTypeMergePanel.returnTypeEntryToSource(obj);
+                    myPopupSelectedIndex = -1;
+                }
+                catch (RuntimeException ex)
+                {
+                    LOGGER.warn(e);
                 }
             }
         });

@@ -3,8 +3,6 @@ package io.opensphere.mantle.data.geom.style.impl.ui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -64,14 +62,7 @@ public class GroupedStyleParameterEditorPanel extends AbstractGroupedVisualizati
         myParameterGroups = New.list();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JButton resetButton = new JButton("Restore Defaults");
-        resetButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                revertToDefaultSettigns();
-            }
-        });
+        resetButton.addActionListener(e -> revertToDefaultSettigns());
         myResetPanel = new JPanel(new BorderLayout());
         myResetPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         myResetPanel.setMaximumSize(new Dimension(1000, 40));
@@ -140,38 +131,34 @@ public class GroupedStyleParameterEditorPanel extends AbstractGroupedVisualizati
      */
     private void rebuild()
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            removeAll();
+            add(labelPanel(getStyle().getStyleName(), Font.BOLD, 8, 30));
+            if (!StringUtils.isBlank(getStyle().getStyleDescription()))
             {
-                removeAll();
-                add(labelPanel(getStyle().getStyleName(), Font.BOLD, 8, 30));
-                if (!StringUtils.isBlank(getStyle().getStyleDescription()))
-                {
-                    add(textAreaPanel(getStyle().getStyleDescription(), Font.PLAIN, 2, 90));
-                }
-                synchronized (myParameterGroups)
-                {
-                    if (!myParameterGroups.isEmpty())
-                    {
-                        for (StyleParameterEditorGroupPanel pnl : myParameterGroups)
-                        {
-                            add(pnl);
-                        }
-                        add(myResetPanel);
-                    }
-                    else
-                    {
-                        add(Box.createVerticalGlue());
-                        add(labelPanel("THIS STYLE HAS NO CONTROLS", Font.BOLD, 8, 30));
-                    }
-                }
-
-                add(Box.createVerticalGlue());
-                add(new JPanel());
-                revalidate();
+                add(textAreaPanel(getStyle().getStyleDescription(), Font.PLAIN, 2, 90));
             }
+            synchronized (myParameterGroups)
+            {
+                if (!myParameterGroups.isEmpty())
+                {
+                    for (StyleParameterEditorGroupPanel pnl : myParameterGroups)
+                    {
+                        add(pnl);
+                    }
+                    add(myResetPanel);
+                }
+                else
+                {
+                    add(Box.createVerticalGlue());
+                    add(labelPanel("THIS STYLE HAS NO CONTROLS", Font.BOLD, 8, 30));
+                }
+            }
+
+            add(Box.createVerticalGlue());
+            add(new JPanel());
+            revalidate();
         });
     }
 

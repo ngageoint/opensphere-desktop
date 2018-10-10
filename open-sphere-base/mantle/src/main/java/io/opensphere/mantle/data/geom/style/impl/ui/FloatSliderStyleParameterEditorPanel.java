@@ -214,21 +214,17 @@ public class FloatSliderStyleParameterEditorPanel extends AbstractStyleParameter
         if (myConvertor.intToFloat(mySlider.getValue()) != sliderValue)
         {
             final double fSliderValue = sliderValue;
-            EventQueueUtilities.runOnEDT(new Runnable()
+            EventQueueUtilities.runOnEDT(() ->
             {
-                @Override
-                public void run()
+                mySlider.removeChangeListener(FloatSliderStyleParameterEditorPanel.this);
+                if (myConvertor.intToFloat(mySlider.getValue()) != fSliderValue)
                 {
-                    mySlider.removeChangeListener(FloatSliderStyleParameterEditorPanel.this);
-                    if (myConvertor.intToFloat(mySlider.getValue()) != fSliderValue)
-                    {
-                        mySlider.setValue(myConvertor.floatToInt(fSliderValue));
-                    }
-                    mySlider.addChangeListener(FloatSliderStyleParameterEditorPanel.this);
-                    myTextField.setText(myConvertor.labelValue(myConvertor.intToFloat(mySlider.getValue())));
-                    myValueLabel
-                            .setText(myTextEntry ? myConvertor.getUnit() : createLabelWithUnit(mySlider.getValue(), myConvertor));
+                    mySlider.setValue(myConvertor.floatToInt(fSliderValue));
                 }
+                mySlider.addChangeListener(FloatSliderStyleParameterEditorPanel.this);
+                myTextField.setText(myConvertor.labelValue(myConvertor.intToFloat(mySlider.getValue())));
+                myValueLabel
+                        .setText(myTextEntry ? myConvertor.getUnit() : createLabelWithUnit(mySlider.getValue(), myConvertor));
             });
         }
     }
@@ -298,14 +294,10 @@ public class FloatSliderStyleParameterEditorPanel extends AbstractStyleParameter
      */
     private void updateValueLabel(final int value)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
-            {
-                myValueLabel.setText(myTextEntry ? myConvertor.getUnit() : createLabelWithUnit(value, myConvertor));
-                myTextField.setText(myConvertor.labelValue(myConvertor.intToFloat(value)));
-            }
+            myValueLabel.setText(myTextEntry ? myConvertor.getUnit() : createLabelWithUnit(value, myConvertor));
+            myTextField.setText(myConvertor.labelValue(myConvertor.intToFloat(value)));
         });
     }
 

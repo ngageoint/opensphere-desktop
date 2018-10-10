@@ -74,14 +74,10 @@ public class CheckBoxStyleParameterEditorPanel extends AbstractStyleParameterEdi
         if (val != myCheckBox.isSelected())
         {
             final boolean fVal = val;
-            EventQueueUtilities.runOnEDT(new Runnable()
+            EventQueueUtilities.runOnEDT(() ->
             {
-                @Override
-                public void run()
-                {
-                    myCheckBox.setSelected(fVal);
-                    showMessage(Boolean.valueOf(fVal));
-                }
+                myCheckBox.setSelected(fVal);
+                showMessage(Boolean.valueOf(fVal));
             });
         }
     }

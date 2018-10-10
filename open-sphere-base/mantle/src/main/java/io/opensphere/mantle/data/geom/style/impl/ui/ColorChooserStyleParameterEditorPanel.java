@@ -3,8 +3,6 @@ package io.opensphere.mantle.data.geom.style.impl.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -57,21 +55,17 @@ public class ColorChooserStyleParameterEditorPanel extends AbstractStyleParamete
         panel.add(Box.createHorizontalGlue());
         myControlPanel.setLayout(new BorderLayout());
         myControlPanel.add(panel, BorderLayout.CENTER);
-        myColorChooserBT.addActionListener(new ActionListener()
+        myColorChooserBT.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            if (e.getSource() == myColorChooserBT)
             {
-                if (e.getSource() == myColorChooserBT)
+                Color c = ColorPicker.showDialog(SwingUtilities.getWindowAncestor(ColorChooserStyleParameterEditorPanel.this),
+                        "Select Color", ((ColorCircleIcon)myColorChooserBT.getIcon()).getColor(), includeOpacity);
+                if (c != null)
                 {
-                    Color c = ColorPicker.showDialog(SwingUtilities.getWindowAncestor(ColorChooserStyleParameterEditorPanel.this),
-                            "Select Color", ((ColorCircleIcon)myColorChooserBT.getIcon()).getColor(), includeOpacity);
-                    if (c != null)
-                    {
-                        myColor = c;
-                        myColorChooserBT.setIcon(new ColorCircleIcon(myColor));
-                        setParamValue(myColor);
-                    }
+                    myColor = c;
+                    myColorChooserBT.setIcon(new ColorCircleIcon(myColor));
+                    setParamValue(myColor);
                 }
             }
         });

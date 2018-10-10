@@ -45,27 +45,16 @@ public class StreamingSupportImpl extends ObservableValueService implements Stre
         myStreamingMechanism.set(StreamingMechanism.CLIENT_POLL);
 
         // Set the initial play state when streaming is enabled
-        bindModel(myStreamingEnabled, new ChangeListener<Boolean>()
+        bindModel(myStreamingEnabled, (ChangeListener<Boolean>)(observable, oldValue, newValue) ->
         {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+            if (newValue.booleanValue() && myPlayState.get() == null)
             {
-                if (newValue.booleanValue() && myPlayState.get() == null)
-                {
-                    myPlayState.set(PlayState.STOP);
-                }
+                myPlayState.set(PlayState.STOP);
             }
         });
 
         // Save the play state to the preferences when it changes
-        bindModel(myPlayState, new ChangeListener<PlayState>()
-        {
-            @Override
-            public void changed(ObservableValue<? extends PlayState> observable, PlayState oldValue, PlayState newValue)
-            {
-                dataTypeInfoPreferenceAssistant.setPlayStatePreference(dtiKey, newValue);
-            }
-        });
+        bindModel(myPlayState, (ChangeListener<PlayState>)(observable, oldValue, newValue) -> dataTypeInfoPreferenceAssistant.setPlayStatePreference(dtiKey, newValue));
 
         open();
     }

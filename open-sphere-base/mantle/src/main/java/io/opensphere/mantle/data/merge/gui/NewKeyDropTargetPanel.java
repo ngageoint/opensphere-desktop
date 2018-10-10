@@ -105,14 +105,7 @@ public class NewKeyDropTargetPanel extends JPanel implements KeyMoveListener
                 // Check for String flavor
                 if (!info.isDataFlavorSupported(TypeKeyEntry.ourDataFlavor))
                 {
-                    EventQueueUtilities.invokeLater(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            JOptionPane.showMessageDialog(null, "Doesn't accept a drop of this type.");
-                        }
-                    });
+                    EventQueueUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null, "Doesn't accept a drop of this type."));
                     return false;
                 }
 
@@ -137,14 +130,7 @@ public class NewKeyDropTargetPanel extends JPanel implements KeyMoveListener
                 }
 
                 final TypeKeyEntry toAdd = data;
-                EventQueueUtilities.invokeLater(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        myDataTypeMergePanel.createNewMappedTypeFromEntry(toAdd, myAllowOnlyWithSpecialKeys);
-                    }
-                });
+                EventQueueUtilities.invokeLater(() -> myDataTypeMergePanel.createNewMappedTypeFromEntry(toAdd, myAllowOnlyWithSpecialKeys));
 
                 return true;
             }
@@ -203,14 +189,10 @@ public class NewKeyDropTargetPanel extends JPanel implements KeyMoveListener
      */
     private void setLineColor(final Color c)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
-            {
-                myLineColor = c;
-                repaint();
-            }
+            myLineColor = c;
+            repaint();
         });
     }
 }

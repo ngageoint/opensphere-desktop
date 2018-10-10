@@ -214,14 +214,7 @@ public class StyleTypeSelectTreePanel extends JPanel implements StyleEditPanelCo
         if (firstTCP != null)
         {
             final TypeChoicePanel fTCP = firstTCP;
-            EventQueueUtilities.runOnEDT(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    nodeEditSelectChanged(fTCP.getSelectedStyleNodeUserObject(), true);
-                }
-            });
+            EventQueueUtilities.runOnEDT(() -> nodeEditSelectChanged(fTCP.getSelectedStyleNodeUserObject(), true));
         }
     }
 
@@ -258,14 +251,7 @@ public class StyleTypeSelectTreePanel extends JPanel implements StyleEditPanelCo
         if (firstChoice != null)
         {
             final TypeChoicePanel choicePanel = firstChoice;
-            EventQueueUtilities.runOnEDT(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    nodeEditSelectChanged(choicePanel.getSelectedStyleNodeUserObject(), true);
-                }
-            });
+            EventQueueUtilities.runOnEDT(() -> nodeEditSelectChanged(choicePanel.getSelectedStyleNodeUserObject(), true));
         }
     }
 
@@ -303,14 +289,7 @@ public class StyleTypeSelectTreePanel extends JPanel implements StyleEditPanelCo
         if (firstChoice != null)
         {
             final TypeChoicePanel fTCP = firstChoice;
-            EventQueueUtilities.runOnEDT(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    nodeEditSelectChanged(fTCP.getSelectedStyleNodeUserObject(), true);
-                }
-            });
+            EventQueueUtilities.runOnEDT(() -> nodeEditSelectChanged(fTCP.getSelectedStyleNodeUserObject(), true));
         }
     }
 
@@ -397,15 +376,11 @@ public class StyleTypeSelectTreePanel extends JPanel implements StyleEditPanelCo
                 && EqualsHelper.equals(evt.getDTIKey(), myDataType.getDataTypeInfo().getTypeKey())
                 && !(evt.getSource() instanceof StyleEditPanelController))
         {
-            EventQueueUtilities.runOnEDT(new Runnable()
+            EventQueueUtilities.runOnEDT(() ->
             {
-                @Override
-                public void run()
+                for (TypeChoicePanel tcp : myTypeChoicePanels)
                 {
-                    for (TypeChoicePanel tcp : myTypeChoicePanels)
-                    {
-                        tcp.selectIfPossible(evt.getMGSClass(), evt.getNewStyle());
-                    }
+                    tcp.selectIfPossible(evt.getMGSClass(), evt.getNewStyle());
                 }
             });
         }

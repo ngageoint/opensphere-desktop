@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
@@ -195,62 +194,58 @@ public class MiniStylePanel extends JPanel
     /** Rebuild ui. */
     private void rebuildUI()
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            destroy();
+
+            Box hBox = Box.createHorizontalBox();
+            hBox.add(myEnableCustomTypeCheckBox);
+            hBox.add(Box.createHorizontalGlue());
+            hBox.add(Box.createHorizontalStrut(5));
+            add(hBox);
+
+            VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox)
+                    .getVisualizationStyleController();
+            boolean shouldBeSelected = vsc.isTypeUsingCustom(myDGI, myDTI);
+            if (shouldBeSelected != myEnableCustomTypeCheckBox.isSelected())
             {
-                destroy();
-
-                Box hBox = Box.createHorizontalBox();
-                hBox.add(myEnableCustomTypeCheckBox);
-                hBox.add(Box.createHorizontalGlue());
-                hBox.add(Box.createHorizontalStrut(5));
-                add(hBox);
-
-                VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox)
-                        .getVisualizationStyleController();
-                boolean shouldBeSelected = vsc.isTypeUsingCustom(myDGI, myDTI);
-                if (shouldBeSelected != myEnableCustomTypeCheckBox.isSelected())
-                {
-                    myEnableCustomTypeCheckBox.setSelected(shouldBeSelected);
-                }
-
-                if (myEnableCustomTypeCheckBox.isSelected())
-                {
-                    List<Class<? extends VisualizationSupport>> featureClasses = StyleManagerUtils
-                            .getDefaultFeatureClassesForType(myDTI);
-                    if (CollectionUtilities.hasContent(featureClasses))
-                    {
-                        boolean isFirst = true;
-                        for (Class<? extends VisualizationSupport> fc : featureClasses)
-                        {
-                            MiniStyleTypePanel mstp = new MiniStyleTypePanel(myToolbox, fc, myDGI, myDTI, isFirst);
-
-                            myTypePanels.add(mstp);
-
-                            myLayout.setConstraints(mstp, myConstraints);
-                            myInternalPanel.add(mstp);
-
-                            myConstraints.gridy++;
-
-                            isFirst = false;
-                        }
-                    }
-
-                    myScrollPane = new JScrollPane(myInternalPanel);
-                    myScrollPane.getVerticalScrollBar().setUnitIncrement(25);
-                    myScrollPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, 300));
-                    myScrollPane.setMinimumSize(new Dimension(150, 300));
-                    myScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-                    myScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-                    add(myScrollPane);
-                }
-
-                setBackground(Color.CYAN);
-                revalidate();
-                repaint();
+                myEnableCustomTypeCheckBox.setSelected(shouldBeSelected);
             }
+
+            if (myEnableCustomTypeCheckBox.isSelected())
+            {
+                List<Class<? extends VisualizationSupport>> featureClasses = StyleManagerUtils
+                        .getDefaultFeatureClassesForType(myDTI);
+                if (CollectionUtilities.hasContent(featureClasses))
+                {
+                    boolean isFirst = true;
+                    for (Class<? extends VisualizationSupport> fc : featureClasses)
+                    {
+                        MiniStyleTypePanel mstp = new MiniStyleTypePanel(myToolbox, fc, myDGI, myDTI, isFirst);
+
+                        myTypePanels.add(mstp);
+
+                        myLayout.setConstraints(mstp, myConstraints);
+                        myInternalPanel.add(mstp);
+
+                        myConstraints.gridy++;
+
+                        isFirst = false;
+                    }
+                }
+
+                myScrollPane = new JScrollPane(myInternalPanel);
+                myScrollPane.getVerticalScrollBar().setUnitIncrement(25);
+                myScrollPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, 300));
+                myScrollPane.setMinimumSize(new Dimension(150, 300));
+                myScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                myScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+                add(myScrollPane);
+            }
+
+            setBackground(Color.CYAN);
+            revalidate();
+            repaint();
         });
     }
 
@@ -470,15 +465,11 @@ public class MiniStylePanel extends JPanel
                 myExpandCollapseButton.setMargin(new Insets(0, 0, 0, 0));
                 myExpandCollapseButton.setBorder(null);
                 myExpandCollapseButton.setContentAreaFilled(false);
-                myExpandCollapseButton.addActionListener(new ActionListener()
+                myExpandCollapseButton.addActionListener(e ->
                 {
-                    @Override
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        myCurrentFVCP.getPanel().setVisible(!getExpandCollapseButton().isSelected());
-                        saveCollapsedPreference();
-                        getResetStyleButton().setVisible(!isCollapsedPreference());
-                    }
+                    myCurrentFVCP.getPanel().setVisible(!getExpandCollapseButton().isSelected());
+                    saveCollapsedPreference();
+                    getResetStyleButton().setVisible(!isCollapsedPreference());
                 });
             }
             return myExpandCollapseButton;
@@ -498,15 +489,11 @@ public class MiniStylePanel extends JPanel
                 myResetStyleButton.setRolloverIcon("/images/icon-repeat-over.png");
                 myResetStyleButton.setPressedIcon("/images/icon-repeat-down.png");
                 myResetStyleButton.setToolTipText("Reset the style to its defaults.");
-                myResetStyleButton.addActionListener(new ActionListener()
+                myResetStyleButton.addActionListener(evt ->
                 {
-                    @Override
-                    public void actionPerformed(ActionEvent evt)
+                    if (myCurrentFVCP != null)
                     {
-                        if (myCurrentFVCP != null)
-                        {
-                            myCurrentFVCP.revertToDefaultSettigns();
-                        }
+                        myCurrentFVCP.revertToDefaultSettigns();
                     }
                 });
             }
@@ -522,14 +509,7 @@ public class MiniStylePanel extends JPanel
         {
             if (myVisStyleParameterChangeListener == null)
             {
-                myVisStyleParameterChangeListener = new VisualizationStyleParameterChangeListener()
-                {
-                    @Override
-                    public void styleParametersChanged(VisualizationStyleParameterChangeEvent evt)
-                    {
-                        handleVisualizationStyleParameterChange(evt);
-                    }
-                };
+                myVisStyleParameterChangeListener = evt -> handleVisualizationStyleParameterChange(evt);
             }
             return myVisStyleParameterChangeListener;
         }
@@ -562,61 +542,57 @@ public class MiniStylePanel extends JPanel
          */
         private void handleStyleSelectChange(final Class<? extends VisualizationStyle> selectedStyleClass)
         {
-            EventQueueUtilities.runOnEDT(new Runnable()
+            EventQueueUtilities.runOnEDT(() ->
             {
-                @Override
-                public void run()
+                VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox)
+                        .getVisualizationStyleController();
+                VisualizationStyle vs = vsc.getStyleForEditorWithConfigValues(selectedStyleClass, myFeatureClass, myDGI,
+                        myDTI);
+                VisualizationStyle curStyle = MantleToolboxUtils.getMantleToolbox(myToolbox).getVisualizationStyleRegistry()
+                        .getStyle(myFeatureClass, myDTI.getTypeKey(), false);
+
+                if (myRegistryStyle != null)
                 {
-                    VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox)
-                            .getVisualizationStyleController();
-                    VisualizationStyle vs = vsc.getStyleForEditorWithConfigValues(selectedStyleClass, myFeatureClass, myDGI,
-                            myDTI);
-                    VisualizationStyle curStyle = MantleToolboxUtils.getMantleToolbox(myToolbox).getVisualizationStyleRegistry()
-                            .getStyle(myFeatureClass, myDTI.getTypeKey(), false);
-
-                    if (myRegistryStyle != null)
-                    {
-                        myRegistryStyle.removeStyleParameterChangeListener(getStyleParameterChangeListener());
-                    }
-                    myRegistryStyle = curStyle;
-                    if (curStyle != null && !myDestroyed)
-                    {
-                        curStyle.addStyleParameterChangeListener(getStyleParameterChangeListener());
-                    }
-                    FeatureVisualizationControlPanel fvsc = vs.getMiniUIPanel();
-                    myMiniStylePanelController.setItems(null, null, null, null);
-                    if (myCurrentFVCP != null)
-                    {
-                        myCurrentFVCP.removeListener(myMiniStylePanelController);
-                    }
-                    myCurrentFVCP = fvsc;
-                    if (myCurrentFVCP != null && !myDestroyed)
-                    {
-                        myMiniStylePanelController.setItems(myCurrentFVCP, myFeatureClass, myDGI, myDTI);
-                        myCurrentFVCP.addListener(myMiniStylePanelController);
-                        myCurrentFVCP.getPanel().setVisible(!isCollapsedPreference());
-                    }
-
-                    removeAll();
-                    Box cbBox = Box.createHorizontalBox();
-                    cbBox.add(Box.createHorizontalStrut(2));
-                    cbBox.add(getExpandCollapseButton());
-                    cbBox.add(Box.createHorizontalStrut(4));
-                    cbBox.add(new JLabel(StyleManagerUtils.getStyleCategoryNameForFeatureClass(myFeatureClass)));
-                    if (myStyleSelectComboBox.getModel().getSize() > 1)
-                    {
-                        cbBox.add(myStyleSelectComboBox);
-                    }
-                    cbBox.add(Box.createHorizontalGlue());
-                    cbBox.add(getResetStyleButton());
-                    getResetStyleButton().setVisible(!isCollapsedPreference());
-                    cbBox.add(Box.createHorizontalStrut(3));
-                    cbBox.setBorder(BorderFactory.createEmptyBorder(1, 0, 0, 0));
-                    add(cbBox);
-                    add((Component)fvsc);
-                    revalidate();
-                    repaint();
+                    myRegistryStyle.removeStyleParameterChangeListener(getStyleParameterChangeListener());
                 }
+                myRegistryStyle = curStyle;
+                if (curStyle != null && !myDestroyed)
+                {
+                    curStyle.addStyleParameterChangeListener(getStyleParameterChangeListener());
+                }
+                FeatureVisualizationControlPanel fvsc = vs.getMiniUIPanel();
+                myMiniStylePanelController.setItems(null, null, null, null);
+                if (myCurrentFVCP != null)
+                {
+                    myCurrentFVCP.removeListener(myMiniStylePanelController);
+                }
+                myCurrentFVCP = fvsc;
+                if (myCurrentFVCP != null && !myDestroyed)
+                {
+                    myMiniStylePanelController.setItems(myCurrentFVCP, myFeatureClass, myDGI, myDTI);
+                    myCurrentFVCP.addListener(myMiniStylePanelController);
+                    myCurrentFVCP.getPanel().setVisible(!isCollapsedPreference());
+                }
+
+                removeAll();
+                Box cbBox = Box.createHorizontalBox();
+                cbBox.add(Box.createHorizontalStrut(2));
+                cbBox.add(getExpandCollapseButton());
+                cbBox.add(Box.createHorizontalStrut(4));
+                cbBox.add(new JLabel(StyleManagerUtils.getStyleCategoryNameForFeatureClass(myFeatureClass)));
+                if (myStyleSelectComboBox.getModel().getSize() > 1)
+                {
+                    cbBox.add(myStyleSelectComboBox);
+                }
+                cbBox.add(Box.createHorizontalGlue());
+                cbBox.add(getResetStyleButton());
+                getResetStyleButton().setVisible(!isCollapsedPreference());
+                cbBox.add(Box.createHorizontalStrut(3));
+                cbBox.setBorder(BorderFactory.createEmptyBorder(1, 0, 0, 0));
+                add(cbBox);
+                add((Component)fvsc);
+                revalidate();
+                repaint();
             });
         }
 
@@ -630,37 +606,33 @@ public class MiniStylePanel extends JPanel
             if (!myDestroyed && (evt.getDTIKey() == null
                     || EqualsHelper.equals(myDTI.getTypeKey(), evt.getDTIKey()) && evt.getMGSClass() == myFeatureClass))
             {
-                EventQueueUtilities.runOnEDT(new Runnable()
+                EventQueueUtilities.runOnEDT(() ->
                 {
-                    @Override
-                    public void run()
-                    {
-                        VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox)
-                                .getVisualizationStyleController();
-                        Class<? extends VisualizationStyle> selStyle = vsc.getSelectedVisualizationStyleClass(myFeatureClass,
-                                myDGI, myDTI);
+                    VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox)
+                            .getVisualizationStyleController();
+                    Class<? extends VisualizationStyle> selStyle = vsc.getSelectedVisualizationStyleClass(myFeatureClass,
+                            myDGI, myDTI);
 
-                        StyleNodeUserObject selectedNode = null;
-                        if (myStyleSelectComboBox.getItemCount() > 1)
+                    StyleNodeUserObject selectedNode = null;
+                    if (myStyleSelectComboBox.getItemCount() > 1)
+                    {
+                        for (int i = 0; i < myStyleSelectComboBox.getItemCount(); i++)
                         {
-                            for (int i = 0; i < myStyleSelectComboBox.getItemCount(); i++)
+                            StyleNodeUserObject node = myStyleSelectComboBox.getItemAt(i);
+                            if (EqualsHelper.equals(node.getStyleClass(), selStyle))
                             {
-                                StyleNodeUserObject node = myStyleSelectComboBox.getItemAt(i);
-                                if (EqualsHelper.equals(node.getStyleClass(), selStyle))
-                                {
-                                    selectedNode = node;
-                                    break;
-                                }
+                                selectedNode = node;
+                                break;
                             }
                         }
-                        if (selectedNode != null && !Utilities.sameInstance(MiniStyleTypePanel.this, evt.getSource()))
-                        {
-                            myStyleSelectComboBox.removeActionListener(myStyleSelectCBActionListener);
-                            myStyleSelectComboBox.setSelectedItem(selectedNode);
-                            myStyleSelectComboBox.addActionListener(myStyleSelectCBActionListener);
-                        }
-                        handleStyleSelectChange(selStyle);
                     }
+                    if (selectedNode != null && !Utilities.sameInstance(MiniStyleTypePanel.this, evt.getSource()))
+                    {
+                        myStyleSelectComboBox.removeActionListener(myStyleSelectCBActionListener);
+                        myStyleSelectComboBox.setSelectedItem(selectedNode);
+                        myStyleSelectComboBox.addActionListener(myStyleSelectCBActionListener);
+                    }
+                    handleStyleSelectChange(selStyle);
                 });
             }
         }
@@ -771,14 +743,7 @@ public class MiniStylePanel extends JPanel
         @Override
         public void styleChanged(boolean hasChangesFromBase)
         {
-            myUpdateExecutor.execute(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    myVSC.updateStyle(myFVCP.getChangedStyle(), myFeatureClass, myDGI, myDTI, MiniStyleTypePanelController.this);
-                }
-            });
+            myUpdateExecutor.execute(() -> myVSC.updateStyle(myFVCP.getChangedStyle(), myFeatureClass, myDGI, myDTI, MiniStyleTypePanelController.this));
         }
 
         @Override

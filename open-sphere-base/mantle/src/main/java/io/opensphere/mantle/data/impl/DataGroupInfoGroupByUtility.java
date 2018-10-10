@@ -482,14 +482,7 @@ public final class DataGroupInfoGroupByUtility
             else
             {
                 final Comparator<? super DataTypeInfo> dtiComp = typeComparator;
-                Collections.sort(entry.getValue(), new Comparator<Pair<DataGroupInfo, DataTypeInfo>>()
-                {
-                    @Override
-                    public int compare(Pair<DataGroupInfo, DataTypeInfo> o1, Pair<DataGroupInfo, DataTypeInfo> o2)
-                    {
-                        return dtiComp.compare(o1.getSecondObject(), o2.getSecondObject());
-                    }
-                });
+                Collections.sort(entry.getValue(), (o1, o2) -> dtiComp.compare(o1.getSecondObject(), o2.getSecondObject()));
             }
         }
 

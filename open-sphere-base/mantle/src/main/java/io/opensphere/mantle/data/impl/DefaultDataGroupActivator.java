@@ -62,21 +62,17 @@ public class DefaultDataGroupActivator implements DataGroupActivator
          * checked and throws a new InterruptedException to signal the caller
          * that the thread was interrupted. */
         TaskCanceller canceller = new TaskCanceller();
-        Function<? super DataGroupInfo, ? extends Boolean> mapper = new Function<>()
+        Function<? super DataGroupInfo, ? extends Boolean> mapper = g ->
         {
-            @Override
-            public Boolean apply(DataGroupInfo g)
+            try
             {
-                try
-                {
-                    return canceller.wrap((InterruptibleCallable<Boolean>)() -> Boolean
-                            .valueOf(setGroupActive(g, false) && setGroupActive(g, true))).call();
-                }
-                catch (InterruptedException e)
-                {
-                    canceller.cancel();
-                    return Boolean.FALSE;
-                }
+                return canceller.wrap((InterruptibleCallable<Boolean>)() -> Boolean
+                        .valueOf(setGroupActive(g, false) && setGroupActive(g, true))).call();
+            }
+            catch (InterruptedException e)
+            {
+                canceller.cancel();
+                return Boolean.FALSE;
             }
         };
         @SuppressWarnings("PMD.PrematureDeclaration")
@@ -130,21 +126,17 @@ public class DefaultDataGroupActivator implements DataGroupActivator
          * checked and throws a new InterruptedException to signal the caller
          * that the thread was interrupted. */
         TaskCanceller canceller = new TaskCanceller();
-        Function<? super DataGroupInfo, ? extends Boolean> mapper = new Function<>()
+        Function<? super DataGroupInfo, ? extends Boolean> mapper = g ->
         {
-            @Override
-            public Boolean apply(DataGroupInfo g)
+            try
             {
-                try
-                {
-                    return canceller.wrap((InterruptibleCallable<Boolean>)() -> Boolean.valueOf(setGroupActive(g, active)))
-                            .call();
-                }
-                catch (InterruptedException e)
-                {
-                    canceller.cancel();
-                    return Boolean.FALSE;
-                }
+                return canceller.wrap((InterruptibleCallable<Boolean>)() -> Boolean.valueOf(setGroupActive(g, active)))
+                        .call();
+            }
+            catch (InterruptedException e)
+            {
+                canceller.cancel();
+                return Boolean.FALSE;
             }
         };
         @SuppressWarnings("PMD.PrematureDeclaration")

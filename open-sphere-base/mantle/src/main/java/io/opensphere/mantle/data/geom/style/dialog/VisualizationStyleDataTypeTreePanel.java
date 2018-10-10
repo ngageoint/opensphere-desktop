@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
@@ -380,28 +379,14 @@ public class VisualizationStyleDataTypeTreePanel extends JPanel implements NodeL
                 lastSelectedNodeKey, styleGroup);
 
         List<DataGroupInfo> dgiKeyList = New.list(topParentToLeafNodeMap.keySet());
-        Collections.sort(dgiKeyList, new Comparator<DataGroupInfo>()
-        {
-            @Override
-            public int compare(DataGroupInfo o1, DataGroupInfo o2)
-            {
-                return o1.getDisplayName().compareTo(o2.getDisplayName());
-            }
-        });
+        Collections.sort(dgiKeyList, (o1, o2) -> o1.getDisplayName().compareTo(o2.getDisplayName()));
         Map<DataGroupInfo, CollapsiblePanel> topParentToNodeMap = New.map();
         for (DataGroupInfo topNode : dgiKeyList)
         {
             List<DataTypeNodeUserObject> nodeList = topParentToLeafNodeMap.get(topNode);
             if (!nodeList.isEmpty())
             {
-                Collections.sort(nodeList, new Comparator<DataTypeNodeUserObject>()
-                {
-                    @Override
-                    public int compare(DataTypeNodeUserObject o1, DataTypeNodeUserObject o2)
-                    {
-                        return o1.getDisplayName().compareTo(o2.getDisplayName());
-                    }
-                });
+                Collections.sort(nodeList, (o1, o2) -> o1.getDisplayName().compareTo(o2.getDisplayName()));
                 CollapsiblePanel topParentNode = topParentToNodeMap.get(topNode);
                 if (topParentNode == null)
                 {

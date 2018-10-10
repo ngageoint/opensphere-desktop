@@ -63,44 +63,40 @@ public class QueryRegionInfoDialog extends JDialog
         setContentPane(panel);
         setVisible(true);
 
-        Runnable showRunner = new Runnable()
+        Runnable showRunner = () ->
         {
-            @Override
-            public void run()
+            TreeItem<Object> root = new TreeItem<>("Layers for Query Region");
+            root.setExpanded(true);
+
+            myRegion.getTypeKeyToFilterMap().forEach((k, v1) ->
             {
-                TreeItem<Object> root = new TreeItem<>("Layers for Query Region");
-                root.setExpanded(true);
-
-                myRegion.getTypeKeyToFilterMap().forEach((k, v) ->
+                DataTypeInfo dti = myDataGroupController.findMemberById(k);
+                if (dti != null)
                 {
-                    DataTypeInfo dti = myDataGroupController.findMemberById(k);
-                    if (dti != null)
+                    TreeItem<Object> layerNode = new TreeItem<>(dti);
+                    Consumer<Object> filterAdder = o -> layerNode.getChildren().add(new TreeItem<>(o));
+                    if (v1 != null)
                     {
-                        TreeItem<Object> layerNode = new TreeItem<>(dti);
-                        Consumer<Object> filterAdder = o -> layerNode.getChildren().add(new TreeItem<>(o));
-                        if (v != null)
+                        if (v1.getFilterGroup().getGroups().isEmpty())
                         {
-                            if (v.getFilterGroup().getGroups().isEmpty())
-                            {
-                                filterAdder.accept(v.getFilterGroup());
-                            }
-                            else
-                            {
-                                v.getFilterGroup().getGroups().forEach(filterAdder);
-                            }
+                            filterAdder.accept(v1.getFilterGroup());
                         }
-                        root.getChildren().add(layerNode);
+                        else
+                        {
+                            v1.getFilterGroup().getGroups().forEach(filterAdder);
+                        }
                     }
-                });
-                TreeView<Object> tree = new TreeView<>(root);
-                tree.setCellFactory(v -> new TreeCellExtension());
-                tree.setOnMouseClicked(e -> handleMouseClick(myDataFilterRegistry, tree, e));
+                    root.getChildren().add(layerNode);
+                }
+            });
+            TreeView<Object> tree = new TreeView<>(root);
+            tree.setCellFactory(v2 -> new TreeCellExtension());
+            tree.setOnMouseClicked(e -> handleMouseClick(myDataFilterRegistry, tree, e));
 
-                Scene scene = new Scene(tree);
-                FXUtilities.addDesktopStyle(scene);
+            Scene scene = new Scene(tree);
+            FXUtilities.addDesktopStyle(scene);
 
-                panel.setScene(scene);
-            }
+            panel.setScene(scene);
         };
 
         Platform.runLater(showRunner);

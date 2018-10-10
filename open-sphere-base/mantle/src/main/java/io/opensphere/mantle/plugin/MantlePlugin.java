@@ -152,17 +152,13 @@ public class MantlePlugin extends PluginAdapter
         myTileStyleTransformController = new TileStyleTransformController(toolbox);
         myLabelHoverController = new LabelHoverController(toolbox);
 
-        EventQueueUtilities.runOnEDTAndWait(new Runnable()
+        EventQueueUtilities.runOnEDTAndWait(() ->
         {
-            @Override
-            public void run()
-            {
-                MantleMenuInit menuInit = new MantleMenuInit(myToolbox);
-                menuInit.createAndInstallDataElementCacheSummaryMenuItem();
-                menuInit.createAndInstallVisStyleControlDialog();
-                menuInit.createAndInstallIconManagerMenuItem();
-                menuInit.createAndInstallDynamicEnumDebugPrintMenuItem();
-            }
+            MantleMenuInit menuInit = new MantleMenuInit(myToolbox);
+            menuInit.createAndInstallDataElementCacheSummaryMenuItem();
+            menuInit.createAndInstallVisStyleControlDialog();
+            menuInit.createAndInstallIconManagerMenuItem();
+            menuInit.createAndInstallDynamicEnumDebugPrintMenuItem();
         });
     }
 

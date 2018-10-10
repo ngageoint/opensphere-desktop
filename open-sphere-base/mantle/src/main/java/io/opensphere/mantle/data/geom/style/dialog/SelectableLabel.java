@@ -134,14 +134,10 @@ public class SelectableLabel extends JLabel
         {
             myIsSelected = selected;
             fireActionPerformed(myIsSelected);
-            EventQueueUtilities.runOnEDT(new Runnable()
+            EventQueueUtilities.runOnEDT(() ->
             {
-                @Override
-                public void run()
-                {
-                    updateFromRenderer(isEnabled());
-                    repaint();
-                }
+                updateFromRenderer(isEnabled());
+                repaint();
             });
         }
     }
@@ -172,17 +168,13 @@ public class SelectableLabel extends JLabel
     private void fireActionPerformed(boolean selected)
     {
         final ActionEvent ae = new ActionEvent(this, 0, selected ? "SELECTED" : "DESELECTED");
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            synchronized (myActionListeners)
             {
-                synchronized (myActionListeners)
+                for (ActionListener al : myActionListeners)
                 {
-                    for (ActionListener al : myActionListeners)
-                    {
-                        al.actionPerformed(ae);
-                    }
+                    al.actionPerformed(ae);
                 }
             }
         });

@@ -89,27 +89,23 @@ public class GroupedMiniStyleEditorPanel extends AbstractGroupedVisualizationCon
      */
     private void rebuild()
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            removeAll();
+            synchronized (myParamGroups)
             {
-                removeAll();
-                synchronized (myParamGroups)
+                if (!myParamGroups.isEmpty())
                 {
-                    if (!myParamGroups.isEmpty())
+                    for (StyleParameterEditorGroupPanel pnl : myParamGroups)
                     {
-                        for (StyleParameterEditorGroupPanel pnl : myParamGroups)
-                        {
-                            add(pnl);
-                        }
+                        add(pnl);
                     }
                 }
-
-                add(Box.createVerticalGlue());
-                add(new JPanel());
-                revalidate();
             }
+
+            add(Box.createVerticalGlue());
+            add(new JPanel());
+            revalidate();
         });
     }
 }

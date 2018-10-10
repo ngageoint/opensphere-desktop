@@ -46,10 +46,8 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.concurrent.ProcrastinatingExecutor;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.core.util.lang.StringUtilities;
-import io.opensphere.core.viewer.ViewChangeSupport;
 import io.opensphere.core.viewer.ViewChangeSupport.ViewChangeListener;
 import io.opensphere.core.viewer.ViewChangeSupport.ViewChangeType;
-import io.opensphere.core.viewer.Viewer;
 import io.opensphere.mantle.mp.MutableMapAnnotationPoint;
 
 /** This is the transformer class for displaying map points. */
@@ -92,15 +90,11 @@ public class MapPointTransformer extends DefaultTransformer
     private TileGeometry myDragTile;
 
     /** Listen to events from the main viewer to redraw our cross-hair. */
-    private final ViewChangeListener myMainViewListener = new ViewChangeListener()
+    private final ViewChangeListener myMainViewListener = (viewer, type) ->
     {
-        @Override
-        public void viewChanged(Viewer viewer, ViewChangeSupport.ViewChangeType type)
+        if (type == ViewChangeType.WINDOW_RESIZE && myShouldDisplayCrossHair)
         {
-            if (type == ViewChangeType.WINDOW_RESIZE && myShouldDisplayCrossHair)
-            {
-                myViewChangeExecutor.execute(MapPointTransformer.this::drawCrossHairs);
-            }
+            myViewChangeExecutor.execute(MapPointTransformer.this::drawCrossHairs);
         }
     };
 

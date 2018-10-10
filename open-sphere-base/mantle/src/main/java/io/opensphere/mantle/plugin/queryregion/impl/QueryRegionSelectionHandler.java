@@ -37,23 +37,19 @@ public class QueryRegionSelectionHandler implements Service
     private final Supplier<Collection<? extends QueryRegion>> myQueryRegionSupplier;
 
     /** Handler for region selection. */
-    private final ContextActionProvider<GeometryContextKey> myRegionSelectionHandler = new ContextActionProvider<>()
+    private final ContextActionProvider<GeometryContextKey> myRegionSelectionHandler = (contextId, key, x, y) ->
     {
-        @Override
-        public boolean doAction(String contextId, GeometryContextKey key, int x, int y)
+        Optional<? extends QueryRegion> region = myQueryRegionSupplier.get().stream()
+                .filter(r -> r.getGeometries().contains(key.getGeometry())).findAny();
+        if (region.isPresent())
         {
-            Optional<? extends QueryRegion> region = myQueryRegionSupplier.get().stream()
-                    .filter(r -> r.getGeometries().contains(key.getGeometry())).findAny();
-            if (region.isPresent())
-            {
-                new QueryRegionInfoDialog(myMainFrameSupplier.get(), region.get(), myDataGroupController, myDataFilterRegistry)
-                        .buildAndShow();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            new QueryRegionInfoDialog(myMainFrameSupplier.get(), region.get(), myDataGroupController, myDataFilterRegistry)
+                    .buildAndShow();
+            return true;
+        }
+        else
+        {
+            return false;
         }
     };
 

@@ -239,19 +239,15 @@ public class DataTypeInfoPreferenceAssistantImpl implements DataTypeInfoPreferen
      */
     private EventListener<AbstractDataTypeInfoChangeEvent> createDataTypeChangeListener()
     {
-        return new EventListener<>()
+        return event ->
         {
-            @Override
-            public void notify(AbstractDataTypeInfoChangeEvent event)
+            if (event instanceof DataTypeVisibilityChangeEvent)
             {
-                if (event instanceof DataTypeVisibilityChangeEvent)
-                {
-                    ourEventExecutorService.execute(new DataTypeInfoVisibilityChangeWorker((DataTypeVisibilityChangeEvent)event));
-                }
-                else if (event instanceof DataTypeInfoColorChangeEvent)
-                {
-                    ourEventExecutorService.execute(new DataTypeInfoColorChangeWorker((DataTypeInfoColorChangeEvent)event));
-                }
+                ourEventExecutorService.execute(new DataTypeInfoVisibilityChangeWorker((DataTypeVisibilityChangeEvent)event));
+            }
+            else if (event instanceof DataTypeInfoColorChangeEvent)
+            {
+                ourEventExecutorService.execute(new DataTypeInfoColorChangeWorker((DataTypeInfoColorChangeEvent)event));
             }
         };
     }

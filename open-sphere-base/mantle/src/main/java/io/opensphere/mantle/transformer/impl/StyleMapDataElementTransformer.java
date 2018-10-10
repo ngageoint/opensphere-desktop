@@ -9,7 +9,6 @@ import gnu.trove.set.TLongSet;
 import gnu.trove.set.hash.TLongHashSet;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.event.EventListener;
-import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.TroveUtilities;
 import io.opensphere.mantle.controller.event.impl.ActiveDataGroupsChangedEvent;
@@ -17,7 +16,6 @@ import io.opensphere.mantle.data.AbstractDataTypeInfoChangeEvent;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.element.event.consolidated.AbstractConsolidatedDataElementChangeEvent;
-import io.opensphere.mantle.plugin.selection.SelectionCommand;
 import io.opensphere.mantle.plugin.selection.SelectionCommandProcessor;
 import io.opensphere.mantle.transformer.TransformerGeomRegistryUpdateTaskActivity;
 import io.opensphere.mantle.util.MantleToolboxUtils;
@@ -81,15 +79,11 @@ public class StyleMapDataElementTransformer extends AbstractMapDataElementTransf
     @Override
     public EventListener<AbstractConsolidatedDataElementChangeEvent> createDataElementChangeListener()
     {
-        return new EventListener<>()
+        return event ->
         {
-            @Override
-            public void notify(AbstractConsolidatedDataElementChangeEvent event)
+            if (event.getDataTypeKeys().contains(getDataType().getTypeKey()))
             {
-                if (event.getDataTypeKeys().contains(getDataType().getTypeKey()))
-                {
-                    myGeometryProcessor.handleConsolidatedDataElementChangeEvent(event);
-                }
+                myGeometryProcessor.handleConsolidatedDataElementChangeEvent(event);
             }
         };
     }
@@ -97,15 +91,11 @@ public class StyleMapDataElementTransformer extends AbstractMapDataElementTransf
     @Override
     public EventListener<AbstractDataTypeInfoChangeEvent> createDataTypeChangeListener()
     {
-        return new EventListener<>()
+        return event ->
         {
-            @Override
-            public void notify(AbstractDataTypeInfoChangeEvent event)
+            if (Utilities.sameInstance(getDataType(), event.getDataTypeInfo()))
             {
-                if (Utilities.sameInstance(getDataType(), event.getDataTypeInfo()))
-                {
-                    myGeometryProcessor.handleDataTypeInfoChangeEvent(event);
-                }
+                myGeometryProcessor.handleDataTypeInfoChangeEvent(event);
             }
         };
     }
@@ -113,34 +103,26 @@ public class StyleMapDataElementTransformer extends AbstractMapDataElementTransf
     @Override
     public SelectionCommandProcessor createPurgeCommandProcessor()
     {
-        return new SelectionCommandProcessor()
+        return (bounds, cmd) ->
         {
-            @Override
-            public void selectionOccurred(Collection<? extends PolygonGeometry> bounds, SelectionCommand cmd)
+            if (LOGGER.isTraceEnabled())
             {
-                if (LOGGER.isTraceEnabled())
-                {
-                    LOGGER.trace("Purge Occured: " + cmd);
-                }
-                myGeometryProcessor.purgeOccurred(bounds, null, cmd);
+                LOGGER.trace("Purge Occured: " + cmd);
             }
+            myGeometryProcessor.purgeOccurred(bounds, null, cmd);
         };
     }
 
     @Override
     public SelectionCommandProcessor createSelectionCommandProcessor()
     {
-        return new SelectionCommandProcessor()
+        return (bounds, cmd) ->
         {
-            @Override
-            public void selectionOccurred(Collection<? extends PolygonGeometry> bounds, SelectionCommand cmd)
+            if (LOGGER.isTraceEnabled())
             {
-                if (LOGGER.isTraceEnabled())
-                {
-                    LOGGER.trace("Selecton Occured: " + cmd);
-                }
-                myGeometryProcessor.selectionOccurred(bounds, cmd);
+                LOGGER.trace("Selecton Occured: " + cmd);
             }
+            myGeometryProcessor.selectionOccurred(bounds, cmd);
         };
     }
 
@@ -235,18 +217,14 @@ public class StyleMapDataElementTransformer extends AbstractMapDataElementTransf
      */
     private EventListener<ActiveDataGroupsChangedEvent> createActiveDataGroupsChangedListener()
     {
-        return new EventListener<>()
+        return event ->
         {
-            @Override
-            public void notify(ActiveDataGroupsChangedEvent event)
+            boolean active = MantleToolboxUtils.getMantleToolbox(getToolbox()).getDataGroupController()
+                    .isTypeActive(getDataType());
+            if (active != myPublishChangesToGeometryRegistry)
             {
-                boolean active = MantleToolboxUtils.getMantleToolbox(getToolbox()).getDataGroupController()
-                        .isTypeActive(getDataType());
-                if (active != myPublishChangesToGeometryRegistry)
-                {
-                    myGeometryProcessor.publishUnpublishGeometries(active);
-                    myPublishChangesToGeometryRegistry = active;
-                }
+                myGeometryProcessor.publishUnpublishGeometries(active);
+                myPublishChangesToGeometryRegistry = active;
             }
         };
     }

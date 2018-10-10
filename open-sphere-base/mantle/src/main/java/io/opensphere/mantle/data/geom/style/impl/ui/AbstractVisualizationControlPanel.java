@@ -4,7 +4,6 @@ import java.util.Set;
 
 import javax.swing.JPanel;
 
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
@@ -191,14 +190,10 @@ public abstract class AbstractVisualizationControlPanel extends JPanel
                     }
                 }
             }
-            EventQueueUtilities.runOnEDT(new Runnable()
+            EventQueueUtilities.runOnEDT(() ->
             {
-                @Override
-                public void run()
-                {
-                    update();
-                    fireControlPanelStyleChanged();
-                }
+                update();
+                fireControlPanelStyleChanged();
             });
         }
     }
@@ -213,18 +208,14 @@ public abstract class AbstractVisualizationControlPanel extends JPanel
      */
     public void updateSync()
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            update();
+            if (CollectionUtilities.hasContent(myVisibilityDependencies))
             {
-                update();
-                if (CollectionUtilities.hasContent(myVisibilityDependencies))
+                for (EditorPanelVisibilityDependency dep : myVisibilityDependencies)
                 {
-                    for (EditorPanelVisibilityDependency dep : myVisibilityDependencies)
-                    {
-                        dep.evaluateStyle();
-                    }
+                    dep.evaluateStyle();
                 }
             }
         });
@@ -237,19 +228,15 @@ public abstract class AbstractVisualizationControlPanel extends JPanel
      */
     protected void fireAcceptCancel(final boolean accept)
     {
-        myChangeSupport.notifyListeners(new Callback<FeatureVisualizationControlPanel.FeatureVisualizationControlPanelListener>()
+        myChangeSupport.notifyListeners(listener ->
         {
-            @Override
-            public void notify(FeatureVisualizationControlPanelListener listener)
+            if (accept)
             {
-                if (accept)
-                {
-                    listener.styleChangesAccepted();
-                }
-                else
-                {
-                    listener.styleChangesCancelled();
-                }
+                listener.styleChangesAccepted();
+            }
+            else
+            {
+                listener.styleChangesCancelled();
             }
         });
     }
@@ -260,14 +247,7 @@ public abstract class AbstractVisualizationControlPanel extends JPanel
     protected void fireControlPanelStyleChanged()
     {
         final boolean hasChanges = hasChanges();
-        myChangeSupport.notifyListeners(new Callback<FeatureVisualizationControlPanel.FeatureVisualizationControlPanelListener>()
-        {
-            @Override
-            public void notify(FeatureVisualizationControlPanelListener listener)
-            {
-                listener.styleChanged(hasChanges);
-            }
-        });
+        myChangeSupport.notifyListeners(listener -> listener.styleChanged(hasChanges));
     }
 
     /**
@@ -281,13 +261,6 @@ public abstract class AbstractVisualizationControlPanel extends JPanel
     private void performLiveParameterUpdate(final String dtiKey, final Class<? extends VisualizationSupport> convertedClass,
             final Class<? extends VisualizationStyle> vsClass, final Set<VisualizationStyleParameter> updateSet)
     {
-        myChangeSupport.notifyListeners(new Callback<FeatureVisualizationControlPanel.FeatureVisualizationControlPanelListener>()
-        {
-            @Override
-            public void notify(FeatureVisualizationControlPanelListener listener)
-            {
-                listener.performLiveParameterUpdate(dtiKey, convertedClass, vsClass, updateSet);
-            }
-        });
+        myChangeSupport.notifyListeners(listener -> listener.performLiveParameterUpdate(dtiKey, convertedClass, vsClass, updateSet));
     }
 }

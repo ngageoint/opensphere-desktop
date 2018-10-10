@@ -3,7 +3,6 @@ package io.opensphere.mantle.data.impl.dgset.v1;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -206,14 +205,7 @@ public class JAXBDataGroupInfoActiveHistoryList
         myHistoryListLock.lock();
         try
         {
-            Collections.sort(myHistoryList, new Comparator<JAXBDataGroupInfoActiveHistoryRecord>()
-            {
-                @Override
-                public int compare(JAXBDataGroupInfoActiveHistoryRecord o1, JAXBDataGroupInfoActiveHistoryRecord o2)
-                {
-                    return o1.getDate().compareTo(o2.getDate());
-                }
-            });
+            Collections.sort(myHistoryList, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
             Set<String> idSet = New.set();
             Iterator<JAXBDataGroupInfoActiveHistoryRecord> recItr = myHistoryList.iterator();
             while (recItr.hasNext())

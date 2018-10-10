@@ -23,33 +23,25 @@ public interface DataTypeInfo extends Model, Comparable<DataTypeInfo>
      * Comparator that orders {@link DataTypeInfo}s by their display names (Case
      * insensitive).
      */
-    Comparator<DataTypeInfo> CASE_INSENSITIVE_DISPLAY_NAME_COMPARATOR = new Comparator<>()
+    Comparator<DataTypeInfo> CASE_INSENSITIVE_DISPLAY_NAME_COMPARATOR = (o1, o2) ->
     {
-        @Override
-        public int compare(DataTypeInfo o1, DataTypeInfo o2)
+        int result = 0;
+        if (o1 != null && o1.getDisplayName() != null && o2 != null && o2.getDisplayName() != null)
         {
-            int result = 0;
-            if (o1 != null && o1.getDisplayName() != null && o2 != null && o2.getDisplayName() != null)
-            {
-                result = o1.getDisplayName().toLowerCase().compareTo(o2.getDisplayName().toLowerCase());
-            }
-            return result;
+            result = o1.getDisplayName().toLowerCase().compareTo(o2.getDisplayName().toLowerCase());
         }
+        return result;
     };
 
     /** Comparator that orders {@link DataTypeInfo}s by their display names. */
-    Comparator<DataTypeInfo> DISPLAY_NAME_COMPARATOR = new Comparator<>()
+    Comparator<DataTypeInfo> DISPLAY_NAME_COMPARATOR = (o1, o2) ->
     {
-        @Override
-        public int compare(DataTypeInfo o1, DataTypeInfo o2)
+        int result = 0;
+        if (o1 != null && o1.getDisplayName() != null && o2 != null && o2.getDisplayName() != null)
         {
-            int result = 0;
-            if (o1 != null && o1.getDisplayName() != null && o2 != null && o2.getDisplayName() != null)
-            {
-                result = o1.getDisplayName().compareTo(o2.getDisplayName());
-            }
-            return result;
+            result = o1.getDisplayName().compareTo(o2.getDisplayName());
         }
+        return result;
     };
 
     /** Predicate that selects data types that have meta data. */

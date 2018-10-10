@@ -7,7 +7,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -446,29 +445,25 @@ public class DataTypeMergePanel extends JPanel implements KeyMoveListener
      */
     public void returnTypeEntryToSource(final TypeKeyEntry obj)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            boolean moved = false;
+            for (SourceTypeKeyPanel pnl : mySourceTypeKeyPanels)
             {
-                boolean moved = false;
-                for (SourceTypeKeyPanel pnl : mySourceTypeKeyPanels)
+                if (pnl.getTypeKey().equals(obj.getDataTypeKey()))
                 {
-                    if (pnl.getTypeKey().equals(obj.getDataTypeKey()))
+                    if (obj.getOwner() instanceof TypeKeyPanel)
                     {
-                        if (obj.getOwner() instanceof TypeKeyPanel)
-                        {
-                            ((TypeKeyPanel)obj.getOwner()).acceptedTransferOfEntry(obj);
-                        }
-                        pnl.addTypeKeyEntry(obj);
-                        moved = true;
+                        ((TypeKeyPanel)obj.getOwner()).acceptedTransferOfEntry(obj);
                     }
+                    pnl.addTypeKeyEntry(obj);
+                    moved = true;
                 }
-                if (moved)
-                {
-                    rebuildMappedTypeKeyPanels();
-                    rebuildSpecialMappedTypeKeyPanels();
-                }
+            }
+            if (moved)
+            {
+                rebuildMappedTypeKeyPanels();
+                rebuildSpecialMappedTypeKeyPanels();
             }
         });
     }
@@ -509,92 +504,88 @@ public class DataTypeMergePanel extends JPanel implements KeyMoveListener
      */
     public void setFromMappingConfiguration(final Toolbox tb, final DataTypeMergeMap map)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            MantleToolbox mtb = null;
+            if (tb != null)
             {
-                MantleToolbox mtb = null;
-                if (tb != null)
-                {
-                    mtb = MantleToolboxUtils.getMantleToolbox(tb);
-                }
-                myLowerSourcePanel.removeAll();
-                myDataTypeKeyToMetaDataInfoMap.clear();
-                resetMergeInternal();
-                mySourceTypeKeyPanels.clear();
-
-                // Setup and build source panels.
-                for (DataTypeMergeComponent comp : map.getMergeComponents())
-                {
-                    DTINameKeyPair pair = new DTINameKeyPair(comp.getDataTypeDisplayName(), comp.getDataTypeKey());
-                    boolean foundInTool = false;
-                    if (mtb != null && mtb.getDataTypeController().hasDataTypeInfoForTypeKey(comp.getDataTypeKey()))
-                    {
-                        DataTypeInfo dti = mtb.getDataTypeController().getDataTypeInfoForType(comp.getDataTypeKey());
-                        if (dti.getMetaDataInfo() != null)
-                        {
-                            myDataTypeKeyToMetaDataInfoMap.put(pair, dti.getMetaDataInfo());
-                            foundInTool = true;
-                        }
-                    }
-
-                    if (!foundInTool)
-                    {
-                        DefaultMetaDataInfo dmdi = DataTypeMergeAssistant.createMetaDataInfo(comp.getSourceKeyList(), false,
-                                null);
-                        myDataTypeKeyToMetaDataInfoMap.put(pair, dmdi);
-                    }
-                }
-                Map<String, SourceTypeKeyPanel> dtiToSourceTypeKeyPanelMap = initializeSourcePanels();
-
-                // Setup and build mapped panels.
-                Map<String, MappedTypeKeyPanel> keyToPanelMap = new HashMap<>();
-                for (MergeKeySpecification mks : map.getMergedKeyNames())
-                {
-                    if (StringUtils.isNotEmpty(mks.getSpecialKeyClassName()))
-                    {
-                        SpecialKey sk = KeySpecification.getSpecialKeyForSpecialKeyClassName(mks.getSpecialKeyClassName());
-                        SpecialMappedTypeKeyPanel pnl = new SpecialMappedTypeKeyPanel(myDataTypeKeyMoveDNDCoordinator,
-                                DataTypeMergePanel.this, mks.getKeyName(), mks.getClassName(), false, sk);
-                        pnl.setEditable(myEditable);
-                        mySpecialMappedTypeKeyPanels.add(pnl);
-                        keyToPanelMap.put(mks.getKeyName(), pnl);
-                    }
-                    else
-                    {
-                        MappedTypeKeyPanel pnl = new MappedTypeKeyPanel(myDataTypeKeyMoveDNDCoordinator, DataTypeMergePanel.this,
-                                mks.getKeyName(), mks.getClassName(), false);
-                        pnl.setEditable(myEditable);
-                        myMappedTypeKeyPanels.add(pnl);
-                        keyToPanelMap.put(mks.getKeyName(), pnl);
-                    }
-                }
-
-                // Move the TypeKeyEntry(s) from the source panels to the
-                // correct map panels.
-                for (DataTypeMergeComponent comp : map.getMergeComponents())
-                {
-                    SourceTypeKeyPanel panel = dtiToSourceTypeKeyPanelMap.get(comp.getDataTypeKey());
-                    Map<String, TypeKeyEntry> keyToEntryMap = panel.getMapOfKeyToTypeKeyEntry();
-                    for (MetaDataMergeKeyMapEntry entry : comp.getMetaDataMergeKeyMapEntryList())
-                    {
-                        String srcKey = entry.getSourceKeyName();
-                        String mrgKey = entry.getMergeKeyName();
-                        MappedTypeKeyPanel destPanel = keyToPanelMap.get(mrgKey);
-                        TypeKeyEntry tke = keyToEntryMap.get(srcKey);
-                        if (tke != null)
-                        {
-                            destPanel.addTypeKeyEntry(tke);
-                            panel.acceptedTransferOfEntry(tke);
-                        }
-                    }
-                }
-
-                rebuildSpecialMappedTypeKeyPanels();
-                rebuildMappedTypeKeyPanels();
-                revalidate();
+                mtb = MantleToolboxUtils.getMantleToolbox(tb);
             }
+            myLowerSourcePanel.removeAll();
+            myDataTypeKeyToMetaDataInfoMap.clear();
+            resetMergeInternal();
+            mySourceTypeKeyPanels.clear();
+
+            // Setup and build source panels.
+            for (DataTypeMergeComponent comp1 : map.getMergeComponents())
+            {
+                DTINameKeyPair pair = new DTINameKeyPair(comp1.getDataTypeDisplayName(), comp1.getDataTypeKey());
+                boolean foundInTool = false;
+                if (mtb != null && mtb.getDataTypeController().hasDataTypeInfoForTypeKey(comp1.getDataTypeKey()))
+                {
+                    DataTypeInfo dti = mtb.getDataTypeController().getDataTypeInfoForType(comp1.getDataTypeKey());
+                    if (dti.getMetaDataInfo() != null)
+                    {
+                        myDataTypeKeyToMetaDataInfoMap.put(pair, dti.getMetaDataInfo());
+                        foundInTool = true;
+                    }
+                }
+
+                if (!foundInTool)
+                {
+                    DefaultMetaDataInfo dmdi = DataTypeMergeAssistant.createMetaDataInfo(comp1.getSourceKeyList(), false,
+                            null);
+                    myDataTypeKeyToMetaDataInfoMap.put(pair, dmdi);
+                }
+            }
+            Map<String, SourceTypeKeyPanel> dtiToSourceTypeKeyPanelMap = initializeSourcePanels();
+
+            // Setup and build mapped panels.
+            Map<String, MappedTypeKeyPanel> keyToPanelMap = new HashMap<>();
+            for (MergeKeySpecification mks : map.getMergedKeyNames())
+            {
+                if (StringUtils.isNotEmpty(mks.getSpecialKeyClassName()))
+                {
+                    SpecialKey sk = KeySpecification.getSpecialKeyForSpecialKeyClassName(mks.getSpecialKeyClassName());
+                    SpecialMappedTypeKeyPanel pnl1 = new SpecialMappedTypeKeyPanel(myDataTypeKeyMoveDNDCoordinator,
+                            DataTypeMergePanel.this, mks.getKeyName(), mks.getClassName(), false, sk);
+                    pnl1.setEditable(myEditable);
+                    mySpecialMappedTypeKeyPanels.add(pnl1);
+                    keyToPanelMap.put(mks.getKeyName(), pnl1);
+                }
+                else
+                {
+                    MappedTypeKeyPanel pnl2 = new MappedTypeKeyPanel(myDataTypeKeyMoveDNDCoordinator, DataTypeMergePanel.this,
+                            mks.getKeyName(), mks.getClassName(), false);
+                    pnl2.setEditable(myEditable);
+                    myMappedTypeKeyPanels.add(pnl2);
+                    keyToPanelMap.put(mks.getKeyName(), pnl2);
+                }
+            }
+
+            // Move the TypeKeyEntry(s) from the source panels to the
+            // correct map panels.
+            for (DataTypeMergeComponent comp2 : map.getMergeComponents())
+            {
+                SourceTypeKeyPanel panel = dtiToSourceTypeKeyPanelMap.get(comp2.getDataTypeKey());
+                Map<String, TypeKeyEntry> keyToEntryMap = panel.getMapOfKeyToTypeKeyEntry();
+                for (MetaDataMergeKeyMapEntry entry : comp2.getMetaDataMergeKeyMapEntryList())
+                {
+                    String srcKey = entry.getSourceKeyName();
+                    String mrgKey = entry.getMergeKeyName();
+                    MappedTypeKeyPanel destPanel = keyToPanelMap.get(mrgKey);
+                    TypeKeyEntry tke = keyToEntryMap.get(srcKey);
+                    if (tke != null)
+                    {
+                        destPanel.addTypeKeyEntry(tke);
+                        panel.acceptedTransferOfEntry(tke);
+                    }
+                }
+            }
+
+            rebuildSpecialMappedTypeKeyPanels();
+            rebuildMappedTypeKeyPanels();
+            revalidate();
         });
     }
 
@@ -642,44 +633,40 @@ public class DataTypeMergePanel extends JPanel implements KeyMoveListener
      */
     private void autoMerge(final boolean allUnassignedKeys)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            Map<String, SpecialMappedTypeKeyPanel> specKeyNameToSpecPanelMap = new HashMap<>();
+            Map<SpecialKey, SpecialMappedTypeKeyPanel> specKeyToSpecPanelMap = new HashMap<>();
+
+            for (SpecialMappedTypeKeyPanel pnl1 : mySpecialMappedTypeKeyPanels)
             {
-                Map<String, SpecialMappedTypeKeyPanel> specKeyNameToSpecPanelMap = new HashMap<>();
-                Map<SpecialKey, SpecialMappedTypeKeyPanel> specKeyToSpecPanelMap = new HashMap<>();
-
-                for (SpecialMappedTypeKeyPanel pnl : mySpecialMappedTypeKeyPanels)
-                {
-                    specKeyNameToSpecPanelMap.put(pnl.getKeyName(), pnl);
-                    specKeyToSpecPanelMap.put(pnl.getSpecialKey(), pnl);
-                }
-
-                Map<String, MappedTypeKeyPanel> regKeyToSpecPanelMap = new HashMap<>();
-                for (MappedTypeKeyPanel pnl : myMappedTypeKeyPanels)
-                {
-                    regKeyToSpecPanelMap.put(pnl.getKeyName().toLowerCase(), pnl);
-                }
-
-                List<TypeKeyEntry> unassignedEntryList = new ArrayList<>();
-                for (SourceTypeKeyPanel pnl : mySourceTypeKeyPanels)
-                {
-                    unassignedEntryList.addAll(pnl.getTypeEntryList());
-                }
-
-                // Determine new special key panels.
-                determineNewSpecialKeyPanelsAsPartOfMerge(specKeyNameToSpecPanelMap, specKeyToSpecPanelMap, unassignedEntryList);
-
-                // Now work the remaining unassigned list
-                // for the regular key panels.
-                determineNewRegularKeyPanelsAsPartOfMerge(allUnassignedKeys, unassignedEntryList, regKeyToSpecPanelMap);
-
-                // Rebuild the panels.
-                rebuildMappedTypeKeyPanels();
-                rebuildSpecialMappedTypeKeyPanels();
-                fireMergeMapUpdated();
+                specKeyNameToSpecPanelMap.put(pnl1.getKeyName(), pnl1);
+                specKeyToSpecPanelMap.put(pnl1.getSpecialKey(), pnl1);
             }
+
+            Map<String, MappedTypeKeyPanel> regKeyToSpecPanelMap = new HashMap<>();
+            for (MappedTypeKeyPanel pnl2 : myMappedTypeKeyPanels)
+            {
+                regKeyToSpecPanelMap.put(pnl2.getKeyName().toLowerCase(), pnl2);
+            }
+
+            List<TypeKeyEntry> unassignedEntryList = new ArrayList<>();
+            for (SourceTypeKeyPanel pnl3 : mySourceTypeKeyPanels)
+            {
+                unassignedEntryList.addAll(pnl3.getTypeEntryList());
+            }
+
+            // Determine new special key panels.
+            determineNewSpecialKeyPanelsAsPartOfMerge(specKeyNameToSpecPanelMap, specKeyToSpecPanelMap, unassignedEntryList);
+
+            // Now work the remaining unassigned list
+            // for the regular key panels.
+            determineNewRegularKeyPanelsAsPartOfMerge(allUnassignedKeys, unassignedEntryList, regKeyToSpecPanelMap);
+
+            // Rebuild the panels.
+            rebuildMappedTypeKeyPanels();
+            rebuildSpecialMappedTypeKeyPanels();
+            fireMergeMapUpdated();
         });
     }
 
@@ -1040,29 +1027,18 @@ public class DataTypeMergePanel extends JPanel implements KeyMoveListener
      */
     private void rebuildMappedTypeKeyPanels()
     {
-        EventQueueUtilities.invokeLater(new Runnable()
+        EventQueueUtilities.invokeLater(() ->
         {
-            @Override
-            public void run()
+            myNormalKeyTargetPanel.removeAll();
+
+            Collections.sort(myMappedTypeKeyPanels, (o1, o2) -> o1.getKeyName().compareTo(o2.getKeyName()));
+
+            for (MappedTypeKeyPanel pnl : myMappedTypeKeyPanels)
             {
-                myNormalKeyTargetPanel.removeAll();
-
-                Collections.sort(myMappedTypeKeyPanels, new Comparator<MappedTypeKeyPanel>()
-                {
-                    @Override
-                    public int compare(MappedTypeKeyPanel o1, MappedTypeKeyPanel o2)
-                    {
-                        return o1.getKeyName().compareTo(o2.getKeyName());
-                    }
-                });
-
-                for (MappedTypeKeyPanel pnl : myMappedTypeKeyPanels)
-                {
-                    myNormalKeyTargetPanel.add(pnl);
-                }
-                refreshMergedKeynames();
-                myNormalKeyTargetPanel.revalidate();
+                myNormalKeyTargetPanel.add(pnl);
             }
+            refreshMergedKeynames();
+            myNormalKeyTargetPanel.revalidate();
         });
     }
 
@@ -1071,30 +1047,19 @@ public class DataTypeMergePanel extends JPanel implements KeyMoveListener
      */
     private void rebuildSpecialMappedTypeKeyPanels()
     {
-        EventQueueUtilities.invokeLater(new Runnable()
+        EventQueueUtilities.invokeLater(() ->
         {
-            @Override
-            public void run()
+            mySpecialKeyTargetPanel.removeAll();
+
+            Collections.sort(mySpecialMappedTypeKeyPanels, (o1, o2) -> o1.getKeyName().compareTo(o2.getKeyName()));
+
+            for (SpecialMappedTypeKeyPanel pnl : mySpecialMappedTypeKeyPanels)
             {
-                mySpecialKeyTargetPanel.removeAll();
-
-                Collections.sort(mySpecialMappedTypeKeyPanels, new Comparator<MappedTypeKeyPanel>()
-                {
-                    @Override
-                    public int compare(MappedTypeKeyPanel o1, MappedTypeKeyPanel o2)
-                    {
-                        return o1.getKeyName().compareTo(o2.getKeyName());
-                    }
-                });
-
-                for (SpecialMappedTypeKeyPanel pnl : mySpecialMappedTypeKeyPanels)
-                {
-                    mySpecialKeyTargetPanel.add(pnl);
-                }
-
-                refreshMergedKeynames();
-                mySpecialKeyTargetPanel.revalidate();
+                mySpecialKeyTargetPanel.add(pnl);
             }
+
+            refreshMergedKeynames();
+            mySpecialKeyTargetPanel.revalidate();
         });
     }
 
@@ -1103,23 +1068,19 @@ public class DataTypeMergePanel extends JPanel implements KeyMoveListener
      */
     private void refreshMergedKeynames()
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            DefaultListModel<MappedTypeKeyPanelProxy> dlm = new DefaultListModel<>();
+            for (SpecialMappedTypeKeyPanel pnl1 : mySpecialMappedTypeKeyPanels)
             {
-                DefaultListModel<MappedTypeKeyPanelProxy> dlm = new DefaultListModel<>();
-                for (SpecialMappedTypeKeyPanel pnl : mySpecialMappedTypeKeyPanels)
-                {
-                    dlm.addElement(new MappedTypeKeyPanelProxy(pnl));
-                }
-
-                for (MappedTypeKeyPanel pnl : myMappedTypeKeyPanels)
-                {
-                    dlm.addElement(new MappedTypeKeyPanelProxy(pnl));
-                }
-                myDestinationKeyListPanel.setModel(dlm);
+                dlm.addElement(new MappedTypeKeyPanelProxy(pnl1));
             }
+
+            for (MappedTypeKeyPanel pnl2 : myMappedTypeKeyPanels)
+            {
+                dlm.addElement(new MappedTypeKeyPanelProxy(pnl2));
+            }
+            myDestinationKeyListPanel.setModel(dlm);
         });
     }
 

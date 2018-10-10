@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -228,14 +227,7 @@ public abstract class TypeKeyPanel extends JPanel
      */
     public void resetInnerPanelBorder()
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                myInnerPanel.setBorder(BorderFactory.createLineBorder(Color.gray));
-            }
-        });
+        EventQueueUtilities.runOnEDT(() -> myInnerPanel.setBorder(BorderFactory.createLineBorder(Color.gray)));
     }
 
     /**
@@ -266,14 +258,7 @@ public abstract class TypeKeyPanel extends JPanel
     public void setTypeEntryList(List<TypeKeyEntry> entryList)
     {
         List<TypeKeyEntry> list = new ArrayList<>(entryList);
-        Collections.sort(list, new Comparator<TypeKeyEntry>()
-        {
-            @Override
-            public int compare(TypeKeyEntry o1, TypeKeyEntry o2)
-            {
-                return o1.getKeyName().compareTo(o2.getKeyName());
-            }
-        });
+        Collections.sort(list, (o1, o2) -> o1.getKeyName().compareTo(o2.getKeyName()));
 
         DefaultListModel<TypeKeyEntry> model = new DefaultListModel<>();
         for (TypeKeyEntry entry : list)
@@ -300,21 +285,17 @@ public abstract class TypeKeyPanel extends JPanel
                     Object[] objs = getListModel().toArray();
                     getListModel().removeAllElements();
                     List<Object> objList = New.list(objs);
-                    Collections.sort(objList, new Comparator<>()
+                    Collections.sort(objList, (o1, o2) ->
                     {
-                        @Override
-                        public int compare(Object o1, Object o2)
+                        if (o1 instanceof TypeKeyEntry && o2 instanceof TypeKeyEntry)
                         {
-                            if (o1 instanceof TypeKeyEntry && o2 instanceof TypeKeyEntry)
-                            {
-                                String val1 = ((TypeKeyEntry)o1).getKeyName();
-                                String val2 = ((TypeKeyEntry)o2).getKeyName();
-                                return val1.compareTo(val2);
-                            }
-                            else
-                            {
-                                return 0;
-                            }
+                            String val1 = ((TypeKeyEntry)o1).getKeyName();
+                            String val2 = ((TypeKeyEntry)o2).getKeyName();
+                            return val1.compareTo(val2);
+                        }
+                        else
+                        {
+                            return 0;
                         }
                     });
                     DefaultListModel model = new DefaultListModel();

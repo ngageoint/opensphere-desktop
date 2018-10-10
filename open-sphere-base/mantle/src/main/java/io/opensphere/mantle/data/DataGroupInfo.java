@@ -44,33 +44,25 @@ public interface DataGroupInfo
     /**
      * Comparator that orders {@link DataGroupInfo}s by their display names (case insensitive).
      */
-    Comparator<DataGroupInfo> CASE_INSENSITIVE_DISPLAY_NAME_COMPARATOR = new Comparator<>()
+    Comparator<DataGroupInfo> CASE_INSENSITIVE_DISPLAY_NAME_COMPARATOR = (o1, o2) ->
     {
-        @Override
-        public int compare(DataGroupInfo o1, DataGroupInfo o2)
+        int result = 0;
+        if (o1 != null && o1.getDisplayName() != null && o2 != null && o2.getDisplayName() != null)
         {
-            int result = 0;
-            if (o1 != null && o1.getDisplayName() != null && o2 != null && o2.getDisplayName() != null)
-            {
-                result = o1.getDisplayName().toLowerCase().compareTo(o2.getDisplayName().toLowerCase());
-            }
-            return result;
+            result = o1.getDisplayName().toLowerCase().compareTo(o2.getDisplayName().toLowerCase());
         }
+        return result;
     };
 
     /** Comparator that orders {@link DataGroupInfo}s by their display names. */
-    Comparator<DataGroupInfo> DISPLAY_NAME_COMPARATOR = new Comparator<>()
+    Comparator<DataGroupInfo> DISPLAY_NAME_COMPARATOR = (o1, o2) ->
     {
-        @Override
-        public int compare(DataGroupInfo o1, DataGroupInfo o2)
+        int result = 0;
+        if (o1 != null && o1.getDisplayName() != null && o2 != null && o2.getDisplayName() != null)
         {
-            int result = 0;
-            if (o1 != null && o1.getDisplayName() != null && o2 != null && o2.getDisplayName() != null)
-            {
-                result = o1.getDisplayName().compareTo(o2.getDisplayName());
-            }
-            return result;
+            result = o1.getDisplayName().compareTo(o2.getDisplayName());
         }
+        return result;
     };
 
     /** A function that returns the display name of the data group info. */
@@ -79,18 +71,14 @@ public interface DataGroupInfo
     /**
      * Comparator that orders {@link DataGroupInfo}s by their long display names.
      */
-    Comparator<DataGroupInfo> LONG_DISPLAY_NAME_COMPARATOR = new Comparator<>()
+    Comparator<DataGroupInfo> LONG_DISPLAY_NAME_COMPARATOR = (o1, o2) ->
     {
-        @Override
-        public int compare(DataGroupInfo o1, DataGroupInfo o2)
+        int result = 0;
+        if (o1 != null && o1.getLongDisplayName() != null && o2 != null && o2.getLongDisplayName() != null)
         {
-            int result = 0;
-            if (o1 != null && o1.getLongDisplayName() != null && o2 != null && o2.getLongDisplayName() != null)
-            {
-                result = o1.getLongDisplayName().compareTo(o2.getLongDisplayName());
-            }
-            return result;
+            result = o1.getLongDisplayName().compareTo(o2.getLongDisplayName());
         }
+        return result;
     };
 
     /** The context id for actions against active data groups. */

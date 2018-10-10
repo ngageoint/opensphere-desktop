@@ -112,42 +112,38 @@ public class VisualizationStyleControlDialog extends JDialog
      */
     private void handleShowTypeVisualizationStyleEvent(final ShowTypeVisualizationStyleEvent event)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            DataTypeInfo dti = event.getType();
+            if (dti != null && dti.getMapVisualizationInfo() != null
+                    && dti.getMapVisualizationInfo().getVisualizationType() != null)
             {
-                DataTypeInfo dti = event.getType();
-                if (dti != null && dti.getMapVisualizationInfo() != null
-                        && dti.getMapVisualizationInfo().getVisualizationType() != null)
+                if (dti.getMapVisualizationInfo().getVisualizationType().isMapDataElementType())
                 {
-                    if (dti.getMapVisualizationInfo().getVisualizationType().isMapDataElementType())
+                    // Feature
+                    myTabbedPane.setSelectedIndex(0);
+                    if (myFeatureDataTypePanel.switchToDataType(event))
                     {
-                        // Feature
-                        myTabbedPane.setSelectedIndex(0);
-                        if (myFeatureDataTypePanel.switchToDataType(event))
-                        {
-                            setVisible(true);
-                        }
+                        setVisible(true);
                     }
-                    else if (dti.getMapVisualizationInfo().getVisualizationType().isImageTileType()
-                            || dti.getMapVisualizationInfo().getVisualizationType().isImageType())
+                }
+                else if (dti.getMapVisualizationInfo().getVisualizationType().isImageTileType()
+                        || dti.getMapVisualizationInfo().getVisualizationType().isImageType())
+                {
+                    // Tile
+                    myTabbedPane.setSelectedIndex(1);
+                    if (myTileDataTypePanel.switchToDataType(event))
                     {
-                        // Tile
-                        myTabbedPane.setSelectedIndex(1);
-                        if (myTileDataTypePanel.switchToDataType(event))
-                        {
-                            setVisible(true);
-                        }
+                        setVisible(true);
                     }
-                    else if (dti.getMapVisualizationInfo().getVisualizationType().isHeatmapType())
+                }
+                else if (dti.getMapVisualizationInfo().getVisualizationType().isHeatmapType())
+                {
+                    // Heatmap
+                    myTabbedPane.setSelectedIndex(2);
+                    if (myHeatmapDataTypePanel.switchToDataType(event))
                     {
-                        // Heatmap
-                        myTabbedPane.setSelectedIndex(2);
-                        if (myHeatmapDataTypePanel.switchToDataType(event))
-                        {
-                            setVisible(true);
-                        }
+                        setVisible(true);
                     }
                 }
             }

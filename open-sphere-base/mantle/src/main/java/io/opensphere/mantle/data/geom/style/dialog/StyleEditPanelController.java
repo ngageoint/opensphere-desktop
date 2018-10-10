@@ -1,13 +1,11 @@
 package io.opensphere.mantle.data.geom.style.dialog;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import io.opensphere.core.Toolbox;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
@@ -21,7 +19,6 @@ import io.opensphere.mantle.data.geom.style.FeatureVisualizationControlPanel.Fea
 import io.opensphere.mantle.data.geom.style.FeatureVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.VisualizationStyle;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleParameter;
-import io.opensphere.mantle.data.geom.style.VisualizationStyleParameterChangeEvent;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleParameterChangeListener;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleRegistry;
 import io.opensphere.mantle.data.geom.style.dialog.DataTypeNodeUserObject.NodeType;
@@ -71,20 +68,16 @@ public class StyleEditPanelController implements FeatureVisualizationControlPane
     private final StyleManagerController myStyleManagerController;
 
     /** The Style parameter change listener. */
-    private final transient VisualizationStyleParameterChangeListener myStyleParameterChangeListener = new VisualizationStyleParameterChangeListener()
+    private final transient VisualizationStyleParameterChangeListener myStyleParameterChangeListener = evt ->
     {
-        @Override
-        public void styleParametersChanged(VisualizationStyleParameterChangeEvent evt)
+        if (myCandidateControlPanel != null && !Utilities.sameInstance(evt.getSource(), StyleEditPanelController.this)
+                && myCandidateControlPanel instanceof AbstractVisualizationControlPanel)
         {
-            if (myCandidateControlPanel != null && !Utilities.sameInstance(evt.getSource(), StyleEditPanelController.this)
-                    && myCandidateControlPanel instanceof AbstractVisualizationControlPanel)
-            {
-                myCandidateControlPanel.getStyle().setParameters(evt.getChangedParameterSet(),
-                        VisualizationStyle.NO_EVENT_SOURCE);
-                myCandidateControlPanel.getChangedStyle().setParameters(evt.getChangedParameterSet(),
-                        VisualizationStyle.NO_EVENT_SOURCE);
-                ((AbstractVisualizationControlPanel)myCandidateControlPanel).updateSync();
-            }
+            myCandidateControlPanel.getStyle().setParameters(evt.getChangedParameterSet(),
+                    VisualizationStyle.NO_EVENT_SOURCE);
+            myCandidateControlPanel.getChangedStyle().setParameters(evt.getChangedParameterSet(),
+                    VisualizationStyle.NO_EVENT_SOURCE);
+            ((AbstractVisualizationControlPanel)myCandidateControlPanel).updateSync();
         }
     };
 
@@ -578,14 +571,7 @@ public class StyleEditPanelController implements FeatureVisualizationControlPane
                 nodeList.add(new StyleNodeUserObject(styleClass, defaultInstance, baseMGSClass));
             }
         }
-        Collections.sort(nodeList, new Comparator<StyleNodeUserObject>()
-        {
-            @Override
-            public int compare(StyleNodeUserObject o1, StyleNodeUserObject o2)
-            {
-                return o1.toString().compareTo(o2.toString());
-            }
-        });
+        Collections.sort(nodeList, (o1, o2) -> o1.toString().compareTo(o2.toString()));
         return nodeList;
     }
 
@@ -596,14 +582,7 @@ public class StyleEditPanelController implements FeatureVisualizationControlPane
      */
     private void fireLockFromChanges(final boolean enable)
     {
-        myChangeSupport.notifyListeners(new Callback<StyleEditPanelController.StyleEditPanelControllerListener>()
-        {
-            @Override
-            public void notify(StyleEditPanelControllerListener listener)
-            {
-                listener.lockFromChanges(enable);
-            }
-        }, new EventQueueExecutor());
+        myChangeSupport.notifyListeners(listener -> listener.lockFromChanges(enable), new EventQueueExecutor());
     }
 
     /**
@@ -612,14 +591,7 @@ public class StyleEditPanelController implements FeatureVisualizationControlPane
      */
     private void fireRefreshDisplay()
     {
-        myChangeSupport.notifyListeners(new Callback<StyleEditPanelController.StyleEditPanelControllerListener>()
-        {
-            @Override
-            public void notify(StyleEditPanelControllerListener listener)
-            {
-                listener.refreshDisplay();
-            }
-        }, new EventQueueExecutor());
+        myChangeSupport.notifyListeners(listener -> listener.refreshDisplay(), new EventQueueExecutor());
     }
 
     /**
@@ -631,14 +603,7 @@ public class StyleEditPanelController implements FeatureVisualizationControlPane
     private void fireStyleEditSelectionChanged(final StyleNodeUserObject styleToEdit,
             final FeatureVisualizationControlPanel editorPanel)
     {
-        myChangeSupport.notifyListeners(new Callback<StyleEditPanelController.StyleEditPanelControllerListener>()
-        {
-            @Override
-            public void notify(StyleEditPanelControllerListener listener)
-            {
-                listener.styleEditSelectionChanged(styleToEdit, editorPanel);
-            }
-        }, new EventQueueExecutor());
+        myChangeSupport.notifyListeners(listener -> listener.styleEditSelectionChanged(styleToEdit, editorPanel), new EventQueueExecutor());
     }
 
     /**

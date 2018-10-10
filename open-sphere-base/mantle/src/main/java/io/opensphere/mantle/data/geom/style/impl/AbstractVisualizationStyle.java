@@ -7,7 +7,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import io.opensphere.core.Toolbox;
-import io.opensphere.core.util.ChangeSupport;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
@@ -263,14 +262,7 @@ public abstract class AbstractVisualizationStyle implements MutableVisualization
                 changedSet, source);
         if (!Utilities.sameInstance(NO_EVENT_SOURCE, source))
         {
-            myParameterChangeSupport.notifyListeners(new ChangeSupport.Callback<VisualizationStyleParameterChangeListener>()
-            {
-                @Override
-                public void notify(VisualizationStyleParameterChangeListener listener)
-                {
-                    listener.styleParametersChanged(event);
-                }
-            }, ourExecutor);
+            myParameterChangeSupport.notifyListeners(listener -> listener.styleParametersChanged(event), ourExecutor);
         }
     }
 

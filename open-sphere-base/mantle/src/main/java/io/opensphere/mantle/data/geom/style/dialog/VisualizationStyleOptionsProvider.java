@@ -15,7 +15,6 @@ import javax.swing.SwingUtilities;
 
 import io.opensphere.core.control.ui.ToolbarManager;
 import io.opensphere.core.options.impl.AbstractPreferencesOptionsProvider;
-import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
@@ -51,16 +50,12 @@ public class VisualizationStyleOptionsProvider extends AbstractPreferencesOption
     /**
      * Listener for showIconButtonText preference updates.
      */
-    private final PreferenceChangeListener myTextListener = new PreferenceChangeListener()
+    private final PreferenceChangeListener myTextListener = evt ->
     {
-        @Override
-        public void preferenceChange(PreferenceChangeEvent evt)
+        myShowToolbarLabels = evt.getValueAsBoolean(!myShowToolbarLabels);
+        if (myShowToolbarLabelsCheckBox != null)
         {
-            myShowToolbarLabels = evt.getValueAsBoolean(!myShowToolbarLabels);
-            if (myShowToolbarLabelsCheckBox != null)
-            {
-                myShowToolbarLabelsCheckBox.setSelected(myShowToolbarLabels);
-            }
+            myShowToolbarLabelsCheckBox.setSelected(myShowToolbarLabels);
         }
     };
 

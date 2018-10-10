@@ -19,7 +19,6 @@ import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.order.OrderParticipantKey;
 import io.opensphere.core.util.ChangeListener;
-import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.ToStringHelper;
@@ -207,15 +206,11 @@ public class DefaultDataTypeInfo implements DataTypeInfo
         // Set to default value
         setBasicVisualizationInfo(null);
 
-        myStreamingChangeListener = new ChangeListener<>()
+        myStreamingChangeListener = (observable, oldValue, newValue) ->
         {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+            if (newValue.booleanValue())
             {
-                if (newValue.booleanValue())
-                {
-                    addTag("streaming", DefaultDataTypeInfo.this);
-                }
+                addTag("streaming", DefaultDataTypeInfo.this);
             }
         };
         myStreamingSupport.streamingEnabledProperty().addListener(myStreamingChangeListener);

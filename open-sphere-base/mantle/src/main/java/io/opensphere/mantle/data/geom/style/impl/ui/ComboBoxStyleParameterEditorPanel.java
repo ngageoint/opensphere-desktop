@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -141,26 +140,22 @@ public class ComboBoxStyleParameterEditorPanel extends AbstractStyleParameterEdi
             choiceToProxyMap.put(o, proxy);
             result.add(proxy);
         }
-        Collections.sort(result, new Comparator<>()
+        Collections.sort(result, (o1, o2) ->
         {
-            @Override
-            public int compare(Object o1, Object o2)
+            if (numericChoices)
             {
-                if (numericChoices)
+                try
                 {
-                    try
-                    {
-                        double v1 = o1 instanceof Number ? ((Number)o1).doubleValue() : Double.parseDouble(o1.toString());
-                        double v2 = o2 instanceof Number ? ((Number)o2).doubleValue() : Double.parseDouble(o2.toString());
-                        return Double.compare(v1, v2);
-                    }
-                    catch (NumberFormatException e)
-                    {
-                        return o1.toString().compareTo(o2.toString());
-                    }
+                    double v1 = o1 instanceof Number ? ((Number)o1).doubleValue() : Double.parseDouble(o1.toString());
+                    double v2 = o2 instanceof Number ? ((Number)o2).doubleValue() : Double.parseDouble(o2.toString());
+                    return Double.compare(v1, v2);
                 }
-                return o1.toString().compareTo(o2.toString());
+                catch (NumberFormatException e)
+                {
+                    return o1.toString().compareTo(o2.toString());
+                }
             }
+            return o1.toString().compareTo(o2.toString());
         });
 
         if (noneOption)

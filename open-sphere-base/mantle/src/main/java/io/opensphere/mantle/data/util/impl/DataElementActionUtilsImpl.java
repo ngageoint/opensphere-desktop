@@ -121,15 +121,8 @@ public class DataElementActionUtilsImpl implements DataElementActionUtils
     {
         if (PurgeConfirmHelper.confirmProceedWithPurge(myToolbox, confirmDialogParentComponent, this))
         {
-            Thread t = new Thread(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    MantleToolboxUtils.getMantleToolbox(myToolbox).getDataTypeController().removeDataElements(dtiHint,
-                            idsToPurge);
-                }
-            });
+            Thread t = new Thread(() -> MantleToolboxUtils.getMantleToolbox(myToolbox).getDataTypeController().removeDataElements(dtiHint,
+                    idsToPurge));
             t.start();
         }
     }

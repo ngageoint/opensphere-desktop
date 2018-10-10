@@ -194,25 +194,17 @@ class DataGroupActivationController implements DataGroupActivationManager
         final DataGroupInfoActiveSet initialSet = myActiveSetConfig.getSetByName(USER_ACTIVATED_SET_NAME);
         if (initialSet != null && !initialSet.getGroupEntries().isEmpty())
         {
-            myLifeCycleEventListener = new EventListener<>()
+            myLifeCycleEventListener = event ->
             {
-                @Override
-                public void notify(ApplicationLifecycleEvent event)
+                if (event.getStage() == ApplicationLifecycleEvent.Stage.PLUGINS_INITIALIZED)
                 {
-                    if (event.getStage() == ApplicationLifecycleEvent.Stage.PLUGINS_INITIALIZED)
+                    Thread t = new Thread(() ->
                     {
-                        Thread t = new Thread(new Runnable()
-                        {
-                            @Override
-                            public void run()
-                            {
-                                List<String> groupIds = initialSet.getGroupIds();
-                                setGroupsActiveById(groupIds, true);
-                                myInitialActivationPerformed.set(true);
-                            }
-                        });
-                        t.start();
-                    }
+                        List<String> groupIds = initialSet.getGroupIds();
+                        setGroupsActiveById(groupIds, true);
+                        myInitialActivationPerformed.set(true);
+                    });
+                    t.start();
                 }
             };
             myController.getToolbox().getEventManager().subscribe(ApplicationLifecycleEvent.class, myLifeCycleEventListener);

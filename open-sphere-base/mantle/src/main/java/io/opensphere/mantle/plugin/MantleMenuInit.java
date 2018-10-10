@@ -2,7 +2,6 @@ package io.opensphere.mantle.plugin;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JMenuItem;
@@ -41,17 +40,13 @@ class MantleMenuInit
     {
         assert EventQueue.isDispatchThread();
         JMenuItem deCacheSummaryMI = new JMenuItem("Data Element Cache Summary");
-        deCacheSummaryMI.addActionListener(new ActionListener()
+        deCacheSummaryMI.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                String cacheSummary = MantleToolboxUtils.getMantleToolbox(myToolbox).getDataElementCache().toString();
-                TextViewDialog dvd = new TextViewDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
-                        "Data Element Cache Summary", cacheSummary, false, myToolbox.getPreferencesRegistry());
-                dvd.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
-                dvd.setVisible(true);
-            }
+            String cacheSummary = MantleToolboxUtils.getMantleToolbox(myToolbox).getDataElementCache().toString();
+            TextViewDialog dvd = new TextViewDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
+                    "Data Element Cache Summary", cacheSummary, false, myToolbox.getPreferencesRegistry());
+            dvd.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
+            dvd.setVisible(true);
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.DEBUG_MENU)
                 .add(deCacheSummaryMI);
@@ -64,18 +59,14 @@ class MantleMenuInit
     {
         assert EventQueue.isDispatchThread();
         JMenuItem iconManagerMI = new JMenuItem("Dynamic Enum Registry Contents");
-        iconManagerMI.addActionListener(new ActionListener()
+        iconManagerMI.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                TextViewDialog dvd = new TextViewDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
-                        "Dynamic Enumeration Registry Summary",
-                        MantleToolboxUtils.getMantleToolbox(myToolbox).getDynamicEnumerationRegistry().toString(), false,
-                        myToolbox.getPreferencesRegistry());
-                dvd.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
-                dvd.setVisible(true);
-            }
+            TextViewDialog dvd = new TextViewDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
+                    "Dynamic Enumeration Registry Summary",
+                    MantleToolboxUtils.getMantleToolbox(myToolbox).getDynamicEnumerationRegistry().toString(), false,
+                    myToolbox.getPreferencesRegistry());
+            dvd.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
+            dvd.setVisible(true);
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.DEBUG_MENU)
                 .add(iconManagerMI);
@@ -89,16 +80,12 @@ class MantleMenuInit
         assert EventQueue.isDispatchThread();
         JMenuItem iconManagerMI = new JMenuItem("Icon Manager");
         iconManagerMI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
-        iconManagerMI.addActionListener(new ActionListener()
+        iconManagerMI.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                Quantify.collectMetric("mist3d.menu-bar.tools.icon-manager");
-                IconProjDialog internIconManager = new IconProjDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
-                        myToolbox, false, true);
-                internIconManager.setVisible(true);
-            }
+            Quantify.collectMetric("mist3d.menu-bar.tools.icon-manager");
+            IconProjDialog internIconManager = new IconProjDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
+                    myToolbox, false, true);
+            internIconManager.setVisible(true);
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.TOOLS_MENU)
                 .add(iconManagerMI);
@@ -114,14 +101,10 @@ class MantleMenuInit
                 myToolbox.getUIRegistry().getMainFrameProvider().get(), myToolbox);
         JMenuItem visStyleControlMI = new JMenuItem(VisualizationStyleControlDialog.TITLE);
         visStyleControlMI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
-        visStyleControlMI.addActionListener(new ActionListener()
+        visStyleControlMI.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                visualizationStyleControlDialog.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
-                visualizationStyleControlDialog.setVisible(true);
-            }
+            visualizationStyleControlDialog.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
+            visualizationStyleControlDialog.setVisible(true);
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.TOOLS_MENU)
                 .add(visStyleControlMI);

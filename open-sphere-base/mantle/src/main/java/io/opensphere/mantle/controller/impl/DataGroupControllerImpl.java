@@ -1,7 +1,5 @@
 package io.opensphere.mantle.controller.impl;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -597,17 +595,13 @@ public class DataGroupControllerImpl implements DataGroupController, EventListen
     private void createAndInstallControllerPrintMenuItem()
     {
         JMenuItem deCacheSummaryMI = new JMenuItem("DataGroupController - Print Summary");
-        deCacheSummaryMI.addActionListener(new ActionListener()
+        deCacheSummaryMI.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                TextViewDialog dvd = new TextViewDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
-                        "DataGroupController Summary", DataGroupControllerImpl.this.toString(), false,
-                        myToolbox.getPreferencesRegistry());
-                dvd.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
-                dvd.setVisible(true);
-            }
+            TextViewDialog dvd = new TextViewDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
+                    "DataGroupController Summary", DataGroupControllerImpl.this.toString(), false,
+                    myToolbox.getPreferencesRegistry());
+            dvd.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
+            dvd.setVisible(true);
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.DEBUG_MENU)
                 .add(deCacheSummaryMI);

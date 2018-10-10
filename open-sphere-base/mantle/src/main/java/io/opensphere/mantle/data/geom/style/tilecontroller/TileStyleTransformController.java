@@ -151,14 +151,7 @@ public class TileStyleTransformController implements VisualizationStyleRegistryC
      */
     private EventListener<AbstractDataGroupInfoChangeEvent> createDGIChangeListener()
     {
-        EventListener<AbstractDataGroupInfoChangeEvent> listener = new EventListener<>()
-        {
-            @Override
-            public void notify(AbstractDataGroupInfoChangeEvent event)
-            {
-                handleDGIChangeEvent(event);
-            }
-        };
+        EventListener<AbstractDataGroupInfoChangeEvent> listener = event -> handleDGIChangeEvent(event);
         return listener;
     }
 
@@ -312,16 +305,12 @@ public class TileStyleTransformController implements VisualizationStyleRegistryC
                     final DataTypeInfo dti = getDataTypeInfo(MantleToolboxUtils.getMantleToolbox(myToolbox), dtiKey);
                     if (dti != null)
                     {
-                        myExecutor.execute(new Runnable()
+                        myExecutor.execute(() ->
                         {
-                            @Override
-                            public void run()
+                            if (dti.getMapVisualizationInfo() != null
+                                    && dti.getMapVisualizationInfo().getTileRenderProperties() != null)
                             {
-                                if (dti.getMapVisualizationInfo() != null
-                                        && dti.getMapVisualizationInfo().getTileRenderProperties() != null)
-                                {
-                                    tileStyle.updateTileRenderProperties(dti.getMapVisualizationInfo().getTileRenderProperties());
-                                }
+                                tileStyle.updateTileRenderProperties(dti.getMapVisualizationInfo().getTileRenderProperties());
                             }
                         });
                     }

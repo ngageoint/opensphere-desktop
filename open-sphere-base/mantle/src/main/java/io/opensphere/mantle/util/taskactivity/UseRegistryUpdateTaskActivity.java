@@ -79,23 +79,19 @@ public class UseRegistryUpdateTaskActivity extends TaskActivity
      */
     private void update()
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            boolean hasUpdates = false;
+            myUpdateSetLock.lock();
+            try
             {
-                boolean hasUpdates = false;
-                myUpdateSetLock.lock();
-                try
-                {
-                    hasUpdates = !myUpdateSet.isEmpty();
-                }
-                finally
-                {
-                    myUpdateSetLock.unlock();
-                }
-                setActive(hasUpdates);
+                hasUpdates = !myUpdateSet.isEmpty();
             }
+            finally
+            {
+                myUpdateSetLock.unlock();
+            }
+            setActive(hasUpdates);
         });
     }
 }

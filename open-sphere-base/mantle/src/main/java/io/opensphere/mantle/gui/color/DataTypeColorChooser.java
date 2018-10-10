@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.function.Consumer;
 
 import javax.swing.BorderFactory;
@@ -16,8 +14,6 @@ import javax.swing.JPanel;
 
 import com.bric.swing.ColorPicker;
 
-import io.opensphere.core.util.ChangeListener;
-import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.ObservableValueListenerHandle;
 import io.opensphere.core.util.Service;
 import io.opensphere.core.util.swing.ButtonPanel;
@@ -62,27 +58,13 @@ public final class DataTypeColorChooser extends SplitButton implements Service
         super(null, null);
         myParent = parent;
         myModel = model;
-        myModelListenerHandle = new ObservableValueListenerHandle<>(model, new ChangeListener<Color>()
-        {
-            @Override
-            public void changed(ObservableValue<? extends Color> observable, Color oldValue, Color newValue)
-            {
-                handleModelChange();
-            }
-        });
+        myModelListenerHandle = new ObservableValueListenerHandle<>(model, (observable, oldValue, newValue) -> handleModelChange());
         myIcon = new ColorCircleIcon(model.get(), 12);
 
         setIcon(myIcon);
         add(createQuickSelectionPanel());
         setToolTipText("Set Layer Color");
-        addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                showPicker();
-            }
-        });
+        addActionListener(e -> showPicker());
     }
 
     @Override
@@ -114,14 +96,7 @@ public final class DataTypeColorChooser extends SplitButton implements Service
      */
     private JPanel createQuickSelectionPanel()
     {
-        Consumer<Color> modelUpdator = new Consumer<>()
-        {
-            @Override
-            public void accept(Color color)
-            {
-                myModel.set(color);
-            }
-        };
+        Consumer<Color> modelUpdator = color -> myModel.set(color);
 
         JPanel panel = new JPanel(new BorderLayout());
         Box buttonBox = Box.createHorizontalBox();
@@ -147,15 +122,11 @@ public final class DataTypeColorChooser extends SplitButton implements Service
         button.setFocusPainted(false);
         button.setToolTipText("Reset to default color");
         button.setMargin(margin);
-        button.addActionListener(new ActionListener()
+        button.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            if (myDefaultColor != null)
             {
-                if (myDefaultColor != null)
-                {
-                    consumer.accept(myDefaultColor);
-                }
+                consumer.accept(myDefaultColor);
             }
         });
         return button;
@@ -169,16 +140,12 @@ public final class DataTypeColorChooser extends SplitButton implements Service
      */
     private SmallColorPalette createPalettePanel(final Consumer<Color> consumer)
     {
-        SmallColorPalette panel = new SmallColorPalette(new ActionListener()
+        SmallColorPalette panel = new SmallColorPalette(evt ->
         {
-            @Override
-            public void actionPerformed(ActionEvent evt)
+            JButton button = (JButton)evt.getSource();
+            if (button.getIcon() instanceof ColorIcon)
             {
-                JButton button = (JButton)evt.getSource();
-                if (button.getIcon() instanceof ColorIcon)
-                {
-                    consumer.accept(((ColorIcon)button.getIcon()).getColor());
-                }
+                consumer.accept(((ColorIcon)button.getIcon()).getColor());
             }
         });
         return panel;
@@ -199,14 +166,7 @@ public final class DataTypeColorChooser extends SplitButton implements Service
         final ColorPicker picker = new ColorPicker(true, true);
         picker.setColor(myIcon.getColor());
 
-        Consumer<Color> pickerUpdator = new Consumer<>()
-        {
-            @Override
-            public void accept(Color color)
-            {
-                picker.setColor(color);
-            }
-        };
+        Consumer<Color> pickerUpdator = color -> picker.setColor(color);
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.add(createPalettePanel(pickerUpdator));

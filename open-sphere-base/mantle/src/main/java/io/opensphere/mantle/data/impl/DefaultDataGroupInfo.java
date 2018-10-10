@@ -691,17 +691,13 @@ public class DefaultDataGroupInfo implements DataGroupInfo
     public Set<MapVisualizationType> getMemberMapVisualizationTypes(boolean recursive)
     {
         final Set<MapVisualizationType> resultSet = New.set();
-        findMembers(new Predicate<DataTypeInfo>()
+        findMembers(value ->
         {
-            @Override
-            public boolean test(DataTypeInfo value)
+            if (value.getMapVisualizationInfo() != null)
             {
-                if (value.getMapVisualizationInfo() != null)
-                {
-                    resultSet.add(value.getMapVisualizationInfo().getVisualizationType());
-                }
-                return false;
+                resultSet.add(value.getMapVisualizationInfo().getVisualizationType());
             }
+            return false;
         }, recursive, false);
         return resultSet;
     }

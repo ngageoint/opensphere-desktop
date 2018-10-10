@@ -79,14 +79,10 @@ public class CheckBoxFloatSliderStyleParameterEditorPanel extends FloatSliderSty
         if (val != myCheckBox.isSelected())
         {
             final boolean fVal = val;
-            EventQueueUtilities.runOnEDT(new Runnable()
+            EventQueueUtilities.runOnEDT(() ->
             {
-                @Override
-                public void run()
-                {
-                    myCheckBox.setSelected(fVal);
-                    adjustSliderVisibility();
-                }
+                myCheckBox.setSelected(fVal);
+                adjustSliderVisibility();
             });
         }
     }
