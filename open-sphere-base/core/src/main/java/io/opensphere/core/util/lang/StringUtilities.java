@@ -1086,32 +1086,32 @@ public final class StringUtilities
         return text != null ? SGML_PATTERN.matcher(text).replaceAll("").replace("&nbsp;", " ") : null;
     }
 
-//    /**
-//     * Returns a String with all sgml or html tags removed.
-//     *
-//     * @param htmlText The text string to evaluate.
-//     * @return The String with all sgml or html tags removed
-//     */
-//    public static String removeHTML(String htmlText)
-//    {
-//        if (htmlText == null)
-//        {
-//            return null;
-//        }
-//
-//        String text;
-//        Html2Text parser = new Html2Text();
-//        try
-//        {
-//            parser.parse(htmlText);
-//            text = parser.getText();
-//        }
-//        catch (IOException e)
-//        {
-//            text = htmlText;
-//        }
-//        return text;
-//    }
+    //    /**
+    //     * Returns a String with all sgml or html tags removed.
+    //     *
+    //     * @param htmlText The text string to evaluate.
+    //     * @return The String with all sgml or html tags removed
+    //     */
+    //    public static String removeHTML(String htmlText)
+    //    {
+    //        if (htmlText == null)
+    //        {
+    //            return null;
+    //        }
+    //
+    //        String text;
+    //        Html2Text parser = new Html2Text();
+    //        try
+    //        {
+    //            parser.parse(htmlText);
+    //            text = parser.getText();
+    //        }
+    //        catch (IOException e)
+    //        {
+    //            text = htmlText;
+    //        }
+    //        return text;
+    //    }
 
     /**
      * Repeat a string some number of times.

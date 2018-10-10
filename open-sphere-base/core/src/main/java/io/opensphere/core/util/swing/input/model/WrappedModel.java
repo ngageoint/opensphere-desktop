@@ -53,7 +53,7 @@ public abstract class WrappedModel<T> extends StrongObservableValue<T> implement
 
         // Fire an additional event for listeners that need the event source
         myPropertyChangeListener
-                .stateChanged(new PropertyChangeEvent(observable, PropertyChangeEvent.Property.WRAPPED_VALUE_CHANGED));
+        .stateChanged(new PropertyChangeEvent(observable, PropertyChangeEvent.Property.WRAPPED_VALUE_CHANGED));
     };
 
     @Override
@@ -93,7 +93,7 @@ public abstract class WrappedModel<T> extends StrongObservableValue<T> implement
 
         Collection<ViewModel<?>> modelsToCheck = StreamUtilities.filter(myModels,
                 (Predicate<ViewModel<?>>)model -> model.isEnabled() && model.isVisible()
-                        && model.getValidationStatus() != ValidationStatus.VALID);
+                && model.getValidationStatus() != ValidationStatus.VALID);
 
         if (!modelsToCheck.isEmpty())
         {

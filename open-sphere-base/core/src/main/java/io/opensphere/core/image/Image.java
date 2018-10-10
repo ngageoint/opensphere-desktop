@@ -47,7 +47,7 @@ public abstract class Image implements Serializable, AutoCloseable
      * @throws IOException If there is an error reading from the input stream.
      */
     public static InputStream getDDSImageStream(InputStream in, String imageFormat, int contentLength, ImageMetrics metrics)
-        throws ImageFormatUnknownException, IOException
+            throws ImageFormatUnknownException, IOException
     {
         return IMAGE_FACTORY.getDDSImageStream(in, imageFormat, contentLength, metrics, EXECUTOR);
     }
@@ -94,7 +94,7 @@ public abstract class Image implements Serializable, AutoCloseable
      *             recognized.
      */
     public static Image read(InputStream stream, boolean ddsDesired, ImageMetrics metrics)
-        throws IOException, ImageFormatUnknownException
+            throws IOException, ImageFormatUnknownException
     {
         return read(stream, -1, Nulls.STRING, ddsDesired, false, metrics);
     }
@@ -137,7 +137,7 @@ public abstract class Image implements Serializable, AutoCloseable
      *             recognized.
      */
     public static Image read(InputStream stream, int contentLengthBytes, String contentType, ImageMetrics metrics)
-        throws ImageFormatUnknownException
+            throws ImageFormatUnknownException
     {
         return read(stream, contentLengthBytes, contentType, false, false, metrics);
     }
@@ -276,7 +276,7 @@ public abstract class Image implements Serializable, AutoCloseable
      * @throws IOException If an image input stream cannot be created.
      */
     protected void setInput(InputStream input, int estimatedStreamLengthBytes, boolean usePool)
-        throws ImageFormatUnknownException, IOException
+            throws ImageFormatUnknownException, IOException
     {
         setByteBuffer(new StreamReader(input, estimatedStreamLengthBytes).readStreamIntoBuffer(), usePool);
     }

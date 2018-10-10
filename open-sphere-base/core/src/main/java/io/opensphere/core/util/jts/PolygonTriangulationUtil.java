@@ -205,7 +205,7 @@ public final class PolygonTriangulationUtil
      * @param <T> The type of vertex this generator provides.
      */
     public abstract static class AbstractSimpleVertexGenerator<T extends TesseraVertex<? extends Position>>
-            implements VertexGenerator<T>
+    implements VertexGenerator<T>
     {
         /** The model center for the generated positions. */
         private final Vector3d myModelCenter;

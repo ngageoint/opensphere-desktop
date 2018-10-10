@@ -44,7 +44,7 @@ public abstract class MapManagerPreferenceHelper
                 myZoomListener);
 
         prefsRegistry.getPreferences(AdvancedMapOptionsProvider.class)
-                .addPreferenceChangeListener(AdvancedMapOptionsProvider.MODEL_DENSITY_KEY, myModelDensityListener);
+        .addPreferenceChangeListener(AdvancedMapOptionsProvider.MODEL_DENSITY_KEY, myModelDensityListener);
 
         myAdvancedOptionsProvider = new AdvancedMapOptionsProvider(prefsRegistry);
         myMapOptionsProvider.addSubTopic(myAdvancedOptionsProvider);
@@ -55,7 +55,7 @@ public abstract class MapManagerPreferenceHelper
     {
         myMapOptionsProvider.removeSubTopic(myAdvancedOptionsProvider);
         myPrefsRegistry.getPreferences(MapOptionsProvider.class)
-                .removePreferenceChangeListener(MapOptionsProvider.VIEW_ZOOM_RATE_KEY, myZoomListener);
+        .removePreferenceChangeListener(MapOptionsProvider.VIEW_ZOOM_RATE_KEY, myZoomListener);
     }
 
     /**

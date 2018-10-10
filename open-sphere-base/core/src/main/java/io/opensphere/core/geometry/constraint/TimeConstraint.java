@@ -217,7 +217,7 @@ public class TimeConstraint
         return isNegative() ^ (span.isTimeless() || (span.isUnboundedStart() ? span.getEnd() > myMinimumTime
                 : span.isUnboundedEnd() ? span.getStart() < myMaximumTime
                         : span.getStart() < myMaximumTime && span.getStart() >= myMinimumTime
-                                || myMinimumTime < span.getEnd() && myMinimumTime >= span.getStart()));
+                        || myMinimumTime < span.getEnd() && myMinimumTime >= span.getStart()));
     }
 
     @Override

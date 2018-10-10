@@ -888,27 +888,27 @@ public abstract class AbstractProcessor<E extends Geometry> implements Renderabl
         Collection<? extends E> objectsAfterMostRecent = myHasMostRecent
                 ? myMostRecentFilter.filterMostRecent(objects, getTimeManager(), true) : objects;
 
-        List<E> onscreen = New.list(objectsAfterMostRecent.size());
-        for (E geo : objectsAfterMostRecent)
-        {
-            if (isOnScreen(geo, true))
-            {
-                onscreen.add(geo);
-            }
-        }
+                List<E> onscreen = New.list(objectsAfterMostRecent.size());
+                for (E geo : objectsAfterMostRecent)
+                {
+                    if (isOnScreen(geo, true))
+                    {
+                        onscreen.add(geo);
+                    }
+                }
 
-        Collections.sort(onscreen, RENDER_ORDER_COMPARATOR);
+                Collections.sort(onscreen, RENDER_ORDER_COMPARATOR);
 
-        if (LOGGER.isTraceEnabled())
-        {
-            LOGGER.trace("Onscreen: " + onscreen);
+                if (LOGGER.isTraceEnabled())
+                {
+                    LOGGER.trace("Onscreen: " + onscreen);
 
-            Collection<? extends E> offscreen = New.set(objects);
-            offscreen.removeAll(onscreen);
-            LOGGER.trace("Offscreen: " + offscreen);
-        }
+                    Collection<? extends E> offscreen = New.set(objects);
+                    offscreen.removeAll(onscreen);
+                    LOGGER.trace("Offscreen: " + offscreen);
+                }
 
-        return onscreen;
+                return onscreen;
     }
 
     /**

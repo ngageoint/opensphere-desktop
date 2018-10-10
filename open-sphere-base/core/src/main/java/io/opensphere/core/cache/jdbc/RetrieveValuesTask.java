@@ -105,7 +105,7 @@ public class RetrieveValuesTask extends DatabaseTask implements StatementUser<Vo
      * @throws CacheException If there is a database error.
      */
     protected void doGetValues(Connection conn, Statement stmt, int groupId, int[] dataIds, final Collection<String> columnNames)
-        throws CacheException
+            throws CacheException
     {
         final PropertyDescriptor<?>[] props = New.array(getResultMap().getPropertyDescriptors(), PropertyDescriptor.class);
 

@@ -258,25 +258,25 @@ public abstract class GeometryGroupProcessor<E extends AbstractGeometryGroup> ex
         List<E> ready = new ArrayList<>();
         List<E> awaiting = new ArrayList<>();
         GEOMETRY:
-        for (E group : geoms)
-        {
-            ModelGeometryDistributor modDistrib = myDistributors.get(group);
-            if (modDistrib != null)
+            for (E group : geoms)
             {
-                GeometryDistributor distrib = modDistrib.getDistributor();
-                for (RenderableGeometryProcessor<? extends Geometry> processor : distrib.getRenderableGeometryProcessors())
+                ModelGeometryDistributor modDistrib = myDistributors.get(group);
+                if (modDistrib != null)
                 {
-                    if (!processor.allGeometriesReady())
+                    GeometryDistributor distrib = modDistrib.getDistributor();
+                    for (RenderableGeometryProcessor<? extends Geometry> processor : distrib.getRenderableGeometryProcessors())
                     {
-                        awaiting.add(group);
-                        continue GEOMETRY;
+                        if (!processor.allGeometriesReady())
+                        {
+                            awaiting.add(group);
+                            continue GEOMETRY;
+                        }
                     }
                 }
-            }
 
-            // All of my sub-geometries are ready, so I am ready.
-            ready.add(group);
-        }
+                // All of my sub-geometries are ready, so I am ready.
+                ready.add(group);
+            }
 
         if (!ready.isEmpty())
         {

@@ -232,7 +232,7 @@ public class WebPanel extends JFXPanel
         setScene(new Scene(myWebView));
 
         myWebView.getEngine().getLoadWorker().stateProperty()
-                .addListener((observable, oldValue, newValue) -> handleStateChange(newValue));
+        .addListener((observable, oldValue, newValue) -> handleStateChange(newValue));
     }
 
     /**

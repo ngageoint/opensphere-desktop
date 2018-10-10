@@ -357,28 +357,28 @@ public class TriangleGlobeModel extends GeographicProjectionModel
                     Collection<? extends GeographicPolygon> modifiedLocations = event.getChangedRegions() == null
                             ? provider.getRegions() : event.getChangedRegions();
 
-                    for (GeographicPolygon region : modifiedLocations)
-                    {
-                        if (!getCelestialBody().getElevationManager().isOccluded(provider, region))
-                        {
-                            foundNonOccludedRegion = true;
-                            combinedBounds.add(region.getBoundingBox());
-                            // TODO Check to make sure this doesn't do anything
-                            // to petrified regions.
-                            myNorthBottom.modifyElevation(region, false);
-                            mySouthBottom.modifyElevation(region, false);
-                        }
-                    }
+                            for (GeographicPolygon region : modifiedLocations)
+                            {
+                                if (!getCelestialBody().getElevationManager().isOccluded(provider, region))
+                                {
+                                    foundNonOccludedRegion = true;
+                                    combinedBounds.add(region.getBoundingBox());
+                                    // TODO Check to make sure this doesn't do anything
+                                    // to petrified regions.
+                                    myNorthBottom.modifyElevation(region, false);
+                                    mySouthBottom.modifyElevation(region, false);
+                                }
+                            }
 
-                    // If the the new elevations are significantly closer to or
-                    // farther from the viewer, splitting and merging may be
-                    // required.
-                    if (foundNonOccludedRegion)
-                    {
-                        combinedBounds.addAll(doSplitsAndMerges(null));
-                    }
-                    affectedBounds = combinedBounds;
-                    break;
+                            // If the the new elevations are significantly closer to or
+                            // farther from the viewer, splitting and merging may be
+                            // required.
+                            if (foundNonOccludedRegion)
+                            {
+                                combinedBounds.addAll(doSplitsAndMerges(null));
+                            }
+                            affectedBounds = combinedBounds;
+                            break;
                 default:
                     throw new UnexpectedEnumException(event.getChangeType());
             }

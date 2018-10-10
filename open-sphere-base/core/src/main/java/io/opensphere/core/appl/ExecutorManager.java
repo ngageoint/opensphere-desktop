@@ -230,8 +230,8 @@ class ExecutorManager
         int threadCount = Math.max(Runtime.getRuntime().availableProcessors() - 2, 1);
         return new FixedThreadPoolExecutor(threadCount, myPipelineThreadFactory,
                 SuppressableRejectedExecutionHandler.getInstance());
-//        final long timeLimitMilliseconds = 100L;
-//        ScheduledExecutorService pipelineExecutor = new InterruptingExecutor(exec, timeLimitMilliseconds);
+        //        final long timeLimitMilliseconds = 100L;
+        //        ScheduledExecutorService pipelineExecutor = new InterruptingExecutor(exec, timeLimitMilliseconds);
     }
 
     /**

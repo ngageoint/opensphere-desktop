@@ -83,7 +83,7 @@ class AlertViewerController extends EventListenerService
             button.getDialog().setVisible(true);
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.VIEW_MENU)
-                .add(menuItem);
+        .add(menuItem);
     }
 
     /**

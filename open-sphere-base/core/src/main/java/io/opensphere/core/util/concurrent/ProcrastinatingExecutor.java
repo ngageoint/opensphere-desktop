@@ -95,8 +95,8 @@ public class ProcrastinatingExecutor implements Executor
     {
         myExecutor = executor instanceof ProtectedScheduledExecutorService
                 ? ((ProtectedScheduledExecutorService)executor).getService() : executor;
-        myMinDelayNanoseconds = 0L;
-        myMaxDelayNanoseconds = -1L;
+                myMinDelayNanoseconds = 0L;
+                myMaxDelayNanoseconds = -1L;
     }
 
     /**
@@ -116,8 +116,8 @@ public class ProcrastinatingExecutor implements Executor
 
         myExecutor = executor instanceof ProtectedScheduledExecutorService
                 ? ((ProtectedScheduledExecutorService)executor).getService() : executor;
-        myMinDelayNanoseconds = (long)minDelayMilliseconds * Constants.NANO_PER_MILLI;
-        myMaxDelayNanoseconds = -1L;
+                myMinDelayNanoseconds = (long)minDelayMilliseconds * Constants.NANO_PER_MILLI;
+                myMaxDelayNanoseconds = -1L;
     }
 
     /**
@@ -133,7 +133,7 @@ public class ProcrastinatingExecutor implements Executor
      * @throws IllegalArgumentException If the minDelayMilliseconds is &lt; 0.
      */
     public ProcrastinatingExecutor(ScheduledExecutorService executor, int minDelayMilliseconds, int maxDelayMilliseconds)
-        throws IllegalArgumentException
+            throws IllegalArgumentException
     {
         if (minDelayMilliseconds < 0)
         {
@@ -145,8 +145,8 @@ public class ProcrastinatingExecutor implements Executor
         }
         myExecutor = executor instanceof ProtectedScheduledExecutorService
                 ? ((ProtectedScheduledExecutorService)executor).getService() : executor;
-        myMinDelayNanoseconds = (long)minDelayMilliseconds * Constants.NANO_PER_MILLI;
-        myMaxDelayNanoseconds = (long)maxDelayMilliseconds * Constants.NANO_PER_MILLI;
+                myMinDelayNanoseconds = (long)minDelayMilliseconds * Constants.NANO_PER_MILLI;
+                myMaxDelayNanoseconds = (long)maxDelayMilliseconds * Constants.NANO_PER_MILLI;
     }
 
     /**
@@ -179,7 +179,7 @@ public class ProcrastinatingExecutor implements Executor
      * @throws IllegalArgumentException If the minDelayMilliseconds is &lt; 0.
      */
     public ProcrastinatingExecutor(String executorThreadName, int minDelayMilliseconds, int maxDelayMilliseconds)
-        throws IllegalArgumentException
+            throws IllegalArgumentException
     {
         this(Executors.newScheduledThreadPool(1, new NamedThreadFactory(executorThreadName)), minDelayMilliseconds,
                 maxDelayMilliseconds);
@@ -371,7 +371,7 @@ public class ProcrastinatingExecutor implements Executor
 
         @Override
         public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit)
-            throws InterruptedException
+                throws InterruptedException
         {
             throw new UnsupportedOperationException();
         }
@@ -384,7 +384,7 @@ public class ProcrastinatingExecutor implements Executor
 
         @Override
         public <T> T invokeAny(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit)
-            throws InterruptedException, ExecutionException, TimeoutException
+                throws InterruptedException, ExecutionException, TimeoutException
         {
             throw new UnsupportedOperationException();
         }

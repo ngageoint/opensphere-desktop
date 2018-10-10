@@ -114,7 +114,7 @@ class AlertViewerDialog extends JDialog
 
         TableColumn<Alert, io.opensphere.core.dialog.alertviewer.event.Type> severityCol = new TableColumn<>();
         severityCol.setCellValueFactory(
-            v -> new ReadOnlyObjectWrapper<>(v.getValue().getLevel()));
+                v -> new ReadOnlyObjectWrapper<>(v.getValue().getLevel()));
         severityCol.setCellFactory(v -> new SeverityCell());
         severityCol.setPrefWidth(0);
 

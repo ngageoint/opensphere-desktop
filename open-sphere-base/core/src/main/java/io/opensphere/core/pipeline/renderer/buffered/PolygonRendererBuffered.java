@@ -91,7 +91,7 @@ public class PolygonRendererBuffered extends AbstractRenderer<PolygonGeometry> i
                     isDebugFeatureOn("TessellationLines"));
 
             myFadedRenderingHelper.renderEachTimeSpan(rc, renderData.getGroupTimeSpan(),
-                () -> doRender(rc, input, rejected, pickManager, dataRetriever, renderData));
+                    () -> doRender(rc, input, rejected, pickManager, dataRetriever, renderData));
         }
         finally
         {
@@ -231,7 +231,7 @@ public class PolygonRendererBuffered extends AbstractRenderer<PolygonGeometry> i
 
                     lastWidth = GLUtilities.glLineWidth(rc.getGL(),
                             rc.getRenderMode() == RenderMode.PICK ? renderProps.getWidth() + 1f : renderProps.getWidth(),
-                            lastWidth);
+                                    lastWidth);
 
                     lastStipple = GL2Utilities.glLineStipple(rc.getGL().getGL2(), rc.getRenderMode(), renderProps.getStipple(),
                             lastStipple);

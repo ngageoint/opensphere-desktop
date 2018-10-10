@@ -192,8 +192,8 @@ public abstract class AbstractMetricsProvider implements MetricsProvider
     {
         StringBuilder sb = new StringBuilder(64);
         sb.append(getClass().getSimpleName()).append(": TOPIC[").append(getTopic()).append("] SubTopic[").append(getSubTopic())
-                .append("] Label[").append(getLabel()).append("] Value[").append(getValue()).append("] Updated[")
-                .append(getLastUpdatedTime()).append(']');
+        .append("] Label[").append(getLabel()).append("] Value[").append(getValue()).append("] Updated[")
+        .append(getLastUpdatedTime()).append(']');
         return sb.toString();
     }
 

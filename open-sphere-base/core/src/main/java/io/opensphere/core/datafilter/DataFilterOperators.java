@@ -63,11 +63,11 @@ public interface DataFilterOperators
 
         /** The values that are supported for numerics. */
         public static final Conditional[] NUMBER_VALUES = new Conditional[]
-            { EQ, NEQ, LT, LTE, GT, GTE, EMPTY, NOT_EMPTY, IN_LIST, NOT_IN_LIST, BETWEEN };
+                { EQ, NEQ, LT, LTE, GT, GTE, EMPTY, NOT_EMPTY, IN_LIST, NOT_IN_LIST, BETWEEN };
 
         /** The values that are supported for strings. */
         public static final Conditional[] STRING_VALUES = new Conditional[]
-            { EQ, NEQ, LT, LTE, GT, GTE, LIKE, NOT_LIKE, EMPTY, NOT_EMPTY, IN_LIST, NOT_IN_LIST, LIKE_LIST, NOT_LIKE_LIST, BETWEEN, CONTAINS };
+                { EQ, NEQ, LT, LTE, GT, GTE, LIKE, NOT_LIKE, EMPTY, NOT_EMPTY, IN_LIST, NOT_IN_LIST, LIKE_LIST, NOT_LIKE_LIST, BETWEEN, CONTAINS };
 
         /** The symbol. */
         private final String mySymbol;

@@ -122,15 +122,15 @@ public class CreatePasswordPanel extends JPanel implements Validatable
         // @formatter:off
         StringBuffer strBuf = new StringBuffer(278);
         strBuf
-                .append("Your password must be a minimum of ")
-                .append(myMinPasswordLength)
-                .append(" characters and meet any ")
-                .append(myMinPasswordCharacterCategories)
-                .append(" of the following 4 requirements:\n"
-                        + "      -Contain at least one symbol\n"
-                        + "      -Contain at least one number [0-9]\n"
-                        + "      -Contain at least one lower case letter [a-z]\n"
-                        + "      -Contain at least one upper case letter [A-Z]");
+        .append("Your password must be a minimum of ")
+        .append(myMinPasswordLength)
+        .append(" characters and meet any ")
+        .append(myMinPasswordCharacterCategories)
+        .append(" of the following 4 requirements:\n"
+                + "      -Contain at least one symbol\n"
+                + "      -Contain at least one number [0-9]\n"
+                + "      -Contain at least one lower case letter [a-z]\n"
+                + "      -Contain at least one upper case letter [A-Z]");
         // @formatter:on
 
         JTextArea description = new JTextArea(0, 30);

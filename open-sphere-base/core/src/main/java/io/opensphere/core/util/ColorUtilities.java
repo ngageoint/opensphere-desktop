@@ -171,7 +171,7 @@ public final class ColorUtilities
      *             parse-able int.
      */
     public static Color convertFromHexString(String color, int redIndex, int greenIndex, int blueIndex, int alphaIndex)
-        throws NumberFormatException
+            throws NumberFormatException
     {
         if (color == null || color.length() == 0 || color.length() > 8)
         {
@@ -253,7 +253,7 @@ public final class ColorUtilities
         }
         StringBuilder sb = new StringBuilder();
         sb.append(aColor.getRed()).append('-').append(aColor.getGreen()).append('-').append(aColor.getBlue()).append('-')
-                .append(aColor.getAlpha());
+        .append(aColor.getAlpha());
         return sb.toString();
     }
 

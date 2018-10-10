@@ -349,7 +349,7 @@ public final class New
      */
     @SuppressWarnings("unchecked")
     public static <T> T[] array(Collection<? extends T> col, Class<T> type, int prefixCount, int postfixCount)
-        throws IllegalArgumentException
+            throws IllegalArgumentException
     {
         if (prefixCount < 0 || postfixCount < 0)
         {
@@ -1841,8 +1841,8 @@ public final class New
                 : col.getClass().getAnnotation(Immutable.class) != null ? col
                         : col.isEmpty() ? Collections.<T>emptySet()
                                 : col.size() == 1
-                                        ? Collections.<T>singletonList(
-                                                col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
+                                ? Collections.<T>singletonList(
+                                        col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
                                         : Collections.unmodifiableCollection(collection(col));
     }
 
@@ -1861,8 +1861,8 @@ public final class New
                 : col.getClass().getAnnotation(Immutable.class) != null && col instanceof List ? (List<T>)col
                         : col.isEmpty() ? Collections.<T>emptyList()
                                 : col.size() == 1
-                                        ? Collections.<T>singletonList(
-                                                col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
+                                ? Collections.<T>singletonList(
+                                        col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
                                         : Collections.unmodifiableList(list(col));
     }
 
@@ -1913,8 +1913,8 @@ public final class New
                 : col.getClass().getAnnotation(Immutable.class) != null && col instanceof Set ? (Set<? extends T>)col
                         : col.isEmpty() ? Collections.<T>emptySet()
                                 : col.size() == 1
-                                        ? Collections.<T>singleton(
-                                                col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
+                                ? Collections.<T>singleton(
+                                        col instanceof List ? ((List<? extends T>)col).get(0) : col.iterator().next())
                                         : Collections.unmodifiableSet(set(col));
     }
 

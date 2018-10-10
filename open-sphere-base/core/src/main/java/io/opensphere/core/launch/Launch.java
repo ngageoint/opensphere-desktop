@@ -468,7 +468,7 @@ public final class Launch
                     else
                     {
                         LOGGER.error("Attempted to use '" + preferredVersionDirectory.getAbsolutePath()
-                                + "' for launch location, but it doesn't exist as a directory.");
+                        + "' for launch location, but it doesn't exist as a directory.");
                     }
                 }
             }

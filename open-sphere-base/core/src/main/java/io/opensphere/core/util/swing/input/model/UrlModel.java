@@ -81,7 +81,7 @@ public class UrlModel extends TextModel
 
             @Override
             public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
-                throws BadLocationException
+                    throws BadLocationException
             {
                 if (StringUtils.isEmpty(text))
                 {

@@ -83,9 +83,9 @@ public class FrameBoundsHelper
                 FrameOptionsProvider.DEFAULT_INSET);
 
         prefsRegistry.getPreferences(FrameOptionsProvider.class)
-                .addPreferenceChangeListener(FrameOptionsProvider.INSET_PREFERENCE_KEY, myInsetChangeListener);
+        .addPreferenceChangeListener(FrameOptionsProvider.INSET_PREFERENCE_KEY, myInsetChangeListener);
         prefsRegistry.getPreferences(FrameOptionsProvider.class)
-                .addPreferenceChangeListener(FrameOptionsProvider.STICKY_PREFERENCE_KEY, myStickyChangeListener);
+        .addPreferenceChangeListener(FrameOptionsProvider.STICKY_PREFERENCE_KEY, myStickyChangeListener);
 
         myFrameProvider = frameProvider;
     }

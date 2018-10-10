@@ -428,7 +428,7 @@ public class PreferencesImpl implements InternalPreferencesIF
         ToStringHelper helper = new ToStringHelper((Class<?>)null, 0);
         helper.add("======= Preferences for " + getTopic() + " =======");
         Collection<Entry<String, Preference<?>>> entries = CollectionUtilities.sort(myPreferencesMap.entrySet(),
-            (o1, o2) -> o1.getKey().compareTo(o2.getKey()));
+                (o1, o2) -> o1.getKey().compareTo(o2.getKey()));
         for (Map.Entry<String, Preference<?>> entry : entries)
         {
             helper.add("[" + entry.getKey() + "]", "[" + entry.getValue() + "]");

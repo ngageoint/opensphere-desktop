@@ -218,7 +218,7 @@ public class DefaultGenericPublisher<E> implements GenericFilteringPublisher<E>
         /** Atomic updater for {@link #myAdds}. */
         @SuppressWarnings("rawtypes")
         private static final AtomicReferenceFieldUpdater<PublishWorker, Collection> ADDS_UPDATER = AtomicReferenceFieldUpdater
-                .newUpdater(PublishWorker.class, Collection.class, "myAdds");
+        .newUpdater(PublishWorker.class, Collection.class, "myAdds");
 
         /** The collection of objects to be added. */
         private volatile Collection<? extends E> myAdds;

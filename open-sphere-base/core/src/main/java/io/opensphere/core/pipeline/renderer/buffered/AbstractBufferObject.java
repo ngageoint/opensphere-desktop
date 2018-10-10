@@ -21,7 +21,7 @@ public abstract class AbstractBufferObject<E extends Buffer> implements BufferOb
     /** Atomic updater for myBuffer. */
     @SuppressWarnings("rawtypes")
     private static final AtomicReferenceFieldUpdater<AbstractBufferObject, Buffer> BUFFER_UPDATER = AtomicReferenceFieldUpdater
-            .newUpdater(AbstractBufferObject.class, Buffer.class, "myBuffer");
+    .newUpdater(AbstractBufferObject.class, Buffer.class, "myBuffer");
 
     /**
      * The buffer itself, which will be {@code null} after being uploaded.

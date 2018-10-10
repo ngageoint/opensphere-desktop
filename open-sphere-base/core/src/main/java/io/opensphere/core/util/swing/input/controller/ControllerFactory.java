@@ -235,10 +235,10 @@ public final class ControllerFactory
     {
         AbstractController<?, ? extends ViewModel<?>, ? extends JComponent> controller = null;
 
-//        if (model instanceof DateModel)
-//        {
-//            controller = new DateController((DateModel)model);
-//        }
+        //        if (model instanceof DateModel)
+        //        {
+        //            controller = new DateController((DateModel)model);
+        //        }
         if (model instanceof TextModel)
         {
             if (model instanceof GhostTextModel)
@@ -328,17 +328,17 @@ public final class ControllerFactory
         {
             Function<T, AbstractButton> buttonProvider = viewSettings == null || viewSettings.getIconProvider() == null ? null
                     : option ->
-                    {
-                        IconToggleButton button = new IconToggleButton();
-                        ImageIcon icon = viewSettings.getIconProvider().apply(option);
-                        if (icon != null)
-                        {
-                            IconUtil.setIcons(button, icon, IconUtil.DEFAULT_ICON_FOREGROUND,
-                                    IconUtil.ICON_SELECTION_FOREGROUND);
-                        }
-                        button.setToolTipText(option.toString());
-                        return button;
-                    };
+            {
+                IconToggleButton button = new IconToggleButton();
+                ImageIcon icon = viewSettings.getIconProvider().apply(option);
+                if (icon != null)
+                {
+                    IconUtil.setIcons(button, icon, IconUtil.DEFAULT_ICON_FOREGROUND,
+                            IconUtil.ICON_SELECTION_FOREGROUND);
+                }
+                button.setToolTipText(option.toString());
+                return button;
+            };
             controller = new ChoiceRadioButtonController<>(model, viewSettings, buttonProvider);
         }
         else

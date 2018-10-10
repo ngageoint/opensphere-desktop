@@ -63,7 +63,7 @@ public class WrappedSecretKey implements Cloneable
      *             encoded.
      */
     public WrappedSecretKey(SecretKey secretKey, PrivateKeyProvider privateKeyProvider)
-        throws CipherException, PrivateKeyProviderException, CertificateEncodingException
+            throws CipherException, PrivateKeyProviderException, CertificateEncodingException
     {
         try
         {
@@ -161,7 +161,7 @@ public class WrappedSecretKey implements Cloneable
      *             retrieved.
      */
     public SecretKey getSecretKey(PrivateKeyProvider privateKeyProvider)
-        throws NoSuchAlgorithmException, IllegalArgumentException, CipherException, PrivateKeyProviderException
+            throws NoSuchAlgorithmException, IllegalArgumentException, CipherException, PrivateKeyProviderException
     {
         if (!privateKeyProvider.hasDigest(getDigest()))
         {

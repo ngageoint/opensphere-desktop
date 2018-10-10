@@ -47,14 +47,14 @@ final class UnitsRegistryImpl implements UnitsRegistry
 
     @Override
     public <S, T extends S> T convert(Class<S> unitsSupertype, Class<T> desiredUnits, S from)
-        throws InvalidUnitsException, UnitsProviderNotFoundException
+            throws InvalidUnitsException, UnitsProviderNotFoundException
     {
         return getUnitsProvider(unitsSupertype).convert(desiredUnits, from);
     }
 
     @Override
     public <T> T convertUsingLongLabel(Class<T> unitsSupertype, T magnitude, String longLabel)
-        throws UnitsParseException, UnitsProviderNotFoundException, InvalidUnitsException
+            throws UnitsParseException, UnitsProviderNotFoundException, InvalidUnitsException
     {
         Class<? extends T> type = getUnitsProvider(unitsSupertype).getUnitsWithLongLabel(longLabel);
         if (type == null)
@@ -66,7 +66,7 @@ final class UnitsRegistryImpl implements UnitsRegistry
 
     @Override
     public <T> T convertUsingShortLabel(Class<T> unitsSupertype, T magnitude, String shortLabel)
-        throws UnitsParseException, UnitsProviderNotFoundException, InvalidUnitsException
+            throws UnitsParseException, UnitsProviderNotFoundException, InvalidUnitsException
     {
         UnitsProvider<T> unitsProvider = getUnitsProvider(unitsSupertype);
         return unitsProvider.convert(unitsProvider.getUnitsWithShortLabel(shortLabel), magnitude);
@@ -74,14 +74,14 @@ final class UnitsRegistryImpl implements UnitsRegistry
 
     @Override
     public <T> T fromLongLabelString(Class<T> unitsSupertype, String label)
-        throws UnitsParseException, UnitsProviderNotFoundException
+            throws UnitsParseException, UnitsProviderNotFoundException
     {
         return getUnitsProvider(unitsSupertype).fromLongLabelString(label);
     }
 
     @Override
     public <T> T fromMagnitudeAndLongLabel(Class<T> unitsSupertype, Number magnitude, String longLabel)
-        throws UnitsParseException, InvalidUnitsException, UnitsProviderNotFoundException
+            throws UnitsParseException, InvalidUnitsException, UnitsProviderNotFoundException
     {
         UnitsProvider<T> unitsProvider = getUnitsProvider(unitsSupertype);
         return unitsProvider.fromMagnitudeAndLongLabel(magnitude, longLabel);
@@ -89,7 +89,7 @@ final class UnitsRegistryImpl implements UnitsRegistry
 
     @Override
     public <T> T fromMagnitudeAndShortLabel(Class<T> unitsSupertype, Number magnitude, String shortLabel)
-        throws UnitsParseException, UnitsProviderNotFoundException, InvalidUnitsException
+            throws UnitsParseException, UnitsProviderNotFoundException, InvalidUnitsException
     {
         UnitsProvider<T> unitsProvider = getUnitsProvider(unitsSupertype);
         return unitsProvider.fromMagnitudeAndShortLabel(magnitude, shortLabel);
@@ -97,35 +97,35 @@ final class UnitsRegistryImpl implements UnitsRegistry
 
     @Override
     public <T> T fromShortLabelString(Class<T> unitsSupertype, String label)
-        throws UnitsParseException, UnitsProviderNotFoundException
+            throws UnitsParseException, UnitsProviderNotFoundException
     {
         return getUnitsProvider(unitsSupertype).fromShortLabelString(label);
     }
 
     @Override
     public <T> T fromUnitsAndMagnitude(Class<? super T> unitsSupertype, Class<T> type, Number magnitude)
-        throws InvalidUnitsException, UnitsProviderNotFoundException
+            throws InvalidUnitsException, UnitsProviderNotFoundException
     {
         return getUnitsProvider(unitsSupertype).fromUnitsAndMagnitude(type, magnitude);
     }
 
     @Override
     public <T> Collection<Class<? extends T>> getAvailableUnits(Class<T> unitsSupertype, boolean allowAutoscale)
-        throws UnitsProviderNotFoundException
+            throws UnitsProviderNotFoundException
     {
         return getUnitsProvider(unitsSupertype).getAvailableUnits(allowAutoscale);
     }
 
     @Override
     public <T> String[] getAvailableUnitsSelectionLabels(Class<T> unitsSupertype, boolean allowAutoscale)
-        throws UnitsProviderNotFoundException
+            throws UnitsProviderNotFoundException
     {
         return getUnitsProvider(unitsSupertype).getAvailableUnitsSelectionLabels(allowAutoscale);
     }
 
     @Override
     public <T> Class<? extends T> getPreferredFixedScaleUnits(Class<T> unitsSupertype, T value)
-        throws UnitsProviderNotFoundException
+            throws UnitsProviderNotFoundException
     {
         return getUnitsProvider(unitsSupertype).getPreferredFixedScaleUnits(value);
     }
@@ -156,7 +156,7 @@ final class UnitsRegistryImpl implements UnitsRegistry
 
     @Override
     public <T> Class<? extends T> getUnitsWithSelectionLabel(Class<T> unitsSupertype, String label)
-        throws UnitsProviderNotFoundException
+            throws UnitsProviderNotFoundException
     {
         return getUnitsProvider(unitsSupertype).getUnitsWithSelectionLabel(label);
     }

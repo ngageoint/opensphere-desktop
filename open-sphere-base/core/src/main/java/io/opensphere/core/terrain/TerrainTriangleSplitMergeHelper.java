@@ -421,7 +421,7 @@ public class TerrainTriangleSplitMergeHelper
 
         return !myOwner.isDegenerateOnGlobe() && (getVarianceAtMidPoint() < myMinVariance && myOwner.getAdjacentC() == null
                 || myOwner.getAdjacentC().getSplitMergeHelper().getVarianceAtMidPoint() < myOwner.getAdjacentC()
-                        .getSplitMergeHelper().getMinVariance());
+                .getSplitMergeHelper().getMinVariance());
     }
 
     /**

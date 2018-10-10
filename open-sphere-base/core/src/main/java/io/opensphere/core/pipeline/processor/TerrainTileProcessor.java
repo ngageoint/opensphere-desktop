@@ -88,8 +88,8 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
     /** The elevation manager which manages this processor. */
     private ElevationManager myElevationManager;
 
-//    /** The regions for which I can provide elevation values. */
-//    private List<GeographicPolygon> myCoverage;
+    //    /** The regions for which I can provide elevation values. */
+    //    private List<GeographicPolygon> myCoverage;
 
     /**
      * Provider for elevation data which is available from the terrain tiles.
@@ -156,7 +156,7 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
             // area.
             return Collections.singletonList(
                     (GeographicPolygon)new GeographicConvexPolygon(GeographicBoundingBox.WHOLE_GLOBE.getVertices()));
-//            return myCoverage == null ? Collections.<GeographicPolygon>emptyList() : myCoverage;
+            //            return myCoverage == null ? Collections.<GeographicPolygon>emptyList() : myCoverage;
         }
 
         @Override
@@ -434,7 +434,7 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
             if (proj instanceof MutableGlobeProjection && myElevationImageReader != null)
             {
                 ((MutableGlobeProjection)proj).getModel().getCelestialBody().getElevationManager()
-                        .deregisterProvider(myElevationProvider);
+                .deregisterProvider(myElevationProvider);
             }
         }
     }
@@ -1049,17 +1049,17 @@ public class TerrainTileProcessor implements GeometryProcessor<TerrainTileGeomet
     }
 
     /** Set my coverage regions based on the bounding boxes of my geometries. */
-//    @SuppressWarnings("unchecked")
+    //    @SuppressWarnings("unchecked")
     private void setCoveredRegions()
     {
         // TODO changing the coverage region should cause an event to be sent
         // through the Elevation manager.
-//        List<GeographicPolygon> regions = New.list(myGeometries.size());
-//        for (TerrainTileGeometry geom : myGeometries)
-//        {
-//            regions.add(new GeographicConvexPolygon((List<? extends GeographicPosition>)geom.getBoundingBox().getVertices()));
-//        }
-//        myCoverage = regions;
+        //        List<GeographicPolygon> regions = New.list(myGeometries.size());
+        //        for (TerrainTileGeometry geom : myGeometries)
+        //        {
+        //            regions.add(new GeographicConvexPolygon((List<? extends GeographicPosition>)geom.getBoundingBox().getVertices()));
+        //        }
+        //        myCoverage = regions;
     }
 
     /** The states used by this processor in the processing state machine. */

@@ -47,7 +47,7 @@ public class ListRowDataProvider<T> extends AbstractRowDataProvider<T>
     public void addData(Collection<? extends T> data)
     {
         myData.addAll(data);
-//        fireTableRowsInserted(firstRow, lastRow);
+        //        fireTableRowsInserted(firstRow, lastRow);
     }
 
     /**
@@ -61,7 +61,7 @@ public class ListRowDataProvider<T> extends AbstractRowDataProvider<T>
         {
             myData.trimToSize();
         }
-//        fireTableDataChanged();
+        //        fireTableDataChanged();
     }
 
     /**

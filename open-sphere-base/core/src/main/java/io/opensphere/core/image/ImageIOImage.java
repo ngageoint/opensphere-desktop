@@ -477,7 +477,7 @@ public class ImageIOImage extends Image implements DDSEncodableImage
      */
     @Override
     protected void setInput(InputStream input, int estimatedStreamLengthBytes, boolean usePool)
-        throws ImageFormatUnknownException, IOException
+            throws ImageFormatUnknownException, IOException
     {
         try (BufferedInputStream in = new BufferedInputStream(input))
         {
@@ -636,7 +636,7 @@ public class ImageIOImage extends Image implements DDSEncodableImage
         {
             compression = getAWTImage().getColorModel().hasAlpha()
                     ? isDXTCompressible() ? CompressionType.D3DFMT_DXT5 : CompressionType.D3DFMT_A8R8G8B8
-                    : isDXTCompressible() ? CompressionType.D3DFMT_DXT1 : CompressionType.D3DFMT_R8G8B8;
+                            : isDXTCompressible() ? CompressionType.D3DFMT_DXT1 : CompressionType.D3DFMT_R8G8B8;
             setCompressionHint(compression);
         }
         return compression;

@@ -32,7 +32,7 @@ import io.opensphere.core.util.collections.New;
  */
 @SuppressWarnings("PMD.GodClass")
 public abstract class AbstractTileGeometry<E extends AbstractTileGeometry<? super E>> extends AbstractGeometry
-        implements HierarchicalGeometry<AbstractTileGeometry<?>>, ImageProvidingGeometry<E>
+implements HierarchicalGeometry<AbstractTileGeometry<?>>, ImageProvidingGeometry<E>
 {
     /**
      * A cache that stores the divider override data for a specific key so that
@@ -398,7 +398,7 @@ public abstract class AbstractTileGeometry<E extends AbstractTileGeometry<? supe
         Quadrilateral<? extends Position> bbox = getBounds();
         if (bbox instanceof GeographicBoundingBox && ((GeographicBoundingBox)bbox).overlaps(boundingBox, 0.)
                 || bbox instanceof GeoScreenBoundingBox
-                        && boundingBox.contains(((GeoScreenBoundingBox)bbox).getAnchor().getGeographicAnchor(), 0.)
+                && boundingBox.contains(((GeoScreenBoundingBox)bbox).getAnchor().getGeographicAnchor(), 0.)
                 || bbox instanceof GeographicQuadrilateral && ((GeographicQuadrilateral)bbox).overlaps(boundingBox, 0.))
         {
             overlapping.add(this);
@@ -509,7 +509,7 @@ public abstract class AbstractTileGeometry<E extends AbstractTileGeometry<? supe
             return ((BoundingBox<T>)getBounds()).overlaps(boundingBox, tolerance);
         }
         throw new IllegalArgumentException("Cannot check overlap for different position types: " + boundingBox.getPositionType()
-                + " <> " + getPositionType());
+        + " <> " + getPositionType());
     }
 
     /**

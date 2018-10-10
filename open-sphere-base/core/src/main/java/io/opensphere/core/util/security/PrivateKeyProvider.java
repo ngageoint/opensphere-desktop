@@ -74,7 +74,7 @@ public interface PrivateKeyProvider
      * @see MessageDigest#getInstance(String)
      */
     String getFingerprint(String algorithm)
-        throws PrivateKeyProviderException, CertificateEncodingException, NoSuchAlgorithmException;
+            throws PrivateKeyProviderException, CertificateEncodingException, NoSuchAlgorithmException;
 
     /**
      * Get the private key.
@@ -152,7 +152,7 @@ public interface PrivateKeyProvider
      * @throws PrivateKeyProviderException If the provider is uninitialized.
      */
     boolean isAcceptable(Set<? extends String> keyTypes, Collection<? extends X500Principal> acceptableIssuers)
-        throws PrivateKeyProviderException;
+            throws PrivateKeyProviderException;
 
     /**
      * Get if the certificate chain is current.

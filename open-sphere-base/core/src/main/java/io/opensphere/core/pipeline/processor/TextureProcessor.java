@@ -913,8 +913,8 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
                 if (retFailed != null)
                 {
                     retFailed.stream().filter(geometry -> geometry instanceof PointSpriteGeometry)
-                            .forEach(geometry -> handleImageLoaded(textureDataLoaded, textureLoaded, (Collection<E>)null,
-                                    geometry, imageData));
+                    .forEach(geometry -> handleImageLoaded(textureDataLoaded, textureLoaded, (Collection<E>)null,
+                            geometry, imageData));
                 }
             }
         }
@@ -1382,7 +1382,7 @@ public abstract class TextureProcessor<E extends ImageProvidingGeometry<E>> exte
             // @formatter:off
             @SuppressWarnings("unchecked")
             Map<AbstractGeometry.RenderMode, PreloadedTextureImage> preloadedImageMap =
-                (Map<AbstractGeometry.RenderMode, PreloadedTextureImage>)imageMap;
+            (Map<AbstractGeometry.RenderMode, PreloadedTextureImage>)imageMap;
             // @formatter:on
             TextureGroup texture = new TextureGroup(preloadedImageMap);
             getCache().putCacheAssociation(geom.getImageManager(), texture, TextureGroup.class, texture.getSizeBytes(), 0L);

@@ -366,14 +366,14 @@ public class Viewer2D extends AbstractDynamicViewer
     @Override
     public double getViewVolumeWidthAt(Vector3d modelPosition)
     {
-//        // TODO This is incorrect. Need to somehow
-//        // determine the relationship of scale to what
-//        // the scaleFactor should be.
-//        final double lowerLimit = 1.;
-//        double scale = getScale() >= lowerLimit ? getScale() : lowerLimit;
-//        double scaleFactor = 20000 * 1 / Math.abs(scale);
-//
-//        return scaleFactor;
+        //        // TODO This is incorrect. Need to somehow
+        //        // determine the relationship of scale to what
+        //        // the scaleFactor should be.
+        //        final double lowerLimit = 1.;
+        //        double scale = getScale() >= lowerLimit ? getScale() : lowerLimit;
+        //        double scaleFactor = 20000 * 1 / Math.abs(scale);
+        //
+        //        return scaleFactor;
         return myModelWidth / myPosition.getScale();
     }
 

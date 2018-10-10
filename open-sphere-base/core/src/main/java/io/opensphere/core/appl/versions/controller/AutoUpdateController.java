@@ -182,7 +182,7 @@ public class AutoUpdateController implements Service
                 URL updateURL = UrlUtilities.toURL(updateUrlString);
                 String installConfirmation = installUpdateFiles(updateURL)
                         ? "Successfully installed version " + newestRemoteVersion
-                        : "Failed to install version " + newestRemoteVersion;
+                                : "Failed to install version " + newestRemoteVersion;
                 LOG.info(installConfirmation);
             });
         }
@@ -257,7 +257,7 @@ public class AutoUpdateController implements Service
                     try
                     {
                         Files.walk(versionDirectory).sorted(Comparator.reverseOrder()).map(Path::toFile).peek(LOG::debug)
-                                .forEach(File::delete);
+                        .forEach(File::delete);
                     }
                     catch (IOException e)
                     {
@@ -408,8 +408,8 @@ public class AutoUpdateController implements Service
     {
         String newestRemoteVersion = myModel.getNewestRemoteVersion();
         String chooseVersionMessage = "Version " + newestRemoteVersion + " has finished downloading." + System.lineSeparator()
-                + "The new version will be used the next time the application is launched." + System.lineSeparator()
-                + "Would you like to restart with the new version now?";
+        + "The new version will be used the next time the application is launched." + System.lineSeparator()
+        + "Would you like to restart with the new version now?";
         updateProperty("preferred.version", newestRemoteVersion);
 
         int response = JOptionPane.showConfirmDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(), chooseVersionMessage,

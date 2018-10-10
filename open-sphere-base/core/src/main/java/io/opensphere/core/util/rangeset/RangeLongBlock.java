@@ -307,17 +307,17 @@ public class RangeLongBlock implements Comparable<RangeLongBlock>, Iterable<Long
     public int compareTo(RangeLongBlock o)
     {
         if (myStartValue == o.myStartValue && myEndValue == o.myEndValue)
-        // Equality
+            // Equality
         {
             return 0;
         }
         else if (myEndValue < o.myStartValue || o.myEndValue < myStartValue)
-        // Does not overlap
+            // Does not overlap
         {
             return myEndValue < o.myStartValue ? -1 : 1;
         }
         else
-        // Overlaps
+            // Overlaps
         {
             return myStartValue < o.myStartValue ? -1 : 1;
         }
@@ -408,7 +408,7 @@ public class RangeLongBlock implements Comparable<RangeLongBlock>, Iterable<Long
             result = RangeRelationType.EQUAL;
         }
         else
-        // Overlaps, is contained or contains.
+            // Overlaps, is contained or contains.
         {
             if (block.myStartValue >= myStartValue && block.myEndValue <= myEndValue)
             {

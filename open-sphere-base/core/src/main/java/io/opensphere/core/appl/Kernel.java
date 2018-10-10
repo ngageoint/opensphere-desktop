@@ -480,7 +480,7 @@ public class Kernel
                 {
                     JOptionPane.showMessageDialog(null,
                             "<html>Another instance of " + title
-                                    + " is already running. Please close the other instance and try again.</html>",
+                            + " is already running. Please close the other instance and try again.</html>",
                             title + " Fatal Initialization Error", JOptionPane.ERROR_MESSAGE);
                 }
                 else
@@ -498,7 +498,7 @@ public class Kernel
                     }
                     JOptionPane.showMessageDialog(null,
                             "<html>Cache initialization failed." + "<p/><p/>Try deleting the directory at <tt>" + path
-                                    + "</tt> and restarting.</html>",
+                            + "</tt> and restarting.</html>",
                             title + " Fatal Initialization Error", JOptionPane.ERROR_MESSAGE);
                 }
 
@@ -663,7 +663,7 @@ public class Kernel
             JOptionPane.showMessageDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
                     "<html>You are running with 32-bit Java on a 64-bit operating system. "
                             + "The application may be unstable. Please use 64-bit Java if possible.</html>",
-                    "Warning", JOptionPane.WARNING_MESSAGE);
+                            "Warning", JOptionPane.WARNING_MESSAGE);
         }
         else
         {
@@ -674,7 +674,7 @@ public class Kernel
                 JOptionPane.showMessageDialog(
                         myToolbox.getUIRegistry().getMainFrameProvider().get(), "<html>You are running an obsolete Java version ("
                                 + version + "). Please upgrade your Java if possible.</html>",
-                        "Warning", JOptionPane.WARNING_MESSAGE);
+                                "Warning", JOptionPane.WARNING_MESSAGE);
             }
         }
 

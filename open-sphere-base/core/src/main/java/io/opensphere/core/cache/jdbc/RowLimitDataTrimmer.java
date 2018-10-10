@@ -111,8 +111,8 @@ public class RowLimitDataTrimmer implements Runnable
     {
         StringBuilder sql = new StringBuilder(132);
         sql.append("select GROUP_ID from ").append(TableNames.DATA_GROUP).append(SQL.WHERE).append(SQL.NOT_CRITICAL_QUERY)
-                .append(SQL.AND).append(SQL.EXPIRATION_TIME_QUERY).append(" > 0 ").append(SQL.ORDER_BY)
-                .append(ColumnNames.EXPIRATION_TIME).append(", ").append(ColumnNames.CREATION_TIME).append(" DESC");
+        .append(SQL.AND).append(SQL.EXPIRATION_TIME_QUERY).append(" > 0 ").append(SQL.ORDER_BY)
+        .append(ColumnNames.EXPIRATION_TIME).append(", ").append(ColumnNames.CREATION_TIME).append(" DESC");
         ResultSet rs = myCacheUtilities.executeQuery(stmt, sql.toString());
         int[] groupIds;
         try

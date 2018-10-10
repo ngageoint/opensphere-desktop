@@ -133,7 +133,7 @@ public class TextureReplacer implements Runnable
                         {
                             StringBuilder builder = new StringBuilder("The dirty region ");
                             builder.append(reg).append(" is out side of the image bounds (").append(imageWidth).append(", ")
-                                    .append(imageHeight).append(").");
+                            .append(imageHeight).append(").");
                             LOGGER.error(builder.toString());
                             continue;
                         }

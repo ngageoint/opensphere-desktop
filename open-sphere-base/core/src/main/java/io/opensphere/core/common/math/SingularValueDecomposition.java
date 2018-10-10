@@ -398,7 +398,7 @@ public class SingularValueDecomposition implements java.io.Serializable
                         }
                     }
                 }
-                    break;
+                break;
 
                 // Split at negligible s(k).
 
@@ -425,7 +425,7 @@ public class SingularValueDecomposition implements java.io.Serializable
                         }
                     }
                 }
-                    break;
+                break;
 
                 // Perform one qr step.
 
@@ -502,7 +502,7 @@ public class SingularValueDecomposition implements java.io.Serializable
                     e[p - 2] = f;
                     iter = iter + 1;
                 }
-                    break;
+                break;
 
                 // Convergence.
 
@@ -557,7 +557,7 @@ public class SingularValueDecomposition implements java.io.Serializable
                     iter = 0;
                     p--;
                 }
-                    break;
+                break;
             }
         }
     }

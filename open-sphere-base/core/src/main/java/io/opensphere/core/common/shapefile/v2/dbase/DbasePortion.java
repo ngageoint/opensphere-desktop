@@ -262,7 +262,7 @@ public class DbasePortion implements Collection<Object[]>
     }
 
     public boolean parseDbaseRecord(ByteBuffer buffer, Object[] stringArray, Object[] actualArray)
-        throws IOException, ParseException
+            throws IOException, ParseException
     {
         boolean returnValue = false;
 

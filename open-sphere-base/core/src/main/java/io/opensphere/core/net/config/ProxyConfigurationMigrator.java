@@ -82,7 +82,7 @@ public class ProxyConfigurationMigrator implements PreConfigurationUpdateModule
             // Manual proxy with host, port, and exclusions
             proxyConfigs.setSelectedConfigurationType(ConfigurationType.MANUAL);
             proxyConfigs.getManualProxyConfiguration()
-                    .setHost(preferences.get("ProxyHost") != null ? preferences.get("ProxyHost") : "");
+            .setHost(preferences.get("ProxyHost") != null ? preferences.get("ProxyHost") : "");
             proxyConfigs.getManualProxyConfiguration().setPort(Integer.parseInt(preferences.get("ProxyPort")));
             proxyConfigs.getManualProxyConfiguration().getExclusionPatterns().addAll(exclusions);
         }

@@ -729,30 +729,30 @@ public class ListCheckBoxTree extends CheckBoxTree
         /** serialVersionUID. */
         private static final long serialVersionUID = 1L;
 
-//        /**
-//         * Timer used to prevent toggling selection when the tree is
-//         * double-clicked.
-//         */
-//        private Timer myTimer;
-//
-//        @Override
-//        public void setSelectionPaths(TreePath[] pPaths)
-//        {
-//            List<TreePath> paths = New.list(pPaths);
-//            for (int index = 0; index < paths.size(); ++index)
-//            {
-//                TreePath treePath = paths.get(index);
-//                List<TreeTableTreeNode> children = ((TreeTableTreeNode)treePath.getLastPathComponent()).getChildren();
-//                if (children != null)
-//                {
-//                    for (TreeTableTreeNode treeTableTreeNode : children)
-//                    {
-//                        paths.add(new TreePath(treeTableTreeNode));
-//                    }
-//                }
-//            }
-//            super.setSelectionPaths(New.array(paths, TreePath.class));
-//        }
+        //        /**
+        //         * Timer used to prevent toggling selection when the tree is
+        //         * double-clicked.
+        //         */
+        //        private Timer myTimer;
+        //
+        //        @Override
+        //        public void setSelectionPaths(TreePath[] pPaths)
+        //        {
+        //            List<TreePath> paths = New.list(pPaths);
+        //            for (int index = 0; index < paths.size(); ++index)
+        //            {
+        //                TreePath treePath = paths.get(index);
+        //                List<TreeTableTreeNode> children = ((TreeTableTreeNode)treePath.getLastPathComponent()).getChildren();
+        //                if (children != null)
+        //                {
+        //                    for (TreeTableTreeNode treeTableTreeNode : children)
+        //                    {
+        //                        paths.add(new TreePath(treeTableTreeNode));
+        //                    }
+        //                }
+        //            }
+        //            super.setSelectionPaths(New.array(paths, TreePath.class));
+        //        }
 
         /**
          * Sets the selection path.
@@ -768,42 +768,42 @@ public class ListCheckBoxTree extends CheckBoxTree
                 toggleSelection(path);
             }
 
-//            System.err.println(myMouseClickCount);
-//            if (((TreeTableTreeNode)path.getLastPathComponent()).getChildCount() > 0)
-//            {
-//                EventQueueUtilities.invokeLater(new Runnable()
-//                {
-//                    @Override
-//                    public void run()
-//                    {
-//                        setSelectionPaths(new TreePath[] { path });
-//                    }
-//                });
-//                return;
-//            }
-//            // Don't select the row when over a button
-//            if (myMouseOverComponent == null && myMouseClickCount != 2)
-//            {
-//                toggleSelection(path);
-//                System.err.println("start timer");
-//                myTimer = new Timer(1000, new ActionListener()
-//                {
-//                    @Override
-//                    public void actionPerformed(ActionEvent e)
-//                    {
-////                        toggleSelection(path);
-//                        myMouseClickCount = 0;
-//                    }
-//                });
-//                myTimer.setRepeats(false);
-//                myTimer.start();
-//            }
-//            if (myMouseClickCount > 0 && myTimer != null)
-//            {
-//                System.err.println("stop timer");
-//                myTimer.stop();
-//                myTimer = null;
-//            }
+            //            System.err.println(myMouseClickCount);
+            //            if (((TreeTableTreeNode)path.getLastPathComponent()).getChildCount() > 0)
+            //            {
+            //                EventQueueUtilities.invokeLater(new Runnable()
+            //                {
+            //                    @Override
+            //                    public void run()
+            //                    {
+            //                        setSelectionPaths(new TreePath[] { path });
+            //                    }
+            //                });
+            //                return;
+            //            }
+            //            // Don't select the row when over a button
+            //            if (myMouseOverComponent == null && myMouseClickCount != 2)
+            //            {
+            //                toggleSelection(path);
+            //                System.err.println("start timer");
+            //                myTimer = new Timer(1000, new ActionListener()
+            //                {
+            //                    @Override
+            //                    public void actionPerformed(ActionEvent e)
+            //                    {
+            ////                        toggleSelection(path);
+            //                        myMouseClickCount = 0;
+            //                    }
+            //                });
+            //                myTimer.setRepeats(false);
+            //                myTimer.start();
+            //            }
+            //            if (myMouseClickCount > 0 && myTimer != null)
+            //            {
+            //                System.err.println("stop timer");
+            //                myTimer.stop();
+            //                myTimer = null;
+            //            }
         }
 
         /**

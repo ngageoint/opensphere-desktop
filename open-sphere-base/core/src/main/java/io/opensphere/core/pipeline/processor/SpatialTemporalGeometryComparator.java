@@ -173,23 +173,23 @@ public class SpatialTemporalGeometryComparator implements Comparator<Geometry>
         int result;
         TimeConstraint tc1 = o1 instanceof ConstrainableGeometry ? ((ConstrainableGeometry)o1).getConstraints() == null ? null
                 : ((ConstrainableGeometry)o1).getConstraints().getTimeConstraint() : null;
-        TimeConstraint tc2 = o2 instanceof ConstrainableGeometry ? ((ConstrainableGeometry)o2).getConstraints() == null ? null
-                : ((ConstrainableGeometry)o2).getConstraints().getTimeConstraint() : null;
-        if (tc1 == null)
-        {
-            result = tc2 == null ? 0 : -1;
-        }
-        else if (tc2 == null)
-        {
-            result = 1;
-        }
-        else
-        {
-            Duration delta = tc1.getTimeSpan().getGapBetween(myCenterTime)
-                    .subtract(tc2.getTimeSpan().getGapBetween(myCenterTime));
-            result = delta.compareTo(Seconds.ZERO);
-        }
-        return result;
+                TimeConstraint tc2 = o2 instanceof ConstrainableGeometry ? ((ConstrainableGeometry)o2).getConstraints() == null ? null
+                        : ((ConstrainableGeometry)o2).getConstraints().getTimeConstraint() : null;
+                        if (tc1 == null)
+                        {
+                            result = tc2 == null ? 0 : -1;
+                        }
+                        else if (tc2 == null)
+                        {
+                            result = 1;
+                        }
+                        else
+                        {
+                            Duration delta = tc1.getTimeSpan().getGapBetween(myCenterTime)
+                                    .subtract(tc2.getTimeSpan().getGapBetween(myCenterTime));
+                            result = delta.compareTo(Seconds.ZERO);
+                        }
+                        return result;
     }
 
     /**

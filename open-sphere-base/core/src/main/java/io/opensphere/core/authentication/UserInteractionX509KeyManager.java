@@ -433,7 +433,7 @@ public class UserInteractionX509KeyManager extends X509ExtendedKeyManager
                     else
                     {
                         myAuthenticatorDelegate.getSecurityManager()
-                                .setPreselectedPrivateKeyProvider(myAuthenticatorDelegate.getServerKey(), selectedProvider);
+                        .setPreselectedPrivateKeyProvider(myAuthenticatorDelegate.getServerKey(), selectedProvider);
 
                         String logString;
                         if (useForAllCheckbox.isSelected())

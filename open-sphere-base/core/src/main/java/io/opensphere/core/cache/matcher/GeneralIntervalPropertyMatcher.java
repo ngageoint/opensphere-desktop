@@ -13,7 +13,7 @@ import io.opensphere.core.model.Accumulator;
  * @param <T> The operand type.
  */
 public class GeneralIntervalPropertyMatcher<T extends Serializable> extends GeneralPropertyMatcher<T>
-        implements IntervalPropertyMatcher<T>
+implements IntervalPropertyMatcher<T>
 {
     /**
      * Constructor.

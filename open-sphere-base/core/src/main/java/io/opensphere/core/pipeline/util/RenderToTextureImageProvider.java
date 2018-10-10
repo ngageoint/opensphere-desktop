@@ -20,7 +20,7 @@ import io.opensphere.core.util.WeakChangeSupport;
  * Provide the texture which was generated as the texture for the tile.
  */
 public class RenderToTextureImageProvider
-        implements ImageGroupProvider<Void>, ImmediateImageProvider<Void>, ObservableImageProvider<Void>
+implements ImageGroupProvider<Void>, ImmediateImageProvider<Void>, ObservableImageProvider<Void>
 {
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(RenderToTextureImageProvider.class);

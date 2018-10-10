@@ -37,7 +37,7 @@ public final class ProcessorBuilderInit
         processorBuilder.setCache(cache).setMapContext(toolbox.getMapManager()).setPickManager(pickManager);
         processorBuilder.setScheduledExecutorService(scheduledExecutorService);
         processorBuilder
-                .setPriorityComparator(new SpatialTemporalGeometryComparator(toolbox.getMapManager(), toolbox.getTimeManager()));
+        .setPriorityComparator(new SpatialTemporalGeometryComparator(toolbox.getMapManager(), toolbox.getTimeManager()));
         processorBuilder.setDataRetriever(toolbox.getGeometryRegistry().getDataRetrieverExecutor());
         processorBuilder.setTimeManager(toolbox.getTimeManager());
         processorBuilder.setAnimationManager(toolbox.getAnimationManager());
@@ -47,7 +47,7 @@ public final class ProcessorBuilderInit
         processorBuilder.setExecutorService(executorService);
         processorBuilder.setGLExecutor(glExecutor).setLoadSensitiveExecutor(glExecutor.getLoadSensitiveExecutor(executorService));
         processorBuilder
-                .setFixedPoolExecutorService(new FixedThreadPoolExecutor(1, new NamedThreadFactory("Pipeline-FixedPool")));
+        .setFixedPoolExecutorService(new FixedThreadPoolExecutor(1, new NamedThreadFactory("Pipeline-FixedPool")));
 
         return processorBuilder;
     }

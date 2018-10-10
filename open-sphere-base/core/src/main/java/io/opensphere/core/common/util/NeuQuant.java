@@ -227,11 +227,11 @@ public class NeuQuant
             }
         }
         netindex[previouscol] = startpos + maxnetpos >> 1;
-        for (j = previouscol + 1; j < 256; j++)
-        {
-            /* really 256 */
-            netindex[j] = maxnetpos;
-        }
+                for (j = previouscol + 1; j < 256; j++)
+                {
+                    /* really 256 */
+                    netindex[j] = maxnetpos;
+                }
     }
 
     /**
@@ -328,14 +328,14 @@ public class NeuQuant
                 alpha -= alpha / alphadec;
                 radius -= radius / radiusdec;
                 rad = radius >> radiusbiasshift;
-                if (rad <= 1)
-                {
-                    rad = 0;
-                }
-                for (j = 0; j < rad; j++)
-                {
-                    radpower[j] = alpha * ((rad * rad - j * j) * radbias / (rad * rad));
-                }
+            if (rad <= 1)
+            {
+                rad = 0;
+            }
+            for (j = 0; j < rad; j++)
+            {
+                radpower[j] = alpha * ((rad * rad - j * j) * radbias / (rad * rad));
+            }
             }
         }
     }
@@ -460,10 +460,10 @@ public class NeuQuant
         for (int i = 0; i < netsize; i++)
         {
             network[i][0] >>= netbiasshift;
-            network[i][1] >>= netbiasshift;
-            network[i][2] >>= netbiasshift;
-            /* record colour no */
-            network[i][3] = i;
+        network[i][1] >>= netbiasshift;
+                        network[i][2] >>= netbiasshift;
+                    /* record colour no */
+                    network[i][3] = i;
         }
     }
 

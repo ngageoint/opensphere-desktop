@@ -166,7 +166,7 @@ public class DefaultQueryTracker extends TaskCanceller implements MutableQueryTr
             if (myChangeSupport == null)
             {
                 AtomicReferenceFieldUpdater.newUpdater(DefaultQueryTracker.class, StrongChangeSupport.class, "myChangeSupport")
-                        .compareAndSet(this, null, new StrongChangeSupport<QueryTrackerListener>());
+                .compareAndSet(this, null, new StrongChangeSupport<QueryTrackerListener>());
             }
             myChangeSupport.addListener(listener);
         }

@@ -211,7 +211,7 @@ public class WhatsNewPlugin extends PluginAdapter
         }
 
         QuantifyToolboxUtils.getQuantifyToolbox(myToolbox).getSettingsModel().enabledProperty()
-                .set(myMetricsCheckbox.isSelected());
+        .set(myMetricsCheckbox.isSelected());
     }
 
     /**

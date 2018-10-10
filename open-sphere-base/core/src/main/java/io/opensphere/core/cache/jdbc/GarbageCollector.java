@@ -121,7 +121,7 @@ public class GarbageCollector implements Runnable
                 {
                     final long t0 = System.nanoTime();
                     myConnectionAppropriator
-                            .appropriateStatement(myTaskFactory.getPurgeGroupsTask(new int[] { groupId.intValue() }));
+                    .appropriateStatement(myTaskFactory.getPurgeGroupsTask(new int[] { groupId.intValue() }));
                     final long et = System.nanoTime() - t0;
 
                     if (LOGGER.isDebugEnabled())

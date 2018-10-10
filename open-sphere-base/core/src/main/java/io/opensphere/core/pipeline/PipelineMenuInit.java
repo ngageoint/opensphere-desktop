@@ -33,11 +33,11 @@ public class PipelineMenuInit
                 if (event.getStage() == Stage.LAF_INSTALLED)
                 {
                     myToolbox.getUIRegistry().getMenuBarRegistry()
-                            .getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.DEBUG_MENU)
-                            .add(AbstractTileRenderer.getDebugMenu(myToolbox.getMapManager()));
+                    .getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.DEBUG_MENU)
+                    .add(AbstractTileRenderer.getDebugMenu(myToolbox.getMapManager()));
                     myToolbox.getUIRegistry().getMenuBarRegistry()
-                            .getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.DEBUG_MENU)
-                            .add(EllipsoidDebugUI.getDebugMenu(myToolbox));
+                    .getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.DEBUG_MENU)
+                    .add(EllipsoidDebugUI.getDebugMenu(myToolbox));
                 }
                 if (event.getStage() == Stage.LAF_INSTALLED || event.getStage() == Stage.PIPELINE_INITIALIZED)
                 {

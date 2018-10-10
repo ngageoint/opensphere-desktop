@@ -75,7 +75,7 @@ public class QuantifyPlugin extends PluginAdapter
         myService = new DefaultQuantifyService(senders, settingsModel.enabledProperty());
 
         settingsModel.captureToLogProperty()
-                .addListener((obs, ov, nv) -> updateCaptureToLog(ov.booleanValue(), nv.booleanValue()));
+        .addListener((obs, ov, nv) -> updateCaptureToLog(ov.booleanValue(), nv.booleanValue()));
 
         QuantifyToolbox quantifyToolbox = new QuantifyToolboxImpl(settingsModel, myService);
         toolbox.getPluginToolboxRegistry().registerPluginToolbox(quantifyToolbox);

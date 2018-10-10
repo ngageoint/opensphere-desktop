@@ -248,10 +248,10 @@ public class MenuInit
             unitsMenu.add(subMenu);
         }
         unitsMenu.add(SwingUtilities.newMenuItem("Reset all to default", e ->
-                {
-                Quantify.collectMetric("mist3d.menu-bar.edit.units.reset-to-default");
-                toolbox.getUnitsRegistry().resetAllPreferredUnits(e.getSource());
-                }));
+        {
+            Quantify.collectMetric("mist3d.menu-bar.edit.units.reset-to-default");
+            toolbox.getUnitsRegistry().resetAllPreferredUnits(e.getSource());
+        }));
         editMenu.add(unitsMenu);
     }
 
@@ -364,24 +364,24 @@ public class MenuInit
         }
 
         viewMenu.add(SwingUtilities.newMenuItem("Reset View", e ->
-                {
-                    toolbox.getMapManager().getStandardViewer().resetView();
-                    Quantify.collectMetric("mist3d.menu-bar.edit.units.reset-to-default");
-                },
-                KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK)));
+        {
+            toolbox.getMapManager().getStandardViewer().resetView();
+            Quantify.collectMetric("mist3d.menu-bar.edit.units.reset-to-default");
+        },
+        KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK)));
 
-//        // Add toolbar item
-//        final JCheckBoxMenuItem toolbarItem = new JCheckBoxMenuItem("Toolbar");
-//        toolbarItem.setSelected(toolbox.getUIRegistry().getToolbarComponentRegistry().getToolbarManager().isVisible());
-//        toolbarItem.addActionListener(new ActionListener()
-//        {
-//            @Override
-//            public void actionPerformed(ActionEvent arg0)
-//            {
-//                toolbox.getUIRegistry().getToolbarComponentRegistry().getToolbarManager().setVisible(toolbarItem.isSelected());
-//            }
-//        });
-//        viewMenu.add(toolbarItem);
+        //        // Add toolbar item
+        //        final JCheckBoxMenuItem toolbarItem = new JCheckBoxMenuItem("Toolbar");
+        //        toolbarItem.setSelected(toolbox.getUIRegistry().getToolbarComponentRegistry().getToolbarManager().isVisible());
+        //        toolbarItem.addActionListener(new ActionListener()
+        //        {
+        //            @Override
+        //            public void actionPerformed(ActionEvent arg0)
+        //            {
+        //                toolbox.getUIRegistry().getToolbarComponentRegistry().getToolbarManager().setVisible(toolbarItem.isSelected());
+        //            }
+        //        });
+        //        viewMenu.add(toolbarItem);
 
         // Add Projection
         mbr.getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.VIEW_MENU, MenuBarRegistry.PROJECTION_MENU);

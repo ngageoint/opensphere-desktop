@@ -1003,7 +1003,7 @@ public abstract class LatLonAlt implements Serializable, SizeProvider
     {
         StringBuilder sb = new StringBuilder(30);
         sb.append(LatLonAlt.class.getSimpleName()).append(" [").append(getLatD()).append('/').append(getLonD()).append('/')
-                .append(getAltM()).append(']');
+        .append(getAltM()).append(']');
         return sb.toString();
     }
 

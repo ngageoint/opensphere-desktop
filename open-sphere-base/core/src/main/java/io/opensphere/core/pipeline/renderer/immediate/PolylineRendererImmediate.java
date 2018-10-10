@@ -32,7 +32,7 @@ import io.opensphere.core.viewer.impl.MapContext;
  * Immediate mode GL polyline renderer.
  */
 public class PolylineRendererImmediate extends AbstractRenderer<PolylineGeometry>
-        implements GeometryRendererImmediate<PolylineGeometry>
+implements GeometryRendererImmediate<PolylineGeometry>
 {
     /** Bits used for {@link GL2#glPushAttrib(int)}. */
     private static final int ATTRIB_BITS = GL2.GL_ENABLE_BIT | GL.GL_COLOR_BUFFER_BIT | GL2.GL_CURRENT_BIT | GL2.GL_LINE_BIT;
@@ -105,7 +105,7 @@ public class PolylineRendererImmediate extends AbstractRenderer<PolylineGeometry
 
                     PolylineModelData fPositions = positions;
                     GL2Utilities.renderWithTransform(rc, geo.getRenderProperties().getTransform(),
-                        () -> render(rc, geo, fPositions));
+                            () -> render(rc, geo, fPositions));
                 }
             }
         }

@@ -63,7 +63,7 @@ public final class ReflectionUtilities
      */
     @SuppressWarnings("unchecked")
     public static <T> T getFieldValue(Object object, String fieldName, Class<T> fieldClass)
-        throws SecurityException, NoSuchFieldException
+            throws SecurityException, NoSuchFieldException
     {
         Utilities.checkNull(object, "object");
         Utilities.checkNull(fieldName, "fieldName");
@@ -119,7 +119,7 @@ public final class ReflectionUtilities
      * @throws IllegalArgumentException If the value is the wrong type.
      */
     public static void setFieldValue(Object object, String fieldName, Object value)
-        throws SecurityException, NoSuchFieldException, IllegalArgumentException
+            throws SecurityException, NoSuchFieldException, IllegalArgumentException
     {
         Utilities.checkNull(object, "object");
         Utilities.checkNull(fieldName, "fieldName");

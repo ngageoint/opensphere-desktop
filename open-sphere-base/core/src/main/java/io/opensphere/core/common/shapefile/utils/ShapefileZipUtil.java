@@ -275,7 +275,7 @@ public class ShapefileZipUtil
     }
 
     private static void writePrjToZip(ESRIShapefile source, ZipOutputStream zipStream, String fileName, Projection prj)
-        throws IOException
+            throws IOException
     {
 
         // Write the prj to the stream

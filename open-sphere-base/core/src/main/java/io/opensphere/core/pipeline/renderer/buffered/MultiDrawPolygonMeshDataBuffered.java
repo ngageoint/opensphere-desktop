@@ -100,65 +100,65 @@ public class MultiDrawPolygonMeshDataBuffered extends BufferObjectList<BufferObj
         FloatBuffer modelCoords = BufferUtilities.newFloatBuffer(vertexCount * 3);
         FloatBuffer normals = data.stream().anyMatch(d -> d.getVertexData().getNormals() != null)
                 ? BufferUtilities.newFloatBuffer(vertexCount * 3) : null;
-        ByteBuffer colors = BufferUtilities.newByteBuffer(vertexCount * 4);
-        ByteBuffer pickColors = BufferUtilities.newByteBuffer(vertexCount * 4);
-        Collection<IntBuffer> indices = New.collection(geometries.size());
-        ByteBuffer drawColor = ByteBuffer.allocate(4);
-        ByteBuffer pickColor = ByteBuffer.allocate(4);
-        FloatBuffer timeIntervals = groupTimeSpan == null ? null : BufferUtilities.newFloatBuffer(vertexCount * 2);
+                ByteBuffer colors = BufferUtilities.newByteBuffer(vertexCount * 4);
+                ByteBuffer pickColors = BufferUtilities.newByteBuffer(vertexCount * 4);
+                Collection<IntBuffer> indices = New.collection(geometries.size());
+                ByteBuffer drawColor = ByteBuffer.allocate(4);
+                ByteBuffer pickColor = ByteBuffer.allocate(4);
+                FloatBuffer timeIntervals = groupTimeSpan == null ? null : BufferUtilities.newFloatBuffer(vertexCount * 2);
 
-        int vertexIndex = 0;
-        Iterator<? extends PolygonGeometry> geomIter = geometries.iterator();
-        Iterator<? extends PolygonMeshData> dataIter = data.iterator();
-        while (dataIter.hasNext())
-        {
-            PolygonGeometry geom = geomIter.next();
-            PolygonMeshData datum = dataIter.next();
-            VectorBufferUtilities.vec3dToFloatBuffer(datum.getVertexData().getModelCoords(), modelCoords);
+                int vertexIndex = 0;
+                Iterator<? extends PolygonGeometry> geomIter = geometries.iterator();
+                Iterator<? extends PolygonMeshData> dataIter = data.iterator();
+                while (dataIter.hasNext())
+                {
+                    PolygonGeometry geom = geomIter.next();
+                    PolygonMeshData datum = dataIter.next();
+                    VectorBufferUtilities.vec3dToFloatBuffer(datum.getVertexData().getModelCoords(), modelCoords);
 
-            if (normals != null)
-            {
-                VectorBufferUtilities.vec3dToFloatBuffer(datum.getVertexData().getNormals(), normals);
-            }
+                    if (normals != null)
+                    {
+                        VectorBufferUtilities.vec3dToFloatBuffer(datum.getVertexData().getNormals(), normals);
+                    }
 
-            ColorBufferUtilities.getColors(geom, geom.getRenderProperties().getFillColorRenderProperties(), highlight,
-                    drawColor.rewind());
+                    ColorBufferUtilities.getColors(geom, geom.getRenderProperties().getFillColorRenderProperties(), highlight,
+                            drawColor.rewind());
 
-            int geomVertexCount = datum.getVertexData().getModelCoords().size();
-            pickManager.getPickColor(geom, pickColor.rewind());
-            Utilities.times(geomVertexCount, () ->
-            {
-                colors.put(drawColor.rewind());
-                pickColors.put(pickColor.rewind());
-            });
+                    int geomVertexCount = datum.getVertexData().getModelCoords().size();
+                    pickManager.getPickColor(geom, pickColor.rewind());
+                    Utilities.times(geomVertexCount, () ->
+                    {
+                        colors.put(drawColor.rewind());
+                        pickColors.put(pickColor.rewind());
+                    });
 
-            if (timeIntervals != null && groupTimeSpan != null)
-            {
-                addTimeIntervals(groupTimeSpan, geom, datum, timeIntervals);
-            }
+                    if (timeIntervals != null && groupTimeSpan != null)
+                    {
+                        addTimeIntervals(groupTimeSpan, geom, datum, timeIntervals);
+                    }
 
-            indices.add(getIndexBuffer(vertexIndex, datum, geomVertexCount));
+                    indices.add(getIndexBuffer(vertexIndex, datum, geomVertexCount));
 
-            vertexIndex += geomVertexCount;
-        }
+                    vertexIndex += geomVertexCount;
+                }
 
-        if (normals != null)
-        {
-            bufferObjects.add(new NormalBufferObject(normals));
-        }
+                if (normals != null)
+                {
+                    bufferObjects.add(new NormalBufferObject(normals));
+                }
 
-        bufferObjects.add(new ColorBufferObject(colors, 4, AbstractGeometry.RenderMode.DRAW));
-        bufferObjects.add(new ColorBufferObject(pickColors, 4, AbstractGeometry.RenderMode.PICK));
+                bufferObjects.add(new ColorBufferObject(colors, 4, AbstractGeometry.RenderMode.DRAW));
+                bufferObjects.add(new ColorBufferObject(pickColors, 4, AbstractGeometry.RenderMode.PICK));
 
-        if (timeIntervals != null)
-        {
-            bufferObjects.add(new VertexAttributeBufferObject(ShaderRendererUtilities.INTERVAL_FILTER_VERTEX_TIME_ATTRIBUTE_NAME,
-                    timeIntervals));
-        }
-        bufferObjects.add(new VertexBufferObject(modelCoords, false));
-        bufferObjects.add(new MultiDrawIndexBufferObject(indices));
+                if (timeIntervals != null)
+                {
+                    bufferObjects.add(new VertexAttributeBufferObject(ShaderRendererUtilities.INTERVAL_FILTER_VERTEX_TIME_ATTRIBUTE_NAME,
+                            timeIntervals));
+                }
+                bufferObjects.add(new VertexBufferObject(modelCoords, false));
+                bufferObjects.add(new MultiDrawIndexBufferObject(indices));
 
-        return bufferObjects;
+                return bufferObjects;
     }
 
     /**

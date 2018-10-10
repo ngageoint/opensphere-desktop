@@ -356,9 +356,9 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
 
         // TODO This is broken. Get minimum distance relies on the triangles
         // being in view and sometimes returns bad results.
-//        double northMin = getNorthBottom().getMinDistance(view);
-//        double southMin = getSouthBottom().getMinDistance(view);
-//        return Math.min(northMin, southMin);
+        //        double northMin = getNorthBottom().getMinDistance(view);
+        //        double southMin = getSouthBottom().getMinDistance(view);
+        //        return Math.min(northMin, southMin);
     }
 
     @Override
@@ -466,7 +466,7 @@ public class ImmutableTriangleGlobeModel extends TriangleGlobeModel
         for (Entry<AbsoluteElevationProvider, Map<GeographicPolygon, TesseraList<? extends GeographicProjectedTesseraVertex>>> providerEntry
                 : getPetrifiedTerrainBlocks().entrySet())
         {
-        // @formatter:on
+            // @formatter:on
             for (Entry<GeographicPolygon, TesseraList<? extends GeographicProjectedTesseraVertex>> tesseraeEntry : providerEntry
                     .getValue().entrySet())
             {

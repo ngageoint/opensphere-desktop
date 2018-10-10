@@ -27,7 +27,7 @@ import io.opensphere.core.viewer.ViewChangeSupport.ViewChangeListener;
  * @param <T> Layout type
  */
 public abstract class Window<S extends LayoutConstraints, T extends AbstractLayout<S>> extends Frame<S, T>
-        implements PositionBoundedFrame
+implements PositionBoundedFrame
 {
     /** The spacing between tool and the view-port border. */
     private static final int ourBorderWidth = 20;

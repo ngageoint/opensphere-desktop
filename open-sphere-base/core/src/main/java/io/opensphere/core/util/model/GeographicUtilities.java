@@ -134,7 +134,7 @@ public final class GeographicUtilities
             int y = (int)(screenBounds.getHeight() * (geoPos.getLatLonAlt().getLatD() + 90) / 180);
 
             screenPositions
-                    .add(new ScreenPosition(screenBounds.getUpperLeft().getX() + x, screenBounds.getLowerRight().getY() - y));
+            .add(new ScreenPosition(screenBounds.getUpperLeft().getX() + x, screenBounds.getLowerRight().getY() - y));
         }
 
         return screenPositions;

@@ -201,28 +201,28 @@ public class PointSpriteProcessor extends TextureProcessor<PointSpriteGeometry>
         }
     }
 
-//    @Override
-//    protected boolean isOnScreen(PointSpriteGeometry geom, boolean useTime)
-//    {
-//        if (!super.isOnScreen(geom, useTime))
-//        {
-//            return false;
-//        }
-//
-// TODO: This is too slow when there are lots of dots.
-//        Position position = geom.getPosition();
-//        if (position instanceof GeographicPosition)
-//        {
-//            PointProcessor.ModelCoordinates modelData = (PointSpriteProcessor.ModelCoordinates)getModelData(geom);
-//            Vector3d model = modelData.getVector();
-//            return getViewer().isInView(model, 0f) && !isObscured(model);
-//        }
-//        else
-//        {
-//            return true;
-//        }
-//        return true;
-//    }
+    //    @Override
+    //    protected boolean isOnScreen(PointSpriteGeometry geom, boolean useTime)
+    //    {
+    //        if (!super.isOnScreen(geom, useTime))
+    //        {
+    //            return false;
+    //        }
+    //
+    // TODO: This is too slow when there are lots of dots.
+    //        Position position = geom.getPosition();
+    //        if (position instanceof GeographicPosition)
+    //        {
+    //            PointProcessor.ModelCoordinates modelData = (PointSpriteProcessor.ModelCoordinates)getModelData(geom);
+    //            Vector3d model = modelData.getVector();
+    //            return getViewer().isInView(model, 0f) && !isObscured(model);
+    //        }
+    //        else
+    //        {
+    //            return true;
+    //        }
+    //        return true;
+    //    }
 
     @Override
     protected TextureModelData processGeometry(PointSpriteGeometry geom, Projection projectionSnapshot,

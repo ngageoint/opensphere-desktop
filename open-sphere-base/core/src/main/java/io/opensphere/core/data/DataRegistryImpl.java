@@ -517,7 +517,7 @@ public class DataRegistryImpl implements DataRegistry
     @Override
     public <T> void updateModels(final long[] ids, final Collection<? extends T> input,
             final Collection<? extends PropertyAccessor<? super T, ?>> accessors, final Object source, boolean returnEarly,
-            final CacheModificationListener listener)
+                    final CacheModificationListener listener)
     {
         Utilities.checkNull(ids, "ids");
         Utilities.checkNull(accessors, "accessors");
@@ -841,7 +841,7 @@ public class DataRegistryImpl implements DataRegistry
      */
     private Collection<? extends MutableQueryTracker> determineCacheSatisfactions(MultiQueryTracker tracker,
             List<IntervalPropertyValueSet> unsatisfied)
-        throws NotSerializableException, CacheException
+                    throws NotSerializableException, CacheException
     {
         Collection<MutableQueryTracker> cacheTrackers;
         if (tracker.isIntervalQuery())
@@ -946,15 +946,15 @@ public class DataRegistryImpl implements DataRegistry
 
                 MutableQueryTracker subTracker = CollectionUtilities.hasContent(satisfactions)
                         ? tracker.createSubTracker(false, satisfactions) : null;
-                if (subTracker != null)
-                {
-                    dataProviders.add(Pair.create(dp, subTracker));
-                }
+                        if (subTracker != null)
+                        {
+                            dataProviders.add(Pair.create(dp, subTracker));
+                        }
 
-                for (Satisfaction satisfaction : satisfactions)
-                {
-                    IntervalPropertyValueSet.subtract(unsatisfied, satisfaction.getIntervalPropertyValueSet());
-                }
+                        for (Satisfaction satisfaction : satisfactions)
+                        {
+                            IntervalPropertyValueSet.subtract(unsatisfied, satisfaction.getIntervalPropertyValueSet());
+                        }
             }
             else
             {
@@ -1080,7 +1080,7 @@ public class DataRegistryImpl implements DataRegistry
      */
     private int retrievePropertyValues(MutableQueryTracker tracker, int startIndex, long[] ids,
             Collection<? extends PropertyValueReceiver<?>> receivers)
-        throws CacheException
+                    throws CacheException
     {
         if (tracker.isCancelled())
         {

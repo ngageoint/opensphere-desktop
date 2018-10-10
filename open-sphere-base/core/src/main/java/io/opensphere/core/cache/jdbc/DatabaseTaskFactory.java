@@ -313,7 +313,7 @@ public class DatabaseTaskFactory
      */
     public RetrieveGroupValuesTask getRetrieveGroupValuesTask(DataModelCategory category,
             Collection<? extends IntervalPropertyMatcher<?>> parameters,
-            Map<? extends PropertyDescriptor<?>, ? extends List<?>> resultMap)
+                    Map<? extends PropertyDescriptor<?>, ? extends List<?>> resultMap)
     {
         return new RetrieveGroupValuesTask(category, parameters, resultMap, this);
     }

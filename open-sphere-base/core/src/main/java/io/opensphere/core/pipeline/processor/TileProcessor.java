@@ -98,15 +98,15 @@ public class TileProcessor extends TextureProcessor<TileGeometry> implements Spl
 
         GeometryRenderer<?> actualRenderer = renderer instanceof DelegatingRenderer
                 ? ((DelegatingRenderer<?>)renderer).getRenderer() : renderer;
-        if (!(actualRenderer instanceof AbstractTileRenderer))
-        {
-            throw new IllegalArgumentException("Renderer must be an " + AbstractTileRenderer.class.getSimpleName());
-        }
+                if (!(actualRenderer instanceof AbstractTileRenderer))
+                {
+                    throw new IllegalArgumentException("Renderer must be an " + AbstractTileRenderer.class.getSimpleName());
+                }
 
-        Utilities.checkNull(builder.getPriorityComparator(), "builder.getPriorityComparator()");
-        myPriorityComparator = builder.getPriorityComparator();
+                Utilities.checkNull(builder.getPriorityComparator(), "builder.getPriorityComparator()");
+                myPriorityComparator = builder.getPriorityComparator();
 
-        myConfirmDeferredExecutor = new ProcrastinatingExecutor(builder.getFixedPoolExecutorService());
+                myConfirmDeferredExecutor = new ProcrastinatingExecutor(builder.getFixedPoolExecutorService());
     }
 
     @Override

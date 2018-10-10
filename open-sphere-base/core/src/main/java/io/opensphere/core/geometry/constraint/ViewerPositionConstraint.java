@@ -136,7 +136,7 @@ public final class ViewerPositionConstraint
     {
         StringBuilder sb = new StringBuilder(32);
         sb.append(getClass().getSimpleName()).append(" min[").append(myMinimumAltitude).append("] max[").append(myMaximumAltitude)
-                .append(']');
+        .append(']');
         return sb.toString();
     }
 }

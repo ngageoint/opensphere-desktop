@@ -491,7 +491,7 @@ public class SQLGeneratorImpl implements SQLGenerator
         if (joinTableColumn != null)
         {
             sb.append(SQL.RIGHT_JOIN).append(joinTableColumn.getTableName()).append(SQL.ON).append(joinTableColumn.getTableName())
-                    .append('.').append(joinTableColumn.getColumnName()).append(SQL.EQUALS).append(SQL.DATA_GROUP_GROUP_ID);
+            .append('.').append(joinTableColumn.getColumnName()).append(SQL.EQUALS).append(SQL.DATA_GROUP_GROUP_ID);
         }
         if (whereExpression != null && whereExpression.length() > 0)
         {
@@ -507,7 +507,7 @@ public class SQLGeneratorImpl implements SQLGenerator
     @Override
     public String generateRetrieveGroupValuesSql(int[] groupIds, JoinTableColumn joinTableColumn, DataModelCategory category,
             Collection<? extends PropertyMatcher<?>> parameters, Collection<? extends PropertyDescriptor<?>> selectProperties,
-            TimeSpan expirationRange, Boolean critical) throws CacheException
+                    TimeSpan expirationRange, Boolean critical) throws CacheException
     {
         StringBuilder selectExpression = new StringBuilder(512).append(SQL.SELECT);
         StringBuilder tableExpression = new StringBuilder(256).append(SQL.FROM).append(TableNames.DATA_GROUP);
@@ -610,7 +610,7 @@ public class SQLGeneratorImpl implements SQLGenerator
         sb.append(SQL.FROM).append(tableName);
 
         sb.append(SQL.INNER_JOIN).append(joinTableName).append(SQL.ON).append(tableName).append('.').append(ColumnNames.DATA_ID)
-                .append(SQL.EQUALS).append(joinTableName).append('.').append(ColumnNames.JOIN_ID);
+        .append(SQL.EQUALS).append(joinTableName).append('.').append(ColumnNames.JOIN_ID);
         sb.append(SQL.ORDER_BY).append(joinTableName).append(SQL.DOT_SEQUENCE);
 
         return sb.toString();
@@ -640,7 +640,7 @@ public class SQLGeneratorImpl implements SQLGenerator
         sb.append(SQL.FROM).append(tableName);
 
         sb.append(SQL.INNER_JOIN).append(joinTableName).append(SQL.ON).append(tableName).append('.').append(ColumnNames.DATA_ID)
-                .append(SQL.EQUALS).append(joinTableName).append('.').append(ColumnNames.JOIN_ID);
+        .append(SQL.EQUALS).append(joinTableName).append('.').append(ColumnNames.JOIN_ID);
         sb.append(SQL.ORDER_BY).append(joinTableName).append(SQL.DOT_SEQUENCE);
 
         return sb.toString();
@@ -697,8 +697,8 @@ public class SQLGeneratorImpl implements SQLGenerator
         if (joinTableColumn != null)
         {
             tableExpression.append(SQL.INNER_JOIN).append(joinTableColumn.getTableName()).append(SQL.ON)
-                    .append(joinTableColumn.getTableName()).append('.').append(joinTableColumn.getColumnName()).append(SQL.EQUALS)
-                    .append(SQL.DATA_GROUP_GROUP_ID);
+            .append(joinTableColumn.getTableName()).append('.').append(joinTableColumn.getColumnName()).append(SQL.EQUALS)
+            .append(SQL.DATA_GROUP_GROUP_ID);
         }
         else if (groupIds != null)
         {
@@ -946,13 +946,13 @@ public class SQLGeneratorImpl implements SQLGenerator
         {
             appendWhereOrAnd(where);
             where.append(SQL.NOT).append(SQL.EXISTS_SELECT).append('*').append(SQL.FROM).append(groupTableName).append(SQL.AS)
-                    .append(tableAlias).append(SQL.WHERE).append(tableAlias).append(SQL.DOT_GROUP_ID).append(SQL.EQUALS)
-                    .append(SQL.DATA_GROUP_GROUP_ID);
+            .append(tableAlias).append(SQL.WHERE).append(tableAlias).append(SQL.DOT_GROUP_ID).append(SQL.EQUALS)
+            .append(SQL.DATA_GROUP_GROUP_ID);
         }
         else
         {
             join.append(SQL.INNER_JOIN).append(groupTableName).append(SQL.AS).append(tableAlias).append(SQL.ON).append(tableAlias)
-                    .append(SQL.DOT_GROUP_ID).append(SQL.EQUALS).append(SQL.DATA_GROUP_GROUP_ID);
+            .append(SQL.DOT_GROUP_ID).append(SQL.EQUALS).append(SQL.DATA_GROUP_GROUP_ID);
         }
 
         if (!(parameter instanceof GeometryMatcher))
@@ -1013,7 +1013,7 @@ public class SQLGeneratorImpl implements SQLGenerator
             String joinTableName = joinTableNameIterator.next();
             String columnName = columnNames.get(0);
             join.append(SQL.INNER_JOIN).append(joinTableName).append(SQL.ON).append(joinTableName).append('.')
-                    .append(ColumnNames.VALUE).append(SQL.EQUALS).append('"').append(columnName).append('"');
+            .append(ColumnNames.VALUE).append(SQL.EQUALS).append('"').append(columnName).append('"');
         }
         else
         {
@@ -1049,7 +1049,7 @@ public class SQLGeneratorImpl implements SQLGenerator
                 alias = "t" + index++;
                 String groupTableName = TableNames.getGroupTableName(desc.getType());
                 joinExpression.append(SQL.INNER_JOIN).append(groupTableName).append(SQL.AS).append(alias).append(SQL.ON)
-                        .append(alias).append(SQL.DOT_GROUP_ID).append(SQL.EQUALS).append(SQL.DATA_GROUP_GROUP_ID);
+                .append(alias).append(SQL.DOT_GROUP_ID).append(SQL.EQUALS).append(SQL.DATA_GROUP_GROUP_ID);
             }
             if (TimeSpan.class.isAssignableFrom(desc.getType()))
             {

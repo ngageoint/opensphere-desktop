@@ -220,7 +220,7 @@ public class CachingDataRegistryDataProvider
      *             cache.
      */
     private void sendStreamsToPropertyReceivers(long[] ids, Collection<? extends PropertyValueReceiver<?>> receivers)
-        throws CacheException
+            throws CacheException
     {
         PropertyValueMap resultMap = new PropertyValueMap();
         for (PropertyValueReceiver<?> propertyValueReceiver : receivers)

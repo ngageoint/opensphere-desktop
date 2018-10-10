@@ -341,7 +341,7 @@ public class JSONSaxParser
                                 {
                                     JSONSaxParseException e = new JSONSaxParseException(lineCounter, charCounter,
                                             "Pair Separator Character '" + currChar + "' found at position " + charCounter
-                                                    + " without preceeding pair " + " line " + lineCounter);
+                                            + " without preceeding pair " + " line " + lineCounter);
                                     myHandler.fatalError(e);
                                     throw e;
                                 }
@@ -543,7 +543,7 @@ public class JSONSaxParser
                                         getTextBuffer().append(currChar);
                                         break;
                                     case ARRAY_ELEMENT_SEPARATOR: // or
-                                                                  // PAIR_SEPARATOR
+                                        // PAIR_SEPARATOR
                                         // Since this could also be the
                                         // OBJECT K/v pair separator
                                         // check the state one above the
@@ -646,7 +646,7 @@ public class JSONSaxParser
                                         getTextBuffer().append(currChar);
                                         break;
                                     case ARRAY_ELEMENT_SEPARATOR: // ||
-                                                                  // PAIR_SEPARATOR
+                                        // PAIR_SEPARATOR
                                         // Since the "," is both the pair
                                         // separator and the
                                         // array element separator and we
@@ -738,7 +738,7 @@ public class JSONSaxParser
                                             getTextBuffer().append(currChar);
                                             break;
                                         case ARRAY_ELEMENT_SEPARATOR: // ||
-                                                                      // PAIR_SEPARATOR
+                                            // PAIR_SEPARATOR
                                             // Since the "," is both the
                                             // pair separator and the
                                             // array element separator and

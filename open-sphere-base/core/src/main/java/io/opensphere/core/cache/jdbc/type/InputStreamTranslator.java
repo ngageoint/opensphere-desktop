@@ -67,7 +67,7 @@ public class InputStreamTranslator extends AbstractValueTranslator<InputStream>
      */
     @Override
     public int setValue(PreparedStatement pstmt, int column, InputStream value, boolean forInsert)
-        throws CacheException, SQLException
+            throws CacheException, SQLException
     {
         pstmt.setBinaryStream(column, value);
         return column + 1;

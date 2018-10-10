@@ -109,7 +109,7 @@ public class CancellableThreePhaseProperty<S>
     public void removeListener(CancellableThreePhasePropertyListener<S, ? extends CancellableThreePhaseProperty<S>> listener)
     {
         myProperty.removeListener(
-            l -> l instanceof ListenerAdapter && Utilities.sameInstance(((ListenerAdapter<?, ?>)l).myListener, listener));
+                l -> l instanceof ListenerAdapter && Utilities.sameInstance(((ListenerAdapter<?, ?>)l).myListener, listener));
     }
 
     /**
@@ -131,7 +131,7 @@ public class CancellableThreePhaseProperty<S>
      */
     @SuppressWarnings("PMD.AvoidRethrowingException")
     public boolean setValue(S value, long perPhaseTimeoutMillis, boolean failOnTimeout)
-        throws PropertyChangeException, InterruptedException
+            throws PropertyChangeException, InterruptedException
     {
         TaskCanceller canceller = new TaskCanceller();
         TaskCanceller existing = myCanceller.getAndSet(canceller);
@@ -217,7 +217,7 @@ public class CancellableThreePhaseProperty<S>
          * @throws InterruptedException If the thread is interrupted.
          */
         boolean preCommit(T property, S pendingState, PhasedTaskCanceller canceller)
-            throws PropertyChangeException, InterruptedException;
+                throws PropertyChangeException, InterruptedException;
 
         /**
          * Request that the listener count down the latch when it is prepared to
@@ -237,7 +237,7 @@ public class CancellableThreePhaseProperty<S>
          * @throws InterruptedException If the thread is interrupted.
          */
         boolean prepare(T property, S pendingState, PhasedTaskCanceller canceller)
-            throws PropertyChangeException, InterruptedException;
+                throws PropertyChangeException, InterruptedException;
     }
 
     /**
@@ -249,7 +249,7 @@ public class CancellableThreePhaseProperty<S>
      *            to a {@link ThreePhaseChangeListener}.
      */
     protected static final class ListenerAdapter<S, T extends CancellableThreePhaseProperty<S>>
-            implements ThreePhaseChangeListener<S>
+    implements ThreePhaseChangeListener<S>
     {
         /** The wrapped listener. */
         private final Reference<CancellableThreePhasePropertyListener<S, T>> myListener;

@@ -119,7 +119,7 @@ public class ButtonBinding implements KeyBindingChangeListener
             try
             {
                 myRestoreDefaultsButton
-                        .setIcon(new ImageIcon(ImageIO.read(ButtonBinding.class.getResource("/images/icon-repeat-up.png"))));
+                .setIcon(new ImageIcon(ImageIO.read(ButtonBinding.class.getResource("/images/icon-repeat-up.png"))));
                 myRestoreDefaultsButton.setRolloverIcon(
                         new ImageIcon(ImageIO.read(ButtonBinding.class.getResource("/images/icon-repeat-over.png"))));
                 myRestoreDefaultsButton.setPressedIcon(

@@ -172,7 +172,7 @@ public class CacheUtilities
      */
     public int[] convertResultSetToIntArray(ResultSet rs, Collection<? extends IntervalPropertyMatcher<?>> resultFilterParameters,
             TypeMapper typeMapper)
-        throws SQLException
+                    throws SQLException
     {
         int[] arr;
         if (rs.next())
@@ -186,7 +186,7 @@ public class CacheUtilities
                 final IntervalPropertyMatcher<?>[] matchers = New.array(resultFilterParameters, IntervalPropertyMatcher.class);
                 @SuppressWarnings("unchecked")
                 final ValueTranslator<Object>[] valueTranslators = (ValueTranslator<Object>[])typeMapper
-                        .getValueTranslators(props);
+                .getValueTranslators(props);
 
                 final List<Object> results = New.list(1);
                 do
@@ -292,8 +292,8 @@ public class CacheUtilities
      */
     public void convertResultSetToPropertyValues(ResultSet rs, PropertyDescriptor<?>[] props, List<?>[] results,
             TypeMapper typeMapper, Collection<? extends IntervalPropertyMatcher<?>> resultFilterParameters,
-            TIntList failedIndices)
-        throws CacheException
+                    TIntList failedIndices)
+                            throws CacheException
     {
         final IntervalPropertyMatcher<?>[] filters = new IntervalPropertyMatcher<?>[props.length];
         if (CollectionUtilities.hasContent(resultFilterParameters))
@@ -933,7 +933,7 @@ public class CacheUtilities
      * @throws CacheException If the index names cannot be retrieved.
      */
     public Collection<String> getIndexNames(Connection conn, String catalog, String schema, String tableName)
-        throws CacheException
+            throws CacheException
     {
         final Collection<String> indexNames = New.collection();
         try
@@ -978,7 +978,7 @@ public class CacheUtilities
      * @throws CacheException If the table names cannot be retrieved.
      */
     public Collection<String> getTableNames(Connection conn, String catalog, String schemaPattern, String tableNamePattern)
-        throws CacheException
+            throws CacheException
     {
         final Collection<String> tableNames = New.collection();
         try
@@ -1110,7 +1110,7 @@ public class CacheUtilities
      * @throws SQLException If a database error occurs.
      */
     public Collection<SpaceTime> readSpaceTimes(ResultSet rs, List<? extends PropertyMatcher<?>> parameters)
-        throws CacheException, SQLException
+            throws CacheException, SQLException
     {
         int startIndex = -1;
         int endIndex = -1;

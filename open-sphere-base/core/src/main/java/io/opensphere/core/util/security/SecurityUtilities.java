@@ -65,7 +65,7 @@ public final class SecurityUtilities
      */
     public static CipherEncryptedPrivateKeyProvider createCipherEncryptedPrivateKeyProvider(KeyStore keystore, String alias,
             String source, char[] password, CipherFactory cipherFactory, boolean persistable)
-                throws PrivateKeyProviderException, KeyStoreException, NoSuchAlgorithmException
+                    throws PrivateKeyProviderException, KeyStoreException, NoSuchAlgorithmException
     {
         try
         {
@@ -173,7 +173,7 @@ public final class SecurityUtilities
      *             retrieved.
      */
     public static List<? extends X509Certificate> getCertificateChain(KeyStore keystore, String alias)
-        throws PrivateKeyProviderException
+            throws PrivateKeyProviderException
     {
         return new KeyStorePrivateKeyProvider(alias, keystore, (char[])null, "Key Store").getCertificateChain();
     }

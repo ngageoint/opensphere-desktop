@@ -62,7 +62,7 @@ public class IntegerSpinnerController extends AbstractController<Integer, Intege
 
         // Make typing in the text field actually work
         ((DefaultFormatter)((JSpinner.DefaultEditor)getView().getEditor()).getTextField().getFormatter())
-                .setCommitsOnValidEdit(true);
+        .setCommitsOnValidEdit(true);
 
         myPropertyChangeListener = e ->
         {

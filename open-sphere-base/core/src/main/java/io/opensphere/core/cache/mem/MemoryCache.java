@@ -296,7 +296,7 @@ public class MemoryCache implements Cache
     @Override
     public List<DataModelCategory> getDataModelCategoriesByGroupId(int[] ids, boolean source, boolean family, boolean category,
             boolean distinct)
-        throws CacheException
+                    throws CacheException
     {
         List<DataModelCategory> results = New.<DataModelCategory>randomAccessList(ids.length);
 
@@ -354,7 +354,7 @@ public class MemoryCache implements Cache
 
     @Override
     public List<DataModelCategory> getDataModelCategoriesByModelId(long[] ids, boolean source, boolean family, boolean category)
-        throws CacheException
+            throws CacheException
     {
         final int[] groupIds = getGroupIds(ids, true);
         return getDataModelCategoriesByGroupId(groupIds, source, family, category, true);
@@ -376,7 +376,7 @@ public class MemoryCache implements Cache
     @Override
     public long[] getIds(Collection<? extends Satisfaction> satisfactions, Collection<? extends PropertyMatcher<?>> parameters,
             List<? extends OrderSpecifier> orderSpecifiers, int startIndex, int limit)
-        throws CacheException, NotSerializableException
+                    throws CacheException, NotSerializableException
     {
         verifyNestedCache();
         return myNestedCache.getIds(satisfactions, parameters, orderSpecifiers, startIndex, limit);
@@ -385,7 +385,7 @@ public class MemoryCache implements Cache
     @Override
     public long[] getIds(DataModelCategory category, Collection<? extends PropertyMatcher<?>> parameters,
             List<? extends OrderSpecifier> orderSpecifiers, int startIndex, int limit)
-        throws CacheException, NotSerializableException
+                    throws CacheException, NotSerializableException
     {
         verifyNestedCache();
         return myNestedCache.getIds(category, parameters, orderSpecifiers, startIndex, limit);
@@ -394,7 +394,7 @@ public class MemoryCache implements Cache
     @Override
     public long[] getIds(int[] groupIds, Collection<? extends PropertyMatcher<?>> parameters,
             List<? extends OrderSpecifier> orderSpecifiers, int startIndex, int limit)
-        throws NotSerializableException, CacheException
+                    throws NotSerializableException, CacheException
     {
         verifyNestedCache();
         return myNestedCache.getIds(groupIds, parameters, orderSpecifiers, startIndex, limit);
@@ -502,7 +502,7 @@ public class MemoryCache implements Cache
 
     @Override
     public <T> long[] put(CacheDeposit<T> insert, final CacheModificationListener listener)
-        throws CacheException, NotSerializableException
+            throws CacheException, NotSerializableException
     {
         if (myNestedCache == null)
         {
@@ -571,8 +571,8 @@ public class MemoryCache implements Cache
     @Override
     public <T> void updateValues(final long[] ids, final Collection<? extends T> input,
             final Collection<? extends PropertyAccessor<? super T, ?>> accessors, final Executor executor,
-            final CacheModificationListener listener)
-        throws CacheException, NotSerializableException
+                    final CacheModificationListener listener)
+                            throws CacheException, NotSerializableException
     {
         final long t0 = System.nanoTime();
         cacheObjects(ids, input, accessors);
@@ -755,7 +755,7 @@ public class MemoryCache implements Cache
      * @throws CacheException If the objects cannot be retrieved.
      */
     protected int getValuesFromNestedCache(PropertyValueMap resultMap, int[] indices, long[] neededIds, TIntList failedIndices)
-        throws CacheException
+            throws CacheException
     {
         boolean allFail = false;
         final PropertyValueMap cacheResultMap = new PropertyValueMap();
@@ -968,7 +968,7 @@ public class MemoryCache implements Cache
      */
     private void notifyListenerForNonPersistentAccessors(final CacheModificationListener listener,
             Collection<? extends PropertyAccessor<?, ?>> accessors, long[] ids)
-        throws CacheException
+                    throws CacheException
     {
         final Collection<PropertyDescriptor<?>> transientPropertyDescriptors = New.collection();
         for (final PropertyAccessor<?, ?> propertyAccessor : accessors)

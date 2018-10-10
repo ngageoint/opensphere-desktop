@@ -29,7 +29,7 @@ public class PickManagerGeometryRemover
     /** Atomic updater for {@link #myNextFlush}. */
     @SuppressWarnings("rawtypes")
     private static final AtomicReferenceFieldUpdater<PickManagerGeometryRemover, Collection> NEXT_FLUSH_UPDATER = AtomicReferenceFieldUpdater
-            .newUpdater(PickManagerGeometryRemover.class, Collection.class, "myNextFlush");
+    .newUpdater(PickManagerGeometryRemover.class, Collection.class, "myNextFlush");
 
     /** The pick manager. */
     private final PickManager myPickManager;

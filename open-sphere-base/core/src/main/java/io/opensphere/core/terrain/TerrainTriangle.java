@@ -1045,14 +1045,14 @@ public class TerrainTriangle implements Cloneable, Tessera<GeographicPosition>
         {
             // TODO Currently the sets geometries added by addQuadTessera and
             // addTriangleTessera() overlap and cause rendering artifacts.
-//            if (tess.touchesPole())
-//            {
-//                tess.addQuadTessera(quadBuilder);
-//            }
-//            else
-//            {
-//                tess.addTriangleTessera(triBuilder);
-//            }
+            //            if (tess.touchesPole())
+            //            {
+            //                tess.addQuadTessera(quadBuilder);
+            //            }
+            //            else
+            //            {
+            //                tess.addTriangleTessera(triBuilder);
+            //            }
             if (!tess.isDegenerateOnGlobe())
             {
                 tess.addTriangleTessera(triBuilder);

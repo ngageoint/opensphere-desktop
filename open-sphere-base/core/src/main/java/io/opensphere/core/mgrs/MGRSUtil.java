@@ -528,7 +528,7 @@ public final class MGRSUtil
         {
             int numDigits = desiredPrecision / 2;
             result = mgrsFullPrecision.substring(0, 5) + mgrsFullPrecision.substring(5, 5 + numDigits)
-                    + mgrsFullPrecision.substring(10, 10 + numDigits);
+            + mgrsFullPrecision.substring(10, 10 + numDigits);
         }
         return result;
     }

@@ -159,7 +159,7 @@ public class ColladaParser
             {
                 myImageLibrary.put(image.getId(), image);
             }
-//            myUnusedTags.addAll(myImageLibrary.keySet());
+            //            myUnusedTags.addAll(myImageLibrary.keySet());
         }
 
         if (model.getLibraryEffects() != null)
@@ -168,7 +168,7 @@ public class ColladaParser
             {
                 myEffectLibrary.put("#" + effect.getId(), effect);
             }
-//            myUnusedTags.addAll(myEffectLibrary.keySet());
+            //            myUnusedTags.addAll(myEffectLibrary.keySet());
         }
 
         if (model.getLibraryMaterials() != null)
@@ -178,7 +178,7 @@ public class ColladaParser
                 myNameMaterialLibrary.put(material.getName(), material);
                 myIdMaterialLibrary.put("#" + material.getId(), material);
             }
-//            myUnusedTags.addAll(myNameMaterialLibrary.keySet());
+            //            myUnusedTags.addAll(myNameMaterialLibrary.keySet());
         }
 
         for (io.opensphere.core.collada.jaxb.Geometry geometry : model.getLibraryGeometries())

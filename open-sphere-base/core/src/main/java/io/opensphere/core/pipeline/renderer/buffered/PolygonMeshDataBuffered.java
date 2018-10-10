@@ -75,7 +75,7 @@ public class PolygonMeshDataBuffered extends BufferObjectList<PolygonMeshBuffere
             if (data.getVertexData().getNormals() != null)
             {
                 bufferObjects
-                        .add(new NormalBufferObject(VectorBufferUtilities.vec3dToFloatBuffer(data.getVertexData().getNormals())));
+                .add(new NormalBufferObject(VectorBufferUtilities.vec3dToFloatBuffer(data.getVertexData().getNormals())));
             }
             if (data.getVertexData().getColors() != null && data.getVertexData().getTextureCoords() == null)
             {

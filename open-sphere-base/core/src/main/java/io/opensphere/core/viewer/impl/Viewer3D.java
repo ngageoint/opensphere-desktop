@@ -844,7 +844,7 @@ public class Viewer3D extends AbstractDynamicViewer
             {
                 return;
             }
-//                System.out.println(geopos);
+            //                System.out.println(geopos);
         }
         ViewerPosition3D viewerPosition = new ViewerPosition3D(scaledPos, dir, up);
         viewerPosition.setGeoPosition(geopos);
@@ -935,10 +935,10 @@ public class Viewer3D extends AbstractDynamicViewer
             pos = myMapContext.getProjection().convertToModel(myPosition.getGeoPosition(), Vector3d.ORIGIN);
             changed = Math.abs(pos.getX() - oldPos.getX()) > 400 || Math.abs(pos.getY() - oldPos.getY()) > 400
                     || Math.abs(pos.getZ() - oldPos.getZ()) > 400;
-            if (myPosition.getGeoPosition().getAlt().getReferenceLevel() != ReferenceLevel.TERRAIN)
-            {
-                terrainTolerance *= 10;
-            }
+                    if (myPosition.getGeoPosition().getAlt().getReferenceLevel() != ReferenceLevel.TERRAIN)
+                    {
+                        terrainTolerance *= 10;
+                    }
         }
         Vector3d backup = myPosition.getDir().multiply(-100);
         while (!myMapContext.getProjection().isOutsideModel(pos.add(pos.multiply(terrainTolerance))))

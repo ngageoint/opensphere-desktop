@@ -36,7 +36,7 @@ public class EllipseGeometry extends PolygonGeometry
      */
     public EllipseGeometry(EllipseGeometry.AngleBuilder<?> builder, PolygonRenderProperties renderProperties,
             Constraints constraints)
-        throws IllegalArgumentException
+                    throws IllegalArgumentException
     {
         this((PolygonGeometry.Builder<?>)builder, renderProperties, constraints);
 
@@ -77,7 +77,7 @@ public class EllipseGeometry extends PolygonGeometry
      */
     public EllipseGeometry(EllipseGeometry.FocusBuilder<?> builder, PolygonRenderProperties renderProperties,
             Constraints constraints)
-        throws IllegalArgumentException
+                    throws IllegalArgumentException
     {
         super(builder, renderProperties, constraints);
 
@@ -117,7 +117,7 @@ public class EllipseGeometry extends PolygonGeometry
      */
     public EllipseGeometry(EllipseGeometry.ProjectedBuilder builder, PolygonRenderProperties renderProperties,
             Constraints constraints)
-        throws IllegalArgumentException
+                    throws IllegalArgumentException
     {
         this((PolygonGeometry.Builder<?>)builder, renderProperties, constraints);
         myCenter = builder.getCenter();

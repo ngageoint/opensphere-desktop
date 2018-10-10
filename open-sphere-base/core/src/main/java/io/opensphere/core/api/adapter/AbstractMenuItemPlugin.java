@@ -240,7 +240,7 @@ public abstract class AbstractMenuItemPlugin extends PluginAdapter
             final KeyStroke hotKeyStroke, final Integer menuPosition)
     {
         EventQueueUtilities
-                .invokeLater(() -> intializeMenuThread(toolbox, parentMenuName, menuButtonLabel, hotKeyStroke, menuPosition));
+        .invokeLater(() -> intializeMenuThread(toolbox, parentMenuName, menuButtonLabel, hotKeyStroke, menuPosition));
     }
 
     /**

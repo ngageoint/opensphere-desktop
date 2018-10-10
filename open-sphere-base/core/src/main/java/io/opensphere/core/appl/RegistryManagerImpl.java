@@ -121,7 +121,7 @@ public class RegistryManagerImpl
             Predicate<HUDFrame> importerPredicate = f1 -> f1 instanceof HUDJInternalFrame
                     && ((HUDJInternalFrame)f1).getInternalFrame() instanceof FileOrURLImporter;
             adds.stream().filter(importerPredicate)
-                    .forEach(f2 -> myImporterRegistry.addImporter((FileOrURLImporter)((HUDJInternalFrame)f2).getInternalFrame()));
+            .forEach(f2 -> myImporterRegistry.addImporter((FileOrURLImporter)((HUDJInternalFrame)f2).getInternalFrame()));
             removes.stream().filter(importerPredicate).forEach(
                     f3 -> myImporterRegistry.removeImporter((FileOrURLImporter)((HUDJInternalFrame)f3).getInternalFrame()));
         };

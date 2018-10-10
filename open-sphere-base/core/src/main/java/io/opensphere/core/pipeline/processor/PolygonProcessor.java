@@ -564,7 +564,7 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
 
     /** A simple generator for creating screen vertices. */
     protected static class ScreenVertexGenerator
-            extends AbstractSimpleVertexGenerator<SimpleProjectedTesseraVertex<ScreenPosition>>
+    extends AbstractSimpleVertexGenerator<SimpleProjectedTesseraVertex<ScreenPosition>>
     {
         /**
          * The converter used to generate model positions for the projected

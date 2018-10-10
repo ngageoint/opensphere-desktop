@@ -399,7 +399,7 @@ public class CertificateSelectionPanel extends GridBagPanel implements Validatab
         style("label").addRow(expandPanel);
         style("inputFill").addRow(certificateDetailsScrollPane);
         style("label", "input").addRow(null, myWarningLabel);
-//        style("filler").fillVertical().addRow(new JLabel());
+        //        style("filler").fillVertical().addRow(new JLabel());
     }
 
     /**

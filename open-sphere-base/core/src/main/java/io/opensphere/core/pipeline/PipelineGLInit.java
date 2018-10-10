@@ -142,10 +142,10 @@ public class PipelineGLInit
         }
         // TODO: when the GL context is switched, there's nothing to make the
         // component visible again.
-//        else
-//        {
-//            myComponent.setVisible(false);
-//        }
+        //        else
+        //        {
+        //            myComponent.setVisible(false);
+        //        }
     }
 
     /**
@@ -369,7 +369,7 @@ public class PipelineGLInit
         ToStringHelper helper = new ToStringHelper((Class<?>)null, 0);
         helper.add("======= Graphics Information =======");
         helper.add(device.getClass().getSimpleName() + "[type " + device.getType() + ", connection " + device.getConnection()
-                + "]: " + GLProfile.glAvailabilityToString(device));
+        + "]: " + GLProfile.glAvailabilityToString(device));
         helper.add("Swap Interval", gl.getSwapInterval());
         helper.add("GL Profile", gl.getGLProfile());
         helper.add("CTX VERSION", gl.getContext().getGLVersion());
@@ -474,7 +474,7 @@ public class PipelineGLInit
                     if (builder.getRendererSet().getRenderer(type) == null)
                     {
                         warnings.add("Processor for " + type.getSimpleName()
-                                + " geometries is disabled because no renderers are available.");
+                        + " geometries is disabled because no renderers are available.");
                         break;
                     }
                 }

@@ -870,7 +870,7 @@ public class SecurityManagerImpl implements SecurityManager
                         "<html>The private key used to encrypt local data is not available.<br/>Looking for "
                                 + digest.toString()
                                 + "<p/>Would you like to delete your encrypted data (including passwords and certificates) and start over?</html>",
-                        "Cannot load private key", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null, null, null);
+                                "Cannot load private key", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null, null, null);
                 return Boolean.valueOf(choice == JOptionPane.OK_OPTION);
             };
             if (EventQueueUtilities.callOnEdt(userPromptCallable).booleanValue())
@@ -987,7 +987,7 @@ public class SecurityManagerImpl implements SecurityManager
      * @throws SecretKeyProviderException If the user cancelled.
      */
     private SecretKey promptUserForNewSecretKey(final String promptMessage, final boolean warnOnCancel)
-        throws SecretKeyProviderException
+            throws SecretKeyProviderException
     {
         try
         {

@@ -36,7 +36,7 @@ import io.opensphere.core.viewer.impl.MapContext;
  */
 @SuppressWarnings("PMD.GodClass")
 public class PointSpriteRendererImmediate<T extends PointSpriteGeometry> extends AbstractPointRenderer<T>
-        implements GeometryRendererImmediate<T>
+implements GeometryRendererImmediate<T>
 {
     /** Bits used for {@link GL2#glPushAttrib(int)}. */
     private static final int ATTRIB_BITS = GL2.GL_ENABLE_BIT | GL.GL_COLOR_BUFFER_BIT | GL2.GL_CURRENT_BIT | GL2.GL_POINT_BIT

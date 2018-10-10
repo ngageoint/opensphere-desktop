@@ -53,7 +53,7 @@ public abstract class ThreePhaseChangeSupport<S, T extends ThreePhaseChangeListe
 
         @SuppressWarnings("unchecked")
         WeakReference<PhasedChangeArbitrator>[] arr = (WeakReference<PhasedChangeArbitrator>[])new WeakReference<?>[myArbitrators.length
-                + 1];
+                                                                                                                    + 1];
         System.arraycopy(myArbitrators, 0, arr, 0, myArbitrators.length);
         arr[arr.length - 1] = new WeakReference<>(arbitrator);
         myArbitrators = arr;
@@ -126,7 +126,7 @@ public abstract class ThreePhaseChangeSupport<S, T extends ThreePhaseChangeListe
      * @throws InterruptedException If the thread is interrupted.
      */
     public boolean updateState(S pendingState, long perPhaseTimeoutMillis, boolean failOnTimeout)
-        throws PropertyChangeException, InterruptedException
+            throws PropertyChangeException, InterruptedException
     {
         if (myUpdateLock.tryLock())
         {
@@ -191,7 +191,7 @@ public abstract class ThreePhaseChangeSupport<S, T extends ThreePhaseChangeListe
      * @throws InterruptedException If the thread is interrupted.
      */
     private boolean processPhase(Phase phase, S pendingState, long timeout, boolean failOnTimeout)
-        throws PropertyChangeException, InterruptedException
+            throws PropertyChangeException, InterruptedException
     {
         @SuppressWarnings("PMD.PrematureDeclaration")
         long t0 = System.nanoTime();
@@ -267,7 +267,7 @@ public abstract class ThreePhaseChangeSupport<S, T extends ThreePhaseChangeListe
     {
         @SuppressWarnings("unchecked")
         WeakReference<PhasedChangeArbitrator>[] arr = (WeakReference<PhasedChangeArbitrator>[])new WeakReference<?>[myArbitrators.length
-                - 1];
+                                                                                                                    - 1];
         if (arr.length > 0)
         {
             if (index > 0)

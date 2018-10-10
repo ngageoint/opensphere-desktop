@@ -206,17 +206,17 @@ abstract class LRUObjectManager
         if (myVMCacheMetric != null)
         {
             myVMCacheMetric
-                    .setValue(Double.valueOf((double)myCacheStatusVM.getCurrentSizeBytes() / Constants.BYTES_PER_MEGABYTE));
+            .setValue(Double.valueOf((double)myCacheStatusVM.getCurrentSizeBytes() / Constants.BYTES_PER_MEGABYTE));
         }
         if (myGPUCacheMetric != null)
         {
             myGPUCacheMetric
-                    .setValue(Double.valueOf((double)myCacheStatusGPU.getCurrentSizeBytes() / Constants.BYTES_PER_MEGABYTE));
+            .setValue(Double.valueOf((double)myCacheStatusGPU.getCurrentSizeBytes() / Constants.BYTES_PER_MEGABYTE));
         }
         if (myVMPctCacheMetric != null)
         {
             myVMPctCacheMetric
-                    .setValue(Double.valueOf((double)myCacheStatusVM.getCurrentSizeBytes() / myCacheStatusVM.getMaxSizeBytes()));
+            .setValue(Double.valueOf((double)myCacheStatusVM.getCurrentSizeBytes() / myCacheStatusVM.getMaxSizeBytes()));
         }
         if (myGPUPctCacheMetric != null)
         {
@@ -271,7 +271,7 @@ abstract class LRUObjectManager
         for (Entry<Class<?>, long[]> entry : map.entrySet())
         {
             sb.append(entry.getKey().getName()).append(" VM bytes: ").append(entry.getValue()[0]).append(" GPU bytes: ")
-                    .append(entry.getValue()[1]).append(StringUtilities.LINE_SEP);
+            .append(entry.getValue()[1]).append(StringUtilities.LINE_SEP);
         }
 
         return sb.toString();

@@ -81,9 +81,9 @@ public class AbstractHUDPanel extends JPanel implements PreferenceChangeListener
     {
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setOpaque(false);
-//        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-//        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-//        scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(12, Integer.MAX_VALUE));
+        //        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        //        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        //        scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(12, Integer.MAX_VALUE));
         scrollPane.getHorizontalScrollBar().setOpaque(false);
         scrollPane.getVerticalScrollBar().setOpaque(false);
         if (pScrollablePanel != null)

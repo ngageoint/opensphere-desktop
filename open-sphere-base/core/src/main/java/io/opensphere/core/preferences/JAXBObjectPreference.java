@@ -28,7 +28,7 @@ class JAXBObjectPreference<T> extends Preference<T>
      * @throws IllegalArgumentException If the key or value is {@code null}.
      */
     public JAXBObjectPreference(String key, SupplierX<JAXBContext, JAXBException> contextSupplier, T value)
-        throws IllegalArgumentException
+            throws IllegalArgumentException
     {
         super(key, value);
         myJAXBContextSupplier = contextSupplier;

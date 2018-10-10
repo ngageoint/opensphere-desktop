@@ -324,11 +324,11 @@ public class EventCoalescer<E extends Event> implements EventListener<E>
                     {
                         if (!myFired)
                         {
-//                            long ttaStart = System.currentTimeMillis();
+                            //                            long ttaStart = System.currentTimeMillis();
                             myWorkerConsolidator.addEvent(evt);
                             added = true;
                             myLastAddedToTime = System.currentTimeMillis();
-//                            LOGGER.info("EventCoalescentWorker Adding: LAT: " + myLastAddedToTime + " TTA: " + (myLastAddedToTime-ttaStart));
+                            //                            LOGGER.info("EventCoalescentWorker Adding: LAT: " + myLastAddedToTime + " TTA: " + (myLastAddedToTime-ttaStart));
                         }
                     }
                     finally
@@ -376,14 +376,14 @@ public class EventCoalescer<E extends Event> implements EventListener<E>
                         if (myLastAddedToTime != -1 && diffTime > myNoChangeFireTimeMs)
                         {
                             myFired = true;
-//                            LOGGER.info("EventCoalescentWorker Firing: " + System.currentTimeMillis());
+                            //                            LOGGER.info("EventCoalescentWorker Firing: " + System.currentTimeMillis());
                             fireEvent(this);
                         }
-//                        else
-//                        {
-//                            LOGGER.info("EventCoalescentWorker NOT Firing: Diff: " + diffTime + " LAT: " + myLastAddedToTime
-//                                    + " NCFT: " + myNoChangeFireTimeMs);
-//                        }
+                        //                        else
+                        //                        {
+                        //                            LOGGER.info("EventCoalescentWorker NOT Firing: Diff: " + diffTime + " LAT: " + myLastAddedToTime
+                        //                                    + " NCFT: " + myNoChangeFireTimeMs);
+                        //                        }
                     }
                     finally
                     {
@@ -406,7 +406,7 @@ public class EventCoalescer<E extends Event> implements EventListener<E>
          */
         public void start()
         {
-//            LOGGER.info("EventCoalescentWorker Started: " + System.currentTimeMillis());
+            //            LOGGER.info("EventCoalescentWorker Started: " + System.currentTimeMillis());
             myThread.start();
         }
     }

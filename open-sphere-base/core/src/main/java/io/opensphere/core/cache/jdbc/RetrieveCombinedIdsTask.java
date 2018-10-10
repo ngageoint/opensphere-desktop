@@ -248,7 +248,7 @@ public class RetrieveCombinedIdsTask extends DatabaseTask implements ConnectionU
      */
     protected PreparedStatement prepareGetIdStatement(String sql, int groupCount,
             Collection<? extends PropertyMatcher<?>> parameters, PreparedStatement pstmt)
-                throws SQLException, NotSerializableException, CacheException
+                    throws SQLException, NotSerializableException, CacheException
     {
         int index = 1;
 
@@ -279,7 +279,7 @@ public class RetrieveCombinedIdsTask extends DatabaseTask implements ConnectionU
      *             serializable.
      */
     protected <T> int setGetIdStatementParameter(PreparedStatement pstmt, int startIndex, PropertyMatcher<T> param)
-        throws SQLException, CacheException, NotSerializableException
+            throws SQLException, CacheException, NotSerializableException
     {
         int index;
         if (param instanceof MultiPropertyMatcher)
@@ -325,7 +325,7 @@ public class RetrieveCombinedIdsTask extends DatabaseTask implements ConnectionU
      * @throws CacheException If there's a database error.
      */
     protected <T extends Serializable> String setupValueJoinTable(Connection conn, MultiPropertyMatcher<T> parameter)
-        throws CacheException
+            throws CacheException
     {
         Class<?> parameterPropertyType = parameter.getPropertyDescriptor().getType();
         if (parameterPropertyType == null)

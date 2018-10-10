@@ -129,7 +129,7 @@ public class CacheOptionsProvider extends AbstractOptionsProvider
         {
             @Override
             public void insertString(FilterBypass fb, int offset, String string, javax.swing.text.AttributeSet attr)
-                throws javax.swing.text.BadLocationException
+                    throws javax.swing.text.BadLocationException
             {
                 if (string.matches("\\d+"))
                 {
@@ -139,7 +139,7 @@ public class CacheOptionsProvider extends AbstractOptionsProvider
 
             @Override
             public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
-                throws BadLocationException
+                    throws BadLocationException
             {
                 if (text.matches("\\d+"))
                 {

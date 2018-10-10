@@ -168,7 +168,7 @@ public class LimitedFertilityBlockingQueue<E> extends LinkedBlockingQueue<E>
      * @throws InterruptedException if interrupted while waiting
      */
     public E poll(Factory<? extends E> factory, @Nullable Consumer<? super E> adapter, long timeout, TimeUnit unit)
-        throws InterruptedException
+            throws InterruptedException
     {
         E result;
         boolean spawned;

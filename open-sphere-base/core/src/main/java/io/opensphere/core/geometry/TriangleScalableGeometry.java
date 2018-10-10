@@ -54,7 +54,7 @@ public class TriangleScalableGeometry extends AbstractScalableMeshGeometry
 
     @Override
     public TriangleScalableGeometry derive(BaseRenderProperties renderProperties, Constraints constraints)
-        throws ClassCastException
+            throws ClassCastException
     {
         return new TriangleScalableGeometry(createBuilder(), (ScalableMeshRenderProperties)renderProperties, constraints);
     }

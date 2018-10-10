@@ -116,7 +116,7 @@ public class BilSrtmImageReader implements ElevationImageReader
 
     @Override
     public double readElevation(GeographicPosition position, Image image, GeographicBoundingBox bounds, boolean approximate)
-        throws ElevationImageReaderException
+            throws ElevationImageReaderException
     {
         double elevation = getMissingDataValue();
         InputStream stream = validate(position, image, bounds);
@@ -465,7 +465,7 @@ public class BilSrtmImageReader implements ElevationImageReader
      *             from the image.
      */
     private InputStream validate(GeographicPosition position, Image image, GeographicBoundingBox bounds)
-        throws ElevationImageReaderException
+            throws ElevationImageReaderException
     {
         if (!bounds.contains(position, 0.))
         {

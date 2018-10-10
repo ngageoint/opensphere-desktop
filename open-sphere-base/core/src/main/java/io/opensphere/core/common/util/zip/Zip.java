@@ -304,7 +304,7 @@ public class Zip
      */
     public static void zipfiles(File zipFile, List<ZipInputAdapter> zipInputs, final ProgressMonitor pm,
             final boolean progressByFiles)
-        throws FileNotFoundException, IOException
+                    throws FileNotFoundException, IOException
     {
         ZipOutputStream zipOS = new ZipOutputStream(new FileOutputStream(zipFile));
         zipOS.setLevel(9);

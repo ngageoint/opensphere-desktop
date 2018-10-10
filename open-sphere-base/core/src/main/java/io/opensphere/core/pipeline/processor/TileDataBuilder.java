@@ -551,9 +551,9 @@ public final class TileDataBuilder
                 return myBoundingBox.hashCode();
             }
             return myBoundingBox.hashCode() + HashCodeHelper.getHashCode(myImageTextureCoords.left())
-                    + HashCodeHelper.getHashCode(myImageTextureCoords.right())
-                    + HashCodeHelper.getHashCode(myImageTextureCoords.top())
-                    + HashCodeHelper.getHashCode(myImageTextureCoords.bottom());
+            + HashCodeHelper.getHashCode(myImageTextureCoords.right())
+            + HashCodeHelper.getHashCode(myImageTextureCoords.top())
+            + HashCodeHelper.getHashCode(myImageTextureCoords.bottom());
         }
     }
 }

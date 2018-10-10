@@ -30,21 +30,21 @@ public final class DateTextFieldFormat
     /** The date/time format. */
     public static final DateTextFieldFormat DATE_TIME = new DateTextFieldFormat(DateTimeFormats.DATE_TIME_FORMAT,
             matcher ->
-            {
-                try
-                {
-                    LocalDate.of(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)),
-                            Integer.parseInt(matcher.group(3)));
-                    return MathUtil.between(Integer.parseInt(matcher.group(4)), 0, 23)
-                            && MathUtil.between(Integer.parseInt(matcher.group(5)), 0, 59)
-                            && MathUtil.between(Integer.parseInt(matcher.group(6)), 0, 59);
-                }
-                catch (RuntimeException e)
-                {
-                    LOGGER.debug("Unable to parse format information", e);
-                    return false;
-                }
-            }, 150);
+    {
+        try
+        {
+            LocalDate.of(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)),
+                    Integer.parseInt(matcher.group(3)));
+            return MathUtil.between(Integer.parseInt(matcher.group(4)), 0, 23)
+                    && MathUtil.between(Integer.parseInt(matcher.group(5)), 0, 59)
+                    && MathUtil.between(Integer.parseInt(matcher.group(6)), 0, 59);
+        }
+        catch (RuntimeException e)
+        {
+            LOGGER.debug("Unable to parse format information", e);
+            return false;
+        }
+    }, 150);
 
     /** The date format. */
     public static final DateTextFieldFormat DATE = new DateTextFieldFormat(DateTimeFormats.DATE_FORMAT, matcher ->

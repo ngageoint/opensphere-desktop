@@ -549,7 +549,7 @@ public class TypeMapper
             @Override
             public int getValue(Class<? extends Object[]> type, long sizeBytes, int column, ResultSet rs,
                     PropertyMatcher<? extends Object[]> filter, Collection<? super Object[]> results)
-                throws CacheException
+                            throws CacheException
             {
                 throw new UnsupportedOperationException("Object[] value translator requires property descriptor.");
             }
@@ -557,7 +557,7 @@ public class TypeMapper
             @Override
             public int getValue(PropertyDescriptor<? extends Object[]> unused, int startColumn, ResultSet rs,
                     PropertyMatcher<? extends Object[]> filter, Collection<? super Object[]> results)
-                throws CacheException
+                            throws CacheException
             {
                 int column = startColumn;
                 final Collection<Object> rowResults = new ArrayList<>(translators.length);
@@ -572,7 +572,7 @@ public class TypeMapper
 
             @Override
             public int setValue(PreparedStatement pstmt, int startColumn, Object[] value, boolean forInsert)
-                throws CacheException, SQLException
+                    throws CacheException, SQLException
             {
                 Utilities.checkNull(value, "value");
 
@@ -598,7 +598,7 @@ public class TypeMapper
             @SuppressWarnings({ "rawtypes", "unchecked" })
             private int getColumnValue(ValueTranslator columnTranslator, Class type, long sizeBytes, int column, ResultSet rs,
                     PropertyMatcher<? extends Object[]> filter, Collection results)
-                throws CacheException
+                            throws CacheException
             {
                 return columnTranslator.getValue(type, sizeBytes, column, rs, filter, results);
             }
@@ -609,7 +609,7 @@ public class TypeMapper
             @SuppressWarnings({ "unchecked" })
             private <T> int setColumnValue(ValueTranslator<T> columnTranslator, PreparedStatement pstmt, int column, Object value,
                     boolean forInsert)
-                throws CacheException, SQLException
+                            throws CacheException, SQLException
             {
                 return columnTranslator.setValue(pstmt, column, (T)value, forInsert);
             }

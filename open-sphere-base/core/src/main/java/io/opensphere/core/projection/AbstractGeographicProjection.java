@@ -631,7 +631,7 @@ public abstract class AbstractGeographicProjection extends AbstractProjection
      * set of geographic coordinates and a set of model coordinates.
      */
     public static class GeographicTesseraVertex extends SimpleProjectedTesseraVertex<GeographicPosition>
-            implements GeographicProjectedTesseraVertex
+    implements GeographicProjectedTesseraVertex
     {
         /**
          * Construct a vertex.

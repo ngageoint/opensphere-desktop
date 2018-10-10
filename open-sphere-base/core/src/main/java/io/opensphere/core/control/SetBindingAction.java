@@ -250,7 +250,7 @@ public final class SetBindingAction implements ActionListener
                     "The key binding\n" + "\"" + incomingBind.toString() + "\"\nis already in use by the control key,\n\""
                             + previouslyMapped + "\".\n"
                             + "You may assign this binding but the\nexisting binding will be lost.\n\nDo you want to use the new binding?",
-                    "Key Binding Already In Use", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                            "Key Binding Already In Use", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (result == JOptionPane.YES_OPTION)
             {
                 myKeyBindingSupport.notifyListeners(new Callback<KeyBindingChangeListener>()

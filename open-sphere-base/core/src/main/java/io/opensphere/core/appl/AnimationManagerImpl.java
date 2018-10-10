@@ -194,7 +194,7 @@ public class AnimationManagerImpl implements AnimationManager
 
     @Override
     public boolean jumpToStep(AnimationPlan plan, TimeSpan step, boolean waitForListeners)
-        throws AnimationPlanModificationException
+            throws AnimationPlanModificationException
     {
         Utilities.checkNull(step, "step");
         myPlanLock.lock();

@@ -37,7 +37,7 @@ public class MultiDrawPolylineDataBuffered extends BufferObjectList<BufferObject
      */
     public MultiDrawPolylineDataBuffered(
             Map<? extends PolylineGeometry, ? extends Collection<? extends PolylineModelData>> geometryToDataMap,
-            boolean highlight, PickManager pickManager, TimeSpan groupTimeSpan)
+                    boolean highlight, PickManager pickManager, TimeSpan groupTimeSpan)
     {
         super(getBufferObjects(geometryToDataMap, highlight, pickManager, groupTimeSpan));
     }
@@ -54,7 +54,7 @@ public class MultiDrawPolylineDataBuffered extends BufferObjectList<BufferObject
      */
     private static List<? extends BufferObject> getBufferObjects(
             Map<? extends PolylineGeometry, ? extends Collection<? extends PolylineModelData>> geometryToDataMap,
-            boolean highlight, PickManager pickManager, TimeSpan groupTimeSpan)
+                    boolean highlight, PickManager pickManager, TimeSpan groupTimeSpan)
     {
         if (geometryToDataMap.isEmpty())
         {

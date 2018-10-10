@@ -102,7 +102,7 @@ public class SecurityOptionsProvider extends AbstractSecurityOptionsProvider
     {
         JButton clearCertificateAssociationsButton = new JButton("Clear Certificate Associations");
         clearCertificateAssociationsButton
-                .setToolTipText("Clears the associations that have been made between personal certificates and servers.");
+        .setToolTipText("Clears the associations that have been made between personal certificates and servers.");
         clearCertificateAssociationsButton.addActionListener(e ->
         {
             Quantify.collectMetric("mist3d.settings.security.clear-cerificate-associations-button");

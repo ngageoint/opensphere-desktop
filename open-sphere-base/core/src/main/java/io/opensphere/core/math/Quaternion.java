@@ -541,14 +541,14 @@ public final class Quaternion
         }
         return new Vector3d(
                 myW * myW * vect.getX() + 2 * myY * myW * vect.getZ() - 2 * myZ * myW * vect.getY() + myX * myX * vect.getX()
-                        + 2 * myY * myX * vect.getY() + 2 * myZ * myX * vect.getZ() - myZ * myZ * vect.getX()
-                        - myY * myY * vect.getX(),
+                + 2 * myY * myX * vect.getY() + 2 * myZ * myX * vect.getZ() - myZ * myZ * vect.getX()
+                - myY * myY * vect.getX(),
                 2 * myX * myY * vect.getX() + myY * myY * vect.getY() + 2 * myZ * myY * vect.getZ() + 2 * myW * myZ * vect.getX()
-                        - myZ * myZ * vect.getY() + myW * myW * vect.getY() - 2 * myX * myW * vect.getZ()
-                        - myX * myX * vect.getY(),
+                - myZ * myZ * vect.getY() + myW * myW * vect.getY() - 2 * myX * myW * vect.getZ()
+                - myX * myX * vect.getY(),
                 2 * myX * myZ * vect.getX() + 2 * myY * myZ * vect.getY() + myZ * myZ * vect.getZ() - 2 * myW * myY * vect.getX()
-                        - myY * myY * vect.getZ() + 2 * myW * myX * vect.getY() - myX * myX * vect.getZ()
-                        + myW * myW * vect.getZ());
+                - myY * myY * vect.getZ() + 2 * myW * myX * vect.getY() - myX * myX * vect.getZ()
+                + myW * myW * vect.getZ());
     }
 
     /**
@@ -620,13 +620,13 @@ public final class Quaternion
     public Quaternion opposite()
     {
         throw new UnsupportedOperationException("This method needs to be revisited before it should be used.");
-//        Quaternion retQuat = new Quaternion();
-//
-//        Vector3d axis = new Vector3d();
-//        double angle = toAngleAxis(axis);
-//
-//        retQuat.fromAngleAxis(Math.PI + angle, axis);
-//        return retQuat;
+        //        Quaternion retQuat = new Quaternion();
+        //
+        //        Vector3d axis = new Vector3d();
+        //        double angle = toAngleAxis(axis);
+        //
+        //        retQuat.fromAngleAxis(Math.PI + angle, axis);
+        //        return retQuat;
     }
 
     /**

@@ -81,7 +81,7 @@ public class RawVideoChunk implements VideoChunk
     {
         StringBuilder sb = new StringBuilder(128);
         sb.append(getClass().getSimpleName()).append('[').append(TimeSpan.get(myStartTime, myEndTime)).append(' ')
-                .append(myVideoLength).append("B]");
+        .append(myVideoLength).append("B]");
         return sb.toString();
     }
 

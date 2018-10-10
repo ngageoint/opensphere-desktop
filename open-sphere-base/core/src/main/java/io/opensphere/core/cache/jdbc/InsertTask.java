@@ -146,7 +146,7 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
      */
     public InsertTask(long[] ids, Collection<? extends T> input,
             Collection<? extends PersistentPropertyAccessor<? super T, ?>> accessors, CacheModificationListener listener,
-            DatabaseTaskFactory databaseTaskFactory)
+                    DatabaseTaskFactory databaseTaskFactory)
     {
         super(databaseTaskFactory);
         Utilities.checkNull(ids, "ids");
@@ -207,7 +207,7 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
      */
     protected int createDataTable(Collection<? extends PropertyDescriptor<?>> propertyDescriptors,
             final Map<String, String> columnNamesToTypes, Connection conn)
-        throws CacheException
+                    throws CacheException
     {
         return new StatementAppropriator(conn).appropriateStatement((unused, stmt) ->
         {
@@ -263,7 +263,7 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
      * @throws CacheException If there's a problem accessing the cache.
      */
     protected long[] doPutNew(Connection conn, final Collection<? extends PropertyDescriptor<?>> propertyDescriptors)
-        throws CacheException
+            throws CacheException
     {
         int groupId = getReusableGroupId(propertyDescriptors, conn);
         final boolean newGroup = groupId == -1;
@@ -326,7 +326,7 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
      * @throws CacheException If there's a problem accessing the cache.
      */
     protected long[] doPutUpdate(Connection conn, final Collection<? extends PropertyDescriptor<?>> propertyDescriptors)
-        throws CacheException
+            throws CacheException
     {
         final int[] distinctGroupIds = getDatabaseTaskFactory()
                 .getRetrieveGroupIdsTask(getCategory(), (List<IntervalPropertyMatcher<?>>)null).run(conn);
@@ -365,7 +365,7 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
      */
     protected void doUpdateValues(Collection<? extends PropertyDescriptor<?>> propertyDescriptors, int[] distinctGroupIds,
             long[] combinedIds, final Connection conn)
-        throws CacheException
+                    throws CacheException
     {
         getDatabaseTaskFactory().getEnsureColumnsTask(distinctGroupIds, propertyDescriptors).run(conn);
 
@@ -562,7 +562,7 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
      * @throws CacheException If there is a database error.
      */
     protected int getReusableGroupId(Collection<? extends PropertyDescriptor<?>> propertyDescriptors, Connection conn)
-        throws CacheException
+            throws CacheException
     {
         int groupId = -1;
         if (getInput() instanceof Collection && ((Collection<?>)getInput()).size() < MAX_GROUP_REUSE_SIZE)
@@ -723,7 +723,7 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
      */
     protected void insertIntervalPropertyData(Collection<? extends PropertyAccessor<?, ?>> accessors, int[] groupIds,
             Connection conn)
-        throws CacheException
+                    throws CacheException
     {
         for (final PropertyAccessor<?, ?> propertyAccessor : accessors)
         {
@@ -795,7 +795,7 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
      * @throws CacheException If there is a database error.
      */
     protected <S> void insertPropertyValueGroups(IntervalPropertyAccessor<?, S> acc, final int[] groupIds, Connection conn)
-        throws CacheException
+            throws CacheException
     {
         final PropertyDescriptor<S> desc = acc.getPropertyDescriptor();
         String[] columnNames;
@@ -810,7 +810,7 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
         }
         final String sql = getSQLGenerator().generateInsert(TableNames.getGroupTableName(desc.getType()), columnNames);
         new StatementAppropriator(conn)
-                .appropriateStatement((unused, pstmt) -> translateAndUpdate(acc, groupIds, desc, sql, pstmt), sql);
+        .appropriateStatement((unused, pstmt) -> translateAndUpdate(acc, groupIds, desc, sql, pstmt), sql);
     }
 
     /**
@@ -827,7 +827,7 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
      */
     protected <S> Object translateAndUpdate(IntervalPropertyAccessor<?, S> acc, final int[] groupIds,
             final PropertyDescriptor<S> desc, final String sql, PreparedStatement pstmt)
-        throws CacheException
+                    throws CacheException
     {
         try
         {
@@ -910,7 +910,7 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
      */
     protected void postPopulateDataTable(Connection conn, String tableName,
             Collection<? extends PropertyDescriptor<?>> propertyDescriptors, Collection<String> columnNames)
-        throws CacheException
+                    throws CacheException
     {
     }
 
@@ -927,7 +927,7 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
      */
     protected long[] postProcessPut(Connection conn, Collection<? extends PropertyDescriptor<?>> propertyDescriptors, int groupId,
             int[] dataIds)
-        throws CacheException
+                    throws CacheException
     {
         // Convert the data ids to be combined ids.
         final long[] ids = new long[dataIds.length];
@@ -960,7 +960,7 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
      */
     protected <S> int setValue(PreparedStatement pstmt, PropertyAccessor<?, S> propertyAccessor,
             ValueTranslator<? super S> translator, int columnIndex, S value)
-        throws CacheException, SQLException, NotSerializableException
+                    throws CacheException, SQLException, NotSerializableException
     {
         try
         {
@@ -989,8 +989,8 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
      */
     protected <X> void setValues(PreparedStatement pstmt,
             final Collection<? extends PersistentPropertyAccessor<? super T, ?>> propertyAccessors,
-            ValueTranslator<?>[] translators, T obj, int firstColumn)
-        throws CacheException, SQLException, NotSerializableException
+                    ValueTranslator<?>[] translators, T obj, int firstColumn)
+                            throws CacheException, SQLException, NotSerializableException
     {
         int accessorIndex = 0;
         int columnIndex = firstColumn;
@@ -1025,8 +1025,8 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
      */
     protected void updateData(final int groupId, final int[] dataIds,
             final Collection<? extends PersistentPropertyAccessor<? super T, ?>> accessors, Collection<String> columnNames,
-            Connection conn)
-        throws CacheException
+                    Connection conn)
+                            throws CacheException
     {
         final List<String> columns = new ArrayList<>(columnNames);
         columns.add(0, ColumnNames.DATA_ID);
@@ -1052,8 +1052,8 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
      */
     protected Void executeDataUpdate(final int groupId, final int[] dataIds,
             final Collection<? extends PersistentPropertyAccessor<? super T, ?>> accessors, final String sql,
-            PreparedStatement pstmt)
-        throws CacheException
+                    PreparedStatement pstmt)
+                            throws CacheException
     {
         try
         {

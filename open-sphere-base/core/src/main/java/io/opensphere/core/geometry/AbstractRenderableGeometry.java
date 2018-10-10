@@ -51,7 +51,7 @@ public abstract class AbstractRenderableGeometry extends AbstractGeometry implem
      *             be cast to the correct types for this geometry.
      */
     public abstract AbstractRenderableGeometry derive(BaseRenderProperties renderProperties, Constraints constraints)
-        throws ClassCastException;
+            throws ClassCastException;
 
     @Override
     public Constraints getConstraints()

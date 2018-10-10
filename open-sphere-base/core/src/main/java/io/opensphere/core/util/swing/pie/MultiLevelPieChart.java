@@ -445,51 +445,51 @@ public class MultiLevelPieChart<T> extends JComponent
         final int legendMaxX = myPieChartLegend.getLegendBounds() != null
                 ? myPieChartLegend.getLegendBounds().x + myPieChartLegend.getLegendBounds().width : 0;
 
-        float radius = Math.min(getWidth() - legendMaxX, getHeight()) / 2f;
+                float radius = Math.min(getWidth() - legendMaxX, getHeight()) / 2f;
 
-        // Calculate buffer for slice labels
-        if (g != null)
-        {
-            double labelRadius = 0.;
-            for (int slice = 0; slice < myDataModel.getSliceCount(); slice++)
-            {
-                Rectangle2D labelBounds = g.getFontMetrics().getStringBounds(myDataModel.getSliceName(slice), g);
-                if (labelBounds.getWidth() > labelRadius)
+                // Calculate buffer for slice labels
+                if (g != null)
                 {
-                    labelRadius = labelBounds.getWidth();
+                    double labelRadius = 0.;
+                    for (int slice = 0; slice < myDataModel.getSliceCount(); slice++)
+                    {
+                        Rectangle2D labelBounds = g.getFontMetrics().getStringBounds(myDataModel.getSliceName(slice), g);
+                        if (labelBounds.getWidth() > labelRadius)
+                        {
+                            labelRadius = labelBounds.getWidth();
+                        }
+                        if (labelBounds.getHeight() > labelRadius)
+                        {
+                            labelRadius = labelBounds.getHeight();
+                        }
+                    }
+                    myLabelRadius = labelRadius;
                 }
-                if (labelBounds.getHeight() > labelRadius)
+
+                // Calculate buffer for icons
+                double iconRadius = 0.;
+                for (IconInfo iconInfo : myIconModel.getIcons())
                 {
-                    labelRadius = labelBounds.getHeight();
+                    Image icon = iconInfo.getIcon();
+                    int width = icon.getWidth(null);
+                    int height = icon.getHeight(null);
+                    if (width > iconRadius)
+                    {
+                        iconRadius = width;
+                    }
+                    if (height > iconRadius)
+                    {
+                        iconRadius = height;
+                    }
                 }
-            }
-            myLabelRadius = labelRadius;
-        }
+                if (iconRadius > 0)
+                {
+                    myIconRadius = iconRadius;
+                }
 
-        // Calculate buffer for icons
-        double iconRadius = 0.;
-        for (IconInfo iconInfo : myIconModel.getIcons())
-        {
-            Image icon = iconInfo.getIcon();
-            int width = icon.getWidth(null);
-            int height = icon.getHeight(null);
-            if (width > iconRadius)
-            {
-                iconRadius = width;
-            }
-            if (height > iconRadius)
-            {
-                iconRadius = height;
-            }
-        }
-        if (iconRadius > 0)
-        {
-            myIconRadius = iconRadius;
-        }
+                radius -= Math.max(myLabelRadius + LABEL_GAP, myIconRadius + ICON_GAP);
 
-        radius -= Math.max(myLabelRadius + LABEL_GAP, myIconRadius + ICON_GAP);
-
-        return radius;
+                return radius;
     }
 
     /**
@@ -629,27 +629,27 @@ public class MultiLevelPieChart<T> extends JComponent
     {
         g2d.setColor(Color.GRAY);
 
-//        // Draw the rings
-//        for (int ring = 0; ring <= myDataModel.getRingCount(); ring++)
-//        {
-//            float innerRadius = ringThickness * ring + innerCircleRadius;
-//            if (innerRadius > 0)
-//            {
-//                int xOrigin = Math.round(myCenterPoint.x - innerRadius);
-//                int yOrigin = Math.round(myCenterPoint.y - innerRadius);
-//                int arcDiameter = Math.round(2 * innerRadius);
-//                g2d.drawArc(xOrigin, yOrigin, arcDiameter, arcDiameter, 0, 360);
-//            }
-//        }
-//
-//        // Draw the slices
-//        for (int slice = 0; slice < myDataModel.getSliceCount(); slice++)
-//        {
-//            float angle = slice * extent;
-//            Point startPoint = getPoint(angle, innerCircleRadius);
-//            Point endPoint = getPoint(angle, myRadius);
-//            g2d.drawLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-//        }
+        //        // Draw the rings
+        //        for (int ring = 0; ring <= myDataModel.getRingCount(); ring++)
+        //        {
+        //            float innerRadius = ringThickness * ring + innerCircleRadius;
+        //            if (innerRadius > 0)
+        //            {
+        //                int xOrigin = Math.round(myCenterPoint.x - innerRadius);
+        //                int yOrigin = Math.round(myCenterPoint.y - innerRadius);
+        //                int arcDiameter = Math.round(2 * innerRadius);
+        //                g2d.drawArc(xOrigin, yOrigin, arcDiameter, arcDiameter, 0, 360);
+        //            }
+        //        }
+        //
+        //        // Draw the slices
+        //        for (int slice = 0; slice < myDataModel.getSliceCount(); slice++)
+        //        {
+        //            float angle = slice * extent;
+        //            Point startPoint = getPoint(angle, innerCircleRadius);
+        //            Point endPoint = getPoint(angle, myRadius);
+        //            g2d.drawLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+        //        }
 
         // Old way
         for (List<OpsClockCell> ring : getWheel(g2d))
@@ -742,18 +742,18 @@ public class MultiLevelPieChart<T> extends JComponent
     {
         g.setColor(myFontColor);
         final int labelYOffset = g.getFont().getSize() >> 1;
-        for (List<OpsClockCell> ring : getWheel(g))
-        {
-            for (OpsClockCell segment : ring)
+            for (List<OpsClockCell> ring : getWheel(g))
             {
-                if (segment.getRingLabelLocation() != null)
+                for (OpsClockCell segment : ring)
                 {
-                    String ringName = myDataModel.getRingName(segment.getTableCell().y);
-                    drawStringWithBorder(g, ringName, segment.getRingLabelLocation().x + 2,
-                            segment.getRingLabelLocation().y + labelYOffset);
+                    if (segment.getRingLabelLocation() != null)
+                    {
+                        String ringName = myDataModel.getRingName(segment.getTableCell().y);
+                        drawStringWithBorder(g, ringName, segment.getRingLabelLocation().x + 2,
+                                segment.getRingLabelLocation().y + labelYOffset);
+                    }
                 }
             }
-        }
     }
 
     /**

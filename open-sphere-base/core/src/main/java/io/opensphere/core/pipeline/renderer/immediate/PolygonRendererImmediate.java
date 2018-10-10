@@ -34,7 +34,7 @@ import io.opensphere.core.viewer.impl.MapContext;
 
 /** The immediate mode renderer for polygons. */
 public class PolygonRendererImmediate extends AbstractRenderer<PolygonGeometry>
-        implements GeometryRendererImmediate<PolygonGeometry>
+implements GeometryRendererImmediate<PolygonGeometry>
 {
     /** Bits used for {@link GL2#glPushAttrib(int)}. */
     private static final int ATTRIB_BITS = GL2.GL_CURRENT_BIT | GL2.GL_POLYGON_BIT | GL.GL_COLOR_BUFFER_BIT | GL2.GL_ENABLE_BIT
@@ -147,7 +147,7 @@ public class PolygonRendererImmediate extends AbstractRenderer<PolygonGeometry>
                             }
                             lastWidth = GLUtilities.glLineWidth(rc.getGL(), rc.getRenderMode() == RenderMode.PICK
                                     ? geo.getRenderProperties().getWidth() + 1f : geo.getRenderProperties().getWidth(),
-                                    lastWidth);
+                                            lastWidth);
 
                             lastStipple = GL2Utilities.glLineStipple(rc.getGL().getGL2(), rc.getRenderMode(),
                                     geo.getRenderProperties().getStipple(), lastStipple);
@@ -174,7 +174,7 @@ public class PolygonRendererImmediate extends AbstractRenderer<PolygonGeometry>
                                         ((PolygonRenderProperties)renderProps).getFillColorRenderProperties());
                             }
                             GL2Utilities.renderWithTransform(rc, geo.getRenderProperties().getTransform(),
-                                () -> PolygonRenderUtil.drawPolygonMesh(rc.getGL(), fillData));
+                                    () -> PolygonRenderUtil.drawPolygonMesh(rc.getGL(), fillData));
                         }
                     }
                 }

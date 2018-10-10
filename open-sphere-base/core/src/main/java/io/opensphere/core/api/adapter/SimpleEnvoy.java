@@ -117,8 +117,8 @@ public abstract class SimpleEnvoy<T> extends AbstractEnvoy implements DataRegist
     @Override
     public void query(DataModelCategory category, Collection<? extends Satisfaction> satisfactions,
             List<? extends PropertyMatcher<?>> parameters, List<? extends OrderSpecifier> orderSpecifiers, int limit,
-            Collection<? extends PropertyDescriptor<?>> propertyDescriptors, CacheDepositReceiver queryReceiver)
-        throws InterruptedException, QueryException
+                    Collection<? extends PropertyDescriptor<?>> propertyDescriptors, CacheDepositReceiver queryReceiver)
+                            throws InterruptedException, QueryException
     {
         try
         {
@@ -152,7 +152,7 @@ public abstract class SimpleEnvoy<T> extends AbstractEnvoy implements DataRegist
      * @throws QueryException if something goes wrong
      */
     protected void query(URL url, DataModelCategory category, CacheDepositReceiver queryReceiver)
-        throws IOException, CacheException, QueryException
+            throws IOException, CacheException, QueryException
     {
         if (url != null)
         {

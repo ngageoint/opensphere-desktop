@@ -204,7 +204,7 @@ public class RetrieveGroupIdsTask extends DatabaseTask implements ConnectionUser
      *             serializable.
      */
     protected void prepareGroupQueryStatement(Connection conn, PreparedStatement pstmt, String sql)
-        throws CacheException, SQLException, NotSerializableException
+            throws CacheException, SQLException, NotSerializableException
     {
         int index = setStandardWhereParameters(pstmt, getCategory(), getExpirationRange(), isCritical());
 

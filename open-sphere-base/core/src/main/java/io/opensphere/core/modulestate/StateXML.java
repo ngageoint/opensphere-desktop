@@ -37,7 +37,7 @@ public final class StateXML
      *             expression.
      */
     public static Node createChildNode(Node rootNode, Document doc, Node parent, String childPath, String childName)
-        throws XPathExpressionException
+            throws XPathExpressionException
     {
         Node child = getChildNode(rootNode, childPath);
 

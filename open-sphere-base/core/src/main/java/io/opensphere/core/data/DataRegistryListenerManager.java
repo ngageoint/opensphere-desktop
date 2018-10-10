@@ -145,7 +145,7 @@ public class DataRegistryListenerManager
     {
         Collection<? extends ListenerData<?>> listeners = getAllListeners();
         listeners.stream().map(ld -> ld.getListener()).filter(l -> l != null)
-                .forEach(l -> myExecutor.execute(() -> l.allValuesRemoved(source)));
+        .forEach(l -> myExecutor.execute(() -> l.allValuesRemoved(source)));
     }
 
     /**
@@ -445,7 +445,7 @@ public class DataRegistryListenerManager
      */
     private <S, T> void notifyAddsOrUpdates(long[] ids, Iterable<? extends T> input,
             Collection<? extends PropertyAccessor<? super T, ?>> accessors, final ChangeType type, CacheModificationReport report,
-            final DataModelCategory dataModelCategory, ListenerData<S> listenerData, final Object source)
+                    final DataModelCategory dataModelCategory, ListenerData<S> listenerData, final Object source)
     {
         final DataRegistryListener<S> listener = listenerData.getListener();
         if (listener != null)

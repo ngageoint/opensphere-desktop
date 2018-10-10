@@ -139,7 +139,7 @@ public class PolygonMeshProcessor extends TextureProcessor<PolygonMeshGeometry>
     {
         getCache().clearCacheAssociation(
                 geoms.stream()
-                        .map(geom -> geom instanceof PolygonMeshGeometry ? ((PolygonMeshGeometry)geom).getPolygonMesh() : null),
+                .map(geom -> geom instanceof PolygonMeshGeometry ? ((PolygonMeshGeometry)geom).getPolygonMesh() : null),
                 PolygonMeshData.class);
     }
 

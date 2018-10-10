@@ -48,12 +48,12 @@ public class TimespanTranslator extends AbstractValueTranslator<TimeSpan>
             // even though there's no time span property.
             TimeSpan object = unboundedStart ? unboundedEnd ? TimeSpan.TIMELESS : TimeSpan.newUnboundedStartTimeSpan(end)
                     : unboundedEnd ? TimeSpan.newUnboundedEndTimeSpan(start) : TimeSpan.get(start, end);
-            if (filter == null || filter.matches(object))
-            {
-                results.add(object);
-            }
+                    if (filter == null || filter.matches(object))
+                    {
+                        results.add(object);
+                    }
 
-            return index;
+                    return index;
         }
         catch (SQLException e)
         {

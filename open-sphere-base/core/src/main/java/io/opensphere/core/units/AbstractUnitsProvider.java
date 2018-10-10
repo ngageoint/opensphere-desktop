@@ -116,7 +116,7 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
 
     @Override
     public T fromMagnitudeAndSelectionLabel(Number magnitude, String selectionLabel)
-        throws InvalidUnitsException, UnitsParseException
+            throws InvalidUnitsException, UnitsParseException
     {
         Class<? extends T> type = getUnitsWithSelectionLabel(selectionLabel);
         if (type == null)
@@ -333,7 +333,7 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
 
         @SuppressWarnings("rawtypes")
         AtomicReferenceFieldUpdater<AbstractUnitsProvider, Preferences> updater = AtomicReferenceFieldUpdater
-                .newUpdater(AbstractUnitsProvider.class, Preferences.class, "myPreferences");
+        .newUpdater(AbstractUnitsProvider.class, Preferences.class, "myPreferences");
         if (!updater.compareAndSet(this, null, preferences))
         {
             throw new IllegalStateException("Cannot set preferences more than once.");

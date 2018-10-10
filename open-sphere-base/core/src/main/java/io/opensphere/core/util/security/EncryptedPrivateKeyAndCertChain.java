@@ -99,7 +99,7 @@ public class EncryptedPrivateKeyAndCertChain implements Cloneable
      *             not available.
      */
     public PrivateKey getPrivateKey(CipherFactory cipherFactory)
-        throws CipherException, DecryptionException, NoSuchAlgorithmException
+            throws CipherException, DecryptionException, NoSuchAlgorithmException
     {
         byte[] encoded = myEncryptedPrivateKey.getDecryptedData(cipherFactory);
         try
@@ -211,7 +211,7 @@ public class EncryptedPrivateKeyAndCertChain implements Cloneable
      * @throws CipherException If the private key cannot be encrypted.
      */
     public void setPrivateKeyProvider(PrivateKeyProvider in, CipherFactory cipherFactory)
-        throws PrivateKeyProviderException, CertificateEncodingException, CipherException
+            throws PrivateKeyProviderException, CertificateEncodingException, CipherException
     {
         setAlias(in.getAlias());
         setPrivateKey(in.getPrivateKey(), cipherFactory);

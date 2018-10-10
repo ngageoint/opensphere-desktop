@@ -84,7 +84,7 @@ public final class UnitsUtilities
      *             cannot be found.
      */
     public static <S> S createFromLongLabelString(UnitsProvider<S> unitsProvider, Class<? extends Number> valueType, String label)
-        throws UnitsParseException
+            throws UnitsParseException
     {
         Pair<String, String> splitLabel = splitLabel(label);
 
@@ -145,7 +145,7 @@ public final class UnitsUtilities
      * @throws InvalidUnitsException If the type is invalid.
      */
     private static <S> S createFromStrings(String magnitudeString, Class<? extends S> type, Class<? extends Number> valueType)
-        throws UnitsParseException, InvalidUnitsException
+            throws UnitsParseException, InvalidUnitsException
     {
         Object mag;
         try

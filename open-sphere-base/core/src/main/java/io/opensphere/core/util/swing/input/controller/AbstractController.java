@@ -312,10 +312,10 @@ public abstract class AbstractController<T, M extends ViewModel<T>, V extends JC
     private void updateViewVisible()
     {
         myView.setVisible(myModel.isVisible());
-//        Object labeledBy = myView.getClientProperty("labeledBy");
-//        if (labeledBy instanceof JComponent)
-//        {
-//            ((JComponent)labeledBy).setVisible(myModel.isVisible());
-//        }
+        //        Object labeledBy = myView.getClientProperty("labeledBy");
+        //        if (labeledBy instanceof JComponent)
+        //        {
+        //            ((JComponent)labeledBy).setVisible(myModel.isVisible());
+        //        }
     }
 }

@@ -18,7 +18,7 @@ import io.opensphere.core.util.collections.petrifyable.PetrifyableTFloatArrayLis
 @io.opensphere.core.util.Immutable
 @net.jcip.annotations.Immutable
 public final class GeographicPositionArrayList extends AbstractList<GeographicPosition>
-        implements PositionList<GeographicPosition>, Serializable
+implements PositionList<GeographicPosition>, Serializable
 {
     /** Serial version UID. */
     private static final long serialVersionUID = 1L;

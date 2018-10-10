@@ -37,7 +37,7 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
  * the user.
  */
 public class UserInteractionUsernamePasswordProvider extends UserInteractionAuthenticator
-        implements InteractiveUsernamePasswordProvider
+implements InteractiveUsernamePasswordProvider
 {
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(UserInteractionUsernamePasswordProvider.class);

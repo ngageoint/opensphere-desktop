@@ -228,7 +228,7 @@ public class LeastSqLineSupport
 
         double[][] diag = new double[][] {{Math.pow(lambda[0], p), 0.0},
             {0.0, Math.pow(lambda[1], p)}};
-        return multStarMatrix(basis, multMatrix(diag, basis));
+            return multStarMatrix(basis, multMatrix(diag, basis));
     }
 
     /**
