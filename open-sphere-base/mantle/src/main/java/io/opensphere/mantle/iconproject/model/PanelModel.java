@@ -63,7 +63,7 @@ public class PanelModel
      */
     private HashMap<IconRecord, Button> mySingleSelectedIcon = new HashMap<IconRecord, Button>();
 
-    /** Whether to use the filtered icon record list or the regular one */ 
+    /** Whether to use the filtered icon record list or the regular one. */ 
     private boolean myUseFilteredList;
 
     /**
@@ -188,11 +188,21 @@ public class PanelModel
         myIconRecordList = list;
     }
 
+    /**
+     * Gets the filtered icon record list.
+     *
+     * @return the filtered icon record list
+     */
     public List<IconRecord> getFilteredRecordList()
     {
         return myFilteredIconRecordList;
     }
 
+    /**
+     * Sets the filtered icon record list.
+     *
+     * @param list the filtered icon record list
+     */
     public void setFilteredRecordList(List<IconRecord> list)
     {
         myFilteredIconRecordList = list;

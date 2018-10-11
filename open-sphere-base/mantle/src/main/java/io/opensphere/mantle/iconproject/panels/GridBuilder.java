@@ -1,6 +1,7 @@
 package io.opensphere.mantle.iconproject.panels;
 
 import java.awt.Window;
+import java.util.List;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -39,21 +40,11 @@ public class GridBuilder extends TilePane
 
         if (myPanelModel.getUseFilteredList())
         {
-            for (IconRecord recordindex : myPanelModel.getFilteredRecordList())
-            {
-                Button sample = buttonBuilder(recordindex);
-                setMargin(sample, new Insets(5, 5, 5, 5));
-                getChildren().add(sample);
-            }
+            buildIconButtons(myPanelModel.getFilteredRecordList());
         }
         else
         {
-            for (IconRecord recordindex : myPanelModel.getRecordList())
-            {
-                Button sample = buttonBuilder(recordindex);
-                setMargin(sample, new Insets(5, 5, 5, 5));
-                getChildren().add(sample);
-            }
+            buildIconButtons(myPanelModel.getRecordList());
         }
     }
 
@@ -116,6 +107,21 @@ public class GridBuilder extends TilePane
         {
             IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myPanelModel);
             builderPane.setVisible(true);
+        }
+    }
+
+    /**
+     * Adds the icons in the list to the visible panel.
+     *
+     * @param iconRecordList the list of icon records to add
+     */
+    private void buildIconButtons(List<IconRecord> iconRecordList)
+    {
+        for (IconRecord recordindex : iconRecordList)
+        {
+            Button iconButton = buttonBuilder(recordindex);
+            setMargin(iconButton, new Insets(5, 5, 5, 5));
+            getChildren().add(iconButton);
         }
     }
 }
