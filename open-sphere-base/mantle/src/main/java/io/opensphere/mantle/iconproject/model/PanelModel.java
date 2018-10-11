@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Button;
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.iconproject.impl.DefaultIconRecordTreeItemObject;
@@ -44,6 +45,9 @@ public class PanelModel
     /** The icon record list. */
     private List<IconRecord> myIconRecordList;
 
+    /** The filtered icon record list. */
+    private List<IconRecord> myFilteredIconRecordList;
+
     /** The model for the panels contained in the UI. */
     private ViewModel myViewModel;
 
@@ -59,6 +63,9 @@ public class PanelModel
      */
     private HashMap<IconRecord, Button> mySingleSelectedIcon = new HashMap<IconRecord, Button>();
 
+    /** Whether to use the filtered icon record list or the regular one. */ 
+    private boolean myUseFilteredList;
+
     /**
      * Builds the panel to use inside the Icon Manager.
      *
@@ -67,6 +74,8 @@ public class PanelModel
     public PanelModel (Toolbox toolbox)
     {
         myToolbox = toolbox;
+        myFilteredIconRecordList = New.list();
+        myUseFilteredList = false;
     }
 
     /**
@@ -174,9 +183,29 @@ public class PanelModel
      *
      * @param list the icon record list
      */
-    public void setIconRecordList(List<IconRecord> list)
+    public void setRecordList(List<IconRecord> list)
     {
         myIconRecordList = list;
+    }
+
+    /**
+     * Gets the filtered icon record list.
+     *
+     * @return the filtered icon record list
+     */
+    public List<IconRecord> getFilteredRecordList()
+    {
+        return myFilteredIconRecordList;
+    }
+
+    /**
+     * Sets the filtered icon record list.
+     *
+     * @param list the filtered icon record list
+     */
+    public void setFilteredRecordList(List<IconRecord> list)
+    {
+        myFilteredIconRecordList = list;
     }
 
     /**
@@ -259,5 +288,25 @@ public class PanelModel
     public HashMap<IconRecord, Button> getSelectedIconMap()
     {
         return mySingleSelectedIcon;
+    }
+
+    /**
+     * Gets whether to use the filtered list.
+     *
+     * @return whether to use the filtered list
+     */
+    public boolean getUseFilteredList()
+    {
+        return myUseFilteredList;
+    }
+
+    /**
+     * Sets whether to use the filtered list.
+     *
+     * @param whether to use the filtered list
+     */
+    public void setUseFilteredList(boolean useFilteredList)
+    {
+        myUseFilteredList = useFilteredList;
     }
 }

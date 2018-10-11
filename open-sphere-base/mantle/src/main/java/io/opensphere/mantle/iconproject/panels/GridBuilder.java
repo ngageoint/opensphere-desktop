@@ -24,9 +24,6 @@ public class GridBuilder extends TilePane
     /** The width used for icon buttons. */
     private final int myTileWidth;
 
-    /** The icon record list. */
-    private List<IconRecord> myRecordList;
-
     /** The model for the main icon panel. */
     private final PanelModel myPanelModel;
 
@@ -40,13 +37,14 @@ public class GridBuilder extends TilePane
     {
         myPanelModel = panelModel;
         myTileWidth = myPanelModel.getCurrentTileWidth().get();
-        myRecordList = myPanelModel.getRecordList();
 
-        for (IconRecord recordindex : myRecordList)
+        if (myPanelModel.getUseFilteredList())
         {
-            Button sample = buttonBuilder(recordindex);
-            setMargin(sample, new Insets(5, 5, 5, 5));
-            getChildren().add(sample);
+            buildIconButtons(myPanelModel.getFilteredRecordList());
+        }
+        else
+        {
+            buildIconButtons(myPanelModel.getRecordList());
         }
     }
 
@@ -109,6 +107,21 @@ public class GridBuilder extends TilePane
         {
             IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myPanelModel);
             builderPane.setVisible(true);
+        }
+    }
+
+    /**
+     * Adds the icons in the list to the visible panel.
+     *
+     * @param iconRecordList the list of icon records to add
+     */
+    private void buildIconButtons(List<IconRecord> iconRecordList)
+    {
+        for (IconRecord recordindex : iconRecordList)
+        {
+            Button iconButton = buttonBuilder(recordindex);
+            setMargin(iconButton, new Insets(5, 5, 5, 5));
+            getChildren().add(iconButton);
         }
     }
 }

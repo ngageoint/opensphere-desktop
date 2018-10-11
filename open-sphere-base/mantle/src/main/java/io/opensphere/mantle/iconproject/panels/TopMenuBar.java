@@ -12,6 +12,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
+import org.apache.commons.lang.StringUtils;
+
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
 import io.opensphere.mantle.iconproject.impl.LabelMaker;
 import io.opensphere.mantle.iconproject.model.PanelModel;
@@ -90,7 +92,26 @@ public class TopMenuBar extends HBox
     {
         ButtonBar searchBar = new ButtonBar();
         searchBar.getButtons().addAll(mySearchLabel, myTextField);
+        myTextField.setOnKeyTyped(event -> filterIcons());
         return searchBar;
+    }
+
+    /**
+     * Filters icons shown by matching the entered text.
+     */
+    private void filterIcons()
+    {
+        if (StringUtils.isEmpty(myTextField.getText()))
+        {
+            myPanelModel.setUseFilteredList(false);
+            myPanelModel.getViewModel().getMainPanel().refresh();
+            return;
+        }
+        myPanelModel.getFilteredRecordList().clear();
+        myPanelModel.getRecordList().stream().filter(r -> StringUtils.containsIgnoreCase(r.getName(), myTextField.getText()))
+                .forEach(r -> myPanelModel.getFilteredRecordList().add(r));
+        myPanelModel.setUseFilteredList(true);
+        myPanelModel.getViewModel().getMainPanel().refresh();
     }
 
     /**

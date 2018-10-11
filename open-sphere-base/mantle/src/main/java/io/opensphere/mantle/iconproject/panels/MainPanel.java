@@ -80,7 +80,7 @@ public class MainPanel extends SplitPane
         myPanelModel.getCurrentTileWidth().addListener((o, v, m) -> refresh());
         createTreeView(myPanelModel.getIconRegistry().getManagerPrefs().getInitTreeSelection().get());
         myRecordMap = new HashMap<>(myTreeBuilder.getRecordMap());
-        myPanelModel.setIconRecordList(myRecordMap.get("Default"));
+        myPanelModel.setRecordList(myRecordMap.get("Default"));
         myIconGrid = new GridBuilder(myPanelModel);
 
         AnchorPane.setLeftAnchor(myAddIconButton, 0.);
@@ -182,7 +182,7 @@ public class MainPanel extends SplitPane
             myRecordMap = new HashMap<>(myTreeBuilder.getRecordMap());
             String item = myTreeView.getSelectionModel().getSelectedItem() == null ? myTreeView.getTreeItem(0).getValue() : 
                     myTreeView.getSelectionModel().getSelectedItem().getValue();
-            myPanelModel.setIconRecordList(myRecordMap.get(item));
+            myPanelModel.setRecordList(myRecordMap.get(item));
             myScrollPane.setContent(myIconGrid = new GridBuilder(myPanelModel));
             myPanelModel.getSelectedIcons().clear();
         });
@@ -208,7 +208,8 @@ public class MainPanel extends SplitPane
         {
             myPanelModel.getSelectedIcons().clear();
         }
-        myPanelModel.setIconRecordList(myRecordMap.get(colName));
+        myPanelModel.setRecordList(myRecordMap.get(colName));
+        myPanelModel.setUseFilteredList(false);
         myScrollPane.setContent(myIconGrid = new GridBuilder(myPanelModel));
         if (myPanelModel.getIconRegistry().getCollectionNames().contains(colName))
         {

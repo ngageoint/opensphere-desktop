@@ -62,7 +62,7 @@ public class IconBuilderPane extends BorderPane
     private final Window myOwner;
 
     /** The spinner width. */
-    private final double mySpinerWidth = 60.0;
+    private final double mySpinerWidth = 75.0;
 
     /**
      * Constructs a new IconBuilderPane.
