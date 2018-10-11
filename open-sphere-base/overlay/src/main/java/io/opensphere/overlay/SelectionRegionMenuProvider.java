@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.swing.BorderFactory;
 import javax.swing.JMenuItem;
 import javax.swing.event.PopupMenuEvent;
 
@@ -112,17 +113,20 @@ public class SelectionRegionMenuProvider implements ContextMenuProvider<Geometry
         if ((color & 0xff000000) == 0)
         {
             JMenuItem show = new JMenuItem("Show");
+            show.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
             show.addActionListener(e -> ((ColorGeometry)geom).getRenderProperties().setColorARGB(color | 0xff000000));
             menuItems.add(show);
         }
         else
         {
             JMenuItem hide = new JMenuItem("Hide");
+            hide.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
             hide.addActionListener(e -> ((ColorGeometry)geom).getRenderProperties().setColorARGB(color & 0x00ffffff));
             menuItems.add(hide);
         }
 
         JMenuItem setColor = new JMenuItem("Override Color");
+        setColor.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
         setColor.setIcon(new GenericFontIcon(AwesomeIconSolid.TINT, Color.WHITE));
         setColor.addActionListener(e ->
         {

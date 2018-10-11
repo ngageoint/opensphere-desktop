@@ -2,11 +2,14 @@ package io.opensphere.myplaces.specific.points;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
@@ -29,7 +32,6 @@ import io.opensphere.myplaces.editor.controller.AnnotationEditController;
 import io.opensphere.myplaces.models.DataCouple;
 import io.opensphere.myplaces.models.MyPlacesModel;
 import io.opensphere.myplaces.specific.MyPointsMenuItemProvider;
-import io.opensphere.myplaces.specific.points.utils.PointUtils;
 import io.opensphere.myplaces.util.GroupUtils;
 
 /**
@@ -48,6 +50,7 @@ public class PointGeometryContextMenuProvider extends MyPointsMenuItemProvider
             if (pos != null)
             {
                 JMenuItem mi = new JMenuItem("Save as Place", new GenericFontIcon(AwesomeIconSolid.MAP_MARKER_ALT, Color.WHITE));
+                mi.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
                 mi.addActionListener(e -> myTypeController.createAnnotationPointFromPosition(pos));
                 return Collections.singletonList(mi);
             }
@@ -120,6 +123,11 @@ public class PointGeometryContextMenuProvider extends MyPointsMenuItemProvider
 
         if (result != null)
         {
+            JLabel label = new JLabel("Area");
+            label.setBorder(BorderFactory.createEmptyBorder(6, 0, 6, 0));
+            label.setFont(label.getFont().deriveFont(Font.BOLD));
+            menuItems.add(label);
+
             for (ItemType type : ItemType.values())
             {
                 if (type.isRequired())
@@ -161,11 +169,7 @@ public class PointGeometryContextMenuProvider extends MyPointsMenuItemProvider
         if (placemark != null)
         {
             Object src = e.getSource();
-            if (getMenuItems().get(ItemType.CENTER_ON) == src)
-            {
-                myController.centerOnPoint(PointUtils.fromKml(placemark, this));
-            }
-            else if (getMenuItems().get(ItemType.EDIT) == src)
+            if (getMenuItems().get(ItemType.EDIT) == src)
             {
                 DataCouple couple = myController.getDataType(placemark.getId());
                 couple.getDataType().launchEditor(couple.getDataGroup(), Collections.singletonList(couple.getDataType()));

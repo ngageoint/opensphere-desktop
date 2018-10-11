@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JMenuItem;
@@ -16,7 +15,6 @@ import io.opensphere.core.UnitsRegistry;
 import io.opensphere.core.control.action.ContextActionManager;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
-import io.opensphere.core.control.action.context.GeometryContextKey;
 import io.opensphere.core.control.action.context.MultiGeometryContextKey;
 import io.opensphere.core.control.action.context.ScreenPositionContextKey;
 import io.opensphere.core.event.EventManager;
@@ -116,42 +114,6 @@ public class MapManagerMenuProvider
         }
     };
 
-    /**
-     * The menu provider for events related to single geometry selection or
-     * completion.
-     */
-    private final ContextMenuProvider<GeometryContextKey> myGeometryContextMenuProvider = new ContextMenuProvider<GeometryContextKey>()
-    {
-        @Override
-        public List<JMenuItem> getMenuItems(String contextId, GeometryContextKey key)
-        {
-            if (key.getGeometry() instanceof PolylineGeometry)
-            {
-                List<JMenuItem> menuItems = New.list();
-
-                JMenuItem zoom = new JMenuItem("Zoom to");
-                zoom.setIcon(new GenericFontIcon(AwesomeIconSolid.CROP, Color.WHITE, 12));
-                addZoomAction(zoom, Collections.singleton(key.getGeometry()));
-                menuItems.add(zoom);
-
-                JMenuItem center = new JMenuItem("Center On");
-                center.setIcon(new GenericFontIcon(AwesomeIconSolid.BULLSEYE, Color.WHITE));
-                addCenterAction(center, Collections.singleton(key.getGeometry()));
-                menuItems.add(center);
-
-                return menuItems;
-            }
-
-            return null;
-        }
-
-        @Override
-        public int getPriority()
-        {
-            return 11500;
-        }
-    };
-
     /** The map manager this menu provider serves. */
     private final MapManager myMapManager;
 
@@ -213,11 +175,6 @@ public class MapManagerMenuProvider
         myControlActionManager = actionManager;
         myUnitsRegistry = unitsRegistry;
         myEventManager = eventManager;
-        myControlActionManager.registerContextMenuItemProvider(ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT,
-                GeometryContextKey.class, myGeometryContextMenuProvider);
-
-        myControlActionManager.registerContextMenuItemProvider(ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT,
-                GeometryContextKey.class, myGeometryContextMenuProvider);
 
         myControlActionManager.registerContextMenuItemProvider(ContextIdentifiers.ROI_CONTEXT, MultiGeometryContextKey.class,
                 myMultiGeometryContextMenuProvider);
@@ -229,12 +186,6 @@ public class MapManagerMenuProvider
     /** Perform an required cleanup. */
     public void close()
     {
-        myControlActionManager.deregisterContextMenuItemProvider(ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT,
-                GeometryContextKey.class, myGeometryContextMenuProvider);
-
-        myControlActionManager.deregisterContextMenuItemProvider(ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT,
-                GeometryContextKey.class, myGeometryContextMenuProvider);
-
         myControlActionManager.deregisterContextMenuItemProvider(ContextIdentifiers.ROI_CONTEXT, MultiGeometryContextKey.class,
                 myMultiGeometryContextMenuProvider);
 

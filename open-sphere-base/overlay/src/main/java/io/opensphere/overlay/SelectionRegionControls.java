@@ -318,13 +318,13 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
 
     /**
      * Completes the creation of a line.
-     * 
+     *
      * @return true when the line is complete, false otherwise.
      */
     protected synchronized boolean completeLine()
     {
         MouseEvent mousePosition = myLastMouse;
-        if (myModeController.getSelectionMode() == SelectionMode.LINE && getPositions().size() > 2)
+        if (myModeController.getSelectionMode() == SelectionMode.LINE && getPositions().size() >= 2)
         {
             setCompleted(mousePosition);
             finishLine();
@@ -412,7 +412,7 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
 
     /**
      * Draws a line using the supplied points.
-     * 
+     *
      * @param llas the points with which to draw the line.
      */
     protected void setLineDraw(List<LatLonAlt> llas)
@@ -753,7 +753,7 @@ public class SelectionRegionControls extends AbstractRegionControls implements R
 
         /**
          * Handles the mouse draw event.
-         * 
+         *
          * @param event the event to handle.
          */
         private void handleMouseDrawEvent(final MouseEvent event)

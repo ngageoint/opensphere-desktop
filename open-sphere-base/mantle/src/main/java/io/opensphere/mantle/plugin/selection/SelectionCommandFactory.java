@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JSeparator;
 
 import org.apache.log4j.Logger;
 
@@ -17,6 +19,7 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.plugin.selection.impl.AddFeaturesCommand;
 import io.opensphere.mantle.plugin.selection.impl.AddFeaturesCurrentFrame;
 import io.opensphere.mantle.plugin.selection.impl.CancelQueryCommand;
+import io.opensphere.mantle.plugin.selection.impl.CenterOnCommand;
 import io.opensphere.mantle.plugin.selection.impl.CreateBufferCommand;
 import io.opensphere.mantle.plugin.selection.impl.CreateBufferSelectedCommand;
 import io.opensphere.mantle.plugin.selection.impl.DeselectCommand;
@@ -25,6 +28,7 @@ import io.opensphere.mantle.plugin.selection.impl.LoadFeaturesCurrentFrameComman
 import io.opensphere.mantle.plugin.selection.impl.RemoveAllFeaturesCommand;
 import io.opensphere.mantle.plugin.selection.impl.SelectCommand;
 import io.opensphere.mantle.plugin.selection.impl.SelectExclusiveCommand;
+import io.opensphere.mantle.plugin.selection.impl.ZoomToCommand;
 
 /**
  * A factory implementation for selection command implementations.
@@ -70,12 +74,16 @@ public class SelectionCommandFactory
     /** SELECT_EXCLUSIVE. */
     public static final SelectionCommand SELECT_EXCLUSIVE = new SelectExclusiveCommand();
 
+    public static final SelectionCommand CENTER = new CenterOnCommand();
+
+    public static final SelectionCommand ZOOM = new ZoomToCommand();
+
     /**
      * Default set of commands.
      */
-    private static final List<SelectionCommand> DEFAULT_COMMANDS = List.of(ADD_FEATURES, ADD_FEATURES_CURRENT_FRAME,
-            LOAD_FEATURES, LOAD_FEATURES_CURRENT_FRAME, CANCEL_QUERY, CREATE_BUFFER_REGION,
-            CREATE_BUFFER_REGION_FOR_SELECTED, DESELECT, REMOVE_ALL, SELECT, SELECT_EXCLUSIVE);
+    private static final List<SelectionCommand> DEFAULT_COMMANDS = List.of(LOAD_FEATURES, LOAD_FEATURES_CURRENT_FRAME,
+            ADD_FEATURES, ADD_FEATURES_CURRENT_FRAME, CANCEL_QUERY, CREATE_BUFFER_REGION, CREATE_BUFFER_REGION_FOR_SELECTED,
+            SELECT, SELECT_EXCLUSIVE, DESELECT, REMOVE_ALL, CENTER, ZOOM);
 
     /**
      * Default set of commands.
@@ -123,7 +131,10 @@ public class SelectionCommandFactory
     public static List<Component> getPointMenuItems(ActionListener al)
     {
         List<Component> menuItems = new ArrayList<>();
+        menuItems.add(createHeader("Tools"));
         menuItems.add(CREATE_BUFFER_REGION.createMenuItem(al));
+        menuItems.add(CENTER.createMenuItem(al));
+        menuItems.add(ZOOM.createMenuItem(al));
         return menuItems;
     }
 
@@ -139,19 +150,23 @@ public class SelectionCommandFactory
     public static List<Component> getPolygonMenuItems(ActionListener listener, boolean hasFilters, boolean isFromCreateBuffer)
     {
         List<Component> menuItems = new ArrayList<>();
-        menuItems.add(createHeader("QUERY"));
-        menuItems.add(ADD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
+        menuItems.add(createHeader("Query"));
         menuItems.add(LOAD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
-        menuItems.add(createHeader("FEATURES"));
-        menuItems.add(DESELECT.createMenuItem(listener));
-        menuItems.add(REMOVE_ALL.createMenuItem(listener));
+        menuItems.add(ADD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
+        menuItems.add(new JSeparator());
+        menuItems.add(createHeader("Features"));
         menuItems.add(SELECT.createMenuItem(listener));
         menuItems.add(SELECT_EXCLUSIVE.createMenuItem(listener));
+        menuItems.add(DESELECT.createMenuItem(listener));
+        menuItems.add(REMOVE_ALL.createMenuItem(listener));
         if (!isFromCreateBuffer)
         {
-            menuItems.add(createHeader("TOOLS"));
+            menuItems.add(new JSeparator());
+            menuItems.add(createHeader("Tools"));
             menuItems.add(CREATE_BUFFER_REGION.createMenuItem(listener));
             menuItems.add(CREATE_BUFFER_REGION_FOR_SELECTED.createMenuItem(listener));
+            menuItems.add(CENTER.createMenuItem(listener));
+            menuItems.add(ZOOM.createMenuItem(listener));
         }
         return menuItems;
     }
@@ -165,8 +180,11 @@ public class SelectionCommandFactory
     public static List<Component> getPolylineMenuItems(ActionListener al)
     {
         List<Component> menuItems = new ArrayList<>();
+        menuItems.add(createHeader("Tools"));
         menuItems.add(CREATE_BUFFER_REGION.createMenuItem(al));
         menuItems.add(CREATE_BUFFER_REGION_FOR_SELECTED.createMenuItem(al));
+        menuItems.add(CENTER.createMenuItem(al));
+        menuItems.add(ZOOM.createMenuItem(al));
         return menuItems;
     }
 
@@ -181,17 +199,20 @@ public class SelectionCommandFactory
     public static List<Component> getQueryRegionMenuItems(ActionListener al, boolean hasFilters)
     {
         List<Component> menuItems = new ArrayList<>();
-        menuItems.add(createHeader("QUERY"));
-        menuItems.add(ADD_FEATURES.createMenuItem(al, hasFilters ? FILTERS_ACTIVE : null));
+        menuItems.add(createHeader("Query"));
         menuItems.add(LOAD_FEATURES.createMenuItem(al, hasFilters ? FILTERS_ACTIVE : null));
-        menuItems.add(createHeader("FEATURES"));
-        menuItems.add(DESELECT.createMenuItem(al));
-        menuItems.add(REMOVE_ALL.createMenuItem(al));
+        menuItems.add(ADD_FEATURES.createMenuItem(al, hasFilters ? FILTERS_ACTIVE : null));
+        menuItems.add(new JSeparator());
+        menuItems.add(createHeader("Features"));
         menuItems.add(SELECT.createMenuItem(al));
         menuItems.add(SELECT_EXCLUSIVE.createMenuItem(al));
-        menuItems.add(createHeader("TOOLS"));
+        menuItems.add(DESELECT.createMenuItem(al));
+        menuItems.add(REMOVE_ALL.createMenuItem(al));
+        menuItems.add(new JSeparator());
+        menuItems.add(createHeader("Tools"));
         menuItems.add(CREATE_BUFFER_REGION.createMenuItem(al));
-        menuItems.add(CANCEL_QUERY.createMenuItem(al));
+        menuItems.add(CENTER.createMenuItem(al));
+        menuItems.add(ZOOM.createMenuItem(al));
         return menuItems;
     }
 
@@ -205,14 +226,15 @@ public class SelectionCommandFactory
     public static List<Component> getRoiMenuItems(ActionListener listener, boolean hasFilters)
     {
         List<Component> menuOpts = New.list();
-        menuOpts.add(createHeader("QUERY"));
+        menuOpts.add(createHeader("Query"));
         menuOpts.add(LOAD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
         menuOpts.add(ADD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
-        menuOpts.add(createHeader("FEATURES"));
-        menuOpts.add(DESELECT.createMenuItem(listener));
-        menuOpts.add(REMOVE_ALL.createMenuItem(listener));
+        menuOpts.add(new JSeparator());
+        menuOpts.add(createHeader("Features"));
         menuOpts.add(SELECT.createMenuItem(listener));
         menuOpts.add(DESELECT.createMenuItem(listener));
+        menuOpts.add(DESELECT.createMenuItem(listener));
+        menuOpts.add(REMOVE_ALL.createMenuItem(listener));
         return menuOpts;
     }
 
@@ -226,14 +248,15 @@ public class SelectionCommandFactory
     public static List<Component> getSelectionRegionMenuItems(ActionListener listener, boolean hasFilters)
     {
         List<Component> menuOpts = New.list();
-        menuOpts.add(createHeader("QUERY"));
-        menuOpts.add(ADD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
+        menuOpts.add(createHeader("Query"));
         menuOpts.add(LOAD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
-        menuOpts.add(createHeader("FEATURES"));
+        menuOpts.add(ADD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
+        menuOpts.add(new JSeparator());
+        menuOpts.add(createHeader("Features"));
+        menuOpts.add(SELECT.createMenuItem(listener));
+        menuOpts.add(DESELECT.createMenuItem(listener));
         menuOpts.add(DESELECT.createMenuItem(listener));
         menuOpts.add(REMOVE_ALL.createMenuItem(listener));
-        menuOpts.add(SELECT.createMenuItem(listener));
-        menuOpts.add(SELECT_EXCLUSIVE.createMenuItem(listener));
         return menuOpts;
     }
 
@@ -247,6 +270,7 @@ public class SelectionCommandFactory
     private static JLabel createHeader(String title)
     {
         JLabel e = new JLabel(title);
+        e.setBorder(BorderFactory.createEmptyBorder(6, 0, 6, 0));
         e.setFont(e.getFont().deriveFont(Font.BOLD));
         return e;
     }

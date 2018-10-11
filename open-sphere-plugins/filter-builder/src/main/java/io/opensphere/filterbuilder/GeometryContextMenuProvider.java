@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -168,6 +169,7 @@ public class GeometryContextMenuProvider implements ContextMenuProvider<Geometry
             if (matchingGeom == null)
             {
                 JMenuItem saveMI = new JMenuItem("Create spatial filter");
+                saveMI.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
                 saveMI.setIcon(new GenericFontIcon(AwesomeIconSolid.FILTER, Color.WHITE));
                 saveMI.addActionListener(evt -> createSpatialFilter((PolygonGeometry)key.getGeometry()));
                 options.add(saveMI);
@@ -175,11 +177,13 @@ public class GeometryContextMenuProvider implements ContextMenuProvider<Geometry
             else
             {
                 JMenuItem manageLayersMI = new JMenuItem("Manage spatial filter");
+                manageLayersMI.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
                 manageLayersMI.setIcon(new GenericFontIcon(AwesomeIconSolid.FILTER, Color.WHITE));
                 manageLayersMI.addActionListener(evt -> manageLayers(matchingGeom));
                 options.add(manageLayersMI);
 
                 JMenuItem removeMI = new JMenuItem("Remove spatial filter");
+                removeMI.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
                 removeMI.setIcon(new GenericFontIcon(AwesomeIconSolid.FILTER, Color.WHITE));
                 removeMI.addActionListener(evt -> removeSpatialFilter(matchingGeom));
                 options.add(removeMI);
