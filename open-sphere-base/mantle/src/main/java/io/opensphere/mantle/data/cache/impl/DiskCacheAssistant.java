@@ -240,10 +240,7 @@ public class DiskCacheAssistant implements CacheAssistant
             Set<DiskCacheDirectAccessRetriever> retrieverSetForType = myTypeToDirectRetrieverMap.get(dti.getTypeKey());
             if (retrieverSetForType != null && !retrieverSetForType.isEmpty())
             {
-                for (DiskCacheDirectAccessRetriever retriever : retrieverSetForType)
-                {
-                    retriever.close();
-                }
+                retrieverSetForType.forEach(r -> r.close());
                 retrieverSetForType.clear();
             }
         }

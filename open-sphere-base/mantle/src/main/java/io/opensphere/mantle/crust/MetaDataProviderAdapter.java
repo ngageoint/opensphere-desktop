@@ -36,10 +36,7 @@ public abstract class MetaDataProviderAdapter implements MetaDataProvider
     public List<Object> getValues()
     {
         List<Object> ret = new LinkedList<>();
-        for (String k : myFieldNames)
-        {
-            ret.add(getValue(k));
-        }
+        myFieldNames.stream().map(k -> getValue(k)).forEach(ret::add);
         return ret;
     }
 

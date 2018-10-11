@@ -13,8 +13,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import net.jcip.annotations.GuardedBy;
-
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.event.ApplicationLifecycleEvent;
@@ -42,6 +40,7 @@ import io.opensphere.mantle.data.impl.DefaultDataGroupActivator;
 import io.opensphere.mantle.data.impl.DefaultDataGroupInfo;
 import io.opensphere.mantle.data.impl.dgset.v1.JAXBDataGroupInfoActiveSet;
 import io.opensphere.mantle.data.impl.dgset.v1.JAXBDataGroupInfoActiveSetConfig;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * The Class DataGroupActivationController.
@@ -473,13 +472,11 @@ class DataGroupActivationController implements DataGroupActivationManager
      */
     private Set<ActiveGroupEntry> convertToEntrySet(Collection<String> groupIds)
     {
-        Set<ActiveGroupEntry> set = New.set();
         Map<String, DataGroupInfo> map = DefaultDataGroupInfo.getKeyMap().getGroupsForKeys(groupIds);
-        for (Map.Entry<String, DataGroupInfo> entry : map.entrySet())
-        {
-            set.add(new DefaultActiveGroupEntry(entry.getValue().getDisplayNameWithPostfixTopParentName(), entry.getKey()));
-        }
-        return set;
+
+        return map.entrySet().stream().map(
+                entry -> new DefaultActiveGroupEntry(entry.getValue().getDisplayNameWithPostfixTopParentName(), entry.getKey()))
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -491,15 +488,7 @@ class DataGroupActivationController implements DataGroupActivationManager
     private Collection<? extends ActiveGroupEntry> filterOutNonUserActivateableGroups(
             Collection<? extends ActiveGroupEntry> groups)
     {
-        List<ActiveGroupEntry> result = New.list();
-        for (ActiveGroupEntry age : groups)
-        {
-            if (isUserActivationStateControl(age))
-            {
-                result.add(age);
-            }
-        }
-        return result;
+        return groups.stream().filter(age -> isUserActivationStateControl(age)).collect(Collectors.toList());
     }
 
     /**
@@ -511,6 +500,7 @@ class DataGroupActivationController implements DataGroupActivationManager
     private Set<String> filterOutNonUserActivateableGroupsById(Collection<String> groupIds)
     {
         Set<String> result = New.set();
+
         for (String dgiId : groupIds)
         {
             if (isUserActivationStateControl(dgiId))
@@ -662,12 +652,8 @@ class DataGroupActivationController implements DataGroupActivationManager
         {
             if (LOGGER.isTraceEnabled())
             {
-                StringBuilder sb = new StringBuilder();
-                sb.append("Sending Activations to Necessary Groups: \n");
-                for (DataGroupInfo dgi : toActivate)
-                {
-                    sb.append("    ").append(dgi.getId()).append('\n');
-                }
+                StringBuilder sb = new StringBuilder("Sending Activations to Necessary Groups: \n");
+                toActivate.stream().forEach(dgi -> sb.append("    ").append(dgi.getId()).append('\n'));
                 LOGGER.trace(sb.toString());
             }
             try
@@ -696,13 +682,8 @@ class DataGroupActivationController implements DataGroupActivationManager
         Set<DataGroupInfoActiveSet> oldSetSet = myActiveSetConfig.removeSet(USER_ACTIVATED_SET_NAME);
         for (DataGroupInfoActiveSet set : oldSetSet)
         {
-            for (ActiveGroupEntry entry : set.getGroupEntries())
-            {
-                if (isUserActivationStateControl(entry))
-                {
-                    totalSet.add(new DefaultActiveGroupEntry(entry));
-                }
-            }
+            totalSet.addAll(
+                    set.getGroupEntries().stream().filter(e -> isUserActivationStateControl(e)).collect(Collectors.toSet()));
         }
         if (add)
         {
@@ -717,12 +698,9 @@ class DataGroupActivationController implements DataGroupActivationManager
         }
         if (LOGGER.isTraceEnabled())
         {
-            StringBuilder sb = new StringBuilder();
-            sb.append("Updating User Activated Set To: \n");
-            for (ActiveGroupEntry entry : totalSet)
-            {
-                sb.append("     [Name: ").append(entry.getName()).append("  Id: ").append(entry.getId()).append("]\n");
-            }
+            StringBuilder sb = new StringBuilder("Updating User Activated Set To: \n");
+            totalSet.stream()
+                    .forEach(e -> sb.append("     [Name: ").append(e.getName()).append("  Id: ").append(e.getId()).append("]\n"));
             LOGGER.trace(sb.toString());
         }
         JAXBDataGroupInfoActiveSet set = new JAXBDataGroupInfoActiveSet(USER_ACTIVATED_SET_NAME, totalSet);

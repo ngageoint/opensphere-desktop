@@ -1,11 +1,11 @@
 package io.opensphere.mantle.data.cache.impl;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import gnu.trove.list.TLongList;
 import io.opensphere.core.util.Utilities;
@@ -199,15 +199,9 @@ public class DataTypeToIdMap
      */
     public Set<DataTypeInfo> getTypesWithElements()
     {
-        Set<DataTypeInfo> result = new HashSet<>();
-        for (Map.Entry<String, RangedLongSet> entry : myDataTypeKeyToTypeIdSetMap.entrySet())
-        {
-            if (entry.getValue() != null && !entry.getValue().isEmpty())
-            {
-                result.add(myDTIKeyToDTIMap.get(entry.getKey()));
-            }
-        }
-        return Collections.unmodifiableSet(result);
+        return Collections.unmodifiableSet(
+                myDataTypeKeyToTypeIdSetMap.entrySet().stream().filter(e -> e.getValue() != null && !e.getValue().isEmpty())
+                        .map(e -> myDTIKeyToDTIMap.get(e.getKey())).collect(Collectors.toSet()));
     }
 
     /**

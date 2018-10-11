@@ -157,15 +157,11 @@ public class DataUtil implements NamedDataSetManager
     {
         DefaultMetaDataInfo meta = new DefaultMetaDataInfo();
         // add the columns
-        for (Map.Entry<String, Class<?>> ent : cols.entrySet())
-        {
-            meta.addKey(ent.getKey(), ent.getValue(), null);
-        }
+        cols.entrySet().forEach(e -> meta.addKey(e.getKey(), e.getValue(), null));
+
         // add the specials
-        for (Map.Entry<String, SpecialKey> ent : special.entrySet())
-        {
-            meta.setSpecialKey(ent.getKey(), ent.getValue(), null);
-        }
+        special.entrySet().forEach(e -> meta.setSpecialKey(e.getKey(), e.getValue(), null));
+
         return meta;
     }
 

@@ -126,11 +126,8 @@ public class AnalysisTask implements Runnable
                     @Override
                     public void finalizeQuery()
                     {
-                        for (String column : myColumnsToAnalyze)
-                        {
-                            ColumnDataAnalyzer analyzer = columnNameToDataAnalyzerMap.get(column);
-                            analyzer.determineColumnClassFromData();
-                        }
+                        myColumnsToAnalyze.stream().map(c -> columnNameToDataAnalyzerMap.get(c))
+                                .forEach(a -> a.determineColumnClassFromData());
                     }
 
                     @Override
@@ -200,10 +197,7 @@ public class AnalysisTask implements Runnable
 
             if (!stringColumns.isEmpty())
             {
-                for (String column : stringColumns)
-                {
-                    myColumnsToAnalyze.add(column);
-                }
+                stringColumns.forEach(myColumnsToAnalyze::add);
             }
         }
     }

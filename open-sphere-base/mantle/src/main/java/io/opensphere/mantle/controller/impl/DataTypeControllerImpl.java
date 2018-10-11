@@ -433,14 +433,8 @@ public class DataTypeControllerImpl implements DataTypeController
 
         synchronized (myDTIKeyToDTIMap)
         {
-            for (String dtiKey : dtiKeyList)
-            {
-                MapDataElementTransformer xFormer = myDTIKeyToTransformerMap.get(dtiKey);
-                if (xFormer != null)
-                {
-                    xFormer.removeMapDataElements(ids);
-                }
-            }
+            dtiKeyList.stream().map(key -> myDTIKeyToTransformerMap.get(key)).filter(t -> t != null)
+                    .forEach(t -> t.removeMapDataElements(ids));
         }
 
         myDECache.remove(CollectionUtilities.listView(ids), false);
