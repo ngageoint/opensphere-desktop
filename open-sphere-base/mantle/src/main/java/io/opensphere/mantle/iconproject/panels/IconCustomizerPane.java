@@ -66,7 +66,7 @@ public class IconCustomizerPane extends BorderPane
     private ImageView myIconView;
 
     /** The spinner width. */
-    private final double mySpinnerWidth = 59.0;
+    private final double mySpinnerWidth = 75.0;
 
     /** The IconRecord of the displayed Icon. */
     private final IconRecord myIconRecord;

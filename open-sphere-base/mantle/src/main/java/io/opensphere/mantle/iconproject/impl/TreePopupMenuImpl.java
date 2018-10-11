@@ -9,9 +9,6 @@ import javafx.scene.control.TreeItem;
  */
 public class TreePopupMenuImpl
 {
-    /** The selected icon. */
-    IconRecord mySelectedIcon;
-
     /** The current UI model. */
     private PanelModel myPanelModel;
 
@@ -23,7 +20,6 @@ public class TreePopupMenuImpl
     public TreePopupMenuImpl(PanelModel thePanelModel)
     {
         myPanelModel = thePanelModel;
-        mySelectedIcon = myPanelModel.getSelectedRecord().get();
     }
 
     /**

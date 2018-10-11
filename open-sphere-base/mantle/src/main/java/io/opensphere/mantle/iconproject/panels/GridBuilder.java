@@ -1,7 +1,6 @@
 package io.opensphere.mantle.iconproject.panels;
 
 import java.awt.Window;
-import java.util.List;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -24,9 +23,6 @@ public class GridBuilder extends TilePane
     /** The width used for icon buttons. */
     private final int myTileWidth;
 
-    /** The icon record list. */
-    private List<IconRecord> myRecordList;
-
     /** The model for the main icon panel. */
     private final PanelModel myPanelModel;
 
@@ -40,13 +36,24 @@ public class GridBuilder extends TilePane
     {
         myPanelModel = panelModel;
         myTileWidth = myPanelModel.getCurrentTileWidth().get();
-        myRecordList = myPanelModel.getRecordList();
 
-        for (IconRecord recordindex : myRecordList)
+        if (myPanelModel.getUseFilteredList())
         {
-            Button sample = buttonBuilder(recordindex);
-            setMargin(sample, new Insets(5, 5, 5, 5));
-            getChildren().add(sample);
+            for (IconRecord recordindex : myPanelModel.getFilteredRecordList())
+            {
+                Button sample = buttonBuilder(recordindex);
+                setMargin(sample, new Insets(5, 5, 5, 5));
+                getChildren().add(sample);
+            }
+        }
+        else
+        {
+            for (IconRecord recordindex : myPanelModel.getRecordList())
+            {
+                Button sample = buttonBuilder(recordindex);
+                setMargin(sample, new Insets(5, 5, 5, 5));
+                getChildren().add(sample);
+            }
         }
     }
 
