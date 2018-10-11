@@ -11,6 +11,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+
+import org.apache.commons.lang.StringUtils;
+
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
 import io.opensphere.mantle.iconproject.impl.LabelMaker;
 import io.opensphere.mantle.iconproject.model.PanelModel;
@@ -98,14 +101,14 @@ public class TopMenuBar extends HBox
      */
     private void filterIcons()
     {
-        if (myTextField.getText().isEmpty())
+        if (StringUtils.isEmpty(myTextField.getText()))
         {
             myPanelModel.setUseFilteredList(false);
             myPanelModel.getViewModel().getMainPanel().refresh();
             return;
         }
         myPanelModel.getFilteredRecordList().clear();
-        myPanelModel.getRecordList().stream().filter(r -> r.getName().toLowerCase().contains(myTextField.getText().toLowerCase()))
+        myPanelModel.getRecordList().stream().filter(r -> StringUtils.containsIgnoreCase(r.getName(), myTextField.getText()))
                 .forEach(r -> myPanelModel.getFilteredRecordList().add(r));
         myPanelModel.setUseFilteredList(true);
         myPanelModel.getViewModel().getMainPanel().refresh();
