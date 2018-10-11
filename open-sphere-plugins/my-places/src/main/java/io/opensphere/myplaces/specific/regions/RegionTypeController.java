@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Function;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -258,6 +259,7 @@ public class RegionTypeController extends PlaceTypeController
                     && (key.getGeometry() instanceof PolygonGeometry || key.getGeometry() instanceof PolylineGeometry))
             {
                 JMenuItem saveMI = new JMenuItem("Save as Place");
+                saveMI.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
                 saveMI.setIcon(new GenericFontIcon(AwesomeIconRegular.SAVE, Color.WHITE));
                 if (key.getGeometry() instanceof PolygonGeometry)
                 {

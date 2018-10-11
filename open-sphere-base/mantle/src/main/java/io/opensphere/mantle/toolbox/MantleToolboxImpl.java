@@ -151,11 +151,16 @@ public class MantleToolboxImpl implements MantleToolbox
         mySelectionHandler.registerSelectionCommandProcessor(SelectionCommandFactory.LOAD_FEATURES, qrmi);
         mySelectionHandler.registerSelectionCommandProcessor(SelectionCommandFactory.LOAD_FEATURES_CURRENT_FRAME, qrmi);
         mySelectionHandler.registerSelectionCommandProcessor(SelectionCommandFactory.CANCEL_QUERY, qrmi);
+        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommandFactory.CENTER, qrmi);
+        mySelectionHandler.registerSelectionCommandProcessor(SelectionCommandFactory.ZOOM, qrmi);
 
         myQueryLineManager = new QueryLineManagerImpl(aToolbox);
-        mySelectionHandler.registerLineSelectionCommandProcessor(SelectionCommandFactory.CREATE_BUFFER_REGION, myQueryLineManager);
+        mySelectionHandler.registerLineSelectionCommandProcessor(SelectionCommandFactory.CREATE_BUFFER_REGION,
+                myQueryLineManager);
         mySelectionHandler.registerLineSelectionCommandProcessor(SelectionCommandFactory.CREATE_BUFFER_REGION_FOR_SELECTED,
                 myQueryLineManager);
+        mySelectionHandler.registerLineSelectionCommandProcessor(SelectionCommandFactory.CENTER, myQueryLineManager);
+        mySelectionHandler.registerLineSelectionCommandProcessor(SelectionCommandFactory.ZOOM, myQueryLineManager);
 
         myDataTypeInfoPreferenceAssistant = new DataTypeInfoPreferenceAssistantImpl(myParentToolbox);
         myIconRegistry = createIconRegistry(pluginProperties);
