@@ -112,7 +112,6 @@ class ActiveWindowLayer extends CompositeLayer
     /**
      * Constructor.
      *
-     *
      * @param toolbox The toolbox through which application state is accessed.
      * @param timeModel the time model
      * @param animationModel the animation model

@@ -7,12 +7,12 @@ import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.mantle.plugin.selection.SelectionCommandGroup;
 
 /**
- *
+ * Command to center the map on the selected item.
  */
 public class CenterOnCommand extends AbstractSelectionCommand
 {
     /**
-     *
+     * Creates a new command.
      */
     public CenterOnCommand()
     {
