@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,7 +16,6 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.log4j.Logger;
 
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.SpecialKey;
 import io.opensphere.mantle.data.impl.encoder.DiskDecodeHelper;
@@ -225,8 +225,8 @@ public class KeySpecification
             return false;
         }
         KeySpecification other = (KeySpecification)obj;
-        return EqualsHelper.equals(myClassName, other.myClassName) && EqualsHelper.equals(myKeyName, other.myKeyName)
-                && EqualsHelper.equals(mySpecialKeyClassName, other.mySpecialKeyClassName);
+        return Objects.equals(myClassName, other.myClassName) && Objects.equals(myKeyName, other.myKeyName)
+                && Objects.equals(mySpecialKeyClassName, other.mySpecialKeyClassName);
     }
 
     /**

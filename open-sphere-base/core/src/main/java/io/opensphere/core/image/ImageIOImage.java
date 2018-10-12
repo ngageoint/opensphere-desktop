@@ -13,11 +13,11 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.ServiceLoader;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -26,6 +26,7 @@ import javax.imageio.stream.ImageInputStream;
 
 import org.apache.log4j.Logger;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.opensphere.core.image.DDSEncoder.EncodingException;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.LazyMap;
@@ -34,7 +35,6 @@ import io.opensphere.core.util.concurrent.CommonTimer;
 import io.opensphere.core.util.image.ImageUtil;
 import io.opensphere.core.util.io.ByteBufferInputStream;
 import io.opensphere.core.util.lang.Cancellable;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.Serialization;
 import io.opensphere.core.util.lang.StringUtilities;
 
@@ -827,7 +827,7 @@ public class ImageIOImage extends Image implements DDSEncodableImage
                 return false;
             }
             final BufferedImageSpecs other = (BufferedImageSpecs)obj;
-            return myHeight == other.myHeight && myWidth == other.myWidth && EqualsHelper.equals(myImageType, other.myImageType);
+            return myHeight == other.myHeight && myWidth == other.myWidth && Objects.equals(myImageType, other.myImageType);
         }
 
         @Override

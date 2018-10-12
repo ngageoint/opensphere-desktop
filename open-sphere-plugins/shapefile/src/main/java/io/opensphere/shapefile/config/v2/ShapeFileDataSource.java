@@ -1,6 +1,7 @@
 package io.opensphere.shapefile.config.v2;
 
 import java.net.URI;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -11,7 +12,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.collections.StreamUtilities;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.HashCodeHelper;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.importer.config.ImportDataSource;
@@ -84,7 +84,7 @@ public class ShapeFileDataSource extends ImportDataSource
             return false;
         }
         ShapeFileDataSource other = (ShapeFileDataSource)obj;
-        return super.equals(obj) && EqualsHelper.equals(myParseParameters, other.myParseParameters);
+        return super.equals(obj) && Objects.equals(myParseParameters, other.myParseParameters);
     }
 
     @Override

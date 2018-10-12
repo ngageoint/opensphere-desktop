@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
@@ -28,7 +29,6 @@ import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.concurrent.ProcrastinatingExecutor;
 import io.opensphere.core.util.concurrent.SuppressableRejectedExecutionHandler;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.controller.event.AbstractRootDataGroupControllerEvent;
@@ -502,7 +502,7 @@ public class VisualizationStyleDataTypeTreePanel extends JPanel implements NodeL
                         if (add)
                         {
                             aNode = new DataTypeNodeUserObject(name, nodeType, dgi, dti, this);
-                            if (EqualsHelper.equals(aNode.getNodeKey(), lastSelectedNodeKey))
+                            if (Objects.equals(aNode.getNodeKey(), lastSelectedNodeKey))
                             {
                                 aNode.setSelectedNoEvent(true);
                             }
@@ -526,19 +526,11 @@ public class VisualizationStyleDataTypeTreePanel extends JPanel implements NodeL
      */
     private DataTypeNodeUserObject getSelectedNode()
     {
-        DataTypeNodeUserObject found = null;
         synchronized (myNodeKeyToNodeObjMap)
         {
-            for (Map.Entry<String, DataTypeNodeUserObject> entry : myNodeKeyToNodeObjMap.entrySet())
-            {
-                if (entry.getValue().isSelected())
-                {
-                    found = entry.getValue();
-                    break;
-                }
-            }
+            return myNodeKeyToNodeObjMap.entrySet().stream().filter(e -> e.getValue().isSelected()).findFirst()
+                    .map(e -> e.getValue()).orElse(null);
         }
-        return found;
     }
 
     /**

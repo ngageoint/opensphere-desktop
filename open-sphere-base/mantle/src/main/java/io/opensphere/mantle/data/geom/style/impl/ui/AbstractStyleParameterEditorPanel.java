@@ -296,10 +296,7 @@ public abstract class AbstractStyleParameterEditorPanel extends JPanel
     public void updateAll()
     {
         update();
-        for (AbstractStyleParameterEditorPanel sibling : mySiblingComponents)
-        {
-            sibling.update();
-        }
+        mySiblingComponents.forEach(AbstractStyleParameterEditorPanel::update);
     }
 
     /**

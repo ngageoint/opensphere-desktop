@@ -3,6 +3,7 @@ package io.opensphere.mantle.data.geom.util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import io.opensphere.core.geometry.EllipseGeometry;
 import io.opensphere.core.geometry.renderproperties.DefaultPolygonRenderProperties;
@@ -17,7 +18,6 @@ import io.opensphere.core.model.Position;
 import io.opensphere.core.projection.GeographicBody3D;
 import io.opensphere.core.projection.Projection;
 import io.opensphere.core.util.Utilities;
-import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.geom.MapCircleGeometrySupport;
 import io.opensphere.mantle.data.geom.MapEllipseGeometrySupport;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
@@ -132,13 +132,7 @@ public final class MapGeometrySupportUtils
     public static GeographicBoundingBox getBoundingBox(MapPathGeometrySupport pathGs)
     {
         Utilities.checkNull(pathGs, "pathGs");
-        List<LatLonAlt> llaList = pathGs.getLocations();
-        List<GeographicPosition> lgp = new ArrayList<>(llaList.size());
-        for (LatLonAlt lla : llaList)
-        {
-            lgp.add(new GeographicPosition(lla));
-        }
-        return findBounds(lgp);
+        return findBounds(pathGs.getLocations().stream().map(GeographicPosition::new).collect(Collectors.toList()));
     }
 
     /**
@@ -231,14 +225,8 @@ public final class MapGeometrySupportUtils
 
         // Determine the reference level. Use the reference level of the
         // vertices if they are all the same, otherwise use terrain.
-        Set<ReferenceLevel> referenceLevels = New.set();
-        for (Position vertex : vertices)
-        {
-            if (vertex instanceof GeographicPosition)
-            {
-                referenceLevels.add(((GeographicPosition)vertex).getAlt().getReferenceLevel());
-            }
-        }
+        Set<ReferenceLevel> referenceLevels = vertices.stream().map(v -> ((GeographicPosition)v).getAlt().getReferenceLevel())
+                .collect(Collectors.toSet());
         ReferenceLevel referenceLevel = referenceLevels.size() == 1 ? referenceLevels.iterator().next()
                 : Altitude.ReferenceLevel.TERRAIN;
 

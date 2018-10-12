@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
@@ -28,7 +29,6 @@ import org.apache.commons.lang3.StringUtils;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.data.VisualizationSupport;
 import io.opensphere.mantle.data.geom.style.FeatureVisualizationControlPanel;
@@ -136,10 +136,7 @@ public class StyleTypeSelectTreePanel extends JPanel implements StyleEditPanelCo
      */
     public void ensureLabelSelected(final StyleNodeUserObject uo)
     {
-        for (TypeChoicePanel tcp : myTypeChoicePanels)
-        {
-            tcp.selectLabelNoEventIfMatch(uo);
-        }
+        myTypeChoicePanels.forEach(t -> t.selectLabelNoEventIfMatch(uo));
     }
 
     @Override
@@ -373,16 +370,11 @@ public class StyleTypeSelectTreePanel extends JPanel implements StyleEditPanelCo
     private void handleVisualizationStyleDatatypeChangeEvent(final VisualizationStyleDatatypeChangeEvent evt)
     {
         if (myDataType != null && myDataType.getDataTypeInfo() != null
-                && EqualsHelper.equals(evt.getDTIKey(), myDataType.getDataTypeInfo().getTypeKey())
+                && Objects.equals(evt.getDTIKey(), myDataType.getDataTypeInfo().getTypeKey())
                 && !(evt.getSource() instanceof StyleEditPanelController))
         {
-            EventQueueUtilities.runOnEDT(() ->
-            {
-                for (TypeChoicePanel tcp : myTypeChoicePanels)
-                {
-                    tcp.selectIfPossible(evt.getMGSClass(), evt.getNewStyle());
-                }
-            });
+            EventQueueUtilities.runOnEDT(
+                    () -> myTypeChoicePanels.stream().forEach(t -> t.selectIfPossible(evt.getMGSClass(), evt.getNewStyle())));
         }
     }
 
@@ -550,16 +542,8 @@ public class StyleTypeSelectTreePanel extends JPanel implements StyleEditPanelCo
          */
         public StyleNodeUserObject getSelectedStyleNodeUserObject()
         {
-            StyleNodeUserObject result = null;
-            for (Map.Entry<JToggleButton, StyleNodeUserObject> entry : myButtonToUserObjMap.entrySet())
-            {
-                if (entry.getKey().isSelected())
-                {
-                    result = entry.getValue();
-                    break;
-                }
-            }
-            return result;
+            return myButtonToUserObjMap.entrySet().stream().filter(e -> e.getKey().isSelected()).findFirst()
+                    .map(e -> e.getValue()).orElse(null);
         }
 
         /**
@@ -608,13 +592,8 @@ public class StyleTypeSelectTreePanel extends JPanel implements StyleEditPanelCo
          */
         public void selectLabelNoEventIfMatch(StyleNodeUserObject uo)
         {
-            for (Map.Entry<SelectableLabel, StyleNodeUserObject> entry : myLabelToUserObjMap.entrySet())
-            {
-                if (Utilities.sameInstance(uo, entry.getValue()))
-                {
-                    entry.getKey().setSelected(true, false);
-                }
-            }
+            myLabelToUserObjMap.entrySet().stream().filter(e -> Utilities.sameInstance(uo, e.getValue()))
+                    .forEach(e -> e.getKey().setSelected(true, false));
         }
     }
 }

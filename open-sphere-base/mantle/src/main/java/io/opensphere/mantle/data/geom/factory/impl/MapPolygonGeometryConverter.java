@@ -2,6 +2,7 @@ package io.opensphere.mantle.data.geom.factory.impl;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.tools.Tool;
 
@@ -19,7 +20,6 @@ import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.LineType;
 import io.opensphere.core.util.ColorUtilities;
-import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.BasicVisualizationInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MapVisualizationInfo;
@@ -71,21 +71,13 @@ public final class MapPolygonGeometryConverter extends AbstractGeometryConverter
         }
 
         // Convert list of LatLonAlt to list of GeographicPositions
-        List<GeographicPosition> geoPos = New.list();
-        for (LatLonAlt lla : geomSupport.getLocations())
-        {
-            geoPos.add(createGeographicPosition(lla, mapVisInfo, visState, geomSupport));
-        }
-        polygonBuilder.setVertices(geoPos);
+        polygonBuilder.setVertices(geomSupport.getLocations().stream()
+                .map(lla -> createGeographicPosition(lla, mapVisInfo, visState, geomSupport)).collect(Collectors.toList()));
 
         for (List<? extends LatLonAlt> hole : geomSupport.getHoles())
         {
-            List<GeographicPosition> geoHole = New.list();
-            for (LatLonAlt lla : hole)
-            {
-                geoHole.add(createGeographicPosition(lla, mapVisInfo, visState, geomSupport));
-            }
-            polygonBuilder.addHole(geoHole);
+            polygonBuilder.addHole(hole.stream().map(lla -> createGeographicPosition(lla, mapVisInfo, visState, geomSupport))
+                    .collect(Collectors.toList()));
         }
 
         PolygonGeometry polygonGeom = new PolygonGeometry(polygonBuilder, props, constraints);

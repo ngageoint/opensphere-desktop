@@ -17,7 +17,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfoActiveHistoryRecord;
 
@@ -55,10 +54,7 @@ public class JAXBDataGroupInfoActiveHistoryList
         myHistoryListLock.lock();
         try
         {
-            for (JAXBDataGroupInfoActiveHistoryRecord rec : other.myHistoryList)
-            {
-                myHistoryList.add(new JAXBDataGroupInfoActiveHistoryRecord(rec));
-            }
+            other.myHistoryList.stream().map(JAXBDataGroupInfoActiveHistoryRecord::new).forEach(myHistoryList::add);
         }
         finally
         {
@@ -183,7 +179,7 @@ public class JAXBDataGroupInfoActiveHistoryList
             while (!found && recItr.hasNext())
             {
                 JAXBDataGroupInfoActiveHistoryRecord rec = recItr.next();
-                if (EqualsHelper.equals(rec.getId(), id))
+                if (Objects.equals(rec.getId(), id))
                 {
                     found = true;
                     recItr.remove();

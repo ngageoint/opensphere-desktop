@@ -1,8 +1,7 @@
 package io.opensphere.mantle.data.geom.style.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.Geometry;
@@ -11,7 +10,6 @@ import io.opensphere.core.geometry.constraint.Constraints;
 import io.opensphere.core.geometry.renderproperties.DefaultPolylineRenderProperties;
 import io.opensphere.core.geometry.renderproperties.PolylineRenderProperties;
 import io.opensphere.core.model.GeographicPosition;
-import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.LineType;
 import io.opensphere.mantle.data.BasicVisualizationInfo;
 import io.opensphere.mantle.data.MapVisualizationInfo;
@@ -58,14 +56,16 @@ public class PolylineFeatureVisualizationStyle extends AbstractPathVisualization
 
     @Override
     public void createCombinedGeometry(Set<Geometry> setToAddTo, FeatureCombinedGeometryBuilderData builderData,
-            RenderPropertyPool renderPropertyPool) throws IllegalArgumentException
+            RenderPropertyPool renderPropertyPool)
+        throws IllegalArgumentException
     {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public void createIndividualGeometry(Set<Geometry> setToAddTo, FeatureIndividualGeometryBuilderData bd,
-            RenderPropertyPool renderPropertyPool) throws IllegalArgumentException
+            RenderPropertyPool renderPropertyPool)
+        throws IllegalArgumentException
     {
         PolylineGeometry polylineGeom = null;
         if (bd.getMGS() instanceof MapPolylineGeometrySupport)
@@ -78,12 +78,8 @@ public class PolylineFeatureVisualizationStyle extends AbstractPathVisualization
             polylineBuilder.setLineType(mpgs.getLineType() == null ? LineType.STRAIGHT_LINE : mpgs.getLineType());
 
             // Convert list of LatLonAlt to list of GeographicPositions
-            List<GeographicPosition> geoPos = new ArrayList<>();
-            for (LatLonAlt lla : mpgs.getLocations())
-            {
-                geoPos.add(createGeographicPosition(lla, mapVisInfo, bd.getVS(), mpgs));
-            }
-            polylineBuilder.setVertices(geoPos);
+            polylineBuilder.setVertices(mpgs.getLocations().stream()
+                    .map(lla -> createGeographicPosition(lla, mapVisInfo, bd.getVS(), mpgs)).collect(Collectors.toList()));
 
             if (isShowNodes())
             {
@@ -96,13 +92,23 @@ public class PolylineFeatureVisualizationStyle extends AbstractPathVisualization
 
             polylineGeom = new PolylineGeometry(polylineBuilder, props, constraints);
 
-            if (!geoPos.isEmpty())
+            if (!mpgs.getLocations().stream().map(lla -> createGeographicPosition(lla, mapVisInfo, bd.getVS(), mpgs))
+                    .collect(Collectors.toList()).isEmpty())
             {
-                int index = geoPos.size() == 1 ? 0 : (int)Math.floor(geoPos.size() / 2.0);
-                createLabelGeometry(setToAddTo, bd, geoPos.get(index), polylineGeom.getConstraints(), renderPropertyPool);
+                int index = mpgs.getLocations().stream().map(lla -> createGeographicPosition(lla, mapVisInfo, bd.getVS(), mpgs))
+                        .collect(Collectors.toList()).size() == 1
+                                ? 0
+                                : (int)Math.floor(mpgs.getLocations().stream()
+                                        .map(lla -> createGeographicPosition(lla, mapVisInfo, bd.getVS(), mpgs))
+                                        .collect(Collectors.toList()).size() / 2.0);
+                createLabelGeometry(setToAddTo, bd,
+                        mpgs.getLocations().stream().map(lla -> createGeographicPosition(lla, mapVisInfo, bd.getVS(), mpgs))
+                                .collect(Collectors.toList()).get(index),
+                        polylineGeom.getConstraints(), renderPropertyPool);
             }
         }
         else
+
         {
             throw new IllegalArgumentException(
                     "Cannot create geometries from type " + (bd.getMGS() == null ? "NULL" : bd.getMGS().getClass().getName()));

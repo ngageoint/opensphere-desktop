@@ -172,10 +172,7 @@ public class SelectableLabel extends JLabel
         {
             synchronized (myActionListeners)
             {
-                for (ActionListener al : myActionListeners)
-                {
-                    al.actionPerformed(ae);
-                }
+                myActionListeners.forEach(al -> al.actionPerformed(ae));
             }
         });
     }

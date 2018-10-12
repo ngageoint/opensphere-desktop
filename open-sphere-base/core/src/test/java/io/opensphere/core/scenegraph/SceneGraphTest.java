@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -16,7 +17,6 @@ import org.junit.Test;
 import io.opensphere.core.scenegraph.SceneGraph.GroupNode;
 import io.opensphere.core.scenegraph.SceneGraph.LeafNode;
 import io.opensphere.core.scenegraph.SceneGraph.Node;
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /**
  * Test for {@link SceneGraph}.
@@ -306,7 +306,7 @@ public class SceneGraphTest
     {
         for (Node<TestGeometry, Param1> node : nodes)
         {
-            if (EqualsHelper.equals(node.getParameter(), parameter))
+            if (Objects.equals(node.getParameter(), parameter))
             {
                 return node;
             }

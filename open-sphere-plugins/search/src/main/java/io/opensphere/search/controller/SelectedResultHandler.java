@@ -3,6 +3,7 @@ package io.opensphere.search.controller;
 import java.awt.Color;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
+import java.util.Objects;
 
 import com.google.common.collect.BiMap;
 
@@ -18,7 +19,6 @@ import io.opensphere.core.math.Vector3d;
 import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.search.SearchResult;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.viewer.impl.DynamicViewer;
 import io.opensphere.core.viewer.impl.Viewer2D;
 import io.opensphere.core.viewer.impl.ViewerAnimator;
@@ -273,7 +273,7 @@ public class SelectedResultHandler extends DiscreteEventAdapter implements PickL
     {
         if (!myInitiatedEvent)
         {
-            if (!EqualsHelper.equals(myModel.getHoveredResult(), newValue))
+            if (!Objects.equals(myModel.getHoveredResult(), newValue))
             {
                 updateGeometryColors();
             }

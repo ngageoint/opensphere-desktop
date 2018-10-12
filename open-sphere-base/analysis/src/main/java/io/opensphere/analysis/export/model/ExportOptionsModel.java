@@ -1,10 +1,10 @@
 package io.opensphere.analysis.export.model;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Observable;
 
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /**
  * The model used by the export file chooser's accessory view.
@@ -210,7 +210,7 @@ public class ExportOptionsModel extends Observable
      */
     public void setSelectedColorFormat(ColorFormat selectedColorFormat)
     {
-        boolean changed = !EqualsHelper.equals(mySelectedColorFormat, selectedColorFormat);
+        boolean changed = !Objects.equals(mySelectedColorFormat, selectedColorFormat);
 
         if (changed)
         {
@@ -228,7 +228,7 @@ public class ExportOptionsModel extends Observable
      */
     public void setSelectedLatLonFormat(LatLonFormat selectedLatLonFormat)
     {
-        boolean changed = !EqualsHelper.equals(mySelectedColorFormat, selectedLatLonFormat);
+        boolean changed = !Objects.equals(mySelectedColorFormat, selectedLatLonFormat);
 
         if (changed)
         {

@@ -108,10 +108,8 @@ public final class DataGroupInfoGroupByUtility
         if (treeOptions != null && (dgi.numMembers(false) > 1 || !dgi.isFlattenable())
                 && treeOptions.isSubNodesForMultiMemberGroups())
         {
-            for (DataTypeInfo dti : getSortedMemberList(dgi.getMembers(false)))
-            {
-                dgiNode.add(new DefaultMutableTreeNode(userObjGen.createNodeUserObject(dgi, dti)));
-            }
+            getSortedMemberList(dgi.getMembers(false)).stream()
+                    .map(dti -> new DefaultMutableTreeNode(userObjGen.createNodeUserObject(dgi, dti))).forEach(dgiNode::add);
         }
 
         for (DataGroupInfo child : dgi.getChildren())
@@ -139,10 +137,7 @@ public final class DataGroupInfoGroupByUtility
         }
         if (dgi.hasChildren() && dgi.isFlattenable())
         {
-            for (DataGroupInfo child : dgi.getChildren())
-            {
-                addToGroupIfPassesFilter(dataCategoryFilter, groupFilter, addToList, child);
-            }
+            dgi.getChildren().forEach(child -> addToGroupIfPassesFilter(dataCategoryFilter, groupFilter, addToList, child));
         }
     }
 
@@ -158,14 +153,7 @@ public final class DataGroupInfoGroupByUtility
         boolean passes = false;
         if (dgi.hasChildren())
         {
-            for (DataGroupInfo child : dgi.getChildren())
-            {
-                if (anyGroupPassesFilter(groupFilter, child))
-                {
-                    passes = true;
-                    break;
-                }
-            }
+            passes = dgi.getChildren().stream().filter(c -> anyGroupPassesFilter(groupFilter, c)).findFirst().isPresent();
         }
         else
         {
@@ -251,17 +239,13 @@ public final class DataGroupInfoGroupByUtility
 
                 if (typeList != null && !typeList.isEmpty())
                 {
-
                     for (Pair<DataGroupInfo, DataTypeInfo> pair : typeList)
                     {
-
                         DefaultMutableTreeNode dgiNode = new DefaultMutableTreeNode(
                                 userObjGen.createNodeUserObject(pair.getFirstObject(), pair.getSecondObject()));
                         catNode.add(dgiNode);
                         subNodeCount++;
-
                     }
-
                 }
                 catNodeUserObj.setLabel(catNodeUserObj.getLabel());
                 catNodeUserObj.setCategoryCount(subNodeCount);
@@ -323,10 +307,8 @@ public final class DataGroupInfoGroupByUtility
                                 && (groupFilter == null || groupFilter.test(group)));
                 Collections.sort(memberGroups, DefaultDataGroupInfo.CASE_INSENSITIVE_DISPLAY_NAME_COMPARATOR);
 
-                for (DataGroupInfo group : memberGroups)
-                {
-                    parentNode.add(new DefaultMutableTreeNode(userObjGen.createNodeUserObject(group)));
-                }
+                memberGroups.stream().map(group -> new DefaultMutableTreeNode(userObjGen.createNodeUserObject(group)))
+                        .forEach(parentNode::add);
             }
         }
     }
@@ -360,10 +342,7 @@ public final class DataGroupInfoGroupByUtility
 
         List<DataGroupInfo> dgiList = New.linkedList();
 
-        for (DataGroupInfo dgi : collection)
-        {
-            addToGroupIfPassesFilter(dataCategoryFilter, groupFilter, dgiList, dgi);
-        }
+        collection.forEach(dgi -> addToGroupIfPassesFilter(dataCategoryFilter, groupFilter, dgiList, dgi));
 
         Set<String> categories = null;
         for (DataGroupInfo dgi : dgiList)
@@ -431,10 +410,7 @@ public final class DataGroupInfoGroupByUtility
 
         List<DataGroupInfo> dgiList = New.linkedList();
 
-        for (DataGroupInfo dgi : getSortedDGIList(collection))
-        {
-            addToGroupIfPassesFilter(dataCategoryFilter, groupFilter, dgiList, dgi);
-        }
+        getSortedDGIList(collection).forEach(dgi -> addToGroupIfPassesFilter(dataCategoryFilter, groupFilter, dgiList, dgi));
 
         Set<String> categories = null;
         for (DataGroupInfo dgi : dgiList)

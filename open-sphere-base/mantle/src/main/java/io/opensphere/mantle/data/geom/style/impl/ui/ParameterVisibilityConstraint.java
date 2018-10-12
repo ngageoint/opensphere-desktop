@@ -1,10 +1,10 @@
 package io.opensphere.mantle.data.geom.style.impl.ui;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Set;
 
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.geom.style.VisualizationStyle;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleParameter;
 
@@ -76,7 +76,7 @@ public class ParameterVisibilityConstraint implements VisibilityConstraint
             boolean anyMatch = false;
             for (Object val : myParameterValues)
             {
-                if (EqualsHelper.equals(val, param.getValue()))
+                if (Objects.equals(val, param.getValue()))
                 {
                     anyMatch = true;
                 }

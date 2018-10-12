@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,7 +17,6 @@ import org.apache.log4j.Logger;
 
 import io.opensphere.core.util.collections.LazyMap;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.security.CipherFactory;
 import io.opensphere.core.util.security.SecretKeyProviderException;
 
@@ -361,7 +361,7 @@ public final class PreferencesRegistryImpl implements PreferencesRegistry
         {
             if (myLocked)
             {
-                if (!EqualsHelper.equals(cipherFactory, myCipherFactory))
+                if (!Objects.equals(cipherFactory, myCipherFactory))
                 {
                     throw new IllegalStateException("Cipher factory cannot be set after preferences are loaded.");
                 }

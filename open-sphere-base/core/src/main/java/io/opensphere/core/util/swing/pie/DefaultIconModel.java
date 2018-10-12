@@ -2,12 +2,12 @@ package io.opensphere.core.util.swing.pie;
 
 import java.awt.Image;
 import java.util.Collection;
+import java.util.Objects;
 
 import io.opensphere.core.util.ChangeSupport;
 import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.StrongChangeSupport;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /**
  * Default IconModel.
@@ -83,7 +83,7 @@ public class DefaultIconModel implements IconModel
     @Override
     public void setMouseOverIcon(IconInfo iconInfo, Object source)
     {
-        if (!EqualsHelper.equals(myMouseOverIcon, iconInfo))
+        if (!Objects.equals(myMouseOverIcon, iconInfo))
         {
             myMouseOverIcon = iconInfo;
             fireStateChanged(ChangeType.MOUSE_OVER, source);

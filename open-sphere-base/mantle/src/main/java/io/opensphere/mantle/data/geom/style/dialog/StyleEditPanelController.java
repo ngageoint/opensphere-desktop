@@ -3,6 +3,7 @@ package io.opensphere.mantle.data.geom.style.dialog;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import io.opensphere.core.Toolbox;
@@ -10,7 +11,6 @@ import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.concurrent.EventQueueExecutor;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MapVisualizationType;
 import io.opensphere.mantle.data.VisualizationSupport;
@@ -73,8 +73,7 @@ public class StyleEditPanelController implements FeatureVisualizationControlPane
         if (myCandidateControlPanel != null && !Utilities.sameInstance(evt.getSource(), StyleEditPanelController.this)
                 && myCandidateControlPanel instanceof AbstractVisualizationControlPanel)
         {
-            myCandidateControlPanel.getStyle().setParameters(evt.getChangedParameterSet(),
-                    VisualizationStyle.NO_EVENT_SOURCE);
+            myCandidateControlPanel.getStyle().setParameters(evt.getChangedParameterSet(), VisualizationStyle.NO_EVENT_SOURCE);
             myCandidateControlPanel.getChangedStyle().setParameters(evt.getChangedParameterSet(),
                     VisualizationStyle.NO_EVENT_SOURCE);
             ((AbstractVisualizationControlPanel)myCandidateControlPanel).updateSync();
@@ -142,14 +141,8 @@ public class StyleEditPanelController implements FeatureVisualizationControlPane
 
             List<StyleNodeUserObject> nodeList = createStyleNodeList(baseStyleClass, mgsClass);
 
-            for (StyleNodeUserObject node : nodeList)
-            {
-                if (EqualsHelper.equals(node.getStyleClass(), selStyle))
-                {
-                    myMGSPrimaryTypeToSelectedStyleMap.put(mgsClass, node);
-                }
-            }
-
+            nodeList.stream().filter(n -> Objects.equals(n.getStyleClass(), selStyle))
+                    .forEach(n -> myMGSPrimaryTypeToSelectedStyleMap.put(mgsClass, n));
             myMGSPrimaryTypeToStyleNodeListMap.put(mgsClass, nodeList);
         }
 
@@ -161,14 +154,8 @@ public class StyleEditPanelController implements FeatureVisualizationControlPane
 
             List<StyleNodeUserObject> nodeList = createStyleNodeList(baseStyleClass, tileClass);
 
-            for (StyleNodeUserObject node : nodeList)
-            {
-                if (EqualsHelper.equals(node.getStyleClass(), selStyle))
-                {
-                    myTilePrimaryTypeToSelectedStyleMap.put(tileClass, node);
-                }
-            }
-
+            nodeList.stream().filter(n -> Objects.equals(n.getStyleClass(), selStyle))
+                    .forEach(n -> myTilePrimaryTypeToSelectedStyleMap.put(tileClass, n));
             myTilePrimaryTypeToStyleNodeListMap.put(tileClass, nodeList);
         }
 
@@ -181,14 +168,8 @@ public class StyleEditPanelController implements FeatureVisualizationControlPane
                     .getBaseStyleClassesForHeatmapClass(heatmapClass);
 
             List<StyleNodeUserObject> nodeList = createStyleNodeList(baseStyleClass, heatmapClass);
-            for (StyleNodeUserObject node : nodeList)
-            {
-                if (EqualsHelper.equals(node.getStyleClass(), selectedStyle))
-                {
-                    myHeatmapPrimaryTypeToSelectedStyleMap.put(heatmapClass, node);
-                }
-            }
-
+            nodeList.stream().filter(n -> Objects.equals(n.getStyleClass(), selectedStyle))
+                    .forEach(n -> myHeatmapPrimaryTypeToSelectedStyleMap.put(heatmapClass, n));
             myHeatmapPrimaryTypeToStyleNodeListMap.put(heatmapClass, nodeList);
         }
     }
@@ -603,7 +584,8 @@ public class StyleEditPanelController implements FeatureVisualizationControlPane
     private void fireStyleEditSelectionChanged(final StyleNodeUserObject styleToEdit,
             final FeatureVisualizationControlPanel editorPanel)
     {
-        myChangeSupport.notifyListeners(listener -> listener.styleEditSelectionChanged(styleToEdit, editorPanel), new EventQueueExecutor());
+        myChangeSupport.notifyListeners(listener -> listener.styleEditSelectionChanged(styleToEdit, editorPanel),
+                new EventQueueExecutor());
     }
 
     /**

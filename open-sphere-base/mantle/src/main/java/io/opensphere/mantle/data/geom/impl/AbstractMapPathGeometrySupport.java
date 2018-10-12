@@ -9,7 +9,6 @@ import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.LineType;
 import io.opensphere.core.projection.Projection;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.MapVisualizationType;
 import io.opensphere.mantle.data.geom.MapPathGeometrySupport;
 import io.opensphere.mantle.data.geom.util.MapGeometrySupportUtils;
@@ -132,7 +131,7 @@ public abstract class AbstractMapPathGeometrySupport extends AbstractDefaultMapG
             return false;
         }
         AbstractMapPathGeometrySupport other = (AbstractMapPathGeometrySupport)obj;
-        if (myLineWidth != other.myLineWidth || !EqualsHelper.equals(myLineType, other.myLineType))
+        if (myLineWidth != other.myLineWidth || !Objects.equals(myLineType, other.myLineType))
         {
             return false;
         }

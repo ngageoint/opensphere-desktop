@@ -5,10 +5,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
@@ -407,16 +407,8 @@ public class DefaultMetaDataInfo implements MetaDataInfo
      */
     public void copyKeys(MetaDataInfo other, Object source)
     {
-        for (String key : other.getKeyNames())
-        {
-            Class<?> keyClass = other.getKeyClassType(key);
-            addKey(key, keyClass, this);
-        }
-
-        for (Entry<String, SpecialKey> entry : other.getSpecialKeyToTypeMap().entrySet())
-        {
-            setSpecialKey(entry.getKey(), entry.getValue(), this);
-        }
+        other.getKeyNames().forEach(k -> addKey(k, other.getKeyClassType(k), this));
+        other.getSpecialKeyToTypeMap().entrySet().stream().forEach(e -> setSpecialKey(e.getKey(), e.getValue(), this));
     }
 
     /**
@@ -517,18 +509,10 @@ public class DefaultMetaDataInfo implements MetaDataInfo
     @Override
     public List<String> getNumericKeyList(Toolbox tb)
     {
-        List<String> numericKeyList = new ArrayList<>();
         synchronized (myKeyNames)
         {
-            for (String key : myKeyNames)
-            {
-                if (isKeyNumeric(tb, key))
-                {
-                    numericKeyList.add(key);
-                }
-            }
+            return myKeyNames.stream().filter(k -> isKeyNumeric(tb, k)).collect(Collectors.toList());
         }
-        return numericKeyList;
     }
 
     @Override

@@ -202,15 +202,8 @@ public final class OGCFilterGenerator
      */
     private static JAXBElement<? extends LogicOpsType> createLogicalAnd(Collection<JAXBElement<?>> elements)
     {
-//        if (elements.size() < 2)
-//        {
-//            throw new IllegalArgumentException("Cannot create logical \'and\' type with fewer than 2 elements.");
-//        }
         BinaryLogicOpType logicOps = new BinaryLogicOpType();
-        for (JAXBElement<?> element : elements)
-        {
-            logicOps.getComparisonOpsOrSpatialOpsOrLogicOps().add(element);
-        }
+        elements.forEach(logicOps.getComparisonOpsOrSpatialOpsOrLogicOps()::add);
         return OGC_OBJECT_FACTORY.createAnd(logicOps);
     }
 

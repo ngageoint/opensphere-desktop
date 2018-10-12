@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.renderproperties.BaseRenderProperties;
@@ -261,13 +260,8 @@ public abstract class AbstractPathVisualizationStyle extends AbstractFeatureVisu
     public void initialize(Set<VisualizationStyleParameter> paramSet)
     {
         super.initialize(paramSet);
-        for (VisualizationStyleParameter p : paramSet)
-        {
-            if (p.getKey() != null && p.getKey().startsWith(ourPropertyKeyPrefix))
-            {
-                setParameter(p);
-            }
-        }
+        paramSet.stream().filter(p -> p.getKey() != null && p.getKey().startsWith(ourPropertyKeyPrefix))
+                .forEach(this::setParameter);
     }
 
     /**

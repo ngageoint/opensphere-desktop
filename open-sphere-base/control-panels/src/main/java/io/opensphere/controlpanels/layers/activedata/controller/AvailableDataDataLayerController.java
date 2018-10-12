@@ -2,6 +2,7 @@ package io.opensphere.controlpanels.layers.activedata.controller;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.swing.JOptionPane;
@@ -18,7 +19,6 @@ import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.data.DataGroupEvent;
 import io.opensphere.mantle.data.DataGroupInfo;
@@ -212,7 +212,7 @@ public class AvailableDataDataLayerController extends AbstractDiscoveryDataLayer
     @Override
     public void setViewByTypeFromString(String vbt)
     {
-        if (!EqualsHelper.equals(myViewByType, vbt))
+        if (!Objects.equals(myViewByType, vbt))
         {
             myViewByType = vbt;
             getToolbox().getPreferencesRegistry().getPreferences(AvailableDataDataLayerController.class)

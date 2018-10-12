@@ -54,10 +54,7 @@ public abstract class AbstractDataElementEventConsolidator<E extends AbstractDat
     {
         if (events != null)
         {
-            for (E evt : events)
-            {
-                addEvent(evt);
-            }
+            events.forEach(this::addEvent);
         }
     }
 

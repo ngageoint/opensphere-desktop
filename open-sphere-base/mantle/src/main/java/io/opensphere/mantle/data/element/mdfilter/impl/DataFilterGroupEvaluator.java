@@ -2,12 +2,11 @@ package io.opensphere.mantle.data.element.mdfilter.impl;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import io.opensphere.core.datafilter.DataFilterCriteria;
 import io.opensphere.core.datafilter.DataFilterGroup;
 import io.opensphere.core.datafilter.DataFilterOperators.Logical;
 import io.opensphere.core.util.Utilities;
-import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.util.dynenum.DynamicEnumerationRegistry;
 
@@ -41,11 +40,8 @@ public class DataFilterGroupEvaluator
         myOperator = group.getLogicOperator();
         if (group.getCriteria() != null && !group.getCriteria().isEmpty())
         {
-            myCriteriaEvaluators = New.list(group.getCriteria().size());
-            for (DataFilterCriteria criteria : group.getCriteria())
-            {
-                myCriteriaEvaluators.add(new DataFilterCriteriaEvaluator(criteria, dynEnumReg));
-            }
+            myCriteriaEvaluators = group.getCriteria().stream().map(c -> new DataFilterCriteriaEvaluator(c, dynEnumReg))
+                    .collect(Collectors.toList());
         }
         else
         {
@@ -54,11 +50,8 @@ public class DataFilterGroupEvaluator
 
         if (group.getGroups() != null && !group.getGroups().isEmpty())
         {
-            myGroupEvaluators = New.list(group.getGroups().size());
-            for (DataFilterGroup g : group.getGroups())
-            {
-                myGroupEvaluators.add(new DataFilterGroupEvaluator(g, dynEnumReg));
-            }
+            myGroupEvaluators = group.getGroups().stream().map(g -> new DataFilterGroupEvaluator(g, dynEnumReg))
+                    .collect(Collectors.toList());
         }
         else
         {

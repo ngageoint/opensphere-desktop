@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
@@ -221,19 +222,10 @@ public class VisualizationStyleRegistryImpl implements VisualizationStyleRegistr
     public Set<Class<? extends VisualizationStyle>> getStylesForStyleType(Class<? extends VisualizationStyle> styleClass)
     {
         Utilities.checkNull(styleClass, "styleClass");
-        Set<Class<? extends VisualizationStyle>> result = New.set();
         synchronized (myStyleClassesSet)
         {
-            for (Class<? extends VisualizationStyle> cl : myStyleClassesSet)
-            {
-                if (styleClass.isAssignableFrom(cl))
-                {
-                    result.add(cl);
-                }
-            }
+            return myStyleClassesSet.stream().filter(styleClass::isAssignableFrom).collect(Collectors.toUnmodifiableSet());
         }
-        return result.isEmpty() ? Collections.<Class<? extends VisualizationStyle>>emptySet()
-                : Collections.unmodifiableSet(result);
     }
 
     @Override

@@ -2,6 +2,7 @@ package io.opensphere.controlpanels.layers.activedata.controller;
 
 import java.awt.event.MouseListener;
 import java.util.List;
+import java.util.Objects;
 
 import javax.swing.tree.TreePath;
 
@@ -16,7 +17,6 @@ import io.opensphere.core.event.EventListener;
 import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.Preferences;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.core.util.swing.tree.DirectionalTransferHandler;
 import io.opensphere.core.util.swing.tree.OrderTreeEventController;
@@ -270,7 +270,7 @@ public class ActiveDataDataLayerController extends AbstractDiscoveryDataLayerCon
     @Override
     public void setViewByTypeFromString(String vbt)
     {
-        if (!EqualsHelper.equals(myViewByType, vbt))
+        if (!Objects.equals(myViewByType, vbt))
         {
             myViewByType = vbt;
             getToolbox().getPreferencesRegistry().getPreferences(ActiveDataDataLayerController.class)

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -16,7 +17,6 @@ import io.opensphere.core.math.Vector3d;
 import io.opensphere.core.model.LineType;
 import io.opensphere.core.model.Position;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /**
  * A {@link Geometry} that models a series of connected line segments. There is
@@ -119,7 +119,7 @@ public class PolygonGeometry extends PolylineGeometry
             boolean addBeginAsEndToClose = false;
             Position first = getVertices().get(0);
             Position last = getVertices().get(getVertices().size() - 1);
-            if (!EqualsHelper.equals(first, last))
+            if (!Objects.equals(first, last))
             {
                 addBeginAsEndToClose = true;
             }

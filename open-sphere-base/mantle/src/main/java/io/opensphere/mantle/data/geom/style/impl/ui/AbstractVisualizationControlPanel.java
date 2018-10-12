@@ -1,6 +1,7 @@
 package io.opensphere.mantle.data.geom.style.impl.ui;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.swing.JPanel;
 
@@ -172,14 +173,9 @@ public abstract class AbstractVisualizationControlPanel extends JPanel
                 Set<VisualizationStyleParameter> changedParams = evt.getChangedParameterSet();
                 if (changedParams != null && !changedParams.isEmpty())
                 {
-                    Set<VisualizationStyleParameter> updateSet = New.set();
-                    for (VisualizationStyleParameter param : changedParams)
-                    {
-                        if (param.getHint() != null && param.getHint().isRenderPropertyChangeOnly())
-                        {
-                            updateSet.add(param);
-                        }
-                    }
+                    Set<VisualizationStyleParameter> updateSet = changedParams.stream()
+                            .filter(p -> p.getHint() != null && p.getHint().isRenderPropertyChangeOnly())
+                            .collect(Collectors.toSet());
 
                     if (!updateSet.isEmpty())
                     {
@@ -213,10 +209,7 @@ public abstract class AbstractVisualizationControlPanel extends JPanel
             update();
             if (CollectionUtilities.hasContent(myVisibilityDependencies))
             {
-                for (EditorPanelVisibilityDependency dep : myVisibilityDependencies)
-                {
-                    dep.evaluateStyle();
-                }
+                myVisibilityDependencies.forEach(EditorPanelVisibilityDependency::evaluateStyle);
             }
         });
     }
@@ -261,6 +254,7 @@ public abstract class AbstractVisualizationControlPanel extends JPanel
     private void performLiveParameterUpdate(final String dtiKey, final Class<? extends VisualizationSupport> convertedClass,
             final Class<? extends VisualizationStyle> vsClass, final Set<VisualizationStyleParameter> updateSet)
     {
-        myChangeSupport.notifyListeners(listener -> listener.performLiveParameterUpdate(dtiKey, convertedClass, vsClass, updateSet));
+        myChangeSupport
+                .notifyListeners(listener -> listener.performLiveParameterUpdate(dtiKey, convertedClass, vsClass, updateSet));
     }
 }

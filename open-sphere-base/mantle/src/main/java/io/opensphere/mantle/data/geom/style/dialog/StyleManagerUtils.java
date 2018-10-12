@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -111,23 +110,23 @@ public final class StyleManagerUtils
     {
         Class<? extends VisualizationStyle> result = null;
 
-        if (EqualsHelper.equals(featureClass, MapLocationGeometrySupport.class))
+        if (Objects.equals(featureClass, MapLocationGeometrySupport.class))
         {
             result = LocationVisualizationStyle.class;
         }
-        else if (EqualsHelper.equals(featureClass, MapPolylineGeometrySupport.class))
+        else if (Objects.equals(featureClass, MapPolylineGeometrySupport.class))
         {
             result = PolylineFeatureVisualizationStyle.class;
         }
-        else if (EqualsHelper.equals(featureClass, MapPolygonGeometrySupport.class))
+        else if (Objects.equals(featureClass, MapPolygonGeometrySupport.class))
         {
             result = PolygonFeatureVisualizationStyle.class;
         }
-        else if (EqualsHelper.equals(featureClass, TileVisualizationSupport.class))
+        else if (Objects.equals(featureClass, TileVisualizationSupport.class))
         {
             result = TileVisualizationStyle.class;
         }
-        else if (EqualsHelper.equals(featureClass, InterpolatedTileVisualizationSupport.class))
+        else if (Objects.equals(featureClass, InterpolatedTileVisualizationSupport.class))
         {
             result = InterpolatedTileVisualizationStyle.class;
         }
@@ -405,19 +404,19 @@ public final class StyleManagerUtils
     public static String getStyleCategoryNameForFeatureClass(Class<? extends VisualizationSupport> featureClass)
     {
         String result;
-        if (EqualsHelper.equals(featureClass, MapLocationGeometrySupport.class))
+        if (Objects.equals(featureClass, MapLocationGeometrySupport.class))
         {
             result = "Locations";
         }
-        else if (EqualsHelper.equals(featureClass, MapPolylineGeometrySupport.class))
+        else if (Objects.equals(featureClass, MapPolylineGeometrySupport.class))
         {
             result = "Polylines";
         }
-        else if (EqualsHelper.equals(featureClass, MapPolygonGeometrySupport.class))
+        else if (Objects.equals(featureClass, MapPolygonGeometrySupport.class))
         {
             result = "Polygons";
         }
-        else if (EqualsHelper.equals(featureClass, TileVisualizationSupport.class))
+        else if (Objects.equals(featureClass, TileVisualizationSupport.class))
         {
             result = "Tiles";
         }

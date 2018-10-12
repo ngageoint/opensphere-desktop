@@ -3,6 +3,7 @@ package io.opensphere.core.pipeline.renderer.buffered;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.media.opengl.GL;
@@ -31,7 +32,6 @@ import io.opensphere.core.pipeline.util.RenderContext;
 import io.opensphere.core.projection.Projection;
 import io.opensphere.core.util.TimeBudget;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.viewer.impl.MapContext;
 
 /**
@@ -167,16 +167,13 @@ public class PolylineRendererBuffered extends AbstractRenderer<PolylineGeometry>
     @Override
     public boolean setGroupInterval(TimeSpan span)
     {
-        if (EqualsHelper.equals(span, myGroupTimeSpan))
+        if (Objects.equals(span, myGroupTimeSpan))
         {
             return false;
         }
-        else
-        {
-            myGroupTimeSpan = span;
-            getCache().clearCacheAssociations(PolylineDataBuffered.class);
-            return true;
-        }
+        myGroupTimeSpan = span;
+        getCache().clearCacheAssociations(PolylineDataBuffered.class);
+        return true;
     }
 
     @Override

@@ -97,10 +97,7 @@ public class GroupedStyleParameterEditorPanel extends AbstractGroupedVisualizati
     {
         synchronized (myParameterGroups)
         {
-            for (StyleParameterEditorGroupPanel group : myParameterGroups)
-            {
-                group.update();
-            }
+            myParameterGroups.forEach(StyleParameterEditorGroupPanel::update);
         }
     }
 
@@ -143,10 +140,7 @@ public class GroupedStyleParameterEditorPanel extends AbstractGroupedVisualizati
             {
                 if (!myParameterGroups.isEmpty())
                 {
-                    for (StyleParameterEditorGroupPanel pnl : myParameterGroups)
-                    {
-                        add(pnl);
-                    }
+                    myParameterGroups.forEach(this::add);
                     add(myResetPanel);
                 }
                 else
@@ -193,8 +187,9 @@ public class GroupedStyleParameterEditorPanel extends AbstractGroupedVisualizati
         return taPanel;
     }
 
-	@Override
-	public void addGroupAtTop(StyleParameterEditorGroupPanel group) {
-		return;
-	}
+    @Override
+    public void addGroupAtTop(StyleParameterEditorGroupPanel group)
+    {
+        return;
+    }
 }

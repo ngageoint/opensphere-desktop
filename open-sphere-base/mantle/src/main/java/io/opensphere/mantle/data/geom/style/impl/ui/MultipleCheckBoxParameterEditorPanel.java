@@ -59,10 +59,7 @@ public class MultipleCheckBoxParameterEditorPanel extends AbstractStyleParameter
 
         update();
 
-        for (AbstractButton checkBox : myCheckBoxMap.keySet())
-        {
-            checkBox.addActionListener(this);
-        }
+        myCheckBoxMap.keySet().forEach(c -> c.addActionListener(this));
     }
 
     @Override

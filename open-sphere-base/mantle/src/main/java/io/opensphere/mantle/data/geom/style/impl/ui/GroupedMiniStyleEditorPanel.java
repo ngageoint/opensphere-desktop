@@ -77,10 +77,7 @@ public class GroupedMiniStyleEditorPanel extends AbstractGroupedVisualizationCon
     {
         synchronized (myParamGroups)
         {
-            for (StyleParameterEditorGroupPanel group : myParamGroups)
-            {
-                group.update();
-            }
+            myParamGroups.forEach(StyleParameterEditorGroupPanel::update);
         }
     }
 
@@ -96,10 +93,7 @@ public class GroupedMiniStyleEditorPanel extends AbstractGroupedVisualizationCon
             {
                 if (!myParamGroups.isEmpty())
                 {
-                    for (StyleParameterEditorGroupPanel pnl : myParamGroups)
-                    {
-                        add(pnl);
-                    }
+                    myParamGroups.forEach(this::add);
                 }
             }
 

@@ -173,10 +173,7 @@ public abstract class AbstractDynamicMetadataController<T> implements DynamicMet
             }
             else
             {
-                for (Long id : cacheIds)
-                {
-                    myIdToValueMap.put(id.longValue(), tempVal);
-                }
+                cacheIds.forEach(id -> myIdToValueMap.put(id.longValue(), tempVal));
                 fireChangeEvent(cacheIds, source);
             }
         }

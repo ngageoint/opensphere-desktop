@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -274,11 +275,8 @@ public class DataTypeMergePanel extends JPanel implements KeyMoveListener
         pnlList.addAll(mySpecialMappedTypeKeyPanels);
         pnlList.addAll(myMappedTypeKeyPanels);
         DataTypeMergeMap resultMap = new DataTypeMergeMap();
-        Map<String, MetaDataInfo> dtiKeyToMDIMap = new HashMap<>();
-        for (Map.Entry<DTINameKeyPair, MetaDataInfo> entry : myDataTypeKeyToMetaDataInfoMap.entrySet())
-        {
-            dtiKeyToMDIMap.put(entry.getKey().getDataTypeInfoKey(), entry.getValue());
-        }
+        Map<String, MetaDataInfo> dtiKeyToMDIMap = myDataTypeKeyToMetaDataInfoMap.entrySet().stream()
+                .collect(Collectors.toMap(e -> e.getKey().getDataTypeInfoKey(), e -> e.getValue()));
 
         for (MappedTypeKeyPanel pnl : pnlList)
         {
@@ -309,10 +307,8 @@ public class DataTypeMergePanel extends JPanel implements KeyMoveListener
             }
         }
         resultMap.getMergedKeyNames().addAll(mergeKeyNames);
-        for (DataTypeMergeComponent entry : sourceTypeToComponentMap.values())
-        {
-            resultMap.getMergeComponents().add(entry);
-        }
+
+        sourceTypeToComponentMap.values().forEach(resultMap.getMergeComponents()::add);
 
         return resultMap;
     }
@@ -533,8 +529,7 @@ public class DataTypeMergePanel extends JPanel implements KeyMoveListener
 
                 if (!foundInTool)
                 {
-                    DefaultMetaDataInfo dmdi = DataTypeMergeAssistant.createMetaDataInfo(comp1.getSourceKeyList(), false,
-                            null);
+                    DefaultMetaDataInfo dmdi = DataTypeMergeAssistant.createMetaDataInfo(comp1.getSourceKeyList(), false, null);
                     myDataTypeKeyToMetaDataInfoMap.put(pair, dmdi);
                 }
             }

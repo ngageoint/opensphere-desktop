@@ -21,7 +21,8 @@ import net.opengis.ogc._100t.PropertyNameType;
 import net.opengis.ogc._100t.UnaryLogicOpType;
 
 /**
- * FilterToOGCConverter utility to convert application filters into JAXB-formatted OGC Filter classes (v. 1.0.0).
+ * FilterToOGCConverter utility to convert application filters into
+ * JAXB-formatted OGC Filter classes (v. 1.0.0).
  */
 public final class FilterToWFS100Converter
 {

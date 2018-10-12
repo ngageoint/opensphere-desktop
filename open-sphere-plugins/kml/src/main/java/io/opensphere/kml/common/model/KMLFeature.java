@@ -6,10 +6,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.jcip.annotations.GuardedBy;
 import javax.swing.Icon;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,9 +30,9 @@ import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.BooleanUtilities;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.mantle.data.LoadsTo;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * KML wrapper for a JAK Feature.
@@ -166,13 +166,13 @@ public class KMLFeature
         {
             return false;
         }
-        if (!EqualsHelper.equals(myName, other.myName))
+        if (!Objects.equals(myName, other.myName))
         {
             return false;
         }
         String path = getResultingDataSource() != null ? getResultingDataSource().getPath() : null;
         String otherPath = other.getResultingDataSource() != null ? other.getResultingDataSource().getPath() : null;
-        return EqualsHelper.equals(path, otherPath);
+        return Objects.equals(path, otherPath);
     }
 
     /**
@@ -193,25 +193,25 @@ public class KMLFeature
         }
         if (myFeature instanceof Placemark && other.myFeature instanceof Placemark)
         {
-            if (!EqualsHelper.equals(((Placemark)myFeature).getGeometry(), ((Placemark)other.myFeature).getGeometry()))
+            if (!Objects.equals(((Placemark)myFeature).getGeometry(), ((Placemark)other.myFeature).getGeometry()))
             {
                 return false;
             }
         }
         else if (myFeature instanceof GroundOverlay)
         {
-            if (!EqualsHelper.equals(((GroundOverlay)myFeature).getLatLonBox(), ((GroundOverlay)other.myFeature).getLatLonBox()))
+            if (!Objects.equals(((GroundOverlay)myFeature).getLatLonBox(), ((GroundOverlay)other.myFeature).getLatLonBox()))
             {
                 return false;
             }
         }
         else if (myFeature instanceof ScreenOverlay)
         {
-            if (!EqualsHelper.equals(((ScreenOverlay)myFeature).getOverlayXY(), ((ScreenOverlay)other.myFeature).getOverlayXY()))
+            if (!Objects.equals(((ScreenOverlay)myFeature).getOverlayXY(), ((ScreenOverlay)other.myFeature).getOverlayXY()))
             {
                 return false;
             }
-            if (!EqualsHelper.equals(((ScreenOverlay)myFeature).getScreenXY(), ((ScreenOverlay)other.myFeature).getScreenXY()))
+            if (!Objects.equals(((ScreenOverlay)myFeature).getScreenXY(), ((ScreenOverlay)other.myFeature).getScreenXY()))
             {
                 return false;
             }

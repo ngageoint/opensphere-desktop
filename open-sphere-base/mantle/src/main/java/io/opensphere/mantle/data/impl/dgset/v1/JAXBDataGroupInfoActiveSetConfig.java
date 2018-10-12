@@ -58,10 +58,7 @@ public class JAXBDataGroupInfoActiveSetConfig
         other.mySetLock.lock();
         try
         {
-            for (DataGroupInfoActiveSet set : other.mySets)
-            {
-                mySets.add(new JAXBDataGroupInfoActiveSet(set));
-            }
+            other.mySets.stream().map(JAXBDataGroupInfoActiveSet::new).forEach(mySets::add);
         }
         finally
         {
@@ -131,24 +128,15 @@ public class JAXBDataGroupInfoActiveSetConfig
     public DataGroupInfoActiveSet getSetByName(String name)
     {
         Utilities.checkNull(name, "name");
-        DataGroupInfoActiveSet result = null;
         mySetLock.lock();
         try
         {
-            for (JAXBDataGroupInfoActiveSet set : mySets)
-            {
-                if (name.equals(set.getName()))
-                {
-                    result = set;
-                    break;
-                }
-            }
+            return mySets.stream().filter(set -> name.equals(set.getName())).findFirst().orElse(null);
         }
         finally
         {
             mySetLock.unlock();
         }
-        return result;
     }
 
     /**
@@ -162,10 +150,7 @@ public class JAXBDataGroupInfoActiveSetConfig
         mySetLock.lock();
         try
         {
-            for (JAXBDataGroupInfoActiveSet set : mySets)
-            {
-                result.add(set.getName());
-            }
+            mySets.stream().map(s -> s.getName()).forEach(result::add);
         }
         finally
         {
@@ -252,13 +237,7 @@ public class JAXBDataGroupInfoActiveSetConfig
         mySetLock.lock();
         try
         {
-            for (JAXBDataGroupInfoActiveSet set : mySets)
-            {
-                if (setName.equals(set.getName()))
-                {
-                    removeSet.add(set);
-                }
-            }
+            mySets.stream().filter(set -> setName.equals(set.getName())).forEach(removeSet::add);
             if (!removeSet.isEmpty())
             {
                 mySets.removeAll(removeSet);

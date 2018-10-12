@@ -2,12 +2,12 @@ package io.opensphere.core.util.swing;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import javax.swing.AbstractListModel;
 import javax.swing.MutableComboBoxModel;
 
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /**
  * A more efficient list model for combo boxes.
@@ -104,7 +104,7 @@ public class ListComboBoxModel<E> extends AbstractListModel<E> implements Mutabl
      */
     public void setSelectedElement(E anObject) throws IllegalArgumentException
     {
-        if (!EqualsHelper.equals(anObject, mySelectedObject))
+        if (!Objects.equals(anObject, mySelectedObject))
         {
             if (anObject == null || myObjects.contains(anObject))
             {

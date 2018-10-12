@@ -1,13 +1,13 @@
 package io.opensphere.mantle.transformer.impl;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.VisualizationSupport;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
@@ -182,7 +182,7 @@ public class TransfomerStyleAssistant
     @Override
     public void visualizationStyleDatatypeChanged(VisualizationStyleDatatypeChangeEvent evt)
     {
-        if (evt.getDTIKey() == null || EqualsHelper.equals(myDataType.getTypeKey(), evt.getDTIKey()))
+        if (evt.getDTIKey() == null || Objects.equals(myDataType.getTypeKey(), evt.getDTIKey()))
         {
             replaceStyle((FeatureVisualizationStyle)evt.getOldStyle(), (FeatureVisualizationStyle)evt.getNewStyle());
         }

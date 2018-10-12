@@ -4,9 +4,9 @@ import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.ref.Reference;
 import io.opensphere.core.util.ref.WeakReference;
 
@@ -44,14 +44,14 @@ public class WeakSingletonMap<K, V> extends AbstractMap<K, V>
     public boolean containsKey(Object key)
     {
         checkReference();
-        return EqualsHelper.equals(key, myKeyRef.get());
+        return Objects.equals(key, myKeyRef.get());
     }
 
     @Override
     public boolean containsValue(Object value)
     {
         checkReference();
-        return myKeyRef.get() != null && EqualsHelper.equals(value, myValue);
+        return myKeyRef.get() != null && Objects.equals(value, myValue);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class WeakSingletonMap<K, V> extends AbstractMap<K, V>
     public V get(Object key)
     {
         checkReference();
-        return EqualsHelper.equals(key, myKeyRef.get()) ? myValue : null;
+        return Objects.equals(key, myKeyRef.get()) ? myValue : null;
     }
 
     @Override

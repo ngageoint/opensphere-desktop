@@ -1,10 +1,9 @@
 package io.opensphere.city.model.json;
 
 import java.io.InputStream;
+import java.util.Objects;
 
 import org.codehaus.jackson.annotate.JsonSetter;
-
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /**
  * Json class representing one Result object returned by the cyber city 3d
@@ -187,7 +186,7 @@ public class Result
             return false;
         }
         Result other = (Result)obj;
-        return EqualsHelper.equals(myId, other.myId);
+        return Objects.equals(myId, other.myId);
     }
 
     /**

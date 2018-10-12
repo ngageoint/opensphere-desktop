@@ -17,12 +17,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -44,7 +43,6 @@ import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.core.util.security.CipherEncryptedPrivateKeyProvider;
@@ -66,6 +64,8 @@ import io.opensphere.core.util.security.SecurityUtilities;
 import io.opensphere.core.util.security.UsernamePasswordProvider;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.swing.OptionDialog;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /** Implementation of security manager interface. */
 @ThreadSafe
@@ -1121,7 +1121,7 @@ public class SecurityManagerImpl implements SecurityManager
     {
         final Object old = myPreferences.putJAXBObject(SECURITY_CONFIG_KEY, config, true, this);
         if (!(old instanceof SecurityConfiguration)
-                || !EqualsHelper.equals(config.getCryptoConfig(), ((SecurityConfiguration)old).getCryptoConfig()))
+                || !Objects.equals(config.getCryptoConfig(), ((SecurityConfiguration)old).getCryptoConfig()))
         {
             notifyCipherChangeListeners();
         }

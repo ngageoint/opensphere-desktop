@@ -2,10 +2,12 @@ package io.opensphere.mantle.data.impl;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
@@ -102,14 +104,7 @@ public class DataTypeInfoPreferenceAssistantImpl implements DataTypeInfoPreferen
         }
         else
         {
-            StringBuilder sb = new StringBuilder();
-            for (PreferenceType type : types)
-            {
-                sb.append(type.toString());
-                sb.append(',');
-            }
-            sb.deleteCharAt(sb.length() - 1);
-            return sb.toString();
+            return Arrays.stream(types).map(t -> t.toString()).collect(Collectors.joining(","));
         }
     }
 

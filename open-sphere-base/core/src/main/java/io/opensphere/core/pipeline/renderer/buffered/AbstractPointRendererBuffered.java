@@ -1,6 +1,7 @@
 package io.opensphere.core.pipeline.renderer.buffered;
 
 import java.util.Collection;
+import java.util.Objects;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
@@ -18,7 +19,6 @@ import io.opensphere.core.pipeline.renderer.AbstractRenderer;
 import io.opensphere.core.pipeline.renderer.TimeFilteringRenderer;
 import io.opensphere.core.pipeline.util.PickManager;
 import io.opensphere.core.pipeline.util.RenderContext;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.viewer.impl.MapContext;
 
 /**
@@ -134,15 +134,12 @@ public abstract class AbstractPointRendererBuffered<T extends AbstractRenderable
     @Override
     public boolean setGroupInterval(TimeSpan span)
     {
-        if (EqualsHelper.equals(span, myGroupTimeSpan))
+        if (Objects.equals(span, myGroupTimeSpan))
         {
             return false;
         }
-        else
-        {
-            myGroupTimeSpan = span;
-            return true;
-        }
+        myGroupTimeSpan = span;
+        return true;
     }
 
     @Override

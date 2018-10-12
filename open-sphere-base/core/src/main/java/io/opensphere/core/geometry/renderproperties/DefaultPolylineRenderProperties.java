@@ -4,7 +4,6 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 import io.opensphere.core.util.SharedObjectPool;
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /** Standard implementation of {@link PolylineRenderProperties}. */
 public class DefaultPolylineRenderProperties extends DefaultScalableRenderProperties implements PolylineRenderProperties
@@ -75,7 +74,7 @@ public class DefaultPolylineRenderProperties extends DefaultScalableRenderProper
         AtomicReferenceFieldUpdater<DefaultPolylineRenderProperties, StippleModelConfig> updater = AtomicReferenceFieldUpdater
                 .newUpdater(DefaultPolylineRenderProperties.class, StippleModelConfig.class, "myStipple");
         StippleModelConfig oldStipple = updater.getAndSet(this, STIPPLE_POOL.get(stipple));
-        if (!EqualsHelper.equals(stipple, oldStipple))
+        if (!Objects.equals(stipple, oldStipple))
         {
             notifyChanged();
         }

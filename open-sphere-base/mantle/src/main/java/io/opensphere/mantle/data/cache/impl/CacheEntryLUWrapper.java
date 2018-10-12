@@ -1,7 +1,8 @@
 package io.opensphere.mantle.data.cache.impl;
 
+import java.util.Objects;
+
 import io.opensphere.core.util.Utilities;
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /**
  * A wrapper around a cache entry, used to track the last used time of the
@@ -60,7 +61,7 @@ public class CacheEntryLUWrapper implements Comparable<CacheEntryLUWrapper>
             return false;
         }
         CacheEntryLUWrapper other = (CacheEntryLUWrapper)obj;
-        return myLastUsedTime == other.myLastUsedTime && EqualsHelper.equals(myEntry, other.myEntry);
+        return myLastUsedTime == other.myLastUsedTime && Objects.equals(myEntry, other.myEntry);
     }
 
     /**

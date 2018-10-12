@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
@@ -44,7 +45,6 @@ import org.gdal.osr.SpatialReference;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.imagery.gdal.GDALImageLayerData;
 import io.opensphere.imagery.gdal.GDALInfo;
@@ -349,11 +349,11 @@ public class ImagerySourceWizardPanel
             }
             mySourceToDatasetMap.clear();
 
-            if (EqualsHelper.equals(myImportType, IMPORT_AS_NEW_GROUP))
+            if (Objects.equals(myImportType, IMPORT_AS_NEW_GROUP))
             {
                 completeWizardReally(success, new ImagerySourceGroup(myImportGroupName));
             }
-            else if (EqualsHelper.equals(myImportType, IMPORT_ADD_TO_GROUP))
+            else if (Objects.equals(myImportType, IMPORT_ADD_TO_GROUP))
             {
                 ImagerySourceGroup group = null;
                 for (IDataSource src : mySourcesInUse)
@@ -506,7 +506,7 @@ public class ImagerySourceWizardPanel
     {
         myImportType = (String)myImportTypeCombo.getSelectedItem();
         boolean valid = true;
-        if (EqualsHelper.equals(myImportType, IMPORT_AS_NEW_GROUP))
+        if (Objects.equals(myImportType, IMPORT_AS_NEW_GROUP))
         {
             myImportGroupName = myImportGroupNameTF.getText();
 

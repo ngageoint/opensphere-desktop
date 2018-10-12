@@ -65,19 +65,10 @@ public class SelectableLabelGroup implements ActionListener
      */
     public SelectableLabel getSelectedLabel()
     {
-        SelectableLabel selected = null;
         synchronized (myGroup)
         {
-            for (SelectableLabel lb : myGroup)
-            {
-                if (lb.isSelected())
-                {
-                    selected = lb;
-                    break;
-                }
-            }
+            return myGroup.stream().filter(SelectableLabel::isSelected).findFirst().orElse(null);
         }
-        return selected;
     }
 
     /**
@@ -87,10 +78,7 @@ public class SelectableLabelGroup implements ActionListener
     {
         synchronized (myGroup)
         {
-            for (SelectableLabel lb : myGroup)
-            {
-                lb.removeActionListener(this);
-            }
+            myGroup.forEach(lb -> lb.removeActionListener(this));
             myGroup.clear();
         }
     }
@@ -124,13 +112,8 @@ public class SelectableLabelGroup implements ActionListener
     {
         synchronized (myGroup)
         {
-            for (SelectableLabel label : myGroup)
-            {
-                if (!Utilities.sameInstance(label, lb) && lb.isSelected())
-                {
-                    label.setSelected(false, true);
-                }
-            }
+            myGroup.stream().filter(l -> !Utilities.sameInstance(l, lb) && lb.isSelected())
+                    .forEach(l -> l.setSelected(false, true));
         }
     }
 }

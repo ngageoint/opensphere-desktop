@@ -3,6 +3,7 @@ package io.opensphere.hud.dashboard;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 import javax.swing.Timer;
 
@@ -12,7 +13,6 @@ import io.opensphere.core.metrics.impl.AbstractMetricsProvider.EventStrategy;
 import io.opensphere.core.metrics.impl.DefaultMetricsProvider;
 import io.opensphere.core.metrics.impl.DefaultNumberMetricsProvider;
 import io.opensphere.core.metrics.impl.DefaultPercentageMetricsProvider;
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /**
  * The Class JVMMetricProvider.
@@ -114,7 +114,7 @@ public class JVMMonitor implements ActionListener
             myMemoryStateProvider.setValue("UNKNOWN");
         }
 
-        if (!EqualsHelper.equals(myLastStateColor, stateColor))
+        if (!Objects.equals(myLastStateColor, stateColor))
         {
             myLastStateColor = stateColor;
             myPercentUsedProvider.setColor(stateColor);

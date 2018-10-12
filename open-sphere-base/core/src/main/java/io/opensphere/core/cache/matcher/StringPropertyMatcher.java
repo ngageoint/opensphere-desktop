@@ -1,9 +1,9 @@
 package io.opensphere.core.cache.matcher;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import io.opensphere.core.cache.util.PropertyDescriptor;
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /**
  * A string property matcher.
@@ -190,7 +190,7 @@ public final class StringPropertyMatcher extends AbstractPropertyMatcher<String>
         }
         else
         {
-            return getOperator() == OperatorType.NE ^ EqualsHelper.equals(getOperand(), operand);
+            return getOperator() == OperatorType.NE ^ Objects.equals(getOperand(), operand);
         }
     }
 

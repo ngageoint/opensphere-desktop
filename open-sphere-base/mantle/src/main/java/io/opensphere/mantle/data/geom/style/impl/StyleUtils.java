@@ -12,7 +12,6 @@ import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.DateTimeFormats;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.BasicVisualizationInfo;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -142,7 +141,7 @@ public final class StyleUtils
                     "Cannot set " + parameterKey + " name for a visualization style with no dedicated data type.");
         }
         String curValue = (String)style.getStyleParameterValue(parameterKey);
-        if (!EqualsHelper.equals(metaDataKey, curValue))
+        if (!Objects.equals(metaDataKey, curValue))
         {
             DataTypeInfo dataType = StyleUtils.getDataTypeInfoFromKey(style.getToolbox(), style.getDTIKey());
             if (dataType == null)

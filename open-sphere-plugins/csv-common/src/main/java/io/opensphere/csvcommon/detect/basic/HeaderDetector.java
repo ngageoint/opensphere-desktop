@@ -1,10 +1,10 @@
 package io.opensphere.csvcommon.detect.basic;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.csvcommon.common.CellSampler;
 import io.opensphere.csvcommon.detect.CellDetector;
 import io.opensphere.csvcommon.detect.ValuesWithConfidence;
@@ -49,7 +49,7 @@ public class HeaderDetector implements CellDetector<Integer>
 
     /**
      * Detect the parameter.
-     * 
+     *
      * @param pSampler the line sampler
      * @return the parameter
      */
@@ -136,7 +136,7 @@ public class HeaderDetector implements CellDetector<Integer>
                     }
 
                     if (nextCells != null && columnIndex < nextCells.size()
-                            && EqualsHelper.equals(cell, nextCells.get(columnIndex)))
+                            && Objects.equals(cell, nextCells.get(columnIndex)))
                     {
                         dupeCells++;
                     }

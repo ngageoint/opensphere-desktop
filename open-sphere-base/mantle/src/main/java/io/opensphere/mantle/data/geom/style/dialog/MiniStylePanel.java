@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
@@ -30,7 +31,6 @@ import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.concurrent.ProcrastinatingExecutor;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.swing.IconButton;
 import io.opensphere.core.util.swing.ListComboBoxModel;
@@ -84,7 +84,7 @@ public class MiniStylePanel extends JPanel
         @Override
         public void visualizationStyleDatatypeChanged(VisualizationStyleDatatypeChangeEvent evt)
         {
-            if ((evt.getDTIKey() == null || EqualsHelper.equals(myDTI.getTypeKey(), evt.getDTIKey()))
+            if ((evt.getDTIKey() == null || Objects.equals(myDTI.getTypeKey(), evt.getDTIKey()))
                     && myEnableCustomTypeCheckBox.isSelected() == evt.isNewIsDefaultStyle())
             {
                 rebuildUI();
@@ -183,10 +183,7 @@ public class MiniStylePanel extends JPanel
 
         if (myTypePanels != null && !myTypePanels.isEmpty())
         {
-            for (MiniStyleTypePanel panel : myTypePanels)
-            {
-                panel.destroy();
-            }
+            myTypePanels.forEach(MiniStyleTypePanel::destroy);
             myTypePanels.clear();
         }
     }
@@ -204,8 +201,7 @@ public class MiniStylePanel extends JPanel
             hBox.add(Box.createHorizontalStrut(5));
             add(hBox);
 
-            VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox)
-                    .getVisualizationStyleController();
+            VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox).getVisualizationStyleController();
             boolean shouldBeSelected = vsc.isTypeUsingCustom(myDGI, myDTI);
             if (shouldBeSelected != myEnableCustomTypeCheckBox.isSelected())
             {
@@ -341,7 +337,7 @@ public class MiniStylePanel extends JPanel
             StyleNodeUserObject selectedNode = null;
             for (StyleNodeUserObject node : list)
             {
-                if (EqualsHelper.equals(node.getStyleClass(), selStyle))
+                if (Objects.equals(node.getStyleClass(), selStyle))
                 {
                     selectedNode = node;
                 }
@@ -546,8 +542,7 @@ public class MiniStylePanel extends JPanel
             {
                 VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox)
                         .getVisualizationStyleController();
-                VisualizationStyle vs = vsc.getStyleForEditorWithConfigValues(selectedStyleClass, myFeatureClass, myDGI,
-                        myDTI);
+                VisualizationStyle vs = vsc.getStyleForEditorWithConfigValues(selectedStyleClass, myFeatureClass, myDGI, myDTI);
                 VisualizationStyle curStyle = MantleToolboxUtils.getMantleToolbox(myToolbox).getVisualizationStyleRegistry()
                         .getStyle(myFeatureClass, myDTI.getTypeKey(), false);
 
@@ -604,14 +599,14 @@ public class MiniStylePanel extends JPanel
         private void handleVisualizationStyleDatatypeChangeEvent(final VisualizationStyleDatatypeChangeEvent evt)
         {
             if (!myDestroyed && (evt.getDTIKey() == null
-                    || EqualsHelper.equals(myDTI.getTypeKey(), evt.getDTIKey()) && evt.getMGSClass() == myFeatureClass))
+                    || Objects.equals(myDTI.getTypeKey(), evt.getDTIKey()) && evt.getMGSClass() == myFeatureClass))
             {
                 EventQueueUtilities.runOnEDT(() ->
                 {
                     VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox)
                             .getVisualizationStyleController();
-                    Class<? extends VisualizationStyle> selStyle = vsc.getSelectedVisualizationStyleClass(myFeatureClass,
-                            myDGI, myDTI);
+                    Class<? extends VisualizationStyle> selStyle = vsc.getSelectedVisualizationStyleClass(myFeatureClass, myDGI,
+                            myDTI);
 
                     StyleNodeUserObject selectedNode = null;
                     if (myStyleSelectComboBox.getItemCount() > 1)
@@ -619,7 +614,7 @@ public class MiniStylePanel extends JPanel
                         for (int i = 0; i < myStyleSelectComboBox.getItemCount(); i++)
                         {
                             StyleNodeUserObject node = myStyleSelectComboBox.getItemAt(i);
-                            if (EqualsHelper.equals(node.getStyleClass(), selStyle))
+                            if (Objects.equals(node.getStyleClass(), selStyle))
                             {
                                 selectedNode = node;
                                 break;
@@ -743,7 +738,8 @@ public class MiniStylePanel extends JPanel
         @Override
         public void styleChanged(boolean hasChangesFromBase)
         {
-            myUpdateExecutor.execute(() -> myVSC.updateStyle(myFVCP.getChangedStyle(), myFeatureClass, myDGI, myDTI, MiniStyleTypePanelController.this));
+            myUpdateExecutor.execute(() -> myVSC.updateStyle(myFVCP.getChangedStyle(), myFeatureClass, myDGI, myDTI,
+                    MiniStyleTypePanelController.this));
         }
 
         @Override
