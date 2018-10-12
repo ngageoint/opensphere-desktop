@@ -97,6 +97,12 @@ public class GridBuilder extends TilePane
         return iconButton;
     }
 
+    /**
+     * Creates the buttons to be placed in a non-image list.
+     *
+     * @param record the icon
+     * @return the new button of the icon
+     */
     private Button buttonBuilderListStyle(IconRecord record)
     {
         Button iconButton = new Button();
