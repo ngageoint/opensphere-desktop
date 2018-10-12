@@ -27,7 +27,7 @@ import io.opensphere.core.viewer.impl.MapContext;
  * Immediate mode GL point renderer.
  */
 public class PointRendererImmediate extends AbstractPointRenderer<PointGeometry>
-        implements GeometryRendererImmediate<PointGeometry>
+implements GeometryRendererImmediate<PointGeometry>
 {
     /** Bits used for {@link GL2#glPushAttrib(int)}. */
     private static final int ATTRIB_BITS = GL2.GL_ENABLE_BIT | GL.GL_COLOR_BUFFER_BIT | GL2.GL_CURRENT_BIT | GL2.GL_POINT_BIT;

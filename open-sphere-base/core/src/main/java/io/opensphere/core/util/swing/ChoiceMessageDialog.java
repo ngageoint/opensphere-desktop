@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
@@ -17,8 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  * A dialog used to display a message to the user. The message may include
@@ -97,15 +93,11 @@ public class ChoiceMessageDialog extends JDialog
             getContentPane().add(tabbedPane, BorderLayout.CENTER);
             tabbedPane.addTab("Details", detailsPanel);
             pack();
-            tabbedPane.addChangeListener(new ChangeListener()
+            tabbedPane.addChangeListener(e ->
             {
-                @Override
-                public void stateChanged(ChangeEvent e)
+                if (((JTabbedPane)e.getSource()).getSelectedComponent() == detailsPanel)
                 {
-                    if (((JTabbedPane)e.getSource()).getSelectedComponent() == detailsPanel)
-                    {
-                        pack();
-                    }
+                    pack();
                 }
             });
         }
@@ -182,14 +174,10 @@ public class ChoiceMessageDialog extends JDialog
         for (String label : buttonLabels)
         {
             JButton button = new JButton(label);
-            button.addActionListener(new ActionListener()
+            button.addActionListener(e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    mySelection = e.getActionCommand();
-                    dispatchEvent(new WindowEvent(ChoiceMessageDialog.this, WindowEvent.WINDOW_CLOSING));
-                }
+                mySelection = e.getActionCommand();
+                dispatchEvent(new WindowEvent(ChoiceMessageDialog.this, WindowEvent.WINDOW_CLOSING));
             });
             panel.add(button);
         }

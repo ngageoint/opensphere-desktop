@@ -6,9 +6,10 @@ import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.swing.JComponent;
 import javax.swing.TransferHandler.DropLocation;
+
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 /**
  * The Interface FileOrURLImporter.

@@ -169,7 +169,7 @@ public class FrameOptionsProvider extends AbstractPreferencesOptionsProvider
                 {
                     setBackgroundColor(c);
                     getPreferencesRegistry().getPreferences(AbstractHUDPanel.class)
-                            .putInt(AbstractHUDPanel.ourHUDBackgroundColorKey, myBackgroundColor.getRGB(), this);
+                    .putInt(AbstractHUDPanel.ourHUDBackgroundColorKey, myBackgroundColor.getRGB(), this);
                 }
             });
         }

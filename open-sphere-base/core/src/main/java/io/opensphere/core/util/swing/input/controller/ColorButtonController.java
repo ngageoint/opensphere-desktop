@@ -1,7 +1,6 @@
 package io.opensphere.core.util.swing.input.controller;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
@@ -42,17 +41,13 @@ public class ColorButtonController extends AbstractController<Color, ColorModel,
     {
         super.open();
         getView().setIcon(new ColorCircleIcon(getModel().get()));
-        myActionListener = new ActionListener()
+        myActionListener = e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            Color color = ColorPicker.showDialog(SwingUtilities.getWindowAncestor(getView()), "Select Color", getModel().get(),
+                    true);
+            if (color != null)
             {
-                Color color = ColorPicker.showDialog(SwingUtilities.getWindowAncestor(getView()), "Select Color",
-                        getModel().get(), true);
-                if (color != null)
-                {
-                    getModel().set(color);
-                }
+                getModel().set(color);
             }
         };
         getView().addActionListener(myActionListener);

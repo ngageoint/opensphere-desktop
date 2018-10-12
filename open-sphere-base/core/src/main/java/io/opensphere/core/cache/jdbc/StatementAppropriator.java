@@ -62,7 +62,7 @@ public class StatementAppropriator
      * @throws CacheException If there is a database error.
      */
     public <T> T appropriateStatement(final PreparedStatementUser<T> user, final String sql, final String... columnNames)
-        throws CacheException
+            throws CacheException
     {
         return runUser(myConnection, user, sql, columnNames);
     }
@@ -94,7 +94,7 @@ public class StatementAppropriator
      * @throws CacheException If there is a database error.
      */
     private <T> T runUser(Connection conn, PreparedStatementUser<T> puser, String sql, String... columnNames)
-        throws CacheException
+            throws CacheException
     {
         PreparedStatement pstmt;
         try

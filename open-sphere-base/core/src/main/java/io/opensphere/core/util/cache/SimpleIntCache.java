@@ -16,8 +16,8 @@ public class SimpleIntCache<V> implements IntFunction<V>
     /** The look up function. */
     private final IntFunction<V> myLookupFunction;
 
-//    /** The instrumentation. */
-//    private final CacheInstrumentation myInstrumentation = new CacheInstrumentation();
+    //    /** The instrumentation. */
+    //    private final CacheInstrumentation myInstrumentation = new CacheInstrumentation();
 
     /**
      * Constructor.
@@ -34,7 +34,7 @@ public class SimpleIntCache<V> implements IntFunction<V>
     @Override
     public V apply(int key)
     {
-//        myInstrumentation.start();
+        //        myInstrumentation.start();
 
         Integer wrapperKey = Integer.valueOf(key);
         V value = myCacheMap.get(wrapperKey);
@@ -43,12 +43,12 @@ public class SimpleIntCache<V> implements IntFunction<V>
             value = myLookupFunction.apply(key);
             myCacheMap.put(wrapperKey, value);
 
-//            myInstrumentation.miss();
+            //            myInstrumentation.miss();
         }
-//        else
-//        {
-//            myInstrumentation.hit();
-//        }
+        //        else
+        //        {
+        //            myInstrumentation.hit();
+        //        }
 
         return value;
     }

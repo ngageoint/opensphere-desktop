@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Objects;
 
 import io.opensphere.core.util.ChangeSupport;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.StrongChangeSupport;
 import io.opensphere.core.util.collections.New;
 
@@ -98,13 +97,6 @@ public class DefaultIconModel implements IconModel
      */
     protected void fireStateChanged(final ChangeType changeType, final Object source)
     {
-        myChangeSupport.notifyListeners(new Callback<ChangeListener>()
-        {
-            @Override
-            public void notify(ChangeListener listener)
-            {
-                listener.stateChanged(changeType, source);
-            }
-        });
+        myChangeSupport.notifyListeners(listener -> listener.stateChanged(changeType, source));
     }
 }

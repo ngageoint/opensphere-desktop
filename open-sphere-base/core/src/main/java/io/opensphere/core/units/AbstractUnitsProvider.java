@@ -7,7 +7,6 @@ import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.util.ChangeSupport;
@@ -40,18 +39,14 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
     private volatile Preferences myPreferences;
 
     /** The preferences listener. */
-    private final PreferenceChangeListener myPreferencesListener = new PreferenceChangeListener()
+    private final PreferenceChangeListener myPreferencesListener = evt ->
     {
-        @Override
-        public void preferenceChange(PreferenceChangeEvent evt)
+        if (evt.getSource() != AbstractUnitsProvider.this)
         {
-            if (evt.getSource() != AbstractUnitsProvider.this)
+            String className = evt.getValueAsString(null);
+            if (className != null)
             {
-                String className = evt.getValueAsString(null);
-                if (className != null)
-                {
-                    setPreferredUnits(className);
-                }
+                setPreferredUnits(className);
             }
         }
     };
@@ -121,7 +116,7 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
 
     @Override
     public T fromMagnitudeAndSelectionLabel(Number magnitude, String selectionLabel)
-        throws InvalidUnitsException, UnitsParseException
+            throws InvalidUnitsException, UnitsParseException
     {
         Class<? extends T> type = getUnitsWithSelectionLabel(selectionLabel);
         if (type == null)
@@ -189,10 +184,7 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
         {
             return getDisplayClass(convert(type, value));
         }
-        else
-        {
-            return type;
-        }
+        return type;
     }
 
     @Override
@@ -341,7 +333,7 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
 
         @SuppressWarnings("rawtypes")
         AtomicReferenceFieldUpdater<AbstractUnitsProvider, Preferences> updater = AtomicReferenceFieldUpdater
-                .newUpdater(AbstractUnitsProvider.class, Preferences.class, "myPreferences");
+        .newUpdater(AbstractUnitsProvider.class, Preferences.class, "myPreferences");
         if (!updater.compareAndSet(this, null, preferences))
         {
             throw new IllegalStateException("Cannot set preferences more than once.");
@@ -405,14 +397,7 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
      */
     protected void notifyChanges(final Class<? extends T> preferredType)
     {
-        myChangeSupport.notifyListeners(new ChangeSupport.Callback<UnitsChangeListener<T>>()
-        {
-            @Override
-            public void notify(UnitsChangeListener<T> listener)
-            {
-                listener.preferredUnitsChanged(preferredType);
-            }
-        }, null);
+        myChangeSupport.notifyListeners(listener -> listener.preferredUnitsChanged(preferredType), null);
     }
 
     /**
@@ -422,14 +407,7 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
      */
     protected void notifyChanges(final Collection<Class<? extends T>> newUnits)
     {
-        myChangeSupport.notifyListeners(new ChangeSupport.Callback<UnitsChangeListener<T>>()
-        {
-            @Override
-            public void notify(UnitsChangeListener<T> listener)
-            {
-                listener.availableUnitsChanged(getSuperType(), newUnits);
-            }
-        }, null);
+        myChangeSupport.notifyListeners(listener -> listener.availableUnitsChanged(getSuperType(), newUnits), null);
     }
 
     /**

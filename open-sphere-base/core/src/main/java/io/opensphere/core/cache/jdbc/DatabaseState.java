@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.ConcurrentLazyMap;
-import io.opensphere.core.util.collections.LazyMap;
+import io.opensphere.core.util.collections.LazyMap.Factory;
 import io.opensphere.core.util.collections.New;
 
 /**
@@ -23,14 +23,7 @@ public class DatabaseState
 
     /** The set of tables that have been created. */
     private final Map<Integer, Set<String>> myCreatedTables = ConcurrentLazyMap
-            .create(new ConcurrentHashMap<Integer, Set<String>>(), Integer.class, new LazyMap.Factory<Integer, Set<String>>()
-            {
-                @Override
-                public Set<String> create(Integer key)
-                {
-                    return Collections.synchronizedSet(New.<String>set());
-                }
-            });
+            .create(new ConcurrentHashMap<Integer, Set<String>>(), Integer.class, (Factory<Integer, Set<String>>)key -> Collections.synchronizedSet(New.<String>set()));
 
     /** Counter used to create unique temporary table names. */
     private final AtomicInteger myTemporaryTableCounter = new AtomicInteger();

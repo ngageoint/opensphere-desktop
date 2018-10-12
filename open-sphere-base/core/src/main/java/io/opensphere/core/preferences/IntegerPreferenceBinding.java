@@ -2,10 +2,9 @@ package io.opensphere.core.preferences;
 
 import java.util.concurrent.Executor;
 
+import io.opensphere.core.util.Service;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.value.ChangeListener;
-
-import io.opensphere.core.util.Service;
 
 /**
  * Handler that can update a integer preference based on changes to a integer

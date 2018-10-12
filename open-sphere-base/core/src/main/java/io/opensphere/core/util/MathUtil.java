@@ -369,15 +369,12 @@ public final class MathUtil
         {
             return 1;
         }
-        else
+        int gcd = vals[0];
+        for (int index = 1; index < vals.length;)
         {
-            int gcd = vals[0];
-            for (int index = 1; index < vals.length;)
-            {
-                gcd = gcd(gcd, vals[index++]);
-            }
-            return gcd;
+            gcd = gcd(gcd, vals[index++]);
         }
+        return gcd;
     }
 
     /**
@@ -566,7 +563,7 @@ public final class MathUtil
             }
         }
 
-        return new ValueWithCount<Integer>(Integer.valueOf(mode), count);
+        return new ValueWithCount<>(Integer.valueOf(mode), count);
     }
 
     /**

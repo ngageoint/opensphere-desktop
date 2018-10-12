@@ -2,14 +2,14 @@ package io.opensphere.core.util.swing.binding;
 
 import java.awt.EventQueue;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ObservableValue;
-
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.text.DefaultFormatter;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ObservableValue;
 
 /**
  * JSpinner that provides some basic JavaFX-like binding.

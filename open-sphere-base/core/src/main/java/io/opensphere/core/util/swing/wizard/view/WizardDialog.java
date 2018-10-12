@@ -56,46 +56,51 @@ public class WizardDialog
     /** The model for the wizard panels. */
     private WizardPanelModel myPanelModel;
 
+    /** The model for the list of steps. */
+    private WizardStepListModel myStepListModel;
+
+    /** The validation support for the wizard dialog. */
+    private final DefaultValidatorSupport myValidator = new DefaultValidatorSupport(null);
+
+    /** Map of step titles to wizard panels. */
+    private final Map<String, Component> myWizardPanels = New.map();
+
     /**
      * Listener for validation on wizard panels.
      */
-    private final ValidationStatusChangeListener myPanelValidationListener = new ValidationStatusChangeListener()
+    private final ValidationStatusChangeListener myPanelValidationListener = (object, valid, message) ->
     {
-        @Override
-        public void statusChanged(Object object, ValidationStatus valid, String message)
+        if (Utilities.sameInstance(myWizardPanels.get(myStepListModel.getCurrentStepTitle()), object))
         {
-            if (Utilities.sameInstance(myWizardPanels.get(myStepListModel.getCurrentStepTitle()), object))
+            myValidator.setValidationResult(valid, message);
+        }
+        for (int step = 0; step < myStepListModel.getStepCount(); ++step)
+        {
+            String stepTitle = myStepListModel.getStepTitle(step);
+            if (Utilities.sameInstance(myWizardPanels.get(stepTitle), object))
             {
-                myValidator.setValidationResult(valid, message);
-            }
-            for (int step = 0; step < myStepListModel.getStepCount(); ++step)
-            {
-                String stepTitle = myStepListModel.getStepTitle(step);
-                if (Utilities.sameInstance(myWizardPanels.get(stepTitle), object))
+                if (valid == ValidationStatus.VALID)
                 {
-                    if (valid == ValidationStatus.VALID)
+                    myStepListModel.setStepState(stepTitle, StepState.VALID);
+                }
+                else
+                {
+                    StepState stepState = myStepListModel.getStepState(step);
+                    if (stepState == StepState.VALID || stepState == StepState.WARNING || stepState == StepState.INVALID
+                            || myStepListModel.getCurrentStep() == step)
                     {
-                        myStepListModel.setStepState(stepTitle, StepState.VALID);
-                    }
-                    else
-                    {
-                        StepState stepState = myStepListModel.getStepState(step);
-                        if (stepState == StepState.VALID || stepState == StepState.WARNING || stepState == StepState.INVALID
-                                || myStepListModel.getCurrentStep() == step)
+                        if (valid == ValidationStatus.ERROR)
                         {
-                            if (valid == ValidationStatus.ERROR)
-                            {
-                                myStepListModel.setStepState(stepTitle, StepState.INVALID);
-                            }
-                            else
-                            {
-                                myStepListModel.setStepState(stepTitle, StepState.WARNING);
-                            }
+                            myStepListModel.setStepState(stepTitle, StepState.INVALID);
+                        }
+                        else
+                        {
+                            myStepListModel.setStepState(stepTitle, StepState.WARNING);
                         }
                     }
-
-                    break;
                 }
+
+                break;
             }
         }
     };
@@ -112,19 +117,8 @@ public class WizardDialog
         }
     };
 
-    /** The model for the list of steps. */
-    private WizardStepListModel myStepListModel;
-
     /** The panel containing the wizard steps. */
     private final WizardStepList myStepPanel;
-
-    /**
-     * The validation support for the wizard dialog.
-     */
-    private final DefaultValidatorSupport myValidator = new DefaultValidatorSupport(null);
-
-    /** Map of step titles to wizard panels. */
-    private final Map<String, Component> myWizardPanels = New.map();
 
     /** The minimum size. */
     private Dimension myMinimumSize;

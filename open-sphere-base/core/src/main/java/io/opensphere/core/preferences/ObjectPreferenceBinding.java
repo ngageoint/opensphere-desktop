@@ -2,15 +2,14 @@ package io.opensphere.core.preferences;
 
 import java.util.concurrent.Executor;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.util.StringConverter;
-
 import org.apache.log4j.Logger;
 
 import com.google.common.base.Objects;
 
 import io.opensphere.core.util.Service;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.util.StringConverter;
 
 /**
  * Handler that can update a string preference based on changes to an object

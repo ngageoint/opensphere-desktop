@@ -176,10 +176,7 @@ public class RectangularCylinder implements Comparable<RectangularCylinder>
         {
             return myTransform.mult(myLeastCorner.interpolate(myGreatestCorner, .5));
         }
-        else
-        {
-            return myLeastCorner.interpolate(myGreatestCorner, .5);
-        }
+        return myLeastCorner.interpolate(myGreatestCorner, .5);
     }
 
     /**

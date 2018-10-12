@@ -39,5 +39,5 @@ public interface ElevationImageReader extends ElevationMetadataProvider
      *             the image.
      */
     double readElevation(GeographicPosition position, Image image, GeographicBoundingBox bounds, boolean approximate)
-        throws ElevationImageReaderException;
+            throws ElevationImageReaderException;
 }

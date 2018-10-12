@@ -51,7 +51,7 @@ public class MapManagerMenuProvider
     /**
      * The menu provider for events which occur with no associated geometries.
      */
-    private final ContextMenuProvider<ScreenPositionContextKey> myDefaultContextMenuProvider = new ContextMenuProvider<ScreenPositionContextKey>()
+    private final ContextMenuProvider<ScreenPositionContextKey> myDefaultContextMenuProvider = new ContextMenuProvider<>()
     {
         @Override
         public List<JMenuItem> getMenuItems(String contextId, ScreenPositionContextKey key)
@@ -118,7 +118,7 @@ public class MapManagerMenuProvider
      * The menu provider for events related to single geometry selection or
      * completion.
      */
-    private final ContextMenuProvider<GeometryContextKey> myGeometryContextMenuProvider = new ContextMenuProvider<GeometryContextKey>()
+    private final ContextMenuProvider<GeometryContextKey> myGeometryContextMenuProvider = new ContextMenuProvider<>()
     {
         @Override
         public List<JMenuItem> getMenuItems(String contextId, GeometryContextKey key)
@@ -156,7 +156,7 @@ public class MapManagerMenuProvider
     /**
      * The menu provider for events which occur on multiple polygon geometries.
      */
-    private final ContextMenuProvider<MultiGeometryContextKey> myMultiGeometryContextMenuProvider = new ContextMenuProvider<MultiGeometryContextKey>()
+    private final ContextMenuProvider<MultiGeometryContextKey> myMultiGeometryContextMenuProvider = new ContextMenuProvider<>()
     {
         @Override
         public List<JMenuItem> getMenuItems(String contextId, MultiGeometryContextKey key)

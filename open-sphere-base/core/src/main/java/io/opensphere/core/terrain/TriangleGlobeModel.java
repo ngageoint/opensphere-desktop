@@ -261,13 +261,13 @@ public class TriangleGlobeModel extends GeographicProjectionModel
         List<TesseraBlock<TerrainVertex>> tess = new ArrayList<>(2);
         if (!triBuilder.getBlockVertices().isEmpty())
         {
-            tess.add(new TesseraBlock<TerrainVertex>(triBuilder, true));
+            tess.add(new TesseraBlock<>(triBuilder, true));
         }
         if (!quadBuilder.getBlockVertices().isEmpty())
         {
-            tess.add(new TesseraBlock<TerrainVertex>(quadBuilder, true));
+            tess.add(new TesseraBlock<>(quadBuilder, true));
         }
-        return new TesseraList<TerrainVertex>(tess);
+        return new TesseraList<>(tess);
     }
 
     @Override
@@ -357,28 +357,28 @@ public class TriangleGlobeModel extends GeographicProjectionModel
                     Collection<? extends GeographicPolygon> modifiedLocations = event.getChangedRegions() == null
                             ? provider.getRegions() : event.getChangedRegions();
 
-                    for (GeographicPolygon region : modifiedLocations)
-                    {
-                        if (!getCelestialBody().getElevationManager().isOccluded(provider, region))
-                        {
-                            foundNonOccludedRegion = true;
-                            combinedBounds.add(region.getBoundingBox());
-                            // TODO Check to make sure this doesn't do anything
-                            // to petrified regions.
-                            myNorthBottom.modifyElevation(region, false);
-                            mySouthBottom.modifyElevation(region, false);
-                        }
-                    }
+                            for (GeographicPolygon region : modifiedLocations)
+                            {
+                                if (!getCelestialBody().getElevationManager().isOccluded(provider, region))
+                                {
+                                    foundNonOccludedRegion = true;
+                                    combinedBounds.add(region.getBoundingBox());
+                                    // TODO Check to make sure this doesn't do anything
+                                    // to petrified regions.
+                                    myNorthBottom.modifyElevation(region, false);
+                                    mySouthBottom.modifyElevation(region, false);
+                                }
+                            }
 
-                    // If the the new elevations are significantly closer to or
-                    // farther from the viewer, splitting and merging may be
-                    // required.
-                    if (foundNonOccludedRegion)
-                    {
-                        combinedBounds.addAll(doSplitsAndMerges(null));
-                    }
-                    affectedBounds = combinedBounds;
-                    break;
+                            // If the the new elevations are significantly closer to or
+                            // farther from the viewer, splitting and merging may be
+                            // required.
+                            if (foundNonOccludedRegion)
+                            {
+                                combinedBounds.addAll(doSplitsAndMerges(null));
+                            }
+                            affectedBounds = combinedBounds;
+                            break;
                 default:
                     throw new UnexpectedEnumException(event.getChangeType());
             }

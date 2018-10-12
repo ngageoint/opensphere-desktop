@@ -148,7 +148,7 @@ public class GeographicBoundingBox implements BoundingBox<GeographicPosition>, C
      *             reference levels.
      */
     public static GeographicBoundingBox merge(GeographicBoundingBox box1, GeographicBoundingBox box2)
-        throws IllegalArgumentException
+            throws IllegalArgumentException
     {
         if (box1 == null)
         {
@@ -370,7 +370,7 @@ public class GeographicBoundingBox implements BoundingBox<GeographicPosition>, C
         if (lowerLeftCorner.getAltitudeReference() != upperRightCorner.getAltitudeReference())
         {
             throw new IllegalArgumentException("Incompatible altitudes references: " + lowerLeftCorner.getAltitudeReference()
-                    + " and " + upperRightCorner.getAltitudeReference());
+            + " and " + upperRightCorner.getAltitudeReference());
         }
 
         if (upperRightCorner.getLatD() < lowerLeftCorner.getLatD())

@@ -65,7 +65,7 @@ public class SimpleDisposingQuery<T> extends DefaultQuery
     public SimpleDisposingQuery(DataModelCategory dataModelCategory, PropertyDescriptor<T> propertyDescriptor,
             List<? extends PropertyMatcher<?>> propertyMatchers)
     {
-        super(dataModelCategory, Collections.singletonList(new DisposingPropertyValueReceiver<T>(propertyDescriptor)),
+        super(dataModelCategory, Collections.singletonList(new DisposingPropertyValueReceiver<>(propertyDescriptor)),
                 propertyMatchers, Collections.<OrderSpecifier>emptyList());
     }
 

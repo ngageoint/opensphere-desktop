@@ -54,8 +54,8 @@ public class PipelineCanvasHelper
 
         // TODO setSampleBuffers(true) fixes the black outlines around dots on
         // Linux, but causes picking problems on all platforms.
-//        caps.setSampleBuffers(true);
-//        caps.setNumSamples(Math.min(4, caps.getNumSamples()));
+        //        caps.setSampleBuffers(true);
+        //        caps.setNumSamples(Math.min(4, caps.getNumSamples()));
 
         if (newt)
         {

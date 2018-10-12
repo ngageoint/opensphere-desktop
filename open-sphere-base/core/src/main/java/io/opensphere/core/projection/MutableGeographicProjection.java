@@ -40,14 +40,7 @@ public abstract class MutableGeographicProjection extends AbstractMutableGeograp
     private boolean myModelCenterDirty;
 
     /** Listener for changes to the elevation providers. */
-    private final ElevationChangeListener myElevationListener = new ElevationChangeListener()
-    {
-        @Override
-        public Collection<GeographicBoundingBox> handleElevationChange(ElevationChangedEvent event)
-        {
-            return MutableGeographicProjection.this.handleElevationChange(event);
-        }
-    };
+    private final ElevationChangeListener myElevationListener = event -> MutableGeographicProjection.this.handleElevationChange(event);
 
     /** An executor that procrastinates before running tasks. */
     private final Executor myMergeSplitExecutor = CommonTimer.createProcrastinatingExecutor(1000);
@@ -203,25 +196,21 @@ public abstract class MutableGeographicProjection extends AbstractMutableGeograp
         {
             return null;
         }
-        Runnable runner = new Runnable()
+        Runnable runner = () ->
         {
-            @Override
-            public void run()
+            myProjectionChangeLock.lock();
+            try
             {
-                myProjectionChangeLock.lock();
-                try
+                final Collection<GeographicBoundingBox> box = myModel.handleModelDensityChanged(density);
+                if (box != null)
                 {
-                    final Collection<GeographicBoundingBox> box = myModel.handleModelDensityChanged(density);
-                    if (box != null)
-                    {
-                        updateProjectionBounds(box);
-                        sendProjectionUpdate();
-                    }
+                    updateProjectionBounds(box);
+                    sendProjectionUpdate();
                 }
-                finally
-                {
-                    myProjectionChangeLock.unlock();
-                }
+            }
+            finally
+            {
+                myProjectionChangeLock.unlock();
             }
         };
 
@@ -274,32 +263,28 @@ public abstract class MutableGeographicProjection extends AbstractMutableGeograp
         {
             return;
         }
-        Runnable runner = new Runnable()
+        Runnable runner = () ->
         {
-            @Override
-            public void run()
+            myProjectionChangeLock.lock();
+            try
             {
-                myProjectionChangeLock.lock();
-                try
-                {
-                    boolean sendUpdate = verifyModelCenter(view);
+                boolean sendUpdate = verifyModelCenter(view);
 
-                    final Collection<GeographicBoundingBox> box = myModel.updateModelForView(view);
-                    if (box != null)
-                    {
-                        updateProjectionBounds(box);
-                        sendUpdate = true;
-                    }
-
-                    if (sendUpdate)
-                    {
-                        sendProjectionUpdate();
-                    }
-                }
-                finally
+                final Collection<GeographicBoundingBox> box = myModel.updateModelForView(view);
+                if (box != null)
                 {
-                    myProjectionChangeLock.unlock();
+                    updateProjectionBounds(box);
+                    sendUpdate = true;
                 }
+
+                if (sendUpdate)
+                {
+                    sendProjectionUpdate();
+                }
+            }
+            finally
+            {
+                myProjectionChangeLock.unlock();
             }
         };
 

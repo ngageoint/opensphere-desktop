@@ -13,8 +13,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.RenderedImage;
 import java.awt.image.WritableRaster;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -366,33 +364,29 @@ public final class ImageUtil
             }
         });
 
-        chooser.addPropertyChangeListener(new PropertyChangeListener()
+        chooser.addPropertyChangeListener(evt ->
         {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt)
+            if (JFileChooser.SELECTED_FILE_CHANGED_PROPERTY.equals(evt.getPropertyName()))
             {
-                if (JFileChooser.SELECTED_FILE_CHANGED_PROPERTY.equals(evt.getPropertyName()))
+                String filePath = evt.getNewValue() == null ? null : evt.getNewValue().toString();
+                if (filePath != null)
                 {
-                    String filePath = evt.getNewValue() == null ? null : evt.getNewValue().toString();
-                    if (filePath != null)
+                    try
                     {
-                        try
-                        {
-                            BufferedImage buff = ImageIO.read(new File(filePath));
-                            Image scale = ImageUtil.scaleDownImage(buff, imagePreviewPanel.getHeight(),
-                                    imagePreviewPanel.getWidth());
-                            imagePreviewPanel.setImage(scale);
-                        }
-                        catch (IOException e)
-                        {
-                            LOGGER.warn("Unable to read image from path '" + filePath + "'", e);
-                            imagePreviewPanel.setImage(ImageUtil.NO_IMAGE);
-                        }
+                        BufferedImage buff = ImageIO.read(new File(filePath));
+                        Image scale = ImageUtil.scaleDownImage(buff, imagePreviewPanel.getHeight(),
+                                imagePreviewPanel.getWidth());
+                        imagePreviewPanel.setImage(scale);
                     }
-                    else
+                    catch (IOException e)
                     {
+                        LOGGER.warn("Unable to read image from path '" + filePath + "'", e);
                         imagePreviewPanel.setImage(ImageUtil.NO_IMAGE);
                     }
+                }
+                else
+                {
+                    imagePreviewPanel.setImage(ImageUtil.NO_IMAGE);
                 }
             }
         });

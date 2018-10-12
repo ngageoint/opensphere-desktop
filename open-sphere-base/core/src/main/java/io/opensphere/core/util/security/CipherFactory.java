@@ -130,11 +130,8 @@ public class CipherFactory
         {
             return this;
         }
-        else
-        {
-            SecretKey secretKey = myKeyProvider.getSecretKey();
-            return new CipherFactory(new DefaultSecretKeyProvider(secretKey), myDefaultTransformation);
-        }
+        SecretKey secretKey = myKeyProvider.getSecretKey();
+        return new CipherFactory(new DefaultSecretKeyProvider(secretKey), myDefaultTransformation);
     }
 
     /**

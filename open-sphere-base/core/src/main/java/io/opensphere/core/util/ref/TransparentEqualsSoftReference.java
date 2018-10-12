@@ -25,7 +25,7 @@ public class TransparentEqualsSoftReference<T> extends SoftReference<T>
      */
     public static <T> TransparentEqualsSoftReference<T> create(T referent)
     {
-        return new TransparentEqualsSoftReference<T>(referent);
+        return new TransparentEqualsSoftReference<>(referent);
     }
 
     /**
@@ -40,7 +40,7 @@ public class TransparentEqualsSoftReference<T> extends SoftReference<T>
      */
     public static <T> TransparentEqualsSoftReference<T> create(T referent, ReferenceQueue<? super T> q)
     {
-        return new TransparentEqualsSoftReference<T>(referent, q);
+        return new TransparentEqualsSoftReference<>(referent, q);
     }
 
     /**

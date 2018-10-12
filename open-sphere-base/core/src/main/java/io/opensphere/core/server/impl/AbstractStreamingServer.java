@@ -18,9 +18,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
-
 import org.apache.log4j.Logger;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -36,6 +33,8 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.io.CancellableInputStream;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.net.HttpUtilities;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /** Abstract {@link StreamingServer} that deals with {@link InputStream}s. */
 @ThreadSafe

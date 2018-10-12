@@ -107,9 +107,9 @@ public class Viewer2DControlTranslator extends AbstractViewerControlTranslator
         double stretchFactor = getViewer().getStretchFactor();
         Vector3d location = new Vector3d(
                 viewPosition.getLocation().getX() - deltaX / getViewer().getViewportWidth() * modelWidth
-                        / (stretchFactor > 1. ? stretchFactor : 1.) / getViewer().getScale(),
+                / (stretchFactor > 1. ? stretchFactor : 1.) / getViewer().getScale(),
                 viewPosition.getLocation().getY() + deltaY / getViewer().getViewportHeight() * modelHeight
-                        * (stretchFactor < 1. ? stretchFactor : 1.) / getViewer().getScale(),
+                * (stretchFactor < 1. ? stretchFactor : 1.) / getViewer().getScale(),
                 0.);
 
         getViewer().setPosition(new ViewerPosition2D(location, getViewer().getScale()));

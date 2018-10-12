@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.table.AbstractTableModel;
+
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
-import javax.swing.table.AbstractTableModel;
 
 /**
  * Abstract base class for table models that only deals with columns. This

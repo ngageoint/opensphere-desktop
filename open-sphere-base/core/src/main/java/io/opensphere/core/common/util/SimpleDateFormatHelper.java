@@ -24,7 +24,7 @@ public class SimpleDateFormatHelper
     private final static TimeZone DEFAULT_TIME_ZONE_GMT00 = TimeZone.getTimeZone("GMT+00:00");
 
     /** Pattern to SimpleDateFormat map. */
-    private static ThreadLocal<Map<String, SimpleDateFormat>> threadLocalPatternToSDF = new ThreadLocal<Map<String, SimpleDateFormat>>()
+    private static ThreadLocal<Map<String, SimpleDateFormat>> threadLocalPatternToSDF = new ThreadLocal<>()
     {
         @Override
         protected Map<String, SimpleDateFormat> initialValue()

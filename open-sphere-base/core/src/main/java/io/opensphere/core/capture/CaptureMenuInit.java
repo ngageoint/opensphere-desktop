@@ -2,8 +2,6 @@ package io.opensphere.core.capture;
 
 import java.awt.Frame;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JMenuItem;
 import javax.swing.WindowConstants;
@@ -39,26 +37,12 @@ public final class CaptureMenuInit
     public static JMenuItem getScreenCaptureMenuItem(final Toolbox toolbox)
     {
         final JMenuItem captureMenuItem = new JMenuItem("Screen Capture");
-        captureMenuItem.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent event)
-            {
-                launchScreenCapture(toolbox);
-            }
-        });
+        captureMenuItem.addActionListener(e -> launchScreenCapture(toolbox));
 
         final IconButton screenCaptureActivationButton = new IconButton("Screen Capture");
         IconUtil.setIcons(screenCaptureActivationButton, "/images/screencapture.png");
         screenCaptureActivationButton.setToolTipText("Save a screen shot");
-        screenCaptureActivationButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent evt)
-            {
-                launchScreenCapture(toolbox);
-            }
-        });
+        screenCaptureActivationButton.addActionListener(e -> launchScreenCapture(toolbox));
         toolbox.getUIRegistry().getToolbarComponentRegistry().registerToolbarComponent(ToolbarLocation.NORTH, "Screen Capture",
                 screenCaptureActivationButton, 455, SeparatorLocation.NONE, new Insets(0, 2, 0, 2));
 

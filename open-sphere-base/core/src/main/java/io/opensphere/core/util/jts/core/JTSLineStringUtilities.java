@@ -36,7 +36,7 @@ public class JTSLineStringUtilities
     /**
      * Builds a set of core geometries for the supplied line sets. Defaults to
      * using other utilities if the supplied region is not a line.
-     * 
+     *
      * @param region the region to convert to a line set.
      * @param color the color to apply to the converted line.
      * @return a {@link List} of {@link Geometry} objects generated from the
@@ -98,7 +98,7 @@ public class JTSLineStringUtilities
     /**
      * Creates an instance of the {@link PolylineRenderProperties} class for use
      * in generating new {@link PolylineGeometry} instances.
-     * 
+     *
      * @param color the color to include in the properties object.
      * @param width the width to include in the properties object.
      * @param pickable the 'pickable' state to include in the properties object.

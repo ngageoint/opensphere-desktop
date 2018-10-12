@@ -186,7 +186,7 @@ public class TileGeometry extends AbstractTileGeometry<TileGeometry> implements 
     @Override
     protected Builder<Position> createRawBuilder()
     {
-        return new Builder<Position>();
+        return new Builder<>();
     }
 
     @Override

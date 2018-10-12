@@ -51,22 +51,19 @@ public final class BoundingBoxes
         {
             return null;
         }
+        T item = CollectionUtilities.getItem(positions, 0);
+        if (item instanceof GeographicPosition)
+        {
+            return (BoundingBox<T>)GeographicBoundingBox
+                    .getMinimumBoundingBox((Collection<? extends GeographicPosition>)positions);
+        }
+        else if (item instanceof ScreenPosition)
+        {
+            return (BoundingBox<T>)ScreenBoundingBox.getMinimumBoundingBox((Collection<? extends ScreenPosition>)positions);
+        }
         else
         {
-            T item = CollectionUtilities.getItem(positions, 0);
-            if (item instanceof GeographicPosition)
-            {
-                return (BoundingBox<T>)GeographicBoundingBox
-                        .getMinimumBoundingBox((Collection<? extends GeographicPosition>)positions);
-            }
-            else if (item instanceof ScreenPosition)
-            {
-                return (BoundingBox<T>)ScreenBoundingBox.getMinimumBoundingBox((Collection<? extends ScreenPosition>)positions);
-            }
-            else
-            {
-                throw new UnsupportedOperationException();
-            }
+            throw new UnsupportedOperationException();
         }
     }
 

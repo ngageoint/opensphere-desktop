@@ -134,7 +134,7 @@ public class PointSetGeometry extends AbstractColorGeometry implements PointRend
     @Override
     protected Builder<? extends Position> createRawBuilder()
     {
-        return new Builder<Position>();
+        return new Builder<>();
     }
 
     /**

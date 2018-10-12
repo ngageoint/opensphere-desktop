@@ -223,7 +223,7 @@ public interface SQLGenerator
      */
     String generateRetrieveGroupValuesSql(int[] groupIds, JoinTableColumn joinTableColumn, DataModelCategory category,
             Collection<? extends PropertyMatcher<?>> parameters, Collection<? extends PropertyDescriptor<?>> selectProperties,
-            TimeSpan expirationRange, Boolean critical) throws CacheException;
+                    TimeSpan expirationRange, Boolean critical) throws CacheException;
 
     /**
      * Build the SQL for a model ids query.

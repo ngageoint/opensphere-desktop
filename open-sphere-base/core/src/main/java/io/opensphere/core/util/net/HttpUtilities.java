@@ -76,7 +76,7 @@ public final class HttpUtilities
      * @throws IOException If something went wrong
      */
     public static CancellableInputStream sendGet(URL url, ResponseValues response, ServerProvider<HttpServer> serverProvider)
-        throws IOException
+            throws IOException
     {
         if (LOGGER.isDebugEnabled())
         {
@@ -116,7 +116,7 @@ public final class HttpUtilities
      */
     public static CancellableInputStream sendPost(URL url, InputStream postData, ResponseValues response, ContentType contentType,
             ServerProvider<HttpServer> serverProvider)
-        throws IOException
+                    throws IOException
     {
         if (LOGGER.isDebugEnabled())
         {

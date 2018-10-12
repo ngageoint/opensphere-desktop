@@ -44,7 +44,7 @@ public class PropertyDescriptor<T> implements Serializable
      */
     public static <T> PropertyDescriptor<T> create(String propertyName, Class<T> type)
     {
-        return new PropertyDescriptor<T>(propertyName, type);
+        return new PropertyDescriptor<>(propertyName, type);
     }
 
     /**
@@ -58,7 +58,7 @@ public class PropertyDescriptor<T> implements Serializable
      */
     public static <T> PropertyDescriptor<T> create(String propertyName, Class<T> type, long estimatedValueSizeBytes)
     {
-        return new PropertyDescriptor<T>(propertyName, type, estimatedValueSizeBytes);
+        return new PropertyDescriptor<>(propertyName, type, estimatedValueSizeBytes);
     }
 
     /**
@@ -75,7 +75,7 @@ public class PropertyDescriptor<T> implements Serializable
     public static <T> PropertyDescriptor<T> create(String propertyName, Class<T> type, long estimatedValueSizeBytes,
             boolean cacheable)
     {
-        return new PropertyDescriptor<T>(propertyName, type, estimatedValueSizeBytes, cacheable);
+        return new PropertyDescriptor<>(propertyName, type, estimatedValueSizeBytes, cacheable);
     }
 
     /**

@@ -179,11 +179,11 @@ public class SecurityConfiguration implements Cloneable
         SecurityConfiguration other = (SecurityConfiguration)obj;
         // @formatter:off
         return EqualsHelper.equals(myCryptoConfig,               other.myCryptoConfig,
-                                   myEncryptedPrivateKeys,       other.myEncryptedPrivateKeys,
-                                   myEncryptedUsernamePasswords, other.myEncryptedUsernamePasswords,
-                                   myPreferredCertificates,      other.myPreferredCertificates,
-                                   myUserTrustedCertificates,    other.myUserTrustedCertificates,
-                                   myUserTrustedServers,         other.myUserTrustedServers);
+                myEncryptedPrivateKeys,       other.myEncryptedPrivateKeys,
+                myEncryptedUsernamePasswords, other.myEncryptedUsernamePasswords,
+                myPreferredCertificates,      other.myPreferredCertificates,
+                myUserTrustedCertificates,    other.myUserTrustedCertificates,
+                myUserTrustedServers,         other.myUserTrustedServers);
         // @formatter:on
     }
 

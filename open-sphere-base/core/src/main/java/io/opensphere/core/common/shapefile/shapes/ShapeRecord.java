@@ -53,7 +53,7 @@ public abstract class ShapeRecord
          *
          */
         public ShapeRecord getShapeRecordInstance() throws InstantiationException, IllegalAccessException,
-            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
+        IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
         {
             return shapeRecord.getDeclaredConstructor().newInstance();
         }

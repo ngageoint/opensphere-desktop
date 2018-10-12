@@ -86,14 +86,11 @@ public class ConstraintChecker
                     {
                         return false;
                     }
-                    else
+                    Collection<? extends TimeSpan> secondary = timeManager
+                            .getSecondaryActiveTimeSpans(constraints.getTimeConstraint().getKey());
+                    if (secondary == null || !constraints.getTimeConstraint().check(secondary))
                     {
-                        Collection<? extends TimeSpan> secondary = timeManager
-                                .getSecondaryActiveTimeSpans(constraints.getTimeConstraint().getKey());
-                        if (secondary == null || !constraints.getTimeConstraint().check(secondary))
-                        {
-                            return false;
-                        }
+                        return false;
                     }
                 }
             }

@@ -6,8 +6,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.MenuElement;
 import javax.swing.MenuSelectionManager;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  * A menu item that stays open until the user clicks off (unlike standard menu
@@ -97,15 +95,11 @@ public class StayOpenMenuItem extends JMenuItem
     /** Initializes a change listener to keep the menu showing. */
     private void initializeListener()
     {
-        getModel().addChangeListener(new ChangeListener()
+        getModel().addChangeListener(e ->
         {
-            @Override
-            public void stateChanged(ChangeEvent e)
+            if (getModel().isArmed() && isShowing())
             {
-                if (getModel().isArmed() && isShowing())
-                {
-                    path = MenuSelectionManager.defaultManager().getSelectedPath();
-                }
+                path = MenuSelectionManager.defaultManager().getSelectedPath();
             }
         });
     }

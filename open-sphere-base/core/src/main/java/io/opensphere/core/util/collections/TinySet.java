@@ -38,10 +38,7 @@ public class TinySet<E> extends AbstractProxySet<E>
             {
                 return result;
             }
-            else
-            {
-                return input;
-            }
+            return input;
         }
         else
         {
@@ -71,15 +68,12 @@ public class TinySet<E> extends AbstractProxySet<E>
             {
                 return Collections.<T>singleton(c.iterator().next());
             }
-            else
+            Set<T> result = New.set(c);
+            if (result.size() == 1)
             {
-                Set<T> result = New.set(c);
-                if (result.size() == 1)
-                {
-                    result = Collections.<T>singleton(c.iterator().next());
-                }
-                return result;
+                result = Collections.<T>singleton(c.iterator().next());
             }
+            return result;
         }
         else if (input.size() == 1)
         {
@@ -89,10 +83,7 @@ public class TinySet<E> extends AbstractProxySet<E>
             {
                 return result;
             }
-            else
-            {
-                return input;
-            }
+            return input;
         }
         else
         {
@@ -124,10 +115,7 @@ public class TinySet<E> extends AbstractProxySet<E>
             {
                 return Collections.emptySet();
             }
-            else
-            {
-                return set;
-            }
+            return set;
         }
         else
         {
@@ -135,10 +123,7 @@ public class TinySet<E> extends AbstractProxySet<E>
             {
                 return resetStorage(set);
             }
-            else
-            {
-                return set;
-            }
+            return set;
         }
     }
 
@@ -165,10 +150,7 @@ public class TinySet<E> extends AbstractProxySet<E>
             {
                 return Collections.emptySet();
             }
-            else
-            {
-                return set;
-            }
+            return set;
         }
         else
         {
@@ -176,10 +158,7 @@ public class TinySet<E> extends AbstractProxySet<E>
             {
                 return resetStorage(set);
             }
-            else
-            {
-                return set;
-            }
+            return set;
         }
     }
 
@@ -206,10 +185,7 @@ public class TinySet<E> extends AbstractProxySet<E>
             {
                 return mySet;
             }
-            else
-            {
-                return Collections.emptySet();
-            }
+            return Collections.emptySet();
         }
         else if (mySet.retainAll(c))
         {
@@ -262,10 +238,7 @@ public class TinySet<E> extends AbstractProxySet<E>
                 mySet = set;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
         else
         {
@@ -305,10 +278,7 @@ public class TinySet<E> extends AbstractProxySet<E>
                 mySet = set;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
         else
         {
@@ -336,10 +306,7 @@ public class TinySet<E> extends AbstractProxySet<E>
                 mySet = Collections.emptySet();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
         else
         {
@@ -348,10 +315,7 @@ public class TinySet<E> extends AbstractProxySet<E>
                 resetStorage();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
     }
 
@@ -369,10 +333,7 @@ public class TinySet<E> extends AbstractProxySet<E>
                 mySet = Collections.emptySet();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
         else if (super.removeAll(c))
         {
@@ -398,11 +359,8 @@ public class TinySet<E> extends AbstractProxySet<E>
             {
                 return false;
             }
-            else
-            {
-                mySet = Collections.emptySet();
-                return true;
-            }
+            mySet = Collections.emptySet();
+            return true;
         }
         else if (super.retainAll(c))
         {

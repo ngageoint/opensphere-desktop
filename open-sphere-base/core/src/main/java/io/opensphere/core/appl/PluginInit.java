@@ -19,8 +19,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import net.jcip.annotations.GuardedBy;
-
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -38,6 +36,7 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.predicate.InPredicate;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Initializer for plug-ins.
@@ -398,24 +397,20 @@ class PluginInit
             final Map<String, Collection<PluginLoaderData>> dependencyToPluginsMap, final Set<String> initializedPluginIds,
             final Set<String> failedPluginIds, final BlockingQueue<PluginLoaderData> workQueue)
     {
-        return new PluginInitFuture(data.getId(), executor.submit(new Runnable()
+        return new PluginInitFuture(data.getId(), executor.submit(() ->
         {
-            @Override
-            public void run()
+            if (initPlugin(data))
             {
-                if (initPlugin(data))
-                {
-                    initializedPluginIds.add(data.getId());
-                }
-                else
-                {
-                    failedPluginIds.add(data.getId());
-                }
-                final Collection<? extends PluginLoaderData> dependents = dependencyToPluginsMap.get(data.getId());
-                if (dependents != null)
-                {
-                    workQueue.addAll(dependents);
-                }
+                initializedPluginIds.add(data.getId());
+            }
+            else
+            {
+                failedPluginIds.add(data.getId());
+            }
+            final Collection<? extends PluginLoaderData> dependents = dependencyToPluginsMap.get(data.getId());
+            if (dependents != null)
+            {
+                workQueue.addAll(dependents);
             }
         }));
     }

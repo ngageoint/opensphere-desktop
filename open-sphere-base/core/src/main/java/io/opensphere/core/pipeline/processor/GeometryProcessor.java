@@ -27,15 +27,11 @@ public interface GeometryProcessor<E extends Geometry> extends GenericSubscriber
     double ELLIPSOID_CULL_COSINE = .25;
 
     /** A comparator for comparing geometries based on their rendering order. */
-    Comparator<Geometry> RENDER_ORDER_COMPARATOR = new Comparator<Geometry>()
+    Comparator<Geometry> RENDER_ORDER_COMPARATOR = (o1, o2) ->
     {
-        @Override
-        public int compare(Geometry o1, Geometry o2)
-        {
-            int r1 = o1.getRenderProperties().getRenderingOrder();
-            int r2 = o2.getRenderProperties().getRenderingOrder();
-            return r1 < r2 ? -1 : r1 == r2 ? 0 : 1;
-        }
+        int r1 = o1.getRenderProperties().getRenderingOrder();
+        int r2 = o2.getRenderProperties().getRenderingOrder();
+        return r1 < r2 ? -1 : r1 == r2 ? 0 : 1;
     };
 
     /**

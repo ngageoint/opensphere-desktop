@@ -190,7 +190,7 @@ public final class ColladaUtilities
         for (Vertices vertices : mesh.getVertices())
         {
             vertices.getInputs().stream().filter(i -> semantic.equals(i.getSemantic()))
-                    .forEach(i -> vertexToPositionIdMap.put("#" + vertices.getId(), i.getSource()));
+            .forEach(i -> vertexToPositionIdMap.put("#" + vertices.getId(), i.getSource()));
         }
         return vertexToPositionIdMap;
     }

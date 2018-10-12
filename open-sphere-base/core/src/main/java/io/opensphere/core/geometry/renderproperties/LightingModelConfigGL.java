@@ -268,7 +268,7 @@ public class LightingModelConfigGL implements Serializable
          */
         public void addLightModelParameter(LightModelParameterType paramType, float value)
         {
-            myLightModelParameters.add(new SingleParameter<LightModelParameterType>(paramType, value));
+            myLightModelParameters.add(new SingleParameter<>(paramType, value));
         }
 
         /**
@@ -279,7 +279,7 @@ public class LightingModelConfigGL implements Serializable
          */
         public void addLightModelVectorParameter(LightModelVectorParameterType paramType, float[] values)
         {
-            myLightModelVectorParameters.add(new VectorParameter<LightModelVectorParameterType>(paramType, values));
+            myLightModelVectorParameters.add(new VectorParameter<>(paramType, values));
         }
 
         /**
@@ -290,7 +290,7 @@ public class LightingModelConfigGL implements Serializable
          */
         public void addLightParameter(LightParameterType paramType, float value)
         {
-            myLightParameters.add(new SingleParameter<LightParameterType>(paramType, value));
+            myLightParameters.add(new SingleParameter<>(paramType, value));
         }
 
         /**
@@ -302,7 +302,7 @@ public class LightingModelConfigGL implements Serializable
          */
         public void addLightParameterVector(LightVectorParameterType paramType, float[] values)
         {
-            myLightVectorParameters.add(new VectorParameter<LightVectorParameterType>(paramType, values));
+            myLightVectorParameters.add(new VectorParameter<>(paramType, values));
         }
 
         /**
@@ -312,7 +312,7 @@ public class LightingModelConfigGL implements Serializable
          */
         public void addMaterialShininessParameter(float value)
         {
-            myMaterialParameters.add(new SingleParameter<MaterialParameterType>(MaterialParameterType.SHININESS, value));
+            myMaterialParameters.add(new SingleParameter<>(MaterialParameterType.SHININESS, value));
         }
 
         /**
@@ -323,7 +323,7 @@ public class LightingModelConfigGL implements Serializable
          */
         public void addMaterialVectorParameter(MaterialVectorParameterType paramType, float[] values)
         {
-            myMaterialVectorParameters.add(new VectorParameter<MaterialVectorParameterType>(paramType, values));
+            myMaterialVectorParameters.add(new VectorParameter<>(paramType, values));
         }
 
         /**

@@ -159,7 +159,7 @@ public enum DbfFieldType
         // Initialize the map if it hasn't be done.
         if (null == VALUE_DBFFIELDTYPE_MAP)
         {
-            VALUE_DBFFIELDTYPE_MAP = new HashMap<Character, DbfFieldType>();
+            VALUE_DBFFIELDTYPE_MAP = new HashMap<>();
             for (DbfFieldType t : DbfFieldType.values())
             {
                 VALUE_DBFFIELDTYPE_MAP.put(Character.valueOf(t.getValue()), t);

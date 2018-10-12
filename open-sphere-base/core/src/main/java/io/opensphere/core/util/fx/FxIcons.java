@@ -106,7 +106,6 @@ public final class FxIcons
     {
         Label label = new Label(pIcon.getFontCode());
         label.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
-        String fontName = "icons-" + pIcon.getFont().getFontName();
         label.getStyleClass().addAll("icons", "icons-" + pIcon.getFont().getFontName());
         label.setStyle("-fx-font-size: " + pSize + "px;");
         return label;

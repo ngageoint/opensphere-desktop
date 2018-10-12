@@ -12,10 +12,9 @@ import java.util.LinkedList;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
-
 import org.apache.log4j.Logger;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.opensphere.core.util.ref.SoftReference;
 
@@ -61,7 +60,9 @@ public final class Utilities
     public static <T> T checkNull(T parameter, String name) throws IllegalArgumentException
     {
         if (parameter == null)
+        {
             throw new IllegalArgumentException("Parameter [" + name + "] cannot be null.");
+        }
         return parameter;
     }
 

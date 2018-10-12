@@ -35,7 +35,7 @@ public class RadioSelectionMark extends Renderable
         final int vertexCount = Math.min(37, (ourDotRadius + 2) * 2);
         final double warpFactor = -0.3;
 
-        CircularMeshGeometry.Builder<ScreenPosition> circBldr = new CircularMeshGeometry.Builder<ScreenPosition>();
+        CircularMeshGeometry.Builder<ScreenPosition> circBldr = new CircularMeshGeometry.Builder<>();
         circBldr.setCenter(center);
         circBldr.setWarpFactor(warpFactor);
         circBldr.setNumVertices(vertexCount);

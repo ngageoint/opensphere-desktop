@@ -41,14 +41,7 @@ public class SimpleMapContext<T extends Viewer> implements MapContext<T>
         myViewChangeSupport = new ViewChangeSupport();
         if (screenViewer != null || standardViewer != null)
         {
-            myViewerObserver = new DynamicViewer.Observer()
-            {
-                @Override
-                public void notifyViewChanged(ViewChangeSupport.ViewChangeType type)
-                {
-                    myViewChangeSupport.notifyViewChangeListeners(myStandardViewer, null, type);
-                }
-            };
+            myViewerObserver = type -> myViewChangeSupport.notifyViewChangeListeners(myStandardViewer, null, type);
             if (screenViewer != null)
             {
                 screenViewer.addObserver(myViewerObserver);

@@ -25,15 +25,11 @@ public class PropertyChangeListenerHandle implements Service
     public PropertyChangeListenerHandle(AbstractViewModel<?> observable, final PropertyChangeListener listener)
     {
         myModel = observable;
-        myListener = new PropertyChangeListener()
+        myListener = e ->
         {
-            @Override
-            public void stateChanged(PropertyChangeEvent e)
+            if (myHandleEvent)
             {
-                if (myHandleEvent)
-                {
-                    listener.stateChanged(e);
-                }
+                listener.stateChanged(e);
             }
         };
     }

@@ -64,15 +64,7 @@ public class UIRegistryImpl implements UIRegistry
     private final IconLegendRegistry myIconLegendRegistry = new IconLegendRegistryImpl();
 
     /** The supplier for the main frame. */
-    private final Supplier<? extends JFrame> myFrameSupplier = new Supplier<>()
-    {
-        @Override
-        public JFrame get()
-        {
-            assert EventQueue.isDispatchThread();
-            return myMainFrame;
-        }
-    };
+    private final Supplier<? extends JFrame> myFrameSupplier;
 
     /**
      * Constructor.
@@ -86,6 +78,11 @@ public class UIRegistryImpl implements UIRegistry
         myMainFrame = mainFrame;
         myControlActionManager = new ContextActionManagerImpl(controlRegistry);
         myToolbarComponentRegistry = new ToolbarComponentRegistryImpl(preferencesRegistry);
+        myFrameSupplier = () ->
+        {
+            assert EventQueue.isDispatchThread();
+            return myMainFrame;
+        };
     }
 
     @Override
@@ -207,34 +204,30 @@ public class UIRegistryImpl implements UIRegistry
     @Override
     public void setMainPaneSize(final int width, final int height)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            synchronized (this)
             {
-                synchronized (this)
+                while (myMainPaneComponent == null)
                 {
-                    while (myMainPaneComponent == null)
+                    try
                     {
-                        try
-                        {
-                            wait();
-                        }
-                        catch (InterruptedException e)
-                        {
-                        }
+                        wait();
                     }
+                    catch (InterruptedException e)
+                    {
+                    }
+                }
 
-                    // Adjust the pane's size by resizing the main frame by the
-                    // required amount.
-                    int deltaX = width - myMainPaneComponent.getWidth();
-                    int deltaY = height - myMainPaneComponent.getHeight();
-                    int mainFrameWidth = myMainFrame.getWidth();
-                    int mainFrameHeight = myMainFrame.getHeight();
-                    if (deltaX != 0 || deltaY != 0)
-                    {
-                        myMainFrame.setSize(mainFrameWidth + deltaX, mainFrameHeight + deltaY);
-                    }
+                // Adjust the pane's size by resizing the main frame by the
+                // required amount.
+                int deltaX = width - myMainPaneComponent.getWidth();
+                int deltaY = height - myMainPaneComponent.getHeight();
+                int mainFrameWidth = myMainFrame.getWidth();
+                int mainFrameHeight = myMainFrame.getHeight();
+                if (deltaX != 0 || deltaY != 0)
+                {
+                    myMainFrame.setSize(mainFrameWidth + deltaX, mainFrameHeight + deltaY);
                 }
             }
         });

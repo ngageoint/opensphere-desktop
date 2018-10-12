@@ -87,14 +87,8 @@ public class RetrieveValuesTask extends DatabaseTask implements StatementUser<Vo
         getDatabaseTaskFactory().getEnsureColumnsTask(distinctGroupIds, descriptors).run(conn);
 
         final Collection<String> columnNames = columnNamesToTypes.keySet();
-        CacheIdUtilities.forEachGroup(getIds(), new CacheIdUtilities.DatabaseGroupFunctor()
-        {
-            @Override
-            public void run(long[] combinedIds, int groupId, int[] dataIds) throws CacheException
-            {
-                doGetValues(conn, stmt, groupId, dataIds, columnNames);
-            }
-        });
+        CacheIdUtilities.forEachGroup(getIds(),
+                (combinedIds, groupId, dataIds) -> doGetValues(conn, stmt, groupId, dataIds, columnNames));
 
         return null;
     }
@@ -111,7 +105,7 @@ public class RetrieveValuesTask extends DatabaseTask implements StatementUser<Vo
      * @throws CacheException If there is a database error.
      */
     protected void doGetValues(Connection conn, Statement stmt, int groupId, int[] dataIds, final Collection<String> columnNames)
-        throws CacheException
+            throws CacheException
     {
         final PropertyDescriptor<?>[] props = New.array(getResultMap().getPropertyDescriptors(), PropertyDescriptor.class);
 

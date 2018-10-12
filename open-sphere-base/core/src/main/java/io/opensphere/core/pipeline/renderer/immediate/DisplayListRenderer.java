@@ -192,11 +192,11 @@ public class DisplayListRenderer<T extends Geometry> extends AbstractRenderer<T>
     public boolean handleProjectionChanged(ProjectionChangedEvent evt)
     {
         // TODO I think this shouldn't be done until the projection is switched?
-//        if (result)
-//        {
-//            myDrawDirty = true;
-//            myPickDirty = true;
-//        }
+        //        if (result)
+        //        {
+        //            myDrawDirty = true;
+        //            myPickDirty = true;
+        //        }
         return super.handleProjectionChanged(evt) | myRenderer.handleProjectionChanged(evt);
     }
 

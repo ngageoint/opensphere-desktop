@@ -43,7 +43,7 @@ public final class ThreadControl
     /**
      * Thread-local list of things to be cancelled if the thread is cancelled.
      */
-    private static final Map<Thread, List<Cancellable>> ourCancellables = new WeakHashMap<Thread, List<Cancellable>>();
+    private static final Map<Thread, List<Cancellable>> ourCancellables = new WeakHashMap<>();
 
     /** Map of registered threads to locks. */
     private static final ConcurrentMap<Thread, CountDownLatch> ourThreadLatches = new ConcurrentHashMap<>();

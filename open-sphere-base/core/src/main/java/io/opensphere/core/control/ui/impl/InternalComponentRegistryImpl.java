@@ -118,22 +118,18 @@ public class InternalComponentRegistryImpl extends InternalComponentRegistry
             if (frame instanceof HUDJInternalFrame)
             {
                 final HUDJInternalFrame comp = (HUDJInternalFrame)frame;
-                EventQueueUtilities.runOnEDTAndWait(new Runnable()
+                EventQueueUtilities.runOnEDTAndWait(() ->
                 {
-                    @Override
-                    public void run()
-                    {
-                        myInternalFrameContainer.add(comp.getInternalFrame());
+                    myInternalFrameContainer.add(comp.getInternalFrame());
 
-                        comp.getInternalFrame().addInternalFrameListener(new InternalFrameAdapter()
+                    comp.getInternalFrame().addInternalFrameListener(new InternalFrameAdapter()
+                    {
+                        @Override
+                        public void internalFrameClosed(InternalFrameEvent e)
                         {
-                            @Override
-                            public void internalFrameClosed(InternalFrameEvent e)
-                            {
-                                removeObjects(Collections.singleton(comp));
-                            }
-                        });
-                    }
+                            removeObjects(Collections.singleton(comp));
+                        }
+                    });
                 });
             }
         }
@@ -146,21 +142,8 @@ public class InternalComponentRegistryImpl extends InternalComponentRegistry
         final Collection<HUDFrame> frames = super.doRemoveObjectsForSource(source);
         if (!frames.isEmpty())
         {
-            EventQueueUtilities.runOnEDT(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    for (HUDFrame frame : frames)
-                    {
-                        if (frame instanceof HUDJInternalFrame)
-                        {
-                            final HUDJInternalFrame comp = (HUDJInternalFrame)frame;
-                            myInternalFrameContainer.remove(comp.getInternalFrame());
-                        }
-                    }
-                }
-            });
+            EventQueueUtilities.runOnEDT(() -> frames.stream().filter(f -> f instanceof HUDJInternalFrame)
+                    .map(f -> (HUDJInternalFrame)f).forEach(c -> myInternalFrameContainer.remove(c.getInternalFrame())));
         }
         return frames;
     }
@@ -172,21 +155,8 @@ public class InternalComponentRegistryImpl extends InternalComponentRegistry
 
         if (removed)
         {
-            EventQueueUtilities.runOnEDT(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    for (HUDFrame frame : objs)
-                    {
-                        if (frame instanceof HUDJInternalFrame)
-                        {
-                            HUDJInternalFrame comp = (HUDJInternalFrame)frame;
-                            myInternalFrameContainer.remove(comp.getInternalFrame());
-                        }
-                    }
-                }
-            });
+            EventQueueUtilities.runOnEDT(() -> objs.stream().filter(f -> f instanceof HUDJInternalFrame)
+                    .map(f -> (HUDJInternalFrame)f).forEach(c -> myInternalFrameContainer.remove(c.getInternalFrame())));
         }
 
         return removed;

@@ -194,10 +194,7 @@ public class PositionConverter
             {
                 return position.asVector3d();
             }
-            else
-            {
-                return position.asVector3d().add(modelCenter);
-            }
+            return position.asVector3d().add(modelCenter);
         }
         else if (position instanceof GeographicPosition)
         {

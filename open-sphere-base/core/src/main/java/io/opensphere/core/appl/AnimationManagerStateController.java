@@ -182,31 +182,31 @@ public class AnimationManagerStateController extends AbstractModuleStateControll
                 List<? extends TimeSpan> sequence = time.getPlayIntervals() != null && time.getPlayIntervals().isSetInterval()
                         ? time.getPlayIntervals().getInterval().stream().map(StateUtilities::parseSpan)
                                 .collect(Collectors.toList())
-                        : Collections.emptyList();
-                PlayState playState = time.getAnimation().getPlayState() == PlayStateType.PLAY ? PlayState.FORWARD
-                        : PlayState.STOP;
+                                : Collections.emptyList();
+                                PlayState playState = time.getAnimation().getPlayState() == PlayStateType.PLAY ? PlayState.FORWARD
+                                        : PlayState.STOP;
 
-                int millisPerFrame = time.getAnimation().getMillisPerFrame();
-                if (millisPerFrame <= 1)
-                {
-                    LOGGER.warn("Animation state millisPerFrame is " + millisPerFrame + "; setting to 500");
-                    millisPerFrame = 500;
-                }
+                                int millisPerFrame = time.getAnimation().getMillisPerFrame();
+                                if (millisPerFrame <= 1)
+                                {
+                                    LOGGER.warn("Animation state millisPerFrame is " + millisPerFrame + "; setting to 500");
+                                    millisPerFrame = 500;
+                                }
 
-                // Fix the loop span
-                if (loopSpan == null)
-                {
-                    loopSpan = activeSpan;
-                }
+                                // Fix the loop span
+                                if (loopSpan == null)
+                                {
+                                    loopSpan = activeSpan;
+                                }
 
-                activeSpan = fixActiveSpan(activeSpan, sequence, loopSpan, advanceDuration);
+                                activeSpan = fixActiveSpan(activeSpan, sequence, loopSpan, advanceDuration);
 
-                AnimationPlan plan = createAnimationPlan(sequence, loopSpan, activeSpan, advanceDuration);
+                                AnimationPlan plan = createAnimationPlan(sequence, loopSpan, activeSpan, advanceDuration);
 
-                AnimationState animationState = plan.findState(activeSpan, AnimationState.Direction.FORWARD);
-                Direction animationDirection = playState == PlayState.STOP ? null
-                        : playState == PlayState.REVERSE ? Direction.BACKWARD : Direction.FORWARD;
-                myAnimationManager.setPlan(plan, animationState, animationDirection, new Milliseconds(millisPerFrame));
+                                AnimationState animationState = plan.findState(activeSpan, AnimationState.Direction.FORWARD);
+                                Direction animationDirection = playState == PlayState.STOP ? null
+                                        : playState == PlayState.REVERSE ? Direction.BACKWARD : Direction.FORWARD;
+                                myAnimationManager.setPlan(plan, animationState, animationDirection, new Milliseconds(millisPerFrame));
             }
             else
             {
@@ -375,7 +375,7 @@ public class AnimationManagerStateController extends AbstractModuleStateControll
 
             TimeSequenceType playIntervals = new TimeSequenceType();
             playIntervals.getInterval()
-                    .addAll(plan.getAnimationSequence().stream().map(TimeSpan::toISO8601String).collect(Collectors.toList()));
+            .addAll(plan.getAnimationSequence().stream().map(TimeSpan::toISO8601String).collect(Collectors.toList()));
             time.setPlayIntervals(playIntervals);
         }
     }

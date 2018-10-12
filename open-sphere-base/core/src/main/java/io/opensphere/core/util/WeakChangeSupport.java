@@ -21,12 +21,12 @@ public class WeakChangeSupport<T> extends AbstractChangeSupport<T>
      */
     public static <T> WeakChangeSupport<T> create()
     {
-        return new WeakChangeSupport<T>();
+        return new WeakChangeSupport<>();
     }
 
     @Override
     protected Reference<T> createReference(T listener)
     {
-        return new WeakReference<T>(listener);
+        return new WeakReference<>(listener);
     }
 }

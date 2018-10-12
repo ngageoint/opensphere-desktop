@@ -113,14 +113,7 @@ public class AbstractInternalFrame extends JInternalFrame implements PositionBou
     @Override
     public void repositionForInsets()
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                setBounds(getBounds());
-            }
-        });
+        EventQueueUtilities.runOnEDT(() -> setBounds(getBounds()));
     }
 
     @Override

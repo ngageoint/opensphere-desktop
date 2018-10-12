@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 import edu.umd.cs.findbugs.annotations.OverrideMustInvoke;
-
 import io.opensphere.core.geometry.renderproperties.ZOrderRenderProperties;
 import io.opensphere.core.model.BoundingBox;
 import io.opensphere.core.model.GeoScreenBoundingBox;
@@ -17,7 +16,6 @@ import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.GeographicQuadrilateral;
 import io.opensphere.core.model.Position;
 import io.opensphere.core.model.Quadrilateral;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.TimeBudget;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
@@ -34,7 +32,7 @@ import io.opensphere.core.util.collections.New;
  */
 @SuppressWarnings("PMD.GodClass")
 public abstract class AbstractTileGeometry<E extends AbstractTileGeometry<? super E>> extends AbstractGeometry
-        implements HierarchicalGeometry<AbstractTileGeometry<?>>, ImageProvidingGeometry<E>
+implements HierarchicalGeometry<AbstractTileGeometry<?>>, ImageProvidingGeometry<E>
 {
     /**
      * A cache that stores the divider override data for a specific key so that
@@ -149,7 +147,7 @@ public abstract class AbstractTileGeometry<E extends AbstractTileGeometry<? supe
         myMinimumDisplaySize = builder.getMinimumDisplaySize();
         myMaximumDisplaySize = builder.getMaximumDisplaySize();
 
-        myImageProvidingGeometryHelper = myImageManager == null ? null : new ImageProvidingGeometryHelper<E>(getObservable());
+        myImageProvidingGeometryHelper = myImageManager == null ? null : new ImageProvidingGeometryHelper<>(getObservable());
     }
 
     /**
@@ -400,7 +398,7 @@ public abstract class AbstractTileGeometry<E extends AbstractTileGeometry<? supe
         Quadrilateral<? extends Position> bbox = getBounds();
         if (bbox instanceof GeographicBoundingBox && ((GeographicBoundingBox)bbox).overlaps(boundingBox, 0.)
                 || bbox instanceof GeoScreenBoundingBox
-                        && boundingBox.contains(((GeoScreenBoundingBox)bbox).getAnchor().getGeographicAnchor(), 0.)
+                && boundingBox.contains(((GeoScreenBoundingBox)bbox).getAnchor().getGeographicAnchor(), 0.)
                 || bbox instanceof GeographicQuadrilateral && ((GeographicQuadrilateral)bbox).overlaps(boundingBox, 0.))
         {
             overlapping.add(this);
@@ -510,11 +508,8 @@ public abstract class AbstractTileGeometry<E extends AbstractTileGeometry<? supe
         {
             return ((BoundingBox<T>)getBounds()).overlaps(boundingBox, tolerance);
         }
-        else
-        {
-            throw new IllegalArgumentException("Cannot check overlap for different position types: "
-                    + boundingBox.getPositionType() + " <> " + getPositionType());
-        }
+        throw new IllegalArgumentException("Cannot check overlap for different position types: " + boundingBox.getPositionType()
+        + " <> " + getPositionType());
     }
 
     /**
@@ -583,7 +578,7 @@ public abstract class AbstractTileGeometry<E extends AbstractTileGeometry<? supe
     @Override
     protected Builder<Position> createRawBuilder()
     {
-        return new Builder<Position>();
+        return new Builder<>();
     }
 
     @Override
@@ -656,14 +651,7 @@ public abstract class AbstractTileGeometry<E extends AbstractTileGeometry<? supe
          */
         public void fireSplitJoinChangeRequest()
         {
-            myChangeSupport.notifyListeners(new Callback<AbstractTileGeometry.SplitJoinRequestListener>()
-            {
-                @Override
-                public void notify(SplitJoinRequestListener listener)
-                {
-                    listener.splitJoinRequest();
-                }
-            });
+            myChangeSupport.notifyListeners(listener -> listener.splitJoinRequest());
         }
 
         @Override

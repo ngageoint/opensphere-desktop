@@ -44,7 +44,7 @@ import io.opensphere.core.viewer.impl.MapContext;
  * Immediate mode GL tile renderer.
  */
 public class PolygonMeshRendererImmediate extends AbstractRenderer<PolygonMeshGeometry>
-        implements GeometryRendererImmediate<PolygonMeshGeometry>, Comparator<PolygonMeshGeometry>
+implements GeometryRendererImmediate<PolygonMeshGeometry>, Comparator<PolygonMeshGeometry>
 {
     /** Bits used for {@link GL2#glPushAttrib(int)}. */
     private static final int ATTRIB_BITS = GL2.GL_CURRENT_BIT | GL2.GL_POLYGON_BIT | GL.GL_COLOR_BUFFER_BIT | GL2.GL_ENABLE_BIT
@@ -139,7 +139,7 @@ public class PolygonMeshRendererImmediate extends AbstractRenderer<PolygonMeshGe
                         }
 
                         GL2Utilities.renderWithTransform(rc, geom.getRenderProperties().getTransform(),
-                            () -> PolygonRenderUtil.drawPolygonMesh(rc.getGL(), modelData.getFirstObject()));
+                                () -> PolygonRenderUtil.drawPolygonMesh(rc.getGL(), modelData.getFirstObject()));
                     }
                 }
                 finally
@@ -192,7 +192,7 @@ public class PolygonMeshRendererImmediate extends AbstractRenderer<PolygonMeshGe
                     drawMode = GL.GL_TRIANGLES;
                     break;
                 case QUAD_VERTEX_COUNT:
-                    drawMode = GL2.GL_QUADS;
+                    drawMode = GL2GL3.GL_QUADS;
                     break;
                 default:
                     drawMode = GL2.GL_POLYGON;

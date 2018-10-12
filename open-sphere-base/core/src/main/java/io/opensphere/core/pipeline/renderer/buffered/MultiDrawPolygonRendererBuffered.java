@@ -114,7 +114,7 @@ public class MultiDrawPolygonRendererBuffered extends AbstractRenderer<PolygonGe
                     isDebugFeatureOn("TessellationLines"));
 
             myFadedRenderingHelper.renderEachTimeSpan(rc, renderData.getGroupTimeSpan(),
-                () -> doRender(rc, input, rejected, pickManager, dataRetriever, renderData));
+                    () -> doRender(rc, input, rejected, pickManager, dataRetriever, renderData));
         }
         finally
         {

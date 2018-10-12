@@ -35,10 +35,7 @@ abstract class UnboundedStartTimeSpan extends UnboundedTimeSpan
         {
             return -o.compareEnd(getEnd());
         }
-        else
-        {
-            return -1;
-        }
+        return -1;
     }
 
     @Override
@@ -66,11 +63,8 @@ abstract class UnboundedStartTimeSpan extends UnboundedTimeSpan
         {
             return Milliseconds.ZERO;
         }
-        else
-        {
-            long millis = other.getStart() - getEnd();
-            return millis > 0L ? Duration.create(Milliseconds.class, millis) : Milliseconds.ZERO;
-        }
+        long millis = other.getStart() - getEnd();
+        return millis > 0L ? Duration.create(Milliseconds.class, millis) : Milliseconds.ZERO;
     }
 
     @Override
@@ -191,10 +185,7 @@ abstract class UnboundedStartTimeSpan extends UnboundedTimeSpan
         {
             return 1;
         }
-        else
-        {
-            return 0;
-        }
+        return 0;
     }
 
     @Override

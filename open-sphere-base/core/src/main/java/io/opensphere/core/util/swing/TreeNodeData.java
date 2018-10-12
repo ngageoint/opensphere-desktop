@@ -22,8 +22,8 @@ public class TreeNodeData
     /** The Show root node. */
     private boolean myShowRootNode;
 
-//    /** The Use label and button. */
-//    private boolean myUseLabelAndButton;
+    //    /** The Use label and button. */
+    //    private boolean myUseLabelAndButton;
 
     /**
      * Instantiates a new tree node data.

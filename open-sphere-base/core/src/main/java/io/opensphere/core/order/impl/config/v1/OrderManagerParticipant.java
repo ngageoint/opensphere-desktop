@@ -13,24 +13,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class OrderManagerParticipant
 {
     /** The Constant ourCompareByOrder. */
-    public static final Comparator<OrderManagerParticipant> ourCompareByOrder = new Comparator<OrderManagerParticipant>()
-    {
-        @Override
-        public int compare(OrderManagerParticipant o1, OrderManagerParticipant o2)
-        {
-            return Integer.compare(o1.getOrder(), o2.getOrder());
-        }
-    };
+    public static final Comparator<OrderManagerParticipant> ourCompareByOrder = (o1, o2) -> Integer.compare(o1.getOrder(), o2.getOrder());
 
     /** The Constant ourReverseCompareByOrder. */
-    public static final Comparator<OrderManagerParticipant> ourReverseCompareByOrder = new Comparator<OrderManagerParticipant>()
-    {
-        @Override
-        public int compare(OrderManagerParticipant o1, OrderManagerParticipant o2)
-        {
-            return Integer.compare(o2.getOrder(), o1.getOrder());
-        }
-    };
+    public static final Comparator<OrderManagerParticipant> ourReverseCompareByOrder = (o1, o2) -> Integer.compare(o2.getOrder(), o1.getOrder());
 
     /** The family for this manager. */
     @XmlAttribute(name = "order")

@@ -122,15 +122,8 @@ public class PreferencesImpl implements InternalPreferencesIF
      */
     protected PreferencesImpl()
     {
-        Factory<String, ChangeSupport<PreferenceChangeListener>> changeSupportFactory = new Factory<String, ChangeSupport<PreferenceChangeListener>>()
-        {
-            @Override
-            public ChangeSupport<PreferenceChangeListener> create(String key)
-            {
-                return new WeakChangeSupport<PreferenceChangeListener>();
-            }
-        };
-        myChangeSupportMap = new LazyMap<String, ChangeSupport<PreferenceChangeListener>>(
+        Factory<String, ChangeSupport<PreferenceChangeListener>> changeSupportFactory = key -> new WeakChangeSupport<>();
+        myChangeSupportMap = new LazyMap<>(
                 new ConcurrentHashMap<String, ChangeSupport<PreferenceChangeListener>>(), String.class, changeSupportFactory);
     }
 
@@ -435,7 +428,7 @@ public class PreferencesImpl implements InternalPreferencesIF
         ToStringHelper helper = new ToStringHelper((Class<?>)null, 0);
         helper.add("======= Preferences for " + getTopic() + " =======");
         Collection<Entry<String, Preference<?>>> entries = CollectionUtilities.sort(myPreferencesMap.entrySet(),
-            (o1, o2) -> o1.getKey().compareTo(o2.getKey()));
+                (o1, o2) -> o1.getKey().compareTo(o2.getKey()));
         for (Map.Entry<String, Preference<?>> entry : entries)
         {
             helper.add("[" + entry.getKey() + "]", "[" + entry.getValue() + "]");
@@ -446,21 +439,21 @@ public class PreferencesImpl implements InternalPreferencesIF
     @Override
     public Boolean putBoolean(String key, boolean value, Object source)
     {
-        Preference<?> oldPref = putPreference(new NonJAXBObjectPreference<Boolean>(key, Boolean.valueOf(value)), true, source);
+        Preference<?> oldPref = putPreference(new NonJAXBObjectPreference<>(key, Boolean.valueOf(value)), true, source);
         return oldPref == null ? null : oldPref.getBooleanValue(null);
     }
 
     @Override
     public byte[] putByteArray(String key, byte[] value, Object source)
     {
-        Preference<?> oldPref = putPreference(new NonJAXBObjectPreference<byte[]>(key, value), true, source);
+        Preference<?> oldPref = putPreference(new NonJAXBObjectPreference<>(key, value), true, source);
         return oldPref == null ? null : oldPref.getByteArrayValue(null);
     }
 
     @Override
     public List<byte[]> putByteArrayList(String key, List<byte[]> list, Object source)
     {
-        Preference<?> oldPref = putPreference(new JAXBObjectPreference<ByteArrayList>(key, new ByteArrayList(list)), true,
+        Preference<?> oldPref = putPreference(new JAXBObjectPreference<>(key, new ByteArrayList(list)), true,
                 source);
         return oldPref == null ? null : oldPref.getByteArrayListValue(null);
     }
@@ -468,21 +461,21 @@ public class PreferencesImpl implements InternalPreferencesIF
     @Override
     public Double putDouble(String key, double value, Object source) throws NullPointerException
     {
-        Preference<?> oldPref = putPreference(new NonJAXBObjectPreference<Double>(key, Double.valueOf(value)), true, source);
+        Preference<?> oldPref = putPreference(new NonJAXBObjectPreference<>(key, Double.valueOf(value)), true, source);
         return oldPref == null ? null : oldPref.getDoubleValue(null);
     }
 
     @Override
     public Float putFloat(String key, float value, Object source) throws NullPointerException
     {
-        Preference<?> oldPref = putPreference(new NonJAXBObjectPreference<Float>(key, Float.valueOf(value)), true, source);
+        Preference<?> oldPref = putPreference(new NonJAXBObjectPreference<>(key, Float.valueOf(value)), true, source);
         return oldPref == null ? null : oldPref.getFloatValue(null);
     }
 
     @Override
     public Integer putInt(String key, int value, Object source) throws NullPointerException
     {
-        Preference<?> oldPref = putPreference(new NonJAXBObjectPreference<Integer>(key, Integer.valueOf(value)), true, source);
+        Preference<?> oldPref = putPreference(new NonJAXBObjectPreference<>(key, Integer.valueOf(value)), true, source);
         return oldPref == null ? null : oldPref.getIntegerValue(null);
     }
 
@@ -499,7 +492,7 @@ public class PreferencesImpl implements InternalPreferencesIF
     public Object putJAXBObject(String key, Object value, boolean compareToOld,
             SupplierX<JAXBContext, JAXBException> contextSupplier, Object source)
     {
-        Preference<?> oldPref = putPreference(new JAXBObjectPreference<Object>(key, contextSupplier, value), compareToOld,
+        Preference<?> oldPref = putPreference(new JAXBObjectPreference<>(key, contextSupplier, value), compareToOld,
                 source);
         return oldPref == null ? null : oldPref.getValue(null, contextSupplier);
     }
@@ -507,42 +500,42 @@ public class PreferencesImpl implements InternalPreferencesIF
     @Override
     public Object putJAXBObject(String key, Object value, boolean compareToOld, Object source)
     {
-        Preference<?> oldPref = putPreference(new JAXBObjectPreference<Object>(key, value), compareToOld, source);
+        Preference<?> oldPref = putPreference(new JAXBObjectPreference<>(key, value), compareToOld, source);
         return oldPref == null ? null : oldPref.getValue(null, null);
     }
 
     @Override
     public Long putLong(String key, long value, Object source) throws NullPointerException
     {
-        Preference<?> oldPref = putPreference(new NonJAXBObjectPreference<Long>(key, Long.valueOf(value)), true, source);
+        Preference<?> oldPref = putPreference(new NonJAXBObjectPreference<>(key, Long.valueOf(value)), true, source);
         return oldPref == null ? null : oldPref.getLongValue(null);
     }
 
     @Override
     public String putString(String key, String value, Object source)
     {
-        Preference<?> oldPref = putPreference(new NonJAXBObjectPreference<String>(key, value), true, source);
+        Preference<?> oldPref = putPreference(new NonJAXBObjectPreference<>(key, value), true, source);
         return oldPref == null ? null : oldPref.getStringValue(null);
     }
 
     @Override
     public List<String> putStringList(String key, List<String> list, Object source)
     {
-        Preference<?> oldPref = putPreference(new JAXBObjectPreference<StringList>(key, new StringList(list)), true, source);
+        Preference<?> oldPref = putPreference(new JAXBObjectPreference<>(key, new StringList(list)), true, source);
         return oldPref == null ? null : oldPref.getStringListValue(null);
     }
 
     @Override
     public Map<String, String> putStringMap(String key, Map<String, String> map, Object source)
     {
-        Preference<?> oldPref = putPreference(new JAXBObjectPreference<StringMap>(key, new StringMap(map)), true, source);
+        Preference<?> oldPref = putPreference(new JAXBObjectPreference<>(key, new StringMap(map)), true, source);
         return oldPref == null ? null : oldPref.getStringMapValue(null);
     }
 
     @Override
     public Set<String> putStringSet(String key, Set<String> set, Object source)
     {
-        Preference<?> oldPref = putPreference(new JAXBObjectPreference<StringSet>(key, new StringSet(set)), true, source);
+        Preference<?> oldPref = putPreference(new JAXBObjectPreference<>(key, new StringSet(set)), true, source);
         return oldPref == null ? null : oldPref.getStringSetValue(null);
     }
 
@@ -743,7 +736,7 @@ public class PreferencesImpl implements InternalPreferencesIF
         // properties.
         for (String key : oldKeys)
         {
-            events.add(new PreferenceChangeEvent(myTopic, new NonJAXBObjectPreference<Object>(key, null), source));
+            events.add(new PreferenceChangeEvent(myTopic, new NonJAXBObjectPreference<>(key, null), source));
             myPreferencesMap.remove(key);
         }
 
@@ -896,7 +889,7 @@ public class PreferencesImpl implements InternalPreferencesIF
         Preference<?> removed = myPreferencesMap.remove(key);
         if (removed != null)
         {
-            firePreferenceChanged(new PreferenceChangeEvent(myTopic, new NonJAXBObjectPreference<Object>(key, null), source));
+            firePreferenceChanged(new PreferenceChangeEvent(myTopic, new NonJAXBObjectPreference<>(key, null), source));
             schedulePersist();
         }
         return removed;

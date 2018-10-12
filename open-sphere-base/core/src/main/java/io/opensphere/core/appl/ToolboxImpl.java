@@ -12,7 +12,6 @@ import io.opensphere.core.AnimationManager;
 import io.opensphere.core.FrameBufferCaptureManager;
 import io.opensphere.core.MapManager;
 import io.opensphere.core.MemoryManager.MemoryListener;
-import io.opensphere.core.MemoryManager.Status;
 import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.SecurityManager;
 import io.opensphere.core.StatisticsManager;
@@ -73,32 +72,7 @@ abstract class ToolboxImpl implements Toolbox
     private final MapManagerImpl myMapManager;
 
     /** A listener for memory events. */
-    private final MemoryListener myMemoryListener = new MemoryListener()
-    {
-        @Override
-        public void handleMemoryStatusChange(Status oldStatus, Status newStatus)
-        {
-            final double defaultCacheSize = 10.;
-            double cacheSize;
-            switch (newStatus)
-            {
-                case CRITICAL:
-                    cacheSize = Utilities.parseSystemProperty("opensphere.db.criticalCacheSizePercentage", defaultCacheSize);
-                    break;
-                case NOMINAL:
-                    cacheSize = Utilities.parseSystemProperty("opensphere.db.nominalCacheSizePercentage", defaultCacheSize);
-                    break;
-                case WARNING:
-                    cacheSize = Utilities.parseSystemProperty("opensphere.db.warningCacheSizePercentage", defaultCacheSize);
-                    break;
-                default:
-                    cacheSize = 0.;
-                    break;
-            }
-            final long bytes = (long)(Runtime.getRuntime().maxMemory() * cacheSize / 100);
-            myRegistryManager.getDataRegistry().setInMemoryCacheSizeBytes(bytes);
-        }
-    };
+    private final MemoryListener myMemoryListener;
 
     /** The module state manager. */
     private final ModuleStateManager myModuleStateManager;
@@ -147,6 +121,30 @@ abstract class ToolboxImpl implements Toolbox
                 ToolboxImpl.this.requestRestart();
             }
         };
+
+        myMemoryListener = (oldStatus, newStatus) ->
+        {
+            final double defaultCacheSize = 10.;
+            double cacheSize;
+            switch (newStatus)
+            {
+                case CRITICAL:
+                    cacheSize = Utilities.parseSystemProperty("opensphere.db.criticalCacheSizePercentage", defaultCacheSize);
+                    break;
+                case NOMINAL:
+                    cacheSize = Utilities.parseSystemProperty("opensphere.db.nominalCacheSizePercentage", defaultCacheSize);
+                    break;
+                case WARNING:
+                    cacheSize = Utilities.parseSystemProperty("opensphere.db.warningCacheSizePercentage", defaultCacheSize);
+                    break;
+                default:
+                    cacheSize = 0.;
+                    break;
+            }
+            final long bytes = (long)(Runtime.getRuntime().maxMemory() * cacheSize / 100);
+            myRegistryManager.getDataRegistry().setInMemoryCacheSizeBytes(bytes);
+        };
+
         executorManager.setMemoryManager(mySystemToolbox.getMemoryManager());
         mySystemToolbox.getMemoryManager().addMemoryListener(myMemoryListener);
         myStatisticsManager = new StatisticsManagerImpl();

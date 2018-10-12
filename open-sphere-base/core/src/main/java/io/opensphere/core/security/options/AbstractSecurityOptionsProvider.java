@@ -2,7 +2,6 @@ package io.opensphere.core.security.options;
 
 import io.opensphere.core.SecurityManager;
 import io.opensphere.core.options.impl.AbstractOptionsProvider;
-import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
@@ -16,14 +15,7 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 public abstract class AbstractSecurityOptionsProvider extends AbstractOptionsProvider
 {
     /** The preference change listener. */
-    private final PreferenceChangeListener myPreferenceChangeListener = new PreferenceChangeListener()
-    {
-        @Override
-        public void preferenceChange(PreferenceChangeEvent evt)
-        {
-            EventQueueUtilities.invokeLater(AbstractSecurityOptionsProvider.this::handlePreferenceChange);
-        }
-    };
+    private final PreferenceChangeListener myPreferenceChangeListener = evt -> EventQueueUtilities.invokeLater(AbstractSecurityOptionsProvider.this::handlePreferenceChange);
 
     /** The security preferences. */
     private final Preferences myPrefs;

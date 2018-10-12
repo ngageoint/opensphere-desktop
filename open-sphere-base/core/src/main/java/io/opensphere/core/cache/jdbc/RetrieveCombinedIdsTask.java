@@ -107,69 +107,65 @@ public class RetrieveCombinedIdsTask extends DatabaseTask implements ConnectionU
 
         final String sql = getSQLGenerator().generateRetrieveIds(getGroupIds(), getParameters(), joinTableNames,
                 getOrderSpecifiers(), getStartIndex(), getLimit(), getTypeMapper());
-        PreparedStatementUser<long[]> user = new PreparedStatementUser<long[]>()
+        PreparedStatementUser<long[]> user = (unused, pstmt) ->
         {
-            @Override
-            public long[] run(Connection unused, PreparedStatement pstmt) throws CacheException
+            try
+            {
+                prepareGetIdStatement(sql, getGroupIds().length, getParameters(), pstmt);
+            }
+            catch (NotSerializableException e1)
+            {
+                throw new CacheException(e1);
+            }
+            catch (SQLException e2)
+            {
+                throw getCacheUtilities().createCacheException(sql, e2);
+            }
+
+            ResultSet rs = getCacheUtilities().executeQuery(pstmt, sql);
+            try
+            {
+                long[] arr;
+                if (rs.next())
+                {
+                    int size = 0;
+                    arr = new long[16];
+                    do
+                    {
+                        if (arr.length == size)
+                        {
+                            arr = Arrays.copyOf(arr, size << 1);
+                        }
+                        arr[size++] = getCacheUtilities().getCombinedId(rs.getInt(1), rs.getInt(2));
+                    }
+                    while (rs.next());
+                    if (arr.length > size)
+                    {
+                        arr = Arrays.copyOf(arr, size);
+                    }
+                }
+                else
+                {
+                    arr = new long[0];
+                }
+                setResultCount(arr.length);
+                return arr;
+            }
+            catch (SQLException e3)
+            {
+                throw getCacheUtilities().createCacheException(sql, e3);
+            }
+            finally
             {
                 try
                 {
-                    prepareGetIdStatement(sql, getGroupIds().length, getParameters(), pstmt);
+                    rs.close();
                 }
-                catch (NotSerializableException e)
+                catch (SQLException e4)
                 {
-                    throw new CacheException(e);
-                }
-                catch (SQLException e)
-                {
-                    throw getCacheUtilities().createCacheException(sql, e);
-                }
-
-                ResultSet rs = getCacheUtilities().executeQuery(pstmt, sql);
-                try
-                {
-                    long[] arr;
-                    if (rs.next())
+                    if (LOGGER.isTraceEnabled())
                     {
-                        int size = 0;
-                        arr = new long[16];
-                        do
-                        {
-                            if (arr.length == size)
-                            {
-                                arr = Arrays.copyOf(arr, size << 1);
-                            }
-                            arr[size++] = getCacheUtilities().getCombinedId(rs.getInt(1), rs.getInt(2));
-                        }
-                        while (rs.next());
-                        if (arr.length > size)
-                        {
-                            arr = Arrays.copyOf(arr, size);
-                        }
-                    }
-                    else
-                    {
-                        arr = new long[0];
-                    }
-                    setResultCount(arr.length);
-                    return arr;
-                }
-                catch (SQLException e)
-                {
-                    throw getCacheUtilities().createCacheException(sql, e);
-                }
-                finally
-                {
-                    try
-                    {
-                        rs.close();
-                    }
-                    catch (SQLException e)
-                    {
-                        if (LOGGER.isTraceEnabled())
-                        {
-                            LOGGER.trace("Failed to close result set: " + e, e);
-                        }
+                        LOGGER.trace("Failed to close result set: " + e4, e4);
                     }
                 }
             }
@@ -252,7 +248,7 @@ public class RetrieveCombinedIdsTask extends DatabaseTask implements ConnectionU
      */
     protected PreparedStatement prepareGetIdStatement(String sql, int groupCount,
             Collection<? extends PropertyMatcher<?>> parameters, PreparedStatement pstmt)
-                throws SQLException, NotSerializableException, CacheException
+                    throws SQLException, NotSerializableException, CacheException
     {
         int index = 1;
 
@@ -283,7 +279,7 @@ public class RetrieveCombinedIdsTask extends DatabaseTask implements ConnectionU
      *             serializable.
      */
     protected <T> int setGetIdStatementParameter(PreparedStatement pstmt, int startIndex, PropertyMatcher<T> param)
-        throws SQLException, CacheException, NotSerializableException
+            throws SQLException, CacheException, NotSerializableException
     {
         int index;
         if (param instanceof MultiPropertyMatcher)
@@ -329,7 +325,7 @@ public class RetrieveCombinedIdsTask extends DatabaseTask implements ConnectionU
      * @throws CacheException If there's a database error.
      */
     protected <T extends Serializable> String setupValueJoinTable(Connection conn, MultiPropertyMatcher<T> parameter)
-        throws CacheException
+            throws CacheException
     {
         Class<?> parameterPropertyType = parameter.getPropertyDescriptor().getType();
         if (parameterPropertyType == null)
@@ -367,29 +363,25 @@ public class RetrieveCombinedIdsTask extends DatabaseTask implements ConnectionU
         getCacheUtilities().execute(createTableSql, conn);
 
         final String sql = getSQLGenerator().generateInsert(tempTableName, ColumnNames.VALUE);
-        PreparedStatementUser<Void> user = new PreparedStatementUser<Void>()
+        PreparedStatementUser<Void> user = (unused, pstmt) ->
         {
-            @Override
-            public Void run(Connection unused, PreparedStatement pstmt) throws CacheException
+            CacheUtilities cacheUtil = getCacheUtilities();
+            try
             {
-                CacheUtilities cacheUtil = getCacheUtilities();
-                try
+                for (T value : values)
                 {
-                    for (T value : values)
+                    translator.setValue(pstmt, 1, value, true);
+                    if (cacheUtil.executeUpdate(pstmt, sql) != 1)
                     {
-                        translator.setValue(pstmt, 1, value, true);
-                        if (cacheUtil.executeUpdate(pstmt, sql) != 1)
-                        {
-                            throw new CacheException("Failed to insert values into join table.");
-                        }
+                        throw new CacheException("Failed to insert values into join table.");
                     }
+                }
 
-                    return null;
-                }
-                catch (SQLException e)
-                {
-                    throw cacheUtil.createCacheException(sql, e);
-                }
+                return null;
+            }
+            catch (SQLException e)
+            {
+                throw cacheUtil.createCacheException(sql, e);
             }
         };
         app.appropriateStatement(user, sql);

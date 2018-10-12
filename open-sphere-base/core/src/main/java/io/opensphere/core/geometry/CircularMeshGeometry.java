@@ -124,7 +124,7 @@ public class CircularMeshGeometry extends PolygonMeshGeometry
     @Override
     protected Builder<? extends Position> createRawBuilder()
     {
-        return new Builder<Position>();
+        return new Builder<>();
     }
 
     /** Generate the required fields for the mesh. */

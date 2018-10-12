@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
-
 import io.opensphere.core.cache.matcher.PropertyMatcher;
 import io.opensphere.core.util.Utilities;
 
@@ -66,7 +65,7 @@ public class DefaultQuery implements Query
      */
     public DefaultQuery(DataModelCategory dataModelCategory,
             Collection<? extends PropertyValueReceiver<?>> propertyValueReceivers,
-            @Nullable List<? extends PropertyMatcher<?>> parameters, @Nullable List<? extends OrderSpecifier> orderSpecifiers)
+                    @Nullable List<? extends PropertyMatcher<?>> parameters, @Nullable List<? extends OrderSpecifier> orderSpecifiers)
     {
         this(dataModelCategory, propertyValueReceivers, parameters, orderSpecifiers, 0, Integer.MAX_VALUE, Integer.MAX_VALUE);
     }
@@ -89,8 +88,8 @@ public class DefaultQuery implements Query
      */
     public DefaultQuery(DataModelCategory dataModelCategory,
             Collection<? extends PropertyValueReceiver<?>> propertyValueReceivers,
-            @Nullable List<? extends PropertyMatcher<?>> parameters, @Nullable List<? extends OrderSpecifier> orderSpecifiers,
-            int startIndex, int batchSize, int limit)
+                    @Nullable List<? extends PropertyMatcher<?>> parameters, @Nullable List<? extends OrderSpecifier> orderSpecifiers,
+                            int startIndex, int batchSize, int limit)
     {
         Utilities.checkNull(propertyValueReceivers, "propertyValueReceivers");
         myDataModelCategory = Utilities.checkNull(dataModelCategory, "dataModelCategory");
@@ -114,7 +113,9 @@ public class DefaultQuery implements Query
     private static <E> List<E> unmodCopy(Collection<E> c)
     {
         if (c == null)
+        {
             return null;
+        }
         return Collections.unmodifiableList(new ArrayList<>(c));
     }
 

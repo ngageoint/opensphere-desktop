@@ -44,10 +44,7 @@ public final class ColorUtilities
                     (color1.getGreen() * alpha + color2.getGreen() * (1f - alpha)) / COLOR_COMPONENT_MAX_VALUE,
                     (color1.getBlue() * alpha + color2.getBlue() * (1f - alpha)) / COLOR_COMPONENT_MAX_VALUE);
         }
-        else
-        {
-            return color1;
-        }
+        return color1;
     }
 
     /**
@@ -174,7 +171,7 @@ public final class ColorUtilities
      *             parse-able int.
      */
     public static Color convertFromHexString(String color, int redIndex, int greenIndex, int blueIndex, int alphaIndex)
-        throws NumberFormatException
+            throws NumberFormatException
     {
         if (color == null || color.length() == 0 || color.length() > 8)
         {
@@ -256,7 +253,7 @@ public final class ColorUtilities
         }
         StringBuilder sb = new StringBuilder();
         sb.append(aColor.getRed()).append('-').append(aColor.getGreen()).append('-').append(aColor.getBlue()).append('-')
-                .append(aColor.getAlpha());
+        .append(aColor.getAlpha());
         return sb.toString();
     }
 
@@ -429,10 +426,7 @@ public final class ColorUtilities
         {
             return startingColor;
         }
-        else
-        {
-            return new Color(startingColor.getRGB() & 0xffffff | (int)(alpha * 0xff + 0.5) << 24, true);
-        }
+        return new Color(startingColor.getRGB() & 0xffffff | (int)(alpha * 0xff + 0.5) << 24, true);
     }
 
     /**
@@ -452,10 +446,7 @@ public final class ColorUtilities
         {
             return startingColor;
         }
-        else
-        {
-            return new Color(startingColor.getRGB() & 0xffffff | alpha << 24, true);
-        }
+        return new Color(startingColor.getRGB() & 0xffffff | alpha << 24, true);
     }
 
     /**

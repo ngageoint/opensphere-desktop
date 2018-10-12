@@ -36,7 +36,7 @@ import io.opensphere.core.viewer.impl.MapContext;
  */
 @SuppressWarnings("PMD.GodClass")
 public class PointSpriteRendererImmediate<T extends PointSpriteGeometry> extends AbstractPointRenderer<T>
-        implements GeometryRendererImmediate<T>
+implements GeometryRendererImmediate<T>
 {
     /** Bits used for {@link GL2#glPushAttrib(int)}. */
     private static final int ATTRIB_BITS = GL2.GL_ENABLE_BIT | GL.GL_COLOR_BUFFER_BIT | GL2.GL_CURRENT_BIT | GL2.GL_POINT_BIT
@@ -259,27 +259,24 @@ public class PointSpriteRendererImmediate<T extends PointSpriteGeometry> extends
         {
             return false;
         }
-        else
+        float size = pickManager.getPickedGeometries().contains(geom) ? coords.getHighlightSize() : coords.getSize();
+        if (rs.getLastPointSize() != size || !Utilities.sameInstance(rs.getLastTextureHandle(), textureHandle))
         {
-            float size = pickManager.getPickedGeometries().contains(geom) ? coords.getHighlightSize() : coords.getSize();
-            if (rs.getLastPointSize() != size || !Utilities.sameInstance(rs.getLastTextureHandle(), textureHandle))
+            glEndIfBegun(rc, rs);
+            rs.setLastPointSize(glPointSize(rc, size, rs.getLastPointSize()));
+            if (!Utilities.sameInstance(rs.getLastTextureHandle(), textureHandle))
             {
-                glEndIfBegun(rc, rs);
-                rs.setLastPointSize(glPointSize(rc, size, rs.getLastPointSize()));
-                if (!Utilities.sameInstance(rs.getLastTextureHandle(), textureHandle))
-                {
-                    rc.getGL().glBindTexture(GL.GL_TEXTURE_2D, textureHandle.getTextureId());
-                    rs.setLastTextureHandle(textureHandle);
-                    rs.setLastTextureGroup(textureGroup);
-                }
-                rc.getGL().getGL2().glBegin(GL.GL_POINTS);
-                rs.setBegun();
+                rc.getGL().glBindTexture(GL.GL_TEXTURE_2D, textureHandle.getTextureId());
+                rs.setLastTextureHandle(textureHandle);
+                rs.setLastTextureGroup(textureGroup);
             }
-            GL2Utilities.glColor(rc, pickManager, geom);
-            rc.glDepthMask(geom.getRenderProperties().isObscurant());
-            rc.getGL().getGL2().glVertex3f(coords.getX(), coords.getY(), coords.getZ());
-            return true;
+            rc.getGL().getGL2().glBegin(GL.GL_POINTS);
+            rs.setBegun();
         }
+        GL2Utilities.glColor(rc, pickManager, geom);
+        rc.glDepthMask(geom.getRenderProperties().isObscurant());
+        rc.getGL().getGL2().glVertex3f(coords.getX(), coords.getY(), coords.getZ());
+        return true;
     }
 
     /**
@@ -327,7 +324,7 @@ public class PointSpriteRendererImmediate<T extends PointSpriteGeometry> extends
         @Override
         public GeometryRendererImmediate<PointSpriteGeometry> createRenderer()
         {
-            return new PointSpriteRendererImmediate<PointSpriteGeometry>(getCache());
+            return new PointSpriteRendererImmediate<>(getCache());
         }
 
         @Override

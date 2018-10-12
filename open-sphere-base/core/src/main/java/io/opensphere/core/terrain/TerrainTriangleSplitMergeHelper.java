@@ -340,11 +340,8 @@ public class TerrainTriangleSplitMergeHelper
                 myOwner.getAdjacentC().getParent().checkMergeForVariance(bounds);
                 return;
             }
-            else
-            {
-                checkMerge(bounds);
-                myOwner.getAdjacentC().getParent().checkMerge(bounds);
-            }
+            checkMerge(bounds);
+            myOwner.getAdjacentC().getParent().checkMerge(bounds);
         }
     }
 
@@ -388,11 +385,8 @@ public class TerrainTriangleSplitMergeHelper
             return myOwner.getLeftChild().getSplitMergeHelper().getViewSize() < ourMergeViewSize
                     || myOwner.getRightChild().getSplitMergeHelper().getViewSize() < ourMergeViewSize;
         }
-        else
-        {
-            return myOwner.getLeftChild().getSplitMergeHelper().getArcSize() < myResolutionHintM
-                    || myOwner.getRightChild().getSplitMergeHelper().getArcSize() < myResolutionHintM;
-        }
+        return myOwner.getLeftChild().getSplitMergeHelper().getArcSize() < myResolutionHintM
+                || myOwner.getRightChild().getSplitMergeHelper().getArcSize() < myResolutionHintM;
     }
 
     /**
@@ -427,7 +421,7 @@ public class TerrainTriangleSplitMergeHelper
 
         return !myOwner.isDegenerateOnGlobe() && (getVarianceAtMidPoint() < myMinVariance && myOwner.getAdjacentC() == null
                 || myOwner.getAdjacentC().getSplitMergeHelper().getVarianceAtMidPoint() < myOwner.getAdjacentC()
-                        .getSplitMergeHelper().getMinVariance());
+                .getSplitMergeHelper().getMinVariance());
     }
 
     /**
@@ -474,10 +468,7 @@ public class TerrainTriangleSplitMergeHelper
         {
             return myOwner.getPlane().getDistance(myOwner.getLeftChild().getVertexC().getModelCoordinates()) / myArcSize;
         }
-        else
-        {
-            return myOwner.getPlane().getDistance(getSplitMidVertex().getModelCoordinates()) / myArcSize;
-        }
+        return myOwner.getPlane().getDistance(getSplitMidVertex().getModelCoordinates()) / myArcSize;
     }
 
     /**
@@ -551,10 +542,7 @@ public class TerrainTriangleSplitMergeHelper
             {
                 return split(view);
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         return true;

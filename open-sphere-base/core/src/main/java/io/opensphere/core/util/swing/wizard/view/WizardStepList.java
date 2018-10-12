@@ -20,8 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
@@ -83,14 +81,7 @@ public class WizardStepList extends JPanel
         jList.setBackground(getBackground());
         jList.setCellRenderer(new WizardStepCellRenderer());
         jList.setSelectionModel(mySelectionModel);
-        jList.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-        {
-            @Override
-            public void valueChanged(ListSelectionEvent e)
-            {
-                myModel.setCurrentStep(((ListSelectionModel)e.getSource()).getAnchorSelectionIndex());
-            }
-        });
+        jList.getSelectionModel().addListSelectionListener(e -> myModel.setCurrentStep(((ListSelectionModel)e.getSource()).getAnchorSelectionIndex()));
 
         JLabel stepsLabel = new JLabel("Steps");
         stepsLabel.setFont(

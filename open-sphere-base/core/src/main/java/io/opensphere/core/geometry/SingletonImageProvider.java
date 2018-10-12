@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 
-import net.jcip.annotations.GuardedBy;
 import javax.imageio.ImageIO;
 
 import io.opensphere.core.image.Image;
@@ -13,6 +12,7 @@ import io.opensphere.core.image.ImageIOImage;
 import io.opensphere.core.image.ImmediateImageProvider;
 import io.opensphere.core.image.ObservableImageProvider;
 import io.opensphere.core.util.Utilities;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * {@link ImmediateImageProvider} that provides a single image.
@@ -121,12 +121,9 @@ public class SingletonImageProvider implements ImmediateImageProvider<Void>, Obs
         {
             return null;
         }
-        else
-        {
-            Image result = new ImageIOImage(image);
-            result.setCompressionHint(myCompressionHint);
-            return result;
-        }
+        Image result = new ImageIOImage(image);
+        result.setCompressionHint(myCompressionHint);
+        return result;
     }
 
     /**

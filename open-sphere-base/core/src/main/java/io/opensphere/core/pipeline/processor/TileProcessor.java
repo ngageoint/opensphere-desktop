@@ -98,15 +98,15 @@ public class TileProcessor extends TextureProcessor<TileGeometry> implements Spl
 
         GeometryRenderer<?> actualRenderer = renderer instanceof DelegatingRenderer
                 ? ((DelegatingRenderer<?>)renderer).getRenderer() : renderer;
-        if (!(actualRenderer instanceof AbstractTileRenderer))
-        {
-            throw new IllegalArgumentException("Renderer must be an " + AbstractTileRenderer.class.getSimpleName());
-        }
+                if (!(actualRenderer instanceof AbstractTileRenderer))
+                {
+                    throw new IllegalArgumentException("Renderer must be an " + AbstractTileRenderer.class.getSimpleName());
+                }
 
-        Utilities.checkNull(builder.getPriorityComparator(), "builder.getPriorityComparator()");
-        myPriorityComparator = builder.getPriorityComparator();
+                Utilities.checkNull(builder.getPriorityComparator(), "builder.getPriorityComparator()");
+                myPriorityComparator = builder.getPriorityComparator();
 
-        myConfirmDeferredExecutor = new ProcrastinatingExecutor(builder.getFixedPoolExecutorService());
+                myConfirmDeferredExecutor = new ProcrastinatingExecutor(builder.getFixedPoolExecutorService());
     }
 
     @Override
@@ -129,7 +129,7 @@ public class TileProcessor extends TextureProcessor<TileGeometry> implements Spl
     @Override
     public void generateDryRunGeometries()
     {
-        TileGeometry.Builder<GeographicPosition> builder = new TileGeometry.Builder<GeographicPosition>();
+        TileGeometry.Builder<GeographicPosition> builder = new TileGeometry.Builder<>();
         builder.setBounds(new GeographicBoundingBox(LatLonAlt.createFromDegrees(0, 0), LatLonAlt.createFromDegrees(10, 10)));
         BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics g = image.getGraphics();
@@ -701,10 +701,7 @@ public class TileProcessor extends TextureProcessor<TileGeometry> implements Spl
                 {
                     return true;
                 }
-                else
-                {
-                    cache.putCacheAssociation(geom, position, Vector3d.class, Vector3d.SIZE_BYTES, 0L);
-                }
+                cache.putCacheAssociation(geom, position, Vector3d.class, Vector3d.SIZE_BYTES, 0L);
             }
             inView = getViewer().isInView(position, 0.) && !isObscured(position);
         }
@@ -976,14 +973,7 @@ public class TileProcessor extends TextureProcessor<TileGeometry> implements Spl
     /** Confirm deferred asynchronously, using the executor. */
     private void confirmDeferred()
     {
-        myConfirmDeferredExecutor.execute(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                doConfirmDeferred();
-            }
-        });
+        myConfirmDeferredExecutor.execute(() -> doConfirmDeferred());
     }
 
     /**

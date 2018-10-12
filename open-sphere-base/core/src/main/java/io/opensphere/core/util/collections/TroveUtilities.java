@@ -96,7 +96,7 @@ public final class TroveUtilities
     /** Base size of a {@link TObjectDoubleHashMap}. */
     private static final int TOBJECTDOUBLEHASHMAP_BASE_SIZE_BYTES = MathUtil.roundUpTo(
             Constants.OBJECT_SIZE_BYTES + Constants.REFERENCE_SIZE_BYTES + Constants.DOUBLE_SIZE_BYTES
-                    + Constants.BOOLEAN_SIZE_BYTES * 2 + Constants.INT_SIZE_BYTES * 4 + Constants.FLOAT_SIZE_BYTES * 2,
+            + Constants.BOOLEAN_SIZE_BYTES * 2 + Constants.INT_SIZE_BYTES * 4 + Constants.FLOAT_SIZE_BYTES * 2,
             Constants.MEMORY_BLOCK_SIZE_BYTES);
 
     /** Base size of a {@link TShortArrayList}. */

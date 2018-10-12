@@ -140,24 +140,24 @@ public class DateDurationKey implements Comparable<DateDurationKey>
         return toReturn;
     }
 
-//    /**
-//     * Instantiates a new date duration key.
-//     *
-//     * @param startDate the start date
-//     * @param endDate the end date
-//     * @param aDurationInSeconds the a duration in seconds
-//     */
-//    public DateDurationKey(Date startDate, Date endDate, int aDurationInSeconds)
-//    {
-//        // Don't want to store or pass back mutable references to these Dates
-//        // clone() is the Java SDK's recommended way to get date copies.
-//        // Enums are pass by value anyway.
-//        myStartDate = (Date)startDate.clone();
-//        myEndDate = (Date)endDate.clone();
-//
-//        myDuration = Duration.CUSTOM;
-//        myCustomDurationInSeconds = aDurationInSeconds;
-//    }
+    //    /**
+    //     * Instantiates a new date duration key.
+    //     *
+    //     * @param startDate the start date
+    //     * @param endDate the end date
+    //     * @param aDurationInSeconds the a duration in seconds
+    //     */
+    //    public DateDurationKey(Date startDate, Date endDate, int aDurationInSeconds)
+    //    {
+    //        // Don't want to store or pass back mutable references to these Dates
+    //        // clone() is the Java SDK's recommended way to get date copies.
+    //        // Enums are pass by value anyway.
+    //        myStartDate = (Date)startDate.clone();
+    //        myEndDate = (Date)endDate.clone();
+    //
+    //        myDuration = Duration.CUSTOM;
+    //        myCustomDurationInSeconds = aDurationInSeconds;
+    //    }
 
     /**
      * Contains date.
@@ -201,10 +201,7 @@ public class DateDurationKey implements Comparable<DateDurationKey>
             DateDurationKey other = (DateDurationKey)o;
             return getDuration().equals(other.getDuration()) && getStartDate().getTime() == other.getStartDate().getTime();
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     /**

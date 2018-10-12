@@ -84,10 +84,7 @@ public class ExtentAccumulator implements Accumulator<TimeSpan>
             {
                 return TimeSpan.TIMELESS;
             }
-            else
-            {
-                return TimeSpan.newUnboundedStartTimeSpan(myEnd);
-            }
+            return TimeSpan.newUnboundedStartTimeSpan(myEnd);
         }
         else if (myUnboundedEnd)
         {

@@ -155,7 +155,9 @@ public class PlaneUtils
         // first find a point on which to center the projection
         R3 avg = new R3();
         for (LatLonBear llb :  lobs)
+        {
             avg.add(fromLatLon(llb.latDeg, llb.lonDeg));
+        }
         avg.nz();
 
         // create the projection
@@ -169,16 +171,24 @@ public class PlaneUtils
         lsqLoc.setNumLines(lobVecList.size());
         int i = 0;
         for (LobVec v :  lobVecList)
+        {
             lsqLoc.addLine(v.p0.x, v.p0.y, v.dirUnit.x, v.dirUnit.y, i++);
+        }
         lsqLoc.localize();
         errorMessage = lsqLoc.getErrorMessage();
         if (errorMessage != null)
+        {
             return;
+        }
 
         // see if any lines point away from the convergence
         for (int j = 0; j < lobs.size(); j++)
+        {
             if (!lsqLoc.checkPointingAngle(j, 30.0))
+            {
                 badPointers.add(j);
+            }
+        }
 
         // extract and convert location data
         double[] lsqPoint = lsqLoc.getLocation();
@@ -202,7 +212,9 @@ public class PlaneUtils
             // elliptical case
             orientDeg = Math.toDegrees(angleOf(basis[1][1], basis[1][0]));
             if (orientDeg < 0.0)
+            {
                 orientDeg += 180.0;
+            }
             minorRadiusNmi = CONF_95_RADIUS * Math.sqrt(EARTH_R_NMI / lambda[0]);
             majorRadiusNmi = CONF_95_RADIUS * Math.sqrt(EARTH_R_NMI / lambda[1]);
         }
@@ -267,11 +279,17 @@ public class PlaneUtils
     private static double angleOf(double x, double y)
     {
         if (x > 0.0)
+        {
             return Math.atan(y / x);
+        }
         if (y > 0.0)
+        {
             return Math.PI + Math.atan(y / x);
+        }
         if (y < 0.0)
+        {
             return -Math.PI + Math.atan(y / x);
+        }
         return -Math.PI;
     }
 

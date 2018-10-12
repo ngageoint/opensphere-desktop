@@ -287,14 +287,7 @@ public class OptionsRegistryImpl implements OptionsRegistry
      */
     private OptionsProviderChangeListener createOptionsProviderChangeListener()
     {
-        OptionsProviderChangeListener listener = new OptionsProviderChangeListener()
-        {
-            @Override
-            public void optionsProviderChanged(final OptionsProvider from, final OptionsProvider originator)
-            {
-                myChangeSupport.notifyListeners(listener -> listener.optionsProviderChanged(from), ourEventExecutor);
-            }
-        };
+        OptionsProviderChangeListener listener = (from, originator) -> myChangeSupport.notifyListeners(listener1 -> listener1.optionsProviderChanged(from), ourEventExecutor);
         return listener;
     }
 

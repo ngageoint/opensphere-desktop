@@ -58,10 +58,21 @@ public class ControlEventSupport
     private Geometry myPickedGeometry;
 
     /** Listener for pick changes. */
-    private final PickListener myPickListener = new PickListener()
+    private final PickListener myPickListener;
+
+    /** The listener to whom I send events. */
+    private final ControlEventListener mySelectionListener;
+
+    /**
+     * Construct me.
+     *
+     * @param listener component which owns me.
+     * @param controlRegistry The control registry.
+     */
+    public ControlEventSupport(ControlEventListener listener, ControlRegistry controlRegistry)
     {
-        @Override
-        public void handlePickEvent(PickEvent evt)
+        mySelectionListener = listener;
+        myPickListener = evt ->
         {
             // If I have a picked geometry, then receiving a pick event means
             // that either no geometry is picked, or a different geometry is
@@ -80,21 +91,7 @@ public class ControlEventSupport
             {
                 myPickedGeometry = null;
             }
-        }
-    };
-
-    /** The listener to whom I send events. */
-    private final ControlEventListener mySelectionListener;
-
-    /**
-     * Construct me.
-     *
-     * @param listener component which owns me.
-     * @param controlRegistry The control registry.
-     */
-    public ControlEventSupport(ControlEventListener listener, ControlRegistry controlRegistry)
-    {
-        mySelectionListener = listener;
+        };
         myControlRegistry = controlRegistry;
         register();
     }

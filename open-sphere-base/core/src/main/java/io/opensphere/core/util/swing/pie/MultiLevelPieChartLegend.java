@@ -90,15 +90,11 @@ public final class MultiLevelPieChartLegend<T>
         List<Color> sortedKeys = New.list(colorToDataMap.keySet());
         if (myValueComparator != null)
         {
-            Collections.sort(sortedKeys, new Comparator<Color>()
+            Collections.sort(sortedKeys, (o1, o2) ->
             {
-                @Override
-                public int compare(Color o1, Color o2)
-                {
-                    T value1 = colorToDataMap.get(o1).get(0);
-                    T value2 = colorToDataMap.get(o2).get(0);
-                    return myValueComparator.compare(value1, value2);
-                }
+                T value1 = colorToDataMap.get(o1).get(0);
+                T value2 = colorToDataMap.get(o2).get(0);
+                return myValueComparator.compare(value1, value2);
             });
         }
 

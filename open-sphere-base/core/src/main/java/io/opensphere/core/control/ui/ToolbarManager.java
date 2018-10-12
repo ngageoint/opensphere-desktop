@@ -27,7 +27,6 @@ import javax.swing.SwingConstants;
 
 import org.apache.commons.lang3.StringUtils;
 
-import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
@@ -90,15 +89,7 @@ public class ToolbarManager
     /**
      * Listener for showIconButtonText preference updates.
      */
-    private final PreferenceChangeListener myTextListener = new PreferenceChangeListener()
-    {
-        @Override
-        public void preferenceChange(PreferenceChangeEvent evt)
-        {
-            myShowIconButtonText = evt.getValueAsBoolean(!myShowIconButtonText);
-            myIconButtons.forEach(b -> b.setTextPainted(myShowIconButtonText));
-        }
-    };
+    private final PreferenceChangeListener myTextListener;
 
     /** Icon buttons that have been added to the toolbar and can have text. */
     private final Collection<IconButton> myIconButtons = New.collection();
@@ -136,6 +127,12 @@ public class ToolbarManager
     {
         myPreferences = preferencesRegistry.getPreferences(ToolbarManager.class);
         myShowIconButtonText = myPreferences.getBoolean(SHOW_ICON_BUTTON_TEXT_PREF_KEY, true);
+
+        myTextListener = evt ->
+        {
+            myShowIconButtonText = evt.getValueAsBoolean(!myShowIconButtonText);
+            myIconButtons.forEach(b -> b.setTextPainted(myShowIconButtonText));
+        };
 
         myPreferences.addPreferenceChangeListener(SHOW_ICON_BUTTON_TEXT_PREF_KEY, myTextListener);
     }
@@ -409,7 +406,7 @@ public class ToolbarManager
             SeparatorLocation separatorLocation, Insets insets)
     {
         myNorthBottomToolbarComponents
-            .add(new ToolbarComponent(getNorthBottomToolbar(), componentName, comp, relativeLoc, separatorLocation, insets));
+        .add(new ToolbarComponent(getNorthBottomToolbar(), componentName, comp, relativeLoc, separatorLocation, insets));
         registerIconButtons(comp);
         Collections.sort(myNorthBottomToolbarComponents);
 
@@ -450,7 +447,7 @@ public class ToolbarManager
             Insets insets)
     {
         myNorthToolbarComponents
-            .add(new ToolbarComponent(getNorthToolbar(), componentName, comp, order, separatorLocation, insets));
+        .add(new ToolbarComponent(getNorthToolbar(), componentName, comp, order, separatorLocation, insets));
         registerIconButtons(comp);
         Collections.sort(myNorthToolbarComponents);
         getNorthToolbar().removeAll();
@@ -489,7 +486,7 @@ public class ToolbarManager
             final SeparatorLocation separatorLocation, Insets insets)
     {
         mySouthToolbarComponents
-            .add(new ToolbarComponent(getSouthToolbar(), componentName, comp, relativeLoc, separatorLocation, insets));
+        .add(new ToolbarComponent(getSouthToolbar(), componentName, comp, relativeLoc, separatorLocation, insets));
         registerIconButtons(comp);
         Collections.sort(mySouthToolbarComponents);
 

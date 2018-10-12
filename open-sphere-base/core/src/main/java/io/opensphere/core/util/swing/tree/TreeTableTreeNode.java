@@ -417,7 +417,7 @@ public class TreeTableTreeNode implements MutableTreeNode
             }
             myRenderableChildren = null;
 
-            return new Pair<int[], TreeTableTreeNode[]>(indices, nodes);
+            return new Pair<>(indices, nodes);
         }
         return null;
     }
@@ -447,10 +447,7 @@ public class TreeTableTreeNode implements MutableTreeNode
             {
                 return null;
             }
-            else
-            {
-                retNodes = new TreeNode[depth];
-            }
+            retNodes = new TreeNode[depth];
         }
         else
         {
@@ -480,7 +477,7 @@ public class TreeTableTreeNode implements MutableTreeNode
             myRenderableChildren = New.list(myChildren);
         }
 
-        changes = new Pair<int[], TreeTableTreeNode[]>(new int[] { getIndexOfRenderableChild(node) },
+        changes = new Pair<>(new int[] { getIndexOfRenderableChild(node) },
                 new TreeTableTreeNode[] { node });
         myRenderableChildren.remove(node);
         return changes;

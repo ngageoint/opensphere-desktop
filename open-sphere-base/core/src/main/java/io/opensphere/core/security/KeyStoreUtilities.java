@@ -193,7 +193,7 @@ public final class KeyStoreUtilities
      * @throws KeyStoreException If the trust store is not initialized.
      */
     private static void addCertsFromTrustStore(KeyStore trustStore, Collection<? super X509Certificate> certs)
-        throws KeyStoreException
+            throws KeyStoreException
     {
         for (String alias : fixDuplicateAliases(trustStore))
         {

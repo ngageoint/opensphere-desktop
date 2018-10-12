@@ -22,7 +22,7 @@ public class StreamIterable<T> implements Iterable<T>
      */
     public static <T> StreamIterable<T> get(Stream<T> stream)
     {
-        return new StreamIterable<T>(stream);
+        return new StreamIterable<>(stream);
     }
 
     /**

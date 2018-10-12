@@ -41,21 +41,7 @@ class TimeManagerWrapper implements ObservableValue<TimeSpan>, Service
     private final AnimationPlanController myAnimationPlanController;
 
     /** Listener for changes to the data load duration. */
-    private final DataLoadDurationChangeListener myDataLoadDurationChangeListener = new DataLoadDurationChangeListener()
-    {
-        @Override
-        public void dataLoadDurationChanged(final Duration dataLoadDuration)
-        {
-            EventQueueUtilities.runOnEDT(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    myAnimationModel.getSelectedDataLoadDuration().set(dataLoadDuration);
-                }
-            });
-        }
-    };
+    private final DataLoadDurationChangeListener myDataLoadDurationChangeListener;
 
     /** The listeners that are added. */
     private final List<ChangeListener<? super TimeSpan>> myListeners = New.list();
@@ -70,14 +56,7 @@ class TimeManagerWrapper implements ObservableValue<TimeSpan>, Service
     private final TimelineUIModel myUIModel;
 
     /** Listener for changes to the UI span. */
-    private final ChangeListener<TimeSpan> myUISpanListener = new ChangeListener<TimeSpan>()
-    {
-        @Override
-        public void changed(ObservableValue<? extends TimeSpan> observable, TimeSpan oldValue, TimeSpan newValue)
-        {
-            setActiveSpanScreenPosition(get());
-        }
-    };
+    private final ChangeListener<TimeSpan> myUISpanListener = (obs, ov, nv) -> setActiveSpanScreenPosition(get());
 
     /**
      * Constructor.
@@ -94,6 +73,8 @@ class TimeManagerWrapper implements ObservableValue<TimeSpan>, Service
         myAnimationPlanController = animationPlanController;
         myAnimationModel = animationModel;
         myUIModel = uiModel;
+        myDataLoadDurationChangeListener = d -> EventQueueUtilities
+                .runOnEDT(() -> myAnimationModel.getSelectedDataLoadDuration().set(d));
 
         myTimeListener = new PrimaryTimeSpanChangeListener()
         {

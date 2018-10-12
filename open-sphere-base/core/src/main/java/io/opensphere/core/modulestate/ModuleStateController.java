@@ -60,7 +60,7 @@ public interface ModuleStateController
      * @throws InterruptedException If activation is interrupted.
      */
     void activateState(String id, String description, Collection<? extends String> tags, StateType state)
-        throws InterruptedException;
+            throws InterruptedException;
 
     /**
      * Determine if a DOM node contains valid state for this controller.

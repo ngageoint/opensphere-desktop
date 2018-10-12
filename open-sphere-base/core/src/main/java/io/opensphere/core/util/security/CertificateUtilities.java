@@ -91,11 +91,11 @@ public final class CertificateUtilities
         String dn = cert.getSubjectDN().getName();
         sb.append(indent).append("Serial number:            \t").append(getSerialNumberString(cert)).append(LINE_SEP);
         sb.append(indent).append("Common Name (CN):         \t").append(CertificateUtilities.getDistinguishedNamePart(dn, "CN="))
-                .append(LINE_SEP);
+        .append(LINE_SEP);
         sb.append(indent).append("Organization (O):         \t").append(CertificateUtilities.getDistinguishedNamePart(dn, "O="))
-                .append(LINE_SEP);
+        .append(LINE_SEP);
         sb.append(indent).append("Organizational Unit (OU): \t").append(CertificateUtilities.getDistinguishedNamePart(dn, "OU="))
-                .append(LINE_SEP);
+        .append(LINE_SEP);
         sb.append(LINE_SEP);
 
         for (String alg : new String[] { "MD5", "SHA1" })
@@ -103,7 +103,7 @@ public final class CertificateUtilities
             try
             {
                 sb.append(indent).append(String.format("%-26s", alg + " Fingerprint:")).append('\t')
-                        .append(CertificateUtilities.getFingerprint(cert, alg)).append(LINE_SEP);
+                .append(CertificateUtilities.getFingerprint(cert, alg)).append(LINE_SEP);
             }
             catch (CertificateEncodingException e)
             {
@@ -174,7 +174,7 @@ public final class CertificateUtilities
      * @see MessageDigest#getInstance(String)
      */
     public static String getFingerprint(Certificate certificate, String algorithm)
-        throws CertificateEncodingException, NoSuchAlgorithmException
+            throws CertificateEncodingException, NoSuchAlgorithmException
     {
         return StringUtilities.toHexString(new Digest(algorithm, certificate).getMessageDigest(), ":");
     }

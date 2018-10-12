@@ -25,7 +25,6 @@ import io.opensphere.core.cache.Cache;
 import io.opensphere.core.cache.CacheDeposit;
 import io.opensphere.core.cache.CacheException;
 import io.opensphere.core.cache.CacheModificationListener;
-import io.opensphere.core.cache.CacheModificationReport;
 import io.opensphere.core.cache.CacheRemovalListener;
 import io.opensphere.core.cache.ClassProvider;
 import io.opensphere.core.cache.DefaultCacheModificationListener;
@@ -39,7 +38,6 @@ import io.opensphere.core.cache.matcher.PropertyMatcherUtilities;
 import io.opensphere.core.cache.mem.MemoryCache;
 import io.opensphere.core.cache.util.IntervalPropertyValueSet;
 import io.opensphere.core.cache.util.PropertyDescriptor;
-import io.opensphere.core.data.MultiQueryTracker.ResubmitListener;
 import io.opensphere.core.data.util.DataModelCategory;
 import io.opensphere.core.data.util.PropertyValueIdReceiver;
 import io.opensphere.core.data.util.PropertyValueReceiver;
@@ -86,14 +84,7 @@ public class DataRegistryImpl implements DataRegistry
     private final DataRegistryListenerManager myListenerManager = new DataRegistryListenerManager();
 
     /** The query manager. */
-    private final QueryManager myQueryManager = new QueryManager(new ResubmitListener()
-    {
-        @Override
-        public void slaveDone(MultiQueryTracker multiTracker)
-        {
-            performQuery(multiTracker, false, false);
-        }
-    });
+    private final QueryManager myQueryManager = new QueryManager(mt -> performQuery(mt, false, false));
 
     /**
      * Construct a data registry.
@@ -105,27 +96,23 @@ public class DataRegistryImpl implements DataRegistry
     {
         myExecutor = executor;
         myCache = new MemoryCache(cache);
-        myCache.setClassProvider(new ClassProvider()
+        myCache.setClassProvider(className ->
         {
-            @Override
-            public Class<?> getClass(String className)
-            {
-                Class<?> theClass = null;
+            Class<?> theClass = null;
 
-                synchronized (myClassProviders)
+            synchronized (myClassProviders)
+            {
+                for (ClassProvider provider : myClassProviders)
                 {
-                    for (ClassProvider provider : myClassProviders)
+                    theClass = provider.getClass(className);
+                    if (theClass != null)
                     {
-                        theClass = provider.getClass(className);
-                        if (theClass != null)
-                        {
-                            break;
-                        }
+                        break;
                     }
                 }
-
-                return theClass;
             }
+
+            return theClass;
         });
     }
 
@@ -178,10 +165,7 @@ public class DataRegistryImpl implements DataRegistry
         {
             return new long[0];
         }
-        else
-        {
-            return listener.getReports().iterator().next().getIds();
-        }
+        return listener.getReports().iterator().next().getIds();
     }
 
     @Override
@@ -533,7 +517,7 @@ public class DataRegistryImpl implements DataRegistry
     @Override
     public <T> void updateModels(final long[] ids, final Collection<? extends T> input,
             final Collection<? extends PropertyAccessor<? super T, ?>> accessors, final Object source, boolean returnEarly,
-            final CacheModificationListener listener)
+                    final CacheModificationListener listener)
     {
         Utilities.checkNull(ids, "ids");
         Utilities.checkNull(accessors, "accessors");
@@ -546,18 +530,13 @@ public class DataRegistryImpl implements DataRegistry
         try
         {
             long t0 = System.nanoTime();
-            myCache.updateValues(ids, input, accessors, returnEarly ? myExecutor : null, new CacheModificationListener()
+            myCache.updateValues(ids, input, accessors, returnEarly ? myExecutor : null, cmr ->
             {
-                @Override
-                public void cacheModified(CacheModificationReport cacheModificationReport)
+                myListenerManager.notifyAddsOrUpdates(cmr, ids, input, cmr.filterAccessors(accessors),
+                        DataRegistryListenerManager.ChangeType.UPDATE, source);
+                if (listener != null)
                 {
-                    myListenerManager.notifyAddsOrUpdates(cacheModificationReport, ids, input,
-                            cacheModificationReport.filterAccessors(accessors), DataRegistryListenerManager.ChangeType.UPDATE,
-                            source);
-                    if (listener != null)
-                    {
-                        listener.cacheModified(cacheModificationReport);
-                    }
+                    listener.cacheModified(cmr);
                 }
             });
             if (LOGGER.isDebugEnabled())
@@ -674,11 +653,8 @@ public class DataRegistryImpl implements DataRegistry
                 {
                     throw new IllegalArgumentException("Cannot have more than one geometry accessor.");
                 }
-                else
-                {
-                    foundGeometryAccessor = true;
-                    foundIntervalAccessor = true;
-                }
+                foundGeometryAccessor = true;
+                foundIntervalAccessor = true;
             }
             else if (accessor instanceof IntervalPropertyAccessor)
             {
@@ -704,18 +680,13 @@ public class DataRegistryImpl implements DataRegistry
 
             final DataRegistryListenerManager.ChangeType changeType = insert.isNew() ? DataRegistryListenerManager.ChangeType.ADD
                     : DataRegistryListenerManager.ChangeType.UPDATE;
-            long[] ids = myCache.put(insert, new CacheModificationListener()
+            long[] ids = myCache.put(insert, cmr ->
             {
-                @Override
-                public void cacheModified(CacheModificationReport cacheModificationReport)
+                myListenerManager.notifyAddsOrUpdates(cmr, cmr.getIds(), insert.getInput(),
+                        cmr.filterAccessors(insert.getAccessors()), changeType, source);
+                if (listener != null)
                 {
-                    myListenerManager.notifyAddsOrUpdates(cacheModificationReport, cacheModificationReport.getIds(),
-                            insert.getInput(), cacheModificationReport.filterAccessors(insert.getAccessors()), changeType,
-                            source);
-                    if (listener != null)
-                    {
-                        listener.cacheModified(cacheModificationReport);
-                    }
+                    listener.cacheModified(cmr);
                 }
             });
 
@@ -869,7 +840,8 @@ public class DataRegistryImpl implements DataRegistry
      *             serializable.
      */
     private Collection<? extends MutableQueryTracker> determineCacheSatisfactions(MultiQueryTracker tracker,
-            List<IntervalPropertyValueSet> unsatisfied) throws NotSerializableException, CacheException
+            List<IntervalPropertyValueSet> unsatisfied)
+                    throws NotSerializableException, CacheException
     {
         Collection<MutableQueryTracker> cacheTrackers;
         if (tracker.isIntervalQuery())
@@ -974,15 +946,15 @@ public class DataRegistryImpl implements DataRegistry
 
                 MutableQueryTracker subTracker = CollectionUtilities.hasContent(satisfactions)
                         ? tracker.createSubTracker(false, satisfactions) : null;
-                if (subTracker != null)
-                {
-                    dataProviders.add(Pair.create(dp, subTracker));
-                }
+                        if (subTracker != null)
+                        {
+                            dataProviders.add(Pair.create(dp, subTracker));
+                        }
 
-                for (Satisfaction satisfaction : satisfactions)
-                {
-                    IntervalPropertyValueSet.subtract(unsatisfied, satisfaction.getIntervalPropertyValueSet());
-                }
+                        for (Satisfaction satisfaction : satisfactions)
+                        {
+                            IntervalPropertyValueSet.subtract(unsatisfied, satisfaction.getIntervalPropertyValueSet());
+                        }
             }
             else
             {
@@ -1085,23 +1057,13 @@ public class DataRegistryImpl implements DataRegistry
      */
     private boolean performCacheQuery(final MutableQueryTracker cacheTracker, boolean synchronous)
     {
-        Runnable r = cacheTracker.wrapRunnable(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                performCacheQuery(cacheTracker);
-            }
-        });
+        Runnable r = cacheTracker.wrapRunnable(() -> performCacheQuery(cacheTracker));
         if (synchronous)
         {
             r.run();
             return cacheTracker.getIds().length > 0;
         }
-        else
-        {
-            myExecutor.execute(r);
-        }
+        myExecutor.execute(r);
         return false;
     }
 
@@ -1117,7 +1079,8 @@ public class DataRegistryImpl implements DataRegistry
      * @throws CacheException If the properties cannot be retrieved.
      */
     private int retrievePropertyValues(MutableQueryTracker tracker, int startIndex, long[] ids,
-            Collection<? extends PropertyValueReceiver<?>> receivers) throws CacheException
+            Collection<? extends PropertyValueReceiver<?>> receivers)
+                    throws CacheException
     {
         if (tracker.isCancelled())
         {
@@ -1214,14 +1177,7 @@ public class DataRegistryImpl implements DataRegistry
             }
         }
 
-        Runnable runner = tracker.wrapRunnable(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                performQuery(tracker, cacheOnly, synchronous);
-            }
-        });
+        Runnable runner = tracker.wrapRunnable(() -> performQuery(tracker, cacheOnly, synchronous));
 
         if (synchronous)
         {
@@ -1273,8 +1229,8 @@ public class DataRegistryImpl implements DataRegistry
     }
 
     /**
-     * Implementation of {@link io.opensphere.core.data.util.Satisfaction}
-     * that tracks the ids that satisfy the query.
+     * Implementation of {@link io.opensphere.core.data.util.Satisfaction} that
+     * tracks the ids that satisfy the query.
      */
     protected static class IdSatisfaction extends SingleSatisfaction
     {

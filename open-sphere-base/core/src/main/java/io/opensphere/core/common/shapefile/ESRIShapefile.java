@@ -192,7 +192,7 @@ public class ESRIShapefile implements Collection<ShapefileRecord>
      * @throws IOException if an error occurs while processing the Zip.
      */
     public static ESRIShapefile createFromZipFile(ZipInputStream zipStream, String outputDir, boolean inDeleteFiles)
-        throws IOException
+            throws IOException
     {
         ESRIShapefile shapefile = null;
         List<File> tempFiles = new ArrayList<>();

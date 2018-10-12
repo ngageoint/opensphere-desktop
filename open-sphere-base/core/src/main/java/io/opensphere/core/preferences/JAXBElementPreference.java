@@ -34,10 +34,7 @@ class JAXBElementPreference<T> extends Preference<T>
         {
             return XMLUtilities.marshalJAXBObjectToElement(getData());
         }
-        else
-        {
-            return (Element)getData();
-        }
+        return (Element)getData();
     }
 
     @Override
@@ -49,12 +46,9 @@ class JAXBElementPreference<T> extends Preference<T>
         {
             return ((JAXBElement<T>)data).getValue();
         }
-        else
+        synchronized (data)
         {
-            synchronized (data)
-            {
-                return (T)XMLUtilities.readXMLObject((Element)data, JAXBElement.class).getValue();
-            }
+            return (T)XMLUtilities.readXMLObject((Element)data, JAXBElement.class).getValue();
         }
     }
 }

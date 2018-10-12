@@ -81,7 +81,7 @@ public class UrlModel extends TextModel
 
             @Override
             public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
-                throws BadLocationException
+                    throws BadLocationException
             {
                 if (StringUtils.isEmpty(text))
                 {
@@ -148,7 +148,7 @@ public class UrlModel extends TextModel
     private void setValidator()
     {
         Collection<PredicateWithMessage<? super String>> predicates = New.collection(2);
-        predicates.add(new WrappedPredicateWithMessage<String>(new ValidURLPredicate())
+        predicates.add(new WrappedPredicateWithMessage<>(new ValidURLPredicate())
         {
             @Override
             public String getMessage()
@@ -171,6 +171,6 @@ public class UrlModel extends TextModel
             }
         });
         PredicateWithMessage<String> predicate = new CompoundPredicateWithMessage<>(predicates);
-        setValidatorSupport(new ObservableValueValidatorSupport<String>(this, predicate));
+        setValidatorSupport(new ObservableValueValidatorSupport<>(this, predicate));
     }
 }

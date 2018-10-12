@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
 
-import net.jcip.annotations.NotThreadSafe;
 import javax.xml.namespace.NamespaceContext;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.collections.PredicateIterator;
+import net.jcip.annotations.NotThreadSafe;
 
 /**
  * An implementation for {@link NamespaceContext} that allows adding namespaces
@@ -54,15 +54,8 @@ public class MutableNamespaceContext implements NamespaceContext
     @Override
     public Iterator<String> getPrefixes(final String namespaceURI)
     {
-        Predicate<Entry<String, String>> predicate = new Predicate<Entry<String, String>>()
-        {
-            @Override
-            public boolean test(Entry<String, String> input)
-            {
-                return input.getValue().equals(namespaceURI);
-            }
-        };
-        return new PredicateIterator<Entry<String, String>, String>(myMap.entrySet().iterator(), predicate)
+        Predicate<Entry<String, String>> predicate = input -> input.getValue().equals(namespaceURI);
+        return new PredicateIterator<>(myMap.entrySet().iterator(), predicate)
         {
             @Override
             protected String convert(Entry<String, String> obj)

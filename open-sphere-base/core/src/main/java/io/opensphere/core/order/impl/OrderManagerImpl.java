@@ -13,7 +13,6 @@ import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
-import gnu.trove.procedure.TIntObjectProcedure;
 import io.opensphere.core.order.OrderCategory;
 import io.opensphere.core.order.OrderChangeListener;
 import io.opensphere.core.order.OrderManager;
@@ -112,14 +111,10 @@ public class OrderManagerImpl implements OrderManager
 
         if (participants != null)
         {
-            participants.forEachEntry(new TIntObjectProcedure<OrderParticipantKey>()
+            participants.forEachEntry((key, value) ->
             {
-                @Override
-                public boolean execute(int key, OrderParticipantKey value)
-                {
-                    insertParticipant(value, key);
-                    return true;
-                }
+                insertParticipant(value, key);
+                return true;
             });
         }
     }
@@ -406,10 +401,7 @@ public class OrderManagerImpl implements OrderManager
             // The participant is already in the desired spot.
             return currentOrder;
         }
-        else
-        {
-            removeParticipant(participant);
-        }
+        removeParticipant(participant);
 
         int assignedOrder;
         TObjectIntMap<OrderParticipantKey> moved = new TObjectIntHashMap<>(Math.abs(referenceOrder - currentOrder));
@@ -477,10 +469,7 @@ public class OrderManagerImpl implements OrderManager
             // The participant is already in the desired spot.
             return currentOrder;
         }
-        else
-        {
-            removeParticipant(participant);
-        }
+        removeParticipant(participant);
 
         int assignedOrder;
         TObjectIntMap<OrderParticipantKey> moved = new TObjectIntHashMap<>(Math.abs(referenceOrder - currentOrder));
@@ -657,22 +646,7 @@ public class OrderManagerImpl implements OrderManager
     {
         // Use an executor here since this may be on the AWT thread when changes
         // are a result of GUI interaction.
-        myNotificationExecutor.execute(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                ChangeSupport.Callback<OrderChangeListener> callback = new ChangeSupport.Callback<OrderChangeListener>()
-                {
-                    @Override
-                    public void notify(OrderChangeListener listener)
-                    {
-                        listener.orderChanged(event);
-                    }
-                };
-                myChangeSupport.notifyListeners(callback);
-            }
-        });
+        myNotificationExecutor.execute(() -> myChangeSupport.notifyListeners(listener -> listener.orderChanged(event)));
     }
 
     /**

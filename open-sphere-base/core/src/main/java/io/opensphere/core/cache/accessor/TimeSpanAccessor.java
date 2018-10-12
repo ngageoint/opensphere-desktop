@@ -11,7 +11,7 @@ import io.opensphere.core.model.time.TimeSpan;
  * @param <S> The type of object that provides the property values.
  */
 public abstract class TimeSpanAccessor<S> extends AbstractIntervalPropertyAccessor<S, TimeSpan>
-        implements PersistentPropertyAccessor<S, TimeSpan>
+implements PersistentPropertyAccessor<S, TimeSpan>
 {
     /** The property descriptor. */
     public static final PropertyDescriptor<TimeSpan> PROPERTY_DESCRIPTOR;

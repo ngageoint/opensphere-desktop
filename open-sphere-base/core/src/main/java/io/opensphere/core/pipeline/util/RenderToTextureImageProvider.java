@@ -14,14 +14,13 @@ import io.opensphere.core.image.Image;
 import io.opensphere.core.image.ImmediateImageProvider;
 import io.opensphere.core.image.ObservableImageProvider;
 import io.opensphere.core.util.ChangeSupport;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.WeakChangeSupport;
 
 /**
  * Provide the texture which was generated as the texture for the tile.
  */
 public class RenderToTextureImageProvider
-        implements ImageGroupProvider<Void>, ImmediateImageProvider<Void>, ObservableImageProvider<Void>
+implements ImageGroupProvider<Void>, ImmediateImageProvider<Void>, ObservableImageProvider<Void>
 {
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(RenderToTextureImageProvider.class);
@@ -139,14 +138,7 @@ public class RenderToTextureImageProvider
         }
         if (isReady())
         {
-            myChangeSupport.notifyListeners(new Callback<ObservableImageProvider.Observer>()
-            {
-                @Override
-                public void notify(ObservableImageProvider.Observer listener)
-                {
-                    listener.dataReady();
-                }
-            });
+            myChangeSupport.notifyListeners(listener -> listener.dataReady());
         }
     }
 

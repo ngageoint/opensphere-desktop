@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Executors;
@@ -344,11 +343,8 @@ public final class Launch
                 LOGGER.info("Memory test at " + maxMemory + " was successful.");
                 break;
             }
-            else
-            {
-                LOGGER.info("Memory test at " + maxMemory + " failed.");
-                maxMemory -= 128;
-            }
+            LOGGER.info("Memory test at " + maxMemory + " failed.");
+            maxMemory -= 128;
         }
 
         if (maxMemory < maxMemoryFloorMB)
@@ -472,7 +468,7 @@ public final class Launch
                     else
                     {
                         LOGGER.error("Attempted to use '" + preferredVersionDirectory.getAbsolutePath()
-                                + "' for launch location, but it doesn't exist as a directory.");
+                        + "' for launch location, but it doesn't exist as a directory.");
                     }
                 }
             }
@@ -601,17 +597,13 @@ public final class Launch
         final File file = myCurrentWorkingDirectory;
         if (file.isDirectory())
         {
-            final File[] files = file.listFiles(new FilenameFilter()
+            final File[] files = file.listFiles((FilenameFilter)(dir, name) ->
             {
-                @Override
-                public boolean accept(File dir, String name)
+                if (name.startsWith("config") && name.endsWith(".jar") || name.contains("-config-") && name.endsWith(".jar"))
                 {
-                    if (name.startsWith("config") && name.endsWith(".jar") || name.contains("-config-") && name.endsWith(".jar"))
-                    {
-                        return true;
-                    }
-                    return false;
+                    return true;
                 }
+                return false;
             });
             if (files != null)
             {
@@ -623,14 +615,7 @@ public final class Launch
                 {
                     LOGGER.warn("More than one config JAR found in installation directory, and no property set for "
                             + "'opensphere.launch.config'. Defaulting to newest file.");
-                    Arrays.sort(files, new Comparator<File>()
-                    {
-                        @Override
-                        public int compare(File o1, File o2)
-                        {
-                            return (int)(o2.lastModified() - o1.lastModified());
-                        }
-                    });
+                    Arrays.sort(files, (o1, o2) -> (int)(o2.lastModified() - o1.lastModified()));
                     returnValue = files[0].getName();
                 }
             }
@@ -663,17 +648,13 @@ public final class Launch
         final File file = myCurrentWorkingDirectory;
         if (file.isDirectory())
         {
-            final File[] files = file.listFiles(new FilenameFilter()
+            final File[] files = file.listFiles((FilenameFilter)(dir, name) ->
             {
-                @Override
-                public boolean accept(File dir, String name)
+                if (name.startsWith("suite") && name.endsWith(".jar") || name.contains("-suite-") && name.endsWith(".jar"))
                 {
-                    if (name.startsWith("suite") && name.endsWith(".jar") || name.contains("-suite-") && name.endsWith(".jar"))
-                    {
-                        return true;
-                    }
-                    return false;
+                    return true;
                 }
+                return false;
             });
             if (files != null)
             {
@@ -685,14 +666,7 @@ public final class Launch
                 {
                     LOGGER.warn("More than one suite JAR found in installation directory, and no property set for "
                             + "'opensphere.launch.version'. Defaulting to newest file.");
-                    Arrays.sort(files, new Comparator<File>()
-                    {
-                        @Override
-                        public int compare(File o1, File o2)
-                        {
-                            return (int)(o2.lastModified() - o1.lastModified());
-                        }
-                    });
+                    Arrays.sort(files, (o1, o2) -> (int)(o2.lastModified() - o1.lastModified()));
                     returnValue = files[0].getName();
                 }
             }
@@ -782,18 +756,15 @@ public final class Launch
                                     mySplashScreenActive = false;
                                     break;
                                 }
+                                final int ix = line.indexOf(SplashScreenManagerImpl.INIT_MESSAGE_PREFIX);
+                                if (ix >= 0)
+                                {
+                                    mySplashScreenManager.setInitMessage(
+                                            line.substring(ix + SplashScreenManagerImpl.INIT_MESSAGE_PREFIX.length()));
+                                }
                                 else
                                 {
-                                    final int ix = line.indexOf(SplashScreenManagerImpl.INIT_MESSAGE_PREFIX);
-                                    if (ix >= 0)
-                                    {
-                                        mySplashScreenManager.setInitMessage(
-                                                line.substring(ix + SplashScreenManagerImpl.INIT_MESSAGE_PREFIX.length()));
-                                    }
-                                    else
-                                    {
-                                        System.out.println(line);
-                                    }
+                                    System.out.println(line);
                                 }
                             }
                         }

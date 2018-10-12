@@ -24,7 +24,7 @@ final class ColumnMappingUtils
     {
         ColumnMappings copy = new ColumnMappings();
         copy.getColumnMapping()
-                .addAll(source.getColumnMapping().stream().map(ColumnMappingUtils::copy).collect(Collectors.toList()));
+        .addAll(source.getColumnMapping().stream().map(ColumnMappingUtils::copy).collect(Collectors.toList()));
         return copy;
     }
 

@@ -77,10 +77,7 @@ public class ImageGroup implements SizeProvider
             }
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     /**

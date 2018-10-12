@@ -25,15 +25,11 @@ public class ObservableValueListenerHandle<T> implements Service
     public ObservableValueListenerHandle(ObservableValue<T> observable, final ChangeListener<? super T> listener)
     {
         myObservable = observable;
-        myListener = new ChangeListener<T>()
+        myListener = (value, oldValue, newValue) ->
         {
-            @Override
-            public void changed(ObservableValue<? extends T> value, T oldValue, T newValue)
+            if (myHandleEvent)
             {
-                if (myHandleEvent)
-                {
-                    listener.changed(value, oldValue, newValue);
-                }
+                listener.changed(value, oldValue, newValue);
             }
         };
     }

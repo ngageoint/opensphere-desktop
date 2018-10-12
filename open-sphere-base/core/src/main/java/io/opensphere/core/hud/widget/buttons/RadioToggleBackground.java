@@ -71,7 +71,7 @@ public class RadioToggleBackground extends Renderable
         ScreenPosition center = new ScreenPosition(Math.round(bbox.getCenter().getX()), Math.round(bbox.getCenter().getY()));
         final int vertexCount = Math.min(37, (ourCircleRadius + 2) * 2);
 
-        CircularMeshGeometry.Builder<ScreenPosition> circBldr = new CircularMeshGeometry.Builder<ScreenPosition>();
+        CircularMeshGeometry.Builder<ScreenPosition> circBldr = new CircularMeshGeometry.Builder<>();
         circBldr.setCenter(center);
         circBldr.setWarpFactor(ourWarpFactor);
         circBldr.setNumVertices(vertexCount);
@@ -84,7 +84,7 @@ public class RadioToggleBackground extends Renderable
         myMouseSupport.setActionGeometry(buttonBg);
         getGeometries().add(buttonBg);
 
-        EllipseGeometry.AngleBuilder<ScreenPosition> builder = new EllipseGeometry.AngleBuilder<ScreenPosition>();
+        EllipseGeometry.AngleBuilder<ScreenPosition> builder = new EllipseGeometry.AngleBuilder<>();
         builder.setAngle(0.);
         builder.setCenter(center);
         builder.setSemiMajorAxis(ourCircleRadius);

@@ -40,7 +40,7 @@ public final class GdalIOUtilities
       ],
       AUTHORITY["EPSG","4326"]
     ]
-    */
+     */
     //@formatter:on
     /** "Well Known Text" String for the projection in standard use. */
     private static final String WGS_84_WKT = "GEOGCS[\"WGS 84\","

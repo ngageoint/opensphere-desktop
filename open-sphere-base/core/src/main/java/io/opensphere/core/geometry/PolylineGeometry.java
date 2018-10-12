@@ -248,10 +248,7 @@ public class PolylineGeometry extends AbstractColorGeometry
         {
             return boundingBox.overlaps(BoundingBoxes.getMinimumBoundingBox((Collection<? extends T>)getVertices()), tolerance);
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     @Override
@@ -265,7 +262,7 @@ public class PolylineGeometry extends AbstractColorGeometry
     @Override
     protected Builder<? extends Position> createRawBuilder()
     {
-        return new Builder<Position>();
+        return new Builder<>();
     }
 
     /**

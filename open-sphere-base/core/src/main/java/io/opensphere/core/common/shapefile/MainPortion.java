@@ -117,7 +117,7 @@ class MainPortion implements Collection<ShapeRecord>
          * @throws IllegalArgumentException
          */
         public boolean parseRecord(ByteBuffer buffer) throws InstantiationException, IllegalAccessException,
-            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
+        IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
         {
             boolean returnValue = true;
 
@@ -143,7 +143,7 @@ class MainPortion implements Collection<ShapeRecord>
         {
             boolean returnValue = true;
 
-//            System.out.println("Starting Record " + recNumber + " At Pos: " + channel.position() );
+            //            System.out.println("Starting Record " + recNumber + " At Pos: " + channel.position() );
 
             channel.write(getAsByteBuffer(recNumber));
 
@@ -303,93 +303,93 @@ class MainPortion implements Collection<ShapeRecord>
      * @throws IOException
      *
      * @throws FileNotFoundException *//* public boolean writeToFiles( String
-                                        * filePath, String fileNamePrefix )
-                                        * throws IOException,
-                                        * FileNotFoundException { boolean
-                                        * returnValue = true;
-                                        *
-                                        * if ( this.index == null && records !=
-                                        * null ) setShapes(records);
-                                        *
-                                        * File shpFile = new File( filePath +
-                                        * File.separator + fileNamePrefix +
-                                        * ".shp"); File shxFile = new File(
-                                        * filePath + File.separator +
-                                        * fileNamePrefix + ".shx");
-                                        *
-                                        * // TODO: Write the main file.
-                                        * FileOutputStream shpFOS = new
-                                        * FileOutputStream(shpFile); FileChannel
-                                        * shpChannel = shpFOS.getChannel(); try
-                                        * { // System.out.
-                                        * println("Writing Main File: ");
-                                        * this.header.writeHeader(shpChannel);
-                                        * // TODO clean up inefficiencies for (
-                                        * int i = 0; i < records.size(); i++ )
-                                        * records.get(i).writeRecord(i+1,
-                                        * shpChannel); } finally {
-                                        * shpChannel.close(); }
-                                        *
-                                        * // Write out the index file
-                                        * FileOutputStream shxFOS = new
-                                        * FileOutputStream(shxFile);
-                                        * this.index.writeFile(shxFOS);
-                                        *
-                                        * return returnValue; }
-                                        *
-                                        * /** Gets an array of byte buffers.
-                                        *
-                                        * @return ByteBuffer[] always length of
-                                        * 2 Index 0: shp ByteBuffer Index 1: shx
-                                        * ByteBuffer *//* public ByteBuffer[]
-                                                        * getAsByteBuffer() {
-                                                        * ByteBuffer[] buffArray
-                                                        * = new ByteBuffer[2];
-                                                        * int allocateSize =
-                                                        * ShapeHeader.
-                                                        * HEADER_SIZE;
-                                                        * List<ByteBuffer>
-                                                        * recordBuffs = new
-                                                        * ArrayList<ByteBuffer>(
-                                                        * ); //Capture all of
-                                                        * the record byte
-                                                        * buffers so that we can
-                                                        * //calculate an
-                                                        * allocation size, and
-                                                        * add to the overall
-                                                        * //shpBuffer
-                                                        *
-                                                        * // TODO Do we really
-                                                        * need all this copying?
-                                                        * for ( int i = 0; i <
-                                                        * records.size(); i++ )
-                                                        * { ByteBuffer
-                                                        * recordBuff =
-                                                        * records.get(i).
-                                                        * getAsByteBuffer(i+1);
-                                                        * recordBuffs.add(
-                                                        * recordBuff);
-                                                        * allocateSize +=
-                                                        * recordBuff.limit(); }
-                                                        * ByteBuffer shpBuffer =
-                                                        * ByteBuffer.allocate(
-                                                        * allocateSize);
-                                                        * shpBuffer.put(this.
-                                                        * header.getAsByteBuffer
-                                                        * ()); for (ByteBuffer
-                                                        * recordBuff:
-                                                        * recordBuffs) {
-                                                        * shpBuffer.put(
-                                                        * recordBuff); }
-                                                        * shpBuffer.flip();
-                                                        * buffArray[0] =
-                                                        * shpBuffer;
-                                                        *
-                                                        * //Add the shx byte
-                                                        * buffer buffArray[1] =
-                                                        * this.index.
-                                                        * getAsByteBuffer();
-                                                        * return buffArray; } */
+     * filePath, String fileNamePrefix )
+     * throws IOException,
+     * FileNotFoundException { boolean
+     * returnValue = true;
+     *
+     * if ( this.index == null && records !=
+     * null ) setShapes(records);
+     *
+     * File shpFile = new File( filePath +
+     * File.separator + fileNamePrefix +
+     * ".shp"); File shxFile = new File(
+     * filePath + File.separator +
+     * fileNamePrefix + ".shx");
+     *
+     * // TODO: Write the main file.
+     * FileOutputStream shpFOS = new
+     * FileOutputStream(shpFile); FileChannel
+     * shpChannel = shpFOS.getChannel(); try
+     * { // System.out.
+     * println("Writing Main File: ");
+     * this.header.writeHeader(shpChannel);
+     * // TODO clean up inefficiencies for (
+     * int i = 0; i < records.size(); i++ )
+     * records.get(i).writeRecord(i+1,
+     * shpChannel); } finally {
+     * shpChannel.close(); }
+     *
+     * // Write out the index file
+     * FileOutputStream shxFOS = new
+     * FileOutputStream(shxFile);
+     * this.index.writeFile(shxFOS);
+     *
+     * return returnValue; }
+     *
+     * /** Gets an array of byte buffers.
+     *
+     * @return ByteBuffer[] always length of
+     * 2 Index 0: shp ByteBuffer Index 1: shx
+     * ByteBuffer *//* public ByteBuffer[]
+     * getAsByteBuffer() {
+     * ByteBuffer[] buffArray
+     * = new ByteBuffer[2];
+     * int allocateSize =
+     * ShapeHeader.
+     * HEADER_SIZE;
+     * List<ByteBuffer>
+     * recordBuffs = new
+     * ArrayList<ByteBuffer>(
+     * ); //Capture all of
+     * the record byte
+     * buffers so that we can
+     * //calculate an
+     * allocation size, and
+     * add to the overall
+     * //shpBuffer
+     *
+     * // TODO Do we really
+     * need all this copying?
+     * for ( int i = 0; i <
+     * records.size(); i++ )
+     * { ByteBuffer
+     * recordBuff =
+     * records.get(i).
+     * getAsByteBuffer(i+1);
+     * recordBuffs.add(
+     * recordBuff);
+     * allocateSize +=
+     * recordBuff.limit(); }
+     * ByteBuffer shpBuffer =
+     * ByteBuffer.allocate(
+     * allocateSize);
+     * shpBuffer.put(this.
+     * header.getAsByteBuffer
+     * ()); for (ByteBuffer
+     * recordBuff:
+     * recordBuffs) {
+     * shpBuffer.put(
+     * recordBuff); }
+     * shpBuffer.flip();
+     * buffArray[0] =
+     * shpBuffer;
+     *
+     * //Add the shx byte
+     * buffer buffArray[1] =
+     * this.index.
+     * getAsByteBuffer();
+     * return buffArray; } */
     boolean doPrep() throws IOException
     {
         boolean returnValue = true;
@@ -669,104 +669,104 @@ class MainPortion implements Collection<ShapeRecord>
     }
 
     /*    *//**
-             * Sets the main portion for this ShapeFile, an IndexPortion and
-             * Header are auto-generated to match the MainPortionRecord list and
-             * Header.
-             *
-             * @param header
-             * @param records
-             * @throws UnsupportedDataTypeException if the record types in the
-             *             array are not yet supported
-             * @throws IllegalArgumentException if records does not contain at
-             *             least one record or if the list of records does not
-             *             contain all of the same type of shape.
-             * @throws NullPointerException if records is null or any value in
-             *             records is null
-             *//* public void setShapes( LinkedList<MainPortionRecord> shapes )
-                * { if ( shapes == null ) throw new NullPointerException();
-                *
-                * if ( shapes.size() <= 0 ) throw new
-                * IllegalArgumentException();
-                *
-                * records = (LinkedList<MainPortionRecord>) shapes.clone();
-                *
-                * int shapeType =
-                * records.peekFirst().getRecord().getShapeType();
-                *
-                * // Assume all shapeType are the same since that is the
-                * standard. // To store the bounding box for the header double[]
-                * bbox = new double[8];
-                *
-                * // Prep the bounding box values // Xmin bbox[0] =
-                * Double.MAX_VALUE; // Ymin bbox[1] = Double.MAX_VALUE; // Xmax
-                * bbox[2] = Double.MIN_VALUE; // Ymax bbox[3] =
-                * Double.MIN_VALUE; bbox[4] = 0.0; bbox[5] = 0.0; bbox[6] = 0.0;
-                * bbox[7] = 0.0;
-                *
-                * // Prep Z Min and Max only if we're using a Z type shape. if (
-                * shapeType == 11 || shapeType == 13 || shapeType == 15 ||
-                * shapeType == 18) { // Zmin bbox[4] = Double.MAX_VALUE; // Zmax
-                * bbox[5] = Double.MIN_VALUE; }
-                *
-                * // Prep Do M Min and Max only if we're using a M type shape.
-                * if ( shapeType == 23 || shapeType == 21 || shapeType == 25 ||
-                * shapeType == 28) { // Mmin bbox[6] = Double.MAX_VALUE; // Mmax
-                * bbox[7] = Double.MIN_VALUE; }
-                *
-                * // Inital 50 for header. int fileLength = 50;
-                *
-                * //for ( int i = 0; i < this.records.length; i++ ) // Last
-                * chance before writing, make sure all the right components are
-                * // correctly populated. This method is intentionally
-                * inefficient int numRecords = 0; for ( MainPortionRecord record
-                * : records ) { if ( record.getRecord().getShapeType() !=
-                * shapeType ) throw new
-                * IllegalArgumentException("Mixed Shape Types Detected, This is not allowed"
-                * );
-                *
-                * ShapeRecord rec = record.getRecord();
-                *
-                * //Ensure mainportion record has the size component
-                * record.contentLength = rec.getContentLengthInWords();
-                *
-                * // Make sure record numbers and content length are set
-                * properly. record.recordNumber = ++numRecords;
-                * record.contentLength =
-                * record.getRecord().getContentLengthInWords(); fileLength += 4
-                * + record.contentLength;
-                *
-                * double[] shapeBBox = rec.getBox();
-                *
-                * // Modify summary bounding boxes if necessary if ( shapeBBox
-                * != null ) { // Adjust bounding region if necessary if (
-                * shapeBBox[0] < bbox[0] ) // Xmin bbox[0] = shapeBBox[0];
-                *
-                * if ( shapeBBox[2] > bbox[2] ) // Xmax bbox[2] = shapeBBox[2];
-                *
-                * if ( shapeBBox[1] < bbox[1] ) // Ymin bbox[1] = shapeBBox[1];
-                *
-                * if ( shapeBBox[3] > bbox[3] ) // Ymax bbox[3] = shapeBBox[3];
-                * }
-                *
-                * // Modify measurment bounds if necessary if ( rec instanceof
-                * MeasureMinMax ) { MeasureMinMax recM = (MeasureMinMax)rec;
-                *
-                * if ( recM.getMeasurementMin() < bbox[4] ) bbox[4] =
-                * recM.getMeasurementMin();
-                *
-                * if ( recM.getMeasurementMax() > bbox[5] ) bbox[5] =
-                * recM.getMeasurementMax(); }
-                *
-                * // Modify Z bounds if necessary if ( rec instanceof ZMinMax )
-                * { ZMinMax recM = (ZMinMax)rec;
-                *
-                * if ( recM.getZMin() < bbox[4] ) bbox[4] = recM.getZMin();
-                *
-                * if ( recM.getZMax() > bbox[5] ) bbox[5] = recM.getZMax(); } }
-                *
-                * this.header = new ShapeHeader(fileLength,shapeType, bbox);
-                * //this.index = new IndexPortion(this.header,this.records);
-                * } */
+     * Sets the main portion for this ShapeFile, an IndexPortion and
+     * Header are auto-generated to match the MainPortionRecord list and
+     * Header.
+     *
+     * @param header
+     * @param records
+     * @throws UnsupportedDataTypeException if the record types in the
+     *             array are not yet supported
+     * @throws IllegalArgumentException if records does not contain at
+     *             least one record or if the list of records does not
+     *             contain all of the same type of shape.
+     * @throws NullPointerException if records is null or any value in
+     *             records is null
+     *//* public void setShapes( LinkedList<MainPortionRecord> shapes )
+     * { if ( shapes == null ) throw new NullPointerException();
+     *
+     * if ( shapes.size() <= 0 ) throw new
+     * IllegalArgumentException();
+     *
+     * records = (LinkedList<MainPortionRecord>) shapes.clone();
+     *
+     * int shapeType =
+     * records.peekFirst().getRecord().getShapeType();
+     *
+     * // Assume all shapeType are the same since that is the
+     * standard. // To store the bounding box for the header double[]
+     * bbox = new double[8];
+     *
+     * // Prep the bounding box values // Xmin bbox[0] =
+     * Double.MAX_VALUE; // Ymin bbox[1] = Double.MAX_VALUE; // Xmax
+     * bbox[2] = Double.MIN_VALUE; // Ymax bbox[3] =
+     * Double.MIN_VALUE; bbox[4] = 0.0; bbox[5] = 0.0; bbox[6] = 0.0;
+     * bbox[7] = 0.0;
+     *
+     * // Prep Z Min and Max only if we're using a Z type shape. if (
+     * shapeType == 11 || shapeType == 13 || shapeType == 15 ||
+     * shapeType == 18) { // Zmin bbox[4] = Double.MAX_VALUE; // Zmax
+     * bbox[5] = Double.MIN_VALUE; }
+     *
+     * // Prep Do M Min and Max only if we're using a M type shape.
+     * if ( shapeType == 23 || shapeType == 21 || shapeType == 25 ||
+     * shapeType == 28) { // Mmin bbox[6] = Double.MAX_VALUE; // Mmax
+     * bbox[7] = Double.MIN_VALUE; }
+     *
+     * // Inital 50 for header. int fileLength = 50;
+     *
+     * //for ( int i = 0; i < this.records.length; i++ ) // Last
+     * chance before writing, make sure all the right components are
+     * // correctly populated. This method is intentionally
+     * inefficient int numRecords = 0; for ( MainPortionRecord record
+     * : records ) { if ( record.getRecord().getShapeType() !=
+     * shapeType ) throw new
+     * IllegalArgumentException("Mixed Shape Types Detected, This is not allowed"
+     * );
+     *
+     * ShapeRecord rec = record.getRecord();
+     *
+     * //Ensure mainportion record has the size component
+     * record.contentLength = rec.getContentLengthInWords();
+     *
+     * // Make sure record numbers and content length are set
+     * properly. record.recordNumber = ++numRecords;
+     * record.contentLength =
+     * record.getRecord().getContentLengthInWords(); fileLength += 4
+     * + record.contentLength;
+     *
+     * double[] shapeBBox = rec.getBox();
+     *
+     * // Modify summary bounding boxes if necessary if ( shapeBBox
+     * != null ) { // Adjust bounding region if necessary if (
+     * shapeBBox[0] < bbox[0] ) // Xmin bbox[0] = shapeBBox[0];
+     *
+     * if ( shapeBBox[2] > bbox[2] ) // Xmax bbox[2] = shapeBBox[2];
+     *
+     * if ( shapeBBox[1] < bbox[1] ) // Ymin bbox[1] = shapeBBox[1];
+     *
+     * if ( shapeBBox[3] > bbox[3] ) // Ymax bbox[3] = shapeBBox[3];
+     * }
+     *
+     * // Modify measurment bounds if necessary if ( rec instanceof
+     * MeasureMinMax ) { MeasureMinMax recM = (MeasureMinMax)rec;
+     *
+     * if ( recM.getMeasurementMin() < bbox[4] ) bbox[4] =
+     * recM.getMeasurementMin();
+     *
+     * if ( recM.getMeasurementMax() > bbox[5] ) bbox[5] =
+     * recM.getMeasurementMax(); }
+     *
+     * // Modify Z bounds if necessary if ( rec instanceof ZMinMax )
+     * { ZMinMax recM = (ZMinMax)rec;
+     *
+     * if ( recM.getZMin() < bbox[4] ) bbox[4] = recM.getZMin();
+     *
+     * if ( recM.getZMax() > bbox[5] ) bbox[5] = recM.getZMax(); } }
+     *
+     * this.header = new ShapeHeader(fileLength,shapeType, bbox);
+     * //this.index = new IndexPortion(this.header,this.records);
+     * } */
 
     /**
      * Retrieves all of the shapes in the main portion

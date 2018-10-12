@@ -4,8 +4,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Phaser;
 import java.util.concurrent.atomic.AtomicReference;
 
-import net.jcip.annotations.ThreadSafe;
-
 import io.opensphere.core.util.PropertyChangeException;
 import io.opensphere.core.util.ReferenceService;
 import io.opensphere.core.util.Service;
@@ -14,6 +12,7 @@ import io.opensphere.core.util.ThreePhaseProperty;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.ref.Reference;
 import io.opensphere.core.util.ref.WeakReference;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * A property that supports notifying listeners during a change to its value,
@@ -50,7 +49,7 @@ public class CancellableThreePhaseProperty<S>
      */
     public void addListener(CancellableThreePhasePropertyListener<S, CancellableThreePhaseProperty<S>> listener)
     {
-        myProperty.addListener(new ListenerAdapter<S, CancellableThreePhaseProperty<S>>(this, listener));
+        myProperty.addListener(new ListenerAdapter<>(this, listener));
     }
 
     /**
@@ -78,7 +77,7 @@ public class CancellableThreePhaseProperty<S>
     public ReferenceService<ThreePhaseChangeListener<S>> getListenerService(
             CancellableThreePhasePropertyListener<S, CancellableThreePhaseProperty<S>> listener)
     {
-        return myProperty.getListenerService(new ListenerAdapter<S, CancellableThreePhaseProperty<S>>(this, listener));
+        return myProperty.getListenerService(new ListenerAdapter<>(this, listener));
     }
 
     /**
@@ -110,7 +109,7 @@ public class CancellableThreePhaseProperty<S>
     public void removeListener(CancellableThreePhasePropertyListener<S, ? extends CancellableThreePhaseProperty<S>> listener)
     {
         myProperty.removeListener(
-            l -> l instanceof ListenerAdapter && Utilities.sameInstance(((ListenerAdapter<?, ?>)l).myListener, listener));
+                l -> l instanceof ListenerAdapter && Utilities.sameInstance(((ListenerAdapter<?, ?>)l).myListener, listener));
     }
 
     /**
@@ -132,7 +131,7 @@ public class CancellableThreePhaseProperty<S>
      */
     @SuppressWarnings("PMD.AvoidRethrowingException")
     public boolean setValue(S value, long perPhaseTimeoutMillis, boolean failOnTimeout)
-        throws PropertyChangeException, InterruptedException
+            throws PropertyChangeException, InterruptedException
     {
         TaskCanceller canceller = new TaskCanceller();
         TaskCanceller existing = myCanceller.getAndSet(canceller);
@@ -218,7 +217,7 @@ public class CancellableThreePhaseProperty<S>
          * @throws InterruptedException If the thread is interrupted.
          */
         boolean preCommit(T property, S pendingState, PhasedTaskCanceller canceller)
-            throws PropertyChangeException, InterruptedException;
+                throws PropertyChangeException, InterruptedException;
 
         /**
          * Request that the listener count down the latch when it is prepared to
@@ -238,7 +237,7 @@ public class CancellableThreePhaseProperty<S>
          * @throws InterruptedException If the thread is interrupted.
          */
         boolean prepare(T property, S pendingState, PhasedTaskCanceller canceller)
-            throws PropertyChangeException, InterruptedException;
+                throws PropertyChangeException, InterruptedException;
     }
 
     /**
@@ -250,7 +249,7 @@ public class CancellableThreePhaseProperty<S>
      *            to a {@link ThreePhaseChangeListener}.
      */
     protected static final class ListenerAdapter<S, T extends CancellableThreePhaseProperty<S>>
-            implements ThreePhaseChangeListener<S>
+    implements ThreePhaseChangeListener<S>
     {
         /** The wrapped listener. */
         private final Reference<CancellableThreePhasePropertyListener<S, T>> myListener;

@@ -136,7 +136,7 @@ public class TileData implements SizeProvider, AbstractRenderer.ModelData
             else
             {
                 assert !textureCoords.isEmpty();
-                myTextureCoords = Collections.unmodifiableList(new ArrayList<Vector2d>(textureCoords));
+                myTextureCoords = Collections.unmodifiableList(new ArrayList<>(textureCoords));
             }
         }
 

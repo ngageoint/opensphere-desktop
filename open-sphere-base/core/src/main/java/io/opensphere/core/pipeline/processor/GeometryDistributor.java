@@ -14,7 +14,6 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import net.jcip.annotations.GuardedBy;
 import javax.media.opengl.GL;
 
 import org.apache.log4j.Logger;
@@ -50,6 +49,7 @@ import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.core.viewer.ViewChangeSupport.ViewChangeType;
 import io.opensphere.core.viewer.Viewer;
 import io.opensphere.core.viewer.impl.MapContext;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Organize and group geometries to send to the various assorted processors.
@@ -331,7 +331,7 @@ public class GeometryDistributor
     /** A snapshot of the latest collection of geometry processors. */
     @GuardedBy("myProcessorsLock")
     private volatile Collection<? extends GeometryProcessor<? extends Geometry>> myGeometryProcessorsSnapshot = Collections
-            .emptyList();
+    .emptyList();
 
     /**
      * Geometries which have been sorted by key, but do not need to be processed
@@ -367,7 +367,7 @@ public class GeometryDistributor
      */
     @GuardedBy("mySpecializedProcessorsLock")
     private final Map<ProcessorDistributionKey, GeometryProcessor<? extends Geometry>> myProjectionSensitiveProcessors = New
-            .map();
+    .map();
 
     /** The manager for synchronizing projection changes in the processors. */
     private final ProjectionSyncManager myProjectionSyncManager = new ProjectionSyncManager();
@@ -379,7 +379,7 @@ public class GeometryDistributor
      */
     @GuardedBy("mySpecializedProcessorsLock")
     private final Map<ProcessorDistributionKey, RenderableGeometryProcessor<? extends Geometry>> myRenderableGeometryProcessors = New
-            .naturalOrderMap();
+    .naturalOrderMap();
 
     /** The pipeline repaint listener. */
     private final RepaintListener myRepaintListener;
@@ -662,7 +662,7 @@ public class GeometryDistributor
         try
         {
             sb.append("unprocessed [").append(myUnprocessedAdds.size()).append("] inactive [").append(myInactiveGeometries.size())
-                    .append("] active [").append(StringUtilities.LINE_SEP);
+            .append("] active [").append(StringUtilities.LINE_SEP);
             for (final Entry<ProcessorDistributionKey, GeometryProcessor<? extends Geometry>> entry : myGeometryProcessorsMap
                     .entrySet())
             {
@@ -783,32 +783,26 @@ public class GeometryDistributor
             {
                 return active != null && active.getPrimary().intersects(span);
             }
-            else
+            final AnimationState state = animationPlan.findState(span, currentAnimationState.getDirection());
+            if (state == null)
             {
-                final AnimationState state = animationPlan.findState(span, currentAnimationState.getDirection());
-                if (state == null)
-                {
-                    return false;
-                }
-                else
-                {
-                    boolean result = false;
-                    try
-                    {
-                        result = animationPlan.calculateDistance(currentAnimationState, state) == 0;
-                    }
-                    catch (final RuntimeException e)
-                    {
-                        // If this test fails just fail the in range test as
-                        // this always happens during a plan change where the
-                        // distributor has yet to receive the updated plan and
-                        // ends up in a race condition with the animation
-                        // manager adjusting to the new plan.
-                        result = false;
-                    }
-                    return result;
-                }
+                return false;
             }
+            boolean result = false;
+            try
+            {
+                result = animationPlan.calculateDistance(currentAnimationState, state) == 0;
+            }
+            catch (final RuntimeException e)
+            {
+                // If this test fails just fail the in range test as
+                // this always happens during a plan change where the
+                // distributor has yet to receive the updated plan and
+                // ends up in a race condition with the animation
+                // manager adjusting to the new plan.
+                result = false;
+            }
+            return result;
         }
         else
         {
@@ -1113,27 +1107,24 @@ public class GeometryDistributor
         {
             return false;
         }
-        else
+        animationPlan.getTimeSpanForState(state);
+        boolean inRange = false;
+        try
         {
-            animationPlan.getTimeSpanForState(state);
-            boolean inRange = false;
-            try
-            {
-                final int distance = animationPlan.calculateDistance(currentAnimationState, state);
-                inRange = distance <= loadAhead;
-            }
-            catch (final RuntimeException e)
-            {
-                // If this test fails just fail the in range test as this always
-                // happens during a plan
-                // change where the distributor has yet to receive the updated
-                // plan and ends up in
-                // a race condition with the animation manager adjusting to the
-                // new plan.
-                inRange = false;
-            }
-            return inRange;
+            final int distance = animationPlan.calculateDistance(currentAnimationState, state);
+            inRange = distance <= loadAhead;
         }
+        catch (final RuntimeException e)
+        {
+            // If this test fails just fail the in range test as this always
+            // happens during a plan
+            // change where the distributor has yet to receive the updated
+            // plan and ends up in
+            // a race condition with the animation manager adjusting to the
+            // new plan.
+            inRange = false;
+        }
+        return inRange;
     }
 
     /**
@@ -1266,7 +1257,7 @@ public class GeometryDistributor
     private void setProcessorConstraints(ProcessorDistributionKey key)
     {
         myProcessorBuilder
-                .setPositiveConstraints(new Constraints(new StrictTimeConstraint(key.getConstraintKey(), key.getTimeSpan())));
+        .setPositiveConstraints(new Constraints(new StrictTimeConstraint(key.getConstraintKey(), key.getTimeSpan())));
         myProcessorBuilder.setNegativeConstraints(
                 new Constraints(TimeConstraint.getNegativeTimeConstraint(key.getConstraintKey(), key.getTimeSpan())));
     }
@@ -1505,26 +1496,26 @@ public class GeometryDistributor
         final TimeConstraint timeConstr = geom instanceof ConstrainableGeometry
                 ? ((ConstrainableGeometry)geom).getConstraints() == null ? null
                         : ((ConstrainableGeometry)geom).getConstraints().getTimeConstraint()
-                : null;
+                        : null;
 
-        boolean foundKey = false;
-        for (final TimeSpan time : timeSpans)
-        {
-            if (timeConstr == null || timeConstr.check(time))
-            {
-                foundKey = true;
-                hull.set(geom, constraintKey, time);
-                if (keyToGeoms.containsKey(hull))
-                {
-                    keyToGeoms.get(hull).add(geom);
-                }
-                else
-                {
-                    keyToGeoms.get(new ImmutableProcessorDistributionKey(geom, constraintKey, time)).add(geom);
-                }
-            }
-        }
-        return foundKey;
+                        boolean foundKey = false;
+                        for (final TimeSpan time : timeSpans)
+                        {
+                            if (timeConstr == null || timeConstr.check(time))
+                            {
+                                foundKey = true;
+                                hull.set(geom, constraintKey, time);
+                                if (keyToGeoms.containsKey(hull))
+                                {
+                                    keyToGeoms.get(hull).add(geom);
+                                }
+                                else
+                                {
+                                    keyToGeoms.get(new ImmutableProcessorDistributionKey(geom, constraintKey, time)).add(geom);
+                                }
+                            }
+                        }
+                        return foundKey;
     }
 
     /**

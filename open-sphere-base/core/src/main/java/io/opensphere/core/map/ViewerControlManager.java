@@ -323,31 +323,31 @@ abstract class ViewerControlManager
         // TODO pitch and yaw are not being bound until the viewer is fixed to
         // work with them.
 
-//        // Pitch Up
-//        DiscreteEventAdapter pitchUpListener = new DiscreteEventAdapter(category, "Pitch Up",
-//                "Move the camera aim up from the current looking direction")
-//        {
-//            @Override
-//            public void eventOccurred(InputEvent event)
-//            {
-//                getCurrentControlTranslator().pitchViewUp(event);
-//            }
-//        };
-//        myControlEventListeners.add(pitchUpListener);
-//        context.addListener(pitchUpListener, new DefaultKeyPressedBinding(KeyEvent.VK_A));
-//
-//        // Pitch Down
-//        DiscreteEventAdapter pitchDownListener = new DiscreteEventAdapter(category, "Pitch down",
-//                "Move the camera aim down from the current looking direction")
-//        {
-//            @Override
-//            public void eventOccurred(InputEvent event)
-//            {
-//                getCurrentControlTranslator().pitchViewDown(event);
-//            }
-//        };
-//        myControlEventListeners.add(pitchDownListener);
-//        context.addListener(pitchDownListener, new DefaultKeyPressedBinding(KeyEvent.VK_Z));
+        //        // Pitch Up
+        //        DiscreteEventAdapter pitchUpListener = new DiscreteEventAdapter(category, "Pitch Up",
+        //                "Move the camera aim up from the current looking direction")
+        //        {
+        //            @Override
+        //            public void eventOccurred(InputEvent event)
+        //            {
+        //                getCurrentControlTranslator().pitchViewUp(event);
+        //            }
+        //        };
+        //        myControlEventListeners.add(pitchUpListener);
+        //        context.addListener(pitchUpListener, new DefaultKeyPressedBinding(KeyEvent.VK_A));
+        //
+        //        // Pitch Down
+        //        DiscreteEventAdapter pitchDownListener = new DiscreteEventAdapter(category, "Pitch down",
+        //                "Move the camera aim down from the current looking direction")
+        //        {
+        //            @Override
+        //            public void eventOccurred(InputEvent event)
+        //            {
+        //                getCurrentControlTranslator().pitchViewDown(event);
+        //            }
+        //        };
+        //        myControlEventListeners.add(pitchDownListener);
+        //        context.addListener(pitchDownListener, new DefaultKeyPressedBinding(KeyEvent.VK_Z));
 
         // Roll Left
         DiscreteEventAdapter rollLeftListener = new DiscreteEventAdapter(category, "Roll View Left",
@@ -375,31 +375,31 @@ abstract class ViewerControlManager
         myControlEventListeners.add(rollRightListener);
         context.addListener(rollRightListener, new DefaultKeyPressedBinding(KeyEvent.VK_RIGHT, InputEvent.SHIFT_DOWN_MASK));
 
-//        // Yaw right
-//        DiscreteEventAdapter yawRightListener = new DiscreteEventAdapter(category, "Yaw View Right",
-//                "Rotates the camera to the right around its up/down axis")
-//        {
-//            @Override
-//            public void eventOccurred(InputEvent event)
-//            {
-//                getCurrentControlTranslator().yawViewRight(event);
-//            }
-//        };
-//        myControlEventListeners.add(yawRightListener);
-//        context.addListener(yawRightListener, new DefaultKeyPressedBinding(KeyEvent.VK_S));
-//
-//        // Yaw left
-//        DiscreteEventAdapter yawLeftListener = new DiscreteEventAdapter(category, "Yaw View Left",
-//                "Rotates the camera left around its up/down axis")
-//        {
-//            @Override
-//            public void eventOccurred(InputEvent event)
-//            {
-//                getCurrentControlTranslator().yawViewLeft(event);
-//            }
-//        };
-//        myControlEventListeners.add(yawLeftListener);
-//        context.addListener(yawLeftListener, new DefaultKeyPressedBinding(KeyEvent.VK_X));
+        //        // Yaw right
+        //        DiscreteEventAdapter yawRightListener = new DiscreteEventAdapter(category, "Yaw View Right",
+        //                "Rotates the camera to the right around its up/down axis")
+        //        {
+        //            @Override
+        //            public void eventOccurred(InputEvent event)
+        //            {
+        //                getCurrentControlTranslator().yawViewRight(event);
+        //            }
+        //        };
+        //        myControlEventListeners.add(yawRightListener);
+        //        context.addListener(yawRightListener, new DefaultKeyPressedBinding(KeyEvent.VK_S));
+        //
+        //        // Yaw left
+        //        DiscreteEventAdapter yawLeftListener = new DiscreteEventAdapter(category, "Yaw View Left",
+        //                "Rotates the camera left around its up/down axis")
+        //        {
+        //            @Override
+        //            public void eventOccurred(InputEvent event)
+        //            {
+        //                getCurrentControlTranslator().yawViewLeft(event);
+        //            }
+        //        };
+        //        myControlEventListeners.add(yawLeftListener);
+        //        context.addListener(yawLeftListener, new DefaultKeyPressedBinding(KeyEvent.VK_X));
     }
 
     /**
@@ -555,35 +555,35 @@ abstract class ViewerControlManager
                 new DefaultMouseBinding(MouseEvent.MOUSE_PRESSED, InputEvent.BUTTON3_DOWN_MASK | InputEvent.CTRL_DOWN_MASK));
         myControlEventListeners.add(smoothYawListener);
 
-//        CompoundEventMouseAdapter changeViewAxisListener = new CompoundEventMouseAdapter(string, "Change View Axis",
-//                "Changes the view axis")
-//        {
-//            @Override
-//            public void eventEnded(InputEvent event)
-//            {
-//                getCurrentControlTranslator().compoundMoveAxisEnd(event);
-//            }
-//
-//            @Override
-//            public void eventStarted(InputEvent event)
-//            {
-//                getCurrentControlTranslator().compoundMoveAxisStart(event);
-//            }
-//
-//            @Override
-//            public void mouseDragged(MouseEvent event)
-//            {
-//                getCurrentControlTranslator().compoundMoveAxisDrag(event);
-//            }
-//
-//            @Override
-//            public void mouseMoved(MouseEvent event)
-//            {
-//                getCurrentControlTranslator().compoundMoveAxisDrag(event);
-//            }
-//        };
-//        context.addListener(changeViewAxisListener, new DefaultMouseBinding(MouseEvent.MOUSE_PRESSED,
-//                InputEvent.BUTTON1_DOWN_MASK | InputEvent.CTRL_DOWN_MASK));
+        //        CompoundEventMouseAdapter changeViewAxisListener = new CompoundEventMouseAdapter(string, "Change View Axis",
+        //                "Changes the view axis")
+        //        {
+        //            @Override
+        //            public void eventEnded(InputEvent event)
+        //            {
+        //                getCurrentControlTranslator().compoundMoveAxisEnd(event);
+        //            }
+        //
+        //            @Override
+        //            public void eventStarted(InputEvent event)
+        //            {
+        //                getCurrentControlTranslator().compoundMoveAxisStart(event);
+        //            }
+        //
+        //            @Override
+        //            public void mouseDragged(MouseEvent event)
+        //            {
+        //                getCurrentControlTranslator().compoundMoveAxisDrag(event);
+        //            }
+        //
+        //            @Override
+        //            public void mouseMoved(MouseEvent event)
+        //            {
+        //                getCurrentControlTranslator().compoundMoveAxisDrag(event);
+        //            }
+        //        };
+        //        context.addListener(changeViewAxisListener, new DefaultMouseBinding(MouseEvent.MOUSE_PRESSED,
+        //                InputEvent.BUTTON1_DOWN_MASK | InputEvent.CTRL_DOWN_MASK));
 
         EarthDragListener earthDragListener = new EarthDragListener(myCurrentViewControlTranslator.getReadOnly());
         myControlEventListeners.add(earthDragListener);

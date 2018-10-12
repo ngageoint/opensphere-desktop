@@ -31,23 +31,23 @@ public class SystemStatistics
     private double mySystemLoadAverage;
 
     /**
-    * The version of the Java Management Specification implemented by the underlying virtual machine.
-    */
+     * The version of the Java Management Specification implemented by the underlying virtual machine.
+     */
     private String myManagementSpecVersion;
 
     /**
-    * The name of the Java specification implemented by the underlying virtual machine.
-    */
+     * The name of the Java specification implemented by the underlying virtual machine.
+     */
     private String mySpecName;
 
     /**
-    * The vendor providing the implementation of the Java specification in the underlying virtual machine.
-    */
+     * The vendor providing the implementation of the Java specification in the underlying virtual machine.
+     */
     private String mySpecVendor;
 
     /**
-    *  The version of the Java specification implemented by the underlying virtual machine.
-    */
+     *  The version of the Java specification implemented by the underlying virtual machine.
+     */
     private String mySpecVersion;
 
     /**

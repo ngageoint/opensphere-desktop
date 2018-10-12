@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import io.opensphere.core.util.collections.New;
 import javafx.beans.InvalidationListener;
 import javafx.event.EventHandler;
 import javafx.scene.control.Control;
@@ -12,8 +13,6 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-
-import io.opensphere.core.util.collections.New;
 
 /**
  * An abstract base implementation of a behavior, in which default implementations are provided for all behaviors. Each provided

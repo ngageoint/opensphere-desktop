@@ -48,23 +48,20 @@ public class ClasspathPreferencesPersistenceManager implements PreferencesPersis
             }
             return null;
         }
-        else
+        try
         {
-            try
+            if (LOGGER.isDebugEnabled())
             {
-                if (LOGGER.isDebugEnabled())
-                {
-                    LOGGER.debug("Loading preferences for topic [" + topic + "] from URL [" + url + "]");
-                }
-                PreferencesImpl pref = XMLUtilities.readXMLObject(url.openStream(), PreferencesImpl.class);
-                pref.setPreferencesSaveable(false);
-                return pref;
+                LOGGER.debug("Loading preferences for topic [" + topic + "] from URL [" + url + "]");
             }
-            catch (JAXBException | IOException e)
-            {
-                LOGGER.error("Error loading preferences file from URL [" + url + "]: " + e, e);
-                return null;
-            }
+            PreferencesImpl pref = XMLUtilities.readXMLObject(url.openStream(), PreferencesImpl.class);
+            pref.setPreferencesSaveable(false);
+            return pref;
+        }
+        catch (JAXBException | IOException e)
+        {
+            LOGGER.error("Error loading preferences file from URL [" + url + "]: " + e, e);
+            return null;
         }
     }
 

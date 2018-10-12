@@ -34,7 +34,7 @@ abstract class AbstractProcessorListenerHelper
      * Hash strategy for render properties so listeners are added to each
      * instance once.
      */
-    private static final HashingStrategy<RenderProperties> RENDER_PROPERTY_HASH_STRATEGY = new HashingStrategy<RenderProperties>()
+    private static final HashingStrategy<RenderProperties> RENDER_PROPERTY_HASH_STRATEGY = new HashingStrategy<>()
     {
         /** Serial version UID. */
         private static final long serialVersionUID = 1L;
@@ -56,14 +56,7 @@ abstract class AbstractProcessorListenerHelper
     private final ProcrastinatingExecutor myConstraintsChangedExecutor;
 
     /** Listener for changes to constraints. */
-    private final ConstraintsChangedListener myConstraintsListener = new ConstraintsChangedListener()
-    {
-        @Override
-        public void constraintsChanged(final ConstraintsChangedEvent evt)
-        {
-            myConstraintsChangedExecutor.execute(() -> handleConstraintsChanged(evt));
-        }
-    };
+    private final ConstraintsChangedListener myConstraintsListener;
 
     /** The display interval change listener. */
     private volatile ActiveTimeSpanChangeListener myDisplayIntervalChangeListener;
@@ -75,14 +68,7 @@ abstract class AbstractProcessorListenerHelper
     private final ProcrastinatingExecutor myRenderPropertyChangedExecutor;
 
     /** Listener for changes to render properties. */
-    private final RenderPropertyChangeListener myRenderPropertyListener = new RenderPropertyChangeListener()
-    {
-        @Override
-        public void propertyChanged(final RenderPropertyChangedEvent evt)
-        {
-            myRenderPropertyChangedExecutor.execute(() -> handlePropertyChanged(evt));
-        }
-    };
+    private final RenderPropertyChangeListener myRenderPropertyListener;
 
     /** Reference to the time manager. */
     private final TimeManager myTimeManager;
@@ -101,6 +87,8 @@ abstract class AbstractProcessorListenerHelper
     {
         myConstraintsChangedExecutor = new ProcrastinatingExecutor(scheduledExecutorService, 50);
         myRenderPropertyChangedExecutor = new ProcrastinatingExecutor(scheduledExecutorService, 100);
+        myRenderPropertyListener = evt -> myRenderPropertyChangedExecutor.execute(() -> handlePropertyChanged(evt));
+        myConstraintsListener = evt -> myConstraintsChangedExecutor.execute(() -> handleConstraintsChanged(evt));
         myTimeManager = timeManager;
         renderer.addProjectionReadyListener(myProjectionReadyListener);
     }

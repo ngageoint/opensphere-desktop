@@ -69,11 +69,8 @@ public class ImageFactory
                     image.dispose();
                 }
             }
-            else
-            {
-                setImageInput(image, stream, contentLengthBytes, metrics, useBufferedImagePool);
-                return image;
-            }
+            setImageInput(image, stream, contentLengthBytes, metrics, useBufferedImagePool);
+            return image;
         }
         catch (ReflectiveOperationException e)
         {
@@ -146,10 +143,7 @@ public class ImageFactory
                     return in;
                 }
             }
-            else
-            {
-                return in;
-            }
+            return in;
         }
         catch (ReflectiveOperationException e)
         {

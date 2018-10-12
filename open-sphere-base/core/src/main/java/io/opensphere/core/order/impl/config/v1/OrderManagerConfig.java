@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import gnu.trove.map.TObjectIntMap;
-import gnu.trove.procedure.TObjectIntProcedure;
 import io.opensphere.core.order.OrderParticipantKey;
 import io.opensphere.core.util.collections.New;
 
@@ -47,14 +46,10 @@ public class OrderManagerConfig
         if (participantMap != null && !participantMap.isEmpty())
         {
             myParticipants = New.list(participantMap.size());
-            participantMap.forEachEntry(new TObjectIntProcedure<OrderParticipantKey>()
+            participantMap.forEachEntry((key, order) ->
             {
-                @Override
-                public boolean execute(OrderParticipantKey key, int order)
-                {
-                    myParticipants.add(new OrderManagerParticipant(key.getId(), order));
-                    return true;
-                }
+                myParticipants.add(new OrderManagerParticipant(key.getId(), order));
+                return true;
             });
             Collections.sort(myParticipants, OrderManagerParticipant.ourReverseCompareByOrder);
         }

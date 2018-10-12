@@ -79,10 +79,7 @@ public class TimeSpanArrayList extends TimeSpanList implements RandomAccess
         {
             return emptyList();
         }
-        else
-        {
-            return new TimeSpanArrayList(intersectList);
-        }
+        return new TimeSpanArrayList(intersectList);
     }
 
     @Override
@@ -110,10 +107,7 @@ public class TimeSpanArrayList extends TimeSpanList implements RandomAccess
         {
             return emptyList();
         }
-        else
-        {
-            return new TimeSpanArrayList(intersectList);
-        }
+        return new TimeSpanArrayList(intersectList);
     }
 
     @Override

@@ -341,7 +341,7 @@ public class CertificateSelectionPanel extends GridBagPanel implements Validatab
     {
         Collection<? extends PrivateKeyProvider> privateKeyProviders = mySecurityManager.getPrivateKeyProviders();
 
-        myCertificateComboBox = new JComboBox<PrivateKeyProvider>(
+        myCertificateComboBox = new JComboBox<>(
                 privateKeyProviders.toArray(new PrivateKeyProvider[privateKeyProviders.size()]));
         myCertificateComboBox.setRenderer(getComboBoxRenderer(myCertificateComboBox.getRenderer()));
 
@@ -399,7 +399,7 @@ public class CertificateSelectionPanel extends GridBagPanel implements Validatab
         style("label").addRow(expandPanel);
         style("inputFill").addRow(certificateDetailsScrollPane);
         style("label", "input").addRow(null, myWarningLabel);
-//        style("filler").fillVertical().addRow(new JLabel());
+        //        style("filler").fillVertical().addRow(new JLabel());
     }
 
     /**

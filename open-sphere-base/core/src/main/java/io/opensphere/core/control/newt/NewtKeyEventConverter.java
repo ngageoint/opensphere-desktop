@@ -44,20 +44,16 @@ public class NewtKeyEventConverter implements KeyListener
      *
      * @return true when the converter is operational.
      */
-    public boolean canDispatch()
+    private boolean canDispatch()
     {
         if (myDispatcher == null)
         {
             if (myToolbox.getUIRegistry() != null)
             {
-                EventQueueUtilities.runOnEDTAndWait(new Runnable()
+                EventQueueUtilities.runOnEDTAndWait(() ->
                 {
-                    @Override
-                    public void run()
-                    {
-                        Container mainFrame = myToolbox.getUIRegistry().getMainFrameProvider().get();
-                        myDispatcher = new AWTEventDispatcher(mainFrame, myCanvas);
-                    }
+                    Container mainFrame = myToolbox.getUIRegistry().getMainFrameProvider().get();
+                    myDispatcher = new AWTEventDispatcher(mainFrame, myCanvas);
                 });
             }
             else
@@ -89,19 +85,15 @@ public class NewtKeyEventConverter implements KeyListener
     {
         if (canDispatch())
         {
-            EventQueueUtilities.runOnEDT(new Runnable()
+            EventQueueUtilities.runOnEDT(() ->
             {
-                @Override
-                public void run()
+                // Because there is no NEWT KEY_TYPED event, we need to
+                // generate it ourselves.
+                if (event.getEventType() == com.jogamp.newt.event.KeyEvent.EVENT_KEY_RELEASED)
                 {
-                    // Because there is no NEWT KEY_TYPED event, we need to
-                    // generate it ourselves.
-                    if (event.getEventType() == com.jogamp.newt.event.KeyEvent.EVENT_KEY_RELEASED)
-                    {
-                        myDispatcher.dispatchEvent(myEventFactory.createSyntheticTypedEvent(event));
-                    }
-                    myDispatcher.dispatchEvent(myEventFactory.createKeyEvent(event));
+                    myDispatcher.dispatchEvent(myEventFactory.createSyntheticTypedEvent(event));
                 }
+                myDispatcher.dispatchEvent(myEventFactory.createKeyEvent(event));
             });
         }
     }

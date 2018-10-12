@@ -93,8 +93,8 @@ public class MGRS
     /** ARRAY INDEX FOR LETTER Z */
     private static final int LETTER_Z = 25;
 
-// /** NUMBER OF LETTERS IN MGRS              */
-//    private static final int MGRS_LETTERS = 3;
+    // /** NUMBER OF LETTERS IN MGRS              */
+    //    private static final int MGRS_LETTERS = 3;
     /** ONE HUNDRED THOUSAND */
     private static final double ONEHT = 100000.0;
 
@@ -103,18 +103,18 @@ public class MGRS
 
     private static final double LETTER_X_MAX_NORTHING = 9328000.0;
 
-//    private static final int MIN_EASTING = 100000;
-//    private static final int MAX_EASTING = 900000;
-//    private static final int MIN_NORTHING = 0;
-//    private static final int MAX_NORTHING = 10000000;
-//   /** Maximum precision of easting & northing */
-//    private static final int MAX_PRECISION = 5;
-//    private static final double MIN_UTM_LAT = Math.toRadians(-80);
-//  /** 84 degrees in radians     */
-//    private static final double MAX_UTM_LAT = Math.toRadians(84);
-//
-//    private static final int MIN_EAST_NORTH = 0;
-//    private static final int MAX_EAST_NORTH = 4000000;
+    //    private static final int MIN_EASTING = 100000;
+    //    private static final int MAX_EASTING = 900000;
+    //    private static final int MIN_NORTHING = 0;
+    //    private static final int MAX_NORTHING = 10000000;
+    //   /** Maximum precision of easting & northing */
+    //    private static final int MAX_PRECISION = 5;
+    //    private static final double MIN_UTM_LAT = Math.toRadians(-80);
+    //  /** 84 degrees in radians     */
+    //    private static final double MAX_UTM_LAT = Math.toRadians(84);
+    //
+    //    private static final int MIN_EAST_NORTH = 0;
+    //    private static final int MAX_EAST_NORTH = 4000000;
 
     /* Ellipsoid parameters, default to WGS 84 */
     /** Semi-major axis of ellipsoid in meters */
@@ -153,11 +153,11 @@ public class MGRS
         new LatitudeBand(LETTER_W, 7000000.0, 72.0, 64.0, 6000000.0),
         new LatitudeBand(LETTER_X, 7900000.0, 84.5, 72.0, 6000000.0) };
 
-//    private static final UPSConstant[] UPS_Constant_Table = new UPSConstant[] {
-//        new UPSConstant(LETTER_A, LETTER_J, LETTER_Z, LETTER_Z, 800000.0, 800000.0),
-//        new UPSConstant(LETTER_B, LETTER_A, LETTER_R, LETTER_Z, 2000000.0, 800000.0),
-//        new UPSConstant(LETTER_Y, LETTER_J, LETTER_Z, LETTER_P, 800000.0, 1300000.0),
-//        new UPSConstant(LETTER_Z, LETTER_A, LETTER_J, LETTER_P, 2000000.0, 1300000.0)};
+    //    private static final UPSConstant[] UPS_Constant_Table = new UPSConstant[] {
+    //        new UPSConstant(LETTER_A, LETTER_J, LETTER_Z, LETTER_Z, 800000.0, 800000.0),
+    //        new UPSConstant(LETTER_B, LETTER_A, LETTER_R, LETTER_Z, 2000000.0, 800000.0),
+    //        new UPSConstant(LETTER_Y, LETTER_J, LETTER_Z, LETTER_P, 800000.0, 1300000.0),
+    //        new UPSConstant(LETTER_Z, LETTER_A, LETTER_J, LETTER_P, 2000000.0, 1300000.0)};
 
     private int zone;
 
@@ -264,14 +264,11 @@ public class MGRS
             // add the maximum easting and northing for the given precision
 
         }
-        else
-        {
-            // We aren't supporting UPS coordinates yet
-//            UPS ups = convertMGRSToUPS(MGRS);
-//            ups.setParameters(MGRS_a, MGRS_f);
-//            return ups.convertToGeodetic();
-            throw new RuntimeException("Error: UPS conversion not implemented.");
-        }
+        // We aren't supporting UPS coordinates yet
+        //            UPS ups = convertMGRSToUPS(MGRS);
+        //            ups.setParameters(MGRS_a, MGRS_f);
+        //            return ups.convertToGeodetic();
+        throw new RuntimeException("Error: UPS conversion not implemented.");
     }
 
     public void toUpperLeft()
@@ -334,16 +331,13 @@ public class MGRS
         {
             throw new RuntimeException("error");
         }
+        if (letters.get(0) < LETTER_N)
+        {
+            hemisphere = 'S';
+        }
         else
         {
-            if (letters.get(0) < LETTER_N)
-            {
-                hemisphere = 'S';
-            }
-            else
-            {
-                hemisphere = 'N';
-            }
+            hemisphere = 'N';
         }
 
         int ltr2_low_value = 0, ltr2_high_value = 0;
@@ -486,7 +480,7 @@ public class MGRS
             l += i + ", ";
         }
         return "MGRS{zone: " + zone + " letters: " + l + " easting: " + easting + " northing: " + northing + " precision: "
-                + precision + "}";
+        + precision + "}";
     }
 
     /**

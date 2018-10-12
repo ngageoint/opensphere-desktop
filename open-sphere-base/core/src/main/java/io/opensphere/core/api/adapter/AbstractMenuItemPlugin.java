@@ -1,7 +1,5 @@
 package io.opensphere.core.api.adapter;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -241,56 +239,61 @@ public abstract class AbstractMenuItemPlugin extends PluginAdapter
     private void initializeMenu(final Toolbox toolbox, final String parentMenuName, final String menuButtonLabel,
             final KeyStroke hotKeyStroke, final Integer menuPosition)
     {
-        EventQueueUtilities.invokeLater(new Runnable()
+        EventQueueUtilities
+        .invokeLater(() -> intializeMenuThread(toolbox, parentMenuName, menuButtonLabel, hotKeyStroke, menuPosition));
+    }
+
+    /**
+     * Initialize the menu for the plugin.
+     *
+     * @param toolbox The toolbox.
+     * @param parentMenuName The parent menu name.
+     * @param menuButtonLabel The menu button label.
+     * @param hotKeyStroke The hot key.
+     * @param menuPosition The menu position.
+     */
+    private void intializeMenuThread(final Toolbox toolbox, final String parentMenuName, final String menuButtonLabel,
+            final KeyStroke hotKeyStroke, final Integer menuPosition)
+    {
+        JMenu menu = getParentMenu(parentMenuName, toolbox);
+        if (menu == null)
         {
-            @Override
-            public void run()
+            throw new IllegalArgumentException("Menu with name [" + parentMenuName + "] could not be found.");
+        }
+        myMenuItem = createMenuItem(menuButtonLabel);
+        if (hotKeyStroke != null)
+        {
+            myMenuItem.setAccelerator(hotKeyStroke);
+        }
+        myMenuItem.addActionListener(event ->
+        {
+            if (myMenuItem.isSelected())
             {
-                JMenu menu = getParentMenu(parentMenuName, toolbox);
-                if (menu == null)
-                {
-                    throw new IllegalArgumentException("Menu with name [" + parentMenuName + "] could not be found.");
-                }
-                myMenuItem = createMenuItem(menuButtonLabel);
-                if (hotKeyStroke != null)
-                {
-                    myMenuItem.setAccelerator(hotKeyStroke);
-                }
-                myMenuItem.addActionListener(new ActionListener()
-                {
-                    @Override
-                    public void actionPerformed(ActionEvent event)
-                    {
-                        if (myMenuItem.isSelected())
-                        {
-                            buttonSelected();
-                            Quantify.collectMetric("mist3d.menu-bar.help." + myMenuItem.getText() + ".enabled");
-                            updateVisibilityPreference();
-                        }
-                        else
-                        {
-                            buttonDeselected();
-                            Quantify.collectMetric("mist3d.menu-bar.help." + myMenuItem.getText() + ".disabled");
-                            updateVisibilityPreference();
-                        }
-                    }
-                });
-
-                if (menuPosition == null)
-                {
-                    menu.add(myMenuItem);
-                }
-                else
-                {
-                    menu.insert(myMenuItem, menuPosition.intValue());
-                }
-
-                // The subclass needs to be initialized before this is called.
-                if (isRememberVisibilityState() && isVisibilityPreference())
-                {
-                    getMenuItem().doClick();
-                }
+                buttonSelected();
+                Quantify.collectMetric("mist3d.menu-bar.help." + myMenuItem.getText() + ".enabled");
+                updateVisibilityPreference();
+            }
+            else
+            {
+                buttonDeselected();
+                Quantify.collectMetric("mist3d.menu-bar.help." + myMenuItem.getText() + ".disabled");
+                updateVisibilityPreference();
             }
         });
+
+        if (menuPosition == null)
+        {
+            menu.add(myMenuItem);
+        }
+        else
+        {
+            menu.insert(myMenuItem, menuPosition.intValue());
+        }
+
+        // The subclass needs to be initialized before this is called.
+        if (isRememberVisibilityState() && isVisibilityPreference())
+        {
+            getMenuItem().doClick();
+        }
     }
 }

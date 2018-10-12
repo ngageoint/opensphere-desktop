@@ -69,14 +69,10 @@ public abstract class AbstractRenderProperties implements RenderProperties
     /** Notify listeners when one or more of my properties has changed. */
     protected void notifyChanged()
     {
-        myChangeSupport.notifyListeners(new WeakChangeSupport.Callback<RenderPropertyChangeListener>()
+        myChangeSupport.notifyListeners(listener ->
         {
-            @Override
-            public void notify(RenderPropertyChangeListener listener)
-            {
-                RenderPropertyChangedEvent evt = new RenderPropertyChangedEvent(AbstractRenderProperties.this);
-                listener.propertyChanged(evt);
-            }
+            RenderPropertyChangedEvent evt = new RenderPropertyChangedEvent(AbstractRenderProperties.this);
+            listener.propertyChanged(evt);
         }, null);
     }
 }

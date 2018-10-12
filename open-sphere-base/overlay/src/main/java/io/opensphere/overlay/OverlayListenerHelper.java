@@ -9,7 +9,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 import io.opensphere.core.TimeManager.ActiveTimeSpanChangeListener;
-import io.opensphere.core.TimeManager.ActiveTimeSpans;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.BoundEventListener;
 import io.opensphere.core.control.CompoundEventMouseAdapter;
@@ -228,14 +227,7 @@ public class OverlayListenerHelper
 
         if (myTimeDisplayTransformer != null)
         {
-            myTimeSpanChangeListener = new ActiveTimeSpanChangeListener()
-            {
-                @Override
-                public void activeTimeSpansChanged(ActiveTimeSpans active)
-                {
-                    myTimeDisplayTransformer.setTimeDisplayLabel();
-                }
-            };
+            myTimeSpanChangeListener = active -> myTimeDisplayTransformer.setTimeDisplayLabel();
             myToolbox.getTimeManager().addActiveTimeSpanChangeListener(myTimeSpanChangeListener);
         }
     }

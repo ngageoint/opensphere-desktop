@@ -2,7 +2,6 @@ package io.opensphere.core.util.swing;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -227,14 +226,10 @@ public class IconButton extends JButton implements CustomizableButton
         {
             if (myTimer == null)
             {
-                myTimer = new Timer(delay, new ActionListener()
+                myTimer = new Timer(delay, e ->
                 {
-                    @Override
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        ++myTimerCount;
-                        fireActionPerformed(e);
-                    }
+                    ++myTimerCount;
+                    fireActionPerformed(e);
                 });
             }
             if (myHoldListener == null)

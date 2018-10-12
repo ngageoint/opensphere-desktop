@@ -48,10 +48,7 @@ class TimeSpanLongLong extends BoundedTimeSpan
         {
             return Duration.create(Milliseconds.class, myEnd - myStart);
         }
-        else
-        {
-            return Duration.create(Milliseconds.class, new BigDecimal(myEnd).subtract(new BigDecimal(myStart)));
-        }
+        return Duration.create(Milliseconds.class, new BigDecimal(myEnd).subtract(new BigDecimal(myStart)));
     }
 
     @Override
@@ -61,10 +58,7 @@ class TimeSpanLongLong extends BoundedTimeSpan
         {
             return myEnd - myStart;
         }
-        else
-        {
-            throw new ArithmeticException();
-        }
+        throw new ArithmeticException();
     }
 
     @Override

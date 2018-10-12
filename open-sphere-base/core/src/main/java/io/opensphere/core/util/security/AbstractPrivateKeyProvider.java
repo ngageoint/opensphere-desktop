@@ -96,14 +96,14 @@ public abstract class AbstractPrivateKeyProvider implements PrivateKeyProvider
 
     @Override
     public Digest getDigest(String algorithm)
-        throws PrivateKeyProviderException, CertificateEncodingException, NoSuchAlgorithmException
+            throws PrivateKeyProviderException, CertificateEncodingException, NoSuchAlgorithmException
     {
         return new Digest(algorithm, getFirstCertificate());
     }
 
     @Override
     public String getFingerprint(String algorithm)
-        throws CertificateEncodingException, NoSuchAlgorithmException, PrivateKeyProviderException
+            throws CertificateEncodingException, NoSuchAlgorithmException, PrivateKeyProviderException
     {
         Certificate cert = getFirstCertificate();
         return CertificateUtilities.getFingerprint(cert, algorithm);
@@ -259,7 +259,7 @@ public abstract class AbstractPrivateKeyProvider implements PrivateKeyProvider
 
     @Override
     public boolean isAcceptable(Set<? extends String> keyTypes, Collection<? extends X500Principal> principals)
-        throws PrivateKeyProviderException
+            throws PrivateKeyProviderException
     {
         return isCurrent() && hasKeyType(keyTypes) && isAcceptable(principals);
     }

@@ -1,7 +1,6 @@
 package io.opensphere.core.util.swing;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.font.TextAttribute;
 import java.util.Map;
@@ -63,15 +62,8 @@ public class InfoPopupLabel extends JButton
     {
         if (myPopupAction == null)
         {
-            myPopupAction = new ActionListener()
-            {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    JOptionPane.showOptionDialog(InfoPopupLabel.this, myInfoText, "", JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.PLAIN_MESSAGE, null, null, null);
-                }
-            };
+            myPopupAction = e -> JOptionPane.showOptionDialog(InfoPopupLabel.this, myInfoText, "", JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.PLAIN_MESSAGE, null, null, null);
             addActionListener(myPopupAction);
             super.setFont(myEnabledFont);
         }

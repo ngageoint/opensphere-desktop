@@ -60,47 +60,47 @@ public class DateTimeRangeInput extends CompoundTitledControl
      */
     private boolean myPresetCausedChanged;
 
-//    /**
-//     * Creates a new {@link DateTimeRangeInput} using the supplied parameters.
-//     *
-//     * @param pTitle the display title of the component to be displayed on the form.
-//     * @param pStartVariable the variable name to apply to the start date / time input field.
-//     * @param pEndVariable the variable name to apply to the end date / time input field.
-//     * @param pStartTitle the title to apply to the start date / time input field.
-//     * @param pEndTitle the title to apply to the end date / time input field.
-//     * @param pToolbox the toolbox through which the time manager is referenced.
-//     */
-//    @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
-//    public DateTimeRangeInput(String pTitle, String pStartVariable, String pEndVariable, String pStartTitle, String pEndTitle,
-//            Toolbox pToolbox)
-//    {
-//        super(pTitle, Orientation.VERTICAL, true);
-//
-//        myToolbox = pToolbox;
-//
-//        CombinedDateTimePicker start = new CombinedDateTimePicker();
-//        CombinedDateTimePicker end = new CombinedDateTimePicker();
-//        ComboBox<String> presetControl = new ComboBox<>(FXCollections.observableArrayList(CUSTOM_PRESET, "Timeline",
-//                "Last 24 Hours", "Last 48 Hours", "Last 72 Hours", "Last 168 Hours (1 Week)", "Today", "Yesterday", "This Week",
-//                "Last Week", "This Month", "Last 30 Days", "Last 60 Days", "Last 90 Days", "This Year"));
-//        presetControl.valueProperty().addListener((pSource, pOld, pNew) -> presetSelected(pNew));
-//
-//        start.valueProperty().addListener((pSource, pOld, pNew) -> valueChanged());
-//        end.valueProperty().addListener((pSource, pOld, pNew) -> valueChanged());
-//
-//        myStartInput = new IdentifiedControl<>(pStartVariable, pStartTitle, start);
-//        myStartInput.setResultAccessorFunction(() -> DateTimeUtilities.generateISO8601DateString(start.valueProperty().get()));
-//        myEndInput = new IdentifiedControl<>(pEndVariable, pEndTitle, end);
-//        myEndInput.setResultAccessorFunction(() -> DateTimeUtilities.generateISO8601DateString(end.valueProperty().get()));
-//        myPresetControl = new IdentifiedControl<>(null, "Time From", presetControl);
-//
-//        setControls(Orientation.VERTICAL, true, myPresetControl, myStartInput, myEndInput);
-//
-//        setNodeStyle("-fx-padding: 5;");
-//        setStyle("-fx-border-width: 1; -fx-border-style: solid; -fx-border-radius: 3; -fx-border-color: -fx-outer-border;");
-//
-//        presetControl.setValue("Timeline");
-//    }
+    //    /**
+    //     * Creates a new {@link DateTimeRangeInput} using the supplied parameters.
+    //     *
+    //     * @param pTitle the display title of the component to be displayed on the form.
+    //     * @param pStartVariable the variable name to apply to the start date / time input field.
+    //     * @param pEndVariable the variable name to apply to the end date / time input field.
+    //     * @param pStartTitle the title to apply to the start date / time input field.
+    //     * @param pEndTitle the title to apply to the end date / time input field.
+    //     * @param pToolbox the toolbox through which the time manager is referenced.
+    //     */
+    //    @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
+    //    public DateTimeRangeInput(String pTitle, String pStartVariable, String pEndVariable, String pStartTitle, String pEndTitle,
+    //            Toolbox pToolbox)
+    //    {
+    //        super(pTitle, Orientation.VERTICAL, true);
+    //
+    //        myToolbox = pToolbox;
+    //
+    //        CombinedDateTimePicker start = new CombinedDateTimePicker();
+    //        CombinedDateTimePicker end = new CombinedDateTimePicker();
+    //        ComboBox<String> presetControl = new ComboBox<>(FXCollections.observableArrayList(CUSTOM_PRESET, "Timeline",
+    //                "Last 24 Hours", "Last 48 Hours", "Last 72 Hours", "Last 168 Hours (1 Week)", "Today", "Yesterday", "This Week",
+    //                "Last Week", "This Month", "Last 30 Days", "Last 60 Days", "Last 90 Days", "This Year"));
+    //        presetControl.valueProperty().addListener((pSource, pOld, pNew) -> presetSelected(pNew));
+    //
+    //        start.valueProperty().addListener((pSource, pOld, pNew) -> valueChanged());
+    //        end.valueProperty().addListener((pSource, pOld, pNew) -> valueChanged());
+    //
+    //        myStartInput = new IdentifiedControl<>(pStartVariable, pStartTitle, start);
+    //        myStartInput.setResultAccessorFunction(() -> DateTimeUtilities.generateISO8601DateString(start.valueProperty().get()));
+    //        myEndInput = new IdentifiedControl<>(pEndVariable, pEndTitle, end);
+    //        myEndInput.setResultAccessorFunction(() -> DateTimeUtilities.generateISO8601DateString(end.valueProperty().get()));
+    //        myPresetControl = new IdentifiedControl<>(null, "Time From", presetControl);
+    //
+    //        setControls(Orientation.VERTICAL, true, myPresetControl, myStartInput, myEndInput);
+    //
+    //        setNodeStyle("-fx-padding: 5;");
+    //        setStyle("-fx-border-width: 1; -fx-border-style: solid; -fx-border-radius: 3; -fx-border-color: -fx-outer-border;");
+    //
+    //        presetControl.setValue("Timeline");
+    //    }
 
     /**
      * Creates a new {@link DateTimeRangeInput} using the supplied parameters.

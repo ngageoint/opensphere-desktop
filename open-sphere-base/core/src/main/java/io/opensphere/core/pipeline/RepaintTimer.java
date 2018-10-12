@@ -1,8 +1,6 @@
 package io.opensphere.core.pipeline;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
@@ -22,13 +20,6 @@ public class RepaintTimer extends Timer
      */
     public RepaintTimer(int periodMillis, final Component component)
     {
-        super(periodMillis, new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                component.repaint();
-            }
-        });
+        super(periodMillis, e -> component.repaint());
     }
 }

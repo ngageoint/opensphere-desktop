@@ -9,17 +9,6 @@ import io.opensphere.core.util.ChangeSupport.Callback;
  */
 public class DefaultValidatorSupport implements ValidatorSupport
 {
-    /**
-     * Callback used to notify listeners.
-     */
-    private final Callback<ValidatorSupport.ValidationStatusChangeListener> myCallback = new Callback<ValidatorSupport.ValidationStatusChangeListener>()
-    {
-        @Override
-        public void notify(ValidationStatusChangeListener listener)
-        {
-            listener.statusChanged(myValidationObject, myValidationSuccessful, myValidationMessage);
-        }
-    };
 
     /** The change support. */
     private final transient ChangeSupport<ValidatorSupport.ValidationStatusChangeListener> myChangeSupport = StrongChangeSupport
@@ -34,6 +23,9 @@ public class DefaultValidatorSupport implements ValidatorSupport
     /** The last validation result. */
     private ValidationStatus myValidationSuccessful;
 
+    /** Callback used to notify listeners. */
+    private final Callback<ValidatorSupport.ValidationStatusChangeListener> myCallback;
+
     /**
      * Construct the validator support.
      *
@@ -42,6 +34,7 @@ public class DefaultValidatorSupport implements ValidatorSupport
     public DefaultValidatorSupport(Object validationObject)
     {
         myValidationObject = validationObject;
+        myCallback = listener -> listener.statusChanged(myValidationObject, myValidationSuccessful, myValidationMessage);
     }
 
     @Override

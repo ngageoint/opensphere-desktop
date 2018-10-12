@@ -2,6 +2,7 @@ package io.opensphere.core.util.swing;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Window;
@@ -16,18 +17,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.Validatable;
 import io.opensphere.core.util.ValidationStatus;
 import io.opensphere.core.util.ValidatorSupport;
-import io.opensphere.core.util.ValidatorSupport.ValidationStatusChangeListener;
 import io.opensphere.core.util.collections.CollectionUtilities;
 
 /**
- * <code>OptionDialog</code> makes it easy to pop up a standard dialog box that displays a particular component. It has some
- * similarities to <code>JOptionPane</code>, but it allows focus within the component, provides more control over the dialog
- * buttons, and provides validation support.
+ * <code>OptionDialog</code> makes it easy to pop up a standard dialog box that
+ * displays a particular component. It has some similarities to
+ * <code>JOptionPane</code>, but it allows focus within the component, provides
+ * more control over the dialog buttons, and provides validation support.
  *
  * <p>
  * Typical use:
@@ -83,7 +85,8 @@ import io.opensphere.core.util.collections.CollectionUtilities;
  * To enable validation, do one of the following:
  * </p>
  * <ul>
- * <li>Make the component implement {@link io.opensphere.core.util.Validatable}</li>
+ * <li>Make the component implement
+ * {@link io.opensphere.core.util.Validatable}</li>
  * <li>Set the validator directly:
  *
  * <pre>
@@ -186,10 +189,10 @@ public class OptionDialog extends JDialog
      */
     public OptionDialog(Component parent, Component component, String title)
     {
-        super(getFirstWindow(parent), title, JDialog.DEFAULT_MODALITY_TYPE);
+        super(getFirstWindow(parent), title, Dialog.DEFAULT_MODALITY_TYPE);
         myParent = parent;
         setComponentInternal(component);
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -254,7 +257,8 @@ public class OptionDialog extends JDialog
     }
 
     /**
-     * A listener class ("ear", because it listens, get it?) configured to react to button events.
+     * A listener class ("ear", because it listens, get it?) configured to react
+     * to button events.
      */
     private class ButtonEar implements ActionListener
     {
@@ -294,8 +298,9 @@ public class OptionDialog extends JDialog
     }
 
     /**
-     * Before closing the OptionDialog, check to see if the operation should be blocked. By default, the check succeeds
-     * automatically, but subclasses may override this method to provide implementation-specific behavior.
+     * Before closing the OptionDialog, check to see if the operation should be
+     * blocked. By default, the check succeeds automatically, but subclasses may
+     * override this method to provide implementation-specific behavior.
      *
      * @return true if and only if the dialog should be allowed to close
      */
@@ -331,16 +336,12 @@ public class OptionDialog extends JDialog
      */
     public void requestFocus(final String buttonLabel)
     {
-        EventQueueUtilities.invokeLater(new Runnable()
+        EventQueueUtilities.invokeLater(() ->
         {
-            @Override
-            public void run()
+            JButton button = getDialogButtonPanel().getButton(buttonLabel);
+            if (button != null)
             {
-                JButton button = getDialogButtonPanel().getButton(buttonLabel);
-                if (button != null)
-                {
-                    button.requestFocusInWindow();
-                }
+                button.requestFocusInWindow();
             }
         });
     }
@@ -366,8 +367,8 @@ public class OptionDialog extends JDialog
     }
 
     /**
-     * Set the labels for the buttons that will cancel the dialog. This defaults to {@link ButtonPanel#NO} and
-     * {@link ButtonPanel#CANCEL}.
+     * Set the labels for the buttons that will cancel the dialog. This defaults
+     * to {@link ButtonPanel#NO} and {@link ButtonPanel#CANCEL}.
      *
      * @param buttonLabels The button labels.
      */
@@ -377,8 +378,8 @@ public class OptionDialog extends JDialog
     }
 
     /**
-     * Set the labels for the buttons that will cancel the dialog. This defaults to {@link ButtonPanel#NO} and
-     * {@link ButtonPanel#CANCEL}.
+     * Set the labels for the buttons that will cancel the dialog. This defaults
+     * to {@link ButtonPanel#NO} and {@link ButtonPanel#CANCEL}.
      *
      * @param buttonLabels The button labels.
      */
@@ -398,8 +399,10 @@ public class OptionDialog extends JDialog
     }
 
     /**
-     * Set the labels for buttons that will dispose the dialog. This defaults to {@link ButtonPanel#OK},
-     * {@link ButtonPanel#CANCEL}, {@link ButtonPanel#YES}, {@link ButtonPanel#NO}, and {@link ButtonPanel#CLOSE}.
+     * Set the labels for buttons that will dispose the dialog. This defaults to
+     * {@link ButtonPanel#OK}, {@link ButtonPanel#CANCEL},
+     * {@link ButtonPanel#YES}, {@link ButtonPanel#NO}, and
+     * {@link ButtonPanel#CLOSE}.
      *
      * @param buttonLabels The button labels.
      */
@@ -419,8 +422,8 @@ public class OptionDialog extends JDialog
     }
 
     /**
-     * Set the labels for buttons that will validate the dialog. This defaults to {@link ButtonPanel#OK} and
-     * {@link ButtonPanel#YES}.
+     * Set the labels for buttons that will validate the dialog. This defaults
+     * to {@link ButtonPanel#OK} and {@link ButtonPanel#YES}.
      *
      * @param buttonLabels The button labels.
      */
@@ -504,14 +507,7 @@ public class OptionDialog extends JDialog
         {
             panel.addRow(buildErrorLabel());
 
-            myValidatorSupport.addAndNotifyValidationListener(new ValidationStatusChangeListener()
-            {
-                @Override
-                public void statusChanged(Object object, ValidationStatus valid, String message)
-                {
-                    updateErrorState(valid, message);
-                }
-            });
+            myValidatorSupport.addAndNotifyValidationListener((object, valid, message) -> updateErrorState(valid, message));
         }
         panel.addRow(buildBottomPanel());
         return panel;

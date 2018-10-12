@@ -77,7 +77,7 @@ public class StopWatch
     public void printCategories()
     {
         List<Entry<String, Long>> entrySet = CollectionUtilities.sort(myCategoryTimes.entrySet(),
-            (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+                (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
         for (Map.Entry<String, Long> entry : entrySet)
         {
             System.out.println(StringUtils.leftPad(entry.getValue().toString(), 7) + " " + entry.getKey());

@@ -51,12 +51,9 @@ public class PriorityThreadPoolExecutor extends ThreadPoolExecutor
     {
         if (callable instanceof Comparable<?>)
         {
-            return new ComparableFutureTask<T>(callable);
+            return new ComparableFutureTask<>(callable);
         }
-        else
-        {
-            return super.newTaskFor(callable);
-        }
+        return super.newTaskFor(callable);
     }
 
     @Override
@@ -64,11 +61,8 @@ public class PriorityThreadPoolExecutor extends ThreadPoolExecutor
     {
         if (runnable instanceof Comparable<?>)
         {
-            return new ComparableFutureTask<T>(runnable, value);
+            return new ComparableFutureTask<>(runnable, value);
         }
-        else
-        {
-            return super.newTaskFor(runnable, value);
-        }
+        return super.newTaskFor(runnable, value);
     }
 }

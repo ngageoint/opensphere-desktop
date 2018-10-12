@@ -66,7 +66,7 @@ public class BufferDisposalHelper<E extends BufferObjectList<?>> implements Disp
      */
     public static <T extends BufferObjectList<?>> BufferDisposalHelper<T> create(Class<T> type, CacheProvider cache)
     {
-        return new BufferDisposalHelper<T>(type, cache);
+        return new BufferDisposalHelper<>(type, cache);
     }
 
     /**
@@ -80,38 +80,27 @@ public class BufferDisposalHelper<E extends BufferObjectList<?>> implements Disp
         myBufferedObjectType = Utilities.checkNull(type, "type");
         myCache = Utilities.checkNull(cache, "cache");
 
-        myBufferInsertionListener = new CacheContentListener<BufferObjectList<?>>()
+        myBufferInsertionListener = event -> ourExecutorService.execute(() ->
         {
-            @Override
-            public void handleCacheContentChange(final CacheContentEvent<BufferObjectList<?>> event)
+            myDisposalLock.lock();
+            try
             {
-                ourExecutorService.execute(new Runnable()
+                for (BufferObjectList<?> bufferObjectList : event.getChangedItems())
                 {
-                    @Override
-                    public void run()
-                    {
-                        myDisposalLock.lock();
-                        try
-                        {
-                            for (BufferObjectList<?> bufferObjectList : event.getChangedItems())
-                            {
-                                // Use TransparentEqualsWeakReference so that we
-                                // can use regular map lookup and only add this
-                                // reference to the map if there is no reference
-                                // for this object already.
-                                WeakReference<BufferObjectList<?>> ref = new TransparentEqualsWeakReference<BufferObjectList<?>>(
-                                        bufferObjectList, myBufferReferenceQueue);
-                                myDisposalMap.put(ref, bufferObjectList.getBufferObjects());
-                            }
-                        }
-                        finally
-                        {
-                            myDisposalLock.unlock();
-                        }
-                    }
-                });
+                    // Use TransparentEqualsWeakReference so that we
+                    // can use regular map lookup and only add this
+                    // reference to the map if there is no reference
+                    // for this object already.
+                    WeakReference<BufferObjectList<?>> ref = new TransparentEqualsWeakReference<>(bufferObjectList,
+                            myBufferReferenceQueue);
+                    myDisposalMap.put(ref, bufferObjectList.getBufferObjects());
+                }
             }
-        };
+            finally
+            {
+                myDisposalLock.unlock();
+            }
+        });
     }
 
     @Override

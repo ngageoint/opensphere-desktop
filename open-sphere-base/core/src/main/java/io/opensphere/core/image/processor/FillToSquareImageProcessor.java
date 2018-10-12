@@ -28,9 +28,6 @@ public class FillToSquareImageProcessor extends AbstractChainedImageProcessor
             squareImage.getGraphics().drawImage(image, x, y, null);
             return squareImage;
         }
-        else
-        {
-            return image;
-        }
+        return image;
     }
 }

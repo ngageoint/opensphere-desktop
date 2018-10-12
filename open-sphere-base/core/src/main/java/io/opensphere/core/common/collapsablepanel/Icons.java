@@ -105,7 +105,7 @@ public class Icons
         int interiorDim = pSize - 2 * pBorderWidth;
 
         int edgeOffset = (int)(OFFSET_RATIO * interiorDim);
-//        int yEdgeOffset = (int)(OFFSET_RATIO * interiorDim);
+        //        int yEdgeOffset = (int)(OFFSET_RATIO * interiorDim);
         int lineWidth = 0;
 
         // compute line width

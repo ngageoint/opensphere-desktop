@@ -328,16 +328,13 @@ public class GenericRegistry<E> extends DefaultGenericPublisher<E> implements Ge
         {
             return false;
         }
-        else
+        Set<E> objsForSource = getObjectsForSourceOrCreate(source);
+        boolean added;
+        synchronized (objsForSource)
         {
-            Set<E> objsForSource = getObjectsForSourceOrCreate(source);
-            boolean added;
-            synchronized (objsForSource)
-            {
-                added = objsForSource.addAll(objs);
-            }
-            return added;
+            added = objsForSource.addAll(objs);
         }
+        return added;
     }
 
     /**

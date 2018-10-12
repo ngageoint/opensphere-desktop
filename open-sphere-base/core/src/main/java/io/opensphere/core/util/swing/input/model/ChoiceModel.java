@@ -119,7 +119,7 @@ public class ChoiceModel<T> extends AbstractViewModel<T>
     private void setValidator()
     {
         final InPredicate inPredicate = new InPredicate(myOptions);
-        PredicateWithMessage<T> predicate = new PredicateWithMessage<T>()
+        PredicateWithMessage<T> predicate = new PredicateWithMessage<>()
         {
             @Override
             public String getMessage()

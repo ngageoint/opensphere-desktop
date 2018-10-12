@@ -1,6 +1,5 @@
 package io.opensphere.auxiliary.cache.jdbc;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -224,26 +223,16 @@ public class DatabaseSizeDataTrimmer implements Runnable
         {
             try
             {
-                int[] groupIds = myConnectionAppropriator.appropriateStatement(new StatementUser<int[]>()
-                {
-                    @Override
-                    public int[] run(Connection conn, Statement stmt) throws CacheException
-                    {
-                        return trimDataTables(getSizeLimitBytes(), stmt);
-                    }
-                }, false);
+                int[] groupIds = myConnectionAppropriator.appropriateStatement(
+                        (StatementUser<int[]>)(conn, stmt) -> trimDataTables(getSizeLimitBytes(), stmt), false);
                 if (groupIds.length > 0)
                 {
                     myCompactor.compact(groupIds);
 
-                    myConnectionAppropriator.appropriateStatement(new StatementUser<Void>()
+                    myConnectionAppropriator.appropriateStatement((conn, stmt) ->
                     {
-                        @Override
-                        public Void run(Connection conn, Statement stmt) throws CacheException
-                        {
-                            LOGGER.info("Database size is now " + getCurrentSize(stmt) + "B");
-                            return null;
-                        }
+                        LOGGER.info("Database size is now " + getCurrentSize(stmt) + "B");
+                        return null;
                     });
                 }
             }

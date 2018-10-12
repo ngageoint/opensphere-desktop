@@ -5,12 +5,11 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
-import net.jcip.annotations.ThreadSafe;
-
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.pipeline.util.PickManager;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * Manages coordinated removal of geometries from the {@link PickManager}.
@@ -30,7 +29,7 @@ public class PickManagerGeometryRemover
     /** Atomic updater for {@link #myNextFlush}. */
     @SuppressWarnings("rawtypes")
     private static final AtomicReferenceFieldUpdater<PickManagerGeometryRemover, Collection> NEXT_FLUSH_UPDATER = AtomicReferenceFieldUpdater
-            .newUpdater(PickManagerGeometryRemover.class, Collection.class, "myNextFlush");
+    .newUpdater(PickManagerGeometryRemover.class, Collection.class, "myNextFlush");
 
     /** The pick manager. */
     private final PickManager myPickManager;
@@ -81,14 +80,7 @@ public class PickManagerGeometryRemover
             final Collection<Geometry> pickManagerRemoves = NEXT_FLUSH_UPDATER.getAndSet(this, null);
             if (pickManagerRemoves != null)
             {
-                myExecutor.execute(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        myPickManager.removeGeometries(pickManagerRemoves);
-                    }
-                });
+                myExecutor.execute(() -> myPickManager.removeGeometries(pickManagerRemoves));
             }
         }
     }

@@ -28,7 +28,7 @@ public abstract class SerializableAccessor<S, T extends Serializable> implements
     public static <T extends Serializable> SerializableAccessor<T, T> getHomogeneousAccessor(
             PropertyDescriptor<T> propertyDescriptor)
     {
-        return new SerializableAccessor<T, T>(propertyDescriptor)
+        return new SerializableAccessor<>(propertyDescriptor)
         {
             @Override
             public T access(T input)
@@ -50,7 +50,7 @@ public abstract class SerializableAccessor<S, T extends Serializable> implements
      */
     public static <T extends Serializable> SerializableAccessor<T, T> getHomogeneousAccessor(String propertyName, Class<T> type)
     {
-        return new SerializableAccessor<T, T>(propertyName, type)
+        return new SerializableAccessor<>(propertyName, type)
         {
             @Override
             public T access(T input)
@@ -74,7 +74,7 @@ public abstract class SerializableAccessor<S, T extends Serializable> implements
     public static <S, T extends Serializable> SerializableAccessor<S, T> getSingletonAccessor(
             PropertyDescriptor<T> propertyDescriptor, final T object)
     {
-        return new SerializableAccessor<S, T>(propertyDescriptor)
+        return new SerializableAccessor<>(propertyDescriptor)
         {
             @Override
             public T access(S input)
@@ -99,7 +99,7 @@ public abstract class SerializableAccessor<S, T extends Serializable> implements
     public static <S, T extends Serializable> PropertyAccessor<S, T> getSingletonAccessor(String propertyName, Class<T> type,
             final T object)
     {
-        return new SerializableAccessor<S, T>(propertyName, type)
+        return new SerializableAccessor<>(propertyName, type)
         {
             @Override
             public T access(S input)

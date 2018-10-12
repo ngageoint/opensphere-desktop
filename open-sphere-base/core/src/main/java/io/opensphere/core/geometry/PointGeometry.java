@@ -126,7 +126,7 @@ public class PointGeometry extends AbstractColorGeometry implements PointRenderP
     @Override
     protected Builder<? extends Position> createRawBuilder()
     {
-        return new Builder<Position>();
+        return new Builder<>();
     }
 
     /**

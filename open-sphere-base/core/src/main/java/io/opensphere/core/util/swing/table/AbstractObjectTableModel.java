@@ -2,11 +2,11 @@ package io.opensphere.core.util.swing.table;
 
 import java.util.List;
 
-import net.jcip.annotations.NotThreadSafe;
 import javax.swing.SwingUtilities;
 
 import io.opensphere.core.util.cache.SimpleCache;
 import io.opensphere.core.util.collections.FixedSizeBufferMap;
+import net.jcip.annotations.NotThreadSafe;
 
 /**
  * A table model that uses a list to store the data objects, and a cache to

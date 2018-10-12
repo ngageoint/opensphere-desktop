@@ -72,10 +72,7 @@ class CachingDataRegistryDataProviderIterator implements Iterator<CachingDataReg
                 {
                     break;
                 }
-                else
-                {
-                    myNext = null;
-                }
+                myNext = null;
             }
         }
         return myNext;

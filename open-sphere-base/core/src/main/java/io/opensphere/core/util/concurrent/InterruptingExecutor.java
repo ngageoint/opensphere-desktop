@@ -91,7 +91,7 @@ public class InterruptingExecutor implements ScheduledExecutorService
 
     @Override
     public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit)
-        throws InterruptedException
+            throws InterruptedException
     {
         checkInterface(ExecutorService.class);
         return ((ExecutorService)myExecutor).invokeAll(decorateTasks(tasks), timeout, unit);
@@ -106,7 +106,7 @@ public class InterruptingExecutor implements ScheduledExecutorService
 
     @Override
     public <T> T invokeAny(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit)
-        throws InterruptedException, ExecutionException, TimeoutException
+            throws InterruptedException, ExecutionException, TimeoutException
     {
         checkInterface(ExecutorService.class);
         return ((ExecutorService)myExecutor).invokeAny(decorateTasks(tasks), timeout, unit);
@@ -129,7 +129,7 @@ public class InterruptingExecutor implements ScheduledExecutorService
     public <V> ScheduledFuture<V> schedule(Callable<V> callable, long delay, TimeUnit unit)
     {
         checkInterface(ScheduledExecutorService.class);
-        return ((ScheduledExecutorService)myExecutor).schedule((Callable<V>)new Interruptible<V>(callable), delay, unit);
+        return ((ScheduledExecutorService)myExecutor).schedule((Callable<V>)new Interruptible<>(callable), delay, unit);
     }
 
     @SuppressWarnings("cast")
@@ -176,10 +176,7 @@ public class InterruptingExecutor implements ScheduledExecutorService
         {
             return ((ExecutorService)myExecutor).shutdownNow();
         }
-        else
-        {
-            checkForOvertimeTasks();
-        }
+        checkForOvertimeTasks();
 
         LOGGER.warn("shudownNow() not executed for executor type " + myExecutor.getClass().getName());
         return null;
@@ -189,7 +186,7 @@ public class InterruptingExecutor implements ScheduledExecutorService
     public <T> Future<T> submit(Callable<T> task)
     {
         checkInterface(ExecutorService.class);
-        return ((ExecutorService)myExecutor).submit((Callable<T>)new Interruptible<T>(task));
+        return ((ExecutorService)myExecutor).submit((Callable<T>)new Interruptible<>(task));
     }
 
     @SuppressWarnings("cast")
@@ -256,7 +253,7 @@ public class InterruptingExecutor implements ScheduledExecutorService
         Collection<Callable<T>> interruptibles = new ArrayList<>(tasks.size());
         for (Callable<T> task : tasks)
         {
-            interruptibles.add(new Interruptible<T>(task));
+            interruptibles.add(new Interruptible<>(task));
         }
         return interruptibles;
     }
@@ -391,10 +388,7 @@ public class InterruptingExecutor implements ScheduledExecutorService
                     myThread = null;
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
             finally
             {

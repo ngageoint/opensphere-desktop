@@ -17,8 +17,8 @@ public class SimpleCache<K, V> implements Function<K, V>
     /** The look up function. */
     private final Function<K, V> myLookupFunction;
 
-//    /** The instrumentation. */
-//    private final CacheInstrumentation myInstrumentation = new CacheInstrumentation();
+    //    /** The instrumentation. */
+    //    private final CacheInstrumentation myInstrumentation = new CacheInstrumentation();
 
     /**
      * Constructor.
@@ -35,7 +35,7 @@ public class SimpleCache<K, V> implements Function<K, V>
     @Override
     public V apply(K key)
     {
-//        myInstrumentation.start();
+        //        myInstrumentation.start();
 
         V value = myCacheMap.get(key);
         if (value == null)
@@ -43,12 +43,12 @@ public class SimpleCache<K, V> implements Function<K, V>
             value = myLookupFunction.apply(key);
             myCacheMap.put(key, value);
 
-//            myInstrumentation.miss();
+            //            myInstrumentation.miss();
         }
-//        else
-//        {
-//            myInstrumentation.hit();
-//        }
+        //        else
+        //        {
+        //            myInstrumentation.hit();
+        //        }
 
         return value;
     }

@@ -201,9 +201,9 @@ public class CollapsiblePanel extends JPanel implements ActionListener
     }
 
     /**
-    *
-    *
-    */
+     *
+     *
+     */
     private void init()
     {
         headerBorder = BorderFactory.createLineBorder(getBackground().darker().darker(), 1);

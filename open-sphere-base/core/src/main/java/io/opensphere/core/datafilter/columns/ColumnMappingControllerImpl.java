@@ -10,9 +10,6 @@ import java.util.TreeSet;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
-
 import org.apache.commons.lang3.StringUtils;
 
 import io.opensphere.core.preferences.Preferences;
@@ -25,6 +22,8 @@ import io.opensphere.core.util.lang.Pair;
 import io.opensphere.state.v2.ColumnMappingType;
 import io.opensphere.state.v2.ColumnMappings;
 import io.opensphere.state.v2.ColumnType;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * Controller for column mappings.

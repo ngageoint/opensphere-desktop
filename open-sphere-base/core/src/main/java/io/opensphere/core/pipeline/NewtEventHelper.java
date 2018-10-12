@@ -20,8 +20,8 @@ public class NewtEventHelper
     /** The converter for handling changing NEWT events to AWT events. */
     private final NewtMouseEventConverter myMouseConverter;
 
-//    /** The listener for window related controls. */
-//    private final KeyListener myWindowControls;
+    //    /** The listener for window related controls. */
+    //    private final KeyListener myWindowControls;
 
     /**
      * Constructor.
@@ -37,21 +37,21 @@ public class NewtEventHelper
         myKeyConverter = new NewtKeyEventConverter(toolbox, canvas);
         // TODO if we move all of the menu/toolbars onto the canvas, we should
         // be able to have full screen mode again.
-//        myWindowControls = new KeyAdapter()
-//        {
-//            @Override
-//            public void keyPressed(KeyEvent e)
-//            {
-//                if (e.getKeyCode() == KeyEvent.VK_F11)
-//                {
-//                    myGLWindow.setFullscreen(!myGLWindow.isFullscreen());
-//                }
-//            }
-//        };
+        //        myWindowControls = new KeyAdapter()
+        //        {
+        //            @Override
+        //            public void keyPressed(KeyEvent e)
+        //            {
+        //                if (e.getKeyCode() == KeyEvent.VK_F11)
+        //                {
+        //                    myGLWindow.setFullscreen(!myGLWindow.isFullscreen());
+        //                }
+        //            }
+        //        };
 
         myGLWindow.addMouseListener(myMouseConverter);
         myGLWindow.addKeyListener(myKeyConverter);
-//        myGLWindow.addKeyListener(myWindowControls);
+        //        myGLWindow.addKeyListener(myWindowControls);
     }
 
     /** Cleanup the event listeners. */
@@ -59,6 +59,6 @@ public class NewtEventHelper
     {
         myGLWindow.removeMouseListener(myMouseConverter);
         myGLWindow.removeKeyListener(myKeyConverter);
-//        myGLWindow.removeKeyListener(myWindowControls);
+        //        myGLWindow.removeKeyListener(myWindowControls);
     }
 }

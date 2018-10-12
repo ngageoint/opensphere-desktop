@@ -16,39 +16,21 @@ public interface OrderCategory
      * A static case insensitive alphabetical comparator for categories by
      * category id.
      */
-    Comparator<OrderCategory> ourCompareByCaseInsensitiveCategoryId = new Comparator<OrderCategory>()
-    {
-        @Override
-        public int compare(OrderCategory o1, OrderCategory o2)
-        {
-            return o1.getCategoryId().compareToIgnoreCase(o2.getCategoryId());
-        }
-    };
+    Comparator<OrderCategory> ourCompareByCaseInsensitiveCategoryId = (o1, o2) -> o1.getCategoryId().compareToIgnoreCase(o2.getCategoryId());
 
     /** A static lexicographical comparator for categories by category id. */
-    Comparator<OrderCategory> ourCompareByCategoryId = new Comparator<OrderCategory>()
-    {
-        @Override
-        public int compare(OrderCategory o1, OrderCategory o2)
-        {
-            return o1.getCategoryId().compareTo(o2.getCategoryId());
-        }
-    };
+    Comparator<OrderCategory> ourCompareByCategoryId = (o1, o2) -> o1.getCategoryId().compareTo(o2.getCategoryId());
 
     /**
      * A static comparator for comparing {@link OrderCategory} by order range
      * where the range with the lowest minimum integer is less than another
      * range.
      */
-    Comparator<OrderCategory> ourCompareByOrderRange = new Comparator<OrderCategory>()
+    Comparator<OrderCategory> ourCompareByOrderRange = (o1, o2) ->
     {
-        @Override
-        public int compare(OrderCategory o1, OrderCategory o2)
-        {
-            int o1MinInt = o1.getOrderRange() == null ? Integer.MAX_VALUE : o1.getOrderRange().getMinimum().intValue();
-            int o2MinInt = o2.getOrderRange() == null ? Integer.MAX_VALUE : o2.getOrderRange().getMinimum().intValue();
-            return o1MinInt == o2MinInt ? 0 : o1MinInt < o2MinInt ? -1 : 1;
-        }
+        int o1MinInt = o1.getOrderRange() == null ? Integer.MAX_VALUE : o1.getOrderRange().getMinimum().intValue();
+        int o2MinInt = o2.getOrderRange() == null ? Integer.MAX_VALUE : o2.getOrderRange().getMinimum().intValue();
+        return o1MinInt == o2MinInt ? 0 : o1MinInt < o2MinInt ? -1 : 1;
     };
 
     /**

@@ -1,8 +1,7 @@
 package io.opensphere.core.geometry.constraint;
 
-import net.jcip.annotations.Immutable;
-
 import io.opensphere.core.model.time.TimeSpan;
+import net.jcip.annotations.Immutable;
 
 /**
  * A strict time constraint that requires that the active time span exactly

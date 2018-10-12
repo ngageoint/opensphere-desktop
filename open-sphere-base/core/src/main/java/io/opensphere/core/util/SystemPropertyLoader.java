@@ -79,7 +79,7 @@ public final class SystemPropertyLoader
                         catch (final IOException e)
                         {
                             Logger.getLogger(SystemPropertyLoader.class)
-                                    .trace("Failed to close stream after loading system properties " + e, e);
+                            .trace("Failed to close stream after loading system properties " + e, e);
                         }
                     }
                 }
@@ -88,7 +88,7 @@ public final class SystemPropertyLoader
             else if (warn)
             {
                 Logger.getLogger(SystemPropertyLoader.class)
-                        .warn("System properties resource could not be loaded: " + resourceName);
+                .warn("System properties resource could not be loaded: " + resourceName);
             }
         }
         catch (final IOException e)
@@ -195,10 +195,7 @@ public final class SystemPropertyLoader
                 return false;
             }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     /** Disallow instantiation. */

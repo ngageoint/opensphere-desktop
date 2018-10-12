@@ -3,9 +3,8 @@ package io.opensphere.core.util;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
-import net.jcip.annotations.ThreadSafe;
-
 import io.opensphere.core.util.ref.Reference;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * An object property that supports having three phase change listeners.
@@ -86,7 +85,7 @@ public class ThreePhaseProperty<S>
     public synchronized void removeListener(Predicate<? super ThreePhaseChangeListener<?>> predicate)
     {
         Arrays.stream(myChangeSupport.getListeners()).map(r -> r.get()).filter(l -> l != null && predicate.test(l))
-                .forEach(l -> removeListener(l));
+        .forEach(l -> removeListener(l));
     }
 
     /**
@@ -118,7 +117,7 @@ public class ThreePhaseProperty<S>
      * @throws InterruptedException If the thread is interrupted.
      */
     public boolean setValue(S value, long perPhaseTimeoutMillis, boolean failOnTimeout)
-        throws PropertyChangeException, InterruptedException
+            throws PropertyChangeException, InterruptedException
     {
         synchronized (this)
         {
@@ -127,10 +126,7 @@ public class ThreePhaseProperty<S>
                 myValue = value;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
     }
 

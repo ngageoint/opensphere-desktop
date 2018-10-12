@@ -68,7 +68,7 @@ public class GeoScreenPolylineGeometry extends PolylineGeometry
 
     @Override
     public GeoScreenPolylineGeometry derive(BaseRenderProperties renderProperties, Constraints constraints)
-        throws ClassCastException
+            throws ClassCastException
     {
         return new GeoScreenPolylineGeometry(createBuilder(), (PolylineRenderProperties)renderProperties, constraints);
     }
@@ -95,7 +95,7 @@ public class GeoScreenPolylineGeometry extends PolylineGeometry
     {
         StringBuilder sb = new StringBuilder(150);
         sb.append(getClass().getSimpleName()).append(' ').append(hashCode()).append(" [").append(getVertices())
-                .append(", attachment: ").append(getAttachment()).append(']');
+        .append(", attachment: ").append(getAttachment()).append(']');
         return sb.toString();
     }
 

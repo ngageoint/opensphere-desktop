@@ -34,7 +34,7 @@ public class AutoSelectComboBox<T> extends ComboBox<T>
     /**
      * Creates a new combobox bound to the supplied observable list. All
      * auto-selectable combo boxes are editable by default
-     * 
+     *
      * @param items the items to show in the list.
      */
     public AutoSelectComboBox(ObservableList<T> items)
@@ -53,7 +53,7 @@ public class AutoSelectComboBox<T> extends ComboBox<T>
 
     /**
      * Handles the release of the key described in the event.
-     * 
+     *
      * @param event the event describing the key release.
      */
     public void handleKeyRelease(KeyEvent event)
@@ -86,8 +86,8 @@ public class AutoSelectComboBox<T> extends ComboBox<T>
                     return;
                 case ENTER:
                     Set<? extends Object> matchingEntries = items.stream()
-                            .filter(item -> StringUtils.startsWithIgnoreCase(item.toString(), editorContents))
-                            .collect(Collectors.toSet());
+                    .filter(item -> StringUtils.startsWithIgnoreCase(item.toString(), editorContents))
+                    .collect(Collectors.toSet());
                     if (matchingEntries.size() == 1)
                     {
                         String fullEntry = (String)matchingEntries.iterator().next();

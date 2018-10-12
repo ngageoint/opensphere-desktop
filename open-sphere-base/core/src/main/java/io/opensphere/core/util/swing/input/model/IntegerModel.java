@@ -107,7 +107,7 @@ public class IntegerModel extends AbstractViewModel<Integer>
      */
     private void setValidator()
     {
-        PredicateWithMessage<Integer> predicate = new WrappedPredicateWithMessage<Integer>(
+        PredicateWithMessage<Integer> predicate = new WrappedPredicateWithMessage<>(
                 new IntegerRangePredicate(myMin, myMax))
         {
             @Override
@@ -128,6 +128,6 @@ public class IntegerModel extends AbstractViewModel<Integer>
                 }
             }
         };
-        setValidatorSupport(new ObservableValueValidatorSupport<Integer>(this, predicate));
+        setValidatorSupport(new ObservableValueValidatorSupport<>(this, predicate));
     }
 }

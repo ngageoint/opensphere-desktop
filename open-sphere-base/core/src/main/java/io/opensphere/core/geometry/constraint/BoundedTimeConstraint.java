@@ -1,11 +1,10 @@
 package io.opensphere.core.geometry.constraint;
 
-import net.jcip.annotations.Immutable;
-
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.units.duration.Duration;
 import io.opensphere.core.units.duration.Seconds;
 import io.opensphere.core.util.Constants;
+import net.jcip.annotations.Immutable;
 
 /**
  * A {@link TimeConstraint} that has additional restrictions based on the
@@ -145,10 +144,7 @@ public class BoundedTimeConstraint extends TimeConstraint
         {
             return false;
         }
-        else
-        {
-            return super.check(span);
-        }
+        return super.check(span);
     }
 
     @Override

@@ -9,7 +9,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
@@ -82,14 +81,7 @@ public class ViewBookmarkRegistryImpl implements ViewBookmarkRegistry
         {
             final ViewBookmark fAddedView = addedView;
             saveToPreferences();
-            myChangeSupport.notifyListeners(new Callback<ViewBookmarkRegistryListener>()
-            {
-                @Override
-                public void notify(ViewBookmarkRegistryListener listener)
-                {
-                    listener.viewBookmarkAdded(fAddedView, source);
-                }
-            });
+            myChangeSupport.notifyListeners(listener -> listener.viewBookmarkAdded(fAddedView, source));
         }
         return addedView != null;
     }
@@ -209,14 +201,7 @@ public class ViewBookmarkRegistryImpl implements ViewBookmarkRegistry
         {
             saveToPreferences();
             final ViewBookmark fRemoved = removedView;
-            myChangeSupport.notifyListeners(new Callback<ViewBookmarkRegistryListener>()
-            {
-                @Override
-                public void notify(ViewBookmarkRegistryListener listener)
-                {
-                    listener.viewBookmarkRemoved(fRemoved, source);
-                }
-            });
+            myChangeSupport.notifyListeners(listener -> listener.viewBookmarkRemoved(fRemoved, source));
         }
         return removedView != null;
     }

@@ -411,7 +411,7 @@ public final class Zip
     @SuppressWarnings("PMD.CollapsibleIfStatements")
     public static void zipfiles(File zipFile, List<ZipInputAdapter> zipInputs, final ProgressMonitor pm,
             final boolean progressByFiles)
-        throws IOException
+                    throws IOException
     {
         ZipOutputStream zipOS = new ZipOutputStream(new FileOutputStream(zipFile));
         zipOS.setLevel(9);
@@ -528,7 +528,7 @@ public final class Zip
         if (pm != null)
         {
             EventQueueUtilities
-                    .runOnEDT(() -> pm.setNote("Adding Entry " + entryCount + " of " + totalEntries + " : " + inputFileName));
+            .runOnEDT(() -> pm.setNote("Adding Entry " + entryCount + " of " + totalEntries + " : " + inputFileName));
         }
     }
 

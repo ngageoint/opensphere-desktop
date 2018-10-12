@@ -29,7 +29,6 @@ import org.apache.log4j.Logger;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.opensphere.core.image.DDSEncoder.EncodingException;
 import io.opensphere.core.util.Utilities;
-import io.opensphere.core.util.collections.LazyMap;
 import io.opensphere.core.util.collections.MappedObjectPool;
 import io.opensphere.core.util.concurrent.CommonTimer;
 import io.opensphere.core.util.image.ImageUtil;
@@ -59,14 +58,7 @@ public class ImageIOImage extends Image implements DDSEncodableImage
 
     /** Pool for buffered images. */
     private static final MappedObjectPool<BufferedImageSpecs, BufferedImage> BUFFERED_IMAGE_POOL = new MappedObjectPool<>(
-            BufferedImageSpecs.class, new LazyMap.Factory<BufferedImageSpecs, BufferedImage>()
-            {
-                @Override
-                public BufferedImage create(BufferedImageSpecs specs)
-                {
-                    return specs.createBufferedImage();
-                }
-            }, 20, 20, CLEANUP_EXECUTOR);
+            BufferedImageSpecs.class, specs -> specs.createBufferedImage(), 20, 20, CLEANUP_EXECUTOR);
 
     /** serialVersionUID. */
     private static final long serialVersionUID = 2L;
@@ -229,10 +221,7 @@ public class ImageIOImage extends Image implements DDSEncodableImage
                 {
                     throw new IOException("Failed to encode image to DDS: no available encoder.");
                 }
-                else
-                {
-                    throw new IOException("Failed to encode image to DDS: " + errorMsg);
-                }
+                throw new IOException("Failed to encode image to DDS: " + errorMsg);
             }
         }
 
@@ -327,15 +316,11 @@ public class ImageIOImage extends Image implements DDSEncodableImage
             {
                 try
                 {
-                    final InputStream result = encoder.encodeStreaming(getAWTImage(), compression, executor, new Runnable()
+                    final InputStream result = encoder.encodeStreaming(getAWTImage(), compression, executor, () ->
                     {
-                        @Override
-                        public void run()
+                        if (dispose)
                         {
-                            if (dispose)
-                            {
-                                dispose();
-                            }
+                            dispose();
                         }
                     });
                     disposeHandled = true;
@@ -358,10 +343,7 @@ public class ImageIOImage extends Image implements DDSEncodableImage
             {
                 throw new EncodingException("Failed to encode image to DDS: no available encoder.");
             }
-            else
-            {
-                throw err;
-            }
+            throw err;
         }
         finally
         {
@@ -495,7 +477,7 @@ public class ImageIOImage extends Image implements DDSEncodableImage
      */
     @Override
     protected void setInput(InputStream input, int estimatedStreamLengthBytes, boolean usePool)
-        throws ImageFormatUnknownException, IOException
+            throws ImageFormatUnknownException, IOException
     {
         try (BufferedInputStream in = new BufferedInputStream(input))
         {
@@ -654,7 +636,7 @@ public class ImageIOImage extends Image implements DDSEncodableImage
         {
             compression = getAWTImage().getColorModel().hasAlpha()
                     ? isDXTCompressible() ? CompressionType.D3DFMT_DXT5 : CompressionType.D3DFMT_A8R8G8B8
-                    : isDXTCompressible() ? CompressionType.D3DFMT_DXT1 : CompressionType.D3DFMT_R8G8B8;
+                            : isDXTCompressible() ? CompressionType.D3DFMT_DXT1 : CompressionType.D3DFMT_R8G8B8;
             setCompressionHint(compression);
         }
         return compression;

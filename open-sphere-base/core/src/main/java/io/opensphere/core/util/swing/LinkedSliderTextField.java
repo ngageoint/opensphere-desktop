@@ -9,22 +9,17 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 import io.opensphere.core.util.ChangeSupport;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.WeakChangeSupport;
 
 /**
@@ -264,32 +259,14 @@ public final class LinkedSliderTextField extends AbstractHUDPanel
         }
 
         mySlider.setOpaque(false);
-        mySlider.addChangeListener(new ChangeListener()
+        mySlider.addChangeListener(evt ->
         {
-            @Override
-            public void stateChanged(ChangeEvent evt)
-            {
-                makeTextMatchSlider();
-                myChangeSupport.notifyListeners(new Callback<ActionListener>()
-                {
-                    @Override
-                    public void notify(ActionListener listener)
-                    {
-                        listener.actionPerformed(
-                                new ActionEvent(LinkedSliderTextField.this, mySlider.getValue(), "Value Updated"));
-                    }
-                });
-            }
+            makeTextMatchSlider();
+            myChangeSupport.notifyListeners(listener -> listener.actionPerformed(
+                    new ActionEvent(LinkedSliderTextField.this, mySlider.getValue(), "Value Updated")));
         });
 
-        mySlider.addMouseWheelListener(new MouseWheelListener()
-        {
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e)
-            {
-                moveSlider(-e.getWheelRotation());
-            }
-        });
+        mySlider.addMouseWheelListener(e -> moveSlider(-e.getWheelRotation()));
     }
 
     /**
@@ -334,14 +311,7 @@ public final class LinkedSliderTextField extends AbstractHUDPanel
             public void focusGained(FocusEvent e)
             {
                 myTextHasFocus = true;
-                EventQueueUtilities.invokeLater(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        myTextField.selectAll();
-                    }
-                });
+                EventQueueUtilities.invokeLater(() -> myTextField.selectAll());
             }
 
             @Override

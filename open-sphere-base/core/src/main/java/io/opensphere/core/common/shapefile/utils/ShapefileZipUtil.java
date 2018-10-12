@@ -51,7 +51,7 @@ public class ShapefileZipUtil
         }
 
         ESRIShapefile shapefile = null;
-        List<File> tempFiles = new ArrayList<File>();
+        List<File> tempFiles = new ArrayList<>();
         String selectedEntryName = null;
         String shapeName = null;
         while (tempFiles.size() < 3)
@@ -275,7 +275,7 @@ public class ShapefileZipUtil
     }
 
     private static void writePrjToZip(ESRIShapefile source, ZipOutputStream zipStream, String fileName, Projection prj)
-        throws IOException
+            throws IOException
     {
 
         // Write the prj to the stream

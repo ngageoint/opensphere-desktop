@@ -92,7 +92,7 @@ public class PointSpriteRendererBuffered<T extends PointSpriteGeometry> extends 
                     groupTimeSpan);
             buffers.put(entry.getKey(), pointData);
         }
-        setRenderData(new PointSpriteRenderData<PointSpriteGeometry>(buffers, rejects, projection, groupTimeSpan));
+        setRenderData(new PointSpriteRenderData<>(buffers, rejects, projection, groupTimeSpan));
     }
 
     @Override
@@ -238,15 +238,10 @@ public class PointSpriteRendererBuffered<T extends PointSpriteGeometry> extends 
      */
     private ModelDataRetriever<T> createSpecialDataRetriever(final ModelDataRetriever<T> dataRetriever)
     {
-        ModelDataRetriever<T> specialDataRetriever = new ModelDataRetriever<T>()
+        ModelDataRetriever<T> specialDataRetriever = (geom, proj, override, timeBudget) ->
         {
-            @Override
-            public AbstractRenderer.ModelData getModelData(T geom, Projection proj, AbstractRenderer.ModelData override,
-                    TimeBudget timeBudget)
-            {
-                TextureModelData modelData = (TextureModelData)dataRetriever.getModelData(geom, proj, override, timeBudget);
-                return modelData.getModelData();
-            }
+            TextureModelData modelData = (TextureModelData)dataRetriever.getModelData(geom, proj, override, timeBudget);
+            return modelData.getModelData();
         };
         return specialDataRetriever;
     }
@@ -329,7 +324,7 @@ public class PointSpriteRendererBuffered<T extends PointSpriteGeometry> extends 
         @Override
         public GeometryRenderer<PointSpriteGeometry> createRenderer()
         {
-            return new PointSpriteRendererBuffered<PointSpriteGeometry>(getCache());
+            return new PointSpriteRendererBuffered<>(getCache());
         }
 
         @Override

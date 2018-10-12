@@ -5,13 +5,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
-
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.model.time.TimeSpanList;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.concurrent.ProcrastinatingExecutor;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /** Manages which time spans have been queried, so you don't have to. */
 @ThreadSafe
@@ -210,9 +209,6 @@ public abstract class TimeSpanGovernor
             callbacks = New.list(myCallbacks);
             myCallbacks.clear();
         }
-        for (Runnable callback : callbacks)
-        {
-            callback.run();
-        }
+        callbacks.forEach(c -> c.run());
     }
 }

@@ -57,7 +57,7 @@ public class PointProcessor extends AbstractProcessor<PointGeometry>
     @Override
     public void generateDryRunGeometries()
     {
-        PointGeometry.Builder<GeographicPosition> builder = new PointGeometry.Builder<GeographicPosition>();
+        PointGeometry.Builder<GeographicPosition> builder = new PointGeometry.Builder<>();
         builder.setPosition(new GeographicPosition(LatLonAlt.createFromDegrees(0., 0.)));
 
         PointRenderProperties renderProperties = new DefaultPointRenderProperties(
@@ -179,28 +179,28 @@ public class PointProcessor extends AbstractProcessor<PointGeometry>
         }
     }
 
-//    @Override
-//    protected boolean isOnScreen(PointGeometry geom, boolean useTime)
-//    {
-//        if (!super.isOnScreen(geom, useTime))
-//        {
-//            return false;
-//        }
+    //    @Override
+    //    protected boolean isOnScreen(PointGeometry geom, boolean useTime)
+    //    {
+    //        if (!super.isOnScreen(geom, useTime))
+    //        {
+    //            return false;
+    //        }
 
-// TODO: This is too slow when there are lots of dots.
-//        Position position = geom.getPosition();
-//        if (position instanceof GeographicPosition)
-//        {
-//            PointProcessor.ModelCoordinates modelData = (PointProcessor.ModelCoordinates)getModelData(geom);
-//            Vector3d model = modelData.getVector();
-//            return getViewer().isInView(model, 0f) && !isObscured(model);
-//        }
-//        else
-//        {
-//            return true;
-//        }
-//        return true;
-//    }
+    // TODO: This is too slow when there are lots of dots.
+    //        Position position = geom.getPosition();
+    //        if (position instanceof GeographicPosition)
+    //        {
+    //            PointProcessor.ModelCoordinates modelData = (PointProcessor.ModelCoordinates)getModelData(geom);
+    //            Vector3d model = modelData.getVector();
+    //            return getViewer().isInView(model, 0f) && !isObscured(model);
+    //        }
+    //        else
+    //        {
+    //            return true;
+    //        }
+    //        return true;
+    //    }
 
     @Override
     protected AbstractRenderer.ModelData processGeometry(PointGeometry geo, Projection projectionSnapshot,

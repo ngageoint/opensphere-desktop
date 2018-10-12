@@ -69,7 +69,7 @@ public class ImmutableDataFilter implements DataFilter
     public ImmutableDataFilter(DataFilter filter, Object filterSource)
     {
         Utilities.checkNull(filter, "filter");
-        myFilterSourceWR = filterSource == null ? null : new WeakReference<Object>(filterSource);
+        myFilterSourceWR = filterSource == null ? null : new WeakReference<>(filterSource);
         mySQLLikeString = filter.getSqlLikeString();
         myTypeKey = filter.getTypeKey();
         myColumns = filter.getColumns() == null ? null : New.unmodifiableList(filter.getColumns());
@@ -99,7 +99,7 @@ public class ImmutableDataFilter implements DataFilter
         myTypeKey = typeKey;
         myColumns = columns == null ? null : New.unmodifiableList(columns);
         myFilterGroup = dfGroup == null ? null : new ImmutableDataFilterGroup(dfGroup);
-        myFilterSourceWR = filterSource == null ? null : new WeakReference<Object>(filterSource);
+        myFilterSourceWR = filterSource == null ? null : new WeakReference<>(filterSource);
         mySQLLikeString = sqlLikeStr;
         myFilterCount = 0;
         myActive = true;

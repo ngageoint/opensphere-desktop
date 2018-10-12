@@ -76,7 +76,7 @@ public class ZYXImageKey
     {
         StringBuilder sb = new StringBuilder(256);
         sb.append(getClass().getSimpleName()).append(" [").append(myZ).append(',').append(myY).append(',').append(myX)
-                .append(']');
+        .append(']');
         return sb.toString();
     }
 }

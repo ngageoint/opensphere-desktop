@@ -78,10 +78,7 @@ public class SphereBody extends GeographicBody3D
                 throw new UnexpectedEnumException(inPos.getLatLonAlt().getAltitudeReference());
             }
         }
-        else
-        {
-            return new Vector3d(x - modelCenter.getX(), y - modelCenter.getY(), z - modelCenter.getZ());
-        }
+        return new Vector3d(x - modelCenter.getX(), y - modelCenter.getY(), z - modelCenter.getZ());
     }
 
     @Override

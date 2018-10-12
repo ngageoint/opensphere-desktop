@@ -1,14 +1,13 @@
 package io.opensphere.core.util.fx;
 
+import io.opensphere.core.util.Utilities;
+import io.opensphere.core.util.lang.StringUtilities;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
-
-import io.opensphere.core.util.Utilities;
-import io.opensphere.core.util.lang.StringUtilities;
 import netscape.javascript.JSException;
 import netscape.javascript.JSObject;
 

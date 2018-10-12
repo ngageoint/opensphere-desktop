@@ -912,10 +912,7 @@ public class DefaultRangedLongSet implements RangedLongSet
         {
             return Integer.MAX_VALUE;
         }
-        else
-        {
-            return (int)valueCount();
-        }
+        return (int)valueCount();
     }
 
     @Override
@@ -1204,7 +1201,7 @@ public class DefaultRangedLongSet implements RangedLongSet
                     }
                 }
                 else
-                // Does not overlap with either
+                    // Does not overlap with either
                 {
                     myBlockList.add(insertIndex, insertBlock);
                     changedSomething = true;

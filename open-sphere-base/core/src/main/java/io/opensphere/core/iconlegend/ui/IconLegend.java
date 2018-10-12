@@ -9,13 +9,13 @@ import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 
-import net.jcip.annotations.GuardedBy;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -28,6 +28,7 @@ import io.opensphere.core.iconlegend.IconLegendListener;
 import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.GridBagPanel;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * The Class IconLegend. Sets up a table that displays details about icons that
@@ -94,7 +95,7 @@ public final class IconLegend implements IconLegendListener
             myIconLegendFrame.setIconifiable(false);
             myIconLegendFrame.setClosable(true);
             myIconLegendFrame.setResizable(true);
-            myIconLegendFrame.setDefaultCloseOperation(AbstractInternalFrame.HIDE_ON_CLOSE);
+            myIconLegendFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
             myIconLegendFrame.setContentPane(getMainPanel());
             myIconLegendFrame.setLocation(200, 100);
         }

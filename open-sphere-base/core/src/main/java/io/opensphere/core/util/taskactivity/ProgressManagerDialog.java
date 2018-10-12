@@ -4,7 +4,6 @@ import java.awt.Window;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import net.jcip.annotations.ThreadSafe;
 import javax.swing.JDialog;
 
 import io.opensphere.core.util.ThreadConfined;
@@ -29,6 +28,7 @@ import javafx.scene.control.cell.ProgressBarTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * A dialog that can display the running tasks and allow the user to take action

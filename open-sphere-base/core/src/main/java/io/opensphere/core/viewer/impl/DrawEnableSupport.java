@@ -62,14 +62,7 @@ public class DrawEnableSupport
      */
     protected void notifyDrawEnableListeners(final boolean drawEnable)
     {
-        ChangeSupport.Callback<DrawEnableListener> callback = new ChangeSupport.Callback<MapContext.DrawEnableListener>()
-        {
-            @Override
-            public void notify(DrawEnableListener listener)
-            {
-                listener.drawEnabled(drawEnable);
-            }
-        };
+        ChangeSupport.Callback<DrawEnableListener> callback = listener -> listener.drawEnabled(drawEnable);
         myChangeSupport.notifyListeners(callback, myExecutor);
     }
 }

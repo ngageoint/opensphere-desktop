@@ -255,7 +255,7 @@ public class GeoScreenPolygonProcessor<E extends GeoScreenPolygonGeometry> exten
             ScreenPosition position = new ScreenPosition(location.getX(), location.getY());
             Vector3d model = new Vector3d(location.getX() + getModelCenter().getX(), getModelCenter().getY() - location.getY(),
                     0.);
-            return new SimpleProjectedTesseraVertex<ScreenPosition>(position, model);
+            return new SimpleProjectedTesseraVertex<>(position, model);
         }
     }
 }

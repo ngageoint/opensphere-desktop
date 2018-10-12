@@ -2,10 +2,10 @@ package io.opensphere.core.pipeline.renderer.buffered;
 
 import java.nio.ByteBuffer;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.media.opengl.GL;
 import javax.media.opengl.fixedfunc.GLPointerFunc;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.geometry.AbstractGeometry;
 import io.opensphere.core.pipeline.util.RenderContext;
 
@@ -41,10 +41,7 @@ public class ColorBufferObject extends AbstractBufferObject<ByteBuffer>
             rc.getGL2().glColorPointer(myBytesPerColor, GL.GL_UNSIGNED_BYTE, 0, 0);
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     @Override

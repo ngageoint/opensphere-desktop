@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.opensphere.core.animation.AnimationState;
 import io.opensphere.core.animation.AnimationState.Direction;
@@ -72,10 +71,7 @@ public class DefaultContinuousAnimationPlan extends DefaultAnimationPlan impleme
         {
             return determineNextState((DefaultContinuousAnimationState)state);
         }
-        else
-        {
-            return super.determineNextState(state);
-        }
+        return super.determineNextState(state);
     }
 
     /**
@@ -118,32 +114,28 @@ public class DefaultContinuousAnimationPlan extends DefaultAnimationPlan impleme
         {
             return new DefaultContinuousAnimationState(stepNumber, nextSpan, state.getDirection());
         }
-        else
+        DefaultAnimationState nextParentState = state;
+        do
         {
-            DefaultAnimationState nextParentState = state;
-            do
-            {
-                nextParentState = super.determineNextState(nextParentState);
-            }
-            while (nextParentState != null && !getLimitWindow().overlaps(getTimeSpanForState(nextParentState)));
-
-            if (nextParentState == null)
-            {
-                return null;
-            }
-
-            // If the direction reversed, the parent advanced a step, but we
-            // don't want to advance yet.
-            if (nextParentState.getDirection() != state.getDirection()
-                    && nextParentState.getStepNumber() != state.getStepNumber())
-            {
-                int correctedStepNumber = nextParentState.getStepNumber()
-                        - (nextParentState.getDirection() == Direction.FORWARD ? 1 : -1);
-                nextParentState = new DefaultAnimationState(correctedStepNumber, nextParentState.getDirection());
-            }
-
-            return createStateFromParentState(nextParentState, nextParentState.getDirection() == Direction.FORWARD);
+            nextParentState = super.determineNextState(nextParentState);
         }
+        while (nextParentState != null && !getLimitWindow().overlaps(getTimeSpanForState(nextParentState)));
+
+        if (nextParentState == null)
+        {
+            return null;
+        }
+
+        // If the direction reversed, the parent advanced a step, but we
+        // don't want to advance yet.
+        if (nextParentState.getDirection() != state.getDirection() && nextParentState.getStepNumber() != state.getStepNumber())
+        {
+            int correctedStepNumber = nextParentState.getStepNumber()
+                    - (nextParentState.getDirection() == Direction.FORWARD ? 1 : -1);
+            nextParentState = new DefaultAnimationState(correctedStepNumber, nextParentState.getDirection());
+        }
+
+        return createStateFromParentState(nextParentState, nextParentState.getDirection() == Direction.FORWARD);
     }
 
     @Override
@@ -153,10 +145,7 @@ public class DefaultContinuousAnimationPlan extends DefaultAnimationPlan impleme
         {
             return determinePreviousState((DefaultContinuousAnimationState)state);
         }
-        else
-        {
-            return super.determinePreviousState(state);
-        }
+        return super.determinePreviousState(state);
     }
 
     /**
@@ -200,31 +189,28 @@ public class DefaultContinuousAnimationPlan extends DefaultAnimationPlan impleme
         {
             return new DefaultContinuousAnimationState(stepNumber, prevSpan, state.getDirection());
         }
-        else
+        DefaultAnimationState prevParentState = state;
+        do
         {
-            DefaultAnimationState prevParentState = state;
-            do
-            {
-                prevParentState = super.determinePreviousState(prevParentState);
-            }
-            while (prevParentState != null && !getLimitWindow().overlaps(getTimeSpanForState(prevParentState)));
-
-            if (prevParentState == null)
-            {
-                return null;
-            }
-
-            // If the direction reversed, the parent advanced a step, but we
-            // don't want to advance yet.
-            if (prevParentState.getDirection() != state.getDirection())
-            {
-                int correctedStepNumber = prevParentState.getStepNumber()
-                        - (prevParentState.getDirection() == Direction.FORWARD ? -1 : 1);
-                prevParentState = new DefaultAnimationState(correctedStepNumber, prevParentState.getDirection());
-            }
-
-            return createStateFromParentState(prevParentState, prevParentState.getDirection() == Direction.BACKWARD);
+            prevParentState = super.determinePreviousState(prevParentState);
         }
+        while (prevParentState != null && !getLimitWindow().overlaps(getTimeSpanForState(prevParentState)));
+
+        if (prevParentState == null)
+        {
+            return null;
+        }
+
+        // If the direction reversed, the parent advanced a step, but we
+        // don't want to advance yet.
+        if (prevParentState.getDirection() != state.getDirection())
+        {
+            int correctedStepNumber = prevParentState.getStepNumber()
+                    - (prevParentState.getDirection() == Direction.FORWARD ? -1 : 1);
+            prevParentState = new DefaultAnimationState(correctedStepNumber, prevParentState.getDirection());
+        }
+
+        return createStateFromParentState(prevParentState, prevParentState.getDirection() == Direction.BACKWARD);
     }
 
     @Override
@@ -402,10 +388,7 @@ public class DefaultContinuousAnimationPlan extends DefaultAnimationPlan impleme
         {
             return ((ContinuousAnimationState)state).getActiveTimeSpan();
         }
-        else
-        {
-            return super.getTimeSpanForState(state);
-        }
+        return super.getTimeSpanForState(state);
     }
 
     @Override

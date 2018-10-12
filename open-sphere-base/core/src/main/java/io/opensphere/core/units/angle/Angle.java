@@ -40,10 +40,7 @@ public abstract class Angle implements Cloneable, Serializable, Comparable<Angle
         {
             return (T)from;
         }
-        else
-        {
-            return UnitsUtilities.create(type, Angle.class, from);
-        }
+        return UnitsUtilities.create(type, Angle.class, from);
     }
 
     /**

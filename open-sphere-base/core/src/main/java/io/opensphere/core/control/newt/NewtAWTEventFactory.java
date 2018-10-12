@@ -2,6 +2,7 @@ package io.opensphere.core.control.newt;
 
 import java.awt.Canvas;
 import java.awt.Point;
+import java.awt.event.InputEvent;
 import java.awt.event.MouseWheelEvent;
 
 import gnu.trove.map.TIntIntMap;
@@ -104,7 +105,7 @@ public class NewtAWTEventFactory
         {
             // NEWT erroneously reports button1 down when rolling the mouse
             // wheel, so remove that from the modifiers.
-            mods &= ~java.awt.event.MouseEvent.BUTTON1_DOWN_MASK;
+            mods &= ~InputEvent.BUTTON1_DOWN_MASK;
             evt = new java.awt.event.MouseWheelEvent(myCanvas, type, event.getWhen(), mods, event.getX(), event.getY(),
                     absolute.x, absolute.y, -rotation, false, MouseWheelEvent.WHEEL_UNIT_SCROLL, 3, -rotation);
         }

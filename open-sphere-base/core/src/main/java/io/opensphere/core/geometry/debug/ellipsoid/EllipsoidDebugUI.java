@@ -3,6 +3,11 @@ package io.opensphere.core.geometry.debug.ellipsoid;
 import java.awt.Dimension;
 import java.text.NumberFormat;
 
+import javax.swing.JMenuItem;
+
+import io.opensphere.core.Toolbox;
+import io.opensphere.core.util.fx.FXUtilities;
+import io.opensphere.core.util.fx.JFXDialog;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.CheckBox;
@@ -12,12 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.util.converter.NumberStringConverter;
-
-import javax.swing.JMenuItem;
-
-import io.opensphere.core.Toolbox;
-import io.opensphere.core.util.fx.FXUtilities;
-import io.opensphere.core.util.fx.JFXDialog;
 
 /**
  * The UI that allows a user to draw ellipsoids on globe in debug mode.

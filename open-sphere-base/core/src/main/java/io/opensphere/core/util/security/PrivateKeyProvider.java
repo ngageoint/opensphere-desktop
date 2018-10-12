@@ -19,14 +19,7 @@ import javax.security.auth.x500.X500Principal;
 public interface PrivateKeyProvider
 {
     /** Comparator that compares providers by their aliases. */
-    Comparator<PrivateKeyProvider> ALIAS_COMPARATOR = new Comparator<PrivateKeyProvider>()
-    {
-        @Override
-        public int compare(PrivateKeyProvider o1, PrivateKeyProvider o2)
-        {
-            return o1.getAlias().compareTo(o2.getAlias());
-        }
-    };
+    Comparator<PrivateKeyProvider> ALIAS_COMPARATOR = (o1, o2) -> o1.getAlias().compareTo(o2.getAlias());
 
     /**
      * Get the alias associated with this key.
@@ -81,7 +74,7 @@ public interface PrivateKeyProvider
      * @see MessageDigest#getInstance(String)
      */
     String getFingerprint(String algorithm)
-        throws PrivateKeyProviderException, CertificateEncodingException, NoSuchAlgorithmException;
+            throws PrivateKeyProviderException, CertificateEncodingException, NoSuchAlgorithmException;
 
     /**
      * Get the private key.
@@ -159,7 +152,7 @@ public interface PrivateKeyProvider
      * @throws PrivateKeyProviderException If the provider is uninitialized.
      */
     boolean isAcceptable(Set<? extends String> keyTypes, Collection<? extends X500Principal> acceptableIssuers)
-        throws PrivateKeyProviderException;
+            throws PrivateKeyProviderException;
 
     /**
      * Get if the certificate chain is current.

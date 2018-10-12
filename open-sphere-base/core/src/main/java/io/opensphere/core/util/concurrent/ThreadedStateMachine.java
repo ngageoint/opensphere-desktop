@@ -63,17 +63,13 @@ public class ThreadedStateMachine<E>
      * Comparator for tasks that puts them in the order of their "from" state
      * order.
      */
-    private final Comparator<Task> myTaskComparator = new Comparator<Task>()
+    private final Comparator<Task> myTaskComparator = (o1, o2) ->
     {
-        @Override
-        public int compare(Task o1, Task o2)
-        {
-            State o1FromState = o1.getFromState();
-            State o2FromState = o2.getFromState();
-            int o2StateOrder = o2FromState == null ? 0 : o2FromState.getStateOrder();
-            int o1StateOrder = o1FromState == null ? 0 : o1FromState.getStateOrder();
-            return o2StateOrder > o1StateOrder ? -1 : o2StateOrder == o1StateOrder ? 0 : 1;
-        }
+        State o1FromState = o1.getFromState();
+        State o2FromState = o2.getFromState();
+        int o2StateOrder = o2FromState == null ? 0 : o2FromState.getStateOrder();
+        int o1StateOrder = o1FromState == null ? 0 : o1FromState.getStateOrder();
+        return o2StateOrder > o1StateOrder ? -1 : o2StateOrder == o1StateOrder ? 0 : 1;
     };
 
     /**
@@ -887,14 +883,7 @@ public class ThreadedStateMachine<E>
                 {
                     final StateChangeHandler<E> handler = pair.getStateChangeHandler();
                     Executor executor = pair.getExecutor(task.getObjects().size());
-                    executor.execute(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            executeTask(task, handler);
-                        }
-                    });
+                    executor.execute(() -> executeTask(task, handler));
                 }
             }
         }

@@ -88,27 +88,20 @@ public class TaskCanceller extends DefaultCancellable
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     public <T> Callable<T> wrap(Callable<T> c)
     {
-        return new Callable<T>()
+        return () ->
         {
-            @Override
-            public T call() throws Exception
+            addCurrentThread();
+            try
             {
-                addCurrentThread();
-                try
+                if (isCancelled())
                 {
-                    if (isCancelled())
-                    {
-                        throw new InterruptedException();
-                    }
-                    else
-                    {
-                        return c.call();
-                    }
+                    throw new InterruptedException();
                 }
-                finally
-                {
-                    removeCurrentThread();
-                }
+                return c.call();
+            }
+            finally
+            {
+                removeCurrentThread();
             }
         };
     }
@@ -124,23 +117,19 @@ public class TaskCanceller extends DefaultCancellable
     @SuppressWarnings("PMD.AvoidRethrowingException")
     public <T> InterruptibleCallable<T> wrap(InterruptibleCallable<T> c)
     {
-        return new InterruptibleCallable<T>()
+        return () ->
         {
-            @Override
-            public T call() throws InterruptedException
+            try
             {
-                try
-                {
-                    return wrap((Callable<T>)() -> c.call()).call();
-                }
-                catch (RuntimeException | Error | InterruptedException e)
-                {
-                    throw e;
-                }
-                catch (Exception e)
-                {
-                    throw new ImpossibleException(e);
-                }
+                return wrap((Callable<T>)() -> c.call()).call();
+            }
+            catch (RuntimeException | Error | InterruptedException e1)
+            {
+                throw e1;
+            }
+            catch (Exception e2)
+            {
+                throw new ImpossibleException(e2);
             }
         };
     }
@@ -155,30 +144,26 @@ public class TaskCanceller extends DefaultCancellable
     @SuppressWarnings("PMD.AvoidRethrowingException")
     public Runnable wrap(Runnable r)
     {
-        return new Runnable()
+        return () ->
         {
-            @Override
-            public void run()
+            try
             {
-                try
+                wrap((Callable<Void>)() ->
                 {
-                    wrap((Callable<Void>)() ->
-                    {
-                        r.run();
-                        return null;
-                    }).call();
-                }
-                catch (InterruptedException e)
-                {
-                }
-                catch (RuntimeException | Error e)
-                {
-                    throw e;
-                }
-                catch (Exception e)
-                {
-                    throw new ImpossibleException(e);
-                }
+                    r.run();
+                    return null;
+                }).call();
+            }
+            catch (InterruptedException e)
+            {
+            }
+            catch (RuntimeException | Error e)
+            {
+                throw e;
+            }
+            catch (Exception e)
+            {
+                throw new ImpossibleException(e);
             }
         };
     }

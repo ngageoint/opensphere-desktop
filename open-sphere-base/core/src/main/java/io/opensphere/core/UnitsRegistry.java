@@ -70,7 +70,7 @@ public interface UnitsRegistry
      *             installed.
      */
     <S, T extends S> T convert(Class<S> unitsSupertype, Class<T> desiredType, S from)
-        throws InvalidUnitsException, UnitsProviderNotFoundException;
+            throws InvalidUnitsException, UnitsProviderNotFoundException;
 
     /**
      * Convert from one type to another, determining the destination type from a
@@ -88,7 +88,7 @@ public interface UnitsRegistry
      *             installed.
      */
     <T> T convertUsingLongLabel(Class<T> unitsSupertype, T magnitude, String longLabel)
-        throws UnitsParseException, UnitsProviderNotFoundException, InvalidUnitsException;
+            throws UnitsParseException, UnitsProviderNotFoundException, InvalidUnitsException;
 
     /**
      * Convert from one type to another, determining the destination type from a
@@ -106,7 +106,7 @@ public interface UnitsRegistry
      *             invalid.
      */
     <T> T convertUsingShortLabel(Class<T> unitsSupertype, T magnitude, String shortLabel)
-        throws UnitsParseException, UnitsProviderNotFoundException, InvalidUnitsException;
+            throws UnitsParseException, UnitsProviderNotFoundException, InvalidUnitsException;
 
     /**
      * Get an instance from a long label representation (magnitude + long
@@ -137,7 +137,7 @@ public interface UnitsRegistry
      *             installed.
      */
     <T> T fromMagnitudeAndLongLabel(Class<T> unitsSupertype, Number magnitude, String longLabel)
-        throws UnitsParseException, InvalidUnitsException, UnitsProviderNotFoundException;
+            throws UnitsParseException, InvalidUnitsException, UnitsProviderNotFoundException;
 
     /**
      * Get an instance from a magnitude and a short label.
@@ -154,7 +154,7 @@ public interface UnitsRegistry
      *             invalid.
      */
     <T> T fromMagnitudeAndShortLabel(Class<T> unitsSupertype, Number magnitude, String shortLabel)
-        throws UnitsParseException, UnitsProviderNotFoundException, InvalidUnitsException;
+            throws UnitsParseException, UnitsProviderNotFoundException, InvalidUnitsException;
 
     /**
      * Get an instance from a short label representation (magnitude + short
@@ -183,7 +183,7 @@ public interface UnitsRegistry
      *             installed.
      */
     <T> T fromUnitsAndMagnitude(Class<? super T> unitsSupertype, Class<T> type, Number magnitude)
-        throws InvalidUnitsException, UnitsProviderNotFoundException;
+            throws InvalidUnitsException, UnitsProviderNotFoundException;
 
     /**
      * Get the unit types currently available from the unit provider for a given
@@ -198,7 +198,7 @@ public interface UnitsRegistry
      *             installed.
      */
     <T> Collection<Class<? extends T>> getAvailableUnits(Class<T> unitsSupertype, boolean allowAutoscale)
-        throws UnitsProviderNotFoundException;
+            throws UnitsProviderNotFoundException;
 
     /**
      * Convenience method to get the selection labels of all the available units
@@ -213,7 +213,7 @@ public interface UnitsRegistry
      *             installed.
      */
     <T> String[] getAvailableUnitsSelectionLabels(Class<T> unitsSupertype, boolean allowAutoscale)
-        throws UnitsProviderNotFoundException;
+            throws UnitsProviderNotFoundException;
 
     /**
      * Get the preferred units from the unit provider for a particular value.
@@ -270,7 +270,7 @@ public interface UnitsRegistry
      *             installed.
      */
     <T> Class<? extends T> getUnitsWithSelectionLabel(Class<T> unitsSupertype, String label)
-        throws UnitsProviderNotFoundException;
+            throws UnitsProviderNotFoundException;
 
     /**
      * Remove a units provider from the registry.

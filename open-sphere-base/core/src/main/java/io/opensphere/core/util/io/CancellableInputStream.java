@@ -4,14 +4,13 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
-import net.jcip.annotations.ThreadSafe;
-
 import org.apache.log4j.Logger;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.opensphere.core.util.lang.Cancellable;
 import io.opensphere.core.util.lang.Nulls;
 import io.opensphere.core.util.lang.ThreadControl;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * A wrapped {@link InputStream} that has a {@link Runnable} to be called when

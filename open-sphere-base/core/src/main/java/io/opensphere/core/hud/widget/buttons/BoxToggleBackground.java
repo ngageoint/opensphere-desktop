@@ -63,7 +63,7 @@ public class BoxToggleBackground extends Renderable
         poss.add(new ScreenPosition(left, upper));
         poss.add(lowerLeft);
 
-        PolylineGeometry.Builder<ScreenPosition> bitter = new PolylineGeometry.Builder<ScreenPosition>();
+        PolylineGeometry.Builder<ScreenPosition> bitter = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = new DefaultPolylineRenderProperties(getBaseZOrder() + 2, true, false);
         props.setColor(getBaseColor());
         bitter.setLineSmoothing(false);
@@ -109,7 +109,7 @@ public class BoxToggleBackground extends Renderable
         double upper = center.getY() - ourHeight / 2;
         double lower = upper + ourHeight;
 
-        PolygonMeshGeometry.Builder<ScreenPosition> polyBuilder = new PolygonMeshGeometry.Builder<ScreenPosition>();
+        PolygonMeshGeometry.Builder<ScreenPosition> polyBuilder = new PolygonMeshGeometry.Builder<>();
         polyBuilder.setPolygonVertexCount(8);
 
         List<ScreenPosition> poss = new ArrayList<>();

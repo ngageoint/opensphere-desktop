@@ -43,10 +43,7 @@ final class TimeSpanLong extends InstantaneousTimeSpan
         {
             return -o.compareEnd(myTime);
         }
-        else
-        {
-            return -compareStart;
-        }
+        return -compareStart;
     }
 
     @Override

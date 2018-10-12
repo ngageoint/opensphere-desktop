@@ -142,11 +142,11 @@ public class LatLonAltParser
 
     /** The possible latitude coordinates, in priority order. */
     private static final Coord[] POSSIBLE_LAT_COORDS = new Coord[] {
-            LAT_DECIMAL, LAT_DEG_DMIN_SYM, LAT_DDMMSS_SYM, LAT_DDMMSS, LAT_DDMMSSSSS, LAT_DEG_DMIN};
+        LAT_DECIMAL, LAT_DEG_DMIN_SYM, LAT_DDMMSS_SYM, LAT_DDMMSS, LAT_DDMMSSSSS, LAT_DEG_DMIN};
 
     /** The possible longitude coordinates, in priority order. */
     private static final Coord[] POSSIBLE_LON_COORDS = new Coord[] {
-            LON_DECIMAL, LON_DEG_DMIN_SYM, LON_DDDMMSS_SYM, LON_DDDMMSS, LON_DDDMMSSSSS, LON_DEG_DMIN};
+        LON_DECIMAL, LON_DEG_DMIN_SYM, LON_DDDMMSS_SYM, LON_DDDMMSS, LON_DDDMMSSSSS, LON_DEG_DMIN};
 
     /** List of possible lat/lon patterns. */
     private static Collection<Coords> latLonOptions = New.collection();

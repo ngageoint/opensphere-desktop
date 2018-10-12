@@ -103,7 +103,7 @@ public class TextLabel extends Renderable
     {
         ScreenBoundingBox drawBox = getDrawBounds();
 
-        LabelGeometry.Builder<ScreenPosition> labelBuilder = new LabelGeometry.Builder<ScreenPosition>();
+        LabelGeometry.Builder<ScreenPosition> labelBuilder = new LabelGeometry.Builder<>();
         LabelRenderProperties props = new DefaultLabelRenderProperties(getBaseZOrder() + 1, true, false);
         props.setColor(getBaseColor());
         labelBuilder.setText(text);

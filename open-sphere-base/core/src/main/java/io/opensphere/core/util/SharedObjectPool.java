@@ -67,7 +67,7 @@ public class SharedObjectPool<T>
             T poolObject = ref == null ? null : ref.get();
             if (poolObject == null)
             {
-                myPool.put(input, new WeakReference<T>(input));
+                myPool.put(input, new WeakReference<>(input));
                 poolObject = input;
             }
 

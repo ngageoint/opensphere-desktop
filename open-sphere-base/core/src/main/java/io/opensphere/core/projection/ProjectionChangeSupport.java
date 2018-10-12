@@ -31,14 +31,7 @@ public class ProjectionChangeSupport
      */
     public void notifyProjectionChangeListeners(final ProjectionChangedEvent evt, Executor executor)
     {
-        ChangeSupport.Callback<ProjectionChangeListener> callback = new ChangeSupport.Callback<ProjectionChangeListener>()
-        {
-            @Override
-            public void notify(ProjectionChangeListener listener)
-            {
-                listener.projectionChanged(evt);
-            }
-        };
+        ChangeSupport.Callback<ProjectionChangeListener> callback = listener -> listener.projectionChanged(evt);
         myChangeSupport.notifyListeners(callback, executor);
     }
 

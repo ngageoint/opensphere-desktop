@@ -15,23 +15,19 @@ public class RollupValidator extends DefaultValidatorSupport
     private final Collection<ValidatorSupport> myChildren = new ArrayList<>();
 
     /** Listener for status changes on my children. */
-    private final ValidationStatusChangeListener myListener = new ValidationStatusChangeListener()
+    private final ValidationStatusChangeListener myListener = (object, valid, message) ->
     {
-        @Override
-        public void statusChanged(Object object, ValidationStatus valid, String message)
+        synchronized (myChildren)
         {
-            synchronized (myChildren)
+            for (ValidatorSupport validator : myChildren)
             {
-                for (ValidatorSupport validator : myChildren)
+                if (validator.getValidationStatus() != ValidationStatus.VALID)
                 {
-                    if (validator.getValidationStatus() != ValidationStatus.VALID)
-                    {
-                        setValidationResult(validator);
-                        return;
-                    }
+                    setValidationResult(validator);
+                    return;
                 }
-                setValidationResult(ValidationStatus.VALID, null);
             }
+            setValidationResult(ValidationStatus.VALID, null);
         }
     };
 

@@ -3,11 +3,11 @@ package io.opensphere.core.util.swing.binding;
 import java.awt.EventQueue;
 import java.awt.event.ItemEvent;
 
+import javax.swing.JCheckBox;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
-
-import javax.swing.JCheckBox;
 
 /**
  * JCheckBox that provides some basic JavaFX-like binding.
@@ -56,20 +56,20 @@ public class CheckBox extends JCheckBox implements AutoCloseable
         myExternalProperty = externalProperty;
         mySelected.bindBidirectional(myExternalProperty);
 
-//        if (externalProperty instanceof ViewProperty)
-//        {
-//            ViewProperty viewProperty = (ViewProperty)externalProperty;
-//
-//            setToolTipText(viewProperty.getViewSupport().getDescription());
-//            viewProperty.getViewSupport().descriptionProperty().addListener(new ChangeListener<String>()
-//            {
-//                @Override
-//                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
-//                {
-//                    setToolTipText(newValue);
-//                }
-//            });
-//        }
+        //        if (externalProperty instanceof ViewProperty)
+        //        {
+        //            ViewProperty viewProperty = (ViewProperty)externalProperty;
+        //
+        //            setToolTipText(viewProperty.getViewSupport().getDescription());
+        //            viewProperty.getViewSupport().descriptionProperty().addListener(new ChangeListener<String>()
+        //            {
+        //                @Override
+        //                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+        //                {
+        //                    setToolTipText(newValue);
+        //                }
+        //            });
+        //        }
 
         // Bind the UI to our internal property
         mySelected.addListener(this::propertyChanged);
@@ -137,14 +137,14 @@ public class CheckBox extends JCheckBox implements AutoCloseable
      */
     private static String getName(BooleanProperty property)
     {
-//      if (property instanceof ViewProperty)
-//      {
-//          String displayName = ((ViewProperty)property).getViewSupport().getDisplayName();
-//          if (StringUtils.isNotEmpty(displayName))
-//          {
-//              name = displayName;
-//          }
-//      }
+        //      if (property instanceof ViewProperty)
+        //      {
+        //          String displayName = ((ViewProperty)property).getViewSupport().getDisplayName();
+        //          if (StringUtils.isNotEmpty(displayName))
+        //          {
+        //              name = displayName;
+        //          }
+        //      }
         return property.getName();
     }
 }

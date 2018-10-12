@@ -21,7 +21,6 @@ import io.opensphere.core.model.time.TimeSpanList;
 import io.opensphere.core.units.duration.Duration;
 import io.opensphere.core.units.duration.Seconds;
 import io.opensphere.core.viewer.ViewChangeSupport.ViewChangeListener;
-import io.opensphere.core.viewer.ViewChangeSupport.ViewChangeType;
 import io.opensphere.core.viewer.Viewer;
 import io.opensphere.core.viewer.impl.MapContext;
 
@@ -53,24 +52,11 @@ public class SpatialTemporalGeometryComparator implements Comparator<Geometry>
     private volatile Vector3d myModelCenter;
 
     /** The listener for time changes. */
-    private final ActiveTimeSpanChangeListener myTimeListener = new ActiveTimeSpanChangeListener()
-    {
-        @Override
-        public void activeTimeSpansChanged(ActiveTimeSpans active)
-        {
-            myCenterTime = TimeSpan.get(active.getPrimary().getExtent().getMidpoint());
-        }
-    };
+    private final ActiveTimeSpanChangeListener myTimeListener = active -> myCenterTime = TimeSpan
+            .get(active.getPrimary().getExtent().getMidpoint());
 
     /** The listener for view changes. */
-    private final ViewChangeListener myViewChangeListener = new ViewChangeListener()
-    {
-        @Override
-        public void viewChanged(Viewer viewer, ViewChangeType type)
-        {
-            setModelCenter(viewer);
-        }
-    };
+    private final ViewChangeListener myViewChangeListener = (viewer, type) -> setModelCenter(viewer);
 
     /**
      * Constructor.
@@ -187,23 +173,23 @@ public class SpatialTemporalGeometryComparator implements Comparator<Geometry>
         int result;
         TimeConstraint tc1 = o1 instanceof ConstrainableGeometry ? ((ConstrainableGeometry)o1).getConstraints() == null ? null
                 : ((ConstrainableGeometry)o1).getConstraints().getTimeConstraint() : null;
-        TimeConstraint tc2 = o2 instanceof ConstrainableGeometry ? ((ConstrainableGeometry)o2).getConstraints() == null ? null
-                : ((ConstrainableGeometry)o2).getConstraints().getTimeConstraint() : null;
-        if (tc1 == null)
-        {
-            result = tc2 == null ? 0 : -1;
-        }
-        else if (tc2 == null)
-        {
-            result = 1;
-        }
-        else
-        {
-            Duration delta = tc1.getTimeSpan().getGapBetween(myCenterTime)
-                    .subtract(tc2.getTimeSpan().getGapBetween(myCenterTime));
-            result = delta.compareTo(Seconds.ZERO);
-        }
-        return result;
+                TimeConstraint tc2 = o2 instanceof ConstrainableGeometry ? ((ConstrainableGeometry)o2).getConstraints() == null ? null
+                        : ((ConstrainableGeometry)o2).getConstraints().getTimeConstraint() : null;
+                        if (tc1 == null)
+                        {
+                            result = tc2 == null ? 0 : -1;
+                        }
+                        else if (tc2 == null)
+                        {
+                            result = 1;
+                        }
+                        else
+                        {
+                            Duration delta = tc1.getTimeSpan().getGapBetween(myCenterTime)
+                                    .subtract(tc2.getTimeSpan().getGapBetween(myCenterTime));
+                            result = delta.compareTo(Seconds.ZERO);
+                        }
+                        return result;
     }
 
     /**

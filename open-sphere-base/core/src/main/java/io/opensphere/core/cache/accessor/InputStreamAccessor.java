@@ -23,7 +23,7 @@ public abstract class InputStreamAccessor<S> implements PersistentPropertyAccess
      */
     public static InputStreamAccessor<InputStream> getHomogeneousAccessor(PropertyDescriptor<InputStream> propertyDescriptor)
     {
-        return new InputStreamAccessor<InputStream>(propertyDescriptor)
+        return new InputStreamAccessor<>(propertyDescriptor)
         {
             @Override
             public InputStream access(InputStream input)
@@ -43,7 +43,7 @@ public abstract class InputStreamAccessor<S> implements PersistentPropertyAccess
      */
     public static InputStreamAccessor<InputStream> getHomogeneousAccessor(String propertyName)
     {
-        return new InputStreamAccessor<InputStream>(propertyName)
+        return new InputStreamAccessor<>(propertyName)
         {
             @Override
             public InputStream access(InputStream input)
@@ -66,7 +66,7 @@ public abstract class InputStreamAccessor<S> implements PersistentPropertyAccess
     public static <S> PropertyAccessor<S, InputStream> getSingletonAccessor(PropertyDescriptor<InputStream> propertyDescriptor,
             final InputStream object)
     {
-        return new InputStreamAccessor<S>(propertyDescriptor)
+        return new InputStreamAccessor<>(propertyDescriptor)
         {
             @Override
             public InputStream access(S input)
@@ -88,7 +88,7 @@ public abstract class InputStreamAccessor<S> implements PersistentPropertyAccess
      */
     public static <S> PropertyAccessor<S, InputStream> getSingletonAccessor(String propertyName, final InputStream object)
     {
-        return new InputStreamAccessor<S>(propertyName)
+        return new InputStreamAccessor<>(propertyName)
         {
             @Override
             public InputStream access(S input)

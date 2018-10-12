@@ -31,7 +31,7 @@ public class Quantify
 
     /**
      * Collects the named metric in the quantify service defined in the toolbox.
-     * 
+     *
      * @param key the metric key for which to collect the metric.
      */
     public static void collectMetric(String key)

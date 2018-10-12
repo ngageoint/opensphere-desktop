@@ -121,10 +121,7 @@ public class RotateImageProcessor extends AbstractChainedImageProcessor
 
             return processedImage;
         }
-        else
-        {
-            return image;
-        }
+        return image;
     }
 
     /**

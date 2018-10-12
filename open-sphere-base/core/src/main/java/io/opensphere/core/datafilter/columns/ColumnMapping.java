@@ -3,10 +3,9 @@ package io.opensphere.core.datafilter.columns;
 import java.io.Serializable;
 import java.util.Objects;
 
-import net.jcip.annotations.Immutable;
-
 import io.opensphere.core.util.lang.HashCodeHelper;
 import io.opensphere.core.util.lang.ToStringHelper;
+import net.jcip.annotations.Immutable;
 
 /** ColumnMapping bean. */
 @Immutable

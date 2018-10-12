@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import net.jcip.annotations.GuardedBy;
-
 import org.w3c.dom.Node;
 
 import com.bitsys.fade.mist.state.v4.StateType;
@@ -13,6 +11,7 @@ import com.bitsys.fade.mist.state.v4.StateType;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.StringUtilities;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Abstract state controller for layers.

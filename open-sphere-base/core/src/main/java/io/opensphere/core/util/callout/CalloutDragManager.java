@@ -189,27 +189,13 @@ public class CalloutDragManager
         @Override
         public void mousePressed(final MouseEvent mouseEvent)
         {
-            myExecutor.execute(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    handleMousePressed(mouseEvent);
-                }
-            });
+            myExecutor.execute(() -> handleMousePressed(mouseEvent));
         }
 
         @Override
         public void mouseReleased(final MouseEvent mouseEvent)
         {
-            myExecutor.execute(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    handleMouseReleased(mouseEvent);
-                }
-            });
+            myExecutor.execute(() -> handleMouseReleased(mouseEvent));
         }
     }
 
@@ -240,14 +226,7 @@ public class CalloutDragManager
                 if (mouseEvent.getID() == MouseEvent.MOUSE_DRAGGED)
                 {
                     mouseEvent.consume();
-                    myExecutor.execute(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            handleMouseDragged(mouseEvent);
-                        }
-                    });
+                    myExecutor.execute(() -> handleMouseDragged(mouseEvent));
                 }
             }
         }

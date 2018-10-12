@@ -15,6 +15,6 @@ public class StrongThreePhaseChangeSupport<S, T extends ThreePhaseChangeListener
     @Override
     protected Reference<T> createReference(T listener)
     {
-        return new StrongReference<T>(listener);
+        return new StrongReference<>(listener);
     }
 }

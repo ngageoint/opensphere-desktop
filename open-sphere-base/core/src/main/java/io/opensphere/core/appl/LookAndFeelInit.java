@@ -48,8 +48,8 @@ public class LookAndFeelInit
             nt.setMenuOpacity(opacity);
             nt.setFrameOpacity(opacity);
 
-//        UIManager.put("InternalFrame.border", new BorderUIResource(new OSDarkLAFInternalFrameBorder()));
-//        UIManager.put("InternalFrame.paletteBorder", new BorderUIResource(BorderFactory.createEmptyBorder()));
+            //        UIManager.put("InternalFrame.border", new BorderUIResource(new OSDarkLAFInternalFrameBorder()));
+            //        UIManager.put("InternalFrame.paletteBorder", new BorderUIResource(BorderFactory.createEmptyBorder()));
 
             final OpenSphereDarkLookAndFeel laf = new OpenSphereDarkLookAndFeel();
             OpenSphereDarkLookAndFeel.setCurrentTheme(nt);

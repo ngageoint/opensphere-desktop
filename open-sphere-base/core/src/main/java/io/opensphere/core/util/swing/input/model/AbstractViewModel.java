@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 
 import io.opensphere.core.util.AbstractChangeSupport;
 import io.opensphere.core.util.ChangeSupport;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.StrongChangeSupport;
 import io.opensphere.core.util.StrongObservableValue;
 import io.opensphere.core.util.ValidationStatus;
@@ -320,14 +319,7 @@ public abstract class AbstractViewModel<T> extends StrongObservableValue<T> impl
     protected void firePropertyChangeEvent(Object source, PropertyChangeEvent.Property property)
     {
         final PropertyChangeEvent event = new PropertyChangeEvent(source == null ? this : source, property);
-        myChangeSupport.notifyListeners(new Callback<PropertyChangeListener>()
-        {
-            @Override
-            public void notify(PropertyChangeListener listener)
-            {
-                listener.stateChanged(event);
-            }
-        });
+        myChangeSupport.notifyListeners(listener -> listener.stateChanged(event));
     }
 
     /**

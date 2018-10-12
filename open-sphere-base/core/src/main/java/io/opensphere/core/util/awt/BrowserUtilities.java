@@ -112,7 +112,7 @@ public final class BrowserUtilities
     {
         LOGGER.error(message);
         EventQueueUtilities.runOnEDT(
-            () -> JOptionPane.showMessageDialog(parent, message, "Open Hyperlink Error", JOptionPane.ERROR_MESSAGE));
+                () -> JOptionPane.showMessageDialog(parent, message, "Open Hyperlink Error", JOptionPane.ERROR_MESSAGE));
     }
 
     /** Private constructor. */
