@@ -17,6 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import io.opensphere.mantle.iconproject.impl.ButtonBuilder;
 import io.opensphere.mantle.iconproject.impl.LabelMaker;
 import io.opensphere.mantle.iconproject.model.PanelModel;
+import io.opensphere.mantle.iconproject.model.ViewStyle;
 
 /** An HBox containing display size controls, view style, and filter options. */
 public class TopMenuBar extends HBox
@@ -169,8 +170,18 @@ public class TopMenuBar extends HBox
         myGridView.setText("Grid");
         myGridView.setToggleGroup(myToggleGroup);
         myGridView.setSelected(true);
+        myListView.setOnAction(event ->
+        {
+            myPanelModel.getViewStyle().set(ViewStyle.LIST);
+            myPanelModel.getViewModel().getMainPanel().refresh();
+        });
+        myGridView.setOnAction(event ->
+        {
+            myPanelModel.getViewStyle().set(ViewStyle.GRID);
+            myPanelModel.getViewModel().getMainPanel().refresh();
+        });
 
-        theViewToggle.getButtons().addAll(myViewLabel, myListView, myGridView);
+        theViewToggle.getButtons().addAll(myViewLabel, myGridView, myListView);
 
         return theViewToggle;
     }
