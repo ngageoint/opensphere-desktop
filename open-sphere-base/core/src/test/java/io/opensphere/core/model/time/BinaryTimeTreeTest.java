@@ -53,7 +53,7 @@ public class BinaryTimeTreeTest
 
         for (Method method : declaredMethods)
         {
-            if (!method.getName().startsWith("$"))
+            if (!method.getName().startsWith("$") && !method.getName().startsWith("lambda$"))
             {
                 assertFalse(method.getName() + " is private. No private methods are permitted.",
                         Modifier.isPrivate(method.getModifiers()));
