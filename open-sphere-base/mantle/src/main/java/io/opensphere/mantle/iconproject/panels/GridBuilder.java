@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.iconproject.model.PanelModel;
+import io.opensphere.mantle.iconproject.model.ViewStyle;
 import io.opensphere.mantle.iconproject.view.IconCustomizerDialog;
 import io.opensphere.mantle.iconproject.view.IconPopupMenu;
 
@@ -97,6 +98,43 @@ public class GridBuilder extends TilePane
     }
 
     /**
+     * Creates the buttons to be placed in a non-image list.
+     *
+     * @param record the icon
+     * @return the new button of the icon
+     */
+    private Button buttonBuilderListStyle(IconRecord record)
+    {
+        Button iconButton = new Button();
+        iconButton.setMinHeight(30);
+        iconButton.setMaxHeight(30);
+        iconButton.setPadding(new Insets(5, 5, 5, 5));
+        iconButton.setText(record.getName());
+        iconButton.setAlignment(Pos.CENTER);
+        iconButton.setTooltip(new Tooltip(record.getId() + record.getImageURL().toString()));
+        iconButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent e)
+            {
+                if (e.getButton() == MouseButton.SECONDARY)
+                {
+                    iconButton.setContextMenu(new IconPopupMenu(myPanelModel));
+                }
+                if (myPanelModel.getViewModel().getMultiSelectEnabled())
+                {
+                    iconButton.setStyle("-fx-effect: dropshadow(three-pass-box, purple, 20, 0, 0, 0);");
+                    myPanelModel.getSelectedIcons().put(record, iconButton);
+                }
+                myPanelModel.getSelectedRecord().set(record);
+                myPanelModel.getSelectedIconMap().clear();
+                myPanelModel.getSelectedIconMap().put(record, iconButton);
+            }
+        });
+        return iconButton;
+    }
+
+    /**
      * Shows the icon customizer.
      *
      * @param owner the current window pane.
@@ -119,7 +157,15 @@ public class GridBuilder extends TilePane
     {
         for (IconRecord recordindex : iconRecordList)
         {
-            Button iconButton = buttonBuilder(recordindex);
+            Button iconButton;
+            if (myPanelModel.getViewStyle().get() == ViewStyle.GRID)
+            {
+                iconButton = buttonBuilder(recordindex);
+            }
+            else
+            {
+                iconButton = buttonBuilderListStyle(recordindex);
+            }
             setMargin(iconButton, new Insets(5, 5, 5, 5));
             getChildren().add(iconButton);
         }

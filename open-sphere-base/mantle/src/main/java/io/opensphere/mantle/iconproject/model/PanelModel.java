@@ -19,7 +19,7 @@ import io.opensphere.mantle.iconproject.impl.DefaultIconRecordTreeItemObject;
 public class PanelModel
 {
     /** View set to default of Grid. */
-    private final ObjectProperty<ViewStyle> myViewType = new SimpleObjectProperty<>(this, "viewtype", ViewStyle.GRID);
+    private final ObjectProperty<ViewStyle> myViewStyle = new SimpleObjectProperty<>(this, "viewtype", ViewStyle.GRID);
 
     /** The selected icon to be used for customization dialogs. */
     private ObjectProperty<IconRecord> mySelectedRecord = new SimpleObjectProperty<IconRecord>();
@@ -79,13 +79,13 @@ public class PanelModel
     }
 
     /**
-     * Gets the icon display view type.
+     * Gets the icon display view style.
      *
      * @return the chosen view.
      */
-    public ObjectProperty<ViewStyle> getViewType()
+    public ObjectProperty<ViewStyle> getViewStyle()
     {
-        return myViewType;
+        return myViewStyle;
     }
 
     /**
