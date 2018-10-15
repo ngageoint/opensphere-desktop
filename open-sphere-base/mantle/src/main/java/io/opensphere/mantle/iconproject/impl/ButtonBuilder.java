@@ -8,9 +8,6 @@ import javafx.scene.layout.AnchorPane;
 /** Creates customized buttons for the icon manager. */
 public class ButtonBuilder extends Button
 {
-    /** The button label. */
-    private final String myLabel;
-
     /**
      * Creates a new button with the supplied parameters.
      *
@@ -20,8 +17,7 @@ public class ButtonBuilder extends Button
     public ButtonBuilder(String label, boolean useIcon)
     {
         super();
-        myLabel = label;
-        setText(myLabel);
+        setText(label);
         setTextOverrun(javafx.scene.control.OverrunStyle.CLIP);
 
         if (useIcon)

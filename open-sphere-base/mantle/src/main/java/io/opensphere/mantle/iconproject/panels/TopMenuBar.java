@@ -84,7 +84,7 @@ public class TopMenuBar extends HBox
     }
 
     /**
-     * Creates the search bar containing the label and ext entry field for
+     * Creates the search bar containing the label and text entry field for
      * filtering icons.
      *
      * @return a JavaFX ButtonBar containing filter control elements.
@@ -141,16 +141,13 @@ public class TopMenuBar extends HBox
         ButtonBar sizeMenu = new ButtonBar();
         myEnlargeButton.setOnAction(event ->
         {
-            int origTile = myPanelModel.getCurrentTileWidth().get();
-            myPanelModel.getCurrentTileWidth().set(origTile + 10);
-            myPanelModel.getViewModel().getMainPanel().getScrollPane().setContent(new GridBuilder(myPanelModel));
+            myPanelModel.getCurrentTileWidth().set(myPanelModel.getCurrentTileWidth().get() + 10);
         });
         myEnlargeButton.setTooltip(new Tooltip("Increase Icon Size"));
 
         myShrinkButton.setOnAction(event ->
         {
-            int origTile = myPanelModel.getCurrentTileWidth().get();
-            myPanelModel.getCurrentTileWidth().set(origTile - 10);
+            myPanelModel.getCurrentTileWidth().set(myPanelModel.getCurrentTileWidth().get() - 10);
         });
         myShrinkButton.setTooltip(new Tooltip("Decrease Icon Size"));
         sizeMenu.getButtons().addAll(mySizeLabel, myShrinkButton, myEnlargeButton);
@@ -164,7 +161,7 @@ public class TopMenuBar extends HBox
      */
     public ButtonBar createViewToggle()
     {
-        ButtonBar theViewToggle = new ButtonBar();
+        ButtonBar viewToggle = new ButtonBar();
         myListView.setText("List");
         myListView.setToggleGroup(myToggleGroup);
         myGridView.setText("Grid");
@@ -185,9 +182,9 @@ public class TopMenuBar extends HBox
             myPanelModel.getViewModel().getMainPanel().refresh();
         });
 
-        theViewToggle.getButtons().addAll(myViewLabel, myGridView, myListView);
+        viewToggle.getButtons().addAll(myViewLabel, myGridView, myListView);
 
-        return theViewToggle;
+        return viewToggle;
     }
 
     /**

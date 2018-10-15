@@ -9,9 +9,6 @@ import javafx.scene.layout.BorderPane;
  */
 public class AddIconPane extends BorderPane
 {
-    /** The current model for UI elements. */
-    private PanelModel myPanelModel;
-
     /** The pane containing controls for the collection name choice. */
     private CollectNamesPane myCollectionNamePane;
 
@@ -26,23 +23,11 @@ public class AddIconPane extends BorderPane
      */
     public AddIconPane(PanelModel panelModel)
     {
-        myPanelModel = panelModel;
+        myCollectionNamePane = new CollectNamesPane(panelModel);
+        mySubCollectPane = new SubCollectPane(panelModel);
 
-        setCollectionNamePane(new CollectNamesPane(myPanelModel));
-        setSubCollectPane(new SubCollectPane(myPanelModel));
-
-        setTop(getCollectionNamePane());
-        setCenter(getSubCollectPane());
-    }
-
-    /**
-     * Sets the current collection name pane.
-     *
-     * @param collectionNamePane the collection name input pane.
-     */
-    public void setCollectionNamePane(CollectNamesPane collectionNamePane)
-    {
-        myCollectionNamePane = collectionNamePane;
+        setTop(myCollectionNamePane);
+        setCenter(mySubCollectPane);
     }
 
     /**
@@ -53,16 +38,6 @@ public class AddIconPane extends BorderPane
     public CollectNamesPane getCollectionNamePane()
     {
         return myCollectionNamePane;
-    }
-
-    /**
-     * Sets the current sub collection pane.
-     *
-     * @param subCollectPane the sub collection name input pane.
-     */
-    private void setSubCollectPane(SubCollectPane subCollectPane)
-    {
-        mySubCollectPane = subCollectPane;
     }
 
     /**

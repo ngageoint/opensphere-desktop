@@ -46,36 +46,36 @@ public class IconTreeBuilder
         List<IconRecord> records = myIconRegistry.getIconRecords(filter);
         Collections.sort(records, (r1, r2) -> AlphanumComparator.compareNatural(r1.getImageURL().toString(), r2.getImageURL().toString()));
         Set<String> collectionSet = New.set();
-        Map<String, Map<String, List<IconRecord>>> collectionToSubCatIconRecMap = New.map();
-        String defaultSubCat = "DEFAULT";
-        for (IconRecord rec : records)
+        Map<String, Map<String, List<IconRecord>>> iconRecordMapCollection = New.map();
+        String defaultSubCategory = "DEFAULT";
+        for (IconRecord record : records)
         {
-            String collection = rec.getCollectionName() == null ? IconRecord.DEFAULT_COLLECTION : rec.getCollectionName();
-            if (collection == null)
+            String collectionName = record.getCollectionName() == null ? IconRecord.DEFAULT_COLLECTION : record.getCollectionName();
+            if (collectionName == null)
             {
-                collection = IconRecord.DEFAULT_COLLECTION;
+                collectionName = IconRecord.DEFAULT_COLLECTION;
             }
 
-            collectionSet.add(collection);
-            String subCat = rec.getSubCategory() == null ? defaultSubCat : rec.getSubCategory();
+            collectionSet.add(collectionName);
+            String subCategory = record.getSubCategory() == null ? defaultSubCategory : record.getSubCategory();
 
-            Map<String, List<IconRecord>> subCatToRecListMap = collectionToSubCatIconRecMap.get(collection);
-            if (subCatToRecListMap == null)
+            Map<String, List<IconRecord>> iconRecordMap = iconRecordMapCollection.get(collectionName);
+            if (iconRecordMap == null)
             {
-                subCatToRecListMap = New.map();
-                collectionToSubCatIconRecMap.put(collection, subCatToRecListMap);
+                iconRecordMap = New.map();
+                iconRecordMapCollection.put(collectionName, iconRecordMap);
             }
 
-            List<IconRecord> recList = subCatToRecListMap.get(subCat);
-            if (recList == null)
+            List<IconRecord> recordList = iconRecordMap.get(subCategory);
+            if (recordList == null)
             {
-                recList = New.linkedList();
-                subCatToRecListMap.put(subCat, recList);
+                recordList = New.linkedList();
+                iconRecordMap.put(subCategory, recordList);
             }
-            recList.add(rec);
+            recordList.add(record);
         }
 
-        buildTreeFromMaps(rootNode, collectionSet, collectionToSubCatIconRecMap, defaultSubCat);
+        buildTreeFromMaps(rootNode, collectionSet, iconRecordMapCollection, defaultSubCategory);
 
         return rootNode;
     }
@@ -85,12 +85,12 @@ public class IconTreeBuilder
      *
      * @param rootNode the root node
      * @param collectionSet the collection set
-     * @param collectionToSubCatIconRecMap the collection to sub cat icon rec
+     * @param iconRecordMapCollection the collection to sub cat icon rec
      *            map
-     * @param defaultSubCat the default sub cat
+     * @param defaultSubCategory the default sub cat
      */
     private void buildTreeFromMaps(DefaultMutableTreeNode rootNode, Set<String> collectionSet,
-            Map<String, Map<String, List<IconRecord>>> collectionToSubCatIconRecMap, String defaultSubCat)
+            Map<String, Map<String, List<IconRecord>>> iconRecordMapCollection, String defaultSubCategory)
     {
         List<String> collectionList = New.list(collectionSet);
         Collections.sort(collectionList);
@@ -107,31 +107,31 @@ public class IconTreeBuilder
 
         for (String collection : collectionList)
         {
-            DefaultMutableTreeNode colNode = new DefaultMutableTreeNode();
-            Map<String, List<IconRecord>> subToRecListMap = collectionToSubCatIconRecMap.get(collection);
-            if (subToRecListMap != null)
+            DefaultMutableTreeNode collectionNode = new DefaultMutableTreeNode();
+            Map<String, List<IconRecord>> iconRecordMap = iconRecordMapCollection.get(collection);
+            if (iconRecordMap != null)
             {
-                rootNode.add(colNode);
-                List<String> subCatList = New.list(subToRecListMap.keySet());
-                Collections.sort(subCatList);
-                if (subCatList.remove(defaultSubCat))
+                rootNode.add(collectionNode);
+                List<String> subCategoryList = New.list(iconRecordMap.keySet());
+                Collections.sort(subCategoryList);
+                if (subCategoryList.remove(defaultSubCategory))
                 {
-                    List<IconRecord> defaultRecList = subToRecListMap.get(defaultSubCat);
-                    colNode.setUserObject(DefaultIconRecordTreeNodeUserObject.createLeafNode(colNode, collection, defaultRecList,
+                    List<IconRecord> defaultRecList = iconRecordMap.get(defaultSubCategory);
+                    collectionNode.setUserObject(DefaultIconRecordTreeNodeUserObject.createLeafNode(collectionNode, collection, defaultRecList,
                             IconRecordTreeNodeUserObject.NameType.COLLECTION));
                 }
                 else
                 {
-                    colNode.setUserObject(DefaultIconRecordTreeNodeUserObject.createFolderNode(colNode, collection,
+                    collectionNode.setUserObject(DefaultIconRecordTreeNodeUserObject.createFolderNode(collectionNode, collection,
                             IconRecordTreeNodeUserObject.NameType.COLLECTION));
                 }
 
-                for (String subCat : subCatList)
+                for (String subCategory : subCategoryList)
                 {
                     DefaultMutableTreeNode subNode = new DefaultMutableTreeNode();
-                    subNode.setUserObject(DefaultIconRecordTreeNodeUserObject.createLeafNode(subNode, subCat,
-                            subToRecListMap.get(subCat), IconRecordTreeNodeUserObject.NameType.SUBCATEGORY));
-                    colNode.add(subNode);
+                    subNode.setUserObject(DefaultIconRecordTreeNodeUserObject.createLeafNode(subNode, subCategory,
+                            iconRecordMap.get(subCategory), IconRecordTreeNodeUserObject.NameType.SUBCATEGORY));
+                    collectionNode.add(subNode);
                 }
             }
         }

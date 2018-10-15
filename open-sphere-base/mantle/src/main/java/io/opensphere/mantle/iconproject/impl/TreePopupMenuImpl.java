@@ -15,11 +15,11 @@ public class TreePopupMenuImpl
     /**
      * The constructor for IconPopupMenuImpl.
      *
-     * @param thePanelModel the model used to get registry items.
+     * @param panelModel the model used to get registry items.
      */
-    public TreePopupMenuImpl(PanelModel thePanelModel)
+    public TreePopupMenuImpl(PanelModel panelModel)
     {
-        myPanelModel = thePanelModel;
+        myPanelModel = panelModel;
     }
 
     /**

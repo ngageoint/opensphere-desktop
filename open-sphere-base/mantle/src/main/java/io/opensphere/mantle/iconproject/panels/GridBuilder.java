@@ -54,7 +54,7 @@ public class GridBuilder extends TilePane
      * @param record the IconRecord
      * @return the button of the icon
      */
-    private Button buttonBuilder(IconRecord record)
+    private Button buttonBuilderGridStyle(IconRecord record)
     {
         Button iconButton = new Button();
         iconButton.setMinSize(myTileWidth, myTileWidth);
@@ -155,7 +155,7 @@ public class GridBuilder extends TilePane
             Button iconButton;
             if (myPanelModel.getViewStyle().get() == ViewStyle.GRID)
             {
-                iconButton = buttonBuilder(recordindex);
+                iconButton = buttonBuilderGridStyle(recordindex);
             }
             else
             {

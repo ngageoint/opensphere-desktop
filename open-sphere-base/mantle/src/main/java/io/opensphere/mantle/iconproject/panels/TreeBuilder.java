@@ -54,36 +54,36 @@ public class TreeBuilder extends TreeItem<String>
         List<IconRecord> records = myIconRegistry.getIconRecords(filter);
         Collections.sort(records, (r1, r2) -> AlphanumComparator.compareNatural(r1.getImageURL().toString(), r2.getImageURL().toString()));
         Set<String> collectionSet = New.set();
-        Map<String, Map<String, List<IconRecord>>> collectionToSubCatIconRecMap = New.map();
-        String defaultSubCat = "DEFAULT";
-        for (IconRecord rec : records)
+        Map<String, Map<String, List<IconRecord>>> iconRecordMapCollection = New.map();
+        String defaultSubCategory = "DEFAULT";
+        for (IconRecord record : records)
         {
-            String collection = rec.getCollectionName() == null ? IconRecord.DEFAULT_COLLECTION : rec.getCollectionName();
+            String collection = record.getCollectionName() == null ? IconRecord.DEFAULT_COLLECTION : record.getCollectionName();
             if (collection == null)
             {
                 collection = IconRecord.DEFAULT_COLLECTION;
             }
 
             collectionSet.add(collection);
-            String subCat = rec.getSubCategory() == null ? defaultSubCat : rec.getSubCategory();
+            String subCategory = record.getSubCategory() == null ? defaultSubCategory : record.getSubCategory();
 
-            Map<String, List<IconRecord>> subCatToRecListMap = collectionToSubCatIconRecMap.get(collection);
-            if (subCatToRecListMap == null)
+            Map<String, List<IconRecord>> iconRecordMap = iconRecordMapCollection.get(collection);
+            if (iconRecordMap == null)
             {
-                subCatToRecListMap = New.map();
-                collectionToSubCatIconRecMap.put(collection, subCatToRecListMap);
+                iconRecordMap = New.map();
+                iconRecordMapCollection.put(collection, iconRecordMap);
             }
 
-            List<IconRecord> recList = subCatToRecListMap.get(subCat);
-            if (recList == null)
+            List<IconRecord> recordList = iconRecordMap.get(subCategory);
+            if (recordList == null)
             {
-                recList = New.linkedList();
-                subCatToRecListMap.put(subCat, recList);
+                recordList = New.linkedList();
+                iconRecordMap.put(subCategory, recordList);
             }
-            recList.add(rec);
+            recordList.add(record);
         }
 
-        buildTreeFromMaps(this, collectionSet, collectionToSubCatIconRecMap, defaultSubCat);
+        buildTreeFromMaps(this, collectionSet, iconRecordMapCollection, defaultSubCategory);
         setExpanded(true);
     }
 
@@ -92,12 +92,11 @@ public class TreeBuilder extends TreeItem<String>
      *
      * @param rootNode the root node
      * @param collectionSet the collection set
-     * @param collectionToSubCatIconRecMap the collection to sub cat icon rec
-     *            map
-     * @param defaultSubCat the default sub cat
+     * @param iconRecordMapCollection the collection of icon record collections
+     * @param defaultSubCategory the default sub category
      */
     private void buildTreeFromMaps(TreeItem<String> rootNode, Set<String> collectionSet,
-            Map<String, Map<String, List<IconRecord>>> collectionToSubCatIconRecMap, String defaultSubCat)
+            Map<String, Map<String, List<IconRecord>>> iconRecordMapCollection, String defaultSubCategory)
     {
         List<String> collectionList = New.list(collectionSet);
         Collections.sort(collectionList);
@@ -114,15 +113,15 @@ public class TreeBuilder extends TreeItem<String>
         for (String collection : collectionList)
         {
             TreeItem<String> mainNode = new TreeItem<>();
-            Map<String, List<IconRecord>> subToRecListMap = collectionToSubCatIconRecMap.get(collection);
-            if (subToRecListMap != null)
+            Map<String, List<IconRecord>> iconRecordMap = iconRecordMapCollection.get(collection);
+            if (iconRecordMap != null)
             {
-                List<String> subCatList = New.list(subToRecListMap.keySet());
-                Collections.sort(subCatList);
+                List<String> subCategoryList = New.list(iconRecordMap.keySet());
+                Collections.sort(subCategoryList);
 
-                if (subCatList.remove(defaultSubCat))
+                if (subCategoryList.remove(defaultSubCategory))
                 {
-                    List<IconRecord> defaultRecList = subToRecListMap.get(defaultSubCat);
+                    List<IconRecord> defaultRecList = iconRecordMap.get(defaultSubCategory);
                     myIconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(mainNode, collection, defaultRecList,
                             IconRecordTreeItemUserObject.NameType.COLLECTION, null);
                     myRecordMap.put(collection, myIconTreeObject.getRecords(true));
@@ -135,16 +134,16 @@ public class TreeBuilder extends TreeItem<String>
                 }
 
                 getChildren().add(myIconTreeObject.getMyTreeItem().get());
-                for (String subCat : subCatList)
+                for (String subCategory : subCategoryList)
                 {
-                    TreeItem<String> depNode = new TreeItem<>();
-                    myIconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(depNode, subCat, subToRecListMap.get(subCat),
+                    TreeItem<String> newNode = new TreeItem<>();
+                    myIconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(newNode, subCategory, iconRecordMap.get(subCategory),
                             IconRecordTreeItemUserObject.NameType.SUBCATEGORY, collection);
                     mainNode.getChildren().add(myIconTreeObject.getMyTreeItem().get());
-                    myRecordMap.put(subCat, myIconTreeObject.getRecords(true));
-                    ArrayList<IconRecord> test = new ArrayList<>(myRecordMap.get(collection));
-                    test.addAll(myIconTreeObject.getRecords(true));
-                    myRecordMap.put(collection, test);
+                    myRecordMap.put(subCategory, myIconTreeObject.getRecords(true));
+                    ArrayList<IconRecord> iconRecords = new ArrayList<>(myRecordMap.get(collection));
+                    iconRecords.addAll(myIconTreeObject.getRecords(true));
+                    myRecordMap.put(collection, iconRecords);
                 }
             }
         }
