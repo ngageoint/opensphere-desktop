@@ -27,7 +27,6 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.GuardedBy;
 
 /**
  * A JPanel that displays a scrolling marquis (when necessary) or a combination
