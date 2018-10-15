@@ -78,7 +78,7 @@ public class MainPanel extends SplitPane
         myOwner = myPanelModel.getOwner();
 
         myPanelModel.getCurrentTileWidth().addListener((o, v, m) -> refresh());
-        createTreeView(myPanelModel.getIconRegistry().getManagerPrefs().getInitTreeSelection().get());
+        createTreeView(myPanelModel.getIconRegistry().getManagerPrefs().getTreeSelection().get());
         myRecordMap = new HashMap<>(myTreeBuilder.getRecordMap());
         myPanelModel.setRecordList(myRecordMap.get("Default"));
         myIconGrid = new GridBuilder(myPanelModel);

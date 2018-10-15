@@ -93,12 +93,12 @@ public class IconPopupMenuImpl
         }
         else if (recordSet.size() > 1)
         {
-            for (IconRecord rec : recordSet)
+            for (IconRecord record : recordSet)
             {
-                myPanelModel.getIconRegistry().removeIcon(rec, this);
+                myPanelModel.getIconRegistry().removeIcon(record, this);
                 if (doDelete)
                 {
-                    myPanelModel.getIconRegistry().deleteIcon(rec, myPanelModel);
+                    myPanelModel.getIconRegistry().deleteIcon(record, myPanelModel);
                 }
             }
         }
@@ -116,10 +116,10 @@ public class IconPopupMenuImpl
     /** Un-Selects the Icons visually and in the registry. */
     public void unSelectIcons()
     {
-        for (Button recordindex : myPanelModel.getSelectedIcons().values())
+        for (Button recordButton : myPanelModel.getSelectedIcons().values())
         {
-            int idx = myPanelModel.getViewModel().getMainPanel().getIconGrid().getChildren().indexOf(recordindex);
-            myPanelModel.getViewModel().getMainPanel().getIconGrid().getChildren().get(idx).setStyle("");
+            int recordIndex = myPanelModel.getViewModel().getMainPanel().getIconGrid().getChildren().indexOf(recordButton);
+            myPanelModel.getViewModel().getMainPanel().getIconGrid().getChildren().get(recordIndex).setStyle("");
         }
         myPanelModel.getSelectedIcons().clear();
     }
@@ -127,10 +127,10 @@ public class IconPopupMenuImpl
     /** Un-Selects the Icons visually and in the registry. */
     public void unSelectIcon()
     {
-        for (Button recordindex : myPanelModel.getSelectedIconMap().values())
+        for (Button recordButton : myPanelModel.getSelectedIconMap().values())
         {
-            int idx = myPanelModel.getViewModel().getMainPanel().getIconGrid().getChildren().indexOf(recordindex);
-            myPanelModel.getViewModel().getMainPanel().getIconGrid().getChildren().get(idx).setStyle("");
+            int recordIndex = myPanelModel.getViewModel().getMainPanel().getIconGrid().getChildren().indexOf(recordButton);
+            myPanelModel.getViewModel().getMainPanel().getIconGrid().getChildren().get(recordIndex).setStyle("");
         }
         myPanelModel.getSelectedIconMap().clear();
     }

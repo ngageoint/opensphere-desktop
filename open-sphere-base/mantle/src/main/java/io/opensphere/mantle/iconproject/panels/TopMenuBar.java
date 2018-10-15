@@ -64,14 +64,14 @@ public class TopMenuBar extends HBox
     /**
      * Creates the top menu bar of the icon manager UI.
      *
-     * @param thePanelModel the current UI model.
+     * @param panelModel the current UI model.
      */
-    public TopMenuBar(PanelModel thePanelModel)
+    public TopMenuBar(PanelModel panelModel)
     {
         mySearchBar = createFilterBar();
         myViewToggle = createViewToggle();
         mySizeMenu = createSizeMenu();
-        myPanelModel = thePanelModel;
+        myPanelModel = panelModel;
 
         Region region1 = new Region();
         HBox.setHgrow(region1, Priority.ALWAYS);

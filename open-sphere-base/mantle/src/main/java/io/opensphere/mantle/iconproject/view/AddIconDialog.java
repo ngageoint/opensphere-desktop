@@ -60,9 +60,6 @@ public class AddIconDialog extends JFXDialog
      */
     private void loadFromFolder(String collectionName, String subCollectionName)
     {
-        String colName = collectionName;
-        String subcategory = subCollectionName;
-
         MnemonicFileChooser chooser = new MnemonicFileChooser(myPanelModel.getToolbox().getPreferencesRegistry(),
                 "IconManagerFrame");
 
@@ -75,8 +72,8 @@ public class AddIconDialog extends JFXDialog
             File resultFile = chooser.getSelectedFile();
             try
             {
-                List<DefaultIconProvider> providerList = IconProviderFactory.createFromDirectory(resultFile, colName,
-                        "IconManager", true, subcategory);
+                List<DefaultIconProvider> providerList = IconProviderFactory.createFromDirectory(resultFile, collectionName,
+                        "IconManager", true, subCollectionName);
                 myPanelModel.getIconRegistry().addIcons(providerList, this);
             }
             catch (IOException e)

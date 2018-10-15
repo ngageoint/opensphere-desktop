@@ -9,11 +9,11 @@ public class LabelMaker extends Text
     /**
      * Creates a custom label with white text.
      *
-     * @param theText the Text to edit.
+     * @param text the Text to edit.
      */
-    public LabelMaker(String theText)
+    public LabelMaker(String text)
     {
-        setText(theText);
+        setText(text);
         setFill(Color.WHITE);
     }
 }

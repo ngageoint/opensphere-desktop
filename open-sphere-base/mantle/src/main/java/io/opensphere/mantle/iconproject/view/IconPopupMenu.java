@@ -23,8 +23,8 @@ public class IconPopupMenu extends ContextMenu
     {
         IconPopupMenuImpl selector = new IconPopupMenuImpl(panelModel);
 
-        MenuItem favAction = new MenuItem("Add Selected Icon(s) to Favorites");
-        favAction.setOnAction(event -> selector.addToFav());
+        MenuItem favoriteAction = new MenuItem("Add Selected Icon(s) to Favorites");
+        favoriteAction.setOnAction(event -> selector.addToFav());
 
         MenuItem rotateAction = new MenuItem("Customize Icon");
         rotateAction.setOnAction(event -> EventQueue.invokeLater(() -> selector.customize()));
@@ -41,6 +41,6 @@ public class IconPopupMenu extends ContextMenu
         MenuItem deSelectAction = new MenuItem("Deselect Icon");
         deSelectAction.setOnAction(event -> EventQueue.invokeLater(() -> selector.unSelectIcon()));
 
-        getItems().addAll(favAction, rotateAction, deSelectAction, unSelectAction, removeAction, deleteAction);
+        getItems().addAll(favoriteAction, rotateAction, deSelectAction, unSelectAction, removeAction, deleteAction);
     }
 }

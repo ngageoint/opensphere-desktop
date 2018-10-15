@@ -6,7 +6,6 @@ import java.util.Set;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.iconproject.model.ImportProp;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,7 +31,7 @@ public class CollectNamesPane extends VBox
      * The Radio Button to indicate only existing collection names will appear
      * in the combobox.
      */
-    private RadioButton myExistingRB;
+    private RadioButton myExistingRadioButton;
 
     /**
      * The ComboBox to show the current collections names and take in user input
@@ -55,9 +54,6 @@ public class CollectNamesPane extends VBox
     /** The toggle group for the New and Existing radio buttons. */
     private ToggleGroup myToggleGroup = new ToggleGroup();
 
-    /** The model for the importation properties. */
-    private ImportProp myIconProps;
-
     /**
      * Creates the Collection Name selection controls and packages into a VBox.
      *
@@ -66,19 +62,18 @@ public class CollectNamesPane extends VBox
     public CollectNamesPane(PanelModel panelModel)
     {
         myPanelModel = panelModel;
-        myIconProps = myPanelModel.getImportProps();
         Set<String> collectionNameSet = myPanelModel.getIconRegistry().getCollectionNames();
 
         collectionNameSet.remove(IconRecord.DEFAULT_COLLECTION);
         collectionNameSet.remove(IconRecord.USER_ADDED_COLLECTION);
         collectionNameSet.remove(IconRecord.FAVORITES_COLLECTION);
-        List<String> colNames = New.list(collectionNameSet);
-        Collections.sort(colNames);
-        colNames.add(0, IconRecord.FAVORITES_COLLECTION);
-        colNames.add(0, IconRecord.USER_ADDED_COLLECTION);
-        colNames.add(0, IconRecord.DEFAULT_COLLECTION);
+        List<String> collectionNames = New.list(collectionNameSet);
+        Collections.sort(collectionNames);
+        collectionNames.add(0, IconRecord.FAVORITES_COLLECTION);
+        collectionNames.add(0, IconRecord.USER_ADDED_COLLECTION);
+        collectionNames.add(0, IconRecord.DEFAULT_COLLECTION);
 
-        myOptions = FXCollections.observableArrayList(colNames);
+        myOptions = FXCollections.observableArrayList(collectionNames);
 
         HBox bottomPane = new HBox();
 
@@ -86,15 +81,15 @@ public class CollectNamesPane extends VBox
         collectionMessage.setFont(Font.font(collectionMessage.getFont().getFamily(), FontPosture.ITALIC, 11));
         collectionMessage.setContentDisplay(ContentDisplay.BOTTOM);
 
-        myExistingRB = new RadioButton("Existing");
-        myExistingRB.setSelected(true);
-        myExistingRB.setOnMouseClicked(event -> lockfeature(false));
+        myExistingRadioButton = new RadioButton("Existing");
+        myExistingRadioButton.setSelected(true);
+        myExistingRadioButton.setOnMouseClicked(event -> lockfeature(false));
 
         myExistingComboBox = new ComboBox<>(myOptions);
         myExistingComboBox.getSelectionModel().selectFirst();
         myExistingComboBox.setOnAction((event) ->
         {
-            myIconProps.getCollectionName().set(myExistingComboBox.getValue());
+        	myPanelModel.getImportProps().getCollectionName().set(myExistingComboBox.getValue());
             if (!myOptions.contains(myExistingComboBox.getValue()))
             {
                 myOptions.add(myExistingComboBox.getValue());
@@ -109,9 +104,9 @@ public class CollectNamesPane extends VBox
         bottomPane.setSpacing(5);
         bottomPane.setAlignment(Pos.BASELINE_LEFT);
 
-        myExistingRB.setToggleGroup(myToggleGroup);
+        myExistingRadioButton.setToggleGroup(myToggleGroup);
         myNewCollectionButton.setToggleGroup(myToggleGroup);
-        bottomPane.getChildren().addAll(myExistingRB, myNewCollectionButton, myExistingComboBox);
+        bottomPane.getChildren().addAll(myExistingRadioButton, myNewCollectionButton, myExistingComboBox);
         bottomPane.setSpacing(5);
 
         getChildren().addAll(collectionMessage, bottomPane);

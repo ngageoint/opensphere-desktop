@@ -71,7 +71,7 @@ public class IconProjDialog extends JFXDialog
     {
         MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs().getIconWidth()
                 .set(myPanelModel.getCurrentTileWidth().get());
-        MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs().getInitTreeSelection()
+        MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs().getTreeSelection()
                 .set((TreeItem<String>)myPanelModel.getTreeObject().getMyObsTree().get().getSelectionModel().selectedItemProperty()
                         .get());
     }

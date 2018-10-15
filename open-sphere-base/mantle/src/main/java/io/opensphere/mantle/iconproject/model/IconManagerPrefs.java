@@ -27,10 +27,10 @@ import javafx.scene.control.TreeItem;
 public class IconManagerPrefs
 {
     /** The value used for the tilewidth. */
-    private final IntegerProperty myInitTileWidth = new SimpleIntegerProperty();
+    private final IntegerProperty myInitialTileWidth = new SimpleIntegerProperty();
 
     /** The tree which will be selected on start up. */
-    private final ObjectProperty<TreeItem<String>> myInitTreeSelection = new SimpleObjectProperty<>(
+    private final ObjectProperty<TreeItem<String>> myInitialTreeSelection = new SimpleObjectProperty<>(
             new TreeItem<>("temp"));
 
     /**
@@ -40,15 +40,15 @@ public class IconManagerPrefs
      */
     public IntegerProperty getIconWidth()
     {
-        return myInitTileWidth;
+        return myInitialTileWidth;
     }
     /**
-     * Gets the value of the {@link #myInitTreeSelection} field.
+     * Gets the value of the {@link #myInitialTreeSelection} field.
      *
-     * @return the value stored in the {@link #myInitTreeSelection} field.
+     * @return the value stored in the {@link #myInitialTreeSelection} field.
      */
-    public ObjectProperty<TreeItem<String>> getInitTreeSelection()
+    public ObjectProperty<TreeItem<String>> getTreeSelection()
     {
-        return myInitTreeSelection;
+        return myInitialTreeSelection;
     }
 }
