@@ -173,11 +173,15 @@ public class TopMenuBar extends HBox
         myListView.setOnAction(event ->
         {
             myPanelModel.getViewStyle().set(ViewStyle.LIST);
+            myShrinkButton.setDisable(true);
+            myEnlargeButton.setDisable(true);
             myPanelModel.getViewModel().getMainPanel().refresh();
         });
         myGridView.setOnAction(event ->
         {
             myPanelModel.getViewStyle().set(ViewStyle.GRID);
+            myShrinkButton.setDisable(false);
+            myEnlargeButton.setDisable(false);
             myPanelModel.getViewModel().getMainPanel().refresh();
         });
 

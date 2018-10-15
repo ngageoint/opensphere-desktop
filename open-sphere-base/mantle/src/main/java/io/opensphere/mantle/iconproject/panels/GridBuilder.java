@@ -107,24 +107,20 @@ public class GridBuilder extends TilePane
         iconButton.setText(record.getName());
         iconButton.setAlignment(Pos.CENTER);
         iconButton.setTooltip(new Tooltip(record.getId() + record.getImageURL().toString()));
-        iconButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
+        iconButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->
         {
-            @Override
-            public void handle(MouseEvent e)
+            if (e.getButton() == MouseButton.SECONDARY)
             {
-                if (e.getButton() == MouseButton.SECONDARY)
-                {
-                    iconButton.setContextMenu(new IconPopupMenu(myPanelModel));
-                }
-                if (myPanelModel.getViewModel().getMultiSelectEnabled())
-                {
-                    iconButton.setStyle("-fx-effect: dropshadow(three-pass-box, purple, 20, 0, 0, 0);");
-                    myPanelModel.getSelectedIcons().put(record, iconButton);
-                }
-                myPanelModel.getSelectedRecord().set(record);
-                myPanelModel.getSelectedIconMap().clear();
-                myPanelModel.getSelectedIconMap().put(record, iconButton);
+                iconButton.setContextMenu(new IconPopupMenu(myPanelModel));
             }
+            if (myPanelModel.getViewModel().getMultiSelectEnabled())
+            {
+                iconButton.setStyle("-fx-effect: dropshadow(three-pass-box, purple, 20, 0, 0, 0);");
+                myPanelModel.getSelectedIcons().put(record, iconButton);
+            }
+            myPanelModel.getSelectedRecord().set(record);
+            myPanelModel.getSelectedIconMap().clear();
+            myPanelModel.getSelectedIconMap().put(record, iconButton);
         });
         return iconButton;
     }

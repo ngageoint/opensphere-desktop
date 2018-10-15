@@ -158,7 +158,7 @@ public class IconCustomizerPane extends BorderPane
         rotationSlider.valueProperty().bindBidirectional(myRotation);
 
         Spinner<Number> rotationSpinner = new Spinner<>(-180., 180., 0.);
-        rotationSpinner.setPrefWidth(40.);
+        rotationSpinner.setPrefWidth(68.);
         rotationSpinner.getValueFactory().valueProperty().bindBidirectional(myRotation);
         rotationSpinner.setEditable(true);
         rotationSpinner.getStyleClass().clear();
