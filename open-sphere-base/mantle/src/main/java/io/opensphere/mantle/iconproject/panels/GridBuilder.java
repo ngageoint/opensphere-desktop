@@ -61,11 +61,12 @@ public class GridBuilder extends TilePane
         iconButton.setMaxSize(myTileWidth, myTileWidth);
         String text = record.getName();
         iconButton.setPadding(new Insets(5, 5, 5, 5));
-        iconButton.setTooltip(new Tooltip(record.getId() + record.getImageURL().toString()));
+        iconButton.setTooltip(new Tooltip("Icon #" + record.getId() + ": " + record.getImageURL().toString()));
 
         iconButton.setText(text);
         iconButton.setContentDisplay(ContentDisplay.TOP);
         iconButton.setAlignment(Pos.BOTTOM_CENTER);
+        iconButton.setMnemonicParsing(false);
 
         ImageView iconView = new ImageView(record.getImageURL().toString());
         if (iconView.getImage().getWidth() + 20 > myTileWidth)
@@ -74,6 +75,7 @@ public class GridBuilder extends TilePane
             iconView.setFitWidth(myTileWidth - 40);
         }
         iconButton.setGraphic(iconView);
+        iconButton.setContextMenu(new IconPopupMenu(myPanelModel));
         iconButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->
         {
             if (e.getButton() == MouseButton.SECONDARY)
@@ -106,7 +108,9 @@ public class GridBuilder extends TilePane
         iconButton.setPadding(new Insets(5, 5, 5, 5));
         iconButton.setText(record.getName());
         iconButton.setAlignment(Pos.CENTER);
-        iconButton.setTooltip(new Tooltip(record.getId() + record.getImageURL().toString()));
+        iconButton.setMnemonicParsing(false);
+        iconButton.setTooltip(new Tooltip("Icon #" + record.getId() + ": " + record.getImageURL().toString()));
+        iconButton.setContextMenu(new IconPopupMenu(myPanelModel));
         iconButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->
         {
             if (e.getButton() == MouseButton.SECONDARY)

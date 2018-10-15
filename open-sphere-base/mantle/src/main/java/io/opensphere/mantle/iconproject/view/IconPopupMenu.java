@@ -17,11 +17,11 @@ public class IconPopupMenu extends ContextMenu
     /**
      * The main method to instantiate a new IconPopupMenu.
      *
-     * @param thePanelModel the model used to get registry items.
+     * @param panelModel the model used to get registry items.
      */
-    public IconPopupMenu(PanelModel thePanelModel)
+    public IconPopupMenu(PanelModel panelModel)
     {
-        IconPopupMenuImpl selector = new IconPopupMenuImpl(thePanelModel);
+        IconPopupMenuImpl selector = new IconPopupMenuImpl(panelModel);
 
         MenuItem favAction = new MenuItem("Add Selected Icon(s) to Favorites");
         favAction.setOnAction(event -> selector.addToFav());
@@ -30,7 +30,7 @@ public class IconPopupMenu extends ContextMenu
         rotateAction.setOnAction(event -> EventQueue.invokeLater(() -> selector.customize()));
 
         MenuItem deleteAction = new MenuItem("Delete Selected Icon(s)");
-        deleteAction.setOnAction(event ->selector.delete(true));
+        deleteAction.setOnAction(event -> selector.delete(true));
 
         MenuItem removeAction = new MenuItem("Remove Selected Icon(s)");
         removeAction.setOnAction(event -> selector.delete(false));
